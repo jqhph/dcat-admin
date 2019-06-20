@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Admin\Repositories;
+
+use Dcat\Admin\Repositories\EloquentRepository;
+use {modelClass} as {model}Model;
+
+class {controller} extends EloquentRepository
+{
+    /**
+     * Model.
+     *
+     * @var string
+     */
+    protected $eloquentClass = {model}Model::class;
+
+}

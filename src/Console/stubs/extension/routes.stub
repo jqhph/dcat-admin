@@ -1,0 +1,5 @@
+<?php
+
+use :namespace\Http\Controllers;
+
+Route::get(':path', Controllers\:class_nameController::class.'@index');

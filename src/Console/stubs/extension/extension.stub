@@ -1,0 +1,27 @@
+<?php
+
+namespace :namespace;
+
+use Dcat\Admin\Extension;
+
+class :class_name extends Extension
+{
+    const NAME = ':base_package';
+
+    protected $serviceProvider = :class_nameServiceProvider::class;
+
+//    protected $views = __DIR__.'/../resources/views';
+
+    protected $assets = __DIR__.'/../resources/assets';
+
+//    protected $lang = __DIR__.'/../resources/lang';
+
+    protected $composerJson = __DIR__.'/../composer.json';
+
+    protected $menu = [
+        'title' => ':title',
+        'path'  => ':path',
+        'icon'  => 'fa-gears',
+    ];
+
+}

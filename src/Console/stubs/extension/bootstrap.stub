@@ -1,0 +1,4 @@
+<?php
+
+// Register the extension.
+Dcat\Admin\Admin::extend(:namespace\:class_name::class);
