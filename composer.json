@@ -1,5 +1,5 @@
 {
-    "name": "dcat/admin",
+    "name": "dcat/laravel-admin",
     "description": "dcat admin",
     "type": "library",
     "keywords": ["dcat", "laravel", "admin", "grid", "form"],

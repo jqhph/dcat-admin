@@ -1,6 +1,41 @@
 <?php
 
 return [
+    'scaffold' => [
+        'header'            => 'Scaffold',
+        'choose'            => 'choose',
+        'table'             => 'Table',
+        'model'             => 'Model',
+        'controller'        => 'Controller',
+        'add_field'         => 'Add field',
+        'pk'                => 'Primary key',
+        'soft_delete'       => 'Soft delete',
+        'create_migration'  => 'Create migration',
+        'create_model'      => 'Create model',
+        'create_repository' => 'Create repository',
+        'create_controller' => 'Create controller',
+        'run_migrate'       => 'Run migrate',
+        'create_lang'       => 'Create lang',
+        'field'             => 'field',
+        'translation'       => 'translation',
+        'comment'           => 'comment',
+        'default'           => 'default',
+        'field_name'        => 'field name',
+        'type'              => 'type',
+        'nullable'          => 'nullable',
+        'key'               => 'key',
+    ],
+    'client' => [
+        'delete_confirm'    => 'Are you sure to delete this item ?',
+        'confirm'           => 'Confirm',
+        'cancel'            => 'cancel',
+        'refresh_succeeded' => 'Refresh succeeded !',
+
+        '500' => 'Internal server error !',
+        '403' => 'Permission deny !',
+        '401' => 'Unauthorized !',
+        '419' => 'Page expired !',
+    ],
     'online'                => 'Online',
     'login'                 => 'Login',
     'logout'                => 'Logout',
@@ -105,6 +140,5 @@ return [
         'display_all'           => ' <i class="glyphicon glyphicon-th icon-th"></i> ',
         'focus'                 => 'Focus',
     ],
-
     'menu_titles' => [],
 ];

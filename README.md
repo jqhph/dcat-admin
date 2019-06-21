@@ -1,12 +1,12 @@
 <p align="center">
-<a href="">
+<h2>
     Dcat Admin
-</a>
+</h2>
 
 <p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需使用很少的代码即可快速构建出一个功能完善的漂亮的管理后台。</p>
 
 <p align="center">
-<a href="">文档</a> |
+<a href="https://jqhph.gitee.io/dcatadmin/">文档</a> |
 <a href="">Demo</a> |
 <a href="">Demo源码</a> |
 <a href="#extensions">扩展</a>
@@ -55,7 +55,7 @@ php artisan admin:install
 <a name="extensions"></a>
 ## 扩展
 
-| 扩展                                        | 描述                              | dcat-admin version                             |
+| 扩展                                        | 描述                              | dcat-admin 版本                             |
 | ------------------------------------------------ | ---------------------------------------- |---------------------------------------- |
 | [dcat-page](https://github.com/jqhph/dcat-page)             | 一个简洁的静态站点构建工具 | * |
 | [ueditor](https://github.com/dcat-admin-extensions/ueditor) | 百度在线编辑器          | * |
