@@ -10,10 +10,14 @@
   <link rel="stylesheet" href="{{ admin_asset(\Dcat\Admin\Admin::$baseCss['bootstrap']) }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ admin_asset(\Dcat\Admin\Admin::$baseCss['font-awesome']) }}">
+
+  <link rel="stylesheet" href="{{ admin_asset(\Dcat\Admin\Admin::$baseCss['icons']) }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ admin_asset(\Dcat\Admin\Admin::$baseCss['adminLTE']) }}">
 
   <link rel="stylesheet" href="{{ admin_asset("vendor/dcat-admin/dcat-admin/main.min.css") }}">
+
+  <link rel="stylesheet" href="{{ admin_asset(\Dcat\Admin\Admin::$fonts) }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

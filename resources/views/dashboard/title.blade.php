@@ -29,11 +29,6 @@
 </div>
 <div class="links">
     <a href="https://github.com/jqhph/dcat-admin" target="_blank">Github</a>
-    <a href="http://dcatadmin.com/docs" id="doc-link" target="_blank">Documentation</a>
-    <a href="http://demo.dcatadmin.com" id="demo-link"  target="_blank">Demo</a>
+    <a href="https://jqhph.gitee.io/dcatadmin/docs.html" id="doc-link" target="_blank">Documentation</a>
+    <a href="https://jqhph.gitee.io/dcatadmin/demo.html" id="demo-link" target="_blank">Demo</a>
 </div>
-
-<script>LA.ready(function () {
-
-
-})</script>

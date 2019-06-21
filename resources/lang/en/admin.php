@@ -108,6 +108,7 @@ return [
     'parent_select_error'   => 'Parent select error',
     'tree'                  => 'Tree',
     'table'                 => 'Table',
+    'default'               => 'Default',
     'pagination'            => [
         'range' => 'Showing :first to :last of :total entries',
     ],
