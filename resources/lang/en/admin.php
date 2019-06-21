@@ -95,6 +95,7 @@ return [
     'more'                  => 'More',
     'deny'                  => 'Permission denied',
     'administrator'         => 'Administrator',
+    'no_data'               => 'No data.',
     'roles'                 => 'Roles',
     'permissions'           => 'Permissions',
     'slug'                  => 'Slug',
@@ -109,6 +110,9 @@ return [
     'tree'                  => 'Tree',
     'table'                 => 'Table',
     'default'               => 'Default',
+    'create_extension'      => 'Create Extension',
+    'import'                => 'Import',
+    'is_not_import'         => 'No',
     'pagination'            => [
         'range' => 'Showing :first to :last of :total entries',
     ],
