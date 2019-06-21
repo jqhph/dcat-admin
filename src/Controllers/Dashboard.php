@@ -58,20 +58,20 @@ class Dashboard
     {
         $extensions = [
             'Dcat Page' => [
-                'name' => '漂亮的个人网站、Markdown文档生成工具 - Dcat Page',
-                'link' => 'https://github.com/dcat-admin-extensions/dcat-page',
+                'name' => '一个简洁的静态站点生成工具 - Dcat Page',
+                'link' => 'https://github.com/jqhph/dcat-page',
                 'icon' => ' fa-file-text-o',
                 'key'  => 'dcat-page',
             ],
             'UEditor' => [
                 'name' => '百度在线编辑器 UEditor',
-                'link' => 'https://github.com/dcat-admin-extensions/ueditor',
+                'link' => 'https://github.com/jqhph/dcat-admin-ueditor',
                 'icon' => 'fa-underline',
                 'key'  => 'ueditor',
             ],
             '干货集中营' => [
                 'name' => '干货集中营',
-                'link' => 'https://github.com/dcat-admin-extensions/gank',
+                'link' => 'https://github.com/jqhph/dcat-admin-gank',
                 'icon' => 'fa-newspaper-o',
                 'key'  => 'gank',
             ],
