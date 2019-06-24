@@ -100,10 +100,10 @@
 
             </div>
 
-{{--            <hr />--}}
+            {{--            <hr />--}}
             <table class="table table-hover responsive table-header-gray " id="table-fields" style="margin-top:25px;">
                 <thead>
-                 <tr>
+                <tr>
                     <th style="width: 200px">{{trans('admin.scaffold.field_name')}}</th>
                     <th>{{trans('admin.scaffold.translation')}}</th>
                     <th>{{trans('admin.scaffold.type')}}</th>
@@ -207,10 +207,10 @@
 
             </div>
 
-        <!-- /.box-body -->
-        <div class="box-footer">
-            <button type="submit" class="btn btn-primary pull-right">{{ucfirst(trans('admin.submit'))}}</button>
-        </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary pull-right">{{ucfirst(trans('admin.submit'))}}</button>
+            </div>
 
         {{ csrf_field() }}
 
@@ -255,217 +255,217 @@
 </template>
 
 <script>
-LA.ready(function () {
-    var typing = 0,
-        $model = $('#inputModelName'),
-        $controller = $('#inputControllerName'),
-        $table = $('#inputTableName'),
-        $fieldsBody = $('#table-fields tbody'),
-        tpl = $('#table-field-tpl').html(),
-        modelNamespace = 'App\\Models\\',
-        controllerNamespace = 'App\\Admin\\Controllers\\',
-        dataTypeMap = {!! json_encode($dataTypeMap) !!};
+    LA.ready(function () {
+        var typing = 0,
+            $model = $('#inputModelName'),
+            $controller = $('#inputControllerName'),
+            $table = $('#inputTableName'),
+            $fieldsBody = $('#table-fields tbody'),
+            tpl = $('#table-field-tpl').html(),
+            modelNamespace = 'App\\Models\\',
+            controllerNamespace = 'App\\Admin\\Controllers\\',
+            dataTypeMap = {!! json_encode($dataTypeMap) !!};
 
-    $('select').select2();
-
-    $('#add-table-field').click(function (event) {
-        add_field();
-    });
-
-    $('#table-fields').on('click', '.table-field-remove', function(event) {
-        $(event.target).closest('tr').remove();
-    });
-
-    $('#scaffold').on('submit', function (event) {
-
-        //event.preventDefault();
-
-        if ($table.val() == '') {
-            $table.closest('.form-group').addClass('has-error');
-            $('#table-name-help').removeClass('hide');
-
-            return false;
-        }
-
-        return true;
-    });
-
-    $('.choose-exist-table').on('change', function () {
-        var val = $(this).val(), tb, db;
-        if (val == '0') {
-            $table.val('');
-            get_tr().remove();
-            return;
-        }
-        val = val.split('-');
-        db = val[0];
-        tb = val[1];
-
-        LA.loading();
-        $table.val(tb);
-
-        write_controller(tb);
-        write_model(tb);
-
-        $.post('{{admin_base_path('helpers/scaffold/table')}}', {db: db, tb: tb, _token: LA.token}, function (res) {
-            LA.loading(false);
-
-            if (!res.list) return;
-            var i, list = res.list, $id = $('#inputPrimaryKey'), updated, created, soft;
-
-            get_tr().remove();
-            for (i in list) {
-                if (list[i].id) {
-                    $id.val(i);
-                    continue;
-                }
-                if (i == 'updated_at') {
-                    updated = list[i];
-                    continue;
-                }
-                if (i == 'created_at') {
-                    created = list[i];
-                    continue;
-                }
-                if (i == 'deleted_at') {
-                    soft = list[i];
-                    continue;
-                }
-
-                var c = LA.str.replace(list[i].comment, '"', '');
-                add_field({
-                    name: i,
-                    lang: c,
-                    type: list[i].type,
-                    default: LA.str.replace(list[i].default, '"', ''),
-                    comment: c,
-                    nullable: list[i].nullable != 'NO',
-                });
-            }
-
-            add_timestamps(updated, created);
-            add_softdelete(soft);
-        });
-
-    });
-
-
-    $table.on('keyup', function (e) {
-        var $this = $(this);
-        $this.val($this.val());
-
-        if (typing == 1) {
-            return;
-        }
-        typing = 1;
-
-        setTimeout(function () {
-            typing = 0;
-
-            write_controller($this.val());
-            write_model($this.val());
-        }, 100);
-
-    });
-
-    function add_timestamps(updated, created) {
-        if (updated && created) {
-            return;
-        }
-        $('[name="timestamps"]').prop('checked', false);
-
-        var c;
-        if (updated) {
-            c = LA.str.replace(updated.comment, '"', '');
-            add_field({
-                name: 'updated_at',
-                lang: c,
-                type: updated.type,
-                default: LA.str.replace(updated.default, '"', ''),
-                comment: c,
-                nullable: updated.nullable != 'NO',
-            });
-        }
-        if (created) {
-            c = LA.str.replace(created.comment, '"', '');
-            add_field({
-                name: 'created_at',
-                lang: c,
-                type: created.type,
-                default: LA.str.replace(created.default, '"', ''),
-                comment: c,
-                nullable: created.nullable != 'NO',
-            });
-        }
-    }
-
-    function add_softdelete(soft) {
-        if (soft) {
-            $('[name="soft_deletes"]').prop('checked', true);
-        }
-    }
-
-    function add_field(val) {
-        val = val || {};
-
-        var idx = get_tr().length - 1,
-            $field = $(
-                tpl
-                    .replace(/__index__/g, idx)
-                    .replace(/{name}/g, val.name || '')
-                    .replace(/{translation}/g, val.lang || '')
-                    .replace(/{default}/g, val.default || '')
-                    .replace(/{comment}/g, val.comment || '')
-                    .replace(/{nullable}/g, val.nullable ? 'checked' : '')
-            ),
-            i;
-
-        $fieldsBody.append($field);
         $('select').select2();
 
-        // 选中字段类型
-        for (i in dataTypeMap) {
-            if (val.type == i) {
-                $field.find('[name="fields['+ idx +'][type]"]')
-                    .val(dataTypeMap[i])
-                    .trigger("change");
+        $('#add-table-field').click(function (event) {
+            add_field();
+        });
+
+        $('#table-fields').on('click', '.table-field-remove', function(event) {
+            $(event.target).closest('tr').remove();
+        });
+
+        $('#scaffold').on('submit', function (event) {
+
+            //event.preventDefault();
+
+            if ($table.val() == '') {
+                $table.closest('.form-group').addClass('has-error');
+                $('#table-name-help').removeClass('hide');
+
+                return false;
+            }
+
+            return true;
+        });
+
+        $('.choose-exist-table').on('change', function () {
+            var val = $(this).val(), tb, db;
+            if (val == '0') {
+                $table.val('');
+                get_tr().remove();
+                return;
+            }
+            val = val.split('-');
+            db = val[0];
+            tb = val[1];
+
+            LA.loading();
+            $table.val(tb);
+
+            write_controller(tb);
+            write_model(tb);
+
+            $.post('{{admin_base_path('helpers/scaffold/table')}}', {db: db, tb: tb, _token: LA.token}, function (res) {
+                LA.loading(false);
+
+                if (!res.list) return;
+                var i, list = res.list, $id = $('#inputPrimaryKey'), updated, created, soft;
+
+                get_tr().remove();
+                for (i in list) {
+                    if (list[i].id) {
+                        $id.val(i);
+                        continue;
+                    }
+                    if (i == 'updated_at') {
+                        updated = list[i];
+                        continue;
+                    }
+                    if (i == 'created_at') {
+                        created = list[i];
+                        continue;
+                    }
+                    if (i == 'deleted_at') {
+                        soft = list[i];
+                        continue;
+                    }
+
+                    var c = LA.str.replace(list[i].comment, '"', '');
+                    add_field({
+                        name: i,
+                        lang: c,
+                        type: list[i].type,
+                        default: LA.str.replace(list[i].default, '"', ''),
+                        comment: c,
+                        nullable: list[i].nullable != 'NO',
+                    });
+                }
+
+                add_timestamps(updated, created);
+                add_softdelete(soft);
+            });
+
+        });
+
+
+        $table.on('keyup', function (e) {
+            var $this = $(this);
+            $this.val($this.val());
+
+            if (typing == 1) {
+                return;
+            }
+            typing = 1;
+
+            setTimeout(function () {
+                typing = 0;
+
+                write_controller($this.val());
+                write_model($this.val());
+            }, 100);
+
+        });
+
+        function add_timestamps(updated, created) {
+            if (updated && created) {
+                return;
+            }
+            $('[name="timestamps"]').prop('checked', false);
+
+            var c;
+            if (updated) {
+                c = LA.str.replace(updated.comment, '"', '');
+                add_field({
+                    name: 'updated_at',
+                    lang: c,
+                    type: updated.type,
+                    default: LA.str.replace(updated.default, '"', ''),
+                    comment: c,
+                    nullable: updated.nullable != 'NO',
+                });
+            }
+            if (created) {
+                c = LA.str.replace(created.comment, '"', '');
+                add_field({
+                    name: 'created_at',
+                    lang: c,
+                    type: created.type,
+                    default: LA.str.replace(created.default, '"', ''),
+                    comment: c,
+                    nullable: created.nullable != 'NO',
+                });
             }
         }
 
-    }
+        function add_softdelete(soft) {
+            if (soft) {
+                $('[name="soft_deletes"]').prop('checked', true);
+            }
+        }
 
-    function write_controller(val) {
-        val = ucfirst(to_hump(to_line(val)));
-        $controller.val(val ? (controllerNamespace + val + 'Controller') : controllerNamespace);
-    }
-    function write_model(val) {
-        $model.val(modelNamespace + ucfirst(ucfirst(to_hump(to_line(val)))));
-    }
+        function add_field(val) {
+            val = val || {};
 
-    function get_tr() {
-        return $('#table-fields tbody tr');
-    }
+            var idx = get_tr().length,
+                $field = $(
+                    tpl
+                        .replace(/__index__/g, idx)
+                        .replace(/{name}/g, val.name || '')
+                        .replace(/{translation}/g, val.lang || '')
+                        .replace(/{default}/g, val.default || '')
+                        .replace(/{comment}/g, val.comment || '')
+                        .replace(/{nullable}/g, val.nullable ? 'checked' : '')
+                ),
+                i;
 
-    // 下划线转换驼峰
-    function to_hump(name) {
-        return name.replace(/\_(\w)/g, function (all, letter) {
-            return letter.toUpperCase();
-        });
-    }
+            $fieldsBody.append($field);
+            $('select').select2();
 
-    // 驼峰转换下划线
-    function to_line(name) {
-        return name.replace(/([A-Z])/g,"_$1").toLowerCase();
-    }
+            // 选中字段类型
+            for (i in dataTypeMap) {
+                if (val.type == i) {
+                    $field.find('[name="fields['+ idx +'][type]"]')
+                        .val(dataTypeMap[i])
+                        .trigger("change");
+                }
+            }
 
-    function ucfirst(str) {
-        var reg = /\b(\w)|\s(\w)/g;
-        return str.replace(reg,function(m){
-            return m.toUpperCase()
-        });
-    }
+        }
+
+        function write_controller(val) {
+            val = ucfirst(to_hump(to_line(val)));
+            $controller.val(val ? (controllerNamespace + val + 'Controller') : controllerNamespace);
+        }
+        function write_model(val) {
+            $model.val(modelNamespace + ucfirst(ucfirst(to_hump(to_line(val)))));
+        }
+
+        function get_tr() {
+            return $('#table-fields tbody tr');
+        }
+
+        // 下划线转换驼峰
+        function to_hump(name) {
+            return name.replace(/\_(\w)/g, function (all, letter) {
+                return letter.toUpperCase();
+            });
+        }
+
+        // 驼峰转换下划线
+        function to_line(name) {
+            return name.replace(/([A-Z])/g,"_$1").toLowerCase();
+        }
+
+        function ucfirst(str) {
+            var reg = /\b(\w)|\s(\w)/g;
+            return str.replace(reg,function(m){
+                return m.toUpperCase()
+            });
+        }
 
 
-});
+    });
 
 </script>
