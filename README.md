@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://jqhph.gitee.io/dcatadmin/">文档</a> |
 <a href="https://jqhph.gitee.io/dcatadmin/demo.html">Demo</a> |
-<a href="">Demo源码</a> |
+<a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
 <a href="#extensions">扩展</a>
 </p>
 
