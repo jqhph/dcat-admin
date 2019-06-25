@@ -18,6 +18,7 @@ use Dcat\Admin\Grid\Concerns;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\BuilderEvents;
+use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
@@ -32,7 +33,10 @@ class Grid
         Concerns\HasElementNames,
         Concerns\Options,
         Concerns\MultipleHeader,
-        Concerns\QuickSearch;
+        Concerns\QuickSearch,
+        Macroable {
+            __call as macroCall;
+        }
 
     /**
      * The grid data model instance.
@@ -67,7 +71,7 @@ class Grid
      *
      * @var array
      */
-    protected $columnNames = [];
+    public $columnNames = [];
 
     /**
      * Grid builder.
@@ -130,21 +134,21 @@ class Grid
      *
      * @var array
      */
-    protected $perPages = [10, 20, 30, 50, 100, 200];
+    public $perPages = [10, 20, 30, 50, 100, 200];
 
     /**
      * Default items count per-page.
      *
      * @var int
      */
-    protected $perPage = 20;
+    public $perPage = 20;
 
     /**
      * Header tools.
      *
      * @var Tools
      */
-    protected $tools;
+    public $tools;
 
     /**
      * Callback for grid actions.
@@ -326,7 +330,7 @@ class Grid
         if (strpos($name, '.') !== false) {
             list($relationName, $relationColumn) = explode('.', $name);
 
-            $label = empty($label) ? admin_trans_field($relationColumn) : $label;
+            $label = empty($label) ? trans_field($relationColumn) : $label;
 
             $name = Str::snake($relationName).'.'.$relationColumn;
         }
@@ -432,14 +436,6 @@ class Grid
     }
 
     /**
-     * @return array
-     */
-    public function getColumnNames()
-    {
-        return $this->columnNames;
-    }
-
-    /**
      * Paginate the grid.
      *
      * @param int $perPage
@@ -451,14 +447,6 @@ class Grid
         $this->perPage = $perPage;
 
         $this->model()->setPerPage($perPage);
-    }
-
-    /**
-     * @return int
-     */
-    public function getPerPage()
-    {
-        return $this->perPage;
     }
 
     /**
@@ -495,16 +483,6 @@ class Grid
         $this->perPages = $perPages;
 
         return $this;
-    }
-
-    /**
-     * Get per-page options.
-     *
-     * @return array
-     */
-    public function getPerPages()
-    {
-        return $this->perPages;
     }
 
     /**
@@ -1192,6 +1170,10 @@ HTML;
      */
     public function __call($method, $arguments)
     {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $arguments);
+        }
+
         return $this->addColumn($method, $arguments[0] ?? null);
     }
 
