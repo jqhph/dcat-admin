@@ -1,4 +1,4 @@
-<p align="center">
+
 <h2>
     Dcat Admin
 </h2>
@@ -12,9 +12,24 @@
 <a href="#extensions">扩展</a>
 </p>
 
+<p align="center">
+    <a href="https://github.com/jqhph/dcat-admin/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-7389D8.svg?style=flat" alt="MIT"></a>
+    <a><img src="https://img.shields.io/badge/awesome-laravel-59a9f8.svg?style=flat" alt="Awesome Larave"></a>
+    <a href="https://github.com/jqhph/dcat-admin/releases" ><img src="https://img.shields.io/github/release/jqhph/dcat-admin.svg?color=4099DE" alt="Release version"/></a> 
+    <a href="https://packagist.org/packages/dcat/laravel-admin"><img src="https://img.shields.io/packagist/dt/dcat/laravel-admin.svg?color=" /></a> 
+    <a><img src="https://img.shields.io/github/repo-size/jqhph/dcat-admin.svg" /></a> 
+</p>
+
 ## 截图
 
 ![dcat-admin]()
+
+## 前言
+
+这个项目从开始到开发完成大概了用了三个多月的时间（晚上下班和周末），提交的有效git版本不少于400个，而这个项目仅仅只是二次开发而已，并不是一个从零开始的全新的项目，可见持续维护一个稳定的开源项目是多么不易。所以这里也非常感谢`Laravel`、`Laravel Admin`等等优秀开源软件的的开发者们，免费为我们提供这么好用的项目。
+对于我个人而言，`Laravel Admin`是我使用过的最好用的后台构建工具，仅需使用很少的代码就可以构建出功能完善的后台系统，API简洁易用，入门也很容易，没有那么多花里胡哨的东西。而我之所以要开发这个项目，主要是想对`Laravel Admin`的一些细节做一些补充调整，增加一些比较常用的功能，优化开发体验（比如增加前端静态资源按需加载支持、美化界面和布局、增加表单弹窗、双表头表格等等比较实用的功能），总的来说可以把这个项目看做`Laravel Admin`“2.0”，更详细的异同点查看请[点击这里](https://jqhph.gitee.io/dcatadmin/docs-master-new.html)。
+
+> 有的同学可能想问：现在都流行前后端分离这么久了，还搞这种后端渲染的项目有意义吗？答案是当然有意义。因为开发一个前后端分离项目也是需要一定成本和资源的（比如你得有个熟悉前端的开发人员），实际项目中也需要考量一下为一个管理后台耗费这些成本资源值不值得。如果条件允许的话，当然用前后端分离的架构会更好一些。但是实际项目中也有许多不具备这种条件的，比如说公司的开发人员对前端都不是很熟悉，但是项目又很紧急的；还有一些如个人项目或者是很小的项目等等，也没有太大必要搞前后端分离，这个时候怎么省事怎么来就行，而`Dcat Admin`就是让你构建后台系统更快速更省事。
 
 ## 环境
  - PHP >= 7.1.0
@@ -87,6 +102,7 @@ php artisan admin:install
 + [fontawesome-iconpicker](https://github.com/itsjavi/fontawesome-iconpicker)
 + [layer弹出层](http://layer.layui.com/)
 + [waves](https://github.com/fians/Waves)
+
 
 ## License
 ------------
