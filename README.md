@@ -22,7 +22,7 @@
 
 ## 截图
 
-![dcat-admin](https://raw.githubusercontent.com/jqhph/dcat-admin/master/docs/screenshots/1.gif)
+![dcat-admin](https://raw.githubusercontent.com/jqhph/dcat-admin/master/docs/screenshots/2.gif)
 
 ## 前言
 
