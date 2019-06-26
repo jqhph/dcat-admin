@@ -21,6 +21,11 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
         $this->listeners = Repository::getListeners(get_class($repository));
     }
 
+    public function getOriginalClassName()
+    {
+        return get_class($this->repository);
+    }
+
     public function getKeyName()
     {
         return $this->repository->getKeyName();
