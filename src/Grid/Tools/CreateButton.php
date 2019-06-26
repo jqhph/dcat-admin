@@ -25,7 +25,7 @@ class CreateButton
         $quickBtn = $btn = '';
         if ($this->grid->option('show_create_btn')) {
             $btn = "<a href='{$url}' class='btn btn-sm btn-success btn-mini'>
-    <i class='glyphicon glyphicon-plus-sign'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span>
+    <i class='ti-plus'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span>
 </a>";
         }
 

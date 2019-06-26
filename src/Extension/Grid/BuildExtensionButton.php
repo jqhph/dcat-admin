@@ -19,7 +19,7 @@ CSS
 
         $label = trans('admin.create_extension');
 
-        return "<a id='create-extension' class='btn btn-success btn-sm'><i class=\"glyphicon glyphicon-plus-sign\"></i> &nbsp;$label</a>";
+        return "<a id='create-extension' class='btn btn-success btn-sm'><i class=\"ti-plus\"></i> &nbsp;$label</a>";
     }
 
     protected function setupScript()

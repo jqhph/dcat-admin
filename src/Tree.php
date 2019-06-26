@@ -445,7 +445,7 @@ JS;
 
         $quickBtn = $btn = '';
         if ($this->useCreate) {
-            $btn = "<a href='{$url}' class='btn btn-sm btn-success'><i class='glyphicon glyphicon-plus-sign'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span></a>";
+            $btn = "<a href='{$url}' class='btn btn-sm btn-success'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span></a>";
         }
 
         if ($this->useQuickCreate) {
