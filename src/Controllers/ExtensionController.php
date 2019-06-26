@@ -109,7 +109,7 @@ class ExtensionController extends Controller
         $grid->description->expand(function ($expand) {
             if (!$this->description) return;
 
-            $expand->button(trans('admin.detail'));
+            $expand->button(trans('admin.view'));
 
             return "<div style='padding:10px 20px'>{$this->description}</div>";
         });
@@ -119,18 +119,18 @@ class ExtensionController extends Controller
 
         $grid->imported;
 
-        $detail = ucfirst(trans('admin.detail'));
+        $view = ucfirst(trans('admin.view'));
 
         $grid->config
-            ->display($detail)
+            ->display($view)
             ->expand($this->getExpandHandler('config'));
 
         $grid->require
-            ->display($detail)
+            ->display($view)
             ->expand($this->getExpandHandler());
 
         $grid->require_dev
-            ->display($detail)
+            ->display($view)
             ->expand($this->getExpandHandler('require_dev'));
 
         return $grid;

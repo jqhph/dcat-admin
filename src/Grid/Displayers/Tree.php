@@ -145,7 +145,7 @@ class Tree extends AbstractDisplayer
             $callbackOrNodes->call($this->row, $this);
         }
 
-        $btn = $this->trans('detail');
+        $btn = $this->trans('view');
 
         $this->setupScript();
 
