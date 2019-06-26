@@ -22,7 +22,7 @@ class :class_nameServiceProvider extends ServiceProvider
         }
 
         if ($migrations = $extension->migrations()) {
-            $this->loadMigrationsFrom(migrations);
+            $this->loadMigrationsFrom($migrations);
         }
 
         $this->app->booted(function () use ($extension) {
