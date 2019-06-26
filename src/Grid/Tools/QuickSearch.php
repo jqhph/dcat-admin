@@ -26,6 +26,7 @@ class QuickSearch extends AbstractTool
             'action' => request()->url() . '?' . http_build_query($query),
             'key' => QuickSearchConcerns::$searchKey,
             'value' => request(QuickSearchConcerns::$searchKey),
+            'placeholder' => trans('admin.search'),
         ];
 
         return view($this->view, $vars);
