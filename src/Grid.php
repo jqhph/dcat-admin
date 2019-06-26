@@ -35,8 +35,8 @@ class Grid
         Concerns\MultipleHeader,
         Concerns\QuickSearch,
         Macroable {
-            __call as macroCall;
-        }
+        __call as macroCall;
+    }
 
     /**
      * The grid data model instance.
@@ -183,6 +183,11 @@ class Grid
     protected $addNumberColumn = false;
 
     /**
+     * @var string
+     */
+    protected $tableId;
+
+    /**
      * Create a new grid instance.
      *
      * @param Repository $model
@@ -193,10 +198,11 @@ class Grid
         if ($repository) {
             $this->keyName = $repository->getKeyName();
         }
-        $this->model   = new Model($repository);
-        $this->columns = new Collection();
-        $this->rows    = new Collection();
-        $this->builder = $builder;
+        $this->model    = new Model($repository);
+        $this->columns  = new Collection();
+        $this->rows     = new Collection();
+        $this->builder  = $builder;
+        $this->tableId  = 'grid-'.Str::random(8);
 
         $this->model()->setGrid($this);
 
@@ -230,6 +236,14 @@ class Grid
         }
 
         return $this->responsive;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTableId()
+    {
+        return $this->tableId;
     }
 
     /**
@@ -1080,6 +1094,7 @@ HTML;
     protected function variables()
     {
         $this->variables['grid'] = $this;
+        $this->variables['tableId'] = $this->tableId;
 
         return $this->variables;
     }

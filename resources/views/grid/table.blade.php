@@ -1,7 +1,3 @@
-@php
-    $__id = 'grid-'.\Illuminate\Support\Str::random(8);
-@endphp
-
 @if ($grid->option('show_toolbar')
     && ($grid->getTools()->has() || $grid->allowExportBtn() || $grid->allowCreateBtn() || $grid->allowQuickCreateBtn() || $grid->allowResponsive() || !empty($title)))
     <div class="box-header " >
@@ -12,11 +8,11 @@
                     <small>{!! $description!!}</small>
                 @endif
             </h4>
-            <div class="pull-right" data-responsive-table-toolbar="{{$__id}}">
+            <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
                 {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
             </div>
         @else
-            <div class="pull-right" data-responsive-table-toolbar="{{$__id}}">
+            <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
                 {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
             </div>
 
@@ -31,7 +27,7 @@
 {!! $grid->renderHeader() !!}
 
 <div class="card-body panel-collapse collapse in table-responsive" {!! $grid->option('show_bordered') ? 'style="padding:3px 10px 10px"' : '' !!}>
-    <table class=" table table-hover responsive {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{$__id}}">
+    <table class=" table table-hover responsive {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{$tableId}}">
         <thead>
         @if ($headers = $grid->getMutipleHeaders())
             <tr>
