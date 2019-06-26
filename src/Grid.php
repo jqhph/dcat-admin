@@ -71,7 +71,7 @@ class Grid
      *
      * @var array
      */
-    public $columnNames = [];
+    protected $columnNames = [];
 
     /**
      * Grid builder.
@@ -134,21 +134,21 @@ class Grid
      *
      * @var array
      */
-    public $perPages = [10, 20, 30, 50, 100, 200];
+    protected $perPages = [10, 20, 30, 50, 100, 200];
 
     /**
      * Default items count per-page.
      *
      * @var int
      */
-    public $perPage = 20;
+    protected $perPage = 20;
 
     /**
      * Header tools.
      *
      * @var Tools
      */
-    public $tools;
+    protected $tools;
 
     /**
      * Callback for grid actions.
@@ -330,7 +330,7 @@ class Grid
         if (strpos($name, '.') !== false) {
             list($relationName, $relationColumn) = explode('.', $name);
 
-            $label = empty($label) ? trans_field($relationColumn) : $label;
+            $label = empty($label) ? admin_trans_field($relationColumn) : $label;
 
             $name = Str::snake($relationName).'.'.$relationColumn;
         }
@@ -436,6 +436,14 @@ class Grid
     }
 
     /**
+     * @return array
+     */
+    public function getColumnNames()
+    {
+        return $this->columnNames;
+    }
+
+    /**
      * Paginate the grid.
      *
      * @param int $perPage
@@ -447,6 +455,14 @@ class Grid
         $this->perPage = $perPage;
 
         $this->model()->setPerPage($perPage);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPerPage()
+    {
+        return $this->perPage;
     }
 
     /**
@@ -483,6 +499,16 @@ class Grid
         $this->perPages = $perPages;
 
         return $this;
+    }
+
+    /**
+     * Get per-page options.
+     *
+     * @return array
+     */
+    public function getPerPages()
+    {
+        return $this->perPages;
     }
 
     /**
