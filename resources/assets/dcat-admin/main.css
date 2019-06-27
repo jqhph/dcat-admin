@@ -936,6 +936,8 @@ fieldset legend {
 }
 
 code {
+    /*color: var(--primary);*/
+    /*background-color: #f0f2f1;*/
     color: #188ae2;
     background-color: #f4f8fb;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
@@ -1207,11 +1209,9 @@ select.form-shadow {
     height: 34px;
     min-width: 34px;
     border:0;
-    color: #333;
     margin: 0 .3rem 5px;
     text-decoration: none;
     transition: .3s cubic-bezier(0, 0, .2, 1);
-    font-weight:600;
     border-radius:3rem!important;
     /*border-radius:4px!important;*/
 }
