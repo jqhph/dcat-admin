@@ -7,7 +7,6 @@ use Dcat\Admin\Traits\BuilderEvents;
 use Dcat\Admin\Traits\Definitions;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
@@ -18,9 +17,11 @@ use Illuminate\Support\Traits\Macroable;
 
 class Field implements Renderable
 {
-    use BuilderEvents, Definitions, Macroable {
-        __call as macroCall;
-    }
+    use BuilderEvents,
+        Definitions,
+        Macroable {
+            __call as macroCall;
+        }
 
     /**
      * @var array

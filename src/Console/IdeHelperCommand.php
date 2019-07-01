@@ -57,7 +57,8 @@ class IdeHelperCommand extends Command
         ],
         'form' => '* @method %s %s(...$params)',
         'grid-column' => '* @method $this %s(...$params)',
-        'grid-filter'  => '* @method %s %s(...$params)',
+        'grid-filter' => '* @method %s %s(...$params)',
+        'show-column' => '* @method $this %s(...$params)',
     ];
 
     protected $path = '../dcat_admin_ide_helper.php';
@@ -174,6 +175,7 @@ class IdeHelperCommand extends Command
                 '{form}',
                 '{grid-column}',
                 '{grid-filter}',
+                '{show-column}',
             ],
             [
                 $this->generate('grid', $fields),
@@ -181,6 +183,7 @@ class IdeHelperCommand extends Command
                 $this->generateFormFields(),
                 $this->generateGridColumns(),
                 $this->generateGridFilters(),
+                $this->generateShowFields(),
             ],
             File::get($this->getStub())
         );
@@ -226,6 +229,23 @@ class IdeHelperCommand extends Command
             $fields
                 ->map(function ($value, $key) use (&$space) {
                     return $space.sprintf($this->templates['grid-filter'], '\\'.$value, $key);
+                })
+                ->join("\r\n")
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateShowFields()
+    {
+        $extensions = collect(Show\Field::getExtensions());
+
+        $space = str_repeat(' ', 5);
+        return trim(
+            $extensions
+                ->map(function ($value, $key) use (&$space) {
+                    return $space.sprintf($this->templates['show-column'], $key);
                 })
                 ->join("\r\n")
         );

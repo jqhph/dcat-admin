@@ -40,3 +40,10 @@ namespace Dcat\Admin\Grid {
      */
     class Filter {}
 }
+
+namespace Dcat\Admin\Show {
+    /**
+     {show-column}
+     */
+    class Field {}
+}
