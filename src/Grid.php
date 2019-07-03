@@ -255,6 +255,28 @@ class Grid
     }
 
     /**
+     * @return bool
+     */
+    public function allowHeader()
+    {
+        if (
+            $this->option('show_toolbar')
+            && (
+                $this->getTools()->has() ||
+                $this->allowExportBtn() ||
+                $this->allowCreateBtn() ||
+                $this->allowQuickCreateBtn() ||
+                $this->allowResponsive() ||
+                !empty($this->variables['title'])
+            )
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Setup grid tools.
      */
     public function setupTools()

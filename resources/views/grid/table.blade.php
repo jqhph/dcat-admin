@@ -1,5 +1,4 @@
-@if ($grid->option('show_toolbar')
-    && ($grid->getTools()->has() || $grid->allowExportBtn() || $grid->allowCreateBtn() || $grid->allowQuickCreateBtn() || $grid->allowResponsive() || !empty($title)))
+@if ($grid->allowHeader())
     <div class="box-header " >
         @if(!empty($title))
             <h4 class="pull-left" style="margin:5px 10px 0;">
