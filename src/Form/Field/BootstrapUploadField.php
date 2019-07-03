@@ -28,7 +28,7 @@ trait BootstrapUploadField
      *
      * @var \Illuminate\Filesystem\Filesystem
      */
-    protected $storage = '';
+    protected $storage;
 
     /**
      * If use unique name to store upload file.

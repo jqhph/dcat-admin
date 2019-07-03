@@ -187,7 +187,7 @@ class BootstrapFile extends Field
         $options = json_encode($this->options);
 
         $this->script = <<<JS
-$("input{$this->getElementClassSelector()}").fileinput({$options});
+$("{$this->getElementClassSelector()}").fileinput({$options});
 JS;
 
         return parent::render();
