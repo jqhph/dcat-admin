@@ -127,11 +127,13 @@ return [
     'route'                 => 'Route',
     'confirm'               => 'Confirm',
     'cancel'                => 'Cancel',
+    'selectall'             => 'Select all',
     'http'                  => [
         'method' => 'HTTP method',
         'path'   => 'HTTP path',
     ],
     'all_methods_if_empty'  => 'All methods if empty',
+    'any_character_is'      => 'Using "*" to match any character.',
     'all'                   => 'All',
     'current_page'          => 'Current page',
     'selected_rows'         => 'Selected rows',

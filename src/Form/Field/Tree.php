@@ -238,7 +238,7 @@ class Tree extends Field
         $checkboxes->style('primary');
         $checkboxes->inline();
         $checkboxes->options([
-            1 => trans('admin.checkedall'),
+            1 => trans('admin.selectall'),
             2 => trans('admin.expand')
         ]);
         if (!empty($this->attributes['disabled'])) {

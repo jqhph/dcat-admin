@@ -130,7 +130,7 @@ return [
     'route'                 => '路由',
     'confirm'               => '确认',
     'cancel'                => '取消',
-    'checkedall'            => '全选',
+    'selectall'             => '全选',
     'http'                  => [
         'method' => 'HTTP方法',
         'path'   => 'HTTP路径',
