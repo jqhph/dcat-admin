@@ -560,7 +560,7 @@ class Form implements Renderable
      */
     public function isAjaxRequest()
     {
-        $request = Request::capture();
+        $request = request();
 
         return $request->ajax() && !$request->pjax();
     }
