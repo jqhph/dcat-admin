@@ -119,6 +119,7 @@ return [
     'create_extension'      => 'Create Extension',
     'import'                => 'Import',
     'is_not_import'         => 'No',
+    'selected_options'      => ':num options selected',
     'pagination'            => [
         'range' => 'Showing :first to :last of :total entries',
     ],
