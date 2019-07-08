@@ -1,7 +1,3 @@
-.skin-black-light .main-header {
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .1), 0 4px 5px 0 rgba(0, 0, 0, .1), 0 1px 6px 0 rgba(0, 0, 0, .05);
-}
-
 .skin-black-light .main-header .navbar-toggle {
     color: #333
 }
@@ -12,7 +8,9 @@
 }
 
 .skin-black-light .main-header > .navbar {
-    background-color: #fff
+    background-color: #fff;
+    box-shadow: 1px 1px 5px #ddd;
+    left:-1px;
 }
 
 .skin-black-light .main-header > .navbar .nav > li > a {
@@ -38,14 +36,15 @@
 }
 
 .skin-black-light .main-header > .logo {
-    background-color: #262d37;
-    color: #fff;
+    background-color: #fff;
+    color: #333;
     border-bottom: 0 solid transparent;
-    font-size: 21px
+    font-size: 21px;
+    z-index: 1001;
 }
 
 .skin-black-light .main-header > .logo:hover {
-    background-color: #212d37
+    background-color: #f1f1f1
 }
 
 @media (max-width: 767px) {

@@ -285,7 +285,7 @@ return [
     | @see https://adminlte.io/docs/2.4/layout
     |
     | Supported:
-    |    "skin-blue", "skin-blue-light", "skin-black-light".
+    |    "skin-blue-light", "skin-black", "skin-black-light".
     |
     */
     'skin' => 'skin-blue-light',
