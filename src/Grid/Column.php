@@ -33,6 +33,8 @@ use Illuminate\Support\Str;
  * @method $this modal($title = '', \Closure $callback = null)
  * @method $this tree($callbackOrNodes = null)
  * @method $this qrcode($formatter = null, $width = 150, $height = 150)
+ * @method $this downloadable()
+ * @method $this copyable()
  *
  * @method $this limit($limit = 100, $end = '...')
  * @method $this ascii()
@@ -62,23 +64,25 @@ class Column
      * @var array
      */
     protected static $displayers = [
-        'editable'    => Displayers\Editable::class,
-        'switch'      => Displayers\SwitchDisplay::class,
-        'switchGroup' => Displayers\SwitchGroup::class,
-        'select'      => Displayers\Select::class,
-        'image'       => Displayers\Image::class,
-        'label'       => Displayers\Label::class,
-        'button'      => Displayers\Button::class,
-        'link'        => Displayers\Link::class,
-        'badge'       => Displayers\Badge::class,
-        'progressBar' => Displayers\ProgressBar::class,
-        'radio'       => Displayers\Radio::class,
-        'checkbox'    => Displayers\Checkbox::class,
-        'table'       => Displayers\Table::class,
-        'expand'      => Displayers\Expand::class,
-        'modal'       => Displayers\Modal::class,
-        'tree'        => Displayers\Tree::class,
-        'qrcode'      => Displayers\QRCode::class,
+        'editable'     => Displayers\Editable::class,
+        'switch'       => Displayers\SwitchDisplay::class,
+        'switchGroup'  => Displayers\SwitchGroup::class,
+        'select'       => Displayers\Select::class,
+        'image'        => Displayers\Image::class,
+        'label'        => Displayers\Label::class,
+        'button'       => Displayers\Button::class,
+        'link'         => Displayers\Link::class,
+        'badge'        => Displayers\Badge::class,
+        'progressBar'  => Displayers\ProgressBar::class,
+        'radio'        => Displayers\Radio::class,
+        'checkbox'     => Displayers\Checkbox::class,
+        'table'        => Displayers\Table::class,
+        'expand'       => Displayers\Expand::class,
+        'modal'        => Displayers\Modal::class,
+        'tree'         => Displayers\Tree::class,
+        'qrcode'       => Displayers\QRCode::class,
+        'downloadable' => Displayers\Downloadable::class,
+        'copyable'     => Displayers\Copyable::class,
     ];
 
     /**
