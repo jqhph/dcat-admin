@@ -188,20 +188,83 @@ trait FieldValidator
     }
 
     /**
+     * @param string $rule
+     *
+     * @return $this
+     */
+    public function removeUpdateRule($rule)
+    {
+        $this->deleteRuleByKeyword($this->updateRules, $rule);
+
+        return $this;
+    }
+
+    /**
+     * @param string $rule
+     *
+     * @return $this
+     */
+    public function removeCreationRule($rule)
+    {
+        $this->deleteRuleByKeyword($this->creationRules, $rule);
+
+        return $this;
+    }
+
+    /**
      * Remove a specific rule by keyword.
      *
      * @param string $rule
      *
-     * @return void
+     * @return $this
      */
     public function removeRule($rule)
     {
-        if (!$this->rules || !is_string($this->rules)) {
+        $this->deleteRuleByKeyword($this->rules, $rule);
+
+        return $this;
+    }
+
+    /**
+     * @param $rules
+     * @param $rule
+     * @return void
+     */
+    protected function deleteRuleByKeyword(&$rules, $rule)
+    {
+        if (is_array($rules)) {
+            array_delete($rules, $rule);
+
+            return;
+        }
+
+        if (!is_string($rules)) {
             return;
         }
 
         $pattern = "/{$rule}[^\|]?(\||$)/";
-        $this->rules = preg_replace($pattern, '', $this->rules, -1);
+
+        $rules = preg_replace($pattern, '', $rules, -1);
+    }
+
+    /**
+     * @param string $rule
+     *
+     * @return bool
+     */
+    public function hasUpdateRule($rule)
+    {
+        return $this->isRuleExists($this->updateRules, $rule);
+    }
+
+    /**
+     * @param string $rule
+     *
+     * @return bool
+     */
+    public function hasCreationRule($rule)
+    {
+        return $this->isRuleExists($this->creationRules, $rule);
     }
 
     /**
@@ -211,13 +274,27 @@ trait FieldValidator
      */
     public function hasRule($rule)
     {
-        if (!$this->rules || !is_string($this->rules)) {
+        return $this->isRuleExists($this->rules, $rule);
+    }
+
+    /**
+     * @param $rules
+     * @param $rule
+     * @return bool
+     */
+    protected function isRuleExists($rules, $rule)
+    {
+        if (is_array($rules)) {
+            return in_array($rule, $rules);
+        }
+
+        if (!is_string($rules)) {
             return false;
         }
 
         $pattern = "/{$rule}[^\|]?(\||$)/";
 
-        return preg_match($pattern, $this->rules);
+        return (bool)preg_match($pattern, $rules);
     }
 
     /**
