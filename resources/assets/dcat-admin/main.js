@@ -257,6 +257,7 @@ window.require = window.define = window.exports = window.module = undefined;
                 '.btn-instagram',
                 '.btn-facebook',
                 '.skin-black-light:not(.sidebar-collapse) .sidebar-menu li>a',
+                '.skin-black:not(.sidebar-collapse) .sidebar-menu li>a',
             ],
             float = [
                 '.btn',
