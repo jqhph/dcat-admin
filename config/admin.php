@@ -118,6 +118,8 @@ return [
 
         'controller' => Dcat\Admin\Controllers\AuthController::class,
 
+        'guard' => 'admin',
+
         'guards' => [
             'admin' => [
                 'driver'   => 'session',

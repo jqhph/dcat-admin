@@ -6,7 +6,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Models\Role;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Middleware\Pjax;
-use Illuminate\Support\Facades\Auth;
 
 class Permission
 {
@@ -31,7 +30,7 @@ class Permission
             return;
         }
 
-        if (Auth::guard('admin')->user()->cannot($permission)) {
+        if (Admin::user()->cannot($permission)) {
             static::error();
         }
     }
@@ -49,7 +48,7 @@ class Permission
             return true;
         }
 
-        if (!Auth::guard('admin')->user()->inRoles($roles)) {
+        if (!Admin::user()->inRoles($roles)) {
             static::error();
         }
     }
@@ -77,7 +76,7 @@ class Permission
             return true;
         }
 
-        if (Auth::guard('admin')->user()->inRoles($roles)) {
+        if (Admin::user()->inRoles($roles)) {
             static::error();
         }
     }
@@ -103,6 +102,6 @@ class Permission
      */
     public static function isAdministrator()
     {
-        return Auth::guard('admin')->user()->isRole(Role::ADMINISTRATOR);
+        return Admin::user()->isRole(Role::ADMINISTRATOR);
     }
 }

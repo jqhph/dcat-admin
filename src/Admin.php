@@ -13,6 +13,7 @@ use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -113,7 +114,17 @@ class Admin
      */
     public static function user()
     {
-        return Auth::guard('admin')->user();
+        return static::guard()->user();
+    }
+
+    /**
+     * Attempt to get the guard from the local cache.
+     *
+     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     */
+    public static function guard()
+    {
+        return Auth::guard(config('admin.auth.guard') ?: 'admin');
     }
 
     /**
