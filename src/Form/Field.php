@@ -4,10 +4,10 @@ namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
+use Dcat\Admin\Form\Concerns;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Traits\Macroable;
 
@@ -16,7 +16,7 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Field implements Renderable
 {
-    use Macroable;
+    use Macroable, Concerns\FieldValidator;
 
     const FILE_DELETE_FLAG = '_file_del_';
 
@@ -103,25 +103,6 @@ class Field implements Renderable
      * @var array
      */
     protected $checked = [];
-
-    /**
-     * Validation rules.
-     *
-     * @var string|\Closure
-     */
-    protected $rules = '';
-
-    /**
-     * @var callable
-     */
-    protected $validator;
-
-    /**
-     * Validation messages.
-     *
-     * @var array
-     */
-    protected $validationMessages = [];
 
     /**
      * Css required by this field.
@@ -488,96 +469,6 @@ class Field implements Renderable
     }
 
     /**
-     * Get or set rules.
-     *
-     * @param null  $rules
-     * @param array $messages
-     *
-     * @return $this
-     */
-    public function rules($rules = null, $messages = [])
-    {
-        if ($rules instanceof \Closure) {
-            $this->rules = $rules;
-        }
-
-        if (is_array($rules)) {
-            $thisRuleArr = array_filter(explode('|', $this->rules));
-
-            $this->rules = array_merge($thisRuleArr, $rules);
-        } elseif (is_string($rules)) {
-            $rules = array_filter(explode('|', "{$this->rules}|$rules"));
-
-            $this->rules = implode('|', $rules);
-        }
-
-        $this->validationMessages = $messages;
-
-        return $this;
-    }
-
-    /**
-     * Get field validation rules.
-     *
-     * @return string
-     */
-    public function getRules()
-    {
-        if ($this->rules instanceof \Closure) {
-            return $this->rules->call($this, $this->form);
-        }
-
-        return $this->rules;
-    }
-
-    /**
-     * Remove a specific rule by keyword.
-     *
-     * @param string $rule
-     *
-     * @return void
-     */
-    public function removeRule($rule)
-    {
-        if (!$this->rules || !is_string($this->rules)) {
-            return;
-        }
-
-        $pattern = "/{$rule}[^\|]?(\||$)/";
-        $this->rules = preg_replace($pattern, '', $this->rules, -1);
-    }
-
-    /**
-     * @param string $rule
-     *
-     * @return bool
-     */
-    public function hasRule($rule)
-    {
-        if (!$this->rules || !is_string($this->rules)) {
-            return false;
-        }
-
-        $pattern = "/{$rule}[^\|]?(\||$)/";
-
-        return preg_match($pattern, $this->rules);
-    }
-
-    /**
-     * Set field validator.
-     *
-     * @param callable $validator
-     *
-     * @return $this
-     */
-    public function validator(callable $validator)
-    {
-        $this->validator = $validator;
-
-        return $this;
-    }
-
-    /**
      * Get key for error message.
      *
      * @return string
@@ -719,50 +610,6 @@ class Field implements Renderable
     public function original()
     {
         return $this->original;
-    }
-
-    /**
-     * Get validator for this field.
-     *
-     * @param array $input
-     *
-     * @return bool|Validator
-     */
-    public function getValidator(array $input)
-    {
-        if ($this->validator) {
-            return $this->validator->call($this, $input);
-        }
-
-        $rules = $attributes = [];
-
-        if (!$fieldRules = $this->getRules()) {
-            return false;
-        }
-
-        if (is_string($this->column)) {
-            if (!Arr::has($input, $this->column)) {
-                return false;
-            }
-
-            $input = $this->sanitizeInput($input, $this->column);
-
-            $rules[$this->column] = $fieldRules;
-            $attributes[$this->column] = $this->label;
-        }
-
-        if (is_array($this->column)) {
-            foreach ($this->column as $key => $column) {
-                if (!array_key_exists($column, $input)) {
-                    continue;
-                }
-                $input[$column.$key] = Arr::get($input, $column);
-                $rules[$column.$key] = $fieldRules;
-                $attributes[$column.$key] = $this->label."[$column]";
-            }
-        }
-
-        return Validator::make($input, $rules, $this->validationMessages, $attributes);
     }
 
     /**

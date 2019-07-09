@@ -76,7 +76,7 @@ class BootstrapMultipleFile extends Field
 
         list($rules, $input) = $this->hydrateFiles(Arr::get($input, $this->column, []));
 
-        return Validator::make($input, $rules, $this->validationMessages, $attributes);
+        return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
     /**

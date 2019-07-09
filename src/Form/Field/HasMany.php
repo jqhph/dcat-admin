@@ -165,7 +165,7 @@ class HasMany extends Field
             $newInput = $input;
         }
 
-        return Validator::make($newInput, $newRules, $this->validationMessages, $attributes);
+        return Validator::make($newInput, $newRules, $this->getValidationMessages(), $attributes);
     }
 
     /**
