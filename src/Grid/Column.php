@@ -32,6 +32,7 @@ use Illuminate\Support\Str;
  * @method $this select($options = [])
  * @method $this modal($title = '', \Closure $callback = null)
  * @method $this tree($callbackOrNodes = null)
+ * @method $this qrcode($formatter = null, $width = 150, $height = 150)
  *
  * @method $this limit($limit = 100, $end = '...')
  * @method $this ascii()
@@ -77,6 +78,7 @@ class Column
         'expand'      => Displayers\Expand::class,
         'modal'       => Displayers\Modal::class,
         'tree'        => Displayers\Tree::class,
+        'qrcode'      => Displayers\QRCode::class,
     ];
 
     /**
