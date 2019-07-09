@@ -30,7 +30,7 @@ trait QuickSearch
     /**
      * @param array|string|\Closure
      *
-     * @return $this
+     * @return Tools\QuickSearch
      */
     public function quickSearch($search = null)
     {
@@ -40,9 +40,9 @@ trait QuickSearch
             $this->search = $search;
         }
 
-        $this->tools->append(new Tools\QuickSearch());
-
-        return $this;
+        return tap(new Tools\QuickSearch(), function ($search) {
+            $this->tools->append($search);
+        });
     }
 
     /**
@@ -58,10 +58,6 @@ trait QuickSearch
 
         if ($this->search instanceof \Closure) {
             return call_user_func($this->search, $this->model(), $query);
-        }
-
-        if (!$this->model()->getRepository() instanceof EloquentRepository) {
-            return;
         }
 
         if (is_string($this->search)) {

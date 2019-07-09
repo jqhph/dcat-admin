@@ -14,6 +14,25 @@ class QuickSearch extends AbstractTool
     protected $view = 'admin::grid.quick-search';
 
     /**
+     * @var string
+     */
+    protected $placeholder = null;
+
+    /**
+     * Set placeholder.
+     *
+     * @param string $text
+     *
+     * @return $this
+     */
+    public function placeholder(?string $text = '')
+    {
+        $this->placeholder = $text;
+
+        return $this;
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
@@ -26,7 +45,7 @@ class QuickSearch extends AbstractTool
             'action' => request()->url() . '?' . http_build_query($query),
             'key' => QuickSearchConcerns::$searchKey,
             'value' => request(QuickSearchConcerns::$searchKey),
-            'placeholder' => trans('admin.search'),
+            'placeholder' => $this->placeholder ?: trans('admin.search'),
         ];
 
         return view($this->view, $vars);
