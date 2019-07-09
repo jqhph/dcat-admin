@@ -150,6 +150,44 @@ trait FieldValidator
     }
 
     /**
+     * Format validation rules.
+     *
+     * @param array|string $rules
+     *
+     * @return array
+     */
+    protected function formatRules($rules)
+    {
+        if (is_string($rules)) {
+            $rules = array_filter(explode('|', $rules));
+        }
+
+        return array_filter((array) $rules);
+    }
+
+
+    /**
+     * @param string|array|\Closure $input
+     * @param string|array         $original
+     *
+     * @return array|\Closure
+     */
+    protected function mergeRules($input, $original)
+    {
+        if ($input instanceof \Closure) {
+            $rules = $input;
+
+        } else {
+            if (!empty($original)) {
+                $original = $this->formatRules($original);
+            }
+            $rules = array_merge($original, $this->formatRules($input));
+        }
+
+        return $rules;
+    }
+
+    /**
      * Remove a specific rule by keyword.
      *
      * @param string $rule
