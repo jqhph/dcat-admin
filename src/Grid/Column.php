@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid;
 
 use Closure;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Grid\Concerns;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 use Dcat\Admin\Traits\BuilderEvents;
 use Dcat\Admin\Traits\Definitions;
@@ -54,7 +53,8 @@ class Column
 {
     use BuilderEvents,
         Definitions,
-        Concerns\Displayers;
+        Grid\Column\HasHeader,
+        Grid\Column\Displayers;
 
     const SELECT_COLUMN_NAME = '__row_selector__';
 
@@ -127,13 +127,6 @@ class Column
      * @var mixed
      */
     protected $value;
-
-    /**
-     * Is column sortable.
-     *
-     * @var bool
-     */
-    protected $sortable = false;
 
     /**
      * Sort arguments.
@@ -209,6 +202,14 @@ class Column
     public function setGrid(Grid $grid)
     {
         $this->grid = $grid;
+    }
+
+    /**
+     * @return Grid
+     */
+    public function grid()
+    {
+        return $this->grid;
     }
 
     /**
@@ -368,27 +369,38 @@ class Column
     }
 
     /**
-     * Set sort value.
+     * Mark this column as sortable.
      *
-     * @param bool $sort
-     *
-     * @return Column
+     * @param string $cast
+     * @return Column|string
      */
-    public function sort(bool $sort)
+    public function sortable($cast = null)
     {
-        $this->sortable = $sort;
-
-        return $this;
+        return $this->addSorter($cast);
     }
 
     /**
-     * Mark this column as sortable.
+     * Set help message for column.
+     *
+     * @param string $help
+     * @param null $style
+     * @return $this
+     */
+    public function help($help = '', $style = null)
+    {
+        return $this->addHelp($help, $style);
+    }
+
+    /**
+     * Set column filter.
+     *
+     * @param Grid\Column\Filter $builder
      *
      * @return $this
      */
-    public function sortable()
+    public function filter(Grid\Column\Filter $filter)
     {
-        return $this->sort(true);
+        return $this->addFilter($filter);
     }
 
     /**
@@ -541,38 +553,6 @@ class Column
         }
 
         return $item;
-    }
-
-
-    /**
-     * Create the column sorter.
-     *
-     * @return string
-     */
-    public function sorter()
-    {
-        if (!$this->sortable) {
-            return '';
-        }
-
-        $icon  = '';
-        $color = 'text-70';
-        $type  = 'desc';
-
-        if ($this->isSorted()) {
-            $type = $this->sort['type'] == 'desc' ? 'asc' : 'desc';
-            if ($this->sort['type']) {
-                $icon .= $this->sort['type'] == 'desc' ? '-by-attributes-alt' : '-by-attributes';
-
-                $color = 'text-80';
-            }
-        }
-
-        $url = request()->fullUrlWithQuery([
-            $this->grid->model()->getSortName() => ['column' => $this->name, 'type' => $type]
-        ]);
-
-        return " <a class=' glyphicon glyphicon-sort{$icon} $color' href='$url'></a>";
     }
 
     /**

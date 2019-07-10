@@ -43,7 +43,6 @@ return [
     'name'                  => 'Name',
     'username'              => 'Username',
     'user'                  => 'User',
-    'uri'                   => 'Uri',
     'alias'                 => 'Alias',
     'route_action'          => 'Route Action',
     'middleware'            => 'Middleware',
@@ -142,6 +141,8 @@ return [
     'new_folder'            => 'New folder',
     'time'                  => 'Time',
     'size'                  => 'Size',
+    'between_start'         => 'Start',
+    'between_end'           => 'End',
     'listbox'               => [
         'text_total'         => 'Showing all {0}',
         'text_empty'         => 'Empty list',

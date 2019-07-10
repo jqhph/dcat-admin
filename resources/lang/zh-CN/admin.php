@@ -144,6 +144,8 @@ return [
     'new_folder'            => '新建文件夹',
     'time'                  => '时间',
     'size'                  => '大小',
+    'between_start'         => '起始',
+    'between_end'           => '结束',
     'create_extension'      => '创建扩展',
     'listbox'               => [
         'text_total'         => '总共 {0} 项',

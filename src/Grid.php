@@ -630,6 +630,14 @@ HTML
     }
 
     /**
+     * Apply column filter to grid query.
+     */
+    protected function applyColumnFilter()
+    {
+        $this->columns->each->bindFilterQuery($this->model());
+    }
+
+    /**
      * Build the grid.
      *
      * @return void
@@ -641,6 +649,7 @@ HTML
         }
 
         $this->applyQuickSearch();
+        $this->applyColumnFilter();
 
         $collection = $this->processFilter(false);
 

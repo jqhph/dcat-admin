@@ -37,7 +37,7 @@
         @endif
         <tr>
             @foreach($grid->getColumns() as $column)
-                <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->sorter() !!}</th>
+                <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
             @endforeach
         </tr>
         </thead>
