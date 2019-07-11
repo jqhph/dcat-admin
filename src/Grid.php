@@ -35,8 +35,8 @@ class Grid
         Concerns\MultipleHeader,
         Concerns\QuickSearch,
         Macroable {
-        __call as macroCall;
-    }
+            __call as macroCall;
+        }
 
     /**
      * The grid data model instance.

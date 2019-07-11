@@ -59,11 +59,13 @@ class Menu extends Model
         return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'role_id');
     }
 
-    public function permission(): BelongsTo
+    public function permissions(): BelongsToMany
     {
+        $pivotTable = config('admin.database.permission_menu_table');
+
         $relatedModel = config('admin.database.permissions_model');
 
-        return $this->belongsTo($relatedModel, 'permission_id', 'id');
+        return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'permission_id');
     }
 
     /**
@@ -95,7 +97,7 @@ class Menu extends Model
             $self = call_user_func($this->queryCallback, $self);
         }
 
-        return $self->with('roles')->orderByRaw($byOrder)->get()->toArray();
+        return $self->with('roles')->with('permissions')->orderByRaw($byOrder)->get()->toArray();
     }
 
     /**
@@ -119,6 +121,7 @@ class Menu extends Model
 
         static::deleting(function ($model) {
             $model->roles()->detach();
+            $model->permissions()->detach();
 
             $model->destroyCache();
 

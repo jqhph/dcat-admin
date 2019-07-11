@@ -42,10 +42,10 @@ class MenuController extends Controller
                     $form->text('title', trans('admin.title'))->rules('required');
                     $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
-                    $form->select('roles', trans('admin.roles'))
+                    $form->multipleSelect('roles', trans('admin.roles'))
                         ->options($roleModel::all()->pluck('name', 'id'));
                     if ($menuModel::withPermission()) {
-                        $form->select('permission_id', trans('admin.permission'))->options($permissionModel::selectOptions());
+                        $form->multipleSelect('permissions', trans('admin.permission'))->options($permissionModel::selectOptions());
                     }
                     $form->hidden('_token')->default(csrf_token());
 
@@ -67,7 +67,7 @@ class MenuController extends Controller
 
         if ($menuModel::withPermission()) {
             $tree->query(function ($model) {
-                return $model->with('permission');
+                return $model->with('permissions');
             });
         }
         $tree->disableCreateButton();
@@ -87,21 +87,6 @@ class MenuController extends Controller
                 }
 
                 $payload .= "&nbsp;&nbsp;&nbsp;<a href=\"$uri\" class=\"dd-nodrag\">$uri</a>";
-            }
-
-            if (!empty($branch['roles'])) {
-                $roles = collect($branch['roles'])
-                    ->pluck('name')
-                    ->join('&nbsp;');
-
-                $slug = current($branch['roles'])['slug'] ?? '';
-                $payload .= str_repeat('&nbsp;', 6)."<span title='$slug'>[{$roleText}: $roles]</span>";
-            }
-
-            if (!empty($branch['permission'])) {
-
-                $payload .= str_repeat('&nbsp;', empty($branch['roles']) ? 6 : 3)
-                    . "<span>[{$permissionText}: {$branch['permission']['slug']}]</span>";
             }
 
             return $payload;
@@ -149,13 +134,21 @@ class MenuController extends Controller
         $form->text('title', trans('admin.title'))->rules('required');
         $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
         $form->text('uri', trans('admin.uri'));
-        $form->select('roles', trans('admin.roles'))
+        $form->multipleSelect('roles', trans('admin.roles'))
             ->options($roleModel::all()->pluck('name', 'id'))
             ->customFormat(function ($v) {
-                return join(',', array_column($v, 'id'));
+                return array_column($v, 'id');
             });
         if ($menuModel::withPermission()) {
-            $form->select('permission_id', trans('admin.permission'))->options($permissionModel::selectOptions());
+            $form->tree('permissions', trans('admin.permission'))
+                ->nodes((new $permissionModel)->allNodes())
+                ->customFormat(function ($v) {
+                    if (!$v) {
+                        return [];
+                    }
+
+                    return array_column($v, 'id');
+                });
         }
 
         $form->display('created_at', trans('admin.created_at'));

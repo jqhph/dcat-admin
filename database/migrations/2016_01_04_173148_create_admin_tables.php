@@ -49,7 +49,6 @@ class CreateAdminTables extends Migration
             $table->string('title', 50);
             $table->string('icon', 50);
             $table->string('uri', 50)->nullable();
-            $table->string('permission_id')->nullable();
 
             $table->timestamps();
         });
@@ -72,6 +71,13 @@ class CreateAdminTables extends Migration
             $table->integer('role_id');
             $table->integer('menu_id');
             $table->index(['role_id', 'menu_id']);
+            $table->timestamps();
+        });
+
+        Schema::connection($connection)->create(config('admin.database.permission_menu_table'), function (Blueprint $table) {
+            $table->integer('permission_id');
+            $table->integer('menu_id');
+            $table->index(['permission_id', 'menu_id']);
             $table->timestamps();
         });
 

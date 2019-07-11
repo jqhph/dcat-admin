@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Models;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
 trait HasPermissions
@@ -120,16 +121,6 @@ trait HasPermissions
 
         if ($this->isAdministrator()) {
             return true;
-        }
-        $roles = (array)$roles;
-
-        if (!$roles) {
-            return false;
-        }
-
-        if (is_array(current($roles))) {
-            return $this->inRoles(array_column($roles, 'slug'))
-                || $this->inRoles(array_column($roles, 'id'));
         }
 
         return $this->inRoles($roles);

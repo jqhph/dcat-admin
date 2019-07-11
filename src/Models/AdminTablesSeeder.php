@@ -93,24 +93,6 @@ class AdminTablesSeeder extends Seeder
                 'created_at'  => $createdAt,
             ],
 
-            [
-                'id'          => 7,
-                'name'        => 'Root menus',
-                'slug'        => 'root.menus',
-                'http_method' => '',
-                'http_path'   => '',
-                'parent_id'   => 0,
-                'created_at'  => $createdAt,
-            ],
-            [
-                'id'          => 8,
-                'name'        => 'Admin',
-                'slug'        => 'root.menu.admin',
-                'http_method' => '',
-                'http_path'   => '',
-                'parent_id'   => 7,
-                'created_at'  => $createdAt,
-            ],
         ]);
 
 //        Role::first()->permissions()->save(Permission::first());
@@ -125,7 +107,6 @@ class AdminTablesSeeder extends Seeder
                 'icon'          => 'fa-bar-chart',
                 'uri'           => '/',
                 'created_at'    => $createdAt,
-                'permission_id' => null,
             ],
             [
                 'parent_id'     => 0,
@@ -134,7 +115,6 @@ class AdminTablesSeeder extends Seeder
                 'icon'          => 'fa-tasks',
                 'uri'           => '',
                 'created_at'    => $createdAt,
-                'permission_id' => 8,
             ],
             [
                 'parent_id'     => 2,
@@ -143,7 +123,6 @@ class AdminTablesSeeder extends Seeder
                 'icon'          => 'fa-users',
                 'uri'           => 'auth/users',
                 'created_at'    => $createdAt,
-                'permission_id' => 2,
             ],
             [
                 'parent_id'     => 2,
@@ -152,7 +131,6 @@ class AdminTablesSeeder extends Seeder
                 'icon'          => 'fa-user',
                 'uri'           => 'auth/roles',
                 'created_at'    => $createdAt,
-                'permission_id' => 3,
             ],
             [
                 'parent_id'     => 2,
@@ -161,7 +139,6 @@ class AdminTablesSeeder extends Seeder
                 'icon'          => 'fa-ban',
                 'uri'           => 'auth/permissions',
                 'created_at'    => $createdAt,
-                'permission_id' => 4,
             ],
             [
                 'parent_id'     => 2,
@@ -170,7 +147,6 @@ class AdminTablesSeeder extends Seeder
                 'icon'          => 'fa-bars',
                 'uri'           => 'auth/menu',
                 'created_at'    => $createdAt,
-                'permission_id' => 5,
             ],
             [
                 'parent_id'     => 2,
@@ -179,7 +155,6 @@ class AdminTablesSeeder extends Seeder
                 'icon'          => 'fa-history',
                 'uri'           => 'auth/logs',
                 'created_at'    => $createdAt,
-                'permission_id' => 6,
             ],
         ]);
 

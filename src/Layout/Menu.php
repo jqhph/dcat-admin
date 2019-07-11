@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Layout;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 
 class Menu
@@ -103,12 +104,26 @@ class Menu
     {
         $html = '';
         foreach (Helper::buildNestedArray($nodes) as $item) {
-            $html .= view('admin::partials.menu', ['item' => &$item])->render();
+            $html .= $this->renderMenu($item);
         }
 
         return $html;
     }
 
+    /**
+     * @param array $item
+     * @return array|string
+     */
+    protected function renderMenu(array $item)
+    {
+        return view('admin::partials.menu', ['item' => &$item])->render();
+    }
+
+    /**
+     * @param array $item
+     * @param null|string $path
+     * @return bool
+     */
     public function isActive(array $item, ?string $path = null)
     {
         if (empty($path)) {
@@ -136,6 +151,39 @@ class Menu
         return false;
     }
 
+    /**
+     * @param array $menuItem
+     * @return bool
+     */
+    public function show(array $menuItem)
+    {
+        $permissionIds = $menuItem['permission_id'] ?? null;
+        $roles = array_column($menuItem['roles'] ?? [], 'slug');
+        $permissions = array_column($menuItem['permissions'] ?? [], 'slug');
+
+        if (!$permissionIds && !$roles && !$permissions) {
+            return true;
+        }
+
+        $user = Admin::user();
+
+        if ($user->visible($roles)) {
+            return true;
+        }
+
+        foreach (array_merge(Helper::array($permissionIds), $permissions) as $permission) {
+            if ($user->can($permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $uri
+     * @return string
+     */
     public function getFullUri($uri)
     {
         if (!$uri) return $uri;
