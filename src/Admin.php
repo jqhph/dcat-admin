@@ -53,6 +53,11 @@ class Admin
     protected static $availableExtensions;
 
     /**
+     * @var Menu
+     */
+    protected static $menu;
+
+    /**
      * @var []Closure
      */
     protected static $booting = [];
@@ -80,7 +85,7 @@ class Admin
      */
     public static function menu(Closure $builder = null)
     {
-        $menu = Menu::make();
+        $menu = static::$menu ?: (static::$menu = new Menu);
 
         $builder && $builder($menu);
 

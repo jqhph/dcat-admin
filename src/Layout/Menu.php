@@ -8,11 +8,6 @@ use Dcat\Admin\Support\Helper;
 class Menu
 {
     /**
-     * @var static
-     */
-    protected static $instance;
-
-    /**
      * @var array
      */
     protected static $helperNodes = [
@@ -189,13 +184,5 @@ class Menu
         if (!$uri) return $uri;
 
         return $this->url->isValidUrl($uri) ? $uri : admin_base_path($uri);
-    }
-
-    /**
-     * @return static
-     */
-    public static function make()
-    {
-        return static::$instance ?: (static::$instance = new static);
     }
 }
