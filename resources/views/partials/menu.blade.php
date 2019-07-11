@@ -1,7 +1,7 @@
 @if(Dcat\Admin\Admin::Menu()->show($item))
     @if(!isset($item['children']))
         @php
-            $url = Dcat\Admin\Admin::menu()->getFullUri($item['uri']);
+            $url = Dcat\Admin\Admin::menu()->getAdminPath($item['uri']);
         @endphp
 
         <li {!! Dcat\Admin\Admin::Menu()->isActive($item) ? 'class="active"' : '' !!}>

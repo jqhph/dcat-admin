@@ -134,11 +134,11 @@ class Menu
             if (empty($item['uri'])) {
                 return false;
             }
-            return trim($this->getFullUri($item['uri']), '/') == $path;
+            return trim($this->getAdminPath($item['uri']), '/') == $path;
         }
 
         foreach($item['children'] as $v) {
-            if ($path == trim($this->getFullUri($v['uri']), '/')) {
+            if ($path == trim($this->getAdminPath($v['uri']), '/')) {
                 return true;
             }
             if (!empty($v['children'])) {
@@ -184,7 +184,7 @@ class Menu
      * @param $uri
      * @return string
      */
-    public function getFullUri($uri)
+    public function getAdminPath($uri)
     {
         if (!$uri) return $uri;
 
