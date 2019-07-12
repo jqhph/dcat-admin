@@ -65,11 +65,6 @@ class MenuController extends Controller
 
         $tree = new Tree(new $menuModel);
 
-        if ($menuModel::withPermission()) {
-            $tree->query(function ($model) {
-                return $model->with('permissions');
-            });
-        }
         $tree->disableCreateButton();
         $tree->disableQuickCreateButton();
 

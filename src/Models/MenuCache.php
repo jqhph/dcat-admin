@@ -20,7 +20,7 @@ trait MenuCache
             return $builder();
         }
 
-        return $this->getStore()->remember($this->cacheKey, 0, $builder);
+        return $this->getStore()->remember($this->cacheKey, null, $builder);
     }
 
     /**
