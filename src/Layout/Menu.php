@@ -49,17 +49,7 @@ class Menu
     ];
 
     /**
-     * @var \Illuminate\Contracts\Routing\UrlGenerator
-     */
-    protected $url;
-
-    public function __construct()
-    {
-        $this->url = url();
-    }
-
-    /**
-     * Register menu,.
+     * Register menu.
      */
     public function register()
     {
@@ -183,6 +173,6 @@ class Menu
     {
         if (!$uri) return $uri;
 
-        return $this->url->isValidUrl($uri) ? $uri : admin_base_path($uri);
+        return url()->isValidUrl($uri) ? $uri : admin_base_path($uri);
     }
 }
