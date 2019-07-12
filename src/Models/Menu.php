@@ -69,11 +69,13 @@ class Menu extends Model
     }
 
     /**
+     * @param bool $force
+     *
      * @return array
      */
-    public function allNodes() : array
+    public function allNodes(bool $force = false): array
     {
-        if ($this->queryCallback instanceof \Closure) {
+        if ($force || $this->queryCallback instanceof \Closure) {
             return $this->fetchAll();
         }
 

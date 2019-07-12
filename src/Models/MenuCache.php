@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Cache;
 
 trait MenuCache
 {
-    protected $cacheKey = 'dcat-admin-menus';
+    protected $cacheKey = 'dcat-admin-menus-%d';
 
     /**
      * Get an item from the cache, or execute the given Closure and store the result.
@@ -20,7 +20,7 @@ trait MenuCache
             return $builder();
         }
 
-        return $this->getStore()->remember($this->cacheKey, null, $builder);
+        return $this->getStore()->remember($this->getCacheKey(), null, $builder);
     }
 
     /**
@@ -34,7 +34,15 @@ trait MenuCache
             return null;
         }
 
-        return $this->getStore()->delete($this->cacheKey);
+        return $this->getStore()->delete($this->getCacheKey());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCacheKey()
+    {
+        return sprintf($this->cacheKey, (int)static::withPermission());
     }
 
     /**
