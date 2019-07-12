@@ -16,7 +16,7 @@ trait MenuCache
      */
     protected function remember(\Closure $builder)
     {
-        if (!$this->enable()) {
+        if (!$this->enableCache()) {
             return $builder();
         }
 
@@ -30,7 +30,7 @@ trait MenuCache
      */
     public function destroyCache()
     {
-        if (!$this->enable()) {
+        if (!$this->enableCache()) {
             return null;
         }
 
@@ -40,7 +40,7 @@ trait MenuCache
     /**
      * @return bool
      */
-    public function enable()
+    public function enableCache()
     {
         return config('admin.menu.cache.enable');
     }
