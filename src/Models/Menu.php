@@ -97,7 +97,11 @@ class Menu extends Model
             $self = call_user_func($this->queryCallback, $self);
         }
 
-        return $self->with('roles')->with('permissions')->orderByRaw($byOrder)->get()->toArray();
+        if (static::withPermission()) {
+            $self = $self->with('permissions');
+        }
+
+        return $self->with('roles')->orderByRaw($byOrder)->get()->toArray();
     }
 
     /**
