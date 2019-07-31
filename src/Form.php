@@ -74,6 +74,7 @@ use Dcat\Admin\Form\Concerns;
  * @method Field\Tree           tree($column, $label = '')
  * @method Field\Table          table($column, $callback)
  * @method Field\ListField      list($column, $label = '')
+ * @method Field\Timezone       timezone($column, $label = '')
  *
  * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
  * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
@@ -144,6 +145,7 @@ class Form implements Renderable
         'tree'           => Field\Tree::class,
         'table'          => Field\Table::class,
         'list'           => Field\ListField::class,
+        'timezone'       => Field\Timezone::class,
 
         'bootstrapFile'          => Field\BootstrapFile::class,
         'bootstrapImage'         => Field\BootstrapImage::class,
