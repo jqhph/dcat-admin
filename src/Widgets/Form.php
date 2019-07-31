@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Illuminate\Contracts\Support\Arrayable;
@@ -165,6 +166,28 @@ class Form implements Renderable
     {
         return $this->attribute('method', strtoupper($method));
     }
+
+    /**
+     * Add a fieldset to form.
+     *
+     * @param string  $title
+     * @param Closure $setCallback
+     *
+     * @return Field\Fieldset
+     */
+    public function fieldset(string $title, Closure $setCallback)
+    {
+        $fieldset = new Field\Fieldset();
+
+        $this->html($fieldset->start($title))->plain();
+
+        $setCallback($this);
+
+        $this->html($fieldset->end())->plain();
+
+        return $fieldset;
+    }
+
 
     /**
      * Add form attributes.
