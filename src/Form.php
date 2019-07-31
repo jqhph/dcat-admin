@@ -73,6 +73,7 @@ use Dcat\Admin\Form\Concerns;
  * @method Field\MultipleImage  multipleImage($column, $label = '')
  * @method Field\Tree           tree($column, $label = '')
  * @method Field\Table          table($column, $callback)
+ * @method Field\ListField      list($column, $label = '')
  *
  * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
  * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
@@ -142,6 +143,7 @@ class Form implements Renderable
         'multipleImage'  => Field\MultipleImage::class,
         'tree'           => Field\Tree::class,
         'table'          => Field\Table::class,
+        'list'           => Field\ListField::class,
 
         'bootstrapFile'          => Field\BootstrapFile::class,
         'bootstrapImage'         => Field\BootstrapImage::class,
