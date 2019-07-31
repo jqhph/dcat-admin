@@ -60,6 +60,7 @@ use Illuminate\Support\Str;
  * @method Field\Table          table($column, $callback)
  * @method Field\ListField      list($column, $label = '')
  * @method Field\Timezone       timezone($column, $label = '')
+ * @method Field\KeyValue       keyValue($column, $label = '')
  *
  * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
  * @method Field\BootstrapImage         bootstrapImage($column, $label = '')

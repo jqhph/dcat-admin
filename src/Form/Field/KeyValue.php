@@ -6,59 +6,19 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Illuminate\Support\Arr;
 
-class ListField extends Field
+class KeyValue extends Field
 {
-    /**
-     * Max list size.
-     *
-     * @var int
-     */
-    protected $max;
-
-    /**
-     * Minimum list size.
-     *
-     * @var int
-     */
-    protected $min = 0;
-
     /**
      * @var array
      */
-    protected $value = [''];
-
-    /**
-     * Set Max list size.
-     *
-     * @param int $size
-     *
-     * @return $this
-     */
-    public function max(int $size)
-    {
-        $this->max = $size;
-        return $this;
-    }
-
-    /**
-     * Set Minimum list size.
-     *
-     * @param int $size
-     *
-     * @return $this
-     */
-    public function min(int $size)
-    {
-        $this->min = $size;
-        return $this;
-    }
+    protected $value = ['' => ''];
 
     /**
      * Fill data to the field.
      *
      * @param array $data
      *
-     * @return void
+     * @return mixed
      */
     public function formatAttributeFromQuery($data)
     {
@@ -81,6 +41,7 @@ class ListField extends Field
         }
 
         $rules = $attributes = [];
+
         if (!$fieldRules = $this->getRules()) {
             return false;
         }
@@ -89,50 +50,35 @@ class ListField extends Field
             return false;
         }
 
+        $rules["{$this->column}.keys.*"] = 'distinct';
         $rules["{$this->column}.values.*"] = $fieldRules;
+        $attributes["{$this->column}.keys.*"] = __('Key');
         $attributes["{$this->column}.values.*"] = __('Value');
-        $rules["{$this->column}.values"][] = 'array';
-
-        if (!is_null($this->max)) {
-            $rules["{$this->column}.values"][] = "max:$this->max";
-        }
-
-        if (!is_null($this->min)) {
-            $rules["{$this->column}.values"][] = "min:$this->min";
-        }
-
-        $attributes["{$this->column}.values"] = $this->label;
 
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setupScript()
     {
         $this->script = <<<JS
+
 $('.{$this->column}-add').on('click', function () {
     var tpl = $('template.{$this->column}-tpl').html();
-    $('tbody.list-{$this->column}-table').append(tpl);
+    $('tbody.kv-{$this->column}-table').append(tpl);
 });
+
 $('tbody').on('click', '.{$this->column}-remove', function () {
     $(this).closest('tr').remove();
 });
+
 JS;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function prepare($value)
     {
-        return array_values($value['values']);
+        return array_combine($value['keys'], $value['values']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->setupScript();
