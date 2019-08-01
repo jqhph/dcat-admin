@@ -1,5 +1,7 @@
 <?php
 
+use Dcat\Admin\Grid\Displayers\DropdownActions;
+
 return [
 
     /*
@@ -144,6 +146,16 @@ return [
             'auth/logout',
         ],
 
+    ],
+
+    'grid' => [
+
+        /*
+        |--------------------------------------------------------------------------
+        | The global Grid action display class.
+        |--------------------------------------------------------------------------
+        */
+        'grid_action_class' => Dcat\Admin\Grid\Displayers\DropdownActions::class,
     ],
 
     /*

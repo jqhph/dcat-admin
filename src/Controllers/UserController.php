@@ -130,6 +130,9 @@ class UserController extends Controller
         return $grid;
     }
 
+    /**
+     * @return MiniGrid
+     */
     protected function miniGrid()
     {
         $grid = new MiniGrid(new Administrator());

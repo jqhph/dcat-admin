@@ -56,6 +56,7 @@ return [
     'delete'                => '删除',
     'remove'                => '移除',
     'edit'                  => '编辑',
+    'quick_edit'            => '快捷编辑',
     'continue_editing'      => '继续编辑',
     'continue_creating'     => '继续创建',
     'view'                  => '查看',

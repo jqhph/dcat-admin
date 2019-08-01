@@ -58,6 +58,7 @@ return [
     'delete'                => 'Delete',
     'remove'                => 'Remove',
     'edit'                  => 'Edit',
+    'quick_edit'            => 'Quick Edit',
     'view'                  => 'View',
     'continue_editing'      => 'Continue editing',
     'continue_creating'     => 'Continue creating',

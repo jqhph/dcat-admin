@@ -31,6 +31,7 @@ class Grid
 {
     use BuilderEvents,
         Concerns\HasElementNames,
+        Concerns\Actions,
         Concerns\Options,
         Concerns\MultipleHeader,
         Concerns\QuickSearch,
@@ -149,13 +150,6 @@ class Grid
      * @var Tools
      */
     protected $tools;
-
-    /**
-     * Callback for grid actions.
-     *
-     * @var Closure[]
-     */
-    protected $actionsCallback = [];
 
     /**
      * @var Closure
@@ -545,35 +539,6 @@ class Grid
     public function getPerPages()
     {
         return $this->perPages;
-    }
-
-    /**
-     * Set grid action callback.
-     *
-     * @param Closure $callback
-     *
-     * @return $this
-     */
-    public function actions(Closure $callback)
-    {
-        $this->actionsCallback[] = $callback;
-
-        return $this;
-    }
-
-    /**
-     * Add `actions` column for grid.
-     *
-     * @return void
-     */
-    protected function appendActionsColumn()
-    {
-        if (!$this->options['show_actions']) {
-            return;
-        }
-
-        $this->addColumn('__actions__', trans('admin.action'))
-            ->displayUsing(Displayers\Actions::class, [$this->actionsCallback]);
     }
 
     /**
