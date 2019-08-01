@@ -20,7 +20,7 @@ class KeyValue extends Field
      *
      * @return mixed
      */
-    public function formatAttributeFromQuery($data)
+    public function formatFieldData($data)
     {
         $this->data = $data;
 

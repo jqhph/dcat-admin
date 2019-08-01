@@ -132,7 +132,7 @@ class BootstrapMultipleFile extends Field
         return $this->original;
     }
 
-    protected function formatAttributeFromQuery($data)
+    protected function formatFieldData($data)
     {
         $value = Arr::get($data, $this->column);
 

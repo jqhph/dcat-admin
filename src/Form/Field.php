@@ -324,18 +324,18 @@ class Field implements Renderable
     {
         $this->data($data);
 
-        $this->value = $this->formatAttributeFromQuery($data);
+        $this->value = $this->formatFieldData($data);
 
         $this->callCustomFormatter();
     }
 
     /**
-     * Format attribute.
+     * Format field data.
      *
      * @param array $data
      * @return mixed
      */
-    protected function formatAttributeFromQuery($data)
+    protected function formatFieldData($data)
     {
         if (is_array($this->column)) {
             $value = [];
@@ -347,7 +347,7 @@ class Field implements Renderable
             return $value;
         }
 
-        return Arr::get($data, $this->column);
+        return Arr::get($data, $this->column, $this->value);
     }
 
     /**
@@ -372,7 +372,7 @@ class Field implements Renderable
      */
     final public function setOriginal($data)
     {
-        $this->original = $this->formatAttributeFromQuery($data);
+        $this->original = $this->formatFieldData($data);
 
         $this->callCustomFormatter('original', new Fluent($data));
     }

@@ -60,7 +60,7 @@ class ListField extends Field
      *
      * @return void
      */
-    public function formatAttributeFromQuery($data)
+    public function formatFieldData($data)
     {
         $this->data = $data;
 

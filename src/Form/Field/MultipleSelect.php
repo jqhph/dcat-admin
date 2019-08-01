@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 
 class MultipleSelect extends Select
 {
-    protected function formatAttributeFromQuery($data)
+    protected function formatFieldData($data)
     {
         return Helper::array(Arr::get($data, $this->column));
     }

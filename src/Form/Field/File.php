@@ -123,7 +123,7 @@ class File extends Field
         return $this;
     }
 
-    protected function formatAttributeFromQuery($data)
+    protected function formatFieldData($data)
     {
         return Helper::array(Arr::get($data, $this->column));
     }

@@ -196,7 +196,7 @@ class Tree extends Field
         return $this;
     }
 
-    protected function formatAttributeFromQuery($data)
+    protected function formatFieldData($data)
     {
         $value = Arr::get($data, $this->column);
 

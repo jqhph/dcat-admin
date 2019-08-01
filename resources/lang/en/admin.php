@@ -169,7 +169,7 @@ return [
         'failed_num' => 'failed::fail.',
         'pause_upload' => 'Pause',
         'go_on_upload' => 'Go On',
-        'start_upload' => 'Start Upload',
+        'start_upload' => 'Upload',
         'upload_success_message' => ':success files uploaded successfully',
         'go_on_add' => 'New File',
         'Q_TYPE_DENIED' => 'Sorry, the type of this file is not allowed!',
