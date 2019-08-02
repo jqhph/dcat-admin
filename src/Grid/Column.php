@@ -32,7 +32,7 @@ use Illuminate\Support\Str;
  * @method $this modal($title = '', \Closure $callback = null)
  * @method $this tree($callbackOrNodes = null)
  * @method $this qrcode($formatter = null, $width = 150, $height = 150)
- * @method $this downloadable()
+ * @method $this downloadable($server = '', $disk = null)
  * @method $this copyable()
  *
  * @method $this limit($limit = 100, $end = '...')
