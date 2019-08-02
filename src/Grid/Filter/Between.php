@@ -37,12 +37,13 @@ class Between extends AbstractFilter
      */
     protected function formatName($column)
     {
+        $gridName = $this->parent->getGrid()->getName().'_';
         $columns = explode('.', $column);
 
         if (count($columns) == 1) {
-            $name = $columns[0];
+            $name = $gridName.$columns[0];
         } else {
-            $name = array_shift($columns);
+            $name =  $gridName.array_shift($columns);
 
             foreach ($columns as $column) {
                 $name .= "[$column]";
