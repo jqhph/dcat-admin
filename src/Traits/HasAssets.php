@@ -30,6 +30,11 @@ trait HasAssets
     /**
      * @var array
      */
+    protected static $html = [];
+
+    /**
+     * @var array
+     */
     protected static $headerJs = [];
 
     /**
@@ -260,6 +265,22 @@ trait HasAssets
         }
 
         return $js;
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return null|string
+     */
+    public static function html($html = '')
+    {
+        if (!empty($html)) {
+            static::$html = array_merge(static::$html, (array) $html);
+
+            return;
+        }
+
+        return implode('', array_unique(static::$html));
     }
 
     /**

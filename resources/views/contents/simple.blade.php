@@ -19,6 +19,7 @@
     {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
 
     {!! Dcat\Admin\Admin::script() !!}
+    {!! Dcat\Admin\Admin::html() !!}
 @endsection
 
 
