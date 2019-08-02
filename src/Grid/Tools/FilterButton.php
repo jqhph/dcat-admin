@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
+use Illuminate\Support\Str;
 
 class FilterButton extends AbstractTool
 {
@@ -32,7 +33,7 @@ class FilterButton extends AbstractTool
     protected function getElementClassName()
     {
         if (!$this->btnClassName) {
-            $this->btnClassName = uniqid().'-filter-btn';
+            $this->btnClassName = 'filter-btn-'.Str::random(8);
         }
 
         return $this->btnClassName;

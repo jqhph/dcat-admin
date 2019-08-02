@@ -198,6 +198,8 @@ class Filter implements Renderable
 
         $this->primaryKey = $model->getKeyName();
 
+        $this->filterID = $this->generateFilterId();
+
         $this->initLayout();
 
         $this->scopes = new Collection();
@@ -211,6 +213,14 @@ class Filter implements Renderable
     protected function initLayout()
     {
         $this->layout = new Filter\Layout\Layout($this);
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateFilterId()
+    {
+        return 'filter-box-'.Str::random(8);
     }
 
     /**
