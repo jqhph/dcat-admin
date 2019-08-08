@@ -293,8 +293,8 @@ class PermissionController extends Controller
 
         $form->display('id', 'ID');
 
-        $form->text('slug', trans('admin.slug'))->rules('required');
-        $form->text('name', trans('admin.name'))->rules('required');
+        $form->text('slug', trans('admin.slug'))->required();
+        $form->text('name', trans('admin.name'))->required();
 
         $form->multipleSelect('http_method', trans('admin.http.method'))
             ->options($this->getHttpMethodsOptions())

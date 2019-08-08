@@ -157,10 +157,10 @@ class RoleController extends Controller
 
         $form->display('id', 'ID');
 
-        $form->text('slug', trans('admin.slug'))->rules('required')->customPrepare(function ($value) {
+        $form->text('slug', trans('admin.slug'))->required()->customPrepare(function ($value) {
             return $value;
         });
-        $form->text('name', trans('admin.name'))->rules('required');
+        $form->text('name', trans('admin.name'))->required();
 
         $permissionModel = config('admin.database.permissions_model');
         $permissionModel = new $permissionModel;

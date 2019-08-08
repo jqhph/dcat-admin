@@ -2035,9 +2035,9 @@ div.layui-layer-btn{
 
 .form-group.has-error .jstree-wrapper {border-color:#dd4b39}
 
-.fields-group label.asterisk:after {
+.fields-group label.asterisk:before {
     content: "*";
-    margin:0 0 0 5px;
+    margin:0 5px 0 0;
     font-weight:bold;
     color:#dd4b39
 }

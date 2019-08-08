@@ -39,8 +39,8 @@ class MenuController extends Controller
                     $roleModel = config('admin.database.roles_model');
 
                     $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
-                    $form->text('title', trans('admin.title'))->rules('required');
-                    $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
+                    $form->text('title', trans('admin.title'))->required();
+                    $form->icon('icon', trans('admin.icon'))->default('fa-bars')->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
                     $form->multipleSelect('roles', trans('admin.roles'))
                         ->options($roleModel::all()->pluck('name', 'id'));
@@ -123,8 +123,8 @@ class MenuController extends Controller
         $form->display('id', 'ID');
 
         $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
-        $form->text('title', trans('admin.title'))->rules('required');
-        $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
+        $form->text('title', trans('admin.title'))->required();
+        $form->icon('icon', trans('admin.icon'))->default('fa-bars')->help($this->iconHelp());
         $form->text('uri', trans('admin.uri'));
         $form->multipleSelect('roles', trans('admin.roles'))
             ->options($roleModel::all()->pluck('name', 'id'))

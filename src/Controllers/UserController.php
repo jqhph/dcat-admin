@@ -224,9 +224,10 @@ class UserController extends Controller
         $form->display('id', 'ID');
 
         $form->text('username', trans('admin.username'))
+            ->required()
             ->creationRules(['required', "unique:{$connection}.{$userTable}"])
             ->updateRules(['required', "unique:{$connection}.{$userTable},username,$id"]);
-        $form->text('name', trans('admin.name'))->rules('required');
+        $form->text('name', trans('admin.name'))->required();
         $form->image('avatar', trans('admin.avatar'));
         $form->password('password', trans('admin.password'))->rules('required|confirmed');
         $form->password('password_confirmation', trans('admin.password_confirmation'))
