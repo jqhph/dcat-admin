@@ -812,7 +812,7 @@ input.label {
 }
 
 .table-bordered, .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-    border-top: 1px solid #ebeff2;
+    border-top: 1px solid #f4f4f4;
     vertical-align: middle;
 }
 
@@ -833,9 +833,9 @@ input.label {
     padding: .75rem 8px;
     letter-spacing: .05em;
 }
-/*.table-header-default.table {*/
-/*border:1px solid #eee;*/
-/*}*/
+.table-header-default.table>thead>tr>th {
+    border-bottom: 2px solid #f4f4f4;
+}
 .table>thead:first-child>tr:first-child>th:first-child {
     padding-left: 18px;
 }
@@ -847,7 +847,7 @@ input.label {
 }
 
 .table-header-default.table:not(.table-striped) thead tr {
-    border-top: 1px solid #e3e7eb;
+    border-top: 1px solid #f4f4f4;
 }
 .table-header-gray.table:not(.table-striped) thead tr {
     border-top: 1px solid #e3e7eb;

@@ -68,10 +68,7 @@ class MenuController extends Controller
         $tree->disableCreateButton();
         $tree->disableQuickCreateButton();
 
-        $roleText = trans('admin.roles');
-        $permissionText = trans('admin.permissions');
-
-        $tree->branch(function ($branch) use ($roleText, $permissionText) {
+        $tree->branch(function ($branch) {
             $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
 
             if (!isset($branch['children'])) {

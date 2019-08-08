@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     /**
+     * @var string
+     */
+    protected $redirectTo;
+
+    /**
      * Show the login page.
      *
      * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
@@ -208,7 +213,7 @@ class AuthController extends Controller
             return $this->redirectTo();
         }
 
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : config('admin.route.prefix');
+        return $this->redirectTo ?: config('admin.route.prefix');
     }
 
     /**
@@ -244,6 +249,6 @@ class AuthController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Admin::guard();
     }
 }

@@ -33,7 +33,7 @@ trait Options
 
         'export_limit'       => 50000,
         'dialog_form_area'   => ['700px', '670px'],
-        'table_header_style' => 'table-header-gray',
+        'table_header_style' => 'table-header-default',
 
     ];
 

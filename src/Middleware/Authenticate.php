@@ -21,7 +21,7 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('admin')->guest() && !$this->shouldPassThrough($request)) {
+        if (Admin::guard()->guest() && !$this->shouldPassThrough($request)) {
             $loginPage = admin_base_path('auth/login');
 
             if ($request->ajax() && !$request->pjax()) {

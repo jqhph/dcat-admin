@@ -66,7 +66,7 @@ class Sorter implements Renderable
     public function render()
     {
         $icon  = '';
-        $color = 'text-70';
+        $color = '';
         $type  = 'desc';
 
         if ($this->isSorted()) {
@@ -74,7 +74,7 @@ class Sorter implements Renderable
             if ($this->sort['type']) {
                 $icon .= $this->sort['type'] == 'desc' ? '-by-attributes-alt' : '-by-attributes';
 
-                $color = 'text-80';
+                $color = '';
             }
         }
 
