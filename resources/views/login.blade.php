@@ -83,7 +83,7 @@
         <div class="col-xs-8">
           @if(config('admin.auth.remember'))
             <div class="checkbox checkbox-primary checkbox-circle">
-              <input id="remember" type="checkbox" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
+              <input id="remember" name="remember" type="checkbox" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
               <label for="remember">
                 {{ trans('admin.remember_me') }}
               </label>
