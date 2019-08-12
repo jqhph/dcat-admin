@@ -1350,9 +1350,8 @@ pre.dump {
     border: 0;
     /*color: #eee;*/
     box-shadow: 0 1px 3px 1px rgba(34, 25, 25, .17);
-    background: rgba(255, 255,213,0.3);
+    background: #f8f8f8;
     white-space:pre-wrap;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, .15);
 }
 
 .form-row .control-label, .line .text {
