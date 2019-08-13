@@ -17,7 +17,7 @@ class Helper
      * @param bool $filter
      * @return array
      */
-    public static function array($value, bool $filter = false)
+    public static function array($value, bool $filter = true)
     {
         if (!$value) {
             return [];
@@ -40,7 +40,9 @@ class Helper
 
         }
 
-        return $filter ? array_filter($value) : $value;
+        return $filter ? array_filter($value, function ($v) {
+            return $v !== '' && $v !== null;
+        }) : $value;
     }
 
     /**

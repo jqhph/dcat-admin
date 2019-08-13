@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Checkbox as WidgetCheckbox;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
@@ -200,14 +201,7 @@ class Tree extends Field
     {
         $value = Arr::get($data, $this->column);
 
-        if ($value && is_string($value)) {
-            return explode(',', $value);
-        }
-        if (!is_array($value)) {
-            return $value ? (array)$value : [];
-        }
-
-        return $value;
+        return Helper::array($value, true);
     }
 
     /**
@@ -218,15 +212,7 @@ class Tree extends Field
      */
     public function prepare($value)
     {
-        if (is_array($value)) {
-            return $value;
-        }
-
-        if ($value && is_string($value) ) {
-            return explode(',', $value);
-        }
-
-        return $value ? (array)$value : [];
+        return Helper::array($value, true);
     }
 
     public function render()
