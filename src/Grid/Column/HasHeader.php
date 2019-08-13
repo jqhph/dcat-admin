@@ -61,13 +61,15 @@ trait HasHeader
     /**
      * Add a help tooltip to column header.
      *
-     * @param $message
-     * @param null $style
+     * @param string|\Closure $message
+     * @param null|string $style 'green', 'blue', 'red', 'purple'
+     * @param null|string $placement 'bottom', 'left', 'right', 'top'
+     *
      * @return $this
      */
-    protected function addHelp($message, $style = null)
+    protected function addHelp($message, ?string $style = null, ? string $placement = 'bottom')
     {
-        return $this->addHeader(new Help($message, $style));
+        return $this->addHeader(new Help($message, $style, $placement));
     }
 
     /**

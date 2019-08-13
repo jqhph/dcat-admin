@@ -382,13 +382,15 @@ class Column
     /**
      * Set help message for column.
      *
-     * @param string $help
-     * @param null $style
+     * @param string|\Closure $help
+     * @param null|string $style 'green', 'blue', 'red', 'purple'
+     * @param null|string $placement 'bottom', 'left', 'right', 'top'
+     *
      * @return $this
      */
-    public function help($help = '', $style = null)
+    public function help($help = '', ?string $style = null, ?string $placement = 'bottom')
     {
-        return $this->addHelp($help, $style);
+        return $this->addHelp($help, $style, $placement);
     }
 
     /**

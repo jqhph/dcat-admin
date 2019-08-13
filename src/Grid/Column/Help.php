@@ -19,14 +19,20 @@ class Help implements Renderable
     protected $style;
 
     /**
+     * @var null
+     */
+    protected $placement;
+
+    /**
      * Help constructor.
      *
      * @param string $message
      */
-    public function __construct($message = '', $style = null)
+    public function __construct($message = '', ?string $style = null, ?string $placement = 'bottom')
     {
-        $this->message = $message;
-        $this->style = null;
+        $this->message = value($message);
+        $this->style = $style;
+        $this->placement = $placement;
     }
 
     /**
@@ -40,12 +46,15 @@ class Help implements Renderable
 
         $tooltip = Tooltip::make('.grid-column-help-'.$random);
 
-        if ($this->style && method_exists($tooltip, $this->style)) {
-            $tooltip->{$this->style};
+        if (in_array($this->style, ['green', 'blue', 'red', 'purple'])) {
+            $tooltip->{$this->style}();
+        }
+
+        if (in_array($this->placement, ['bottom', 'left', 'right', 'top'])) {
+            $tooltip->{$this->placement}();
         }
 
         $tooltip->content($this->message)
-            ->bottom()
             ->render();
 
         return <<<HELP
