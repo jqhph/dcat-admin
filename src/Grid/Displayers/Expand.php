@@ -41,7 +41,7 @@ class Expand extends AbstractDisplayer
 
         return <<<EOT
 <span class="grid-expand" data-inserted="0" data-key="{$key}" data-toggle="collapse" data-target="#grid-collapse-{$key}">
-   <a class="btn btn-xs btn-default"><i class="fa fa-caret-right"></i>  $button</a>
+   <a href="javascript:void(0)"><i class="fa fa-angle-double-right"></i>  $button</a>
 </span>
 <template class="grid-expand-{$key}">
     <div id="grid-collapse-{$key}" class="collapse">$html</div>
@@ -78,7 +78,7 @@ $('.grid-expand').off('click').click(function () {
         $(this).data('inserted', 1);
     }
     
-    $("i", this).toggleClass("fa-caret-down fa-caret-right");
+    $("i", this).toggleClass("fa-angle-double-right fa-angle-double-down");
 });
 JS;
         Admin::script($script);
