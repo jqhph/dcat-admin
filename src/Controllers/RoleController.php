@@ -157,7 +157,7 @@ class RoleController extends Controller
 
         $form->display('id', 'ID');
 
-        $form->text('slug', trans('admin.slug'))->required()->customPrepare(function ($value) {
+        $form->text('slug', trans('admin.slug'))->required()->prepareForSave(function ($value) {
             return $value;
         });
         $form->text('name', trans('admin.name'))->required();

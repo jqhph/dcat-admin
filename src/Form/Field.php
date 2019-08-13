@@ -204,7 +204,7 @@ class Field implements Renderable
     /**
      * @var \Closure
      */
-    protected $customPrepare;
+    protected $prepare;
 
     /**
      * Field constructor.
@@ -748,9 +748,9 @@ class Field implements Renderable
      * @param \Closure $closure
      * @return $this
      */
-    public function customPrepare(\Closure $closure)
+    public function prepareForSave(\Closure $closure)
     {
-        $this->customPrepare = $closure;
+        $this->prepare = $closure;
 
         return $this;
     }
@@ -765,7 +765,7 @@ class Field implements Renderable
     {
         $value = $this->prepare($value);
 
-        if ($handler = $this->customPrepare) {
+        if ($handler = $this->prepare) {
             $handler->bindTo($this->data);
 
             return $handler($value);
