@@ -10,9 +10,11 @@ class Icon extends Text
 
     public function render()
     {
-        $this->script = <<<EOT
-$('{$this->getElementClassSelector()}').iconpicker({placement:'bottomLeft'});
-EOT;
+        $this->script = <<<JS
+setTimeout(function () {
+    $('{$this->getElementClassSelector()}').iconpicker({placement:'bottomLeft'});
+}, 10);
+JS;
 
         $this->prepend('<i class="fa fa-pencil fa-fw"></i>')
             ->defaultAttribute('style', 'width: 200px');
