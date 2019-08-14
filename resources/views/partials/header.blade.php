@@ -2,7 +2,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <a href="{{ admin_base_path('/') }}" class="logo waves-effect waves-light">
+    <a href="{{ admin_url('/') }}" class="logo waves-effect waves-light">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">{!! config('admin.logo-mini', config('admin.name')) !!}</span>
         <!-- logo for regular state and mobile devices -->

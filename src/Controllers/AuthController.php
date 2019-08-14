@@ -76,7 +76,7 @@ class AuthController extends Controller
 
         $request->session()->invalidate();
 
-        $path = admin_base_path('auth/login');
+        $path = admin_url('auth/login');
         if ($request->pjax()) {
             return "<script>location.href = '$path';</script>";
         }
@@ -186,7 +186,7 @@ class AuthController extends Controller
         $form->saved(function () {
             admin_alert(trans('admin.update_succeeded'));
 
-            return redirect(admin_base_path('auth/setting'));
+            return redirect(admin_url('auth/setting'));
         });
 
         return $form;

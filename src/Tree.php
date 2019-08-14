@@ -53,6 +53,11 @@ class Tree implements Renderable
     protected $branchCallback = null;
 
     /**
+     * @var string
+     */
+    public $path;
+
+    /**
      * @var bool
      */
     public $useCreate = true;
@@ -119,7 +124,7 @@ class Tree implements Renderable
     {
         $this->model = $model;
 
-        $this->path = app('request')->getPathInfo();
+        $this->path = $this->path ?: request()->getPathInfo();
         $this->elementId .= uniqid();
 
         $this->setupTools();
@@ -488,7 +493,7 @@ JS;
         Admin::script($this->script());
 
         view()->share([
-            'path'           => $this->path,
+            'path'           => url($this->path),
             'keyName'        => $this->model->getKeyName(),
             'branchView'     => $this->view['branch'],
             'branchCallback' => $this->branchCallback,

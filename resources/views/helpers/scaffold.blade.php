@@ -307,7 +307,7 @@
             write_controller(tb);
             write_model(tb);
 
-            $.post('{{admin_base_path('helpers/scaffold/table')}}', {db: db, tb: tb, _token: LA.token}, function (res) {
+            $.post('{{admin_url('helpers/scaffold/table')}}', {db: db, tb: tb, _token: LA.token}, function (res) {
                 LA.loading(false);
 
                 if (!res.list) return;
