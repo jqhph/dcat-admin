@@ -2,17 +2,22 @@
 
 namespace Dcat\Admin\Controllers;
 
+use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Models\Repositories\Role;
+use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\MiniGrid;
 use Dcat\Admin\Show;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Routing\Controller;
 
 class RoleController extends Controller
 {
-    use HasResourceActions;
+    use HasResourceActions {
+        destroy as delete;
+    }
 
     /**
      * Index interface.
@@ -58,7 +63,7 @@ class RoleController extends Controller
         return $content
             ->header(trans('admin.roles'))
             ->description(trans('admin.edit'))
-            ->body($this->form()->edit($id));
+            ->body($this->form($id)->edit($id));
     }
 
     /**
@@ -143,6 +148,10 @@ class RoleController extends Controller
         $show->created_at;
         $show->updated_at;
 
+        if ($id == RoleModel::ADMINISTRATOR_ID) {
+            $show->disableDeleteButton();
+        }
+
         return $show;
     }
 
@@ -151,7 +160,7 @@ class RoleController extends Controller
      *
      * @return Form
      */
-    public function form()
+    public function form($id = null)
     {
         $form = new Form(new Role());
 
@@ -175,6 +184,27 @@ class RoleController extends Controller
         $form->display('created_at', trans('admin.created_at'));
         $form->display('updated_at', trans('admin.updated_at'));
 
+        if ($id == RoleModel::ADMINISTRATOR_ID) {
+            $form->disableDeleteButton();
+        }
+
         return $form;
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if (in_array(RoleModel::ADMINISTRATOR_ID, Helper::array($id))) {
+            Permission::error();
+        }
+
+        return $this->delete($id);
+    }
+
 }

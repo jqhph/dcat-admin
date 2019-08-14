@@ -18,6 +18,8 @@ class Administrator extends Model implements AuthenticatableContract
 {
     use Authenticatable, HasPermissions;
 
+    const DEFAULT_ID = 1;
+
     protected $fillable = ['username', 'password', 'name', 'avatar'];
 
     /**

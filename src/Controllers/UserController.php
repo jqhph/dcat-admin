@@ -2,18 +2,23 @@
 
 namespace Dcat\Admin\Controllers;
 
+use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Models\Repositories\Administrator;
+use Dcat\Admin\Models\Administrator as AdministratorModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\MiniGrid;
 use Dcat\Admin\Show;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Tree;
 use Illuminate\Routing\Controller;
 
 class UserController extends Controller
 {
-    use HasResourceActions;
+    use HasResourceActions {
+        destroy as delete;
+    }
 
     /**
      * Index interface.
@@ -116,7 +121,7 @@ class UserController extends Controller
         $grid->updated_at->sortable();
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
-            if ($actions->getKey() == 1) {
+            if ($actions->getKey() == AdministratorModel::DEFAULT_ID) {
                 $actions->disableDelete();
             }
         });
@@ -204,6 +209,10 @@ class UserController extends Controller
             return $tree->render();
         });
 
+        if ($id == AdministratorModel::DEFAULT_ID) {
+            $show->disableDeleteButton();
+        }
+
         return $show;
     }
 
@@ -255,7 +264,27 @@ class UserController extends Controller
             }
         });
 
+        if ($id == AdministratorModel::DEFAULT_ID) {
+            $form->disableDeleteButton();
+        }
+
         return $form;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if (in_array(AdministratorModel::DEFAULT_ID, Helper::array($id))) {
+            Permission::error();
+        }
+
+        return $this->delete($id);
     }
 
 }
