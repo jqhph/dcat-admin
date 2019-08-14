@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -46,11 +47,7 @@ class Tags extends Field
             $value = array_column($value, $this->visibleColumn, $this->key);
         }
 
-        if (is_string($value)) {
-            $value = explode(',', $value);
-        }
-
-        return array_filter((array) $value, 'strlen');
+        return array_filter(Helper::array($value), 'strlen');
     }
 
     /**

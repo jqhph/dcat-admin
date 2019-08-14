@@ -109,11 +109,11 @@ class Tree extends Field
 
     protected function formatNodes()
     {
-        $value = old($this->column, $this->value ?: $this->getDefault());
-        if ($value && !is_array($value)) {
-            $value = explode(',', $value);
-        }
-        $this->value = $value;
+        $value = Helper::array(
+            old($this->column, $this->value ?: $this->getDefault())
+        );
+
+        $this->value = &$value;
 
         if (!$this->nodes) return;
 

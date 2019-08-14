@@ -834,7 +834,7 @@ input.label {
     letter-spacing: .05em;
 }
 .table-header-default.table>thead>tr>th {
-    border-bottom: 2px solid #f4f4f4;
+    border-bottom: 1px solid #f4f4f4;
 }
 .table>thead:first-child>tr:first-child>th:first-child {
     padding-left: 18px;
