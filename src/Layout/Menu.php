@@ -119,11 +119,11 @@ class Menu
             if (empty($item['uri'])) {
                 return false;
             }
-            return trim($this->getAdminPath($item['uri']), '/') == $path;
+            return trim($this->getPath($item['uri']), '/') == $path;
         }
 
         foreach($item['children'] as $v) {
-            if ($path == trim($this->getAdminPath($v['uri']), '/')) {
+            if ($path == trim($this->getPath($v['uri']), '/')) {
                 return true;
             }
             if (!empty($v['children'])) {
@@ -167,12 +167,25 @@ class Menu
 
     /**
      * @param $uri
+     *
      * @return string
      */
-    public function getAdminPath($uri)
+    public function getPath($uri)
     {
         if (!$uri) return $uri;
 
         return url()->isValidUrl($uri) ? $uri : admin_base_path($uri);
+    }
+
+    /**
+     * @param $uri
+     *
+     * @return string
+     */
+    public function getUrl($uri)
+    {
+        if (!$uri) return $uri;
+
+        return admin_url($uri);
     }
 }

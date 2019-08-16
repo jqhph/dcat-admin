@@ -73,7 +73,7 @@ class File extends Field
 
         $fileLimit = $this->options['fileNumLimit'] ?? 1;
         if ($fileLimit < count($value)) {
-            $this->form->addValidationMessages(
+            $this->form->responseValidationMessages(
                 $this->column,
                 trans('admin.uploader.max_file_limit', ['attribute' => $this->label, 'max' => $fileLimit])
             );

@@ -102,7 +102,7 @@ class AuthController extends Controller
 
         return $content
             ->header(trans('admin.user_setting'))
-            ->body($form->edit(Admin::user()->id));
+            ->body($form->edit(Admin::user()->getKey()));
     }
 
     /**
@@ -115,10 +115,10 @@ class AuthController extends Controller
         $form = $this->settingForm();
 
         if (!$this->validateCredentialsWhenUpdatingPassword()) {
-            $form->addValidationMessages('old_password', trans('admin.old_password_error'));
+            $form->responseValidationMessages('old_password', trans('admin.old_password_error'));
         }
 
-        return $form->update(Admin::user()->id);
+        return $form->update(Admin::user()->getKey());
     }
 
     protected function validateCredentialsWhenUpdatingPassword()
@@ -173,7 +173,7 @@ class AuthController extends Controller
                 return $form->model()->password;
             });
 
-        $form->setAction(admin_base_path('auth/setting'));
+        $form->setAction(admin_url('auth/setting'));
 
         $form->ignore(['password_confirmation', 'old_password']);
 

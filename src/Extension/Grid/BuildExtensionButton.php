@@ -26,7 +26,7 @@ CSS
     {
         $submit = trans('admin.submit');
 
-        $url = admin_base_path('helpers/extensions/create');
+        $url = admin_url('helpers/extensions/create');
 
         Admin::script(
             <<<JS

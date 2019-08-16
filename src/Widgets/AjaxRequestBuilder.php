@@ -45,7 +45,7 @@ trait AjaxRequestBuilder
      */
     public function setUrl(string $url)
     {
-        $this->url = url()->isValidUrl($url) ? $url : admin_base_path($url);
+        $this->url = admin_url($url);
 
         return $this;
     }

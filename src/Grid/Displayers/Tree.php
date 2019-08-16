@@ -71,11 +71,7 @@ class Tree extends AbstractDisplayer
 
     public function url(string $source)
     {
-        if ($source && URL::isValidUrl($source)) {
-            $this->url = $source;
-        } else {
-            $this->url = admin_base_path($source);
-        }
+        $this->url = admin_url($source);
 
         return $this;
     }

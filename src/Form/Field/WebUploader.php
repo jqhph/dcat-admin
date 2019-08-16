@@ -86,7 +86,7 @@ trait WebUploader
      */
     public function url(string $server)
     {
-        $this->options['server'] = URL::isValidUrl($server) ? $server : admin_base_path($server);
+        $this->options['server'] = admin_url($server);
 
         return $this;
     }
@@ -124,7 +124,7 @@ trait WebUploader
      */
     public function deleteUrl(string $server)
     {
-        $this->options['deleteUrl'] = URL::isValidUrl($server) ? $server : admin_base_path($server);
+        $this->options['deleteUrl'] = admin_url($server);
 
         return $this;
     }
@@ -153,7 +153,7 @@ trait WebUploader
                 '_method' => 'PUT',
             ],
             'formData' => [
-                '_id' => Admin::user()->id,
+                '_id' => Admin::user()->getKey(),
                 'upload_column' => $this->column,
                 '_method' => 'PUT',
                 '_token' => csrf_token(),

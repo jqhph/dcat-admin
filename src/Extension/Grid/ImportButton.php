@@ -39,7 +39,7 @@ HTML;
         $confirm = trans('admin.confirm');
         $cancel  = trans('admin.cancel');
 
-        $url = admin_base_path('helpers/extensions/import');
+        $url = admin_url('helpers/extensions/import');
 
         Admin::script(
             <<<JS

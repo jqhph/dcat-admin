@@ -470,7 +470,7 @@ class Show implements Renderable
     public function resource(string $resource)
     {
         if ($resource) {
-            $this->resource = URL::isValidUrl($resource) ? $resource : admin_base_path($resource);
+            $this->resource = admin_url($resource);
         }
 
         return $this;
@@ -489,7 +489,7 @@ class Show implements Renderable
             $segments = explode('/', $path);
             array_pop($segments);
 
-            $this->resource = implode('/', $segments);
+            $this->resource = url(implode('/', $segments));
         }
 
         return $this->resource;

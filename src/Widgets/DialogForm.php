@@ -207,7 +207,7 @@ class DialogForm
     {
         if ($url) {
             $this->options['defaultUrl'] = Helper::urlWithQuery(
-                ($url && URL::isValidUrl($url)) ? $url : admin_base_path($url),
+                admin_url($url),
                 [static::QUERY_NAME => 1]
             );
         }

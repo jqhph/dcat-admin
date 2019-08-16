@@ -107,16 +107,13 @@ class SelectResource extends Field
     /**
      * Set source path.
      *
-     * @param $source
+     * @param string $source
+     *
      * @return $this
      */
     public function path($source)
     {
-        if ($source && URL::isValidUrl($source)) {
-            $this->source = $source;
-        } else {
-            $this->source = admin_base_path($source);
-        }
+        $this->source = admin_url($source);
 
         return $this;
     }

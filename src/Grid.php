@@ -1034,7 +1034,7 @@ HTML;
     public function resource(string $path)
     {
         if (!empty($path)) {
-            $this->resourcePath = URL::isValidUrl($path) ? $path : admin_base_path($path);
+            $this->resourcePath = admin_url($path);
         }
         return $this;
     }
@@ -1046,7 +1046,9 @@ HTML;
      */
     public function getResource()
     {
-        return $this->resourcePath ?: app('request')->getPathInfo();
+        return $this->resourcePath ?: (
+            $this->resourcePath = url(app('request')->getPathInfo())
+        );
     }
 
     /**
