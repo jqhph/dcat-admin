@@ -1164,7 +1164,6 @@ HTML;
         $this->handleExportRequest(true);
 
         try {
-            echo $a;
             $this->callComposing();
 
             $this->build();
