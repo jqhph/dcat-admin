@@ -32,7 +32,7 @@ class Composer
             return null;
         }
 
-        $lockFile = $lockFile ?: app_path('../composer.lock');
+        $lockFile = $lockFile ?: base_path('composer.lock');
 
         $content = collect(static::readJson($lockFile)['packages'] ?? [])
             ->filter(function ($value) use ($packageName) {

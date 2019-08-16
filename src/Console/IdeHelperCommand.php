@@ -61,7 +61,7 @@ class IdeHelperCommand extends Command
         'show-column' => '* @method $this %s(...$params)',
     ];
 
-    protected $path = '../dcat_admin_ide_helper.php';
+    protected $path = 'dcat_admin_ide_helper.php';
 
     /**
      * Execute the console command.
@@ -188,7 +188,7 @@ class IdeHelperCommand extends Command
             File::get($this->getStub())
         );
 
-        File::put(app_path($this->path), $content);
+        File::put(base_path($this->path), $content);
     }
 
     /**

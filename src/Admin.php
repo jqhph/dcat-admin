@@ -339,7 +339,7 @@ class Admin
         $files  = app('files');
         $result = (bool)$files->put(config_path('admin-extensions.php'), Helper::exportArrayPhp($config));
 
-        if ($result && is_file($cache = app_path('../bootstrap/cache/config.php'))) {
+        if ($result && is_file(base_path('bootstrap/cache/config.php'))) {
             Artisan::call('config:cache');
         }
 
