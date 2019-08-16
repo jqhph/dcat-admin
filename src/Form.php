@@ -1058,13 +1058,15 @@ class Form implements Renderable
     }
 
     /**
-     * @param $column
+     * @param string|array|MessageProvider $column
      * @param string|array $messages
+     *
+     * @return $this
      */
-    public function addValidationMessages($column, $messages = null)
+    public function responseValidationMessages($column, $messages = null)
     {
         if ($column instanceof MessageProvider) {
-            return $this->addValidationMessages($column->getMessageBag()->getMessages());
+            return $this->responseValidationMessages($column->getMessageBag()->getMessages());
         }
 
         if (!$this->validationMessages) {
@@ -1349,7 +1351,7 @@ class Form implements Renderable
             $segments = array_slice($segments, 0, $slice);
         }
 
-        return implode('/', $segments);
+        return \url(implode('/', $segments));
     }
 
     /**
@@ -1361,7 +1363,7 @@ class Form implements Renderable
     public function resource(string $resource)
     {
         if ($resource) {
-            $this->resource = URL::isValidUrl($resource) ? $resource : admin_base_path($resource);
+            $this->resource = admin_url($resource);
         }
 
         return $this;
