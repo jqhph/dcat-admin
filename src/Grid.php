@@ -1168,7 +1168,7 @@ HTML;
 
             $this->build();
         } catch (\Throwable $e) {
-            return app(config('admin.exception_handler'))->renderException($e);
+            return Admin::makeExceptionHandler()->renderException($e);
         }
 
         return $this->doWrap();

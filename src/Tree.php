@@ -468,38 +468,42 @@ JS;
      */
     public function render()
     {
-        $this->callResolving();
+        try {
+            $this->callResolving();
 
-        if ($this->useQuickEdit) {
-            list($width, $height) = $this->dialogFormDimensions;
+            if ($this->useQuickEdit) {
+                list($width, $height) = $this->dialogFormDimensions;
 
-            Form::popup(trans('admin.edit'))
-                ->click('.tree-quick-edit')
-                ->success('LA.reload()')
-                ->dimensions($width, $height)
-                ->render();
+                Form::popup(trans('admin.edit'))
+                    ->click('.tree-quick-edit')
+                    ->success('LA.reload()')
+                    ->dimensions($width, $height)
+                    ->render();
+            }
+
+            if ($this->useQuickCreate) {
+                list($width, $height) = $this->dialogFormDimensions;
+
+                Form::popup(trans('admin.new'))
+                    ->click('.tree-quick-create')
+                    ->success('LA.reload()')
+                    ->dimensions($width, $height)
+                    ->render();
+            }
+
+            Admin::script($this->script());
+
+            view()->share([
+                'path'           => url($this->path),
+                'keyName'        => $this->model->getKeyName(),
+                'branchView'     => $this->view['branch'],
+                'branchCallback' => $this->branchCallback,
+            ]);
+
+            return $this->doWrap();
+        } catch (\Throwable $e) {
+            return Admin::makeExceptionHandler()->renderException($e);
         }
-
-        if ($this->useQuickCreate) {
-            list($width, $height) = $this->dialogFormDimensions;
-
-            Form::popup(trans('admin.new'))
-                ->click('.tree-quick-create')
-                ->success('LA.reload()')
-                ->dimensions($width, $height)
-                ->render();
-        }
-
-        Admin::script($this->script());
-
-        view()->share([
-            'path'           => url($this->path),
-            'keyName'        => $this->model->getKeyName(),
-            'branchView'     => $this->view['branch'],
-            'branchCallback' => $this->branchCallback,
-        ]);
-
-        return $this->doWrap();
     }
 
     /**

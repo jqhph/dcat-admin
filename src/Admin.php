@@ -3,6 +3,7 @@
 namespace Dcat\Admin;
 
 use Closure;
+use Dcat\Admin\Exception\Handler;
 use Dcat\Admin\Models\HasPermissions;
 use Dcat\Admin\Controllers\AuthController;
 use Dcat\Admin\Layout\SectionManager;
@@ -317,6 +318,16 @@ class Admin
         $config[$name]['enable'] = $enable;
 
         return static::updateExtensionConfig($config);
+    }
+
+    /**
+     * @return Handler
+     */
+    public static function makeExceptionHandler()
+    {
+        return app(
+            config('admin.exception_handler') ?: Handler::class
+        );
     }
 
     /**

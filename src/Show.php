@@ -550,31 +550,35 @@ class Show implements Renderable
      */
     public function render()
     {
-        $model = $this->getModel();
+        try {
+            $model = $this->getModel();
 
-        if (is_callable($this->builder)) {
-            call_user_func($this->builder, $this);
+            if (is_callable($this->builder)) {
+                call_user_func($this->builder, $this);
+            }
+
+            if ($this->fields->isEmpty()) {
+                $this->all();
+            }
+
+            if (is_array($this->builder)) {
+                $this->fields($this->builder);
+            }
+
+            $this->fields->each->setValue($model);
+            $this->relations->each->setModel($model);
+
+            $this->callComposing();
+
+            $data = [
+                'panel'     => $this->panel->fill($this->fields),
+                'relations' => $this->relations,
+            ];
+
+            return view($this->view, $data)->render();
+        } catch (\Throwable $e) {
+            return Admin::makeExceptionHandler()->renderException($e);
         }
-
-        if ($this->fields->isEmpty()) {
-            $this->all();
-        }
-
-        if (is_array($this->builder)) {
-            $this->fields($this->builder);
-        }
-
-        $this->fields->each->setValue($model);
-        $this->relations->each->setModel($model);
-
-        $this->callComposing();
-
-        $data = [
-            'panel'     => $this->panel->fill($this->fields),
-            'relations' => $this->relations,
-        ];
-
-        return view($this->view, $data)->render();
     }
 
     /**
