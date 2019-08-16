@@ -14,7 +14,7 @@ class Handler
      *
      * @return string
      */
-    public static function renderException(\Throwable $exception)
+    public function renderException(\Throwable $exception)
     {
         if (config('app.debug')) {
             throw $exception;
@@ -34,25 +34,11 @@ class Handler
     }
 
     /**
-     * Flash a error message to content.
-     *
-     * @param string $title
-     * @param string $message
-     *
-     * @return mixed
-     */
-    public static function error($title = '', $message = '')
-    {
-        $error = new MessageBag(compact('title', 'message'));
-
-        return session()->flash('error', $error);
-    }
-
-    /**
      * @param \Throwable $e
+     *
      * @return mixed
      */
-    public static function handleDestroyException(\Throwable $e)
+    public function handleDestroyException(\Throwable $e)
     {
         $root = dirname(app_path());
 

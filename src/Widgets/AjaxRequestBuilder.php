@@ -34,7 +34,7 @@ trait AjaxRequestBuilder
 
     public function requestCurrent(array $query = [])
     {
-        $this->url = '?'.http_build_query($query);
+        $this->url = url(request()->getPathInfo()).'?'.http_build_query($query);
 
         return $this;
     }

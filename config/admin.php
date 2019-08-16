@@ -331,24 +331,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Show version at footer
+    | The exception handler class
     |--------------------------------------------------------------------------
-    |
-    | Whether to display the version number of dcat-admin at the footer of
-    | each page
     |
     */
-    'show_version' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Show environment at footer
-    |--------------------------------------------------------------------------
-    |
-    | Whether to display the environment at the footer of each page
-    |
-    */
-    'show_environment' => true,
+    'exception_handler' => \Dcat\Admin\Exception\Handler::class,
 
     /*
     |--------------------------------------------------------------------------

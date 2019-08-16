@@ -47,7 +47,7 @@ class Tags extends Field
             $value = array_column($value, $this->visibleColumn, $this->key);
         }
 
-        return array_filter(Helper::array($value), 'strlen');
+        return Helper::array($value);
     }
 
     /**

@@ -1164,11 +1164,12 @@ HTML;
         $this->handleExportRequest(true);
 
         try {
+            echo $a;
             $this->callComposing();
 
             $this->build();
         } catch (\Throwable $e) {
-            return Handler::renderException($e);
+            return app(config('admin.exception_handler'))->renderException($e);
         }
 
         return $this->doWrap();
