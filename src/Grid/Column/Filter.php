@@ -121,9 +121,10 @@ abstract class Filter implements Renderable
 
     /**
      * @param array ...$params
+     *
      * @return static
      */
-    public static function create(...$params)
+    public static function make(...$params)
     {
         return new static(...$params);
     }

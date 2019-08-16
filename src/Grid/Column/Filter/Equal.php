@@ -52,9 +52,9 @@ class Equal extends Filter
      *
      * @return $this
      */
-    public function datetime()
+    public function datetime(string $format = 'YYYY-MM-DD HH:mm:ss')
     {
-        return $this->setDateFormat('YYYY-MM-DD HH:mm:ss');
+        return $this->setDateFormat($format);
     }
 
     /**

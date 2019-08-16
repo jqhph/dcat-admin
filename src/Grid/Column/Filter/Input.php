@@ -40,6 +40,8 @@ JS;
     {
         $this->addScript();
 
+        $value = $this->getFilterValue();
+
         $active = empty($value) ? '' : 'text-yellow';
 
         return <<<EOT
