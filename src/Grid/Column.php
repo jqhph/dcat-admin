@@ -396,6 +396,15 @@ class Column
     /**
      * Set column filter.
      *
+     * @example
+     *      $grid->username()->filter(
+     *          Grid\Column\Filter\StartWith::make(__('admin.username'))
+     *      );
+     *
+     *      $grid->created_at()->filter(
+     *          Grid\Column\Filter\Equal::make(__('admin.created_at'))->date()
+     *      );
+     *
      * @param Grid\Column\Filter $builder
      *
      * @return $this

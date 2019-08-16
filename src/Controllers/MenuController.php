@@ -40,7 +40,7 @@ class MenuController extends Controller
 
                     $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
                     $form->text('title', trans('admin.title'))->required();
-                    $form->icon('icon', trans('admin.icon'))->default('fa-bars')->help($this->iconHelp());
+                    $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
                     $form->multipleSelect('roles', trans('admin.roles'))
                         ->options($roleModel::all()->pluck('name', 'id'));
@@ -126,7 +126,7 @@ class MenuController extends Controller
             return $menuModel::selectOptions();
         });
         $form->text('title', trans('admin.title'))->required();
-        $form->icon('icon', trans('admin.icon'))->default('fa-bars')->help($this->iconHelp());
+        $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
         $form->text('uri', trans('admin.uri'));
         $form->multipleSelect('roles', trans('admin.roles'))
             ->options(function () use ($roleModel) {

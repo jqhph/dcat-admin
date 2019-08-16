@@ -28,21 +28,22 @@ class Administrator extends EloquentRepository
             return $model;
         }
 
+        $roleModel = config('admin.database.roles_model');
+
         $items = collect($items);
+
+        $roleKeyName = (new $roleModel)->getKeyName();
 
         $roleIds = $items
             ->pluck('roles')
             ->flatten(1)
-            ->keyBy('id')
+            ->keyBy($roleKeyName)
             ->keys()
             ->toArray();
 
-        $roleModel = config('admin.database.roles_model');
         $permissions = $roleModel::getPermissionId($roleIds);
 
         if (!$permissions->isEmpty()) {
-            $roleKeyName = (new $roleModel)->getKeyName();
-
             $items = $items->map(function ($v) use ($roleKeyName, $permissions) {
                 $v['permissions'] = [];
 
