@@ -122,18 +122,24 @@ class MenuController extends Controller
 
         $form->display('id', 'ID');
 
-        $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
+        $form->select('parent_id', trans('admin.parent_id'))->options(function () use ($menuModel) {
+            return $menuModel::selectOptions();
+        });
         $form->text('title', trans('admin.title'))->required();
         $form->icon('icon', trans('admin.icon'))->default('fa-bars')->help($this->iconHelp());
         $form->text('uri', trans('admin.uri'));
         $form->multipleSelect('roles', trans('admin.roles'))
-            ->options($roleModel::all()->pluck('name', 'id'))
+            ->options(function () use ($roleModel) {
+                return $roleModel::all()->pluck('name', 'id');
+            })
             ->customFormat(function ($v) {
                 return array_column($v, 'id');
             });
         if ($menuModel::withPermission()) {
             $form->tree('permissions', trans('admin.permission'))
-                ->nodes((new $permissionModel)->allNodes())
+                ->nodes(function () use ($permissionModel) {
+                    return (new $permissionModel)->allNodes();
+                })
                 ->customFormat(function ($v) {
                     if (!$v) {
                         return [];

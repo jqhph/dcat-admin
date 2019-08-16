@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -24,12 +25,18 @@ class Select extends Field
     /**
      * Set options.
      *
-     * @param array|callable|string $options
+     * @param array|\Closure|string $options
      *
      * @return $this|mixed
      */
     public function options($options = [])
     {
+        if ($options instanceof \Closure) {
+            $this->options = $options;
+
+            return $this;
+        }
+
         // remote options
         if (is_string($options)) {
             // reload selected
@@ -40,15 +47,7 @@ class Select extends Field
             return $this->loadRemoteOptions(...func_get_args());
         }
 
-        if ($options instanceof Arrayable) {
-            $options = $options->toArray();
-        }
-
-        if (is_callable($options)) {
-            $this->options = $options;
-        } else {
-            $this->options = (array) $options;
-        }
+        $this->options = Helper::array($options);
 
         return $this;
     }

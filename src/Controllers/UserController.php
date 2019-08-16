@@ -223,7 +223,6 @@ class UserController extends Controller
      */
     public function form($id = null)
     {
-        $roleModel = config('admin.database.roles_model');
         $userTable = config('admin.database.users_table');
 
         $connection = config('admin.database.connection');
@@ -248,7 +247,11 @@ class UserController extends Controller
         $form->ignore(['password_confirmation']);
 
         $form->multipleSelect('roles', trans('admin.roles'))
-            ->options($roleModel::all()->pluck('name', 'id'))
+            ->options(function () {
+                $roleModel = config('admin.database.roles_model');
+
+                return $roleModel::all()->pluck('name', 'id');
+            })
             ->customFormat(function ($v) {
                 return array_column($v, 'id');
             });

@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Checkbox extends MultipleSelect
@@ -25,23 +26,19 @@ class Checkbox extends MultipleSelect
     /**
      * Set options.
      *
-     * @param array|callable|string $options
+     * @param array|\Closure|string $options
      *
      * @return $this|mixed
      */
     public function options($options = [])
     {
-        if (is_callable($options)) {
+        if ($options instanceof \Closure) {
             $this->options = $options;
 
             return $this;
         }
 
-        if ($options instanceof Arrayable) {
-            $options = $options->toArray();
-        }
-
-        $this->options = (array) $options;
+        $this->options = Helper::array($options);
 
         return $this;
     }
@@ -119,10 +116,10 @@ class Checkbox extends MultipleSelect
      */
     public function render()
     {
-        if (is_callable($this->options)) {
-            $this->options = $this->options->bindTo($this->getFormModel());
-
-            $this->options(call_user_func($this->options, $this->value, $this));
+        if ($this->options instanceof \Closure) {
+            $this->options(
+                $this->options->call($this->getFormModel(), $this->value, $this)
+            );
         }
 
         $this->addVariables([

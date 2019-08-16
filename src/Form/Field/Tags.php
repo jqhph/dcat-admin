@@ -73,12 +73,18 @@ class Tags extends Field
     /**
      * Set the field options.
      *
-     * @param array|Collection|Arrayable $options
+     * @param array|Collection|Arrayable|\Closure $options
      *
      * @return $this|Field
      */
     public function options($options = [])
     {
+        if ($this->options instanceof \Closure) {
+            $this->options = $options;
+
+            return $this;
+        }
+
         if (!$this->keyAsValue) {
             return parent::options($options);
         }
@@ -151,6 +157,12 @@ class Tags extends Field
      */
     public function render()
     {
+        if ($this->options instanceof \Closure) {
+            $this->options(
+                $this->options->call($this->getFormModel(), $this->value, $this)
+            );
+        }
+
         $this->script = "$(\"{$this->getElementClassSelector()}\").select2({
             tags: true,
             tokenSeparators: [',']

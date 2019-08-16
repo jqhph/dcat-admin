@@ -171,10 +171,13 @@ class RoleController extends Controller
         });
         $form->text('name', trans('admin.name'))->required();
 
-        $permissionModel = config('admin.database.permissions_model');
-        $permissionModel = new $permissionModel;
         $form->tree('permissions')
-            ->nodes($permissionModel->allNodes())
+            ->nodes(function () {
+                $permissionModel = config('admin.database.permissions_model');
+                $permissionModel = new $permissionModel;
+
+                return $permissionModel->allNodes();
+            })
             ->customFormat(function ($v) {
                 if (!$v) return [];
 

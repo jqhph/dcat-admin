@@ -61,7 +61,7 @@ class Tree extends Field
     protected $filterParents = true;
 
     /**
-     * @param array $data exp:
+     * @param array|Arrayable|\Closure $data exp:
      *     {
      *          "id": "1",
      *          "parent": "#",
@@ -69,7 +69,6 @@ class Tree extends Field
      *          // "state": {"selected": true}
      *     }
      *
-     * @param array $data
      * @return $this
      */
     public function nodes($data)
@@ -114,6 +113,10 @@ class Tree extends Field
         );
 
         $this->value = &$value;
+
+        if ($this->nodes instanceof \Closure) {
+            $this->nodes = $this->nodes->call($this->getFormModel(), $this->value, $this);
+        }
 
         if (!$this->nodes) return;
 

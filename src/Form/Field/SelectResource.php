@@ -71,14 +71,13 @@ class SelectResource extends Field
 
     protected function formatOptions()
     {
-        $opts = $this->options;
-        if (is_callable($opts)) {
+        if ($this->options instanceof \Closure) {
             $value = Helper::array(old($this->column, $this->value));
 
-            $opts = call_user_func($opts, $value);
+            $this->options = $this->options->call($this->getFormModel(), $value, $this);
         }
 
-        $this->options = Helper::array($opts);
+        $this->options = Helper::array($this->options);
 
     }
 
