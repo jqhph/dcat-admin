@@ -52,7 +52,7 @@ JS;
     </a>
     <ul class="dropdown-menu" role="menu" style="padding: 10px;box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);left: -70px;border-radius: 0;font-weight:normal;background:#fff;">
         <li>
-            <input placeholder="{$this->placeholder}" type="text" name="{$this->getFormName()}" value="{$this->getFilterValue()}" class="form-control input-sm {$this->class}" autocomplete="off"/>
+            <input placeholder="{$this->placeholder}" type="text" name="{$this->getFormName()}" value="{$value}" class="form-control input-sm {$this->class}" autocomplete="off"/>
         </li>
         <li class="divider"></li>
         <li class="">

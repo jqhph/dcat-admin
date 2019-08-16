@@ -142,15 +142,19 @@ class UserController extends Controller
     {
         $grid = new MiniGrid(new Administrator());
 
-        $grid->id->bold()->sortable();
-        $grid->username;
-        $grid->name;
+        $grid->id->bold()->sortable()->filter(
+            Grid\Column\Filter\Equal::make('ID')
+        );
 
-        $grid->filter(function (Grid\Filter $filter) {
-            $filter->equal('id')->width('270px');
-            $filter->like('username')->width('270px');
-            $filter->like('name')->width('270px');
-        });
+        $grid->username->filter(
+            Grid\Column\Filter\StartWith::make(__('admin.username'))
+        );
+
+        $grid->name->filter(
+            Grid\Column\Filter\StartWith::make(__('admin.name'))
+        );
+
+        $grid->created_at;
 
         return $grid;
     }
