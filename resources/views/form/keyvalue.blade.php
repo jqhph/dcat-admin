@@ -6,6 +6,8 @@
         <span name="{{$name}}"></span>
         <input name="{{ $name }}[{{ \Dcat\Admin\Form\Field\KeyValue::DEFAULT_FLAG_NAME }}]" type="hidden" />
 
+        <error></error>
+
         <table class="table table-hover">
             <thead>
             <tr>
@@ -80,6 +82,7 @@
         <td>
             <div class="form-group  ">
                 <div class="col-sm-12">
+                    <error></error>
                     <input name="{{ $column }}[keys][{key}]" class="form-control" required/>
                 </div>
             </div>
@@ -87,6 +90,7 @@
         <td>
             <div class="form-group  ">
                 <div class="col-sm-12">
+                    <error></error>
                     <input name="{{ $column }}[values][{key}]" class="form-control" />
                 </div>
             </div>
