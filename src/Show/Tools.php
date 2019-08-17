@@ -194,7 +194,9 @@ class Tools implements Renderable
      */
     protected function getListPath()
     {
-        return '/'.ltrim($this->getResource(), '/');
+        $url = $this->getResource();
+
+        return url()->isValidUrl($url) ? $url : '/'.trim($url, '/');
     }
 
     /**

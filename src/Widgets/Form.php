@@ -107,6 +107,14 @@ class Form implements Renderable
     protected $formId;
 
     /**
+     * @var array
+     */
+    protected $width = [
+        'label' => 2,
+        'field' => 8,
+    ];
+
+    /**
      * Form constructor.
      *
      * @param array $data
@@ -271,6 +279,11 @@ class Form implements Renderable
      */
     public function setWidth($fieldWidth = 8, $labelWidth = 2)
     {
+        $this->width = [
+            'label' => $labelWidth,
+            'field' => $fieldWidth,
+        ];
+
         collect($this->fields)->each(function ($field) use ($fieldWidth, $labelWidth) {
             /* @var Field $field  */
             $field->setWidth($fieldWidth, $labelWidth);
@@ -307,6 +320,8 @@ class Form implements Renderable
     public function pushField(Field &$field)
     {
         array_push($this->fields, $field);
+
+        $field->setWidth($this->width['field'], $this->width['label']);
 
         $field::collectAssets();
 

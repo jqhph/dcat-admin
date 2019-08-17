@@ -293,6 +293,10 @@ class Form implements Renderable
 
         $this->builder->fields()->push($field);
 
+        $width = $this->builder->getWidth();
+
+        $field->setWidth($width['field'], $width['label']);
+
         $field::collectAssets();
 
         return $this;

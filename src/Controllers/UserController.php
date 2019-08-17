@@ -176,6 +176,8 @@ class UserController extends Controller
         $show->username;
         $show->name;
 
+        $show->avatar->image();
+
         $show->newline();
 
         $show->created_at;
