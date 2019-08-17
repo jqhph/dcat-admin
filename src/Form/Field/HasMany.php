@@ -114,7 +114,7 @@ class HasMany extends Field
 
         $form = $this->buildNestedForm($this->column, $this->builder);
 
-        $rules = $attributes = [];
+        $rules = $attributes = $messages = [];
 
         /* @var Field $field */
         foreach ($form->fields() as $field) {
@@ -137,6 +137,11 @@ class HasMany extends Field
             $attributes = array_merge(
                 $attributes,
                 $this->formatValidationAttribute($input, $field->label(), $column)
+            );
+
+            $messages = array_merge(
+                $messages,
+                $this->formatValidationMessages($input, $field->getValidationMessages())
             );
         }
 
@@ -169,7 +174,29 @@ class HasMany extends Field
             $newInput = $input;
         }
 
-        return Validator::make($newInput, $newRules, $this->getValidationMessages(), $attributes);
+        return Validator::make($newInput, $newRules, array_merge($this->getValidationMessages(), $messages), $attributes);
+    }
+
+    /**
+     * Format validation messages.
+     *
+     * @param array $input
+     * @param array $messages
+     *
+     * @return array
+     */
+    protected function formatValidationMessages(array $input, array $messages)
+    {
+        $result = [];
+        foreach ($input[$this->column] as $key => &$value) {
+            $newKey = $this->column.'.'.$key;
+
+            foreach ($messages as $k => $message) {
+                $result[$newKey.'.'.$k] = $message;
+            }
+        }
+
+        return $result;
     }
 
     /**

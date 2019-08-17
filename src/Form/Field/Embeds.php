@@ -60,7 +60,7 @@ class Embeds extends Field
 
         $input = Arr::only($input, $this->column);
 
-        $rules = $attributes = [];
+        $rules = $attributes = $messages = [];
 
         /** @var Field $field */
         foreach ($this->buildEmbeddedForm()->fields() as $field) {
@@ -123,13 +123,36 @@ class Embeds extends Field
                 $attributes,
                 $this->formatValidationAttribute($input, $field->label(), $column)
             );
+
+            $messages = array_merge(
+                $messages,
+                $this->formatValidationMessages($input, $field->getValidationMessages())
+            );
         }
 
         if (empty($rules)) {
             return false;
         }
 
-        return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);
+        return Validator::make($input, $rules, array_merge($this->getValidationMessages(), $messages), $attributes);
+    }
+
+    /**
+     * Format validation messages.
+     *
+     * @param array $input
+     * @param array $messages
+     *
+     * @return array
+     */
+    protected function formatValidationMessages(array $input, array $messages)
+    {
+        $result = [];
+        foreach ($messages as $k => $message) {
+            $result[$this->column.'.'.$k] = $message;
+        }
+
+        return $result;
     }
 
     /**
