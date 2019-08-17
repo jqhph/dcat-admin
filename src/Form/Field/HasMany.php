@@ -445,7 +445,8 @@ class HasMany extends Field
          * {count} is increment number of current sub form count.
          */
         $script = <<<JS
-var index = 0;
+(function () {
+    var index = 0;
 $('#has-many-{$this->column}').on('click', '.add', function () {
 
     var tpl = $('template.{$this->column}-tpl');
@@ -461,7 +462,7 @@ $('#has-many-{$this->column}').on('click', '.remove', function () {
     $(this).closest('.has-many-{$this->column}-form').hide();
     $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
 });
-
+})();
 JS;
 
         Admin::script($script);
@@ -480,8 +481,8 @@ JS;
         $defaultKey = NestedForm::DEFAULT_KEY_NAME;
 
         $script = <<<JS
-
-$('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
+(function () {
+    $('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
     var \$navTab = $(this).siblings('a');
     var \$pane = $(\$navTab.attr('href'));
     if( \$pane.hasClass('new') ){
@@ -517,6 +518,7 @@ if ($('.has-error').length) {
     var first = $('.has-error:first').parent().attr('id');
     $('li a[href="#'+first+'"]').tab('show');
 }
+})();
 JS;
 
         Admin::script($script);
@@ -542,23 +544,23 @@ JS;
          * {count} is increment number of current sub form count.
          */
         $script = <<<JS
-var index = 0;
-$('#has-many-{$this->column}').on('click', '.add', function () {
-
-    var tpl = $('template.{$this->column}-tpl');
-
-    index++;
-
-    var template = tpl.html().replace(/{$defaultKey}/g, index);
-    $('.has-many-{$this->column}-forms').append(template);
-    {$templateScript}
-});
-
-$('#has-many-{$this->column}').on('click', '.remove', function () {
-    $(this).closest('.has-many-{$this->column}-form').hide();
-    $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
-});
-
+(function () {
+    var index = 0;
+    $('#has-many-{$this->column}').on('click', '.add', function () {
+        var tpl = $('template.{$this->column}-tpl');
+    
+        index++;
+    
+        var template = tpl.html().replace(/{$defaultKey}/g, index);
+        $('.has-many-{$this->column}-forms').append(template);
+        {$templateScript}
+    });
+    
+    $('#has-many-{$this->column}').on('click', '.remove', function () {
+        $(this).closest('.has-many-{$this->column}-form').remove();
+        
+    });
+})();
 JS;
 
         Admin::script($script);
