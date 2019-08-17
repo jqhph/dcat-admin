@@ -8,6 +8,8 @@ use Illuminate\Support\Arr;
 
 class ListField extends Field
 {
+    const DEFAULT_FLAG_NAME = '_def_';
+
     /**
      * Max list size.
      *
@@ -103,7 +105,16 @@ class ListField extends Field
 
         $attributes["{$this->column}.values"] = $this->label;
 
+        $input = $this->prepareValidatorInput($input);
+
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
+    }
+
+    protected function prepareValidatorInput(array $input)
+    {
+        Arr::forget($input, "{$this->column}.values.".static::DEFAULT_FLAG_NAME);
+
+        return $input;
     }
 
     /**
@@ -111,14 +122,21 @@ class ListField extends Field
      */
     protected function setupScript()
     {
+        $number = $this->value ? count($this->value) : 0;
+
         $this->script = <<<JS
-$('.{$this->column}-add').on('click', function () {
-    var tpl = $('template.{$this->column}-tpl').html();
-    $('tbody.list-{$this->column}-table').append(tpl);
-});
-$('tbody').on('click', '.{$this->column}-remove', function () {
-    $(this).closest('tr').remove();
-});
+(function () {
+    var index = {$number};
+    $('.{$this->column}-add').on('click', function () {
+        var tpl = $('template.{$this->column}-tpl').html().replace('{key}', index);
+        $('tbody.list-{$this->column}-table').append(tpl);
+        
+        index++;
+    });
+    $('tbody').on('click', '.{$this->column}-remove', function () {
+        $(this).closest('tr').remove();
+    });
+})();
 JS;
     }
 
@@ -127,6 +145,12 @@ JS;
      */
     public function prepare($value)
     {
+        unset($value['values'][static::DEFAULT_FLAG_NAME]);
+
+        if (empty($value['values'])) {
+            return [];
+        }
+
         return array_values($value['values']);
     }
 
