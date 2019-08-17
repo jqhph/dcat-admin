@@ -71,6 +71,7 @@ use Dcat\Admin\Form\Concerns;
  * @method Field\Image          image($column, $label = '')
  * @method Field\MultipleFile   multipleFile($column, $label = '')
  * @method Field\MultipleImage  multipleImage($column, $label = '')
+ * @method Field\HasMany        hasMany($column, \Closure $callback)
  * @method Field\Tree           tree($column, $label = '')
  * @method Field\Table          table($column, $callback)
  * @method Field\ListField      list($column, $label = '')
@@ -143,6 +144,7 @@ class Form implements Renderable
         'image'          => Field\Image::class,
         'multipleFile'   => Field\MultipleFile::class,
         'multipleImage'  => Field\MultipleImage::class,
+        'hasMany'        => Field\HasMany::class,
         'tree'           => Field\Tree::class,
         'table'          => Field\Table::class,
         'list'           => Field\ListField::class,

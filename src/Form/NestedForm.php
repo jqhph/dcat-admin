@@ -156,6 +156,10 @@ class NestedForm
         }
 
         foreach ($data as $value) {
+            if (! isset($value[$relatedKeyName])) {
+                continue;
+            }
+
             /*
              * like $this->original[30] = [ id = 30, .....]
              */

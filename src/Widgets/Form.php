@@ -56,6 +56,7 @@ use Illuminate\Support\Str;
  * @method Field\Image          image($column, $label = '')
  * @method Field\MultipleFile   multipleFile($column, $label = '')
  * @method Field\MultipleImage  multipleImage($column, $label = '')
+ * @method Field\HasMany        hasMany($column, \Closure $callback)
  * @method Field\Tree           tree($column, $label = '')
  * @method Field\Table          table($column, $callback)
  * @method Field\ListField      list($column, $label = '')

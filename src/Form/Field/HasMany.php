@@ -283,7 +283,9 @@ class HasMany extends Field
     {
         $form = $this->buildNestedForm($this->column, $this->builder);
 
-        return $form->setOriginal($this->original, $this->getKeyName())->prepare($input);
+        return array_values(
+            $form->setOriginal($this->original, $this->getKeyName())->prepare($input)
+        );
     }
 
     /**
