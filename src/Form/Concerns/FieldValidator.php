@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 /**
  * @property Form $form
@@ -387,7 +388,27 @@ trait FieldValidator
             $messages = $this->validationMessages['update'] ?? $messages;
         }
 
-        return $messages;
+        $result = [];
+
+        foreach ($messages as $k => $v) {
+            if (Str::contains($k, '.')) {
+                $result[$k] = $v;
+                continue;
+            }
+
+            if (is_string($this->column)) {
+                $k = $this->column . '.' . $k;
+
+                $result[$k] = $v;
+                continue;
+            }
+
+            foreach ($this->column as $column) {
+                $result[$column.'.'.$k] = $v;
+            }
+        }
+
+        return $result;
     }
 
 

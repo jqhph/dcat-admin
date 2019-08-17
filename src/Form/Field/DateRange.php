@@ -69,13 +69,7 @@ JS;
     public function getValidationMessages()
     {
         // Default validation message.
-        $messages = $this->validationMessages['default'] ?? [];
-
-        if (request()->isMethod('POST')) {
-            $messages = $this->validationMessages['creation'] ?? $messages;
-        } elseif (request()->isMethod('PUT')) {
-            $messages = $this->validationMessages['update'] ?? $messages;
-        }
+        $messages = parent::getValidationMessages();
 
         $result = [];
         foreach ($messages as $key => $message) {
