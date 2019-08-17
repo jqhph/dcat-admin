@@ -63,12 +63,14 @@ class Table extends HasMany
         $form = $this->buildNestedForm($this->column, $this->builder);
         $prepare = $form->prepare($input);
 
-        return collect($prepare)->reject(function ($item) {
-            return $item[NestedForm::REMOVE_FLAG_NAME] == 1;
-        })->map(function ($item) {
-            unset($item[NestedForm::REMOVE_FLAG_NAME]);
-            return $item;
-        })->toArray();
+        return array_values(
+            collect($prepare)->reject(function ($item) {
+                return $item[NestedForm::REMOVE_FLAG_NAME] == 1;
+            })->map(function ($item) {
+                unset($item[NestedForm::REMOVE_FLAG_NAME]);
+                return $item;
+            })->toArray()
+        );
     }
 
     protected function getKeyName()

@@ -10,32 +10,32 @@ trait HasAssets
     /**
      * @var array
      */
-    protected static $script = [];
+    public static $script = [];
 
     /**
      * @var array
      */
-    protected static $style = [];
+    public static $style = [];
 
     /**
      * @var array
      */
-    protected static $css = [];
+    public static $css = [];
 
     /**
      * @var array
      */
-    protected static $js = [];
+    public static $js = [];
 
     /**
      * @var array
      */
-    protected static $html = [];
+    public static $html = [];
 
     /**
      * @var array
      */
-    protected static $headerJs = [];
+    public static $headerJs = [];
 
     /**
      * @var array
