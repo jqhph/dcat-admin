@@ -870,7 +870,7 @@ window.require = window.define = window.exports = window.module = undefined;
                 return;
             }
 
-            var p = $c.parents(groupSlt), j;
+            var p = $c.closest(groupSlt), j;
 
             p.addClass(cls);
 
