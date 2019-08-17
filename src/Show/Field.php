@@ -264,7 +264,7 @@ class Field implements Renderable
         return $this->unescape()->as(function ($path) use ($server, $download, $field) {
             $name = basename($path);
 
-            $field->border = false;
+            $field->wrap(false);
 
             $size = $url = '';
 
@@ -372,7 +372,9 @@ HTML;
         return $this->unescape()->as(function ($value) use ($field) {
             $content = is_string($value) ? json_decode($value, true) : $value;
 
-            return Dump::make($value);
+            $field->wrap(false);
+
+            return Dump::make($content);
         });
     }
 
@@ -506,9 +508,9 @@ HTML;
     /**
      * @return $this
      */
-    public function wrap()
+    public function wrap(bool $wrap = true)
     {
-        $this->border = true;
+        $this->border = $wrap;
 
         return $this;
     }
@@ -569,7 +571,7 @@ HTML;
         $field = $this;
         return $this->as(function ($value) use ($extend, $field, $arguments) {
             if (!$extend->border) {
-                $field->border = false;
+                $field->wrap(false);
             }
 
             $extend->setValue($value)->setModel($this);
