@@ -170,7 +170,11 @@
         function get_field_obj($form, column) {
             if (column.indexOf('.') != -1) {
                 column = column.split('.');
-                column = column[0] + '[' + column[1] + ']'
+                var first = column.shift(), i, sub = '';
+                for (i in column) {
+                    sub += '[' + column[i] + ']';
+                }
+                column = first + sub;
             }
 
             var $c = $form.find('[name="' + column + '"]');
