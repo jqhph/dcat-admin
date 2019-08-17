@@ -743,11 +743,11 @@ window.require = window.define = window.exports = window.module = undefined;
             tpl = opts.template,
             $form = opts.$form,
             tabSelector = '.tab-pane',
-            getTabId = function ($c) {
+            get_tab_id = function ($c) {
                 return $c.parents(tabSelector).attr('id');
             },
-            getTabTitleError = function ($c) {
-                var id = getTabId($c);
+            get_tab_title_error = function ($c) {
+                var id = get_tab_id($c);
                 if (!id) return $('<none></none>');
                 return $("[href='#" + id + "'] .text-red");
             };
@@ -844,7 +844,7 @@ window.require = window.define = window.exports = window.module = undefined;
                 p.removeClass(cls);
                 p.find('error').html('');
 
-                t = getTabTitleError($eColumns[i]);
+                t = get_tab_title_error($eColumns[i]);
                 if (!t.hasClass('hide')) {
                     t.addClass('hide');
                 }
@@ -858,7 +858,7 @@ window.require = window.define = window.exports = window.module = undefined;
         function show_field_error($form, column, errors) {
             var $c = get_field_obj($form, column);
 
-            getTabTitleError($c).removeClass('hide');
+            get_tab_title_error($c).removeClass('hide');
 
             // 保存字段原始数据
             originalVals[column] = get_val($c);
@@ -875,7 +875,7 @@ window.require = window.define = window.exports = window.module = undefined;
             p.addClass(cls);
 
             for (j in errors) {
-                p.find('error').append(tpl.replace('_message_', errors[j]));
+                p.find('error').eq(0).append(tpl.replace('_message_', errors[j]));
             }
 
             if (!opts.disableRemoveError) {
@@ -959,9 +959,9 @@ window.require = window.define = window.exports = window.module = undefined;
                 p.find('error').html('');
 
                 // tab页下没有错误信息了，隐藏title的错误图标
-                var id = getTabId($c), t;
+                var id = get_tab_id($c), t;
                 if (id && !$('#'+id).find('.'+cls).length) {
-                    t = getTabTitleError($c);
+                    t = get_tab_title_error($c);
                     if (!t.hasClass('hide')) {
                         t.addClass('hide');
                     }

@@ -1,7 +1,11 @@
 
-<div class="row">
-    <div class="{{$viewClass['label']}}"><h4 class="pull-right">{!! $label !!}</h4></div>
+<div class="row form-group">
+    <div class="{{$viewClass['label']}} "><h4 class="pull-right"><label class="control-label">{!! $label !!}</label></h4></div>
     <div class="{{$viewClass['field']}}">
+        @include('admin::form.error')
+
+        <span name="{{$column}}"></span> {{-- 用于显示错误信息 --}}
+
         <div id="has-many-{{$column}}" >
             <table class="table table-has-many has-many-{{$column}}">
                 <thead>
