@@ -151,6 +151,10 @@ class HasMany extends Field
 
         foreach ($rules as $column => $rule) {
             foreach (array_keys($input[$this->column]) as $key) {
+                if ($input[$this->column][$key][NestedForm::REMOVE_FLAG_NAME]) {
+                    continue;
+                }
+
                 $newRules["{$this->column}.$key.$column"] = $rule;
                 if (isset($input[$this->column][$key][$column]) &&
                     is_array($input[$this->column][$key][$column])) {
@@ -557,8 +561,8 @@ JS;
     });
     
     $('#has-many-{$this->column}').on('click', '.remove', function () {
-        $(this).closest('.has-many-{$this->column}-form').remove();
-        
+        $(this).closest('.has-many-{$this->column}-form').hide();
+        $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
     });
 })();
 JS;
