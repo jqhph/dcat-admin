@@ -5,6 +5,7 @@ namespace Dcat\Admin\Show;
 use Dcat\Admin\Show;
 use Dcat\Admin\Traits\BuilderEvents;
 use Dcat\Admin\Traits\Definitions;
+use Dcat\Admin\Widgets\Dump;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -371,12 +372,7 @@ HTML;
         return $this->unescape()->as(function ($value) use ($field) {
             $content = is_string($value) ? json_decode($value, true) : $value;
 
-            if (is_array($content)) {
-
-                return '<pre>'.json_encode($content, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE).'</pre>';
-            }
-
-            return $value;
+            return Dump::make($value);
         });
     }
 
