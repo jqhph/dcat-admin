@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Psy\Util\Str;
 
 class DateRange extends Field
 {
@@ -58,6 +59,38 @@ class DateRange extends Field
 JS;
 
         return parent::render();
+    }
+
+    /**
+     * Get validation messages for the field.
+     *
+     * @return array|mixed
+     */
+    public function getValidationMessages()
+    {
+        // Default validation message.
+        $messages = $this->validationMessages['default'] ?? [];
+
+        if (request()->isMethod('POST')) {
+            $messages = $this->validationMessages['creation'] ?? $messages;
+        } elseif (request()->isMethod('PUT')) {
+            $messages = $this->validationMessages['update'] ?? $messages;
+        }
+
+        $result = [];
+        foreach ($messages as $key => $message) {
+            $column = explode('.', $key);
+            $rule   = array_pop($column);
+            $column = join('.', $column);
+
+            if ($this->column['start'] == $column) {
+                $result[$column.'start.'.$rule] = $message;
+            } else {
+                $result[$key] = $message;
+            }
+        }
+
+        return $result;
     }
 
     public static function collectAssets()
