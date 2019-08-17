@@ -8,6 +8,8 @@ use Illuminate\Support\Arr;
 
 class KeyValue extends Field
 {
+    const DEFAULT_FLAG_NAME = '_def_';
+
     /**
      * @var array
      */
@@ -55,27 +57,51 @@ class KeyValue extends Field
         $attributes["{$this->column}.keys.*"] = __('Key');
         $attributes["{$this->column}.values.*"] = __('Value');
 
+        $input = $this->prepareValidatorInput($input);
+
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
+    }
+
+    protected function prepareValidatorInput(array $input)
+    {
+        Arr::forget($input, $this->column.'.'.static::DEFAULT_FLAG_NAME);
+
+        return $input;
     }
 
     protected function setupScript()
     {
+        $value = old($this->column, $this->value);
+
+        $number = $value ? count($value) : 0;
+
         $this->script = <<<JS
 
-$('.{$this->column}-add').on('click', function () {
-    var tpl = $('template.{$this->column}-tpl').html();
-    $('tbody.kv-{$this->column}-table').append(tpl);
-});
-
-$('tbody').on('click', '.{$this->column}-remove', function () {
-    $(this).closest('tr').remove();
-});
+(function () {
+    var index = {$number};
+    $('.{$this->column}-add').on('click', function () {
+        var tpl = $('template.{$this->column}-tpl').html().replace('{key}', index).replace('{key}', index);
+        $('tbody.kv-{$this->column}-table').append(tpl);
+        
+        index++;
+    });
+    
+    $('tbody').on('click', '.{$this->column}-remove', function () {
+        $(this).closest('tr').remove();
+    });
+})();
 
 JS;
     }
 
     public function prepare($value)
     {
+        unset($value[static::DEFAULT_FLAG_NAME]);
+
+        if (empty($value)) {
+            return [];
+        }
+
         return array_combine($value['keys'], $value['values']);
     }
 

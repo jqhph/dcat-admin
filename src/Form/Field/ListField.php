@@ -122,7 +122,9 @@ class ListField extends Field
      */
     protected function setupScript()
     {
-        $number = $this->value ? count($this->value) : 0;
+        $value = old($this->column, $this->value);
+
+        $number = $value ? count($value) : 0;
 
         $this->script = <<<JS
 (function () {
