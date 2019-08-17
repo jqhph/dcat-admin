@@ -907,6 +907,13 @@ window.require = window.define = window.exports = window.module = undefined;
                 $c = $form.find('[name="' + column.replace(/end$/, '') + '"]');
             }
 
+            if (!$c.length) {
+                $c = $form.find('[name="' + column.replace(/start\]$/, ']') + '"]');
+            }
+            if (!$c.length) {
+                $c = $form.find('[name="' + column.replace(/end\]$/, ']') + '"]');
+            }
+
             return $c;
         }
 
