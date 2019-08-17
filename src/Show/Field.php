@@ -369,12 +369,11 @@ HTML;
         $field = $this;
 
         return $this->unescape()->as(function ($value) use ($field) {
-            $content = json_decode($value, true);
+            $content = is_string($value) ? json_decode($value, true) : $value;
 
-            if (json_last_error() == 0) {
-                $field->border = false;
+            if (is_array($content)) {
 
-                return '<pre><code>'.json_encode($content, JSON_PRETTY_PRINT).'</code></pre>';
+                return '<pre>'.json_encode($content, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE).'</pre>';
             }
 
             return $value;
