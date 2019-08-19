@@ -1,6 +1,6 @@
 
 <div class="row form-group">
-    <div class="{{$viewClass['label']}} "><h4 class="pull-right"><label class="control-label">{!! $label !!}</label></h4></div>
+    <div class="{{$viewClass['label']}} "><label class="control-label pull-right">{!! $label !!}</label></div>
     <div class="{{$viewClass['field']}}">
         @include('admin::form.error')
 

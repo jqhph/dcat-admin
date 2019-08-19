@@ -357,14 +357,12 @@ class Filter implements Renderable
 
     public function withoutBorder()
     {
-        $this->border = '';
-
-        return $this;
+        return $this->withBorder('');
     }
 
-    public function withBorder()
+    public function withBorder($border = null)
     {
-        $this->border = 'border-top:1px solid #f4f4f4;';
+        $this->border = is_null($border) ? 'border-top:1px solid #f4f4f4;' : $border;
 
         return $this;
     }
@@ -372,11 +370,15 @@ class Filter implements Renderable
     /**
      * Remove filter by column.
      *
-     * @param mixed $id
+     * @param string|array $column
      */
     public function removeFilter($column)
     {
-        $this->filters = array_filter($this->filters, function (AbstractFilter $filter) use ($column) {
+        $this->filters = array_filter($this->filters, function (AbstractFilter $filter) use (&$column) {
+            if (is_array($column)) {
+                return ! in_array($filter->getColumn(), $column);
+            }
+
             return $filter->getColumn() != $column;
         });
     }

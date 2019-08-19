@@ -5,7 +5,7 @@
             @if($loop->last)
                 <li class="active">
                     @if (\Illuminate\Support\Arr::has($item, 'icon'))
-                        <i class="fa fa-{{ $item['icon'] }}"></i>
+                        <i class="fa {{ $item['icon'] }}"></i>
                     @endif
                     {{ $item['text'] }}
                 </li>
@@ -13,7 +13,7 @@
                 <li>
                     <a href="{{ admin_url(\Illuminate\Support\Arr::get($item, 'url')) }}">
                         @if (\Illuminate\Support\Arr::has($item, 'icon'))
-                            <i class="fa fa-{{ $item['icon'] }}"></i>
+                            <i class="fa {{ $item['icon'] }}"></i>
                         @endif
                         {{ $item['text'] }}
                     </a>
