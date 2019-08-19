@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Grid;
 
+use Dcat\Admin\Grid\Column\Help;
+use Dcat\Admin\Grid\Column\Sorter;
 use Dcat\Admin\Widgets\Widget;
 use Dcat\Admin\Grid;
 
@@ -91,6 +93,20 @@ class Header extends Widget
         $this->html[] = $html;
 
         return $this;
+    }
+
+    /**
+     * Add a help tooltip to column header.
+     *
+     * @param string|\Closure $message
+     * @param null|string $style 'green', 'blue', 'red', 'purple'
+     * @param null|string $placement 'bottom', 'left', 'right', 'top'
+     *
+     * @return $this
+     */
+    public function help($message, ?string $style = null, ? string $placement = 'bottom')
+    {
+        return $this->append((new Help($message, $style, $placement))->render());
     }
 
     protected function setupAttributes()

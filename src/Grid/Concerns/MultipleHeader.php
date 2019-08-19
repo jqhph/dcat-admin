@@ -15,15 +15,17 @@ trait MultipleHeader
     protected $mutipleHeaders = [];
 
     /**
+     * Merge cells.
      *
      * @param string $label
      * @param array $columnNames
+     *
      * @return Header
      */
-    public function addMultipleHeader(string $label, array $columnNames)
+    public function combine(string $label, array $columnNames)
     {
-        if (!$columnNames || count($columnNames) < 2) {
-            throw new \InvalidArgumentException('The number of sub titles must be greater than 2');
+        if (count($columnNames) < 2) {
+            throw new \InvalidArgumentException('The number of "$columnNames" must be greater than 2');
         }
         $this->withBorder();
 
