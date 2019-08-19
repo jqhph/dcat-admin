@@ -167,7 +167,7 @@ class Tab extends Widget implements Renderable
     {
         $data = array_merge(
             $this->data,
-            ['attributes' => $this->formatAttributes(), 'padding' => $this->padding]
+            ['attributes' => $this->formatHtmlAttributes(), 'padding' => $this->padding]
         );
 
         return view($this->view, $data)->render();

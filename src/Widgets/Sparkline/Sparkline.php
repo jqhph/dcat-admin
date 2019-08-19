@@ -171,13 +171,13 @@ JS
 
         Admin::script($this->script());
 
-        $this->setAttribute([
+        $this->setHtmlAttribute([
             'id' => $this->id,
         ]);
 
         $this->collectAssets();
         return <<<HTML
-<span {$this->formatAttributes()}></span>
+<span {$this->formatHtmlAttributes()}></span>
 HTML;
 
     }

@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 
 class Navbar extends Widget
 {
+    const DROPDOWN_FLAG_KEY = '__dropdown__';
+
     protected $view = 'admin::widgets.navbar';
 
     protected $id;
@@ -104,7 +106,7 @@ class Navbar extends Widget
             $closure($dropdown);
         }
 
-        $this->items['__dropdown__'] = $dropdown;
+        $this->items[self::DROPDOWN_FLAG_KEY] = $dropdown;
 
         return $this;
     }
@@ -112,7 +114,7 @@ class Navbar extends Widget
     public function variables()
     {
         foreach ($this->items as $k => &$item) {
-            if ($k === '__dropdown__') {
+            if ($k === self::DROPDOWN_FLAG_KEY) {
                 continue;
             }
 
@@ -143,11 +145,11 @@ JS
         }
 
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'items' => $this->items,
-            'attributes' => $this->formatAttributes(),
-            'actives' => $this->actives,
+            'id'         => $this->id,
+            'title'      => $this->title,
+            'items'      => $this->items,
+            'attributes' => $this->formatHtmlAttributes(),
+            'actives'    => $this->actives,
         ];
     }
 

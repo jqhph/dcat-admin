@@ -110,7 +110,7 @@ class Tree extends Widget
 
         $this->id($id);
         $this->class('jstree-wrapper');
-        $this->defaultAttribute('style', 'border:0;padding:5px 0');
+        $this->defaultHtmlAttribute('style', 'border:0;padding:5px 0');
 
         $this->formatNodes();
 

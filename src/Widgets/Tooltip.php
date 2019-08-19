@@ -158,10 +158,10 @@ class Tooltip extends Widget
             Admin::style(".tooltip-inner{max-width:{$this->maxWidth}}");
         }
 
-        $this->defaultAttribute('class', 'tooltip-inner');
+        $this->defaultHtmlAttribute('class', 'tooltip-inner');
         $this->style('background:'.$this->bg, true);
 
-        $this->options['template'] = "<div class='tooltip' role='tooltip'><div class='tooltip-arrow' style='border-{$this->options['placement']}-color:{$this->bg}'></div><div {$this->formatAttributes()}></div></div>";
+        $this->options['template'] = "<div class='tooltip' role='tooltip'><div class='tooltip-arrow' style='border-{$this->options['placement']}-color:{$this->bg}'></div><div {$this->formatHtmlAttributes()}></div></div>";
 
         $opts = json_encode($this->options, JSON_UNESCAPED_UNICODE);
 

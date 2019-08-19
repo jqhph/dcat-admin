@@ -13,8 +13,8 @@ class PieChartCard extends DoughnutChartCard
                 ->responsive(false)
                 ->height('85px')
                 ->width('85px')
-                ->setAttribute('width', '85px')
-                ->setAttribute('height', '85px')
+                ->setHtmlAttribute('width', '85px')
+                ->setHtmlAttribute('height', '85px')
                 ->disableLegend();
     }
 }

@@ -126,7 +126,7 @@ class Card extends Widget
 
     protected function setupFetchScript()
     {
-        $id = $this->attributes['id'];
+        $id = $this->getHtmlAttribute('id');
 
         $this->fetching(
             <<<SCRIPT

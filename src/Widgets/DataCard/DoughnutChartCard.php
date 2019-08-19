@@ -36,8 +36,8 @@ class DoughnutChartCard extends Card
             ->responsive(false) // 去掉自适应，这里固定大小即可，否则手机端显示会有问题
             ->height('85px')
             ->width('85px')
-            ->setAttribute('width', '85px')
-            ->setAttribute('height', '85px')
+            ->setHtmlAttribute('width', '85px')
+            ->setHtmlAttribute('height', '85px')
             ->disableLegend();
     }
 
@@ -155,6 +155,9 @@ HTML;
     {
         $this->buildDots();
 
-        return $this->chart->toJsonResponse(true, array_merge($this->buildJsonResponseArray(), $data));
+        return $this->chart->toJsonResponse(
+            true,
+            array_merge($this->buildJsonResponseArray(), $data)
+        );
     }
 }

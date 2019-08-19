@@ -5,6 +5,7 @@ namespace Dcat\Admin\Widgets;
 use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -70,6 +71,8 @@ use Illuminate\Support\Str;
  */
 class Form implements Renderable
 {
+    use HasHtmlAttributes;
+
     /**
      * @var Field[]
      */
@@ -84,11 +87,6 @@ class Form implements Renderable
      * @var array
      */
     protected $data = [];
-
-    /**
-     * @var array
-     */
-    protected $attributes = [];
 
     /**
      * Available buttons.
@@ -138,13 +136,13 @@ class Form implements Renderable
      */
     protected function initFormAttributes()
     {
-        $this->attributes = [
+        $this->setHtmlAttribute([
             'method'         => 'POST',
             'action'         => '',
             'class'          => 'form-horizontal',
             'accept-charset' => 'UTF-8',
             'pjax-container' => true,
-        ];
+        ]);
     }
 
     /**
@@ -156,7 +154,7 @@ class Form implements Renderable
      */
     public function action($action)
     {
-        return $this->attribute('action', $action);
+        return $this->setHtmlAttribute('action', $action);
     }
 
     /**
@@ -164,7 +162,7 @@ class Form implements Renderable
      */
     public function getAction()
     {
-        return $this->attributes['action'];
+        return $this->getHtmlAttribute('action');
     }
 
     /**
@@ -176,7 +174,7 @@ class Form implements Renderable
      */
     public function method($method = 'POST')
     {
-        return $this->attribute('method', strtoupper($method));
+        return $this->setHtmlAttribute('method', strtoupper($method));
     }
 
     /**
@@ -200,28 +198,6 @@ class Form implements Renderable
         return $fieldset;
     }
 
-
-    /**
-     * Add form attributes.
-     *
-     * @param string|array $attr
-     * @param string       $value
-     *
-     * @return $this
-     */
-    public function attribute($attr, $value = '')
-    {
-        if (is_array($attr)) {
-            foreach ($attr as $key => $value) {
-                $this->attribute($key, $value);
-            }
-        } else {
-            $this->attributes[$attr] = $value;
-        }
-
-        return $this;
-    }
-
     /**
      * Disable Pjax.
      *
@@ -229,7 +205,7 @@ class Form implements Renderable
      */
     public function disablePjax()
     {
-        Arr::forget($this->attributes, 'pjax-container');
+        $this->forgetHtmlAttribute('pjax-container');
 
         return $this;
     }
@@ -342,33 +318,10 @@ class Form implements Renderable
 
         return [
             'fields'     => $this->fields,
-            'attributes' => $this->formatAttribute(),
-            'method'     => $this->attributes['method'],
+            'attributes' => $this->formatHtmlAttributes(),
+            'method'     => $this->getHtmlAttribute('method'),
             'buttons'    => $this->buttons,
         ];
-    }
-
-    /**
-     * Format form attributes form array to html.
-     *
-     * @param array $attributes
-     *
-     * @return string
-     */
-    public function formatAttribute($attributes = [])
-    {
-        $attributes = $attributes ?: $this->attributes;
-
-        if ($this->hasFile()) {
-            $attributes['enctype'] = 'multipart/form-data';
-        }
-
-        $html = [];
-        foreach ($attributes as $key => $val) {
-            $html[] = "$key=\"$val\"";
-        }
-
-        return implode(' ', $html) ?: '';
     }
 
     /**

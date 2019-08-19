@@ -396,7 +396,7 @@ JS
 
         $this->script = $this->script();
 
-        $this->setAttribute([
+        $this->setHtmlAttribute([
             'id' => $this->id,
         ]);
 
@@ -404,7 +404,7 @@ JS
 
         return <<<HTML
 <div class="chart" style="{$this->containerStyle}">
-    <canvas {$this->formatAttributes()}>
+    <canvas {$this->formatHtmlAttributes()}>
         Your browser does not support the canvas element.
     </canvas>
 </div>

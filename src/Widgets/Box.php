@@ -170,7 +170,7 @@ class Box extends Widget implements Renderable
             'title'      => $this->title,
             'content'    => $this->content,
             'tools'      => $this->tools,
-            'attributes' => $this->formatAttributes(),
+            'attributes' => $this->formatHtmlAttributes(),
             'padding'    => $this->padding,
         ];
     }

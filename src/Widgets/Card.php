@@ -96,7 +96,7 @@ class Card extends Widget
             'title'      => $this->title,
             'content'    => $this->content,
             'tools'      => $this->tools,
-            'attributes' => $this->formatAttributes(),
+            'attributes' => $this->formatHtmlAttributes(),
             'style'      => $this->style,
             'padding'    => $this->padding,
         ];

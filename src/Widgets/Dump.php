@@ -64,10 +64,10 @@ class Dump extends Widget
 
     public function render()
     {
-        $this->defaultAttribute('style', 'white-space:pre-wrap');
+        $this->defaultHtmlAttribute('style', 'white-space:pre-wrap');
 
         return <<<EOF
-<div style="padding:{$this->padding}"><pre class="dump" {$this->formatAttributes()}>{$this->content}</pre></div>
+<div style="padding:{$this->padding}"><pre class="dump" {$this->formatHtmlAttributes()}>{$this->content}</pre></div>
 EOF;
 
     }

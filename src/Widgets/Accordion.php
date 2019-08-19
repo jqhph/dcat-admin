@@ -66,10 +66,10 @@ class Accordion extends Widget implements Renderable
     public function variables()
     {
         return [
-            'id'         => $this->attributes['id'],
+            'id'         => $this->getHtmlAttribute('id'),
             'items'      => $this->items,
             'panelStyle' => $this->panelStyle,
-            'attributes' => $this->formatAttributes(),
+            'attributes' => $this->formatHtmlAttributes(),
         ];
     }
 }

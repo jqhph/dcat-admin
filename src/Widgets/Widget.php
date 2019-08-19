@@ -4,6 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
@@ -15,6 +16,8 @@ use Illuminate\Contracts\Support\Renderable;
  */
 abstract class Widget implements Renderable
 {
+    use HasHtmlAttributes;
+
     /**
      * @var array
      */
@@ -34,11 +37,6 @@ abstract class Widget implements Renderable
      * @var string
      */
     protected $script = '';
-
-    /**
-     * @var array
-     */
-    protected $attributes = [];
 
     /**
      * @var array
@@ -83,16 +81,6 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * Get the attributes from the fluent instance.
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
      * Variables in view.
      *
      * @return array
@@ -100,7 +88,7 @@ abstract class Widget implements Renderable
     public function variables()
     {
         return array_merge($this->variables, [
-            'attributes' => $this->formatAttributes(),
+            'attributes' => $this->formatHtmlAttributes(),
             'options'    => $this->options,
         ]);
     }
@@ -155,50 +143,6 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * Set default attribute.
-     *
-     * @param string $attribute
-     * @param mixed $value
-     * @return $this
-     */
-    public function defaultAttribute($attribute, $value)
-    {
-        if (!array_key_exists($attribute, $this->attributes)) {
-            $this->setAttribute($attribute, $value);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set element attributes.
-     *
-     * @param $k
-     * @param null $v
-     * @return $this
-     */
-    public function setAttribute($k, $v = null)
-    {
-        if (is_array($k)) {
-            $this->attributes = array_merge($this->attributes, $k);
-        } else {
-            $this->attributes[$k] = $v;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Build an HTML attribute string from an array.
-     *
-     * @return string
-     */
-    public function formatAttributes()
-    {
-        return Helper::buildHtmlAttributes($this->getAttributes());
-    }
-
-    /**
      * @param $method
      * @param $parameters
      * @return $this
@@ -210,17 +154,17 @@ abstract class Widget implements Renderable
             $append = $parameters[1] ?? ($method === 'class' ? false : true);
 
             if ($append) {
-                $original = $this->attributes[$method] ?? '';
+                $original = $this->htmlAttributes[$method] ?? '';
 
                 $de = $method === 'style' ? ';' : ' ';
 
                 $value = $original . $de . $value;
             }
 
-            return $this->setAttribute($method, $value);
+            return $this->setHtmlAttribute($method, $value);
         }
 
-        $this->attributes[$method] = count($parameters) > 0 ? $parameters[0] : true;
+        $this->htmlAttributes[$method] = count($parameters) > 0 ? $parameters[0] : true;
 
         return $this;
     }
@@ -231,7 +175,7 @@ abstract class Widget implements Renderable
      */
     public function __get($key)
     {
-        return $this->attributes[$key] ?? null;
+        return $this->htmlAttributes[$key] ?? null;
     }
 
     /**
@@ -241,7 +185,7 @@ abstract class Widget implements Renderable
      */
     public function __set($key, $value)
     {
-        $this->attributes[$key] = $value;
+        $this->htmlAttributes[$key] = $value;
     }
 
     /**

@@ -53,7 +53,7 @@ class Row
      */
     public function getRowAttributes()
     {
-        return $this->formatHtmlAttribute($this->attributes);
+        return $this->formatHtmlAttributes($this->attributes);
     }
 
     /**
@@ -69,7 +69,7 @@ class Row
             ($column = $this->grid->getColumns()->get($column))
             && ($attributes = $column->getAttributes())
         ) {
-            return $this->formatHtmlAttribute($attributes);
+            return $this->formatHtmlAttributes($attributes);
         }
         return '';
     }
@@ -81,7 +81,7 @@ class Row
      *
      * @return string
      */
-    private function formatHtmlAttribute($attributes = [])
+    private function formatHtmlAttributes($attributes = [])
     {
         $attrArr = [];
         foreach ($attributes as $name => $val) {

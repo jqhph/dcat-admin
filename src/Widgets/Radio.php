@@ -38,12 +38,12 @@ class Radio extends Widget
             return $this;
         }
 
-        return $this->setAttribute('disabled', 'disabled');
+        return $this->setHtmlAttribute('disabled', 'disabled');
     }
 
     public function name($name)
     {
-        return $this->setAttribute('name', $name);
+        return $this->setHtmlAttribute('name', $name);
     }
 
     public function inline()
@@ -104,7 +104,7 @@ class Radio extends Widget
         return [
             'style'      => $this->style,
             'options'    => $this->options,
-            'attributes' => $this->formatAttributes(),
+            'attributes' => $this->formatHtmlAttributes(),
             'checked'    => $this->checked,
             'inline'     => $this->inline ? $this->type.'-inline' : '',
             'disabled'   => $this->disabledValues,
@@ -113,7 +113,7 @@ class Radio extends Widget
 
     public function render()
     {
-        $this->setAttribute('type', $this->type);
+        $this->setHtmlAttribute('type', $this->type);
 
         return parent::render();
     }

@@ -77,7 +77,7 @@ class Markdown extends Widget
         }
 
         return <<<EOF
-<div {$this->formatAttributes()}><textarea style="display:none;">{$this->content}</textarea></div>
+<div {$this->formatHtmlAttributes()}><textarea style="display:none;">{$this->content}</textarea></div>
 EOF;
 
     }
@@ -86,7 +86,7 @@ EOF;
     {
         $id = uniqid();
 
-        $this->defaultAttribute('id', $id);
+        $this->defaultHtmlAttribute('id', $id);
 
         $opts = json_encode($this->options);
 

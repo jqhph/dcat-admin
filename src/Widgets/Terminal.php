@@ -51,7 +51,7 @@ class Terminal extends Widget
         static::$style = null;
 
         return <<<EOF
-{$style}<pre {$this->formatAttributes()}>{$this->content}</pre>
+{$style}<pre {$this->formatHtmlAttributes()}>{$this->content}</pre>
 EOF;
 
     }

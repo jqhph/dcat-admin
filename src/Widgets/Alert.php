@@ -127,7 +127,7 @@ class Alert extends Widget implements Renderable
             'title'        => $this->title,
             'content'      => $this->content,
             'icon'         => $this->icon,
-            'attributes'   => $this->formatAttributes(),
+            'attributes'   => $this->formatHtmlAttributes(),
             'showCloseBtn' => $this->showCloseBtn,
         ];
     }

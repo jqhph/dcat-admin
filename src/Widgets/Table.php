@@ -30,7 +30,7 @@ class Table extends Widget implements Renderable
     /**
      * @var int
      */
-    protected $level = 0;
+    protected $depth = 0;
 
     /**
      * Table constructor.
@@ -62,9 +62,13 @@ class Table extends Widget implements Renderable
         return $this;
     }
 
-    public function level($level)
+    /**
+     * @param int $depth
+     * @return $this
+     */
+    public function depth(int $depth)
     {
-        $this->level = $level;
+        $this->depth = $depth;
 
         return $this;
     }
@@ -78,36 +82,36 @@ class Table extends Widget implements Renderable
      */
     public function setRows($rows = [])
     {
-        $noTrPadding = false;
-
-        if (Arr::isAssoc($rows)) {
-            foreach ($rows as $key => $item) {
-                if (is_array($item)) {
-                    if (Arr::isAssoc($item)) {
-                        $borderLeft = $this->level ? 'table-left-border-nofirst' : 'table-left-border';
-
-                        $item = static::make()
-                            ->level($this->level + 1)
-                            ->setRows($item)
-                            ->class('table-no-top-border '.$borderLeft, true)
-                            ->render();
-
-                        if (!$noTrPadding) {
-                            $this->class('table-no-tr-padding', true);
-                        }
-                        $noTrPadding = true;
-                    } else {
-                        $item = json_encode($item, JSON_UNESCAPED_UNICODE);
-                    }
-                }
-
-                $this->rows[] = [$key, $item];
-            }
+        if (! Arr::isAssoc($rows)) {
+            $this->rows = $rows;
 
             return $this;
         }
 
-        $this->rows = $rows;
+        $noTrPadding = false;
+
+        foreach ($rows as $key => $item) {
+            if (is_array($item)) {
+                if (Arr::isAssoc($item)) {
+                    $borderLeft = $this->level ? 'table-left-border-nofirst' : 'table-left-border';
+
+                    $item = static::make()
+                        ->depth($this->depth + 1)
+                        ->setRows($item)
+                        ->class('table-no-top-border '.$borderLeft, true)
+                        ->render();
+
+                    if (!$noTrPadding) {
+                        $this->class('table-no-tr-padding', true);
+                    }
+                    $noTrPadding = true;
+                } else {
+                    $item = json_encode($item, JSON_UNESCAPED_UNICODE);
+                }
+            }
+
+            $this->rows[] = [$key, $item];
+        }
 
         return $this;
     }
@@ -137,7 +141,7 @@ class Table extends Widget implements Renderable
             'headers'    => $this->headers,
             'rows'       => $this->rows,
             'style'      => $this->style,
-            'attributes' => $this->formatAttributes(),
+            'attributes' => $this->formatHtmlAttributes(),
         ];
 
         return view($this->view, $vars)->render();

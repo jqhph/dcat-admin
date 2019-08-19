@@ -85,6 +85,6 @@ JS
             $html .= "<li class='$active bg-white'>$item</li>";
         }
 
-        return "<ul {$this->formatAttributes()}>{$html}</ul>";
+        return "<ul {$this->formatHtmlAttributes()}>{$html}</ul>";
     }
 }

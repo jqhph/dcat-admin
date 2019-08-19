@@ -59,6 +59,9 @@ class LineChartCard extends Card
      */
     public function toJsonResponse(array $data = [])
     {
-        return $this->chart->toJsonResponse(true, array_merge($this->buildJsonResponseArray(), $data));
+        return $this->chart->toJsonResponse(
+            true,
+            array_merge($this->buildJsonResponseArray(), $data)
+        );
     }
 }

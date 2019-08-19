@@ -91,7 +91,7 @@ class Code extends Markdown
     public function read($file, $start = 1, $end = 10)
     {
         if (!$file or !is_readable($file) || $end < $start) {
-            return [];
+            return $this;
         }
 
         $file = fopen($file, 'r');
@@ -119,7 +119,7 @@ class Code extends Markdown
         }
 
         return <<<EOF
-<div {$this->formatAttributes()}><textarea style="display:none;">
+<div {$this->formatHtmlAttributes()}><textarea style="display:none;">
 ```{$this->lang}
 {$this->content}
 ```

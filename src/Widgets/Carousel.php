@@ -2,9 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Illuminate\Contracts\Support\Renderable;
-
-class Carousel extends Widget implements Renderable
+class Carousel extends Widget
 {
     /**
      * @var string
@@ -32,7 +30,7 @@ class Carousel extends Widget implements Renderable
 
         $this->id('carousel-'.uniqid());
         $this->class('carousel slide');
-        $this->offsetSet('data-ride', 'carousel');
+        $this->setHtmlAttribute('data-ride', 'carousel');
     }
 
     /**
@@ -55,7 +53,7 @@ class Carousel extends Widget implements Renderable
         $variables = [
             'items'      => $this->items,
             'title'      => $this->title,
-            'attributes' => $this->formatAttributes(),
+            'attributes' => $this->formatHtmlAttributes(),
             'id'         => $this->id,
         ];
 
