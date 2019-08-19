@@ -3,11 +3,9 @@
 namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Widgets\Widget;
-use Illuminate\Contracts\Support\Renderable;
-use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 
-class Header extends Widget implements Renderable
+class Header extends Widget
 {
     /**
      * @var Grid
@@ -25,9 +23,9 @@ class Header extends Widget implements Renderable
     protected $columnNames = [];
 
     /**
-     * @var string
+     * @var array
      */
-    protected $sorter;
+    protected $html = [];
 
     public function __construct(Grid $grid, string $label, array $columnNames)
     {
@@ -78,37 +76,37 @@ class Header extends Widget implements Renderable
      */
     public function responsive(int $priority = 1)
     {
-        $this->setAttribute('data-priority', $priority);
+        $this->setHtmlAttribute('data-priority', $priority);
 
         return $this;
     }
 
     /**
      *
-     * @param string $sorter
+     * @param string $html
      * @return $this
      */
-    public function setSorter(string $sorter)
+    public function append($html)
     {
-        $this->sorter = $sorter;
+        $this->html[] = $html;
+
         return $this;
     }
 
-    /**
-     * 初始化属性
-     */
     protected function setupAttributes()
     {
         $count = count($this->columnNames);
         if ($count == 1) {
-            $this->attributes['rowspan'] = 2;
+            $this->htmlAttributes['rowspan'] = 2;
         } else {
-            $this->attributes['colspan'] = $count;
+            $this->htmlAttributes['colspan'] = $count;
         }
     }
 
     public function render()
     {
-        return "<th {$this->formatAttributes()}>{$this->label}{$this->sorter}</th>";
+        $headers = implode(' ', $this->html);
+
+        return "<th {$this->formatHtmlAttributes()}>{$this->label}{$headers}</th>";
     }
 }

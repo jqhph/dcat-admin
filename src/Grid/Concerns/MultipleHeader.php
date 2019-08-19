@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Concerns;
 
+use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Header;
 
 trait MultipleHeader
@@ -92,5 +93,24 @@ trait MultipleHeader
             $afterHeaders
         );
     }
+
+    protected function createHeaderWithColumns(array $columns)
+    {
+        $headers = [];
+        /* @var Column $column */
+        foreach ($columns as $name => $column) {
+            $header = new Header($this, $column->getLabel(), [$name]);
+            $prio = $column->getDataPriority();
+            if (is_int($prio)) {
+                $header->responsive($prio);
+            }
+            if ($html = $column->renderHeader()) {
+                $header->append($html);
+            }
+            $headers[] = $header;
+        }
+        return $headers;
+    }
+
 
 }

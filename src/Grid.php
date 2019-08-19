@@ -642,24 +642,6 @@ HTML
         $this->sortHeaders();
     }
 
-    protected function createHeaderWithColumns(array $columns)
-    {
-        $headers = [];
-        /* @var Column $column */
-        foreach ($columns as $name => $column) {
-            $header = new Header($this, $column->getLabel(), [$name]);
-            $prio = $column->getDataPriority();
-            if (is_int($prio)) {
-                $header->responsive($prio);
-            }
-            if ($sorter = $column->sorter()) {
-                $header->setSorter($sorter);
-            }
-            $headers[] = $header;
-        }
-        return $headers;
-    }
-
     /**
      * @return Tools
      */
