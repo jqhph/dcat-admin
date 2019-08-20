@@ -907,11 +907,24 @@ class Form implements Renderable
     {
         $relations = [];
         $this->builder->fields()->each(function ($field) use (&$relations) {
-            if (Str::contains($field->column(), '.')) {
-                $first = explode('.', $field->column())[0];
+            $column = $field->column();
 
+            if (is_array($column)) {
+                foreach ($column as $v) {
+                    if (Str::contains($v, '.')) {
+                        $first = explode('.', $v)[0];
+                        $relations[$first] = null;
+                    }
+                }
+
+                return;
+            }
+
+            if (Str::contains($column, '.')) {
+                $first = explode('.', $column)[0];
                 $relations[$first] = null;
             }
+
         });
 
         foreach ($relations as $first => $v) {
