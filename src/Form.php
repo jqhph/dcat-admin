@@ -877,9 +877,7 @@ class Form implements Renderable
      */
     public function prepareInsert($inserts)
     {
-        if ($this->isHasOneRelation($inserts)) {
-            $inserts = Arr::dot($inserts);
-        }
+        $this->prepareHasOneRelation($inserts);
 
         foreach ($inserts as $column => $value) {
             if (is_null($field = $this->getFieldByColumn($column))) {
@@ -904,21 +902,24 @@ class Form implements Renderable
      *
      * @param array $inserts
      *
-     * @return bool
      */
-    protected function isHasOneRelation($inserts)
+    function prepareHasOneRelation(array &$inserts)
     {
-        $first = current($inserts);
+        $relations = [];
+        $this->builder->fields()->each(function ($field) use (&$relations) {
+            if (Str::contains($field->column(), '.')) {
+                $first = explode('.', $field->column())[0];
 
-        if (!is_array($first)) {
-            return false;
+                $relations[$first] = null;
+            }
+        });
+
+        foreach ($relations as $first => $v) {
+            if (isset($inserts[$first])) {
+                $inserts = array_merge($inserts, Arr::dot([$first => $inserts[$first]]));
+            }
         }
 
-        if (is_array(current($first))) {
-            return false;
-        }
-
-        return Arr::isAssoc($first);
     }
 
     /**

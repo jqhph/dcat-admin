@@ -174,7 +174,9 @@ abstract class EloquentRepository extends Repository
 
             $relations = $this->getRelationInputs($model, $updates);
 
-            $updates = Arr::except($updates, array_keys($relations));
+            if ($relations) {
+                $updates = Arr::except($updates, array_keys($relations));
+            }
 
             foreach ($updates as $column => $value) {
                 $model->setAttribute($column, $value);
