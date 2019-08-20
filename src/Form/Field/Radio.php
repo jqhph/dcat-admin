@@ -88,7 +88,7 @@ class Radio extends Field
     {
         if ($this->options instanceof \Closure) {
             $this->options(
-                $this->options->call($this->getFormModel(), $this->value, $this)
+                $this->options->call($this->getFormModel(), $this->value(), $this)
             );
         }
 

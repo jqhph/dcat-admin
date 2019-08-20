@@ -135,7 +135,7 @@ class File extends Field
     {
         $previews = [];
 
-        foreach ($this->value as $value) {
+        foreach ($this->value() as $value) {
             $previews[] = [
                 'id' => $value,
                 'path' => basename($value),
@@ -160,7 +160,7 @@ class File extends Field
     {
         $this->setDefaultServer();
 
-        if (!empty($this->value)) {
+        if (!empty($this->value())) {
             $this->setupPreviewOptions();
         }
 
@@ -168,6 +168,8 @@ class File extends Field
 
         if ($this->value !== null) {
             $this->value = join(',', $this->value);
+        } elseif (is_array($this->default)) {
+            $this->default = join(',', $this->default);
         }
         $this->addVariables([
             'options' => json_encode($this->options),

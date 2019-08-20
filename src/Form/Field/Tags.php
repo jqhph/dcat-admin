@@ -144,10 +144,10 @@ class Tags extends Field
     public function value($value = null)
     {
         if (is_null($value)) {
-            return empty($this->value) ? ($this->getDefault() ?? []) : $this->value;
+            return empty($this->value) ? Helper::array($this->getDefault()) : $this->value;
         }
 
-        $this->value = (array) $value;
+        $this->value = Helper::array($value);
 
         return $this;
     }
@@ -157,9 +157,11 @@ class Tags extends Field
      */
     public function render()
     {
+        $value = Helper::array($this->value());
+
         if ($this->options instanceof \Closure) {
             $this->options(
-                $this->options->call($this->getFormModel(), $this->value, $this)
+                $this->options->call($this->getFormModel(), $value, $this)
             );
         }
 
@@ -169,9 +171,9 @@ class Tags extends Field
         });";
 
         if ($this->keyAsValue) {
-            $options = $this->value + $this->options;
+            $options = $value + $this->options;
         } else {
-            $options = array_unique(array_merge($this->value, $this->options));
+            $options = array_unique(array_merge($value, $this->options));
         }
 
         return parent::render()->with([

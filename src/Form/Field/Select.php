@@ -374,7 +374,7 @@ JS;
         if ($this->options instanceof \Closure) {
             $this->options = $this->options->bindTo($this->getFormModel());
 
-            $this->options(call_user_func($this->options, $this->value, $this));
+            $this->options(call_user_func($this->options, $this->value(), $this));
         }
 
         $this->options = array_filter($this->options, 'strlen');
@@ -384,7 +384,7 @@ JS;
             'groups'  => $this->groups,
         ]);
 
-        $this->attribute('data-value', implode(',', (array) $this->value()));
+        $this->attribute('data-value', implode(',', Helper::array($this->value())));
 
         return parent::render();
     }

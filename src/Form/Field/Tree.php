@@ -109,13 +109,13 @@ class Tree extends Field
     protected function formatNodes()
     {
         $value = Helper::array(
-            old($this->column, $this->value ?: $this->getDefault())
+            old($this->column, $this->value())
         );
 
         $this->value = &$value;
 
         if ($this->nodes instanceof \Closure) {
-            $this->nodes = $this->nodes->call($this->getFormModel(), $this->value, $this);
+            $this->nodes = $this->nodes->call($this->getFormModel(), $this->value(), $this);
         }
 
         if (!$this->nodes) return;

@@ -602,6 +602,11 @@ class Field implements Renderable
         return $this;
     }
 
+    public function old()
+    {
+        return old($this->column, $this->value());
+    }
+
     /**
      * Get original value of the field.
      *

@@ -72,7 +72,7 @@ class SelectResource extends Field
     protected function formatOptions()
     {
         if ($this->options instanceof \Closure) {
-            $value = Helper::array(old($this->column, $this->value));
+            $value = Helper::array(old($this->column, $this->value()));
 
             $this->options = $this->options->call($this->getFormModel(), $value, $this);
         }

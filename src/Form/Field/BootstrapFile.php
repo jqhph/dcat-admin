@@ -142,7 +142,7 @@ class BootstrapFile extends Field
      */
     protected function preview()
     {
-        return $this->objectUrl($this->value);
+        return $this->objectUrl($this->value());
     }
 
     /**
@@ -163,7 +163,7 @@ class BootstrapFile extends Field
     protected function initialPreviewConfig()
     {
         return [
-            ['caption' => basename($this->value), 'key' => 0],
+            ['caption' => basename($this->value()), 'key' => 0],
         ];
     }
 

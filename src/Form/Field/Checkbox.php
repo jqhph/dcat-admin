@@ -118,7 +118,7 @@ class Checkbox extends MultipleSelect
     {
         if ($this->options instanceof \Closure) {
             $this->options(
-                $this->options->call($this->getFormModel(), $this->value, $this)
+                $this->options->call($this->getFormModel(), $this->value(), $this)
             );
         }
 

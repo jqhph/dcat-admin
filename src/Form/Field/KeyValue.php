@@ -71,7 +71,7 @@ class KeyValue extends Field
 
     protected function setupScript()
     {
-        $value = old($this->column, $this->value);
+        $value = old($this->column, $this->value());
 
         $number = $value ? count($value) : 0;
 
