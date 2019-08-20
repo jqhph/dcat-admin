@@ -110,6 +110,7 @@ class CreateAdminTables extends Migration
         Schema::connection($connection)->dropIfExists(config('admin.database.role_users_table'));
         Schema::connection($connection)->dropIfExists(config('admin.database.role_permissions_table'));
         Schema::connection($connection)->dropIfExists(config('admin.database.role_menu_table'));
+        Schema::connection($connection)->dropIfExists(config('admin.database.permission_menu_table'));
         Schema::connection($connection)->dropIfExists(config('admin.database.operation_log_table'));
     }
 }
