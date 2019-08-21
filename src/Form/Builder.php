@@ -59,7 +59,7 @@ class Builder
      *
      * @var string
      */
-    protected $mode = 'create';
+    protected $mode = self::MODE_CREATE;
 
     /**
      * @var array
@@ -235,7 +235,7 @@ class Builder
      *
      * @return void
      */
-    public function setMode($mode = 'create')
+    public function setMode(string $mode = self::MODE_CREATE)
     {
         $this->mode = $mode;
     }

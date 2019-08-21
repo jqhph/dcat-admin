@@ -12,6 +12,7 @@ trait Events
      * @var array
      */
     protected $_listeners = [
+        'creating' => [],
         'editing' => [],
         'submitted' => [],
         'saving' => [],
@@ -19,6 +20,18 @@ trait Events
         'deleting' => [],
         'deleted' => [],
     ];
+
+    /**
+     * Set after getting creating model callback.
+     *
+     * @param Closure $callback
+     *
+     * @return void
+     */
+    public function creating(Closure $callback)
+    {
+        $this->_listeners['creating'][] = $callback;
+    }
 
     /**
      * Set after getting editing model callback.
@@ -86,6 +99,16 @@ trait Events
     public function deleted(Closure $callback)
     {
         $this->_listeners['deleted'][] = $callback;
+    }
+
+    /**
+     * Call creating callbacks.
+     *
+     * @return mixed
+     */
+    protected function callCreating()
+    {
+        return $this->callListeners('creating');
     }
 
     /**

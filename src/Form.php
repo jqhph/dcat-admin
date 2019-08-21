@@ -316,6 +316,22 @@ class Form implements Renderable
     }
 
     /**
+     * @return bool
+     */
+    public function isCreating()
+    {
+        return $this->builder->isCreating();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEditing()
+    {
+        return $this->builder->isEditing();
+    }
+
+    /**
      * @return Fluent
      */
     public function model()
@@ -741,7 +757,7 @@ class Form implements Renderable
         }
 
         // 非ajax请求
-        $status = $options['status'] ?? 200;
+        $status = (int) ($options['status_code'] ?? 200);
 
         admin_alert($message);
 
@@ -1400,6 +1416,10 @@ class Form implements Renderable
     public function render()
     {
         try {
+            if ($this->isCreating()) {
+                $this->callCreating();
+            }
+
             $this->callComposing();
 
             return $this->builder->render();
@@ -1427,7 +1447,6 @@ class Form implements Renderable
 
     /**
      * @param string|array $keys
-     * @param null   $value
      *
      * @return void
      */
