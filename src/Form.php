@@ -558,11 +558,10 @@ class Form implements Renderable
             return $response;
         }
 
-        if ($response = $this->ajaxResponse(trans('admin.save_succeeded'), $this->getRedirectUrl($id, $redirectTo))) {
-            return $response;
-        }
-
-        return $this->redirectAfterStore($id, $redirectTo);
+        return $this->redirect(
+            $this->getRedirectUrl($id, $redirectTo),
+            trans('admin.save_succeeded')
+        );
     }
 
     /**
@@ -712,38 +711,42 @@ class Form implements Renderable
             return $result;
         }
 
-        if ($response = $this->ajaxResponse(trans('admin.update_succeeded'), $this->getRedirectUrl($id, $redirectTo))) {
+        return $this->redirect(
+            $this->getRedirectUrl($id, $redirectTo),
+            trans('admin.update_succeeded')
+        );
+    }
+
+    /**
+     * Get redirect response.
+     *
+     * @param string $url
+     * @param array|string $options
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function redirect(?string $url, $options = null)
+    {
+        if (is_string($options)) {
+            $message = $options;
+            $options = [];
+        } else {
+            $message = $options['message'] ?? trans('admin.save_succeeded');
+        }
+
+        $status = (bool) ($options['status'] ?? true);
+
+        // 判断是否是ajax请求
+        if ($response = $this->ajaxResponse($message, $url, $status)) {
             return $response;
         }
 
-        return $this->redirectAfterUpdate($id, $redirectTo);
-    }
+        // 非ajax请求
+        $status = $options['status'] ?? 200;
 
-    /**
-     * Get RedirectResponse after store.
-     *
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    protected function redirectAfterStore($id, $redirectTo)
-    {
-        admin_alert(trans('admin.save_succeeded'));
+        admin_alert($message);
 
-        return redirect($this->getRedirectUrl($id, $redirectTo));
-    }
+        return redirect($url, $status);
 
-    /**
-     * Get RedirectResponse after update.
-     *
-     * @param mixed $key
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function redirectAfterUpdate($key, $redirectTo)
-    {
-        admin_alert(trans('admin.save_succeeded'));
-
-        return redirect($this->getRedirectUrl($key, $redirectTo));
     }
 
     /**
@@ -1420,6 +1423,19 @@ class Form implements Renderable
         }
 
         return Arr::set($this->inputs, $key, $value);
+    }
+
+    /**
+     * Get or set input data.
+     *
+     * @param string|array $keys
+     * @param null   $value
+     *
+     * @return void
+     */
+    public function forgetInput($keys)
+    {
+        Arr::forget($this->inputs, $keys);
     }
 
     /**
