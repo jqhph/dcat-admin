@@ -57,6 +57,8 @@ class TestCase extends BaseTestCase
 
         require __DIR__.'/seeds/factory.php';
 
+        view()->addNamespace('admin-tests', __DIR__.'/views');
+
         if ($this->login) {
             $this->be($this->user = Administrator::first(), 'admin');
         }

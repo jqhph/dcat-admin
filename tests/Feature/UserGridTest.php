@@ -12,7 +12,7 @@ class UserGridTest extends TestCase
 
     public function testIndexPage()
     {
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->see('All users')
             ->seeInElement('tr th', 'Username')
             ->seeInElement('tr th', 'Email')
@@ -29,7 +29,7 @@ class UserGridTest extends TestCase
             ->seeInElement('tr th', 'Created at')
             ->seeInElement('tr th', 'Updated at');
 
-        $action = url('/admin/users');
+        $action = url('/admin/tests/users');
 
         $this->seeElement("form[action='$action'][method=get]")
 //            ->seeElement("form[action='$action'][method=get] input[name=id]")
@@ -40,8 +40,8 @@ class UserGridTest extends TestCase
             ->seeElement("form[action='$action'][method=get] input[name='profile[end_at][start]']")
             ->seeElement("form[action='$action'][method=get] input[name='profile[end_at][end]']");
 
-        $this->seeInElement('a[href="http://localhost:8000/admin/users?_export_=all"]', 'All')
-            ->seeInElement('a[href="http://localhost:8000/admin/users/create"]', 'New');
+        $this->seeInElement('a[href="http://localhost:8000/admin/tests/users?_export_=all"]', 'All')
+            ->seeInElement('a[href="http://localhost:8000/admin/tests/users/create"]', 'New');
     }
 
     protected function seedsTable($count = 100)
@@ -58,7 +58,7 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable();
 
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->see('All users');
 
         $this->assertCount(100, UserModel::all());
@@ -69,19 +69,19 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(65);
 
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->see('All users');
 
-        $this->visit('admin/users?page=2');
+        $this->visit('admin/tests/users?page=2');
         $this->assertCount(20, $this->crawler()->filter('td a i[class*=fa-ellipsis-v]'));
 
-        $this->visit('admin/users?page=3');
+        $this->visit('admin/tests/users?page=3');
         $this->assertCount(20, $this->crawler()->filter('td a i[class*=fa-ellipsis-v]'));
 
-        $this->visit('admin/users?page=4');
+        $this->visit('admin/tests/users?page=4');
         $this->assertCount(5, $this->crawler()->filter('td a i[class*=fa-ellipsis-v]'));
 
-        $this->click(1)->seePageIs('admin/users?page=1');
+        $this->click(1)->seePageIs('admin/tests/users?page=1');
         $this->assertCount(20, $this->crawler()->filter('td a i[class*=fa-ellipsis-v]'));
     }
 
@@ -89,7 +89,7 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(50);
 
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->see('All users');
 
         $this->assertCount(50, UserModel::all());
@@ -99,7 +99,7 @@ class UserGridTest extends TestCase
 
         $user = UserModel::find($id);
 
-        $this->visit('admin/users?id='.$id)
+        $this->visit('admin/tests/users?id='.$id)
             ->seeInElement('td', $user->username)
             ->seeInElement('td', $user->email)
             ->seeInElement('td', $user->mobile)
@@ -117,7 +117,7 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(50);
 
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->see('All users');
 
         $this->assertCount(50, UserModel::all());
@@ -125,7 +125,7 @@ class UserGridTest extends TestCase
 
         $users = UserModel::where('username', 'like', '%mi%')->get();
 
-        $this->visit('admin/users?username=mi');
+        $this->visit('admin/tests/users?username=mi');
 
         $this->assertEquals($this->crawler()->filter('td a i[class*=fa-ellipsis-v]')->count(), count($users->toArray()));
 
@@ -140,7 +140,7 @@ class UserGridTest extends TestCase
 
         $user = UserModel::with('profile')->find(mt_rand(1, 20));
 
-        $this->visit('admin/users?email='.$user->email)
+        $this->visit('admin/tests/users?email='.$user->email)
             ->seeInElement('td', $user->username)
             ->seeInElement('td', $user->email)
             ->seeInElement('td', $user->mobile)
@@ -160,7 +160,7 @@ class UserGridTest extends TestCase
 
         $user = UserModel::with('profile')->find(1);
 
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->seeInElement('th', 'Column1 not in table')
             ->seeInElement('th', 'Column2 not in table')
             ->seeInElement('td', "full name:{$user->profile->first_name} {$user->profile->last_name}")
@@ -176,7 +176,7 @@ class UserGridTest extends TestCase
                 $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
             });
 
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->seeElement('td code');
 
         $this->assertCount(50, $this->crawler()->filter('td code'));
@@ -186,7 +186,7 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(15);
 
-        $this->visit('admin/users');
+        $this->visit('admin/tests/users');
 
         $this->assertCount(15, $this->crawler()->filter('td a i[class*=fa-ellipsis-v]'));
     }
@@ -195,7 +195,7 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(10);
 
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->seeInElement('td a[class*=btn]', 'detail');
 
         $this->assertCount(5, $this->crawler()->filter('td a[class*=btn]'));
@@ -205,7 +205,7 @@ class UserGridTest extends TestCase
     {
         $this->seedsTable(98);
 
-        $this->visit('admin/users')
+        $this->visit('admin/tests/users')
             ->seeElement('select[class*=per-page][name=per-page]')
             ->seeInElement('select option', 10)
             ->seeInElement('select option[selected]', 20)
@@ -213,11 +213,11 @@ class UserGridTest extends TestCase
             ->seeInElement('select option', 50)
             ->seeInElement('select option', 100);
 
-        $this->assertEquals('http://localhost:8000/admin/users?per_page=20', $this->crawler()->filter('select option[selected]')->attr('value'));
+        $this->assertEquals('http://localhost:8000/admin/tests/users?per_page=20', $this->crawler()->filter('select option[selected]')->attr('value'));
 
         $perPage = mt_rand(1, 98);
 
-        $this->visit('admin/users?per_page='.$perPage)
+        $this->visit('admin/tests/users?per_page='.$perPage)
             ->seeInElement('select option[selected]', $perPage)
             ->assertCount($perPage + 1, $this->crawler()->filter('tr'));
     }

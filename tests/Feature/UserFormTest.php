@@ -12,7 +12,7 @@ class UserFormTest extends TestCase
 
     public function testCreatePage()
     {
-        $this->visit('admin/users/create')
+        $this->visit('admin/tests/users/create')
             ->seeElement('input[type=text][name=username]')
             ->seeElement('input[type=email][name=email]')
             ->seeElement('input[type=text][name=mobile]')
@@ -57,12 +57,12 @@ class UserFormTest extends TestCase
             ],
         ];
 
-        $this->visit('admin/users/create')
+        $this->visit('admin/tests/users/create')
 //            ->attach(__DIR__.'/assets/test.jpg', 'avatar')
 
             ->submitForm('Submit', $data);
 
-        $this->seePageIs('admin/users')
+        $this->seePageIs('admin/tests/users')
             ->seeInElement('td', 1)
             ->seeInElement('td', $data['username'])
             ->seeInElement('td', $data['email'])
@@ -116,7 +116,7 @@ class UserFormTest extends TestCase
 
         $user = UserModel::with('profile')->find($id);
 
-        $this->visit("admin/users/$id/edit")
+        $this->visit("admin/tests/users/$id/edit")
             ->seeElement("input[type=text][name=username][value='{$user->username}']")
             ->seeElement("input[type=email][name=email][value='{$user->email}']")
             ->seeElement("input[type=text][name=mobile][value='{$user->mobile}']")
@@ -142,12 +142,12 @@ class UserFormTest extends TestCase
 
         $id = mt_rand(1, 10);
 
-        $this->visit("admin/users/$id/edit")
+        $this->visit("admin/tests/users/$id/edit")
             ->type('hello world', 'username')
             ->type('123', 'password')
             ->type('123', 'password_confirmation')
             ->press('Submit')
-            ->seePageIs('admin/users')
+            ->seePageIs('admin/tests/users')
             ->seeInDatabase('test_users', ['username' => 'hello world']);
 
         $user = UserModel::with('profile')->find($id);
@@ -161,29 +161,29 @@ class UserFormTest extends TestCase
 
         $id = mt_rand(1, 10);
 
-        $this->visit("admin/users/$id/edit")
+        $this->visit("admin/tests/users/$id/edit")
             ->type('', 'email')
             ->press('Submit')
-            ->seePageIs("admin/users/$id/edit")
+            ->seePageIs("admin/tests/users/$id/edit")
             ->see('The email field is required');
 
         $this->type('xxaxx', 'email')
             ->press('Submit')
-            ->seePageIs("admin/users/$id/edit")
+            ->seePageIs("admin/tests/users/$id/edit")
             ->see('The email must be a valid email address.');
 
-        $this->visit("admin/users/$id/edit")
+        $this->visit("admin/tests/users/$id/edit")
             ->type('123', 'password')
             ->type('1234', 'password_confirmation')
             ->press('Submit')
-            ->seePageIs("admin/users/$id/edit")
+            ->seePageIs("admin/tests/users/$id/edit")
             ->see('The Password confirmation does not match.');
 
         $this->type('xx@xx.xx', 'email')
             ->type('123', 'password')
             ->type('123', 'password_confirmation')
             ->press('Submit')
-            ->seePageIs('admin/users')
+            ->seePageIs('admin/tests/users')
             ->seeInDatabase('test_users', ['email' => 'xx@xx.xx']);
     }
 
@@ -192,7 +192,7 @@ class UserFormTest extends TestCase
     {
         $this->seedsTable(1);
 
-        $this->visit('admin/users/1/edit')
+        $this->visit('admin/tests/users/1/edit')
             ->seeElement('input[type=checkbox][value=1]')
             ->seeElement('input[type=checkbox][value=3]');
     }
