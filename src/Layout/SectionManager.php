@@ -68,17 +68,17 @@ class SectionManager
      */
     protected function put($section, $content, bool $append = false, int $priority = 10)
     {
-        if (!$section) {
-            throw new \InvalidArgumentException("Section cant not be empty.");
+        if (! $section) {
+            throw new \InvalidArgumentException("Section name is required.");
         }
 
-        if (!isset($this->sections[$section])) {
+        if (! isset($this->sections[$section])) {
             unset($this->defaultSections[$section]);
 
             $this->sections[$section] = [];
         }
 
-        if (!isset($this->sections[$section][$priority])) {
+        if (! isset($this->sections[$section][$priority])) {
             $this->sections[$section][$priority] = [];
         }
 
@@ -100,8 +100,8 @@ class SectionManager
     {
         $defaultSection = $this->defaultSections[$section] ?? null;
 
-        if (!$this->hasSection($section) && $defaultSection === null) {
-            return value($default);
+        if (! $this->hasSection($section) && $defaultSection === null) {
+            return Helper::render($default, [new Fluent()]);
         }
 
         $content = $this->getSections($section) ?: $defaultSection;
@@ -118,9 +118,7 @@ class SectionManager
      */
     public function getSections($name)
     {
-        if (! isset($this->sortedSections[$name])) {
-            $this->sortSections($name);
-        }
+        $this->sortSections($name);
 
         return $this->sortedSections[$name];
     }
@@ -135,7 +133,7 @@ class SectionManager
     {
         $this->sortedSections[$name] = [];
 
-        if (isset($this->sections[$name])) {
+        if (! empty($this->sections[$name])) {
             krsort($this->sections[$name]);
 
             $this->sortedSections[$name] = call_user_func_array(
@@ -188,7 +186,7 @@ class SectionManager
 
         $result = '';
         foreach ($content as &$item) {
-            $value  = Helper::render($item['value'] ?? '');
+            $value  = Helper::render($item['value'] ?? '', [$options]);
             $append = $item['append'] ?? false;
 
             if (!$append) {
@@ -198,7 +196,7 @@ class SectionManager
             $options->previous = $result;
         }
 
-        $this->sections[$name] = [['value' => &$result]];
+//        $this->sections[$name] = [['value' => &$result]];
 
         return $result;
     }
