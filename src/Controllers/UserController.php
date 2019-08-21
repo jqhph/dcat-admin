@@ -243,12 +243,16 @@ class UserController extends Controller
             ->updateRules(['required', "unique:{$connection}.{$userTable},username,$id"]);
         $form->text('name', trans('admin.name'))->required();
         $form->image('avatar', trans('admin.avatar'));
-        $form->password('password', trans('admin.password'))->rules('required|confirmed');
-        $form->password('password_confirmation', trans('admin.password_confirmation'))
-            ->rules('required')
-            ->default(function ($form) {
-                return $form->model()->get('password');
+
+        $form->password('password', trans('admin.password'))
+            ->rules('confirmed')
+            ->customFormat(function ($v) {
+                if ($v == $this->password) {
+                    return;
+                }
+                return $v;
             });
+        $form->password('password_confirmation', trans('admin.password_confirmation'));
 
         $form->ignore(['password_confirmation']);
 
@@ -270,6 +274,10 @@ class UserController extends Controller
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->get('password') != $form->password) {
                 $form->password = bcrypt($form->password);
+            }
+
+            if (! $form->password) {
+                $form->deleteInput('password');
             }
         });
 

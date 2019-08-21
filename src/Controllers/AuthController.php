@@ -167,11 +167,16 @@ class AuthController extends Controller
         $form->image('avatar', trans('admin.avatar'));
 
         $form->password('old_password', trans('admin.old_password'));
-        $form->password('password', trans('admin.password'))->rules('confirmed|required');
-        $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
-            ->default(function ($form) {
-                return $form->model()->password;
+
+        $form->password('password', trans('admin.password'))
+            ->rules('confirmed')
+            ->customFormat(function ($v) {
+                if ($v == $this->password) {
+                    return;
+                }
+                return $v;
             });
+        $form->password('password_confirmation', trans('admin.password_confirmation'));
 
         $form->setAction(admin_url('auth/setting'));
 
@@ -181,12 +186,17 @@ class AuthController extends Controller
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = bcrypt($form->password);
             }
+
+            if (! $form->password) {
+                $form->deleteInput('password');
+            }
         });
 
-        $form->saved(function () {
-            admin_alert(trans('admin.update_succeeded'));
-
-            return redirect(admin_url('auth/setting'));
+        $form->saved(function (Form $form) {
+            return $form->redirect(
+                admin_url('auth/setting'),
+                trans('admin.update_succeeded')
+            );
         });
 
         return $form;

@@ -1426,14 +1426,12 @@ class Form implements Renderable
     }
 
     /**
-     * Get or set input data.
-     *
      * @param string|array $keys
      * @param null   $value
      *
      * @return void
      */
-    public function forgetInput($keys)
+    public function deleteInput($keys)
     {
         Arr::forget($this->inputs, $keys);
     }
