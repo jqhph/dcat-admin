@@ -14,7 +14,7 @@ class MiniGrid extends Grid
         $this->setName('mini');
         $this->disableCreateButton();
         $this->disableActions();
-        $this->disableExport();
+        $this->disableExporter();
         $this->disableQuickCreateButton();
 
         $this->options['row_selector_clicktr'] = true;

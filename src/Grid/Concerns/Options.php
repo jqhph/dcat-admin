@@ -342,7 +342,7 @@ trait Options
      *
      * @return $this
      */
-    public function disableExport(bool $disable = true)
+    public function disableExporter(bool $disable = true)
     {
         return $this->option('show_exporter', !$disable);
     }
@@ -352,9 +352,9 @@ trait Options
      *
      * @return $this
      */
-    public function showExport(bool $val = true)
+    public function showExporter(bool $val = true)
     {
-        return $this->disableExport(!$val);
+        return $this->disableExporter(!$val);
     }
 
     /**
@@ -362,7 +362,7 @@ trait Options
      *
      * @return $this
      */
-    public function disableExportAll(bool $disable = true)
+    public function disableExporterAll(bool $disable = true)
     {
         return $this->option('show_export_all', !$disable);
     }
@@ -374,7 +374,7 @@ trait Options
      */
     public function showExportAll(bool $val = true)
     {
-        return $this->disableExportAll(!$val);
+        return $this->disableExporterAll(!$val);
     }
 
     /**
