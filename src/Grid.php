@@ -1164,7 +1164,7 @@ HTML;
         $view = view($this->view, $this->variables());
 
         if (!$wrapper = $this->wrapper) {
-            return "<div class='box box-default'>{$view->render()}</div>";
+            return "<div class='box'>{$view->render()}</div>";
         }
 
         return $wrapper($view);
