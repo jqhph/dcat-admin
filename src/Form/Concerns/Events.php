@@ -11,14 +11,14 @@ trait Events
     /**
      * @var array
      */
-    protected $_listeners = [
-        'creating' => [],
-        'editing' => [],
+    protected $hooks = [
+        'creating'  => [],
+        'editing'   => [],
         'submitted' => [],
-        'saving' => [],
-        'saved' => [],
-        'deleting' => [],
-        'deleted' => [],
+        'saving'    => [],
+        'saved'     => [],
+        'deleting'  => [],
+        'deleted'   => [],
     ];
 
     /**
@@ -30,7 +30,7 @@ trait Events
      */
     public function creating(Closure $callback)
     {
-        $this->_listeners['creating'][] = $callback;
+        $this->hooks['creating'][] = $callback;
     }
 
     /**
@@ -42,7 +42,7 @@ trait Events
      */
     public function editing(Closure $callback)
     {
-        $this->_listeners['editing'][] = $callback;
+        $this->hooks['editing'][] = $callback;
     }
 
     /**
@@ -54,7 +54,7 @@ trait Events
      */
     public function submitted(Closure $callback)
     {
-        $this->_listeners['submitted'][] = $callback;
+        $this->hooks['submitted'][] = $callback;
     }
 
     /**
@@ -66,7 +66,7 @@ trait Events
      */
     public function saving(Closure $callback)
     {
-        $this->_listeners['saving'][] = $callback;
+        $this->hooks['saving'][] = $callback;
     }
 
     /**
@@ -78,7 +78,7 @@ trait Events
      */
     public function saved(Closure $callback)
     {
-        $this->_listeners['saved'][] = $callback;
+        $this->hooks['saved'][] = $callback;
     }
 
     /**
@@ -88,7 +88,7 @@ trait Events
      */
     public function deleting(Closure $callback)
     {
-        $this->_listeners['deleting'][] = $callback;
+        $this->hooks['deleting'][] = $callback;
     }
 
     /**
@@ -98,7 +98,7 @@ trait Events
      */
     public function deleted(Closure $callback)
     {
-        $this->_listeners['deleted'][] = $callback;
+        $this->hooks['deleted'][] = $callback;
     }
 
     /**
@@ -173,7 +173,7 @@ trait Events
      */
     protected function callListeners($name)
     {
-        foreach ($this->_listeners[$name] as $func) {
+        foreach ($this->hooks[$name] as $func) {
             $this->model && $func->bindTo($this->model);
 
             if (($ret = $func($this)) instanceof Response) {

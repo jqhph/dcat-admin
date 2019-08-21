@@ -3,10 +3,13 @@
 namespace Dcat\Admin;
 
 use Dcat\Admin\Layout\Content;
+use Dcat\Admin\Layout\Menu;
+use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Fluent;
 use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
@@ -64,6 +67,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerDefaultSections();
         $this->registerViews();
         $this->ensureHttps();
         $this->registerRoutes();
@@ -83,8 +87,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerExtensionProviders();
         $this->loadAdminAuthConfig();
         $this->registerRouteMiddleware();
-        $this->registerService();
-        $this->registerDefaultSections();
+        $this->registerServices();
 
         $this->commands($this->commands);
     }
@@ -190,9 +193,18 @@ class AdminServiceProvider extends ServiceProvider
         }, true);
     }
 
-    protected function registerService()
+    /**
+     * Register admin services
+     */
+    protected function registerServices()
     {
         $this->app->singleton('sectionManager', SectionManager::class);
+
+        $this->app->singleton('admin.navbar', Navbar::class);
+
+        $this->app->singleton('admin.menu', Menu::class);
+
+        $this->app->singleton('admin.object', Fluent::class);
     }
 
     /**

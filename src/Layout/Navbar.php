@@ -11,11 +11,6 @@ class Navbar implements Renderable
     use BuilderEvents;
 
     /**
-     * @var static
-     */
-    protected static $instance;
-
-    /**
      * @var array
      */
     protected $elements = [];
@@ -83,11 +78,4 @@ class Navbar implements Renderable
         })->implode('');
     }
 
-    /**
-     * @return static
-     */
-    public static function make()
-    {
-        return static::$instance ?: (static::$instance = new static);
-    }
 }

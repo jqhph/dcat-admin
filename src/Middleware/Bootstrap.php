@@ -17,11 +17,11 @@ class Bootstrap
 
         Admin::callBooting();
 
-        Admin::callBooted();
-
         if (config('admin.cdn')) {
             Admin::cdn();
         }
+
+        Admin::callBooted();
 
         return $next($request);
     }

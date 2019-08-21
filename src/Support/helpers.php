@@ -183,9 +183,11 @@ if (!function_exists('admin_controller_slug')) {
      */
     function admin_controller_slug()
     {
-        static $slug;
+        static $slug = [];
 
-        return $slug ?: ($slug = \Dcat\Admin\Support\Helper::slug(admin_controller_name()));
+        $controller = admin_controller_name();
+
+        return $slug[$controller] ?? ($slug[$controller] = \Dcat\Admin\Support\Helper::slug($controller));
     }
 }
 
@@ -197,18 +199,22 @@ if (!function_exists('admin_controller_name')) {
      */
     function admin_controller_name()
     {
-        static $name;
+        static $name = [];
 
-        if (!$name) {
-            if (!app('router')->current()) {
-                return $name = 'undefined';
-            }
+        $router = app('router');
 
-            $controller = class_basename(explode('@', app('router')->current()->getActionName())[0]);
-
-            $name = str_replace('Controller', '', $controller);
+        if (! $router->current()) {
+            return 'undefined';
         }
-        return $name;
+
+        $actionName = $router->current()->getActionName();
+
+        if (! isset($name[$actionName])) {
+            $controller = class_basename(explode('@', $actionName)[0]);
+
+            $name[$actionName] = str_replace('Controller', '', $controller);
+        }
+        return $name[$actionName];
     }
 }
 

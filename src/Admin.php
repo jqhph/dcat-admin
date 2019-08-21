@@ -19,6 +19,8 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
+use phpDocumentor\Reflection\Types\Mixed_;
 
 /**
  * Class Admin.
@@ -35,11 +37,6 @@ class Admin
     const VERSION = '1.0.0';
 
     /**
-     * @var Navbar
-     */
-    protected static $navbar;
-
-    /**
      * @var string
      */
     protected static $metaTitle;
@@ -53,21 +50,6 @@ class Admin
      * @var array
      */
     protected static $availableExtensions;
-
-    /**
-     * @var Menu
-     */
-    protected static $menu;
-
-    /**
-     * @var []Closure
-     */
-    protected static $booting = [];
-
-    /**
-     * @var []Closure
-     */
-    protected static $booted = [];
 
     /**
      * Returns the long version of dcat-admin.
@@ -87,7 +69,7 @@ class Admin
      */
     public static function menu(Closure $builder = null)
     {
-        $menu = static::$menu ?: (static::$menu = new Menu);
+        $menu = app('admin.menu');
 
         $builder && $builder($menu);
 
@@ -143,7 +125,7 @@ class Admin
      */
     public static function navbar(Closure $builder = null)
     {
-        $navbar = Navbar::make();
+        $navbar = app('admin.navbar');
 
         $builder && $builder($navbar);
 
@@ -363,17 +345,17 @@ class Admin
     /**
      * @param callable $callback
      */
-    public static function booting(callable $callback)
+    public static function booting($callback)
     {
-        static::$booting[] = $callback;
+        Event::listen('admin.booting', $callback);
     }
 
     /**
      * @param callable $callback
      */
-    public static function booted(callable $callback)
+    public static function booted($callback)
     {
-        static::$booted[] = $callback;
+        Event::listen('admin.booted', $callback);
     }
 
     /**
@@ -381,9 +363,7 @@ class Admin
      */
     public static function callBooting()
     {
-        foreach (static::$booting as $call) {
-            call_user_func($call);
-        }
+        Event::dispatch('admin.booting');
     }
 
     /**
@@ -391,9 +371,7 @@ class Admin
      */
     public static function callBooted()
     {
-        foreach (static::$booted as $call) {
-            call_user_func($call);
-        }
+        Event::dispatch('admin.booted');
     }
 
 }

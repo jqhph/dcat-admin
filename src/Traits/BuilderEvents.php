@@ -5,16 +5,6 @@ namespace Dcat\Admin\Traits;
 trait BuilderEvents
 {
     /**
-     * @var callable
-     */
-    protected static $resolvingListneners = [];
-
-    /**
-     * @var callable
-     */
-    protected static $composerListneners = [];
-
-    /**
      * Register a resolving listener.
      *
      * @param callable $callback
@@ -22,7 +12,7 @@ trait BuilderEvents
      */
     public static function resolving(callable $callback, bool $once = false)
     {
-        static::$resolvingListneners[] = [$callback, $once];
+        static::setListeners('builder.resolving', $callback, $once);
     }
 
     /**
@@ -30,7 +20,7 @@ trait BuilderEvents
      */
     protected function callResolving(...$params)
     {
-        $this->callBuilderListeners(static::$resolvingListneners, ...$params);
+        $this->callBuilderListeners('builder.resolving', ...$params);
     }
 
     /**
@@ -41,7 +31,7 @@ trait BuilderEvents
      */
     public static function composing(callable $callback, bool $once = false)
     {
-        static::$composerListneners[] = [$callback, $once];
+        static::setListeners('builder.composing', $callback, $once);
     }
 
     /**
@@ -49,15 +39,19 @@ trait BuilderEvents
      */
     protected function callComposing(...$params)
     {
-        $this->callBuilderListeners(static::$composerListneners, ...$params);
+        $this->callBuilderListeners('builder.composing', ...$params);
     }
 
     /**
      * @param $listeners
      * @param array ...$params
      */
-    protected function callBuilderListeners(&$listeners, ...$params)
+    protected function callBuilderListeners($key, ...$params)
     {
+        $object = app('admin.object');
+
+        $listeners = $object->get($key) ?: [];
+
         foreach ($listeners as $k => $listener) {
             list($callback, $once) = $listener;
 
@@ -67,6 +61,24 @@ trait BuilderEvents
 
             call_user_func($callback, $this, ...$params);
         }
+
+        $object[$key] = $listeners;
+    }
+
+    /**
+     * @param string $key
+     * @param callable $callback
+     * @param bool $once
+     */
+    protected static function setListeners($key, $callback, $once)
+    {
+        $object = app('admin.object');
+
+        $listeners = $object->get($key) ?: [];
+
+        $listeners[] = [$callback, $once];
+
+        $object[$key] = $listeners;
     }
 
 }

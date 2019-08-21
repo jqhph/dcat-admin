@@ -44,6 +44,7 @@ return [
     'username'              => 'Username',
     'user'                  => 'User',
     'alias'                 => 'Alias',
+    'routes'                => 'Routes',
     'route_action'          => 'Route Action',
     'middleware'            => 'Middleware',
     'method'                => 'Method',
