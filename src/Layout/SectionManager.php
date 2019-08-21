@@ -21,11 +21,6 @@ class SectionManager
     /**
      * @var array
      */
-    protected $sortedSections = [];
-
-    /**
-     * @var array
-     */
     protected $defaultSections = [];
 
     /**
@@ -118,9 +113,7 @@ class SectionManager
      */
     public function getSections($name)
     {
-        $this->sortSections($name);
-
-        return $this->sortedSections[$name];
+        return $this->sortSections($name);
     }
 
     /**
@@ -131,15 +124,14 @@ class SectionManager
      */
     protected function sortSections($name)
     {
-        $this->sortedSections[$name] = [];
-
-        if (! empty($this->sections[$name])) {
-            krsort($this->sections[$name]);
-
-            $this->sortedSections[$name] = call_user_func_array(
-                'array_merge', $this->sections[$name]
-            );
+        if (empty($this->sections[$name])) {
+            return [];
         }
+        krsort($this->sections[$name]);
+
+        return call_user_func_array(
+            'array_merge', $this->sections[$name]
+        );
     }
 
     /**
