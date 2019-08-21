@@ -1,0 +1,63 @@
+<?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+
+use Dcat\Admin\Models\Menu;
+
+class MenuTest extends TestCase
+{
+    protected $login = true;
+
+    public function testMenuIndex()
+    {
+        $this->visit('admin/auth/menu')
+            ->see('Menu')
+            ->see('Index')
+            ->see('Auth')
+            ->see('Users')
+            ->see('Roles')
+            ->see('Permission')
+            ->see('Menu')
+            ->see('Operation log');
+    }
+
+    public function testAddMenu()
+    {
+        $item = ['parent_id' => '0', 'title' => 'Test', 'uri' => 'test', 'icon' => 'fa-user'];
+
+        $this->visit('admin/auth/menu')
+            ->seePageIs('admin/auth/menu')
+            ->see('Menu')
+            ->submitForm('Submit', $item)
+            ->seePageIs('admin/auth/menu')
+            ->seeInDatabase(config('admin.database.menu_table'), $item)
+            ->assertEquals(8, Menu::count());
+    }
+
+    public function testDeleteMenu()
+    {
+        $this->delete('admin/auth/menu/8')
+            ->assertEquals(7, Menu::count());
+    }
+
+    public function testEditMenu()
+    {
+        $this->visit('admin/auth/menu/1/edit')
+            ->see('Menu')
+            ->submitForm('Submit', ['title' => 'blablabla'])
+            ->seePageIs('admin/auth/menu')
+            ->seeInDatabase(config('admin.database.menu_table'), ['title' => 'blablabla'])
+            ->assertEquals(7, Menu::count());
+    }
+
+    public function testEditMenuParent()
+    {
+        $this->expectException(\Laravel\BrowserKitTesting\HttpException::class);
+
+        $this->visit('admin/auth/menu/5/edit')
+            ->see('Menu')
+            ->submitForm('Submit', ['parent_id' => 5]);
+    }
+}

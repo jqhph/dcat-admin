@@ -6,6 +6,7 @@ use Dcat\Admin\Models\Repositories\Administrator;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Content;
+use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -255,7 +256,7 @@ class AuthController extends Controller
     /**
      * Get the guard to be used during authentication.
      *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     * @return \Illuminate\Contracts\Auth\StatefulGuard|GuardHelpers
      */
     protected function guard()
     {

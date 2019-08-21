@@ -757,7 +757,7 @@ class Form implements Renderable
         }
 
         // 非ajax请求
-        $status = (int) ($options['status_code'] ?? 200);
+        $status = (int) ($options['status_code'] ?? 302);
 
         admin_alert($message);
 
