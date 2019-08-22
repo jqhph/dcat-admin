@@ -7,7 +7,7 @@ use Dcat\Admin\Models\OperationLog;
 
 class OperationLogTest extends TestCase
 {
-    protected $login = true;
+
 
     public function testOperationLogIndex()
     {

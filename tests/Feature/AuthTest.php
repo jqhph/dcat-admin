@@ -6,6 +6,8 @@ use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
+    protected $login = false;
+
     public function testLoginPage()
     {
         $this->visit('admin/auth/login')

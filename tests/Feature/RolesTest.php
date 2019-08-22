@@ -8,7 +8,7 @@ use Dcat\Admin\Models\Administrator;
 
 class RolesTest extends TestCase
 {
-    protected $login = true;
+
 
     public function testRolesIndex()
     {

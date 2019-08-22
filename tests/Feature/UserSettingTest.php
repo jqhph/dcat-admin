@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\File;
 
 class UserSettingTest extends TestCase
 {
-    protected $login = true;
-
     public function testVisitSettingPage()
     {
         $this->visit('admin/auth/setting')

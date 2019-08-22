@@ -9,8 +9,6 @@ use Tests\TestCase;
 
 class PermissionsTest extends TestCase
 {
-    protected $login = true;
-
     public function testPermissionsIndex()
     {
         $this->assertTrue(Administrator::first()->isAdministrator());

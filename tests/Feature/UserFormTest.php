@@ -8,8 +8,6 @@ use Tests\Models\User as UserModel;
 
 class UserFormTest extends TestCase
 {
-    protected $login = true;
-
     public function testCreatePage()
     {
         $this->visit('admin/tests/users/create')

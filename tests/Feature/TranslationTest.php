@@ -8,8 +8,6 @@ use Tests\TestCase;
 
 class TranslationTest extends TestCase
 {
-    protected $login = true;
-
     public function testTransField()
     {
         $this->visit('admin/tests/users');

@@ -6,7 +6,7 @@ use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-    protected $login = true;
+
 
     public function testIndex()
     {

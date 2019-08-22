@@ -6,7 +6,7 @@ use Tests\TestCase;
 
 class CombineGridTest extends TestCase
 {
-    protected $login = true;
+
 
     public function test()
     {

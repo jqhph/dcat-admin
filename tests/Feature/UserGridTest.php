@@ -8,8 +8,6 @@ use Tests\Models\User as UserModel;
 
 class UserGridTest extends TestCase
 {
-    protected $login = true;
-
     public function testIndexPage()
     {
         $this->visit('admin/tests/users')

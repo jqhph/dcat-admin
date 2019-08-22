@@ -7,8 +7,6 @@ use Tests\TestCase;
 
 class UsersTest extends TestCase
 {
-    protected $login = true;
-
     public function testUsersIndexPage()
     {
         $this->visit('admin/auth/users')

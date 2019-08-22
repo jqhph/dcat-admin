@@ -8,8 +8,6 @@ use Dcat\Admin\Models\Menu;
 
 class MenuTest extends TestCase
 {
-    protected $login = true;
-
     public function testMenuIndex()
     {
         $this->visit('admin/auth/menu')
@@ -20,7 +18,11 @@ class MenuTest extends TestCase
             ->see('Roles')
             ->see('Permission')
             ->see('Menu')
-            ->see('Operation log');
+            ->see('Operation log')
+            ->see('Helpers')
+            ->see('Extensions')
+            ->see('Scaffold')
+            ->see('Routes');
     }
 
     public function testAddMenu()

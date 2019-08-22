@@ -6,6 +6,8 @@ use Tests\TestCase;
 
 class SectionTest extends TestCase
 {
+    protected $login = false;
+
     public function testInjectValues()
     {
         // view

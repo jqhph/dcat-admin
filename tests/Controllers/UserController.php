@@ -8,6 +8,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Controllers\HasResourceActions;
+use Dcat\Admin\Show;
 use Tests\Models\Tag;
 use Tests\Repositories\User;
 
@@ -55,6 +56,21 @@ class UserController extends Controller
         $content->header('Create user');
 
         return $content->body($this->form());
+    }
+
+    /**
+     * Show interface.
+     *
+     * @param mixed $id
+     * @param Content $content
+     * @return Content
+     */
+    public function show($id, Content $content)
+    {
+        return $content
+            ->header('User')
+            ->description('Detail')
+            ->body($this->detail($id));
     }
 
     /**
@@ -124,6 +140,32 @@ class UserController extends Controller
         });
 
         return $grid;
+    }
+
+    /**
+     * Make a show builder.
+     *
+     * @param mixed $id
+     * @return Show
+     */
+    protected function detail($id)
+    {
+        $show = new Show(new User());
+
+        $show->setId($id);
+
+        $show->id('ID');
+        $show->username();
+        $show->email;
+
+        $show->divider();
+
+        $show->full_name();
+        $show->field('profile.postcode');
+
+        $show->tags->json();
+
+        return $show;
     }
 
     /**
