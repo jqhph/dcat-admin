@@ -97,7 +97,7 @@ class Navbar extends Widget
         \Closure $closure = null
     )
     {
-        $dropdown = DropdownMenu::make($options)
+        $dropdown = Dropdown::make($options)
             ->button($text)
             ->buttonClass('')
             ->template('%s<ul class="dropdown-menu">%s</ul>');

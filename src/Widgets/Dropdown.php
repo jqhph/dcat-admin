@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class DropdownMenu extends Widget
+class Dropdown extends Widget
 {
     const DIVIDER = '_divider';
 

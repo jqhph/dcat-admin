@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 use Illuminate\Validation\Validator;
 use Spatie\EloquentSortable\Sortable;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,7 +88,10 @@ class Form implements Renderable
 {
     use BuilderEvents,
         Concerns\Events,
-        Concerns\Files;
+        Concerns\Files,
+        Macroable {
+            __call as macroCall;
+        }
 
     /**
      * Remove flag in `has many` form.
@@ -1596,6 +1600,10 @@ class Form implements Renderable
      */
     public function __call($method, $arguments)
     {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $arguments);
+        }
+
         if ($className = static::findFieldClass($method)) {
             $column = Arr::get($arguments, 0, '');
 

@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Widgets\DataCard;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\DropdownMenu;
+use Dcat\Admin\Widgets\Dropdown;
 use Dcat\Admin\Widgets\AjaxRequestBuilder;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
@@ -105,7 +105,7 @@ class Card extends Widget
     public function dropdown(array $options, \Closure $builder, ?string $defaultLabel = null)
     {
         return $this->tool(
-            DropdownMenu::make($options)
+            Dropdown::make($options)
                 ->click()
                 ->button($defaultLabel)
                 ->buttonClass('btn btn-xs btn-light')

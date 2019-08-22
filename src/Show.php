@@ -15,10 +15,14 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Traits\Macroable;
 
 class Show implements Renderable
 {
-    use BuilderEvents;
+    use BuilderEvents,
+        Macroable {
+            __call as macroCall;
+        }
 
     /**
      * @var string
@@ -505,6 +509,10 @@ class Show implements Renderable
      */
     public function __call($method, $arguments = [])
     {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $arguments);
+        }
+
         return $this->call($method, $arguments);
     }
 
