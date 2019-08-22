@@ -50,6 +50,8 @@ trait BuilderEvents
     {
         $object = app('admin.object');
 
+        $key = static::formatBuilderEventKey($key);
+
         $listeners = $object->get($key) ?: [];
 
         foreach ($listeners as $k => $listener) {
@@ -74,11 +76,18 @@ trait BuilderEvents
     {
         $object = app('admin.object');
 
+        $key = static::formatBuilderEventKey($key);
+
         $listeners = $object->get($key) ?: [];
 
         $listeners[] = [$callback, $once];
 
         $object[$key] = $listeners;
+    }
+
+    protected static function formatBuilderEventKey($key)
+    {
+        return static::class.'::'.$key;
     }
 
 }
