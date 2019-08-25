@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
@@ -24,7 +25,10 @@ class Navbar extends Widget
     /**
      * @var array
      */
-    protected $items = [];
+    protected $items = [
+        'right' => [],
+        'left' => [],
+    ];
 
     protected $active;
 
@@ -59,15 +63,25 @@ class Navbar extends Widget
         return $this->style('margin:'.$value);
     }
 
-    public function add($items)
+    public function add($items, bool $right = false)
     {
-        if ($items instanceof Arrayable) {
-            $items = $items->toArray();
+        if ($right) {
+            $this->items['right'] = array_merge($this->items['right'], Helper::array($items));
+        } else {
+            $this->items['left'] = array_merge($this->items['left'], Helper::array($items));
         }
 
-        $this->items = (array)$items;
-
         return $this;
+    }
+
+    public function left($items)
+    {
+        return $this->add($items, false);
+    }
+
+    public function right($items)
+    {
+        return $this->add($items, true);
     }
 
     public function checked($key)
@@ -94,7 +108,8 @@ class Navbar extends Widget
     public function dropdown(
         ?string $text,
         array $options,
-        \Closure $closure = null
+        \Closure $closure = null,
+        bool $right = false
     )
     {
         $dropdown = Dropdown::make($options)
@@ -106,31 +121,20 @@ class Navbar extends Widget
             $closure($dropdown);
         }
 
-        $this->items[self::DROPDOWN_FLAG_KEY] = $dropdown;
+        $key = $right ? 'right' : 'left';
+
+        $this->items[$key][self::DROPDOWN_FLAG_KEY] = $dropdown;
 
         return $this;
     }
 
     public function variables()
     {
-        foreach ($this->items as $k => &$item) {
-            if ($k === self::DROPDOWN_FLAG_KEY) {
-                continue;
-            }
-
-            if ($builder = $this->builder) {
-                $item = $builder($item, $k);
-            }
-
-            if (strpos($item, '</li>')) {
-                continue;
-            }
-
-            $active = $this->active === $k ? 'active' : '';
-
-            $item = strpos($item, '</a>') ? $item : "<a href='javascript:void(0)'>$item</a>";
-
-            $item = "<li class='nav-li $active'>$item</li>";
+        foreach ($this->items['left'] as $k => &$item) {
+            $item = $this->formatItem($k, $item);
+        }
+        foreach ($this->items['right'] as $k => &$item) {
+            $item = $this->formatItem($k, $item);
         }
 
         if ($this->click) {
@@ -151,6 +155,27 @@ JS
             'attributes' => $this->formatHtmlAttributes(),
             'actives'    => $this->actives,
         ];
+    }
+
+    protected function formatItem($k, $item)
+    {
+        if ($k === self::DROPDOWN_FLAG_KEY) {
+            return $item;
+        }
+
+        if ($builder = $this->builder) {
+            $item = $builder($item, $k);
+        }
+
+        if (strpos($item, '</li>')) {
+            return $item;
+        }
+
+        $active = $this->active === $k ? 'active' : '';
+
+        $item = strpos($item, '</a>') ? $item : "<a href='javascript:void(0)'>$item</a>";
+
+        return "<li class='nav-li $active'>$item</li>";
     }
 
 }

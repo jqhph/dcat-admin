@@ -823,7 +823,7 @@ input.label {
     height:53px;
 }
 .table > thead > tr > th {
-    color: #555;
+    color: var(--80);
 }
 .table-header-default.table>thead>tr>th,.table-header-gray.table>thead>tr>th {
     border-bottom: 1px solid #e3e7eb;
@@ -866,7 +866,7 @@ input.label {
     vertical-align: bottom !important;
     /*color:var(--90-half);*/
     /*font-weight:bold;*/
-    color:#555;
+    color:var(--80);
 }
 
 td {
