@@ -833,9 +833,9 @@ input.label {
     padding: .75rem 8px;
     letter-spacing: .05em;
 }
-.table-header-default.table>thead>tr>th {
-    border-bottom: 1px solid #f4f4f4;
-}
+/*.table-header-default.table>thead>tr>th {*/
+/*    border-bottom: 1px solid #f4f4f4;*/
+/*}*/
 .table>thead:first-child>tr:first-child>th:first-child {
     padding-left: 18px;
 }
@@ -847,7 +847,7 @@ input.label {
 }
 
 .table-header-default.table:not(.table-striped) thead tr {
-    border-top: 1px solid #f4f4f4;
+    border-top: 1px solid #e3e7eb;
 }
 .table-header-gray.table:not(.table-striped) thead tr {
     border-top: 1px solid #e3e7eb;
