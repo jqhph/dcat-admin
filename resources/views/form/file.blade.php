@@ -1,7 +1,4 @@
-@php
-   $random = \Illuminate\Support\Str::random(8);
-@endphp
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<div id="{{$_id}}" class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
 
     <label for="{{$column}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
@@ -11,10 +8,10 @@
 
         <input name="{{$name}}" id="{{$id}}" type="hidden" />
 
-        <div class="web-uploader {{$_files}}" id="web-uploader-{{$random}}" style="">
+        <div class="web-uploader {{$_files}}"  style="">
             <div class="queueList">
-                <div id="dnd-area-{{$random}}" class="placeholder">
-                    <div id="file-picker-{{$random}}"></div>
+                <div class="placeholder dnd-area">
+                    <div class="file-picker"></div>
                     <p>{{trans('admin.uploader.drag_file')}}</p>
                 </div>
             </div>
@@ -24,7 +21,7 @@
                 </div>
                 <div class="info"></div>
                 <div class="btns">
-                    <div id="add-file-{{$random}}" class="add-file-button"></div> &nbsp;
+                    <div class="add-file-button"></div> &nbsp;
                     <div class="uploadBtn btn btn-primary"><i class="fa fa-upload"></i> &nbsp;{{trans('admin.upload')}}</div>
                 </div>
             </div>
@@ -42,17 +39,16 @@ LA.ready(function () {
 
     function init() {
         var opts = $.extend({
-            wrapper: '#web-uploader-{{$random}}',
-            addFileButton: '#add-file-{{$random}}',
+            selector: '#{{$_id}}',
         }, options);
 
         opts.upload = $.extend({
             pick: {
-                id: '#file-picker-{{$random}}',
+                id: '#{{$_id}} .file-picker',
                 label: '<i class="glyphicon glyphicon-folder-open"></i>&nbsp; {{trans('admin.uploader.add_new_media')}}'
             },
-            dnd: '#dnd-area-{{$random}}',
-            paste: '#web-uploader-{{$random}}'
+            dnd: '#{{$_id}} .dnd-area',
+            paste: '#{{$_id}} .web-uploader'
         }, opts);
 
         upload = LA.Uploader(opts);

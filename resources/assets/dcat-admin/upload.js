@@ -1,8 +1,8 @@
 (function ($) {
     function Uploader(opts) {
         opts = $.extend({
-            wrapper: '#uploader', // 图片显示容器选择器
-            addFileButton: '#add-file-button', // 继续添加按钮选择器
+            wrapper: '.web-uploader', // 图片显示容器选择器
+            addFileButton: '.add-file-button', // 继续添加按钮选择器
             isImage: false,
             preview: [], // 数据预览
             deleteUrl: '',
@@ -61,8 +61,9 @@
             }
         }, opts);
 
-        var updateColumn = opts.upload.formData.upload_column || ('webup' + Math.floor(Math.random()*10000));
-        var elementName = opts.elementName;
+        var $selector = $(opts.selector),
+            updateColumn = opts.upload.formData.upload_column || ('webup' + Math.floor(Math.random()*10000)),
+            elementName = opts.elementName;
 
         if (typeof opts.upload.formData._id == "undefined" || !opts.upload.formData._id) {
             opts.upload.formData._id = updateColumn + Math.floor(Math.random()*10000);
@@ -94,7 +95,7 @@
             originalFilesNum = LA.len(opts.preview),
 
             // 上传表单
-            $input = $('input[name="' + elementName + '"]'),
+            $input = $selector.find('input[name="' + elementName + '"]'),
 
             // 获取文件视图选择器
             getFileViewSelector = function (fileId) {
@@ -414,7 +415,7 @@
                     text = __('selected_has_failed', {success: stats.successNum, fail: stats.uploadFailNum});
                 }
             } else {
-               showSuccess();
+                showSuccess();
             }
 
             function showSuccess() {
@@ -477,7 +478,7 @@
 
                 case 'ready':
                     $placeHolder.addClass('element-invisible');
-                    $(addFileButtonSelector).removeClass('element-invisible');
+                    $selector.find(addFileButtonSelector).removeClass('element-invisible');
                     $queue.show();
                     if (!opts.disabled) {
                         $statusBar.removeClass('element-invisible');
@@ -490,7 +491,7 @@
                     break;
 
                 case 'uploading':
-                    $(addFileButtonSelector).addClass('element-invisible');
+                    $selector.find(addFileButtonSelector).addClass('element-invisible');
                     $progress.show();
                     $upload.text(__('pause_upload'));
                     break;
@@ -503,7 +504,7 @@
                 case 'confirm':
                     if (uploader) {
                         $progress.hide();
-                        $(addFileButtonSelector).removeClass('element-invisible');
+                        $selector.find(addFileButtonSelector).removeClass('element-invisible');
                         $upload.text(__('start_upload'));
 
                         stats = uploader.getStats();
@@ -734,7 +735,7 @@
 
         // 初始化web-uploader
         function build() {
-            $wrap = $(opts.wrapper);
+            $wrap = $selector.find(opts.wrapper);
 
             // 图片容器
             $queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList'));

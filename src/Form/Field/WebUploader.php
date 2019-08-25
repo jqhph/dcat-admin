@@ -4,10 +4,11 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @property Form $form
+ */
 trait WebUploader
 {
     /**

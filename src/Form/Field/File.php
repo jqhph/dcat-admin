@@ -6,6 +6,7 @@ use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class File extends Field
@@ -174,6 +175,7 @@ class File extends Field
         $this->addVariables([
             'options' => json_encode($this->options),
             '_files' => $this->options['isImage'] ? '' : '_files',
+            '_id' => 'file-'.Str::random(8),
         ]);
 
         return parent::render();
