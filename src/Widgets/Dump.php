@@ -29,7 +29,13 @@ class Dump extends Widget
      */
     public function __construct($content, string $padding = null)
     {
-        $content = $this->getJson($content) ?: $content;
+        $this->content($content);
+        $this->padding($padding);
+    }
+
+    public function content($content)
+    {
+        $content = $this->convertJsonToArray($content) ?: $content;
 
         if ($content instanceof Renderable) {
             $this->content = $content->render();
@@ -38,28 +44,34 @@ class Dump extends Widget
         } else {
             $this->content = $content;
         }
-        if ($padding) {
-            $this->padding = $padding;
-        }
+
+        return $this;
     }
 
     public function padding(?string $padding)
     {
-        $this->padding = $padding;
+        if ($padding) {
+            $this->padding = $padding;
+        }
 
         return $this;
     }
 
     /**
      * @param mixed $content
-     * @return bool
+     * @return array|null
      */
-    protected function getJson($content)
+    protected function convertJsonToArray($content)
     {
-        if (!is_string($content)) {
-            return false;
+        if (
+            is_string($content) &&
+            (
+                (strpos($content, '{') === 0 && strpos($content, '}', -1) !== false) ||
+                (strpos($content, '[') === 0 && strpos($content, ']', -1) !== false)
+            )
+        ) {
+            return json_decode($content, true);
         }
-        return json_decode($content);
     }
 
     public function render()
