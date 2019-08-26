@@ -41,6 +41,6 @@ class MiniGrid extends Grid
 
         Content::composing(function (Content $content) {
             $content->simple()->prepend($this->filter);
-        });
+        }, true);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
+use Dcat\Admin\Support\Helper;
+
 class Modal extends AbstractDisplayer
 {
     public function display($callback = null)
@@ -12,13 +14,13 @@ class Modal extends AbstractDisplayer
         }
 
         $html = $this->value;
-        if ($callback) {
+        if ($callback instanceof \Closure) {
             $callback = $callback->bindTo($this->row);
 
-            $html = $callback($this->row);
+            $html = Helper::render($callback($this));
         }
 
-        $key = $this->getKey();
+        $key = $this->grid->getName().$this->getKey();
 
         return <<<EOT
 <span class="grid-expand" data-toggle="modal" data-target="#grid-modal-{$key}">
