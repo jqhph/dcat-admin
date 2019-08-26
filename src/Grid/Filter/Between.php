@@ -87,7 +87,7 @@ class Between extends AbstractFilter
 
         $this->query = 'whereBetween';
 
-        return $this->buildCondition($this->column, $this->value);
+        return $this->buildCondition($this->column, [$value['start'], $value['end']]);
     }
 
     /**
