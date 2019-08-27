@@ -76,11 +76,11 @@ class Between extends Filter
         }
 
         if (!isset($value['start'])) {
-            return $model->where($this->getColumnName(), '<', $value['end']);
+            return $model->where($this->getColumnName(), '<=', $value['end']);
         }
 
         if (!isset($value['end'])) {
-            return $model->where($this->getColumnName(), '>', $value['start']);
+            return $model->where($this->getColumnName(), '=>', $value['start']);
         }
 
         return $model->whereBetween($this->getColumnName(), array_values($value));
