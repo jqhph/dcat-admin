@@ -346,11 +346,16 @@ class Model
             ($isA = is_array($data))
             || $data instanceof Collection
             || $data instanceof \Closure
-            || $data instanceof AbstractPaginator
+            || ($isP = $data instanceof AbstractPaginator)
         ) {
             if ($isA) {
                 $data = collect($data);
+            } elseif (! empty($isP)) {
+                $this->model = $data;
+                $this->data = $data->getCollection();
+                return;
             }
+
             $this->data = $data;
         }
     }
