@@ -70,7 +70,11 @@ abstract class Filter implements Renderable
         $request = request();
 
         $query = $request->query();
-        Arr::forget($query, [$this->getColumnName(), '_pjax']);
+        Arr::forget($query, [
+            $this->getColumnName(),
+            $this->parent->grid()->model()->getPageName(),
+            '_pjax',
+        ]);
 
         $question = $request->getBaseUrl().$request->getPathInfo() == '/' ? '/?' : '?';
 
