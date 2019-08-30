@@ -84,9 +84,15 @@ class Sorter implements Renderable
             $sort['cast'] = $this->cast;
         }
 
-        $url = request()->fullUrlWithQuery([
-            $this->sortName => $sort
-        ]);
+        if (! $this->isSorted() || $this->sort['type'] != 'asc') {
+            $url = request()->fullUrlWithQuery([
+                $this->sortName => $sort
+            ]);
+        } else {
+            $url = request()->fullUrlWithQuery([
+                $this->sortName => [],
+            ]);
+        }
 
         return " <a class=' glyphicon glyphicon-sort{$icon} $color' href='$url'></a>";
     }
