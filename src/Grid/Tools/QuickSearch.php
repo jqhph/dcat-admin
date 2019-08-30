@@ -37,12 +37,17 @@ class QuickSearch extends AbstractTool
      */
     public function render()
     {
-        $query = request()->query();
+        $request = request();
+        $query = $request->query();
 
-        Arr::forget($query, QuickSearchConcerns::$searchKey);
+        Arr::forget($query, [
+            QuickSearchConcerns::$searchKey,
+            $this->grid->model()->getPageName(),
+            '_pjax',
+        ]);
 
         $vars = [
-            'action' => request()->url() . '?' . http_build_query($query),
+            'action' => $request->url() . '?' . http_build_query($query),
             'key' => QuickSearchConcerns::$searchKey,
             'value' => request(QuickSearchConcerns::$searchKey),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
