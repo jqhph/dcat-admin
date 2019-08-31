@@ -2037,7 +2037,7 @@ div.layui-layer-btn{
 
 .fields-group label.asterisk:before {
     content: "*";
-    margin:0 5px 0 0;
+    margin:0 3px 0 0;
     font-weight:bold;
     color:#dd4b39
 }

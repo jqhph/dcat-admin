@@ -226,6 +226,7 @@ class Tree extends Field
 
         $checkboxes->style('primary');
         $checkboxes->inline();
+        $checkboxes->circle(false);
         $checkboxes->options([
             1 => trans('admin.selectall'),
             2 => trans('admin.expand')
