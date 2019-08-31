@@ -112,7 +112,7 @@ $(document).on('change', "{$this->getElementClassSelector()}", function () {
                 d.text = d.$textField;
                 return d;
             })
-        }).trigger('change');
+        }).val(target.attr('data-value')).trigger('change');
     });
 });
 JS;
