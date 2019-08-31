@@ -112,4 +112,13 @@ class Image extends File
         return $this->dimensions(['ratio' => $ratio]);
     }
 
+    /**
+     * @param UploadedFile $file
+     *
+     */
+    protected function prepareFile(UploadedFile $file)
+    {
+        $this->callInterventionMethods($file->getRealPath(), $file->getClientMimeType());
+    }
+
 }

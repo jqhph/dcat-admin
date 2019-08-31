@@ -34,16 +34,18 @@ trait ImageField
      *
      * @return mixed
      */
-    public function callInterventionMethods($target)
+    public function callInterventionMethods($target, $mime)
     {
         if (!empty($this->interventionCalls)) {
             $image = ImageManagerStatic::make($target);
+
+            $mime = $mime ?: finfo_file(finfo_open(FILEINFO_MIME_TYPE), $target);
 
             foreach ($this->interventionCalls as $call) {
                 call_user_func_array(
                     [$image, $call['method']],
                     $call['arguments']
-                )->save($target);
+                )->save($target, null, $mime);
             }
         }
 

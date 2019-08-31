@@ -147,7 +147,7 @@ trait UploadField
                 return $this->responseError(403, 'Missing id');
             }
 
-            if (!($file = $this->mergeChunks($id, $file))) {
+            if (! ($file = $this->mergeChunks($id, $file))) {
                 return $this->response(['merge' => 1]);
             }
 
@@ -160,6 +160,8 @@ trait UploadField
             $this->name = $this->getStoreName($file);
 
             $this->renameIfExists($file);
+
+            $this->prepareFile($file);
 
             if (!is_null($this->storagePermission)) {
                 $result = $this->storage->putFileAs($this->getDirectory(), $file, $this->name, $this->storagePermission);
@@ -191,6 +193,13 @@ trait UploadField
     }
 
     /**
+     * @param UploadedFile $file
+     */
+    protected function prepareFile(UploadedFile $file)
+    {
+    }
+
+    /**
      * @param string $id
      * @param UploadedFile $file
      * @return UploadedFile|null
@@ -219,15 +228,15 @@ trait UploadField
 
         if (!$done) return;
 
-        $this->tempFilePath = $tmpDir . '/' . $newFilename . '.tmp';
+        $this->tempFilePath = $tmpDir.'/'.$newFilename.'.tmp';
         $this->putTmpFileContent($chunks, $tmpDir, $newFilename);
 
         return new UploadedFile(
             $this->tempFilePath,
-           $file->getClientOriginalName(),
-           'application/octet-stream',
-           UPLOAD_ERR_OK,
-           true
+            $file->getClientOriginalName(),
+            'application/octet-stream',
+            UPLOAD_ERR_OK,
+            true
         );
     }
 
