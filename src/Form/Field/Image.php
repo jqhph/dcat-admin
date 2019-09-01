@@ -118,7 +118,7 @@ class Image extends File
      */
     protected function prepareFile(UploadedFile $file)
     {
-        $this->callInterventionMethods($file->getRealPath(), $file->getClientMimeType());
+        $this->callInterventionMethods($file->getRealPath(), $file->getMimeType());
     }
 
 }

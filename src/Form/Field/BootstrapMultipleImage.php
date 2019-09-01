@@ -31,7 +31,7 @@ class BootstrapMultipleImage extends BootstrapMultipleFile
     {
         $this->name = $this->getStoreName($image);
 
-        $this->callInterventionMethods($image->getRealPath());
+        $this->callInterventionMethods($image->getRealPath(), $image->getMimeType());
 
         return tap($this->upload($image), function () {
             $this->name = null;

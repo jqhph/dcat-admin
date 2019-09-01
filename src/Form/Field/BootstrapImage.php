@@ -75,7 +75,7 @@ class BootstrapImage extends BootstrapFile
 
         $this->name = $this->getStoreName($image);
 
-        $this->callInterventionMethods($image->getRealPath());
+        $this->callInterventionMethods($image->getRealPath(), $image->getMimeType());
 
         return $this->uploadAndDeleteOriginal($image);
     }
