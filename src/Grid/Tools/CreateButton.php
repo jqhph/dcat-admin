@@ -17,32 +17,48 @@ class CreateButton
         $this->grid = $grid;
     }
 
-    public function render()
+    protected function renderQuickCreateButton()
     {
+        if (! $this->grid->option('show_quick_create_btn')) {
+            return;
+        }
+
         $new = trans('admin.new');
         $url = $this->grid->getCreateUrl();
 
-        $quickBtn = $btn = '';
-        if ($this->grid->option('show_create_btn')) {
-            $btn = "<a href='{$url}' class='btn btn-sm btn-success btn-mini'>
+        list($width, $height) = $this->grid->option('dialog_form_area');
+
+        Form::popup($new)
+            ->click(".{$this->grid->getGridRowName()}-create")
+            ->success('LA.reload()')
+            ->dimensions($width, $height)
+            ->render();
+
+        $text = $this->grid->option('show_create_btn') ? '<i class="fa fa-clone"></i>' : "<i class='ti-plus'></i><span class='hidden-xs'> &nbsp; $new</span>";
+
+        return "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->getGridRowName()}-create'>$text</a>";
+    }
+
+    protected function renderCreateButton()
+    {
+        if (! $this->grid->option('show_create_btn')) {
+            return;
+        }
+
+        $new = trans('admin.new');
+        $url = $this->grid->getCreateUrl();
+
+        return "<a href='{$url}' class='btn btn-sm btn-success btn-mini'>
     <i class='ti-plus'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span>
 </a>";
+    }
+
+    public function render()
+    {
+        if (! $this->grid->option('show_create_btn') && ! $this->grid->option('show_quick_create_btn')) {
+            return;
         }
 
-        if ($this->grid->option('show_quick_create_btn')) {
-            list($width, $height) = $this->grid->option('dialog_form_area');
-
-            Form::popup($new)
-                ->click(".{$this->grid->getGridRowName()}-create")
-                ->success('LA.reload()')
-                ->dimensions($width, $height)
-                ->render();
-
-            $text = $this->grid->option('show_create_btn') ? '<i class=\' fa fa-clone\'></i>' : "<i class='ti-plus'></i><span class='hidden-xs'> &nbsp; $new</span>";
-
-            $quickBtn = "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->getGridRowName()}-create'>$text</a>";
-        }
-
-        return "<div class='btn-group' style='margin-right:3px'>{$btn}{$quickBtn}</div>";
+        return "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderQuickCreateButton()}</div>";
     }
 }

@@ -203,7 +203,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('admin.menu', Menu::class);
 
-        $this->app->singleton('admin.object', Fluent::class);
+        $this->app->singleton('admin.temp', Fluent::class);
     }
 
     /**

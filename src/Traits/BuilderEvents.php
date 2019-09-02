@@ -48,11 +48,11 @@ trait BuilderEvents
      */
     protected function callBuilderListeners($key, ...$params)
     {
-        $object = app('admin.object');
+        $storage = app('admin.temp');
 
         $key = static::formatBuilderEventKey($key);
 
-        $listeners = $object->get($key) ?: [];
+        $listeners = $storage->get($key) ?: [];
 
         foreach ($listeners as $k => $listener) {
             list($callback, $once) = $listener;
@@ -64,7 +64,7 @@ trait BuilderEvents
             call_user_func($callback, $this, ...$params);
         }
 
-        $object[$key] = $listeners;
+        $storage[$key] = $listeners;
     }
 
     /**
@@ -74,15 +74,15 @@ trait BuilderEvents
      */
     protected static function setListeners($key, $callback, $once)
     {
-        $object = app('admin.object');
+        $storage = app('admin.temp');
 
         $key = static::formatBuilderEventKey($key);
 
-        $listeners = $object->get($key) ?: [];
+        $listeners = $storage->get($key) ?: [];
 
         $listeners[] = [$callback, $once];
 
-        $object[$key] = $listeners;
+        $storage[$key] = $listeners;
     }
 
     protected static function formatBuilderEventKey($key)

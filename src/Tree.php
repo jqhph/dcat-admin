@@ -60,6 +60,11 @@ class Tree implements Renderable
     public $path;
 
     /**
+     * @var string
+     */
+    public $url;
+
+    /**
      * @var bool
      */
     public $useCreate = true;
@@ -127,6 +132,7 @@ class Tree implements Renderable
         $this->model = $model;
 
         $this->path = $this->path ?: request()->getPathInfo();
+        $this->url = url($this->path);
         $this->elementId .= uniqid();
 
         $this->setupTools();
@@ -135,8 +141,6 @@ class Tree implements Renderable
         if ($callback instanceof \Closure) {
             call_user_func($callback, $this);
         }
-
-        $this->initBranchCallback();
 
         $this->callResolving();
     }
@@ -159,7 +163,7 @@ class Tree implements Renderable
      *
      * @return void
      */
-    protected function initBranchCallback()
+    protected function setDefaultBranchCallback()
     {
         if (is_null($this->branchCallback)) {
             $this->branchCallback = function ($branch) {
@@ -337,7 +341,7 @@ $('.tree_branch_delete').click(function() {
         LA.NP.start();
         $.ajax({
             method: 'post',
-            url:  '{$this->path}/' + id,
+            url:  '{$this->url}/' + id,
             data: {
                 _method:'delete',
                 _token:LA.token,
@@ -360,7 +364,7 @@ $('.tree_branch_delete').click(function() {
 $('.{$this->elementId}-save').click(function () {
     var serialize = $('#{$this->elementId}').nestable('serialize');
     LA.NP.start();
-    $.post('{$this->path}', {
+    $.post('{$this->url}', {
         _token: LA.token,
         _order: JSON.stringify(serialize)
     },
@@ -447,7 +451,7 @@ JS;
             return '';
         }
 
-        $url = $this->path . '/create';
+        $url = $this->url . '/create';
         $new = trans('admin.new');
 
         $quickBtn = $btn = '';
@@ -464,6 +468,38 @@ JS;
     }
 
     /**
+     * @return void
+     */
+    protected function renderQuickEditButton()
+    {
+        if ($this->useQuickEdit) {
+            list($width, $height) = $this->dialogFormDimensions;
+
+            Form::popup(trans('admin.edit'))
+                ->click('.tree-quick-edit')
+                ->success('LA.reload()')
+                ->dimensions($width, $height)
+                ->render();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function renderQuickCreateButton()
+    {
+        if ($this->useQuickCreate) {
+            list($width, $height) = $this->dialogFormDimensions;
+
+            Form::popup(trans('admin.new'))
+                ->click('.tree-quick-create')
+                ->success('LA.reload()')
+                ->dimensions($width, $height)
+                ->render();
+        }
+    }
+
+    /**
      * Render a tree.
      *
      * @return \Illuminate\Http\JsonResponse|string
@@ -473,30 +509,15 @@ JS;
         try {
             $this->callResolving();
 
-            if ($this->useQuickEdit) {
-                list($width, $height) = $this->dialogFormDimensions;
+            $this->setDefaultBranchCallback();
 
-                Form::popup(trans('admin.edit'))
-                    ->click('.tree-quick-edit')
-                    ->success('LA.reload()')
-                    ->dimensions($width, $height)
-                    ->render();
-            }
-
-            if ($this->useQuickCreate) {
-                list($width, $height) = $this->dialogFormDimensions;
-
-                Form::popup(trans('admin.new'))
-                    ->click('.tree-quick-create')
-                    ->success('LA.reload()')
-                    ->dimensions($width, $height)
-                    ->render();
-            }
+            $this->renderQuickEditButton();
+            $this->renderQuickCreateButton();
 
             Admin::script($this->script());
 
             view()->share([
-                'path'           => url($this->path),
+                'path'           => $this->url,
                 'keyName'        => $this->model->getKeyName(),
                 'branchView'     => $this->view['branch'],
                 'branchCallback' => $this->branchCallback,

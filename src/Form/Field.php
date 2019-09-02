@@ -899,6 +899,20 @@ class Field implements Renderable
     }
 
     /**
+     * Remove the field in dialog.
+     *
+     * @return $this
+     */
+    public function hideInDialog()
+    {
+        if (Form::isDialogFormPage()) {
+            $this->setDisplay(false);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     protected function getFormId()
