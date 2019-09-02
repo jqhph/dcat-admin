@@ -1460,7 +1460,7 @@ class Form implements Renderable
      * @param int $width
      * @param Closure $callback
      */
-    public function column(int $width, \Closure $callback)
+    public function block(int $width, \Closure $callback)
     {
         $layout = $this->builder->layout();
 
@@ -1471,9 +1471,9 @@ class Form implements Renderable
      * @param int $width
      * @return $this
      */
-    public function setDefaultColumnWidth(int $width)
+    public function setDefaultBlockWidth(int $width)
     {
-        $this->builder->setDefaultColumnWidth($width);
+        $this->builder->setDefaultBlockWidth($width);
 
         return $this;
     }
@@ -1491,7 +1491,7 @@ class Form implements Renderable
     /**
      * @return bool
      */
-    public static function isDialogFormPage()
+    public static function inDialog()
     {
         return DialogForm::is();
     }

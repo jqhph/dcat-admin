@@ -905,7 +905,7 @@ class Field implements Renderable
      */
     public function hideInDialog()
     {
-        if (Form::isDialogFormPage()) {
+        if (Form::inDialog()) {
             $this->setDisplay(false);
         }
 

@@ -111,7 +111,7 @@ class Builder
     /**
      * @var int
      */
-    protected $defaultColumnWidth = 12;
+    protected $defaultBlockWidth = 12;
 
     /**
      * @var string
@@ -185,9 +185,9 @@ class Builder
      * @param int $width
      * @return $this
      */
-    public function setDefaultColumnWidth(int $width)
+    public function setDefaultBlockWidth(int $width)
     {
-        $this->defaultColumnWidth = $width;
+        $this->defaultBlockWidth = $width;
 
         return $this;
     }
@@ -733,7 +733,7 @@ class Builder
         ];
 
         $this->layout->prepend(
-            $this->defaultColumnWidth,
+            $this->defaultBlockWidth,
             $this->doWrap(view($this->view, $data))
         );
 
