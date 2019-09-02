@@ -60,6 +60,13 @@ trait UploadField
     protected $tempFilePath;
 
     /**
+     * Retain file when delete record from DB.
+     *
+     * @var bool
+     */
+    protected $retainable = false;
+
+    /**
      * Initialize the storage instance.
      *
      * @return void.
@@ -131,6 +138,18 @@ trait UploadField
         }
 
         return $this->directory ?: $this->defaultDirectory();
+    }
+
+    /**
+     * Indicates if the underlying field is retainable.
+     *
+     * @return $this
+     */
+    public function retainable($retainable = true)
+    {
+        $this->retainable = $retainable;
+
+        return $this;
     }
 
     /**
@@ -213,7 +232,7 @@ trait UploadField
             return $file;
         }
 
-        $tmpDir = $this->getTmpDir($id);
+        $tmpDir = $this->getTempDir($id);
         $newFilename = md5($file->getClientOriginalName());
 
         $file->move($tmpDir, "{$newFilename}.{$chunk}.part");
@@ -229,7 +248,7 @@ trait UploadField
         if (!$done) return;
 
         $this->tempFilePath = $tmpDir.'/'.$newFilename.'.tmp';
-        $this->putTmpFileContent($chunks, $tmpDir, $newFilename);
+        $this->putTempFileContent($chunks, $tmpDir, $newFilename);
 
         return new UploadedFile(
             $this->tempFilePath,
@@ -265,7 +284,7 @@ trait UploadField
      * @param string $tmpDir
      * @param string $newFilename
      */
-    protected function putTmpFileContent($chunks, $tmpDir, $newFileame)
+    protected function putTempFileContent($chunks, $tmpDir, $newFileame)
     {
         $out = fopen($this->tempFilePath, 'wb');
 
@@ -293,7 +312,7 @@ trait UploadField
      * @param $id
      * @return string
      */
-    protected function getTmpDir($id)
+    protected function getTempDir($id)
     {
         $tmpDir = storage_path('tmp/' . $id);
 
@@ -467,6 +486,9 @@ trait UploadField
      */
     public function destroy()
     {
+        if ($this->retainable) {
+            return;
+        }
         $this->deleteFile($this->original);
     }
 
