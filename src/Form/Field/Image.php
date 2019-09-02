@@ -119,6 +119,20 @@ class Image extends File
     protected function prepareFile(UploadedFile $file)
     {
         $this->callInterventionMethods($file->getRealPath(), $file->getMimeType());
+
+        $this->uploadAndDeleteOriginalThumbnail($file);
+    }
+
+    /**
+     * Destroy original files.
+     *
+     * @return void.
+     */
+    public function destroy()
+    {
+        parent::destroy();
+
+        $this->destroyThumbnail();
     }
 
 }
