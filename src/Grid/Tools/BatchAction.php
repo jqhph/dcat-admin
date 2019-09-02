@@ -100,7 +100,7 @@ abstract class BatchAction implements Renderable
     public function render()
     {
         return <<<HTML
-<li><a href="#" class="{{$this->getElementClass()}}}">{$this->getTitle()}</a></li>
+<li><a href="#" class="{$this->getElementClass()}">{$this->getTitle()}</a></li>
 HTML;
 
     }
