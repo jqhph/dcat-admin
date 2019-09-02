@@ -456,8 +456,8 @@ JS;
         }
 
         if ($this->useQuickCreate) {
-            $text = $this->useCreate ? '' : "<span class='hidden-xs'> &nbsp; $new</span>";
-            $quickBtn = "<a data-url='$url' class='btn btn-sm btn-success tree-quick-create'><i class=' fa fa-clone'></i>$text</a>";
+            $text = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='ti-plus'></i><span class='hidden-xs'> &nbsp; $new</span>";
+            $quickBtn = "<a data-url='$url' class='btn btn-sm btn-success tree-quick-create'>$text</a>";
         }
 
         return "<div class='btn-group pull-right' style='margin-right:3px'>{$btn}{$quickBtn}</div>";

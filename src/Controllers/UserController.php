@@ -91,6 +91,7 @@ class UserController extends Controller
         $grid = new Grid(new Administrator());
 
         $grid->disableBatchDelete();
+        $grid->disableCreateButton();
 
         $grid->model()->with('roles');
 

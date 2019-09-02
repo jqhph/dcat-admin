@@ -38,9 +38,9 @@ class CreateButton
                 ->dimensions($width, $height)
                 ->render();
 
-            $text = $this->grid->option('show_create_btn') ? '' : "<span class='hidden-xs'> &nbsp; $new</span>";
+            $text = $this->grid->option('show_create_btn') ? '<i class=\' fa fa-clone\'></i>' : "<i class='ti-plus'></i><span class='hidden-xs'> &nbsp; $new</span>";
 
-            $quickBtn = "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->getGridRowName()}-create'><i class=' fa fa-clone'></i>$text</a>";
+            $quickBtn = "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->getGridRowName()}-create'>$text</a>";
         }
 
         return "<div class='btn-group' style='margin-right:3px'>{$btn}{$quickBtn}</div>";
