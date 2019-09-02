@@ -12,8 +12,6 @@ trait Options
     protected $options = [
         'show_pagination'        => true,
         'show_filter'            => true,
-        'show_exporter'          => false,
-        'show_export_all'        => true,
         'show_actions'           => true,
         'show_quick_edit_button' => true,
         'show_edit_button'       => true,
@@ -31,7 +29,12 @@ trait Options
         'row_selector_label_name' => null,
         'row_selector_bg'         => 'var(--20)',
 
-        'export_limit'       => 50000,
+        'show_exporter'   => false,
+        'show_export_all' => true,
+        'show_export_current_page' => true,
+        'show_export_selected_rows' => true,
+        'export_limit'    => 50000,
+
         'dialog_form_area'   => ['700px', '670px'],
         'table_header_style' => 'table-header-gray',
 
@@ -355,26 +358,6 @@ trait Options
     public function showExporter(bool $val = true)
     {
         return $this->disableExporter(!$val);
-    }
-
-    /**
-     * Disable export all.
-     *
-     * @return $this
-     */
-    public function disableExporterAll(bool $disable = true)
-    {
-        return $this->option('show_export_all', !$disable);
-    }
-
-    /**
-     * Show export all option.
-     *
-     * @return $this
-     */
-    public function showExportAll(bool $val = true)
-    {
-        return $this->disableExporterAll(!$val);
     }
 
     /**

@@ -850,12 +850,28 @@ HTML
     }
 
     /**
-     * @param int|null $limit
-     * @return Grid
+     * @param array $options
+     * @return $this
      */
-    public function setExportLimit(?int $limit)
+    public function setExportOptions(array $options)
     {
-        return $this->option('export_limit', $limit);
+        if (isset($options['limit'])) {
+            $this->options['export_limit'] = $options['limit'];
+        }
+
+        if (isset($options['all'])) {
+            $this->options['show_export_all'] = $options['show_all'];
+        }
+
+        if (isset($options['current_page'])) {
+            $this->options['show_export_current_page'] = $options['current_page'];
+        }
+
+        if (isset($options['selected_rows'])) {
+            $this->options['show_export_selected_rows'] = $options['selected_rows'];
+        }
+
+        return $this;
     }
 
     /**
