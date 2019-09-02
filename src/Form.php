@@ -670,6 +670,25 @@ class Form implements Renderable
     }
 
     /**
+     * Handle orderable update.
+     *
+     * @param int   $id
+     * @param array $input
+     *
+     * @return bool
+     */
+    protected function handleOrderable(array $input = [])
+    {
+        if (array_key_exists('_orderable', $input)) {
+            $input['_orderable'] == 1 ? $this->repository->moveOrderUp() : $this->repository->moveOrderDown();
+
+            return $this->ajaxResponse(__('admin.update_succeeded'));
+        }
+
+    }
+
+
+    /**
      * Handle update.
      *
      * @param $id
@@ -704,6 +723,10 @@ class Form implements Renderable
 
         $this->setModel(new Fluent($this->repository->getDataWhenUpdating($this)));
         $this->setFieldOriginalValue();
+
+        if ($response = $this->handleOrderable($data)) {
+            return $response;
+        }
 
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {

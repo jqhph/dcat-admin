@@ -34,6 +34,7 @@ use Illuminate\Support\Str;
  * @method $this qrcode($formatter = null, $width = 150, $height = 150)
  * @method $this downloadable($server = '', $disk = null)
  * @method $this copyable()
+ * @method $this orderable()
  *
  * @method $this limit($limit = 100, $end = '...')
  * @method $this ascii()
@@ -83,6 +84,7 @@ class Column
         'qrcode'       => Displayers\QRCode::class,
         'downloadable' => Displayers\Downloadable::class,
         'copyable'     => Displayers\Copyable::class,
+        'orderable'    => Displayers\Orderable::class,
     ];
 
     /**

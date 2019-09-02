@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Support\Str;
+use Spatie\EloquentSortable\Sortable;
 
 abstract class EloquentRepository extends Repository
 {
@@ -238,6 +239,41 @@ abstract class EloquentRepository extends Repository
         });
 
         return $result;
+    }
+
+    /**
+     * Swaps the order of this model with the model 'above' this model.
+     *
+     * @return bool
+     */
+    public function moveOrderUp()
+    {
+        $model = $this->eloquent();
+        if ($model instanceof Sortable) {
+            $model->moveOrderUp();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Swaps the order of this model with the model 'below' this model.
+     *
+     * @return bool
+     */
+    public function moveOrderDown()
+    {
+        $model = $this->eloquent();
+
+        if ($model instanceof Sortable) {
+            $model->moveOrderDown();
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
