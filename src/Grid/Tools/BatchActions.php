@@ -52,22 +52,15 @@ class BatchActions extends AbstractTool
     /**
      * Add a batch action.
      *
-     * @param $title
-     * @param BatchAction|null $action
+     * @param BatchAction $action
      *
      * @return $this
      */
-    public function add($title, BatchAction $action = null)
+    public function add(BatchAction $action)
     {
         $id = $this->actions->count();
 
-        if (func_num_args() == 1) {
-            $action = $title;
-            $action->setId($id);
-        } elseif (func_num_args() == 2) {
-            $action->setId($id);
-            $action->setTitle($title);
-        }
+        $action->setId($id);
 
         $this->actions->push($action);
 

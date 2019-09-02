@@ -3,8 +3,9 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Grid;
+use Illuminate\Contracts\Support\Renderable;
 
-abstract class BatchAction
+abstract class BatchAction implements Renderable
 {
     /**
      * @var int
@@ -72,18 +73,35 @@ abstract class BatchAction
      *
      * @return string
      */
-    public function getElementClass($dotPrefix = true)
+    public function getElementClass()
     {
         return sprintf(
-            '%s%s-%s',
-            $dotPrefix ? '.' : '',
+            '%s-%s',
             $this->grid->getGridBatchName(),
             $this->id
         );
     }
 
     /**
-     * @return mixed
+     * @return string
+     */
+    public function getElementSelector()
+    {
+        return '.'.$this->getElementClass();
+    }
+
+    /**
+     * Script of batch action.
+     *
+     * @return string
      */
     abstract public function script();
+
+    public function render()
+    {
+        return <<<HTML
+<li><a href="#" class="{{$this->getElementClass()}}}">{$this->getTitle()}</a></li>
+HTML;
+
+    }
 }

@@ -6,11 +6,7 @@
     </button>
     <ul class="dropdown-menu" role="menu">
         @foreach($actions as $action)
-            @if($action instanceof \Dcat\Admin\Grid\Tools\BatchDelete)
-                {!! $action->render() !!}
-            @else
-                <li><a href="#" class="{{ $action->getElementClass(false) }}">{{ $action->getTitle() }}</a></li>
-            @endif
+            {!! $action->render() !!}
         @endforeach
     </ul>
 </div>
