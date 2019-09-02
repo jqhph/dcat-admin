@@ -275,10 +275,8 @@ class UserController extends Controller
                 return array_column($v, 'id');
             });
 
-        if ($id) {
-            $form->display('created_at', trans('admin.created_at'));
-            $form->display('updated_at', trans('admin.updated_at'));
-        }
+        $form->display('created_at', trans('admin.created_at'));
+        $form->display('updated_at', trans('admin.updated_at'));
 
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->get('password') != $form->password) {

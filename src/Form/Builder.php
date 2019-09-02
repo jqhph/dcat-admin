@@ -668,7 +668,7 @@ class Builder
      */
     protected function removeReservedFields()
     {
-        if (!$this->isMode(static::MODE_CREATE)) {
+        if (! $this->isMode(static::MODE_CREATE)) {
             return;
         }
 
@@ -678,7 +678,7 @@ class Builder
             $this->form->getRepository()->getUpdatedAtColumn(),
         ];
 
-        $this->fields = $this->fields()->reject(function (Field $field) use ($reservedColumns) {
+        $this->fields = $this->fields()->reject(function (Field $field) use (&$reservedColumns) {
             return in_array($field->column(), $reservedColumns);
         });
     }

@@ -18,9 +18,7 @@ trait FormCreator
 
         $rows = [
             <<<EOF
-if (\$id) {
-            \$form->display('{$primaryKey}');
-        }
+\$form->display('{$primaryKey}');
 EOF
 
         ];
@@ -35,10 +33,8 @@ EOF
         if ($timestamps) {
             $rows[] = <<<EOF
         
-        if (\$id) {
-            \$form->display('created_at');
-            \$form->display('updated_at');
-        }
+        \$form->display('created_at');
+        \$form->display('updated_at');
 EOF;
         }
 

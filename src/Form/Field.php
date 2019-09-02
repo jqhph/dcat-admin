@@ -1077,11 +1077,7 @@ class Field implements Renderable
      */
     protected function shouldRender()
     {
-        if (!$this->display) {
-            return false;
-        }
-
-        return true;
+        return $this->display;
     }
 
     /**
