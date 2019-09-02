@@ -38,9 +38,6 @@ EOF
         if (\$id) {
             \$form->display('created_at');
             \$form->display('updated_at');
-        } else {
-            \$form->hidden('created_at');
-            \$form->hidden('updated_at');
         }
 EOF;
         }
