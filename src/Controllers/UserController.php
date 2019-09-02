@@ -95,7 +95,7 @@ class UserController extends Controller
 
         $grid->model()->with('roles');
 
-        $grid->id->bold()->sortable();
+        $grid->id('ID')->bold()->sortable();
         $grid->username;
         $grid->name;
         $grid->roles->pluck('name')->label('primary');

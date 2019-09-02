@@ -97,7 +97,7 @@ class RoleController extends Controller
         $grid->disableBatchDelete();
         $grid->disableCreateButton();
 
-        $grid->id->bold()->sortable();
+        $grid->id('ID')->bold()->sortable();
         $grid->slug->label('primary');
         $grid->name;
 

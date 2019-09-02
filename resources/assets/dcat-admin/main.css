@@ -824,7 +824,7 @@ input.label {
     height:53px;
 }
 .table > thead > tr > th {
-    color: var(--80);
+    color: #555;
 }
 .table-header-default.table>thead>tr>th,.table-header-gray.table>thead>tr>th {
     border-bottom: 1px solid #e3e7eb;
@@ -867,7 +867,7 @@ input.label {
     vertical-align: bottom !important;
     /*color:var(--90-half);*/
     /*font-weight:bold;*/
-    color:var(--80);
+    /*color:var(--80);*/
 }
 
 td {
@@ -1890,7 +1890,9 @@ pre.dump {
     opacity: 0.7;
 }
 .checkbox-grid{
-    margin-top:0;margin-bottom:0;top:1px
+    margin-top:0;
+    margin-bottom:0;
+    top:2px;
 }
 .checkbox-grid label{min-height:15px}
 .checkbox.checkbox-circle label::before {
