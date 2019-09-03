@@ -264,7 +264,7 @@ class Grid
      */
     public function number(?string $label = null)
     {
-        return $this->column('#', $label ?: '#')->bold();
+        return $this->addColumn('#', $label ?: '#')->bold();
     }
 
     /**
@@ -319,24 +319,6 @@ class Grid
         $column->setGrid($this);
 
         $this->columns->put($field, $column);
-
-        return $column;
-    }
-
-    /**
-     * Prepend column to grid.
-     *
-     * @param string $column
-     * @param string $label
-     *
-     * @return Column
-     */
-    protected function prependColumn($column = '', $label = '')
-    {
-        $column = new Column($column, $label);
-        $column->setGrid($this);
-
-        $this->columns->prepend($column);
 
         return $column;
     }

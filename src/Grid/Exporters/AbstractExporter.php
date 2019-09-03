@@ -92,6 +92,8 @@ abstract class AbstractExporter implements ExporterInterface
     {
         $model = $this->grid->model();
 
+        $model->usePaginate(false);
+
         if ($scope == Grid\Exporter::SCOPE_ALL) {
             $model->usePaginate(true);
             $model->setPerPage($this->grid->option('export_limit'));

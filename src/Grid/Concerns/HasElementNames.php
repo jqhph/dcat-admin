@@ -2,6 +2,12 @@
 
 namespace Dcat\Admin\Grid\Concerns;
 
+use Dcat\Admin\Grid;
+
+/**
+ * @method Grid\Model model()
+ * @method Grid\Filter getFilter()
+ */
 trait HasElementNames
 {
     /**
@@ -36,13 +42,15 @@ trait HasElementNames
     {
         $this->__name = $name;
 
-        $m = $this->model();
+        $model = $this->model();
 
-        $m->setPerPageName("{$name}_{$m->getPerPageName()}")
-            ->setPageName("{$name}_{$m->getPageName()}")
-            ->setSortName("{$name}_{$m->getSortName()}");
+        $model->setPerPageName("{$name}_{$model->getPerPageName()}")
+            ->setPageName("{$name}_{$model->getPageName()}")
+            ->setSortName("{$name}_{$model->getSortName()}");
 
         $this->getFilter()->setName($name);
+
+        $this->setExporterQueryName($name);
 
         return $this;
     }

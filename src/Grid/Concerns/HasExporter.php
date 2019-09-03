@@ -11,11 +11,16 @@ use Illuminate\Support\Facades\Input;
 trait HasExporter
 {
     /**
+     * @var Exporter
+     */
+    protected $exporter;
+
+    /**
      * Export driver.
      *
      * @var string|Grid\Exporters\AbstractExporter
      */
-    protected $exporter;
+    protected $exportDriver;
 
     /**
      * Set exporter driver for Grid to export.
@@ -26,7 +31,7 @@ trait HasExporter
      */
     public function exporter($exporter)
     {
-        $this->exporter = $exporter;
+        $this->exportDriver = $exporter;
 
         return $this;
     }
@@ -35,10 +40,15 @@ trait HasExporter
      * Handle export request.
      *
      * @param bool $forceExport
+     *
+     * @return mixed
      */
     protected function handleExportRequest($forceExport = false)
     {
-        if (!$scope = request(Exporter::$queryName)) {
+        if (
+            ! $this->allowExportBtn()
+            || ! $scope = request($this->getExporter()->getQueryName())
+        ) {
             return;
         }
 
@@ -52,12 +62,32 @@ trait HasExporter
         if ($this->builder) {
             call_user_func($this->builder, $this);
 
-            $this->getExporter($scope)->export();
+            return $this->resolveExportDriver($scope)->export();
         }
 
         if ($forceExport) {
-            $this->getExporter($scope)->export();
+            return $this->resolveExportDriver($scope)->export();
         }
+    }
+
+    /**
+     * @return Exporter
+     */
+    protected function getExporter()
+    {
+        return $this->exporter ?: ($this->exporter = new Exporter($this));
+    }
+
+    /**
+     * @param string $gridName
+     */
+    protected function setExporterQueryName($gridName)
+    {
+        if (! $this->allowExportBtn()) {
+            return;
+        }
+
+        $this->getExporter()->setQueryName($gridName.'_export_');
     }
 
     /**
@@ -65,9 +95,9 @@ trait HasExporter
      *
      * @return AbstractExporter
      */
-    protected function getExporter($scope)
+    protected function resolveExportDriver($scope)
     {
-        return (new Exporter($this))->resolve($this->exporter)->withScope($scope);
+        return $this->getExporter()->resolve($this->exportDriver)->withScope($scope);
     }
 
 
@@ -81,7 +111,7 @@ trait HasExporter
      */
     public function getExportUrl($scope = 1, $args = null)
     {
-        $input = array_merge(Input::all(), Exporter::formatExportQuery($scope, $args));
+        $input = array_merge(Input::all(), $this->getExporter()->formatExportQuery($scope, $args));
 
         if ($constraints = $this->model()->getConstraints()) {
             $input = array_merge($input, $constraints);
@@ -122,9 +152,10 @@ trait HasExporter
      */
     public function renderExportButton()
     {
-        if (!$this->options['show_exporter']) {
+        if (! $this->allowExportBtn()) {
             return '';
         }
+        
         return (new Tools\ExportButton($this))->render();
     }
 
@@ -135,7 +166,7 @@ trait HasExporter
      */
     public function disableExporter(bool $disable = true)
     {
-        return $this->option('show_exporter', !$disable);
+        return $this->option('show_exporter', ! $disable);
     }
 
     /**

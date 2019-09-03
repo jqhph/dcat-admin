@@ -15,11 +15,6 @@ class Exporter
     const SCOPE_SELECTED_ROWS = 'selected';
 
     /**
-     * @var Grid
-     */
-    protected $grid;
-
-    /**
      * Available exporter drivers.
      *
      * @var array
@@ -31,7 +26,12 @@ class Exporter
      *
      * @var string
      */
-    public static $queryName = '_export_';
+    protected $queryName = '_export_';
+
+    /**
+     * @var Grid
+     */
+    protected $grid;
 
     /**
      * Create a new Exporter instance.
@@ -41,18 +41,30 @@ class Exporter
     public function __construct(Grid $grid)
     {
         $this->grid = $grid;
-
-        $this->grid->model()->usePaginate(false);
     }
 
     /**
      * Set export query name.
      *
      * @param $name
+     *
+     * @return $this
      */
-    public static function setQueryName($name)
+    public function setQueryName($name)
     {
-        static::$queryName = $name;
+        $this->queryName = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get export query name.
+     *
+     * @return string
+     */
+    public function getQueryName(): string
+    {
+        return $this->queryName;
     }
 
     /**
@@ -116,7 +128,7 @@ class Exporter
      *
      * @return array
      */
-    public static function formatExportQuery($scope = '', $args = null)
+    public function formatExportQuery($scope = '', $args = null)
     {
         $query = '';
 
@@ -132,6 +144,6 @@ class Exporter
             $query = "selected:$args";
         }
 
-        return [static::$queryName => $query];
+        return [$this->queryName => $query];
     }
 }
