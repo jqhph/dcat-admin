@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
-trait Displayers
+trait HasDisplayers
 {
     /**
      * Display using display abstract.

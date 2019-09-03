@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Support\Facades\Input;
 use Dcat\Admin\Form\Field;
 
-trait Files
+trait HasFiles
 {
     /**
      * @param array $data

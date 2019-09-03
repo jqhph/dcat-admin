@@ -1,4 +1,4 @@
-@if ($grid->allowHeader())
+@if ($grid->allowToolbar())
     <div class="box-header " >
         @if(!empty($title))
             <h4 class="pull-left" style="margin:5px 10px 0;">

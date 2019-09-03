@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 /**
  * @property Form $form
  */
-trait FieldValidator
+trait HasFieldValidator
 {
     /**
      * The validation rules for creation.

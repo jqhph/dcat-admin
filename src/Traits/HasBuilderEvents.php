@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Traits;
 
-trait BuilderEvents
+trait HasBuilderEvents
 {
     /**
      * Register a resolving listener.

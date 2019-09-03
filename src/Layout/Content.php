@@ -4,13 +4,13 @@ namespace Dcat\Admin\Layout;
 
 use Closure;
 use Dcat\Admin\Admin;
-use Dcat\Admin\Traits\BuilderEvents;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 
 class Content implements Renderable
 {
-    use BuilderEvents;
+    use HasBuilderEvents;
 
     /**
      * @var string

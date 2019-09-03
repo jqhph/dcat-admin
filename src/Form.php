@@ -8,7 +8,7 @@ use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Contracts\Repository;
-use Dcat\Admin\Traits\BuilderEvents;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
@@ -83,9 +83,9 @@ use Dcat\Admin\Form\Concerns;
  */
 class Form implements Renderable
 {
-    use BuilderEvents,
-        Concerns\Events,
-        Concerns\Files,
+    use HasBuilderEvents,
+        Concerns\HasEvents,
+        Concerns\HasFiles,
         Macroable {
             __call as macroCall;
         }

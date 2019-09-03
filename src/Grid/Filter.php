@@ -27,7 +27,7 @@ use Dcat\Admin\Grid\Filter\Scope;
 use Dcat\Admin\Grid\Filter\StartWith;
 use Dcat\Admin\Grid\Filter\Where;
 use Dcat\Admin\Grid\Filter\Year;
-use Dcat\Admin\Traits\BuilderEvents;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -62,7 +62,7 @@ use Illuminate\Support\Facades\Input;
  */
 class Filter implements Renderable
 {
-    use BuilderEvents;
+    use HasBuilderEvents;
 
     /**
      * Ignore value.

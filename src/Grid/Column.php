@@ -5,8 +5,8 @@ namespace Dcat\Admin\Grid;
 use Closure;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
-use Dcat\Admin\Traits\BuilderEvents;
-use Dcat\Admin\Traits\Definitions;
+use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Traits\HasDefinitions;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -52,10 +52,10 @@ use Illuminate\Support\Str;
  */
 class Column
 {
-    use BuilderEvents,
-        Definitions,
+    use HasBuilderEvents,
+        HasDefinitions,
         Grid\Column\HasHeader,
-        Grid\Column\Displayers;
+        Grid\Column\HasDisplayers;
 
     const SELECT_COLUMN_NAME = '__row_selector__';
 

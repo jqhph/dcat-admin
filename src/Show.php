@@ -8,7 +8,7 @@ use Dcat\Admin\Show\Field;
 use Dcat\Admin\Show\Newline;
 use Dcat\Admin\Show\Panel;
 use Dcat\Admin\Show\Relation;
-use Dcat\Admin\Traits\BuilderEvents;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -19,7 +19,7 @@ use Illuminate\Support\Traits\Macroable;
 
 class Show implements Renderable
 {
-    use BuilderEvents,
+    use HasBuilderEvents,
         Macroable {
             __call as macroCall;
         }

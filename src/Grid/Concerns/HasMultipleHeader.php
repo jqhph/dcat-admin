@@ -5,7 +5,7 @@ namespace Dcat\Admin\Grid\Concerns;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Header;
 
-trait MultipleHeader
+trait HasMultipleHeader
 {
     /**
      * Table multiple headers.

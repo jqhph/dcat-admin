@@ -2,13 +2,13 @@
 
 namespace Dcat\Admin\Layout;
 
-use Dcat\Admin\Traits\BuilderEvents;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 
 class Navbar implements Renderable
 {
-    use BuilderEvents;
+    use HasBuilderEvents;
 
     /**
      * @var array

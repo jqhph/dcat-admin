@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
  *
  * @method  Model model()
  */
-trait QuickSearch
+trait HasQuickSearch
 {
     /**
      * @var string

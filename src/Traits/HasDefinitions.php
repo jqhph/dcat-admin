@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Traits;
 
-trait Definitions
+trait HasDefinitions
 {
     /**
      * Defined columns.

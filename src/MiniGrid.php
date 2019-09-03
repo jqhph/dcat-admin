@@ -17,12 +17,12 @@ class MiniGrid extends Grid
         $this->disableExporter();
         $this->disableQuickCreateButton();
 
-        $this->options['row_selector_clicktr'] = true;
+        $this->option('row_selector_clicktr', true);
 
         $this->tools->disableBatchActions();
 
         $this->wrap(function ($view) {
-            return "<div class='card'>$view</div>";
+            return "<div class='box'>$view</div>";
         });
     }
 

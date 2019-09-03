@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Show;
 
 use Dcat\Admin\Show;
-use Dcat\Admin\Traits\BuilderEvents;
-use Dcat\Admin\Traits\Definitions;
+use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Traits\HasDefinitions;
 use Dcat\Admin\Widgets\Dump;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -18,8 +18,8 @@ use Illuminate\Support\Traits\Macroable;
 
 class Field implements Renderable
 {
-    use BuilderEvents,
-        Definitions,
+    use HasBuilderEvents,
+        HasDefinitions,
         Macroable {
             __call as macroCall;
         }

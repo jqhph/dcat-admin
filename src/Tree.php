@@ -3,7 +3,7 @@
 namespace Dcat\Admin;
 
 use Closure;
-use Dcat\Admin\Traits\BuilderEvents;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Tree\Tools;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +11,7 @@ use Illuminate\Support\Traits\Macroable;
 
 class Tree implements Renderable
 {
-    use BuilderEvents,
+    use HasBuilderEvents,
         Macroable;
 
     /**

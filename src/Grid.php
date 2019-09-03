@@ -5,9 +5,6 @@ namespace Dcat\Admin;
 use Closure;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Displayers;
-use Dcat\Admin\Grid\Exporter;
-use Dcat\Admin\Grid\Exporters\AbstractExporter;
-use Dcat\Admin\Grid\Filter;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Responsive;
 use Dcat\Admin\Grid\Row;
@@ -15,22 +12,24 @@ use Dcat\Admin\Grid\Tools;
 use Dcat\Admin\Grid\Concerns;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Traits\BuilderEvents;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 
 class Grid
 {
-    use BuilderEvents,
+    use HasBuilderEvents,
         Concerns\HasElementNames,
-        Concerns\Actions,
-        Concerns\Options,
-        Concerns\MultipleHeader,
-        Concerns\QuickSearch,
+        Concerns\HasFilter,
+        Concerns\HasTools,
+        Concerns\HasActions,
+        Concerns\HasPaginator,
+        Concerns\HasExporter,
+        Concerns\HasMultipleHeader,
+        Concerns\HasQuickSearch,
         Macroable {
             __call as macroCall;
         }
@@ -92,13 +91,6 @@ class Grid
     protected $variables = [];
 
     /**
-     * The grid Filter.
-     *
-     * @var \Dcat\Admin\Grid\Filter
-     */
-    protected $filter;
-
-    /**
      * Resource path of the grid.
      *
      * @var
@@ -113,39 +105,11 @@ class Grid
     protected $keyName = 'id';
 
     /**
-     * Export driver.
-     *
-     * @var string
-     */
-    protected $exporter;
-
-    /**
      * View for grid to render.
      *
      * @var string
      */
     protected $view = 'admin::grid.table';
-
-    /**
-     * Per-page options.
-     *
-     * @var array
-     */
-    protected $perPages = [10, 20, 30, 50, 100, 200];
-
-    /**
-     * Default items count per-page.
-     *
-     * @var int
-     */
-    protected $perPage = 20;
-
-    /**
-     * Header tools.
-     *
-     * @var Tools
-     */
-    protected $tools;
 
     /**
      * @var Closure
@@ -178,6 +142,42 @@ class Grid
     protected $tableId;
 
     /**
+     * Options for grid.
+     *
+     * @var array
+     */
+    protected $options = [
+        'show_pagination'        => true,
+        'show_filter'            => true,
+        'show_actions'           => true,
+        'show_quick_edit_button' => true,
+        'show_edit_button'       => true,
+        'show_view_button'       => true,
+        'show_delete_button'     => true,
+        'show_row_selector'      => true,
+        'show_create_btn'        => true,
+        'show_quick_create_btn'  => true,
+        'show_bordered'          => false,
+        'show_toolbar'           => true,
+
+        'row_selector_style'      => 'primary',
+        'row_selector_circle'     => true,
+        'row_selector_clicktr'    => false,
+        'row_selector_label_name' => null,
+        'row_selector_bg'         => 'var(--20)',
+
+        'show_exporter'             => false,
+        'show_export_all'           => true,
+        'show_export_current_page'  => true,
+        'show_export_selected_rows' => true,
+        'export_limit'              => 50000,
+
+        'dialog_form_area'   => ['700px', '670px'],
+        'table_header_style' => 'table-header-gray',
+
+    ];
+
+    /**
      * Create a new grid instance.
      *
      * @param Repository $model
@@ -203,32 +203,8 @@ class Grid
     }
 
     /**
-     * Create a grid instance.
+     * Get table ID.
      *
-     * @param mixed ...$params
-     * @return $this
-     */
-    public static function make(...$params)
-    {
-        return new static(...$params);
-    }
-
-    /**
-     * Enable responsive tables.
-     * @see https://github.com/nadangergeo/RWD-Table-Patterns
-     *
-     * @return Responsive
-     */
-    public function responsive()
-    {
-        if (!$this->responsive) {
-            $this->responsive = new Responsive($this);
-        }
-
-        return $this->responsive;
-    }
-
-    /**
      * @return string
      */
     public function getTableId()
@@ -236,92 +212,6 @@ class Grid
         return $this->tableId;
     }
 
-    /**
-     * @return bool
-     */
-    public function allowResponsive()
-    {
-        return $this->responsive ? true : false;
-    }
-
-    /**
-     * @return bool
-     */
-    public function allowHeader()
-    {
-        if (
-            $this->option('show_toolbar')
-            && (
-                $this->getTools()->has() ||
-                $this->allowExportBtn() ||
-                $this->allowCreateBtn() ||
-                $this->allowQuickCreateBtn() ||
-                $this->allowResponsive() ||
-                !empty($this->variables['title'])
-            )
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Setup grid tools.
-     */
-    public function setupTools()
-    {
-        $this->tools = new Tools($this);
-    }
-
-    /**
-     * Setup grid filter.
-     *
-     * @return void
-     */
-    protected function setupFilter()
-    {
-        $this->filter = new Filter($this->model());
-    }
-
-    /**
-     * Handle export request.
-     *
-     * @param bool $forceExport
-     */
-    protected function handleExportRequest($forceExport = false)
-    {
-        if (!$scope = request(Exporter::$queryName)) {
-            return;
-        }
-
-        // clear output buffer.
-        if (ob_get_length()) {
-            ob_end_clean();
-        }
-
-        $this->model()->usePaginate(false);
-
-        if ($this->builder) {
-            call_user_func($this->builder, $this);
-
-            $this->getExporter($scope)->export();
-        }
-
-        if ($forceExport) {
-            $this->getExporter($scope)->export();
-        }
-    }
-
-    /**
-     * @param string $scope
-     *
-     * @return AbstractExporter
-     */
-    protected function getExporter($scope)
-    {
-        return (new Exporter($this))->resolve($this->exporter)->withScope($scope);
-    }
 
     /**
      * Get primary key name of model.
@@ -470,74 +360,6 @@ class Grid
     }
 
     /**
-     * Paginate the grid.
-     *
-     * @param int $perPage
-     *
-     * @return void
-     */
-    public function paginate(int $perPage = 20)
-    {
-        $this->perPage = $perPage;
-
-        $this->model()->setPerPage($perPage);
-    }
-
-    /**
-     * @return int
-     */
-    public function getPerPage()
-    {
-        return $this->perPage;
-    }
-
-    /**
-     * Get the grid paginator.
-     *
-     * @return mixed
-     */
-    public function paginator()
-    {
-        if (!$this->options['show_pagination']) {
-            return;
-        }
-
-        return new Tools\Paginator($this);
-    }
-
-    /**
-     * If this grid use pagination.
-     *
-     * @return bool
-     */
-    public function allowPagination()
-    {
-        return $this->options['show_pagination'];
-    }
-
-    /**
-     * Set per-page options.
-     *
-     * @param array $perPages
-     */
-    public function perPages(array $perPages)
-    {
-        $this->perPages = $perPages;
-
-        return $this;
-    }
-
-    /**
-     * Get per-page options.
-     *
-     * @return array
-     */
-    public function getPerPages()
-    {
-        return $this->perPages;
-    }
-
-    /**
      * @param array $options
      * @return $this
      */
@@ -639,79 +461,6 @@ HTML
     }
 
     /**
-     * @return Tools
-     */
-    public function getTools()
-    {
-        return $this->tools;
-    }
-
-    /**
-     * Get filter of Grid.
-     *
-     * @return Filter
-     */
-    public function getFilter()
-    {
-        return $this->filter;
-    }
-
-    /**
-     * Process the grid filter.
-     *
-     * @param bool $toArray
-     *
-     * @return array|Collection|mixed
-     */
-    public function processFilter($toArray = true)
-    {
-        if ($this->builder) {
-            call_user_func($this->builder, $this);
-        }
-
-        return $this->filter->execute($toArray);
-    }
-
-    /**
-     * Set the grid filter.
-     *
-     * @param Closure $callback
-     * @return $this
-     */
-    public function filter(Closure $callback)
-    {
-        call_user_func($callback, $this->filter);
-
-        return $this;
-    }
-
-    /**
-     * Render the grid filter.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
-     */
-    public function renderFilter()
-    {
-        if (!$this->options['show_filter']) {
-            return '';
-        }
-
-        return $this->filter->render();
-    }
-
-    /**
-     * Expand filter.
-     *
-     * @return $this
-     */
-    public function expandFilter()
-    {
-        $this->filter->expand();
-
-        return $this;
-    }
-
-    /**
      * Build the grid rows.
      *
      * @param array $data
@@ -748,63 +497,6 @@ HTML
     }
 
     /**
-     * Setup grid tools.
-     *
-     * @param Closure $callback
-     *
-     * @return $this
-     */
-    public function tools(Closure $callback)
-    {
-        call_user_func($callback, $this->tools);
-
-        return $this;
-    }
-
-    /**
-     * Render custom tools.
-     *
-     * @return string
-     */
-    public function renderTools()
-    {
-        return $this->tools->render();
-    }
-
-    /**
-     * Set exporter driver for Grid to export.
-     *
-     * @param $exporter
-     *
-     * @return $this
-     */
-    public function exporter($exporter)
-    {
-        $this->exporter = $exporter;
-
-        return $this;
-    }
-
-    /**
-     * Get the export url.
-     *
-     * @param int  $scope
-     * @param null $args
-     *
-     * @return string
-     */
-    public function getExportUrl($scope = 1, $args = null)
-    {
-        $input = array_merge(Input::all(), Exporter::formatExportQuery($scope, $args));
-
-        if ($constraints = $this->model()->getConstraints()) {
-            $input = array_merge($input, $constraints);
-        }
-
-        return $this->getResource().'?'.http_build_query($input);
-    }
-
-    /**
      * Get create url.
      *
      * @return string
@@ -833,72 +525,6 @@ HTML
         $this->options['dialog_form_area'] = [$width, $height];
 
         return $this;
-    }
-
-    /**
-     * If grid show export btn.
-     *
-     * @return bool
-     */
-    public function allowExportBtn()
-    {
-        return $this->options['show_exporter'];
-    }
-
-    /**
-     * @param array $options
-     * @return $this
-     */
-    public function setExportOptions(array $options)
-    {
-        if (isset($options['limit'])) {
-            $this->options['export_limit'] = $options['limit'];
-        }
-
-        if (isset($options['all'])) {
-            $this->options['show_export_all'] = $options['show_all'];
-        }
-
-        if (isset($options['current_page'])) {
-            $this->options['show_export_current_page'] = $options['current_page'];
-        }
-
-        if (isset($options['selected_rows'])) {
-            $this->options['show_export_selected_rows'] = $options['selected_rows'];
-        }
-
-        return $this;
-    }
-
-    /**
-     * Render export button.
-     *
-     * @return string
-     */
-    public function renderExportButton()
-    {
-        if (!$this->options['show_exporter']) {
-            return '';
-        }
-        return (new Tools\ExportButton($this))->render();
-    }
-
-    /**
-     * If allow creation.
-     *
-     * @return bool
-     */
-    public function allowCreateBtn()
-    {
-        return $this->options['show_create_btn'];
-    }
-
-    /**
-     * @return bool
-     */
-    public function allowQuickCreateBtn()
-    {
-        return $this->options['show_quick_create_btn'];
     }
 
     /**
@@ -1020,6 +646,105 @@ HTML;
     }
 
     /**
+     * Get or set option for grid.
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return $this|mixed
+     */
+    public function option($key, $value = null)
+    {
+        if (is_null($value)) {
+            return $this->options[$key];
+        }
+
+        $this->options[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Disable row selector.
+     *
+     * @return $this
+     */
+    public function disableRowSelector(bool $disable = true)
+    {
+        $this->tools->disableBatchActions($disable);
+
+        return $this->option('show_row_selector', !$disable);
+    }
+
+    /**
+     * Show row selector.
+     *
+     * @return $this
+     */
+    public function showRowSelector(bool $val = true)
+    {
+        return $this->disableRowSelector(!$val);
+    }
+
+    /**
+     * Remove create button on grid.
+     *
+     * @return $this
+     */
+    public function disableCreateButton(bool $disable = true)
+    {
+        return $this->option('show_create_btn', !$disable);
+    }
+
+    /**
+     * Show create button.
+     *
+     * @return $this
+     */
+    public function showCreateButton(bool $val = true)
+    {
+        return $this->disableCreateButton(!$val);
+    }
+
+    /**
+     * @param bool $disable
+     * @return $this
+     */
+    public function disableQuickCreateButton(bool $disable = true)
+    {
+        return $this->option('show_quick_create_btn', !$disable);
+    }
+
+    /**
+     * @param bool $val
+     * @return $this
+     */
+    public function showQuickCreateButton(bool $val = true)
+    {
+        return $this->disableQuickCreateButton(!$val);
+    }
+
+    /**
+     * If allow creation.
+     *
+     * @return bool
+     */
+    public function allowCreateBtn()
+    {
+        return $this->options['show_create_btn'];
+    }
+
+    /**
+     * If grid show quick create button.
+     *
+     * @return bool
+     */
+    public function allowQuickCreateBtn()
+    {
+        return $this->options['show_quick_create_btn'];
+    }
+
+    /**
      * Set resource path.
      *
      * @param string $path
@@ -1043,6 +768,40 @@ HTML;
         return $this->resourcePath ?: (
             $this->resourcePath = url(app('request')->getPathInfo())
         );
+    }
+
+    /**
+     * Create a grid instance.
+     *
+     * @param mixed ...$params
+     * @return $this
+     */
+    public static function make(...$params)
+    {
+        return new static(...$params);
+    }
+
+    /**
+     * Enable responsive tables.
+     * @see https://github.com/nadangergeo/RWD-Table-Patterns
+     *
+     * @return Responsive
+     */
+    public function responsive()
+    {
+        if (!$this->responsive) {
+            $this->responsive = new Responsive($this);
+        }
+
+        return $this->responsive;
+    }
+
+    /**
+     * @return bool
+     */
+    public function allowResponsive()
+    {
+        return $this->responsive ? true : false;
     }
 
     /**

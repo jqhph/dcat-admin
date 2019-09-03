@@ -16,7 +16,8 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Field implements Renderable
 {
-    use Macroable, Concerns\FieldValidator;
+    use Macroable,
+        Concerns\HasFieldValidator;
 
     const FILE_DELETE_FLAG = '_file_del_';
 

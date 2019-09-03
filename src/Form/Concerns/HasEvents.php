@@ -6,7 +6,7 @@ use Closure;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-trait Events
+trait HasEvents
 {
     /**
      * @var array
