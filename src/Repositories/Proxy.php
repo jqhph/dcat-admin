@@ -10,15 +10,19 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 {
     protected $repository;
 
-    protected $listeners = [];
+    protected $__listeners = [];
 
-    protected $caches = [];
+    protected $__caches = [
+        'edit' => [],
+        'detail' => [],
+        'updating' => [],
+    ];
 
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
 
-        $this->listeners = Repository::getListeners(get_class($repository));
+        $this->__listeners = Repository::getListeners(get_class($repository));
     }
 
     public function getOriginalClassName()
@@ -48,40 +52,44 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 
     public function get(Grid\Model $model)
     {
-        if (isset($this->caches['all'])) {
-            return $this->caches['all'];
+        if (array_key_exists('get', $this->__caches)) {
+            return $this->__caches['get'];
         }
 
-        return $this->caches['all'] = $this->repository->get($model);
+        return $this->__caches['get'] = $this->repository->get($model);
     }
 
     public function edit(Form $form): array
     {
-        if (isset($this->caches['edit'])) {
-            return $this->caches['edit'];
+        $id = $form->getKey();
+
+        if (array_key_exists($id, $this->__caches['edit'])) {
+            return $this->__caches['edit'][$id];
         }
 
-        return $this->caches['edit'] = $this->repository->edit($form);
+        return $this->__caches['edit'][$id] = $this->repository->edit($form);
     }
 
     public function detail(Show $show): array
     {
-        if (isset($this->caches['detail'])) {
-            return $this->caches['detail'];
+        $id = $show->getId();
+
+        if (array_key_exists($id, $this->__caches['detail'])) {
+            return $this->__caches['detail'][$id];
         }
 
-        return $this->caches['detail'] = $this->repository->detail($show);
+        return $this->__caches['detail'][$id] = $this->repository->detail($show);
     }
 
     public function store(Form $form)
     {
-        foreach ($this->listeners as $listener) {
+        foreach ($this->__listeners as $listener) {
             $listener->creating($form);
         }
 
         $newId = $this->repository->store($form);
 
-        foreach ($this->listeners as $listener) {
+        foreach ($this->__listeners as $listener) {
             $listener->created($form, $newId);
         }
 
@@ -90,24 +98,26 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 
     public function getDataWhenUpdating(Form $form): array
     {
-        if (isset($this->caches['updating'])) {
-            return $this->caches['updating'];
+        $id = $form->getKey();
+
+        if (array_key_exists($id, $this->__caches['updating'])) {
+            return $this->__caches['updating'][$id];
         }
 
-        return $this->caches['updating'] = $this->repository->getDataWhenUpdating($form);
+        return $this->__caches['updating'][$id] = $this->repository->getDataWhenUpdating($form);
     }
 
     public function update(Form $form)
     {
-        $editAttributes = $this->caches['edit'] ?? [];
+        $editAttributes = $this->__caches['edit'] ?? [];
 
-        foreach ($this->listeners as $listener) {
+        foreach ($this->__listeners as $listener) {
             $listener->updating($form, $editAttributes);
         }
 
         $result = $this->repository->update($form);
 
-        foreach ($this->listeners as $listener) {
+        foreach ($this->__listeners as $listener) {
             $listener->updated($form, $editAttributes, $result);
         }
 
@@ -116,13 +126,13 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 
     public function destroy(Form $form, array $deletingData)
     {
-        foreach ($this->listeners as $listener) {
+        foreach ($this->__listeners as $listener) {
             $listener->deleting($form, $deletingData);
         }
 
         $result = $this->repository->destroy($form, $deletingData);
 
-        foreach ($this->listeners as $listener) {
+        foreach ($this->__listeners as $listener) {
             $listener->deleted($form, $deletingData, $result);
         }
 
@@ -137,5 +147,15 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
     public function __call($method, $arguments)
     {
         return $this->repository->$method(...$arguments);
+    }
+
+    public function __get($name)
+    {
+        return $this->repository->$name;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->repository->$name = $value;
     }
 }

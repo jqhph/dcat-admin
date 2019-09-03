@@ -12,16 +12,6 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
     /**
      * @var array
      */
-    private static $listenerClasses = [];
-
-    /**
-     * @var array
-     */
-    private static $listeners = [];
-
-    /**
-     * @var array
-     */
     protected $attributes = [];
 
     /**
@@ -186,13 +176,19 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public static function listen($repositories, $listeners)
     {
-        foreach ((array)$repositories as $v) {
-            if (!isset(static::$listenerClasses[$v])) {
-                static::$listenerClasses[$v] = [];
+        $storage = app('admin.temp');
+
+        $array = $storage->get('repository.listeners') ?: [];
+
+        foreach ((array) $repositories as $v) {
+            if (! isset($array[$v])) {
+                $array[$v] = [];
             }
 
-            static::$listenerClasses[$v] = array_merge(static::$listenerClasses[$v], (array)$listeners);
+            $array[$v] = array_merge($array[$v], (array) $listeners);
         }
+
+        $storage['repository.listeners'] = $array;
     }
 
     /**
@@ -203,23 +199,28 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public static function getListeners(?string $repository)
     {
-        if (!$repository) {
+        if (! $repository) {
             return null;
         }
 
         $any = $repository !== '*' ? static::getListeners('*') : [];
 
-        if (isset(static::$listeners[$repository])) {
-            return array_merge(static::$listeners[$repository], $any);
+        $storage = app('admin.temp');
+
+        $listeners = $storage->get('repository.listeners') ?: [];
+        $resolves = $storage->get('repository.listeners.resolves') ?: [];
+
+        if (isset($resolves[$repository])) {
+            return array_merge($resolves[$repository], $any);
         }
 
-        static::$listeners[$repository] = [];
+        $resolves[$repository] = [];
 
-        if (!isset(static::$listenerClasses[$repository])) {
+        if (! isset($listeners[$repository])) {
             return $any;
         }
 
-        foreach (static::$listenerClasses[$repository] as $class) {
+        foreach ($listeners[$repository] as $class) {
             if (!class_exists($class)) {
                 continue;
             }
@@ -229,10 +230,12 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
                 continue;
             }
 
-            static::$listeners[$repository][] = $listener;
+            $resolves[$repository][] = $listener;
         }
 
-        return array_merge(static::$listeners[$repository], $any);
+        $storage['repository.listeners.resolves'] = $resolves;
+
+        return array_merge($resolves[$repository], $any);
     }
 
     /**
