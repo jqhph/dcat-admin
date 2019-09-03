@@ -245,12 +245,19 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function __call($method, $arguments)
     {
-        $this->attributes[] = [
-            'method'    => $method,
-            'arguments' => $arguments,
-        ];
+        $this->attributes[$method] = $arguments;
 
         return $this;
+    }
+
+    public function __get($name)
+    {
+        return $this->attributes[$name] ?? null;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->attributes[$name] = $value;
     }
 
 }

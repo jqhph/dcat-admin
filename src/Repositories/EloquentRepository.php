@@ -91,7 +91,7 @@ abstract class EloquentRepository extends Repository
     {
         $eloquent = $this->eloquent();
 
-        $model->getQueries()->merge($this->attributes)->unique()->each(function ($query) use (&$eloquent) {
+        $model->getQueries()->unique()->each(function ($query) use (&$eloquent) {
             if ($query['method'] == 'paginate') {
                 $query['arguments'][1] = $this->getGridColumns();
             } elseif ($query['method'] == 'get') {
@@ -114,12 +114,6 @@ abstract class EloquentRepository extends Repository
     {
         $eloquent = $this->eloquent();
 
-        if ($this->attributes) {
-            collect($this->attributes)->unique()->each(function ($query) use (&$eloquent) {
-                $eloquent = call_user_func_array([$eloquent, $query['method']], $query['arguments'] ?? []);
-            });
-        }
-
         if ($this->isSoftDeletes) {
             $eloquent = $eloquent->withTrashed();
         }
@@ -140,12 +134,6 @@ abstract class EloquentRepository extends Repository
     public function detail(Show $show): array
     {
         $eloquent = $this->eloquent();
-
-        if ($this->attributes) {
-            collect($this->attributes)->unique()->each(function ($query) use (&$eloquent) {
-                $eloquent = call_user_func_array([$eloquent, $query['method']], $query['arguments'] ?? []);
-            });
-        }
 
         if ($this->isSoftDeletes) {
             $eloquent = $eloquent->withTrashed();
@@ -316,17 +304,13 @@ abstract class EloquentRepository extends Repository
      */
     public function getDataWhenDeleting(Form $form): array
     {
-        $builder = $this->eloquent()->newQuery();
-
-        if ($this->attributes) {
-            collect($this->attributes)->unique()->each(function ($query) use (&$eloquent) {
-                $eloquent = call_user_func_array([$eloquent, $query['method']], $query['arguments'] ?? []);
-            });
-        }
+        $model = $this->eloquent();
 
         if ($this->isSoftDeletes) {
-            $builder = $builder->withTrashed();
+            $model = $model->withTrashed();
         }
+
+        $builder = $model->newQuery();
 
         $id = $form->getKey();
 
