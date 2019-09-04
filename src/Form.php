@@ -19,7 +19,6 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Validation\Validator;
-use Spatie\EloquentSortable\Sortable;
 use Symfony\Component\HttpFoundation\Response;
 use Dcat\Admin\Form\Concerns;
 
@@ -178,6 +177,11 @@ class Form implements Renderable
     protected $repository;
 
     /**
+     * @var Closure
+     */
+    protected $fieldBuilder;
+
+    /**
      * @var bool
      */
     protected $useAjaxSubmit = true;
@@ -237,7 +241,7 @@ class Form implements Renderable
      *
      * @var array
      */
-    public $rows = [];
+    protected $rows = [];
 
     /**
      * @var bool
@@ -255,15 +259,13 @@ class Form implements Renderable
      * @param Repository $model
      * @param \Closure $callback
      */
-    public function __construct(Repository $repository, Closure $callback = null)
+    public function __construct(Repository $repository, ?Closure $callback = null)
     {
         $this->repository = Admin::createRepository($repository);
 
-        $this->builder = new Builder($this);
+        $this->fieldBuilder = $callback;
 
-        if ($callback instanceof Closure) {
-            $callback($this);
-        }
+        $this->builder = new Builder($this);
 
         $this->isSoftDeletes = $this->repository->isSoftDeletes();
 
@@ -330,6 +332,14 @@ class Form implements Renderable
     public function isEditing()
     {
         return $this->builder->isEditing();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleting()
+    {
+        return $this->builder->isDeleting();
     }
 
     /**
@@ -492,10 +502,13 @@ class Form implements Renderable
     {
         try {
             $this->builder->setResourceId($id);
+            $this->builder->setMode(Builder::MODE_DELETE);
 
             $data = $this->repository->getDataWhenDeleting($this);
 
             $this->setModel(new Fluent($data));
+
+            $this->buildField();
 
             if (($response = $this->callDeleting()) instanceof Response) {
                 return $response;
@@ -687,7 +700,6 @@ class Form implements Renderable
 
     }
 
-
     /**
      * Handle update.
      *
@@ -706,6 +718,8 @@ class Form implements Renderable
 
         $this->builder->setResourceId($id);
         $this->builder->setMode(Builder::MODE_EDIT);
+
+        $this->buildField();
 
         if (($response = $this->callSubmitted())) {
             return $response;
@@ -1076,8 +1090,6 @@ class Form implements Renderable
      */
     protected function setFieldValue()
     {
-        $this->setModel(new Fluent($this->repository->edit($this)));
-
         $this->callEditing();
 
         $data = $this->model->toArray();
@@ -1087,6 +1099,34 @@ class Form implements Renderable
                 $field->fill($data);
             }
         });
+    }
+
+    /**
+     * @return void
+     */
+    protected function rendering()
+    {
+        if ($isEditing = $this->isEditing()) {
+            $this->setModel(new Fluent($this->repository->edit($this)));
+        }
+
+        $this->buildField();
+
+        if ($isEditing) {
+            $this->setFieldValue();
+        } else {
+            $this->callCreating();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function buildField()
+    {
+        if ($callback = $this->fieldBuilder) {
+            $callback($this);
+        }
     }
 
     /**
@@ -1440,9 +1480,7 @@ class Form implements Renderable
     public function render()
     {
         try {
-            if ($this->isCreating()) {
-                $this->callCreating();
-            }
+            $this->rendering();
 
             $this->callComposing();
 

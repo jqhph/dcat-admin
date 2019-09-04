@@ -642,7 +642,7 @@ HTML;
                 }
 
                 $this->value = $callable->call(
-                    $this->parent->getModel(),
+                    $this->parent->model(),
                     $this->value,
                     ...$params
                 );

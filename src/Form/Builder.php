@@ -51,6 +51,7 @@ class Builder
      */
     const MODE_EDIT = 'edit';
     const MODE_CREATE = 'create';
+    const MODE_DELETE = 'delete';
 
     /**
      * Form action mode, could be create|view|edit.
@@ -276,6 +277,16 @@ class Builder
     public function isEditing()
     {
         return $this->isMode(static::MODE_EDIT);
+    }
+
+    /**
+     * Check if is deleting resource.
+     *
+     * @return bool
+     */
+    public function isDeleting()
+    {
+        return $this->isMode(static::MODE_DELETE);
     }
 
     /**

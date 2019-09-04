@@ -24,20 +24,20 @@ trait GridCreator
 
             if ($field['name'] == $primaryKey) continue;
 
-            $rows[] = "        \$grid->{$field['name']};";
+            $rows[] = "            \$grid->{$field['name']};";
         }
 
         if ($timestamps) {
-            $rows[] = "        \$grid->created_at;";
-            $rows[] = "        \$grid->updated_at->sortable();";
+            $rows[] = "            \$grid->created_at;";
+            $rows[] = "            \$grid->updated_at->sortable();";
         }
 
         $rows[] = <<<EOF
         
-        \$grid->filter(function (Grid\Filter \$filter) {
-            \$filter->equal('$primaryKey');
+            \$grid->filter(function (Grid\Filter \$filter) {
+                \$filter->equal('$primaryKey');
         
-        });
+            });
 EOF;
 
 

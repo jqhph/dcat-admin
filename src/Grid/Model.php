@@ -117,7 +117,7 @@ class Model
      *
      * @param Repository $repository
      */
-    public function __construct(Repository $repository = null)
+    public function __construct(?Repository $repository = null)
     {
         if ($repository) {
             $this->repository = Admin::createRepository($repository);

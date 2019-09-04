@@ -169,6 +169,17 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
     }
 
     /**
+     *
+     * @param mixed ...$params
+     *
+     * @return $this
+     */
+    public static function make(...$params)
+    {
+        return new static(...$params);
+    }
+
+    /**
      * Register listeners.
      *
      * @param array|string $repositories

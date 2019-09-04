@@ -28,13 +28,13 @@ EOF
 
             if ($field['name'] == $primaryKey) continue;
 
-            $rows[] = "        \$form->text('{$field['name']}');";
+            $rows[] = "            \$form->text('{$field['name']}');";
         }
         if ($timestamps) {
             $rows[] = <<<EOF
         
-        \$form->display('created_at');
-        \$form->display('updated_at');
+            \$form->display('created_at');
+            \$form->display('updated_at');
 EOF;
         }
 
