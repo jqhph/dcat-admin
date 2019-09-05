@@ -156,7 +156,7 @@ if (!function_exists('admin_trans')) {
         $translator = app('translator');
 
         if ($translator->has($key)) {
-            return $translator->trans($key, $replace, $locale);
+            return $translator->get($key, $replace, $locale);
         }
         if (
             strpos($key, 'global.') !== 0
@@ -170,7 +170,7 @@ if (!function_exists('admin_trans')) {
                 return end($arr);
             }
 
-            return $translator->trans($key, $replace, $locale);
+            return $translator->get($key, $replace, $locale);
         }
 
         return last(explode('.', $key));

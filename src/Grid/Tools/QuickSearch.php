@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid\Concerns\QuickSearch as QuickSearchConcerns;
+use Dcat\Admin\Grid\Concerns\HasQuickSearch as QuickSearchConcerns;
 use Illuminate\Support\Arr;
 
 class QuickSearch extends AbstractTool
