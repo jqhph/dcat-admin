@@ -13,7 +13,6 @@ use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
@@ -546,7 +545,7 @@ class Form implements Renderable
      */
     public function store(?array $data = null, $redirectTo = null)
     {
-        $data = $data ?: Input::all();
+        $data = $data ?: request()->all();
 
         if (($response = $this->callSubmitted())) {
             return $response;
@@ -714,7 +713,7 @@ class Form implements Renderable
         $redirectTo = null
     )
     {
-        $data = $data ?: Input::all();
+        $data = $data ?: request()->all();
 
         $this->builder->setResourceId($id);
         $this->builder->setMode(Builder::MODE_EDIT);

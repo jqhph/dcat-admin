@@ -21,6 +21,8 @@ class Dump extends Widget
      */
     protected $content = '';
 
+    protected $maxWidth;
+
     /**
      * Dump constructor.
      *
@@ -57,6 +59,13 @@ class Dump extends Widget
         return $this;
     }
 
+    public function maxWidth($width)
+    {
+        $this->maxWidth = $width;
+
+        return $this;
+    }
+
     /**
      * @param mixed $content
      * @return array|null
@@ -76,7 +85,10 @@ class Dump extends Widget
 
     public function render()
     {
-        $this->defaultHtmlAttribute('style', 'white-space:pre-wrap');
+        $this->defaultHtmlAttribute(
+            'style',
+            'white-space:pre-wrap;'.($this->maxWidth ? "max-width:{$this->maxWidth};" : '')
+        );
 
         return <<<EOF
 <div style="padding:{$this->padding}"><pre class="dump" {$this->formatHtmlAttributes()}>{$this->content}</pre></div>

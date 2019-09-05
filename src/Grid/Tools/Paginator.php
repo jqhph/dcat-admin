@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Grid;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Input;
 
 class Paginator extends AbstractTool
 {
@@ -35,7 +34,7 @@ class Paginator extends AbstractTool
         $this->paginator = $this->grid->model()->paginator();
 
         if ($this->paginator instanceof LengthAwarePaginator) {
-            $this->paginator->appends(Input::all());
+            $this->paginator->appends(request()->all());
         }
     }
 

@@ -33,7 +33,6 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class Filter.
@@ -392,7 +391,7 @@ class Filter implements Renderable
             return $this->inputs;
         }
 
-        $this->inputs = Arr::dot(Input::all());
+        $this->inputs = Arr::dot(request()->all());
 
         $this->inputs = array_filter($this->inputs, function ($input) {
             return $input !== '' && !is_null($input) && $input !== static::IGNORE_VALUE;

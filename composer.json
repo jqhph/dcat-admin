@@ -14,11 +14,10 @@
     "require": {
         "php": ">=7.1.0",
         "symfony/dom-crawler": "~3.1|~4.0",
-        "laravel/framework": "~5.5",
+        "laravel/framework": "~5.5|~6.0",
         "doctrine/dbal": "2.*"
     },
     "require-dev": {
-        "laravel/laravel": "~5.5",
         "symfony/css-selector": "~3.1",
         "fzaninotto/faker": "~1.4",
         "laravel/browser-kit-testing": "~5.1"
