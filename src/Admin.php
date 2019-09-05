@@ -140,6 +140,19 @@ class Admin
     /**
      * Build show page.
      *
+     * @example
+     *     $show = Admin::show();
+     *
+     *     $show = Admin::show($id);
+     *     $show = Admin::show(new Repository);
+     *     $show = Admin::show(function (Show $show) {});
+     *
+     *     $show = Admin::show($id, new Repository);
+     *     $show = Admin::show($id, function (Show $show) {});
+     *     $show = Admin::show(new Repository, function (Show $show) {});
+     *
+     *     $show = Admin::show($id, new Repository, function (Show $show) {});
+     *
      * @param $repository
      * @param mixed $callable
      *
@@ -153,13 +166,28 @@ class Admin
 
                 break;
             case 1:
-                $show = new Show(null, $id);
+                if ($id instanceof \Closure) {
+                    $show = new Show(null, $id);
+                } elseif ($id instanceof Repository) {
+                    $show = new Show($id);
+                } else {
+                    $show = new Show();
+                    $show->setId($id);
+                }
 
                 break;
             case 2:
-                $show = new Show(null, $repository);
+                if ($id instanceof Repository && $repository instanceof \Closure) {
+                    $show = new Show($id, $repository);
+                } elseif ($repository instanceof \Closure) {
+                    $show = new Show(null, $repository);
 
-                $show->setId($id);
+                    $show->setId($id);
+                } elseif ($repository instanceof Repository) {
+                    $show = new Show($repository);
+
+                    $show->setId($id);
+                }
                 break;
             case 3:
                 $show = new Show($repository, $callable);

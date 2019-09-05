@@ -41,9 +41,11 @@ class RouteController extends Controller
                 return "<span class=\"label bg-{$colors[$method]}\">$method</span>";
             })->implode('&nbsp;');
 
-            $grid->uri(trans('admin.uri'))->sortable();
+            $grid->uri(trans('admin.uri'))->sortable()->display(function ($v) {
+                return "<code>$v</code>";
+            });
 
-            $grid->name(trans('admin.alias'));
+            $grid->name(trans('admin.alias'))->bold();
 
             $grid->action(trans('admin.route_action'))->display(function ($uri) {
                 if ($uri === 'Closure') {
