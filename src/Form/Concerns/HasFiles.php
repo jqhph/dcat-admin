@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Form\Concerns;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Illuminate\Support\Facades\Input;
 use Dcat\Admin\Form\Field;
 
 trait HasFiles
@@ -96,7 +95,7 @@ trait HasFiles
             unset($input['key']);
         }
 
-        Input::replace($input);
+        request()->replace($input);
 
         return $input;
     }

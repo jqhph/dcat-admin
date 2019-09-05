@@ -18,22 +18,22 @@ trait ShowCreator
         $rows = [];
 
         if ($primaryKey) {
-            $rows[] = "        \$show->{$primaryKey};";
+            $rows[] = "            \$show->{$primaryKey};";
         }
 
         foreach ($fields as $k => $field) {
             if (empty($field['name'])) continue;
 
-            $rows[] = "        \$show->{$field['name']};";
+            $rows[] = "            \$show->{$field['name']};";
 
             if ($k === 1 && (count($fields) > 2 || $timestamps)) {
-                $rows[] = "        \$show->divider();";
+                $rows[] = "            \$show->divider();";
             }
         }
 
         if ($timestamps) {
-            $rows[] = "        \$show->created_at;";
-            $rows[] = "        \$show->updated_at;";
+            $rows[] = "            \$show->created_at;";
+            $rows[] = "            \$show->updated_at;";
         }
 
         return trim(implode("\n", $rows));

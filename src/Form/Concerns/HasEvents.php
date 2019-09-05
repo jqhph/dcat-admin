@@ -11,7 +11,7 @@ trait HasEvents
     /**
      * @var array
      */
-    protected $hooks = [
+    protected $__hooks = [
         'creating'  => [],
         'editing'   => [],
         'submitted' => [],
@@ -26,11 +26,13 @@ trait HasEvents
      *
      * @param Closure $callback
      *
-     * @return void
+     * @return $this
      */
     public function creating(Closure $callback)
     {
-        $this->hooks['creating'][] = $callback;
+        $this->__hooks['creating'][] = $callback;
+        
+        return $this;
     }
 
     /**
@@ -38,11 +40,13 @@ trait HasEvents
      *
      * @param Closure $callback
      *
-     * @return void
+     * @return $this
      */
     public function editing(Closure $callback)
     {
-        $this->hooks['editing'][] = $callback;
+        $this->__hooks['editing'][] = $callback;
+
+        return $this;
     }
 
     /**
@@ -50,11 +54,13 @@ trait HasEvents
      *
      * @param Closure $callback
      *
-     * @return void
+     * @return $this
      */
     public function submitted(Closure $callback)
     {
-        $this->hooks['submitted'][] = $callback;
+        $this->__hooks['submitted'][] = $callback;
+
+        return $this;
     }
 
     /**
@@ -62,11 +68,13 @@ trait HasEvents
      *
      * @param Closure $callback
      *
-     * @return void
+     * @return $this
      */
     public function saving(Closure $callback)
     {
-        $this->hooks['saving'][] = $callback;
+        $this->__hooks['saving'][] = $callback;
+
+        return $this;
     }
 
     /**
@@ -74,11 +82,13 @@ trait HasEvents
      *
      * @param Closure $callback
      *
-     * @return void
+     * @return $this
      */
     public function saved(Closure $callback)
     {
-        $this->hooks['saved'][] = $callback;
+        $this->__hooks['saved'][] = $callback;
+
+        return $this;
     }
 
     /**
@@ -88,7 +98,9 @@ trait HasEvents
      */
     public function deleting(Closure $callback)
     {
-        $this->hooks['deleting'][] = $callback;
+        $this->__hooks['deleting'][] = $callback;
+
+        return $this;
     }
 
     /**
@@ -98,7 +110,9 @@ trait HasEvents
      */
     public function deleted(Closure $callback)
     {
-        $this->hooks['deleted'][] = $callback;
+        $this->__hooks['deleted'][] = $callback;
+
+        return $this;
     }
 
     /**
@@ -173,7 +187,7 @@ trait HasEvents
      */
     protected function callListeners($name)
     {
-        foreach ($this->hooks[$name] as $func) {
+        foreach ($this->__hooks[$name] as $func) {
             $this->model && $func->bindTo($this->model);
 
             if (($ret = $func($this)) instanceof Response) {

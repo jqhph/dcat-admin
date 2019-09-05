@@ -9,11 +9,11 @@ use Illuminate\Pagination\AbstractPaginator;
 
 class Administrator extends EloquentRepository
 {
-    public function __construct()
+    public function __construct($relations = [])
     {
         $this->eloquentClass = config('admin.database.users_model');
 
-        parent::__construct();
+        parent::__construct($relations);
     }
 
     public function get(Grid\Model $model)

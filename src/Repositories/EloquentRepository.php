@@ -5,6 +5,7 @@ namespace Dcat\Admin\Repositories;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
@@ -26,13 +27,17 @@ abstract class EloquentRepository extends Repository
      */
     protected $model;
 
-    public function __construct()
+    protected $relations;
+
+    public function __construct($relations = [])
     {
         $this->setKeyName($this->eloquent()->getKeyName());
 
         $this->setIsSoftDeletes(
             in_array(SoftDeletes::class, class_uses($this->eloquent()))
         );
+
+        $this->with($relations);
     }
 
     /**
@@ -82,6 +87,19 @@ abstract class EloquentRepository extends Repository
     }
 
     /**
+     * Set the relationships that should be eager loaded.
+     *
+     * @param  mixed  $relations
+     * @return $this
+     */
+    public function with($relations)
+    {
+        $this->relations = (array) $relations;
+
+        return $this;
+    }
+
+    /**
      * Get the grid data.
      *
      * @param Grid\Model $model
@@ -90,6 +108,10 @@ abstract class EloquentRepository extends Repository
     public function get(Grid\Model $model)
     {
         $eloquent = $this->eloquent();
+
+        if ($this->relations) {
+            $eloquent = $eloquent->with($this->relations);
+        }
 
         $model->getQueries()->unique()->each(function ($query) use (&$eloquent) {
             if ($query['method'] == 'paginate') {
@@ -388,7 +410,7 @@ abstract class EloquentRepository extends Repository
             }
         }
 
-        return array_unique($relations);
+        return array_unique(array_merge($relations, $this->relations));
     }
 
     /**

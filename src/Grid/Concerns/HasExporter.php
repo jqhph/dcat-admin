@@ -6,7 +6,6 @@ use Dcat\Admin\Grid\Exporter;
 use Dcat\Admin\Grid\Exporters\AbstractExporter;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Tools;
-use Illuminate\Support\Facades\Input;
 
 trait HasExporter
 {
@@ -111,7 +110,7 @@ trait HasExporter
      */
     public function getExportUrl($scope = 1, $args = null)
     {
-        $input = array_merge(Input::all(), $this->getExporter()->formatExportQuery($scope, $args));
+        $input = array_merge(request()->all(), $this->getExporter()->formatExportQuery($scope, $args));
 
         if ($constraints = $this->model()->getConstraints()) {
             $input = array_merge($input, $constraints);

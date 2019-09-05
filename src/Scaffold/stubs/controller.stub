@@ -9,6 +9,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
+use Dcat\Admin\Admin;
 
 class DummyClass extends Controller
 {
@@ -55,7 +56,7 @@ class DummyClass extends Controller
         return $content
             ->header(admin_trans_label())
             ->description(admin_trans_label('edit'))
-            ->body($this->form($id)->edit($id));
+            ->body($this->form()->edit($id));
     }
 
     /**
@@ -79,11 +80,9 @@ class DummyClass extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new DummyModel);
-
-        {grid}
-
-        return $grid;
+        return Admin::grid(new DummyModel, function (Grid $grid) {
+            {grid}
+        });
     }
 
     /**
@@ -94,28 +93,21 @@ class DummyClass extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(new DummyModel);
-
-        $show->setId($id);
-
-        {show}
-
-        return $show;
+        return Admin::show($id, new DummyModel, function (Show $show) {
+            {show}
+        });
     }
 
     /**
      * Make a form builder.
      *
-     * @param $id
      * @return Form
      */
-    protected function form($id = null)
+    protected function form()
     {
-        $form = new Form(new DummyModel);
-
-        {form}
-
-        return $form;
+        return Admin::form(new DummyModel, function (Form $form) {
+            {form}
+        });
     }
 
 }

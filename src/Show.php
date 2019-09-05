@@ -81,11 +81,13 @@ class Show implements Renderable
      * Show constructor.
      *
      * @param Model $model
-     * @param mixed $builder
+     * @param \Closure $builder
      */
-    public function __construct(Repository $repository, $builder = null)
+    public function __construct(?Repository $repository = null, ?\Closure $builder = null)
     {
-        $this->repository = Admin::createRepository($repository);
+        if ($repository) {
+            $this->repository = Admin::createRepository($repository);
+        }
         $this->builder = $builder;
 
         $this->initPanel();
@@ -142,7 +144,7 @@ class Show implements Renderable
     /**
      * @return Fluent
      */
-    public function getModel()
+    public function model()
     {
         if (!$this->model) {
             $this->setModel(new Fluent($this->repository->detail($this)));
@@ -275,7 +277,7 @@ class Show implements Renderable
      */
     public function all()
     {
-        $fields = array_keys($this->getModel()->toArray());
+        $fields = array_keys($this->model()->toArray());
 
         return $this->fields($fields);
     }
@@ -559,7 +561,7 @@ class Show implements Renderable
     public function render()
     {
         try {
-            $model = $this->getModel();
+            $model = $this->model();
 
             if (is_callable($this->builder)) {
                 call_user_func($this->builder, $this);

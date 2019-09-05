@@ -127,7 +127,7 @@ class Tree implements Renderable
      *
      * @param Model|null $model
      */
-    public function __construct(Model $model = null, \Closure $callback = null)
+    public function __construct(Model $model = null, ?\Closure $callback = null)
     {
         $this->model = $model;
 

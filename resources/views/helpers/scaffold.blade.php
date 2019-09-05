@@ -62,7 +62,7 @@
                                     @foreach($tables as $db => $tb)
                                         <optgroup label="{!! $db !!}">
                                             @foreach($tb as $v)
-                                                <option value="{{$db}}-{{$v}}">{{$v}}</option>
+                                                <option value="{{$db}}|{{$v}}">{{$v}}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach
@@ -297,7 +297,7 @@
                 get_tr().remove();
                 return;
             }
-            val = val.split('-');
+            val = val.split('|');
             db = val[0];
             tb = val[1];
 

@@ -4,6 +4,7 @@ namespace Dcat\Admin;
 
 use Closure;
 use Dcat\Admin\Exception\Handler;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\HasPermissions;
 use Dcat\Admin\Controllers\AuthController;
 use Dcat\Admin\Layout\SectionManager;
@@ -94,6 +95,89 @@ class Admin
     public static function title()
     {
         return static::$metaTitle ?: config('admin.title');
+    }
+
+    /**
+     * @param $repository
+     * @param Closure|null $callback
+     *
+     * @return Grid
+     */
+    public static function grid($repository = null, \Closure $callback = null)
+    {
+        if ($repository instanceof \Closure) {
+            return new Grid(null, $callback);
+        }
+
+        return new Grid($repository, $callback);
+    }
+
+    /**
+     * @param $repository
+     * @param Closure $callable
+     *
+     * @return Form
+     *
+     */
+    public static function form(Repository $repository, Closure $callable = null)
+    {
+        return new Form($repository, $callable);
+    }
+
+    /**
+     * Build a tree.
+     *
+     * @param $model
+     * @param Closure|null $callable
+     *
+     * @return Tree
+     */
+    public static function tree($model, Closure $callable = null)
+    {
+        return new Tree($model, $callable);
+    }
+
+    /**
+     * Build show page.
+     *
+     * @param $repository
+     * @param mixed $callable
+     *
+     * @return Show
+     */
+    public static function show($id = null, $repository = null, \Closure $callable = null)
+    {
+        switch (func_num_args()) {
+            case 0:
+                $show = new Show();
+
+                break;
+            case 1:
+                $show = new Show(null, $id);
+
+                break;
+            case 2:
+                $show = new Show(null, $repository);
+
+                $show->setId($id);
+                break;
+            case 3:
+                $show = new Show($repository, $callable);
+
+                $show->setId($id);
+        }
+
+        return $show;
+    }
+
+    /**
+     * @param Closure $callable
+     *
+     * @return Content
+     */
+    public static function content(Closure $callable = null)
+    {
+        return new Content($callable);
     }
 
     /**

@@ -180,10 +180,11 @@ class Grid
     /**
      * Create a new grid instance.
      *
-     * @param Repository $model
-     * @param Closure  $builder
+     * Grid constructor.
+     * @param Repository|null $repository
+     * @param null $builder
      */
-    public function __construct(Repository $repository = null, $builder = null)
+    public function __construct(?Repository $repository = null, ?\Closure $builder = null)
     {
         if ($repository) {
             $this->keyName = $repository->getKeyName();

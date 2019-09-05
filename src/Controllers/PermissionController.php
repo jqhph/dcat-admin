@@ -8,16 +8,9 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
 use Dcat\Admin\MiniGrid;
-use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Show;
 use Dcat\Admin\Tree;
-use Dcat\Admin\Widgets\Checkbox;
-use Dcat\Admin\Widgets\Radio;
-use Dcat\Admin\Widgets\Tab;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class PermissionController extends Controller
@@ -33,7 +26,7 @@ class PermissionController extends Controller
      */
     public function index(Content $content)
     {
-        if (Input::get('_mini')) {
+        if (request('_mini')) {
             return $content->body($this->miniGrid());
         }
 
