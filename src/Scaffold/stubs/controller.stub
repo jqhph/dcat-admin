@@ -93,7 +93,7 @@ class DummyClass extends Controller
      */
     protected function detail($id)
     {
-        return Admin::show($id, new DummyMode, function () {
+        return Admin::show($id, new DummyModel, function (Show $show) {
             {show}
         });
     }
