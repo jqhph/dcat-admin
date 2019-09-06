@@ -150,13 +150,13 @@ class Grid
         'show_pagination'        => true,
         'show_filter'            => true,
         'show_actions'           => true,
-        'show_quick_edit_button' => true,
+        'show_quick_edit_button' => false,
         'show_edit_button'       => true,
         'show_view_button'       => true,
         'show_delete_button'     => true,
         'show_row_selector'      => true,
         'show_create_btn'        => true,
-        'show_quick_create_btn'  => true,
+        'show_quick_create_btn'  => false,
         'show_bordered'          => false,
         'show_toolbar'           => true,
 
@@ -413,9 +413,6 @@ HTML
         if ($this->built) {
             return;
         }
-
-        $this->applyQuickSearch();
-        $this->applyColumnFilter();
 
         $collection = $this->processFilter(false);
 
@@ -918,7 +915,7 @@ HTML;
         $view = view($this->view, $this->variables());
 
         if (!$wrapper = $this->wrapper) {
-            return "<div class='box box-default'>{$view->render()}</div>";
+            return $view->render();
         }
 
         return $wrapper($view);

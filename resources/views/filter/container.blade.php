@@ -1,5 +1,5 @@
 <div class=" panel-collapse collapse {{ $expand?'in':'' }} {{$containerClass}}" style="{{$border}}padding:0;">
-    <div style="{!! $style !!}" class="box-header " id="{{ $filterID }}">
+    <div style="{!! $style !!}"  id="{{ $filterID }}">
         <form action="{!! $action !!}" class="form-horizontal" pjax-container method="get">
             @foreach($layout->columns() as $column)
                 @foreach($column->filters() as $filter)

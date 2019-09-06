@@ -1,4 +1,4 @@
-<div class="card-header" style="border-bottom:0">
+<div class="card-header">
 
     <div class="btn-group" style="margin-right:3px">
         <a class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="expand">
@@ -32,7 +32,7 @@
 </div>
 
 <div class="card-body table-responsive">
-    <div class="dd" id="{{ $id }}" style="margin:8px 15px 15px">
+    <div class="dd" id="{{ $id }}" style="margin:18px">
         <ol class="dd-list">
             @foreach($items as $branch)
                 @include($branchView)

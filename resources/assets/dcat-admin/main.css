@@ -2125,6 +2125,37 @@ div.layui-layer-btn{
     content:"\f107"!important;
 }
 
+.material .box-header,.material .card-header {
+    padding: 13px 12px;
+}
+.material .box-header .btn, .material .card-header .btn {
+    /*text-transform: uppercase;*/
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow:none!important;
+    color:var(--font)!important;
+}
+.material .box-header .btn:hover,.material .card-header .btn:hover {
+    background-color:var(--40)!important;
+}
+.material .box-header .btn-group, .material .card-header .btn-group {
+    box-shadow:none!important;
+}
+
+.quick-search-clear {
+    color:transparent;
+    display:none;
+    font-weight: bold;
+    position:absolute;
+    top:8px;
+    cursor:pointer;
+    z-index:100;
+}
+
+.quick-search:hover .quick-search-clear{
+    display:inline!important;
+}
+
 
 /*!
  * Waves v0.7.6

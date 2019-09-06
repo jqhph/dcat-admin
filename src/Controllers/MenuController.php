@@ -9,6 +9,7 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Tree;
 use Dcat\Admin\Widgets\Box;
+use Dcat\Admin\Widgets\Card;
 use Illuminate\Routing\Controller;
 
 class MenuController extends Controller
@@ -51,7 +52,7 @@ class MenuController extends Controller
 
                     $form->setWidth(9, 2);
 
-                    $column->append(Box::make(trans('admin.new'), $form)->style('success'));
+                    $column->append(Card::make(trans('admin.new'), $form)->class('card material'));
                 });
             });
     }

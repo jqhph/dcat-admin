@@ -96,6 +96,11 @@ class RoleController extends Controller
 
         $grid->disableBatchDelete();
         $grid->disableCreateButton();
+        $grid->showQuickCreateButton();
+        $grid->disableEditButton();
+        $grid->showQuickEditButton();
+        $grid->disableFilterButton();
+        $grid->quickSearch(['id', 'name', 'slug']);
 
         $grid->id('ID')->bold()->sortable();
         $grid->slug->label('primary');
@@ -111,12 +116,6 @@ class RoleController extends Controller
             if ($roleModel::isAdministrator($actions->row->slug)) {
                 $actions->disableDelete();
             }
-        });
-
-        $grid->filter(function (Grid\Filter $filter) {
-            $filter->equal('id')->width('270px');
-            $filter->like('slug')->width('270px');
-            $filter->like('name')->width('270px');
         });
 
         return $grid;

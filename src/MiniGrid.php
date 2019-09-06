@@ -20,10 +20,6 @@ class MiniGrid extends Grid
         $this->option('row_selector_clicktr', true);
 
         $this->tools->disableBatchActions();
-
-        $this->wrap(function ($view) {
-            return "<div class='box'>$view</div>";
-        });
     }
 
     protected function setupFilter()

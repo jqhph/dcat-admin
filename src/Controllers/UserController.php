@@ -90,9 +90,6 @@ class UserController extends Controller
     protected function grid()
     {
         return Admin::grid(new Administrator('roles'), function (Grid $grid) {
-            $grid->disableBatchDelete();
-            $grid->disableCreateButton();
-
             $grid->id('ID')->bold()->sortable();
             $grid->username;
             $grid->name;
@@ -119,17 +116,19 @@ class UserController extends Controller
             $grid->created_at;
             $grid->updated_at->sortable();
 
+            $grid->disableBatchDelete();
+            $grid->disableCreateButton();
+            $grid->showQuickCreateButton();
+            $grid->showQuickEditButton();
+            $grid->disableFilterButton();
+            $grid->quickSearch(['id', 'name', 'username']);
+
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if ($actions->getKey() == AdministratorModel::DEFAULT_ID) {
                     $actions->disableDelete();
                 }
             });
 
-            $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-                $filter->like('username');
-                $filter->like('name');
-            });
         });
     }
 
@@ -140,17 +139,13 @@ class UserController extends Controller
     {
         $grid = new MiniGrid(new Administrator());
 
-        $grid->id->bold()->sortable()->filter(
-            Grid\Column\Filter\Equal::make('ID')
-        );
+        $grid->quickSearch(['id', 'name', 'username']);
 
-        $grid->username->filter(
-            Grid\Column\Filter\StartWith::make(__('admin.username'))
-        );
+        $grid->id->bold()->sortable();
 
-        $grid->name->filter(
-            Grid\Column\Filter\StartWith::make(__('admin.name'))
-        );
+        $grid->username;
+
+        $grid->name;
 
         $grid->created_at;
 

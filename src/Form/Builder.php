@@ -766,7 +766,7 @@ EOF;
 
         $style = $this->isCreating() ? 'success' : 'default';
 
-        return "<div class='box box-{$style}'>{$view->render()}</div>";
+        return "<div class='card material'>{$view->render()}</div>";
     }
 
     protected function setupSubmitScript()
