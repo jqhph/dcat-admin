@@ -1107,7 +1107,26 @@ class Form implements Renderable
     }
 
     /**
-     * @param $condition
+     * @example
+     *     $form->if(true)->next(function (Form $form) {
+     *          $form->text('name');
+     *     });
+     *
+     *     $form->if(function (Form $form) {
+     *         return $form->model()->id > 5;
+     *     })->next(function (Form $form) {
+     *         $form->text('name');
+     *     });
+     *
+     *     $form->if(true)->then(function (Form $form) {
+     *         $form->text('name');
+     *     });
+     *
+     *     $form->if(true)->creating(function (Form $form) {});
+     *
+     *     $form->if(true)->removeField('name');
+     *
+     * @param bool|\Closure $condition
      *
      * @return Condition|$this
      */

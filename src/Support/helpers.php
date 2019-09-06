@@ -153,10 +153,16 @@ if (!function_exists('admin_trans')) {
      */
     function admin_trans($key, $replace = [], $locale = null)
     {
+        static $method = null;
+
+        if ($method === null) {
+            $method = version_compare(app()->version(), '6.0', '>=') ? 'get' : 'trans';
+        }
+
         $translator = app('translator');
 
         if ($translator->has($key)) {
-            return $translator->get($key, $replace, $locale);
+            return $translator->$method($key, $replace, $locale);
         }
         if (
             strpos($key, 'global.') !== 0
@@ -170,7 +176,7 @@ if (!function_exists('admin_trans')) {
                 return end($arr);
             }
 
-            return $translator->get($key, $replace, $locale);
+            return $translator->$method($key, $replace, $locale);
         }
 
         return last(explode('.', $key));

@@ -45,7 +45,7 @@ class Condition
         }
 
         if ($next) {
-            $this->call($next);
+            $this->next($next);
         }
 
         foreach ($this->next as $callback) {
