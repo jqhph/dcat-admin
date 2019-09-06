@@ -4,6 +4,7 @@ namespace Dcat\Admin;
 
 use Closure;
 use Dcat\Admin\Form\Builder;
+use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
@@ -251,6 +252,11 @@ class Form implements Renderable
      * @var MessageBag
      */
     protected $validationMessages;
+
+    /**
+     * @var Condition[]
+     */
+    protected $conditions = [];
 
     /**
      * Create a new form instance.
@@ -1101,6 +1107,35 @@ class Form implements Renderable
     }
 
     /**
+     * @example
+     *     $form->if(true)->next(function (Form $form) {
+     *          $form->text('name');
+     *     });
+     *
+     *     $form->if(function (Form $form) {
+     *         return $form->model()->id > 5;
+     *     })->next(function (Form $form) {
+     *         $form->text('name');
+     *     });
+     *
+     *     $form->if(true)->then(function (Form $form) {
+     *         $form->text('name');
+     *     });
+     *
+     *     $form->if(true)->creating(function (Form $form) {});
+     *
+     *     $form->if(true)->removeField('name');
+     *
+     * @param bool|\Closure $condition
+     *
+     * @return Condition|$this
+     */
+    public function if($condition)
+    {
+        return $this->conditions[] = new Condition($condition, $this);
+    }
+
+    /**
      * @return void
      */
     protected function rendering()
@@ -1125,6 +1160,10 @@ class Form implements Renderable
     {
         if ($callback = $this->fieldBuilder) {
             $callback($this);
+        }
+
+        foreach ($this->conditions as $condition) {
+            $condition->then();
         }
     }
 

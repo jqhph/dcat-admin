@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Tools;
-use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Support\Collection;
 use Dcat\Admin\Grid\Model;
 use Illuminate\Support\Str;
