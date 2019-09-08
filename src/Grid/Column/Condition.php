@@ -122,6 +122,10 @@ class Condition
 
     public function __call($name, $arguments)
     {
+        if ($name == 'if') {
+            return $this->column->if(...$arguments);
+        }
+
         return $this->then(function ($column) use ($name, &$arguments) {
             return $column->$name(...$arguments);
         });

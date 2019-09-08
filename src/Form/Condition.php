@@ -96,8 +96,8 @@ class Condition
 
     public function __call($name, $arguments)
     {
-        if (! method_exists($this->form, $name)) {
-            return $this;
+        if ($name == 'if') {
+            return $this->form->if(...$arguments);
         }
 
         return $this->then(function (Form $form) use ($name, &$arguments) {
