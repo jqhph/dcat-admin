@@ -10,7 +10,7 @@ use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Dcat\Admin\Widgets\DialogForm;
+use Dcat\Admin\Widgets\ModalForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -276,7 +276,7 @@ class Form implements Renderable
 
         $this->setModel(new Fluent());
 
-        $this->prepareDialogForm();
+        $this->prepareModalForm();
 
         $this->callResolving();
     }
@@ -1580,9 +1580,9 @@ class Form implements Renderable
     /**
      * @return $this
      */
-    protected function prepareDialogForm()
+    protected function prepareModalForm()
     {
-        DialogForm::prepare($this);
+        ModalForm::prepare($this);
 
         return $this;
     }
@@ -1590,20 +1590,20 @@ class Form implements Renderable
     /**
      * @return bool
      */
-    public static function inDialog()
+    public static function inModal()
     {
-        return DialogForm::is();
+        return ModalForm::is();
     }
 
     /**
-     * Create a dialog form.
+     * Create a modal form.
      *
      * @param string|null $title
-     * @return DialogForm
+     * @return ModalForm
      */
-    public static function popup(?string $title = null)
+    public static function modal(?string $title = null)
     {
-        return new DialogForm($title);
+        return new ModalForm($title);
     }
 
     /**

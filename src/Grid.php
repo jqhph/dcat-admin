@@ -500,7 +500,7 @@ HTML
      * @param string $height
      * @return $this
      */
-    public function setDialogFormDimensions(string $width, string $height)
+    public function setModalFormDimensions(string $width, string $height)
     {
         $this->options['dialog_form_area'] = [$width, $height];
 

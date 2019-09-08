@@ -218,7 +218,7 @@ EOT;
 
             list($width, $height) = $this->grid->option('dialog_form_area');
 
-            Form::popup(trans('admin.edit'))
+            Form::modal(trans('admin.edit'))
                 ->click(".{$this->grid->getGridRowName()}-edit")
                 ->dimensions($width, $height)
                 ->success('LA.reload()')

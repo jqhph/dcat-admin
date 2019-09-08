@@ -28,7 +28,7 @@ class CreateButton
 
         list($width, $height) = $this->grid->option('dialog_form_area');
 
-        Form::popup($new)
+        Form::modal($new)
             ->click(".{$this->grid->getGridRowName()}-create")
             ->success('LA.reload()')
             ->dimensions($width, $height)

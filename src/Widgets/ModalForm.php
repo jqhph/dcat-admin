@@ -7,16 +7,15 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Facades\URL;
 
-class DialogForm
+class ModalForm
 {
     const QUERY_NAME = '_form_win_';
 
     /**
      * @var string
      */
-    public static $contentView = 'admin::contents.dialog-form';
+    public static $contentView = 'admin::contents.modal-form';
 
     /**
      * @var array
@@ -239,7 +238,7 @@ class DialogForm
         {$this->handlers['saved']}
     };
     
-    LA.DialogForm(opts);
+    LA.ModalForm(opts);
 })();
 JS
         );
@@ -267,8 +266,6 @@ JS
     }
 
     /**
-     * 对弹窗要渲染的表单对象进行前置处理
-     *
      * @param Form $form
      */
     public static function prepare(Form $form)

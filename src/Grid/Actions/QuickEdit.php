@@ -24,7 +24,7 @@ class QuickEdit extends RowAction
 
             list($width, $height) = $this->parent->option('dialog_form_area');
 
-            Form::popup(trans('admin.edit'))
+            Form::modal(trans('admin.edit'))
                 ->click(".{$this->getElementClass()}")
                 ->dimensions($width, $height)
                 ->success('LA.reload()')

@@ -274,7 +274,7 @@ EOF;
             $id = 'show-edit-'.Str::random(8);
             list($width, $height) = $this->dialogFormDimensions;
 
-            Form::popup($edit)
+            Form::modal($edit)
                 ->click(".$id")
                 ->dimensions($width, $height)
                 ->success('LA.reload()')

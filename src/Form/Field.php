@@ -900,13 +900,13 @@ class Field implements Renderable
     }
 
     /**
-     * Remove the field in dialog.
+     * Remove the field in modal.
      *
      * @return $this
      */
-    public function hideInDialog()
+    public function hideInModal()
     {
-        if (Form::inDialog()) {
+        if (Form::inModal()) {
             $this->setDisplay(false);
         }
 
