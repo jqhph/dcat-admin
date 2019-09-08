@@ -65,7 +65,7 @@ class Role extends Model
      *
      * @return bool
      */
-    public function can(string $permission) : bool
+    public function can(?string $permission) : bool
     {
         return $this->permissions()->where('slug', $permission)->exists();
     }
@@ -77,7 +77,7 @@ class Role extends Model
      *
      * @return bool
      */
-    public function cannot(string $permission) : bool
+    public function cannot(?string $permission) : bool
     {
         return !$this->can($permission);
     }
@@ -115,7 +115,7 @@ class Role extends Model
      * @param string $slug
      * @return bool
      */
-    public static function isAdministrator(string $slug)
+    public static function isAdministrator(?string $slug)
     {
         return $slug === static::ADMINISTRATOR;
     }

@@ -1108,17 +1108,17 @@ class Form implements Renderable
 
     /**
      * @example
-     *     $form->if(true)->next(function (Form $form) {
+     *     $form->if(true)->then(function (Form $form) {
      *          $form->text('name');
      *     });
      *
      *     $form->if(function (Form $form) {
      *         return $form->model()->id > 5;
-     *     })->next(function (Form $form) {
+     *     })->then(function (Form $form) {
      *         $form->text('name');
      *     });
      *
-     *     $form->if(true)->then(function (Form $form) {
+     *     $form->if(true)->now(function (Form $form) {
      *         $form->text('name');
      *     });
      *
@@ -1163,7 +1163,7 @@ class Form implements Renderable
         }
 
         foreach ($this->conditions as $condition) {
-            $condition->then();
+            $condition->process();
         }
     }
 

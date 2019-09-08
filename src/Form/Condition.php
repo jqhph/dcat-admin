@@ -26,14 +26,19 @@ class Condition
         $this->form = $form;
     }
 
-    public function next(\Closure $closure)
+    public function then(\Closure $closure)
     {
         $this->next[] = $closure;
 
         return $this;
     }
 
-    public function then(\Closure $next = null)
+    public function now(\Closure $next = null)
+    {
+        $this->process($next);
+    }
+
+    public function process(\Closure $next = null)
     {
         if ($this->done) {
             return;
@@ -45,7 +50,7 @@ class Condition
         }
 
         if ($next) {
-            $this->next($next);
+            $this->then($next);
         }
 
         foreach ($this->next as $callback) {
@@ -73,7 +78,7 @@ class Condition
             return $this;
         }
 
-        return $this->next(function (Form $form) use ($name, &$arguments) {
+        return $this->then(function (Form $form) use ($name, &$arguments) {
             return $form->$name(...$arguments);
         });
     }
