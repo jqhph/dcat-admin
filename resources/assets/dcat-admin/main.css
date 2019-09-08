@@ -2133,7 +2133,9 @@ div.layui-layer-btn{
     background-color: transparent !important;
     border-color: transparent !important;
     box-shadow:none!important;
-    color:var(--font)!important;
+    color:var(--80)!important;
+    font-weight: bold;
+    font-size: 13px;
 }
 .material .box-header .btn:hover,.material .card-header .btn:hover {
     background-color:var(--40)!important;
