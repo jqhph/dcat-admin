@@ -2139,9 +2139,14 @@ div.layui-layer-btn{
 }
 .material .box-header .btn:hover,.material .card-header .btn:hover {
     background-color:var(--40)!important;
+    border-radius:2px!important;
 }
 .material .box-header .btn-group, .material .card-header .btn-group {
     box-shadow:none!important;
+}
+
+.material .box-header .btn.btn-danger, .material .card-header .btn.btn-danger {
+    color:var(--danger-dark)!important;
 }
 
 .quick-search-clear {
