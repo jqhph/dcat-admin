@@ -15,6 +15,8 @@ class Condition
 
     protected $condition;
 
+    protected $result;
+
     /**
      * @var \Closure[]
      */
@@ -36,6 +38,21 @@ class Condition
     public function now(\Closure $next = null)
     {
         $this->process($next);
+    }
+
+    public function else(\Closure $next = null)
+    {
+        $self = $this;
+
+        $condition = $this->form->if(function () use ($self) {
+            return ! $self->getResult();
+        });
+
+        if ($next) {
+            $condition->then($next);
+        }
+
+        return $condition;
     }
 
     public function process(\Closure $next = null)
@@ -64,7 +81,12 @@ class Condition
             $this->condition = $this->call($this->condition);
         }
 
-        return $this->condition ? true : false;
+        return $this->result = $this->condition ? true : false;
+    }
+
+    public function getResult()
+    {
+        return $this->result;
     }
 
     protected function call(\Closure $callback)
