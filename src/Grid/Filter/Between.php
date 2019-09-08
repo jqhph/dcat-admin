@@ -14,6 +14,23 @@ class Between extends AbstractFilter
     protected $view = 'admin::filter.between';
 
     /**
+     * @var bool
+     */
+    protected $timestamp = false;
+
+    /**
+     * Convert the datetime into unix timestamp.
+     *
+     * @return $this
+     */
+    public function toTimestamp()
+    {
+        $this->timestamp = true;
+
+        return $this;
+    }
+
+    /**
      * Format id.
      *
      * @param string $column
@@ -72,6 +89,14 @@ class Between extends AbstractFilter
         $value = array_filter($this->value, function ($val) {
             return $val !== '';
         });
+
+        if ($this->timestamp) {
+            $value = array_map(function ($v) {
+                if ($v) {
+                    return strtotime($v);
+                }
+            }, $value);
+        }
 
         if (empty($value)) {
             return;
