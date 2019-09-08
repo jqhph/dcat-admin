@@ -98,11 +98,11 @@ class UserController extends Controller
             $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');
             $nodes = (new $permissionModel)->allNodes();
-            $grid->permissions->display(function ($v, $column) use (&$nodes, $roleModel) {
-                if (empty($this->roles)) {
-                    return;
-                }
-                return $column->tree(function (Grid\Displayers\Tree $tree) use (&$nodes, $roleModel) {
+            $grid->permissions
+                ->if(function () {
+                    return ! empty($this->roles);
+                })
+                ->tree(function (Grid\Displayers\Tree $tree) use (&$nodes, $roleModel) {
                     $tree->nodes($nodes);
 
                     foreach (array_column($this->roles, 'slug') as $slug) {
@@ -110,8 +110,10 @@ class UserController extends Controller
                             $tree->checkedAll();
                         }
                     }
-                });
-            });
+                })
+                ->else()
+                ->showEmpty();
+
 
             $grid->created_at;
             $grid->updated_at->sortable();

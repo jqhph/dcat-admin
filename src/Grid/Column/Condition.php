@@ -22,6 +22,11 @@ class Condition
     protected $condition;
 
     /**
+     * @var bool
+     */
+    protected $result;
+
+    /**
      * @var \Closure[]
      */
     protected $next = [];
@@ -45,7 +50,7 @@ class Condition
         $self = $this;
 
         $condition = $this->column->if(function () use ($self) {
-            return ! $self->is();
+            return ! $self->getResult();
         });
 
         if ($next) {
@@ -100,7 +105,12 @@ class Condition
             $condition = $this->call($condition);
         }
 
-        return $condition ? true : false;
+        return$this->result = $condition ? true : false;
+    }
+
+    public function getResult()
+    {
+        return $this->result;
     }
 
     protected function call(\Closure $callback, $column = null)
