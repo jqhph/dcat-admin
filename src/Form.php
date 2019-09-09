@@ -553,6 +553,8 @@ class Form implements Renderable
     {
         $data = $data ?: request()->all();
 
+        $this->buildField();
+
         if (($response = $this->callSubmitted())) {
             return $response;
         }
