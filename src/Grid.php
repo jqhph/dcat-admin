@@ -163,7 +163,7 @@ class Grid
         'row_selector_style'      => 'primary',
         'row_selector_circle'     => true,
         'row_selector_clicktr'    => false,
-        'row_selector_label_name' => null,
+        'row_selector_label_key' => null,
         'row_selector_bg'         => 'var(--20)',
 
         'show_exporter'             => false,
@@ -357,8 +357,8 @@ class Grid
         if (isset($options['clicktr'])) {
             $this->options['row_selector_clicktr'] = $options['clicktr'];
         }
-        if (isset($options['label_name'])) {
-            $this->options['row_selector_label_name'] = $options['label_name'];
+        if (isset($options['label'])) {
+            $this->options['row_selector_label_key'] = $options['label_name'];
         }
         if (isset($options['bg'])) {
             $this->options['row_selector_bg'] = $options['bg'];

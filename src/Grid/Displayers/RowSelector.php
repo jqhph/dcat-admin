@@ -37,7 +37,7 @@ EOT;
      */
     protected function getLabel()
     {
-        if ($column = $this->grid->option('row_selector_label_name')) {
+        if ($column = $this->grid->option('row_selector_label_key')) {
             $label = $this->row->{$column};
             if ($label !== null && $label !== '') {
                 return $label;
