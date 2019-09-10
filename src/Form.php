@@ -791,20 +791,24 @@ class Form implements Renderable
             $message = $options;
             $options = [];
         } else {
-            $message = $options['message'] ?? trans('admin.save_succeeded');
+            $message = $options['message'] ?? null;
         }
 
         $status = (bool) ($options['status'] ?? true);
 
         // 判断是否是ajax请求
-        if ($response = $this->ajaxResponse($message, $url, $status)) {
-            return $response;
+        if ($this->isAjaxRequest()) {
+            $message = $message ?: trans('admin.save_succeeded');
+
+            return $this->ajaxResponse($message, $url, $status);
         }
 
         // 非ajax请求
         $status = (int) ($options['status_code'] ?? 302);
 
-        admin_alert($message);
+        if ($message) {
+            admin_alert($message);
+        }
 
         return redirect($url, $status);
 
