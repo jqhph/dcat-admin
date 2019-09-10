@@ -988,7 +988,7 @@ window.require = window.define = window.exports = window.module = undefined;
      * @param opt
      * @constructor
      */
-    LA.DialogForm = function (opt) {
+    LA.ModalForm = function (opt) {
         var number = 1,
             defUrl = opt.defaultUrl,
             btn = opt.buttonSelector,

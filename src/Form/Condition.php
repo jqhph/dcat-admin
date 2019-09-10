@@ -15,6 +15,8 @@ class Condition
 
     protected $condition;
 
+    protected $result;
+
     /**
      * @var \Closure[]
      */
@@ -26,14 +28,34 @@ class Condition
         $this->form = $form;
     }
 
-    public function next(\Closure $closure)
+    public function then(\Closure $closure)
     {
         $this->next[] = $closure;
 
         return $this;
     }
 
-    public function then(\Closure $next = null)
+    public function now(\Closure $next = null)
+    {
+        $this->process($next);
+    }
+
+    public function else(\Closure $next = null)
+    {
+        $self = $this;
+
+        $condition = $this->form->if(function () use ($self) {
+            return ! $self->getResult();
+        });
+
+        if ($next) {
+            $condition->then($next);
+        }
+
+        return $condition;
+    }
+
+    public function process(\Closure $next = null)
     {
         if ($this->done) {
             return;
@@ -45,7 +67,7 @@ class Condition
         }
 
         if ($next) {
-            $this->next($next);
+            $this->then($next);
         }
 
         foreach ($this->next as $callback) {
@@ -59,7 +81,12 @@ class Condition
             $this->condition = $this->call($this->condition);
         }
 
-        return $this->condition ? true : false;
+        return $this->result = $this->condition ? true : false;
+    }
+
+    public function getResult()
+    {
+        return $this->result;
     }
 
     protected function call(\Closure $callback)
@@ -69,11 +96,11 @@ class Condition
 
     public function __call($name, $arguments)
     {
-        if (! method_exists($this->form, $name)) {
-            return $this;
+        if ($name == 'if') {
+            return $this->form->if(...$arguments);
         }
 
-        return $this->next(function (Form $form) use ($name, &$arguments) {
+        return $this->then(function (Form $form) use ($name, &$arguments) {
             return $form->$name(...$arguments);
         });
     }

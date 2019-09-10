@@ -688,7 +688,8 @@ class Builder
         ];
 
         $this->fields = $this->fields()->reject(function (Field $field) use (&$reservedColumns) {
-            return in_array($field->column(), $reservedColumns);
+            return in_array($field->column(), $reservedColumns)
+                && $field instanceof Form\Field\Display;
         });
     }
 
@@ -766,7 +767,7 @@ EOF;
 
         $style = $this->isCreating() ? 'success' : 'default';
 
-        return "<div class='box box-{$style}'>{$view->render()}</div>";
+        return "<div class='card material'>{$view->render()}</div>";
     }
 
     protected function setupSubmitScript()

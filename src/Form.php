@@ -10,7 +10,7 @@ use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Dcat\Admin\Widgets\DialogForm;
+use Dcat\Admin\Widgets\ModalForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -179,7 +179,7 @@ class Form implements Renderable
     /**
      * @var Closure
      */
-    protected $fieldBuilder;
+    protected $callback;
 
     /**
      * @var bool
@@ -268,7 +268,7 @@ class Form implements Renderable
     {
         $this->repository = Admin::createRepository($repository);
 
-        $this->fieldBuilder = $callback;
+        $this->callback = $callback;
 
         $this->builder = new Builder($this);
 
@@ -276,7 +276,7 @@ class Form implements Renderable
 
         $this->setModel(new Fluent());
 
-        $this->prepareDialogForm();
+        $this->prepareModalForm();
 
         $this->callResolving();
     }
@@ -513,7 +513,7 @@ class Form implements Renderable
 
             $this->setModel(new Fluent($data));
 
-            $this->buildField();
+            $this->build();
 
             if (($response = $this->callDeleting()) instanceof Response) {
                 return $response;
@@ -552,6 +552,8 @@ class Form implements Renderable
     public function store(?array $data = null, $redirectTo = null)
     {
         $data = $data ?: request()->all();
+
+        $this->build();
 
         if (($response = $this->callSubmitted())) {
             return $response;
@@ -724,7 +726,7 @@ class Form implements Renderable
         $this->builder->setResourceId($id);
         $this->builder->setMode(Builder::MODE_EDIT);
 
-        $this->buildField();
+        $this->build();
 
         if (($response = $this->callSubmitted())) {
             return $response;
@@ -789,20 +791,24 @@ class Form implements Renderable
             $message = $options;
             $options = [];
         } else {
-            $message = $options['message'] ?? trans('admin.save_succeeded');
+            $message = $options['message'] ?? null;
         }
 
         $status = (bool) ($options['status'] ?? true);
 
         // 判断是否是ajax请求
-        if ($response = $this->ajaxResponse($message, $url, $status)) {
-            return $response;
+        if ($this->isAjaxRequest()) {
+            $message = $message ?: trans('admin.save_succeeded');
+
+            return $this->ajaxResponse($message, $url, $status);
         }
 
         // 非ajax请求
         $status = (int) ($options['status_code'] ?? 302);
 
-        admin_alert($message);
+        if ($message) {
+            admin_alert($message);
+        }
 
         return redirect($url, $status);
 
@@ -1108,17 +1114,17 @@ class Form implements Renderable
 
     /**
      * @example
-     *     $form->if(true)->next(function (Form $form) {
+     *     $form->if(true)->then(function (Form $form) {
      *          $form->text('name');
      *     });
      *
      *     $form->if(function (Form $form) {
      *         return $form->model()->id > 5;
-     *     })->next(function (Form $form) {
+     *     })->then(function (Form $form) {
      *         $form->text('name');
      *     });
      *
-     *     $form->if(true)->then(function (Form $form) {
+     *     $form->if(true)->now(function (Form $form) {
      *         $form->text('name');
      *     });
      *
@@ -1144,7 +1150,7 @@ class Form implements Renderable
             $this->setModel(new Fluent($this->repository->edit($this)));
         }
 
-        $this->buildField();
+        $this->build();
 
         if ($isEditing) {
             $this->setFieldValue();
@@ -1156,14 +1162,14 @@ class Form implements Renderable
     /**
      * @return void
      */
-    protected function buildField()
+    protected function build()
     {
-        if ($callback = $this->fieldBuilder) {
+        if ($callback = $this->callback) {
             $callback($this);
         }
 
         foreach ($this->conditions as $condition) {
-            $condition->then();
+            $condition->process();
         }
     }
 
@@ -1580,30 +1586,37 @@ class Form implements Renderable
     /**
      * @return $this
      */
-    protected function prepareDialogForm()
+    protected function prepareModalForm()
     {
-        DialogForm::prepare($this);
+        ModalForm::prepare($this);
 
         return $this;
     }
 
     /**
-     * @return bool
+     * @param Closure $callback
+     * @return bool|void
      */
-    public static function inDialog()
+    public function inModal(\Closure $callback = null)
     {
-        return DialogForm::is();
+        if (! $callback) {
+            return ModalForm::is();
+        }
+
+        if (ModalForm::is()) {
+            $callback($this);
+        }
     }
 
     /**
-     * Create a dialog form.
+     * Create a modal form.
      *
      * @param string|null $title
-     * @return DialogForm
+     * @return ModalForm
      */
-    public static function popup(?string $title = null)
+    public static function modal(?string $title = null)
     {
-        return new DialogForm($title);
+        return new ModalForm($title);
     }
 
     /**

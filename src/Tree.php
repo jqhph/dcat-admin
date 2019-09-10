@@ -475,7 +475,7 @@ JS;
         if ($this->useQuickEdit) {
             list($width, $height) = $this->dialogFormDimensions;
 
-            Form::popup(trans('admin.edit'))
+            Form::modal(trans('admin.edit'))
                 ->click('.tree-quick-edit')
                 ->success('LA.reload()')
                 ->dimensions($width, $height)
@@ -491,7 +491,7 @@ JS;
         if ($this->useQuickCreate) {
             list($width, $height) = $this->dialogFormDimensions;
 
-            Form::popup(trans('admin.new'))
+            Form::modal(trans('admin.new'))
                 ->click('.tree-quick-create')
                 ->success('LA.reload()')
                 ->dimensions($width, $height)
@@ -537,7 +537,7 @@ JS;
         $view = view($this->view['tree'], $this->variables());
 
         if (!$wrapper = $this->wrapper) {
-            return "<div class='box box-default'>{$view->render()}</div>";
+            return "<div class='card material'>{$view->render()}</div>";
         }
 
         return $wrapper($view);

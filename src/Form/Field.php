@@ -754,7 +754,7 @@ class Field implements Renderable
      * @param \Closure $closure
      * @return $this
      */
-    public function prepareForSave(\Closure $closure)
+    public function saving(\Closure $closure)
     {
         $this->prepare = $closure;
 
@@ -900,13 +900,16 @@ class Field implements Renderable
     }
 
     /**
-     * Remove the field in dialog.
+     * Remove the field in modal.
      *
      * @return $this
      */
-    public function hideInDialog()
+    public function hideInModal()
     {
-        if (Form::inDialog()) {
+        if (
+            $this->form instanceof Form
+            && $this->form->inModal()
+        ) {
             $this->setDisplay(false);
         }
 

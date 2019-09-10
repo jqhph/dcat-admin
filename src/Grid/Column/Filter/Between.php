@@ -10,12 +10,29 @@ class Between extends Filter
 {
     protected $dateFormat = null;
 
+    /**
+     * @var bool
+     */
+    protected $timestamp = false;
+
     public function __construct()
     {
         $this->class = [
             'start' => uniqid('column-filter-start-'),
             'end'   => uniqid('column-filter-end-'),
         ];
+    }
+
+    /**
+     * Convert the datetime into unix timestamp.
+     *
+     * @return $this
+     */
+    public function toTimestamp()
+    {
+        $this->timestamp = true;
+
+        return $this;
     }
 
     /**
@@ -73,6 +90,14 @@ class Between extends Filter
 
         if (empty($value)) {
             return;
+        }
+
+        if ($this->timestamp) {
+            $value = array_map(function ($v) {
+                if ($v) {
+                    return strtotime($v);
+                }
+            }, $value);
         }
 
         if (!isset($value['start'])) {

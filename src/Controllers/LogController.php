@@ -75,9 +75,19 @@ class LogController extends Controller
                     return $userModel::findOrFail($v)->pluck('name', 'id');
                 });
 
-            $filter->equal('method', trans('admin.method'))->select(array_combine(OperationLogModel::$methods, OperationLogModel::$methods));
+            $filter->equal('method', trans('admin.method'))
+                ->select(
+                    array_combine(OperationLogModel::$methods, OperationLogModel::$methods)
+                );
+
             $filter->like('path', trans('admin.uri'));
+
             $filter->equal('ip', 'IP');
+
+            $filter->between('created_at')
+                ->width(4)
+                ->datetime();
+
         });
 
         return $grid;

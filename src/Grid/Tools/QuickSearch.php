@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid\Concerns\HasQuickSearch as QuickSearchConcerns;
 use Illuminate\Support\Arr;
 
 class QuickSearch extends AbstractTool
@@ -17,6 +16,30 @@ class QuickSearch extends AbstractTool
      * @var string
      */
     protected $placeholder = null;
+
+    /**
+     * @var string
+     */
+    protected $queryName = '__search__';
+
+    /**
+     * @param string|null $name
+     * @return $this
+     */
+    public function setQueryName(?string $name)
+    {
+        $this->queryName = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueryName()
+    {
+        return $this->queryName;
+    }
 
     /**
      * Set placeholder.
@@ -37,22 +60,52 @@ class QuickSearch extends AbstractTool
      */
     public function render()
     {
+        $this->setupScript();
+
         $request = request();
         $query = $request->query();
 
         Arr::forget($query, [
-            QuickSearchConcerns::$searchKey,
+            $this->queryName,
             $this->grid->model()->getPageName(),
             '_pjax',
         ]);
 
         $vars = [
             'action' => $request->url() . '?' . http_build_query($query),
-            'key' => QuickSearchConcerns::$searchKey,
-            'value' => request(QuickSearchConcerns::$searchKey),
+            'key' => $this->queryName,
+            'value' => request($this->queryName),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
         ];
 
         return view($this->view, $vars);
     }
+
+    protected function setupScript()
+    {
+        $script = <<<JS
+var show = function () {
+    var t = $(this),
+        clear = t.parent().find('.quick-search-clear');
+
+    if (t.val()) {
+        clear.css({color: '#333'});
+    } else {
+        clear.css({color: '#fff'});
+    }
+    return false;
+};
+
+$('input.quick-search-input').on('focus', show).on('keyup', show);
+
+$('.quick-search-clear').click(function () {
+    $(this).parent().find('.quick-search-input').val('');
+
+    $(this).closest('form').submit();
+});
+JS;
+
+        Admin::script($script);
+    }
+
 }

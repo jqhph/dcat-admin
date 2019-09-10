@@ -37,7 +37,7 @@ class Expand extends AbstractDisplayer
 
         $key = $this->getDataKey();
 
-        $button = $this->button ?? $this->value;
+        $button = is_null($this->button) ? $this->value : $this->button;
 
         return <<<EOT
 <span class="grid-expand" data-inserted="0" data-key="{$key}" data-toggle="collapse" data-target="#grid-collapse-{$key}">

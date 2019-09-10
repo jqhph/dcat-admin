@@ -48,6 +48,9 @@ trait HasFilter
             call_user_func($this->builder, $this);
         }
 
+        $this->applyQuickSearch();
+        $this->applyColumnFilter();
+
         return $this->filter->execute($toArray);
     }
 

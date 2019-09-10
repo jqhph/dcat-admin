@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Controllers;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Models\Repositories\Role;
 use Dcat\Admin\Models\Role as RoleModel;
@@ -63,7 +64,7 @@ class RoleController extends Controller
         return $content
             ->header(trans('admin.roles'))
             ->description(trans('admin.edit'))
-            ->body($this->form($id)->edit($id));
+            ->body($this->form()->edit($id));
     }
 
     /**
@@ -96,6 +97,11 @@ class RoleController extends Controller
 
         $grid->disableBatchDelete();
         $grid->disableCreateButton();
+        $grid->showQuickCreateButton();
+        $grid->disableEditButton();
+        $grid->showQuickEditButton();
+        $grid->disableFilterButton();
+        $grid->quickSearch(['id', 'name', 'slug']);
 
         $grid->id('ID')->bold()->sortable();
         $grid->slug->label('primary');
@@ -113,12 +119,6 @@ class RoleController extends Controller
             }
         });
 
-        $grid->filter(function (Grid\Filter $filter) {
-            $filter->equal('id')->width('270px');
-            $filter->like('slug')->width('270px');
-            $filter->like('name')->width('270px');
-        });
-
         return $grid;
     }
 
@@ -131,28 +131,25 @@ class RoleController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(new Role());
+        return Admin::show($id, new Role('permissions'), function (Show $show) {
+            $show->id;
+            $show->slug;
+            $show->name;
 
-        $show->setId($id);
+            $show->permissions->width(12)->as(function ($permission) {
+                return collect($permission)->pluck('name');
+            })->label('primary');
 
-        $show->id;
-        $show->slug;
-        $show->name;
+            $show->divider();
 
-        $show->permissions->width(12)->as(function ($permission) {
-            return collect($permission)->pluck('name');
-        })->label('primary');
+            $show->created_at;
+            $show->updated_at;
 
-        $show->divider();
+            if ($show->getId() == RoleModel::ADMINISTRATOR_ID) {
+                $show->disableDeleteButton();
+            }
 
-        $show->created_at;
-        $show->updated_at;
-
-        if ($id == RoleModel::ADMINISTRATOR_ID) {
-            $show->disableDeleteButton();
-        }
-
-        return $show;
+        });
     }
 
     /**
@@ -160,38 +157,34 @@ class RoleController extends Controller
      *
      * @return Form
      */
-    public function form($id = null)
+    public function form()
     {
-        $form = new Form(new Role());
+        return Admin::form(new Role('permissions'), function (Form $form) {
+            $form->display('id', 'ID');
 
-        $form->display('id', 'ID');
+            $form->text('slug', trans('admin.slug'))->required();
+            $form->text('name', trans('admin.name'))->required();
 
-        $form->text('slug', trans('admin.slug'))->required()->prepareForSave(function ($value) {
-            return $value;
+            $form->tree('permissions')
+                ->nodes(function () {
+                    $permissionModel = config('admin.database.permissions_model');
+                    $permissionModel = new $permissionModel;
+
+                    return $permissionModel->allNodes();
+                })
+                ->customFormat(function ($v) {
+                    if (!$v) return [];
+
+                    return array_column($v, 'id');
+                });
+
+            $form->display('created_at', trans('admin.created_at'));
+            $form->display('updated_at', trans('admin.updated_at'));
+
+            if ($form->getKey() == RoleModel::ADMINISTRATOR_ID) {
+                $form->disableDeleteButton();
+            }
         });
-        $form->text('name', trans('admin.name'))->required();
-
-        $form->tree('permissions')
-            ->nodes(function () {
-                $permissionModel = config('admin.database.permissions_model');
-                $permissionModel = new $permissionModel;
-
-                return $permissionModel->allNodes();
-            })
-            ->customFormat(function ($v) {
-                if (!$v) return [];
-
-                return array_column($v, 'id');
-            });
-
-        $form->display('created_at', trans('admin.created_at'));
-        $form->display('updated_at', trans('admin.updated_at'));
-
-        if ($id == RoleModel::ADMINISTRATOR_ID) {
-            $form->disableDeleteButton();
-        }
-
-        return $form;
     }
 
     /**

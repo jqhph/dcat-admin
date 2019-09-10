@@ -106,13 +106,18 @@ class ExtensionController extends Controller
         $grid->name;
         $grid->version;
         $grid->alias;
-        $grid->description->expand(function ($expand) {
-            if (!$this->description) return;
 
-            $expand->button(trans('admin.view'));
+        $grid->description
+            ->if(function () {
+                return mb_strlen($this->description) > 14;
+            })
+            ->limit(14)
+            ->expand(function ($expand) {
+                if (!$this->description) return;
 
-            return "<div style='padding:10px 20px'>{$this->description}</div>";
-        });
+                return "<div style='padding:10px 20px'>{$this->description}</div>";
+            });
+
         $grid->authors;
 
         $grid->enable->switch();
@@ -122,8 +127,13 @@ class ExtensionController extends Controller
         $view = ucfirst(trans('admin.view'));
 
         $grid->config
+            ->if(function () {
+                return $this->config ? true : false;
+            })
             ->display($view)
-            ->expand($this->getExpandHandler('config'));
+            ->expand($this->getExpandHandler('config'))
+            ->else()
+            ->showEmpty();
 
         $grid->require
             ->display($view)

@@ -17,14 +17,14 @@ use Illuminate\Support\Str;
 trait HasQuickSearch
 {
     /**
-     * @var string
-     */
-    public static $searchKey = '__search__';
-
-    /**
      * @var array|string|\Closure
      */
     protected $search;
+
+    /**
+     * @var Tools\QuickSearch
+     */
+    protected $quickSearch;
 
     /**
      * @param array|string|\Closure
@@ -39,9 +39,45 @@ trait HasQuickSearch
             $this->search = $search;
         }
 
+        if ($this->quickSearch) {
+            return $this->quickSearch;
+        }
+
         return tap(new Tools\QuickSearch(), function ($search) {
-            $this->tools->append($search);
+            $search->setGrid($this);
+
+            $this->quickSearch = $search;
         });
+    }
+
+    /**
+     * @param string $gridName
+     */
+    protected function setQuickSearchQueryName($gridName)
+    {
+        if ($this->quickSearch) {
+            $this->quickSearch->setQueryName($gridName.'__search');
+        }
+    }
+
+    /**
+     * @return Tools\QuickSearch
+     */
+    public function getQuickSearch()
+    {
+        return $this->quickSearch;
+    }
+
+    /**
+     * @return \Illuminate\View\View|string
+     */
+    public function renderQuickSearch()
+    {
+        if (! $this->quickSearch) {
+            return '';
+        }
+
+        return $this->quickSearch->render();
     }
 
     /**
@@ -51,7 +87,11 @@ trait HasQuickSearch
      */
     public function applyQuickSearch()
     {
-        if (!$query = request()->get(static::$searchKey)) {
+        if (! $this->quickSearch) {
+            return;
+        }
+
+        if (! $query = request()->get($this->quickSearch->getQueryName())) {
             return;
         }
 
@@ -83,8 +123,13 @@ trait HasQuickSearch
     protected function addWhereBindings($query)
     {
         $queries = preg_split('/\s(?=([^"]*"[^"]*")*[^"]*$)/', trim($query));
+        if (! $queries = $this->parseQueryBindings($queries)) {
+            $this->addWhereBasicBinding($this->getKeyName(), false, '=', '___');
 
-        foreach ($this->parseQueryBindings($queries) as list($column, $condition, $or)) {
+            return;
+        }
+
+        foreach ($queries as list($column, $condition, $or)) {
             if (preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match) !== 0) {
                 $this->addWhereInBinding($column, $or, (bool)$match['not'], $match['values']);
                 continue;
@@ -101,6 +146,11 @@ trait HasQuickSearch
             }
 
             if (preg_match('/(?<pattern>%[^%]+%)/', $condition, $match) !== 0) {
+                $this->addWhereLikeBinding($column, $or, $match['pattern']);
+                continue;
+            }
+
+            if (preg_match('/(?<pattern>[^%]+%)/', $condition, $match) !== 0) {
                 $this->addWhereLikeBinding($column, $or, $match['pattern']);
                 continue;
             }

@@ -90,9 +90,6 @@ class UserController extends Controller
     protected function grid()
     {
         return Admin::grid(new Administrator('roles'), function (Grid $grid) {
-            $grid->disableBatchDelete();
-            $grid->disableCreateButton();
-
             $grid->id('ID')->bold()->sortable();
             $grid->username;
             $grid->name;
@@ -101,11 +98,11 @@ class UserController extends Controller
             $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');
             $nodes = (new $permissionModel)->allNodes();
-            $grid->permissions->display(function ($v, $column) use (&$nodes, $roleModel) {
-                if (empty($this->roles)) {
-                    return;
-                }
-                return $column->tree(function (Grid\Displayers\Tree $tree) use (&$nodes, $roleModel) {
+            $grid->permissions
+                ->if(function () {
+                    return ! empty($this->roles);
+                })
+                ->tree(function (Grid\Displayers\Tree $tree) use (&$nodes, $roleModel) {
                     $tree->nodes($nodes);
 
                     foreach (array_column($this->roles, 'slug') as $slug) {
@@ -113,11 +110,20 @@ class UserController extends Controller
                             $tree->checkedAll();
                         }
                     }
-                });
-            });
+                })
+                ->else()
+                ->showEmpty();
+
 
             $grid->created_at;
             $grid->updated_at->sortable();
+
+            $grid->disableBatchDelete();
+            $grid->disableCreateButton();
+            $grid->showQuickCreateButton();
+            $grid->showQuickEditButton();
+            $grid->disableFilterButton();
+            $grid->quickSearch(['id', 'name', 'username']);
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if ($actions->getKey() == AdministratorModel::DEFAULT_ID) {
@@ -125,11 +131,6 @@ class UserController extends Controller
                 }
             });
 
-            $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
-                $filter->like('username');
-                $filter->like('name');
-            });
         });
     }
 
@@ -140,17 +141,13 @@ class UserController extends Controller
     {
         $grid = new MiniGrid(new Administrator());
 
-        $grid->id->bold()->sortable()->filter(
-            Grid\Column\Filter\Equal::make('ID')
-        );
+        $grid->quickSearch(['id', 'name', 'username']);
 
-        $grid->username->filter(
-            Grid\Column\Filter\StartWith::make(__('admin.username'))
-        );
+        $grid->id->bold()->sortable();
 
-        $grid->name->filter(
-            Grid\Column\Filter\StartWith::make(__('admin.name'))
-        );
+        $grid->username;
+
+        $grid->name;
 
         $grid->created_at;
 

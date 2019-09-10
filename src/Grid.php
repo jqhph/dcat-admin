@@ -150,20 +150,20 @@ class Grid
         'show_pagination'        => true,
         'show_filter'            => true,
         'show_actions'           => true,
-        'show_quick_edit_button' => true,
+        'show_quick_edit_button' => false,
         'show_edit_button'       => true,
         'show_view_button'       => true,
         'show_delete_button'     => true,
         'show_row_selector'      => true,
         'show_create_btn'        => true,
-        'show_quick_create_btn'  => true,
+        'show_quick_create_btn'  => false,
         'show_bordered'          => false,
         'show_toolbar'           => true,
 
         'row_selector_style'      => 'primary',
         'row_selector_circle'     => true,
         'row_selector_clicktr'    => false,
-        'row_selector_label_name' => null,
+        'row_selector_label_key' => null,
         'row_selector_bg'         => 'var(--20)',
 
         'show_exporter'             => false,
@@ -357,8 +357,8 @@ class Grid
         if (isset($options['clicktr'])) {
             $this->options['row_selector_clicktr'] = $options['clicktr'];
         }
-        if (isset($options['label_name'])) {
-            $this->options['row_selector_label_name'] = $options['label_name'];
+        if (isset($options['label'])) {
+            $this->options['row_selector_label_key'] = $options['label_name'];
         }
         if (isset($options['bg'])) {
             $this->options['row_selector_bg'] = $options['bg'];
@@ -413,9 +413,6 @@ HTML
         if ($this->built) {
             return;
         }
-
-        $this->applyQuickSearch();
-        $this->applyColumnFilter();
 
         $collection = $this->processFilter(false);
 
@@ -503,7 +500,7 @@ HTML
      * @param string $height
      * @return $this
      */
-    public function setDialogFormDimensions(string $width, string $height)
+    public function setModalFormDimensions(string $width, string $height)
     {
         $this->options['dialog_form_area'] = [$width, $height];
 
@@ -918,7 +915,7 @@ HTML;
         $view = view($this->view, $this->variables());
 
         if (!$wrapper = $this->wrapper) {
-            return "<div class='box box-default'>{$view->render()}</div>";
+            return $view->render();
         }
 
         return $wrapper($view);

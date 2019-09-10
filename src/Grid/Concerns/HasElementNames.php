@@ -52,6 +52,8 @@ trait HasElementNames
 
         $this->setExporterQueryName($name);
 
+        $this->setQuickSearchQueryName($name);
+
         return $this;
     }
 

@@ -172,4 +172,30 @@ trait HasDisplayers
         });
     }
 
+    /**
+     * Limit the number of characters in a string.
+     *
+     * @param  int     $limit
+     * @param  string  $end
+     * @return $this
+     */
+    public function limit($limit = 100, $end = '...')
+    {
+        return $this->display(function ($value) use ($limit, $end) {
+            if (mb_strlen($value, 'UTF-8') <= $limit) {
+                return $value;
+            }
+
+            return mb_substr($value, 0, $limit).$end;
+        });
+    }
+
+    /**
+     * @return $this
+     */
+    public function showEmpty()
+    {
+        return $this->display('');
+    }
+
 }

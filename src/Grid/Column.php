@@ -36,7 +36,6 @@ use Illuminate\Support\Str;
  * @method $this copyable()
  * @method $this orderable()
  *
- * @method $this limit($limit = 100, $end = '...')
  * @method $this ascii()
  * @method $this camel()
  * @method $this finish($cap)
@@ -119,6 +118,11 @@ class Column
     protected $label;
 
     /**
+     * @var Fluent
+     */
+    protected $originalModel;
+
+    /**
      * Original value of column.
      *
      * @var mixed
@@ -163,6 +167,11 @@ class Column
      * @var Model
      */
     protected static $model;
+
+    /**
+     * @var Grid\Column\Condition
+     */
+    protected $conditions = [];
 
     /**
      * @param string $name
@@ -234,6 +243,37 @@ class Column
     {
         $this->titleHtmlAttributes['width'] = $width;
         return $this;
+    }
+
+    /**
+     *
+     * @example
+     *     $grid->config
+     *         ->if(function () {
+     *             return $this->config ? true : false;
+     *         })
+     *         ->display($view)
+     *         ->expand(...)
+     *         ->else()
+     *         ->showEmpty()
+     *
+     *    $grid->config
+     *         ->if(function () {
+     *             return $this->config ? true : false;
+     *         })
+     *         ->then(function (Column $column) {
+     *             $column ->display($view)->expand(...);
+     *         })
+     *         ->else(function (Column $column) {
+     *             $column->showEmpty();
+     *         })
+     *
+     * @param \Closure $condition
+     * @return Column\Condition|$this
+     */
+    public function if(\Closure $condition)
+    {
+        return $this->conditions[] = new Grid\Column\Condition($condition, $this);
     }
 
     /**
@@ -319,6 +359,26 @@ class Column
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param array|Model $model
+     */
+    public function setOriginalModel($model)
+    {
+        if (is_array($model)) {
+            $model = new Fluent($model);
+        }
+
+        $this->originalModel = $model;
+    }
+
+    /**
+     * @return Fluent|Model
+     */
+    public function getOriginalModel()
+    {
+        return $this->originalModel;
     }
 
     /**
@@ -435,20 +495,37 @@ class Column
      *
      * @return bool
      */
-    protected function hasDisplayCallbacks()
+    public function hasDisplayCallbacks()
     {
-        return !empty($this->displayCallbacks);
+        return ! empty($this->displayCallbacks);
+    }
+
+    /**
+     * @param array $callbacks
+     *
+     * @return void
+     */
+    public function setDisplayCallbacks(array $callbacks)
+    {
+        $this->displayCallbacks = $callbacks;
+    }
+
+    /**
+     * @return \Closure[]
+     */
+    public function getDisplayCallbacks()
+    {
+        return $this->displayCallbacks;
     }
 
     /**
      * Call all of the "display" callbacks column.
      *
      * @param mixed $value
-     * @param int   $key
      *
      * @return mixed
      */
-    protected function callDisplayCallbacks($value, $key)
+    protected function callDisplayCallbacks($value)
     {
         foreach ($this->displayCallbacks as $callback) {
             list($callback, $params) = $callback;
@@ -460,14 +537,15 @@ class Column
 
             $previous = $value;
 
-            $callback = $this->bindOriginalRowModel($callback, $key);
+            $callback = $this->bindOriginalRowModel($callback);
             $value = $callback($value, $this, ...$params);
 
-            if (($value instanceof static) &&
-                ($last = array_pop($this->displayCallbacks))
+            if (
+                $value instanceof static
+                && ($last = array_pop($this->displayCallbacks))
             ) {
                 list($last, $params) = $last;
-                $last = $this->bindOriginalRowModel($last, $key);
+                $last = $this->bindOriginalRowModel($last);
                 $value = call_user_func($last, $previous, $this, ...$params);
             }
         }
@@ -479,19 +557,12 @@ class Column
      * Set original grid data to column.
      *
      * @param Closure $callback
-     * @param int     $key
      *
      * @return Closure
      */
-    protected function bindOriginalRowModel(Closure $callback, $key)
+    protected function bindOriginalRowModel(Closure $callback)
     {
-        $rowModel = static::$originalGridModels[$key];
-
-        if (is_array($rowModel)) {
-            $rowModel = new Fluent($rowModel);
-        }
-
-        return $callback->bindTo($rowModel);
+        return $callback->bindTo($this->getOriginalModel());
     }
 
     /**
@@ -508,7 +579,7 @@ class Column
         $i = 0;
         foreach ($data as $key => &$row) {
             $i++;
-            if (!isset($row['#'])) {
+            if (! isset($row['#'])) {
                 $row['#'] = $i;
             }
 
@@ -516,15 +587,33 @@ class Column
 
             $this->value = $value = $this->htmlEntityEncode($value);
 
+            $this->setOriginalModel(static::$originalGridModels[$key]);
+
+            $this->processConditions();
+
             Arr::set($row, $this->name, $value);
 
             if ($this->hasDisplayCallbacks()) {
-                $value = $this->callDisplayCallbacks($this->original, $key);
+                $value = $this->callDisplayCallbacks($this->original);
                 Arr::set($row, $this->name, $value);
             }
         }
 
         $this->value = $value ?? null;
+    }
+
+    /**
+     * @return void
+     */
+    protected function processConditions()
+    {
+        foreach ($this->conditions as $condition) {
+            $condition->reset();
+        }
+
+        foreach ($this->conditions as $condition) {
+            $condition->process();
+        }
     }
 
     /**
