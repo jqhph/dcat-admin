@@ -754,7 +754,7 @@ class Field implements Renderable
      * @param \Closure $closure
      * @return $this
      */
-    public function prepareForSave(\Closure $closure)
+    public function saving(\Closure $closure)
     {
         $this->prepare = $closure;
 

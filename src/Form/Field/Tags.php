@@ -32,11 +32,6 @@ class Tags extends Field
     protected $key = null;
 
     /**
-     * @var \Closure
-     */
-    protected $saveAction = null;
-
-    /**
      * {@inheritdoc}
      */
     protected function formatFieldData($data)
@@ -103,29 +98,11 @@ class Tags extends Field
     }
 
     /**
-     * Set save Action.
-     *
-     * @param \Closure $saveAction
-     *
-     * @return $this
-     */
-    public function saving(\Closure $saveAction)
-    {
-        $this->saveAction = $saveAction;
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function prepare($value)
     {
         $value = array_filter($value, 'strlen');
-
-        if ($this->keyAsValue) {
-            return is_null($this->saveAction) ? $value : ($this->saveAction)($value);
-        }
 
         if (is_array($value) && !Arr::isAssoc($value)) {
             $value = implode(',', $value);
