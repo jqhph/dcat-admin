@@ -19,6 +19,8 @@ trait CreatesApplication
 
         $app->register('Dcat\Admin\AdminServiceProvider');
 
+        $app->make('config')->set('app.locale', 'en');
+
         return $app;
 
     }
