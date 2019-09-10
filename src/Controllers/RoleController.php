@@ -162,9 +162,7 @@ class RoleController extends Controller
         return Admin::form(new Role('permissions'), function (Form $form) {
             $form->display('id', 'ID');
 
-            $form->text('slug', trans('admin.slug'))->required()->prepareForSave(function ($value) {
-                return $value;
-            });
+            $form->text('slug', trans('admin.slug'))->required();
             $form->text('name', trans('admin.name'))->required();
 
             $form->tree('permissions')
