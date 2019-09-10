@@ -179,7 +179,7 @@ class Form implements Renderable
     /**
      * @var Closure
      */
-    protected $fieldBuilder;
+    protected $callback;
 
     /**
      * @var bool
@@ -268,7 +268,7 @@ class Form implements Renderable
     {
         $this->repository = Admin::createRepository($repository);
 
-        $this->fieldBuilder = $callback;
+        $this->callback = $callback;
 
         $this->builder = new Builder($this);
 
@@ -513,7 +513,7 @@ class Form implements Renderable
 
             $this->setModel(new Fluent($data));
 
-            $this->buildField();
+            $this->build();
 
             if (($response = $this->callDeleting()) instanceof Response) {
                 return $response;
@@ -553,7 +553,7 @@ class Form implements Renderable
     {
         $data = $data ?: request()->all();
 
-        $this->buildField();
+        $this->build();
 
         if (($response = $this->callSubmitted())) {
             return $response;
@@ -726,7 +726,7 @@ class Form implements Renderable
         $this->builder->setResourceId($id);
         $this->builder->setMode(Builder::MODE_EDIT);
 
-        $this->buildField();
+        $this->build();
 
         if (($response = $this->callSubmitted())) {
             return $response;
@@ -1146,7 +1146,7 @@ class Form implements Renderable
             $this->setModel(new Fluent($this->repository->edit($this)));
         }
 
-        $this->buildField();
+        $this->build();
 
         if ($isEditing) {
             $this->setFieldValue();
@@ -1158,9 +1158,9 @@ class Form implements Renderable
     /**
      * @return void
      */
-    protected function buildField()
+    protected function build()
     {
-        if ($callback = $this->fieldBuilder) {
+        if ($callback = $this->callback) {
             $callback($this);
         }
 
@@ -1590,11 +1590,18 @@ class Form implements Renderable
     }
 
     /**
-     * @return bool
+     * @param Closure $callback
+     * @return bool|void
      */
-    public static function inModal()
+    public function inModal(\Closure $callback = null)
     {
-        return ModalForm::is();
+        if (! $callback) {
+            return ModalForm::is();
+        }
+
+        if (ModalForm::is()) {
+            $callback($this);
+        }
     }
 
     /**

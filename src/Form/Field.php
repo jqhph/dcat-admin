@@ -906,7 +906,10 @@ class Field implements Renderable
      */
     public function hideInModal()
     {
-        if (Form::inModal()) {
+        if (
+            $this->form instanceof Form
+            && $this->form->inModal()
+        ) {
             $this->setDisplay(false);
         }
 
