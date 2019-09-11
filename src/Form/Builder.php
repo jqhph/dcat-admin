@@ -765,8 +765,6 @@ EOF;
             return $wrapper($view);
         }
 
-        $style = $this->isCreating() ? 'success' : 'default';
-
         return "<div class='card material'>{$view->render()}</div>";
     }
 

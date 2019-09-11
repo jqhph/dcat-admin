@@ -1,6 +1,6 @@
 @if($title || $tools)
 <div class="box-header with-border">
-    <h3 class="box-title text-80 bold" style="line-height:30px;">{!! $title !!}</h3>
+    <h3 class="box-title" style="line-height:30px;">{!! $title !!}</h3>
     <div class="pull-right">{!! $tools !!}</div>
 </div>
 @endif

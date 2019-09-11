@@ -1,6 +1,6 @@
 @if($showHeader)
 <div class="box-header with-border">
-    <h3 class="box-title text-80 bold" style="line-height:30px">{!! $form->title() !!}</h3>
+    <h3 class="box-title" style="line-height:30px">{!! $form->title() !!}</h3>
     <div class="pull-right">{!! $form->renderTools() !!}</div>
 </div>
 @endif
