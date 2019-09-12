@@ -1,10 +1,10 @@
 .skin-blue-light .main-header {
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
-    background-color: #1867c0
+    /*box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);*/
+    background-color: #297ec0
 }
 
 .skin-blue-light .main-header .navbar {
-    background-color: #1867c0
+    background-color: #297ec0
 }
 
 .skin-blue-light .main-header .navbar .nav > li > a {
@@ -30,7 +30,7 @@
 }
 
 /*.skin-blue-light .main-header .navbar .sidebar-toggle:hover {*/
-/*background-color: #1867c0*/
+/*background-color: #297ec0*/
 /*}*/
 
 @media (max-width: 767px) {
@@ -43,23 +43,23 @@
     }
 
     .skin-blue-light .main-header .navbar .dropdown-menu li a:hover {
-        background: #1867c0
+        background: #297ec0
     }
 }
 
 .skin-blue-light .main-header .logo {
-    background-color: #1867c0;
+    background-color: #297ec0;
     color: #fff;
     border-bottom: 0 solid transparent
 }
 
 .skin-blue-light .main-header .logo:hover {
-    /*background-color: #1867c0*/
+    /*background-color: #297ec0*/
     background:rgba(0, 0, 0, .1);
 }
 
 .skin-blue-light .main-header li.user-header {
-    background-color: #1867c0
+    background-color: #297ec0
 }
 
 .skin-blue-light .content-header {
@@ -68,7 +68,7 @@
 
 .skin-blue-light .left-side, .skin-blue-light .main-sidebar, .skin-blue-light .wrapper {
     background-color: #fff;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+    /*box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)*/
 }
 
 .skin-blue-light .content-wrapper, .skin-blue-light .main-footer {
@@ -100,7 +100,7 @@
 }
 
 .skin-blue-light .sidebar-menu > li.active {
-    border-left-color: #1867c0
+    border-left-color: #297ec0
 }
 
 .skin-blue-light .sidebar-menu > li.active > a {
@@ -184,7 +184,7 @@
 }
 
 .skin-blue-light.layout-top-nav .main-header > .logo {
-    background-color: #1867c0;
+    background-color: #297ec0;
     color: #fff;
     border-bottom: 0 solid transparent;
     font-family: Rancho, cursive;
@@ -192,7 +192,7 @@
 }
 
 .skin-blue-light.layout-top-nav .main-header > .logo:hover {
-    background-color: #1867c0
+    background-color: #297ec0
 }
 
 .skin-blue-light .navbar-search-from {
