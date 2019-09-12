@@ -182,8 +182,8 @@ trait HasEvents
     }
 
     /**
-     * @param array $listeners
-     * @return mixed|void
+     * @param string $name
+     * @return RedirectResponse|\Illuminate\Http\Response|void
      */
     protected function callListeners($name)
     {

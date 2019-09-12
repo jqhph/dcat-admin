@@ -38,11 +38,6 @@ class Admin
     const VERSION = '1.0.0';
 
     /**
-     * @var string
-     */
-    protected static $metaTitle;
-
-    /**
      * @var array
      */
     protected static $extensions = [];
@@ -51,6 +46,16 @@ class Admin
      * @var array
      */
     protected static $availableExtensions;
+
+    /**
+     * @var string
+     */
+    protected static $metaTitle;
+
+    /**
+     * @var string
+     */
+    protected static $favicon;
 
     /**
      * Returns the long version of dcat-admin.
@@ -95,6 +100,21 @@ class Admin
     public static function title()
     {
         return static::$metaTitle ?: config('admin.title');
+    }
+
+
+    /**
+     * @param null|string $favicon
+     *
+     * @return string|void
+     */
+    public static function favicon($favicon = null)
+    {
+        if (is_null($favicon)) {
+            return static::$favicon;
+        }
+
+        static::$favicon = $favicon;
     }
 
     /**
