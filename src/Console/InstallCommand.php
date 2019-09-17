@@ -37,6 +37,8 @@ class InstallCommand extends Command
         $this->initDatabase();
 
         $this->initAdminDirectory();
+
+        $this->info('Done.');
     }
 
     /**
@@ -65,7 +67,7 @@ class InstallCommand extends Command
         $this->directory = config('admin.directory');
 
         if (is_dir($this->directory)) {
-            $this->line("<error>{$this->directory} directory already exists !</error> ");
+            $this->warn("{$this->directory} directory already exists !");
 
             return;
         }

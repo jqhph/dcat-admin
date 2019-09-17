@@ -82,7 +82,7 @@
       <div class="row" style="margin-top:28px">
         <div class="col-xs-8">
           @if(config('admin.auth.remember'))
-            <div class="checkbox checkbox-primary checkbox-circle">
+            <div class="checkbox checkbox-primary">
               <input id="remember" name="remember" type="checkbox" value="1" {{ (old('remember')) ? 'checked' : '' }}>
               <label for="remember">
                 {{ trans('admin.remember_me') }}
