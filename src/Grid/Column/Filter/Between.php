@@ -146,7 +146,7 @@ JS;
         $this->addScript();
 
         $value = $this->getFilterValue(['start' => '', 'end' => '']);
-        $active = empty(array_filter($value)) ? '' : 'text-yellow';
+        $active = empty(array_filter($value)) ? '' : 'active';
 
         return <<<EOT
 &nbsp;<span class="dropdown" style="position:absolute">

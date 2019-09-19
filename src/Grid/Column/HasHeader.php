@@ -102,7 +102,7 @@ trait HasHeader
      */
     public function renderHeader()
     {
-        return collect($this->headers)->map(function ($item) {
+        $headers = collect($this->headers)->map(function ($item) {
             if ($item instanceof Renderable) {
                 return $item->render();
             }
@@ -113,5 +113,7 @@ trait HasHeader
 
             return (string) $item;
         })->implode('');
+
+        return "<span class='grid-column-header'>$headers</span>";
     }
 }

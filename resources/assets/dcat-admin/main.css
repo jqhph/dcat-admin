@@ -835,7 +835,7 @@ input.label {
     letter-spacing: .05em;
 }
 .table-header-default.table>thead>tr>th {
-    border-bottom: 2px solid #f4f4f4;
+    border-bottom: 1px solid #f4f4f4;
 }
 .table>thead:first-child>tr:first-child>th:first-child {
     padding-left: 18px;
@@ -2161,6 +2161,14 @@ div.layui-layer-btn{
 
 .quick-search:hover .quick-search-clear{
     display:inline!important;
+}
+
+.grid-column-header a {
+    color: rgba(0, 0, 0, 0.5)!important;
+    font-size: 13px;
+}
+.grid-column-header a:hover,.grid-column-header a.active {
+    color: var(--font)!important;
 }
 
 

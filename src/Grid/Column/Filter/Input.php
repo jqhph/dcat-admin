@@ -42,7 +42,7 @@ JS;
 
         $value = $this->getFilterValue();
 
-        $active = empty($value) ? '' : 'text-yellow';
+        $active = empty($value) ? '' : 'active';
 
         return <<<EOT
 &nbsp;<span class="dropdown" style="position: absolute">
