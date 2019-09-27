@@ -37,7 +37,7 @@ class Show implements Renderable
     /**
      * @var mixed
      */
-    protected $_id;
+    protected $__id;
 
     /**
      * @var Fluent
@@ -122,7 +122,7 @@ class Show implements Renderable
      */
     public function setId($id)
     {
-        $this->_id = $id;
+        $this->__id = $id;
     }
 
     /**
@@ -130,7 +130,7 @@ class Show implements Renderable
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->__id;
     }
 
     /**
