@@ -155,7 +155,7 @@ trait ModelTree
     public function allNodes()
     {
         $orderColumn = DB::getQueryGrammar()->wrap($this->orderColumn);
-        $byOrder = $orderColumn.' = 0,'.$orderColumn;
+        $byOrder = 'ROOT ASC, '.$orderColumn;
 
         $self = new static();
 
@@ -163,7 +163,11 @@ trait ModelTree
             $self = call_user_func($this->queryCallback, $self);
         }
 
-        return $self->orderByRaw($byOrder)->get()->toArray();
+        return $self->selectRaw('*, '.$orderColumn.' ROOT')
+            ->orderByRaw($byOrder)
+            ->get()
+            ->toArray();
+
     }
 
     /**

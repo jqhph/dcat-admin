@@ -123,6 +123,6 @@ class Header extends Widget
     {
         $headers = implode(' ', $this->html);
 
-        return "<th {$this->formatHtmlAttributes()}>{$this->label}{$headers}</th>";
+        return "<th {$this->formatHtmlAttributes()}>{$this->label}<span class='grid-column-header'>{$headers}</span></th>";
     }
 }

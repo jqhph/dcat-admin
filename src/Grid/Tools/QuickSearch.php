@@ -23,6 +23,11 @@ class QuickSearch extends AbstractTool
     protected $queryName = '__search__';
 
     /**
+     * @var int rem
+     */
+    protected $width = 24.25;
+
+    /**
      * @param string|null $name
      * @return $this
      */
@@ -39,6 +44,17 @@ class QuickSearch extends AbstractTool
     public function getQueryName()
     {
         return $this->queryName;
+    }
+
+    /**
+     * @param int $width
+     * @return $this
+     */
+    public function width(int $width)
+    {
+        $this->width = $width;
+
+        return $this;
     }
 
     /**
@@ -76,6 +92,7 @@ class QuickSearch extends AbstractTool
             'key' => $this->queryName,
             'value' => request($this->queryName),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
+            'width' => $this->width,
         ];
 
         return view($this->view, $vars);

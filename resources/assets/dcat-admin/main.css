@@ -835,7 +835,7 @@ input.label {
     letter-spacing: .05em;
 }
 .table-header-default.table>thead>tr>th {
-    border-bottom: 2px solid #f4f4f4;
+    border-bottom: 1px solid #f4f4f4;
 }
 .table>thead:first-child>tr:first-child>th:first-child {
     padding-left: 18px;
@@ -1218,12 +1218,10 @@ select.form-shadow {
 }
 
 .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
-    /*color: #2e609c;*/
-    /*color:var(--primary-dark);*/
-    /*background-color:rgba(64,153,222,.2);*/
-    background-color:var(--primary-80);
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .1), 1px 2px 2px 0 rgba(0, 0, 0, .1), 0 1px 3px 1px rgba(0, 0, 0, .1);
-
+    background-color:transparent;
+    color: #777;
+    font-weight: bold;
+    cursor: not-allowed;
 }
 /*.pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover{*/
 /*    background:transparent;*/
@@ -2126,7 +2124,7 @@ div.layui-layer-btn{
 }
 
 .material .box-header,.material .card-header {
-    padding: 11px;
+    padding: 12px;
 }
 .material .box-header .btn, .material .card-header .btn {
     /*text-transform: uppercase;*/
@@ -2161,6 +2159,14 @@ div.layui-layer-btn{
 
 .quick-search:hover .quick-search-clear{
     display:inline!important;
+}
+
+.grid-column-header a {
+    color: rgba(0, 0, 0, 0.5)!important;
+    font-size: 13px;
+}
+.grid-column-header a:hover,.grid-column-header a.active {
+    color: var(--font)!important;
 }
 
 

@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\DB;
  */
 class Menu extends Model
 {
-    use MenuCache, ModelTree {
-        ModelTree::boot as treeBoot;
-    }
+    use MenuCache,
+        ModelTree {
+            ModelTree::boot as treeBoot;
+        }
 
     /**
      * The attributes that are mass assignable.
@@ -92,7 +93,7 @@ class Menu extends Model
         $connection = config('admin.database.connection') ?: config('database.default');
         $orderColumn = DB::connection($connection)->getQueryGrammar()->wrap($this->orderColumn);
 
-        $byOrder = $orderColumn.' = 0,'.$orderColumn;
+        $byOrder = 'ROOT ASC, '.$orderColumn;
 
         $self = new static;
         if ($this->queryCallback instanceof \Closure) {
@@ -103,7 +104,11 @@ class Menu extends Model
             $self = $self->with('permissions');
         }
 
-        return $self->with('roles')->orderByRaw($byOrder)->get()->toArray();
+        return $self->with('roles')
+            ->selectRaw('*, '.$orderColumn.' ROOT')
+            ->orderByRaw($byOrder)
+            ->get()
+            ->toArray();
     }
 
     /**

@@ -1,5 +1,5 @@
 <form action="{!! $action !!}" class="input-no-border" pjax-container style="display:inline-block;margin:0 5px 13px 0;">
-    <div class="input-group quick-search" style="width:24.75rem;">
+    <div class="input-group quick-search" style="width:{{$width}}rem;">
 
         <input type="text"
                placeholder="{{ $placeholder }}"
@@ -8,7 +8,7 @@
                style="margin-left:-1px;padding:0 1.5rem 0 3.48rem;height:36px;line-height:36px;"
                value="{{ $value }}"
         >
-        <a onclick="$(this).submit()" style="overflow:hidden;position:absolute;top:8px;margin-left:-23.85rem;cursor:pointer;z-index:100">
+        <a onclick="$(this).submit()" style="overflow:hidden;position:absolute;top:8px;margin-left:-{{$width - 0.9}}rem;cursor:pointer;z-index:100">
             <svg xmlns="http://www.w3.org/2000/svg"
                  width="20"
                  height="20"
