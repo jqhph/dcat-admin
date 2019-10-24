@@ -30,6 +30,7 @@ class Grid
         Concerns\HasExporter,
         Concerns\HasMultipleHeader,
         Concerns\HasQuickSearch,
+        Concerns\HasSelector,
         Macroable {
             __call as macroCall;
         }
