@@ -54,28 +54,28 @@
 </style>
 
 <div class="grid-selector">
-    @foreach($values as $column => $value)
+    @foreach($self->getSelectors() as $column => $selector)
         <div class="wrap">
-            <div class="select-label">{{ $value['label'] }}</div>
+            <div class="select-label">{{ $selector['label'] }}</div>
             <div class="select-options">
                 <ul>
-                    @foreach($value['options'] as $value => $option)
+                    @foreach($selector['options'] as $value => $option)
                         @php
                             $active = in_array($value, \Illuminate\Support\Arr::get($selected, $column, []));
                         @endphp
                         <li>
-                            <a href="{{ $selector->url($column, $value, true) }}"
+                            <a href="{{ $self->url($column, $value, true) }}"
                                class="{{$active ? 'active' : ''}}">{{ $option }}</a>
-                            @if(!$active && $value['type'] == 'many')
+                            @if(!$active && $selector['type'] == 'many')
                                 &nbsp;
-                                <a href="{{ $selector->url($column, $value) }}" class="add"><i class="fa fa-plus-square-o"></i></a>
+                                <a href="{{ $self->url($column, $value) }}" class="add"><i class="fa fa-plus-square-o"></i></a>
                             @else
                                 <a style="visibility: hidden;"><i class="fa fa-plus-square-o"></i></a>
                             @endif
                         </li>
                     @endforeach
                     <li>
-                        <a href="{{ $selector->url($column) }}" class="clear"><i class="fa fa-trash"></i></a>
+                        <a href="{{ $self->url($column) }}" class="clear"><i class="fa fa-trash"></i></a>
                     </li>
                 </ul>
             </div>

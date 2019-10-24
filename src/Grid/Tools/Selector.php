@@ -179,8 +179,7 @@ class Selector
     public function render()
     {
         return view('admin::grid.selector', [
-            'selector' => $this,
-            'values'   => $this->selectors,
+            'self'     => $this,
             'selected' => $this->parseSelected(),
         ]);
     }
