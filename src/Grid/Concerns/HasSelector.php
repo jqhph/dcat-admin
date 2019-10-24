@@ -22,7 +22,7 @@ trait HasSelector
      */
     public function selector(\Closure $closure)
     {
-        $this->_selector = new Selector();
+        $this->_selector = new Selector($this);
 
         call_user_func($closure, $this->_selector);
 
@@ -44,7 +44,7 @@ trait HasSelector
             return $this;
         }
 
-        $active = Selector::parseSelected();
+        $active = $this->_selector->parseSelected();
 
         $this->_selector->getSelectors()->each(function ($selector, $column) use ($active) {
             if (!array_key_exists($column, $active)) {

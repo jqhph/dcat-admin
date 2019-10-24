@@ -2,12 +2,23 @@
 
 namespace Dcat\Admin\Grid\Tools;
 
-use Illuminate\Contracts\Support\Renderable;
+use Dcat\Admin\Grid;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
-class Selector implements Renderable
+class Selector
 {
+    /**
+     * @var Grid
+     */
+    protected $grid;
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
     /**
      * @var array|Collection
      */
@@ -16,14 +27,23 @@ class Selector implements Renderable
     /**
      * @var array
      */
-    protected static $selected;
+    protected $selected;
+
+    /**
+     * @var string
+     */
+    protected $queryKey;
 
     /**
      * Selector constructor.
      */
-    public function __construct()
+    public function __construct(Grid $grid)
     {
+        $this->grid      = $grid;
+        $this->request   = request();
         $this->selectors = new Collection();
+
+        $this->queryKey = $grid->getName().'_selector';
     }
 
     /**
@@ -34,7 +54,7 @@ class Selector implements Renderable
      *
      * @return $this
      */
-    public function select($column, $label, $options = [], $query = null)
+    public function select(string $column, $label, $options = [], ?\Closure $query = null)
     {
         return $this->addSelector($column, $label, $options, $query);
     }
@@ -47,7 +67,7 @@ class Selector implements Renderable
      *
      * @return $this
      */
-    public function selectOne($column, $label, $options = [], $query = null)
+    public function selectOne(string $column, $label, $options = [], ?\Closure $query = null)
     {
         return $this->addSelector($column, $label, $options, $query, 'one');
     }
@@ -61,7 +81,7 @@ class Selector implements Renderable
      *
      * @return $this
      */
-    protected function addSelector($column, $label, $options = [], $query = null, $type = 'many')
+    protected function addSelector(string $column, $label, $options = [], ?\Closure $query = null, $type = 'many')
     {
         if (is_array($label)) {
             if ($options instanceof \Closure) {
@@ -92,13 +112,13 @@ class Selector implements Renderable
     /**
      * @return array
      */
-    public static function parseSelected()
+    public function parseSelected()
     {
-        if (! is_null(static::$selected)) {
-            return static::$selected;
+        if (! is_null($this->selected)) {
+            return $this->selected;
         }
 
-        $selected = request('_selector', []);
+        $selected = $this->request->input($this->queryKey, []);
         if (! is_array($selected)) {
             return [];
         }
@@ -111,7 +131,7 @@ class Selector implements Renderable
             $value = explode(',', $value);
         }
 
-        return static::$selected = $selected;
+        return $this->selected = $selected;
     }
 
     /**
@@ -121,18 +141,18 @@ class Selector implements Renderable
      *
      * @return string
      */
-    public static function url($column, $value = null, $add = false)
+    public function url($column, $value = null, $add = false)
     {
-        $query = request()->query();
+        $query = $this->request->query();
 
-        $selected = static::parseSelected();
+        $selected = $this->parseSelected();
 
         $options = Arr::get($selected, $column, []);
 
         if (is_null($value)) {
-            Arr::forget($query, "_selector.{$column}");
+            Arr::forget($query, "{$this->queryKey}.{$column}");
 
-            return request()->fullUrlWithQuery($query);
+            return $this->request->fullUrlWithQuery($query);
         }
 
         if (in_array($value, $options)) {
@@ -145,12 +165,12 @@ class Selector implements Renderable
         }
 
         if (! empty($options)) {
-            Arr::set($query, "_selector.{$column}", implode(',', $options));
+            Arr::set($query, "{$this->queryKey}.{$column}", implode(',', $options));
         } else {
-            Arr::forget($query, "_selector.{$column}");
+            Arr::forget($query, "{$this->queryKey}.{$column}");
         }
 
-        return request()->fullUrlWithQuery($query);
+        return $this->request->fullUrlWithQuery($query);
     }
 
     /**
@@ -159,8 +179,9 @@ class Selector implements Renderable
     public function render()
     {
         return view('admin::grid.selector', [
-            'selectors' => $this->selectors,
-            'selected'  => static::parseSelected(),
+            'selector' => $this,
+            'values'   => $this->selectors,
+            'selected' => $this->parseSelected(),
         ]);
     }
 
