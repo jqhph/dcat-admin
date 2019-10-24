@@ -122,7 +122,7 @@ class Menu
             return trim($this->getPath($item['uri']), '/') == $path;
         }
 
-        foreach($item['children'] as $v) {
+        foreach ($item['children'] as $v) {
             if ($path == trim($this->getPath($v['uri']), '/')) {
                 return true;
             }

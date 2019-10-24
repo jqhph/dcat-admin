@@ -50,6 +50,7 @@ trait HasFilter
 
         $this->applyQuickSearch();
         $this->applyColumnFilter();
+        $this->applySelectorQuery();
 
         return $this->filter->execute($toArray);
     }
