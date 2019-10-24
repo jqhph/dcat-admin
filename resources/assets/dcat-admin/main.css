@@ -2125,6 +2125,7 @@ div.layui-layer-btn{
 
 .material .box-header,.material .card-header {
     padding: 12px;
+    border-top: 2px solid #fff
 }
 .material .box-header .btn, .material .card-header .btn {
     /*text-transform: uppercase;*/
