@@ -72,6 +72,14 @@ class QuickSearch extends AbstractTool
     }
 
     /**
+     * @return string
+     */
+    public function getInput()
+    {
+        return request($this->queryName);
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
@@ -88,11 +96,11 @@ class QuickSearch extends AbstractTool
         ]);
 
         $vars = [
-            'action' => $request->url() . '?' . http_build_query($query),
-            'key' => $this->queryName,
-            'value' => request($this->queryName),
+            'action'      => $request->url().'?'.http_build_query($query),
+            'key'         => $this->queryName,
+            'value'       => $this->getInput(),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
-            'width' => $this->width,
+            'width'       => $this->width,
         ];
 
         return view($this->view, $vars);

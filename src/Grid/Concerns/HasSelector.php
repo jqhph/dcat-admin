@@ -67,6 +67,14 @@ trait HasSelector
     }
 
     /**
+     * @return Selector
+     */
+    public function getSelector()
+    {
+        return $this->_selector;
+    }
+
+    /**
      * Render grid selector.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
