@@ -456,7 +456,7 @@ HTML
 
         if ($this->rowsCallback) {
             foreach ($this->rowsCallback as $value) {
-                $this->rows->map($value);
+                $value($this->rows);
             }
         }
     }

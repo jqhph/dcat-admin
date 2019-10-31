@@ -4,12 +4,13 @@ namespace Dcat\Admin\Grid;
 
 use Closure;
 use Dcat\Admin\Grid;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 
-class Row
+class Row implements Arrayable
 {
     /**
      * @var Grid
@@ -142,6 +143,18 @@ class Row
     }
 
     /**
+     * Setter.
+     *
+     * @param mixed $attr
+     * @param mixed $value
+     * @return void
+     */
+    public function __set($attr, $value)
+    {
+        Arr::set($this->data, $attr, $value);
+    }
+
+    /**
      * Get or set value of column in this row.
      *
      * @param string $name
@@ -164,6 +177,18 @@ class Row
         Arr::set($this->data, $name, $value);
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        if ($this->data instanceof Arrayable) {
+            return $this->data->toArray();
+        }
+
+        return (array) $this->data;
     }
 
     /**
