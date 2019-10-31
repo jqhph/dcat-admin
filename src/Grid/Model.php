@@ -380,7 +380,7 @@ class Model
      *
      * @return Collection|LengthAwarePaginator
      */
-    protected function get()
+    public function get()
     {
         if (
             $this->model instanceof LengthAwarePaginator
