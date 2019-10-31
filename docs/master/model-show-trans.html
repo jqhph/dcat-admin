@@ -1,0 +1,443 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>数据详情字段翻译 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
+    <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="canonical" href="../../docs-master-model-show-trans.html" />
+    
+     <link rel="stylesheet" href="../../assets/css/laravel.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
+
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i">
+     <link rel="stylesheet" href="../../assets/font-awesome/css/font-awesome.min.css">
+
+    <link rel="shortcut icon" href="../../assets/img/favicon.ico">
+
+             <link rel="stylesheet" href="../../assets/gitalk/gitalk.css">
+        <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src="https://hm.baidu.com/hm.js?a7ae1f00b3f1bf2992dc2885b8f5f413";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body class="docs language-default">
+    
+        
+        
+        
+    
+    <span class="overlay"></span>
+
+    <nav class="main">
+        <a href="../../index.html" class="brand nav-block" >
+
+            <span>Dcat Admin</span>
+        </a>
+
+        <ul class="main-nav">
+            <li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+        </ul>
+
+        <div class="search nav-block invisible">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#A1A1A1" d="M5.8 11.7c-1.6 0-3-.6-4.1-1.7S0 7.4 0 5.8s.6-3 1.7-4.1C2.8.6 4.3 0 5.8 0s3 .6 4.1 1.7c2.3 2.3 2.3 6 0 8.3-1 1.1-2.5 1.7-4.1 1.7zM5.8 1c-1.3 0-2.5.5-3.4 1.4C1.5 3.3 1 4.5 1 5.8s.5 2.5 1.4 3.4c.9.9 2.1 1.4 3.4 1.4s2.5-.5 3.4-1.4c1.9-1.9 1.9-5 0-6.9C8.4 1.5 7.1 1 5.8 1z"/><path fill="#A1A1A1" d="M15.5 16c-.1 0-.3 0-.3-.1L9.3 10c-.2-.2-.2-.5 0-.7s.5-.2.7 0l5.9 5.9c.2.2.2.5 0 .7-.1.1-.3.1-.4.1z"/></svg>
+            <input placeholder="search" type="text" id="search-input" aria-label="search"/>
+        </div>
+
+                    <div class="switcher">
+	<div class="dropdown">
+		<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			Master
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-show-trans.html">Master</a>
+				</li>
+					</ul>
+	</div>
+</div>
+        
+        <div class="responsive-sidebar-nav">
+            <a href="#" class="toggle-slide menu-link btn">&#9776;</a>
+        </div>
+    </nav>
+
+    <nav id="slide-menu" class="slide-menu" role="navigation">
+
+	<div class="brand">
+		<a href="../../index.html">
+			Dcat Admin
+		</a>
+	</div>
+
+	<ul class="slide-main-nav">
+		<li><a href="../../index.html">Home</a></li>
+
+		<li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+	</ul>
+
+	<div class="slide-docs-nav">
+		<h2>Documentation</h2>
+
+		<ul class="slide-docs-version">
+			<li>
+				<h2>Version</h2>
+
+				<ul>
+					<li>
+													<div class="switcher">
+	<div class="dropdown">
+		<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			Master
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-show-trans.html">Master</a>
+				</li>
+					</ul>
+	</div>
+</div>
+											</li>
+				</ul>
+			</li>
+		</ul>
+
+		<ul>
+<li>
+<h2>入门</h2>
+<ul>
+<li><a href="../../docs/master/installation.html">安装</a></li>
+<li><a href="../../docs/master/notice.html">开发前必读</a></li>
+<li><a href="../../docs/master/quick-start.html">快速开始</a></li>
+<li><a href="../../docs/master/content-layout.html">页面内容和布局</a></li>
+<li><a href="../../docs/master/new.html">与Laravel Admin的异同</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表格</h2>
+<ul>
+<li><a href="../../docs/master/model-grid.html">基本使用</a></li>
+<li><a href="../../docs/master/model-grid-column.html">列的使用</a></li>
+<li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
+<li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
+<li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
+<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-data.html">表格数据源</a></li>
+<li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
+<li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
+<li><a href="../../docs/master/model-grid-init.html">表格初始化</a></li>
+<li><a href="../../docs/master/model-grid-trans.html">表格字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表单</h2>
+<ul>
+<li><a href="../../docs/master/model-form.html">基本使用</a></li>
+<li><a href="../../docs/master/model-form-upload.html">图片/文件上传</a></li>
+<li><a href="../../docs/master/model-form-fields.html">Form组件使用</a></li>
+<li><a href="../../docs/master/model-form-field-management.html">Form组件管理</a></li>
+<li><a href="../../docs/master/model-form-data.html">表单数据源</a></li>
+<li><a href="../../docs/master/model-form-modal.html">表单弹窗</a></li>
+<li><a href="../../docs/master/model-form-validation.html">表单验证</a></li>
+<li><a href="../../docs/master/model-form-callback.html">表单回调</a></li>
+<li><a href="../../docs/master/model-form-init.html">表单初始化</a></li>
+<li><a href="../../docs/master/model-form-trans.html">表单字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据详情</h2>
+<ul>
+<li><a href="../../docs/master/model-show.html">基本使用</a></li>
+<li><a href="../../docs/master/model-show-field.html">字段显示</a></li>
+<li><a href="../../docs/master/model-show-relation.html">关联关系</a></li>
+<li><a href="../../docs/master/model-show-extend.html">显示扩展</a>      </li>
+<li><a href="../../docs/master/model-show-init.html">初始化</a></li>
+<li><a href="../../docs/master/model-show-trans.html">字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/model-tree.html">模型树</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/trans.html">多语言</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/extend.html">开发扩展</a></h2>
+</li>
+<li>
+<h2>页面组件</h2>
+<ul>
+<li><a href="../../docs/master/widgets-charts.html">图表</a></li>
+<li><a href="../../docs/master/widgets-data-card.html">数据卡片</a></li>
+<li><a href="../../docs/master/widgets-form.html">表单</a></li>
+<li><a href="../../docs/master/widgets-dialog-form.html">表单弹窗</a></li>
+<li><a href="../../docs/master/widgets-navbar.html">导航菜单</a></li>
+<li><a href="../../docs/master/widgets-dropdown.html">下拉菜单</a></li>
+<li><a href="../../docs/master/widgets-tab.html">选项卡</a></li>
+<li><a href="../../docs/master/widgets-alert.html">告警框</a></li>
+<li><a href="../../docs/master/widgets-tooltip.html">提示条</a></li>
+<li><a href="../../docs/master/widgets-checkbox.html">单、复选框</a></li>
+<li><a href="../../docs/master/widgets-markdown.html">Markdown</a></li>
+<li><a href="../../docs/master/widgets-box.html">卡片</a></li>
+<li><a href="../../docs/master/widgets-accordion.html">折叠卡</a></li>
+<li><a href="../../docs/master/widgets-table.html">表格</a></li>
+<li><a href="../../docs/master/widgets-js.html">JS组件</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/section.html">区块（section）</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/permission.html">权限控制</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/menu.html">菜单</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/function.html">帮助函数</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/helpers.html">开发工具</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-authentication.html">自定义登陆认证</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-navbar.html">自定义头部导航</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/qa.html">常见问题</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/change-log.html">Change log</a></h2>
+</li>
+</ul>
+	</div>
+
+</nav>
+
+<div class="docs-wrapper container">
+
+	<section class="sidebar">
+		
+		<small><a href="#" id="doc-expand" style="font-size: 11px; color: #B8B8B8;">EXPAND ALL</a></small>
+		<ul>
+<li>
+<h2>入门</h2>
+<ul>
+<li><a href="../../docs/master/installation.html">安装</a></li>
+<li><a href="../../docs/master/notice.html">开发前必读</a></li>
+<li><a href="../../docs/master/quick-start.html">快速开始</a></li>
+<li><a href="../../docs/master/content-layout.html">页面内容和布局</a></li>
+<li><a href="../../docs/master/new.html">与Laravel Admin的异同</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表格</h2>
+<ul>
+<li><a href="../../docs/master/model-grid.html">基本使用</a></li>
+<li><a href="../../docs/master/model-grid-column.html">列的使用</a></li>
+<li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
+<li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
+<li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
+<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-data.html">表格数据源</a></li>
+<li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
+<li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
+<li><a href="../../docs/master/model-grid-init.html">表格初始化</a></li>
+<li><a href="../../docs/master/model-grid-trans.html">表格字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表单</h2>
+<ul>
+<li><a href="../../docs/master/model-form.html">基本使用</a></li>
+<li><a href="../../docs/master/model-form-upload.html">图片/文件上传</a></li>
+<li><a href="../../docs/master/model-form-fields.html">Form组件使用</a></li>
+<li><a href="../../docs/master/model-form-field-management.html">Form组件管理</a></li>
+<li><a href="../../docs/master/model-form-data.html">表单数据源</a></li>
+<li><a href="../../docs/master/model-form-modal.html">表单弹窗</a></li>
+<li><a href="../../docs/master/model-form-validation.html">表单验证</a></li>
+<li><a href="../../docs/master/model-form-callback.html">表单回调</a></li>
+<li><a href="../../docs/master/model-form-init.html">表单初始化</a></li>
+<li><a href="../../docs/master/model-form-trans.html">表单字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据详情</h2>
+<ul>
+<li><a href="../../docs/master/model-show.html">基本使用</a></li>
+<li><a href="../../docs/master/model-show-field.html">字段显示</a></li>
+<li><a href="../../docs/master/model-show-relation.html">关联关系</a></li>
+<li><a href="../../docs/master/model-show-extend.html">显示扩展</a>      </li>
+<li><a href="../../docs/master/model-show-init.html">初始化</a></li>
+<li><a href="../../docs/master/model-show-trans.html">字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/model-tree.html">模型树</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/trans.html">多语言</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/extend.html">开发扩展</a></h2>
+</li>
+<li>
+<h2>页面组件</h2>
+<ul>
+<li><a href="../../docs/master/widgets-charts.html">图表</a></li>
+<li><a href="../../docs/master/widgets-data-card.html">数据卡片</a></li>
+<li><a href="../../docs/master/widgets-form.html">表单</a></li>
+<li><a href="../../docs/master/widgets-dialog-form.html">表单弹窗</a></li>
+<li><a href="../../docs/master/widgets-navbar.html">导航菜单</a></li>
+<li><a href="../../docs/master/widgets-dropdown.html">下拉菜单</a></li>
+<li><a href="../../docs/master/widgets-tab.html">选项卡</a></li>
+<li><a href="../../docs/master/widgets-alert.html">告警框</a></li>
+<li><a href="../../docs/master/widgets-tooltip.html">提示条</a></li>
+<li><a href="../../docs/master/widgets-checkbox.html">单、复选框</a></li>
+<li><a href="../../docs/master/widgets-markdown.html">Markdown</a></li>
+<li><a href="../../docs/master/widgets-box.html">卡片</a></li>
+<li><a href="../../docs/master/widgets-accordion.html">折叠卡</a></li>
+<li><a href="../../docs/master/widgets-table.html">表格</a></li>
+<li><a href="../../docs/master/widgets-js.html">JS组件</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/section.html">区块（section）</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/permission.html">权限控制</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/menu.html">菜单</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/function.html">帮助函数</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/helpers.html">开发工具</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-authentication.html">自定义登陆认证</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-navbar.html">自定义头部导航</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/qa.html">常见问题</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/change-log.html">Change log</a></h2>
+</li>
+</ul>
+	</section>
+
+	<article>
+		<h1>数据详情字段翻译</h1>
+<p>与数据表格字段翻译的使用基本一致，可参考<a href="../../docs/master/model-grid-trans.html">数据表格字段翻译</a>。</p>
+
+		<div id="comment-container" style="margin-top: 90px"></div>
+	</article>
+
+</div>
+
+    <footer class="main">
+        <ul>
+            <li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+        </ul>
+        <p>Built by <b>jqh</b>. Copyright &copy; 2019</p>
+        <p class="less-significant">
+            <a href="http://jackmcdade.com">
+                Designed by<br>
+                <svg xmlns="http://www.w3.org/2000/svg" width="128.2" height="28" viewBox="0 0 128.2 28"><g fill="#c3c3c3"><path d="M14.2.4v1.4l-1.4-.3.3 4.5c.1 1.5 0 3-.1 4.5 0 .4-.1.8-.1 1.2-.1.4-.1.8-.3 1.2-.1.4-.3.7-.5 1.1-.2.3-.5.6-.9.9-.4.2-.9.4-1.5.6-.6.2-1.1.3-1.6.3-.6 0-1.2-.1-1.6-.3-.5-.2-.9-.6-1.1-1-.3-.5-.5-1-.6-1.6-.1-.6-.1-1.3 0-2.1 0-.2.1-.5.2-.7-.1-.2 0-.4.1-.6l.3-.6 1.1.4c.2 0 .5.1.8.2.3.1.5.1.6.2 0 .2 0 .4-.1.5-.1.2-.1.3-.2.4-.1.1-.2.3-.2.4-.1.2-.1.3-.1.5L6 10.8c-.1.3-.2.7-.2 1.1 0 .4.1.8.2 1.2.2.4.4.7.6 1 .3.3.6.4 1 .3.6 0 1.1-.3 1.4-.6.3-.4.5-.9.7-1.7.1-.7.2-1.6.2-2.8V5.4c0-.6-.1-1.3-.1-2-.1-.6-.2-1.3-.3-2H5.7c-.7 0-1.5 0-2.2.2-.3.1-.6.2-1 .4-.3.1-.6.4-.9.6-.2.3-.4.6-.5 1-.1.3-.1.7 0 1 .1.5.3.8.4.9v-.1c0-.4.1-.8.4-1 .3-.2.6-.3.9-.3.3 0 .6.1.9.3.3.2.4.6.4 1s-.1.8-.4 1c-.3.2-.6.3-1 .3-.8 0-1.4-.2-1.8-.7-.4-.4-.7-.9-.8-1.5C0 4 0 3.4.2 2.7c.2-.6.5-1.1 1-1.5.4-.3.8-.5 1.2-.7.4-.1.9-.2 1.4-.3.5-.1.9-.1 1.4-.1h2.9c.6 0 1.1 0 1.6.1.5 0 1 .1 1.5.1s1 .1 1.5.1c.4.1.9.1 1.5 0zM25.2 14.3c0 .2.1.4.1.6 0 .2.1.4.1.7-1-.1-2-.2-3-.1-1.1.1-2.1.2-3 .4 0-.2-.1-.4-.1-.5 0-.2-.1-.4-.1-.5.2 0 .5-.1.7-.1.2 0 .4-.1.6-.1-.1-1.5-.3-3.1-.5-4.6-.5.1-.9.1-1.4.2-.5.1-.9.1-1.4.2-.2.7-.3 1.3-.5 2s-.3 1.3-.5 2h.6c.1 0 .3 0 .4.1v.9c0 .1 0 .2-.1.3H14v-1.2h1c.2-.5.3-1 .4-1.5.1-.5.3-1 .4-1.5.2-.6.3-1.2.5-1.7.2-.6.3-1.2.5-1.7.2-1.1.4-2.1.6-3.2.2-1.1.3-2.1.4-3.2h-1.4c0-.2.1-.4.1-.6 0-.2 0-.4.1-.6h5.8l.2 1.2h-1c.3 2.1.7 4.3 1 6.5.3 2.2.7 4.4 1 6.5h1.6zM17.5 9c.4-.1.7-.1 1.1-.2.4-.1.8-.1 1.2-.2-.2-1-.3-2-.5-2.9-.2-1-.4-1.9-.6-2.9-.2 1-.4 2.1-.5 3.1-.3 1-.5 2.1-.7 3.1zM36.7 10.4h-.6c0 .6 0 1.2-.2 1.9-.2.6-.5 1.2-1 1.6-.5.5-1 .9-1.6 1.1-.6.3-1.3.4-2 .5-.6.1-1.1.1-1.8 0-.6-.1-1.1-.4-1.6-.7-.2-.2-.5-.4-.8-.7-.3-.3-.5-.5-.6-.8-.3-.5-.5-1-.6-1.5-.2-.5-.3-.9-.4-1.4-.1-.5-.2-1-.2-1.5s0-1 .1-1.6c.2-1 .4-2 .8-2.9.4-.9.8-1.7 1.4-2.3.5-.7 1.2-1.2 1.9-1.6.7-.3 1.4-.5 2.2-.5.3 0 .5 0 .8.1.3.1.5.2.7.4.3.3.7.7 1 1.2.3.5.6 1.2.7 1.9h.6v.6l-2.5.4c-.3.1-.5.1-.6 0-.1 0-.2-.1-.2-.2-.1-.1-.1-.2 0-.3h.4c.2-.2.3-.3.3-.6v-.7c0-.5-.2-.9-.5-1.3l-.4-.4c-.2-.1-.4-.1-.6 0-.2 0-.4.2-.6.4-.2.2-.4.5-.5.9-.3.2-.4.6-.5.9-.1.3-.2.5-.2.7-.6 2.6-.7 5.3-.2 8 .1.3.2.7.3 1s.3.6.5.9c.2.3.5.5.8.7.3.2.6.2 1 .1.6-.1 1-.4 1.4-1 .3-.5.6-1.1.7-1.8.1-.3.1-.6.1-.9v-.5c-.2 0-.4 0-.6-.1-.1-.1-.2-.2-.2-.3 0-.1 0-.2.1-.3h3.4c0 .1 0 .2-.1.3-.1.1-.1.2-.1.3z"/><path d="M48 14.2c.1.2.3.3.5.4.2.1.5.1.7 0 .1.1.1.2.1.4s-.1.3-.2.4c-.1.1-.2.2-.4.2h-1.4c-.3 0-.7 0-1-.1-.3-.1-.7-.2-1-.4-.3-.2-.5-.4-.7-.7-.2-.3-.3-.6-.3-1V9.9v-.4c0-.2-.1-.3-.2-.5s-.3-.3-.4-.4c-.2-.1-.4-.1-.7-.1-.1 0-.2 0-.5.1-.2.3-.3.5-.5.8-.2.3-.3.5-.5.7 0 .8 0 1.5-.1 2.2 0 .7-.1 1.5-.1 2.1h1.4v1.1c-.5 0-.9.1-1.3 0-.4 0-.8 0-1.2-.1-.4 0-.8-.1-1.2-.1H37.3c-.1 0-.2 0-.3-.1-.1 0-.1-.1-.1-.2s-.1-.3-.1-.4v-.4c0-.1.1-.2.1-.2.2.1.4.2.6.1s.4-.2.5-.4c0-.1.1-.3.1-.7 0-.4 0-.9.1-1.6 0-.6.1-1.3.1-2.1s0-1.6.1-2.4c0-.8 0-1.5.1-2.3 0-.7.1-1.3.1-1.8v-.7c0-.2-.1-.4-.2-.6-.1-.2-.3-.3-.5-.4-.2-.1-.4 0-.6.1 0-.2-.1-.5-.1-.7 0-.2 0-.4-.1-.7 1 0 2 .1 3 .1.9 0 1.9.1 3 .1v.3c0 .1 0 .3.1.4v.4c0 .1 0 .2-.1.2-.1.1-.2.1-.3.1-.1 0-.2 0-.4-.1-.1-.1-.3-.1-.4-.2-.1-.1-.3-.1-.3-.1-.1.9-.1 1.9-.1 2.9s-.1 2-.1 3.1c.7-1.2 1.4-2.5 2-3.8.2-.3.3-.6.4-.9.1-.3.3-.6.5-.9.2-.3.4-.5.7-.7.3.3.6.2.9.1.3-.1.7-.1 1 0 .3.1.6.2.9.5.2.3.4.6.4 1s.1.8 0 1.1v.5c0 .2-.1.3-.2.4-.1.2-.2.3-.4.4-.2.1-.4.1-.5.2-.1 0-.3.1-.4.1h-.4c-.2-.3-.4-.4-.4-.6-.1-.2-.1-.4 0-.5.1-.2.2-.3.3-.3.1 0 .2-.1.4-.1.2-.1.3-.2.3-.3.1-.2.1-.3.1-.5 0-.3-.1-.5-.1-.7-.1-.2-.2-.3-.3-.3-.2 0-.3 0-.5.1s-.3.2-.5.4-.3.4-.4.6c-.1.2-.3.5-.4.7-.1.3-.3.6-.4.8-.2.2-.3.5-.4.8-.4.9-.8 1.7-1.2 2.5.3 0 .6-.1 1 0h1c.3 0 .7.1 1 .2.3.1.6.3.8.6.3.3.4.6.5 1 .1.4.1.8.2 1.1l.2 2.1c0 .2.1.5.1.7 0 .4.1.7.3.9zM71.7 13.9c.2.2.4.4.7.5.3.1.5 0 .8-.1 0 .2.1.3.1.6.1.2.1.4.1.6h-1.1s-.8 0-1.3.1h-2.3v-.2c0-.1.1-.2.2-.3.1-.1.2-.2.4-.3.2-.1.3-.1.6-.1.1 0 .1-.2.1-.7v-1.6c0-.6 0-1.2-.1-1.9s0-1.1 0-1.5V6.4c0-.7.1-1.5.1-2.2-.6 1.3-1.1 2.7-1.6 4.1-.5 1.5-1 3-1.5 4.4 0 0 .1.1.1.2-.2 0-.4 0-.7.1-.3.1-.5.1-.7.1-.5-1.9-1.1-3.7-1.6-5.5-.5-1.8-1.1-3.6-1.6-5.5-.1 1-.1 2-.1 3 0 1.1-.1 2.1-.1 3.2s0 2.1-.1 3.2c0 1-.1 2-.1 3h1.4v1.1c-.5 0-.9.1-1.3 0-.4 0-.8 0-1.2-.1-.4 0-.8-.1-1.2-.1H58c-.1 0-.2 0-.3-.1-.1 0-.1-.1-.1-.2s-.1-.3-.1-.4v-.4c0-.1.1-.2.1-.2.2.1.4.2.6.1s.4-.2.5-.4c0-.1.1-.3.1-.7 0-.4 0-.9.1-1.6 0-.6.1-1.3.1-2.1V7.2c0-.8 0-1.5.1-2.3 0-.7.1-1.3.1-1.8v-.7c0-.2-.1-.4-.2-.6-.1-.2-.3-.3-.5-.4-.2-.1-.4 0-.6.1 0-.2-.1-.5-.1-.7 0-.2 0-.4-.1-.7 1 0 2 .1 3 .1.9 0 1.9.1 3 .1 0 .3-.1.5-.4.7.3 1.3.6 2.6 1 3.9l1.2 3.9c.2-.6.4-1.3.6-1.9l.6-1.8c.3-.5.5-1.1.8-1.7.2-.6.4-1.3.6-2-.1 0-.3 0-.4-.1-.1 0-.2 0-.4-.1-.1 0-.1-.1-.1-.3 0-.1.1-.2.1-.3.1-.1.2-.1.3-.1h4.5c.1 0 .3.1.4.2.1.1.2.2.2.4s0 .3-.2.3c-.1-.1-.2-.1-.3-.1-.1 0-.2.1-.3.1-.2.4-.3.8-.4 1.3-.1.5-.1.9-.1 1.4-.2 2.8-.2 5.6 0 8.4 0 .3 0 .5.1.7-.1.3 0 .5.2.7zM81.7 12h-.4c0 .4 0 .9-.2 1.3-.1.4-.4.8-.7 1.1-.3.3-.7.6-1.1.8-.4.2-.9.3-1.3.4-.4.1-.8 0-1.2 0-.4-.1-.8-.2-1.1-.5-.2-.1-.3-.3-.5-.5s-.3-.4-.4-.6c-.2-.4-.3-.7-.4-1-.1-.3-.2-.6-.3-1-.1-.3-.1-.6-.1-1 0-.3 0-.7.1-1.1.1-.7.3-1.4.5-2 .3-.6.6-1.1.9-1.6s.8-.8 1.3-1.1c.5-.3 1-.4 1.5-.4.2 0 .4 0 .6.1.2.1.3.1.5.3.2.2.4.4.6.8.2.4.4.8.5 1.3h.4v.4l-1.7.3c-.2.1-.3.1-.4 0-.1 0-.1-.1-.2-.2v-.2h.4c.1-.1.2-.2.2-.4v-.5c0-.3-.1-.6-.3-.9l-.3-.3c-.1-.1-.2-.1-.4 0-.1 0-.3.1-.4.3-.1.2-.3.4-.4.6l-.3.6c-.1.2-.1.4-.1.5-.4 1.8-.5 3.6-.1 5.5.1.2.1.4.2.7l.3.6c.1.2.3.3.6.5.2.1.4.1.7.1.4-.1.7-.3 1-.7.2-.4.4-.8.5-1.2 0-.2.1-.4.1-.6v-.3h-.4c-.1 0-.1-.1-.1-.2s0-.2.1-.2h2.4v.2c-.5-.1-.5 0-.6.1z"/><path d="M83.5 14.2c.2-4.3.3-8.5.2-12.8h-1.8V.9.4c.7 0 1.3 0 2-.1.7 0 1.3 0 2-.1.8-.2 1.6-.2 2.4-.1.8.1 1.6.3 2.4.5.7.3 1.4.7 1.9 1.2s.9 1.1 1.1 1.8c.3 1.3.4 2.5.3 3.8 0 1.2-.2 2.4-.3 3.6 0 .4-.1.8-.2 1.2-.1.4-.3.8-.5 1.1-.3.5-.8 1-1.3 1.3-.5.3-1.1.5-1.7.6-.5.1-.9.2-1.4.1-.5 0-.9 0-1.4-.1h-4.9c-.2-.4-.1-.8.2-1.1.2-.2.3-.2.5-.3.2.3.4.3.5.4zm5.9-12.3c-.4-.3-.8-.5-1.3-.6-.5-.1-1-.1-1.5-.1-.3 4.5-.2 9.1.4 13.6.2 0 .4 0 .5-.1.2 0 .4-.1.6-.1.3-.1.6-.2.9-.4.3-.2.6-.4.8-.7.2-.3.4-.6.5-1s.2-.7.2-1.1c.4-2.1.4-4.2.2-6.3-.1-.6-.2-1.2-.4-1.9 0-.4-.4-.9-.9-1.3zM102.4 9.7c-.6-.1-1.3-.1-2 0s-1.4.4-2 .8l-.2-1.4.9-.1c0-.4-.1-.7-.1-1 0-.2-.1-.5-.1-.9-.3 0-.6.1-.9.1-.3 0-.6.1-1 .1-.2.7-.3 1.3-.4 1.8-.1.5-.2 1.1-.4 1.6l.2-.1.7.6c-.4.2-.8.6-1.2 1.1-.4.5-.7 1-.9 1.5l-.9-.5c0-.1.1-.2.2-.4s.2-.3.2-.4c.1-.2.2-.5.3-1 .1-.4.2-.9.4-1.3.1-.5.2-.9.3-1.3.1-.4.2-.7.2-.9l.3-1.2.3-1.2c.2-.7.3-1.4.4-2.1.1-.7.2-1.4.3-2.2h-.6l.1-.8 4-.1.1.8h-.2-.2c.1.7.2 1.4.3 2l.3 1.8.3 1.8c.1.6.2 1.3.4 2h.6l.3.9zm-3.6-3.6c-.1-.7-.2-1.3-.3-2-.1-.6-.3-1.3-.4-2-.1.6-.2 1.3-.4 2.1-.1.7-.3 1.5-.5 2.2l1.6-.3z"/><path d="M124.9 20.1c0-.3.1-.6.3-.8.2-.2.4-.3.7-.4.3-.1.5 0 .8.1.3.1.5.3.6.5.3.4.6.9.7 1.4.2.5.2 1 .2 1.5s-.1 1-.3 1.5c-.2.5-.4 1-.7 1.4-.6.9-1.4 1.6-2.4 2-1 .5-2 .7-3 .7-1.5 0-2.8-.3-3.9-1s-2.1-1.4-3-2.4c-.9-1-1.8-2.1-2.5-3.2-.8-1.2-1.5-2.3-2.3-3.5-1.1 1.2-2.4 2.2-3.9 3-1.5.8-3 1.1-4.5 1-1.1 0-2.1-.1-3-.5-.9-.3-1.6-.8-2.2-1.4-.6-.6-.9-1.3-1.1-2.2-.2-.8-.1-1.7.2-2.7.3-.9.7-1.6 1.3-2.2.6-.6 1.2-1.1 2-1.5.7-.4 1.5-.6 2.4-.7.8-.1 1.7 0 2.6.2v-5-4.6h-1.8V.8.3l3.7-.1c.8-.2 1.6-.2 2.4-.1.8.1 1.6.3 2.4.5.7.3 1.4.7 1.9 1.2s.9 1.1 1.1 1.8c.3 1.2.4 2.4.3 3.6-.1 1.2-.2 2.5-.4 3.7-.1 1-.4 2-.8 3-.5 1-1 2-1.7 2.9.3.4.6.8.8 1.2.3.4.5.8.8 1.2.5.8 1.1 1.6 1.7 2.5.6.8 1.3 1.6 2 2.4.7.7 1.5 1.3 2.4 1.8s1.8.7 2.9.8c1.1 0 2.1-.2 3-.7.9-.5 1.6-1.2 2.1-2.2.2-.4.3-.8.4-1.3.1-.5 0-.9-.1-1.3-.2.1-.4.2-.6.2-.2 0-.4 0-.6-.1-.2-.1-.4-.2-.5-.4s-.4-.5-.4-.8zm-22 .9c1.5-.4 2.8-1 3.7-1.8.9-.8 1.7-1.7 2.3-2.8-.2-.2-.3-.5-.6-.7-.6-.7-1.2-1.4-1.9-1.9 0 .6.1 1.2.1 1.8 0 .6.1 1.1.2 1.6v.1h-4.3c-.1-.2-.1-.4 0-.7 0-.2.1-.3.3-.5.3-.3.7-.4 1.1-.2l.1-3.5c-.5-.2-1-.3-1.5-.3s-1.1 0-1.6.1c-.6.1-1.1.3-1.6.6s-.9.7-1.3 1.1c-.4.4-.7.9-.9 1.5-.2.5-.3 1.1-.3 1.6 0 .7.2 1.3.6 1.8.4.5.9.9 1.4 1.4.2.2.5.3.8.5.3.1.7.2 1.1.3.4.1.8.1 1.2.1.3 0 .7 0 1.1-.1zm6.4-19.1c-.4-.3-.8-.5-1.2-.6-.5-.1-.9-.1-1.4-.1-.1 1.7-.2 3.4-.3 5.3-.1 1.9-.1 3.7 0 5.6.6.4 1.2.8 1.7 1.4.5.5 1 1.1 1.5 1.6.2-.6.4-1.2.6-1.9.2-.6.3-1.2.3-1.7.2-1.1.2-2.1.3-3.1 0-1 0-2.1-.1-3.1-.1-.6-.2-1.2-.4-1.9-.2-.6-.5-1.1-1-1.5z"/><path d="M116.5 1.2h-1.8V.4c.5 0 .9 0 1.2-.1s.7 0 1.1 0h1.1s.8 0 1.3-.1c.9 0 1.8 0 2.8-.1.9 0 1.8 0 2.8-.1v3.6h-1.3c-.1 0-.1-.1 0-.1.1-.2.1-.4.1-.6s0-.4-.1-.6l-.3-.6c-.1-.2-.2-.3-.4-.4-.2-.1-.4-.2-.6-.2h-.7c-.3 0-.5.1-.8.1-.3.1-.5.2-.6.4-.1.2-.1.3-.1.3v.3c0 .7-.1 1.3-.1 2 0 .6-.1 1.3-.1 1.9v1c.6-.2 1.2-.3 1.9-.4.6-.1 1.2-.3 1.9-.4 0 .1.1.2.1.3V7c0 .2-.1.3-.1.4-.1.1-.1.2-.1.3-.1.1-.2.1-.4.2-.1 0-.3.1-.4.1-.5.1-.9.2-1.4.3-.5.1-.9.1-1.4.2 0 1-.1 2-.2 2.9-.1 1-.1 1.9-.2 2.9.8.2 1.5.3 2 .1.6-.2 1.2-.5 1.9-1 .2-.1.2-.3.2-.5v-.7c0-.2.1-.5.2-.6.1-.2.3-.3.7-.4.4 0 .6.1.7.4.1.3.2.7.2 1.1 0 .5 0 .9-.1 1.4-.1.5-.1.9 0 1.2h-1.4c-.4 0-.8 0-1.2.1-.4 0-.8 0-1.2.1h-1.3c-.9 0-1.7 0-2.5.1-.7.1-1.6.1-2.4.1-.2-.2-.2-.4-.2-.7 0-.2.1-.5.3-.6.2-.2.3-.3.6-.3.2-.1.5 0 .7.1.1-2.1.2-4.3.1-6.5-.7-2.2-.7-4.3-.5-6.5z"/></g></svg>
+            </a>
+        </p>
+    </footer>
+
+    <div class="fixed-bottom-btn"><a class="waves-effect waves-light" id="go-top"><i class="fa fa-chevron-up"></i></a></div>
+
+    <script>
+    var DMS = {
+        version: 'master',
+
+        getDocUrl: function (doc) {
+            var temp = 'docs/master/{doc}.html';
+
+            if (location.pathname.indexOf(temp.replace('{doc}.html', '')) !== -1) {
+                return doc+'.html';
+            }
+
+            return temp.replace('{doc}', doc);
+        },
+
+        config: {
+            comment: {"enable":true,"clientID":"b0db00f91f421852203b","clientSecret":"bc39c61703100ad1c9490c5187cf1c6682e03513","repo":"dcat-admin-comments","owner":"jqhwx","admin":["jqhwx"],"language":"zh-CN","perPage":15,"pagerDirection":"first"}
+        },
+    };
+
+    DMS.config.comment.id = 'master/model-show-trans';
+
+    (function () {
+        function indices() {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src="../../assets/indices/master.js";
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+        }
+
+        setTimeout(indices, 1);
+    })();
+
+</script>
+
+             <script src="../../assets/gitalk/gitalk.min.js"></script>
+         <script src="../../assets/js/laravel.js"></script>
+     <script src="../../assets/js/viewport-units-buggyfill.js"></script>
+    <script>window.viewportUnitsBuggyfill.init();</script>
+
+</body>
+</html>

@@ -1,0 +1,1114 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Form组件使用 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
+    <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="canonical" href="../../docs-master-model-form-fields.html" />
+    
+     <link rel="stylesheet" href="../../assets/css/laravel.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
+
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i">
+     <link rel="stylesheet" href="../../assets/font-awesome/css/font-awesome.min.css">
+
+    <link rel="shortcut icon" href="../../assets/img/favicon.ico">
+
+             <link rel="stylesheet" href="../../assets/gitalk/gitalk.css">
+        <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src="https://hm.baidu.com/hm.js?a7ae1f00b3f1bf2992dc2885b8f5f413";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body class="docs language-default">
+    
+        
+        
+        
+    
+    <span class="overlay"></span>
+
+    <nav class="main">
+        <a href="../../index.html" class="brand nav-block" >
+
+            <span>Dcat Admin</span>
+        </a>
+
+        <ul class="main-nav">
+            <li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+        </ul>
+
+        <div class="search nav-block invisible">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#A1A1A1" d="M5.8 11.7c-1.6 0-3-.6-4.1-1.7S0 7.4 0 5.8s.6-3 1.7-4.1C2.8.6 4.3 0 5.8 0s3 .6 4.1 1.7c2.3 2.3 2.3 6 0 8.3-1 1.1-2.5 1.7-4.1 1.7zM5.8 1c-1.3 0-2.5.5-3.4 1.4C1.5 3.3 1 4.5 1 5.8s.5 2.5 1.4 3.4c.9.9 2.1 1.4 3.4 1.4s2.5-.5 3.4-1.4c1.9-1.9 1.9-5 0-6.9C8.4 1.5 7.1 1 5.8 1z"/><path fill="#A1A1A1" d="M15.5 16c-.1 0-.3 0-.3-.1L9.3 10c-.2-.2-.2-.5 0-.7s.5-.2.7 0l5.9 5.9c.2.2.2.5 0 .7-.1.1-.3.1-.4.1z"/></svg>
+            <input placeholder="search" type="text" id="search-input" aria-label="search"/>
+        </div>
+
+                    <div class="switcher">
+	<div class="dropdown">
+		<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			Master
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-form-fields.html">Master</a>
+				</li>
+					</ul>
+	</div>
+</div>
+        
+        <div class="responsive-sidebar-nav">
+            <a href="#" class="toggle-slide menu-link btn">&#9776;</a>
+        </div>
+    </nav>
+
+    <nav id="slide-menu" class="slide-menu" role="navigation">
+
+	<div class="brand">
+		<a href="../../index.html">
+			Dcat Admin
+		</a>
+	</div>
+
+	<ul class="slide-main-nav">
+		<li><a href="../../index.html">Home</a></li>
+
+		<li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+	</ul>
+
+	<div class="slide-docs-nav">
+		<h2>Documentation</h2>
+
+		<ul class="slide-docs-version">
+			<li>
+				<h2>Version</h2>
+
+				<ul>
+					<li>
+													<div class="switcher">
+	<div class="dropdown">
+		<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			Master
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-form-fields.html">Master</a>
+				</li>
+					</ul>
+	</div>
+</div>
+											</li>
+				</ul>
+			</li>
+		</ul>
+
+		<ul>
+<li>
+<h2>入门</h2>
+<ul>
+<li><a href="../../docs/master/installation.html">安装</a></li>
+<li><a href="../../docs/master/notice.html">开发前必读</a></li>
+<li><a href="../../docs/master/quick-start.html">快速开始</a></li>
+<li><a href="../../docs/master/content-layout.html">页面内容和布局</a></li>
+<li><a href="../../docs/master/new.html">与Laravel Admin的异同</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表格</h2>
+<ul>
+<li><a href="../../docs/master/model-grid.html">基本使用</a></li>
+<li><a href="../../docs/master/model-grid-column.html">列的使用</a></li>
+<li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
+<li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
+<li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
+<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-data.html">表格数据源</a></li>
+<li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
+<li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
+<li><a href="../../docs/master/model-grid-init.html">表格初始化</a></li>
+<li><a href="../../docs/master/model-grid-trans.html">表格字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表单</h2>
+<ul>
+<li><a href="../../docs/master/model-form.html">基本使用</a></li>
+<li><a href="../../docs/master/model-form-upload.html">图片/文件上传</a></li>
+<li><a href="../../docs/master/model-form-fields.html">Form组件使用</a></li>
+<li><a href="../../docs/master/model-form-field-management.html">Form组件管理</a></li>
+<li><a href="../../docs/master/model-form-data.html">表单数据源</a></li>
+<li><a href="../../docs/master/model-form-modal.html">表单弹窗</a></li>
+<li><a href="../../docs/master/model-form-validation.html">表单验证</a></li>
+<li><a href="../../docs/master/model-form-callback.html">表单回调</a></li>
+<li><a href="../../docs/master/model-form-init.html">表单初始化</a></li>
+<li><a href="../../docs/master/model-form-trans.html">表单字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据详情</h2>
+<ul>
+<li><a href="../../docs/master/model-show.html">基本使用</a></li>
+<li><a href="../../docs/master/model-show-field.html">字段显示</a></li>
+<li><a href="../../docs/master/model-show-relation.html">关联关系</a></li>
+<li><a href="../../docs/master/model-show-extend.html">显示扩展</a>      </li>
+<li><a href="../../docs/master/model-show-init.html">初始化</a></li>
+<li><a href="../../docs/master/model-show-trans.html">字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/model-tree.html">模型树</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/trans.html">多语言</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/extend.html">开发扩展</a></h2>
+</li>
+<li>
+<h2>页面组件</h2>
+<ul>
+<li><a href="../../docs/master/widgets-charts.html">图表</a></li>
+<li><a href="../../docs/master/widgets-data-card.html">数据卡片</a></li>
+<li><a href="../../docs/master/widgets-form.html">表单</a></li>
+<li><a href="../../docs/master/widgets-dialog-form.html">表单弹窗</a></li>
+<li><a href="../../docs/master/widgets-navbar.html">导航菜单</a></li>
+<li><a href="../../docs/master/widgets-dropdown.html">下拉菜单</a></li>
+<li><a href="../../docs/master/widgets-tab.html">选项卡</a></li>
+<li><a href="../../docs/master/widgets-alert.html">告警框</a></li>
+<li><a href="../../docs/master/widgets-tooltip.html">提示条</a></li>
+<li><a href="../../docs/master/widgets-checkbox.html">单、复选框</a></li>
+<li><a href="../../docs/master/widgets-markdown.html">Markdown</a></li>
+<li><a href="../../docs/master/widgets-box.html">卡片</a></li>
+<li><a href="../../docs/master/widgets-accordion.html">折叠卡</a></li>
+<li><a href="../../docs/master/widgets-table.html">表格</a></li>
+<li><a href="../../docs/master/widgets-js.html">JS组件</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/section.html">区块（section）</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/permission.html">权限控制</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/menu.html">菜单</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/function.html">帮助函数</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/helpers.html">开发工具</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-authentication.html">自定义登陆认证</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-navbar.html">自定义头部导航</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/qa.html">常见问题</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/change-log.html">Change log</a></h2>
+</li>
+</ul>
+	</div>
+
+</nav>
+
+<div class="docs-wrapper container">
+
+	<section class="sidebar">
+		
+		<small><a href="#" id="doc-expand" style="font-size: 11px; color: #B8B8B8;">EXPAND ALL</a></small>
+		<ul>
+<li>
+<h2>入门</h2>
+<ul>
+<li><a href="../../docs/master/installation.html">安装</a></li>
+<li><a href="../../docs/master/notice.html">开发前必读</a></li>
+<li><a href="../../docs/master/quick-start.html">快速开始</a></li>
+<li><a href="../../docs/master/content-layout.html">页面内容和布局</a></li>
+<li><a href="../../docs/master/new.html">与Laravel Admin的异同</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表格</h2>
+<ul>
+<li><a href="../../docs/master/model-grid.html">基本使用</a></li>
+<li><a href="../../docs/master/model-grid-column.html">列的使用</a></li>
+<li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
+<li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
+<li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
+<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-data.html">表格数据源</a></li>
+<li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
+<li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
+<li><a href="../../docs/master/model-grid-init.html">表格初始化</a></li>
+<li><a href="../../docs/master/model-grid-trans.html">表格字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表单</h2>
+<ul>
+<li><a href="../../docs/master/model-form.html">基本使用</a></li>
+<li><a href="../../docs/master/model-form-upload.html">图片/文件上传</a></li>
+<li><a href="../../docs/master/model-form-fields.html">Form组件使用</a></li>
+<li><a href="../../docs/master/model-form-field-management.html">Form组件管理</a></li>
+<li><a href="../../docs/master/model-form-data.html">表单数据源</a></li>
+<li><a href="../../docs/master/model-form-modal.html">表单弹窗</a></li>
+<li><a href="../../docs/master/model-form-validation.html">表单验证</a></li>
+<li><a href="../../docs/master/model-form-callback.html">表单回调</a></li>
+<li><a href="../../docs/master/model-form-init.html">表单初始化</a></li>
+<li><a href="../../docs/master/model-form-trans.html">表单字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据详情</h2>
+<ul>
+<li><a href="../../docs/master/model-show.html">基本使用</a></li>
+<li><a href="../../docs/master/model-show-field.html">字段显示</a></li>
+<li><a href="../../docs/master/model-show-relation.html">关联关系</a></li>
+<li><a href="../../docs/master/model-show-extend.html">显示扩展</a>      </li>
+<li><a href="../../docs/master/model-show-init.html">初始化</a></li>
+<li><a href="../../docs/master/model-show-trans.html">字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/model-tree.html">模型树</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/trans.html">多语言</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/extend.html">开发扩展</a></h2>
+</li>
+<li>
+<h2>页面组件</h2>
+<ul>
+<li><a href="../../docs/master/widgets-charts.html">图表</a></li>
+<li><a href="../../docs/master/widgets-data-card.html">数据卡片</a></li>
+<li><a href="../../docs/master/widgets-form.html">表单</a></li>
+<li><a href="../../docs/master/widgets-dialog-form.html">表单弹窗</a></li>
+<li><a href="../../docs/master/widgets-navbar.html">导航菜单</a></li>
+<li><a href="../../docs/master/widgets-dropdown.html">下拉菜单</a></li>
+<li><a href="../../docs/master/widgets-tab.html">选项卡</a></li>
+<li><a href="../../docs/master/widgets-alert.html">告警框</a></li>
+<li><a href="../../docs/master/widgets-tooltip.html">提示条</a></li>
+<li><a href="../../docs/master/widgets-checkbox.html">单、复选框</a></li>
+<li><a href="../../docs/master/widgets-markdown.html">Markdown</a></li>
+<li><a href="../../docs/master/widgets-box.html">卡片</a></li>
+<li><a href="../../docs/master/widgets-accordion.html">折叠卡</a></li>
+<li><a href="../../docs/master/widgets-table.html">表格</a></li>
+<li><a href="../../docs/master/widgets-js.html">JS组件</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/section.html">区块（section）</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/permission.html">权限控制</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/menu.html">菜单</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/function.html">帮助函数</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/helpers.html">开发工具</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-authentication.html">自定义登陆认证</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-navbar.html">自定义头部导航</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/qa.html">常见问题</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/change-log.html">Change log</a></h2>
+</li>
+</ul>
+	</section>
+
+	<article>
+		<h1>Form组件使用</h1>
+<p>在<code  >model-form</code>中内置了大量的form组件来帮助你快速的构建form表单</p>
+<p><a name="public"></a></p>
+<h2>公共方法</h2>
+<p><a name="value"></a></p>
+<h3>设置保存值</h3>
+<pre><code   class="language-php">$form-&gt;text(&#039;title&#039;)-&gt;value(&#039;text...&#039;);</code></pre>
+<p><a name="default"></a></p>
+<h3>设置默认值</h3>
+<pre><code   class="language-php">$form-&gt;text(&#039;title&#039;)-&gt;default(&#039;text...&#039;);</code></pre>
+<p><a name="help"></a></p>
+<h3>设置help信息</h3>
+<pre><code   class="language-php">$form-&gt;text(&#039;title&#039;)-&gt;help(&#039;help...&#039;);</code></pre>
+<p><a name="attr"></a></p>
+<h3>设置属性</h3>
+<pre><code   class="language-php">$form-&gt;text(&#039;title&#039;)-&gt;attribute([&#039;data-title&#039; =&gt; &#039;title...&#039;]);
+
+$form-&gt;text(&#039;title&#039;)-&gt;attribute(&#039;data-title&#039;, &#039;title...&#039;);</code></pre>
+<p><a name="required"></a></p>
+<h3>设置为必填</h3>
+<pre><code   class="language-php">$form-&gt;text(&#039;title&#039;)-&gt;required();
+
+// 不显示"*"号
+$form-&gt;text(&#039;title&#039;)-&gt;required(false);</code></pre>
+<p><a name="disable"></a></p>
+<h3>设置为不可编辑</h3>
+<pre><code   class="language-php">$form-&gt;text(&#039;title&#039;)-&gt;disable();</code></pre>
+<p><a name="placeholder"></a></p>
+<h3>设置placeholder</h3>
+<pre><code   class="language-php">$form-&gt;text(&#039;title&#039;)-&gt;placeholder(&#039;请输入。。。&#039;);</code></pre>
+<p><a name="setWidth"></a></p>
+<h3>设置宽度</h3>
+<pre><code   class="language-php">$form-&gt;text(&#039;title&#039;)-&gt;setWidth(8, 2);</code></pre>
+<p><a name="rules"></a></p>
+<h3>设置验证规则</h3>
+<p>具体使用可参考<a href="../../docs/master/model-form-validation.html">表单验证</a>。</p>
+<p><a name="saving"></a></p>
+<h3>处理待保存的数据</h3>
+<p><code  >saving</code>方法可以更改待保存到数据库的数据。如下面的例子，原本表单提交的是一个以“,”隔开的字符串，我们可以把这个值转化成<code  >json</code>格式保存到数据库</p>
+<pre><code   class="language-php">$form-&gt;mutipleFile(&#039;files&#039;)-&gt;saving(function ($paths) {
+    // 把“,”隔开的字符串转化为数组
+    $paths = Helper::array($paths);
+
+    // 最终转化为json保存到数据库
+    return json_encode($paths);
+});</code></pre>
+<p><a name="customFormat"></a></p>
+<h3>处理待渲染的数据</h3>
+<p><code  >customFormat</code>方法可以改变从外部注入到表单的字段值。</p>
+<p>如上面的例子，我们把原本是以“,”隔开的字符串改为<code  >json</code>格式保存到数据库，那么从数据库中取出的值也是<code  >json</code>，这个时候直接注入到表单后并不能被表单识别，所以需要通过<code  >customFormat</code>方法把这个值重新转回以“,”隔开的字符串。</p>
+<pre><code   class="language-php">$form-&gt;mutipleFile(&#039;files&#039;)-&gt;saving(function ($paths) {
+    $paths = Helper::array($paths);
+
+    return json_encode($paths);
+})-&gt;customFormat(function ($paths) {
+    if (!$paths) return &#039;&#039;;
+
+    // 转化为数组
+    $paths = json_decode($paths, true);
+
+    // 转为以“,”隔开的字符串
+    return join(&#039;,&#039;, $paths);
+});</code></pre>
+<h3>在弹窗中隐藏</h3>
+<p>如果不想在弹窗中显示某个字段，可以使用<code  >Form\Field::hideInModal</code>方法</p>
+<pre><code   class="language-php">$form-&gt;display(&#039;id&#039;);
+$form-&gt;text(&#039;title&#039;);
+$form-&gt;textare(&#039;contents&#039;)-&gt;hideInModal();</code></pre>
+<p><a name="tab"></a></p>
+<h2>model-form-tab</h2>
+<p>如果表单元素太多,会导致form页面太长, 这种情况下可以使用tab来分隔form:</p>
+<pre><code   class="language-php">
+$form-&gt;tab(&#039;Basic info&#039;, function ($form) {
+
+    $form-&gt;text(&#039;username&#039;);
+    $form-&gt;email(&#039;email&#039;);
+
+})-&gt;tab(&#039;Profile&#039;, function ($form) {
+
+   $form-&gt;image(&#039;avatar&#039;);
+   $form-&gt;text(&#039;address&#039;);
+   $form-&gt;mobile(&#039;phone&#039;);
+
+})-&gt;tab(&#039;Jobs&#039;, function ($form) {
+
+     $form-&gt;hasMany(&#039;jobs&#039;, function () {
+         $form-&gt;text(&#039;company&#039;);
+         $form-&gt;date(&#039;start_date&#039;);
+         $form-&gt;date(&#039;end_date&#039;);
+     });
+
+  })
+</code></pre>
+<p><a name="text"></a></p>
+<h2>text</h2>
+<pre><code   class="language-php">$form-&gt;text($column, [$label]);
+
+// 添加提交验证规则
+$form-&gt;text($column, [$label])-&gt;rules(&#039;required|min:10&#039;);</code></pre>
+<p><a name="select"></a></p>
+<h2>select</h2>
+<pre><code   class="language-php">$form-&gt;select($column[, $label])-&gt;options([1 =&gt; &#039;foo&#039;, 2 =&gt; &#039;bar&#039;, &#039;val&#039; =&gt; &#039;Option name&#039;]);</code></pre>
+<p>或者从api中获取选项列表：</p>
+<pre><code   class="language-php">$form-&gt;select($column[, $label])-&gt;options(&#039;/api/users&#039;);
+
+// 使用ajax并显示所选项目
+
+$form-&gt;select($column[, $label])-&gt;options(Model::class)-&gt;ajax(&#039;/api/users&#039;);
+
+// 或指定名称和ID
+
+$form-&gt;select($column[, $label])-&gt;options(Model::class, &#039;name&#039;, &#039;id&#039;)-&gt;ajax(&#039;/api/users&#039;);</code></pre>
+<p>其中api接口的格式必须为下面格式：</p>
+<pre><code   class="language-php">[
+    {
+        "id": 9,
+        "text": "xxx"
+    },
+    {
+        "id": 21,
+        "text": "xxx"
+    },
+    ...
+]</code></pre>
+<p>如果选项过多，可通过ajax方式动态分页载入选项：</p>
+<pre><code   class="language-php">$form-&gt;select(&#039;user_id&#039;)-&gt;options(function ($id) {
+    $user = User::find($id);
+
+    if ($user) {
+        return [$user-&gt;id =&gt; $user-&gt;name];
+    }
+})-&gt;ajax(&#039;/admin/api/users&#039;);</code></pre>
+<p><sub>注：如果你修改了<code  >config/admin.php</code>配置文件中<code  >route.prefix</code>的值，此处的接口路由应该修改为<code  >config(&#039;admin.route.prefix&#039;).&#039;/api/users&#039;</code>。</sub></p>
+<p>API <code  >/admin/api/users</code>接口的代码：</p>
+<pre><code   class="language-php">public function users(Request $request)
+{
+    $q = $request-&gt;get(&#039;q&#039;);
+
+    return User::where(&#039;name&#039;, &#039;like&#039;, "%$q%")-&gt;paginate(null, [&#039;id&#039;, &#039;name as text&#039;]);
+}
+</code></pre>
+<p>接口返回的数据结构为</p>
+<pre><code   class="language-json">{
+    "total": 4,
+    "per_page": 15,
+    "current_page": 1,
+    "last_page": 1,
+    "next_page_url": null,
+    "prev_page_url": null,
+    "from": 1,
+    "to": 3,
+    "data": [
+        {
+            "id": 9,
+            "text": "xxx"
+        },
+        {
+            "id": 21,
+            "text": "xxx"
+        },
+        {
+            "id": 42,
+            "text": "xxx"
+        },
+        {
+            "id": 48,
+            "text": "xxx"
+        }
+    ]
+}</code></pre>
+<p><a name="selectload"></a></p>
+<h2>select 联动</h2>
+<p><code  >select</code>组件支持父子关系的单向联动：</p>
+<pre><code   class="language-php">$form-&gt;select(&#039;province&#039;)-&gt;options(...)-&gt;load(&#039;city&#039;, &#039;/api/city&#039;);
+
+$form-&gt;select(&#039;city&#039;);
+</code></pre>
+<p>其中<code  >load(&#039;city&#039;, &#039;/api/city&#039;);</code>的意思是，在当前select的选项切换之后，会把当前选项的值通过参数<code  >q</code>, 调用接口<code  >/api/city</code>，并把api返回的数据填充为city选择框的选项，其中api<code  >/api/city</code>返回的数据格式必须符合:</p>
+<pre><code   class="language-php">[
+    {
+        "id": 9,
+        "text": "xxx"
+    },
+    {
+        "id": 21,
+        "text": "xxx"
+    },
+    ...
+]</code></pre>
+<p>控制器action的代码示例如下：</p>
+<pre><code   class="language-php">public function city(Request $request)
+{
+    $provinceId = $request-&gt;get(&#039;q&#039;);
+
+    return ChinaArea::city()-&gt;where(&#039;parent_id&#039;, $provinceId)-&gt;get([&#039;id&#039;, DB::raw(&#039;name as text&#039;)]);
+}</code></pre>
+<p><a name="multipleSelect"></a></p>
+<h2>multipleSelect</h2>
+<blockquote>
+<p>{tip} 注入这个字段的数据（从数据库查出来的）可以是一个以“,”隔开的字符串或数组。</p>
+</blockquote>
+<pre><code   class="language-php">$form-&gt;multipleSelect($column[, $label])-&gt;options([1 =&gt; &#039;foo&#039;, 2 =&gt; &#039;bar&#039;, &#039;val&#039; =&gt; &#039;Option name&#039;]);
+
+// 使用ajax并显示所选项目：
+
+$form-&gt;multipleSelect($column[, $label])-&gt;options(Model::class)-&gt;ajax(&#039;ajax_url&#039;);
+
+// 或指定名称和ID
+
+$form-&gt;multipleSelect($column[, $label])-&gt;options(Model::class, &#039;name&#039;, &#039;id&#039;)-&gt;ajax(&#039;ajax_url&#039;);</code></pre>
+<p>多选框可以处理两种情况，第一种是<code  >ManyToMany</code>的关系。</p>
+<pre><code  >
+class Post extends Models
+{
+    public function tags()
+    {
+        return $this-&gt;belongsToMany(Tag::class);
+    }
+}
+
+$form-&gt;multipleSelect(&#039;tags&#039;)-&gt;options(Tag::all()-&gt;pluck(&#039;name&#039;, &#039;id&#039;));
+</code></pre>
+<p>第二种是将选项数组存储到单字段中，如果字段是字符串类型，那就需要在模型里面为该字段定义<a href="https://laravel.com/docs/5.5/eloquent-mutators">访问器和修改器</a>来存储和读取了。</p>
+<p>如果选项过多，可通过ajax方式动态分页载入选项：</p>
+<pre><code   class="language-php">$form-&gt;select(&#039;friends&#039;)-&gt;options(function ($ids) {
+
+    return User::find($ids)-&gt;pluck(&#039;name&#039;, &#039;id&#039;);
+
+})-&gt;ajax(&#039;/admin/api/users&#039;);</code></pre>
+<p><sub>注：如果你修改了<code  >config/admin.php</code>配置文件中<code  >route.prefix</code>的值，此处的接口路由应该修改为<code  >config(&#039;admin.route.prefix&#039;).&#039;/api/users&#039;</code>。</sub></p>
+<p>API <code  >/admin/api/users</code>接口的代码：</p>
+<pre><code   class="language-php">public function users(Request $request)
+{
+    $q = $request-&gt;get(&#039;q&#039;);
+
+    return User::where(&#039;name&#039;, &#039;like&#039;, "%$q%")-&gt;paginate(null, [&#039;id&#039;, &#039;name as text&#039;]);
+}
+</code></pre>
+<p>接口返回的数据结构为</p>
+<pre><code  >{
+    "total": 4,
+    "per_page": 15,
+    "current_page": 1,
+    "last_page": 1,
+    "next_page_url": null,
+    "prev_page_url": null,
+    "from": 1,
+    "to": 3,
+    "data": [
+        {
+            "id": 9,
+            "text": "xxx"
+        },
+        {
+            "id": 21,
+            "text": "xxx"
+        },
+        {
+            "id": 42,
+            "text": "xxx"
+        },
+        {
+            "id": 48,
+            "text": "xxx"
+        }
+    ]
+}</code></pre>
+<p><a name="selectResource"></a></p>
+<h2>selectResource</h2>
+<p>选择数据源，选择弹窗里面的表格数据。</p>
+<blockquote>
+<p>{tip} 注入这个字段的数据（从数据库查出来的）可以是一个以“,”隔开的字符串或数组。</p>
+</blockquote>
+<pre><code   class="language-php"> $form-&gt;selectResource(&#039;user&#039;)
+    -&gt;path(&#039;auth/users&#039;) // 设置表格页面链接
+    -&gt;options(function ($v) { // 显示已选中的数据
+        if (!$v) return $v;
+        $userModel = config(&#039;admin.database.users_model&#039;);
+
+        return $userModel::findOrFail($v)-&gt;pluck(&#039;name&#039;, &#039;id&#039;);
+    });
+
+// 设置为多选
+ $form-&gt;selectResource(&#039;user&#039;)
+    -&gt;path(&#039;auth/users&#039;) 
+    -&gt;multiple() // 设置为多选
+    -&gt;options(function ($v) {
+        ...
+    });  
+
+// 限制最大选择数量
+ $form-&gt;selectResource(&#039;user&#039;)
+    -&gt;path(&#039;auth/users&#039;) 
+    -&gt;multiple(3) // 最多选择3个选项
+    -&gt;options(function ($v) {
+        ...
+    });       </code></pre>
+<p><code  >auth/users</code>页面实现代码如下：</p>
+<pre><code   class="language-php">/**
+ * Index interface.
+ *
+ * @return Content
+ */
+public function index(Content $content)
+{
+    if (request(&#039;_mini&#039;)) {
+        return $content-&gt;body($this-&gt;miniGrid());
+    }
+
+    ...
+}
+
+protected function miniGrid()
+{
+    $grid = new MiniGrid(new Administrator());
+
+    // 指定行选择器选中时显示的值的字段名称
+    // 指定行选择器选中时显示的值的字段名称
+    // 指定行选择器选中时显示的值的字段名称
+    // 如果表格数据中带有 “name”、“title”或“username”字段，则可以不用设置
+    $grid-&gt;setRowSelectorOptions([&#039;label_name&#039; =&gt; &#039;username&#039;]);
+
+    $grid-&gt;id-&gt;sortable();
+    $grid-&gt;username;
+    $grid-&gt;name;
+
+    $grid-&gt;filter(function (Grid\Filter $filter) {
+        $filter-&gt;equal(&#039;id&#039;);
+        $filter-&gt;like(&#039;username&#039;);
+        $filter-&gt;like(&#039;name&#039;);
+    });
+
+    return $grid;
+}</code></pre>
+<p><a name="listbox"></a></p>
+<h2>listbox</h2>
+<p>使用方法和<code  >multipleSelect</code>类似。</p>
+<blockquote>
+<p>{tip} 注入这个字段的数据（从数据库查出来的）可以是一个以“,”隔开的字符串或数组。</p>
+</blockquote>
+<pre><code   class="language-php">$form-&gt;listbox($column[, $label])-&gt;options([1 =&gt; &#039;foo&#039;, 2 =&gt; &#039;bar&#039;, &#039;val&#039; =&gt; &#039;Option name&#039;]);</code></pre>
+<p><a name="textarea"></a></p>
+<h2>textarea</h2>
+<pre><code   class="language-php">$form-&gt;textarea($column[, $label])-&gt;rows(10);</code></pre>
+<p><a name="radio"></a></p>
+<h2>radio</h2>
+<pre><code   class="language-php">$form-&gt;radio($column[, $label])-&gt;options([&#039;m&#039; =&gt; &#039;Female&#039;, &#039;f&#039;=&gt; &#039;Male&#039;])-&gt;default(&#039;m&#039;);
+
+// 竖排
+$form-&gt;radio($column[, $label])-&gt;options([&#039;m&#039; =&gt; &#039;Female&#039;, &#039;f&#039;=&gt; &#039;Male&#039;])-&gt;stacked();</code></pre>
+<p><a name="checkbox"></a></p>
+<h2>checkbox</h2>
+<p><code  >checkbox</code>能处理两种数据存储情况，参考<a href="#多选框">多选框</a></p>
+<p><code  >options()</code>方法用来设置选择项:</p>
+<pre><code   class="language-php">$form-&gt;checkbox($column[, $label])-&gt;options([1 =&gt; &#039;foo&#039;, 2 =&gt; &#039;bar&#039;, &#039;val&#039; =&gt; &#039;Option name&#039;]);
+
+// 竖排
+$form-&gt;checkbox($column[, $label])-&gt;options([1 =&gt; &#039;foo&#039;, 2 =&gt; &#039;bar&#039;, &#039;val&#039; =&gt; &#039;Option name&#039;])-&gt;stacked();</code></pre>
+<p><a name="email"></a></p>
+<h2>email</h2>
+<pre><code   class="language-php">$form-&gt;email($column[, $label]);</code></pre>
+<p><a name="password"></a></p>
+<h2>password</h2>
+<pre><code   class="language-php">$form-&gt;password($column[, $label]);</code></pre>
+<p><a name="url"></a></p>
+<h2>url输入框</h2>
+<pre><code   class="language-php">$form-&gt;url($column[, $label]);</code></pre>
+<p><a name="ip"></a></p>
+<h2>ip</h2>
+<pre><code   class="language-php">$form-&gt;ip($column[, $label]);</code></pre>
+<p><a name="mobile"></a></p>
+<h2>mobile</h2>
+<pre><code   class="language-php">$form-&gt;mobile($column[, $label])-&gt;options([&#039;mask&#039; =&gt; &#039;999 9999 9999&#039;]);</code></pre>
+<p><a name="color"></a></p>
+<h2>color</h2>
+<pre><code   class="language-php">$form-&gt;color($column[, $label])-&gt;default(&#039;#ccc&#039;);</code></pre>
+<p><a name="time"></a></p>
+<h2>time</h2>
+<pre><code   class="language-php">$form-&gt;time($column[, $label]);
+
+// 设置时间格式，更多格式参考http://momentjs.com/docs/#/displaying/format/
+$form-&gt;time($column[, $label])-&gt;format(&#039;HH:mm:ss&#039;);</code></pre>
+<p><a name="date"></a></p>
+<h2>date</h2>
+<pre><code   class="language-php">$form-&gt;date($column[, $label]);
+
+// 设置日期格式，更多格式参考http://momentjs.com/docs/#/displaying/format/
+$form-&gt;date($column[, $label])-&gt;format(&#039;YYYY-MM-DD&#039;);</code></pre>
+<p><a name="datetime"></a></p>
+<h2>datetime</h2>
+<pre><code   class="language-php">$form-&gt;datetime($column[, $label]);
+
+// 设置日期格式，更多格式参考http://momentjs.com/docs/#/displaying/format/
+$form-&gt;datetime($column[, $label])-&gt;format(&#039;YYYY-MM-DD HH:mm:ss&#039;);</code></pre>
+<p><a name="timeRange"></a></p>
+<h2>timeRange</h2>
+<p><code  >$startTime</code>、<code  >$endTime</code>为开始和结束时间字段:</p>
+<pre><code   class="language-php">$form-&gt;timeRange($startTime, $endTime, &#039;Time Range&#039;);</code></pre>
+<p><a name="dateRange"></a></p>
+<h2>dateRange</h2>
+<p><code  >$startDate</code>、<code  >$endDate</code>为开始和结束日期字段:</p>
+<pre><code   class="language-php">$form-&gt;dateRange($startDate, $endDate, &#039;Date Range&#039;);</code></pre>
+<p><a name="datetimeRange"></a></p>
+<h2>datetimeRange</h2>
+<p><code  >$startDateTime</code>、<code  >$endDateTime</code>为开始和结束时间日期:</p>
+<pre><code   class="language-php">$form-&gt;datetimeRange($startDateTime, $endDateTime, &#039;DateTime Range&#039;);</code></pre>
+<p><a name="currency"></a></p>
+<h2>currency</h2>
+<pre><code   class="language-php">$form-&gt;currency($column[, $label]);
+
+// 设置单位符号
+$form-&gt;currency($column[, $label])-&gt;symbol(&#039;￥&#039;);</code></pre>
+<p><a name="number"></a></p>
+<h2>number</h2>
+<pre><code   class="language-php">$form-&gt;number($column[, $label]);</code></pre>
+<p><a name="rate"></a></p>
+<h2>rate</h2>
+<pre><code   class="language-php">$form-&gt;rate($column[, $label]);</code></pre>
+<p><a name="file"></a></p>
+<h2>file</h2>
+<p>使用文件上传功能之前需要先完成上传配置。文件上传配置以及内置方法请参考:<a href="../../docs/master/model-form-upload.html">图片/文件上传</a>.</p>
+<p>文件上传目录在文件<code  >config/admin.php</code>中的<code  >upload.file</code>中配置，如果目录不存在，需要创建该目录并开放写权限。</p>
+<pre><code   class="language-php">$form-&gt;file($column[, $label]);
+
+// 修改文件上传路径和文件名
+$form-&gt;file($column[, $label])-&gt;move($dir, $name);
+
+// 并设置上传文件类型
+$form-&gt;file($column[, $label])-&gt;rules(&#039;mimes:doc,docx,xlsx&#039;);
+
+// 添加文件删除按钮
+$form-&gt;file($column[, $label])-&gt;removable();</code></pre>
+<p><a name="image"></a></p>
+<h2>image</h2>
+<p>使用图片上传功能之前需要先完成上传配置。图片上传配置以及内置方法请参考:<a href="../../docs/master/model-form-upload.html">图片/文件上传</a>.</p>
+<p>图片上传目录在文件<code  >config/admin.php</code>中的<code  >upload.image</code>中配置，如果目录不存在，需要创建该目录并开放写权限。</p>
+<p>可以使用压缩、裁切、添加水印等各种方法,需要先安装<a href="http://image.intervention.io/getting_started/installation">intervention/image</a>。</p>
+<p>更多使用方法请参考[<a href="http://image.intervention.io/getting_started/introduction">Intervention</a>]：</p>
+<pre><code   class="language-php">$form-&gt;image($column[, $label]);
+
+// 修改图片上传路径和文件名
+$form-&gt;image($column[, $label])-&gt;move($dir, $name);
+
+// 剪裁图片
+$form-&gt;image($column[, $label])-&gt;crop(int $width, int $height, [int $x, int $y]);
+
+// 加水印
+$form-&gt;image($column[, $label])-&gt;insert($watermark, &#039;center&#039;);</code></pre>
+<p><a name="multipleImage"></a></p>
+<h2>multipleImage/multipleFile</h2>
+<p>多图片上传表单继承自单图上传表单，多文件上传表单继承自单文件上传表单。</p>
+<blockquote>
+<p>{tip} 注入这个字段的数据（从数据库查出来的）可以是一个以“,”隔开的字符串或数组。</p>
+</blockquote>
+<pre><code   class="language-php">// 多图
+$form-&gt;multipleImage($column[, $label]);
+
+// 限制最大上传数量
+$form-&gt;multipleImage($column[, $label])-&gt;limit(3);
+
+// 多文件
+$form-&gt;multipleFile($column[, $label]);
+
+// 限制最大上传数量
+$form-&gt;multipleFile($column[, $label])-&gt;limit(5);</code></pre>
+<p>多图/文件上传的时候提交的数据为以“,”隔开的文件路径字符串。当然你可以通过以下方式把数据在保存进数据库之前改为你想要的格式：</p>
+<pre><code   class="language-php">// 转化为json格式保存到数据库
+$form-&gt;multipleFile($column[, $label])-&gt;customPrepare(function ($paths) {
+    $paths = Helper::array($paths);
+
+    return json_encode($paths);
+});
+</code></pre>
+<p><a name="map"></a></p>
+<h2>map</h2>
+<p>地图组件引用了网络资源，默认关闭,如果要开启这个组件参考<a href="../../docs/master/model-form-field-management.html">form组件管理</a></p>
+<p>地图控件，用来选择经纬度,<code  >$latitude</code>, <code  >$longitude</code>为经纬度字段，<code  >Laravel</code>的<code  >locale</code>设置为<code  >zh_CN</code>的时候使用腾讯地图，否则使用Google地图：</p>
+<pre><code   class="language-php">$form-&gt;map($latitude, $longitude, $label);</code></pre>
+<p><a name="slider"></a></p>
+<h2>slider</h2>
+<p>可以用来数字类型字段的选择，比如年龄：</p>
+<pre><code   class="language-php">$form-&gt;slider($column[, $label])-&gt;options([&#039;max&#039; =&gt; 100, &#039;min&#039; =&gt; 1, &#039;step&#039; =&gt; 1, &#039;postfix&#039; =&gt; &#039;years old&#039;]);</code></pre>
+<p>更多options请参考:<a href="https://github.com/IonDen/ion.rangeSlider#settings">https://github.com/IonDen/ion.rangeSlider#settings</a></p>
+<p><a name="editor"></a></p>
+<h2>editor</h2>
+<p>编辑器组件引用了网络资源，默认关闭,如果要开启这个组件参考<a href="../../docs/master/model-form-field-management.html">form组件管理</a>.</p>
+<pre><code   class="language-php">$form-&gt;editor($column[, $label]);</code></pre>
+<p><a name="hidden"></a></p>
+<h2>hidden</h2>
+<pre><code   class="language-php">$form-&gt;hidden($column);</code></pre>
+<p><a name="switch"></a></p>
+<h2>switch</h2>
+<p>开关表单保存到数据库的默认值</p>
+<pre><code   class="language-php">$form-&gt;switch($column[, $label]);</code></pre>
+<p><a name="display"></a></p>
+<h2>display</h2>
+<p>只显示字段，不做任何操作：</p>
+<pre><code   class="language-php">$form-&gt;display($column[, $label]);
+
+//更复杂的显示
+$form-&gt;display($column[, $label])-&gt;with(function ($value) {
+    return "&lt;img src="$value" /&gt;";
+});</code></pre>
+<p><a name="divider"></a></p>
+<h2>divider</h2>
+<pre><code   class="language-php">$form-&gt;divider();</code></pre>
+<p><a name="html"></a></p>
+<h2>html</h2>
+<p>插入html内容，参数可以是实现了<code  >Htmlable</code>、<code  >Renderable</code>或者实现了<code  >__toString()</code>方法的类</p>
+<pre><code   class="language-php">$form-&gt;html(&#039;你的html内容&#039;, $label = &#039;&#039;);</code></pre>
+<p><a name="tags"></a></p>
+<h2>tags</h2>
+<p>插入逗号(,)隔开的字符串<code  >tags</code></p>
+<pre><code   class="language-php">$form-&gt;tags(&#039;keywords&#039;);</code></pre>
+<p><code  >tags</code>同样支持<code  >ManyToMany</code>的关系，示例如下：</p>
+<pre><code   class="language-php">$form-&gt;tags(&#039;tags&#039;, &#039;文章标签&#039;)
+    -&gt;pluck(&#039;name&#039;, &#039;id&#039;) // name 为需要显示的 Tag 模型的字段，id 为主键
+    -&gt;options(Tag::all());// 下拉框选项</code></pre>
+<p>注意：处理<code  >ManyToMany</code>关系时必须调用<code  >pluck</code>方法，指定显示的字段名和主键。
+此外 <code  >options</code> 方法传入一个<code  >Collection</code>对象时，<code  >options</code>会自动调用该对象的<code  >pluck</code>方法转为<code  >[&#039;主键名&#039; =&gt; &#039;显示字段名&#039;]</code> 数组，作为下拉框选项。或者可以直接使用<code  >[&#039;主键名&#039; =&gt; &#039;显示字段名&#039;]</code>这样的数组作为参数。</p>
+<p><code  >tags</code>还支持<code  >saving</code>方法用于处理提交的数据，示例如下：</p>
+<pre><code   class="language-php">$form-&gt;tags(&#039;tags&#039;, &#039;文章标签&#039;)
+    -&gt;pluck(&#039;name&#039;, &#039;id&#039;)
+    -&gt;options(Tag::all())
+    -&gt;saving(function ($value) {
+        return $value;
+    });</code></pre>
+<p><code  >saving</code> 方法接收一个「参数为 tags 的提交值，返回值为修改后的 tags 提交值」的闭包，可以用于实现自动创建新 tag 或其它功能。</p>
+<p><a name="icon"></a></p>
+<h2>icon</h2>
+<p>选择<code  >font-awesome</code>图标</p>
+<pre><code   class="language-php">$form-&gt;icon(&#039;icon&#039;);</code></pre>
+<p><a name="tree"></a></p>
+<h2>tree</h2>
+<p>树形结构表单</p>
+<pre><code   class="language-php">$form-&gt;tree(&#039;permissions&#039;)
+    -&gt;nodes($permissionModel-&gt;allNodes()) // 设置所有节点
+    -&gt;customFormat(function ($v) { // 格式化外部注入的值
+        if (!$v) return [];
+
+        return array_column($v, &#039;id&#039;);
+    });
+
+// 修改节点的字段名称
+// 默认 “id” “name” “parent_id”
+$form-&gt;tree(&#039;permissions&#039;)
+    -&gt;nodes($permissionModel-&gt;allNodes())
+    -&gt;columnNames(&#039;id&#039;, &#039;title&#039;, &#039;parent&#039;); 
+
+// 默认是不保存父节点的值的，因为一般来说父节点只是作为标题的形式存在
+// 禁止过滤父节点的值
+$form-&gt;tree(&#039;permissions&#039;)
+    -&gt;nodes($permissionModel-&gt;allNodes())
+    -&gt;disableFilterParents();</code></pre>
+<p><a name="table"></a></p>
+<h2>table</h2>
+<p>如果某一个字段存储的是json格式的二维数组，可以使用table表单组件来实现快速的编辑：</p>
+<pre><code   class="language-php">$form-&gt;table(&#039;extra&#039;, function (NestedForm $table) {
+    $table-&gt;text(&#039;key&#039;);
+    $table-&gt;text(&#039;value&#039;);
+    $table-&gt;text(&#039;desc&#039;);
+});</code></pre>
+<p>同时在模型里面给这个字段增加访问器和修改器:</p>
+<pre><code   class="language-php">public function getExtraAttribute($extra)
+{
+    return array_values(json_decode($extra, true) ?: []);
+}
+
+public function setExtraAttribute($extra)
+{
+    $this-&gt;attributes[&#039;extra&#039;] = json_encode(array_values($extra));
+}</code></pre>
+<p>这个组件类似于hasMany组件，不过是用来处理单个字段的情况，适用于简单的二维数据。</p>
+<p><a name="onemany"></a></p>
+<h2>一对多</h2>
+<p>一对多内嵌表格，用于处理一对多的关系，下面是个简单的例子：</p>
+<p>有两张表是一对多关系：</p>
+<pre><code   class="language-sql">CREATE TABLE `demo_painters` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `bio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT &#039;0000-00-00 00:00:00&#039;,
+  `updated_at` timestamp NOT NULL DEFAULT &#039;0000-00-00 00:00:00&#039;,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `demo_paintings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `painter_id` int(10) unsigned NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `body` text COLLATE utf8_unicode_ci NOT NULL,
+  `completed_at` timestamp NOT NULL DEFAULT &#039;0000-00-00 00:00:00&#039;,
+  `created_at` timestamp NOT NULL DEFAULT &#039;0000-00-00 00:00:00&#039;,
+  `updated_at` timestamp NOT NULL DEFAULT &#039;0000-00-00 00:00:00&#039;,
+  PRIMARY KEY (`id`),
+  KEY painter_id (`painter_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;</code></pre>
+<p>表的模型为：</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace App\Models\Demo;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Painter extends Model
+{
+    public function paintings()
+    {
+        return $this-&gt;hasMany(Painting::class, &#039;painter_id&#039;);
+    }
+}</code></pre>
+<pre><code   class="language-php">&lt;?php
+
+namespace App\Models\Demo;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Painting extends Model
+{
+    protected $fillable = [&#039;title&#039;, &#039;body&#039;, &#039;completed_at&#039;];
+
+    public function painter()
+    {
+        return $this-&gt;belongsTo(Painter::class, &#039;painter_id&#039;);
+    }
+}</code></pre>
+<p>构建表单代码如下：</p>
+<pre><code   class="language-php">$form-&gt;display(&#039;id&#039;, &#039;ID&#039;);
+
+$form-&gt;text(&#039;username&#039;)-&gt;rules(&#039;required&#039;);
+$form-&gt;textarea(&#039;bio&#039;)-&gt;rules(&#039;required&#039;);
+
+$form-&gt;hasMany(&#039;paintings&#039;, function (Form\NestedForm $form) {
+    $form-&gt;text(&#039;title&#039;);
+    $form-&gt;image(&#039;body&#039;);
+    $form-&gt;datetime(&#039;completed_at&#039;);
+});
+
+$form-&gt;display(&#039;created_at&#039;, &#039;Created At&#039;);
+$form-&gt;display(&#039;updated_at&#039;, &#039;Updated At&#039;);
+
+// 也可以设置label
+
+$form-&gt;hasMany(&#039;paintings&#039;, &#039;画作&#039;, function (Form\NestedForm $form) {
+
+});</code></pre>
+<p><a name="embeds"></a></p>
+<h2>内嵌</h2>
+<p>用于处理<code  >mysql</code>的<code  >JSON</code>类型字段数据或者<code  >mongodb</code>的<code  >object</code>类型数据，也可以将多个field的数据值以<code  >JSON</code>字符串的形式存储在<code  >mysql</code>的字符串类型字段中</p>
+<p>比如<code  >orders</code>表中的<code  >JSON</code>或字符串类型的<code  >extra</code>字段，用来存储多个field的数据，先定义model:</p>
+<pre><code   class="language-php">class Order extends Model
+{
+    protected $casts = [
+        &#039;extra&#039; =&gt; &#039;json&#039;,
+    ];
+}</code></pre>
+<p>然后在form中使用：</p>
+<pre><code   class="language-php">$form-&gt;embeds(&#039;extra&#039;, function ($form) {
+
+    $form-&gt;text(&#039;extra1&#039;)-&gt;rules(&#039;required&#039;);
+    $form-&gt;email(&#039;extra2&#039;)-&gt;rules(&#039;required&#039;);
+    $form-&gt;mobile(&#039;extra3&#039;);
+    $form-&gt;datetime(&#039;extra4&#039;);
+
+    $form-&gt;dateRange(&#039;extra5&#039;, &#039;extra6&#039;, &#039;范围&#039;)-&gt;rules(&#039;required&#039;);
+
+});
+
+// 自定义标题
+$form-&gt;embeds(&#039;extra&#039;, &#039;附加信息&#039;, function ($form) {
+    ...
+});</code></pre>
+<p>回调函数里面构建表单元素的方法调用和外面是一样的。</p>
+
+		<div id="comment-container" style="margin-top: 90px"></div>
+	</article>
+
+</div>
+
+    <footer class="main">
+        <ul>
+            <li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+        </ul>
+        <p>Built by <b>jqh</b>. Copyright &copy; 2019</p>
+        <p class="less-significant">
+            <a href="http://jackmcdade.com">
+                Designed by<br>
+                <svg xmlns="http://www.w3.org/2000/svg" width="128.2" height="28" viewBox="0 0 128.2 28"><g fill="#c3c3c3"><path d="M14.2.4v1.4l-1.4-.3.3 4.5c.1 1.5 0 3-.1 4.5 0 .4-.1.8-.1 1.2-.1.4-.1.8-.3 1.2-.1.4-.3.7-.5 1.1-.2.3-.5.6-.9.9-.4.2-.9.4-1.5.6-.6.2-1.1.3-1.6.3-.6 0-1.2-.1-1.6-.3-.5-.2-.9-.6-1.1-1-.3-.5-.5-1-.6-1.6-.1-.6-.1-1.3 0-2.1 0-.2.1-.5.2-.7-.1-.2 0-.4.1-.6l.3-.6 1.1.4c.2 0 .5.1.8.2.3.1.5.1.6.2 0 .2 0 .4-.1.5-.1.2-.1.3-.2.4-.1.1-.2.3-.2.4-.1.2-.1.3-.1.5L6 10.8c-.1.3-.2.7-.2 1.1 0 .4.1.8.2 1.2.2.4.4.7.6 1 .3.3.6.4 1 .3.6 0 1.1-.3 1.4-.6.3-.4.5-.9.7-1.7.1-.7.2-1.6.2-2.8V5.4c0-.6-.1-1.3-.1-2-.1-.6-.2-1.3-.3-2H5.7c-.7 0-1.5 0-2.2.2-.3.1-.6.2-1 .4-.3.1-.6.4-.9.6-.2.3-.4.6-.5 1-.1.3-.1.7 0 1 .1.5.3.8.4.9v-.1c0-.4.1-.8.4-1 .3-.2.6-.3.9-.3.3 0 .6.1.9.3.3.2.4.6.4 1s-.1.8-.4 1c-.3.2-.6.3-1 .3-.8 0-1.4-.2-1.8-.7-.4-.4-.7-.9-.8-1.5C0 4 0 3.4.2 2.7c.2-.6.5-1.1 1-1.5.4-.3.8-.5 1.2-.7.4-.1.9-.2 1.4-.3.5-.1.9-.1 1.4-.1h2.9c.6 0 1.1 0 1.6.1.5 0 1 .1 1.5.1s1 .1 1.5.1c.4.1.9.1 1.5 0zM25.2 14.3c0 .2.1.4.1.6 0 .2.1.4.1.7-1-.1-2-.2-3-.1-1.1.1-2.1.2-3 .4 0-.2-.1-.4-.1-.5 0-.2-.1-.4-.1-.5.2 0 .5-.1.7-.1.2 0 .4-.1.6-.1-.1-1.5-.3-3.1-.5-4.6-.5.1-.9.1-1.4.2-.5.1-.9.1-1.4.2-.2.7-.3 1.3-.5 2s-.3 1.3-.5 2h.6c.1 0 .3 0 .4.1v.9c0 .1 0 .2-.1.3H14v-1.2h1c.2-.5.3-1 .4-1.5.1-.5.3-1 .4-1.5.2-.6.3-1.2.5-1.7.2-.6.3-1.2.5-1.7.2-1.1.4-2.1.6-3.2.2-1.1.3-2.1.4-3.2h-1.4c0-.2.1-.4.1-.6 0-.2 0-.4.1-.6h5.8l.2 1.2h-1c.3 2.1.7 4.3 1 6.5.3 2.2.7 4.4 1 6.5h1.6zM17.5 9c.4-.1.7-.1 1.1-.2.4-.1.8-.1 1.2-.2-.2-1-.3-2-.5-2.9-.2-1-.4-1.9-.6-2.9-.2 1-.4 2.1-.5 3.1-.3 1-.5 2.1-.7 3.1zM36.7 10.4h-.6c0 .6 0 1.2-.2 1.9-.2.6-.5 1.2-1 1.6-.5.5-1 .9-1.6 1.1-.6.3-1.3.4-2 .5-.6.1-1.1.1-1.8 0-.6-.1-1.1-.4-1.6-.7-.2-.2-.5-.4-.8-.7-.3-.3-.5-.5-.6-.8-.3-.5-.5-1-.6-1.5-.2-.5-.3-.9-.4-1.4-.1-.5-.2-1-.2-1.5s0-1 .1-1.6c.2-1 .4-2 .8-2.9.4-.9.8-1.7 1.4-2.3.5-.7 1.2-1.2 1.9-1.6.7-.3 1.4-.5 2.2-.5.3 0 .5 0 .8.1.3.1.5.2.7.4.3.3.7.7 1 1.2.3.5.6 1.2.7 1.9h.6v.6l-2.5.4c-.3.1-.5.1-.6 0-.1 0-.2-.1-.2-.2-.1-.1-.1-.2 0-.3h.4c.2-.2.3-.3.3-.6v-.7c0-.5-.2-.9-.5-1.3l-.4-.4c-.2-.1-.4-.1-.6 0-.2 0-.4.2-.6.4-.2.2-.4.5-.5.9-.3.2-.4.6-.5.9-.1.3-.2.5-.2.7-.6 2.6-.7 5.3-.2 8 .1.3.2.7.3 1s.3.6.5.9c.2.3.5.5.8.7.3.2.6.2 1 .1.6-.1 1-.4 1.4-1 .3-.5.6-1.1.7-1.8.1-.3.1-.6.1-.9v-.5c-.2 0-.4 0-.6-.1-.1-.1-.2-.2-.2-.3 0-.1 0-.2.1-.3h3.4c0 .1 0 .2-.1.3-.1.1-.1.2-.1.3z"/><path d="M48 14.2c.1.2.3.3.5.4.2.1.5.1.7 0 .1.1.1.2.1.4s-.1.3-.2.4c-.1.1-.2.2-.4.2h-1.4c-.3 0-.7 0-1-.1-.3-.1-.7-.2-1-.4-.3-.2-.5-.4-.7-.7-.2-.3-.3-.6-.3-1V9.9v-.4c0-.2-.1-.3-.2-.5s-.3-.3-.4-.4c-.2-.1-.4-.1-.7-.1-.1 0-.2 0-.5.1-.2.3-.3.5-.5.8-.2.3-.3.5-.5.7 0 .8 0 1.5-.1 2.2 0 .7-.1 1.5-.1 2.1h1.4v1.1c-.5 0-.9.1-1.3 0-.4 0-.8 0-1.2-.1-.4 0-.8-.1-1.2-.1H37.3c-.1 0-.2 0-.3-.1-.1 0-.1-.1-.1-.2s-.1-.3-.1-.4v-.4c0-.1.1-.2.1-.2.2.1.4.2.6.1s.4-.2.5-.4c0-.1.1-.3.1-.7 0-.4 0-.9.1-1.6 0-.6.1-1.3.1-2.1s0-1.6.1-2.4c0-.8 0-1.5.1-2.3 0-.7.1-1.3.1-1.8v-.7c0-.2-.1-.4-.2-.6-.1-.2-.3-.3-.5-.4-.2-.1-.4 0-.6.1 0-.2-.1-.5-.1-.7 0-.2 0-.4-.1-.7 1 0 2 .1 3 .1.9 0 1.9.1 3 .1v.3c0 .1 0 .3.1.4v.4c0 .1 0 .2-.1.2-.1.1-.2.1-.3.1-.1 0-.2 0-.4-.1-.1-.1-.3-.1-.4-.2-.1-.1-.3-.1-.3-.1-.1.9-.1 1.9-.1 2.9s-.1 2-.1 3.1c.7-1.2 1.4-2.5 2-3.8.2-.3.3-.6.4-.9.1-.3.3-.6.5-.9.2-.3.4-.5.7-.7.3.3.6.2.9.1.3-.1.7-.1 1 0 .3.1.6.2.9.5.2.3.4.6.4 1s.1.8 0 1.1v.5c0 .2-.1.3-.2.4-.1.2-.2.3-.4.4-.2.1-.4.1-.5.2-.1 0-.3.1-.4.1h-.4c-.2-.3-.4-.4-.4-.6-.1-.2-.1-.4 0-.5.1-.2.2-.3.3-.3.1 0 .2-.1.4-.1.2-.1.3-.2.3-.3.1-.2.1-.3.1-.5 0-.3-.1-.5-.1-.7-.1-.2-.2-.3-.3-.3-.2 0-.3 0-.5.1s-.3.2-.5.4-.3.4-.4.6c-.1.2-.3.5-.4.7-.1.3-.3.6-.4.8-.2.2-.3.5-.4.8-.4.9-.8 1.7-1.2 2.5.3 0 .6-.1 1 0h1c.3 0 .7.1 1 .2.3.1.6.3.8.6.3.3.4.6.5 1 .1.4.1.8.2 1.1l.2 2.1c0 .2.1.5.1.7 0 .4.1.7.3.9zM71.7 13.9c.2.2.4.4.7.5.3.1.5 0 .8-.1 0 .2.1.3.1.6.1.2.1.4.1.6h-1.1s-.8 0-1.3.1h-2.3v-.2c0-.1.1-.2.2-.3.1-.1.2-.2.4-.3.2-.1.3-.1.6-.1.1 0 .1-.2.1-.7v-1.6c0-.6 0-1.2-.1-1.9s0-1.1 0-1.5V6.4c0-.7.1-1.5.1-2.2-.6 1.3-1.1 2.7-1.6 4.1-.5 1.5-1 3-1.5 4.4 0 0 .1.1.1.2-.2 0-.4 0-.7.1-.3.1-.5.1-.7.1-.5-1.9-1.1-3.7-1.6-5.5-.5-1.8-1.1-3.6-1.6-5.5-.1 1-.1 2-.1 3 0 1.1-.1 2.1-.1 3.2s0 2.1-.1 3.2c0 1-.1 2-.1 3h1.4v1.1c-.5 0-.9.1-1.3 0-.4 0-.8 0-1.2-.1-.4 0-.8-.1-1.2-.1H58c-.1 0-.2 0-.3-.1-.1 0-.1-.1-.1-.2s-.1-.3-.1-.4v-.4c0-.1.1-.2.1-.2.2.1.4.2.6.1s.4-.2.5-.4c0-.1.1-.3.1-.7 0-.4 0-.9.1-1.6 0-.6.1-1.3.1-2.1V7.2c0-.8 0-1.5.1-2.3 0-.7.1-1.3.1-1.8v-.7c0-.2-.1-.4-.2-.6-.1-.2-.3-.3-.5-.4-.2-.1-.4 0-.6.1 0-.2-.1-.5-.1-.7 0-.2 0-.4-.1-.7 1 0 2 .1 3 .1.9 0 1.9.1 3 .1 0 .3-.1.5-.4.7.3 1.3.6 2.6 1 3.9l1.2 3.9c.2-.6.4-1.3.6-1.9l.6-1.8c.3-.5.5-1.1.8-1.7.2-.6.4-1.3.6-2-.1 0-.3 0-.4-.1-.1 0-.2 0-.4-.1-.1 0-.1-.1-.1-.3 0-.1.1-.2.1-.3.1-.1.2-.1.3-.1h4.5c.1 0 .3.1.4.2.1.1.2.2.2.4s0 .3-.2.3c-.1-.1-.2-.1-.3-.1-.1 0-.2.1-.3.1-.2.4-.3.8-.4 1.3-.1.5-.1.9-.1 1.4-.2 2.8-.2 5.6 0 8.4 0 .3 0 .5.1.7-.1.3 0 .5.2.7zM81.7 12h-.4c0 .4 0 .9-.2 1.3-.1.4-.4.8-.7 1.1-.3.3-.7.6-1.1.8-.4.2-.9.3-1.3.4-.4.1-.8 0-1.2 0-.4-.1-.8-.2-1.1-.5-.2-.1-.3-.3-.5-.5s-.3-.4-.4-.6c-.2-.4-.3-.7-.4-1-.1-.3-.2-.6-.3-1-.1-.3-.1-.6-.1-1 0-.3 0-.7.1-1.1.1-.7.3-1.4.5-2 .3-.6.6-1.1.9-1.6s.8-.8 1.3-1.1c.5-.3 1-.4 1.5-.4.2 0 .4 0 .6.1.2.1.3.1.5.3.2.2.4.4.6.8.2.4.4.8.5 1.3h.4v.4l-1.7.3c-.2.1-.3.1-.4 0-.1 0-.1-.1-.2-.2v-.2h.4c.1-.1.2-.2.2-.4v-.5c0-.3-.1-.6-.3-.9l-.3-.3c-.1-.1-.2-.1-.4 0-.1 0-.3.1-.4.3-.1.2-.3.4-.4.6l-.3.6c-.1.2-.1.4-.1.5-.4 1.8-.5 3.6-.1 5.5.1.2.1.4.2.7l.3.6c.1.2.3.3.6.5.2.1.4.1.7.1.4-.1.7-.3 1-.7.2-.4.4-.8.5-1.2 0-.2.1-.4.1-.6v-.3h-.4c-.1 0-.1-.1-.1-.2s0-.2.1-.2h2.4v.2c-.5-.1-.5 0-.6.1z"/><path d="M83.5 14.2c.2-4.3.3-8.5.2-12.8h-1.8V.9.4c.7 0 1.3 0 2-.1.7 0 1.3 0 2-.1.8-.2 1.6-.2 2.4-.1.8.1 1.6.3 2.4.5.7.3 1.4.7 1.9 1.2s.9 1.1 1.1 1.8c.3 1.3.4 2.5.3 3.8 0 1.2-.2 2.4-.3 3.6 0 .4-.1.8-.2 1.2-.1.4-.3.8-.5 1.1-.3.5-.8 1-1.3 1.3-.5.3-1.1.5-1.7.6-.5.1-.9.2-1.4.1-.5 0-.9 0-1.4-.1h-4.9c-.2-.4-.1-.8.2-1.1.2-.2.3-.2.5-.3.2.3.4.3.5.4zm5.9-12.3c-.4-.3-.8-.5-1.3-.6-.5-.1-1-.1-1.5-.1-.3 4.5-.2 9.1.4 13.6.2 0 .4 0 .5-.1.2 0 .4-.1.6-.1.3-.1.6-.2.9-.4.3-.2.6-.4.8-.7.2-.3.4-.6.5-1s.2-.7.2-1.1c.4-2.1.4-4.2.2-6.3-.1-.6-.2-1.2-.4-1.9 0-.4-.4-.9-.9-1.3zM102.4 9.7c-.6-.1-1.3-.1-2 0s-1.4.4-2 .8l-.2-1.4.9-.1c0-.4-.1-.7-.1-1 0-.2-.1-.5-.1-.9-.3 0-.6.1-.9.1-.3 0-.6.1-1 .1-.2.7-.3 1.3-.4 1.8-.1.5-.2 1.1-.4 1.6l.2-.1.7.6c-.4.2-.8.6-1.2 1.1-.4.5-.7 1-.9 1.5l-.9-.5c0-.1.1-.2.2-.4s.2-.3.2-.4c.1-.2.2-.5.3-1 .1-.4.2-.9.4-1.3.1-.5.2-.9.3-1.3.1-.4.2-.7.2-.9l.3-1.2.3-1.2c.2-.7.3-1.4.4-2.1.1-.7.2-1.4.3-2.2h-.6l.1-.8 4-.1.1.8h-.2-.2c.1.7.2 1.4.3 2l.3 1.8.3 1.8c.1.6.2 1.3.4 2h.6l.3.9zm-3.6-3.6c-.1-.7-.2-1.3-.3-2-.1-.6-.3-1.3-.4-2-.1.6-.2 1.3-.4 2.1-.1.7-.3 1.5-.5 2.2l1.6-.3z"/><path d="M124.9 20.1c0-.3.1-.6.3-.8.2-.2.4-.3.7-.4.3-.1.5 0 .8.1.3.1.5.3.6.5.3.4.6.9.7 1.4.2.5.2 1 .2 1.5s-.1 1-.3 1.5c-.2.5-.4 1-.7 1.4-.6.9-1.4 1.6-2.4 2-1 .5-2 .7-3 .7-1.5 0-2.8-.3-3.9-1s-2.1-1.4-3-2.4c-.9-1-1.8-2.1-2.5-3.2-.8-1.2-1.5-2.3-2.3-3.5-1.1 1.2-2.4 2.2-3.9 3-1.5.8-3 1.1-4.5 1-1.1 0-2.1-.1-3-.5-.9-.3-1.6-.8-2.2-1.4-.6-.6-.9-1.3-1.1-2.2-.2-.8-.1-1.7.2-2.7.3-.9.7-1.6 1.3-2.2.6-.6 1.2-1.1 2-1.5.7-.4 1.5-.6 2.4-.7.8-.1 1.7 0 2.6.2v-5-4.6h-1.8V.8.3l3.7-.1c.8-.2 1.6-.2 2.4-.1.8.1 1.6.3 2.4.5.7.3 1.4.7 1.9 1.2s.9 1.1 1.1 1.8c.3 1.2.4 2.4.3 3.6-.1 1.2-.2 2.5-.4 3.7-.1 1-.4 2-.8 3-.5 1-1 2-1.7 2.9.3.4.6.8.8 1.2.3.4.5.8.8 1.2.5.8 1.1 1.6 1.7 2.5.6.8 1.3 1.6 2 2.4.7.7 1.5 1.3 2.4 1.8s1.8.7 2.9.8c1.1 0 2.1-.2 3-.7.9-.5 1.6-1.2 2.1-2.2.2-.4.3-.8.4-1.3.1-.5 0-.9-.1-1.3-.2.1-.4.2-.6.2-.2 0-.4 0-.6-.1-.2-.1-.4-.2-.5-.4s-.4-.5-.4-.8zm-22 .9c1.5-.4 2.8-1 3.7-1.8.9-.8 1.7-1.7 2.3-2.8-.2-.2-.3-.5-.6-.7-.6-.7-1.2-1.4-1.9-1.9 0 .6.1 1.2.1 1.8 0 .6.1 1.1.2 1.6v.1h-4.3c-.1-.2-.1-.4 0-.7 0-.2.1-.3.3-.5.3-.3.7-.4 1.1-.2l.1-3.5c-.5-.2-1-.3-1.5-.3s-1.1 0-1.6.1c-.6.1-1.1.3-1.6.6s-.9.7-1.3 1.1c-.4.4-.7.9-.9 1.5-.2.5-.3 1.1-.3 1.6 0 .7.2 1.3.6 1.8.4.5.9.9 1.4 1.4.2.2.5.3.8.5.3.1.7.2 1.1.3.4.1.8.1 1.2.1.3 0 .7 0 1.1-.1zm6.4-19.1c-.4-.3-.8-.5-1.2-.6-.5-.1-.9-.1-1.4-.1-.1 1.7-.2 3.4-.3 5.3-.1 1.9-.1 3.7 0 5.6.6.4 1.2.8 1.7 1.4.5.5 1 1.1 1.5 1.6.2-.6.4-1.2.6-1.9.2-.6.3-1.2.3-1.7.2-1.1.2-2.1.3-3.1 0-1 0-2.1-.1-3.1-.1-.6-.2-1.2-.4-1.9-.2-.6-.5-1.1-1-1.5z"/><path d="M116.5 1.2h-1.8V.4c.5 0 .9 0 1.2-.1s.7 0 1.1 0h1.1s.8 0 1.3-.1c.9 0 1.8 0 2.8-.1.9 0 1.8 0 2.8-.1v3.6h-1.3c-.1 0-.1-.1 0-.1.1-.2.1-.4.1-.6s0-.4-.1-.6l-.3-.6c-.1-.2-.2-.3-.4-.4-.2-.1-.4-.2-.6-.2h-.7c-.3 0-.5.1-.8.1-.3.1-.5.2-.6.4-.1.2-.1.3-.1.3v.3c0 .7-.1 1.3-.1 2 0 .6-.1 1.3-.1 1.9v1c.6-.2 1.2-.3 1.9-.4.6-.1 1.2-.3 1.9-.4 0 .1.1.2.1.3V7c0 .2-.1.3-.1.4-.1.1-.1.2-.1.3-.1.1-.2.1-.4.2-.1 0-.3.1-.4.1-.5.1-.9.2-1.4.3-.5.1-.9.1-1.4.2 0 1-.1 2-.2 2.9-.1 1-.1 1.9-.2 2.9.8.2 1.5.3 2 .1.6-.2 1.2-.5 1.9-1 .2-.1.2-.3.2-.5v-.7c0-.2.1-.5.2-.6.1-.2.3-.3.7-.4.4 0 .6.1.7.4.1.3.2.7.2 1.1 0 .5 0 .9-.1 1.4-.1.5-.1.9 0 1.2h-1.4c-.4 0-.8 0-1.2.1-.4 0-.8 0-1.2.1h-1.3c-.9 0-1.7 0-2.5.1-.7.1-1.6.1-2.4.1-.2-.2-.2-.4-.2-.7 0-.2.1-.5.3-.6.2-.2.3-.3.6-.3.2-.1.5 0 .7.1.1-2.1.2-4.3.1-6.5-.7-2.2-.7-4.3-.5-6.5z"/></g></svg>
+            </a>
+        </p>
+    </footer>
+
+    <div class="fixed-bottom-btn"><a class="waves-effect waves-light" id="go-top"><i class="fa fa-chevron-up"></i></a></div>
+
+    <script>
+    var DMS = {
+        version: 'master',
+
+        getDocUrl: function (doc) {
+            var temp = 'docs/master/{doc}.html';
+
+            if (location.pathname.indexOf(temp.replace('{doc}.html', '')) !== -1) {
+                return doc+'.html';
+            }
+
+            return temp.replace('{doc}', doc);
+        },
+
+        config: {
+            comment: {"enable":true,"clientID":"b0db00f91f421852203b","clientSecret":"bc39c61703100ad1c9490c5187cf1c6682e03513","repo":"dcat-admin-comments","owner":"jqhwx","admin":["jqhwx"],"language":"zh-CN","perPage":15,"pagerDirection":"first"}
+        },
+    };
+
+    DMS.config.comment.id = 'master/model-form-fields';
+
+    (function () {
+        function indices() {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src="../../assets/indices/master.js";
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+        }
+
+        setTimeout(indices, 1);
+    })();
+
+</script>
+
+             <script src="../../assets/gitalk/gitalk.min.js"></script>
+         <script src="../../assets/js/laravel.js"></script>
+     <script src="../../assets/js/viewport-units-buggyfill.js"></script>
+    <script>window.viewportUnitsBuggyfill.init();</script>
+
+</body>
+</html>

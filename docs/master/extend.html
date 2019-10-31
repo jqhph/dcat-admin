@@ -1,0 +1,917 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>开发扩展 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
+    <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="canonical" href="../../docs-master-extend.html" />
+    
+     <link rel="stylesheet" href="../../assets/css/laravel.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
+
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i">
+     <link rel="stylesheet" href="../../assets/font-awesome/css/font-awesome.min.css">
+
+    <link rel="shortcut icon" href="../../assets/img/favicon.ico">
+
+             <link rel="stylesheet" href="../../assets/gitalk/gitalk.css">
+        <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src="https://hm.baidu.com/hm.js?a7ae1f00b3f1bf2992dc2885b8f5f413";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body class="docs language-default">
+    
+        
+        
+        
+    
+    <span class="overlay"></span>
+
+    <nav class="main">
+        <a href="../../index.html" class="brand nav-block" >
+
+            <span>Dcat Admin</span>
+        </a>
+
+        <ul class="main-nav">
+            <li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+        </ul>
+
+        <div class="search nav-block invisible">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#A1A1A1" d="M5.8 11.7c-1.6 0-3-.6-4.1-1.7S0 7.4 0 5.8s.6-3 1.7-4.1C2.8.6 4.3 0 5.8 0s3 .6 4.1 1.7c2.3 2.3 2.3 6 0 8.3-1 1.1-2.5 1.7-4.1 1.7zM5.8 1c-1.3 0-2.5.5-3.4 1.4C1.5 3.3 1 4.5 1 5.8s.5 2.5 1.4 3.4c.9.9 2.1 1.4 3.4 1.4s2.5-.5 3.4-1.4c1.9-1.9 1.9-5 0-6.9C8.4 1.5 7.1 1 5.8 1z"/><path fill="#A1A1A1" d="M15.5 16c-.1 0-.3 0-.3-.1L9.3 10c-.2-.2-.2-.5 0-.7s.5-.2.7 0l5.9 5.9c.2.2.2.5 0 .7-.1.1-.3.1-.4.1z"/></svg>
+            <input placeholder="search" type="text" id="search-input" aria-label="search"/>
+        </div>
+
+                    <div class="switcher">
+	<div class="dropdown">
+		<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			Master
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="../../docs-master-extend.html">Master</a>
+				</li>
+					</ul>
+	</div>
+</div>
+        
+        <div class="responsive-sidebar-nav">
+            <a href="#" class="toggle-slide menu-link btn">&#9776;</a>
+        </div>
+    </nav>
+
+    <nav id="slide-menu" class="slide-menu" role="navigation">
+
+	<div class="brand">
+		<a href="../../index.html">
+			Dcat Admin
+		</a>
+	</div>
+
+	<ul class="slide-main-nav">
+		<li><a href="../../index.html">Home</a></li>
+
+		<li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+	</ul>
+
+	<div class="slide-docs-nav">
+		<h2>Documentation</h2>
+
+		<ul class="slide-docs-version">
+			<li>
+				<h2>Version</h2>
+
+				<ul>
+					<li>
+													<div class="switcher">
+	<div class="dropdown">
+		<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			Master
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="../../docs-master-extend.html">Master</a>
+				</li>
+					</ul>
+	</div>
+</div>
+											</li>
+				</ul>
+			</li>
+		</ul>
+
+		<ul>
+<li>
+<h2>入门</h2>
+<ul>
+<li><a href="../../docs/master/installation.html">安装</a></li>
+<li><a href="../../docs/master/notice.html">开发前必读</a></li>
+<li><a href="../../docs/master/quick-start.html">快速开始</a></li>
+<li><a href="../../docs/master/content-layout.html">页面内容和布局</a></li>
+<li><a href="../../docs/master/new.html">与Laravel Admin的异同</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表格</h2>
+<ul>
+<li><a href="../../docs/master/model-grid.html">基本使用</a></li>
+<li><a href="../../docs/master/model-grid-column.html">列的使用</a></li>
+<li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
+<li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
+<li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
+<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-data.html">表格数据源</a></li>
+<li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
+<li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
+<li><a href="../../docs/master/model-grid-init.html">表格初始化</a></li>
+<li><a href="../../docs/master/model-grid-trans.html">表格字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表单</h2>
+<ul>
+<li><a href="../../docs/master/model-form.html">基本使用</a></li>
+<li><a href="../../docs/master/model-form-upload.html">图片/文件上传</a></li>
+<li><a href="../../docs/master/model-form-fields.html">Form组件使用</a></li>
+<li><a href="../../docs/master/model-form-field-management.html">Form组件管理</a></li>
+<li><a href="../../docs/master/model-form-data.html">表单数据源</a></li>
+<li><a href="../../docs/master/model-form-modal.html">表单弹窗</a></li>
+<li><a href="../../docs/master/model-form-validation.html">表单验证</a></li>
+<li><a href="../../docs/master/model-form-callback.html">表单回调</a></li>
+<li><a href="../../docs/master/model-form-init.html">表单初始化</a></li>
+<li><a href="../../docs/master/model-form-trans.html">表单字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据详情</h2>
+<ul>
+<li><a href="../../docs/master/model-show.html">基本使用</a></li>
+<li><a href="../../docs/master/model-show-field.html">字段显示</a></li>
+<li><a href="../../docs/master/model-show-relation.html">关联关系</a></li>
+<li><a href="../../docs/master/model-show-extend.html">显示扩展</a>      </li>
+<li><a href="../../docs/master/model-show-init.html">初始化</a></li>
+<li><a href="../../docs/master/model-show-trans.html">字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/model-tree.html">模型树</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/trans.html">多语言</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/extend.html">开发扩展</a></h2>
+</li>
+<li>
+<h2>页面组件</h2>
+<ul>
+<li><a href="../../docs/master/widgets-charts.html">图表</a></li>
+<li><a href="../../docs/master/widgets-data-card.html">数据卡片</a></li>
+<li><a href="../../docs/master/widgets-form.html">表单</a></li>
+<li><a href="../../docs/master/widgets-dialog-form.html">表单弹窗</a></li>
+<li><a href="../../docs/master/widgets-navbar.html">导航菜单</a></li>
+<li><a href="../../docs/master/widgets-dropdown.html">下拉菜单</a></li>
+<li><a href="../../docs/master/widgets-tab.html">选项卡</a></li>
+<li><a href="../../docs/master/widgets-alert.html">告警框</a></li>
+<li><a href="../../docs/master/widgets-tooltip.html">提示条</a></li>
+<li><a href="../../docs/master/widgets-checkbox.html">单、复选框</a></li>
+<li><a href="../../docs/master/widgets-markdown.html">Markdown</a></li>
+<li><a href="../../docs/master/widgets-box.html">卡片</a></li>
+<li><a href="../../docs/master/widgets-accordion.html">折叠卡</a></li>
+<li><a href="../../docs/master/widgets-table.html">表格</a></li>
+<li><a href="../../docs/master/widgets-js.html">JS组件</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/section.html">区块（section）</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/permission.html">权限控制</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/menu.html">菜单</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/function.html">帮助函数</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/helpers.html">开发工具</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-authentication.html">自定义登陆认证</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-navbar.html">自定义头部导航</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/qa.html">常见问题</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/change-log.html">Change log</a></h2>
+</li>
+</ul>
+	</div>
+
+</nav>
+
+<div class="docs-wrapper container">
+
+	<section class="sidebar">
+		
+		<small><a href="#" id="doc-expand" style="font-size: 11px; color: #B8B8B8;">EXPAND ALL</a></small>
+		<ul>
+<li>
+<h2>入门</h2>
+<ul>
+<li><a href="../../docs/master/installation.html">安装</a></li>
+<li><a href="../../docs/master/notice.html">开发前必读</a></li>
+<li><a href="../../docs/master/quick-start.html">快速开始</a></li>
+<li><a href="../../docs/master/content-layout.html">页面内容和布局</a></li>
+<li><a href="../../docs/master/new.html">与Laravel Admin的异同</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表格</h2>
+<ul>
+<li><a href="../../docs/master/model-grid.html">基本使用</a></li>
+<li><a href="../../docs/master/model-grid-column.html">列的使用</a></li>
+<li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
+<li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
+<li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
+<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-data.html">表格数据源</a></li>
+<li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
+<li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
+<li><a href="../../docs/master/model-grid-init.html">表格初始化</a></li>
+<li><a href="../../docs/master/model-grid-trans.html">表格字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据表单</h2>
+<ul>
+<li><a href="../../docs/master/model-form.html">基本使用</a></li>
+<li><a href="../../docs/master/model-form-upload.html">图片/文件上传</a></li>
+<li><a href="../../docs/master/model-form-fields.html">Form组件使用</a></li>
+<li><a href="../../docs/master/model-form-field-management.html">Form组件管理</a></li>
+<li><a href="../../docs/master/model-form-data.html">表单数据源</a></li>
+<li><a href="../../docs/master/model-form-modal.html">表单弹窗</a></li>
+<li><a href="../../docs/master/model-form-validation.html">表单验证</a></li>
+<li><a href="../../docs/master/model-form-callback.html">表单回调</a></li>
+<li><a href="../../docs/master/model-form-init.html">表单初始化</a></li>
+<li><a href="../../docs/master/model-form-trans.html">表单字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2>数据详情</h2>
+<ul>
+<li><a href="../../docs/master/model-show.html">基本使用</a></li>
+<li><a href="../../docs/master/model-show-field.html">字段显示</a></li>
+<li><a href="../../docs/master/model-show-relation.html">关联关系</a></li>
+<li><a href="../../docs/master/model-show-extend.html">显示扩展</a>      </li>
+<li><a href="../../docs/master/model-show-init.html">初始化</a></li>
+<li><a href="../../docs/master/model-show-trans.html">字段翻译</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/model-tree.html">模型树</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/trans.html">多语言</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/extend.html">开发扩展</a></h2>
+</li>
+<li>
+<h2>页面组件</h2>
+<ul>
+<li><a href="../../docs/master/widgets-charts.html">图表</a></li>
+<li><a href="../../docs/master/widgets-data-card.html">数据卡片</a></li>
+<li><a href="../../docs/master/widgets-form.html">表单</a></li>
+<li><a href="../../docs/master/widgets-dialog-form.html">表单弹窗</a></li>
+<li><a href="../../docs/master/widgets-navbar.html">导航菜单</a></li>
+<li><a href="../../docs/master/widgets-dropdown.html">下拉菜单</a></li>
+<li><a href="../../docs/master/widgets-tab.html">选项卡</a></li>
+<li><a href="../../docs/master/widgets-alert.html">告警框</a></li>
+<li><a href="../../docs/master/widgets-tooltip.html">提示条</a></li>
+<li><a href="../../docs/master/widgets-checkbox.html">单、复选框</a></li>
+<li><a href="../../docs/master/widgets-markdown.html">Markdown</a></li>
+<li><a href="../../docs/master/widgets-box.html">卡片</a></li>
+<li><a href="../../docs/master/widgets-accordion.html">折叠卡</a></li>
+<li><a href="../../docs/master/widgets-table.html">表格</a></li>
+<li><a href="../../docs/master/widgets-js.html">JS组件</a></li>
+</ul>
+</li>
+<li>
+<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/section.html">区块（section）</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/permission.html">权限控制</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/menu.html">菜单</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/function.html">帮助函数</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/helpers.html">开发工具</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-authentication.html">自定义登陆认证</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/custom-navbar.html">自定义头部导航</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/qa.html">常见问题</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
+</li>
+<li>
+<h2><a href="../../docs/master/change-log.html">Change log</a></h2>
+</li>
+</ul>
+	</section>
+
+	<article>
+		<h1>开发扩展</h1>
+<p><a name="pre"></a></p>
+<h2>开始</h2>
+<p><code  >Dcat Admin</code>支持安装扩展工具来帮助丰富你的后台功能。</p>
+<blockquote>
+<p>需要注意的是，<code  >Laravel Admin</code>原有的扩展无法直接在<code  >Dcat Admin</code>中使用，但大部分扩展只需要做一些微小的调整就可以正常使用了，有兴趣的同学可以自行移植。</p>
+</blockquote>
+<p>如果大家在使用的过程中有在<code  >Dcat Admin</code>的基础上添加一些自己的功能或者组件，不妨做成一个<code  >Dcat Admin</code>扩展，这样可以给其它<code  >Dcat Admin</code>使用者提供帮助，并且在其它人的使用反馈中的提升扩展的质量。</p>
+<p>这篇文档将会以开发一个<code  >干货集中营</code>扩展为例，一步一步的开发一个扩展，并且发布给他人使用，最终的效果参考[Demo]()。</p>
+<p><a name="composer"></a></p>
+<h2>创建composer包</h2>
+<p><code  >Dcat Admin</code>的包将会用<code  >composer</code>安装，所以先要创建一个<code  >composer</code>包，可以用内置的<code  >admin:extend</code>命令来生成一个扩展的骨架。</p>
+<p>运行命令的时候，可能会提示输入一个目录来存放你的扩展文件，你可以在<code  >config/admin.php</code>里面增加一个配置<code  >&#039;extension_dir&#039; =&gt; admin_path(&#039;Extensions&#039;)</code>，这样扩展文件将会存放在<code  >app/Admin/Extensions目录下</code>,当然你也可以放在任何其它目录。</p>
+<pre><code   class="language-php">php artisan admin:extend dcat-admin-extension/gank --namespace=Dcat\\Admin\\Extension\\Gank</code></pre>
+<p>其中<code  >dcat-admin-extension/gank</code>是包名，<code  >namespace</code>选项是这个包使用的顶级命名空间，运行这个命令之后, 将会在在<code  >config/admin.php</code>中设置的扩展目录中生成目录<code  >dcat-admin-extension/gank</code>和下面的文件结构：</p>
+<pre><code  >├── LICENSE
+├── README.md
+├── composer.json
+├── bootstrap.php
+├── database
+│   ├── migrations
+│   └── seeds
+├── resources
+│   ├── assets
+│   └── views
+│       └── index.blade.php
+├── routes
+│   └── web.php
+└── src
+    ├── Gank.php
+    ├── GankServiceProvider.php
+    └── Http
+        └── Controllers
+            └── GankController.php</code></pre>
+<p><code  >bootstrap.php</code>用于注册扩展，此文件的代码不需要做任何修改；<code  >resources</code>用来放置视图文件和静态资源文件；<code  >src</code>主要用来放置逻辑代码； <code  >routes/web.php</code>用来存放这个扩展的路由设置，<code  >database</code>用来放置数据库迁移文件和数据<code  >seeders</code>。</p>
+<p><a name="dev"></a></p>
+<h2>功能开发</h2>
+<p>这个扩展的功能主要用来展示<a href="http://gank.io">gank.io</a>接口的内容，集成进<code  >Dcat Admin</code>中，它将会有一个路由和一个控制器，没有数据库文件、模板和静态资源文件，我们可以将没有用到的文件或目录清理掉，清理之后的目录文件为：</p>
+<pre><code  >├── LICENSE
+├── README.md
+├── composer.json
+├── bootstrap.php
+├── routes
+│   └── web.php
+└── src
+    ├── Gank.php
+    ├── GankServiceProvider.php
+    └── Http
+        └── Controllers
+            └── GankController.php</code></pre>
+<p>生成完扩展框架之后，你可能需要一边调试一边开发，所以可以参考下面的本地安装，先把扩展安装进系统中，继续开发</p>
+<p><a name="route"></a></p>
+<h3>添加路由</h3>
+<p>首先添加一个路由，在<code  >routes/web.php</code>中已经自动生成好了一个路由配置</p>
+<pre><code   class="language-php">&lt;?php
+
+use Dcat\Admin\Extension\Gank\Http\Controllers;
+
+Route::get(&#039;gank&#039;, Controllers\GankController::class.&#039;@index&#039;);</code></pre>
+<p>访问路径<code  >http://localhost:8000/admin/gank</code>，将会由<code  >Dcat\Admin\Extension\Gank\Http\Controllers\GankController</code>控制器的<code  >index</code>方法来处理这个请求。</p>
+<p><a name="attrs"></a></p>
+<h3>设置扩展属性</h3>
+<p><code  >src/Gank.php</code>作为扩展类，用来设置扩展的属性</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace Dcat\Admin\Extension\Gank;
+
+use Dcat\Admin\Extension;
+
+class Gank extends Extension
+{
+    // 扩展别名，用于在配置文件中获取配置信息
+    const NAME = &#039;gank&#039;;
+
+    // service provider类名，这个用自动生成的就行，不需要改
+    public $serviceProvider = GankServiceProvider::class;
+
+    // 静态资源目录，如果不需要静态资源可用删除掉  
+//    public $assets = __DIR__.&#039;/../resources/assets&#039;;
+
+    // composer配置文件路径，用默认的即可
+    public $composerJson = __DIR__.&#039;/../composer.json&#039;;
+
+    // 自定义属性
+    public static $categoryColorsMap = [
+        &#039;App&#039;      =&gt; &#039;var(--purple)&#039;,
+        &#039;前端&#039;     =&gt; &#039;var(--primary)&#039;,
+        &#039;拓展资源&#039; =&gt; &#039;var(--primary-dark)&#039;,
+        &#039;瞎推荐&#039;   =&gt; &#039;var(--blue)&#039;,
+        &#039;福利&#039;     =&gt; &#039;var(--danger)&#039;,
+        &#039;Android&#039;  =&gt; &#039;var(--purple-dark)&#039;,
+        &#039;iOS&#039;      =&gt; &#039;var(--info)&#039;,
+        &#039;休息视频&#039; =&gt; &#039;var(--warning)&#039;,
+    ];
+}
+</code></pre>
+<p>这个文件用来设置这个扩展的一些属性，<code  >$name</code>是这个扩展的别名，如果这个扩展有视图文件需要渲染，则必须指定这个扩展的<code  >$views</code>属性，同样如果有静态资源文件需要发布，则必须设置<code  >$assets</code>属性， 如果需要在左侧边栏增加一项菜单按钮，设置<code  >$menu</code>属性，可以根据需要去掉不必要的属性。</p>
+<p>然后打开<code  >src/GankServiceProvider.php</code>，这个<code  >ServiceProvider</code>将会在启用扩展的时候运行（不需要开发者自己添加），用来将这个扩展的一些服务注册进系统中。</p>
+<p><a name="loadview"></a></p>
+<h3>加载视图</h3>
+<p>如果这个扩展需要加载视图文件，在<code  >src/GankServiceProvider.php</code>的<code  >boot</code>方法中加入以下的代码：</p>
+<pre><code   class="language-php">$extension = Gank::make();
+
+if ($extension-&gt;views) {
+    $this-&gt;loadViewsFrom($extension-&gt;views, &#039;gank&#039;);
+}</code></pre>
+<p><code  >loadViewsFrom</code>方法的的第一个参数为在扩展类<code  >src/Gank.php</code>中设置的视图属性，第二个参数是视图文件目录的命名空间，设置为<code  >gank</code>之后，在控制器中用<code  >view(&#039;gank::index&#039;)</code>来加载<code  >resources/views</code>目录下的视图文件。</p>
+<p><a name="loadassets"></a></p>
+<h3>引入静态资源</h3>
+<p>如果你的项目中有静态资源文件需要引入，先把文件放在<code  >resources/assets</code>目录中，比如放入<code  >resources/assets/foo.js</code>和<code  >resources/assets/bar.css</code>这两个文件。</p>
+<p>接着在扩展类<code  >src/Gank.php</code>中设置<code  >$assets</code>属性即可：</p>
+<pre><code   class="language-php">public $assets = __DIR__.&#039;/../resources/assets&#039;;</code></pre>
+<p>安装完成之后，文件将会复制到<code  >public/vendor/dcat-admin-extensions/gank</code>目录中。</p>
+<p>我们需要在<code  >Dcat Admin</code>启动的时候在页面里引入这两个文件，需要在<code  >src/GankServiceProvider.php</code>的<code  >boot</code>方法加入下面的代码：</p>
+<pre><code   class="language-php">use use Encore\Admin\Admin;
+
+...
+
+Admin::booting(function () {
+    Admin::js(&#039;vendor/dcat-admin-extensions/gank/phpinfo/foo.js&#039;);
+    Admin::css(&#039;vendor/dcat-admin-extensions/gank/phpinfo/bar.css&#039;);
+});</code></pre>
+<p>这样就完成了静态资源的引入，在<code  >gank</code>这个扩展中，由于没有静态资源需要引入，所以可以忽略掉这一步。</p>
+<p><a name="addmenu"></a></p>
+<h3>添加菜单</h3>
+<p>添加菜单的方式有两种：</p>
+<ul>
+<li>在<code  >src/Gank.php</code>设置<code  >$menu</code>属性，这种方式是把菜单写入到菜单表中，用户更易于控制</li>
+<li>使用<code  >Admin::menu</code>接口通过数组的方式添加菜单，这种方式更加方便，并且支持添加多级菜单</li>
+</ul>
+<p>这里使用的是第二种方式添加菜单，在<code  >src/GankServiceProvider.php</code>的<code  >boot</code>方法加入下面的代码：</p>
+<pre><code   class="language-php">Admin::menu()-&gt;add([
+    [
+        &#039;id&#039;            =&gt; 1,
+        &#039;title&#039;         =&gt; &#039;干货集中营&#039;,
+        &#039;icon&#039;          =&gt; &#039; fa-newspaper-o&#039;,
+        &#039;uri&#039;           =&gt; &#039;gank&#039;,
+        &#039;parent_id&#039;     =&gt; 0,
+        &#039;permission_id&#039; =&gt; &#039;gank&#039;, // 绑定权限
+        &#039;roles&#039;         =&gt; [[&#039;slug&#039; =&gt; &#039;gank&#039;]], // 绑定角色
+    ],
+    [
+        &#039;id&#039;            =&gt; 2,
+        &#039;title&#039;         =&gt; &#039;所有干货&#039;,
+        &#039;icon&#039;          =&gt; &#039;fa-smile-o&#039;,
+        &#039;uri&#039;           =&gt; &#039;gank&#039;,
+        &#039;parent_id&#039;     =&gt; 1,
+        &#039;permission_id&#039; =&gt; &#039;gank&#039;, // 绑定权限
+        &#039;roles&#039;         =&gt; [[&#039;slug&#039; =&gt; &#039;gank&#039;]], // 绑定角色
+    ],
+]);</code></pre>
+<p>最终的<code  >src/GankServiceProvider.php</code>代码如下：</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace Dcat\Admin\Extension\Gank;
+
+use Dcat\Admin\Admin;
+use Illuminate\Support\ServiceProvider;
+
+class GankServiceProvider extends ServiceProvider
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function boot()
+    {
+        $extension = Gank::make();
+
+        if ($extension-&gt;views) {
+            $this-&gt;loadViewsFrom($extension-&gt;views, &#039;gank&#039;);
+        }
+
+        if ($extension-&gt;lang) {
+            $this-&gt;loadTranslationsFrom($extension-&gt;lang, &#039;gank&#039;);
+        }
+
+        if ($extension-&gt;migrations) {
+            $this-&gt;loadMigrationsFrom($extension-&gt;migrations);
+        }
+
+        $this-&gt;app-&gt;booted(function () use ($extension) {
+            $extension-&gt;routes(__DIR__.&#039;/../routes/web.php&#039;);
+        });
+
+        // 添加菜单
+        $this-&gt;registerMenus();
+    }
+
+    protected function registerMenus()
+    {
+        Admin::menu()-&gt;add([
+            [
+                &#039;id&#039;            =&gt; 1,
+                &#039;title&#039;         =&gt; &#039;干货集中营&#039;,
+                &#039;icon&#039;          =&gt; &#039; fa-newspaper-o&#039;,
+                &#039;uri&#039;           =&gt; &#039;gank&#039;,
+                &#039;parent_id&#039;     =&gt; 0,
+                &#039;permission_id&#039; =&gt; &#039;gank&#039;, // 绑定权限
+                &#039;roles&#039;         =&gt; [[&#039;slug&#039; =&gt; &#039;gank&#039;]], // 绑定角色
+            ],
+            [
+                &#039;id&#039;            =&gt; 2,
+                &#039;title&#039;         =&gt; &#039;所有干货&#039;,
+                &#039;icon&#039;          =&gt; &#039;fa-smile-o&#039;,
+                &#039;uri&#039;           =&gt; &#039;gank&#039;,
+                &#039;parent_id&#039;     =&gt; 1,
+                &#039;permission_id&#039; =&gt; &#039;gank&#039;, // 绑定权限
+                &#039;roles&#039;         =&gt; [[&#039;slug&#039; =&gt; &#039;gank&#039;]], // 绑定角色
+            ],
+        ]);
+    }
+}</code></pre>
+<p><a name="importcode"></a></p>
+<h2>添加自定义安装逻辑</h2>
+<p>如果你想在导入扩展时执行一些自定义逻辑，可以在<code  >src/Gank.php</code>中添加以下代码：</p>
+<blockquote>
+<p>注意请保证重复执行导入命令不会报错</p>
+</blockquote>
+<pre><code   class="language-php">...
+
+    public function import(Command $command)
+    {
+        parent::import($command); // TODO: Change the autogenerated stub
+
+        // 在这里写入你的导入逻辑
+
+        $command-&gt;info(&#039;导入成功&#039;);
+
+    }
+</code></pre>
+<p><a name="code"></a></p>
+<h2>代码逻辑开发</h2>
+<p>这个扩展主要是调用[gank.io]()提供的接口，再把数据展示出来。</p>
+<p>我们需要新增一个数据仓库文件用于获取[gank.io]()的数据，创建文件<code  >src/Repositories/Ganks.php</code>：</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace Dcat\Admin\Extension\Gank\Repositories;
+
+use Dcat\Admin\Grid;
+use Dcat\Admin\Repositories\Repository;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+
+class Ganks extends Repository
+{
+    protected $api = &#039;http://gank.io/api/data/{category}/{limit}/{page}&#039;;
+
+    protected $searchApi = &#039;http://gank.io/api/search/query/{key}/category/{category}/count/{limit}/page/{page}&#039;;
+
+    /**
+     * 查询表格数据
+     *
+     * @param Grid\Model $model
+     * @return Collection
+     */
+    public function get(Grid\Model $model)
+    {
+        $currentPage = $model-&gt;getCurrentPage();
+        $perPage = $model-&gt;getPerPage();
+
+        // 获取筛选参数
+        $category = $model-&gt;getFilter()-&gt;input(Grid\Filter\Scope::QUERY_NAME, &#039;all&#039;);
+        $keyword  = trim($model-&gt;getFilter()-&gt;input(&#039;keyword&#039;));
+
+        $api = $keyword ? $this-&gt;searchApi : $this-&gt;api;
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client-&gt;get(str_replace(
+            [&#039;{category}&#039;, &#039;{limit}&#039;, &#039;{page}&#039;, &#039;{key}&#039;],
+            [$category, $perPage, $currentPage, $keyword],
+            $api
+        ));
+        $data = collect(
+            json_decode((string)$response-&gt;getBody(), true)[&#039;results&#039;] ?? []
+        );
+
+        $total = $keyword ? 400 : ($category == &#039;all&#039; ? 1000 : 500);
+
+        $paginator = new LengthAwarePaginator(
+            $data,
+            $category == &#039;福利&#039; ? 680 : $total,
+            $perPage, // 传入每页显示行数
+            $currentPage // 传入当前页码
+        );
+
+        $paginator-&gt;setPath(\url()-&gt;current());
+
+        return $paginator;
+    }
+
+    public function getKeyName()
+    {
+        return &#039;_id&#039;;
+    }
+
+}</code></pre>
+<p>修改控制器代码如下：</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace Dcat\Admin\Extension\Gank\Http\Controllers;
+
+use Dcat\Admin\Extension\Gank\Gank;
+use Dcat\Admin\Extension\Gank\Repositories\Ganks;
+use Dcat\Admin\Grid;
+use Dcat\Admin\Layout\Content;
+use Dcat\Admin\Layout\Row;
+use Illuminate\Routing\Controller;
+use Dcat\Admin\Widgets\Navbar;
+
+class GankController extends Controller
+{
+    public function index(Content $content)
+    {
+        $grid = $this-&gt;grid();
+
+        $grid-&gt;disableFilter();
+        $grid-&gt;getFilter()
+            -&gt;withoutInputBorder()
+            -&gt;expand()
+            -&gt;resetPosition()
+            -&gt;hiddenResetButtonText();
+
+        return $content
+            -&gt;header(&#039;所有干货&#039;)
+            -&gt;description(&#039;每日分享妹子图 和 技术干货&#039;)
+            -&gt;body($grid-&gt;getFilter())
+            -&gt;body(function (Row $row) {
+                $items = array_keys(Gank::$categoryColorsMap);
+
+                array_unshift($items, &#039;全部&#039;);
+
+                $navbar = Navbar::make(&#039;#&#039;, array_combine($items, $items))
+                    -&gt;checked(request(Grid\Filter\Scope::QUERY_NAME, &#039;全部&#039;))
+                    -&gt;click()
+                    -&gt;map(function ($v) {
+                        if ($v == &#039;全部&#039;) {
+                            $url = &#039;?&#039;;
+                        } else {
+                            $url = &#039;?&#039;.Grid\Filter\Scope::QUERY_NAME.&#039;=&#039;.$v;
+                        }
+
+                        return "&lt;a href=&#039;$url&#039;&gt;$v&lt;/a&gt;";
+                    })
+                    -&gt;style(&#039;max-width:705px&#039;);
+
+                $row-&gt;column(7, $navbar);
+
+            })
+            -&gt;body($grid);
+    }
+
+    protected function grid()
+    {
+        $this-&gt;define();
+
+        $grid = new Grid(new Ganks);
+
+        $grid-&gt;number();
+        $grid-&gt;desc(&#039;描述&#039;)-&gt;width(&#039;300px&#039;);
+        $grid-&gt;images(&#039;图片&#039;)-&gt;image(150);
+        $grid-&gt;type(&#039;类别&#039;);
+        $grid-&gt;who(&#039;作者&#039;)-&gt;label();
+        $grid-&gt;publishedAt(&#039;发布于&#039;);
+
+        $grid-&gt;disableActions();
+        $grid-&gt;disableBatchDelete();
+        $grid-&gt;disableExport();
+        $grid-&gt;disableCreateButton();
+        $grid-&gt;disableFilterButton();
+        $grid-&gt;disableQuickCreateButton();
+        $grid-&gt;perPages([]);
+
+        return $grid-&gt;filter(function (Grid\Filter $filter) {
+            $category = $filter-&gt;input(Grid\Filter\Scope::QUERY_NAME, &#039;全部&#039;);
+
+            if ($category != &#039;福利&#039;) {
+                $filter-&gt;like(&#039;keyword&#039;, ucfirst($category))-&gt;width(&#039;300px&#039;)-&gt;placeholder(&#039;请输入&#039;);
+            }
+
+        });
+    }
+
+    protected function define()
+    {
+        Grid\Column::define(&#039;desc&#039;, function ($v) {
+            if ($this-&gt;type == &#039;福利&#039;) {
+                $width = &#039;150&#039;;
+                $height = &#039;200&#039;;
+                return "&lt;img data-init=&#039;preview&#039; src=&#039;{$this-&gt;url}&#039; style=&#039;max-width:{$width}px;max-height:{$height}px;cursor:pointer&#039; class=&#039;img img-thumbnail&#039; /&gt;";
+            }
+
+            return sprintf(&#039;&lt;a href="%s" target="_blank"&gt;%s&lt;/a&gt;&#039;, $this-&gt;url, $v);
+        });
+
+        Grid\Column::define(&#039;publishedAt&#039;, function ($v) {
+            return date(&#039;Y-m-d&#039;, strtotime($v));
+        });
+        Grid\Column::define(&#039;datetime&#039;, function ($v) {
+            return date(&#039;Y-m-d H:i:s&#039;, strtotime($v));
+        });
+
+        Grid\Column::define(&#039;type&#039;, function ($v) {
+            $map = Gank::$categoryColorsMap;
+
+            return "&lt;span class=&#039;label&#039; style=&#039;background:{$map[$v]}&#039;&gt;$v&lt;/span&gt;";
+        });
+    }
+}</code></pre>
+<p>这样一个完整的扩展就开发完成了。</p>
+<p><a name="updatejson"></a></p>
+<h2>修改 composer.json &amp; README.md</h2>
+<p>代码部分完成之后，需要修改<code  >composer.json</code>里面的内容，将<code  >description</code>、<code  >keywords</code>、<code  >license</code>、<code  >authors</code>等内容替换为你的信息，然后不要忘记完善<code  >README.md</code>，补充使用文档等相关信息。</p>
+<p><a name="install"></a></p>
+<h2>安装</h2>
+<p>完成了扩展开发之后，根据情况可以用下面的的方式安装你的扩展</p>
+<p><a name="local"></a></p>
+<h3>本地安装</h3>
+<p>在开发的过程中，一般需要一边调试一边开发，所以先按照下面的方式进行本地安装</p>
+<p>打开你的项目中<code  >composer.json</code>文件，在加入下面的配置</p>
+<pre><code  >"repositories": [
+    {
+        "type": "path",
+        "url": "app/Admin/Extensions/dcat-admin-extensions/gank"
+    }
+]</code></pre>
+<p>然后运行<code  >composer require dcat-admin-extensions/gank</code>完成安装，如果有静态文件需要发布，运行下面的命令</p>
+<p><a name="remote"></a></p>
+<h3>远程安装</h3>
+<p>如果开发完成之后，希望开源出来给大家使用，按照下面的步骤进行</p>
+<p><a name="github"></a></p>
+<h4>上传到Github</h4>
+<p>先登录你的Github，创建一个仓库，然后按照页面上的提示把你的代码push上去</p>
+<pre><code  >git init
+git remote add origin https://github.com/&lt;your-name&gt;/&lt;your-repository&gt;.git
+git add .
+git commit -am "Initial commit."
+git push origin master</code></pre>
+<p><a name="release"></a></p>
+<h4>发布release</h4>
+<p>可以用下面的方式在本地发布版本</p>
+<pre><code  >git tag 0.0.1 &amp;&amp; git push --tags</code></pre>
+<p>也可以在Github的仓库页面的Releases页面手动设置</p>
+<p><a name="packagist"></a></p>
+<h4>发布到Packagist.org</h4>
+<p>接下来就是发布你的项目到<code  >Packagist.org</code>，如果没有账号的话，先注册一个，然后打开顶部导航的<code  >Submit</code>, 填入仓库地址提交</p>
+<p>默认情况下，当您推送新代码时，<code  >Packagist.org</code>不会自动更新，所以，您需要创建一个GitHub服务钩子， 你也可以使用点击页面上的<code  >Update</code>按钮手动更新它，但我建议自动执行这个过程</p>
+<p>提交之后，由于各地的镜像同步时间的延迟，可能在用composer安装的时候，会暂时找不到你的项目，这个时候可能需要等待同步完成</p>
+<p>发布完成之后就可以通过composer安装你的扩展了</p>
+<p>加入到https://github.com/dcat-admin-extensions
+如果想把你开发的扩展加入到<code  >dcat-admin-extensions</code>，欢迎用各种方式联系我，这样可以让更多人看到并使用你开发的工具。</p>
+<p><a name="import"></a></p>
+<h2>导入和启用扩展</h2>
+<p><a name="importext"></a></p>
+<h3>导入扩展</h3>
+<p>安装完成后，运行以下命令即可以导入扩展，导入的文件主要有：静态资源文件、菜单、权限等。</p>
+<blockquote>
+<p>视图、数据库迁移文件、语言包一般不需要导入。如果要导入其他文件，需要扩展开发者自行定义。
+另外此命令允许重复执行。</p>
+</blockquote>
+<pre><code   class="language-php">php artisan admin:import Dcat\Admin\Extension\Gank\Gank</code></pre>
+<p><a name="enable"></a></p>
+<h3>启用扩展</h3>
+<p>扩展的启用与否是通过配置文件控制的，打开<code  >/config/admin-extension.php</code>，加入以下代码：</p>
+<pre><code   class="language-php">return [
+    &#039;gank&#039; =&gt; [
+        &#039;enable&#039; =&gt; true,
+    ],
+];</code></pre>
+<p><a name="view"></a></p>
+<h3>可视化管理扩展</h3>
+<p>访问<code  >http://localhost:8000/admin/helpers/extensions</code>，可以通过页面操作启用或关闭扩展、导入扩展。</p>
+<blockquote>
+<p>如果<code  >/config/admin-extension.php</code>不存在，系统会自动创建</p>
+</blockquote>
+<p>这样就完成了安装，打开<code  >http://localhost/admin/gank</code>访问这个扩展。</p>
+
+		<div id="comment-container" style="margin-top: 90px"></div>
+	</article>
+
+</div>
+
+    <footer class="main">
+        <ul>
+            <li class=""><a href="../../docs.html">文档</a></li>
+<li class=""><a href="../../docs/master/extensions.html">扩展</a></li>
+<li class=""><a target="_blank" href="../../demo.html">Demo</a></li>
+<li class=""><a target="_blank" href="https://github.com/jqhph/dcat-admin">Github</a></li>
+<li class=""><a href="../../docs.html">打赏</a></li>
+        </ul>
+        <p>Built by <b>jqh</b>. Copyright &copy; 2019</p>
+        <p class="less-significant">
+            <a href="http://jackmcdade.com">
+                Designed by<br>
+                <svg xmlns="http://www.w3.org/2000/svg" width="128.2" height="28" viewBox="0 0 128.2 28"><g fill="#c3c3c3"><path d="M14.2.4v1.4l-1.4-.3.3 4.5c.1 1.5 0 3-.1 4.5 0 .4-.1.8-.1 1.2-.1.4-.1.8-.3 1.2-.1.4-.3.7-.5 1.1-.2.3-.5.6-.9.9-.4.2-.9.4-1.5.6-.6.2-1.1.3-1.6.3-.6 0-1.2-.1-1.6-.3-.5-.2-.9-.6-1.1-1-.3-.5-.5-1-.6-1.6-.1-.6-.1-1.3 0-2.1 0-.2.1-.5.2-.7-.1-.2 0-.4.1-.6l.3-.6 1.1.4c.2 0 .5.1.8.2.3.1.5.1.6.2 0 .2 0 .4-.1.5-.1.2-.1.3-.2.4-.1.1-.2.3-.2.4-.1.2-.1.3-.1.5L6 10.8c-.1.3-.2.7-.2 1.1 0 .4.1.8.2 1.2.2.4.4.7.6 1 .3.3.6.4 1 .3.6 0 1.1-.3 1.4-.6.3-.4.5-.9.7-1.7.1-.7.2-1.6.2-2.8V5.4c0-.6-.1-1.3-.1-2-.1-.6-.2-1.3-.3-2H5.7c-.7 0-1.5 0-2.2.2-.3.1-.6.2-1 .4-.3.1-.6.4-.9.6-.2.3-.4.6-.5 1-.1.3-.1.7 0 1 .1.5.3.8.4.9v-.1c0-.4.1-.8.4-1 .3-.2.6-.3.9-.3.3 0 .6.1.9.3.3.2.4.6.4 1s-.1.8-.4 1c-.3.2-.6.3-1 .3-.8 0-1.4-.2-1.8-.7-.4-.4-.7-.9-.8-1.5C0 4 0 3.4.2 2.7c.2-.6.5-1.1 1-1.5.4-.3.8-.5 1.2-.7.4-.1.9-.2 1.4-.3.5-.1.9-.1 1.4-.1h2.9c.6 0 1.1 0 1.6.1.5 0 1 .1 1.5.1s1 .1 1.5.1c.4.1.9.1 1.5 0zM25.2 14.3c0 .2.1.4.1.6 0 .2.1.4.1.7-1-.1-2-.2-3-.1-1.1.1-2.1.2-3 .4 0-.2-.1-.4-.1-.5 0-.2-.1-.4-.1-.5.2 0 .5-.1.7-.1.2 0 .4-.1.6-.1-.1-1.5-.3-3.1-.5-4.6-.5.1-.9.1-1.4.2-.5.1-.9.1-1.4.2-.2.7-.3 1.3-.5 2s-.3 1.3-.5 2h.6c.1 0 .3 0 .4.1v.9c0 .1 0 .2-.1.3H14v-1.2h1c.2-.5.3-1 .4-1.5.1-.5.3-1 .4-1.5.2-.6.3-1.2.5-1.7.2-.6.3-1.2.5-1.7.2-1.1.4-2.1.6-3.2.2-1.1.3-2.1.4-3.2h-1.4c0-.2.1-.4.1-.6 0-.2 0-.4.1-.6h5.8l.2 1.2h-1c.3 2.1.7 4.3 1 6.5.3 2.2.7 4.4 1 6.5h1.6zM17.5 9c.4-.1.7-.1 1.1-.2.4-.1.8-.1 1.2-.2-.2-1-.3-2-.5-2.9-.2-1-.4-1.9-.6-2.9-.2 1-.4 2.1-.5 3.1-.3 1-.5 2.1-.7 3.1zM36.7 10.4h-.6c0 .6 0 1.2-.2 1.9-.2.6-.5 1.2-1 1.6-.5.5-1 .9-1.6 1.1-.6.3-1.3.4-2 .5-.6.1-1.1.1-1.8 0-.6-.1-1.1-.4-1.6-.7-.2-.2-.5-.4-.8-.7-.3-.3-.5-.5-.6-.8-.3-.5-.5-1-.6-1.5-.2-.5-.3-.9-.4-1.4-.1-.5-.2-1-.2-1.5s0-1 .1-1.6c.2-1 .4-2 .8-2.9.4-.9.8-1.7 1.4-2.3.5-.7 1.2-1.2 1.9-1.6.7-.3 1.4-.5 2.2-.5.3 0 .5 0 .8.1.3.1.5.2.7.4.3.3.7.7 1 1.2.3.5.6 1.2.7 1.9h.6v.6l-2.5.4c-.3.1-.5.1-.6 0-.1 0-.2-.1-.2-.2-.1-.1-.1-.2 0-.3h.4c.2-.2.3-.3.3-.6v-.7c0-.5-.2-.9-.5-1.3l-.4-.4c-.2-.1-.4-.1-.6 0-.2 0-.4.2-.6.4-.2.2-.4.5-.5.9-.3.2-.4.6-.5.9-.1.3-.2.5-.2.7-.6 2.6-.7 5.3-.2 8 .1.3.2.7.3 1s.3.6.5.9c.2.3.5.5.8.7.3.2.6.2 1 .1.6-.1 1-.4 1.4-1 .3-.5.6-1.1.7-1.8.1-.3.1-.6.1-.9v-.5c-.2 0-.4 0-.6-.1-.1-.1-.2-.2-.2-.3 0-.1 0-.2.1-.3h3.4c0 .1 0 .2-.1.3-.1.1-.1.2-.1.3z"/><path d="M48 14.2c.1.2.3.3.5.4.2.1.5.1.7 0 .1.1.1.2.1.4s-.1.3-.2.4c-.1.1-.2.2-.4.2h-1.4c-.3 0-.7 0-1-.1-.3-.1-.7-.2-1-.4-.3-.2-.5-.4-.7-.7-.2-.3-.3-.6-.3-1V9.9v-.4c0-.2-.1-.3-.2-.5s-.3-.3-.4-.4c-.2-.1-.4-.1-.7-.1-.1 0-.2 0-.5.1-.2.3-.3.5-.5.8-.2.3-.3.5-.5.7 0 .8 0 1.5-.1 2.2 0 .7-.1 1.5-.1 2.1h1.4v1.1c-.5 0-.9.1-1.3 0-.4 0-.8 0-1.2-.1-.4 0-.8-.1-1.2-.1H37.3c-.1 0-.2 0-.3-.1-.1 0-.1-.1-.1-.2s-.1-.3-.1-.4v-.4c0-.1.1-.2.1-.2.2.1.4.2.6.1s.4-.2.5-.4c0-.1.1-.3.1-.7 0-.4 0-.9.1-1.6 0-.6.1-1.3.1-2.1s0-1.6.1-2.4c0-.8 0-1.5.1-2.3 0-.7.1-1.3.1-1.8v-.7c0-.2-.1-.4-.2-.6-.1-.2-.3-.3-.5-.4-.2-.1-.4 0-.6.1 0-.2-.1-.5-.1-.7 0-.2 0-.4-.1-.7 1 0 2 .1 3 .1.9 0 1.9.1 3 .1v.3c0 .1 0 .3.1.4v.4c0 .1 0 .2-.1.2-.1.1-.2.1-.3.1-.1 0-.2 0-.4-.1-.1-.1-.3-.1-.4-.2-.1-.1-.3-.1-.3-.1-.1.9-.1 1.9-.1 2.9s-.1 2-.1 3.1c.7-1.2 1.4-2.5 2-3.8.2-.3.3-.6.4-.9.1-.3.3-.6.5-.9.2-.3.4-.5.7-.7.3.3.6.2.9.1.3-.1.7-.1 1 0 .3.1.6.2.9.5.2.3.4.6.4 1s.1.8 0 1.1v.5c0 .2-.1.3-.2.4-.1.2-.2.3-.4.4-.2.1-.4.1-.5.2-.1 0-.3.1-.4.1h-.4c-.2-.3-.4-.4-.4-.6-.1-.2-.1-.4 0-.5.1-.2.2-.3.3-.3.1 0 .2-.1.4-.1.2-.1.3-.2.3-.3.1-.2.1-.3.1-.5 0-.3-.1-.5-.1-.7-.1-.2-.2-.3-.3-.3-.2 0-.3 0-.5.1s-.3.2-.5.4-.3.4-.4.6c-.1.2-.3.5-.4.7-.1.3-.3.6-.4.8-.2.2-.3.5-.4.8-.4.9-.8 1.7-1.2 2.5.3 0 .6-.1 1 0h1c.3 0 .7.1 1 .2.3.1.6.3.8.6.3.3.4.6.5 1 .1.4.1.8.2 1.1l.2 2.1c0 .2.1.5.1.7 0 .4.1.7.3.9zM71.7 13.9c.2.2.4.4.7.5.3.1.5 0 .8-.1 0 .2.1.3.1.6.1.2.1.4.1.6h-1.1s-.8 0-1.3.1h-2.3v-.2c0-.1.1-.2.2-.3.1-.1.2-.2.4-.3.2-.1.3-.1.6-.1.1 0 .1-.2.1-.7v-1.6c0-.6 0-1.2-.1-1.9s0-1.1 0-1.5V6.4c0-.7.1-1.5.1-2.2-.6 1.3-1.1 2.7-1.6 4.1-.5 1.5-1 3-1.5 4.4 0 0 .1.1.1.2-.2 0-.4 0-.7.1-.3.1-.5.1-.7.1-.5-1.9-1.1-3.7-1.6-5.5-.5-1.8-1.1-3.6-1.6-5.5-.1 1-.1 2-.1 3 0 1.1-.1 2.1-.1 3.2s0 2.1-.1 3.2c0 1-.1 2-.1 3h1.4v1.1c-.5 0-.9.1-1.3 0-.4 0-.8 0-1.2-.1-.4 0-.8-.1-1.2-.1H58c-.1 0-.2 0-.3-.1-.1 0-.1-.1-.1-.2s-.1-.3-.1-.4v-.4c0-.1.1-.2.1-.2.2.1.4.2.6.1s.4-.2.5-.4c0-.1.1-.3.1-.7 0-.4 0-.9.1-1.6 0-.6.1-1.3.1-2.1V7.2c0-.8 0-1.5.1-2.3 0-.7.1-1.3.1-1.8v-.7c0-.2-.1-.4-.2-.6-.1-.2-.3-.3-.5-.4-.2-.1-.4 0-.6.1 0-.2-.1-.5-.1-.7 0-.2 0-.4-.1-.7 1 0 2 .1 3 .1.9 0 1.9.1 3 .1 0 .3-.1.5-.4.7.3 1.3.6 2.6 1 3.9l1.2 3.9c.2-.6.4-1.3.6-1.9l.6-1.8c.3-.5.5-1.1.8-1.7.2-.6.4-1.3.6-2-.1 0-.3 0-.4-.1-.1 0-.2 0-.4-.1-.1 0-.1-.1-.1-.3 0-.1.1-.2.1-.3.1-.1.2-.1.3-.1h4.5c.1 0 .3.1.4.2.1.1.2.2.2.4s0 .3-.2.3c-.1-.1-.2-.1-.3-.1-.1 0-.2.1-.3.1-.2.4-.3.8-.4 1.3-.1.5-.1.9-.1 1.4-.2 2.8-.2 5.6 0 8.4 0 .3 0 .5.1.7-.1.3 0 .5.2.7zM81.7 12h-.4c0 .4 0 .9-.2 1.3-.1.4-.4.8-.7 1.1-.3.3-.7.6-1.1.8-.4.2-.9.3-1.3.4-.4.1-.8 0-1.2 0-.4-.1-.8-.2-1.1-.5-.2-.1-.3-.3-.5-.5s-.3-.4-.4-.6c-.2-.4-.3-.7-.4-1-.1-.3-.2-.6-.3-1-.1-.3-.1-.6-.1-1 0-.3 0-.7.1-1.1.1-.7.3-1.4.5-2 .3-.6.6-1.1.9-1.6s.8-.8 1.3-1.1c.5-.3 1-.4 1.5-.4.2 0 .4 0 .6.1.2.1.3.1.5.3.2.2.4.4.6.8.2.4.4.8.5 1.3h.4v.4l-1.7.3c-.2.1-.3.1-.4 0-.1 0-.1-.1-.2-.2v-.2h.4c.1-.1.2-.2.2-.4v-.5c0-.3-.1-.6-.3-.9l-.3-.3c-.1-.1-.2-.1-.4 0-.1 0-.3.1-.4.3-.1.2-.3.4-.4.6l-.3.6c-.1.2-.1.4-.1.5-.4 1.8-.5 3.6-.1 5.5.1.2.1.4.2.7l.3.6c.1.2.3.3.6.5.2.1.4.1.7.1.4-.1.7-.3 1-.7.2-.4.4-.8.5-1.2 0-.2.1-.4.1-.6v-.3h-.4c-.1 0-.1-.1-.1-.2s0-.2.1-.2h2.4v.2c-.5-.1-.5 0-.6.1z"/><path d="M83.5 14.2c.2-4.3.3-8.5.2-12.8h-1.8V.9.4c.7 0 1.3 0 2-.1.7 0 1.3 0 2-.1.8-.2 1.6-.2 2.4-.1.8.1 1.6.3 2.4.5.7.3 1.4.7 1.9 1.2s.9 1.1 1.1 1.8c.3 1.3.4 2.5.3 3.8 0 1.2-.2 2.4-.3 3.6 0 .4-.1.8-.2 1.2-.1.4-.3.8-.5 1.1-.3.5-.8 1-1.3 1.3-.5.3-1.1.5-1.7.6-.5.1-.9.2-1.4.1-.5 0-.9 0-1.4-.1h-4.9c-.2-.4-.1-.8.2-1.1.2-.2.3-.2.5-.3.2.3.4.3.5.4zm5.9-12.3c-.4-.3-.8-.5-1.3-.6-.5-.1-1-.1-1.5-.1-.3 4.5-.2 9.1.4 13.6.2 0 .4 0 .5-.1.2 0 .4-.1.6-.1.3-.1.6-.2.9-.4.3-.2.6-.4.8-.7.2-.3.4-.6.5-1s.2-.7.2-1.1c.4-2.1.4-4.2.2-6.3-.1-.6-.2-1.2-.4-1.9 0-.4-.4-.9-.9-1.3zM102.4 9.7c-.6-.1-1.3-.1-2 0s-1.4.4-2 .8l-.2-1.4.9-.1c0-.4-.1-.7-.1-1 0-.2-.1-.5-.1-.9-.3 0-.6.1-.9.1-.3 0-.6.1-1 .1-.2.7-.3 1.3-.4 1.8-.1.5-.2 1.1-.4 1.6l.2-.1.7.6c-.4.2-.8.6-1.2 1.1-.4.5-.7 1-.9 1.5l-.9-.5c0-.1.1-.2.2-.4s.2-.3.2-.4c.1-.2.2-.5.3-1 .1-.4.2-.9.4-1.3.1-.5.2-.9.3-1.3.1-.4.2-.7.2-.9l.3-1.2.3-1.2c.2-.7.3-1.4.4-2.1.1-.7.2-1.4.3-2.2h-.6l.1-.8 4-.1.1.8h-.2-.2c.1.7.2 1.4.3 2l.3 1.8.3 1.8c.1.6.2 1.3.4 2h.6l.3.9zm-3.6-3.6c-.1-.7-.2-1.3-.3-2-.1-.6-.3-1.3-.4-2-.1.6-.2 1.3-.4 2.1-.1.7-.3 1.5-.5 2.2l1.6-.3z"/><path d="M124.9 20.1c0-.3.1-.6.3-.8.2-.2.4-.3.7-.4.3-.1.5 0 .8.1.3.1.5.3.6.5.3.4.6.9.7 1.4.2.5.2 1 .2 1.5s-.1 1-.3 1.5c-.2.5-.4 1-.7 1.4-.6.9-1.4 1.6-2.4 2-1 .5-2 .7-3 .7-1.5 0-2.8-.3-3.9-1s-2.1-1.4-3-2.4c-.9-1-1.8-2.1-2.5-3.2-.8-1.2-1.5-2.3-2.3-3.5-1.1 1.2-2.4 2.2-3.9 3-1.5.8-3 1.1-4.5 1-1.1 0-2.1-.1-3-.5-.9-.3-1.6-.8-2.2-1.4-.6-.6-.9-1.3-1.1-2.2-.2-.8-.1-1.7.2-2.7.3-.9.7-1.6 1.3-2.2.6-.6 1.2-1.1 2-1.5.7-.4 1.5-.6 2.4-.7.8-.1 1.7 0 2.6.2v-5-4.6h-1.8V.8.3l3.7-.1c.8-.2 1.6-.2 2.4-.1.8.1 1.6.3 2.4.5.7.3 1.4.7 1.9 1.2s.9 1.1 1.1 1.8c.3 1.2.4 2.4.3 3.6-.1 1.2-.2 2.5-.4 3.7-.1 1-.4 2-.8 3-.5 1-1 2-1.7 2.9.3.4.6.8.8 1.2.3.4.5.8.8 1.2.5.8 1.1 1.6 1.7 2.5.6.8 1.3 1.6 2 2.4.7.7 1.5 1.3 2.4 1.8s1.8.7 2.9.8c1.1 0 2.1-.2 3-.7.9-.5 1.6-1.2 2.1-2.2.2-.4.3-.8.4-1.3.1-.5 0-.9-.1-1.3-.2.1-.4.2-.6.2-.2 0-.4 0-.6-.1-.2-.1-.4-.2-.5-.4s-.4-.5-.4-.8zm-22 .9c1.5-.4 2.8-1 3.7-1.8.9-.8 1.7-1.7 2.3-2.8-.2-.2-.3-.5-.6-.7-.6-.7-1.2-1.4-1.9-1.9 0 .6.1 1.2.1 1.8 0 .6.1 1.1.2 1.6v.1h-4.3c-.1-.2-.1-.4 0-.7 0-.2.1-.3.3-.5.3-.3.7-.4 1.1-.2l.1-3.5c-.5-.2-1-.3-1.5-.3s-1.1 0-1.6.1c-.6.1-1.1.3-1.6.6s-.9.7-1.3 1.1c-.4.4-.7.9-.9 1.5-.2.5-.3 1.1-.3 1.6 0 .7.2 1.3.6 1.8.4.5.9.9 1.4 1.4.2.2.5.3.8.5.3.1.7.2 1.1.3.4.1.8.1 1.2.1.3 0 .7 0 1.1-.1zm6.4-19.1c-.4-.3-.8-.5-1.2-.6-.5-.1-.9-.1-1.4-.1-.1 1.7-.2 3.4-.3 5.3-.1 1.9-.1 3.7 0 5.6.6.4 1.2.8 1.7 1.4.5.5 1 1.1 1.5 1.6.2-.6.4-1.2.6-1.9.2-.6.3-1.2.3-1.7.2-1.1.2-2.1.3-3.1 0-1 0-2.1-.1-3.1-.1-.6-.2-1.2-.4-1.9-.2-.6-.5-1.1-1-1.5z"/><path d="M116.5 1.2h-1.8V.4c.5 0 .9 0 1.2-.1s.7 0 1.1 0h1.1s.8 0 1.3-.1c.9 0 1.8 0 2.8-.1.9 0 1.8 0 2.8-.1v3.6h-1.3c-.1 0-.1-.1 0-.1.1-.2.1-.4.1-.6s0-.4-.1-.6l-.3-.6c-.1-.2-.2-.3-.4-.4-.2-.1-.4-.2-.6-.2h-.7c-.3 0-.5.1-.8.1-.3.1-.5.2-.6.4-.1.2-.1.3-.1.3v.3c0 .7-.1 1.3-.1 2 0 .6-.1 1.3-.1 1.9v1c.6-.2 1.2-.3 1.9-.4.6-.1 1.2-.3 1.9-.4 0 .1.1.2.1.3V7c0 .2-.1.3-.1.4-.1.1-.1.2-.1.3-.1.1-.2.1-.4.2-.1 0-.3.1-.4.1-.5.1-.9.2-1.4.3-.5.1-.9.1-1.4.2 0 1-.1 2-.2 2.9-.1 1-.1 1.9-.2 2.9.8.2 1.5.3 2 .1.6-.2 1.2-.5 1.9-1 .2-.1.2-.3.2-.5v-.7c0-.2.1-.5.2-.6.1-.2.3-.3.7-.4.4 0 .6.1.7.4.1.3.2.7.2 1.1 0 .5 0 .9-.1 1.4-.1.5-.1.9 0 1.2h-1.4c-.4 0-.8 0-1.2.1-.4 0-.8 0-1.2.1h-1.3c-.9 0-1.7 0-2.5.1-.7.1-1.6.1-2.4.1-.2-.2-.2-.4-.2-.7 0-.2.1-.5.3-.6.2-.2.3-.3.6-.3.2-.1.5 0 .7.1.1-2.1.2-4.3.1-6.5-.7-2.2-.7-4.3-.5-6.5z"/></g></svg>
+            </a>
+        </p>
+    </footer>
+
+    <div class="fixed-bottom-btn"><a class="waves-effect waves-light" id="go-top"><i class="fa fa-chevron-up"></i></a></div>
+
+    <script>
+    var DMS = {
+        version: 'master',
+
+        getDocUrl: function (doc) {
+            var temp = 'docs/master/{doc}.html';
+
+            if (location.pathname.indexOf(temp.replace('{doc}.html', '')) !== -1) {
+                return doc+'.html';
+            }
+
+            return temp.replace('{doc}', doc);
+        },
+
+        config: {
+            comment: {"enable":true,"clientID":"b0db00f91f421852203b","clientSecret":"bc39c61703100ad1c9490c5187cf1c6682e03513","repo":"dcat-admin-comments","owner":"jqhwx","admin":["jqhwx"],"language":"zh-CN","perPage":15,"pagerDirection":"first"}
+        },
+    };
+
+    DMS.config.comment.id = 'master/extend';
+
+    (function () {
+        function indices() {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src="../../assets/indices/master.js";
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+        }
+
+        setTimeout(indices, 1);
+    })();
+
+</script>
+
+             <script src="../../assets/gitalk/gitalk.min.js"></script>
+         <script src="../../assets/js/laravel.js"></script>
+     <script src="../../assets/js/viewport-units-buggyfill.js"></script>
+    <script>window.viewportUnitsBuggyfill.init();</script>
+
+</body>
+</html>
