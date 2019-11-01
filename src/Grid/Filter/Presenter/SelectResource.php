@@ -172,7 +172,10 @@ class SelectResource extends Presenter
      */
     public function variables() : array
     {
-        $this->value = request($this->filter->getColumn(), $this->filter->getValue() ?: $this->filter->getDefault());
+        $this->value = request(
+            $this->filter->getColumn(),
+            $this->filter->getValue() ?: $this->filter->getDefault()
+        );
 
         $this->formatOptions();
         $this->formatValue();

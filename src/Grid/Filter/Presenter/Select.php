@@ -11,6 +11,11 @@ use Illuminate\Support\Arr;
 class Select extends Presenter
 {
     /**
+     * @var string
+     */
+    protected $elementClass = null;
+
+    /**
      * Options of select.
      *
      * @var array
@@ -273,7 +278,8 @@ JS;
      */
     protected function getElementClass() : string
     {
-        return str_replace('.', '_', $this->filter->getColumn());
+        return $this->elementClass ?:
+            ($this->elementClass = $this->getClass($this->filter->getColumn()));
     }
 
     /**
@@ -288,11 +294,11 @@ JS;
      */
     public function load($target, $resourceUrl, $idField = 'id', $textField = 'text') : self
     {
-        $column = $this->filter->getColumn();
+        $class = $this->getElementClass();
 
         $script = <<<JS
-$(document).off('change', ".{$this->getClass($column)}");
-$(document).on('change', ".{$this->getClass($column)}", function () {
+$(document).off('change', ".{$class}");
+$(document).on('change', ".{$class}", function () {
     var target = $(this).closest('form').find(".{$this->getClass($target)}");
     $.get("$resourceUrl?q="+this.value, function (data) {
         target.find("option").remove();
