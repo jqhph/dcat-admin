@@ -85,12 +85,16 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function buildData(?int $page = null, ?int $perPage = null)
     {
+        if (! is_null($this->data)) {
+            return $this->data;
+        }
+
         $model = $this->grid->model();
 
         // current page
         if ($this->scope === Grid\Exporter::SCOPE_CURRENT_PAGE) {
             $page    = $model->getCurrentPage();
-            $perPage = $model->getPageName();
+            $perPage = $model->getPerPage();
         }
 
         $model->reset();
@@ -102,7 +106,7 @@ abstract class AbstractExporter implements ExporterInterface
             $model->forPage($page, $perPage);
         }
 
-        return $this->data ?? $this->grid->getFilter()->execute(true);
+        return $this->grid->getFilter()->execute(true);
     }
 
     /**

@@ -453,7 +453,7 @@ class Model
             return null;
         }
 
-        return $this->currentPage ?: ($this->currentPage = \request($this->pageName, 1));
+        return $this->currentPage ?: ($this->currentPage = (request($this->pageName) ?: 1));
     }
 
     /**
@@ -476,7 +476,8 @@ class Model
         if (!$this->usePaginate) {
             return null;
         }
-        return \request($this->perPageName, $this->perPage);
+
+        return request($this->perPageName) ?: $this->perPage;
     }
 
     /**
