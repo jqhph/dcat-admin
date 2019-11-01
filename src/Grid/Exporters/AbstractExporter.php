@@ -87,15 +87,19 @@ abstract class AbstractExporter implements ExporterInterface
     {
         $model = $this->grid->model();
 
-        $model->usePaginate(false);
+        // current page
+        if ($this->scope === Grid\Exporter::SCOPE_CURRENT_PAGE) {
+            $page    = $model->getCurrentPage();
+            $perPage = $model->getPageName();
+        }
+
         $model->reset();
+        $model->usePaginate(false);
 
-        if ($this->scope !== Grid\Exporter::SCOPE_SELECTED_ROWS) {
-            if ($page) {
-                $perPage = $perPage ?: $this->grid->option('export_chunk_size');
+        if ($page && $this->scope !== Grid\Exporter::SCOPE_SELECTED_ROWS) {
+            $perPage = $perPage ?: $this->grid->option('export_chunk_size');
 
-                $model->forPage($page, $perPage);
-            }
+            $model->forPage($page, $perPage);
         }
 
         return $this->data ?? $this->grid->getFilter()->execute(true);
