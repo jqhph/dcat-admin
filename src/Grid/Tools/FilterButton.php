@@ -92,15 +92,13 @@ JS
 
         $this->setupScripts();
 
-        $showText = ((!$filters || $this->grid->option('show_filter') === false) && !$scopres->isEmpty()) ? true : false;
-
         $variables = [
             'scopes'           => $scopres,
             'current_label'    => $this->getCurrentScopeLabel(),
             'url_no_scopes'    => $filter->urlWithoutScopes(),
             'btn_class'        => $this->getElementClassName(),
             'expand'           => $filter->expand,
-            'show_filter_text' => $showText,
+            'show_filter_text' => true,
         ];
 
         return view($this->view, $variables)->render();
