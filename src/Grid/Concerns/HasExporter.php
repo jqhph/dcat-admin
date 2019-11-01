@@ -44,11 +44,14 @@ trait HasExporter
      */
     protected function handleExportRequest($forceExport = false)
     {
-        if (
-            ! $this->allowExportBtn()
-            || ! $scope = request($this->getExporter()->getQueryName())
-        ) {
+        if (! $scope = request($this->getExporter()->getQueryName())) {
             return;
+        }
+
+        if ($this->builder) {
+            call_user_func($this->builder, $this);
+
+            $this->builder = null;
         }
 
         // clear output buffer.
@@ -56,15 +59,7 @@ trait HasExporter
             ob_end_clean();
         }
 
-        $this->model()->usePaginate(false);
-
-        if ($this->builder) {
-            call_user_func($this->builder, $this);
-
-            return $this->resolveExportDriver($scope)->export();
-        }
-
-        if ($forceExport) {
+        if ($forceExport || $this->allowExporter()) {
             return $this->resolveExportDriver($scope)->export();
         }
     }
@@ -82,7 +77,7 @@ trait HasExporter
      */
     protected function setExporterQueryName($gridName)
     {
-        if (! $this->allowExportBtn()) {
+        if (! $this->allowExporter()) {
             return;
         }
 
@@ -123,10 +118,10 @@ trait HasExporter
      * @param array $options
      * @return $this
      */
-    public function setExportOptions(array $options)
+    public function setExporterOptions(array $options)
     {
-        if (isset($options['limit'])) {
-            $this->options['export_limit'] = $options['limit'];
+        if (isset($options['chunk_size'])) {
+            $this->options['export_chunk_size'] = (int) $options['chunk_size'];
         }
 
         if (isset($options['all'])) {
@@ -151,7 +146,7 @@ trait HasExporter
      */
     public function renderExportButton()
     {
-        if (! $this->allowExportBtn()) {
+        if (! $this->allowExporter()) {
             return '';
         }
         
@@ -183,7 +178,7 @@ trait HasExporter
      *
      * @return bool
      */
-    public function allowExportBtn()
+    public function allowExporter()
     {
         return $this->options['show_exporter'];
     }

@@ -13,8 +13,8 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
     protected $__listeners = [];
 
     protected $__caches = [
-        'edit' => [],
-        'detail' => [],
+        'edit'     => [],
+        'detail'   => [],
         'updating' => [],
     ];
 
@@ -52,11 +52,7 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 
     public function get(Grid\Model $model)
     {
-        if (array_key_exists('get', $this->__caches)) {
-            return $this->__caches['get'];
-        }
-
-        return $this->__caches['get'] = $this->repository->get($model);
+        return $this->repository->get($model);
     }
 
     public function edit(Form $form): array

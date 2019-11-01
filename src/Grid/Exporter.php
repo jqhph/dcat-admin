@@ -99,7 +99,7 @@ class Exporter
      *
      * @param string $driver
      *
-     * @return CsvExporter
+     * @return Grid\Exporters\AbstractExporter
      */
     protected function getExporter($driver)
     {
@@ -113,11 +113,11 @@ class Exporter
     /**
      * Get default exporter.
      *
-     * @return CsvExporter
+     * @return Grid\Exporters\AbstractExporter
      */
     public function getDefaultExporter()
     {
-        return (new CsvExporter())->setGrid($this->grid);
+        return (new Grid\Exporters\XlsxExporter())->setGrid($this->grid);
     }
 
     /**

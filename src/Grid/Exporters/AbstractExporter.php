@@ -20,7 +20,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @var array
      */
-    public $titles;
+    public $titles = [];
 
     /**
      * @var array
@@ -31,6 +31,11 @@ abstract class AbstractExporter implements ExporterInterface
      * @var string
      */
     public $filename;
+
+    /**
+     * @var string
+     */
+    protected $scope;
 
     /**
      * Create a new exporter instance.
@@ -74,10 +79,25 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Get data with export query.
      *
-     * @return array
+     * @param int $page
+     * @param int $perPage
+     * @return array|\Illuminate\Support\Collection|mixed
      */
-    public function getData()
+    public function buildData(?int $page = null, ?int $perPage = null)
     {
+        $model = $this->grid->model();
+
+        $model->usePaginate(false);
+        $model->reset();
+
+        if ($this->scope !== Grid\Exporter::SCOPE_SELECTED_ROWS) {
+            if ($page) {
+                $perPage = $perPage ?: $this->grid->option('export_chunk_size');
+
+                $model->forPage($page, $perPage);
+            }
+        }
+
         return $this->data ?? $this->grid->getFilter()->execute(true);
     }
 
@@ -90,27 +110,17 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function withScope($scope)
     {
-        $model = $this->grid->model();
+        $data = explode(':', $scope);
 
-        $model->usePaginate(false);
+        $scope = $data[0] ?? '';
+        $args  = $data[1] ?? '';
 
-        if ($scope == Grid\Exporter::SCOPE_ALL) {
-            $model->usePaginate(true);
-            $model->setPerPage($this->grid->option('export_limit'));
-            $model->setCurrentPage(1);
-
-            return $this;
-        }
-
-        list($scope, $args) = explode(':', $scope);
-
-        if ($scope == Grid\Exporter::SCOPE_CURRENT_PAGE) {
-            $model->usePaginate(true);
-        }
+        $this->scope = $scope;
 
         if ($scope == Grid\Exporter::SCOPE_SELECTED_ROWS) {
             $selected = explode(',', $args);
-            $model->whereIn($this->grid->getKeyName(), $selected);
+
+            $this->grid->model()->whereIn($this->grid->getKeyName(), $selected);
         }
 
         return $this;

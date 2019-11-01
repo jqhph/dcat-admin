@@ -161,17 +161,17 @@ class Grid
         'show_bordered'          => false,
         'show_toolbar'           => true,
 
-        'row_selector_style'      => 'primary',
-        'row_selector_circle'     => true,
-        'row_selector_clicktr'    => false,
+        'row_selector_style'     => 'primary',
+        'row_selector_circle'    => true,
+        'row_selector_clicktr'   => false,
         'row_selector_label_key' => null,
-        'row_selector_bg'         => 'var(--20)',
+        'row_selector_bg'        => 'var(--20)',
 
         'show_exporter'             => false,
         'show_export_all'           => true,
         'show_export_current_page'  => true,
         'show_export_selected_rows' => true,
-        'export_limit'              => 50000,
+        'export_chunk_size'         => 5000,
 
         'dialog_form_area'   => ['700px', '670px'],
         'table_header_style' => 'table-header-gray',
@@ -895,7 +895,7 @@ HTML;
      */
     public function render()
     {
-        $this->handleExportRequest(true);
+        $this->handleExportRequest();
 
         try {
             $this->callComposing();

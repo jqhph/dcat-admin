@@ -429,7 +429,11 @@ class Model
      */
     protected function handleInvalidPage(LengthAwarePaginator $paginator)
     {
-        if ($paginator->lastPage() && $paginator->currentPage() > $paginator->lastPage()) {
+        if (
+            $this->usePaginate
+            && $paginator->lastPage()
+            && $paginator->currentPage() > $paginator->lastPage()
+        ) {
             $lastPageUrl = Request::fullUrlWithQuery([
                 $paginator->getPageName() => $paginator->lastPage(),
             ]);
@@ -685,5 +689,16 @@ class Model
         if (array_key_exists($key, $data)) {
             return $data[$key];
         }
+    }
+
+    /**
+     * @return $this
+     */
+    public function reset()
+    {
+        $this->data  = null;
+        $this->model = null;
+
+        return $this;
     }
 }
