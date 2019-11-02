@@ -7,15 +7,20 @@ use Dcat\Admin\Grid;
 
 class ExcelExporter extends AbstractExporter
 {
+    public function __construct($titles = [])
+    {
+        parent::__construct($titles);
+
+        if (! class_exists(Excel::class)) {
+            throw new \Exception('To use exporter, please install [dcat/easy-excel] first.');
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
     public function export()
     {
-        if (! class_exists(Excel::class)) {
-            throw new \Exception('To use exporter, please install [dcat/easy-excel] first.');
-        }
-
         $filename = $this->getFilename().'.'.$this->extension;
 
         $exporter = Excel::export();
