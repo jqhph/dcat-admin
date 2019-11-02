@@ -5,13 +5,8 @@ namespace Dcat\Admin\Grid\Exporters;
 use Dcat\EasyExcel\Excel;
 use Dcat\Admin\Grid;
 
-class CsvExporter extends AbstractExporter
+class ExcelExporter extends AbstractExporter
 {
-    /**
-     * @var string
-     */
-    protected $extension = 'csv';
-
     /**
      * {@inheritdoc}
      */

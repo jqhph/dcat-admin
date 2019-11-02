@@ -5,12 +5,22 @@ namespace Dcat\Admin\Grid\Exporters;
 use Dcat\Admin\Grid;
 use Illuminate\Support\Str;
 
+/**
+ * @method $this disableExportAll(bool $value = true)
+ * @method $this disableExportCurrentPage(bool $value = true)
+ * @method $this disableExportSelectedRow(bool $value = true)
+ */
 abstract class AbstractExporter implements ExporterInterface
 {
     /**
      * @var \Dcat\Admin\Grid
      */
     protected $grid;
+
+    /**
+     * @var Grid\Exporter
+     */
+    protected $parent;
 
     /**
      * @var \Closure
@@ -20,17 +30,17 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @var array
      */
-    public $titles = [];
+    protected $titles = [];
 
     /**
      * @var array
      */
-    public $data;
+    protected $data;
 
     /**
      * @var string
      */
-    public $filename;
+    protected $filename;
 
     /**
      * @var string
@@ -38,19 +48,107 @@ abstract class AbstractExporter implements ExporterInterface
     protected $scope;
 
     /**
+     * @var string
+     */
+    protected $extension = 'xlsx';
+
+    /**
      * Create a new exporter instance.
      *
-     * @param $builder
+     * @param array $titles
      */
-    public function __construct($builder = null)
+    public function __construct($titles = [])
     {
-        if ($builder instanceof \Closure) {
-            $builder->bindTo($this);
+        $this->titles($titles);
+    }
 
-            $this->builder = $builder;
-        } elseif (is_array($builder)) {
-            $this->titles = $builder;
+    /**
+     * Set the headings of excel sheet.
+     *
+     * @param array|false $titles
+     * @return $this
+     */
+    public function titles($titles)
+    {
+        if (is_array($titles) || $titles === false) {
+            $this->titles = $titles;
         }
+
+        return $this;
+    }
+
+    /**
+     * Set filename.
+     *
+     * @param string|\Closure $filename
+     * @return $this
+     */
+    public function filename($filename)
+    {
+        $this->filename = value($filename);
+
+        return $this;
+    }
+
+    /**
+     * Set export data.
+     *
+     * @param array $data
+     * @return $this
+     */
+    public function data($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Set export data callback function.
+     *
+     * @param \Closure $builder
+     * @return $this
+     */
+    public function rows(\Closure $builder)
+    {
+        $this->builder = $builder;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function xlsx()
+    {
+        return $this->extension('xlsx');
+    }
+
+    /**
+     * @return $this
+     */
+    public function csv()
+    {
+        return $this->extension('csv');
+    }
+
+    /**
+     * @return $this
+     */
+    public function ods()
+    {
+        return $this->extension('ods');
+    }
+
+    /**
+     * @param string $ext e.g. csv/xlsx/ods
+     * @return $this
+     */
+    public function extension(string $ext)
+    {
+        $this->extension = $ext;
+
+        return $this;
     }
 
     /**
@@ -62,7 +160,8 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function setGrid(Grid $grid)
     {
-        $this->grid = $grid;
+        $this->grid   = $grid;
+        $this->parent = $grid->getExporter();
 
         return $this;
     }
@@ -73,7 +172,7 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function getFilename()
     {
-        return $this->filename ?? (date('Ymd-His') . '-' . Str::random(6));
+        return $this->filename ?: (admin_trans_label().'-'.date('Ymd-His').'-'.Str::random(6));
     }
 
     /**
@@ -97,16 +196,31 @@ abstract class AbstractExporter implements ExporterInterface
             $perPage = $model->getPerPage();
         }
 
-        $model->reset();
         $model->usePaginate(false);
 
         if ($page && $this->scope !== Grid\Exporter::SCOPE_SELECTED_ROWS) {
-            $perPage = $perPage ?: $this->grid->option('export_chunk_size');
+            $perPage = $perPage ?: $this->getChunkSize();
 
             $model->forPage($page, $perPage);
         }
 
-        return $this->grid->getFilter()->execute(true);
+        $array = $this->grid->getFilter()->execute(true);
+
+        $model->reset();
+
+        if ($this->builder) {
+            return ($this->builder)($array);
+        }
+
+        return $array;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getChunkSize()
+    {
+        return $this->parent->option('chunk_size') ?: 5000;
     }
 
     /**
@@ -140,12 +254,25 @@ abstract class AbstractExporter implements ExporterInterface
     abstract public function export();
 
     /**
+     * @param $method
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        $this->parent->{$method}(...$arguments);
+
+        return $this;
+    }
+
+    /**
      * Create a new exporter instance.
      *
      * @param \Closure|array $closure
      */
-    public static function create($builder = null)
+    public static function make($builder = null)
     {
         return new static($builder);
     }
+
 }

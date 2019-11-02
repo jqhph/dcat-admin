@@ -160,6 +160,7 @@ class Grid
         'show_quick_create_btn'  => false,
         'show_bordered'          => false,
         'show_toolbar'           => true,
+        'show_exporter'          => false,
 
         'row_selector_style'     => 'primary',
         'row_selector_circle'    => true,
@@ -167,15 +168,8 @@ class Grid
         'row_selector_label_key' => null,
         'row_selector_bg'        => 'var(--20)',
 
-        'show_exporter'             => false,
-        'show_export_all'           => true,
-        'show_export_current_page'  => true,
-        'show_export_selected_rows' => true,
-        'export_chunk_size'         => 5000,
-
         'dialog_form_area'   => ['700px', '670px'],
         'table_header_style' => 'table-header-gray',
-
     ];
 
     /**

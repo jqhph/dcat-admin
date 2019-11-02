@@ -697,8 +697,9 @@ class Model
      */
     public function reset()
     {
-        $this->data  = null;
-        $this->model = null;
+        $this->data    = null;
+        $this->model   = null;
+        $this->queries = collect();
 
         return $this;
     }
