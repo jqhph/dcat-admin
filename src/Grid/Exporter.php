@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Grid;
+use Dcat\Admin\Grid\Exporters\ExporterInterface;
 
 class Exporter
 {
@@ -160,6 +161,10 @@ class Exporter
             return $driver->setGrid($this->grid);
         }
 
+        if ($driver && $driver instanceof ExporterInterface) {
+            return $driver;
+        }
+
         return $this->getExporter($driver);
     }
 
@@ -170,19 +175,25 @@ class Exporter
      *
      * @return Grid\Exporters\AbstractExporter
      */
-    protected function getExporter($driver): Grid\Exporters\AbstractExporter
+    protected function getExporter($driver): ExporterInterface
     {
         if (! $driver || ! array_key_exists($driver, static::$drivers)) {
             return $this->getDefaultExporter();
         }
 
-        return (new static::$drivers[$driver]())->setGrid($this->grid);
+        $driver = (new static::$drivers[$driver]());
+
+        if (method_exists($driver, 'setGrid')) {
+            $driver->setGrid($this->grid);
+        }
+
+        return $driver;
     }
 
     /**
      * Get default exporter.
      *
-     * @return Grid\Exporters\AbstractExporter
+     * @return Grid\Exporters\ExcelExporter
      */
     public function getDefaultExporter()
     {
