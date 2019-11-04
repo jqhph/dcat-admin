@@ -29,9 +29,9 @@ trait HasFieldValidator
     /**
      * Validation rules.
      *
-     * @var string|\Closure
+     * @var array|\Closure
      */
-    protected $rules = '';
+    protected $rules = [];
 
     /**
      * @var \Closure
@@ -93,14 +93,12 @@ trait HasFieldValidator
             $this->rules = $rules;
         }
 
+        $originalRules = is_array($this->rules) ? $this->rules : [];
+
         if (is_array($rules)) {
-            $thisRuleArr = array_filter(explode('|', $this->rules));
-
-            $this->rules = array_merge($thisRuleArr, $rules);
+            $this->rules = array_merge($originalRules, $rules);
         } elseif (is_string($rules)) {
-            $rules = array_filter(explode('|', "{$this->rules}|$rules"));
-
-            $this->rules = implode('|', $rules);
+            $this->rules = array_merge($originalRules, array_filter(explode('|', $rules)));
         }
 
         $this->setValidationMessages('default', $messages);
