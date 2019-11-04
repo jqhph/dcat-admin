@@ -184,7 +184,7 @@ class Grid
         if ($repository) {
             $this->keyName = $repository->getKeyName();
         }
-        $this->model    = new Model($repository);
+        $this->model    = new Model(request(), $repository);
         $this->columns  = new Collection();
         $this->rows     = new Collection();
         $this->builder  = $builder;
@@ -235,7 +235,7 @@ class Grid
      * @param string $name
      * @param string $label
      *
-     * @return Column|Collection
+     * @return Column
      */
     public function column($name, $label = '')
     {
@@ -920,7 +920,7 @@ HTML;
      * Add column to grid.
      *
      * @param string $name
-     * @return Column|Collection
+     * @return Column
      */
     public function __get($name)
     {

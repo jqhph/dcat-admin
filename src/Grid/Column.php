@@ -48,6 +48,8 @@ use Illuminate\Support\Str;
  * @method $this studly()
  * @method $this substr($start, $length = null)
  * @method $this ucfirst()
+ *
+ * @mixin Collection
  */
 class Column
 {

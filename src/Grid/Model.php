@@ -8,15 +8,24 @@ use Dcat\Admin\Middleware\Pjax;
 use Dcat\Admin\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+/**
+ * @mixin Builder
+ */
 class Model
 {
+    /**
+     * @var Request
+     */
+    protected $request;
+
     /**
      * @var Repository
      */
@@ -115,13 +124,15 @@ class Model
      * Create a new grid model instance.
      *
      * @param Repository $repository
+     * @param Request $request
      */
-    public function __construct(?Repository $repository = null)
+    public function __construct(Request $request, ?Repository $repository = null)
     {
         if ($repository) {
             $this->repository = Admin::createRepository($repository);
         }
 
+        $this->request = $request;
         $this->queries = collect();
     }
 
@@ -434,7 +445,7 @@ class Model
             && $paginator->lastPage()
             && $paginator->currentPage() > $paginator->lastPage()
         ) {
-            $lastPageUrl = Request::fullUrlWithQuery([
+            $lastPageUrl = $this->request->fullUrlWithQuery([
                 $paginator->getPageName() => $paginator->lastPage(),
             ]);
 
@@ -453,7 +464,7 @@ class Model
             return null;
         }
 
-        return $this->currentPage ?: ($this->currentPage = (request($this->pageName) ?: 1));
+        return $this->currentPage ?: ($this->currentPage = ($this->request->input($this->pageName) ?: 1));
     }
 
     /**
@@ -477,7 +488,7 @@ class Model
             return null;
         }
 
-        return request($this->perPageName) ?: $this->perPage;
+        return $this->request->input($this->perPageName) ?: $this->perPage;
     }
 
     /**
@@ -565,7 +576,7 @@ class Model
      */
     protected function setSort()
     {
-        $this->sort = request($this->sortName, []);
+        $this->sort = $this->request->input($this->sortName, []);
 
         if (empty($this->sort['column']) || empty($this->sort['type'])) {
             return;
