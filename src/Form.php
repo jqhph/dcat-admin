@@ -1134,7 +1134,7 @@ class Form implements Renderable
      *
      * @param bool|\Closure $condition
      *
-     * @return Condition|$this
+     * @return Condition
      */
     public function if($condition)
     {

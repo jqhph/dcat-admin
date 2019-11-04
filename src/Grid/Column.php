@@ -271,7 +271,7 @@ class Column
      *         })
      *
      * @param \Closure $condition
-     * @return Column\Condition|$this
+     * @return Column\Condition
      */
     public function if(\Closure $condition)
     {

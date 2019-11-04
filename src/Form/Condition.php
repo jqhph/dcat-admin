@@ -4,6 +4,9 @@ namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Form;
 
+/**
+ * @mixin Form
+ */
 class Condition
 {
     /**
