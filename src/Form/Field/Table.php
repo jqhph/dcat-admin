@@ -58,7 +58,7 @@ class Table extends HasMany
         return $forms;
     }
 
-    public function prepare($input)
+    public function prepareToSave($input)
     {
         $form = $this->buildNestedForm($this->column, $this->builder);
         $prepare = $form->prepare($input);

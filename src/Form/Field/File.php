@@ -101,7 +101,7 @@ class File extends Field
      *
      * @return mixed|string
      */
-    public function prepare($file)
+    public function prepareToSave($file)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
             return $this->destroy();

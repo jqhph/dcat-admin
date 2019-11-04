@@ -67,7 +67,7 @@ class BootstrapImage extends BootstrapFile
      *
      * @return string
      */
-    public function prepare($image)
+    public function prepareToSave($image)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
             return $this->destroy();

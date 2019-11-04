@@ -84,7 +84,7 @@ class SwitchField extends Field
      * @param mixed $value
      * @return int
      */
-    public function prepare($value)
+    public function prepareToSave($value)
     {
         return $value ? 1 : 0;
     }

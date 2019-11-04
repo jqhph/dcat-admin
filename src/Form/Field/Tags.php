@@ -100,7 +100,7 @@ class Tags extends Field
     /**
      * {@inheritdoc}
      */
-    public function prepare($value)
+    public function prepareToSave($value)
     {
         $value = array_filter($value, 'strlen');
 

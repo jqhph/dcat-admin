@@ -15,7 +15,7 @@ class Date extends Text
         return $this;
     }
 
-    public function prepare($value)
+    public function prepareToSave($value)
     {
         if ($value === '') {
             $value = null;
