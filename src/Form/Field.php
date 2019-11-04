@@ -745,7 +745,7 @@ class Field implements Renderable
      * @param mixed $value
      * @return mixed
      */
-    public function prepareToSave($value)
+    protected function prepareToSave($value)
     {
         return $value;
     }
@@ -767,7 +767,7 @@ class Field implements Renderable
      * @param mixed $value
      * @return mixed
      */
-    final public function prepareInputValue($value)
+    final public function prepare($value)
     {
         $value = $this->prepareToSave($value);
 

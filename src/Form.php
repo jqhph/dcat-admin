@@ -904,7 +904,7 @@ class Form implements Renderable
 
             $value = $this->getDataByColumn($updates, $columns);
 
-            $value = $field->prepareInputValue($value);
+            $value = $field->prepare($value);
 
             if (is_array($columns)) {
                 foreach ($columns as $name => $column) {
@@ -953,7 +953,7 @@ class Form implements Renderable
                 continue;
             }
 
-            $inserts[$column] = $field->prepareInputValue($value);
+            $inserts[$column] = $field->prepare($value);
         }
 
         $prepared = [];

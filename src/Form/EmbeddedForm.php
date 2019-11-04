@@ -178,8 +178,8 @@ class EmbeddedForm
             return in_array($key, (array) $field->column());
         });
 
-        if (method_exists($field, 'prepareInputValue')) {
-            return $field->prepareInputValue($record);
+        if (method_exists($field, 'prepare')) {
+            return $field->prepare($record);
         }
 
         return $record;

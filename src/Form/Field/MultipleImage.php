@@ -33,7 +33,7 @@ class MultipleImage extends Image
      * @param string|array $file
      * @return array
      */
-    public function prepareToSave($file)
+    protected function prepareToSave($file)
     {
         if ($path = request(static::FILE_DELETE_FLAG)) {
             $this->deleteFile($path);

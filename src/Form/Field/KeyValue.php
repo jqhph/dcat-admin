@@ -94,7 +94,7 @@ class KeyValue extends Field
 JS;
     }
 
-    public function prepareToSave($value)
+    protected function prepareToSave($value)
     {
         unset($value[static::DEFAULT_FLAG_NAME]);
 
