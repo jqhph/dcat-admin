@@ -50,6 +50,10 @@ class Dump extends Widget
         return $this;
     }
 
+    /**
+     * @param string|null $padding
+     * @return $this
+     */
     public function padding(?string $padding)
     {
         if ($padding) {
@@ -59,6 +63,10 @@ class Dump extends Widget
         return $this;
     }
 
+    /**
+     * @param string $width
+     * @return $this
+     */
     public function maxWidth($width)
     {
         $this->maxWidth = $width;

@@ -2,10 +2,9 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 
-class Table extends Widget implements Renderable
+class Table extends Widget
 {
     /**
      * @var string

@@ -6,7 +6,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 
 /**
@@ -99,6 +98,7 @@ abstract class Widget implements Renderable
     protected function collectAssets()
     {
         $this->script && Admin::script($this->script);
+
         static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);
     }

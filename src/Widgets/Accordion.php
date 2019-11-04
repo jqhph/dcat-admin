@@ -2,10 +2,9 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 
-class Accordion extends Widget implements Renderable
+class Accordion extends Widget
 {
     /**
      * @var string
@@ -31,11 +30,17 @@ class Accordion extends Widget implements Renderable
         $this->id('accordion-'.Str::random(8));
     }
 
+    /**
+     * @return $this
+     */
     public function white()
     {
         return $this->panelStyle('white');
     }
 
+    /**
+     * @return $this
+     */
     public function panelStyle(string $style)
     {
         $this->panelStyle = 'panel-'.$style;

@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Support\StringOutput;
 use Illuminate\Support\Facades\Artisan;
 

@@ -9,21 +9,29 @@ trait AjaxRequestBuilder
     /**
      * @var string
      */
-    protected $url;
+    protected $__url;
 
     /**
      * @var array
      */
     protected $buttonSelectors = [];
 
+    /**
+     * @var string
+     */
     protected $fn;
 
+    /**
+     * @var array
+     */
     protected $javascripts = [
         'fetching' => [],
         'fetched'  => [],
     ];
 
     /**
+     * Set request url.
+     *
      * @param string $url
      * @return $this
      */
@@ -32,27 +40,38 @@ trait AjaxRequestBuilder
         return $this->setUrl($url);
     }
 
+    /**
+     * Set current url to request.
+     *
+     * @param string $url
+     * @return $this
+     */
     public function requestCurrent(array $query = [])
     {
-        $this->url = url(request()->getPathInfo()).'?'.http_build_query($query);
+        $this->__url = url(request()->getPathInfo()).'?'.http_build_query($query);
 
         return $this;
     }
 
     /**
+     * Set request url.
+     *
      * @param string $url
      * @return $this
      */
     public function setUrl(string $url)
     {
-        $this->url = admin_url($url);
+        $this->__url = admin_url($url);
 
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getUrl()
     {
-        return $this->url;
+        return $this->__url;
     }
 
     /**
@@ -64,7 +83,7 @@ trait AjaxRequestBuilder
     }
 
     /**
-     * 绑定重新获取数据按钮css选择器
+     * Set css selectors of refetch links.
      *
      * @param string|array $selector
      * @return $this
@@ -85,6 +104,12 @@ trait AjaxRequestBuilder
         return $this->buttonSelectors;
     }
 
+    /**
+     * Set the script before fetch data.
+     *
+     * @param string $script
+     * @return $this
+     */
     public function fetching(string $script)
     {
         $this->javascripts['fetching'][] = $script;
@@ -92,6 +117,12 @@ trait AjaxRequestBuilder
         return $this;
     }
 
+    /**
+     * Set the script after fetch data.
+     *
+     * @param string $script
+     * @return $this
+     */
     public function fetched(string $script)
     {
         $this->javascripts['fetched'][] = $script;
@@ -99,11 +130,17 @@ trait AjaxRequestBuilder
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function allowBuildFetchingScript()
     {
-        return $this->url === null ? false : true;
+        return $this->__url === null ? false : true;
     }
 
+    /**
+     * @return bool|string
+     */
     public function buildFetchingScript()
     {
         if (!$this->allowBuildFetchingScript()) {
@@ -120,26 +157,28 @@ trait AjaxRequestBuilder
             $binding .= "$('{$v}').click(function () { {$this->fn}($(this).data()) });";
         }
 
-        return <<<SCRIPT
+        return <<<JS
 window.{$this->fn} = function (p) {
     $fetching;     
-    $.getJSON('{$this->url}', $.extend({_token:LA.token}, p || {}), function (result) {
+    $.getJSON('{$this->__url}', $.extend({_token:LA.token}, p || {}), function (result) {
         {$fetched};
     });
 }
 {$this->fn}();
 $binding;
-SCRIPT;
+JS;
 
     }
 
     /**
+     * Copy the given AjaxRequestBuilder.
+     *
      * @param AjaxRequestBuilder $fetcher
      * @return $this
      */
     public function copy($fetcher)
     {
-        $this->url = $fetcher->getUrl();
+        $this->__url = $fetcher->getUrl();
 
         $this->buttonSelectors = $fetcher->getButtonSelectors();
 

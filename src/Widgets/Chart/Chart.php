@@ -43,6 +43,10 @@ abstract class Chart extends Widget
 
     protected $containerStyle = '';
 
+    /**
+     * Chart constructor.
+     * @param mixed ...$params
+     */
     public function __construct(...$params)
     {
         if (count($params) == 2) {
@@ -60,9 +64,7 @@ abstract class Chart extends Widget
             }
         }
 
-        if (!$this->colors) {
-            $this->colors = Colors::$charts['blue'];
-        }
+        $this->setDefaultColors();
     }
 
     /**
@@ -167,11 +169,17 @@ abstract class Chart extends Widget
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function disableLegend()
     {
         return $this->legend(['display' => false]);
     }
 
+    /**
+     * @return $this
+     */
     public function legendPosition(string $val)
     {
         return $this->legend(['position' => $val]);
@@ -192,6 +200,11 @@ abstract class Chart extends Widget
         return $this;
     }
 
+    /**
+     * Disable tooltip.
+     *
+     * @return $this
+     */
     public function disableTooltip()
     {
         return $this->tooltips(['enabled' => false]);
@@ -268,12 +281,23 @@ abstract class Chart extends Widget
         return $this;
     }
 
+    /**
+     * Set width of container.
+     *
+     * @param string $width
+     * @return Chart
+     */
     public function width($width)
     {
         return $this->setContainerStyle('width:'.$width);
-
     }
 
+    /**
+     * Set height of container.
+     *
+     * @param string $height
+     * @return Chart
+     */
     public function height($height)
     {
         return $this->setContainerStyle('height:'.$height);
@@ -299,6 +323,7 @@ abstract class Chart extends Widget
      * Fill default color.
      *
      * @param array $colors
+     * @return void
      */
     protected function fillColor(array $colors = [])
     {
@@ -313,6 +338,8 @@ abstract class Chart extends Widget
 
     /**
      * Make element id.
+     *
+     * @return void
      */
     protected function makeId()
     {
@@ -343,8 +370,15 @@ abstract class Chart extends Widget
         ];
         $options = json_encode($config);
 
+        // Global configure.
+        $globalSettings = '';
+        foreach (self::$globalSettings as $k => $v) {
+            $globalSettings .= sprintf('Chart.defaults.global.%s="%s";', $k, $v);
+        }
+
         if (!$this->allowBuildFetchingScript()) {
             return <<<JS
+{$globalSettings}
 setTimeout(function(){ new Chart($("#{$this->id}").get(0).getContext("2d"), $options) },60)
 JS;
         }
@@ -363,7 +397,7 @@ window['obj'+id] = new Chart($("#"+id).get(0).getContext("2d"), opt);
 JS
         );
 
-        return $this->buildFetchingScript();
+        return $globalSettings.$this->buildFetchingScript();
 
     }
 
@@ -384,15 +418,13 @@ JS
 
     }
 
+    /**
+     * @return string
+     */
     public function render()
     {
         $this->makeId();
         $this->fillColor();
-
-        // Global configure.
-        foreach (self::$globalSettings as $k => $v) {
-            Admin::script(sprintf('Chart.defaults.global.%s="%s";', $k, $v));
-        }
 
         $this->script = $this->script();
 
@@ -411,6 +443,11 @@ JS
 HTML;
     }
 
+    /**
+     * @param string $method
+     * @param array $parameters
+     * @return $this
+     */
     public function __call($method, $parameters)
     {
         if (isset(Colors::$charts[$method])) {
@@ -441,9 +478,25 @@ HTML;
         ));
     }
 
+    /**
+     * @return void
+     */
+    protected function setDefaultColors()
+    {
+        if (! $this->colors) {
+            $this->colors = Colors::$charts['blue'];
+        }
+    }
+
+    /**
+     * Collect assets.
+     *
+     * @return void
+     */
     public function collectAssets()
     {
         $this->script && Admin::script($this->script);
+
         Admin::collectComponentAssets('chartjs');
     }
 }
