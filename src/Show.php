@@ -86,7 +86,7 @@ class Show implements Renderable
     public function __construct(?Repository $repository = null, ?\Closure $builder = null)
     {
         if ($repository) {
-            $this->repository = Admin::createRepository($repository);
+            $this->repository = Admin::repository($repository);
         }
         $this->builder = $builder;
 

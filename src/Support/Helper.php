@@ -6,10 +6,32 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 class Helper
 {
+    /**
+     * Update extension config.
+     *
+     * @param array $config
+     * @return bool
+     */
+    public static function updateExtensionConfig(array $config)
+    {
+        $files  = app('files');
+        $result = (bool)$files->put(config_path('admin-extensions.php'), Helper::exportArrayPhp($config));
+
+        if ($result && is_file(base_path('bootstrap/cache/config.php'))) {
+            Artisan::call('config:cache');
+        }
+
+        \config(['admin-extensions' => $config]);
+
+        return $result;
+    }
+
+
     /**
      * Converts the given value to an array.
      *

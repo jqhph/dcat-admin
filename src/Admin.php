@@ -16,12 +16,9 @@ use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
-use phpDocumentor\Reflection\Types\Mixed_;
 
 /**
  * Class Admin.
@@ -343,13 +340,13 @@ class Admin
     }
 
     /**
-     * Create a repository instance
+     * Create a repository instance.
      *
      * @param $class
      * @param array $args
      * @return Repository
      */
-    public static function createRepository($class, array $args = [])
+    public static function repository($class, array $args = [])
     {
         $repository = $class;
         if (is_string($repository)) {
@@ -432,35 +429,7 @@ class Admin
 
         $config[$name]['enable'] = $enable;
 
-        return static::updateExtensionConfig($config);
-    }
-
-    /**
-     * @return Handler
-     */
-    public static function makeExceptionHandler()
-    {
-        return app(
-            config('admin.exception_handler') ?: Handler::class
-        );
-    }
-
-    /**
-     * @param array $config
-     * @return bool
-     */
-    public static function updateExtensionConfig(array $config)
-    {
-        $files  = app('files');
-        $result = (bool)$files->put(config_path('admin-extensions.php'), Helper::exportArrayPhp($config));
-
-        if ($result && is_file(base_path('bootstrap/cache/config.php'))) {
-            Artisan::call('config:cache');
-        }
-
-        \config(['admin-extensions' => $config]);
-
-        return $result;
+        return Helper::updateExtensionConfig($config);
     }
 
     /**
@@ -472,6 +441,16 @@ class Admin
     public static function disableExtenstion(string $class)
     {
         return static::enableExtenstion($class, false);
+    }
+
+    /**
+     * @return Handler
+     */
+    public static function makeExceptionHandler()
+    {
+        return app(
+            config('admin.exception_handler') ?: Handler::class
+        );
     }
 
     /**

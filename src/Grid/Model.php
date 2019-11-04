@@ -129,7 +129,7 @@ class Model
     public function __construct(Request $request, ?Repository $repository = null)
     {
         if ($repository) {
-            $this->repository = Admin::createRepository($repository);
+            $this->repository = Admin::repository($repository);
         }
 
         $this->request = $request;

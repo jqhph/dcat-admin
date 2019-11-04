@@ -266,7 +266,7 @@ class Form implements Renderable
      */
     public function __construct(Repository $repository, ?Closure $callback = null)
     {
-        $this->repository = Admin::createRepository($repository);
+        $this->repository = Admin::repository($repository);
 
         $this->callback = $callback;
 
