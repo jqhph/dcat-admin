@@ -84,7 +84,7 @@
             tpl = LA.AssetsLoader.filterScriptAndAutoLoad(tpl).render();
             var t = $(tpl), $form, btns = [lang.submit], opts = {
                 type: 1,
-                area: area,
+                area: formatArea(area),
                 content: tpl,
                 title: title,
                 yes: submit,
@@ -153,6 +153,16 @@
                 });
 
             }
+        }
+
+        function formatArea(area) {
+            var width = w.screen.width;
+
+            if (width <= 750) {
+                return ['100%', area[1]];
+            }
+
+            return area;
         }
 
         // 移除弹窗
