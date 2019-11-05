@@ -17,7 +17,7 @@ class SelectResource extends Presenter
      */
     protected $placeholder = '';
 
-    protected $area = ['60%', '68%'];
+    protected $area = ['55%', '68%'];
 
     protected $source;
 

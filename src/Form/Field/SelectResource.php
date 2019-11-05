@@ -16,7 +16,7 @@ class SelectResource extends Field
         'vendor/dcat-admin/dcat-admin/select-resource.min.js'
     ];
 
-    protected $area = ['60%', '68%'];
+    protected $area = ['55%', '68%'];
 
     protected $source;
 
