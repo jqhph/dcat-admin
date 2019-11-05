@@ -776,10 +776,18 @@ var f = $('#{$this->getFormId()}');
 
 f.find('[type="submit"]').click(function () {
     var t = $(this);
-    t.button('loading');
     
     LA.Form({
         \$form: f,
+        before: function () {
+            f.validator('validate');
+    
+            if (f.find('.has-error').length > 0) {
+                return false;
+            }
+            
+            t.button('loading');
+        },
         after: function () {
             t.button('reset');
         }

@@ -734,7 +734,8 @@ window.require = window.define = window.exports = window.module = undefined;
             disableRedirect: false, //
             columnSelectors: {}, //
             disableRemoveError: false,
-            after: function (success, data) {},
+            before: function () {},
+            after: function () {},
         }, opts);
 
         var originalVals = {},
@@ -752,12 +753,18 @@ window.require = window.define = window.exports = window.module = undefined;
                 return $("[href='#" + id + "'] .text-red");
             };
 
+        var self = this;
+
         // 移除错误信息
         remove_field_error();
 
         $form.ajaxSubmit({
             beforeSubmit: function (d, f, o) {
-                if (call_events(LA._form_.before, d, f, o) === false) {
+                if (opts.before(d, f, o, self) === false) {
+                    return false;
+                }
+
+                if (fire(LA._form_.before, d, f, o, self) === false) {
                     return false;
                 }
 
@@ -766,11 +773,11 @@ window.require = window.define = window.exports = window.module = undefined;
             success: function (d) {
                 LA.NP.done();
 
-                if (opts.after(true, d) === false) {
+                if (opts.after(true, d, self) === false) {
                     return;
                 }
 
-                if (call_events(LA._form_.success, d) === false) {
+                if (fire(LA._form_.success, d, self) === false) {
                     return;
                 }
 
@@ -792,11 +799,11 @@ window.require = window.define = window.exports = window.module = undefined;
             error: function (v) {
                 LA.NP.done();
 
-                if (opts.after(false, v) === false) {
+                if (opts.after(false, v, self) === false) {
                     return;
                 }
 
-                if (call_events(LA._form_.error, v) === false) {
+                if (fire(LA._form_.error, v, self) === false) {
                     return;
                 }
 
@@ -820,13 +827,13 @@ window.require = window.define = window.exports = window.module = undefined;
         });
 
         // 触发钩子事件
-        function call_events(evs) {
-            var i, r, a = arguments, j, p = [];
-            delete a[0];
-            a = a || [];
+        function fire(evs) {
+            var i, j, r, args = arguments, p = [];
+            delete args[0];
+            args = args || [];
 
-            for (j in a) {
-                p.push(a[j]);
+            for (j in args) {
+                p.push(args[j]);
             }
 
             for (i in evs) {
@@ -1098,15 +1105,24 @@ window.require = window.define = window.exports = window.module = undefined;
             $layWin[num] = w.$('#layui-layer' + idx[num]);
 
             // 提交表单
-            function submit (index, layero) {
+            function submit () {
                 if (submitting) return;
-                submitting = 1;
                 $form = $form || w.$('#'+t.find('form').attr('id'));  // 此处必须重新创建jq对象，否则无法操作页面元素
-                $layWin[num].find('.layui-layer-btn0').button('loading');
 
                 LA.Form({
                     $form: $form,
                     disableRedirect: true,
+                    before: function () {
+                        $form.validator('validate');
+
+                        if ($form.find('.has-error').length > 0) {
+                            return false;
+                        }
+
+                        submitting = 1;
+
+                        $layWin[num].find('.layui-layer-btn0').button('loading');
+                    },
                     after: function (success, res) {
                         $layWin[num].find('.layui-layer-btn0').button('reset');
                         submitting = 0;
@@ -1114,7 +1130,7 @@ window.require = window.define = window.exports = window.module = undefined;
                         handlers.saved(success, res);
 
                         if (!success) {
-                            return handlers.error(success, res);;
+                            return handlers.error(success, res);
                         }
                         if (res.status) {
                             handlers.success(success, res);

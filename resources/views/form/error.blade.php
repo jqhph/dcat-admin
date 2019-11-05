@@ -1,4 +1,4 @@
-<error></error>
+<error class="help-block with-errors"></error>
 @if(is_array($errorKey))
     @foreach($errorKey as $key => $col)
         @if($errors->has($col.$key))
