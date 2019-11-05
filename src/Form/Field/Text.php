@@ -81,14 +81,12 @@ class Text extends Field
     {
         $this->rules('min:'.$length);
 
-        $defaultError = trans('validation.min.string') ?: 'The :attribute may not be greater than :max characters.';
-
         return $this->attribute([
             'data-minlength'       => $length,
             'data-minlength-error' => str_replace(
                 [':attribute', ':min'],
                 [$this->column, $length],
-                $error ?: $defaultError
+                $error ?: trans('admin.validation.minlength')
             ),
         ]);
     }
@@ -111,14 +109,12 @@ JS
 
         $this->rules('max:'.$length);
 
-        $defaultError = trans('validation.max.string') ?: 'The :attribute may not be greater than :max characters.';
-
         return $this->attribute([
             'data-maxlength'       => $length,
             'data-maxlength-error' => str_replace(
                 [':attribute', ':max'],
                 [$this->column, $length],
-                $error ?: $defaultError
+                $error ?: trans('admin.validation.maxlength')
             ),
         ]);
     }
