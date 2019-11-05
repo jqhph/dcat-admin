@@ -79,7 +79,7 @@ class Text extends Field
      */
     public function minLength(int $length, ?string $error = null)
     {
-        $this->rules('min:'.$length);
+        $this->rules('nullable|min:'.$length);
 
         return $this->attribute([
             'data-minlength'       => $length,
