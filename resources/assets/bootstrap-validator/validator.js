@@ -14,9 +14,9 @@
 
   function getValue($el) {
     return $el.is('[type="checkbox"]') ? $el.prop('checked')                                     :
-           $el.is('[type="radio"]')    ? !!$('[name="' + $el.attr('name') + '"]:checked').length :
-           $el.is('select[multiple]')  ? ($el.val() || []).length                                :
-                                         $el.val()
+        $el.is('[type="radio"]')    ? !!$('[name="' + $el.attr('name') + '"]:checked').length :
+            $el.is('select[multiple]')  ? ($el.val() || []).length                                :
+                $el.val()
   }
 
   var Validator = function (element, options) {
@@ -24,8 +24,8 @@
     this.validators = $.extend({}, Validator.VALIDATORS, options.custom)
     this.$element   = $(element)
     this.$btn       = $('button[type="submit"], input[type="submit"]')
-                        .filter('[form="' + this.$element.attr('id') + '"]')
-                        .add(this.$element.find('input[type="submit"], button[type="submit"]'))
+        .filter('[form="' + this.$element.attr('id') + '"]')
+        .add(this.$element.find('input[type="submit"], button[type="submit"]'))
 
     this.update()
 
@@ -93,10 +93,10 @@
     var self = this
 
     this.$inputs = this.$element.find(Validator.INPUT_SELECTOR)
-      .add(this.$element.find('[data-validate="true"]'))
-      .not(this.$element.find('[data-validate="false"]')
-        .each(function () { self.clearErrors($(this)) })
-      )
+        .add(this.$element.find('[data-validate="true"]'))
+        .not(this.$element.find('[data-validate="false"]')
+            .each(function () { self.clearErrors($(this)) })
+        )
 
     this.toggleSubmit()
 
@@ -131,13 +131,13 @@
       $el.data('bs.validator.errors', errors)
 
       errors.length
-        ? deferErrors ? self.defer($el, self.showErrors) : self.showErrors($el)
-        : self.clearErrors($el)
+          ? deferErrors ? self.defer($el, self.showErrors) : self.showErrors($el)
+          : self.clearErrors($el)
 
       if (!prevErrors || errors.toString() !== prevErrors.toString()) {
         e = errors.length
-          ? $.Event('invalid.bs.validator', {relatedTarget: $el[0], detail: errors})
-          : $.Event('valid.bs.validator', {relatedTarget: $el[0], detail: prevErrors})
+            ? $.Event('invalid.bs.validator', {relatedTarget: $el[0], detail: errors})
+            : $.Event('valid.bs.validator', {relatedTarget: $el[0], detail: prevErrors})
 
         self.$element.trigger(e)
       }
@@ -163,12 +163,12 @@
     function getValidityStateError() {
       var validity = $el[0].validity
       return validity.typeMismatch    ? $el.attr('data-type-error')
-           : validity.patternMismatch ? $el.attr('data-pattern-error')
-           : validity.stepMismatch    ? $el.attr('data-step-error')
-           : validity.rangeOverflow   ? $el.attr('data-max-error')
-           : validity.rangeUnderflow  ? $el.attr('data-min-error')
-           : validity.valueMissing    ? $el.attr('data-required-error')
-           :                            null
+          : validity.patternMismatch ? $el.attr('data-pattern-error')
+              : validity.stepMismatch    ? $el.attr('data-step-error')
+                  : validity.rangeOverflow   ? $el.attr('data-max-error')
+                      : validity.rangeUnderflow  ? $el.attr('data-min-error')
+                          : validity.valueMissing    ? $el.attr('data-required-error')
+                              :                            null
     }
 
     function getGenericError() {
@@ -182,11 +182,14 @@
     }
 
     $.each(this.validators, $.proxy(function (key, validator) {
-      var error = null
-      if ((getValue($el) || $el.attr('required')) &&
-          ($el.attr('data-' + key) !== undefined || key == 'native') &&
-          (error = validator.call(this, $el))) {
-         error = getErrorMessage(key) || error
+      var error = null, rule = $el.attr('data-' + key) || null
+
+      if (
+          (getValue($el) || $el.attr('required') || key == 'match') &&
+          (rule || key == 'native') &&
+          (error = validator.call(this, $el))
+      ) {
+        error = getErrorMessage(key) || error
         !~errors.indexOf(error) && errors.push(error)
       }
     }, this))
@@ -196,8 +199,8 @@
         var data = {}
         data[$el.attr('name')] = getValue($el)
         $.get($el.attr('data-remote'), data)
-          .fail(function (jqXHR, textStatus, error) { errors.push(getErrorMessage('remote') || error) })
-          .always(function () { deferred.resolve(errors)})
+            .fail(function (jqXHR, textStatus, error) { errors.push(getErrorMessage('remote') || error) })
+            .always(function () { deferred.resolve(errors)})
       })
     } else deferred.resolve(errors)
 
@@ -237,17 +240,17 @@
     if (!errors.length) return
 
     errors = $('<ul/>')
-      .addClass('list-unstyled')
-      .append($.map(errors, function (error) { return $('<li/>')[method](error) }))
+        .addClass('list-unstyled')
+        .append($.map(errors, function (error) { return $('<li/>')[method](error) }))
 
     $block.data('bs.validator.originalContent') === undefined && $block.data('bs.validator.originalContent', $block.html())
     $block.empty().append(errors)
     $group.addClass('has-error has-danger')
 
     $group.hasClass('has-feedback')
-      && $feedback.removeClass(this.options.feedback.success)
-      && $feedback.addClass(this.options.feedback.error)
-      && $group.removeClass('has-success')
+    && $feedback.removeClass(this.options.feedback.success)
+    && $feedback.addClass(this.options.feedback.error)
+    && $group.removeClass('has-success')
   }
 
   Validator.prototype.clearErrors = function ($el) {
@@ -259,11 +262,11 @@
     $group.removeClass('has-error has-danger has-success')
 
     $group.hasClass('has-feedback')
-      && $feedback.removeClass(this.options.feedback.error)
-      && $feedback.removeClass(this.options.feedback.success)
-      && getValue($el)
-      && $feedback.addClass(this.options.feedback.success)
-      && $group.addClass('has-success')
+    && $feedback.removeClass(this.options.feedback.error)
+    && $feedback.removeClass(this.options.feedback.success)
+    && getValue($el)
+    && $feedback.addClass(this.options.feedback.success)
+    && $group.addClass('has-success')
   }
 
   Validator.prototype.hasErrors = function () {
@@ -302,26 +305,26 @@
 
   Validator.prototype.reset = function () {
     this.$element.find('.form-control-feedback')
-      .removeClass(this.options.feedback.error)
-      .removeClass(this.options.feedback.success)
+        .removeClass(this.options.feedback.error)
+        .removeClass(this.options.feedback.success)
 
     this.$inputs
-      .removeData(['bs.validator.errors', 'bs.validator.deferred'])
-      .each(function () {
-        var $this = $(this)
-        var timeout = $this.data('bs.validator.timeout')
-        window.clearTimeout(timeout) && $this.removeData('bs.validator.timeout')
-      })
+        .removeData(['bs.validator.errors', 'bs.validator.deferred'])
+        .each(function () {
+          var $this = $(this)
+          var timeout = $this.data('bs.validator.timeout')
+          window.clearTimeout(timeout) && $this.removeData('bs.validator.timeout')
+        })
 
     this.$element.find('.help-block.with-errors')
-      .each(function () {
-        var $this = $(this)
-        var originalContent = $this.data('bs.validator.originalContent')
+        .each(function () {
+          var $this = $(this)
+          var originalContent = $this.data('bs.validator.originalContent')
 
-        $this
-          .removeData('bs.validator.originalContent')
-          .html(originalContent)
-      })
+          $this
+              .removeData('bs.validator.originalContent')
+              .html(originalContent)
+        })
 
     this.$btn.removeClass('disabled')
 
@@ -334,12 +337,12 @@
     this.reset()
 
     this.$element
-      .removeAttr('novalidate')
-      .removeData('bs.validator')
-      .off('.bs.validator')
+        .removeAttr('novalidate')
+        .removeData('bs.validator')
+        .off('.bs.validator')
 
     this.$inputs
-      .off('.bs.validator')
+        .off('.bs.validator')
 
     this.options    = null
     this.validators = null

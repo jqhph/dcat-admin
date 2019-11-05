@@ -243,21 +243,17 @@ class UserController extends Controller
 
             if ($id) {
                 $form->password('password', trans('admin.password'))
-                    ->rules('confirmed')
                     ->customFormat(function ($v) {
                         if ($v == $this->password) {
                             return;
                         }
                         return $v;
                     });
-                $form->password('password_confirmation', trans('admin.password_confirmation'));
             } else {
-                $form->password('password', trans('admin.password'))
-                    ->required()
-                    ->rules('confirmed');
-
-                $form->password('password_confirmation', trans('admin.password_confirmation'));
+                $form->password('password', trans('admin.password'))->required();
             }
+
+            $form->password('password_confirmation', trans('admin.password_confirmation'))->confirm('password');
 
             $form->ignore(['password_confirmation']);
 

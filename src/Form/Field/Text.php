@@ -56,7 +56,11 @@ class Text extends Field
     public function confirm(string $field, ?string $error = null, ?string $fieldSelector = null)
     {
         if (! $fieldSelector && $this->form) {
-            $fieldSelector = '#'.$this->form->field($field)->getElementId();
+            $column = $this->form->field($field);
+
+            $column->rules('confirmed');
+
+            $fieldSelector = '#'.$column->getElementId();
         }
 
         $attributes = [
