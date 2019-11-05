@@ -1,4 +1,4 @@
-<div class="filter-input col-sm-{{ $width }}"  style="{!! $style !!}">
+<div class="filter-input col-md-{{ $width }}"  style="{!! $style !!}">
     <div class="form-group">
         <div class="input-group input-group-sm">
             <span class="input-group-addon"><b>{{$label}}</b>  &nbsp;<i class="fa fa-calendar"></i></span>
