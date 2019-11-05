@@ -400,6 +400,14 @@ window.require = window.define = window.exports = window.module = undefined;
             });
         };
 
+        // 注册自定义验证器
+        LA.extendValidator = function (rule, callback, message) {
+            var GLOBAL = $.fn.validator.Constructor.DEFAULTS;
+
+            GLOBAL.custom[rule] = callback;
+            GLOBAL.errors[rule] = message || null;
+        };
+
         function layer_position(idx, p) {
             switch (p) {
                 case 'rb':
