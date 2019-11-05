@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 
 class Text extends Field
@@ -69,6 +70,57 @@ class Text extends Field
         ];
 
         return $this->attribute($attributes);
+    }
+
+    /**
+     * @param int $length
+     * @param string|null $error
+     * @return $this
+     */
+    public function minLength(int $length, ?string $error = null)
+    {
+        $this->rules('min:'.$length);
+
+        $defaultError = trans('validation.min.string') ?: 'The :attribute may not be greater than :max characters.';
+
+        return $this->attribute([
+            'data-minlength'       => $length,
+            'data-minlength-error' => str_replace(
+                [':attribute', ':min'],
+                [$this->column, $length],
+                $error ?: $defaultError
+            ),
+        ]);
+    }
+
+    /**
+     * @param int $length
+     * @param string|null $error
+     * @return $this
+     */
+    public function maxLength(int $length, ?string $error = null)
+    {
+        Admin::script(
+            <<<'JS'
+$.fn.validator.Constructor.DEFAULTS.custom.maxlength = function ($el) {
+    var length = $el.attr('data-maxlength');
+    return $el.val().length > length;
+};
+JS
+        );
+
+        $this->rules('max:'.$length);
+
+        $defaultError = trans('validation.max.string') ?: 'The :attribute may not be greater than :max characters.';
+
+        return $this->attribute([
+            'data-maxlength'       => $length,
+            'data-maxlength-error' => str_replace(
+                [':attribute', ':max'],
+                [$this->column, $length],
+                $error ?: $defaultError
+            ),
+        ]);
     }
 
     /**

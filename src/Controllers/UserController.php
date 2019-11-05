@@ -243,6 +243,8 @@ class UserController extends Controller
 
             if ($id) {
                 $form->password('password', trans('admin.password'))
+                    ->minLength(5)
+                    ->maxLength(20)
                     ->customFormat(function ($v) {
                         if ($v == $this->password) {
                             return;
@@ -250,7 +252,10 @@ class UserController extends Controller
                         return $v;
                     });
             } else {
-                $form->password('password', trans('admin.password'))->required();
+                $form->password('password', trans('admin.password'))
+                    ->required()
+                    ->minLength(5)
+                    ->maxLength(20);
             }
 
             $form->password('password_confirmation', trans('admin.password_confirmation'))->confirm('password');
