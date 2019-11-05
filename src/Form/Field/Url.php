@@ -4,7 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 class Url extends Text
 {
-    protected $rules = 'nullable|url';
+    protected $rules = ['nullable', 'url'];
 
     public function render()
     {

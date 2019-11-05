@@ -34,6 +34,53 @@ class Text extends Field
     }
 
     /**
+     * Set input type.
+     *
+     * @param string $type
+     * @return $this
+     */
+    public function type(string $type)
+    {
+        return $this->attribute('type', $type);
+    }
+
+    /**
+     * Set "data-match" attribute.
+     *
+     * @see http://1000hz.github.io/bootstrap-validator/
+     *
+     * @param string $field
+     * @param string $error
+     * @return $this
+     */
+    public function confirm(string $field, ?string $error = null, ?string $fieldSelector = null)
+    {
+        if (! $fieldSelector && $this->form) {
+            $fieldSelector = '#'.$this->form->field($field)->getElementId();
+        }
+
+        $attributes = [
+            'data-match'       => $fieldSelector,
+            'data-match-error' => str_replace(':attribute', $field, $error ?: trans('admin.validation.match'))
+        ];
+
+        return $this->attribute($attributes);
+    }
+
+    /**
+     * Set error messages for individual form field.
+     *
+     * @see http://1000hz.github.io/bootstrap-validator/
+     *
+     * @param string $error
+     * @return $this
+     */
+    public function validationError(string $error)
+    {
+        return $this->attribute('data-error', $error);
+    }
+
+    /**
      * Add inputmask to an elements.
      *
      * @param array $options

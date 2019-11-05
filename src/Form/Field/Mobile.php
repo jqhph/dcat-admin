@@ -19,7 +19,7 @@ class Mobile extends Text
     {
         $this->inputmask($this->options);
 
-        $this->prepend('<i class="fa fa-phone fa-fw"></i>')
+        $this->prepend('<i class="ti-mobile"></i>')
             ->defaultAttribute('style', 'width: 200px');
 
         return parent::render();

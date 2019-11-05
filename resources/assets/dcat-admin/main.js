@@ -1335,3 +1335,79 @@ window.require = window.define = window.exports = window.module = undefined;
 
     LA.AssetsLoader = new AssetsLoader;
 })(window);
+
+(function () {
+    /**
+     * 兼容非html5浏览器表单验证功能
+     *
+     * @see https://github.com/liyincheng/html5-form/blob/master/checkValidity.js
+     */
+    function addCheckValidity () {
+        var input = document.createElement("input");
+        if (! input.checkValidity) {
+            HTMLInputElement.prototype.checkValidity = function () {
+                var that = this;
+                //添加checkValidity
+                var m = {
+                    url : /^https?\:\/\/[a-z0-9]+/i,
+                    //date : /^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/,
+                    email : /^[a-z0-9\.\'\-]+@[a-z0-9\.\-]+$/i,
+                    number : /^[0-9]+(\.[0-9]+)?$/i
+                };
+                // REQUIRED ATTRIBUTES
+                var type  = that.getAttribute('t') || that.getAttribute("type"),
+                    required= (that.getAttribute('required') !== null),
+                    pattern = that.getAttribute('pattern');
+
+                this.validity = {
+                    valueMissing    : required && that.value.length===0,
+                    typeMismatch    : (that.value.length>0) && (type in m) && !that.value.match( m[type] ),
+                    patternMismatch : pattern && (that.value.length>0) && !that.value.match( new RegExp('^'+pattern+'$') )
+                };
+
+                for (var x in that.validity) {
+                    if(x === "valid" && that.validity[x] === true) return true;
+                    if (that.validity[x]) {
+                        that.validity.valid = false;
+                        switch(x){
+                            case "valueMissing":
+                                that.validationMessage = '请填写此项';
+                                break;
+                            case "typeMismatch":
+                                var messages = {
+                                    email: '无效的邮箱格式',
+                                    number: '请输入数字',
+                                    url: '无效的网址格式',
+                                };
+
+                                that.validationMessage = messages[type] || '格式无效';
+                                break;
+                            case "patternMismatch":
+                                that.validationMessage = (this.getAttribute("data-pattern-error") || this.getAttribute("data-error")) || "type mismatch";
+                        }
+                        $(that).trigger('invalid');
+                        return false;
+                    }
+                }
+                return that.validity.valid = true;
+            };
+            HTMLTextAreaElement.prototype.checkValidity = HTMLInputElement.prototype.checkValidity;
+        }
+        //form
+        var form = document.createElement("form");
+        if (!form.checkValidity) {
+            HTMLFormElement.prototype.checkValidity = function(){
+                var $inputs = $(this).find("input, textarea");
+                for (var i = 0; i < $inputs.length; i++) {
+                    if (!$inputs[i].checkValidity()) {
+                        $(this).trigger("invalid");
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+    };
+
+    addCheckValidity();
+})();

@@ -74,6 +74,7 @@ use Dcat\Admin\Form\Concerns;
  * @method Field\ListField      list($column, $label = '')
  * @method Field\Timezone       timezone($column, $label = '')
  * @method Field\KeyValue       keyValue($column, $label = '')
+ * @method Field\Tel            tel($column, $label = '')
  *
  * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
  * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
@@ -150,6 +151,7 @@ class Form implements Renderable
         'list'           => Field\ListField::class,
         'timezone'       => Field\Timezone::class,
         'keyValue'       => Field\KeyValue::class,
+        'tel'            => Field\Tel::class,
 
         'bootstrapFile'          => Field\BootstrapFile::class,
         'bootstrapImage'         => Field\BootstrapImage::class,
@@ -310,6 +312,17 @@ class Form implements Renderable
         $field::collectAssets();
 
         return $this;
+    }
+
+    /**
+     * Get specify field.
+     *
+     * @param string $name
+     * @return Field
+     */
+    public function field($name)
+    {
+        return $this->builder->field($name);
     }
 
     /**

@@ -184,5 +184,8 @@ return [
     ],
     'import_extension_confirm' => 'Are you sure import the extension?',
     'selected_must_less_then'  => 'Only supports maximum :num options.',
+    'validation' => [
+        'match' => 'Does not match with :attribute.',
+    ],
     'menu_titles' => [],
 ];

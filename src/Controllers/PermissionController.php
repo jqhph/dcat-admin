@@ -286,9 +286,17 @@ class PermissionController extends Controller
     {
         $form = new Form(new Permission());
 
+        $permissionTable = config('admin.database.permissions_table');
+        $connection      = config('admin.database.connection');
+
+        $id = $form->getKey();
+
         $form->display('id', 'ID');
 
-        $form->text('slug', trans('admin.slug'))->required();
+        $form->text('slug', trans('admin.slug'))
+            ->required()
+            ->creationRules(['required', "unique:{$connection}.{$permissionTable}"])
+            ->updateRules(['required', "unique:{$connection}.{$permissionTable},slug,$id"]);
         $form->text('name', trans('admin.name'))->required();
 
         $form->multipleSelect('http_method', trans('admin.http.method'))

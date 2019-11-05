@@ -60,7 +60,7 @@ class BootstrapImage extends BootstrapFile
      *
      * @var string
      */
-    protected $rules = 'image';
+    protected $rules = ['image'];
 
     /**
      * @param array|UploadedFile $image

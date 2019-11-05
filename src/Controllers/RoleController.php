@@ -160,9 +160,18 @@ class RoleController extends Controller
     public function form()
     {
         return Admin::form(new Role('permissions'), function (Form $form) {
+            $roleTable  = config('admin.database.roles_table');
+            $connection = config('admin.database.connection');
+
+            $id = $form->getKey();
+
             $form->display('id', 'ID');
 
-            $form->text('slug', trans('admin.slug'))->required();
+            $form->text('slug', trans('admin.slug'))
+                ->required()
+                ->creationRules(['required', "unique:{$connection}.{$roleTable}"])
+                ->updateRules(['required', "unique:{$connection}.{$roleTable},slug,$id"]);
+
             $form->text('name', trans('admin.name'))->required();
 
             $form->tree('permissions')

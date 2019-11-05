@@ -185,5 +185,8 @@ return [
     ],
     'import_extension_confirm' => '确认导入拓展？',
     'selected_must_less_then'  => '最多只能选择:num个选项',
+    'validation' => [
+        'match' => '与 :attribute 不匹配。',
+    ],
     'menu_titles' => [],
 ];
