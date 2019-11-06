@@ -1157,10 +1157,8 @@ window.require = window.define = window.exports = window.module = undefined;
         }
 
         function formatArea(area) {
-            var width = w.screen.width;
-
-            if (width <= 750) {
-                return ['100%', area[1]];
+            if (w.screen.width <= 800) {
+                return ['100%', '100%',];
             }
 
             return area;
