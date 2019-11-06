@@ -119,19 +119,6 @@ JS
     }
 
     /**
-     * Set error messages for individual form field.
-     *
-     * @see http://1000hz.github.io/bootstrap-validator/
-     *
-     * @param string $error
-     * @return $this
-     */
-    public function validationError(string $error)
-    {
-        return $this->attribute('data-error', $error);
-    }
-
-    /**
      * Add inputmask to an elements.
      *
      * @param array $options

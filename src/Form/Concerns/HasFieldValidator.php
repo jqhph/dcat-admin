@@ -410,4 +410,21 @@ trait HasFieldValidator
     }
 
 
+    /**
+     * Set error messages for individual form field.
+     *
+     * @see http://1000hz.github.io/bootstrap-validator/
+     *
+     * @param string $error
+     * @param string $key
+     * @return $this
+     */
+    public function setClientValidationError(string $error, string $key = null)
+    {
+        $key = $key ? "{$key}-" : '';
+
+        return $this->attribute("data-{$key}error", $error);
+    }
+
+
 }
