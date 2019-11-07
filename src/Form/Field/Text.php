@@ -54,14 +54,10 @@ class Text extends Field
      * @param string $error
      * @return $this
      */
-    public function confirm($field, ?string $error = null, ?string $fieldSelector = null)
+    public function confirm($field, ?string $error = null)
     {
         $field = $field instanceof Field ? $field : $this->form->field($field);
         $name  = $field->column();
-
-        if (! $fieldSelector && $this->form) {
-            $fieldSelector = '#'.$field->getElementId();
-        }
 
         if ($name.'_confirmation' === $this->column) {
             $field->rules('confirmed');
@@ -70,7 +66,7 @@ class Text extends Field
         }
 
         $attributes = [
-            'data-match'       => $fieldSelector,
+            'data-match'       => '#'.$field->getElementId(),
             'data-match-error' => str_replace(':attribute', $name, $error ?: trans('admin.validation.match'))
         ];
 
