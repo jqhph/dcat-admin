@@ -193,9 +193,17 @@ JS
 
         $datalist = "<datalist id=\"list-{$this->id}\">";
         foreach ($entries as $k => $v) {
-            $datalist .= "<option value=\"{$k}\">{$v}</option>";
+            $value = is_string($k) ? "value=\"{$k}\"" : '';
+
+            $datalist .= "<option {$value}>{$v}</option>";
         }
         $datalist .= '</datalist>';
+
+        Admin::script(
+            <<<JS
+$('#list-{$this->id}').parent().hide();
+JS
+        );
 
         return $this->append($datalist);
     }
