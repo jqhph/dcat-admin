@@ -376,16 +376,37 @@ class Form implements Renderable
      */
     protected function getVariables()
     {
+        $this->setHtmlAttribute('id', $this->getFormId());
+
         foreach ($this->fields as $field) {
             $field->fill($this->data->toArray());
         }
 
         return [
+            'start'      => $this->open(),
+            'end'        => $this->close(),
             'fields'     => $this->fields,
-            'attributes' => $this->formatHtmlAttributes(),
             'method'     => $this->getHtmlAttribute('method'),
             'buttons'    => $this->buttons,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function open()
+    {
+        return <<<HTML
+<form {$this->formatHtmlAttributes()}>
+HTML;
+    }
+
+    /**
+     * @return string
+     */
+    protected function close()
+    {
+        return '</form>';
     }
 
     /**
@@ -477,10 +498,18 @@ var f = $('#{$this->getFormId()}');
 
 f.find('[type="submit"]').click(function () {
     var t = $(this);
-    t.button('loading');
     
     LA.Form({
         \$form: f,
+         before: function () {
+            f.validator('validate');
+    
+            if (f.find('.has-error').length > 0) {
+                return false;
+            }
+            
+            t.button('loading');
+        },
         after: function () {
             t.button('reset');
         }

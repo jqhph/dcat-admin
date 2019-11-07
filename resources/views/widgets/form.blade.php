@@ -1,4 +1,4 @@
-<form {!! $attributes !!}>
+{!! $start !!}
     <div class="box-body fields-group">
 
         @foreach($fields as $field)
@@ -31,4 +31,4 @@
         </div>
     </div>
     @endif
-</form>
+{!! $end !!}
