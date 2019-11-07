@@ -50,23 +50,28 @@ class Text extends Field
      *
      * @see http://1000hz.github.io/bootstrap-validator/
      *
-     * @param string $field
+     * @param string|Field $field
      * @param string $error
      * @return $this
      */
-    public function confirm(string $field, ?string $error = null, ?string $fieldSelector = null)
+    public function confirm($field, ?string $error = null, ?string $fieldSelector = null)
     {
+        $field = $field instanceof Field ? $field : $this->form->field($field);
+        $name  = $field->column();
+
         if (! $fieldSelector && $this->form) {
-            $column = $this->form->field($field);
+            $fieldSelector = '#'.$field->getElementId();
+        }
 
-            $column->rules('confirmed');
-
-            $fieldSelector = '#'.$column->getElementId();
+        if ($name.'_confirmation' === $this->column) {
+            $field->rules('confirmed');
+        } else {
+            $this->rules('nullable|same:'.$name);
         }
 
         $attributes = [
             'data-match'       => $fieldSelector,
-            'data-match-error' => str_replace(':attribute', $field, $error ?: trans('admin.validation.match'))
+            'data-match-error' => str_replace(':attribute', $name, $error ?: trans('admin.validation.match'))
         ];
 
         return $this->attribute($attributes);

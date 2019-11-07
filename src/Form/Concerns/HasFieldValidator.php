@@ -133,7 +133,7 @@ trait HasFieldValidator
             return $rules;
         }
 
-        if (!$id = $this->form->getKey()) {
+        if (method_exists($this->form, 'getKey') || ! $id = $this->form->getKey()) {
             return $rules;
         }
 
