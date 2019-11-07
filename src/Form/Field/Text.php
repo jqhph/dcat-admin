@@ -199,11 +199,7 @@ JS
         }
         $datalist .= '</datalist>';
 
-        Admin::script(
-            <<<JS
-$('#list-{$this->id}').parent().hide();
-JS
-        );
+        Admin::script("$('#list-{$this->id}').parent().hide()");
 
         return $this->append($datalist);
     }
