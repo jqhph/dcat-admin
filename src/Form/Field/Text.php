@@ -54,7 +54,7 @@ class Text extends Field
      * @param string $error
      * @return $this
      */
-    public function confirm($field, ?string $error = null)
+    public function same($field, ?string $error = null)
     {
         $field = $field instanceof Field ? $field : $this->form->field($field);
         $name  = $field->column();
