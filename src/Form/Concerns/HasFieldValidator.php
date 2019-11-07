@@ -29,9 +29,9 @@ trait HasFieldValidator
     /**
      * Validation rules.
      *
-     * @var string|\Closure
+     * @var array|\Closure
      */
-    protected $rules = '';
+    protected $rules = [];
 
     /**
      * @var \Closure
@@ -93,14 +93,12 @@ trait HasFieldValidator
             $this->rules = $rules;
         }
 
+        $originalRules = is_array($this->rules) ? $this->rules : [];
+
         if (is_array($rules)) {
-            $thisRuleArr = array_filter(explode('|', $this->rules));
-
-            $this->rules = array_merge($thisRuleArr, $rules);
+            $this->rules = array_merge($originalRules, $rules);
         } elseif (is_string($rules)) {
-            $rules = array_filter(explode('|', "{$this->rules}|$rules"));
-
-            $this->rules = implode('|', $rules);
+            $this->rules = array_merge($originalRules, array_filter(explode('|', $rules)));
         }
 
         $this->setValidationMessages('default', $messages);
@@ -135,7 +133,7 @@ trait HasFieldValidator
             return $rules;
         }
 
-        if (!$id = $this->form->getKey()) {
+        if (method_exists($this->form, 'getKey') || ! $id = $this->form->getKey()) {
             return $rules;
         }
 
@@ -409,6 +407,23 @@ trait HasFieldValidator
         }
 
         return $result;
+    }
+
+
+    /**
+     * Set error messages for individual form field.
+     *
+     * @see http://1000hz.github.io/bootstrap-validator/
+     *
+     * @param string $error
+     * @param string $key
+     * @return $this
+     */
+    public function setClientValidationError(string $error, string $key = null)
+    {
+        $key = $key ? "{$key}-" : '';
+
+        return $this->attribute("data-{$key}error", $error);
     }
 
 

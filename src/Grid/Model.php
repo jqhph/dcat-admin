@@ -8,15 +8,24 @@ use Dcat\Admin\Middleware\Pjax;
 use Dcat\Admin\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+/**
+ * @mixin Builder
+ */
 class Model
 {
+    /**
+     * @var Request
+     */
+    protected $request;
+
     /**
      * @var Repository
      */
@@ -115,13 +124,15 @@ class Model
      * Create a new grid model instance.
      *
      * @param Repository $repository
+     * @param Request $request
      */
-    public function __construct(?Repository $repository = null)
+    public function __construct(Request $request, ?Repository $repository = null)
     {
         if ($repository) {
-            $this->repository = Admin::createRepository($repository);
+            $this->repository = Admin::repository($repository);
         }
 
+        $this->request = $request;
         $this->queries = collect();
     }
 
@@ -380,7 +391,7 @@ class Model
      *
      * @return Collection|LengthAwarePaginator
      */
-    protected function get()
+    public function get()
     {
         if (
             $this->model instanceof LengthAwarePaginator
@@ -429,8 +440,12 @@ class Model
      */
     protected function handleInvalidPage(LengthAwarePaginator $paginator)
     {
-        if ($paginator->lastPage() && $paginator->currentPage() > $paginator->lastPage()) {
-            $lastPageUrl = Request::fullUrlWithQuery([
+        if (
+            $this->usePaginate
+            && $paginator->lastPage()
+            && $paginator->currentPage() > $paginator->lastPage()
+        ) {
+            $lastPageUrl = $this->request->fullUrlWithQuery([
                 $paginator->getPageName() => $paginator->lastPage(),
             ]);
 
@@ -449,7 +464,7 @@ class Model
             return null;
         }
 
-        return $this->currentPage ?: ($this->currentPage = \request($this->pageName, 1));
+        return $this->currentPage ?: ($this->currentPage = ($this->request->get($this->pageName) ?: 1));
     }
 
     /**
@@ -472,7 +487,8 @@ class Model
         if (!$this->usePaginate) {
             return null;
         }
-        return \request($this->perPageName, $this->perPage);
+
+        return $this->request->get($this->perPageName) ?: $this->perPage;
     }
 
     /**
@@ -560,7 +576,7 @@ class Model
      */
     protected function setSort()
     {
-        $this->sort = request($this->sortName, []);
+        $this->sort = $this->request->get($this->sortName, []);
 
         if (empty($this->sort['column']) || empty($this->sort['type'])) {
             return;
@@ -685,5 +701,17 @@ class Model
         if (array_key_exists($key, $data)) {
             return $data[$key];
         }
+    }
+
+    /**
+     * @return $this
+     */
+    public function reset()
+    {
+        $this->data    = null;
+        $this->model   = null;
+        $this->queries = collect();
+
+        return $this;
     }
 }

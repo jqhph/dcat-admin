@@ -16,7 +16,7 @@ class SelectResource extends Field
         'vendor/dcat-admin/dcat-admin/select-resource.min.js'
     ];
 
-    protected $area = ['60%', '68%'];
+    protected $area = ['55%', '68%'];
 
     protected $source;
 
@@ -146,7 +146,7 @@ class SelectResource extends Field
         }
     }
 
-    public function prepare($value)
+    protected function prepareToSave($value)
     {
         if ($this->maxItem == 1) {
             if ($value === null || $value === '') {

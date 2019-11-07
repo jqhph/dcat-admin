@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
-class Tab extends Widget implements Renderable
+class Tab extends Widget
 {
     const TYPE_CONTENT = 1;
     const TYPE_LINK = 2;

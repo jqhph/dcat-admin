@@ -160,22 +160,16 @@ class Grid
         'show_quick_create_btn'  => false,
         'show_bordered'          => false,
         'show_toolbar'           => true,
+        'show_exporter'          => false,
 
-        'row_selector_style'      => 'primary',
-        'row_selector_circle'     => true,
-        'row_selector_clicktr'    => false,
+        'row_selector_style'     => 'primary',
+        'row_selector_circle'    => true,
+        'row_selector_clicktr'   => false,
         'row_selector_label_key' => null,
-        'row_selector_bg'         => 'var(--20)',
-
-        'show_exporter'             => false,
-        'show_export_all'           => true,
-        'show_export_current_page'  => true,
-        'show_export_selected_rows' => true,
-        'export_limit'              => 50000,
+        'row_selector_bg'        => 'var(--20)',
 
         'dialog_form_area'   => ['700px', '670px'],
         'table_header_style' => 'table-header-gray',
-
     ];
 
     /**
@@ -190,7 +184,7 @@ class Grid
         if ($repository) {
             $this->keyName = $repository->getKeyName();
         }
-        $this->model    = new Model($repository);
+        $this->model    = new Model(request(), $repository);
         $this->columns  = new Collection();
         $this->rows     = new Collection();
         $this->builder  = $builder;
@@ -241,7 +235,7 @@ class Grid
      * @param string $name
      * @param string $label
      *
-     * @return Column|Collection
+     * @return Column
      */
     public function column($name, $label = '')
     {
@@ -456,7 +450,7 @@ HTML
 
         if ($this->rowsCallback) {
             foreach ($this->rowsCallback as $value) {
-                $this->rows->map($value);
+                $value($this->rows);
             }
         }
     }
@@ -895,7 +889,7 @@ HTML;
      */
     public function render()
     {
-        $this->handleExportRequest(true);
+        $this->handleExportRequest();
 
         try {
             $this->callComposing();
@@ -926,7 +920,7 @@ HTML;
      * Add column to grid.
      *
      * @param string $name
-     * @return Column|Collection
+     * @return Column
      */
     public function __get($name)
     {

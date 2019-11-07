@@ -170,14 +170,15 @@ class AuthController extends Controller
         $form->password('old_password', trans('admin.old_password'));
 
         $form->password('password', trans('admin.password'))
-            ->rules('confirmed')
+            ->minLength(5)
+            ->maxLength(20)
             ->customFormat(function ($v) {
                 if ($v == $this->password) {
                     return;
                 }
                 return $v;
             });
-        $form->password('password_confirmation', trans('admin.password_confirmation'));
+        $form->password('password_confirmation', trans('admin.password_confirmation'))->same('password');
 
         $form->setAction(admin_url('auth/setting'));
 

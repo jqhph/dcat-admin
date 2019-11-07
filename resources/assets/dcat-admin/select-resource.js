@@ -5,7 +5,7 @@
         options = $.extend({
             title: '选择', // 弹窗标题
             selector: '', // 选择按钮选择器
-            column: "", // 字段名称
+            column: '', // 字段名称
             source: '', // 资源地址
             maxItem: 1, // 最大选项数量，0为不限制
             area: ['80%', '90%'],
@@ -63,7 +63,7 @@
                 maxmin: false,
                 shade: false,
                 skin: 'select-resource',
-                area: options.area,
+                area: format_area(options.area),
                 content: options.source + '?_mini=1',
                 btn: options.showCloseButton ? [options.closeButtonText] : null,
                 success: function (layero) {
@@ -230,6 +230,14 @@
             render_tags(originalItems);
         }
 
+        function format_area(area) {
+            if (w.screen.width <= 750) {
+                return ['100%', '100%'];
+            }
+
+            return area;
+        }
+
         render_tags(originalItems);
     }
 
@@ -317,7 +325,6 @@
 
                 $app.html(build_many(tag));
             }
-
 
             function build_many(tag) {
                 var html = [];

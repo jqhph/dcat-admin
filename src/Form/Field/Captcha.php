@@ -6,7 +6,7 @@ use Dcat\Admin\Form;
 
 class Captcha extends Text
 {
-    protected $rules = 'required|captcha';
+    protected $rules = ['required', 'captcha'];
 
     protected $view = 'admin::form.captcha';
 

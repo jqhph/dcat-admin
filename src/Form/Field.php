@@ -4,11 +4,13 @@ namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Dcat\Admin\Form\Concerns;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
@@ -16,8 +18,7 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Field implements Renderable
 {
-    use Macroable,
-        Concerns\HasFieldValidator;
+    use Macroable, Concerns\HasFieldValidator;
 
     const FILE_DELETE_FLAG = '_file_del_';
 
@@ -136,7 +137,7 @@ class Field implements Renderable
     /**
      * Parent form.
      *
-     * @var Form
+     * @var Form|WidgetForm
      */
     protected $form = null;
 
@@ -205,7 +206,7 @@ class Field implements Renderable
     /**
      * @var \Closure
      */
-    protected $prepare;
+    protected $prepareCallback;
 
     /**
      * Field constructor.
@@ -223,7 +224,7 @@ class Field implements Renderable
     /**
      * Get the field element id.
      *
-     * @return string
+     * @return string|array
      */
     public function getElementId()
     {
@@ -239,11 +240,19 @@ class Field implements Renderable
      */
     protected function formatId($column)
     {
+        $random = Str::random(5);
+
         if (is_array($column)) {
-            return str_replace('.', '-', $column);
+            $id = [];
+
+            foreach (str_replace('.', '-', $column) as $k => $v) {
+                $id[$k] = "{$v}-{$random}";
+            }
+
+            return $id;
         }
 
-        return 'form-field-'.str_replace('.', '-', $column);
+        return 'form-field-'.str_replace('.', '-', $column).'-'.$random;
     }
 
     /**
@@ -396,11 +405,11 @@ class Field implements Renderable
     }
 
     /**
-     * @param Form $form
+     * @param Form|WidgetForm $form
      *
      * @return $this
      */
-    public function setForm(Form $form = null)
+    public function setForm($form = null)
     {
         $this->form = $form;
 
@@ -658,12 +667,17 @@ class Field implements Renderable
     /**
      * Specifies a regular expression against which to validate the value of the input.
      *
+     * @param string $error
      * @param string $regexp
      *
      * @return $this
      */
-    public function pattern($regexp)
+    public function pattern($regexp, $error = null)
     {
+        if ($error) {
+            $this->attribute('data-pattern-error', $error);
+        }
+
         return $this->attribute('pattern', $regexp);
     }
 
@@ -745,7 +759,7 @@ class Field implements Renderable
      * @param mixed $value
      * @return mixed
      */
-    public function prepare($value)
+    protected function prepareToSave($value)
     {
         return $value;
     }
@@ -756,7 +770,7 @@ class Field implements Renderable
      */
     public function saving(\Closure $closure)
     {
-        $this->prepare = $closure;
+        $this->prepareCallback = $closure;
 
         return $this;
     }
@@ -767,11 +781,11 @@ class Field implements Renderable
      * @param mixed $value
      * @return mixed
      */
-    final public function prepareInputValue($value)
+    final public function prepare($value)
     {
-        $value = $this->prepare($value);
+        $value = $this->prepareToSave($value);
 
-        if ($handler = $this->prepare) {
+        if ($handler = $this->prepareCallback) {
             $handler->bindTo($this->data);
 
             return $handler($value);
@@ -933,11 +947,9 @@ class Field implements Renderable
      */
     public function addElementClass($class)
     {
-        if (is_array($class) || is_string($class)) {
-            $this->elementClass = array_merge($this->elementClass, (array) $class);
-
-            $this->elementClass = array_unique($this->elementClass);
-        }
+        $this->elementClass = array_unique(
+            array_merge($this->elementClass, (array) $class)
+        );
 
         return $this;
     }
@@ -989,13 +1001,15 @@ class Field implements Renderable
     }
 
     /**
-     * @param array $labelClass
-     *
+     * @param array|string $labelClass
+     * @param bool $append
      * @return $this
      */
-    public function setLabelClass(array $labelClass)
+    public function setLabelClass($labelClass, bool $append = true)
     {
-        $this->labelClass = $labelClass;
+        $this->labelClass = $append
+            ? array_unique(array_merge($this->labelClass, (array) $labelClass))
+            : (array) $labelClass;
 
         return $this;
     }

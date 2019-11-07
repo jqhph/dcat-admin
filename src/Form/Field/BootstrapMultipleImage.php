@@ -18,7 +18,7 @@ class BootstrapMultipleImage extends BootstrapMultipleFile
      *
      * @var string
      */
-    protected $rules = 'image';
+    protected $rules = ['image'];
 
     /**
      * Prepare for each file.

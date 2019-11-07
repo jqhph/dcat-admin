@@ -5,10 +5,13 @@ namespace Dcat\Admin\Widgets;
 use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
+use Dcat\EasyExcel\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
 
 /**
@@ -63,6 +66,7 @@ use Illuminate\Support\Str;
  * @method Field\ListField      list($column, $label = '')
  * @method Field\Timezone       timezone($column, $label = '')
  * @method Field\KeyValue       keyValue($column, $label = '')
+ * @method Field\Tel            tel($column, $label = '')
  *
  * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
  * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
@@ -71,7 +75,9 @@ use Illuminate\Support\Str;
  */
 class Form implements Renderable
 {
-    use HasHtmlAttributes;
+    use HasHtmlAttributes, Macroable {
+        __call as macroCall;
+    }
 
     /**
      * @var Field[]
@@ -84,9 +90,14 @@ class Form implements Renderable
     protected $useAjaxSubmit = true;
 
     /**
-     * @var array
+     * @var Fluent
      */
-    protected $data = [];
+    protected $data;
+
+    /**
+     * @var mixed
+     */
+    protected $primaryKey;
 
     /**
      * Available buttons.
@@ -117,16 +128,12 @@ class Form implements Renderable
      * Form constructor.
      *
      * @param array $data
+     * @param mixed $key
      */
-    public function __construct($data = [])
+    public function __construct($data = [], $key = null)
     {
-        if ($data instanceof Arrayable) {
-            $data = $data->toArray();
-        }
-
-        if (!empty($data)) {
-            $this->data = $data;
-        }
+        $this->data($data);
+        $this->key($key);
 
         $this->initFormAttributes();
     }
@@ -178,6 +185,46 @@ class Form implements Renderable
     }
 
     /**
+     * Set primary key.
+     *
+     * @param mixed $value
+     * @return $this
+     */
+    public function key($value)
+    {
+        $this->primaryKey = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->primaryKey;
+    }
+
+    /**
+     * @param $data
+     * @return $this
+     */
+    public function data($data)
+    {
+        $this->data = new Fluent(Helper::array($data));
+
+        return $this;
+    }
+
+    /**
+     * @return Fluent
+     */
+    public function model()
+    {
+        return $this->data;
+    }
+
+    /**
      * Add a fieldset to form.
      *
      * @param string  $title
@@ -197,6 +244,22 @@ class Form implements Renderable
 
         return $fieldset;
     }
+
+    /**
+     * Get specify field.
+     *
+     * @param string $name
+     * @return Field|null
+     */
+    public function field($name)
+    {
+        foreach ($this->fields as $field) {
+            if ($field->column() === $name) {
+                return $field;
+            }
+        }
+    }
+
 
     /**
      * Disable Pjax.
@@ -298,6 +361,7 @@ class Form implements Renderable
     {
         array_push($this->fields, $field);
 
+        $field->setForm($this);
         $field->setWidth($this->width['field'], $this->width['label']);
 
         $field::collectAssets();
@@ -313,7 +377,7 @@ class Form implements Renderable
     protected function getVariables()
     {
         foreach ($this->fields as $field) {
-            $field->fill($this->data);
+            $field->fill($this->data->toArray());
         }
 
         return [
@@ -377,6 +441,10 @@ class Form implements Renderable
             $this->pushField($element);
 
             return $element;
+        }
+
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $arguments);
         }
     }
 

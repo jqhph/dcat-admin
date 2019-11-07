@@ -4,6 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 
 class Markdown extends Widget
 {
@@ -84,7 +85,7 @@ EOF;
 
     public function render()
     {
-        $id = uniqid();
+        $id = 'mkd-'.Str::random();
 
         $this->defaultHtmlAttribute('id', $id);
 

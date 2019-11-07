@@ -69,16 +69,22 @@
 
             $.get(url, function (tpl) {
                 building = 0;
-                (!$btn) || $btn.button('reset');
+                if ($btn) {
+                    $btn.button('reset');
+                    setTimeout(function () {
+                        $btn.find('.waves-ripple').remove();
+                    }, 50);
+                }
                 popup(tpl, num);
             });
         }
 
         // 弹出弹窗
         function popup(tpl, num) {
+            tpl = LA.AssetsLoader.filterScriptAndAutoLoad(tpl).render();
             var t = $(tpl), $form, btns = [lang.submit], opts = {
                 type: 1,
-                area: area,
+                area: formatArea(area),
                 content: tpl,
                 title: title,
                 yes: submit,
@@ -108,15 +114,24 @@
             $layWin[num] = w.$('#layui-layer' + idx[num]);
 
             // 提交表单
-            function submit (index, layero) {
+            function submit () {
                 if (submitting) return;
-                submitting = 1;
                 $form = $form || w.$('#'+t.find('form').attr('id'));  // 此处必须重新创建jq对象，否则无法操作页面元素
-                $layWin[num].find('.layui-layer-btn0').button('loading');
 
                 LA.Form({
                     $form: $form,
                     disableRedirect: true,
+                    before: function () {
+                        $form.validator('validate');
+
+                        if ($form.find('.has-error').length > 0) {
+                            return false;
+                        }
+
+                        submitting = 1;
+
+                        $layWin[num].find('.layui-layer-btn0').button('loading');
+                    },
                     after: function (success, res) {
                         $layWin[num].find('.layui-layer-btn0').button('reset');
                         submitting = 0;
@@ -124,7 +139,7 @@
                         handlers.saved(success, res);
 
                         if (!success) {
-                            return handlers.error(success, res);;
+                            return handlers.error(success, res);
                         }
                         if (res.status) {
                             handlers.success(success, res);
@@ -138,6 +153,14 @@
                 });
 
             }
+        }
+
+        function formatArea(area) {
+            if (w.screen.width <= 800) {
+                return ['100%', '100%'];
+            }
+
+            return area;
         }
 
         // 移除弹窗

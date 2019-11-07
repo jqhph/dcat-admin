@@ -4,6 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -11,9 +12,15 @@ class Dropdown extends Widget
 {
     const DIVIDER = '_divider';
 
+    /**
+     * @var string
+     */
     protected static $dividerHtml = '<li class="divider"></li>';
 
-    public $template = '<span class="dropdown" style="display:inline-block">%s<ul class="dropdown-menu">%s</ul></span>';
+    /**
+     * @var string
+     */
+    protected $template = '<span class="dropdown" style="display:inline-block">%s<ul class="dropdown-menu">%s</ul></span>';
 
     /**
      * @var array
@@ -54,6 +61,13 @@ class Dropdown extends Widget
         $this->options($options);
     }
 
+    /**
+     * Set the options of dropdown menus.
+     *
+     * @param array $options
+     * @param string|null $title
+     * @return $this
+     */
     public function options($options = [], string $title = null)
     {
         if (!$options) return $this;
@@ -73,6 +87,12 @@ class Dropdown extends Widget
         return $this;
     }
 
+    /**
+     * Set the button text.
+     *
+     * @param string|null $text
+     * @return $this
+     */
     public function button(?string $text)
     {
         $this->button['text'] = $text;
@@ -80,11 +100,22 @@ class Dropdown extends Widget
         return $this;
     }
 
+    /**
+     * Without text of button.
+     *
+     * @return $this
+     */
     public function withoutTextButton()
     {
         return $this->button('');
     }
 
+    /**
+     * Set the button class.
+     *
+     * @param string $class
+     * @return $this
+     */
     public function buttonClass(string $class)
     {
         $this->button['class'] = $class;
@@ -92,6 +123,12 @@ class Dropdown extends Widget
         return $this;
     }
 
+    /**
+     * Set the button style.
+     *
+     * @param string $class
+     * @return $this
+     */
     public function buttonStyle(string $style)
     {
         $this->button['style'] = $style;
@@ -99,6 +136,12 @@ class Dropdown extends Widget
         return $this;
     }
 
+    /**
+     * Show divider.
+     *
+     * @param string $class
+     * @return $this
+     */
     public function divider()
     {
         $this->divider = true;
@@ -106,6 +149,12 @@ class Dropdown extends Widget
         return $this;
     }
 
+    /**
+     * Applies the callback to the elements of the options.
+     *
+     * @param string $class
+     * @return $this
+     */
     public function map(\Closure $builder)
     {
         $this->builder = $builder;
@@ -113,6 +162,12 @@ class Dropdown extends Widget
         return $this;
     }
 
+    /**
+     * Add click event listener.
+     *
+     * @param string|null $defaultLabel
+     * @return $this
+     */
     public function click(?string $defaultLabel = null)
     {
         $this->click = true;
@@ -126,6 +181,12 @@ class Dropdown extends Widget
         return $this;
     }
 
+    /**
+     * Set the template of dropdown menu.
+     *
+     * @param string|\Closure|Renderable $template
+     * @return $this
+     */
     public function template($template)
     {
         $this->template = $this->toString($template);
@@ -133,6 +194,9 @@ class Dropdown extends Widget
         return $this;
     }
 
+    /**
+     * @return string
+     */
     protected function renderButton()
     {
         if (is_null($this->button['text']) && !$this->click) return;
@@ -170,11 +234,17 @@ HTML
         );
     }
 
+    /**
+     * @return string
+     */
     public function getButtonId()
     {
         return $this->buttonId;
     }
 
+    /**
+     * @return string
+     */
     protected function renderOptions()
     {
         $opt = '';
@@ -194,6 +264,11 @@ HTML
         return $opt;
     }
 
+    /**
+     * @param mixed $k
+     * @param mixed $v
+     * @return mixed|string
+     */
     protected function renderOption($k, $v)
     {
         if ($v === static::DIVIDER) {
@@ -215,6 +290,9 @@ HTML
         return $v;
     }
 
+    /**
+     * @return string
+     */
     public function render()
     {
         if (is_null($this->button['text']) && !$this->options) {

@@ -2148,6 +2148,11 @@ div.layui-layer-btn{
     color:var(--danger-dark)!important;
 }
 
+.material .dropdown-btn-group .btn.btn-primary,.material .open .dropdown-toggle.btn {
+    background-color: var(--40) !important;
+    border-color: var(--40) !important;
+}
+
 .quick-search-clear {
     color:transparent;
     display:none;

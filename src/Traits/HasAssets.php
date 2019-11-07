@@ -53,6 +53,7 @@ trait HasAssets
      */
     public static $baseJs = [
         'bootstrap'         => 'vendor/dcat-admin/AdminLTE/bootstrap/js/bootstrap.min.js',
+        'validator'         => 'vendor/dcat-admin/bootstrap-validator/validator.min.js',
         'jquery.slimscroll' => 'vendor/dcat-admin/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
         'adminLTE'          => 'vendor/dcat-admin/AdminLTE/dist/js/app.min.js',
         'layer'             => 'vendor/dcat-admin/layer/layer.js',

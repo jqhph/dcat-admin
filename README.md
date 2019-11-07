@@ -1,14 +1,15 @@
 
-<p align="center">
-<a href="https://jqhph.gitee.io/dcatadmin/">
-<img height="60px" src="https://jqhph.gitee.io/dcatadmin/assets/img/logo.png" alt="dcat-admin">
-</a>
+<div align="center">
+
+# DCAT ADMIN
+
+</div>
 
 <p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需使用很少的代码即可快速构建出一个功能完善的漂亮的管理后台。</p>
 
 <p align="center">
-<a href="https://jqhph.gitee.io/dcatadmin/">文档</a> |
-<a href="https://jqhph.gitee.io/dcatadmin/demo.html">Demo</a> |
+<a href="https://jqhph.github.io/dcat-admin">文档</a> |
+<a href="https://jqhph.github.io/dcat-admin/demo.html">Demo</a> |
 <a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
 <a href="#extensions">扩展</a>
 </p>
@@ -27,7 +28,7 @@
 
 ## 前言
 
-就我个人的感受而言，`Laravel Admin`是我使用过的最好用的后台构建工具，API简洁易用，入门也很容易，没有那么多花里胡哨的东西。而我之所以要开发这个项目，主要是想对`Laravel Admin`的一些细节做一些补充调整，增加一些比较常用的功能，优化开发体验（比如增加前端静态资源按需加载支持、美化界面和布局、增加表单弹窗、双表头表格等等比较实用的功能），总的来说可以把这个项目看做`Laravel Admin`“2.0”，更详细的异同点查看请[点击这里](https://jqhph.gitee.io/dcatadmin/docs-master-new.html)。
+就我个人的感受而言，`Laravel Admin`是我使用过的最好用的后台构建工具，API简洁易用，入门也很容易，没有那么多花里胡哨的东西。而我之所以要开发这个项目，主要是想对`Laravel Admin`的一些细节做一些补充调整，增加一些比较常用的功能，优化开发体验（比如增加前端静态资源按需加载支持、美化界面和布局、增加表单弹窗、双表头表格等等比较实用的功能），总的来说可以把这个项目看做`Laravel Admin`“2.0”，更详细的异同点查看请[点击这里](https://jqhph.github.io/dcat-admin/docs-master-new.html)。
 
 > 有的同学可能想问：现在都流行前后端分离这么久了，还搞这种后端渲染的项目有意义吗？答案是当然有意义。因为开发一个前后端分离项目也是需要一定成本和资源的（例如你得有个熟悉前端的开发人员），实际项目中也需要考量一下为一个管理后台耗费这些成本资源值不值得，并不是所有项目用前后端分离就更好。当然如果条件允许的话，用前后端分离的架构会更好一些。
 

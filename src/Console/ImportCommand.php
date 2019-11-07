@@ -4,7 +4,7 @@ namespace Dcat\Admin\Console;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Extension;
-use Illuminate\Console\Command;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Foundation\Console\VendorPublishCommand;
 use Illuminate\Support\Arr;
 
@@ -89,7 +89,7 @@ class ImportCommand extends VendorPublishCommand
         $config[$name]['imported']    = true;
         $config[$name]['imported_at'] = date('Y-m-d H:i:s');
 
-        return Admin::updateExtensionConfig($config);
+        return Helper::updateExtensionConfig($config);
 
     }
 }

@@ -17,7 +17,7 @@ class SelectResource extends Presenter
      */
     protected $placeholder = '';
 
-    protected $area = ['60%', '68%'];
+    protected $area = ['55%', '68%'];
 
     protected $source;
 
@@ -172,7 +172,10 @@ class SelectResource extends Presenter
      */
     public function variables() : array
     {
-        $this->value = request($this->filter->getColumn(), $this->filter->getValue() ?: $this->filter->getDefault());
+        $this->value = request(
+            $this->filter->getColumn(),
+            $this->filter->getValue() ?: $this->filter->getDefault()
+        );
 
         $this->formatOptions();
         $this->formatValue();

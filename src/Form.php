@@ -13,6 +13,7 @@ use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Widgets\ModalForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\MessageBag;
@@ -74,6 +75,7 @@ use Dcat\Admin\Form\Concerns;
  * @method Field\ListField      list($column, $label = '')
  * @method Field\Timezone       timezone($column, $label = '')
  * @method Field\KeyValue       keyValue($column, $label = '')
+ * @method Field\Tel            tel($column, $label = '')
  *
  * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
  * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
@@ -150,6 +152,7 @@ class Form implements Renderable
         'list'           => Field\ListField::class,
         'timezone'       => Field\Timezone::class,
         'keyValue'       => Field\KeyValue::class,
+        'tel'            => Field\Tel::class,
 
         'bootstrapFile'          => Field\BootstrapFile::class,
         'bootstrapImage'         => Field\BootstrapImage::class,
@@ -180,6 +183,11 @@ class Form implements Renderable
      * @var Closure
      */
     protected $callback;
+
+    /**
+     * @var Request
+     */
+    protected $request;
 
     /**
      * @var bool
@@ -264,14 +272,12 @@ class Form implements Renderable
      * @param Repository $model
      * @param \Closure $callback
      */
-    public function __construct(Repository $repository, ?Closure $callback = null)
+    public function __construct(Repository $repository, ?Closure $callback = null, Request $request = null)
     {
-        $this->repository = Admin::createRepository($repository);
-
+        $this->repository = Admin::repository($repository);
         $this->callback = $callback;
-
+        $this->request = $request ?: request();
         $this->builder = new Builder($this);
-
         $this->isSoftDeletes = $this->repository->isSoftDeletes();
 
         $this->setModel(new Fluent());
@@ -310,6 +316,17 @@ class Form implements Renderable
         $field::collectAssets();
 
         return $this;
+    }
+
+    /**
+     * Get specify field.
+     *
+     * @param string $name
+     * @return Field
+     */
+    public function field($name)
+    {
+        return $this->builder->field($name);
     }
 
     /**
@@ -547,11 +564,11 @@ class Form implements Renderable
      *
      * @param array|null $data
      * @param string|string $redirectTo
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\Http\JsonResponse|Response
      */
     public function store(?array $data = null, $redirectTo = null)
     {
-        $data = $data ?: request()->all();
+        $data = $data ?: $this->request->all();
 
         $this->build();
 
@@ -572,11 +589,7 @@ class Form implements Renderable
 
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
-            if (!$this->isAjaxRequest()) {
-                return back()->withInput()->withErrors($validationMessages);
-            } else {
-                return response()->json(['errors' => $validationMessages->getMessages()], 422);
-            }
+            return $this->makeValidationErrorsResponse($validationMessages);
         }
 
         if (($response = $this->prepare($data))) {
@@ -629,9 +642,7 @@ class Form implements Renderable
      */
     public function isAjaxRequest()
     {
-        $request = request();
-
-        return $request->ajax() && !$request->pjax();
+        return $this->request->ajax() && ! $this->request->pjax();
     }
 
     /**
@@ -695,7 +706,7 @@ class Form implements Renderable
      * @param int   $id
      * @param array $input
      *
-     * @return bool
+     * @return bool||Response
      */
     protected function handleOrderable(array $input = [])
     {
@@ -713,7 +724,7 @@ class Form implements Renderable
      * @param $id
      * @param array|null $data
      * @param string|null $redirectTo
-     * @return $this|bool|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|mixed|null
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse||Response
      */
     public function update(
         $id,
@@ -721,7 +732,7 @@ class Form implements Renderable
         $redirectTo = null
     )
     {
-        $data = $data ?: request()->all();
+        $data = $data ?: $this->request->all();
 
         $this->builder->setResourceId($id);
         $this->builder->setMode(Builder::MODE_EDIT);
@@ -751,13 +762,9 @@ class Form implements Renderable
 
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
-            if (!$isEditable && !$this->isAjaxRequest()) {
-                return back()->withInput()->withErrors($validationMessages);
-            } else {
-                return response()->json([
-                    'errors' => $isEditable ? Arr::dot($validationMessages->getMessages()) : $validationMessages->getMessages()
-                ], 422);
-            }
+            return $this->makeValidationErrorsResponse(
+                $isEditable ? Arr::dot($validationMessages->toArray()) : $validationMessages
+            );
         }
 
         if (($response = $this->prepare($data))) {
@@ -779,6 +786,21 @@ class Form implements Renderable
     }
 
     /**
+     * @param array|MessageBag $validationMessages
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function makeValidationErrorsResponse($validationMessages)
+    {
+        if (! $this->isAjaxRequest()) {
+            return back()->withInput()->withErrors($validationMessages);
+        }
+
+        return response()->json([
+            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages()
+        ], 422);
+    }
+
+    /**
      * Get redirect response.
      *
      * @param string $url
@@ -796,14 +818,12 @@ class Form implements Renderable
 
         $status = (bool) ($options['status'] ?? true);
 
-        // 判断是否是ajax请求
         if ($this->isAjaxRequest()) {
             $message = $message ?: trans('admin.save_succeeded');
 
             return $this->ajaxResponse($message, $url, $status);
         }
 
-        // 非ajax请求
         $status = (int) ($options['status_code'] ?? 302);
 
         if ($message) {
@@ -826,23 +846,23 @@ class Form implements Renderable
         $resourcesPath = $this->builder->isCreating() ?
             $this->getResource(0) : $this->getResource(-1);
 
-        if (request('after-save') == 1) {
+        if ($this->request->get('after-save') == 1) {
             // continue editing
             if ($this->builder->isEditing() && $this->isAjaxRequest()) {
                 return false;
             }
             return rtrim($resourcesPath, '/')."/{$key}/edit";
         }
-        if (request('after-save') == 2) {
+        if ($this->request->get('after-save') == 2) {
             // continue creating
             return rtrim($resourcesPath, '/').'/create';
         }
-        if (request('after-save') == 3) {
+        if ($this->request->get('after-save') == 3) {
             // view resource
             return rtrim($resourcesPath, '/')."/{$key}";
         }
 
-        return request(Builder::PREVIOUS_URL_KEY) ?: $resourcesPath;
+        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: $resourcesPath;
     }
 
     /**
@@ -904,7 +924,7 @@ class Form implements Renderable
 
             $value = $this->getDataByColumn($updates, $columns);
 
-            $value = $field->prepareInputValue($value);
+            $value = $field->prepare($value);
 
             if (is_array($columns)) {
                 foreach ($columns as $name => $column) {
@@ -953,7 +973,7 @@ class Form implements Renderable
                 continue;
             }
 
-            $inserts[$column] = $field->prepareInputValue($value);
+            $inserts[$column] = $field->prepare($value);
         }
 
         $prepared = [];
@@ -1134,7 +1154,7 @@ class Form implements Renderable
      *
      * @param bool|\Closure $condition
      *
-     * @return Condition|$this
+     * @return Condition
      */
     public function if($condition)
     {

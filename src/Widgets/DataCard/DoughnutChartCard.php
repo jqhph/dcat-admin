@@ -15,17 +15,22 @@ class DoughnutChartCard extends Card
      */
     protected $chart;
 
-    protected $dotColors = [];
+    /**
+     * @var array
+     */
+    public $dotColors = [];
 
+    /**
+     * @var array
+     */
     protected $dots = [];
 
     public function __construct($title = null, $description = null)
     {
-        parent::__construct($title, $description);
-
         $this->setupChart();
-
         $this->setupDotColors();
+
+        parent::__construct($title, $description);
     }
 
     protected function setupChart()

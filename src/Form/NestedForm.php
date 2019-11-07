@@ -243,8 +243,8 @@ class NestedForm
                 continue;
             }
 
-            if (method_exists($field, 'prepareInputValue')) {
-                $value = $field->prepareInputValue($value);
+            if (method_exists($field, 'prepare')) {
+                $value = $field->prepare($value);
             }
 
             if (($field instanceof \Dcat\Admin\Form\Field\Hidden) || $value != $field->original()) {

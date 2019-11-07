@@ -642,6 +642,7 @@ class Builder
         $attributes['action'] = $this->getAction();
         $attributes['method'] = Arr::get($options, 'method', 'post');
         $attributes['accept-charset'] = 'UTF-8';
+        $attributes['data-toggle'] = 'validator';
 
         $attributes['class'] = Arr::get($options, 'class');
 
@@ -776,10 +777,18 @@ var f = $('#{$this->getFormId()}');
 
 f.find('[type="submit"]').click(function () {
     var t = $(this);
-    t.button('loading');
     
     LA.Form({
         \$form: f,
+        before: function () {
+            f.validator('validate');
+    
+            if (f.find('.has-error').length > 0) {
+                return false;
+            }
+            
+            t.button('loading');
+        },
         after: function () {
             t.button('reset');
         }

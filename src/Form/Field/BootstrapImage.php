@@ -60,14 +60,14 @@ class BootstrapImage extends BootstrapFile
      *
      * @var string
      */
-    protected $rules = 'image';
+    protected $rules = ['image'];
 
     /**
      * @param array|UploadedFile $image
      *
      * @return string
      */
-    public function prepare($image)
+    protected function prepareToSave($image)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
             return $this->destroy();

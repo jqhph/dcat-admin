@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
-class Box extends Widget implements Renderable
+class Box extends Widget
 {
     /**
      * @var string

@@ -52,7 +52,7 @@ class Currency extends Text
     /**
      * {@inheritdoc}
      */
-    public function prepare($value)
+    protected function prepareToSave($value)
     {
         return (float) $value;
     }

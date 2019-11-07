@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 
 class Text extends Field
@@ -31,6 +32,91 @@ class Text extends Field
         ]);
 
         return parent::render();
+    }
+
+    /**
+     * Set input type.
+     *
+     * @param string $type
+     * @return $this
+     */
+    public function type(string $type)
+    {
+        return $this->attribute('type', $type);
+    }
+
+    /**
+     * Set "data-match" attribute.
+     *
+     * @see http://1000hz.github.io/bootstrap-validator/
+     *
+     * @param string|Field $field
+     * @param string $error
+     * @return $this
+     */
+    public function same($field, ?string $error = null)
+    {
+        $field = $field instanceof Field ? $field : $this->form->field($field);
+        $name  = $field->column();
+
+        if ($name.'_confirmation' === $this->column) {
+            $field->rules('confirmed');
+        } else {
+            $this->rules('nullable|same:'.$name);
+        }
+
+        $attributes = [
+            'data-match'       => '#'.$field->getElementId(),
+            'data-match-error' => str_replace([':attribute', ':other'], [$this->column, $name], $error ?: trans('admin.validation.match'))
+        ];
+
+        return $this->attribute($attributes);
+    }
+
+    /**
+     * @param int $length
+     * @param string|null $error
+     * @return $this
+     */
+    public function minLength(int $length, ?string $error = null)
+    {
+        $this->rules('nullable|min:'.$length);
+
+        return $this->attribute([
+            'data-minlength'       => $length,
+            'data-minlength-error' => str_replace(
+                [':attribute', ':min'],
+                [$this->column, $length],
+                $error ?: trans('admin.validation.minlength')
+            ),
+        ]);
+    }
+
+    /**
+     * @param int $length
+     * @param string|null $error
+     * @return $this
+     */
+    public function maxLength(int $length, ?string $error = null)
+    {
+        Admin::script(
+            <<<'JS'
+LA.extendValidator('maxlength', function ($el) {
+    return $el.val().length > $el.attr('data-maxlength');
+});
+JS
+        );
+
+        $this->rules('max:'.$length);
+
+        return $this->attribute([
+            'data-maxlength'       => $length,
+            'data-maxlength-error' => str_replace(
+                [':attribute', ':max'],
+                [$this->column, $length],
+                $error ?: trans('admin.validation.maxlength')
+            ),
+        ]);
     }
 
     /**
@@ -108,9 +194,13 @@ class Text extends Field
 
         $datalist = "<datalist id=\"list-{$this->id}\">";
         foreach ($entries as $k => $v) {
-            $datalist .= "<option value=\"{$k}\">{$v}</option>";
+            $value = is_string($k) ? "value=\"{$k}\"" : '';
+
+            $datalist .= "<option {$value}>{$v}</option>";
         }
         $datalist .= '</datalist>';
+
+        Admin::script("$('#list-{$this->id}').parent().hide()");
 
         return $this->append($datalist);
     }

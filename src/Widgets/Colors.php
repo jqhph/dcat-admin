@@ -59,26 +59,19 @@ class Colors
             '#483D8B', // blue darker
         ],
 
-       'green' => [ // 绿色系
+       'green' => [
            'rgba(64,153,222,.5)', // primary
             '#21b978', // success
             '#47C1BF', // tear
             '#8FC15D', // green
         ],
 
-        'orange' => [ // 橙色系
+        'orange' => [
             'rgba(64,153,222,.5)', // primary
             '#F99037', // orange
             '#F5573B', // red
             '#F2CB22', // yellow
         ],
-
-//        'red2' => [ // 红色系
-//            '#F99037', // orange
-//            '#F5573B', // red
-//            '#F2CB22', // yellow
-//            '#ff5b5b', // danger
-//        ],
 
         'purple' => [
             'rgba(64,153,222,.5)', // primary

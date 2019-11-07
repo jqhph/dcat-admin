@@ -4,7 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
-use Psy\Util\Str;
 
 class DateRange extends Field
 {
@@ -29,7 +28,7 @@ class DateRange extends Field
         $this->options(['format' => $this->format]);
     }
 
-    public function prepare($value)
+    protected function prepareToSave($value)
     {
         if ($value === '') {
             $value = null;

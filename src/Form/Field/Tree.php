@@ -213,7 +213,7 @@ class Tree extends Field
      * @param string|array $value
      * @return array
      */
-    public function prepare($value)
+    protected function prepareToSave($value)
     {
         return Helper::array($value, true);
     }

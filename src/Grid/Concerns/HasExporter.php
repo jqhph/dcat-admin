@@ -24,15 +24,24 @@ trait HasExporter
     /**
      * Set exporter driver for Grid to export.
      *
-     * @param string|Grid\Exporters\AbstractExporter $exporter
+     * @param string|Grid\Exporters\AbstractExporter|array $exporter
      *
-     * @return $this
+     * @return Grid\Exporters\AbstractExporter
      */
-    public function exporter($exporter)
+    public function exporter($exporter = null)
     {
-        $this->exportDriver = $exporter;
+        $titles = [];
 
-        return $this;
+        if (is_array($exporter) || $exporter === false) {
+            $titles   = $exporter;
+            $exporter = null;
+        }
+
+        $this->showExporter();
+
+        $driver = $this->exportDriver ?: ($this->exportDriver = $this->getExporter()->resolve($exporter));
+
+        return $driver->titles($titles);
     }
 
     /**
@@ -44,11 +53,14 @@ trait HasExporter
      */
     protected function handleExportRequest($forceExport = false)
     {
-        if (
-            ! $this->allowExportBtn()
-            || ! $scope = request($this->getExporter()->getQueryName())
-        ) {
+        if (! $scope = request($this->getExporter()->getQueryName())) {
             return;
+        }
+
+        if ($this->builder) {
+            call_user_func($this->builder, $this);
+
+            $this->builder = null;
         }
 
         // clear output buffer.
@@ -56,15 +68,7 @@ trait HasExporter
             ob_end_clean();
         }
 
-        $this->model()->usePaginate(false);
-
-        if ($this->builder) {
-            call_user_func($this->builder, $this);
-
-            return $this->resolveExportDriver($scope)->export();
-        }
-
-        if ($forceExport) {
+        if ($forceExport || $this->allowExporter()) {
             return $this->resolveExportDriver($scope)->export();
         }
     }
@@ -72,7 +76,7 @@ trait HasExporter
     /**
      * @return Exporter
      */
-    protected function getExporter()
+    public function getExporter()
     {
         return $this->exporter ?: ($this->exporter = new Exporter($this));
     }
@@ -80,9 +84,9 @@ trait HasExporter
     /**
      * @param string $gridName
      */
-    protected function setExporterQueryName($gridName)
+    public function setExporterQueryName($gridName)
     {
-        if (! $this->allowExportBtn()) {
+        if (! $this->allowExporter()) {
             return;
         }
 
@@ -96,7 +100,11 @@ trait HasExporter
      */
     protected function resolveExportDriver($scope)
     {
-        return $this->getExporter()->resolve($this->exportDriver)->withScope($scope);
+        if (! $this->exportDriver) {
+            $this->exportDriver = $this->getExporter()->resolve();
+        }
+
+        return $this->exportDriver->withScope($scope);
     }
 
 
@@ -120,38 +128,13 @@ trait HasExporter
     }
 
     /**
-     * @param array $options
-     * @return $this
-     */
-    public function setExportOptions(array $options)
-    {
-        if (isset($options['limit'])) {
-            $this->options['export_limit'] = $options['limit'];
-        }
-
-        if (isset($options['all'])) {
-            $this->options['show_export_all'] = $options['show_all'];
-        }
-
-        if (isset($options['current_page'])) {
-            $this->options['show_export_current_page'] = $options['current_page'];
-        }
-
-        if (isset($options['selected_rows'])) {
-            $this->options['show_export_selected_rows'] = $options['selected_rows'];
-        }
-
-        return $this;
-    }
-
-    /**
      * Render export button.
      *
      * @return string
      */
     public function renderExportButton()
     {
-        if (! $this->allowExportBtn()) {
+        if (! $this->allowExporter()) {
             return '';
         }
         
@@ -183,7 +166,7 @@ trait HasExporter
      *
      * @return bool
      */
-    public function allowExportBtn()
+    public function allowExporter()
     {
         return $this->options['show_exporter'];
     }

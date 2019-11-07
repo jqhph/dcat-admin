@@ -3,9 +3,12 @@
 namespace Dcat\Admin\Grid\Filter;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
+/**
+ * @mixin Builder
+ */
 class Scope implements Renderable
 {
     const QUERY_NAME = '_scope_';

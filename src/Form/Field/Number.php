@@ -29,7 +29,7 @@ JS;
         return parent::render();
     }
 
-    public function prepare($value)
+    protected function prepareToSave($value)
     {
         return (int)$value;
     }

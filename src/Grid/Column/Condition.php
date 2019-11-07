@@ -4,6 +4,9 @@ namespace Dcat\Admin\Grid\Column;
 
 use Dcat\Admin\Grid\Column;
 
+/**
+ * @mixin Column
+ */
 class Condition
 {
     /**

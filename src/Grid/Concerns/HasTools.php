@@ -174,7 +174,7 @@ trait HasTools
             $this->option('show_toolbar')
             && (
                 $this->getTools()->has() ||
-                $this->allowExportBtn() ||
+                $this->allowExporter() ||
                 $this->allowCreateBtn() ||
                 $this->allowQuickCreateBtn() ||
                 $this->allowResponsive() ||

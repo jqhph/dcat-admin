@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
-class Alert extends Widget implements Renderable
+class Alert extends Widget
 {
     /**
      * @var string
@@ -52,6 +52,12 @@ class Alert extends Widget implements Renderable
         $this->style($style);
     }
 
+    /**
+     * Set title.
+     *
+     * @param string $title
+     * @return $this
+     */
     public function title($title)
     {
         $this->title = $title;
@@ -59,6 +65,12 @@ class Alert extends Widget implements Renderable
         return $this;
     }
 
+    /**
+     * Set contents.
+     *
+     * @param string|\Closure|Renderable $content
+     * @return $this
+     */
     public function content($content)
     {
         $this->content = $this->toString($content);
@@ -66,24 +78,45 @@ class Alert extends Widget implements Renderable
         return $this;
     }
 
+    /**
+     * Set info style.
+     *
+     * @return $this
+     */
     public function info()
     {
         return $this->style('info')->icon('fa fa-info');
     }
 
+    /**
+     * Set success style.
+     *
+     * @return $this
+     */
     public function success()
     {
         return $this->style('success')->icon('fa fa-check');
     }
 
+    /**
+     * Set warning style.
+     *
+     * @return $this
+     */
     public function warning()
     {
         return $this->style('warning')->icon('fa fa-warning');
     }
 
-    public function disableCloseButton()
+    /**
+     * Disable close button.
+     *
+     * @param bool $value
+     * @return $this
+     */
+    public function disableCloseButton(bool $value = true)
     {
-        $this->showCloseBtn = false;
+        $this->showCloseBtn = ! $value;
 
         return $this;
     }
