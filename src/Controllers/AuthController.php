@@ -178,7 +178,7 @@ class AuthController extends Controller
                 }
                 return $v;
             });
-        $form->password('password_confirmation', trans('admin.password_confirmation'))->confirm('password');
+        $form->password('password_confirmation', trans('admin.password_confirmation'))->same('password');
 
         $form->setAction(admin_url('auth/setting'));
 

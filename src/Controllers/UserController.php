@@ -258,7 +258,7 @@ class UserController extends Controller
                     ->maxLength(20);
             }
 
-            $form->password('password_confirmation', trans('admin.password_confirmation'))->confirm('password');
+            $form->password('password_confirmation', trans('admin.password_confirmation'))->same('password');
 
             $form->ignore(['password_confirmation']);
 
