@@ -464,7 +464,7 @@ class Model
             return null;
         }
 
-        return $this->currentPage ?: ($this->currentPage = ($this->request->input($this->pageName) ?: 1));
+        return $this->currentPage ?: ($this->currentPage = ($this->request->get($this->pageName) ?: 1));
     }
 
     /**
@@ -488,7 +488,7 @@ class Model
             return null;
         }
 
-        return $this->request->input($this->perPageName) ?: $this->perPage;
+        return $this->request->get($this->perPageName) ?: $this->perPage;
     }
 
     /**
@@ -576,7 +576,7 @@ class Model
      */
     protected function setSort()
     {
-        $this->sort = $this->request->input($this->sortName, []);
+        $this->sort = $this->request->get($this->sortName, []);
 
         if (empty($this->sort['column']) || empty($this->sort['type'])) {
             return;

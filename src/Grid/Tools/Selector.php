@@ -118,7 +118,7 @@ class Selector
             return $this->selected;
         }
 
-        $selected = $this->request->input($this->queryName, []);
+        $selected = $this->request->get($this->queryName, []);
         if (! is_array($selected)) {
             return [];
         }

@@ -947,11 +947,9 @@ class Field implements Renderable
      */
     public function addElementClass($class)
     {
-        if (is_array($class) || is_string($class)) {
-            $this->elementClass = array_merge($this->elementClass, (array) $class);
-
-            $this->elementClass = array_unique($this->elementClass);
-        }
+        $this->elementClass = array_unique(
+            array_merge($this->elementClass, (array) $class)
+        );
 
         return $this;
     }
@@ -1003,13 +1001,15 @@ class Field implements Renderable
     }
 
     /**
-     * @param array $labelClass
-     *
+     * @param array|string $labelClass
+     * @param bool $append
      * @return $this
      */
-    public function setLabelClass(array $labelClass)
+    public function setLabelClass($labelClass, bool $append = true)
     {
-        $this->labelClass = $labelClass;
+        $this->labelClass = $append
+            ? array_unique(array_merge($this->labelClass, (array) $labelClass))
+            : (array) $labelClass;
 
         return $this;
     }
