@@ -221,6 +221,10 @@ class Form implements Renderable
      */
     public function model()
     {
+        if (! $this->data) {
+            $this->data([]);
+        }
+
         return $this->data;
     }
 
@@ -379,7 +383,7 @@ class Form implements Renderable
         $this->setHtmlAttribute('id', $this->getFormId());
 
         foreach ($this->fields as $field) {
-            $field->fill($this->data->toArray());
+            $field->fill($this->model()->toArray());
         }
 
         return [
