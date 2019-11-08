@@ -438,17 +438,14 @@ class Builder
 
     /**
      * @param $column
-     * @return $this
+     * @return void
      */
     public function removeField($column)
     {
         $this->fields = $this->fields->filter(function (Field $field) use ($column) {
             return $field->column() != $column;
         });
-
-        return $this;
     }
-
 
     /**
      * If the parant form has rows.
@@ -457,7 +454,7 @@ class Builder
      */
     public function hasRows()
     {
-        return !empty($this->form->rows);
+        return !empty($this->form->getRows());
     }
 
     /**
@@ -467,7 +464,7 @@ class Builder
      */
     public function getRows()
     {
-        return $this->form->rows;
+        return $this->form->getRows();
     }
 
     /**
@@ -510,7 +507,7 @@ class Builder
      * @param string $option
      * @param mixed  $value
      *
-     * @return $this
+     * @return void
      */
     public function option($option, $value = null)
     {
@@ -519,41 +516,33 @@ class Builder
         }
 
         $this->options[$option] = $value;
-
-        return $this;
     }
 
     /**
      * @param bool $disable
-     * @return $this
+     * @return void
      */
     public function disableHeader(bool $disable = true)
     {
         $this->showHeader = !$disable;
-
-        return $this;
     }
 
     /**
      * @param bool $disable
-     * @return $this
+     * @return void
      */
     public function disableFooter(bool $disable = true)
     {
         $this->showFooter = !$disable;
-
-        return $this;
     }
 
     /**
      * @param $id
-     * @return $this
+     * @return void
      */
     public function setFormId($id)
     {
         $this->formId = $id;
-
-        return $this;
     }
 
     /**
@@ -733,7 +722,9 @@ class Builder
             $this->setupTabScript();
         }
 
-        $this->form->allowAjaxSubmit() && $this->setupSubmitScript();
+        if ($this->form->allowAjaxSubmit()) {
+            $this->setupSubmitScript();
+        }
 
         $open = $this->open(['class' => 'form-horizontal']);
 
@@ -769,6 +760,9 @@ EOF;
         return "<div class='card material'>{$view->render()}</div>";
     }
 
+    /**
+     * @return void
+     */
     protected function setupSubmitScript()
     {
         Admin::script(
@@ -801,6 +795,9 @@ JS
         );
     }
 
+    /**
+     * @return void
+     */
     protected function setupTabScript()
     {
         $formId = $this->getFormId();

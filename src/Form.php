@@ -247,7 +247,7 @@ class Form implements Renderable
     /**
      * Field rows in form.
      *
-     * @var array
+     * @var Row[]
      */
     protected $rows = [];
 
@@ -1364,13 +1364,24 @@ class Form implements Renderable
     }
 
     /**
+     * @return Row[]
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    /**
      * Tools setting for form.
      *
      * @param Closure $callback
+     * @return $this;
      */
     public function tools(Closure $callback)
     {
         $callback->call($this, $this->builder->getTools());
+
+        return $this;
     }
 
     /**
@@ -1495,10 +1506,13 @@ class Form implements Renderable
      * Footer setting for form.
      *
      * @param Closure $callback
+     * @return $this
      */
     public function footer(Closure $callback)
     {
         call_user_func($callback, $this->builder->getFooter());
+
+        return $this;
     }
 
     /**

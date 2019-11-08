@@ -2,11 +2,10 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
-use Dcat\Admin\Widgets\Form as WidgetsForm;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 
-class MultipleForm extends WidgetsForm
+class MultipleForm extends WidgetForm
 {
     /**
      * @var Form

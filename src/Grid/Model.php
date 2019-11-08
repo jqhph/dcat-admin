@@ -149,7 +149,16 @@ class Model
      */
     public function getQueries()
     {
-        return $this->queries;
+        return $this->queries = $this->queries->unique();
+    }
+
+    /**
+     * @param Collection $query
+     * @return void
+     */
+    public function setQueries(Collection $query)
+    {
+        $this->queries = $query;
     }
 
     /**
@@ -626,15 +635,26 @@ class Model
     }
 
     /**
+     * @param string|array $method
+     * @return void
+     */
+    public function rejectQueries($method)
+    {
+        $method = (array) $method;
+
+        $this->queries = $this->queries->reject(function ($query) use ($method) {
+            return in_array($query['method'], $method);
+        });
+    }
+
+    /**
      * Reset orderBy query.
      *
      * @return void
      */
     public function resetOrderBy()
     {
-        $this->queries = $this->queries->reject(function ($query) {
-            return $query['method'] == 'orderBy' || $query['method'] == 'orderByDesc';
-        });
+        $this->rejectQueries(['orderBy', 'orderByDesc']);
     }
 
     /**
@@ -704,14 +724,11 @@ class Model
     }
 
     /**
-     * @return $this
+     * @return void
      */
     public function reset()
     {
         $this->data    = null;
         $this->model   = null;
-        $this->queries = collect();
-
-        return $this;
     }
 }

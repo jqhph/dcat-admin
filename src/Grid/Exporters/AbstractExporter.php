@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Exporters;
 
 use Dcat\Admin\Grid;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
@@ -207,6 +208,7 @@ abstract class AbstractExporter implements ExporterInterface
         $array = $this->grid->getFilter()->execute(true);
 
         $model->reset();
+        $model->rejectQueries('forPage');
 
         if ($this->builder) {
             return ($this->builder)($array);
