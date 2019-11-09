@@ -147,6 +147,9 @@ return [
     'size'                  => '大小',
     'between_start'         => '起始',
     'between_end'           => '结束',
+    'next_step'             => '下一步',
+    'prev_step'             => '上一步',
+    'done'                  => '完成',
     'create_extension'      => '创建扩展',
     'listbox'               => [
         'text_total'         => '总共 {0} 项',

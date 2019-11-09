@@ -147,6 +147,9 @@ return [
     'size'                  => 'Size',
     'between_start'         => 'Start',
     'between_end'           => 'End',
+    'next_step'             => 'Next',
+    'prev_step'             => 'Previous',
+    'done'                  => 'Done',
     'listbox'               => [
         'text_total'         => 'Showing all {0}',
         'text_empty'         => 'Empty list',

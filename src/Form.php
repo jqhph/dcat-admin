@@ -7,6 +7,7 @@ use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\Row;
+use Dcat\Admin\Form\StepForm;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Traits\HasBuilderEvents;
@@ -15,6 +16,7 @@ use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
@@ -321,10 +323,10 @@ class Form implements Renderable
     /**
      * Get specify field.
      *
-     * @param string $name
-     * @return Field
+     * @param string|null $name
+     * @return Field|Collection|Field[]|null
      */
-    public function field($name)
+    public function field($name = null)
     {
         return $this->builder->field($name);
     }
@@ -572,6 +574,13 @@ class Form implements Renderable
 
         $this->build();
 
+        $this->prepareStepFormFields($data);
+
+        // Validate step form.
+        if ($this->isStepFormValidationRequest()) {
+            return $this->validateStepForm($data);
+        }
+
         if (($response = $this->callSubmitted())) {
             return $response;
         }
@@ -612,6 +621,69 @@ class Form implements Renderable
             $this->getRedirectUrl($id, $redirectTo),
             trans('admin.save_succeeded')
         );
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    protected function prepareStepFormFields(array $data)
+    {
+        $steps = $this->builder->getSteps();
+
+        if (
+            empty($steps)
+            || (! isset($data[StepForm::ALL_STEPS]) && ! $this->isStepFormValidationRequest())
+        ) {
+            return;
+        }
+
+        if ($this->isStepFormValidationRequest()) {
+            $currentIndex = $data[StepForm::CURRENT_VALIDATION_STEP];
+
+            if (empty($steps[$currentIndex])) {
+                return;
+            }
+
+            foreach ($steps[$currentIndex]->field() as $field) {
+                $this->pushField($field);
+            }
+            return;
+        }
+
+        if (! empty($data[StepForm::ALL_STEPS])) {
+            foreach ($steps as $stepForm) {
+                foreach ($stepForm->field() as $field) {
+                    $this->pushField($field);
+                }
+            }
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isStepFormValidationRequest()
+    {
+        $index = $this->request->get(StepForm::CURRENT_VALIDATION_STEP);
+
+        return $index !== '' && $index !== null;
+    }
+
+    /**
+     * Validate step form.
+     *
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function  validateStepForm(array $data)
+    {
+        // Handle validation errors.
+        if ($validationMessages = $this->validationMessages($data)) {
+            return $this->makeValidationErrorsResponse($validationMessages);
+        }
+
+        return $this->ajaxResponse('Success');
     }
 
     /**
@@ -1369,6 +1441,30 @@ class Form implements Renderable
     public function getRows()
     {
         return $this->rows;
+    }
+
+    /**
+     * @param string $title
+     * @param Closure $callback
+     * @return $this
+     */
+    public function step(string $title, \Closure $callback)
+    {
+        $this->builder->step($title, $callback);
+
+        return $this;
+    }
+
+    /**
+     * @param $title
+     * @param Closure|null $callback
+     * @return $this
+     */
+    public function done($title, \Closure $callback = null)
+    {
+        $this->builder->done($title, $callback);
+
+        return $this;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form;
 
+use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
@@ -20,6 +21,13 @@ class Builder
      *  Previous url key.
      */
     const PREVIOUS_URL_KEY = '_previous_';
+
+    /**
+     * Modes constants.
+     */
+    const MODE_EDIT = 'edit';
+    const MODE_CREATE = 'create';
+    const MODE_DELETE = 'delete';
 
     /**
      * @var mixed
@@ -45,13 +53,6 @@ class Builder
      * @var array
      */
     protected $options = [];
-
-    /**
-     * Modes constants.
-     */
-    const MODE_EDIT = 'edit';
-    const MODE_CREATE = 'create';
-    const MODE_DELETE = 'delete';
 
     /**
      * Form action mode, could be create|view|edit.
@@ -133,6 +134,16 @@ class Builder
      * @var bool
      */
     protected $showFooter = true;
+
+    /**
+     * @var StepForm[]
+     */
+    protected $stepForms = [];
+
+    /**
+     * @var DoneStep
+     */
+    protected $doneStep;
 
     /**
      * Builder constructor.
@@ -225,6 +236,49 @@ class Builder
     public function getFooter()
     {
         return $this->footer;
+    }
+
+    /**
+     * @param string $title
+     * @param \Closure $callback
+     * @return void
+     */
+    public function step(string $title, \Closure $callback)
+    {
+        $this->view = 'admin::form.steps';
+
+        $form = new StepForm($this->form, count($this->stepForms), $title);
+
+        $this->stepForms[] = $form;
+
+        $callback($form);
+    }
+
+
+    /**
+     * @param string $title
+     * @param Closure|null $callback
+     * @return $this
+     */
+    public function done($title, \Closure $callback = null)
+    {
+        if ($title instanceof \Closure) {
+            $callback = $title;
+            $title    = trans('admin.done');
+        }
+
+        $this->doneStep = new DoneStep($this->form, $title, $callback);
+
+        return $this;
+    }
+
+
+    /**
+     * @return StepForm[]
+     */
+    public function getSteps()
+    {
+        return $this->stepForms;
     }
 
     /**
@@ -425,12 +479,16 @@ class Builder
     /**
      * Get specify field.
      *
-     * @param string $name
+     * @param string|null $name
      *
-     * @return mixed
+     * @return Field|Collection|Field[]|null
      */
-    public function field($name)
+    public function field($name = null)
     {
+        if ($name === null) {
+            return $this->fields;
+        }
+
         return $this->fields->first(function (Field $field) use ($name) {
             return $field->column() == $name;
         });
@@ -722,8 +780,13 @@ class Builder
             $this->setupTabScript();
         }
 
-        if ($this->form->allowAjaxSubmit()) {
+        if ($this->form->allowAjaxSubmit() && empty($this->stepForms)) {
             $this->setupSubmitScript();
+        }
+
+        if ($this->stepForms && !$this->doneStep) {
+            $this->done(function () {
+            });
         }
 
         $open = $this->open(['class' => 'form-horizontal']);
@@ -734,6 +797,8 @@ class Builder
             'width'      => $this->width,
             'formId'     => $this->getFormId(),
             'showHeader' => $this->showHeader,
+            'steps'      => $this->stepForms,
+            'doneStep'   => $this->doneStep,
         ];
 
         $this->layout->prepend(
@@ -767,29 +832,30 @@ EOF;
     {
         Admin::script(
             <<<JS
-var f = $('#{$this->getFormId()}');
+(function () {
+    var f = $('#{$this->getFormId()}');
 
-f.find('[type="submit"]').click(function () {
-    var t = $(this);
+    f.find('[type="submit"]').click(function () {
+        var t = $(this);
     
-    LA.Form({
-        \$form: f,
-        before: function () {
-            f.validator('validate');
-    
-            if (f.find('.has-error').length > 0) {
-                return false;
+        LA.Form({
+            \$form: f,
+            before: function () {
+                f.validator('validate');
+        
+                if (f.find('.has-error').length > 0) {
+                    return false;
+                }
+                t.button('loading').removeClass('waves-effect');
+            },
+            after: function () {
+                t.button('reset');
             }
-            
-            t.button('loading');
-        },
-        after: function () {
-            t.button('reset');
-        }
+        });
+    
+        return false;
     });
-
-    return false;
-});
+})()
 JS
 
         );

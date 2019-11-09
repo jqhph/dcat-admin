@@ -7,9 +7,8 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
-use Dcat\EasyExcel\Support\Traits\Macroable;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
@@ -78,6 +77,11 @@ class Form implements Renderable
     use HasHtmlAttributes, Macroable {
         __call as macroCall;
     }
+
+    /**
+     * @var string
+     */
+    protected $view = 'admin::widgets.form';
 
     /**
      * @var Field[]
@@ -253,10 +257,14 @@ class Form implements Renderable
      * Get specify field.
      *
      * @param string $name
-     * @return Field|null
+     * @return Field|null|Field[]
      */
-    public function field($name)
+    public function field($name = null)
     {
+        if ($name === null) {
+            return $this->fields;
+        }
+
         foreach ($this->fields as $field) {
             if ($field->column() === $name) {
                 return $field;
@@ -498,29 +506,31 @@ HTML;
     {
         Admin::script(
             <<<JS
-var f = $('#{$this->getFormId()}');
+(function () {
+    var f = $('#{$this->getFormId()}');
 
-f.find('[type="submit"]').click(function () {
-    var t = $(this);
-    
-    LA.Form({
-        \$form: f,
-         before: function () {
-            f.validator('validate');
-    
-            if (f.find('.has-error').length > 0) {
-                return false;
+    f.find('[type="submit"]').click(function () {
+        var t = $(this);
+        
+        LA.Form({
+            \$form: f,
+             before: function () {
+                f.validator('validate');
+        
+                if (f.find('.has-error').length > 0) {
+                    return false;
+                }
+                
+                t.button('loading');
+            },
+            after: function () {
+                t.button('reset');
             }
-            
-            t.button('loading');
-        },
-        after: function () {
-            t.button('reset');
-        }
+        });
+    
+        return false;
     });
-
-    return false;
-});
+})()
 JS
 
         );
@@ -533,9 +543,11 @@ JS
      */
     public function render()
     {
-        $this->useAjaxSubmit && $this->setupSubmitScript();
+        if ($this->allowAjaxSubmit()) {
+            $this->setupSubmitScript();
+        }
 
-        return view('admin::widgets.form', $this->getVariables())->render();
+        return view($this->view, $this->getVariables())->render();
     }
 
     /**
