@@ -272,13 +272,47 @@ class Builder
         return $this;
     }
 
-
     /**
      * @return StepForm[]
      */
     public function getSteps()
     {
         return $this->stepForms;
+    }
+
+    /**
+     * @return DoneStep|null
+     */
+    public function getDoneStep()
+    {
+        if (! $this->stepForms) {
+            return;
+        }
+
+        if (! $this->doneStep) {
+            $this->setDefaultDonePage();
+        }
+
+        return $this->doneStep;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultDonePage()
+    {
+        $this->done(function () {
+            $resource = $this->form->getResource(0);
+
+            $data = [
+                'title'       => trans('admin.save_succeeded'),
+                'description' => '',
+                'createUrl'   => $resource.'/create',
+                'backUrl'     => $resource,
+            ];
+
+            return view('admin::form.done-step', $data);
+        });
     }
 
     /**
@@ -784,11 +818,6 @@ class Builder
             $this->setupSubmitScript();
         }
 
-        if ($this->stepForms && !$this->doneStep) {
-            $this->done(function () {
-            });
-        }
-
         $open = $this->open(['class' => 'form-horizontal']);
 
         $data = [
@@ -798,7 +827,7 @@ class Builder
             'formId'     => $this->getFormId(),
             'showHeader' => $this->showHeader,
             'steps'      => $this->stepForms,
-            'doneStep'   => $this->doneStep,
+            'doneStep'   => $this->getDoneStep(),
         ];
 
         $this->layout->prepend(

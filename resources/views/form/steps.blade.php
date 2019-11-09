@@ -38,10 +38,13 @@
                     </a>
                 </li>
             </ul>
-            <div>
+            <div class="la-step-form">
                 @foreach($steps as $step)
                     {!! $step->render() !!}
                 @endforeach
+
+                <div id="{{ $doneStep->getElementId() }}" class="la-done-step" style="display: none;">
+                </div>
             </div>
         </div>
     @endif
@@ -89,11 +92,15 @@ LA.ready(function () {
             isSubmitting = 1;
 
             // 提交完整表单
-            submit(function (result) {
+            submit(function (state, data) {
                 $t.button('reset');
                 isSubmitting = 0;
 
-                if (result) {
+                if (state) {
+                    if (data) {
+                        form.find('.la-done-step').html(data);
+                    }
+
                     smartWizard.next();
 
                     toggle_btn();
@@ -153,11 +160,11 @@ LA.ready(function () {
 
         // 发送表单到服务器进行验证
         stepInput.val(smartWizard.current_index);
-        submit(function (result) {
+        submit(function (state) {
             $(self).button('reset');
             isSubmitting = 0;
 
-            if (result) {
+            if (state) {
                 // 表单验证成功
                 if (smartWizard.steps.index(self) !== smartWizard.current_index) {
                     smartWizard.next();
@@ -172,10 +179,10 @@ LA.ready(function () {
     function submit(after) {
         LA.Form({
             $form: form,
-            after: function (success, b, c, d) {
-                after(success, b, c, d);
+            after: function (state, b, c, d) {
+                after(state, b, c, d);
 
-                if (success) {
+                if (state) {
                     return false;
                 }
 

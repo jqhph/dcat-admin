@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form;
 use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class DoneStep
@@ -68,7 +69,7 @@ class DoneStep
      * @param string|\Closure|Renderable $contents
      * @return void
      */
-    public function contents($contents)
+    public function content($contents)
     {
         $this->contents = $contents;
     }
@@ -82,11 +83,47 @@ class DoneStep
     }
 
     /**
+     * @return array
+     */
+    public function getNewId()
+    {
+        return $this->form->getKey();
+    }
+
+    /**
+     * @param string|null $key
+     * @param mixed|null $default
+     * @return array|mixed
+     */
+    public function input($key = null, $default = null)
+    {
+        $input = $this->form->getUpdates();
+
+        if ($key === null) {
+            return $input;
+        }
+
+        return Arr::get($input, $key, $default);
+    }
+
+    /**
+     * @return void
+     */
+    public function finish()
+    {
+        $value = call_user_func($this->builder, $this);
+
+        if ($value) {
+            $this->content($value);
+        }
+    }
+
+    /**
      * @return string
      */
-    public function build()
+    public function render()
     {
-        call_user_func($this->builder, $this);
+        return Helper::render($this->contents);
     }
 
 }

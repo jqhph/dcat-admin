@@ -107,8 +107,11 @@ class StepForm extends WidgetForm
      */
     protected function open()
     {
-        Admin::js('vendor/dcat-admin/SmartWizard/dist/js/jquery.smartWizard.min.js');
-        Admin::css('vendor/dcat-admin/SmartWizard/dist/css/step.min.css');
+        $this->collectAssets();
+
+        if ($this->index > 0) {
+            $this->setHtmlAttribute('style', 'display:none');
+        }
 
         $this->setHtmlAttribute('data-toggle', 'validator');
         $this->setHtmlAttribute('role', 'form');
@@ -124,6 +127,12 @@ HTML;
     protected function close()
     {
         return '</div>';
+    }
+
+    protected function collectAssets()
+    {
+        Admin::js('vendor/dcat-admin/SmartWizard/dist/js/jquery.smartWizard.min.js');
+        Admin::css('vendor/dcat-admin/SmartWizard/dist/css/step.min.css');
     }
 
 }
