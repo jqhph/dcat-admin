@@ -80,6 +80,11 @@ class Form implements Renderable
     }
 
     /**
+     * @var string
+     */
+    protected $view = 'admin::widgets.form';
+
+    /**
      * @var Field[]
      */
     protected $fields = [];
@@ -253,10 +258,14 @@ class Form implements Renderable
      * Get specify field.
      *
      * @param string $name
-     * @return Field|null
+     * @return Field|null|Field[]
      */
-    public function field($name)
+    public function field($name = null)
     {
+        if ($name === null) {
+            return $this->fields;
+        }
+
         foreach ($this->fields as $field) {
             if ($field->column() === $name) {
                 return $field;
@@ -498,29 +507,31 @@ HTML;
     {
         Admin::script(
             <<<JS
-var f = $('#{$this->getFormId()}');
+(function () {
+    var f = $('#{$this->getFormId()}');
 
-f.find('[type="submit"]').click(function () {
-    var t = $(this);
-    
-    LA.Form({
-        \$form: f,
-         before: function () {
-            f.validator('validate');
-    
-            if (f.find('.has-error').length > 0) {
-                return false;
+    f.find('[type="submit"]').click(function () {
+        var t = $(this);
+        
+        LA.Form({
+            \$form: f,
+             before: function () {
+                f.validator('validate');
+        
+                if (f.find('.has-error').length > 0) {
+                    return false;
+                }
+                
+                t.button('loading');
+            },
+            after: function () {
+                t.button('reset');
             }
-            
-            t.button('loading');
-        },
-        after: function () {
-            t.button('reset');
-        }
+        });
+    
+        return false;
     });
-
-    return false;
-});
+})()
 JS
 
         );
@@ -533,9 +544,11 @@ JS
      */
     public function render()
     {
-        $this->useAjaxSubmit && $this->setupSubmitScript();
+        if ($this->allowAjaxSubmit()) {
+            $this->setupSubmitScript();
+        }
 
-        return view('admin::widgets.form', $this->getVariables())->render();
+        return view($this->view, $this->getVariables())->render();
     }
 
     /**
