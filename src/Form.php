@@ -617,6 +617,10 @@ class Form implements Renderable
             return $response;
         }
 
+        if ($response = $this->responseDoneStep()) {
+            return $response;
+        }
+
         return $this->redirect(
             $this->getRedirectUrl($id, $redirectTo),
             trans('admin.save_succeeded')
@@ -676,7 +680,7 @@ class Form implements Renderable
      * @param array $data
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    protected function  validateStepForm(array $data)
+    protected function validateStepForm(array $data)
     {
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
@@ -684,6 +688,20 @@ class Form implements Renderable
         }
 
         return $this->ajaxResponse('Success');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|void
+     */
+    protected function responseDoneStep()
+    {
+        if (! $done = $this->builder->getDoneStep()) {
+            return;
+        }
+
+        $done->finish();
+
+        return response($done->render());
     }
 
     /**
@@ -1620,7 +1638,7 @@ class Form implements Renderable
      */
     public function getResource($slice = -2)
     {
-        $path = $this->resource ?: app('request')->getUri();
+        $path = $this->resource ?: $this->request->getUri();
 
         $segments = explode('/', trim($path, '/'));
 
