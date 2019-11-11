@@ -2,15 +2,11 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 
 class StepForm extends WidgetForm
 {
-    const CURRENT_VALIDATION_STEP = 'CURRENT_VALIDATION_STEP';
-    const ALL_STEPS = 'ALL_STEPS';
-
     /**
      * @var string
      */
@@ -107,8 +103,6 @@ class StepForm extends WidgetForm
      */
     protected function open()
     {
-        $this->collectAssets();
-
         if ($this->index > 0) {
             $this->setHtmlAttribute('style', 'display:none');
         }
@@ -127,12 +121,6 @@ HTML;
     protected function close()
     {
         return '</div>';
-    }
-
-    protected function collectAssets()
-    {
-        Admin::js('vendor/dcat-admin/SmartWizard/dist/js/jquery.smartWizard.min.js');
-        Admin::css('vendor/dcat-admin/SmartWizard/dist/css/step.min.css');
     }
 
 }

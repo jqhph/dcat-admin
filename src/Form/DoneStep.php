@@ -54,7 +54,7 @@ class DoneStep
 
     /**
      * @param string $title
-     * @return void|string
+     * @return $this|string
      */
     public function title($title = null)
     {
@@ -63,15 +63,19 @@ class DoneStep
         }
 
         $this->title = value($title);
+
+        return $this;
     }
 
     /**
      * @param string|\Closure|Renderable $contents
-     * @return void
+     * @return $this
      */
     public function content($contents)
     {
         $this->contents = $contents;
+
+        return $this;
     }
 
     /**
@@ -107,7 +111,7 @@ class DoneStep
     }
 
     /**
-     * @return void
+     * @return $this
      */
     public function finish()
     {
@@ -116,6 +120,8 @@ class DoneStep
         if ($value) {
             $this->content($value);
         }
+
+        return $this;
     }
 
     /**

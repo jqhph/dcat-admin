@@ -7,7 +7,7 @@ use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\Row;
-use Dcat\Admin\Form\StepForm;
+use Dcat\Admin\Form\StepBuilder;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Traits\HasBuilderEvents;
@@ -633,17 +633,20 @@ class Form implements Renderable
      */
     protected function prepareStepFormFields(array $data)
     {
-        $steps = $this->builder->getSteps();
+        $stepBuilder = $this->builder->getStepBuilder();
 
         if (
-            empty($steps)
-            || (! isset($data[StepForm::ALL_STEPS]) && ! $this->isStepFormValidationRequest())
+            empty($stepBuilder)
+            || empty($stepBuilder->count())
+            || (! isset($data[StepBuilder::ALL_STEPS]) && ! $this->isStepFormValidationRequest())
         ) {
             return;
         }
 
+        $steps = $stepBuilder->all();
+
         if ($this->isStepFormValidationRequest()) {
-            $currentIndex = $data[StepForm::CURRENT_VALIDATION_STEP];
+            $currentIndex = $data[StepBuilder::CURRENT_VALIDATION_STEP];
 
             if (empty($steps[$currentIndex])) {
                 return;
@@ -655,7 +658,7 @@ class Form implements Renderable
             return;
         }
 
-        if (! empty($data[StepForm::ALL_STEPS])) {
+        if (! empty($data[StepBuilder::ALL_STEPS])) {
             foreach ($steps as $stepForm) {
                 foreach ($stepForm->field() as $field) {
                     $this->pushField($field);
@@ -669,7 +672,7 @@ class Form implements Renderable
      */
     protected function isStepFormValidationRequest()
     {
-        $index = $this->request->get(StepForm::CURRENT_VALIDATION_STEP);
+        $index = $this->request->get(StepBuilder::CURRENT_VALIDATION_STEP);
 
         return $index !== '' && $index !== null;
     }
@@ -695,13 +698,15 @@ class Form implements Renderable
      */
     protected function responseDoneStep()
     {
-        if (! $done = $this->builder->getDoneStep()) {
+        if (! $builder = $this->builder->getStepBuilder()) {
             return;
         }
 
-        $done->finish();
-
-        return response($done->render());
+        return response(
+            $builder->getDoneStep()
+                ->finish()
+                ->render()
+        );
     }
 
     /**
@@ -1462,27 +1467,12 @@ class Form implements Renderable
     }
 
     /**
-     * @param string $title
-     * @param Closure $callback
-     * @return $this
+     * @param Closure|null $builder
+     * @return StepBuilder
      */
-    public function step(string $title, \Closure $callback)
+    public function step(\Closure $builder = null)
     {
-        $this->builder->step($title, $callback);
-
-        return $this;
-    }
-
-    /**
-     * @param $title
-     * @param Closure|null $callback
-     * @return $this
-     */
-    public function done($title, \Closure $callback = null)
-    {
-        $this->builder->done($title, $callback);
-
-        return $this;
+        return $this->builder->step($builder);
     }
 
     /**

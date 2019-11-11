@@ -136,14 +136,9 @@ class Builder
     protected $showFooter = true;
 
     /**
-     * @var StepForm[]
+     * @var StepBuilder
      */
-    protected $stepForms = [];
-
-    /**
-     * @var DoneStep
-     */
-    protected $doneStep;
+    protected $stepBuilder;
 
     /**
      * Builder constructor.
@@ -175,10 +170,10 @@ class Builder
     }
 
     /**
-     * @param \Closure $closure
+     * @param Closure $closure
      * @return $this;
      */
-    public function wrap(\Closure $closure)
+    public function wrap(Closure $closure)
     {
         $this->wrapper = $closure;
 
@@ -239,80 +234,30 @@ class Builder
     }
 
     /**
-     * @param string $title
      * @param \Closure $callback
-     * @return void
+     * @return StepBuilder
      */
-    public function step(string $title, \Closure $callback)
+    public function step(?\Closure $callback = null)
     {
-        $this->view = 'admin::form.steps';
+        if (! $this->stepBuilder) {
+            $this->view = 'admin::form.steps';
 
-        $form = new StepForm($this->form, count($this->stepForms), $title);
-
-        $this->stepForms[] = $form;
-
-        $callback($form);
-    }
-
-
-    /**
-     * @param string $title
-     * @param Closure|null $callback
-     * @return $this
-     */
-    public function done($title, \Closure $callback = null)
-    {
-        if ($title instanceof \Closure) {
-            $callback = $title;
-            $title    = trans('admin.done');
+            $this->stepBuilder = new StepBuilder($this->form);
         }
 
-        $this->doneStep = new DoneStep($this->form, $title, $callback);
-
-        return $this;
-    }
-
-    /**
-     * @return StepForm[]
-     */
-    public function getSteps()
-    {
-        return $this->stepForms;
-    }
-
-    /**
-     * @return DoneStep|null
-     */
-    public function getDoneStep()
-    {
-        if (! $this->stepForms) {
-            return;
+        if ($callback) {
+            $callback($this->stepBuilder);
         }
 
-        if (! $this->doneStep) {
-            $this->setDefaultDonePage();
-        }
-
-        return $this->doneStep;
+        return $this->stepBuilder;
     }
 
     /**
-     * @return void
+     * @return StepBuilder
      */
-    protected function setDefaultDonePage()
+    public function getStepBuilder()
     {
-        $this->done(function () {
-            $resource = $this->form->getResource(0);
-
-            $data = [
-                'title'       => trans('admin.save_succeeded'),
-                'description' => '',
-                'createUrl'   => $resource.'/create',
-                'backUrl'     => $resource,
-            ];
-
-            return view('admin::form.done-step', $data);
-        });
+        return $this->stepBuilder;
     }
 
     /**
@@ -814,7 +759,7 @@ class Builder
             $this->setupTabScript();
         }
 
-        if ($this->form->allowAjaxSubmit() && empty($this->stepForms)) {
+        if ($this->form->allowAjaxSubmit() && empty($this->stepBuilder)) {
             $this->setupSubmitScript();
         }
 
@@ -826,8 +771,7 @@ class Builder
             'width'      => $this->width,
             'formId'     => $this->getFormId(),
             'showHeader' => $this->showHeader,
-            'steps'      => $this->stepForms,
-            'doneStep'   => $this->getDoneStep(),
+            'steps'      => $this->stepBuilder,
         ];
 
         $this->layout->prepend(

@@ -6,11 +6,11 @@
 @endif
 
 <div class="box-body" style="padding:18px 18px 30px">
-    @if($steps)
-        <div class="fields-group la-step-box" style="padding:18px;max-width: 1000px">
+    @if($steps->count())
+        <div class="fields-group la-step-box" style="padding:18px;max-width: {{ $steps->getOption('width') }}">
 
             <ul class="la-step-horizontal la-step-label-horizontal la-step ">
-                @foreach($steps as $step)
+                @foreach($steps->all() as $step)
                 <li class="la-step-item">
                     <a href="#{{ $step->getFormId() }}" class="la-step-item-container">
                         <div class="la-step-line"></div>
@@ -26,24 +26,24 @@
                 @endforeach
 
                 <li class="la-step-item">
-                    <a href="#{{ $doneStep->getElementId() }}" class="la-step-item-container">
+                    <a href="#{{ $steps->getDoneStep()->getElementId() }}" class="la-step-item-container">
                         <div class="la-step-line"></div>
                         <div class="la-step-icons">
-                            <span class="la-step-icon" data-index="{{ count($steps) }}"> {{ count($steps) + 1 }} </span>
+                            <span class="la-step-icon" data-index="{{ $steps->count() }}"> {{ $steps->count() + 1 }} </span>
                         </div>
                         <div class="la-step-content">
-                            <div class="la-step-title">{{ $doneStep->title() }}</div>
+                            <div class="la-step-title">{{ $steps->getDoneStep()->title() }}</div>
                             <div class="la-step-desc"></div>
                         </div>
                     </a>
                 </li>
             </ul>
             <div class="la-step-form">
-                @foreach($steps as $step)
+                @foreach($steps->all() as $step)
                     {!! $step->render() !!}
                 @endforeach
 
-                <div id="{{ $doneStep->getElementId() }}" class="la-done-step" style="display: none;">
+                <div id="{{ $steps->getDoneStep()->getElementId() }}" class="la-done-step" style="display: none;">
                 </div>
             </div>
         </div>
@@ -54,8 +54,8 @@
     {!! $field->render() !!}
 @endforeach
 
-<input type="hidden" class="current-step-input" name="{{ Dcat\Admin\Form\StepForm::CURRENT_VALIDATION_STEP }}" />
-<input type="hidden" class="all-steps-input" name="{{ Dcat\Admin\Form\StepForm::ALL_STEPS }}" />
+<input type="hidden" class="current-step-input" name="{{ Dcat\Admin\Form\StepBuilder::CURRENT_VALIDATION_STEP }}" />
+<input type="hidden" class="all-steps-input" name="{{ Dcat\Admin\Form\StepBuilder::ALL_STEPS }}" />
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 @php
