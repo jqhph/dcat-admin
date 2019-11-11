@@ -39,9 +39,7 @@
                 </li>
             </ul>
             <div class="la-step-form">
-                @foreach($steps->all() as $step)
-                    {!! $step->render() !!}
-                @endforeach
+                {!! $steps->build() !!}
 
                 <div id="{{ $steps->getDoneStep()->getElementId() }}" class="la-done-step" style="display: none;">
                 </div>
@@ -112,6 +110,7 @@ LA.ready(function () {
         });
 
     smartWizard = box.smartWizard({
+        selected: {{ $steps->getOption('selected') }},
         transitionEffect: 'fade',
         useURLhash: false,
         lang: {
@@ -124,6 +123,7 @@ LA.ready(function () {
             toolbarButtonPosition: 'left'
         },
         anchorSettings: {
+            removeDoneStepOnNavigateBack: true,
             enableAnchorOnDoneStep: false,
         },
     });

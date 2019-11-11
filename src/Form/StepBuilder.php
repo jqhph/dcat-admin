@@ -30,6 +30,7 @@ class StepBuilder
      * @var array
      */
     protected $options = [
+        'selected' => 0,
         'width'    => '1000px',
         'remember' => false,
     ];
@@ -103,6 +104,15 @@ class StepBuilder
         }
 
         return $this->options[$key] ?? $default;
+    }
+
+    /**
+     * @param int $index
+     * @return $this
+     */
+    public function select(int $index)
+    {
+        return $this->option('selected', $index);
     }
 
     /**
@@ -227,6 +237,49 @@ class StepBuilder
     {
         Admin::js('vendor/dcat-admin/SmartWizard/dist/js/jquery.smartWizard.min.js');
         Admin::css('vendor/dcat-admin/SmartWizard/dist/css/step.min.css');
+    }
+
+    /**
+     * @return void
+     */
+    protected function selectStep()
+    {
+        if (! $this->options['remember'] || ! $input = $this->fetchStash()) {
+            return;
+        }
+
+        $current = $input[static::CURRENT_VALIDATION_STEP] ?? null;
+        if ($current !== null && $current !== '') {
+            $this->select((int) ($input[static::CURRENT_VALIDATION_STEP] + 1));
+        }
+
+        if (! empty($input[static::ALL_STEPS])) {
+            $this->select($this->count() - 1);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function build()
+    {
+        $this->selectStep();
+
+        return $this->renderFields();
+    }
+
+    /**
+     * @return string
+     */
+    public function renderFields()
+    {
+        $html = '';
+
+        foreach($this->stepForms as $step) {
+            $html .= (string) $step->render();
+        }
+
+        return $html;
     }
 
 }

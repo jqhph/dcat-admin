@@ -98,7 +98,8 @@
 
             if (idx > 0 && this.options.anchorSettings.markDoneStep && this.options.anchorSettings.markAllPreviousStepsAsDone) {
                 // Mark previous steps of the active step as done
-                this.steps.eq(idx).parent('li').prevAll().addClass("done");
+                // this.steps.eq(idx).parent('li').prevAll().addClass("done");
+                this._setDone(this.steps.eq(idx).parent('li').prevAll());
             }
 
             // Show the initial step
