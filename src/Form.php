@@ -610,13 +610,13 @@ class Form implements Renderable
 
         $this->prepareStepFormFields($data);
 
+        if (($response = $this->callSubmitted())) {
+            return $response;
+        }
+
         // Validate step form.
         if ($this->isStepFormValidationRequest()) {
             return $this->validateStepForm($data);
-        }
-
-        if (($response = $this->callSubmitted())) {
-            return $response;
         }
 
         if ($response = $this->handleUploadFile($data)) {
