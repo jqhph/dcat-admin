@@ -95,7 +95,7 @@ trait HasFiles
             unset($input['key']);
         }
 
-        request()->replace($input);
+        $this->request->replace($input);
 
         return $input;
     }
