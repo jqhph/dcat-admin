@@ -30,12 +30,15 @@ class StepBuilder
      * @var array
      */
     protected $options = [
-        'width' => '1000px',
+        'width'    => '1000px',
+        'remember' => false,
     ];
 
     public function __construct(Form $form)
     {
-        $this->form = $form;
+        $this->form = $form->saved(function () {
+            $this->flushStash();
+        });
 
         $this->collectAssets();
     }
@@ -112,6 +115,15 @@ class StepBuilder
     }
 
     /**
+     * @param bool $value
+     * @return $this
+     */
+    public function remember(bool $value = true)
+    {
+        return $this->option('remember', $value);
+    }
+
+    /**
      * @param string|Closure $title
      * @param Closure|null $callback
      * @return $this
@@ -161,6 +173,51 @@ class StepBuilder
 
             return view('admin::form.done-step', $data);
         });
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function stash(array $data)
+    {
+        if (! $this->options['remember']) {
+            return;
+        }
+
+        session()->put($this->getStashKey(), $data);
+    }
+
+    /**
+     * @return array
+     */
+    public function fetchStash()
+    {
+        if (! $this->options['remember']) {
+            return [];
+        }
+
+        return session()->get($this->getStashKey()) ?: [];
+    }
+
+    /**
+     * @return void
+     */
+    public function flushStash()
+    {
+        if (! $this->options['remember']) {
+            return;
+        }
+
+        session()->remove($this->getStashKey());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStashKey()
+    {
+        return 'step-form-input:'.admin_controller_slug();
     }
 
     /**

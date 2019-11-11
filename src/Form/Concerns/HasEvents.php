@@ -187,16 +187,25 @@ trait HasEvents
      */
     protected function callListeners($name)
     {
+        $response = null;
+
         foreach ($this->__hooks[$name] as $func) {
             $this->model && $func->bindTo($this->model);
 
-            if (($ret = $func($this)) instanceof Response) {
-                if ($ret instanceof RedirectResponse && $this->isAjaxRequest()) {
-                    return;
-                }
+            $ret = $func($this);
 
-                return $ret;
+            if (
+                $response ||
+                ! $ret ||
+                ! $ret instanceof Response ||
+                ($ret instanceof RedirectResponse && $this->isAjaxRequest())
+            ) {
+                continue;
             }
+
+            $response = $ret;
         }
+
+        return $response;
     }
 }

@@ -32,6 +32,8 @@ trait HasSteps
             return;
         }
 
+        $stepBuilder->stash($data);
+
         $steps = $stepBuilder->all();
 
         if ($this->isStepFormValidationRequest()) {

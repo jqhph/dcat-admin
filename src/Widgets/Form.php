@@ -7,6 +7,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Arr;
@@ -210,7 +211,7 @@ class Form implements Renderable
     }
 
     /**
-     * @param $data
+     * @param array|Arrayable|Closure $data
      * @return $this
      */
     public function data($data)
@@ -218,6 +219,15 @@ class Form implements Renderable
         $this->data = new Fluent(Helper::array($data));
 
         return $this;
+    }
+
+    /**
+     * @param array|Arrayable|Closure $data
+     * @return $this
+     */
+    public function fill($data)
+    {
+        return $this->data($data);
     }
 
     /**
