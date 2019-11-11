@@ -249,11 +249,15 @@ class StepBuilder
         }
 
         $current = $input[static::CURRENT_VALIDATION_STEP] ?? null;
-        if ($current !== null && $current !== '') {
-            $this->select((int) ($input[static::CURRENT_VALIDATION_STEP] + 1));
+        $allStep = $input[static::ALL_STEPS] ?? null;
+
+        unset($input[static::CURRENT_VALIDATION_STEP],  $input[static::ALL_STEPS]);
+
+        if ($current !== null && $current !== '' && ! empty($input)) {
+            $this->select((int) ($current + 1));
         }
 
-        if (! empty($input[static::ALL_STEPS])) {
+        if (! empty($allStep) && ! empty($input)) {
             $this->select($this->count() - 1);
         }
     }

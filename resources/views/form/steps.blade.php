@@ -139,8 +139,7 @@ LA.ready(function () {
         toggle_btn();
     });
 
-    var next = box.find('.sw-btn-next');
-    next.click(function (e) {
+    var next = box.find('.sw-btn-next').click(function (e) {
         e.preventDefault();
 
         if ($(this).hasClass('disabled') || isSubmitting) {
@@ -185,7 +184,6 @@ LA.ready(function () {
                 if (state) {
                     return false;
                 }
-
             }
         });
     }
@@ -214,7 +212,6 @@ LA.ready(function () {
         if (smartWizard.current_index == (last + 1)) {
             box.find('.sw-btn-group').remove()
         }
-
     }
 
     toggle_btn();
