@@ -602,6 +602,10 @@ window.require = window.define = window.exports = window.module = undefined;
                 for (i in array) {
                     if (!LA.isset(array2, i)) return false;
 
+                    if (array[i] === null && array2[i] === null) {
+                        return true;
+                    }
+
                     if (typeof array[i] == 'object' && typeof array2[i] == 'object') {
                         if (!this.equal(array[i], array2[i]))
                             return false;

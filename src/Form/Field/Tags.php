@@ -66,6 +66,27 @@ class Tags extends Field
     }
 
     /**
+     * Sanitize input data.
+     *
+     * @param array  $input
+     * @param string $column
+     *
+     * @return array
+     */
+    protected function sanitizeInput($input, $column)
+    {
+        $input = parent::sanitizeInput($input, $column);
+
+        $value = array_filter((array) Arr::get($input, $this->column), function ($value) {
+            return $value !== null;
+        });
+
+        Arr::set($input, $this->column, $value);
+
+        return $input;
+    }
+
+    /**
      * Set the field options.
      *
      * @param array|Collection|Arrayable|\Closure $options
