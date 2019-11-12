@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -96,7 +97,7 @@ class NestedForm
     protected $original = [];
 
     /**
-     * @var \Dcat\Admin\Form
+     * @var Form|WidgetForm
      */
     protected $form;
 
@@ -120,11 +121,11 @@ class NestedForm
     /**
      * Set Form.
      *
-     * @param Form $form
+     * @param Form|WidgetForm $form
      *
      * @return $this
      */
-    public function setForm(Form $form = null)
+    public function setForm($form = null)
     {
         $this->form = $form;
 
