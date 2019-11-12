@@ -113,6 +113,7 @@ LA.ready(function () {
         selected: {{ $steps->getOption('selected') }},
         transitionEffect: 'fade',
         useURLhash: false,
+        keyNavigation: false,
         lang: {
             next: '{{ trans('admin.next_step') }}',
             previous: '{{ trans('admin.prev_step') }}'
