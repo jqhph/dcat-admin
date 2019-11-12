@@ -275,13 +275,13 @@ class Form implements Renderable
      * @param Repository $model
      * @param \Closure $callback
      */
-    public function __construct(Repository $repository, ?Closure $callback = null, Request $request = null)
+    public function __construct(?Repository $repository = null, ?Closure $callback = null, Request $request = null)
     {
-        $this->repository = Admin::repository($repository);
+        $this->repository = $repository ? Admin::repository($repository) : null;
         $this->callback = $callback;
         $this->request = $request ?: request();
         $this->builder = new Builder($this);
-        $this->isSoftDeletes = $this->repository->isSoftDeletes();
+        $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
         $this->setModel(new Fluent());
 
@@ -1085,7 +1085,35 @@ class Form implements Renderable
      */
     public function getKeyName()
     {
+        if (! $this->repository) {
+            return 'id';
+        }
+
         return $this->repository->getKeyName();
+    }
+
+    /**
+     * @return string|void
+     */
+    public function getCreatedAtColumn()
+    {
+        if (! $this->repository) {
+            return;
+        }
+
+        return $this->repository->getCreatedAtColumn();
+    }
+
+    /**
+     * @return string|void
+     */
+    public function getUpdatedAtColumn()
+    {
+        if (! $this->repository) {
+            return;
+        }
+
+        return $this->repository->getUpdatedAtColumn();
     }
 
     /**

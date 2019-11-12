@@ -190,8 +190,8 @@ return [
     'selected_must_less_then'  => '最多只能选择:num个选项',
     'validation' => [
         'match'     => '与 :attribute 不匹配。',
-        'minlength' => ':attribute 字符长度不能小于 :min。',
-        'maxlength' => ':attribute 字符长度不能大于 :max。',
+        'minlength' => ':attribute 字符长度不能少于 :min。',
+        'maxlength' => ':attribute 字符长度不能超出 :max。',
     ],
     'menu_titles' => [],
 ];

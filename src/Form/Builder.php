@@ -710,8 +710,8 @@ class Builder
 
         $reservedColumns = [
             $this->form->getKeyName(),
-            $this->form->getRepository()->getCreatedAtColumn(),
-            $this->form->getRepository()->getUpdatedAtColumn(),
+            $this->form->getCreatedAtColumn(),
+            $this->form->getUpdatedAtColumn(),
         ];
 
         $this->fields = $this->fields()->reject(function (Field $field) use (&$reservedColumns) {

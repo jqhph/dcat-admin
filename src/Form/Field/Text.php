@@ -67,7 +67,7 @@ class Text extends Field
 
         $attributes = [
             'data-match'       => '#'.$field->getElementId(),
-            'data-match-error' => str_replace([':attribute', ':other'], [$this->column, $name], $error ?: trans('admin.validation.match'))
+            'data-match-error' => str_replace([':attribute', ':other'], [$this->label, $name], $error ?: trans('admin.validation.match'))
         ];
 
         return $this->attribute($attributes);
@@ -86,7 +86,7 @@ class Text extends Field
             'data-minlength'       => $length,
             'data-minlength-error' => str_replace(
                 [':attribute', ':min'],
-                [$this->column, $length],
+                [$this->label, $length],
                 $error ?: trans('admin.validation.minlength')
             ),
         ]);
@@ -113,7 +113,7 @@ JS
             'data-maxlength'       => $length,
             'data-maxlength-error' => str_replace(
                 [':attribute', ':max'],
-                [$this->column, $length],
+                [$this->label, $length],
                 $error ?: trans('admin.validation.maxlength')
             ),
         ]);
