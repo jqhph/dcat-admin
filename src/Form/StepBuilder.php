@@ -33,6 +33,8 @@ class StepBuilder
         'selected' => 0,
         'width'    => '1000px',
         'remember' => false,
+        'shown'    => [],
+        'leaving'  => [],
     ];
 
     public function __construct(Form $form)
@@ -284,6 +286,40 @@ class StepBuilder
         }
 
         return $html;
+    }
+
+    /**
+     * @param string $script
+     * @return $this
+     */
+    public function shown($script)
+    {
+        $script = value($script);
+
+        $this->options['shown'][] = <<<JS
+function (args) {
+    {$script}
+}
+JS;
+
+        return $this;
+    }
+
+    /**
+     * @param string $script
+     * @return $this
+     */
+    public function leaving($script)
+    {
+        $script = value($script);
+
+        $this->options['leaving'][] = <<<JS
+function (args) {
+    {$script}
+}
+JS;
+
+        return $this;
     }
 
 }

@@ -126,10 +126,69 @@ LA.ready(function () {
             removeDoneStepOnNavigateBack: true,
             enableAnchorOnDoneStep: false,
         },
+    }).on('leaveStep', function (e, tab, idx, direction) {
+        @if ($leaving = $steps->getOption('leaving'))
+
+        var callbacks = [];
+
+        @foreach($leaving as $fun)
+            callbacks.push({!! $fun !!});
+        @endforeach
+
+        return call_listeners(callbacks, build_args(e, tab, idx, direction));
+        @endif
+
+    }).on('showStep', function (e, tab, idx, direction) {
+        @if ($shown = $steps->getOption('shown'))
+
+        var callbacks = [];
+
+        @foreach($shown as $fun)
+        callbacks.push({!! $fun !!});
+        @endforeach
+
+        return call_listeners(callbacks, build_args(e, tab, idx, direction));
+        @endif
     });
+
+    @if ($steps->getOption('leaving') || $steps->getOption('shown'))
+
+    // 执行回调函数
+    function call_listeners(func, args) {
+        for (var i in func) {
+            if (func[i](args) === false) {
+                return false;
+            }
+        }
+    }
+
+    // 获取步骤表单
+    function get_form(idx) {
+        return box.find('.la-step-form [data-toggle="validator"]').eq(idx);
+    }
+
+    // 构建参数
+    function build_args(e, tab, idx, direction) {
+        return {
+            event: e,
+            tab: tab,
+            index: idx,
+            direction: direction,
+            form: get_form(idx),
+            getFrom: function (idx) {
+                return get_form(idx)
+            },
+            formArray: get_form(idx).formToArray(),
+            getFormArray: function (idx) {
+                return get_form(idx).formToArray();
+            }
+        };
+    }
+    @endif
 
     smartWizard = smartWizard.data('smartWizard');
 
+    // 上一步
     var prev = box.find('.sw-btn-prev').click(function (e) {
         e.preventDefault();
         if (smartWizard.steps.index(this) !== smartWizard.current_index) {
@@ -139,6 +198,7 @@ LA.ready(function () {
         toggle_btn();
     });
 
+    // 下一步
     var next = box.find('.sw-btn-next').click(function (e) {
         e.preventDefault();
 
@@ -175,6 +235,7 @@ LA.ready(function () {
         });
     });
 
+    // 提交表单
     function submit(after) {
         LA.Form({
             $form: form,
@@ -188,6 +249,7 @@ LA.ready(function () {
         });
     }
 
+    // 按钮显示隐藏切换
     function toggle_btn() {
         var last = {{ $lastStep->getIndex() }},
             sbm = box.find('.step-submit-btn');
