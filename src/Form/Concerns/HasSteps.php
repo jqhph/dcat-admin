@@ -32,8 +32,6 @@ trait HasSteps
             return;
         }
 
-        $stepBuilder->stash($data);
-
         $steps = $stepBuilder->all();
 
         if ($this->isStepFormValidationRequest()) {
@@ -80,6 +78,9 @@ trait HasSteps
         if ($validationMessages = $this->validationMessages($data)) {
             return $this->makeValidationErrorsResponse($validationMessages);
         }
+
+        // Stash input data.
+        $this->step()->stash($data);
 
         return $this->ajaxResponse('Success');
     }

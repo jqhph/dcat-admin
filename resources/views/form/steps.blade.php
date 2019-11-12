@@ -114,6 +114,7 @@ LA.ready(function () {
         transitionEffect: 'fade',
         useURLhash: false,
         keyNavigation: false,
+        showStepURLhash: false,
         lang: {
             next: '{{ trans('admin.next_step') }}',
             previous: '{{ trans('admin.prev_step') }}'
