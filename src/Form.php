@@ -620,11 +620,12 @@ class Form implements Renderable
         }
 
         if ($response = $this->handleUploadFile($data)) {
-            // Stash uploadted file path.
-            $this->step()->stash(
-                [$data['upload_column'] => $response->getData()->id],
-                true
-            );
+            if (($value = $response->getData()) && ! empty($value->id)) {
+                $this->step()->stash(
+                    [$data['upload_column'] => $value->id],
+                    true
+                );
+            }
 
             return $response;
         }
