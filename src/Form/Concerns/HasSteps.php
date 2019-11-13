@@ -3,8 +3,12 @@
 namespace Dcat\Admin\Form\Concerns;
 
 use Closure;
+use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\StepBuilder;
 
+/**
+ * @property Builder $builder
+ */
 trait HasSteps
 {
     /**
@@ -41,7 +45,7 @@ trait HasSteps
                 return;
             }
 
-            foreach ($steps[$currentIndex]->field() as $field) {
+            foreach ($steps[$currentIndex]->fields() as $field) {
                 $this->pushField($field);
             }
             return;
@@ -49,7 +53,7 @@ trait HasSteps
 
         if (! empty($data[StepBuilder::ALL_STEPS])) {
             foreach ($steps as $stepForm) {
-                foreach ($stepForm->field() as $field) {
+                foreach ($stepForm->fields() as $field) {
                     $this->pushField($field);
                 }
             }

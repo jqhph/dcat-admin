@@ -2,9 +2,13 @@
 
 namespace Dcat\Admin\Form\Concerns;
 
+use Dcat\Admin\Form\Builder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Dcat\Admin\Form\Field;
 
+/**
+ * @property Builder $builder
+ */
 trait HasFiles
 {
     /**
@@ -14,15 +18,16 @@ trait HasFiles
     {
         $column = $data['upload_column'] ?? null;
         $file   = $data['file'] ?? null;
-        if (!$column && !$file instanceof UploadedFile) {
+        if (! $column && ! $file instanceof UploadedFile) {
             return;
         }
 
-        $field = $this->builder->field($column);
-        if (!$field || !$field instanceof Field\File) {
-            return;
+        $field = $this->builder->field($column) ?: $this->builder->stepField($column);
+
+        if ($field && $field instanceof Field\File) {
+            return $field->upload($file);
         }
-        return $field->upload($file);
+
     }
 
     /**
@@ -41,7 +46,8 @@ trait HasFiles
             return;
         }
 
-        $field = $this->builder->field($column);
+        $field = $this->builder->field($column) ?: $this->builder->stepField($column);
+
         if ($field && in_array(Field\UploadField::class, class_uses($field))) {
             $field->deleteFile($file);
 
@@ -49,15 +55,22 @@ trait HasFiles
         }
     }
 
+    /**
+     * @param array $input
+     * @return void
+     */
     public function deleteFilesWhenCreating(array $input)
     {
-        $this->builder->fields()->filter(function ($field) {
-            return $field instanceof Field\File;
-        })->each(function (Field\File $file) use ($input) {
-            $file->setOriginal($input);
+        $this->builder
+            ->fields()
+            ->filter(function ($field) {
+                return $field instanceof Field\File;
+            })
+            ->each(function (Field\File $file) use ($input) {
+                $file->setOriginal($input);
 
-            $file->destroy();
-        });
+                $file->destroy();
+            });
     }
 
     /**

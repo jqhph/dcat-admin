@@ -137,29 +137,32 @@ trait WebUploader
      */
     protected function setupDefaultOptions()
     {
+        $primaryKey = Admin::user() ? Admin::user()->getKey() : null;
+
         $defaultOptions = [
-            'isImage' => false,
-            'disableRemove' => false,
-            'chunked' => true,
-            'fileNumLimit' => 10,
+            'isImage'             => false,
+            'disableRemove'       => false,
+            'chunked'             => true,
+            'fileNumLimit'        => 10,
             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
-            'disableGlobalDnd' => true,
-            'fileSizeLimit' => 20971520000, // 20000M
+            'disableGlobalDnd'    => true,
+            'fileSizeLimit'       => 20971520000, // 20000M
             'fileSingleSizeLimit' => 10485760, // 10M
-            'autoUpdateColumn' => true, // 上传完图片后自动保存图片路径
-            'elementName' => $this->getElementName(), // 字段name属性值
+            'autoUpdateColumn'    => true, // 上传完图片后自动保存图片路径
+            'elementName'         => $this->getElementName(), // 字段name属性值
+            'lang'                => trans('admin.uploader'),
+
             'deleteData' => [
                 static::FILE_DELETE_FLAG => '',
-                '_token' => csrf_token(),
-                '_method' => 'PUT',
+                '_token'                 => csrf_token(),
+                '_method'                => 'PUT',
             ],
             'formData' => [
-                '_id' => Admin::user()->getKey(),
+                '_id'           => $primaryKey,
                 'upload_column' => $this->column,
-                '_method' => 'PUT',
-                '_token' => csrf_token(),
+                '_method'       => 'PUT',
+                '_token'        => csrf_token(),
             ],
-            'lang' => trans('admin.uploader'),
         ];
 
         $this->options($defaultOptions);
@@ -167,18 +170,18 @@ trait WebUploader
 
     protected function setDefaultServer()
     {
-        if (!$this->form instanceof Form) {
+        if (! $this->form || ! method_exists($this->form, 'getAction')) {
             return;
         }
 
-        if (!isset($this->options['server'])) {
+        if (empty($this->options['server'])) {
             $this->options['server'] = $this->form->getAction();
         }
-        if (!isset($this->options['deleteUrl'])) {
+        if (empty($this->options['deleteUrl'])) {
             $this->options['deleteUrl'] = $this->form->getAction();
         }
 
-        if ($this->form->builder()->isCreating()) {
+        if ($this->form->builder() && $this->form->builder()->isCreating()) {
             unset(
                 $this->options['formData']['_method'],
                 $this->options['deleteData']['_method'],

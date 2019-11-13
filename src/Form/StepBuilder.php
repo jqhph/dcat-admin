@@ -271,7 +271,25 @@ class StepBuilder
     {
         $this->selectStep();
 
+        $this->setAction();
+
         return $this->renderFields();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setAction()
+    {
+        foreach ($this->stepForms as $step) {
+            $step->action($this->form->getAction());
+
+            foreach ($step->fields() as $field) {
+                if ($field instanceof Form\Field\File) {
+                    $field->setForm($this->form);
+                }
+            }
+        }
     }
 
     /**

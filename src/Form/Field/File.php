@@ -161,24 +161,41 @@ class File extends Field
     {
         $this->setDefaultServer();
 
-        if (!empty($this->value())) {
+        if (! empty($this->value())) {
             $this->setupPreviewOptions();
         }
 
         $this->forceOptions();
 
+        $this->formatValue();
+
+        $this->addVariables([
+            'options' => json_encode($this->options),
+            '_files'  => $this->options['isImage'] ? '' : '_files',
+            '_id'     => $this->generateId(),
+        ]);
+
+        return parent::render();
+    }
+
+    /**
+     * @return void
+     */
+    protected function formatValue()
+    {
         if ($this->value !== null) {
             $this->value = join(',', $this->value);
         } elseif (is_array($this->default)) {
             $this->default = join(',', $this->default);
         }
-        $this->addVariables([
-            'options' => json_encode($this->options),
-            '_files' => $this->options['isImage'] ? '' : '_files',
-            '_id' => 'file-'.Str::random(8),
-        ]);
+    }
 
-        return parent::render();
+    /**
+     * @return string
+     */
+    protected function generateId()
+    {
+        return 'file-'.Str::random(8);
     }
 
 }

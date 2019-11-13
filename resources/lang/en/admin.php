@@ -170,7 +170,7 @@ return [
         'interrupt'              => 'Interrupt',
         'upload_failed'          => 'Upload failed! Please try again.',
         'selected_files'         => ':num files selected，size: :size。',
-        'selected_has_failed'    => 'Uploaded: :success, failed: :fail, <a class="retry"  href="javascript:"";">retry</a>or<a class="ignore" href="javascript:"";">ignore</a>',
+        'selected_has_failed'    => 'Uploaded: :success, failed: :fail, <a class="retry"  href="javascript:"";">retry </a>or<a class="ignore" href="javascript:"";"> ignore</a>',
         'selected_success'       => ':num(:size) files selected, Uploaded: :success.',
         'dot'                    => ', ',
         'failed_num'             => 'failed::fail.',

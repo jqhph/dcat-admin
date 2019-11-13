@@ -53,7 +53,9 @@ class StepForm extends WidgetForm
     {
         $this->form   = $form;
         $this->parent = $form->builder()->getStepBuilder();
-        $this->index = $index;
+        $this->index  = $index;
+
+        $this->initFields();
 
         $this->title($title);
     }

@@ -31,7 +31,7 @@ trait UploadField
      *
      * @var \Illuminate\Filesystem\Filesystem
      */
-    protected $storage = '';
+    protected $storage;
 
     /**
      * If use unique name to store upload file.
@@ -499,7 +499,7 @@ trait UploadField
      */
     public function destroyIfChanged($file)
     {
-        if (!$file || !$this->original) {
+        if (! $file || ! $this->original) {
             return $this->destroy();
         }
 

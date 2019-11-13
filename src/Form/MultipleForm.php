@@ -22,6 +22,8 @@ class MultipleForm extends WidgetForm
         $this->form    = $form;
         $this->builder = $form->builder();
 
+        $this->initFields();
+
         $this->initFormAttributes();
     }
 
@@ -33,7 +35,7 @@ class MultipleForm extends WidgetForm
      */
     public function pushField(Field &$field)
     {
-        array_push($this->fields, $field);
+        $this->fields->push($field);
 
         $field->setForm($this->form);
 

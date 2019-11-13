@@ -9,6 +9,7 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
@@ -85,9 +86,9 @@ class Form implements Renderable
     protected $view = 'admin::widgets.form';
 
     /**
-     * @var Field[]
+     * @var Field[]|Collection
      */
-    protected $fields = [];
+    protected $fields;
 
     /**
      * @var bool
@@ -140,7 +141,18 @@ class Form implements Renderable
         $this->data($data);
         $this->key($key);
 
+        $this->initFields();
+
         $this->initFormAttributes();
+
+    }
+
+    /**
+     * Initialize the form fields.
+     */
+    protected function initFields()
+    {
+        $this->fields = new Collection();
     }
 
     /**
@@ -267,14 +279,10 @@ class Form implements Renderable
      * Get specify field.
      *
      * @param string $name
-     * @return Field|null|Field[]
+     * @return Field|null
      */
-    public function field($name = null)
+    public function field($name)
     {
-        if ($name === null) {
-            return $this->fields;
-        }
-
         foreach ($this->fields as $field) {
             if ($field->column() === $name) {
                 return $field;
@@ -282,6 +290,13 @@ class Form implements Renderable
         }
     }
 
+    /**
+     * @return Field[]|Collection
+     */
+    public function fields()
+    {
+        return $this->fields;
+    }
 
     /**
      * Disable Pjax.
@@ -346,7 +361,7 @@ class Form implements Renderable
             'field' => $fieldWidth,
         ];
 
-        collect($this->fields)->each(function ($field) use ($fieldWidth, $labelWidth) {
+        $this->fields->each(function ($field) use ($fieldWidth, $labelWidth) {
             /* @var Field $field  */
             $field->setWidth($fieldWidth, $labelWidth);
         });
@@ -381,7 +396,7 @@ class Form implements Renderable
      */
     public function pushField(Field &$field)
     {
-        array_push($this->fields, $field);
+        $this->fields->push($field);
 
         $field->setForm($this);
         $field->setWidth($this->width['field'], $this->width['label']);

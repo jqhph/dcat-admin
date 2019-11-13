@@ -458,19 +458,50 @@ class Builder
     /**
      * Get specify field.
      *
-     * @param string|null $name
+     * @param string $name
      *
-     * @return Field|Collection|Field[]|null
+     * @return Field|null
      */
-    public function field($name = null)
+    public function field($name)
     {
-        if ($name === null) {
-            return $this->fields;
-        }
-
         return $this->fields->first(function (Field $field) use ($name) {
             return $field->column() == $name;
         });
+    }
+
+    /**
+     * @param string $name
+     * @return Field|null
+     */
+    public function stepField($name)
+    {
+        if (! $builder = $this->getStepBuilder()) {
+            return;
+        }
+
+        foreach ($builder->all() as $step) {
+            if ($field = $step->field($name)) {
+                return $field;
+            }
+        }
+    }
+
+    /**
+     * @return Field[]|Collection
+     */
+    public function stepFields()
+    {
+        $fields = new Collection();
+
+        if (! $builder = $this->getStepBuilder()) {
+            return $fields;
+        }
+
+        foreach ($builder->all() as $step) {
+            $fields = $fields->merge($step->fields());
+        }
+
+        return $fields;
     }
 
     /**
