@@ -158,10 +158,6 @@ class StepBuilder
      */
     public function getDoneStep()
     {
-        if (! $this->stepForms) {
-            return;
-        }
-
         if (! $this->doneStep) {
             $this->setDefaultDonePage();
         }
