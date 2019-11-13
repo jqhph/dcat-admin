@@ -278,13 +278,13 @@ class Form implements Renderable
     /**
      * Get specify field.
      *
-     * @param string $name
+     * @param string|Field $name
      * @return Field|null
      */
     public function field($name)
     {
         foreach ($this->fields as $field) {
-            if ($field->column() === $name) {
+            if ($field === $name || $field->column() === $name) {
                 return $field;
             }
         }

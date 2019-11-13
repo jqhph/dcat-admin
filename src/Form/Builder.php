@@ -458,14 +458,14 @@ class Builder
     /**
      * Get specify field.
      *
-     * @param string $name
+     * @param string|Field $name
      *
      * @return Field|null
      */
     public function field($name)
     {
         return $this->fields->first(function (Field $field) use ($name) {
-            return $field->column() == $name;
+            return $field === $name || $field->column() == $name;
         });
     }
 

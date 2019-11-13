@@ -121,9 +121,13 @@ trait HasFiles
     {
         $input = $this->handleFileDelete($input);
 
-        if (isset($input[Field::FILE_DELETE_FLAG])) {
-            $this->builder->fields()->filter(function ($field) {
-                return $field instanceof Field\File;
+        $column = $input['_column'] ?? null;
+
+        if (isset($input[Field::FILE_DELETE_FLAG]) && $column) {
+            $this->builder->fields()->filter(function ($field) use ($column) {
+                /* @var Field $field */
+
+                return $column === $field->column() && $field instanceof Field\File;
             })->each(function (Field\File $file) use ($input) {
                 $file->deleteFile($input[Field::FILE_DELETE_FLAG]);
             });

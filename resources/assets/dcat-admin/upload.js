@@ -182,9 +182,9 @@
                     '</li>');
 
                 $btns = $('<div class="file-panel">' +
-                    '<a class=\'btn btn-xs btn-default\' data-action="cancel"><i class="fa fa-close red-dark" style=\'font-size:13px\'></i></a>' +
-                    '<a class=\'btn btn-xs btn-default\' data-action="delete" style="display: none"><i class="ti-trash red-dark" style=\'font-size:13px\'></i></a>' +
-                    '<a class=\'btn btn-xs btn-default\' data-action="preview" ><i class="glyphicon glyphicon-zoom-in"></i></a>' +
+                    '<a class=\'btn btn-xs btn-default\' data-file-act="cancel"><i class="fa fa-close red-dark" style=\'font-size:13px\'></i></a>' +
+                    '<a class=\'btn btn-xs btn-default\' data-file-act="delete" style="display: none"><i class="ti-trash red-dark" style=\'font-size:13px\'></i></a>' +
+                    '<a class=\'btn btn-xs btn-default\' data-file-act="preview" ><i class="glyphicon glyphicon-zoom-in"></i></a>' +
                     '</div>').appendTo($li);
             } else {
                 $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '">' +
@@ -192,8 +192,8 @@
                     file.name + ' (' + size + ')</p>' +
                     '</li>');
 
-                $btns = $('<span data-action="cancel" class="_act" style="font-size:13px"><i class=\'ti-close red-dark\'></i></span>' +
-                    '<span data-action="delete" class="_act" style="display:none"><i class=\'ti-trash red-dark\'></i></span>'
+                $btns = $('<span data-file-act="cancel" class="_act" style="font-size:13px"><i class=\'ti-close red-dark\'></i></span>' +
+                    '<span data-file-act="delete" class="_act" style="display:none"><i class=\'ti-trash red-dark\'></i></span>'
                 ).appendTo($li);
             }
 
@@ -276,8 +276,8 @@
                 if (prev === 'progress') {
                     // $prgress.hide().width(0);
                 } else if (prev === 'queued') {
-                    $btns.find('[data-action="cancel"]').hide();
-                    $btns.find('[data-action="delete"]').show();
+                    $btns.find('[data-file-act="cancel"]').hide();
+                    $btns.find('[data-file-act="delete"]').show();
                 }
 
                 // 成功
@@ -305,12 +305,13 @@
             var $act = showImg ? $btns.find('a') : $btns;
 
             $act.on('click', function () {
-                var index = $(this).data('action');
+                var index = $(this).data('file-act');
 
                 switch (index) {
                     case 'cancel':
                         uploader.removeFile(file);
                         return;
+                    case 'deleteurl':
                     case 'delete':
                         if (opts.disableRemove) {
                             return uploader.removeFile(file);
@@ -322,12 +323,13 @@
                         if (!post.key) {
                             return uploader.removeFile(file);
                         }
-                        post[updateColumn] = '';
+                        post._column = updateColumn;
 
                         LA.loading();
                         $.post(opts.deleteUrl, post, function (result) {
                             LA.loading(false);
                             if (result.status) {
+                                deleteInput(file.serverId);
                                 uploader.removeFile(file);
                                 return;
                             }
@@ -634,6 +636,8 @@
 
         // 删除表单值
         function deleteInput(id) {
+            console.log(111, id, $input);
+
             if (!id) {
                 return $input.val('');
             }
@@ -659,7 +663,7 @@
                 html += "	<img src='" + file.serverUrl + "'>";
                 html += "</p>";
             } else if (!opts.disabled) {
-                html += '<p class="_act" data-action=\'delete\' data-id="' + file.serverId + '"><i class=\'ti-trash red-dark\'></i></p>';
+                html += '<p class="_act" data-file-act=\'delete\' data-id="' + file.serverId + '"><i class=\'ti-trash red-dark\'></i></p>';
             }
 
             html += "<p class='title' style=''><i class='ti-check green _success' style='font-weight:bold;font-size:17px;display:none'></i>";
@@ -671,9 +675,9 @@
                 html += "<div class='file-panel' >";
 
                 if (!opts.disabled) {
-                    html += "<a class='btn btn-xs btn-default' data-action='deleteurl' data-id='" + file.serverId + "'><i class='ti-trash red-dark' style='font-size:13px'></i></a>";
+                    html += "<a class='btn btn-xs btn-default' data-file-act='deleteurl' data-id='" + file.serverId + "'><i class='ti-trash red-dark' style='font-size:13px'></i></a>";
                 }
-                html += "<a class='btn btn-xs btn-default' data-action='preview' data-url='" + file.serverUrl + "' ><i class='glyphicon glyphicon-zoom-in'></i></a>";
+                html += "<a class='btn btn-xs btn-default' data-file-act='preview' data-url='" + file.serverUrl + "' ><i class='glyphicon glyphicon-zoom-in'></i></a>";
 
                 html += "</div>";
             }
@@ -687,17 +691,17 @@
                 $wrap.css('background', 'transparent');
             }
 
-            // 删除按钮点击事件
-            html.find('[data-action="deleteurl"]').click(function () {
+            var deleteFile = function () {
                 var fileId = $(this).data('id'), post = opts.deleteData;
 
                 if (opts.disableRemove) {
                     html.remove();
+
                     return removeFormFile(fileId);
                 }
 
                 post.key = fileId;
-                post[updateColumn] = null;
+                post._column = updateColumn;
 
                 LA.loading();
                 $.post(opts.deleteUrl, post, function (result) {
@@ -712,9 +716,15 @@
 
                     LA.error(result.message || 'Remove file failed.')
                 });
-            });
+            };
+
+            // 删除按钮点击事件
+            html.find('[data-file-act="deleteurl"]').click(deleteFile);
+            html.find('[data-file-act="delete"]').click(deleteFile);
+
+
             // 放大图片
-            html.find('[data-action="preview"]').click(function () {
+            html.find('[data-file-act="preview"]').click(function () {
                 var url = $(this).data('url');
 
                 LA.previewImage(url);
@@ -862,7 +872,7 @@
                         if (!showImg) {
                             var $li = getFileView(obj.file.id);
                             $li.find('._act').hide();
-                            $li.find('[data-action="delete"]').show();
+                            $li.find('[data-file-act="delete"]').show();
                         }
 
                         break;

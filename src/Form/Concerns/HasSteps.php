@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Concerns;
 use Closure;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\StepBuilder;
+use Dcat\EasyExcel\Support\Arr;
 
 /**
  * @property Builder $builder
@@ -103,5 +104,19 @@ trait HasSteps
                 ->finish()
                 ->render()
         );
+    }
+
+    /**
+     * @param array $input
+     * @return void
+     */
+    protected function deleteFileInStepFormStashData($input = [])
+    {
+        if (empty($input['_column'])) {
+            return;
+        }
+
+        $this->step()->stashIndexByField($input['_column']);
+        $this->step()->forgetStash($input['_column']);
     }
 }

@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form;
 use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
+use Dcat\EasyExcel\Support\Arr;
 
 class StepBuilder
 {
@@ -189,12 +190,17 @@ class StepBuilder
 
     /**
      * @param array $data
+     * @param bool $merge
      * @return void
      */
-    public function stash(array $data)
+    public function stash(array $data, bool $merge = false)
     {
         if (! $this->options['remember']) {
             return;
+        }
+
+        if ($merge) {
+            $data = array_merge($this->fetchStash(), $data);
         }
 
         session()->put($this->getStashKey(), $data);
@@ -222,6 +228,38 @@ class StepBuilder
         }
 
         session()->remove($this->getStashKey());
+    }
+
+    /**
+     * @param string|array $keys
+     * @return void
+     */
+    public function forgetStash($keys)
+    {
+        $data = $this->fetchStash();
+
+        Arr::forget($data, $keys);
+
+        $this->stash($data);
+    }
+
+    /**
+     * @param string|Field $field
+     * @return void
+     */
+    public function stashIndexByField($field)
+    {
+        if (! $this->options['remember']) {
+            return;
+        }
+
+        $data = $this->fetchStash();
+
+        $data[StepBuilder::CURRENT_VALIDATION_STEP] = ($this->getFieldIndex($field) ?: 0) - 1;
+
+        unset($data[StepBuilder::ALL_STEPS]);
+
+        $this->stash($data);
     }
 
     /**
@@ -338,6 +376,21 @@ function (args) {
 JS;
 
         return $this;
+    }
+
+    /**
+     * @param string|Field $column
+     * @return false|int
+     */
+    public function getFieldIndex($column)
+    {
+        foreach ($this->stepForms as $index => $form) {
+            if ($form->field($column)) {
+                return $index;
+            }
+        }
+
+        return false;
     }
 
 }
