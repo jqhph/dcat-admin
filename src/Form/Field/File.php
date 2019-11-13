@@ -19,7 +19,7 @@ class File extends Field
      * @var array
      */
     protected static $css = [
-        '/vendor/dcat-admin/webuploader/webuploader.min.css',
+        'vendor/dcat-admin/webuploader/webuploader.min.css',
     ];
 
     /**
@@ -28,8 +28,8 @@ class File extends Field
      * @var array
      */
     protected static $js = [
-        '/vendor/dcat-admin/webuploader/webuploader.min.js',
-        '/vendor/dcat-admin/dcat-admin/upload.min.js',
+        'vendor/dcat-admin/webuploader/webuploader.min.js',
+        'vendor/dcat-admin/dcat-admin/upload.min.js',
     ];
 
     /**
@@ -42,7 +42,6 @@ class File extends Field
     {
         parent::__construct($column, $arguments);
 
-        $this->initStorage();
         $this->setupDefaultOptions();
     }
 

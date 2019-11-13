@@ -74,6 +74,10 @@ trait UploadField
     protected function initStorage()
     {
         $this->disk(config('admin.upload.disk'));
+
+        if (! $this->storage) {
+            $this->storage = false;
+        }
     }
 
     /**
@@ -85,7 +89,7 @@ trait UploadField
      */
     public function renameIfExists(UploadedFile $file)
     {
-        if ($this->storage->exists("{$this->getDirectory()}/$this->name")) {
+        if ($this->getStorage()->exists("{$this->getDirectory()}/$this->name")) {
             $this->name = $this->generateUniqueName($file);
         }
     }
@@ -183,9 +187,9 @@ trait UploadField
             $this->prepareFile($file);
 
             if (!is_null($this->storagePermission)) {
-                $result = $this->storage->putFileAs($this->getDirectory(), $file, $this->name, $this->storagePermission);
+                $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name, $this->storagePermission);
             } else {
-                $result = $this->storage->putFileAs($this->getDirectory(), $file, $this->name);
+                $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name);
             }
 
             $this->deleteTempFile();
@@ -446,7 +450,7 @@ trait UploadField
         $originalName = $file->getClientOriginalName();
         $newName = $originalName . '_' . $index . '.' . $extension;
 
-        while ($this->storage->exists("{$this->getDirectory()}/$newName")) {
+        while ($this->getStorage()->exists("{$this->getDirectory()}/$newName")) {
             $index++;
             $newName = $originalName . '_' . $index . '.' . $extension;
         }
@@ -527,16 +531,33 @@ trait UploadField
 
             return;
         }
-        if ($this->storage->exists($path)) {
-            $this->storage->delete($path);
+
+        $storage = $this->getStorage();
+
+        if ($storage->exists($path)) {
+            $storage->delete($path);
         } else {
-            $prefix = $this->storage->url('');
+            $prefix = $storage->url('');
             $path = str_replace($prefix, '', $path);
 
-            if ($this->storage->exists($path)) {
-                $this->storage->delete($path);
+            if ($storage->exists($path)) {
+                $storage->delete($path);
             }
         }
+    }
+
+    /**
+     * Get storage instance.
+     *
+     * @return \Illuminate\Filesystem\Filesystem|null
+     */
+    public function getStorage()
+    {
+        if ($this->storage === null) {
+            $this->initStorage();
+        }
+
+        return $this->storage;
     }
 
     /**
@@ -581,9 +602,13 @@ trait UploadField
             return $path;
         }
 
-        return $this->storage->url($path);
+        return $this->getStorage()->url($path);
     }
 
+    /**
+     * @param $permission
+     * @return $this
+     */
     public function storagePermission($permission)
     {
         $this->storagePermission = $permission;

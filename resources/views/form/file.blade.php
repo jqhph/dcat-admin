@@ -33,7 +33,7 @@
 
 <script data-exec-on-popstate>
 LA.ready(function () {
-    var upload, options = {!! $options !!};
+    var upload, options = {!! $options !!}, listenComplete;
 
     init();
 
@@ -52,12 +52,27 @@ LA.ready(function () {
         }, opts);
 
         upload = LA.Uploader(opts);
-
         upload.build();
-
         upload.preview();
+
+        function resize() {
+            setTimeout(function () {
+                if (! upload) return;
+
+                upload.refreshButton();
+                resize();
+
+                if (! listenComplete) {
+                    listenComplete = 1;
+                    $(document).one('pjax:complete', function () {
+                        upload = null;
+                    });
+                }
+            }, 250);
+        }
+        resize();
+
+
     }
-
-
 });
 </script>

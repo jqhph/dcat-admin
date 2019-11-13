@@ -169,6 +169,16 @@ trait BootstrapUploadField
     }
 
     /**
+     * Get storage instance.
+     *
+     * @return \Illuminate\Filesystem\Filesystem|null
+     */
+    public function getStorage()
+    {
+        return $this->storage;
+    }
+
+    /**
      * Specify the directory and name for upload file.
      *
      * @param string      $directory

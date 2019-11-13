@@ -149,8 +149,8 @@ trait ImageField
             // We merge original name + thumbnail name + extension
             $path = $path.'-'.$name.'.'.$ext;
 
-            if ($this->storage->exists($path)) {
-                $this->storage->delete($path);
+            if ($this->getStorage()->exists($path)) {
+                $this->getStorage()->delete($path);
             }
         }
     }
@@ -184,9 +184,9 @@ trait ImageField
             });
 
             if (!is_null($this->storagePermission)) {
-                $this->storage->put("{$this->getDirectory()}/{$path}", $image->encode(), $this->storagePermission);
+                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode(), $this->storagePermission);
             } else {
-                $this->storage->put("{$this->getDirectory()}/{$path}", $image->encode());
+                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode());
             }
         }
 

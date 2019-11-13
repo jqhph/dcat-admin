@@ -636,8 +636,6 @@
 
         // 删除表单值
         function deleteInput(id) {
-            console.log(111, id, $input);
-
             if (!id) {
                 return $input.val('');
             }
@@ -648,9 +646,7 @@
 
         // 重新计算按钮定位
         function refreshButton() {
-            setTimeout(function () {
-                uploader.refresh();
-            }, 400);
+            uploader.refresh();
         }
 
         // 添加上传成功文件到表单区域
