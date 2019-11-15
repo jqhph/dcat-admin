@@ -5,9 +5,9 @@
     </div>
 @endif
 
-<div class="box-body" style="padding:18px 18px 30px">
+<div class="box-body">
     @if($steps->count())
-        <div class="fields-group la-step-box" style="padding:18px;max-width: {{ $steps->getOption('width') }}">
+        <div class="fields-group la-step-box" style="padding: {{ $steps->getOption('padding') }};max-width: {{ $steps->getOption('width') }}">
 
             <ul class="la-step-horizontal la-step-label-horizontal la-step ">
                 @foreach($steps->all() as $step)
@@ -115,6 +115,7 @@ LA.ready(function () {
         useURLhash: false,
         keyNavigation: false,
         showStepURLhash: false,
+        autoAdjustHeight: false,
         lang: {
             next: '{{ trans('admin.next_step') }}',
             previous: '{{ trans('admin.prev_step') }}'

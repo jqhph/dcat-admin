@@ -5,7 +5,7 @@ namespace Dcat\Admin\Form;
 use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
-use Dcat\EasyExcel\Support\Arr;
+use Illuminate\Support\Arr;
 
 class StepBuilder
 {
@@ -33,6 +33,7 @@ class StepBuilder
     protected $options = [
         'selected' => 0,
         'width'    => '1000px',
+        'padding'  => '30px 18px 30px',
         'remember' => false,
         'shown'    => [],
         'leaving'  => [],
@@ -64,6 +65,8 @@ class StepBuilder
     }
 
     /**
+     * Get all step forms.
+     *
      * @return StepForm[]
      */
     public function all()
@@ -72,6 +75,8 @@ class StepBuilder
     }
 
     /**
+     * Counts all step forms.
+     *
      * @return int
      */
     public function count()
@@ -80,6 +85,8 @@ class StepBuilder
     }
 
     /**
+     * Set options.
+     *
      * @param string|array $key
      * @param mixed $value
      * @return $this
@@ -96,6 +103,8 @@ class StepBuilder
     }
 
     /**
+     * Get options.
+     *
      * @param string|null $key
      * @param null $default
      * @return array|mixed|null
@@ -110,6 +119,8 @@ class StepBuilder
     }
 
     /**
+     * Select
+     *
      * @param int $index
      * @return $this
      */
@@ -119,6 +130,19 @@ class StepBuilder
     }
 
     /**
+     * Set padding for container.
+     *
+     * @param string $padding
+     * @return $this
+     */
+    public function padding(string $padding)
+    {
+        return $this->option('padding', $padding);
+    }
+
+    /**
+     * Set max width for container.
+     *
      * @param string $width
      * @return $this
      */
@@ -128,6 +152,8 @@ class StepBuilder
     }
 
     /**
+     * Remember input data.
+     *
      * @param bool $value
      * @return $this
      */
@@ -185,6 +211,8 @@ class StepBuilder
     }
 
     /**
+     * Stash input data.
+     *
      * @param array $data
      * @param bool $merge
      * @return void
@@ -203,6 +231,8 @@ class StepBuilder
     }
 
     /**
+     * Fetch input data.
+     *
      * @return array
      */
     public function fetchStash()
@@ -215,6 +245,8 @@ class StepBuilder
     }
 
     /**
+     * Flush input data.
+     *
      * @return void
      */
     public function flushStash()
@@ -227,6 +259,8 @@ class StepBuilder
     }
 
     /**
+     * Forget input data by keys.
+     *
      * @param string|array $keys
      * @return void
      */
@@ -341,6 +375,8 @@ class StepBuilder
     }
 
     /**
+     * Register the "showStep" event listener.
+     *
      * @param string $script
      * @return $this
      */
@@ -358,6 +394,8 @@ JS;
     }
 
     /**
+     * Register the "leaveStep" event listener.
+     *
      * @param string $script
      * @return $this
      */
