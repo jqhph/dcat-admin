@@ -24,8 +24,8 @@ EOT;
 
     protected function setupScript()
     {
-        $clickTr   = $this->grid->option('row_selector_clicktr') ? 'true' : 'false';
-        $backgroud = $this->grid->option('row_selector_bg') ?: Color::dark20();
+        $clickTr    = $this->grid->option('row_selector_clicktr') ? 'true' : 'false';
+        $background = $this->grid->option('row_selector_bg') ?: Color::dark20();
 
         Admin::script(
             <<<JS
@@ -34,7 +34,7 @@ LA.RowSelector({
     selectAll: '.{$this->grid->getSelectAllName()}', 
     getSelectedRowsMethod: '{$this->grid->getSelectedRowsName()}',
     clickTr: {$clickTr},
-    bg: '{$backgroud}',
+    bg: '{$background}',
 });
 JS
         );
