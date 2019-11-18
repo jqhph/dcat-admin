@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Widgets\Sparkline;
 
-use Dcat\Admin\Widgets\Colors;
+use Dcat\Admin\Widgets\Color;
 
 /**
  * @see https://omnipotent.net/jquery.sparkline
@@ -26,42 +26,42 @@ class Line extends Sparkline
 
     public function fillDefaultColor()
     {
-        $this->fillColors(Colors::$default['primary']);
+        $this->fillColors(Color::$default['primary']);
     }
 
     public function primary(bool $opaque = false)
     {
-        return $this->fillColors(Colors::$default['primary'], $opaque);
+        return $this->fillColors(Color::$default['primary'], $opaque);
     }
 
     public function green(bool $opaque = false)
     {
-        return $this->fillColors(Colors::$default['green'], $opaque);
+        return $this->fillColors(Color::$default['green'], $opaque);
     }
 
     public function purple(bool $opaque = false)
     {
-        return $this->fillColors(Colors::$default['purple'], $opaque);
+        return $this->fillColors(Color::$default['purple'], $opaque);
     }
 
     public function red(bool $opaque = false)
     {
-        return $this->fillColors(Colors::$default['red'], $opaque);
+        return $this->fillColors(Color::$default['red'], $opaque);
     }
 
     public function custom(bool $opaque = false)
     {
-        return $this->fillColors(Colors::$default['custom'], $opaque);
+        return $this->fillColors(Color::$default['custom'], $opaque);
     }
 
     public function tear(bool $opaque = false)
     {
-        return $this->fillColors(Colors::$default['tear'], $opaque);
+        return $this->fillColors(Color::$default['tear'], $opaque);
     }
 
     public function blue(bool $opaque = false)
     {
-        return $this->fillColors(Colors::$default['blue'], $opaque);
+        return $this->fillColors(Color::$default['blue'], $opaque);
     }
 
     protected function fillColors($color, bool $opaque = false)

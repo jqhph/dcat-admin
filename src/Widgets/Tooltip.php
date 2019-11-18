@@ -10,7 +10,7 @@ class Tooltip extends Widget
 
     protected $selector;
 
-    protected $bg = 'var(--primary)';
+    protected $bg;
 
     protected $maxWidth;
 
@@ -76,22 +76,22 @@ class Tooltip extends Widget
 
     public function green()
     {
-        return $this->background('var(--success)');
+        return $this->background(Color::success());
     }
 
     public function blue()
     {
-        return $this->background('var(--blue)');
+        return $this->background(Color::blue());
     }
 
     public function red()
     {
-        return $this->background('var(--danger)');
+        return $this->background(Color::danger());
     }
 
     public function purple()
     {
-        return $this->background('var(--purple)');
+        return $this->background(Color::purple());
     }
 
     /**
@@ -158,10 +158,12 @@ class Tooltip extends Widget
             Admin::style(".tooltip-inner{max-width:{$this->maxWidth}}");
         }
 
-        $this->defaultHtmlAttribute('class', 'tooltip-inner');
-        $this->style('background:'.$this->bg, true);
+        $background = $this->bg ?: Color::primary();
 
-        $this->options['template'] = "<div class='tooltip' role='tooltip'><div class='tooltip-arrow' style='border-{$this->options['placement']}-color:{$this->bg}'></div><div {$this->formatHtmlAttributes()}></div></div>";
+        $this->defaultHtmlAttribute('class', 'tooltip-inner');
+        $this->style('background:'.$background, true);
+
+        $this->options['template'] = "<div class='tooltip' role='tooltip'><div class='tooltip-arrow' style='border-{$this->options['placement']}-color:{$background}'></div><div {$this->formatHtmlAttributes()}></div></div>";
 
         $opts = json_encode($this->options, JSON_UNESCAPED_UNICODE);
 

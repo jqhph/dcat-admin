@@ -4,42 +4,43 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Widgets\Color;
 
 class SwitchField extends Field
 {
     public function primary()
     {
-        return $this->color('var(--primary)');
+        return $this->color(Color::primary());
     }
 
     public function green()
     {
-        return $this->color('var(--success)');
+        return $this->color(Color::success());
     }
 
     public function custom()
     {
-        return $this->color('var(--custom)');
+        return $this->color(Color::custom());
     }
 
     public function yellow()
     {
-        return $this->color('var(--warning)');
+        return $this->color(Color::warning());
     }
 
     public function red()
     {
-        return $this->color('var(--danger)');
+        return $this->color(Color::danger());
     }
 
     public function purple()
     {
-        return $this->color('var(--purple)');
+        return $this->color(Color::purple());
     }
 
     public function blue()
     {
-        return $this->color('var(--blue)');
+        return $this->color(Color::blue());
     }
 
 

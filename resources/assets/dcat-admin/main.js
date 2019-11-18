@@ -1198,7 +1198,7 @@ window.require = window.define = window.exports = window.module = undefined;
             container: '#pjax-container',
             z_index: 100,
             width: '50px',
-            color: 'var(--primary-60)',
+            color: '#84bdea',
             bg: '#fff',
             style: '',
             svg: LOADING_SVG[0]
@@ -1236,7 +1236,7 @@ window.require = window.define = window.exports = window.module = undefined;
         }
         // 配置参数
         opts = $.extend({
-            color: 'var(--primary-80)',
+            color: '#62abe4',
             z_index: 999991014,
             width: '58px',
             shade: 'rgba(255, 255, 255, 0.02)',

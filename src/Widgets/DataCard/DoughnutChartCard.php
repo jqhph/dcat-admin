@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Widgets\DataCard;
 
 use Dcat\Admin\Widgets\Chart\Doughnut;
-use Dcat\Admin\Widgets\Colors;
+use Dcat\Admin\Widgets\Color;
 use Illuminate\Contracts\Support\Arrayable;
 
 class DoughnutChartCard extends Card

@@ -5,7 +5,7 @@
         padding: 24px 0 8px;
     }
     .la-done-step .st-icon {
-        color: var(--success);
+        color: {{ \Dcat\Admin\Widgets\Color::success() }};
         font-size: 72px;
         text-align:center;
     }

@@ -3,23 +3,13 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Widgets\Color;
 
 class RowSelector extends AbstractDisplayer
 {
     public function display()
     {
-        $clickTr = $this->grid->option('row_selector_clicktr') ? 'true' : 'false';
-        Admin::script(
-            <<<JS
-LA.RowSelector({
-    checkbox: '.{$this->grid->getGridRowName()}-checkbox',
-    selectAll: '.{$this->grid->getSelectAllName()}', 
-    getSelectedRowsMethod: '{$this->grid->getSelectedRowsName()}',
-    clickTr: {$clickTr},
-    bg: '{$this->grid->option('row_selector_bg')}',
-});
-JS
-        );
+        $this->setupScript();
 
         $style  = $this->grid->option('row_selector_style');
         $circle = $this->grid->option('row_selector_circle') ? 'checkbox-circle' : '';
@@ -32,9 +22,24 @@ JS
 EOT;
     }
 
-    /**
-     * @return string
-     */
+    protected function setupScript()
+    {
+        $clickTr   = $this->grid->option('row_selector_clicktr') ? 'true' : 'false';
+        $backgroud = $this->grid->option('row_selector_bg') ?: Color::dark20();
+
+        Admin::script(
+            <<<JS
+LA.RowSelector({
+    checkbox: '.{$this->grid->getGridRowName()}-checkbox',
+    selectAll: '.{$this->grid->getSelectAllName()}', 
+    getSelectedRowsMethod: '{$this->grid->getSelectedRowsName()}',
+    clickTr: {$clickTr},
+    bg: '{$backgroud}',
+});
+JS
+        );
+    }
+
     protected function getLabel()
     {
         if ($column = $this->grid->option('row_selector_label_key')) {

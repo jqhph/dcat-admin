@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Grid;
+use Dcat\Admin\Widgets\Color;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class Paginator extends AbstractTool
@@ -79,7 +80,9 @@ class Paginator extends AbstractTool
             return [$key => "<b>$parameter</b>"];
         });
 
-        return '<span style="line-height:33px;color:var(--80)">'.trans('admin.pagination.range', $parameters->all()).'</span>';
+        $color = Color::dark80();
+
+        return "<span style=\"line-height:33px;color:{$color}\">".trans('admin.pagination.range', $parameters->all()).'</span>';
     }
 
     /**

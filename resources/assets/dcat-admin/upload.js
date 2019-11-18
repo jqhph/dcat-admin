@@ -487,7 +487,7 @@
                     }
                     refreshButton();
                     if (showImg) {
-                        $wrap.find('.queueList').css({'border': '1px solid var(--50)', 'padding':'5px'});
+                        $wrap.find('.queueList').css({'border': '1px solid #d3dde5', 'padding':'5px'});
                         // $wrap.find('.queueList').removeAttr('style');
                     }
                     break;

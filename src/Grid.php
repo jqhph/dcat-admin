@@ -166,7 +166,7 @@ class Grid
         'row_selector_circle'    => true,
         'row_selector_clicktr'   => false,
         'row_selector_label_key' => null,
-        'row_selector_bg'        => 'var(--20)',
+        'row_selector_bg'        => null,
 
         'dialog_form_area'   => ['700px', '670px'],
         'table_header_style' => 'table-header-gray',

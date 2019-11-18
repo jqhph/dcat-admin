@@ -35,7 +35,7 @@
         text-decoration: none;
     }
     .grid-selector .select-options a.active {
-        color: var(--primary-dark);
+        color: {{ \Dcat\Admin\Widgets\Color::primaryDark() }};
         font-weight: bold;
     }
     .grid-selector li .add {
@@ -48,7 +48,7 @@
         visibility: hidden;
     }
     .grid-selector ul:hover .clear {
-        color: var(--danger);
+        color: {{ \Dcat\Admin\Widgets\Color::danger() }};
         visibility: visible;
     }
 </style>

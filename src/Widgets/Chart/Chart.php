@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Widgets\Chart;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Colors;
+use Dcat\Admin\Widgets\Color;
 use Dcat\Admin\Widgets\AjaxRequestBuilder;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
@@ -450,8 +450,8 @@ HTML;
      */
     public function __call($method, $parameters)
     {
-        if (isset(Colors::$charts[$method])) {
-            $this->colors = Colors::$charts[$method];
+        if (isset(Color::$chartTheme[$method])) {
+            $this->colors = Color::$chartTheme[$method];
 
             return $this;
         }
@@ -484,7 +484,7 @@ HTML;
     protected function setDefaultColors()
     {
         if (! $this->colors) {
-            $this->colors = Colors::$charts['blue'];
+            $this->colors = Color::$chartTheme['blue'];
         }
     }
 
