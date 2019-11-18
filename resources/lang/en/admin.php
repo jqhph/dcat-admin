@@ -158,8 +158,8 @@ return [
         'filter_placeholder' => 'Filter',
     ],
     'responsive' => [
-        'display'     => '  ',
-        'display_all' => ' <i class="glyphicon glyphicon-th icon-th"></i> ',
+        'display'     => '<i class="ti-layout-list-thumb"></i>',
+        'display_all' => '<i class="ti-layout-grid3"></i>',
         'focus'       => 'Focus',
     ],
     'uploader' => [

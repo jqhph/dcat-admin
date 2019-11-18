@@ -159,8 +159,8 @@ return [
         'filter_placeholder' => '过滤',
     ],
     'responsive'      => [
-        'display'     => '  ',
-        'display_all' => ' <i class="glyphicon glyphicon-th icon-th"></i> ',
+        'display'     => '<i class="ti-layout-list-thumb"></i>',
+        'display_all' => '<i class="ti-layout-grid3"></i>',
         'focus'       => '聚焦',
     ],
     'uploader' => [

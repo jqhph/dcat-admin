@@ -137,7 +137,7 @@
         }
 
         this.$dropdownGroup = $('<div class="btn-group dropdown-btn-group pull-right" />');
-        this.$dropdownBtn = $('<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">' + this.options.i18n.display + ' <span class="caret"></span></button>');
+        this.$dropdownBtn = $('<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">' + this.options.i18n.display + '</button>');
         this.$dropdownContainer = $('<ul class="dropdown-menu"/>');
 
         // Focus btn
@@ -636,7 +636,7 @@
                 that.headerRowIndices[cellIndex] = that.headerColIndices[rowspansBeforeIndex[cellIndex] + cellIndex];
             });
         }
-    }
+    };
 
     // Run this after the content in tbody has changed
     ResponsiveTable.prototype.update = function() {
