@@ -17,7 +17,7 @@
         float: left;
         width: 100px;
         padding-left: 10px;
-        color: #999;
+        color: #888;
     }
     .grid-selector .select-options {
         margin-left: 100px;
@@ -48,7 +48,7 @@
         visibility: hidden;
     }
     .grid-selector ul:hover .clear {
-        color: {{ \Dcat\Admin\Widgets\Color::danger() }};
+        color: {{ \Dcat\Admin\Widgets\Color::dangerDark() }};
         visibility: visible;
     }
 </style>
