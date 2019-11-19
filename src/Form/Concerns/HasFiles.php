@@ -106,6 +106,12 @@ trait HasFiles
         if (array_key_exists(Field::FILE_DELETE_FLAG, $input)) {
             $input[Field::FILE_DELETE_FLAG] = $input['key'];
             unset($input['key']);
+
+            if (! empty($input['_column'])) {
+                $input[$input['_column']] = '';
+
+                unset($input['_column']);
+            }
         }
 
         $this->request->replace($input);
