@@ -117,8 +117,8 @@ LA.ready(function () {
         showStepURLhash: false,
         autoAdjustHeight: false,
         lang: {
-            next: '{{ trans('admin.next_step') }}',
-            previous: '{{ trans('admin.prev_step') }}'
+            next: '{!! trans('admin.next_step') !!}',
+            previous: '{!! trans('admin.prev_step') !!}'
         },
         toolbarSettings: {
             toolbarPosition: 'bottom',

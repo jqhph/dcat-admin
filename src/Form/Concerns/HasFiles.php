@@ -103,15 +103,17 @@ trait HasFiles
      */
     protected function handleFileDelete(array $input = [])
     {
-        if (array_key_exists(Field::FILE_DELETE_FLAG, $input)) {
-            $input[Field::FILE_DELETE_FLAG] = $input['key'];
-            unset($input['key']);
+        if (! array_key_exists(Field::FILE_DELETE_FLAG, $input)) {
+            return $input;
+        }
 
-            if (! empty($input['_column'])) {
-                $input[$input['_column']] = '';
+        $input[Field::FILE_DELETE_FLAG] = $input['key'];
+        unset($input['key']);
 
-                unset($input['_column']);
-            }
+        if (! empty($input['_column'])) {
+            $input[$input['_column']] = '';
+
+            unset($input['_column']);
         }
 
         $this->request->replace($input);
