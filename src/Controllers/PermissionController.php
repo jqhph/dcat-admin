@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Controllers;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Models\Repositories\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -284,33 +285,31 @@ class PermissionController extends Controller
      */
     public function form()
     {
-        $form = new Form(new Permission());
+        return Admin::form(new Permission(), function (Form $form) {
+            $permissionTable = config('admin.database.permissions_table');
+            $connection      = config('admin.database.connection');
 
-        $permissionTable = config('admin.database.permissions_table');
-        $connection      = config('admin.database.connection');
+            $id = $form->getKey();
 
-        $id = $form->getKey();
+            $form->display('id', 'ID');
 
-        $form->display('id', 'ID');
+            $form->text('slug', trans('admin.slug'))
+                ->required()
+                ->creationRules(['required', "unique:{$connection}.{$permissionTable}"])
+                ->updateRules(['required', "unique:{$connection}.{$permissionTable},slug,$id"]);
+            $form->text('name', trans('admin.name'))->required();
 
-        $form->text('slug', trans('admin.slug'))
-            ->required()
-            ->creationRules(['required', "unique:{$connection}.{$permissionTable}"])
-            ->updateRules(['required', "unique:{$connection}.{$permissionTable},slug,$id"]);
-        $form->text('name', trans('admin.name'))->required();
+            $form->multipleSelect('http_method', trans('admin.http.method'))
+                ->options($this->getHttpMethodsOptions())
+                ->help(trans('admin.all_methods_if_empty'));
 
-        $form->multipleSelect('http_method', trans('admin.http.method'))
-            ->options($this->getHttpMethodsOptions())
-            ->help(trans('admin.all_methods_if_empty'));
+            $form->tags('http_path', trans('admin.http.path'))
+                ->options($this->getRoutes())
+                ->help(trans('admin.any_character_is'));
 
-        $form->tags('http_path', trans('admin.http.path'))
-            ->options($this->getRoutes())
-            ->help(trans('admin.any_character_is'));
-
-        $form->display('created_at', trans('admin.created_at'));
-        $form->display('updated_at', trans('admin.updated_at'));
-
-        return $form;
+            $form->display('created_at', trans('admin.created_at'));
+            $form->display('updated_at', trans('admin.updated_at'));
+        });
     }
 
     /**

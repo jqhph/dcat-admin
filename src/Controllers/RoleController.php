@@ -190,7 +190,7 @@ class RoleController extends Controller
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
 
-            if ($form->getKey() == RoleModel::ADMINISTRATOR_ID) {
+            if ($id == RoleModel::ADMINISTRATOR_ID) {
                 $form->disableDeleteButton();
             }
         });
