@@ -9,6 +9,7 @@ use Dcat\Admin\Grid\Actions\Delete;
 use Dcat\Admin\Grid\Actions\Edit;
 use Dcat\Admin\Grid\Actions\Show;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Widgets\Color;
 use Illuminate\Contracts\Support\Renderable;
 
 class DropdownActions extends Actions
@@ -35,7 +36,10 @@ class DropdownActions extends Actions
      */
     protected function addScript()
     {
-        $script = <<<'JS'
+        $background = $this->grid->option('row_selector_bg') ?: Color::dark20();
+        $checkbox   = ".{$this->grid->getGridRowName()}-checkbox";
+
+        $script = <<<JS
 $(function() {
   $('.table-responsive').on('shown.bs.dropdown', function(e) {
     var t = $(this),
@@ -51,11 +55,19 @@ $(function() {
     } else {
       t.css('overflow', 'visible');
     }
-  }).on('hidden.bs.dropdown', function() {
+    
+    $(e.target).parents('tr').css({'background-color': '{$background}'});
+  }).on('hidden.bs.dropdown', function(e) {
     $(this).css({
       'padding-bottom': '',
       'overflow': ''
     });
+    
+    var tr = $(e.target).parents('tr').eq(0);
+    
+    if (! tr.find("{$checkbox}:checked").length) {
+        tr.css({'background-color': ''});
+    }
   });
 });
 JS;
