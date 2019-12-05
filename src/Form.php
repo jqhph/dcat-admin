@@ -63,7 +63,7 @@ use Dcat\Admin\Form\Concerns;
  * @method Field\Tags           tags($column, $label = '')
  * @method Field\Icon           icon($column, $label = '')
  * @method Field\Embeds         embeds($column, $label = '')
- * @method Field\Captcha        captcha($column, $label = '')
+ * @method Field\Captcha        captcha()
  * @method Field\Listbox        listbox($column, $label = '')
  * @method Field\SelectResource selectResource($column, $label = '')
  * @method Field\File           file($column, $label = '')
