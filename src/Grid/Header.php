@@ -31,8 +31,8 @@ class Header extends Widget
 
     public function __construct(Grid $grid, string $label, array $columnNames)
     {
-        $this->grid = $grid;
-        $this->label = admin_trans_field($label);
+        $this->grid        = $grid;
+        $this->label       = admin_trans_field($label);
         $this->columnNames = $columnNames;
 
         $this->setupAttributes();

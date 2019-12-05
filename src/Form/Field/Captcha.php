@@ -2,29 +2,29 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Form;
-
 class Captcha extends Text
 {
     protected $rules = ['required', 'captcha'];
 
     protected $view = 'admin::form.captcha';
 
-    public function __construct($column, $arguments = [])
+    public function __construct()
     {
         if (!class_exists(\Mews\Captcha\Captcha::class)) {
             throw new \Exception('To use captcha field, please install [mews/captcha] first.');
         }
 
         $this->column = '__captcha__';
-        $this->label = trans('admin.captcha');
+        $this->label  = trans('admin.captcha');
     }
 
-    public function setForm(Form $form = null)
+    public function setForm($form = null)
     {
-        $this->form = $form;
+        parent::setForm($form);
 
-        $this->form->ignore($this->column);
+        if (method_exists($this->form, 'ignore')) {
+            $this->form->ignore($this->column);
+        }
 
         return $this;
     }
@@ -35,7 +35,6 @@ class Captcha extends Text
 $('#{$this->column}-captcha').click(function () {
     $(this).attr('src', $(this).attr('src')+'?'+Math.random());
 });
-
 JS;
 
         return parent::render();

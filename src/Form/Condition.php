@@ -28,7 +28,7 @@ class Condition
     public function __construct($condition, Form $form)
     {
         $this->condition = $condition;
-        $this->form = $form;
+        $this->form      = $form;
     }
 
     public function then(\Closure $closure)

@@ -23,10 +23,11 @@ class Responsive
     public function __construct(Grid $grid)
     {
         $this->grid = $grid;
+
         $this->options([
             'i18n' => [
-                'focus' => trans('admin.responsive.focus'),
-                'display' => trans('admin.responsive.display'),
+                'focus'      => trans('admin.responsive.focus'),
+                'display'    => trans('admin.responsive.display'),
                 'displayAll' => trans('admin.responsive.display_all'),
             ],
         ]);

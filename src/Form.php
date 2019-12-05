@@ -7,7 +7,6 @@ use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\Row;
-use Dcat\Admin\Form\StepBuilder;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Traits\HasBuilderEvents;
@@ -277,16 +276,14 @@ class Form implements Renderable
      */
     public function __construct(?Repository $repository = null, ?Closure $callback = null, Request $request = null)
     {
-        $this->repository = $repository ? Admin::repository($repository) : null;
-        $this->callback = $callback;
-        $this->request = $request ?: request();
-        $this->builder = new Builder($this);
+        $this->repository    = $repository ? Admin::repository($repository) : null;
+        $this->callback      = $callback;
+        $this->request       = $request ?: request();
+        $this->builder       = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
         $this->setModel(new Fluent());
-
         $this->prepareModalForm();
-
         $this->callResolving();
     }
 

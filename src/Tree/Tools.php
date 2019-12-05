@@ -30,7 +30,7 @@ class Tools implements Renderable
      */
     public function __construct(Tree $tree)
     {
-        $this->tree = $tree;
+        $this->tree  = $tree;
         $this->tools = new Collection();
     }
 

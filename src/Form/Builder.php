@@ -147,8 +147,7 @@ class Builder
      */
     public function __construct(Form $form)
     {
-        $this->form = $form;
-
+        $this->form   = $form;
         $this->fields = new Collection();
         $this->layout = new Layout($form);
         $this->tools  = new Tools($this);
@@ -695,13 +694,12 @@ class Builder
 
         $this->addRedirectUrlField();
 
-        $attributes['id']     = $this->getFormId();
-        $attributes['action'] = $this->getAction();
-        $attributes['method'] = Arr::get($options, 'method', 'post');
+        $attributes['id']             = $this->getFormId();
+        $attributes['action']         = $this->getAction();
+        $attributes['method']         = Arr::get($options, 'method', 'post');
         $attributes['accept-charset'] = 'UTF-8';
-        $attributes['data-toggle'] = 'validator';
-
-        $attributes['class'] = Arr::get($options, 'class');
+        $attributes['data-toggle']    = 'validator';
+        $attributes['class']          = Arr::get($options, 'class');
 
         if ($this->hasFile()) {
             $attributes['enctype'] = 'multipart/form-data';
@@ -873,27 +871,27 @@ JS
         $formId = $this->getFormId();
 
         $script = <<<JS
-
-var hash = document.location.hash;
-if (hash) {
-    $('#$formId .nav-tabs a[href="' + hash + '"]').tab('show');
-}
-
-// Change hash for page-reload
-$('#$formId .nav-tabs a').on('shown.bs.tab', function (e) {
-    history.pushState(null,null, e.target.hash);
-});
-
-if ($('#$formId .has-error').length) {
-    $('#$formId .has-error').each(function () {
-        var tabId = '#'+$(this).closest('.tab-pane').attr('id');
-        $('li a[href="'+tabId+'"] i').removeClass('hide');
+(function () {
+    var hash = document.location.hash;
+    if (hash) {
+        $('#$formId .nav-tabs a[href="' + hash + '"]').tab('show');
+    }
+    
+    // Change hash for page-reload
+    $('#$formId .nav-tabs a').on('shown.bs.tab', function (e) {
+        history.pushState(null,null, e.target.hash);
     });
-
-    var first = $('#$formId .has-error:first').closest('.tab-pane').attr('id');
-    $('li a[href="#'+first+'"]').tab('show');
-}
-
+    
+    if ($('#$formId .has-error').length) {
+        $('#$formId .has-error').each(function () {
+            var tabId = '#'+$(this).closest('.tab-pane').attr('id');
+            $('li a[href="'+tabId+'"] i').removeClass('hide');
+        });
+    
+        var first = $('#$formId .has-error:first').closest('.tab-pane').attr('id');
+        $('li a[href="#'+first+'"]').tab('show');
+    }
+})();
 JS;
         Admin::script($script);
     }

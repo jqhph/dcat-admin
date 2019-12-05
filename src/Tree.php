@@ -130,9 +130,9 @@ class Tree implements Renderable
     public function __construct(Model $model = null, ?\Closure $callback = null)
     {
         $this->model = $model;
+        $this->path  = $this->path ?: request()->getPathInfo();
+        $this->url   = url($this->path);
 
-        $this->path = $this->path ?: request()->getPathInfo();
-        $this->url = url($this->path);
         $this->elementId .= uniqid();
 
         $this->setupTools();
