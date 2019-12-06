@@ -83,6 +83,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      * Get the grid data.
      *
      * @param Grid\Model $model
+     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|array
      */
     public function get(Grid\Model $model)
@@ -94,6 +95,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      * Get data to build edit form.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function edit(Form $form): array
@@ -105,6 +107,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      * Get detail data.
      *
      * @param Show $show
+     *
      * @return array
      */
     public function detail(Show $show): array
@@ -116,6 +119,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      * Store a new record.
      *
      * @param Form $form
+     *
      * @return mixed
      */
     public function store(Form $form)
@@ -127,6 +131,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      * Get data before update.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function getDataWhenUpdating(Form $form): array
@@ -138,6 +143,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      * Update form data.
      *
      * @param Form $form
+     *
      * @return bool
      */
     public function update(Form $form)
@@ -148,8 +154,9 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
     /**
      * Destroy data.
      *
-     * @param Form $form
+     * @param Form  $form
      * @param array $deletingData
+     *
      * @return mixed
      */
     public function destroy(Form $form, array $deletingData)
@@ -161,6 +168,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      * Get data before destroy.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function getDataWhenDeleting(Form $form): array
@@ -206,6 +214,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      * Get the repository listeners.
      *
      * @param null|string $repository
+     *
      * @return RepositoryListener[]
      */
     public static function getListeners(?string $repository)
@@ -252,6 +261,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
     /**
      * @param string $method
      * @param array  $arguments
+     *
      * @return $this
      */
     public function __call($method, $arguments)

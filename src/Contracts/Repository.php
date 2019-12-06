@@ -7,6 +7,7 @@
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
+
 namespace Dcat\Admin\Contracts;
 
 use Dcat\Admin\Form;
@@ -29,6 +30,7 @@ interface Repository
      * @return string
      */
     public function getCreatedAtColumn();
+
     /**
      * Get the name of the "updated at" column.
      *
@@ -45,6 +47,7 @@ interface Repository
      * Get the grid data.
      *
      * @param Grid\Model $model
+     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|array
      */
     public function get(Grid\Model $model);
@@ -53,6 +56,7 @@ interface Repository
      * Get data to build edit form.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function edit(Form $form): array;
@@ -61,6 +65,7 @@ interface Repository
      * Get detail data.
      *
      * @param Show $show
+     *
      * @return array
      */
     public function detail(Show $show): array;
@@ -69,6 +74,7 @@ interface Repository
      * Store a new record.
      *
      * @param Form $form
+     *
      * @return mixed
      */
     public function store(Form $form);
@@ -77,6 +83,7 @@ interface Repository
      * Get data before update.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function getDataWhenUpdating(Form $form): array;
@@ -85,6 +92,7 @@ interface Repository
      * Update form data.
      *
      * @param Form $form
+     *
      * @return bool
      */
     public function update(Form $form);
@@ -92,8 +100,9 @@ interface Repository
     /**
      * Destroy data.
      *
-     * @param Form $form
+     * @param Form  $form
      * @param array $deletingData
+     *
      * @return mixed
      */
     public function destroy(Form $form, array $deletingData);
@@ -102,8 +111,8 @@ interface Repository
      * Get data before destroy.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function getDataWhenDeleting(Form $form): array;
-
 }

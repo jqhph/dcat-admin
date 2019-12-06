@@ -40,7 +40,7 @@ class AdminServiceProvider extends ServiceProvider
         'admin.log'        => Middleware\LogOperation::class,
         'admin.permission' => Middleware\Permission::class,
         'admin.bootstrap'  => Middleware\Bootstrap::class,
-        'admin.session'    => Middleware\Session::class,
+        'admin.session'    => Middleware\Session::class
     ];
 
     /**
@@ -55,7 +55,7 @@ class AdminServiceProvider extends ServiceProvider
             'admin.log',
             'admin.bootstrap',
             'admin.permission',
-            'admin.session',
+            'admin.session'
         ],
     ];
 
@@ -81,7 +81,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once __DIR__ . '/Support/AdminSection.php';
+        require_once __DIR__.'/Support/AdminSection.php';
 
         $this->registerExtensionProviders();
         $this->loadAdminAuthConfig();

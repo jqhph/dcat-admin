@@ -168,11 +168,11 @@ TREE;
 
         // make bootstrap
         $bootstrap = str_replace(
-            [':namespace', ':class_name',],
+            [':namespace', ':class_name'],
             [$this->namespace, $this->className],
             file_get_contents(__DIR__.'/stubs/extension/bootstrap.stub')
         );
-        $this->putFile("src/bootstrap.php", $bootstrap);
+        $this->putFile('src/bootstrap.php', $bootstrap);
 
         // make service provider
         $providerContents = str_replace(

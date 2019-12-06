@@ -27,6 +27,7 @@ class ResetPasswordCommand extends Command
     {
         if (!config('app.debug')) {
             $this->error('Permission deny!');
+
             return;
         }
 

@@ -186,7 +186,7 @@ return [
     ],
     'import_extension_confirm' => 'Are you sure import the extension?',
     'selected_must_less_then'  => 'Only supports maximum :num options.',
-    'validation' => [
+    'validation'               => [
         'match'     => 'The :attribute and :other must match.',
         'minlength' => 'The :attribute must be at least :min characters.',
         'maxlength' => 'The :attribute may not be greater than :max characters.',

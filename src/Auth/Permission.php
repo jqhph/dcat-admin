@@ -3,9 +3,9 @@
 namespace Dcat\Admin\Auth;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Models\Role;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Middleware\Pjax;
+use Dcat\Admin\Models\Role;
 
 class Permission
 {
@@ -91,7 +91,7 @@ class Permission
         }
 
         Pjax::respond(
-            response((new Content)->withError(trans('admin.deny')))
+            response((new Content())->withError(trans('admin.deny')))
         );
     }
 

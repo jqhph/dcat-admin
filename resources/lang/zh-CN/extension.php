@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 return [
     'labels' => [
         'Extensions' => '扩展',

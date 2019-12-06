@@ -3,17 +3,17 @@
 namespace Dcat\Admin;
 
 use Closure;
+use Dcat\Admin\Contracts\Repository;
+use Dcat\Admin\Controllers\AuthController;
 use Dcat\Admin\Exception\Handler;
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Models\HasPermissions;
-use Dcat\Admin\Controllers\AuthController;
-use Dcat\Admin\Layout\SectionManager;
-use Dcat\Admin\Repositories\Proxy;
-use Dcat\Admin\Contracts\Repository;
-use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
+use Dcat\Admin\Layout\SectionManager;
+use Dcat\Admin\Models\HasPermissions;
+use Dcat\Admin\Repositories\Proxy;
+use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\HasAssets;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -134,7 +134,6 @@ class Admin
      * @param Closure $callable
      *
      * @return Form
-     *
      */
     public static function form(Repository $repository, Closure $callable = null)
     {
@@ -265,6 +264,7 @@ class Admin
      * Get section manager.
      *
      * @param Closure|null $builder
+     *
      * @return SectionManager
      */
     public static function section(Closure $builder = null)
@@ -342,8 +342,9 @@ class Admin
     /**
      * Create a repository instance.
      *
-     * @param $class
-     * @param array $args
+     * @param string $class
+     * @param array  $args
+     *
      * @return Repository
      */
     public static function repository($class, array $args = [])
@@ -412,7 +413,8 @@ class Admin
      * Enable the extension.
      *
      * @param string $class
-     * @param bool $enable
+     * @param bool   $enable
+     *
      * @return bool
      */
     public static function enableExtenstion(string $class, bool $enable = true)
@@ -423,9 +425,9 @@ class Admin
 
         $name = $class::NAME;
 
-        $config = (array)\config('admin-extensions');
+        $config = (array) config('admin-extensions');
 
-        $config[$name] = (array)($config[$name] ?? []);
+        $config[$name] = (array) ($config[$name] ?? []);
 
         $config[$name]['enable'] = $enable;
 
@@ -436,6 +438,7 @@ class Admin
      * Disable the extension.
      *
      * @param string $class
+     *
      * @return bool
      */
     public static function disableExtenstion(string $class)
@@ -484,5 +487,4 @@ class Admin
     {
         Event::dispatch('admin.booted');
     }
-
 }

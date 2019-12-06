@@ -76,20 +76,20 @@ class ImportCommand extends VendorPublishCommand
 
     /**
      * @param $class
+     *
      * @return bool
      */
     protected function updateExtensionConfig($class)
     {
-        $config = (array)\config('admin-extensions');
+        $config = (array) config('admin-extensions');
 
         $name = $class::NAME;
 
-        $config[$name] = (array)($config[$name] ?? []);
+        $config[$name] = (array) ($config[$name] ?? []);
 
-        $config[$name]['imported']    = true;
+        $config[$name]['imported'] = true;
         $config[$name]['imported_at'] = date('Y-m-d H:i:s');
 
         return Helper::updateExtensionConfig($config);
-
     }
 }

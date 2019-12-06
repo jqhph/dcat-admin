@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 /**
- * Class IdeHelperCommand
+ * Class IdeHelperCommand.
  *
  * @authr jqh <841324345@qq.com>
  */
@@ -36,10 +36,10 @@ class IdeHelperCommand extends Command
      * @var array
      */
     protected $patterns = [
-        'grid' => '/(?:grid)->([\w0-9_]+)(?:\(|;|->|\s)/i',
-        'show' => '/show->([\w0-9_]+)(?:\(|;|->|\s)/i',
+        'grid'        => '/(?:grid)->([\w0-9_]+)(?:\(|;|->|\s)/i',
+        'show'        => '/show->([\w0-9_]+)(?:\(|;|->|\s)/i',
         'grid-column' => '/@method[\s]+\$this[\s]+([\w0-9_]+)/i',
-        'form-field' => '/@method[\s]+[\\\\\w0-9_]+[\s]+([\w0-9_]+)/i',
+        'form-field'  => '/@method[\s]+[\\\\\w0-9_]+[\s]+([\w0-9_]+)/i',
         'grid-filter' => '/@method[\s]+[\\\\\w0-9_]+[\s]+([\w0-9_]+)/i',
     ];
 
@@ -55,7 +55,7 @@ class IdeHelperCommand extends Command
             'method'   => '* @method Show\Field|Collection %s(string $label = null)',
             'property' => '* @property Show\Field|Collection %s',
         ],
-        'form' => '* @method %s %s(...$params)',
+        'form'        => '* @method %s %s(...$params)',
         'grid-column' => '* @method $this %s(...$params)',
         'grid-filter' => '* @method %s %s(...$params)',
         'show-column' => '* @method $this %s(...$params)',
@@ -70,6 +70,7 @@ class IdeHelperCommand extends Command
     {
         if (!config('app.debug')) {
             $this->error('Permission deny!');
+
             return;
         }
         if (is_file($bootstrap = admin_path('bootstrap.php'))) {
@@ -92,6 +93,7 @@ class IdeHelperCommand extends Command
 
     /**
      * @param array $reject
+     *
      * @return Collection
      */
     protected function getFieldsFromDatabase(array $reject = [])
@@ -115,7 +117,7 @@ class IdeHelperCommand extends Command
 
                 $each = collect(DB::connection($connectName)->select($sql))
                     ->map(function ($v) use ($value, $exceptTables, &$reject) {
-                        $v = (array)$v;
+                        $v = (array) $v;
 
                         if (in_array($v['TABLE_NAME'], $exceptTables) || in_array($v['COLUMN_NAME'], $reject)) {
                             return;
@@ -135,6 +137,7 @@ class IdeHelperCommand extends Command
 
     /**
      * @param array $reject
+     *
      * @return Collection
      */
     protected function getFieldsFromControllerFiles(array $reject = [])
@@ -192,21 +195,22 @@ class IdeHelperCommand extends Command
     }
 
     /**
-     * @param string $type
+     * @param string     $type
      * @param Collection $fields
+     *
      * @return string
      */
     public function generate(string $type, Collection $fields)
     {
         $methods = $properties = [];
-        $space   = str_repeat(' ', 5);
+        $space = str_repeat(' ', 5);
 
         $fields->each(function ($name) use ($type, &$methods, &$properties, $space) {
             $properties[] = $space.sprintf($this->templates[$type]['property'], $name);
-            $methods[]    = $space.sprintf($this->templates[$type]['method'], $name);
+            $methods[] = $space.sprintf($this->templates[$type]['method'], $name);
         });
 
-        return trim(join("\r\n", array_merge($properties, [$space.'*'], $methods)));
+        return trim(implode("\r\n", array_merge($properties, [$space.'*'], $methods)));
     }
 
     /**
@@ -225,6 +229,7 @@ class IdeHelperCommand extends Command
         });
 
         $space = str_repeat(' ', 5);
+
         return trim(
             $fields
                 ->map(function ($value, $key) use (&$space) {
@@ -242,6 +247,7 @@ class IdeHelperCommand extends Command
         $extensions = collect(Show\Field::getExtensions());
 
         $space = str_repeat(' ', 5);
+
         return trim(
             $extensions
                 ->map(function ($value, $key) use (&$space) {
@@ -267,6 +273,7 @@ class IdeHelperCommand extends Command
         });
 
         $space = str_repeat(' ', 5);
+
         return trim(
             $fields
                 ->map(function ($value, $key) use (&$space) {
@@ -343,7 +350,7 @@ class IdeHelperCommand extends Command
                 $action = $route->getActionName();
 
                 if ($action == 'Closure') {
-                    return null;
+                    return;
                 }
 
                 return explode('@', $action)[0];
@@ -360,16 +367,16 @@ class IdeHelperCommand extends Command
     }
 
     /**
-     * @param $class
+     * @param string $class
+     *
      * @return string
      */
     public function getFileNameByClass($class)
     {
-        if (!class_exists($class)) {
-            return null;
+        if (! class_exists($class)) {
+            return;
         }
 
         return (new \ReflectionClass($class))->getFileName();
     }
-
 }

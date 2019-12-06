@@ -1,7 +1,5 @@
 <?php
 
-use Dcat\Admin\Grid\Displayers\DropdownActions;
-
 return [
 
     /*
@@ -191,7 +189,7 @@ return [
         'cache' => [
             // enable cache or not
             'enable' => true,
-            'store' => 'file',
+            'store'  => 'file',
         ],
 
         // Whether enable menu bind to a permission.
@@ -317,7 +315,7 @@ return [
     | "sidebar-mini".
     |
     */
-    'layout' => ['sidebar-mini', 'fixed',],
+    'layout' => ['sidebar-mini', 'fixed'],
 
     /*
     |--------------------------------------------------------------------------

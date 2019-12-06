@@ -2,14 +2,13 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Models\Repositories\Administrator;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Content;
+use Dcat\Admin\Models\Repositories\Administrator;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;

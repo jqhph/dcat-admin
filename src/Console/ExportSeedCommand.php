@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Console;
 
-use Dcat\Admin\Admin;
 use Illuminate\Console\Command;
 
 class ExportSeedCommand extends Command
