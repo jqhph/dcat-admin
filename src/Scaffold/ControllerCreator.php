@@ -81,6 +81,7 @@ class ControllerCreator
             [
                 'DummyModelNamespace',
                 'DummyModel',
+                'DummyTitle',
                 '{controller}',
                 '{grid}',
                 '{form}',
@@ -88,6 +89,7 @@ class ControllerCreator
             ],
             [
                 $model,
+                class_basename($model),
                 class_basename($model),
                 $slug,
                 $this->generateGrid(),

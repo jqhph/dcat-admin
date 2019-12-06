@@ -3,75 +3,20 @@
 namespace DummyNamespace;
 
 use DummyModelNamespace;
-use App\Http\Controllers\Controller;
-use Dcat\Admin\Controllers\HasResourceActions;
+use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
 use Dcat\Admin\Admin;
 
-class DummyClass extends Controller
+class DummyClass extends AdminController
 {
-    use HasResourceActions;
-
     /**
-     * Index interface.
+     * Title for current resource.
      *
-     * @param Content $content
-     * @return Content
+     * @var string
      */
-    public function index(Content $content)
-    {
-        return $content
-            ->header(admin_trans_label())
-            ->description(admin_trans_label('list'))
-            ->body($this->grid());
-    }
-
-    /**
-     * Show interface.
-     *
-     * @param mixed $id
-     * @param Content $content
-     * @return Content
-     */
-    public function show($id, Content $content)
-    {
-        return $content
-            ->header(admin_trans_label())
-            ->description(admin_trans_label('detail'))
-            ->body($this->detail($id));
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param mixed $id
-     * @param Content $content
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->header(admin_trans_label())
-            ->description(admin_trans_label('edit'))
-            ->body($this->form()->edit($id));
-    }
-
-    /**
-     * Create interface.
-     *
-     * @param Content $content
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->header(admin_trans_label())
-            ->description(admin_trans_label('create'))
-            ->body($this->form());
-    }
+    protected $title = 'DummyTitle';
 
     /**
      * Make a grid builder.
@@ -80,7 +25,7 @@ class DummyClass extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(new DummyModel, function (Grid $grid) {
+        return Admin::grid(new DummyModel(), function (Grid $grid) {
             {grid}
         });
     }
@@ -93,7 +38,7 @@ class DummyClass extends Controller
      */
     protected function detail($id)
     {
-        return Admin::show($id, new DummyModel, function (Show $show) {
+        return Admin::show($id, new DummyModel(), function (Show $show) {
             {show}
         });
     }
@@ -105,7 +50,7 @@ class DummyClass extends Controller
      */
     protected function form()
     {
-        return Admin::form(new DummyModel, function (Form $form) {
+        return Admin::form(new DummyModel(), function (Form $form) {
             {form}
         });
     }

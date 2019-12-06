@@ -9,11 +9,11 @@ use Dcat\Admin\Show\Newline;
 use Dcat\Admin\Show\Panel;
 use Dcat\Admin\Show\Relation;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Traits\Macroable;
 
@@ -38,6 +38,11 @@ class Show implements Renderable
      * @var mixed
      */
     protected $__id;
+
+    /**
+     * @var string
+     */
+    protected $keyName = 'id';
 
     /**
      * @var Fluent
@@ -80,20 +85,32 @@ class Show implements Renderable
     /**
      * Show constructor.
      *
-     * @param Model $model
+     * @param Model|Repository|array|Arrayable $model
      * @param \Closure $builder
      */
-    public function __construct(?Repository $repository = null, ?\Closure $builder = null)
+    public function __construct($model = null, ?\Closure $builder = null)
     {
-        if ($repository) {
-            $this->repository = Admin::repository($repository);
-        }
+        $this->initModel($model);
+
         $this->builder = $builder;
 
         $this->initPanel();
         $this->initContents();
 
         $this->callResolving();
+    }
+
+    protected function initModel($model)
+    {
+        if ($model instanceof Repository) {
+            $this->repository = Admin::repository($model);
+        } elseif ($model instanceof Arrayable) {
+            $this->setModel(new Fluent($model->toArray()));
+        } elseif (is_array($model)) {
+            $this->setModel(new Fluent($model));
+        } else {
+            $this->setModel(new Fluent());
+        }
     }
 
     /**
@@ -108,19 +125,34 @@ class Show implements Renderable
     }
 
     /**
+     * @param string $value
+     * @return $this
+     */
+    public function setKeyName(string $value)
+    {
+        $this->keyName = $value;
+
+        return $this;
+    }
+
+    /**
      * Get primary key name of model.
      *
      * @return string
      */
     public function getKeyName()
     {
-        return $this->repository->getKeyName();
+        if (! $this->repository) {
+            return $this->keyName;
+        }
+
+        return $this->keyName ?: $this->repository->getKeyName();
     }
 
     /**
      * @param mixed $id
      */
-    public function setId($id)
+    public function setKey($id)
     {
         $this->__id = $id;
     }
@@ -128,7 +160,7 @@ class Show implements Renderable
     /**
      * @return mixed
      */
-    public function getId()
+    public function getKey()
     {
         return $this->__id;
     }
@@ -146,10 +178,6 @@ class Show implements Renderable
      */
     public function model()
     {
-        if (!$this->model) {
-            $this->setModel(new Fluent($this->repository->detail($this)));
-        }
-
         return $this->model;
     }
 
@@ -553,6 +581,17 @@ class Show implements Renderable
         return false;
     }
 
+    protected function setupModel()
+    {
+        if ($this->repository && ! $this->model) {
+            $this->setModel(new Fluent($this->repository->detail($this)));
+        }
+
+        if (! $this->model) {
+            $this->setModel(new Fluent());
+        }
+    }
+
     /**
      * Render the show panels.
      *
@@ -561,6 +600,8 @@ class Show implements Renderable
     public function render()
     {
         try {
+            $this->setupModel();
+
             $model = $this->model();
 
             if (is_callable($this->builder)) {

@@ -189,7 +189,7 @@ class Admin
                     $show = new Show($id);
                 } else {
                     $show = new Show();
-                    $show->setId($id);
+                    $show->setKey($id);
                 }
 
                 break;
@@ -199,17 +199,17 @@ class Admin
                 } elseif ($repository instanceof \Closure) {
                     $show = new Show(null, $repository);
 
-                    $show->setId($id);
+                    $show->setKey($id);
                 } elseif ($repository instanceof Repository) {
                     $show = new Show($repository);
 
-                    $show->setId($id);
+                    $show->setKey($id);
                 }
                 break;
             case 3:
                 $show = new Show($repository, $callable);
 
-                $show->setId($id);
+                $show->setKey($id);
         }
 
         return $show;

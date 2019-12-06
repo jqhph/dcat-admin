@@ -145,7 +145,7 @@ class RoleController extends Controller
             $show->created_at;
             $show->updated_at;
 
-            if ($show->getId() == RoleModel::ADMINISTRATOR_ID) {
+            if ($show->getKey() == RoleModel::ADMINISTRATOR_ID) {
                 $show->disableDeleteButton();
             }
 

@@ -163,7 +163,7 @@ abstract class EloquentRepository extends Repository
 
         $this->model = $eloquent
             ->with($this->getRelations($show))
-            ->findOrFail($show->getId(), $this->getDetailColumns());
+            ->findOrFail($show->getKey(), $this->getDetailColumns());
 
         return $this->model->toArray();
     }

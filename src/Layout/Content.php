@@ -18,11 +18,11 @@ class Content implements Renderable
     protected $view = 'admin::content';
 
     /**
-     * Content header.
+     * Content title.
      *
      * @var string
      */
-    protected $header = '';
+    protected $title = '';
 
     /**
      * Content description.
@@ -69,15 +69,25 @@ class Content implements Renderable
     }
 
     /**
-     * Set header of content.
-     *
      * @param string $header
      *
      * @return $this
      */
     public function header($header = '')
     {
-        $this->header = $header;
+        return $this->title($header);
+    }
+
+    /**
+     * Set title of content.
+     *
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function title($title)
+    {
+        $this->title = $title;
 
         return $this;
     }
@@ -352,7 +362,7 @@ CSS
         $this->setupStyles();
 
         $items = [
-            'header'      => $this->header,
+            'header'      => $this->title,
             'description' => $this->description,
             'breadcrumb'  => $this->breadcrumb,
             'content'     => $this->build(),

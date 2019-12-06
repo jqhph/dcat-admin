@@ -211,7 +211,7 @@ class UserController extends Controller
                 return $tree->render();
             });
 
-            if ($show->getId() == AdministratorModel::DEFAULT_ID) {
+            if ($show->getKey() == AdministratorModel::DEFAULT_ID) {
                 $show->disableDeleteButton();
             }
 

@@ -68,7 +68,7 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 
     public function detail(Show $show): array
     {
-        $id = $show->getId();
+        $id = $show->getKey();
 
         if (array_key_exists($id, $this->__caches['detail'])) {
             return $this->__caches['detail'][$id];

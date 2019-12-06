@@ -304,11 +304,13 @@ class PermissionController extends Controller
                 ->help(trans('admin.all_methods_if_empty'));
 
             $form->tags('http_path', trans('admin.http.path'))
-                ->options($this->getRoutes())
-                ->help(trans('admin.any_character_is'));
+                ->options($this->getRoutes());
 
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
+
+            $form->disableViewButton();
+            $form->disableViewCheck();
         });
     }
 

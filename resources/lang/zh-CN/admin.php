@@ -137,7 +137,6 @@ return [
         'path'   => 'HTTP路径',
     ],
     'all_methods_if_empty'  => '为空默认为所有方法',
-    'any_character_is'      => '使用占位符“*”可匹配任意字符，如：“/auth/*”、“/auth/roles/*/edit”',
     'all'                   => '全部',
     'current_page'          => '当前页',
     'selected_rows'         => '选择的行',
