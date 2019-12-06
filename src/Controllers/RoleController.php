@@ -4,12 +4,12 @@ namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Auth\Permission;
-use Dcat\Admin\Models\Repositories\Role;
-use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\MiniGrid;
+use Dcat\Admin\Models\Repositories\Role;
+use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Routing\Controller;
@@ -160,7 +160,7 @@ class RoleController extends Controller
     public function form()
     {
         return Admin::form(new Role('permissions'), function (Form $form) {
-            $roleTable  = config('admin.database.roles_table');
+            $roleTable = config('admin.database.roles_table');
             $connection = config('admin.database.connection');
 
             $id = $form->getKey();
@@ -177,12 +177,14 @@ class RoleController extends Controller
             $form->tree('permissions')
                 ->nodes(function () {
                     $permissionModel = config('admin.database.permissions_model');
-                    $permissionModel = new $permissionModel;
+                    $permissionModel = new $permissionModel();
 
                     return $permissionModel->allNodes();
                 })
                 ->customFormat(function ($v) {
-                    if (!$v) return [];
+                    if (!$v) {
+                        return [];
+                    }
 
                     return array_column($v, 'id');
                 });

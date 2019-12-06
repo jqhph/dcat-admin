@@ -68,6 +68,7 @@ class Admin
      * Left sider-bar menu.
      *
      * @param Closure|null $builder
+     *
      * @return Menu
      */
     public static function menu(Closure $builder = null)

@@ -2,10 +2,10 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Models\Repositories\OperationLog;
-use Dcat\Admin\Models\OperationLog as OperationLogModel;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
+use Dcat\Admin\Models\Repositories\OperationLog;
+use Dcat\Admin\Models\OperationLog as OperationLogModel;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 
@@ -69,7 +69,9 @@ class LogController extends Controller
             $filter->equal('user_id', trans('admin.user'))
                 ->selectResource('auth/users')
                 ->options(function ($v) {
-                    if (!$v) return $v;
+                    if (!$v) {
+                        return $v;
+                    }
                     $userModel = config('admin.database.users_model');
 
                     return $userModel::findOrFail($v)->pluck('name', 'id');

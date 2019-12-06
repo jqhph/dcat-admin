@@ -26,7 +26,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\ResetPasswordCommand::class,
         Console\ExtendCommand::class,
         Console\ExportSeedCommand::class,
-        Console\IdeHelperCommand::class
+        Console\IdeHelperCommand::class,
     ];
 
     /**
@@ -40,7 +40,7 @@ class AdminServiceProvider extends ServiceProvider
         'admin.log'        => Middleware\LogOperation::class,
         'admin.permission' => Middleware\Permission::class,
         'admin.bootstrap'  => Middleware\Bootstrap::class,
-        'admin.session'    => Middleware\Session::class
+        'admin.session'    => Middleware\Session::class,
     ];
 
     /**
@@ -55,7 +55,7 @@ class AdminServiceProvider extends ServiceProvider
             'admin.log',
             'admin.bootstrap',
             'admin.permission',
-            'admin.session'
+            'admin.session',
         ],
     ];
 
@@ -113,7 +113,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register routes
+     * Register routes.
      */
     protected function registerRoutes()
     {
@@ -188,12 +188,11 @@ class AdminServiceProvider extends ServiceProvider
 
             // Register menu
             Admin::menu()->register();
-
         }, true);
     }
 
     /**
-     * Register admin services
+     * Register admin services.
      */
     protected function registerServices()
     {

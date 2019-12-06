@@ -2,13 +2,12 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Models\Repositories\Menu;
 use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
+use Dcat\Admin\Models\Repositories\Menu;
 use Dcat\Admin\Tree;
-use Dcat\Admin\Widgets\Box;
 use Dcat\Admin\Widgets\Card;
 use Illuminate\Routing\Controller;
 
@@ -46,7 +45,7 @@ class MenuController extends Controller
                     $form->multipleSelect('roles', trans('admin.roles'))
                         ->options($roleModel::all()->pluck('name', 'id'));
                     if ($menuModel::withPermission()) {
-                        $form->tree('permissions', trans('admin.permission'))->nodes((new $permissionModel)->allNodes());
+                        $form->tree('permissions', trans('admin.permission'))->nodes((new $permissionModel())->allNodes());
                     }
                     $form->hidden('_token')->default(csrf_token());
 
@@ -64,7 +63,7 @@ class MenuController extends Controller
     {
         $menuModel = config('admin.database.menu_model');
 
-        $tree = new Tree(new $menuModel);
+        $tree = new Tree(new $menuModel());
 
         $tree->disableCreateButton();
         $tree->disableQuickCreateButton();
@@ -139,7 +138,7 @@ class MenuController extends Controller
         if ($menuModel::withPermission()) {
             $form->tree('permissions', trans('admin.permission'))
                 ->nodes(function () use ($permissionModel) {
-                    return (new $permissionModel)->allNodes();
+                    return (new $permissionModel())->allNodes();
                 })
                 ->customFormat(function ($v) {
                     if (!$v) {

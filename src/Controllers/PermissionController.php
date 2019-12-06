@@ -3,12 +3,12 @@
 namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Models\Repositories\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
 use Dcat\Admin\MiniGrid;
+use Dcat\Admin\Models\Repositories\Permission;
 use Dcat\Admin\Show;
 use Dcat\Admin\Tree;
 use Illuminate\Routing\Controller;
@@ -92,7 +92,7 @@ class PermissionController extends Controller
 
     protected function miniGrid()
     {
-        $grid = new MiniGrid(new Permission);
+        $grid = new MiniGrid(new Permission());
 
         $grid->id->bold()->sortable();
         $grid->slug;
@@ -114,7 +114,7 @@ class PermissionController extends Controller
     {
         $model = config('admin.database.permissions_model');
 
-        $tree = new Tree(new $model);
+        $tree = new Tree(new $model());
 
         $tree->disableCreateButton();
 
@@ -129,7 +129,9 @@ class PermissionController extends Controller
 
             $path = array_filter($branch['http_path']);
 
-            if (!$path) return $payload.'</div>&nbsp;';
+            if (!$path) {
+                return $payload.'</div>&nbsp;';
+            }
 
             $max = 3;
             if (count($path) > $max) {
@@ -153,10 +155,10 @@ class PermissionController extends Controller
             })->implode('&nbsp;&nbsp;');
 
             $method = collect($method ?: ['ANY'])->unique()->map(function ($name) {
-                    return strtoupper($name);
-                })->map(function ($name) {
-                    return "<span class='label label-primary'>{$name}</span>";
-                })->implode('&nbsp;').'&nbsp;';
+                return strtoupper($name);
+            })->map(function ($name) {
+                return "<span class='label label-primary'>{$name}</span>";
+            })->implode('&nbsp;').'&nbsp;';
 
             $payload .= "</div>&nbsp; $method<a class=\"dd-nodrag\">$path</a>";
 
@@ -164,7 +166,6 @@ class PermissionController extends Controller
         });
 
         return $tree;
-
     }
 
     /**
@@ -183,14 +184,16 @@ class PermissionController extends Controller
         $grid->name;
 
         $grid->http_path->display(function ($path) {
-            if (!$path) return;
+            if (!$path) {
+                return;
+            }
 
             $method = $this->http_method ?: ['ANY'];
             $method = collect($method)->map(function ($name) {
-                    return strtoupper($name);
-                })->map(function ($name) {
-                    return "<span class='label label-primary'>{$name}</span>";
-                })->implode('&nbsp;').'&nbsp;';
+                return strtoupper($name);
+            })->map(function ($name) {
+                return "<span class='label label-primary'>{$name}</span>";
+            })->implode('&nbsp;').'&nbsp;';
 
             return collect($path)->filter()->map(function ($path) use ($method) {
                 if (Str::contains($path, ':')) {
@@ -287,7 +290,7 @@ class PermissionController extends Controller
     {
         return Admin::form(new Permission(), function (Form $form) {
             $permissionTable = config('admin.database.permissions_table');
-            $connection      = config('admin.database.connection');
+            $connection = config('admin.database.connection');
 
             $id = $form->getKey();
 
@@ -325,6 +328,7 @@ class PermissionController extends Controller
             if (!Str::startsWith($uri = $route->uri(), $prefix)) {
                 return;
             }
+
             return Str::replaceFirst($prefix, '', preg_replace('/{.*}+/', '*', $uri));
         })->filter()->all();
     }

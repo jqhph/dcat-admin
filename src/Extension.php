@@ -2,11 +2,10 @@
 
 namespace Dcat\Admin;
 
+use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Console\Command;
 
 abstract class Extension
 {
@@ -234,12 +233,12 @@ abstract class Extension
                     $command->warn("Menu [$path] already exists!");
                 } else {
                     $this->createMenu($title, $path, $icon);
-                    $command->info("Import extension menu succeeded!");
+                    $command->info('Import extension menu succeeded!');
                 }
             }
         }
 
-        if ($permission =  $this->permission()) {
+        if ($permission = $this->permission()) {
             if ($this->validatePermission($permission)) {
                 extract($permission);
 
@@ -247,7 +246,7 @@ abstract class Extension
                     $command->warn("Permission [$slug] already exists!");
                 } else {
                     $this->createPermission($name, $slug, $path);
-                    $command->info("Import extension permission succeeded!");
+                    $command->info('Import extension permission succeeded!');
                 }
             }
         }
@@ -260,7 +259,6 @@ abstract class Extension
      */
     public function uninstall(Command $command)
     {
-
     }
 
     /**
@@ -275,7 +273,7 @@ abstract class Extension
     public function validateMenu(array $menu)
     {
         /** @var \Illuminate\Validation\Validator $validator */
-        $validator = Validator::make($menu,  $this->menuValidationRules);
+        $validator = Validator::make($menu, $this->menuValidationRules);
 
         if ($validator->passes()) {
             return true;
@@ -316,7 +314,7 @@ abstract class Extension
     public function validatePermission(array $permission)
     {
         /** @var \Illuminate\Validation\Validator $validator */
-        $validator = Validator::make($permission,  $this->permissionValidationRules);
+        $validator = Validator::make($permission, $this->permissionValidationRules);
 
         if ($validator->passes()) {
             return true;
@@ -352,6 +350,7 @@ abstract class Extension
 
     /**
      * @param $slug
+     *
      * @return bool
      */
     protected function checkPermissionExist($slug)
@@ -364,8 +363,8 @@ abstract class Extension
         $result = $query->where('slug', $slug)
             ->get()
             ->first();
-        return $result ? true : false;
 
+        return $result ? true : false;
     }
 
     /**
@@ -409,7 +408,6 @@ abstract class Extension
      */
     public static function make()
     {
-        return new static;
+        return new static();
     }
-
 }

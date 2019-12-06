@@ -4,11 +4,12 @@ namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Auth\Permission;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Scaffold\ControllerCreator;
+use Dcat\Admin\Scaffold\LangCreator;
 use Dcat\Admin\Scaffold\MigrationCreator;
 use Dcat\Admin\Scaffold\ModelCreator;
 use Dcat\Admin\Scaffold\RepositoryCreator;
-use Dcat\Admin\Layout\Content;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
@@ -16,7 +17,6 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\MessageBag;
-use Dcat\Admin\Scaffold\LangCreator;
 use Illuminate\Support\Str;
 
 class ScaffoldController extends Controller
@@ -30,35 +30,35 @@ class ScaffoldController extends Controller
     ];
 
     public static $dataTypeMap = [
-        'int' => 'integer',
-        'int@unsigned' => 'unsignedInteger',
-        'tinyint' => 'tinyInteger',
-        'tinyint@unsigned' => 'unsignedTinyInteger',
-        'smallint' => 'smallInteger',
-        'smallint@unsigned' => 'unsignedSmallInteger',
-        'mediumint' => 'mediumInteger',
+        'int'                => 'integer',
+        'int@unsigned'       => 'unsignedInteger',
+        'tinyint'            => 'tinyInteger',
+        'tinyint@unsigned'   => 'unsignedTinyInteger',
+        'smallint'           => 'smallInteger',
+        'smallint@unsigned'  => 'unsignedSmallInteger',
+        'mediumint'          => 'mediumInteger',
         'mediumint@unsigned' => 'unsignedMediumInteger',
-        'bigint' => 'bigInteger',
-        'bigint@unsigned' => 'unsignedBigInteger',
+        'bigint'             => 'bigInteger',
+        'bigint@unsigned'    => 'unsignedBigInteger',
 
-        'date' => 'date',
-        'time' => 'time',
-        'datetime' => 'dateTime',
+        'date'      => 'date',
+        'time'      => 'time',
+        'datetime'  => 'dateTime',
         'timestamp' => 'timestamp',
 
-        'enum' => 'enum',
-        'json' => 'json',
+        'enum'   => 'enum',
+        'json'   => 'json',
         'binary' => 'binary',
 
-        'float' => 'float',
-        'double' => 'double',
+        'float'   => 'float',
+        'double'  => 'double',
         'decimal' => 'decimal',
 
-        'varchar' => 'string',
-        'char' => 'char',
-        'text' => 'text',
+        'varchar'    => 'string',
+        'char'       => 'char',
+        'text'       => 'text',
         'mediumtext' => 'mediumText',
-        'longtext' => 'longText',
+        'longtext'   => 'longText',
     ];
 
     public function index(Content $content)
@@ -91,7 +91,7 @@ class ScaffoldController extends Controller
         $paths = [];
         $message = '';
         
-        $creates = (array)$request->get('create');
+        $creates = (array) $request->get('create');
 
         try {
 
@@ -130,7 +130,7 @@ class ScaffoldController extends Controller
             }
 
             if (in_array('repository', $creates)) {
-                $paths['repository'] = (new RepositoryCreator)
+                $paths['repository'] = (new RepositoryCreator())
                     ->create($request->get('controller_name'), $request->get('model_name'));
             }
 
@@ -202,7 +202,9 @@ class ScaffoldController extends Controller
 
         try {
             foreach ($databases as $connectName => $value) {
-                if ($db && $db != $value['database']) continue;
+                if ($db && $db != $value['database']) {
+                    continue;
+                }
 
                 $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_schema = "%s"', $value['database']);
 
@@ -214,9 +216,9 @@ class ScaffoldController extends Controller
 
                 $collection = collect($tmp)->map(function ($v) use ($value) {
                     if (!$p = Arr::get($value, 'prefix')) {
-                        return (array)$v;
+                        return (array) $v;
                     }
-                    $v = (array)$v;
+                    $v = (array) $v;
 
                     $v['TABLE_NAME'] = Str::replaceFirst($p, '', $v['TABLE_NAME']);
 
@@ -233,18 +235,17 @@ class ScaffoldController extends Controller
                         }
 
                         return [
-                            'type' => $v['DATA_TYPE'],
-                            'default' => $v['COLUMN_DEFAULT'],
+                            'type'     => $v['DATA_TYPE'],
+                            'default'  => $v['COLUMN_DEFAULT'],
                             'nullable' => $v['IS_NULLABLE'],
-                            'key' => $v['COLUMN_KEY'],
-                            'id' => $v['COLUMN_KEY'] === 'PRI',
-                            'comment' => $v['COLUMN_COMMENT'],
+                            'key'      => $v['COLUMN_KEY'],
+                            'id'       => $v['COLUMN_KEY'] === 'PRI',
+                            'comment'  => $v['COLUMN_COMMENT'],
                         ];
                     })->toArray();
                 })->toArray();
             }
         } catch (\Throwable $e) {
-
         }
 
         return $data;

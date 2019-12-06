@@ -14,7 +14,7 @@ class RouteController extends Controller
 {
     public function index()
     {
-        $content = new Content;
+        $content = new Content();
 
         $content->header(trans('admin.routes'))->description(trans('admin.list'));
 
@@ -29,7 +29,7 @@ class RouteController extends Controller
                 'OPTIONS'=> 'blue',
             ];
 
-            $grid = new Grid;
+            $grid = new Grid();
 
             $grid->model()->setData(function (Grid\Model $model) {
                 return $this->getModel()->setRoutes($this->getRoutes())->get($model);
@@ -171,7 +171,6 @@ class RouteController extends Controller
                 'middleware' => $this->getRouteMiddleware($route),
             ];
         }
-
     }
 
     /**

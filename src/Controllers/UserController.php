@@ -4,12 +4,12 @@ namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Auth\Permission;
-use Dcat\Admin\Models\Repositories\Administrator;
-use Dcat\Admin\Models\Administrator as AdministratorModel;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\MiniGrid;
+use Dcat\Admin\Models\Administrator as AdministratorModel;
+use Dcat\Admin\Models\Repositories\Administrator;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Tree;
@@ -97,10 +97,10 @@ class UserController extends Controller
 
             $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');
-            $nodes = (new $permissionModel)->allNodes();
+            $nodes = (new $permissionModel())->allNodes();
             $grid->permissions
                 ->if(function () {
-                    return ! empty($this->roles);
+                    return !empty($this->roles);
                 })
                 ->tree(function (Grid\Displayers\Tree $tree) use (&$nodes, $roleModel) {
                     $tree->nodes($nodes);
@@ -113,7 +113,6 @@ class UserController extends Controller
                 })
                 ->else()
                 ->showEmpty();
-
 
             $grid->created_at;
             $grid->updated_at->sortable();
@@ -130,7 +129,6 @@ class UserController extends Controller
                     $actions->disableDelete();
                 }
             });
-
         });
     }
 
@@ -178,7 +176,9 @@ class UserController extends Controller
             $show->divider();
 
             $show->roles->width(6)->as(function ($roles) {
-                if (! $roles) return;
+                if (! $roles) {
+                    return;
+                }
 
                 return collect($roles)->pluck('name');
             })->label('primary');
@@ -188,7 +188,7 @@ class UserController extends Controller
 
                 $permissionModel = config('admin.database.permissions_model');
                 $roleModel = config('admin.database.roles_model');
-                $permissionModel = new $permissionModel;
+                $permissionModel = new $permissionModel();
                 $nodes = $permissionModel->allNodes();
 
                 $tree = Tree::make($nodes);
@@ -214,7 +214,6 @@ class UserController extends Controller
             if ($show->getKey() == AdministratorModel::DEFAULT_ID) {
                 $show->disableDeleteButton();
             }
-
         });
     }
 
@@ -249,6 +248,7 @@ class UserController extends Controller
                         if ($v == $this->password) {
                             return;
                         }
+
                         return $v;
                     });
             } else {
@@ -283,7 +283,7 @@ class UserController extends Controller
                 $form->password = bcrypt($form->password);
             }
 
-            if (! $form->password) {
+            if (!$form->password) {
                 $form->deleteInput('password');
             }
         });
@@ -304,5 +304,4 @@ class UserController extends Controller
 
         return $this->delete($id);
     }
-
 }

@@ -299,6 +299,7 @@ class IdeHelperCommand extends Command
         });
 
         $space = str_repeat(' ', 5);
+
         return trim(
             $columns
                 ->map(function ($value) use (&$space) {
@@ -373,7 +374,7 @@ class IdeHelperCommand extends Command
      */
     public function getFileNameByClass($class)
     {
-        if (! class_exists($class)) {
+        if (!class_exists($class)) {
             return;
         }
 

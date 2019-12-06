@@ -3,12 +3,13 @@
 namespace Dcat\Admin;
 
 use Closure;
+use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Form\Builder;
+use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
-use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Widgets\ModalForm;
 use Illuminate\Contracts\Support\MessageProvider;
@@ -22,62 +23,60 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
-use Dcat\Admin\Form\Concerns;
 
 /**
  * Class Form.
  *
- * @method Field\Text           text($column, $label = '')
- * @method Field\Checkbox       checkbox($column, $label = '')
- * @method Field\Radio          radio($column, $label = '')
- * @method Field\Select         select($column, $label = '')
- * @method Field\MultipleSelect multipleSelect($column, $label = '')
- * @method Field\Textarea       textarea($column, $label = '')
- * @method Field\Hidden         hidden($column, $label = '')
- * @method Field\Id             id($column, $label = '')
- * @method Field\Ip             ip($column, $label = '')
- * @method Field\Url            url($column, $label = '')
- * @method Field\Color          color($column, $label = '')
- * @method Field\Email          email($column, $label = '')
- * @method Field\Mobile         mobile($column, $label = '')
- * @method Field\Slider         slider($column, $label = '')
- * @method Field\Map            map($latitude, $longitude, $label = '')
- * @method Field\Editor         editor($column, $label = '')
- * @method Field\Date           date($column, $label = '')
- * @method Field\Datetime       datetime($column, $label = '')
- * @method Field\Time           time($column, $label = '')
- * @method Field\Year           year($column, $label = '')
- * @method Field\Month          month($column, $label = '')
- * @method Field\DateRange      dateRange($start, $end, $label = '')
- * @method Field\DateTimeRange  datetimeRange($start, $end, $label = '')
- * @method Field\TimeRange      timeRange($start, $end, $label = '')
- * @method Field\Number         number($column, $label = '')
- * @method Field\Currency       currency($column, $label = '')
- * @method Field\SwitchField    switch($column, $label = '')
- * @method Field\Display        display($column, $label = '')
- * @method Field\Rate           rate($column, $label = '')
- * @method Field\Divide         divider()
- * @method Field\Password       password($column, $label = '')
- * @method Field\Decimal        decimal($column, $label = '')
- * @method Field\Html           html($html, $label = '')
- * @method Field\Tags           tags($column, $label = '')
- * @method Field\Icon           icon($column, $label = '')
- * @method Field\Embeds         embeds($column, $label = '')
- * @method Field\Captcha        captcha()
- * @method Field\Listbox        listbox($column, $label = '')
- * @method Field\SelectResource selectResource($column, $label = '')
- * @method Field\File           file($column, $label = '')
- * @method Field\Image          image($column, $label = '')
- * @method Field\MultipleFile   multipleFile($column, $label = '')
- * @method Field\MultipleImage  multipleImage($column, $label = '')
- * @method Field\HasMany        hasMany($column, $labelOrCallback, $callback = null)
- * @method Field\Tree           tree($column, $label = '')
- * @method Field\Table          table($column, $labelOrCallback, $callback = null)
- * @method Field\ListField      list($column, $label = '')
- * @method Field\Timezone       timezone($column, $label = '')
- * @method Field\KeyValue       keyValue($column, $label = '')
- * @method Field\Tel            tel($column, $label = '')
- *
+ * @method Field\Text                   text($column, $label = '')
+ * @method Field\Checkbox               checkbox($column, $label = '')
+ * @method Field\Radio                  radio($column, $label = '')
+ * @method Field\Select                 select($column, $label = '')
+ * @method Field\MultipleSelect         multipleSelect($column, $label = '')
+ * @method Field\Textarea               textarea($column, $label = '')
+ * @method Field\Hidden                 hidden($column, $label = '')
+ * @method Field\Id                     id($column, $label = '')
+ * @method Field\Ip                     ip($column, $label = '')
+ * @method Field\Url                    url($column, $label = '')
+ * @method Field\Color                  color($column, $label = '')
+ * @method Field\Email                  email($column, $label = '')
+ * @method Field\Mobile                 mobile($column, $label = '')
+ * @method Field\Slider                 slider($column, $label = '')
+ * @method Field\Map                    map($latitude, $longitude, $label = '')
+ * @method Field\Editor                 editor($column, $label = '')
+ * @method Field\Date                   date($column, $label = '')
+ * @method Field\Datetime               datetime($column, $label = '')
+ * @method Field\Time                   time($column, $label = '')
+ * @method Field\Year                   year($column, $label = '')
+ * @method Field\Month                  month($column, $label = '')
+ * @method Field\DateRange              dateRange($start, $end, $label = '')
+ * @method Field\DateTimeRange          datetimeRange($start, $end, $label = '')
+ * @method Field\TimeRange              timeRange($start, $end, $label = '')
+ * @method Field\Number                 number($column, $label = '')
+ * @method Field\Currency               currency($column, $label = '')
+ * @method Field\SwitchField            switch($column, $label = '')
+ * @method Field\Display                display($column, $label = '')
+ * @method Field\Rate                   rate($column, $label = '')
+ * @method Field\Divide                 divider()
+ * @method Field\Password               password($column, $label = '')
+ * @method Field\Decimal                decimal($column, $label = '')
+ * @method Field\Html                   html($html, $label = '')
+ * @method Field\Tags                   tags($column, $label = '')
+ * @method Field\Icon                   icon($column, $label = '')
+ * @method Field\Embeds                 embeds($column, $label = '')
+ * @method Field\Captcha                captcha()
+ * @method Field\Listbox                listbox($column, $label = '')
+ * @method Field\SelectResource         selectResource($column, $label = '')
+ * @method Field\File                   file($column, $label = '')
+ * @method Field\Image                  image($column, $label = '')
+ * @method Field\MultipleFile           multipleFile($column, $label = '')
+ * @method Field\MultipleImage          multipleImage($column, $label = '')
+ * @method Field\HasMany                hasMany($column, $labelOrCallback, $callback = null)
+ * @method Field\Tree                   tree($column, $label = '')
+ * @method Field\Table                  table($column, $labelOrCallback, $callback = null)
+ * @method Field\ListField              list($column, $label = '')
+ * @method Field\Timezone               timezone($column, $label = '')
+ * @method Field\KeyValue               keyValue($column, $label = '')
+ * @method Field\Tel                    tel($column, $label = '')
  * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
  * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
  * @method Field\BootstrapMultipleImage bootstrapMultipleImage($column, $label = '')
@@ -272,14 +271,14 @@ class Form implements Renderable
      * Create a new form instance.
      *
      * @param Repository $model
-     * @param \Closure $callback
+     * @param \Closure   $callback
      */
     public function __construct(?Repository $repository = null, ?Closure $callback = null, Request $request = null)
     {
-        $this->repository    = $repository ? Admin::repository($repository) : null;
-        $this->callback      = $callback;
-        $this->request       = $request ?: request();
-        $this->builder       = new Builder($this);
+        $this->repository = $repository ? Admin::repository($repository) : null;
+        $this->callback = $callback;
+        $this->request = $request ?: request();
+        $this->builder = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
         $this->setModel(new Fluent());
@@ -291,6 +290,7 @@ class Form implements Renderable
      * Create a form instance.
      *
      * @param mixed ...$params
+     *
      * @return $this
      */
     public static function make(...$params)
@@ -322,6 +322,7 @@ class Form implements Renderable
      * Get specify field.
      *
      * @param string|null $name
+     *
      * @return Field|Collection|Field[]|null
      */
     public function field($name = null)
@@ -331,6 +332,7 @@ class Form implements Renderable
 
     /**
      * @param $column
+     *
      * @return $this
      */
     public function removeField($column)
@@ -394,6 +396,7 @@ class Form implements Renderable
      * Disable submit with ajax.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableAjaxSubmit(bool $disable = true)
@@ -413,6 +416,7 @@ class Form implements Renderable
 
     /**
      * @param \Closure $closure
+     *
      * @return $this;
      */
     public function wrap(\Closure $closure)
@@ -562,8 +566,9 @@ class Form implements Renderable
     /**
      * Store a new record.
      *
-     * @param array|null $data
+     * @param array|null    $data
      * @param string|string $redirectTo
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\Http\JsonResponse|Response
      */
     public function store(?array $data = null, $redirectTo = null)
@@ -599,6 +604,7 @@ class Form implements Renderable
      * Before store.
      *
      * @param array $data
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|Response|void
      */
     protected function beforeStore(array $data)
@@ -728,6 +734,7 @@ class Form implements Renderable
      * Set data for insert or update.
      *
      * @param array $updates
+     *
      * @return $this
      */
     public function setUpdates(array $updates)
@@ -759,8 +766,9 @@ class Form implements Renderable
      * Handle update.
      *
      * @param $id
-     * @param array|null $data
+     * @param array|null  $data
      * @param string|null $redirectTo
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse||Response
      */
     public function update(
@@ -793,6 +801,7 @@ class Form implements Renderable
      * Before update.
      *
      * @param array $data
+     *
      * @return Response|void
      */
     protected function beforeUpdate($id, array &$data)
@@ -837,6 +846,7 @@ class Form implements Renderable
 
     /**
      * @param array|MessageBag $validationMessages
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     protected function makeValidationErrorsResponse($validationMessages)
@@ -855,6 +865,7 @@ class Form implements Renderable
      *
      * @param string $url
      * @param array|string $options
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function redirect(?string $url, $options = null)
@@ -887,6 +898,7 @@ class Form implements Renderable
     /**
      * @param $key
      * @param $redirectTo
+     *
      * @return string|false
      */
     public function getRedirectUrl($key, $redirectTo = null)
@@ -1453,6 +1465,7 @@ class Form implements Renderable
      * Tools setting for form.
      *
      * @param Closure $callback
+     *
      * @return $this;
      */
     public function tools(Closure $callback)
@@ -1464,6 +1477,7 @@ class Form implements Renderable
 
     /**
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableHeader(bool $disable = true)
@@ -1475,6 +1489,7 @@ class Form implements Renderable
 
     /**
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableFooter(bool $disable = true)
@@ -1584,6 +1599,7 @@ class Form implements Renderable
      * Footer setting for form.
      *
      * @param Closure $callback
+     *
      * @return $this
      */
     public function footer(Closure $callback)
@@ -1617,6 +1633,7 @@ class Form implements Renderable
      * Set resource path.
      *
      * @param string $resource
+     *
      * @return $this
      */
     public function resource(string $resource)
@@ -1686,6 +1703,7 @@ class Form implements Renderable
 
     /**
      * @param int $width
+     *
      * @return $this
      */
     public function setDefaultBlockWidth(int $width)
@@ -1707,6 +1725,7 @@ class Form implements Renderable
 
     /**
      * @param Closure $callback
+     *
      * @return bool|void
      */
     public function inModal(\Closure $callback = null)
@@ -1724,6 +1743,7 @@ class Form implements Renderable
      * Create a modal form.
      *
      * @param string|null $title
+     *
      * @return ModalForm
      */
     public static function modal(?string $title = null)

@@ -188,7 +188,7 @@ class AuthController extends Controller
                 $form->password = bcrypt($form->password);
             }
 
-            if (! $form->password) {
+            if (!$form->password) {
                 $form->deleteInput('password');
             }
         });

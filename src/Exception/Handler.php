@@ -56,5 +56,4 @@ class Handler
 
         logger()->error($message, $context);
     }
-
 }

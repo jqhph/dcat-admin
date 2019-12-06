@@ -172,7 +172,7 @@ return [
         'selected_files'         => '选中:num个文件，共:size。',
         'selected_has_failed'    => '已成功上传:success个文件，:fail个文件上传失败，<a class="retry"  href="javascript:"";">重新上传</a>失败文件或<a class="ignore" href="javascript:"";">忽略</a>',
         'selected_success'       => '共:num个(:size)，已上传:success个。',
-        'dot'                    =>                 '，',
+        'dot'                    => '，',
         'failed_num'             => '失败:fail个。',
         'pause_upload'           => '暂停上传',
         'go_on_upload'           => '继续上传',

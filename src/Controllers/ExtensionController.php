@@ -2,18 +2,15 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Extension\Grid\BuildExtensionButton;
 use Dcat\Admin\Extension\Grid\ImportButton;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Repositories\Extension;
-use Dcat\Admin\Widgets\Alert;
 use Dcat\Admin\Widgets\Box;
 use Dcat\Admin\Widgets\Table;
 use Dcat\Admin\Widgets\Terminal;
-use Dcat\Admin\Widgets\Tooltip;
 use Illuminate\Routing\Controller;
 
 class ExtensionController extends Controller
@@ -24,6 +21,7 @@ class ExtensionController extends Controller
      * Index interface.
      *
      * @param Content $content
+     *
      * @return Content
      */
     public function index(Content $content)
@@ -80,7 +78,7 @@ class ExtensionController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new Extension);
+        $grid = new Grid(new Extension());
 
         $grid->disablePagination();
         $grid->disableCreateButton();
@@ -113,7 +111,9 @@ class ExtensionController extends Controller
             })
             ->limit(14)
             ->expand(function ($expand) {
-                if (!$this->description) return;
+                if (!$this->description) {
+                    return;
+                }
 
                 return "<div style='padding:10px 20px'>{$this->description}</div>";
             });
@@ -153,7 +153,7 @@ class ExtensionController extends Controller
      */
     public function form()
     {
-        $form = new Form(new Extension);
+        $form = new Form(new Extension());
 
         $form->hidden('enable');
 
@@ -167,10 +167,12 @@ class ExtensionController extends Controller
     protected function getExpandHandler($key = 'require')
     {
         return function () use ($key) {
-            if (!$this->{$key}) return;
+            if (!$this->{$key}) {
+                return;
+            }
 
             $rows = [];
-            foreach ((array)$this->{$key} as $k => $v) {
+            foreach ((array) $this->{$key} as $k => $v) {
                 $k = "<b class='text-80'>$k</b>";
 
                 $rows[$k] = $v;
@@ -201,16 +203,19 @@ class ExtensionController extends Controller
         };
 
         $authors = function ($v) {
-            if (!$v) return;
+            if (!$v) {
+                return;
+            }
             foreach ($v as &$item) {
                 $item = "<span class='text-80 bold'>{$item['name']}</span> <<code>{$item['email']}</code>>";
             }
-            return join('<br/>', $v);
+            return implode('<br/>', $v);
         };
 
         $imported = function ($v) {
             if (!$v) {
                 $text = trans('admin.is_not_import');
+
                 return "<label class='label label-default'>$text</label>";
             }
 
@@ -222,5 +227,4 @@ class ExtensionController extends Controller
         Grid\Column::define('authors', $authors);
         Grid\Column::define('imported', $imported);
     }
-
 }
