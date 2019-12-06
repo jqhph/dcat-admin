@@ -61,6 +61,11 @@ class Tree extends Field
     protected $filterParents = true;
 
     /**
+     * @var bool
+     */
+    protected $readOnly = false;
+
+    /**
      * @param array|Arrayable|\Closure $data exp:
      *     {
      *          "id": "1",
@@ -87,6 +92,18 @@ class Tree extends Field
     public function disableFilterParents()
     {
         $this->filterParents = false;
+
+        return $this;
+    }
+
+    /**
+     * Set the field as readonly mode.
+     *
+     * @return $this
+     */
+    public function readOnly()
+    {
+        $this->readOnly = true;
 
         return $this;
     }
@@ -142,7 +159,7 @@ class Tree extends Field
                 $v['state']['selected'] = true;
             }
 
-            if (!empty($this->attributes['disabled'])) {
+            if ($this->readOnly) {
                 $v['state']['disabled'] = true;
             }
 
@@ -231,7 +248,7 @@ class Tree extends Field
             1 => trans('admin.selectall'),
             2 => trans('admin.expand')
         ]);
-        if (!empty($this->attributes['disabled'])) {
+        if ($this->readOnly) {
             $checkboxes->disabled(1);
         }
 
