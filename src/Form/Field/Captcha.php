@@ -32,10 +32,12 @@ class Captcha extends Text
     public function render()
     {
         $this->script = <<<JS
-$('#{$this->column}-captcha').click(function () {
-    $(this).attr('src', $(this).attr('src')+'?'+Math.random());
+$('.field-refresh-captcha').off('click').click(function () {
+    $(this).attr('src', $(this).attr('data-url')+'?'+Math.random());
 });
 JS;
+
+        $this->addVariables(['captchaSrc' => captcha_src()]);
 
         return parent::render();
     }
