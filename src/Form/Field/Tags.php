@@ -163,10 +163,7 @@ class Tags extends Field
             );
         }
 
-        $this->script = "$(\"{$this->getElementClassSelector()}\").select2({
-            tags: true,
-            tokenSeparators: [',']
-        });";
+        $this->setupScript();
 
         if ($this->keyAsValue) {
             $options = $value + $this->options;
@@ -178,6 +175,47 @@ class Tags extends Field
             'options'    => $options,
             'keyAsValue' => $this->keyAsValue,
         ]);
+    }
+
+    protected function setupScript()
+    {
+        // 解决部分浏览器开启 tags: true 后无法输入中文的BUG
+        // 支持【逗号】【分号】【空格】结尾生成tags
+        $this->script = <<<JS
+$("{$this->getElementClassSelector()}").select2({
+    tags: true,
+    tokenSeparators: [',', ';', '，', '；', ' '],
+    createTag: function(params) {
+        if (/[,;，； ]/.test(params.term)) {
+            var str = params.term.trim().replace(/[,;，；]*$/, '');
+            return { id: str, text: str }
+        } else {
+            return null;
+        }
+    }
+});
+JS;
+
+        // 解决输入中文后无法回车结束的问题。
+        Admin::script(
+            <<<'JS'
+$(document).off('keyup', '.select2-selection--multiple .select2-search__field').on('keyup', '.select2-selection--multiple .select2-search__field', function (event) {
+    try {
+        if(event.keyCode == 13){
+            var $this = $(this), optionText = $this.val();
+            if (optionText != "" && $this.find("option[value='" + optionText + "']").length === 0) {
+                var $select = $this.parents('.select2-container').prev("select");
+                var newOption = new Option(optionText, optionText, true, true);
+                $select.append(newOption).trigger('change');
+                $this.val('');
+            }
+        }
+    } catch (e) {
+        console.error(e);
+    }
+});
+JS
+        );
     }
 
     public static function collectAssets()
