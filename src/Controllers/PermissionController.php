@@ -243,7 +243,7 @@ class PermissionController extends Controller
     {
         $show = new Show(new Permission());
 
-        $show->setId($id);
+        $show->setKey($id);
 
         $show->id;
         $show->slug;

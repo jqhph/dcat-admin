@@ -178,7 +178,20 @@ class Show implements Renderable
      */
     public function model()
     {
+        if (! $this->model) {
+            $this->setupModel();
+        }
+
         return $this->model;
+    }
+
+    protected function setupModel()
+    {
+        if ($this->repository) {
+            $this->setModel(new Fluent($this->repository->detail($this)));
+        } else {
+            $this->setModel(new Fluent());
+        }
     }
 
     /**
@@ -581,17 +594,6 @@ class Show implements Renderable
         return false;
     }
 
-    protected function setupModel()
-    {
-        if ($this->repository && ! $this->model) {
-            $this->setModel(new Fluent($this->repository->detail($this)));
-        }
-
-        if (! $this->model) {
-            $this->setModel(new Fluent());
-        }
-    }
-
     /**
      * Render the show panels.
      *
@@ -600,8 +602,6 @@ class Show implements Renderable
     public function render()
     {
         try {
-            $this->setupModel();
-
             $model = $this->model();
 
             if (is_callable($this->builder)) {
