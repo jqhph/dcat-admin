@@ -144,7 +144,6 @@ class Form implements Renderable
         $this->initFields();
 
         $this->initFormAttributes();
-
     }
 
     /**
@@ -557,7 +556,6 @@ HTML;
     });
 })()
 JS
-
         );
     }
 

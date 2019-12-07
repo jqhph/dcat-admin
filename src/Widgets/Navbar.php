@@ -110,8 +110,7 @@ class Navbar extends Widget
         array $options,
         \Closure $closure = null,
         bool $right = false
-    )
-    {
+    ) {
         $dropdown = Dropdown::make($options)
             ->button($text)
             ->buttonClass('')
@@ -177,6 +176,4 @@ JS
 
         return "<li class='nav-li $active'>$item</li>";
     }
-
 }
-

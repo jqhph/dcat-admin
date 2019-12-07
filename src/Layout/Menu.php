@@ -172,7 +172,9 @@ class Menu
      */
     public function getPath($uri)
     {
-        if (!$uri) return $uri;
+        if (!$uri) {
+            return $uri;
+        }
 
         return url()->isValidUrl($uri) ? $uri : admin_base_path($uri);
     }
@@ -184,7 +186,9 @@ class Menu
      */
     public function getUrl($uri)
     {
-        if (!$uri) return $uri;
+        if (!$uri) {
+            return $uri;
+        }
 
         return admin_url($uri);
     }

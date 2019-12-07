@@ -267,7 +267,6 @@ HTML;
         <i class="ti-pencil-alt "></i><span class="hidden-xs"> {$edit}</span>
     </a>
 EOF;
-
         }
 
         if ($this->showQuickEdit) {

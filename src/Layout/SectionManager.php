@@ -102,7 +102,6 @@ class SectionManager
         $content = $this->getSections($section) ?: $defaultSection;
 
         return $this->resolveContent($section, $content, $options);
-
     }
 
     /**
@@ -130,7 +129,8 @@ class SectionManager
         krsort($this->sections[$name]);
 
         return call_user_func_array(
-            'array_merge', $this->sections[$name]
+            'array_merge',
+            $this->sections[$name]
         );
     }
 

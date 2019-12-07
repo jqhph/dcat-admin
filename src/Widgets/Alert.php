@@ -164,5 +164,4 @@ class Alert extends Widget
             'showCloseBtn' => $this->showCloseBtn,
         ];
     }
-
 }

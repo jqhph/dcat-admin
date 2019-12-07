@@ -167,7 +167,6 @@ trait ModelTree
             ->orderByRaw($byOrder)
             ->get()
             ->toArray();
-
     }
 
     /**

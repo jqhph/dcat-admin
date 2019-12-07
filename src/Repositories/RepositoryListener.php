@@ -66,5 +66,4 @@ abstract class RepositoryListener
     public function deleted(Form $form, array $originalAttributes, $result)
     {
     }
-
 }

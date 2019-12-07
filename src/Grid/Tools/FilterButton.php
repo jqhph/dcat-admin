@@ -46,7 +46,8 @@ class FilterButton extends AbstractTool
     {
         $id = $this->filter()->getFilterID();
 
-        Admin::script(<<<JS
+        Admin::script(
+            <<<JS
 $('.{$this->getElementClassName()}').click(function(){
     $('#{$id}').parent().collapse('toggle');
 }); 

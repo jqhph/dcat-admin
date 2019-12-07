@@ -280,5 +280,4 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
     {
         $this->attributes[$name] = $value;
     }
-
 }

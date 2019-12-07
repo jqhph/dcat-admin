@@ -135,5 +135,4 @@ class Role extends Model
             $model->permissions()->detach();
         });
     }
-
 }

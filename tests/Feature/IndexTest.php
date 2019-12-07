@@ -6,8 +6,6 @@ use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-
-
     public function testIndex()
     {
         $this->visit('admin/')
@@ -46,6 +44,5 @@ class IndexTest extends TestCase
             ->seePageis('admin/helpers/routes')
             ->click('Icons')
             ->seePageis('admin/helpers/icons');
-
     }
 }

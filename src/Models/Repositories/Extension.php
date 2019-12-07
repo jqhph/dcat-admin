@@ -60,7 +60,9 @@ class Extension extends Repository
 
         $extension = Admin::getExtensions()[$id] ?? null;
 
-        if (!$extension) return false;
+        if (!$extension) {
+            return false;
+        }
 
         $attributes = $form->getUpdates();
 
@@ -100,5 +102,4 @@ class Extension extends Repository
     {
         return [];
     }
-
 }

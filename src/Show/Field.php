@@ -423,7 +423,9 @@ HTML;
     public function explode(string $d = ',')
     {
         return $this->as(function ($v) use ($d) {
-            if (is_array($v) || $v instanceof Arrayable) return $v;
+            if (is_array($v) || $v instanceof Arrayable) {
+                return $v;
+            }
 
             return $v ? explode($d, $v) : [];
         });
@@ -578,7 +580,6 @@ HTML;
 
             return $extend->render(...$arguments);
         });
-
     }
 
     /**
@@ -666,7 +667,6 @@ HTML;
         }
 
         $this->as($class);
-
     }
 
     /**
@@ -689,5 +689,4 @@ HTML;
     {
         return static::$extendedFields;
     }
-
 }

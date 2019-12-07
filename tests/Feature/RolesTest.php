@@ -8,8 +8,6 @@ use Dcat\Admin\Models\Administrator;
 
 class RolesTest extends TestCase
 {
-
-
     public function testRolesIndex()
     {
         $this->visit('admin/auth/roles')

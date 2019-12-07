@@ -52,6 +52,5 @@ class Terminal extends Widget
         return <<<EOF
 {$style}<pre {$this->formatHtmlAttributes()}>{$this->content}</pre>
 EOF;
-
     }
 }

@@ -30,4 +30,3 @@ class StringOutput extends Output
         return trim($this->output);
     }
 }
-

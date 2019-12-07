@@ -174,5 +174,4 @@ class Box extends Widget
             'padding'    => $this->padding,
         ];
     }
-
 }

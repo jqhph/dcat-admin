@@ -11,5 +11,4 @@ use Illuminate\Support\Arr;
 class Doughnut extends Pie
 {
     protected $type = 'doughnut';
-
 }

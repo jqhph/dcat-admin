@@ -23,7 +23,6 @@ class DropdownController extends Controller
                 $row->column(3, $this->example2());
                 $row->column(3, $this->example3());
             });
-
     }
 
     protected function example1()
@@ -84,6 +83,4 @@ JS
 
         return Box::make('Example3', $menu1);
     }
-
-
 }

@@ -219,5 +219,4 @@ JS
         Admin::collectComponentAssets('waypoints');
         Admin::collectComponentAssets('jquery.counterup');
     }
-
 }

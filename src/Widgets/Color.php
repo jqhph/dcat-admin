@@ -177,6 +177,5 @@ class Color
         $key = Helper::slug($method);
 
         return static::$theme[$key] ?? ($arguments[0] ?? null);
-
     }
 }

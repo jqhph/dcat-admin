@@ -242,7 +242,6 @@ class ModalForm
 })();
 JS
         );
-
     }
 
     protected function setupOptions()
@@ -294,5 +293,4 @@ JS
             $content->setView(static::$contentView);
         });
     }
-
 }

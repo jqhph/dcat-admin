@@ -90,5 +90,4 @@ class ComposerProperty implements Arrayable
     {
         return json_encode($this->toArray());
     }
-
 }

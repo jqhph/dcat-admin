@@ -195,5 +195,4 @@ abstract class Widget implements Renderable
     {
         return $this->render();
     }
-
 }

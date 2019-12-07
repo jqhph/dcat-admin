@@ -169,7 +169,8 @@ class Editable extends AbstractDisplayer
     {
         if (!static::$setup) {
             static::$setup = 1;
-            Admin::script(<<<'JS'
+            Admin::script(
+                <<<'JS'
 $.fn.editable.defaults.params = function (params) {
     params._token = LA.token;
     params._editable = 1;

@@ -487,7 +487,8 @@ HTML
             $queryString = http_build_query($constraints);
         }
 
-        return sprintf('%s/create%s',
+        return sprintf(
+            '%s/create%s',
             $this->getResource(),
             $queryString ? ('?'.$queryString) : ''
         );

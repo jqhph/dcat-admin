@@ -101,5 +101,4 @@ class Card extends Widget
             'padding'    => $this->padding,
         ];
     }
-
 }

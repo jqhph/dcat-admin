@@ -22,7 +22,9 @@ trait ShowCreator
         }
 
         foreach ($fields as $k => $field) {
-            if (empty($field['name'])) continue;
+            if (empty($field['name'])) {
+                continue;
+            }
 
             $rows[] = "            \$show->{$field['name']};";
 

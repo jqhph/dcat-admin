@@ -92,6 +92,4 @@ trait HasHtmlAttributes
     {
         return Helper::buildHtmlAttributes($this->htmlAttributes);
     }
-
 }
-

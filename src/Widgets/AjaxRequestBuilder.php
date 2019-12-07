@@ -90,7 +90,7 @@ trait AjaxRequestBuilder
      */
     public function refetch($selector)
     {
-        $this->buttonSelectors = 
+        $this->buttonSelectors =
             array_merge($this->buttonSelectors, (array)$selector);
 
         return $this;
@@ -167,7 +167,6 @@ window.{$this->fn} = function (p) {
 {$this->fn}();
 $binding;
 JS;
-
     }
 
     /**
@@ -189,5 +188,4 @@ JS;
 
         return $this;
     }
-
 }

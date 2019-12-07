@@ -71,5 +71,4 @@ class Pie extends Chart
     {
         return $this->animation(['animateScale' => $val]);
     }
-
 }

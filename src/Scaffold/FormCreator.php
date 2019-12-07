@@ -24,9 +24,13 @@ EOF
         ];
 
         foreach ($fields as $field) {
-            if (empty($field['name'])) continue;
+            if (empty($field['name'])) {
+                continue;
+            }
 
-            if ($field['name'] == $primaryKey) continue;
+            if ($field['name'] == $primaryKey) {
+                continue;
+            }
 
             $rows[] = "            \$form->text('{$field['name']}');";
         }

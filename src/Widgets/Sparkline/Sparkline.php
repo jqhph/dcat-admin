@@ -170,7 +170,6 @@ class Sparkline extends Widget
             $combos .= <<<JS
 $('#{$this->id}').sparkline($v, $o);
 JS;
-
         }
 
         if (!$this->allowBuildFetchingScript()) {
@@ -211,7 +210,6 @@ JS
         return <<<HTML
 <span {$this->formatHtmlAttributes()}></span>
 HTML;
-
     }
 
     /**
@@ -283,5 +281,4 @@ HTML;
         $this->script && Admin::script($this->script);
         Admin::collectComponentAssets('jquery.sparkline');
     }
-
 }

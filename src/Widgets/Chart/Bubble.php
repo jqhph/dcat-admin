@@ -27,6 +27,4 @@ class Bubble extends Chart
     ];
 
     protected $type = 'bubble';
-
-
 }

@@ -55,5 +55,4 @@ class Checkbox extends Radio
 
         return $v;
     }
-
 }

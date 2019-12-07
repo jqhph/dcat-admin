@@ -62,5 +62,4 @@ trait MenuCache
     {
         return Cache::store(config('admin.menu.cache.store', 'file'));
     }
-
 }

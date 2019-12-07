@@ -34,7 +34,6 @@ class SectionTest extends TestCase
 
         admin_inject_section('key1', function ($options) {
             return "previous:{$options->previous},name:{$options->name},age:{$options->age}";
-
         }, false);
 
         $this->assertEquals(
@@ -105,7 +104,5 @@ class SectionTest extends TestCase
         admin_inject_section('key', '');
 
         $this->assertEquals(admin_section('key'), '');
-
     }
-
 }

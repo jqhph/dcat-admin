@@ -13,7 +13,9 @@ trait ScaleSetting
      */
     public function scales(array $opts)
     {
-        if (!isset($this->options['scales'])) $this->options['scales'] = [];
+        if (!isset($this->options['scales'])) {
+            $this->options['scales'] = [];
+        }
 
         $this->options['scales'] = array_merge($this->options['scales'], $opts);
 
@@ -78,7 +80,9 @@ trait ScaleSetting
      */
     public function scale(array $opts)
     {
-        if (!isset($this->options['scale'])) $this->options['scale'] = [];
+        if (!isset($this->options['scale'])) {
+            $this->options['scale'] = [];
+        }
 
         $this->options['scale'] = array_merge($this->options['scale'], $opts);
 

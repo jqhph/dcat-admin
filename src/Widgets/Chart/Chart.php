@@ -50,15 +50,13 @@ abstract class Chart extends Widget
     public function __construct(...$params)
     {
         if (count($params) == 2) {
-            list ($title, $labels) = $params;
+            list($title, $labels) = $params;
 
             $title && $this->title($title);
             $labels && $this->labels($labels);
-
         } elseif (!empty($params[0])) {
             if (is_string($params[0])) {
                 $this->title($params[0]);
-
             } elseif (is_array($params[0])) {
                 $this->labels($params[0]);
             }
@@ -162,7 +160,9 @@ abstract class Chart extends Widget
      */
     public function legend(array $opts)
     {
-        if (!isset($this->options['legend'])) $this->options['legend'] = [];
+        if (!isset($this->options['legend'])) {
+            $this->options['legend'] = [];
+        }
 
         $this->options['legend'] = array_merge($this->options['legend'], $opts);
 
@@ -193,7 +193,9 @@ abstract class Chart extends Widget
      */
     public function tooltips(array $opts)
     {
-        if (!isset($this->options['tooltips'])) $this->options['tooltips'] = [];
+        if (!isset($this->options['tooltips'])) {
+            $this->options['tooltips'] = [];
+        }
 
         $this->options['tooltips'] = array_merge($this->options['tooltips'], $opts);
 
@@ -235,7 +237,9 @@ abstract class Chart extends Widget
      */
     public function elements(array $options)
     {
-        if (!isset($this->options['elements'])) $this->options['elements'] = [];
+        if (!isset($this->options['elements'])) {
+            $this->options['elements'] = [];
+        }
 
         $this->options['elements'] = array_merge($this->options['elements'], $options);
 
@@ -250,7 +254,9 @@ abstract class Chart extends Widget
      */
     public function layout(array $opts)
     {
-        if (!isset($this->options['layout'])) $this->options['layout'] = [];
+        if (!isset($this->options['layout'])) {
+            $this->options['layout'] = [];
+        }
 
         $this->options['layout'] = array_merge($this->options['layout'], $opts);
 
@@ -274,7 +280,9 @@ abstract class Chart extends Widget
      */
     public function animation(array $opts)
     {
-        if (!isset($this->options['animation'])) $this->options['animation'] = [];
+        if (!isset($this->options['animation'])) {
+            $this->options['animation'] = [];
+        }
 
         $this->options['animation'] = array_merge($this->options['animation'], $opts);
 
@@ -398,7 +406,6 @@ JS
         );
 
         return $globalSettings.$this->buildFetchingScript();
-
     }
 
     /**
@@ -415,7 +422,6 @@ JS
 
             return $v;
         }, $this->data['datasets']);
-
     }
 
     /**

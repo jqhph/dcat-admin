@@ -130,7 +130,9 @@ class Tree extends Widget
         }
         $value = (array)$value;
 
-        if (!$this->nodes) return;
+        if (!$this->nodes) {
+            return;
+        }
 
         $idColumn     = $this->columnNames['id'];
         $textColumn   = $this->columnNames['text'];
@@ -139,7 +141,9 @@ class Tree extends Widget
         $nodes = [];
 
         foreach ($this->nodes as &$v) {
-            if (empty($v[$idColumn])) continue;
+            if (empty($v[$idColumn])) {
+                continue;
+            }
 
             $parentId = $v[$parentColumn] ?? '#';
             if (empty($parentId)) {

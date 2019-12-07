@@ -159,6 +159,5 @@ class AdminTablesSeeder extends Seeder
         ]);
 
         (new Menu())->destroyCache();
-
     }
 }

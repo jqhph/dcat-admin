@@ -22,5 +22,4 @@ class TestCase extends BaseTestCase
     protected $user;
 
     protected $login = true;
-
 }

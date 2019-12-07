@@ -7,8 +7,6 @@ use Dcat\Admin\Models\OperationLog;
 
 class OperationLogTest extends TestCase
 {
-
-
     public function testOperationLogIndex()
     {
         $this->visit('admin/auth/logs')

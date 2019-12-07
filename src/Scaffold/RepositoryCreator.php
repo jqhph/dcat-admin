@@ -55,4 +55,3 @@ class RepositoryCreator
         return __DIR__ . '/stubs/repository.stub';
     }
 }
-

@@ -47,5 +47,4 @@ class Bar extends Chart
     {
         return $this->options(['minBarLength' => $val]);
     }
-
 }

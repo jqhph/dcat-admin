@@ -77,5 +77,4 @@ class Navbar implements Renderable
             return (string) $element;
         })->implode('');
     }
-
 }

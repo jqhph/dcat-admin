@@ -21,7 +21,6 @@ class TranslationTest extends TestCase
 
         $this->assertEquals(admin_trans_field('value'), 'value');
         $this->assertEquals(admin_trans_field('profile.value'), 'value');
-
     }
 
     public function testTransLabel()

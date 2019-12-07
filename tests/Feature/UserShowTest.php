@@ -26,7 +26,6 @@ class UserShowTest extends TestCase
             ->seeInElement('a[href="http://localhost:8000/admin/tests/users/1/edit"]', 'Edit');
 
         $this->assertCount(1, $this->crawler()->filter('hr'));
-
     }
 
     protected function seedsTable($count = 100)

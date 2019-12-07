@@ -70,7 +70,9 @@ class Dropdown extends Widget
      */
     public function options($options = [], string $title = null)
     {
-        if (!$options) return $this;
+        if (!$options) {
+            return $this;
+        }
 
         if ($options instanceof Arrayable) {
             $options = $options->toArray();
@@ -199,7 +201,9 @@ class Dropdown extends Widget
      */
     protected function renderButton()
     {
-        if (is_null($this->button['text']) && !$this->click) return;
+        if (is_null($this->button['text']) && !$this->click) {
+            return;
+        }
 
         $text  = $this->button['text'];
         $class = $this->button['class'];
@@ -337,5 +341,4 @@ JS
             $opt
         );
     }
-
 }

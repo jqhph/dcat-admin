@@ -30,5 +30,4 @@ trait HasDefinitions
     {
         return isset(static::$definitions[$name]);
     }
-
 }

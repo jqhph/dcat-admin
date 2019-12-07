@@ -101,6 +101,5 @@ class Dump extends Widget
         return <<<EOF
 <div style="padding:{$this->padding}"><pre class="dump" {$this->formatHtmlAttributes()}>{$this->content}</pre></div>
 EOF;
-
     }
 }

@@ -8,5 +8,4 @@ use Dcat\Admin\Models\OperationLog as OperationLogModel;
 class OperationLog extends EloquentRepository
 {
     protected $eloquentClass = OperationLogModel::class;
-
 }

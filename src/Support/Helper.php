@@ -50,16 +50,12 @@ class Helper
         }
 
         if (is_array($value)) {
-
         } elseif ($value instanceof Arrayable) {
             $value = $value->toArray();
-
         } elseif (is_string($value)) {
             $value = explode(',', $value);
-
         } else {
             $value = (array) $value;
-
         }
 
         return $filter ? array_filter($value, function ($v) {
@@ -207,8 +203,7 @@ class Helper
         ?string $primaryKeyName = null,
         ?string $parentKeyName = null,
         ?string $childrenKeyName = null
-    )
-    {
+    ) {
         $branch = [];
         $primaryKeyName  = $primaryKeyName ?: 'id';
         $parentKeyName   = $parentKeyName ?: 'parent_id';
@@ -308,5 +303,4 @@ class Helper
     {
         return "<?php \nreturn " . static::exportArray($array) . ";\n";
     }
-
 }

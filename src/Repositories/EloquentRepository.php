@@ -301,7 +301,9 @@ abstract class EloquentRepository extends Repository
         collect(explode(',', $id))->filter()->each(function ($id) use ($form, $deletingData) {
             $data = $deletingData->get($id, []);
 
-            if (!$data) return;
+            if (!$data) {
+                return;
+            }
 
             $model = $this->createEloquent($data);
             $model->exists = true;
@@ -389,7 +391,6 @@ abstract class EloquentRepository extends Repository
             foreach ($builder->getFields() as $field) {
                 $columns[] = $field->getName();
             }
-
         }
 
         $model = $this->eloquent();

@@ -208,7 +208,6 @@ trait UploadField
             }
 
             return $this->responseError(107, trans('admin.upload.upload_failed'));
-
         } catch (\Throwable $e) {
             $this->deleteTempFile();
 

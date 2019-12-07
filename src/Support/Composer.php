@@ -63,5 +63,4 @@ class Composer
 
         return static::$files[$path] = [];
     }
-
 }

@@ -38,7 +38,9 @@ class LangCreator
             'options' => [],
         ];
         foreach ($this->fields as $field) {
-            if (empty($field['name'])) continue;
+            if (empty($field['name'])) {
+                continue;
+            }
 
             $content['fields'][$field['name']] = $field['translation'] ?: $field['name'];
         }
@@ -60,6 +62,4 @@ class LangCreator
 
         return $path . '/' . Str::slug($controller) . '.php';
     }
-
 }
-

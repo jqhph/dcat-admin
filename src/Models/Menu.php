@@ -135,7 +135,6 @@ class Menu extends Model
             $model->permissions()->detach();
 
             $model->destroyCache();
-
         });
 
         static::saved(function ($model) {

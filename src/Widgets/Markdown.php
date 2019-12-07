@@ -80,7 +80,6 @@ class Markdown extends Widget
         return <<<EOF
 <div {$this->formatHtmlAttributes()}><textarea style="display:none;">{$this->content}</textarea></div>
 EOF;
-
     }
 
     public function render()
@@ -95,5 +94,4 @@ EOF;
 
         return $this->build();
     }
-
 }

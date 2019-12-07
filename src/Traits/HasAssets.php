@@ -342,7 +342,6 @@ trait HasAssets
         $script = implode(';', array_unique(self::$script));
 
         return "<script data-exec-on-popstate>LA.ready(function () { {$script} });</script>";
-
     }
 
     /**

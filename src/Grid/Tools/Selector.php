@@ -92,7 +92,10 @@ class Selector
         }
 
         $this->selectors[$column] = compact(
-            'label', 'options', 'type', 'query'
+            'label',
+            'options',
+            'type',
+            'query'
         );
 
         return $this;

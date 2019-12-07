@@ -89,5 +89,4 @@ trait HasBuilderEvents
     {
         return static::class.'::'.$key;
     }
-
 }

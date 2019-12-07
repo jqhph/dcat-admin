@@ -82,7 +82,8 @@ EOF;
 
     protected function setupScript()
     {
-        Admin::script(<<<JS
+        Admin::script(
+            <<<JS
 (function(){
     var swt = $('.grid-switch-{$this->grid->getName()}'), t;
     function init(){

@@ -6,8 +6,6 @@ use Tests\TestCase;
 
 class CombineGridTest extends TestCase
 {
-
-
     public function test()
     {
         $this->visit('admin/tests/report')

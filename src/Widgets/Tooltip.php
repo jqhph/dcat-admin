@@ -168,6 +168,5 @@ class Tooltip extends Widget
         $opts = json_encode($this->options, JSON_UNESCAPED_UNICODE);
 
         Admin::script("$('{$this->selector}').tooltip({$opts});");
-
     }
 }

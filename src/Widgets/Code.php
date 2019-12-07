@@ -99,8 +99,9 @@ class Code extends Markdown
 
         $source = '';
         while (($row = fgets($file)) !== false) {
-            if (++$line > $end)
+            if (++$line > $end) {
                 break;
+            }
 
             if ($line >= $start) {
                 $source .= htmlspecialchars($row, ENT_NOQUOTES, config('charset', 'utf-8'));
@@ -125,6 +126,5 @@ class Code extends Markdown
 ```
 </textarea></div>
 EOF;
-
     }
 }

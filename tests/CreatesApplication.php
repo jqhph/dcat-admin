@@ -22,6 +22,5 @@ trait CreatesApplication
         $app->make('config')->set('app.locale', 'en');
 
         return $app;
-
     }
 }

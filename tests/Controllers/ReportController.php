@@ -59,10 +59,8 @@ class ReportController extends Controller
 
             $filter->equal('content');
             $filter->equal('cost');
-
         });
 
         return $grid;
-
     }
 }
