@@ -45,7 +45,8 @@ class SwitchDisplay extends AbstractDisplayer
     /**
      * Set color of the switcher.
      *
-     * @param $color
+     * @param string $color
+     *
      * @return $this
      */
     public function color($color)
@@ -69,10 +70,10 @@ class SwitchDisplay extends AbstractDisplayer
 
         $this->setupScript();
 
-        $name    = $this->getElementName();
-        $key     = $this->row->{$this->grid->getKeyName()};
+        $name = $this->getElementName();
+        $key = $this->row->{$this->grid->getKeyName()};
         $checked = $this->value ? 'checked' : '';
-        $color   = $this->color ?: Color::primary();
+        $color = $this->color ?: Color::primary();
 
         return <<<EOF
 <input class="grid-switch-{$this->grid->getName()}" data-size="small" name="{$name}" data-key="$key" {$checked} type="checkbox" data-color="{$color}"/>
@@ -122,6 +123,4 @@ JS
     {
         Admin::collectComponentAssets('switchery');
     }
-
-
 }

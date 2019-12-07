@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
 
@@ -167,8 +166,8 @@ class Actions extends AbstractDisplayer
         $map = [Helper::class, 'render'];
 
         $prepends = array_map($map, $this->prepends);
-        $appends  = array_map($map, $this->appends);
-        $actions  = &$prepends;
+        $appends = array_map($map, $this->appends);
+        $actions = &$prepends;
 
         foreach ($this->actions as $action) {
             $method = 'render'.ucfirst($action);
@@ -230,7 +229,6 @@ EOT;
     <i class=" fa fa-clone grid-action-icon"></i>
 </a>&nbsp;
 EOF;
-
     }
 
     /**

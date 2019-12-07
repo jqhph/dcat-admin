@@ -23,7 +23,6 @@ $('.{$this->class['all']}').on('change', function () {
     }
     return false;
 });
-
 JS;
 
         Admin::script($script);
@@ -40,7 +39,7 @@ JS;
 
         $allId = 'filter-all-'.Str::random(5);
 
-        return <<<EOT
+        return <<<HTML
 &nbsp;<span class="dropdown" style="position:absolute;">
 <form action="{$this->getFormAction()}" pjax-container style="display: inline-block;">
     <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-toggle="dropdown">
@@ -68,7 +67,7 @@ JS;
     </ul>
 </form>
 </span>
-EOT;
+HTML;
     }
 
     protected function renderOptions($value)
@@ -87,7 +86,5 @@ EOT;
 </li>
 HTML;
         })->implode("\r\n");
-
     }
-
 }

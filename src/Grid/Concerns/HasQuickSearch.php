@@ -3,9 +3,9 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid\Column;
+use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Tools;
 use Illuminate\Support\Collection;
-use Dcat\Admin\Grid\Model;
 use Illuminate\Support\Str;
 
 /**
@@ -73,7 +73,7 @@ trait HasQuickSearch
      */
     public function renderQuickSearch()
     {
-        if (! $this->quickSearch) {
+        if (!$this->quickSearch) {
             return '';
         }
 
@@ -87,11 +87,11 @@ trait HasQuickSearch
      */
     public function applyQuickSearch()
     {
-        if (! $this->quickSearch) {
+        if (!$this->quickSearch) {
             return;
         }
 
-        if (! $query = request()->get($this->quickSearch->getQueryName())) {
+        if (!$query = request()->get($this->quickSearch->getQueryName())) {
             return;
         }
 
@@ -105,14 +105,11 @@ trait HasQuickSearch
 
         if (is_array($this->search)) {
             foreach ($this->search as $column) {
-                $this->addWhereLikeBinding($column, true, '%' . $query . '%');
+                $this->addWhereLikeBinding($column, true, '%'.$query.'%');
             }
-
         } elseif (is_null($this->search)) {
             $this->addWhereBindings($query);
-
         }
-
     }
 
     /**
@@ -123,7 +120,7 @@ trait HasQuickSearch
     protected function addWhereBindings($query)
     {
         $queries = preg_split('/\s(?=([^"]*"[^"]*")*[^"]*$)/', trim($query));
-        if (! $queries = $this->parseQueryBindings($queries)) {
+        if (!$queries = $this->parseQueryBindings($queries)) {
             $this->addWhereBasicBinding($this->getKeyName(), false, '=', '___');
 
             return;
@@ -131,7 +128,7 @@ trait HasQuickSearch
 
         foreach ($queries as list($column, $condition, $or)) {
             if (preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match) !== 0) {
-                $this->addWhereInBinding($column, $or, (bool)$match['not'], $match['values']);
+                $this->addWhereInBinding($column, $or, (bool) $match['not'], $match['values']);
                 continue;
             }
 
@@ -211,7 +208,7 @@ trait HasQuickSearch
      * Add where like binding to model query.
      *
      * @param string $column
-     * @param bool $or
+     * @param bool   $or
      * @param string $pattern
      */
     protected function addWhereLikeBinding(?string $column, ?bool $or, ?string $pattern)
@@ -232,7 +229,7 @@ trait HasQuickSearch
      */
     protected function addWhereDatetimeBinding(?string $column, ?bool $or, ?string $function, ?string $value)
     {
-        $method = ($or ? 'orWhere' : 'where') . ucfirst($function);
+        $method = ($or ? 'orWhere' : 'where').ucfirst($function);
 
         $this->model()->$method($column, $value);
     }
@@ -241,8 +238,8 @@ trait HasQuickSearch
      * Add where in binding to the model query.
      *
      * @param string $column
-     * @param bool $or
-     * @param bool $not
+     * @param bool   $or
+     * @param bool   $not
      * @param string $values
      */
     protected function addWhereInBinding(?string $column, ?bool $or, ?bool $not, ?string $values)
@@ -256,7 +253,7 @@ trait HasQuickSearch
         }
 
         $where = $or ? 'orWhere' : 'where';
-        $method = $where . ($not ? 'NotIn' : 'In');
+        $method = $where.($not ? 'NotIn' : 'In');
 
         $this->model()->$method($column, $values);
     }
@@ -265,7 +262,7 @@ trait HasQuickSearch
      * Add where between binding to the model query.
      *
      * @param string $column
-     * @param bool $or
+     * @param bool   $or
      * @param string $start
      * @param string $end
      */
@@ -280,7 +277,7 @@ trait HasQuickSearch
      * Add where basic binding to the model query.
      *
      * @param string $column
-     * @param bool $or
+     * @param bool   $or
      * @param string $operator
      * @param string $value
      */
@@ -303,5 +300,4 @@ trait HasQuickSearch
 
         $this->model()->{$method}($column, $operator, $value);
     }
-
 }

@@ -59,6 +59,7 @@ trait HasFilter
      * Set the grid filter.
      *
      * @param Closure $callback
+     *
      * @return $this
      */
     public function filter(Closure $callback)
@@ -111,6 +112,7 @@ trait HasFilter
      * Show grid filter.
      *
      * @param bool $val
+     *
      * @return $this
      */
     public function showFilter(bool $val = true)
@@ -122,6 +124,7 @@ trait HasFilter
      * Disable filter button.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableFilterButton(bool $disable = true)
@@ -135,6 +138,7 @@ trait HasFilter
      * Show filter button.
      *
      * @param bool $val
+     *
      * @return $this
      */
     public function showFilterButton(bool $val = true)

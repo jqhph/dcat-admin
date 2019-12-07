@@ -1074,7 +1074,6 @@ class Form implements Renderable
                 $first = explode('.', $column)[0];
                 $relations[$first] = null;
             }
-
         });
 
         foreach ($relations as $first => $v) {

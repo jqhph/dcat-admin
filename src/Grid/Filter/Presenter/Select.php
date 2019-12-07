@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid\Filter\Presenter;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid\Filter;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -65,13 +64,12 @@ class Select extends Presenter
     }
 
     /**
-     * 是否禁用“所有”选项
-     *
      * @return $this
      */
     public function disableSelectAll()
     {
         $this->selectAll = false;
+
         return $this;
     }
 
@@ -176,10 +174,10 @@ SCRIPT;
             'url' => $url.'?'.http_build_query($parameters),
         ];
         $configs = array_merge([
-            'allowClear'         => true,
-            'placeholder'        => [
-                'id'        => '',
-                'text'      => trans('admin.choose'),
+            'allowClear'  => true,
+            'placeholder' => [
+                'id'   => '',
+                'text' => trans('admin.choose'),
             ],
         ], $this->config);
 
@@ -267,8 +265,8 @@ JS;
     public function variables() : array
     {
         return [
-            'options' => $this->buildOptions(),
-            'class'   => $this->getElementClass(),
+            'options'   => $this->buildOptions(),
+            'class'     => $this->getElementClass(),
             'selectAll' => $this->selectAll,
         ];
     }

@@ -18,7 +18,7 @@ class Responsive
     /**
      * @var array
      */
-    protected $options = ['addFocusBtn' => false,];
+    protected $options = ['addFocusBtn' => false];
 
     public function __construct(Grid $grid)
     {
@@ -54,8 +54,8 @@ class Responsive
     }
 
     /**
-     * @param $key
      * @param array $options
+     *
      * @return $this
      */
     public function options(array $options)
@@ -78,5 +78,4 @@ class Responsive
             Admin::script("setTimeout(function(){ $('.table-responsive').responsiveTable($opt); },5);");
         }
     }
-
 }

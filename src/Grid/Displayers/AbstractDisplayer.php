@@ -50,10 +50,10 @@ abstract class AbstractDisplayer
      */
     public function __construct($value, Grid $grid, Column $column, $row)
     {
-        $this->value  = $value;
-        $this->grid   = $grid;
+        $this->value = $value;
+        $this->grid = $grid;
         $this->column = $column;
-        $this->row    = $row;
+        $this->row = $row;
 
         $this->collectAssets();
 
@@ -67,6 +67,7 @@ abstract class AbstractDisplayer
         if (static::$js) {
             Admin::js(static::$js);
         }
+
         if (static::$css) {
             Admin::css(static::$css);
         }

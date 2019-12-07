@@ -28,7 +28,7 @@
     <![endif]-->
 </head>
 
-<body class="dcat-admin-body hold-transition {{config('admin.skin')}} {{join(' ', config('admin.layout'))}}">
+<body class="dcat-admin-body hold-transition {{config('admin.skin')}} {{implode(' ', config('admin.layout'))}}">
     {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
     @include('admin::partials.script')

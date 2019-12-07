@@ -29,7 +29,7 @@ class Expand extends AbstractDisplayer
             if ($html instanceof Renderable) {
                 $html = $html->render();
             }
-        }  elseif ($callbackOrButton && is_string($callbackOrButton)) {
+        } elseif ($callbackOrButton && is_string($callbackOrButton)) {
             $this->button = $callbackOrButton;
         }
 

@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Form;
+use Dcat\Admin\Layout\Column;
 
 class Layout
 {
@@ -23,8 +23,8 @@ class Layout
     }
 
     /**
-     * @param int $width 1~12
-     * @param $content
+     * @param int   $width 1~12
+     * @param mixed $content
      */
     public function column(int $width, $content)
     {
@@ -36,9 +36,8 @@ class Layout
     }
 
     /**
-     *
-     * @param int $width
-     * @param $content
+     * @param int   $width
+     * @param mixed $content
      */
     public function prepend(int $width, $content)
     {
@@ -51,6 +50,7 @@ class Layout
 
     /**
      * @param \Closure|null $callback
+     *
      * @return MultipleForm
      */
     public function form(\Closure $callback = null)

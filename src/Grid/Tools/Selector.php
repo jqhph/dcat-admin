@@ -39,18 +39,17 @@ class Selector
      */
     public function __construct(Grid $grid)
     {
-        $this->grid      = $grid;
-        $this->request   = request();
+        $this->grid = $grid;
+        $this->request = request();
         $this->selectors = new Collection();
-
         $this->queryName = $grid->getName().'_selector';
     }
 
     /**
-     * @param string $column
-     * @param string|array $label
+     * @param string         $column
+     * @param string|array   $label
      * @param array|\Closure $options
-     * @param null|\Closure $query
+     * @param null|\Closure  $query
      *
      * @return $this
      */
@@ -60,9 +59,9 @@ class Selector
     }
 
     /**
-     * @param string $column
-     * @param string $label
-     * @param array $options
+     * @param string        $column
+     * @param string        $label
+     * @param array         $options
      * @param null|\Closure $query
      *
      * @return $this
@@ -75,8 +74,8 @@ class Selector
     /**
      * @param string $column
      * @param string $label
-     * @param array $options
-     * @param null $query
+     * @param array  $options
+     * @param null   $query
      * @param string $type
      *
      * @return $this
@@ -89,7 +88,7 @@ class Selector
             }
 
             $options = $label;
-            $label   = admin_trans_field($column);
+            $label = admin_trans_field($column);
         }
 
         $this->selectors[$column] = compact(
@@ -136,8 +135,8 @@ class Selector
 
     /**
      * @param string $column
-     * @param mixed $value
-     * @param bool $add
+     * @param mixed  $value
+     * @param bool   $add
      *
      * @return string
      */
@@ -183,5 +182,4 @@ class Selector
             'selected' => $this->parseSelected(),
         ]);
     }
-
 }

@@ -70,8 +70,9 @@ class Exporter
     /**
      *  Get or set option for exporter.
      *
-     * @param string $key
+     * @param string     $key
      * @param mixed|null $value
+     *
      * @return $this|mixed|null
      */
     public function option($key, $value = null)
@@ -89,37 +90,41 @@ class Exporter
      * Disable export all.
      *
      * @param bool $value
+     *
      * @return $this
      */
     public function disableExportAll(bool $value = true)
     {
-        return $this->option('show_export_all', ! $value);
+        return $this->option('show_export_all', !$value);
     }
 
     /**
      * Disable export current page.
      *
      * @param bool $value
+     *
      * @return $this
      */
     public function disableExportCurrentPage(bool $value = true)
     {
-        return $this->option('show_export_current_page', ! $value);
+        return $this->option('show_export_current_page', !$value);
     }
 
     /**
      * Disable export selected rows.
      *
      * @param bool $value
+     *
      * @return $this
      */
     public function disableExportSelectedRow(bool $value = true)
     {
-        return $this->option('show_export_selected_rows', ! $value);
+        return $this->option('show_export_selected_rows', !$value);
     }
 
     /**
      * @param int $value
+     *
      * @return $this
      */
     public function chunkSize(int $value)
@@ -177,11 +182,11 @@ class Exporter
      */
     protected function getExporter($driver): ExporterInterface
     {
-        if (! $driver || ! array_key_exists($driver, static::$drivers)) {
+        if (!$driver || !array_key_exists($driver, static::$drivers)) {
             return $this->getDefaultExporter();
         }
 
-        $driver = (new static::$drivers[$driver]());
+        $driver = new static::$drivers[$driver]();
 
         if (method_exists($driver, 'setGrid')) {
             $driver->setGrid($this->grid);

@@ -2,9 +2,7 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
@@ -58,8 +56,8 @@ class Tools implements Renderable
      */
     public function __construct(Builder $builder)
     {
-        $this->form     = $builder;
-        $this->appends  = new Collection();
+        $this->form = $builder;
+        $this->appends = new Collection();
         $this->prepends = new Collection();
     }
 
@@ -154,13 +152,11 @@ class Tools implements Renderable
      */
     protected function getViewPath()
     {
-        $key = $this->form->getResourceId();
-
-        if ($key) {
+        if ($key = $this->form->getResourceId()) {
             return $this->getListPath().'/'.$key;
-        } else {
-            return $this->getListPath();
         }
+
+        return $this->getListPath();
     }
 
     /**

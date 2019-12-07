@@ -78,6 +78,7 @@ class Text extends Field
     /**
      * @param int         $length
      * @param string|null $error
+     *
      * @return $this
      */
     public function minLength(int $length, ?string $error = null)

@@ -47,7 +47,7 @@ trait HasHeader
      *
      * @param string $cast
      *
-     * @return Column|string
+     * @return $this
      */
     protected function addSorter($cast = null)
     {
@@ -62,8 +62,8 @@ trait HasHeader
      * Add a help tooltip to column header.
      *
      * @param string|\Closure $message
-     * @param null|string $style 'green', 'blue', 'red', 'purple'
-     * @param null|string $placement 'bottom', 'left', 'right', 'top'
+     * @param null|string     $style 'green', 'blue', 'red', 'purple'
+     * @param null|string     $placement 'bottom', 'left', 'right', 'top'
      *
      * @return $this
      */
@@ -76,6 +76,7 @@ trait HasHeader
      * Add a filter to column header.
      *
      * @param \Closure $builder
+     *
      * @return $this
      */
     protected function addFilter(Filter $filter)

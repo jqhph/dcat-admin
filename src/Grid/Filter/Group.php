@@ -35,8 +35,8 @@ class Group extends AbstractFilter
     public function __construct($column, \Closure $builder = null, $label = '')
     {
         $this->builder = $builder;
-        $this->column  = $column;
-        $this->label   = $this->formatLabel($label);
+        $this->column = $column;
+        $this->label = $this->formatLabel($label);
 
         $this->initialize();
     }
@@ -47,7 +47,7 @@ class Group extends AbstractFilter
     protected function initialize()
     {
         $this->group = new Collection();
-        $this->name  = "{$this->id}-filter-group";
+        $this->name = "{$this->id}-filter-group";
     }
 
     /**

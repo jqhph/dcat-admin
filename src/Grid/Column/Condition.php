@@ -37,8 +37,8 @@ class Condition
     public function __construct($condition, Column $column)
     {
         $this->condition = $condition;
-        $this->original  = clone $column;
-        $this->column    = $column;
+        $this->original = clone $column;
+        $this->column = $column;
     }
 
     public function then(\Closure $closure)
@@ -53,7 +53,7 @@ class Condition
         $self = $this;
 
         $condition = $this->column->if(function () use ($self) {
-            return ! $self->getResult();
+            return !$self->getResult();
         });
 
         if ($next) {
@@ -72,7 +72,7 @@ class Condition
 
     protected function callCallbacks(array $callbacks)
     {
-        if (! $callbacks) {
+        if (!$callbacks) {
             return;
         }
 
@@ -133,5 +133,4 @@ class Condition
             return $column->$name(...$arguments);
         });
     }
-
 }

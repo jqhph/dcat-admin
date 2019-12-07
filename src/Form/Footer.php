@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Widgets\Checkbox;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -148,11 +147,11 @@ class Footer implements Renderable
         }
 
         if (in_array('view', $this->checkboxes)) {
-            $options[3] =  sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.view'));;
+            $options[3] =  sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.view'));
         }
 
         if (!$options) {
-            return null;
+            return;
         }
 
         return (new Checkbox('after-save', $options))->inline()->circle(true);

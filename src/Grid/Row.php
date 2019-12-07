@@ -72,6 +72,7 @@ class Row implements Arrayable
         ) {
             return $this->formatHtmlAttributes($attributes);
         }
+
         return '';
     }
 
@@ -147,6 +148,7 @@ class Row implements Arrayable
      *
      * @param mixed $attr
      * @param mixed $value
+     *
      * @return void
      */
     public function __set($attr, $value)

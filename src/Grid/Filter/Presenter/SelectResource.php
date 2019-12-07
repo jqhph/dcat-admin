@@ -4,12 +4,11 @@ namespace Dcat\Admin\Grid\Filter\Presenter;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Facades\URL;
 
 class SelectResource extends Presenter
 {
     public static $js = [
-        'vendor/dcat-admin/dcat-admin/select-resource.min.js'
+        'vendor/dcat-admin/dcat-admin/select-resource.min.js',
     ];
 
     /**
@@ -38,8 +37,9 @@ class SelectResource extends Presenter
     }
 
     /**
-     * @param $width
-     * @param $height
+     * @param string $width
+     * @param string $height
+     *
      * @return $this
      */
     public function area($width, $height)
@@ -71,13 +71,13 @@ class SelectResource extends Presenter
         }
 
         $this->options = Helper::array($opts);
-
     }
 
     /**
      * Set button style.
      *
      * @param string $style
+     *
      * @return $this
      */
     public function style(string $style = 'primary')
@@ -91,6 +91,7 @@ class SelectResource extends Presenter
      * Multiple select.
      *
      * @param int|null|null $max
+     *
      * @return SelectResource
      */
     public function multiple(?int $max = null)
@@ -99,8 +100,8 @@ class SelectResource extends Presenter
     }
 
     /**
-     *
      * @param ?int $max
+     *
      * @return $this
      */
     public function max(?int $max)
@@ -138,7 +139,7 @@ class SelectResource extends Presenter
             }
         }
 
-        $this->filter->setValue(json_encode((object)$this->value));
+        $this->filter->setValue(json_encode((object) $this->value));
     }
 
     /**

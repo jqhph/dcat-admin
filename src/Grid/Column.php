@@ -35,7 +35,6 @@ use Illuminate\Support\Str;
  * @method $this downloadable($server = '', $disk = null)
  * @method $this copyable()
  * @method $this orderable()
- *
  * @method $this ascii()
  * @method $this camel()
  * @method $this finish($cap)
@@ -239,16 +238,17 @@ class Column
      * Set width for column.
      *
      * @param string $width
+     *
      * @return $this|string
      */
     public function width(?string $width)
     {
         $this->titleHtmlAttributes['width'] = $width;
+
         return $this;
     }
 
     /**
-     *
      * @example
      *     $grid->config
      *         ->if(function () {
@@ -271,6 +271,7 @@ class Column
      *         })
      *
      * @param \Closure $condition
+     *
      * @return Column\Condition
      */
     public function if(\Closure $condition)
@@ -305,7 +306,6 @@ class Column
     }
 
     /**
-     *
      * @return $this
      */
     public function hide()
@@ -314,8 +314,6 @@ class Column
     }
 
     /**
-     * responsive
-     *
      * data-priority=”1″ 保持可见，但可以在下拉列表筛选隐藏。
      * data-priority=”2″ 480px 分辨率以下可见
      * data-priority=”3″ 640px 以下可见
@@ -324,6 +322,7 @@ class Column
      * data-priority=”6″ 1120px 以下可见
      *
      * @param int $priority
+     *
      * @return $this
      */
     public function responsive(?int $priority = 1)
@@ -402,13 +401,15 @@ class Column
     /**
      * Format label.
      *
-     * @param $label
+     * @param string $label
      *
      * @return mixed
      */
     protected function formatLabel($label)
     {
-        if (!$label) $label = admin_trans_field($this->name);
+        if (!$label) {
+            $label = admin_trans_field($this->name);
+        }
 
         $label = $label ?: ucfirst($this->name);
 
@@ -425,6 +426,11 @@ class Column
         return $this->label;
     }
 
+    /**
+     * @param string $label
+     *
+     * @return $this
+     */
     public function setLabel($label)
     {
         $this->label = $label;
@@ -436,7 +442,8 @@ class Column
      * Mark this column as sortable.
      *
      * @param string $cast
-     * @return Column|string
+     *
+     * @return $this
      */
     public function sortable($cast = null)
     {
@@ -447,8 +454,8 @@ class Column
      * Set help message for column.
      *
      * @param string|\Closure $help
-     * @param null|string $style 'green', 'blue', 'red', 'purple'
-     * @param null|string $placement 'bottom', 'left', 'right', 'top'
+     * @param null|string     $style 'green', 'blue', 'red', 'purple'
+     * @param null|string     $placement 'bottom', 'left', 'right', 'top'
      *
      * @return $this
      */
@@ -481,8 +488,9 @@ class Column
     /**
      * Add a display callback.
      *
-     * @param $callback
-     * @param array $params
+     * @param \Closure $callback
+     * @param array    $params
+     *
      * @return $this
      */
     public function display($callback, ...$params)
@@ -499,7 +507,7 @@ class Column
      */
     public function hasDisplayCallbacks()
     {
-        return ! empty($this->displayCallbacks);
+        return !empty($this->displayCallbacks);
     }
 
     /**
@@ -581,7 +589,7 @@ class Column
         $i = 0;
         foreach ($data as $key => &$row) {
             $i++;
-            if (! isset($row['#'])) {
+            if (!isset($row['#'])) {
                 $row['#'] = $i;
             }
 
@@ -629,6 +637,7 @@ class Column
 
         if ($class instanceof Closure) {
             $this->display($class);
+
             return;
         }
 
@@ -750,11 +759,13 @@ class Column
      * Set column title attributes.
      *
      * @param array $attributes
+     *
      * @return $this
      */
     public function setHeaderAttributes(array $attributes = [])
     {
         $this->titleHtmlAttributes = array_merge($this->titleHtmlAttributes, $attributes);
+
         return $this;
     }
 
@@ -762,6 +773,7 @@ class Column
      * Set column title default attributes.
      *
      * @param array $attributes
+     *
      * @return $this
      */
     public function setDefaultHeaderAttribute(array $attributes)
@@ -770,6 +782,7 @@ class Column
             if (isset($this->titleHtmlAttributes[$key])) {
                 continue;
             }
+
             $this->titleHtmlAttributes[$key] = $value;
         }
 

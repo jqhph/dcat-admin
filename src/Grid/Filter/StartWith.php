@@ -34,5 +34,4 @@ class StartWith extends AbstractFilter
 
         return $this;
     }
-
 }

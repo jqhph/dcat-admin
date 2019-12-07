@@ -9,11 +9,11 @@ use Dcat\Admin\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 /**
@@ -124,7 +124,7 @@ class Model
      * Create a new grid model instance.
      *
      * @param Repository $repository
-     * @param Request $request
+     * @param Request    $request
      */
     public function __construct(Request $request, ?Repository $repository = null)
     {
@@ -154,6 +154,7 @@ class Model
 
     /**
      * @param Collection $query
+     *
      * @return void
      */
     public function setQueries(Collection $query)
@@ -311,6 +312,7 @@ class Model
 
     /**
      * @param array $constraints
+     *
      * @return $this
      */
     public function setConstraints(array $constraints)
@@ -369,9 +371,10 @@ class Model
         ) {
             if ($isA) {
                 $data = collect($data);
-            } elseif (! empty($isP)) {
+            } elseif (!empty($isP)) {
                 $this->model = $data;
                 $this->data = $data->getCollection();
+
                 return;
             }
 
@@ -470,7 +473,7 @@ class Model
     public function getCurrentPage()
     {
         if (!$this->usePaginate) {
-            return null;
+            return;
         }
 
         return $this->currentPage ?: ($this->currentPage = ($this->request->get($this->pageName) ?: 1));
@@ -494,7 +497,7 @@ class Model
     public function getPerPage()
     {
         if (!$this->usePaginate) {
-            return null;
+            return;
         }
 
         return $this->request->get($this->perPageName) ?: $this->perPage;
@@ -636,6 +639,7 @@ class Model
 
     /**
      * @param string|array $method
+     *
      * @return void
      */
     public function rejectQueries($method)
@@ -728,7 +732,7 @@ class Model
      */
     public function reset()
     {
-        $this->data    = null;
-        $this->model   = null;
+        $this->data = null;
+        $this->model = null;
     }
 }

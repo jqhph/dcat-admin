@@ -10,13 +10,10 @@ class Link extends AbstractDisplayer
             $href = $href->bindTo($this->row);
 
             $href = call_user_func($href, $this->value);
-
         } else {
             $href = $href ?: $this->value;
-
         }
 
         return "<a href='$href' target='$target'>{$this->value}</a>";
     }
-    
 }

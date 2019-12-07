@@ -26,7 +26,7 @@ class Checkbox extends AbstractDisplayer
         }
 
         foreach ($options as $value => $label) {
-            $id = 'ckb'.\Illuminate\Support\Str::random(8);
+            $id = 'ckb'.Str::random(8);
 
             $checked = in_array($value, $this->value) ? 'checked' : '';
             $radios .= <<<EOT
@@ -93,7 +93,6 @@ $('form.grid-checkbox-$name').on('submit', function () {
 
     return false;
 });
-
 JS;
     }
 }

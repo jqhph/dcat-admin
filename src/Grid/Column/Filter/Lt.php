@@ -21,5 +21,4 @@ class Lt extends Equal
 
         $model->where($this->getColumnName(), '<', $value);
     }
-
 }

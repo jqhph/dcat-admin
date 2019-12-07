@@ -17,8 +17,9 @@ trait WebUploader
     protected $options = [];
 
     /**
-     * @param string $extensions exp. gif,jpg,jpeg,bmp,png
+     * @param string      $extensions exp. gif,jpg,jpeg,bmp,png
      * @param string|null $mimeTypes exp. image/*
+     *
      * @return $this
      */
     public function accept(string $extensions, string $mimeTypes = null)
@@ -36,6 +37,7 @@ trait WebUploader
 
     /**
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableChunked(bool $disable = true)
@@ -47,6 +49,7 @@ trait WebUploader
 
     /**
      * @param int|null $size kb
+     *
      * @return $this
      */
     public function chunkSize(int $size)
@@ -58,6 +61,7 @@ trait WebUploader
 
     /**
      * @param int $size kb
+     *
      * @return $this
      */
     public function maxSize(int $size)
@@ -70,6 +74,7 @@ trait WebUploader
 
     /**
      * @param int $num
+     *
      * @return $this
      */
     public function threads(int $num)
@@ -83,6 +88,7 @@ trait WebUploader
      * Set upload server.
      *
      * @param string $server
+     *
      * @return $this
      */
     public function url(string $server)
@@ -104,7 +110,6 @@ trait WebUploader
         return $this;
     }
 
-
     /**
      * Disable remove file.
      *
@@ -121,6 +126,7 @@ trait WebUploader
      * Set upload server.
      *
      * @param string $server
+     *
      * @return $this
      */
     public function deleteUrl(string $server)
@@ -170,7 +176,7 @@ trait WebUploader
 
     protected function setDefaultServer()
     {
-        if (! $this->form || ! method_exists($this->form, 'getAction')) {
+        if (!$this->form || !method_exists($this->form, 'getAction')) {
             return;
         }
 
@@ -223,5 +229,4 @@ trait WebUploader
 
         return $this;
     }
-
 }

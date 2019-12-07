@@ -132,5 +132,4 @@ abstract class Filter implements Renderable
     {
         return new static(...$params);
     }
-
 }

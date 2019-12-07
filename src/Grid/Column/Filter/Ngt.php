@@ -21,5 +21,4 @@ class Ngt extends Equal
 
         $model->where($this->getColumnName(), '<=', $value);
     }
-
 }

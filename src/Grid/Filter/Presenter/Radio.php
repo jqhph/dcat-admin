@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Grid\Filter\Presenter;
 
-use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Arrayable;
 
 class Radio extends Presenter

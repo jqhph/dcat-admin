@@ -2,10 +2,9 @@
 
 namespace Dcat\Admin\Grid;
 
-use Dcat\Admin\Grid\Column\Help;
-use Dcat\Admin\Grid\Column\Sorter;
-use Dcat\Admin\Widgets\Widget;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Grid\Column\Help;
+use Dcat\Admin\Widgets\Widget;
 
 class Header extends Widget
 {
@@ -31,8 +30,8 @@ class Header extends Widget
 
     public function __construct(Grid $grid, string $label, array $columnNames)
     {
-        $this->grid        = $grid;
-        $this->label       = admin_trans_field($label);
+        $this->grid = $grid;
+        $this->label = admin_trans_field($label);
         $this->columnNames = $columnNames;
 
         $this->setupAttributes();
@@ -48,7 +47,7 @@ class Header extends Widget
 
     /**
      * 默认隐藏字段
-     * 开启responsive模式有效
+     * 开启responsive模式有效.
      *
      * @return $this
      */
@@ -64,7 +63,7 @@ class Header extends Widget
 
     /**
      * 允许使用responsive
-     * 开启responsive模式有效
+     * 开启responsive模式有效.
      *
      * data-priority=”1″ 保持可见，但可以在下拉列表筛选隐藏。
      * data-priority=”2″ 480px 分辨率以下可见
@@ -74,6 +73,7 @@ class Header extends Widget
      * data-priority=”6″ 1120px 以下可见
      *
      * @param int $priority
+     *
      * @return $this
      */
     public function responsive(int $priority = 1)
@@ -84,8 +84,8 @@ class Header extends Widget
     }
 
     /**
-     *
      * @param string $html
+     *
      * @return $this
      */
     public function append($html)
@@ -99,8 +99,8 @@ class Header extends Widget
      * Add a help tooltip to column header.
      *
      * @param string|\Closure $message
-     * @param null|string $style 'green', 'blue', 'red', 'purple'
-     * @param null|string $placement 'bottom', 'left', 'right', 'top'
+     * @param null|string     $style 'green', 'blue', 'red', 'purple'
+     * @param null|string     $placement 'bottom', 'left', 'right', 'top'
      *
      * @return $this
      */
@@ -112,6 +112,7 @@ class Header extends Widget
     protected function setupAttributes()
     {
         $count = count($this->columnNames);
+
         if ($count == 1) {
             $this->htmlAttributes['rowspan'] = 2;
         } else {

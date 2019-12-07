@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid\Exporters;
 
 use Dcat\Admin\Grid;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
@@ -67,6 +66,7 @@ abstract class AbstractExporter implements ExporterInterface
      * Set the headings of excel sheet.
      *
      * @param array|false $titles
+     *
      * @return $this
      */
     public function titles($titles)
@@ -82,6 +82,7 @@ abstract class AbstractExporter implements ExporterInterface
      * Set filename.
      *
      * @param string|\Closure $filename
+     *
      * @return $this
      */
     public function filename($filename)
@@ -95,6 +96,7 @@ abstract class AbstractExporter implements ExporterInterface
      * Set export data.
      *
      * @param array $data
+     *
      * @return $this
      */
     public function data($data)
@@ -108,6 +110,7 @@ abstract class AbstractExporter implements ExporterInterface
      * Set export data callback function.
      *
      * @param \Closure $builder
+     *
      * @return $this
      */
     public function rows(\Closure $builder)
@@ -143,6 +146,7 @@ abstract class AbstractExporter implements ExporterInterface
 
     /**
      * @param string $ext e.g. csv/xlsx/ods
+     *
      * @return $this
      */
     public function extension(string $ext)
@@ -161,7 +165,7 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function setGrid(Grid $grid)
     {
-        $this->grid   = $grid;
+        $this->grid = $grid;
         $this->parent = $grid->getExporter();
 
         return $this;
@@ -181,11 +185,12 @@ abstract class AbstractExporter implements ExporterInterface
      *
      * @param int $page
      * @param int $perPage
+     *
      * @return array|\Illuminate\Support\Collection|mixed
      */
     public function buildData(?int $page = null, ?int $perPage = null)
     {
-        if (! is_null($this->data)) {
+        if (!is_null($this->data)) {
             return $this->data;
         }
 
@@ -193,7 +198,7 @@ abstract class AbstractExporter implements ExporterInterface
 
         // current page
         if ($this->scope === Grid\Exporter::SCOPE_CURRENT_PAGE) {
-            $page    = $model->getCurrentPage();
+            $page = $model->getCurrentPage();
             $perPage = $model->getPerPage();
         }
 
@@ -235,9 +240,8 @@ abstract class AbstractExporter implements ExporterInterface
     public function withScope($scope)
     {
         $data = explode(':', $scope);
-
         $scope = $data[0] ?? '';
-        $args  = $data[1] ?? '';
+        $args = $data[1] ?? '';
 
         $this->scope = $scope;
 
@@ -258,6 +262,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @param $method
      * @param $arguments
+     *
      * @return mixed
      */
     public function __call($method, $arguments)
@@ -276,5 +281,4 @@ abstract class AbstractExporter implements ExporterInterface
     {
         return new static($builder);
     }
-
 }

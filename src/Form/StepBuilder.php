@@ -49,8 +49,9 @@ class StepBuilder
     }
 
     /**
-     * @param string $title
+     * @param string   $title
      * @param \Closure $callback
+     *
      * @return $this
      */
     public function add(string $title, \Closure $callback)
@@ -88,7 +89,8 @@ class StepBuilder
      * Set options.
      *
      * @param string|array $key
-     * @param mixed $value
+     * @param mixed        $value
+     *
      * @return $this
      */
     public function option($key, $value = null)
@@ -106,7 +108,8 @@ class StepBuilder
      * Get options.
      *
      * @param string|null $key
-     * @param null $default
+     * @param null        $default
+     *
      * @return array|mixed|null
      */
     public function getOption($key = null, $default = null)
@@ -119,9 +122,8 @@ class StepBuilder
     }
 
     /**
-     * Select
-     *
      * @param int $index
+     *
      * @return $this
      */
     public function select(int $index)
@@ -133,6 +135,7 @@ class StepBuilder
      * Set padding for container.
      *
      * @param string $padding
+     *
      * @return $this
      */
     public function padding(string $padding)
@@ -144,6 +147,7 @@ class StepBuilder
      * Set max width for container.
      *
      * @param string $width
+     *
      * @return $this
      */
     public function width(string $width)
@@ -155,6 +159,7 @@ class StepBuilder
      * Remember input data.
      *
      * @param bool $value
+     *
      * @return $this
      */
     public function remember(bool $value = true)
@@ -164,7 +169,8 @@ class StepBuilder
 
     /**
      * @param string|Closure $title
-     * @param Closure|null $callback
+     * @param Closure|null   $callback
+     *
      * @return $this
      */
     public function done($title, Closure $callback = null)
@@ -214,12 +220,13 @@ class StepBuilder
      * Stash input data.
      *
      * @param array $data
-     * @param bool $merge
+     * @param bool  $merge
+     *
      * @return void
      */
     public function stash(array $data, bool $merge = false)
     {
-        if (! $this->options['remember']) {
+        if (!$this->options['remember']) {
             return;
         }
 
@@ -237,7 +244,7 @@ class StepBuilder
      */
     public function fetchStash()
     {
-        if (! $this->options['remember']) {
+        if (!$this->options['remember']) {
             return [];
         }
 
@@ -251,7 +258,7 @@ class StepBuilder
      */
     public function flushStash()
     {
-        if (! $this->options['remember']) {
+        if (!$this->options['remember']) {
             return;
         }
 
@@ -262,6 +269,7 @@ class StepBuilder
      * Forget input data by keys.
      *
      * @param string|array $keys
+     *
      * @return void
      */
     public function forgetStash($keys)
@@ -275,6 +283,7 @@ class StepBuilder
 
     /**
      * @param string|Field $field
+     *
      * @return void
      */
     public function stashIndexByField($field)
@@ -314,20 +323,20 @@ class StepBuilder
      */
     protected function selectStep()
     {
-        if (! $this->options['remember'] || ! $input = $this->fetchStash()) {
+        if (!$this->options['remember'] || !$input = $this->fetchStash()) {
             return;
         }
 
         $current = $input[static::CURRENT_VALIDATION_STEP] ?? null;
         $allStep = $input[static::ALL_STEPS] ?? null;
 
-        unset($input[static::CURRENT_VALIDATION_STEP],  $input[static::ALL_STEPS]);
+        unset($input[static::CURRENT_VALIDATION_STEP], $input[static::ALL_STEPS]);
 
-        if ($current !== null && $current !== '' && ! empty($input)) {
+        if ($current !== null && $current !== '' && !empty($input)) {
             $this->select((int) ($current + 1));
         }
 
-        if (! empty($allStep) && ! empty($input)) {
+        if (!empty($allStep) && !empty($input)) {
             $this->select($this->count() - 1);
         }
     }
@@ -367,7 +376,7 @@ class StepBuilder
     {
         $html = '';
 
-        foreach($this->stepForms as $step) {
+        foreach ($this->stepForms as $step) {
             $html .= (string) $step->render();
         }
 
@@ -378,6 +387,7 @@ class StepBuilder
      * Register the "showStep" event listener.
      *
      * @param string $script
+     *
      * @return $this
      */
     public function shown($script)
@@ -397,6 +407,7 @@ JS;
      * Register the "leaveStep" event listener.
      *
      * @param string $script
+     *
      * @return $this
      */
     public function leaving($script)
@@ -414,6 +425,7 @@ JS;
 
     /**
      * @param string|Field $column
+     *
      * @return false|int
      */
     public function getFieldIndex($column)
@@ -426,5 +438,4 @@ JS;
 
         return false;
     }
-
 }

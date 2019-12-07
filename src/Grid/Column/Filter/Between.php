@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Grid\Column\Filter;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Column\Filter;
+use Dcat\Admin\Grid\Model;
 
 class Between extends Filter
 {
@@ -66,7 +66,8 @@ class Between extends Filter
     }
 
     /**
-     * @param $format
+     * @param string $format
+     *
      * @return $this
      */
     protected function setDateFormat($format)
@@ -188,5 +189,4 @@ EOT;
         Admin::collectComponentAssets('moment');
         Admin::collectComponentAssets('bootstrap-datetimepicker');
     }
-
 }

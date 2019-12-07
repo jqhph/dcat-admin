@@ -21,5 +21,4 @@ class Gt extends Equal
 
         $model->where($this->getColumnName(), '>', $value);
     }
-
 }

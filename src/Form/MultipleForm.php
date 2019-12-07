@@ -19,7 +19,7 @@ class MultipleForm extends WidgetForm
 
     public function __construct(Form $form)
     {
-        $this->form    = $form;
+        $this->form = $form;
         $this->builder = $form->builder();
 
         $this->initFields();
@@ -31,6 +31,7 @@ class MultipleForm extends WidgetForm
      * Add a form field to form.
      *
      * @param Field $field
+     *
      * @return $this
      */
     public function pushField(Field &$field)

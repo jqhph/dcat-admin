@@ -4,11 +4,11 @@ namespace Dcat\Admin\Form\Field;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\URL;
 
 trait UploadField
 {
@@ -75,7 +75,7 @@ trait UploadField
     {
         $this->disk(config('admin.upload.disk'));
 
-        if (! $this->storage) {
+        if (!$this->storage) {
             $this->storage = false;
         }
     }
@@ -160,6 +160,7 @@ trait UploadField
      * Upload File.
      *
      * @param UploadedFile $file
+     *
      * @return Response
      */
     public function upload(UploadedFile $file)
@@ -170,7 +171,7 @@ trait UploadField
                 return $this->responseError(403, 'Missing id');
             }
 
-            if (! ($file = $this->mergeChunks($id, $file))) {
+            if (!($file = $this->mergeChunks($id, $file))) {
                 return $this->response(['merge' => 1]);
             }
 
@@ -202,7 +203,7 @@ trait UploadField
                     'id'     => $path,
                     'name'   => $this->name,
                     'path'   => basename($path),
-                    'url'    => $this->objectUrl($path)
+                    'url'    => $this->objectUrl($path),
                 ]);
             }
 
@@ -223,8 +224,9 @@ trait UploadField
     }
 
     /**
-     * @param string $id
+     * @param string       $id
      * @param UploadedFile $file
+     *
      * @return UploadedFile|null
      */
     protected function mergeChunks($id, UploadedFile $file)
@@ -249,7 +251,9 @@ trait UploadField
             }
         }
 
-        if (!$done) return;
+        if (!$done) {
+            return;
+        }
 
         $this->tempFilePath = $tmpDir.'/'.$newFilename.'.tmp';
         $this->putTempFileContent($chunks, $tmpDir, $newFilename);
@@ -284,7 +288,7 @@ trait UploadField
     }
 
     /**
-     * @param int $chunks
+     * @param int    $chunks
      * @param string $tmpDir
      * @param string $newFilename
      */
@@ -309,16 +313,18 @@ trait UploadField
 
             flock($out, LOCK_UN);
         }
+
         fclose($out);
     }
 
     /**
-     * @param $id
+     * @param mixed $id
+     *
      * @return string
      */
     protected function getTempDir($id)
     {
-        $tmpDir = storage_path('tmp/' . $id);
+        $tmpDir = storage_path('tmp/'.$id);
 
         if (!is_dir($tmpDir)) {
             app('files')->makeDirectory($tmpDir, 0755, true);
@@ -332,18 +338,20 @@ trait UploadField
      *
      * @param $code
      * @param $error
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     protected function responseError($code, $error)
     {
         return $this->response([
-            'error' => ['code' => $code, 'message' => $error], 'status' => false
+            'error' => ['code' => $code, 'message' => $error], 'status' => false,
         ]);
     }
 
     /**
      *
      * @param array $message
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     protected function response(array $message)
@@ -354,7 +362,7 @@ trait UploadField
     /**
      * Specify the directory and name for upload file.
      *
-     * @param string $directory
+     * @param string      $directory
      * @param null|string $name
      *
      * @return $this
@@ -433,7 +441,7 @@ trait UploadField
      */
     protected function generateUniqueName(UploadedFile $file)
     {
-        return md5(uniqid()) . '.' . $file->getClientOriginalExtension();
+        return md5(uniqid()).'.'.$file->getClientOriginalExtension();
     }
 
     /**
@@ -448,11 +456,11 @@ trait UploadField
         $index = 1;
         $extension = $file->getClientOriginalExtension();
         $originalName = $file->getClientOriginalName();
-        $newName = $originalName . '_' . $index . '.' . $extension;
+        $newName = $originalName.'_'.$index.'.'.$extension;
 
         while ($this->getStorage()->exists("{$this->getDirectory()}/$newName")) {
             $index++;
-            $newName = $originalName . '_' . $index . '.' . $extension;
+            $newName = $originalName.'_'.$index.'.'.$extension;
         }
 
         return $newName;
@@ -505,15 +513,14 @@ trait UploadField
      */
     public function destroyIfChanged($file)
     {
-        if (! $file || ! $this->original) {
+        if (!$file || !$this->original) {
             return $this->destroy();
         }
 
-        $file = array_filter((array)$file);
-        $original = (array)$this->original;
+        $file = array_filter((array) $file);
+        $original = (array) $this->original;
 
         $this->deleteFile(Arr::except(array_combine($original, $original), $file));
-
     }
 
     /**
@@ -526,6 +533,7 @@ trait UploadField
         if (!$path) {
             return;
         }
+
         if (is_array($path)) {
             foreach ($path as $v) {
                 $this->deleteFile($v);
@@ -567,9 +575,9 @@ trait UploadField
      *
      * @param string $disk Disks defined in `config/filesystems.php`.
      *
-     * @return $this
      * @throws \Exception
      *
+     * @return $this
      */
     public function disk($disk)
     {
@@ -594,7 +602,7 @@ trait UploadField
     /**
      * Get file visit url.
      *
-     * @param $path
+     * @param string $path
      *
      * @return string
      */
@@ -609,6 +617,7 @@ trait UploadField
 
     /**
      * @param $permission
+     *
      * @return $this
      */
     public function storagePermission($permission)

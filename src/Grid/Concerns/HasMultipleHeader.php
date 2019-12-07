@@ -18,7 +18,7 @@ trait HasMultipleHeader
      * Merge cells.
      *
      * @param string $label
-     * @param array $columnNames
+     * @param array  $columnNames
      *
      * @return Header
      */
@@ -27,6 +27,7 @@ trait HasMultipleHeader
         if (count($columnNames) < 2) {
             throw new \InvalidArgumentException('The number of "$columnNames" must be greater than 2');
         }
+
         $this->withBorder();
 
         return $this->mutipleHeaders[$label] = new Header($this, $label, $columnNames);
@@ -99,20 +100,23 @@ trait HasMultipleHeader
     protected function createHeaderWithColumns(array $columns)
     {
         $headers = [];
+
         /* @var Column $column */
         foreach ($columns as $name => $column) {
             $header = new Header($this, $column->getLabel(), [$name]);
             $prio = $column->getDataPriority();
+
             if (is_int($prio)) {
                 $header->responsive($prio);
             }
+
             if ($html = $column->renderHeader()) {
                 $header->append($html);
             }
+
             $headers[] = $header;
         }
+
         return $headers;
     }
-
-
 }

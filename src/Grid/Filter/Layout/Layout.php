@@ -82,5 +82,4 @@ class Layout
 
         return $this->columns;
     }
-
 }

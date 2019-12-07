@@ -39,7 +39,7 @@ class Between extends AbstractFilter
      */
     public function formatId($column)
     {
-        $id     = str_replace('.', '_', $column);
+        $id = str_replace('.', '_', $column);
         $prefix = 'filter_column_'.$this->parent->getGrid()->getName().'_';
 
         return ['start' => "{$prefix}{$id}_start", 'end' => "{$prefix}{$id}_end"];
@@ -61,7 +61,7 @@ class Between extends AbstractFilter
         if (count($columns) == 1) {
             $name = $prefix.$columns[0];
         } else {
-            $name =  $prefix.array_shift($columns);
+            $name = $prefix.array_shift($columns);
 
             foreach ($columns as $column) {
                 $name .= "[$column]";

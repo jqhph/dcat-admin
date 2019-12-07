@@ -104,11 +104,11 @@ trait HasPaginator
      * Show grid pagination.
      *
      * @param bool $val
+     *
      * @return $this
      */
     public function showPagination(bool $val = true)
     {
         return $this->disablePagination(!$val);
     }
-
 }

@@ -48,11 +48,13 @@ abstract class Presenter
 
     /**
      * @param int $width
+     *
      * @return $this
      */
     public function width($width)
     {
         $this->filter->width($width);
+
         return $this;
     }
 
@@ -100,5 +102,4 @@ abstract class Presenter
             Admin::css(static::$css);
         }
     }
-
 }

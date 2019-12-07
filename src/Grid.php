@@ -3,21 +3,21 @@
 namespace Dcat\Admin;
 
 use Closure;
+use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Grid\Column;
+use Dcat\Admin\Grid\Concerns;
 use Dcat\Admin\Grid\Displayers;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Responsive;
 use Dcat\Admin\Grid\Row;
 use Dcat\Admin\Grid\Tools;
-use Dcat\Admin\Grid\Concerns;
-use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 
 class Grid
 {
@@ -176,19 +176,21 @@ class Grid
      * Create a new grid instance.
      *
      * Grid constructor.
+     *
      * @param Repository|null $repository
-     * @param null $builder
+     * @param null|\Closure   $builder
      */
     public function __construct(?Repository $repository = null, ?\Closure $builder = null)
     {
         if ($repository) {
             $this->keyName = $repository->getKeyName();
         }
-        $this->model    = new Model(request(), $repository);
-        $this->columns  = new Collection();
-        $this->rows     = new Collection();
-        $this->builder  = $builder;
-        $this->tableId  = 'grid-'.Str::random(8);
+
+        $this->model = new Model(request(), $repository);
+        $this->columns = new Collection();
+        $this->rows = new Collection();
+        $this->builder = $builder;
+        $this->tableId = 'grid-'.Str::random(8);
 
         $this->model()->setGrid($this);
 
@@ -207,7 +209,6 @@ class Grid
     {
         return $this->tableId;
     }
-
 
     /**
      * Get primary key name of model.
@@ -256,6 +257,7 @@ class Grid
      * Add number column.
      *
      * @param null|string $label
+     *
      * @return Column
      */
     public function number(?string $label = null)
@@ -339,6 +341,7 @@ class Grid
 
     /**
      * @param array $options
+     *
      * @return $this
      */
     public function setRowSelectorOptions(array $options = [])
@@ -493,6 +496,7 @@ HTML
     /**
      * @param string $width
      * @param string $height
+     *
      * @return $this
      */
     public function setModalFormDimensions(string $width, string $height)
@@ -538,7 +542,9 @@ HTML
         if (!$content) {
             return $this->header;
         }
+
         $this->header = $content;
+
         return $this;
     }
 
@@ -683,6 +689,7 @@ HTML;
 
     /**
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableQuickCreateButton(bool $disable = true)
@@ -692,6 +699,7 @@ HTML;
 
     /**
      * @param bool $val
+     *
      * @return $this
      */
     public function showQuickCreateButton(bool $val = true)
@@ -723,6 +731,7 @@ HTML;
      * Set resource path.
      *
      * @param string $path
+     *
      * @return $this
      */
     public function resource(string $path)
@@ -730,6 +739,7 @@ HTML;
         if (!empty($path)) {
             $this->resourcePath = admin_url($path);
         }
+
         return $this;
     }
 
@@ -749,6 +759,7 @@ HTML;
      * Create a grid instance.
      *
      * @param mixed ...$params
+     *
      * @return $this
      */
     public static function make(...$params)
@@ -758,6 +769,7 @@ HTML;
 
     /**
      * Enable responsive tables.
+     *
      * @see https://github.com/nadangergeo/RWD-Table-Patterns
      *
      * @return Responsive
@@ -781,6 +793,7 @@ HTML;
 
     /**
      * @param Closure $closure
+     *
      * @return $this;
      */
     public function wrap(\Closure $closure)
@@ -920,6 +933,7 @@ HTML;
      * Add column to grid.
      *
      * @param string $name
+     *
      * @return Column
      */
     public function __get($name)
@@ -943,5 +957,4 @@ HTML;
 
         return $this->addColumn($method, $arguments[0] ?? null);
     }
-
 }

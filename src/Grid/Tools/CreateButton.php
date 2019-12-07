@@ -19,7 +19,7 @@ class CreateButton
 
     protected function renderQuickCreateButton()
     {
-        if (! $this->grid->option('show_quick_create_btn')) {
+        if (!$this->grid->option('show_quick_create_btn')) {
             return;
         }
 
@@ -41,7 +41,7 @@ class CreateButton
 
     protected function renderCreateButton()
     {
-        if (! $this->grid->option('show_create_btn')) {
+        if (!$this->grid->option('show_create_btn')) {
             return;
         }
 
@@ -55,7 +55,7 @@ class CreateButton
 
     public function render()
     {
-        if (! $this->grid->option('show_create_btn') && ! $this->grid->option('show_quick_create_btn')) {
+        if (!$this->grid->option('show_create_btn') && ! $this->grid->option('show_quick_create_btn')) {
             return;
         }
 

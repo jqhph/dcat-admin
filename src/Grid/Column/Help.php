@@ -30,8 +30,8 @@ class Help implements Renderable
      */
     public function __construct($message = '', ?string $style = null, ?string $placement = 'bottom')
     {
-        $this->message   = value($message);
-        $this->style     = $style;
+        $this->message = value($message);
+        $this->style = $style;
         $this->placement = $placement;
     }
 
@@ -63,5 +63,4 @@ class Help implements Renderable
 </a>
 HELP;
     }
-
 }

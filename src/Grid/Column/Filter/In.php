@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Grid\Column\Filter;
 
-use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Column\Filter;
+use Dcat\Admin\Grid\Model;
 
 class In extends Filter
 {

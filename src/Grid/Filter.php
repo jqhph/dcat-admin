@@ -31,8 +31,8 @@ use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * Class Filter.
@@ -248,6 +248,7 @@ class Filter implements Renderable
 
     /**
      * @param bool $disabled
+     *
      * @return $this
      */
     public function disableCollapse(bool $disabled = true)
@@ -259,6 +260,7 @@ class Filter implements Renderable
 
     /**
      * @param bool $disabled
+     *
      * @return $this
      */
     public function disableResetButton(bool $disabled = true)
@@ -286,7 +288,6 @@ class Filter implements Renderable
 
         return Arr::get($inputs, $key, $default);
     }
-
 
     /**
      * Get grid model.
@@ -333,7 +334,7 @@ class Filter implements Renderable
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return $this
      */
@@ -375,7 +376,7 @@ class Filter implements Renderable
     {
         $this->filters = array_filter($this->filters, function (AbstractFilter $filter) use (&$column) {
             if (is_array($column)) {
-                return ! in_array($filter->getColumn(), $column);
+                return !in_array($filter->getColumn(), $column);
             }
 
             return $filter->getColumn() != $column;
@@ -589,6 +590,7 @@ class Filter implements Renderable
      * @param string $right
      * @param string $bottom
      * @param string $left
+     *
      * @return Filter
      */
     public function padding($top = '15px', $right = '15px', $bottom = '5px', $left = '')
@@ -599,6 +601,7 @@ class Filter implements Renderable
     /**
      *
      * @param string $style
+     *
      * @return $this
      */
     public function style(?string $style)
@@ -634,13 +637,12 @@ class Filter implements Renderable
         $this->callComposing();
 
         return view($this->view)->with([
-            'action'   => $this->action ?: $this->urlWithoutFilters(),
-            'layout'   => $this->layout,
-            'filterID' => $this->disableCollapse ? '' : $this->filterID,
-            'expand'   => $this->expand,
-            'style'    => $this->style,
-            'border'   => $this->border,
-
+            'action'             => $this->action ?: $this->urlWithoutFilters(),
+            'layout'             => $this->layout,
+            'filterID'           => $this->disableCollapse ? '' : $this->filterID,
+            'expand'             => $this->expand,
+            'style'              => $this->style,
+            'border'             => $this->border,
             'containerClass'     => $this->containerClass,
             'disableResetButton' => $this->disableResetButton,
         ])->render();
@@ -754,5 +756,4 @@ class Filter implements Renderable
     {
         return static::$supports;
     }
-
 }

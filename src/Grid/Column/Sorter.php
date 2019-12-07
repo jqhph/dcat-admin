@@ -65,9 +65,9 @@ class Sorter implements Renderable
      */
     public function render()
     {
-        $icon  = '';
+        $icon = '';
         $color = '';
-        $type  = 'desc';
+        $type = 'desc';
 
         if ($this->isSorted()) {
             $type = $this->sort['type'] == 'desc' ? 'asc' : 'desc';
@@ -84,9 +84,9 @@ class Sorter implements Renderable
             $sort['cast'] = $this->cast;
         }
 
-        if (! $this->isSorted() || $this->sort['type'] != 'asc') {
+        if (!$this->isSorted() || $this->sort['type'] != 'asc') {
             $url = request()->fullUrlWithQuery([
-                $this->sortName => $sort
+                $this->sortName => $sort,
             ]);
         } else {
             $url = request()->fullUrlWithQuery([

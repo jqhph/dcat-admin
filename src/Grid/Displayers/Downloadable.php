@@ -17,7 +17,7 @@ class Downloadable extends AbstractDisplayer
             if (url()->isValidUrl($value)) {
                 $src = $value;
             } elseif ($server) {
-                $src = rtrim($server, '/') . '/' . ltrim($value, '/');
+                $src = rtrim($server, '/').'/'.ltrim($value, '/');
             } else {
                 $src = Storage::disk($disk ?: config('admin.upload.disk'))->url($value);
             }
@@ -31,5 +31,4 @@ class Downloadable extends AbstractDisplayer
 HTML;
         })->implode('<br>');
     }
-
 }

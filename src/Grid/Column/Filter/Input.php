@@ -27,6 +27,7 @@ JS;
      * Set input placeholder.
      *
      * @param null|string $placeholder
+     *
      * @return $this
      */
     public function placeholder(?string $placeholder)
@@ -44,7 +45,7 @@ JS;
 
         $active = empty($value) ? '' : 'active';
 
-        return <<<EOT
+        return <<<HTML
 &nbsp;<span class="dropdown" style="position: absolute">
     <form action="{$this->getFormAction()}" pjax-container style="display: inline-block;">
     <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-toggle="dropdown">
@@ -62,6 +63,6 @@ JS;
     </ul>
     </form>
 </span>
-EOT;
+HTML;
     }
 }

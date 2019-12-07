@@ -21,5 +21,4 @@ class StartWith extends Equal
 
         $model->where($this->getColumnName(), 'like', "{$value}%");
     }
-
 }

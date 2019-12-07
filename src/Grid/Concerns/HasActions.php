@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid\Concerns;
 
 use Closure;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Grid\Displayers;
 
 trait HasActions
 {
@@ -36,7 +35,6 @@ trait HasActions
         return $this;
     }
 
-
     /**
      * Get action display class.
      *
@@ -54,7 +52,6 @@ trait HasActions
 
         return Grid\Displayers\Actions::class;
     }
-
 
     /**
      * Set grid action callback.
@@ -109,6 +106,7 @@ trait HasActions
      * Disable edit.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableEditButton(bool $disable = true)
@@ -122,6 +120,7 @@ trait HasActions
      * Show edit.
      *
      * @param bool $val
+     *
      * @return $this
      */
     public function showEditButton(bool $val = true)
@@ -155,6 +154,7 @@ trait HasActions
      * Disable view action.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableViewButton(bool $disable = true)
@@ -168,6 +168,7 @@ trait HasActions
      * Show view action.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function showViewButton(bool $val = true)
@@ -179,6 +180,7 @@ trait HasActions
      * Disable delete.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableDeleteButton(bool $disable = true)
@@ -192,11 +194,11 @@ trait HasActions
      * Show delete button.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function showDeleteButton(bool $val = true)
     {
         return $this->disableDeleteButton(!$val);
     }
-
 }

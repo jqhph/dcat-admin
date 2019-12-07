@@ -2,9 +2,9 @@
 
 namespace Dcat\Admin\Grid\Concerns;
 
+use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Exporter;
 use Dcat\Admin\Grid\Exporters\AbstractExporter;
-use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Tools;
 
 trait HasExporter
@@ -33,7 +33,7 @@ trait HasExporter
         $titles = [];
 
         if (is_array($exporter) || $exporter === false) {
-            $titles   = $exporter;
+            $titles = $exporter;
             $exporter = null;
         }
 
@@ -86,7 +86,7 @@ trait HasExporter
      */
     public function setExporterQueryName($gridName)
     {
-        if (! $this->allowExporter()) {
+        if (!$this->allowExporter()) {
             return;
         }
 
@@ -100,7 +100,7 @@ trait HasExporter
      */
     protected function resolveExportDriver($scope)
     {
-        if (! $this->exportDriver) {
+        if (!$this->exportDriver) {
             $this->exportDriver = $this->getExporter()->resolve();
         }
 
@@ -134,7 +134,7 @@ trait HasExporter
      */
     public function renderExportButton()
     {
-        if (! $this->allowExporter()) {
+        if (!$this->allowExporter()) {
             return '';
         }
         
@@ -148,7 +148,7 @@ trait HasExporter
      */
     public function disableExporter(bool $disable = true)
     {
-        return $this->option('show_exporter', ! $disable);
+        return $this->option('show_exporter', !$disable);
     }
 
     /**
@@ -170,5 +170,4 @@ trait HasExporter
     {
         return $this->options['show_exporter'];
     }
-
 }

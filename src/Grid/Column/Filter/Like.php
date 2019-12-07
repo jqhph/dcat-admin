@@ -21,5 +21,4 @@ class Like extends Equal
 
         $model->where($this->getColumnName(), 'like', "%{$value}%");
     }
-
 }

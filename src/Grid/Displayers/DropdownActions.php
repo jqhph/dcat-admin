@@ -2,12 +2,12 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Dcat\Admin\Grid\Actions\QuickEdit;
-use Dcat\Admin\Grid\RowAction;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Actions\Delete;
 use Dcat\Admin\Grid\Actions\Edit;
+use Dcat\Admin\Grid\Actions\QuickEdit;
 use Dcat\Admin\Grid\Actions\Show;
+use Dcat\Admin\Grid\RowAction;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Color;
 use Illuminate\Contracts\Support\Renderable;
@@ -37,7 +37,7 @@ class DropdownActions extends Actions
     protected function addScript()
     {
         $background = $this->grid->option('row_selector_bg') ?: Color::dark20();
-        $checkbox   = ".{$this->grid->getGridRowName()}-checkbox";
+        $checkbox = ".{$this->grid->getGridRowName()}-checkbox";
 
         $script = <<<JS
 $(function() {

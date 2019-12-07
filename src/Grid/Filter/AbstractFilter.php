@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Grid\Filter;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Filter;
 use Dcat\Admin\Grid\Filter\Presenter\Checkbox;
 use Dcat\Admin\Grid\Filter\Presenter\DateTime;
@@ -108,7 +107,7 @@ abstract class AbstractFilter
     public function __construct($column, $label = '')
     {
         $this->column = $column;
-        $this->label  = $this->formatLabel($label);
+        $this->label = $this->formatLabel($label);
     }
 
     /**
@@ -139,6 +138,7 @@ abstract class AbstractFilter
      * Set the column width.
      *
      * @param int|string $width
+     *
      * @return $this
      */
     public function width($width)
@@ -287,7 +287,8 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param null $source
+     * @param mixed $source
+     *
      * @return Filter\Presenter\SelectResource
      */
     public function selectResource($source = null)
@@ -475,7 +476,8 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param $value
+     * @param mixed $value
+     *
      * @return $this
      */
     public function setValue($value)

@@ -53,6 +53,7 @@ trait HasDisplayers
 
     /**
      * @param string $color
+     *
      * @return $this
      */
     public function bold($color = 'text-80')
@@ -70,6 +71,7 @@ trait HasDisplayers
      * Display column with "long2ip".
      *
      * @param null $default
+     *
      * @return $this
      */
     public function long2ip($default = null)
@@ -103,6 +105,7 @@ trait HasDisplayers
 
     /**
      * @param string $val
+     *
      * @return $this
      */
     public function prepend($val)
@@ -115,12 +118,14 @@ trait HasDisplayers
             } elseif ($v instanceof Collection) {
                 return $v->prepend($val);
             }
-            return $val . $v;
+
+            return $val.$v;
         });
     }
 
     /**
      * @param string $val
+     *
      * @return $this
      */
     public function append($val)
@@ -133,7 +138,8 @@ trait HasDisplayers
             } elseif ($v instanceof Collection) {
                 return $v->push($val);
             }
-            return $v . $val;
+
+            return $v.$val;
         });
     }
 
@@ -141,12 +147,15 @@ trait HasDisplayers
      * Split a string by string
      *
      * @param string $d
+     *
      * @return $this
      */
     public function explode(string $d = ',')
     {
         return $this->display(function ($v) use ($d) {
-            if (is_array($v) || $v instanceof Arrayable) return $v;
+            if (is_array($v) || $v instanceof Arrayable) {
+                return $v;
+            }
 
             return $v ? explode($d, $v) : [];
         });
@@ -175,8 +184,9 @@ trait HasDisplayers
     /**
      * Limit the number of characters in a string.
      *
-     * @param  int     $limit
-     * @param  string  $end
+     * @param  int    $limit
+     * @param  string $end
+     *
      * @return $this
      */
     public function limit($limit = 100, $end = '...')
@@ -197,5 +207,4 @@ trait HasDisplayers
     {
         return $this->display('');
     }
-
 }

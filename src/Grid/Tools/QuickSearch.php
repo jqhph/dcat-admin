@@ -29,6 +29,7 @@ class QuickSearch extends AbstractTool
 
     /**
      * @param string|null $name
+     *
      * @return $this
      */
     public function setQueryName(?string $name)
@@ -48,6 +49,7 @@ class QuickSearch extends AbstractTool
 
     /**
      * @param int $width
+     *
      * @return $this
      */
     public function width(int $width)
@@ -108,7 +110,7 @@ class QuickSearch extends AbstractTool
 
     protected function setupScript()
     {
-        $script = <<<JS
+        $script = <<<'JS'
 var show = function () {
     var t = $(this),
         clear = t.parent().find('.quick-search-clear');
@@ -132,5 +134,4 @@ JS;
 
         Admin::script($script);
     }
-
 }

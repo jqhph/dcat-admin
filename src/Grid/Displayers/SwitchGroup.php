@@ -22,7 +22,7 @@ class SwitchGroup extends SwitchDisplay
         }
 
         if (!Arr::isAssoc($columns)) {
-            $labels  = array_map('admin_trans_field', $columns);
+            $labels = array_map('admin_trans_field', $columns);
             $columns = array_combine($columns, $labels);
         }
 
@@ -43,7 +43,7 @@ class SwitchGroup extends SwitchDisplay
         if ($keys->isEmpty()) {
             $elementName = $name;
         } else {
-            $elementName = $keys->shift() . $keys->reduce(function ($carry, $val) {
+            $elementName = $keys->shift().$keys->reduce(function ($carry, $val) {
                 return "{$carry}[{$val}]";
             });
         }
@@ -84,7 +84,7 @@ class SwitchGroup extends SwitchDisplay
 JS;
         Admin::script($script);
 
-        $key     = $this->row->{$this->grid->getKeyName()};
+        $key = $this->row->{$this->grid->getKeyName()};
         $checked = $this->row->$name ? 'checked' : '';
 
         return <<<EOT

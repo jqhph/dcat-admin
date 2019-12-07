@@ -39,5 +39,4 @@ JS;
 </a>&nbsp;{$this->value}
 HTML;
     }
-
 }

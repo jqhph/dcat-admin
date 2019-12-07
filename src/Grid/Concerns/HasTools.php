@@ -72,6 +72,7 @@ trait HasTools
 
     /**
      * @param bool $val
+     *
      * @return mixed
      */
     public function disableToolbar(bool $val = true)
@@ -81,6 +82,7 @@ trait HasTools
 
     /**
      * @param bool $val
+     *
      * @return mixed
      */
     public function showToolbar(bool $val = true)
@@ -92,6 +94,7 @@ trait HasTools
      * Disable batch actions.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableBatchActions(bool $disable = true)
@@ -105,6 +108,7 @@ trait HasTools
      * Show batch actions.
      *
      * @param bool $val
+     *
      * @return $this
      */
     public function showBatchActions(bool $val = true)
@@ -116,6 +120,7 @@ trait HasTools
      * Disable batch delete.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableBatchDelete(bool $disable = true)
@@ -131,6 +136,7 @@ trait HasTools
      * Show batch delete.
      *
      * @param bool $val
+     *
      * @return $this
      */
     public function showBatchDelete(bool $val = true)
@@ -142,6 +148,7 @@ trait HasTools
      * Disable refresh button.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableRefreshButton(bool $disable = true)
@@ -155,6 +162,7 @@ trait HasTools
      * Show refresh button.
      *
      * @param bool $val
+     *
      * @return $this
      */
     public function showRefreshButton(bool $val = true)
@@ -173,12 +181,12 @@ trait HasTools
         if (
             $this->option('show_toolbar')
             && (
-                $this->getTools()->has() ||
-                $this->allowExporter() ||
-                $this->allowCreateBtn() ||
-                $this->allowQuickCreateBtn() ||
-                $this->allowResponsive() ||
-                !empty($this->variables['title'])
+                $this->getTools()->has()
+                || $this->allowExporter()
+                || $this->allowCreateBtn()
+                || $this->allowQuickCreateBtn()
+                || $this->allowResponsive()
+                || !empty($this->variables['title'])
             )
         ) {
             return true;
@@ -186,5 +194,4 @@ trait HasTools
 
         return false;
     }
-
 }

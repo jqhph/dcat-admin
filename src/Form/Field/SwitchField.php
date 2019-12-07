@@ -56,7 +56,6 @@ class SwitchField extends Field
     }
 
     /**
-     *
      * @param string $color
      *
      * @return $this

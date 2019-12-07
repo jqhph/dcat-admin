@@ -21,5 +21,4 @@ class Nlt extends Equal
 
         $model->where($this->getColumnName(), '>=', $value);
     }
-
 }

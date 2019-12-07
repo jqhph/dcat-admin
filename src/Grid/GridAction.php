@@ -5,11 +5,9 @@ namespace Dcat\Admin\Grid;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 
 /**
  * Class GridAction.
- *
  */
 abstract class GridAction implements Renderable
 {
@@ -108,10 +106,4 @@ abstract class GridAction implements Renderable
 
         return static::$selectors[$class];
     }
-
-    protected function addScript()
-    {
-
-    }
-
 }

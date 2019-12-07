@@ -28,7 +28,6 @@ class ExportButton extends AbstractTool
     protected function setUpScripts()
     {
         $script = <<<JS
-
 $('.{$this->grid->getExportSelectedName()}').click(function (e) {
     e.preventDefault();
     
@@ -40,7 +39,6 @@ $('.{$this->grid->getExportSelectedName()}').click(function (e) {
     var href = $(this).attr('href').replace('__rows__', rows);
     location.href = href;
 });
-
 JS;
 
         Admin::script($script);
@@ -51,7 +49,7 @@ JS;
      */
     protected function renderExportAll()
     {
-        if (! $this->grid->getExporter()->option('show_export_all')) {
+        if (!$this->grid->getExporter()->option('show_export_all')) {
             return;
         }
         $all = trans('admin.all');
@@ -64,7 +62,7 @@ JS;
      */
     protected function renderExportCurrentPage()
     {
-        if (! $this->grid->getExporter()->option('show_export_current_page')) {
+        if (!$this->grid->getExporter()->option('show_export_current_page')) {
             return;
         }
 
@@ -80,8 +78,8 @@ JS;
     protected function renderExportSelectedRows()
     {
         if (
-            ! $this->grid->option('show_row_selector')
-            || ! $this->grid->getExporter()->option('show_export_selected_rows')
+            !$this->grid->option('show_row_selector')
+            || !$this->grid->getExporter()->option('show_export_selected_rows')
         ) {
             return;
         }

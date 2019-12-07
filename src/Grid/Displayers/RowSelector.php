@@ -11,7 +11,7 @@ class RowSelector extends AbstractDisplayer
     {
         $this->setupScript();
 
-        $style  = $this->grid->option('row_selector_style');
+        $style = $this->grid->option('row_selector_style');
         $circle = $this->grid->option('row_selector_circle') ? 'checkbox-circle' : '';
 
         return <<<EOT
@@ -24,7 +24,7 @@ EOT;
 
     protected function setupScript()
     {
-        $clickTr    = $this->grid->option('row_selector_clicktr') ? 'true' : 'false';
+        $clickTr = $this->grid->option('row_selector_clicktr') ? 'true' : 'false';
         $background = $this->grid->option('row_selector_bg') ?: Color::dark20();
 
         Admin::script(
@@ -55,5 +55,4 @@ JS
 
         return $label ?: ($this->row->username ?: $this->getKey());
     }
-
 }

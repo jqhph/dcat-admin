@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Grid\Exporters;
 
-use Dcat\EasyExcel\Excel;
 use Dcat\Admin\Grid;
+use Dcat\EasyExcel\Excel;
 
 class ExcelExporter extends AbstractExporter
 {
@@ -11,7 +11,7 @@ class ExcelExporter extends AbstractExporter
     {
         parent::__construct($titles);
 
-        if (! class_exists(Excel::class)) {
+        if (!class_exists(Excel::class)) {
             throw new \Exception('To use exporter, please install [dcat/easy-excel] first.');
         }
     }
@@ -37,5 +37,4 @@ class ExcelExporter extends AbstractExporter
 
         exit;
     }
-
 }
