@@ -94,7 +94,7 @@ abstract class RowAction extends GridAction
     {
         $this->addScript();
 
-        if (!$href = $this->href()) {
+        if (! $href = $this->href()) {
             $href = 'javascript:void(0);';
         }
 

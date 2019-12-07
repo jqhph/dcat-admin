@@ -60,7 +60,7 @@ trait HasHtmlAttributes
      */
     public function defaultHtmlAttribute($attribute, $value)
     {
-        if (!array_key_exists($attribute, $this->htmlAttributes)) {
+        if (! array_key_exists($attribute, $this->htmlAttributes)) {
             $this->setHtmlAttribute($attribute, $value);
         }
 

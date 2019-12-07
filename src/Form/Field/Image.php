@@ -62,7 +62,7 @@ class Image extends File
 
     protected function setupImage()
     {
-        if (!isset($this->options['accept'])) {
+        if (! isset($this->options['accept'])) {
             $this->options['accept'] = [];
         }
 
@@ -86,7 +86,7 @@ class Image extends File
      */
     public function dimensions(array $options)
     {
-        if (!$options) {
+        if (! $options) {
             return $this;
         }
 

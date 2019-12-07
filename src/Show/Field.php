@@ -282,7 +282,7 @@ class Field implements Renderable
                 }
             }
 
-            if (!$url) {
+            if (! $url) {
                 return '';
             }
 
@@ -567,20 +567,20 @@ HTML;
             $extend = $abstract;
         }
 
-        if (!isset($extend)) {
+        if (! isset($extend)) {
             admin_warning("[$abstract] is not a valid Show field.");
 
             return $this;
         }
 
-        if (!$extend->escape) {
+        if (! $extend->escape) {
             $this->unescape();
         }
 
         $field = $this;
 
         return $this->as(function ($value) use ($extend, $field, $arguments) {
-            if (!$extend->border) {
+            if (! $extend->border) {
                 $field->wrap(false);
             }
 
@@ -642,9 +642,9 @@ HTML;
 
         if ($this->showAs->isNotEmpty()) {
             $this->showAs->each(function ($callable) {
-                list($callable, $params) = $callable;
+                [$callable, $params] = $callable;
 
-                if (!$callable instanceof \Closure) {
+                if (! $callable instanceof \Closure) {
                     $this->value = $callable;
 
                     return;
@@ -670,7 +670,7 @@ HTML;
     {
         $class = static::$definitions[$this->name];
 
-        if (!$class instanceof \Closure) {
+        if (! $class instanceof \Closure) {
             throw new \Exception("Invalid column definition [$class]");
         }
 

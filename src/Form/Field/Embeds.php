@@ -31,7 +31,7 @@ class Embeds extends Field
         }
 
         if (count($arguments) == 2) {
-            list($this->label, $this->builder) = $arguments;
+            [$this->label, $this->builder] = $arguments;
         }
     }
 
@@ -54,7 +54,7 @@ class Embeds extends Field
      */
     public function getValidator(array $input)
     {
-        if (!array_key_exists($this->column, $input)) {
+        if (! array_key_exists($this->column, $input)) {
             return false;
         }
 
@@ -64,7 +64,7 @@ class Embeds extends Field
 
         /** @var Field $field */
         foreach ($this->buildEmbeddedForm()->fields() as $field) {
-            if (!$fieldRules = $field->getRules()) {
+            if (! $fieldRules = $field->getRules()) {
                 continue;
             }
 
@@ -204,7 +204,7 @@ class Embeds extends Field
         $column = array_flip($column);
 
         foreach ($input[$this->column] as $key => $value) {
-            if (!array_key_exists($key, $column)) {
+            if (! array_key_exists($key, $column)) {
                 continue;
             }
 

@@ -167,7 +167,7 @@ class Editable extends AbstractDisplayer
 
     protected function setupScript()
     {
-        if (!static::$setup) {
+        if (! static::$setup) {
             static::$setup = 1;
             Admin::script(
                 <<<'JS'
@@ -214,7 +214,7 @@ JS
             'data-value' => "{$this->value}",
         ];
 
-        if (!empty($this->attributes)) {
+        if (! empty($this->attributes)) {
             $attributes = array_merge($attributes, $this->attributes);
         }
 

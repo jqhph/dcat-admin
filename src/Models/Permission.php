@@ -68,7 +68,7 @@ class Permission extends Model
      */
     public function shouldPassThrough(Request $request) : bool
     {
-        if (!$this->http_path) {
+        if (! $this->http_path) {
             return false;
         }
 
@@ -78,7 +78,7 @@ class Permission extends Model
             $path = admin_base_path($path);
 
             if (Str::contains($path, ':')) {
-                list($method, $path) = explode(':', $path);
+                [$method, $path] = explode(':', $path);
                 $method = explode(',', $method);
             }
 
@@ -140,10 +140,10 @@ class Permission extends Model
      */
     protected function matchRequest(array $match, Request $request) : bool
     {
-        if (!$path = trim($match['path'], '/')) {
+        if (! $path = trim($match['path'], '/')) {
             return false;
         }
-        if (!Helper::matchRequestPath($path)) {
+        if (! Helper::matchRequestPath($path)) {
             return false;
         }
 

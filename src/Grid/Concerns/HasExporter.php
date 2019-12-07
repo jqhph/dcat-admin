@@ -53,7 +53,7 @@ trait HasExporter
      */
     protected function handleExportRequest($forceExport = false)
     {
-        if (!$scope = request($this->getExporter()->getQueryName())) {
+        if (! $scope = request($this->getExporter()->getQueryName())) {
             return;
         }
 
@@ -86,7 +86,7 @@ trait HasExporter
      */
     public function setExporterQueryName($gridName)
     {
-        if (!$this->allowExporter()) {
+        if (! $this->allowExporter()) {
             return;
         }
 
@@ -100,7 +100,7 @@ trait HasExporter
      */
     protected function resolveExportDriver($scope)
     {
-        if (!$this->exportDriver) {
+        if (! $this->exportDriver) {
             $this->exportDriver = $this->getExporter()->resolve();
         }
 
@@ -133,7 +133,7 @@ trait HasExporter
      */
     public function renderExportButton()
     {
-        if (!$this->allowExporter()) {
+        if (! $this->allowExporter()) {
             return '';
         }
 
@@ -147,7 +147,7 @@ trait HasExporter
      */
     public function disableExporter(bool $disable = true)
     {
-        return $this->option('show_exporter', !$disable);
+        return $this->option('show_exporter', ! $disable);
     }
 
     /**
@@ -157,7 +157,7 @@ trait HasExporter
      */
     public function showExporter(bool $val = true)
     {
-        return $this->disableExporter(!$val);
+        return $this->disableExporter(! $val);
     }
 
     /**

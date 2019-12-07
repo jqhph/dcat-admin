@@ -77,7 +77,7 @@ trait HasTools
      */
     public function disableToolbar(bool $val = true)
     {
-        return $this->option('show_toolbar', !$val);
+        return $this->option('show_toolbar', ! $val);
     }
 
     /**
@@ -87,7 +87,7 @@ trait HasTools
      */
     public function showToolbar(bool $val = true)
     {
-        return $this->disableToolbar(!$val);
+        return $this->disableToolbar(! $val);
     }
 
     /**
@@ -113,7 +113,7 @@ trait HasTools
      */
     public function showBatchActions(bool $val = true)
     {
-        return $this->disableBatchActions(!$val);
+        return $this->disableBatchActions(! $val);
     }
 
     /**
@@ -141,7 +141,7 @@ trait HasTools
      */
     public function showBatchDelete(bool $val = true)
     {
-        return $this->disableBatchDelete(!$val);
+        return $this->disableBatchDelete(! $val);
     }
 
     /**
@@ -167,7 +167,7 @@ trait HasTools
      */
     public function showRefreshButton(bool $val = true)
     {
-        return $this->disableRefreshButton(!$val);
+        return $this->disableRefreshButton(! $val);
     }
 
     /**
@@ -185,7 +185,7 @@ trait HasTools
                 || $this->allowCreateBtn()
                 || $this->allowQuickCreateBtn()
                 || $this->allowResponsive()
-                || !empty($this->variables['title'])
+                || ! empty($this->variables['title'])
             )
         ) {
             return true;

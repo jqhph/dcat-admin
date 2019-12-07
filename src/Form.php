@@ -401,7 +401,7 @@ class Form implements Renderable
      */
     public function disableAjaxSubmit(bool $disable = true)
     {
-        $this->useAjaxSubmit = !$disable;
+        $this->useAjaxSubmit = ! $disable;
 
         return $this;
     }
@@ -621,7 +621,7 @@ class Form implements Renderable
         }
 
         if ($response = $this->handleUploadFile($data)) {
-            if (($value = $response->getData()) && !empty($value->id)) {
+            if (($value = $response->getData()) && ! empty($value->id)) {
                 $this->step()->stash(
                     [$data['upload_column'] => $value->id],
                     true
@@ -684,7 +684,7 @@ class Form implements Renderable
      */
     public function isAjaxRequest()
     {
-        return $this->request->ajax() && !$this->request->pjax();
+        return $this->request->ajax() && ! $this->request->pjax();
     }
 
     /**
@@ -848,7 +848,7 @@ class Form implements Renderable
      */
     protected function makeValidationErrorsResponse($validationMessages)
     {
-        if (!$this->isAjaxRequest()) {
+        if (! $this->isAjaxRequest()) {
             return back()->withInput()->withErrors($validationMessages);
         }
 
@@ -977,7 +977,7 @@ class Form implements Renderable
             $columns = $field->column();
 
             // If column not in input array data, then continue.
-            if (!Arr::has($updates, $columns)) {
+            if (! Arr::has($updates, $columns)) {
                 continue;
             }
 
@@ -1010,8 +1010,8 @@ class Form implements Renderable
     protected function invalidColumn($columns, $oneToOneRelation = false)
     {
         foreach ((array) $columns as $column) {
-            if ((!$oneToOneRelation && Str::contains($column, '.')) ||
-                ($oneToOneRelation && !Str::contains($column, '.'))) {
+            if ((! $oneToOneRelation && Str::contains($column, '.')) ||
+                ($oneToOneRelation && ! Str::contains($column, '.'))) {
                 return true;
             }
         }
@@ -1104,7 +1104,7 @@ class Form implements Renderable
      */
     public function getKeyName()
     {
-        if (!$this->repository) {
+        if (! $this->repository) {
             return 'id';
         }
 
@@ -1116,7 +1116,7 @@ class Form implements Renderable
      */
     public function getCreatedAtColumn()
     {
-        if (!$this->repository) {
+        if (! $this->repository) {
             return;
         }
 
@@ -1128,7 +1128,7 @@ class Form implements Renderable
      */
     public function getUpdatedAtColumn()
     {
-        if (!$this->repository) {
+        if (! $this->repository) {
             return;
         }
 
@@ -1158,7 +1158,7 @@ class Form implements Renderable
         if (is_array($columns)) {
             $value = [];
             foreach ($columns as $name => $column) {
-                if (!Arr::has($data, $column)) {
+                if (! Arr::has($data, $column)) {
                     continue;
                 }
                 $value[$name] = Arr::get($data, $column);
@@ -1214,7 +1214,7 @@ class Form implements Renderable
         $data = $this->model->toArray();
 
         $this->builder->fields()->each(function (Field $field) use ($data) {
-            if (!in_array($field->column(), $this->ignored)) {
+            if (! in_array($field->column(), $this->ignored)) {
                 $field->fill($data);
             }
         });
@@ -1294,11 +1294,11 @@ class Form implements Renderable
 
         /** @var Field $field */
         foreach ($this->builder->fields() as $field) {
-            if (!$validator = $field->getValidator($input)) {
+            if (! $validator = $field->getValidator($input)) {
                 continue;
             }
 
-            if (($validator instanceof Validator) && !$validator->passes()) {
+            if (($validator instanceof Validator) && ! $validator->passes()) {
                 $failedValidators[] = $validator;
             }
         }
@@ -1324,11 +1324,11 @@ class Form implements Renderable
             return $this->responseValidationMessages($column->getMessageBag()->getMessages());
         }
 
-        if (!$this->validationMessages) {
+        if (! $this->validationMessages) {
             $this->validationMessages = new MessageBag();
         }
 
-        if (!$column) {
+        if (! $column) {
             return $this;
         }
 
@@ -1727,7 +1727,7 @@ class Form implements Renderable
      */
     public function inModal(\Closure $callback = null)
     {
-        if (!$callback) {
+        if (! $callback) {
             return ModalForm::is();
         }
 

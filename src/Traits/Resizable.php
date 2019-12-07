@@ -18,7 +18,7 @@ trait Resizable
     public function thumbnail($type, $attribute = 'image', $disk = null)
     {
         // Return empty string if the field not found
-        if (!isset($this->attributes[$attribute])) {
+        if (! isset($this->attributes[$attribute])) {
             return '';
         }
 

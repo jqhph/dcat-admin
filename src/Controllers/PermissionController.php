@@ -128,7 +128,7 @@ class PermissionController extends Controller
 
             $path = array_filter($branch['http_path']);
 
-            if (!$path) {
+            if (! $path) {
                 return $payload.'</div>&nbsp;';
             }
 
@@ -142,11 +142,11 @@ class PermissionController extends Controller
 
             $path = collect($path)->map(function ($path) use ($branch, &$method) {
                 if (Str::contains($path, ':')) {
-                    list($me, $path) = explode(':', $path);
+                    [$me, $path] = explode(':', $path);
 
                     $method = array_merge($method, explode(',', $me));
                 }
-                if ($path !== '...' && !empty(config('admin.route.prefix'))) {
+                if ($path !== '...' && ! empty(config('admin.route.prefix'))) {
                     $path = admin_base_path($path);
                 }
 
@@ -183,7 +183,7 @@ class PermissionController extends Controller
         $grid->name;
 
         $grid->http_path->display(function ($path) {
-            if (!$path) {
+            if (! $path) {
                 return;
             }
 
@@ -196,7 +196,7 @@ class PermissionController extends Controller
 
             return collect($path)->filter()->map(function ($path) use ($method) {
                 if (Str::contains($path, ':')) {
-                    list($method, $path) = explode(':', $path);
+                    [$method, $path] = explode(':', $path);
                     $method = collect(explode(',', $method))->map(function ($name) {
                         return strtoupper($name);
                     })->map(function ($name) {
@@ -204,7 +204,7 @@ class PermissionController extends Controller
                     })->implode('&nbsp;').'&nbsp;';
                 }
 
-                if (!empty(config('admin.route.prefix'))) {
+                if (! empty(config('admin.route.prefix'))) {
                     $path = admin_base_path($path);
                 }
 
@@ -256,7 +256,7 @@ class PermissionController extends Controller
                 $method = $this->http_method ?: ['ANY'];
 
                 if (Str::contains($path, ':')) {
-                    list($method, $path) = explode(':', $path);
+                    [$method, $path] = explode(':', $path);
                     $method = explode(',', $method);
                 }
 
@@ -266,7 +266,7 @@ class PermissionController extends Controller
                     return "<span class='label label-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
-                if (!empty(config('admin.route.prefix'))) {
+                if (! empty(config('admin.route.prefix'))) {
                     $path = '/'.trim(config('admin.route.prefix'), '/').$path;
                 }
 
@@ -324,7 +324,7 @@ class PermissionController extends Controller
         $prefix = config('admin.route.prefix');
 
         return collect(app('router')->getRoutes())->map(function ($route) use ($prefix) {
-            if (!Str::startsWith($uri = $route->uri(), $prefix)) {
+            if (! Str::startsWith($uri = $route->uri(), $prefix)) {
                 return;
             }
 

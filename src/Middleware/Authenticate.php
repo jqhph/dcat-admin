@@ -19,10 +19,10 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if (Admin::guard()->guest() && !$this->shouldPassThrough($request)) {
+        if (Admin::guard()->guest() && ! $this->shouldPassThrough($request)) {
             $loginPage = admin_base_path('auth/login');
 
-            if ($request->ajax() && !$request->pjax()) {
+            if ($request->ajax() && ! $request->pjax()) {
                 return response()->json(['message' => 'Unauthorized.', 'login' => $loginPage], 401);
             }
 

@@ -139,7 +139,7 @@ class SelectResource extends Field
 
     protected function setDefaultSource()
     {
-        if (!$this->source) {
+        if (! $this->source) {
             if (strpos($this->column, '.')) {
                 $this->path(str_replace('_id', '', last(explode('.', $this->column))));
             } else {
@@ -170,7 +170,7 @@ class SelectResource extends Field
         $this->formatValue();
         $this->setDefaultSource();
 
-        if (!$this->maxItem || $this->maxItem > 1) {
+        if (! $this->maxItem || $this->maxItem > 1) {
             $primayDark = Color::primarydark();
 
             Admin::style(".select-resource .nav li a{padding:8px 10px;font-size:13px;font-weight:bold;color:{$primayDark}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}");

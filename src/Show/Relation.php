@@ -77,7 +77,7 @@ class Relation extends Field
             return $this->renderTitle().$view->render();
         }
 
-        if (!$view instanceof Grid) {
+        if (! $view instanceof Grid) {
             return $this->renderTitle().$view;
         }
 

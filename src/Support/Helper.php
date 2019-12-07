@@ -42,7 +42,7 @@ class Helper
      */
     public static function array($value, bool $filter = true)
     {
-        if (!$value) {
+        if (! $value) {
             return [];
         }
 
@@ -75,7 +75,7 @@ class Helper
      */
     public static function render($value, $params = [], $bindTo = null)
     {
-        if (!$value) {
+        if (! $value) {
             return '';
         }
 
@@ -139,7 +139,7 @@ class Helper
      */
     public static function urlWithQuery(?string $url, array $query = [])
     {
-        if (!$url || !$query) {
+        if (! $url || ! $query) {
             return $url;
         }
 
@@ -174,16 +174,16 @@ class Helper
         $current = $current ?: $request->decodedPath();
 
         if (Str::contains($path, ':')) {
-            list($methods, $path) = explode(':', $path);
+            [$methods, $path] = explode(':', $path);
 
             $methods = array_map('strtoupper', explode(',', $methods));
 
-            if (!empty($methods) && !in_array($request->method(), $methods)) {
+            if (! empty($methods) && ! in_array($request->method(), $methods)) {
                 return false;
             }
         }
 
-        if (!Str::contains($path, '*')) {
+        if (! Str::contains($path, '*')) {
             return $path === $current;
         }
 

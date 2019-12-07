@@ -95,7 +95,7 @@ class Exporter
      */
     public function disableExportAll(bool $value = true)
     {
-        return $this->option('show_export_all', !$value);
+        return $this->option('show_export_all', ! $value);
     }
 
     /**
@@ -107,7 +107,7 @@ class Exporter
      */
     public function disableExportCurrentPage(bool $value = true)
     {
-        return $this->option('show_export_current_page', !$value);
+        return $this->option('show_export_current_page', ! $value);
     }
 
     /**
@@ -119,7 +119,7 @@ class Exporter
      */
     public function disableExportSelectedRow(bool $value = true)
     {
-        return $this->option('show_export_selected_rows', !$value);
+        return $this->option('show_export_selected_rows', ! $value);
     }
 
     /**
@@ -182,7 +182,7 @@ class Exporter
      */
     protected function getExporter($driver): ExporterInterface
     {
-        if (!$driver || !array_key_exists($driver, static::$drivers)) {
+        if (! $driver || ! array_key_exists($driver, static::$drivers)) {
             return $this->getDefaultExporter();
         }
 

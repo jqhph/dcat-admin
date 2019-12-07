@@ -158,7 +158,7 @@ class SelectResource extends Presenter
 
     protected function setDefaultSource()
     {
-        if (!$this->source) {
+        if (! $this->source) {
             $column = $this->filter->getColumn();
             if (strpos($column, '.')) {
                 $this->path(str_replace('_id', '', last(explode('.', $column))));
@@ -184,7 +184,7 @@ class SelectResource extends Presenter
 
         $containerClass = 'form-control';
 
-        if (!$this->maxItem || $this->maxItem > 2) {
+        if (! $this->maxItem || $this->maxItem > 2) {
             // 选项大于两个时使用select2样式布局
             Admin::css(Admin::$componentsAssets['select2']['css']);
 

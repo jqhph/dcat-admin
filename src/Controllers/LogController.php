@@ -69,7 +69,7 @@ class LogController extends Controller
             $filter->equal('user_id', trans('admin.user'))
                 ->selectResource('auth/users')
                 ->options(function ($v) {
-                    if (!$v) {
+                    if (! $v) {
                         return $v;
                     }
                     $userModel = config('admin.database.users_model');

@@ -178,11 +178,11 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerDefaultSections()
     {
         Content::composing(function () {
-            if (!admin_has_default_section(\AdminSection::NAVBAR_USER_PANEL)) {
+            if (! admin_has_default_section(\AdminSection::NAVBAR_USER_PANEL)) {
                 admin_inject_default_section(\AdminSection::NAVBAR_USER_PANEL, view('admin::partials.navbar-user-panel'));
             }
 
-            if (!admin_has_default_section(\AdminSection::LEFT_SIDEBAR_USER_PANEL)) {
+            if (! admin_has_default_section(\AdminSection::LEFT_SIDEBAR_USER_PANEL)) {
                 admin_inject_default_section(\AdminSection::LEFT_SIDEBAR_USER_PANEL, view('admin::partials.sidebar-user-panel'));
             }
 
@@ -219,7 +219,7 @@ class AdminServiceProvider extends ServiceProvider
             $router->aliasMiddleware($key, $middleware);
         }
 
-        $disablePermission = !config('admin.permission.enable');
+        $disablePermission = ! config('admin.permission.enable');
 
         // register middleware group.
         foreach ($this->middlewareGroups as $key => $middleware) {

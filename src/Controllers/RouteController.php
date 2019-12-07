@@ -116,10 +116,10 @@ class RouteController extends Controller
                 return $this->routes = collect($this->routes)->filter(function ($route) {
                     foreach ($this->where as $column => $condition) {
                         if (is_array($route[$column])) {
-                            if (!in_array($condition, $route[$column])) {
+                            if (! in_array($condition, $route[$column])) {
                                 return false;
                             }
-                        } elseif (!Str::contains(strtolower($route[$column]), strtolower($condition))) {
+                        } elseif (! Str::contains(strtolower($route[$column]), strtolower($condition))) {
                             return false;
                         }
                     }
@@ -187,7 +187,7 @@ class RouteController extends Controller
             $column = $sort['column'];
             $type = $sort['type'];
 
-            return $type === 'asc' ? !$route[$column] : $route[$column];
+            return $type === 'asc' ? ! $route[$column] : $route[$column];
         });
     }
 

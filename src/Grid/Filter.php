@@ -376,7 +376,7 @@ class Filter implements Renderable
     {
         $this->filters = array_filter($this->filters, function (AbstractFilter $filter) use (&$column) {
             if (is_array($column)) {
-                return !in_array($filter->getColumn(), $column);
+                return ! in_array($filter->getColumn(), $column);
             }
 
             return $filter->getColumn() != $column;
@@ -388,14 +388,14 @@ class Filter implements Renderable
      */
     public function getInputs()
     {
-        if (!is_null($this->inputs)) {
+        if (! is_null($this->inputs)) {
             return $this->inputs;
         }
 
         $this->inputs = Arr::dot(request()->all());
 
         $this->inputs = array_filter($this->inputs, function ($input) {
-            return $input !== '' && !is_null($input) && $input !== static::IGNORE_VALUE;
+            return $input !== '' && ! is_null($input) && $input !== static::IGNORE_VALUE;
         });
 
         $this->sanitizeInputs($this->inputs);
@@ -429,7 +429,7 @@ class Filter implements Renderable
         }
 
         return tap(array_filter($conditions), function ($conditions) {
-            if (!empty($conditions)) {
+            if (! empty($conditions)) {
                 $this->expand();
             }
         });
@@ -442,7 +442,7 @@ class Filter implements Renderable
      */
     protected function sanitizeInputs(&$inputs)
     {
-        if (!$this->name) {
+        if (! $this->name) {
             return $inputs;
         }
 
@@ -723,9 +723,9 @@ class Filter implements Renderable
      */
     public function __call($method, $arguments)
     {
-        if (!empty(static::$supports[$method])) {
+        if (! empty(static::$supports[$method])) {
             $class = static::$supports[$method];
-            if (!is_subclass_of($class, AbstractFilter::class)) {
+            if (! is_subclass_of($class, AbstractFilter::class)) {
                 throw new \InvalidArgumentException("The class [{$class}] must be a type of ".AbstractFilter::class.'.');
             }
 

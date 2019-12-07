@@ -407,7 +407,7 @@ class Column
      */
     protected function formatLabel($label)
     {
-        if (!$label) {
+        if (! $label) {
             $label = admin_trans_field($this->name);
         }
 
@@ -507,7 +507,7 @@ class Column
      */
     public function hasDisplayCallbacks()
     {
-        return !empty($this->displayCallbacks);
+        return ! empty($this->displayCallbacks);
     }
 
     /**
@@ -538,9 +538,9 @@ class Column
     protected function callDisplayCallbacks($value)
     {
         foreach ($this->displayCallbacks as $callback) {
-            list($callback, $params) = $callback;
+            [$callback, $params] = $callback;
 
-            if (!$callback instanceof \Closure) {
+            if (! $callback instanceof \Closure) {
                 $value = $callback;
                 continue;
             }
@@ -554,7 +554,7 @@ class Column
                 $value instanceof static
                 && ($last = array_pop($this->displayCallbacks))
             ) {
-                list($last, $params) = $last;
+                [$last, $params] = $last;
                 $last = $this->bindOriginalRowModel($last);
                 $value = call_user_func($last, $previous, $this, ...$params);
             }
@@ -589,7 +589,7 @@ class Column
         $i = 0;
         foreach ($data as $key => &$row) {
             $i++;
-            if (!isset($row['#'])) {
+            if (! isset($row['#'])) {
                 $row['#'] = $i;
             }
 
@@ -641,7 +641,7 @@ class Column
             return;
         }
 
-        if (!class_exists($class) || !is_subclass_of($class, AbstractDisplayer::class)) {
+        if (! class_exists($class) || ! is_subclass_of($class, AbstractDisplayer::class)) {
             throw new \Exception("Invalid column definition [$class]");
         }
 

@@ -19,10 +19,10 @@ class QuickEdit extends RowAction
 
     public function render()
     {
-        if (!static::$resolvedWindow) {
+        if (! static::$resolvedWindow) {
             static::$resolvedWindow = true;
 
-            list($width, $height) = $this->parent->option('dialog_form_area');
+            [$width, $height] = $this->parent->option('dialog_form_area');
 
             Form::modal(trans('admin.edit'))
                 ->click(".{$this->getElementClass()}")

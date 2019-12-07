@@ -68,7 +68,7 @@ class Actions extends AbstractDisplayer
     {
         if ($disable) {
             array_delete($this->actions, 'view');
-        } elseif (!in_array('view', $this->actions)) {
+        } elseif (! in_array('view', $this->actions)) {
             array_push($this->actions, 'view');
         }
 
@@ -84,7 +84,7 @@ class Actions extends AbstractDisplayer
     {
         if ($disable) {
             array_delete($this->actions, 'delete');
-        } elseif (!in_array('delete', $this->actions)) {
+        } elseif (! in_array('delete', $this->actions)) {
             array_push($this->actions, 'delete');
         }
 
@@ -100,7 +100,7 @@ class Actions extends AbstractDisplayer
     {
         if ($disable) {
             array_delete($this->actions, 'edit');
-        } elseif (!in_array('edit', $this->actions)) {
+        } elseif (! in_array('edit', $this->actions)) {
             array_push($this->actions, 'edit');
         }
 
@@ -116,7 +116,7 @@ class Actions extends AbstractDisplayer
     {
         if ($disable) {
             array_delete($this->actions, 'quickEdit');
-        } elseif (!in_array('quickEdit', $this->actions)) {
+        } elseif (! in_array('quickEdit', $this->actions)) {
             array_push($this->actions, 'quickEdit');
         }
 
@@ -152,10 +152,10 @@ class Actions extends AbstractDisplayer
      */
     public function display(array $callbacks = [])
     {
-        $this->disableView(!$this->grid->option('show_view_button'));
-        $this->disableEdit(!$this->grid->option('show_edit_button'));
-        $this->disableQuickEdit(!$this->grid->option('show_quick_edit_button'));
-        $this->disableDelete(!$this->grid->option('show_delete_button'));
+        $this->disableView(! $this->grid->option('show_view_button'));
+        $this->disableEdit(! $this->grid->option('show_edit_button'));
+        $this->disableQuickEdit(! $this->grid->option('show_quick_edit_button'));
+        $this->disableDelete(! $this->grid->option('show_delete_button'));
 
         foreach ($callbacks as $callback) {
             if ($callback instanceof \Closure) {
@@ -212,10 +212,10 @@ EOT;
      */
     protected function renderQuickEdit()
     {
-        if (!static::$resolvedWindow) {
+        if (! static::$resolvedWindow) {
             static::$resolvedWindow = true;
 
-            list($width, $height) = $this->grid->option('dialog_form_area');
+            [$width, $height] = $this->grid->option('dialog_form_area');
 
             Form::modal(trans('admin.edit'))
                 ->click(".{$this->grid->getGridRowName()}-edit")

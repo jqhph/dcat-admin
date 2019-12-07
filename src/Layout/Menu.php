@@ -53,7 +53,7 @@ class Menu
      */
     public function register()
     {
-        if (!admin_has_default_section(\AdminSection::LEFT_SIDEBAR_MENU)) {
+        if (! admin_has_default_section(\AdminSection::LEFT_SIDEBAR_MENU)) {
             admin_inject_default_section(\AdminSection::LEFT_SIDEBAR_MENU, function () {
                 $menuModel = config('admin.database.menu_model');
 
@@ -131,7 +131,7 @@ class Menu
             if ($path == trim($this->getPath($v['uri']), '/')) {
                 return true;
             }
-            if (!empty($v['children'])) {
+            if (! empty($v['children'])) {
                 if (static::isActive($v, $path)) {
                     return true;
                 }
@@ -152,7 +152,7 @@ class Menu
         $roles = array_column($menuItem['roles'] ?? [], 'slug');
         $permissions = array_column($menuItem['permissions'] ?? [], 'slug');
 
-        if (!$permissionIds && !$roles && !$permissions) {
+        if (! $permissionIds && ! $roles && ! $permissions) {
             return true;
         }
 
@@ -178,7 +178,7 @@ class Menu
      */
     public function getPath($uri)
     {
-        if (!$uri) {
+        if (! $uri) {
             return $uri;
         }
 
@@ -192,7 +192,7 @@ class Menu
      */
     public function getUrl($uri)
     {
-        if (!$uri) {
+        if (! $uri) {
             return $uri;
         }
 

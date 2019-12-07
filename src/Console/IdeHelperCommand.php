@@ -68,7 +68,7 @@ class IdeHelperCommand extends Command
      */
     public function handle()
     {
-        if (!config('app.debug')) {
+        if (! config('app.debug')) {
             $this->error('Permission deny!');
 
             return;
@@ -147,7 +147,7 @@ class IdeHelperCommand extends Command
         return $this->getAllControllers()
             ->merge(explode(',', $option))
             ->map(function ($controller) use (&$reject) {
-                if (!$controller || !$content = $this->getClassContent($controller)) {
+                if (! $controller || ! $content = $this->getClassContent($controller)) {
                     return [];
                 }
 
@@ -374,7 +374,7 @@ class IdeHelperCommand extends Command
      */
     public function getFileNameByClass($class)
     {
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             return;
         }
 

@@ -91,7 +91,7 @@ class HasMany extends Field
         }
 
         if (count($arguments) == 2) {
-            list($this->label, $this->builder) = $arguments;
+            [$this->label, $this->builder] = $arguments;
         }
     }
 
@@ -104,7 +104,7 @@ class HasMany extends Field
      */
     public function getValidator(array $input)
     {
-        if (!array_key_exists($this->column, $input)) {
+        if (! array_key_exists($this->column, $input)) {
             return false;
         }
 
@@ -116,7 +116,7 @@ class HasMany extends Field
 
         /* @var Field $field */
         foreach ($form->fields() as $field) {
-            if (!$fieldRules = $field->getRules()) {
+            if (! $fieldRules = $field->getRules()) {
                 continue;
             }
 
@@ -272,7 +272,7 @@ class HasMany extends Field
                 /*
                  * if doesn't have column name, continue to the next loop
                  */
-                if (!array_key_exists($name, $column)) {
+                if (! array_key_exists($name, $column)) {
                     continue;
                 }
 
@@ -646,7 +646,7 @@ JS;
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
-        list($template, $script) = $this->buildNestedForm($this->column, $this->builder)
+        [$template, $script] = $this->buildNestedForm($this->column, $this->builder)
             ->getTemplateHtmlAndScript();
 
         $this->setupScript($script);

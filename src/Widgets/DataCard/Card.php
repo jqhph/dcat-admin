@@ -142,7 +142,7 @@ class Card extends Widget
      */
     protected function script()
     {
-        if (!$this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildFetchingScript()) {
             return;
         }
 

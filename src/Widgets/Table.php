@@ -82,7 +82,7 @@ class Table extends Widget
      */
     public function setRows($rows = [])
     {
-        if (!Arr::isAssoc($rows)) {
+        if (! Arr::isAssoc($rows)) {
             $this->rows = $rows;
 
             return $this;
@@ -101,7 +101,7 @@ class Table extends Widget
                         ->class('table-no-top-border '.$borderLeft, true)
                         ->render();
 
-                    if (!$noTrPadding) {
+                    if (! $noTrPadding) {
                         $this->class('table-no-tr-padding', true);
                     }
                     $noTrPadding = true;

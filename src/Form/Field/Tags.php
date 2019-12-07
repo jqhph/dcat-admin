@@ -55,7 +55,7 @@ class Tags extends Field
      */
     public function pluck($visibleColumn, $key)
     {
-        if (!empty($visibleColumn) && !empty($key)) {
+        if (! empty($visibleColumn) && ! empty($key)) {
             $this->keyAsValue = true;
         }
 
@@ -101,7 +101,7 @@ class Tags extends Field
             return $this;
         }
 
-        if (!$this->keyAsValue) {
+        if (! $this->keyAsValue) {
             return parent::options($options);
         }
 
@@ -125,7 +125,7 @@ class Tags extends Field
     {
         $value = array_filter($value, 'strlen');
 
-        if (is_array($value) && !Arr::isAssoc($value)) {
+        if (is_array($value) && ! Arr::isAssoc($value)) {
             $value = implode(',', $value);
         }
 

@@ -93,7 +93,7 @@ class Code extends Markdown
      */
     public function read($file, $start = 1, $end = 10)
     {
-        if (!$file or !is_readable($file) || $end < $start) {
+        if (! $file or ! is_readable($file) || $end < $start) {
             return $this;
         }
 

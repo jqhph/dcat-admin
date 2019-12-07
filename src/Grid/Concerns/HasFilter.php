@@ -76,7 +76,7 @@ trait HasFilter
      */
     public function renderFilter()
     {
-        if (!$this->options['show_filter']) {
+        if (! $this->options['show_filter']) {
             return '';
         }
 
@@ -105,7 +105,7 @@ trait HasFilter
 //        $this->tools->disableFilterButton($disable);
         $this->filter->disableCollapse($disable);
 
-        return $this->option('show_filter', !$disable);
+        return $this->option('show_filter', ! $disable);
     }
 
     /**
@@ -117,7 +117,7 @@ trait HasFilter
      */
     public function showFilter(bool $val = true)
     {
-        return $this->disableFilter(!$val);
+        return $this->disableFilter(! $val);
     }
 
     /**
@@ -143,6 +143,6 @@ trait HasFilter
      */
     public function showFilterButton(bool $val = true)
     {
-        return $this->disableFilterButton(!$val);
+        return $this->disableFilterButton(! $val);
     }
 }

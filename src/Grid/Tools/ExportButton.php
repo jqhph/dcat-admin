@@ -49,7 +49,7 @@ JS;
      */
     protected function renderExportAll()
     {
-        if (!$this->grid->getExporter()->option('show_export_all')) {
+        if (! $this->grid->getExporter()->option('show_export_all')) {
             return;
         }
         $all = trans('admin.all');
@@ -62,7 +62,7 @@ JS;
      */
     protected function renderExportCurrentPage()
     {
-        if (!$this->grid->getExporter()->option('show_export_current_page')) {
+        if (! $this->grid->getExporter()->option('show_export_current_page')) {
             return;
         }
 
@@ -78,8 +78,8 @@ JS;
     protected function renderExportSelectedRows()
     {
         if (
-            !$this->grid->option('show_row_selector')
-            || !$this->grid->getExporter()->option('show_export_selected_rows')
+            ! $this->grid->option('show_row_selector')
+            || ! $this->grid->getExporter()->option('show_export_selected_rows')
         ) {
             return;
         }

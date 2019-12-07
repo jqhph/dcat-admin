@@ -4,7 +4,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\MessageBag;
 
-if (!function_exists('admin_section')) {
+if (! function_exists('admin_section')) {
     /**
      * Get the string contents of a section.
      *
@@ -20,7 +20,7 @@ if (!function_exists('admin_section')) {
     }
 }
 
-if (!function_exists('admin_has_section')) {
+if (! function_exists('admin_has_section')) {
     /**
      * Check if section exists.
      *
@@ -34,7 +34,7 @@ if (!function_exists('admin_has_section')) {
     }
 }
 
-if (!function_exists('admin_inject_section')) {
+if (! function_exists('admin_inject_section')) {
     /**
      * Injecting content into a section.
      *
@@ -49,7 +49,7 @@ if (!function_exists('admin_inject_section')) {
     }
 }
 
-if (!function_exists('admin_inject_section_if')) {
+if (! function_exists('admin_inject_section_if')) {
     /**
      * Injecting content into a section.
      *
@@ -67,7 +67,7 @@ if (!function_exists('admin_inject_section_if')) {
     }
 }
 
-if (!function_exists('admin_has_default_section')) {
+if (! function_exists('admin_has_default_section')) {
     /**
      * Check if default section exists.
      *
@@ -81,7 +81,7 @@ if (!function_exists('admin_has_default_section')) {
     }
 }
 
-if (!function_exists('admin_inject_default_section')) {
+if (! function_exists('admin_inject_default_section')) {
     /**
      * Injecting content into a section.
      *
@@ -94,7 +94,7 @@ if (!function_exists('admin_inject_default_section')) {
     }
 }
 
-if (!function_exists('admin_trans_field')) {
+if (! function_exists('admin_trans_field')) {
     /**
      * Translate the field name.
      *
@@ -111,7 +111,7 @@ if (!function_exists('admin_trans_field')) {
     }
 }
 
-if (!function_exists('admin_trans_label')) {
+if (! function_exists('admin_trans_label')) {
     /**
      * Translate the label.
      *
@@ -130,7 +130,7 @@ if (!function_exists('admin_trans_label')) {
     }
 }
 
-if (!function_exists('admin_trans_option')) {
+if (! function_exists('admin_trans_option')) {
     /**
      * Translate the field name.
      *
@@ -148,7 +148,7 @@ if (!function_exists('admin_trans_option')) {
     }
 }
 
-if (!function_exists('admin_trans')) {
+if (! function_exists('admin_trans')) {
     /**
      * Translate the given message.
      *
@@ -179,7 +179,7 @@ if (!function_exists('admin_trans')) {
             array_unshift($arr, 'global');
             $key = implode('.', $arr);
 
-            if (!$translator->has($key)) {
+            if (! $translator->has($key)) {
                 return end($arr);
             }
 
@@ -190,7 +190,7 @@ if (!function_exists('admin_trans')) {
     }
 }
 
-if (!function_exists('admin_controller_slug')) {
+if (! function_exists('admin_controller_slug')) {
     /**
      * @return string
      */
@@ -204,7 +204,7 @@ if (!function_exists('admin_controller_slug')) {
     }
 }
 
-if (!function_exists('admin_controller_name')) {
+if (! function_exists('admin_controller_name')) {
     /**
      * Get the class "basename" of the current controller.
      *
@@ -216,13 +216,13 @@ if (!function_exists('admin_controller_name')) {
 
         $router = app('router');
 
-        if (!$router->current()) {
+        if (! $router->current()) {
             return 'undefined';
         }
 
         $actionName = $router->current()->getActionName();
 
-        if (!isset($name[$actionName])) {
+        if (! isset($name[$actionName])) {
             $controller = class_basename(explode('@', $actionName)[0]);
 
             $name[$actionName] = str_replace('Controller', '', $controller);
@@ -232,7 +232,7 @@ if (!function_exists('admin_controller_name')) {
     }
 }
 
-if (!function_exists('admin_path')) {
+if (! function_exists('admin_path')) {
 
     /**
      * Get admin path.
@@ -247,7 +247,7 @@ if (!function_exists('admin_path')) {
     }
 }
 
-if (!function_exists('admin_url')) {
+if (! function_exists('admin_url')) {
     /**
      * Get admin url.
      *
@@ -269,7 +269,7 @@ if (!function_exists('admin_url')) {
     }
 }
 
-if (!function_exists('admin_base_path')) {
+if (! function_exists('admin_base_path')) {
     /**
      * Get admin url.
      *
@@ -293,7 +293,7 @@ if (!function_exists('admin_base_path')) {
     }
 }
 
-if (!function_exists('admin_alert')) {
+if (! function_exists('admin_alert')) {
     /**
      * Flash a layer message bag to session.
      *
@@ -309,7 +309,7 @@ if (!function_exists('admin_alert')) {
     }
 }
 
-if (!function_exists('admin_success')) {
+if (! function_exists('admin_success')) {
 
     /**
      * Flash a success message bag to session.
@@ -323,7 +323,7 @@ if (!function_exists('admin_success')) {
     }
 }
 
-if (!function_exists('admin_error')) {
+if (! function_exists('admin_error')) {
 
     /**
      * Flash a error message bag to session.
@@ -337,7 +337,7 @@ if (!function_exists('admin_error')) {
     }
 }
 
-if (!function_exists('admin_warning')) {
+if (! function_exists('admin_warning')) {
 
     /**
      * Flash a warning message bag to session.
@@ -351,7 +351,7 @@ if (!function_exists('admin_warning')) {
     }
 }
 
-if (!function_exists('admin_info')) {
+if (! function_exists('admin_info')) {
 
     /**
      * Flash a message bag to session.
@@ -368,7 +368,7 @@ if (!function_exists('admin_info')) {
     }
 }
 
-if (!function_exists('admin_asset')) {
+if (! function_exists('admin_asset')) {
 
     /**
      * @param $path
@@ -385,7 +385,7 @@ if (!function_exists('admin_asset')) {
     }
 }
 
-if (!function_exists('array_delete')) {
+if (! function_exists('array_delete')) {
 
     /**
      * Delete from array by value.

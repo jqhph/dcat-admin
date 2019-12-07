@@ -32,7 +32,7 @@ class FilterButton extends AbstractTool
      */
     protected function getElementClassName()
     {
-        if (!$this->btnClassName) {
+        if (! $this->btnClassName) {
             $this->btnClassName = 'filter-btn-'.Str::random(8);
         }
 
@@ -87,13 +87,13 @@ JS
         $scopres = $filter->getScopes();
         $filters = $filter->filters();
 
-        if ($scopres->isEmpty() && !$filters) {
+        if ($scopres->isEmpty() && ! $filters) {
             return;
         }
 
         $this->setupScripts();
 
-        $onlyScopes = ((!$filters || $this->grid->option('show_filter') === false) && !$scopres->isEmpty()) ? true : false;
+        $onlyScopes = ((! $filters || $this->grid->option('show_filter') === false) && ! $scopres->isEmpty()) ? true : false;
 
         $variables = [
             'scopes'           => $scopres,

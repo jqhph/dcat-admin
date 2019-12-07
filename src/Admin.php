@@ -353,7 +353,7 @@ class Admin
         if (is_string($repository)) {
             $repository = new $class($args);
         }
-        if (!$repository instanceof Repository) {
+        if (! $repository instanceof Repository) {
             throw new \InvalidArgumentException("[$class] must be a valid repository class.");
         }
 
@@ -387,7 +387,7 @@ class Admin
 
         static::$availableExtensions = [];
         foreach (static::$extensions as $k => $extension) {
-            if (!config("admin-extensions.{$k}.enable")) {
+            if (! config("admin-extensions.{$k}.enable")) {
                 continue;
             }
 
@@ -419,7 +419,7 @@ class Admin
      */
     public static function enableExtenstion(string $class, bool $enable = true)
     {
-        if (!$class || !is_subclass_of($class, Extension::class)) {
+        if (! $class || ! is_subclass_of($class, Extension::class)) {
             return false;
         }
 

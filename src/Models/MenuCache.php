@@ -17,7 +17,7 @@ trait MenuCache
      */
     protected function remember(\Closure $builder)
     {
-        if (!$this->enableCache()) {
+        if (! $this->enableCache()) {
             return $builder();
         }
 
@@ -31,7 +31,7 @@ trait MenuCache
      */
     public function destroyCache()
     {
-        if (!$this->enableCache()) {
+        if (! $this->enableCache()) {
             return;
         }
 

@@ -137,7 +137,7 @@ class Tree extends Field
             $this->nodes = $this->nodes->call($this->getFormModel(), $this->value(), $this);
         }
 
-        if (!$this->nodes) {
+        if (! $this->nodes) {
             return;
         }
 

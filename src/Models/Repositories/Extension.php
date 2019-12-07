@@ -61,7 +61,7 @@ class Extension extends Repository
 
         $extension = Admin::getExtensions()[$id] ?? null;
 
-        if (!$extension) {
+        if (! $extension) {
             return false;
         }
 

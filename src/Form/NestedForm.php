@@ -161,7 +161,7 @@ class NestedForm
         }
 
         foreach ($data as $value) {
-            if (!isset($value[$relatedKeyName])) {
+            if (! isset($value[$relatedKeyName])) {
                 continue;
             }
 
@@ -285,7 +285,7 @@ class NestedForm
         if (is_array($columns)) {
             $value = [];
             foreach ($columns as $name => $column) {
-                if (!Arr::has($data, $column)) {
+                if (! Arr::has($data, $column)) {
                     continue;
                 }
                 $value[$name] = Arr::get($data, $column);

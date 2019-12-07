@@ -47,7 +47,7 @@ trait ImageField
      */
     public function callInterventionMethods($target, $mime)
     {
-        if (!empty($this->interventionCalls)) {
+        if (! empty($this->interventionCalls)) {
             $image = ImageManagerStatic::make($target);
 
             $mime = $mime ?: finfo_file(finfo_open(FILEINFO_MIME_TYPE), $target);
@@ -79,7 +79,7 @@ trait ImageField
             return $this;
         }
 
-        if (!class_exists(ImageManagerStatic::class)) {
+        if (! class_exists(ImageManagerStatic::class)) {
             throw new \Exception('To use image handling and manipulation, please install [intervention/image] first.');
         }
 
@@ -123,12 +123,12 @@ trait ImageField
      */
     public function destroyThumbnail($file = null, bool $force = false)
     {
-        if ($this->retainable && !$force) {
+        if ($this->retainable && ! $force) {
             return;
         }
 
         $file = $file ?: $this->original;
-        if (!$file) {
+        if (! $file) {
             return;
         }
 
@@ -184,7 +184,7 @@ trait ImageField
                 $constraint->aspectRatio();
             });
 
-            if (!is_null($this->storagePermission)) {
+            if (! is_null($this->storagePermission)) {
                 $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode(), $this->storagePermission);
             } else {
                 $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode());

@@ -68,13 +68,13 @@ class BootstrapMultipleFile extends Field
 
         $attributes = [];
 
-        if (!$fieldRules = $this->getRules()) {
+        if (! $fieldRules = $this->getRules()) {
             return false;
         }
 
         $attributes[$this->column] = $this->label;
 
-        list($rules, $input) = $this->hydrateFiles(Arr::get($input, $this->column, []));
+        [$rules, $input] = $this->hydrateFiles(Arr::get($input, $this->column, []));
 
         return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);
     }
@@ -219,7 +219,7 @@ class BootstrapMultipleFile extends Field
 
         $this->setupDefaultOptions();
 
-        if (!empty($this->value())) {
+        if (! empty($this->value())) {
             $this->options(['initialPreview' => $this->preview()]);
             $this->setupPreviewOptions();
         }

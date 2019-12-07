@@ -46,7 +46,7 @@ trait HasMultipleHeader
      */
     protected function sortHeaders()
     {
-        if (!$this->mutipleHeaders) {
+        if (! $this->mutipleHeaders) {
             return;
         }
 
@@ -70,12 +70,12 @@ trait HasMultipleHeader
         $before = $after = [];
         $isBefore = true;
         foreach ($originalColumns as $name => $column) {
-            if ($isBefore && !isset($this->columns[$name])) {
+            if ($isBefore && ! isset($this->columns[$name])) {
                 $before[$name] = $column;
                 continue;
             }
             $isBefore = false;
-            if (!isset($this->columns[$name])) {
+            if (! isset($this->columns[$name])) {
                 $after[$name] = $column;
             }
         }

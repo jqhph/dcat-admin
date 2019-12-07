@@ -79,7 +79,7 @@ class Role extends Model
      */
     public function cannot(?string $permission) : bool
     {
-        return !$this->can($permission);
+        return ! $this->can($permission);
     }
 
     /**
@@ -91,7 +91,7 @@ class Role extends Model
      */
     public static function getPermissionId(array $roleIds)
     {
-        if (!$roleIds) {
+        if (! $roleIds) {
             return collect();
         }
         $related = config('admin.database.role_permissions_table');

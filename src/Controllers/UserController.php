@@ -100,7 +100,7 @@ class UserController extends Controller
             $nodes = (new $permissionModel())->allNodes();
             $grid->permissions
                 ->if(function () {
-                    return !empty($this->roles);
+                    return ! empty($this->roles);
                 })
                 ->tree(function (Grid\Displayers\Tree $tree) use (&$nodes, $roleModel) {
                     $tree->nodes($nodes);
@@ -176,7 +176,7 @@ class UserController extends Controller
             $show->divider();
 
             $show->roles->width(6)->as(function ($roles) {
-                if (!$roles) {
+                if (! $roles) {
                     return;
                 }
 
@@ -201,7 +201,7 @@ class UserController extends Controller
                     }
                 }
 
-                if (!$isAdministrator) {
+                if (! $isAdministrator) {
                     $keyName = $permissionModel->getKeyName();
                     $tree->checked(
                         $roleModel::getPermissionId(array_column($roles, $keyName))->flatten()
@@ -283,7 +283,7 @@ class UserController extends Controller
                 $form->password = bcrypt($form->password);
             }
 
-            if (!$form->password) {
+            if (! $form->password) {
                 $form->deleteInput('password');
             }
         });
