@@ -18,8 +18,6 @@
         "doctrine/dbal": "2.*"
     },
     "require-dev": {
-        "symfony/css-selector": "~3.1",
-        "fzaninotto/faker": "~1.4",
         "laravel/browser-kit-testing": "~5.1"
     },
     "autoload": {
