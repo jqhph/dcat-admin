@@ -5,8 +5,8 @@ namespace Dcat\Admin\Form\Field;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Arrayable;
 use Dcat\Admin\Widgets\Color;
+use Illuminate\Contracts\Support\Arrayable;
 
 class SelectResource extends Field
 {
@@ -29,6 +29,7 @@ class SelectResource extends Field
      *
      * @param string $width
      * @param string $height
+     *
      * @return $this
      */
     public function area(string $width, string $height)
@@ -42,6 +43,7 @@ class SelectResource extends Field
      * Set button style.
      *
      * @param string $style
+     *
      * @return $this
      */
     public function style(string $style = 'primary')
@@ -78,13 +80,13 @@ class SelectResource extends Field
         }
 
         $this->options = Helper::array($this->options);
-
     }
 
     /**
      * Multiple select.
      *
      * @param int|null|null $max
+     *
      * @return SelectResource
      */
     public function multiple(?int $max = null)
@@ -93,8 +95,8 @@ class SelectResource extends Field
     }
 
     /**
-     *
      * @param ?int $max
+     *
      * @return $this
      */
     public function max(?int $max)
@@ -132,7 +134,7 @@ class SelectResource extends Field
             }
         }
 
-        $this->value = json_encode((object)$this->value);
+        $this->value = json_encode((object) $this->value);
     }
 
     protected function setDefaultSource()
@@ -152,6 +154,7 @@ class SelectResource extends Field
             if ($value === null || $value === '') {
                 return 0;
             }
+
             return $value;
         }
 
@@ -183,16 +186,15 @@ class SelectResource extends Field
             ->defaultAttribute('name', $name);
 
         $this->addVariables([
-            'className'   => str_replace(['[', ']'], '_', $name),
-            'prepend'     => $this->prepend,
-            'append'      => $this->append,
-            'area'        => json_encode($this->area),
-            'maxItem'     => $this->maxItem,
-            'source'      => $this->source,
-            'placeholder' => $this->getPlaceholder(),
-            'style'       => $this->style,
-            'disabled'    => empty($this->attributes['disabled']) ? '' : 'disabled',
-
+            'className'        => str_replace(['[', ']'], '_', $name),
+            'prepend'          => $this->prepend,
+            'append'           => $this->append,
+            'area'             => json_encode($this->area),
+            'maxItem'          => $this->maxItem,
+            'source'           => $this->source,
+            'placeholder'      => $this->getPlaceholder(),
+            'style'            => $this->style,
+            'disabled'         => empty($this->attributes['disabled']) ? '' : 'disabled',
             'inputContainerId' => $this->id.$this->getFormId(),
         ]);
 

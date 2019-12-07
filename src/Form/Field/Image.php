@@ -117,7 +117,6 @@ class Image extends File
 
     /**
      * @param UploadedFile $file
-     *
      */
     protected function prepareFile(UploadedFile $file)
     {

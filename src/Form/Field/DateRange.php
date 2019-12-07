@@ -74,7 +74,7 @@ JS;
         foreach ($messages as $key => $message) {
             $column = explode('.', $key);
             $rule = array_pop($column);
-            $column = join('.', $column);
+            $column = implode('.', $column);
 
             if ($this->column['start'] == $column) {
                 $result[$column.'start.'.$rule] = $message;

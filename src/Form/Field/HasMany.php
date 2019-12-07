@@ -315,6 +315,7 @@ class HasMany extends Field
                 })
                 ->map(function ($item) {
                     unset($item[NestedForm::REMOVE_FLAG_NAME]);
+
                     return $item;
                 })
                 ->toArray()

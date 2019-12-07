@@ -758,7 +758,6 @@ class Form implements Renderable
 
             return $this->ajaxResponse(__('admin.update_succeeded'));
         }
-
     }
 
     /**

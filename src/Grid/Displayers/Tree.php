@@ -150,12 +150,11 @@ class Tree extends AbstractDisplayer
         return <<<EOF
 <a href="javascript:void(0)" class="{$this->getSelectorPrefix()}-open-tree" data-checked="{$this->checkedAll}" data-val="{$val}"><i class='ti-layout-list-post'></i> $btn</a>
 EOF;
-
     }
 
     protected function format($val)
     {
-        return join(',', Helper::array($val, true));
+        return implode(',', Helper::array($val, true));
     }
 
     protected function getSelectorPrefix()
@@ -167,8 +166,8 @@ EOF;
     {
         $title = $this->title ?: $this->column->getLabel();
 
-        $area  = json_encode($this->area);
-        $opts  = json_encode($this->options);
+        $area = json_encode($this->area);
+        $opts = json_encode($this->options);
         $nodes = json_encode($this->nodes);
 
         Admin::script(
@@ -262,7 +261,6 @@ $('.{$this->getSelectorPrefix()}-open-tree').click(function () {
     
 });
 JS
-
         );
     }
 

@@ -4,7 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Arrayable;
 
 class Radio extends Field
 {
@@ -57,9 +56,10 @@ class Radio extends Field
     }
 
     /**
-     * "info", "primary", "inverse", "danger", "success", "purple"
+     * "info", "primary", "inverse", "danger", "success", "purple".
      *
-     * @param $v
+     * @param string $v
+     *
      * @return $this
      */
     public function style($v)
@@ -93,8 +93,8 @@ class Radio extends Field
         }
 
         $this->addVariables([
-            'options' => $this->options,
-            'inline' => $this->inline,
+            'options'    => $this->options,
+            'inline'     => $this->inline,
             'radioStyle' => $this->style,
         ]);
 

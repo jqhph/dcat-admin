@@ -121,7 +121,7 @@ class Permission extends Model
      */
     public function setHttpPathAttribute($path)
     {
-        if (is_array($path)) $path = join(',', $path);
+        if (is_array($path)) $path = implode(',', $path);
 
         return $this->attributes['http_path'] = $path;
     }

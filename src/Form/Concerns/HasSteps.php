@@ -50,6 +50,7 @@ trait HasSteps
             foreach ($steps[$currentIndex]->fields() as $field) {
                 $this->pushField($field);
             }
+
             return;
         }
 

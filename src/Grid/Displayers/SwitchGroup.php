@@ -31,21 +31,23 @@ class SwitchGroup extends SwitchDisplay
         foreach ($columns as $column => $label) {
             $html[] = $this->buildSwitch($column, $label);
         }
-        return '<table>' . join('', $html) . '</table>';
+
+        return '<table>'.implode('', $html).'</table>';
     }
 
     protected function buildSwitch($name, $label = '')
     {
         $class = 'grid-switch-group-'.$this->grid->getName();
-        $keys  = collect(explode('.', $name));
+        $keys = collect(explode('.', $name));
 
         if ($keys->isEmpty()) {
             $elementName = $name;
         } else {
             $elementName = $keys->shift() . $keys->reduce(function ($carry, $val) {
-                    return "{$carry}[{$val}]";
-                });
+                return "{$carry}[{$val}]";
+            });
         }
+
         $script = <<<JS
 (function () {
     var swt = $('.$class'), t;

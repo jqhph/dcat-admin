@@ -170,7 +170,7 @@ if (!function_exists('admin_trans')) {
         ) {
             unset($arr[0]);
             array_unshift($arr, 'global');
-            $key = join('.', $arr);
+            $key = implode('.', $arr);
 
             if (!$translator->has($key)) {
                 return end($arr);

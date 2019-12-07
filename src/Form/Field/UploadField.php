@@ -460,6 +460,7 @@ trait UploadField
 
     /**
      * @param UploadedFile $file
+     *
      * @return bool|\Illuminate\Support\MessageBag
      */
     protected function getErrorMessages(UploadedFile $file)
@@ -479,7 +480,7 @@ trait UploadField
         if (!$validator->passes()) {
             $errors = $validator->errors()->getMessages()[$this->column];
 
-            return join('; ', $errors);
+            return implode('; ', $errors);
         }
     }
 
@@ -493,6 +494,7 @@ trait UploadField
         if ($this->retainable) {
             return;
         }
+
         $this->deleteFile($this->original);
     }
 

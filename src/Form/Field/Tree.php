@@ -13,11 +13,11 @@ class Tree extends Field
 {
     protected $options = [
         'plugins' => ['checkbox', 'types'],
-        'core' => [
+        'core'    => [
             'check_callback' => true,
 
             'themes' => [
-                'name' => 'proton',
+                'name'       => 'proton',
                 'responsive' => true,
             ],
         ],
@@ -25,7 +25,7 @@ class Tree extends Field
             'keep_selected_style' => false,
         ],
         'types' => [
-            'default' => [
+            'default'  => [
                 'icon' => false,
             ],
         ],
@@ -67,12 +67,12 @@ class Tree extends Field
 
     /**
      * @param array|Arrayable|\Closure $data exp:
-     *     {
-     *          "id": "1",
-     *          "parent": "#",
-     *          "text": "Dashboard",
-     *          // "state": {"selected": true}
-     *     }
+     *                                       {
+     *                                       "id": "1",
+     *                                       "parent": "#",
+     *                                       "text": "Dashboard",
+     *                                       // "state": {"selected": true}
+     *                                       }
      *
      * @return $this
      */
@@ -81,6 +81,7 @@ class Tree extends Field
         if ($data instanceof Arrayable) {
             $data = $data->toArray();
         }
+
         $this->nodes = &$data;
 
         return $this;
@@ -112,12 +113,13 @@ class Tree extends Field
      * @param string $idColumn
      * @param string $textColumn
      * @param string $parentColumn
+     *
      * @return $this
      */
     public function columnNames(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
     {
-        $this->columnNames['id']     = $idColumn;
-        $this->columnNames['text']   = $textColumn;
+        $this->columnNames['id'] = $idColumn;
+        $this->columnNames['text'] = $textColumn;
         $this->columnNames['parent'] = $parentColumn;
 
         return $this;
@@ -135,16 +137,20 @@ class Tree extends Field
             $this->nodes = $this->nodes->call($this->getFormModel(), $this->value(), $this);
         }
 
-        if (!$this->nodes) return;
+        if (!$this->nodes) {
+            return;
+        }
 
-        $idColumn     = $this->columnNames['id'];
-        $textColumn   = $this->columnNames['text'];
+        $idColumn = $this->columnNames['id'];
+        $textColumn = $this->columnNames['text'];
         $parentColumn = $this->columnNames['parent'];
 
         $parentIds = $nodes = [];
 
         foreach ($this->nodes as &$v) {
-            if (empty($v[$idColumn])) continue;
+            if (empty($v[$idColumn])) {
+                continue;
+            }
 
             $parentId = $v[$parentColumn] ?? '#';
             if (empty($parentId)) {
@@ -183,6 +189,7 @@ class Tree extends Field
      * Set type.
      *
      * @param array $value
+     *
      * @return $this
      */
     public function type(array $value)
@@ -196,6 +203,7 @@ class Tree extends Field
      * Set plugins.
      *
      * @param array $value
+     *
      * @return $this
      */
     public function plugins(array $value)
@@ -228,6 +236,7 @@ class Tree extends Field
      * Prepare for saving.
      *
      * @param string|array $value
+     *
      * @return array
      */
     protected function prepareToSave($value)
@@ -246,7 +255,7 @@ class Tree extends Field
         $checkboxes->circle(false);
         $checkboxes->options([
             1 => trans('admin.selectall'),
-            2 => trans('admin.expand')
+            2 => trans('admin.expand'),
         ]);
         if ($this->readOnly) {
             $checkboxes->disabled(1);
@@ -257,7 +266,7 @@ class Tree extends Field
         $this->formatNodes();
 
         if ($v = $this->value()) {
-            $this->attribute('value', join(',', $v));
+            $this->attribute('value', implode(',', $v));
         }
 
         $this->addVariables([

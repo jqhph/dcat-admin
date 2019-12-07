@@ -43,11 +43,11 @@ class SwitchField extends Field
         return $this->color(Color::blue());
     }
 
-
     /**
      * Set color of the switcher.
      *
-     * @param $color
+     * @param string $color
+     *
      * @return $this
      */
     public function color($color)
@@ -57,7 +57,8 @@ class SwitchField extends Field
 
     /**
      *
-     * @param $color
+     * @param string $color
+     *
      * @return $this
      */
     public function secondary($color)
@@ -83,6 +84,7 @@ class SwitchField extends Field
 
     /**
      * @param mixed $value
+     *
      * @return int
      */
     protected function prepareToSave($value)

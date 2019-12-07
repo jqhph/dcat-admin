@@ -149,8 +149,8 @@ trait AjaxRequestBuilder
 
         $this->fn = 'frd_'.Str::random(8);
 
-        $fetching = join(';', $this->javascripts['fetching']);
-        $fetched  = join(';', $this->javascripts['fetched']);
+        $fetching = implode(';', $this->javascripts['fetching']);
+        $fetched  = implode(';', $this->javascripts['fetched']);
 
         $binding = '';
         foreach ($this->buttonSelectors as $v) {

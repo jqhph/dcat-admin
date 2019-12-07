@@ -5,7 +5,6 @@ namespace Dcat\Admin\Form\Field;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

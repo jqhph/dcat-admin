@@ -16,19 +16,18 @@ class Table extends HasMany
      * Table constructor.
      *
      * @param string $column
-     * @param array $arguments
+     * @param array  $arguments
      */
     public function __construct($column, $arguments = [])
     {
         $this->column = $column;
+
         if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
             $this->builder = $arguments[0];
-        }
-        if (count($arguments) == 2) {
+        } elseif (count($arguments) == 2) {
             list($this->label, $this->builder) = $arguments;
         }
-
     }
 
     /**
@@ -39,12 +38,15 @@ class Table extends HasMany
         if (is_null($this->form)) {
             return [];
         }
+
         $forms = [];
+
         if ($values = old($this->column)) {
             foreach ($values as $key => $data) {
                 if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
                     continue;
                 }
+
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
         } else {
@@ -52,9 +54,11 @@ class Table extends HasMany
                 if (isset($data['pivot'])) {
                     $data = array_merge($data, $data['pivot']);
                 }
+
                 $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)->fill($data);
             }
         }
+
         return $forms;
     }
 
@@ -68,6 +72,7 @@ class Table extends HasMany
                 return $item[NestedForm::REMOVE_FLAG_NAME] == 1;
             })->map(function ($item) {
                 unset($item[NestedForm::REMOVE_FLAG_NAME]);
+
                 return $item;
             })->toArray()
         );
@@ -78,6 +83,7 @@ class Table extends HasMany
         if (is_null($this->form)) {
             return;
         }
+
         return 'id';
     }
 
@@ -107,5 +113,4 @@ CSS
 
         return $this->renderTable();
     }
-
 }

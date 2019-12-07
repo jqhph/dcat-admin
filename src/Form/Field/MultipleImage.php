@@ -2,10 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MultipleImage extends Image
 {
@@ -15,6 +12,7 @@ class MultipleImage extends Image
      * Set a limit of files.
      *
      * @param int $limit
+     *
      * @return $this
      */
     public function limit(int $limit)
@@ -22,6 +20,7 @@ class MultipleImage extends Image
         if ($limit < 2) {
             return $this;
         }
+
         $this->options['fileNumLimit'] = $limit;
 
         return $this;
@@ -31,6 +30,7 @@ class MultipleImage extends Image
      * Prepare for saving.
      *
      * @param string|array $file
+     *
      * @return array
      */
     protected function prepareToSave($file)

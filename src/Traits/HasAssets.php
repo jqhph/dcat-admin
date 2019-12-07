@@ -339,7 +339,7 @@ trait HasAssets
             return;
         }
 
-        $script = join(';', array_unique(self::$script));
+        $script = implode(';', array_unique(self::$script));
 
         return "<script data-exec-on-popstate>LA.ready(function () { {$script} });</script>";
 
@@ -358,7 +358,7 @@ trait HasAssets
             return;
         }
 
-        $style = join('', array_unique(self::$style));
+        $style = implode('', array_unique(self::$style));
 
         return "<style>$style</style>";
     }

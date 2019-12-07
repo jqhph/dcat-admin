@@ -38,6 +38,7 @@ class Text extends Field
      * Set input type.
      *
      * @param string $type
+     *
      * @return $this
      */
     public function type(string $type)
@@ -51,13 +52,14 @@ class Text extends Field
      * @see http://1000hz.github.io/bootstrap-validator/
      *
      * @param string|Field $field
-     * @param string $error
+     * @param string       $error
+     *
      * @return $this
      */
     public function same($field, ?string $error = null)
     {
         $field = $field instanceof Field ? $field : $this->form->field($field);
-        $name  = $field->column();
+        $name = $field->column();
 
         if ($name.'_confirmation' === $this->column) {
             $field->rules('confirmed');
@@ -67,14 +69,14 @@ class Text extends Field
 
         $attributes = [
             'data-match'       => '#'.$field->getElementId(),
-            'data-match-error' => str_replace([':attribute', ':other'], [$this->label, $name], $error ?: trans('admin.validation.match'))
+            'data-match-error' => str_replace([':attribute', ':other'], [$this->label, $name], $error ?: trans('admin.validation.match')),
         ];
 
         return $this->attribute($attributes);
     }
 
     /**
-     * @param int $length
+     * @param int         $length
      * @param string|null $error
      * @return $this
      */
@@ -93,8 +95,9 @@ class Text extends Field
     }
 
     /**
-     * @param int $length
+     * @param int         $length
      * @param string|null $error
+     *
      * @return $this
      */
     public function maxLength(int $length, ?string $error = null)

@@ -21,7 +21,6 @@ $('{$this->getElementClassSelector()}:not(.initialized)')
         downClass: 'primary',
         center: true
     });
-
 JS;
 
         $this->prepend('')->defaultAttribute('style', 'width: 200px');
@@ -31,7 +30,7 @@ JS;
 
     protected function prepareToSave($value)
     {
-        return (int)$value;
+        return (int) $value;
     }
 
     /**

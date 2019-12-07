@@ -154,7 +154,6 @@ class Builder
         $this->footer = new Footer($this);
     }
 
-
     /**
      * @param \Closure $closure
      *
@@ -824,6 +823,7 @@ EOF;
 
     /**
      * @param Renderable $view
+     *
      * @return string
      */
     protected function doWrap(Renderable $view)

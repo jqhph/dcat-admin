@@ -45,7 +45,8 @@ class Checkbox extends MultipleSelect
     /**
      * "info", "primary", "inverse", "danger", "success", "purple".
      *
-     * @param $v
+     * @param string $v
+     *
      * @return $this
      */
     public function style($v)
