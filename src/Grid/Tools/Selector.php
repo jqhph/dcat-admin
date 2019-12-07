@@ -116,12 +116,12 @@ class Selector
      */
     public function parseSelected()
     {
-        if (! is_null($this->selected)) {
+        if (!is_null($this->selected)) {
             return $this->selected;
         }
 
         $selected = $this->request->get($this->queryName, []);
-        if (! is_array($selected)) {
+        if (!is_array($selected)) {
             return [];
         }
 
@@ -166,7 +166,7 @@ class Selector
             array_push($options, $value);
         }
 
-        if (! empty($options)) {
+        if (!empty($options)) {
             Arr::set($query, "{$this->queryName}.{$column}", implode(',', $options));
         } else {
             Arr::forget($query, "{$this->queryName}.{$column}");

@@ -6,17 +6,18 @@ trait GridCreator
 {
     /**
      * @param string $primaryKey
-     * @param array $fields
+     * @param array  $fields
+     *
      * @return string
      */
     protected function generateGrid(string $primaryKey = null, array $fields = [], $timestamps = null)
     {
         $primaryKey = $primaryKey ?: request('primary_key', 'id');
-        $fields     = $fields ?: request('fields', []);
+        $fields = $fields ?: request('fields', []);
         $timestamps = $timestamps === null ? request('timestamps', true) : $timestamps;
 
         $rows = [
-            "\$grid->{$primaryKey}->bold()->sortable();"
+            "\$grid->{$primaryKey}->bold()->sortable();",
         ];
 
         foreach ($fields as $field) {
@@ -32,8 +33,8 @@ trait GridCreator
         }
 
         if ($timestamps) {
-            $rows[] = "            \$grid->created_at;";
-            $rows[] = "            \$grid->updated_at->sortable();";
+            $rows[] = '            $grid->created_at;';
+            $rows[] = '            $grid->updated_at->sortable();';
         }
 
         $rows[] = <<<EOF
@@ -43,7 +44,6 @@ trait GridCreator
         
             });
 EOF;
-
 
         return implode("\n", $rows);
     }

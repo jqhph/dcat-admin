@@ -3,8 +3,6 @@
 namespace Dcat\Admin\Middleware;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Form;
-use Dcat\Admin\Grid;
 use Illuminate\Http\Request;
 
 class Bootstrap

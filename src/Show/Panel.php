@@ -3,8 +3,6 @@
 namespace Dcat\Admin\Show;
 
 use Dcat\Admin\Show;
-use Dcat\Admin\Widgets\Box;
-use Dcat\Admin\Widgets\Card;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
@@ -136,6 +134,7 @@ class Panel implements Renderable
      * Add variables to show view.
      *
      * @param array $variables
+     *
      * @return $this
      */
     public function with(array $variables = [])

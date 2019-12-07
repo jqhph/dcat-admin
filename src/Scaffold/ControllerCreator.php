@@ -45,7 +45,7 @@ class ControllerCreator
     public function create($model)
     {
         $path = $this->getpath($this->name);
-        $dir  = dirname($path);
+        $dir = dirname($path);
 
         if (!is_dir($dir)) {
             $this->files->makeDirectory($dir, 0755, true);
@@ -150,6 +150,6 @@ class ControllerCreator
      */
     public function getStub()
     {
-        return __DIR__ . '/stubs/controller.stub';
+        return __DIR__.'/stubs/controller.stub';
     }
 }

@@ -55,7 +55,6 @@ class Tree extends AbstractDisplayer
      *                    "text": "Dashboard",
      *                    // "state": {"selected": true}
      *                    }
-     *
      * @param array $data
      *
      * @return $this

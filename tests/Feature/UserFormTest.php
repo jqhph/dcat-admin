@@ -2,9 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Dcat\Admin\Models\Administrator;
 use Tests\Models\User as UserModel;
+use Tests\TestCase;
 
 class UserFormTest extends TestCase
 {
@@ -184,7 +183,6 @@ class UserFormTest extends TestCase
             ->seePageIs('admin/tests/users')
             ->seeInDatabase('test_users', ['email' => 'xx@xx.xx']);
     }
-
 
     public function testFormFooter()
     {

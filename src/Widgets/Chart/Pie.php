@@ -2,9 +2,6 @@
 
 namespace Dcat\Admin\Widgets\Chart;
 
-use Dcat\Admin\Admin;
-use Illuminate\Support\Arr;
-
 /**
  * @see https://www.chartjs.org/docs/latest/charts/doughnut.html
  */
@@ -19,8 +16,9 @@ class Pie extends Chart
      *     $this->add([1, 23, 6, 10, 6]);
      *
      * @param string|array $label
-     * @param array $data
+     * @param array        $data
      * @param string|array $fillColor
+     *
      * @return $this
      */
     public function add($data = [], $fillColor = null, $none = null)

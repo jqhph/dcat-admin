@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Dcat\Admin\Models\Administrator;
 use Tests\TestCase;
 
 class UsersTest extends TestCase

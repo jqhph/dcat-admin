@@ -12,11 +12,11 @@ class Tree extends Widget
 
     protected $options = [
         'plugins' => ['checkbox', 'types'],
-        'core' => [
+        'core'    => [
             'check_callback' => true,
 
             'themes' => [
-                'name' => 'proton',
+                'name'       => 'proton',
                 'responsive' => true,
             ],
         ],
@@ -62,7 +62,7 @@ class Tree extends Widget
         if ($value instanceof Arrayable) {
             $value = $value->toArray();
         }
-        $this->value = (array)$value;
+        $this->value = (array) $value;
 
         return $this;
     }
@@ -71,12 +71,13 @@ class Tree extends Widget
      * @param string $idColumn
      * @param string $textColumn
      * @param string $parentColumn
+     *
      * @return $this
      */
     public function columnNames(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
     {
-        $this->columnNames['id']     = $idColumn;
-        $this->columnNames['text']   = $textColumn;
+        $this->columnNames['id'] = $idColumn;
+        $this->columnNames['text'] = $textColumn;
         $this->columnNames['parent'] = $parentColumn;
 
         return $this;
@@ -84,14 +85,14 @@ class Tree extends Widget
 
     /**
      * @param array $data exp:
-     *     {
-     *          "id": "1",
-     *          "parent": "#",
-     *          "text": "Dashboard",
-     *          // "state": {"selected": true}
-     *     }
-     *
+     *                    {
+     *                    "id": "1",
+     *                    "parent": "#",
+     *                    "text": "Dashboard",
+     *                    // "state": {"selected": true}
+     *                    }
      * @param array $data
+     *
      * @return $this
      */
     public function nodes($data)
@@ -106,7 +107,7 @@ class Tree extends Widget
 
     public function render()
     {
-        $id = 'widget-tree-' . Str::random(8);
+        $id = 'widget-tree-'.Str::random(8);
 
         $this->id($id);
         $this->class('jstree-wrapper');
@@ -128,14 +129,14 @@ class Tree extends Widget
         if ($value && !is_array($value)) {
             $value = explode(',', $value);
         }
-        $value = (array)$value;
+        $value = (array) $value;
 
         if (!$this->nodes) {
             return;
         }
 
-        $idColumn     = $this->columnNames['id'];
-        $textColumn   = $this->columnNames['text'];
+        $idColumn = $this->columnNames['id'];
+        $textColumn = $this->columnNames['text'];
         $parentColumn = $this->columnNames['parent'];
 
         $nodes = [];

@@ -75,13 +75,14 @@ class Card extends Widget
     }
 
     /**
-     *
      * @param string|Renderable|\Closure $content
+     *
      * @return $this
      */
     public function tool($content)
     {
         $this->tools[] = $this->toString($content);
+
         return $this;
     }
 

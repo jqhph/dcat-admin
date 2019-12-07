@@ -3,12 +3,12 @@
 namespace Dcat\Admin\Models\Repositories;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Extension as AbstractExtension;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Repositories\Repository;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Composer;
-use Dcat\Admin\Extension as AbstractExtension;
 
 class Extension extends Repository
 {
@@ -24,13 +24,14 @@ class Extension extends Repository
 
     /**
      * @param AbstractExtension $extension
+     *
      * @return array
      */
     protected function each(AbstractExtension $extension)
     {
         $property = Composer::parse($extension->composerJson());
 
-        $config = (array)config('admin-extensions.'.$extension->getName());
+        $config = (array) config('admin-extensions.'.$extension->getName());
 
         return [
             'id'           => $extension::NAME,
@@ -43,7 +44,7 @@ class Extension extends Repository
             'require_dev'  => $property->require_dev,
             'homepage'     => $property->homepage,
             'enable'       => $extension::enabled(),
-            'config'       => (array)$extension->config(),
+            'config'       => (array) $extension->config(),
             'imported'     => $config['imported'] ?? false,
             'imported_at'  => $config['imported_at'] ?? null,
         ];
@@ -66,7 +67,7 @@ class Extension extends Repository
 
         $attributes = $form->getUpdates();
 
-        $enable = (bool)($attributes['enable'] ?? false);
+        $enable = (bool) ($attributes['enable'] ?? false);
 
         Admin::enableExtenstion($extension, $enable);
 
@@ -77,13 +78,13 @@ class Extension extends Repository
      * Get data before update.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function getDataWhenUpdating(Form $form): array
     {
         return [];
     }
-
 
     public function detail(Show $show): array
     {

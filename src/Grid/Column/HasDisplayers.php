@@ -144,7 +144,7 @@ trait HasDisplayers
     }
 
     /**
-     * Split a string by string
+     * Split a string by string.
      *
      * @param string $d
      *
@@ -184,8 +184,8 @@ trait HasDisplayers
     /**
      * Limit the number of characters in a string.
      *
-     * @param  int    $limit
-     * @param  string $end
+     * @param int    $limit
+     * @param string $end
      *
      * @return $this
      */

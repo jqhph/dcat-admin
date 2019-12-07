@@ -2,9 +2,6 @@
 
 namespace Dcat\Admin\Traits;
 
-use Dcat\Admin\Admin;
-use Dcat\Admin\Form\Field;
-
 trait HasAssets
 {
     /**
@@ -85,29 +82,29 @@ trait HasAssets
             'js' => 'vendor/dcat-admin/moment/min/moment-with-locales.min.js',
         ],
         'fontawesome-iconpicker' => [
-            'js' => 'vendor/dcat-admin/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.min.js',
+            'js'  => 'vendor/dcat-admin/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.min.js',
             'css' => 'vendor/dcat-admin/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css',
         ],
         'jstree' => [
             'js' => 'vendor/dcat-admin/jstree-theme/jstree.min.js',
         ],
         'jquery.nestable' => [
-            'js' => 'vendor/dcat-admin/nestable/jquery.nestable.min.js',
-            'css' => 'vendor/dcat-admin/nestable/nestable.css'
+            'js'  => 'vendor/dcat-admin/nestable/jquery.nestable.min.js',
+            'css' => 'vendor/dcat-admin/nestable/nestable.css',
         ],
         'switchery' => [
             'css' => 'vendor/dcat-admin/switchery/switchery.min.css',
-            'js' => 'vendor/dcat-admin/switchery/switchery.min.js'
+            'js'  => 'vendor/dcat-admin/switchery/switchery.min.js',
         ],
         'editable' => [
             'css' => 'vendor/dcat-admin/bootstrap3-editable/css/bootstrap-editable.css',
-            'js' => 'vendor/dcat-admin/bootstrap3-editable/js/bootstrap-editable.min.js'
+            'js'  => 'vendor/dcat-admin/bootstrap3-editable/js/bootstrap-editable.min.js',
         ],
         'chartjs' => [
-            'js' => 'vendor/dcat-admin/chart.js/chart.bundle.min.js'
+            'js' => 'vendor/dcat-admin/chart.js/chart.bundle.min.js',
         ],
         'jquery.sparkline' => [
-            'js' => 'vendor/dcat-admin/jquery.sparkline/jquery.sparkline.min.js'
+            'js' => 'vendor/dcat-admin/jquery.sparkline/jquery.sparkline.min.js',
         ],
         'jquery.counterup' => [
             'js' => 'vendor/dcat-admin/jquery.counterup/jquery.counterup.min.js',
@@ -154,7 +151,7 @@ trait HasAssets
 
         static::$componentsAssets['select2']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js';
         static::$componentsAssets['select2']['css'] = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css';
-        static::$componentsAssets['jquery.bootstrap-duallistbox']['js']  = 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/3.0.7/jquery.bootstrap-duallistbox.min.js';
+        static::$componentsAssets['jquery.bootstrap-duallistbox']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-duallistbox/3.0.7/jquery.bootstrap-duallistbox.min.js';
         static::$componentsAssets['jquery.inputmask']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.0/jquery.inputmask.bundle.min.js';
         static::$componentsAssets['bootstrap-datetimepicker']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js';
         static::$componentsAssets['bootstrap-datetimepicker']['css'] = 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css';
@@ -166,7 +163,7 @@ trait HasAssets
         static::$componentsAssets['switchery']['css'] = 'https://cdnjs.cloudflare.com/ajax/libs/switchery/0.8.2/switchery.min.css';
         static::$componentsAssets['editable']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js';
         static::$componentsAssets['editable']['css'] = 'https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap-editable/css/bootstrap-editable.css';
-        static::$componentsAssets['chartjs']['js'] =  'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js';
+        static::$componentsAssets['chartjs']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js';
         static::$componentsAssets['jquery.sparkline']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js';
         static::$componentsAssets['waypoints']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/waypoints/3.1.1/jquery.waypoints.min.js';
         static::$componentsAssets['jquery.counterup']['js'] = 'https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js';
@@ -177,7 +174,7 @@ trait HasAssets
      */
     public static function collectComponentAssets(string $name)
     {
-        $js  = static::$componentsAssets[$name]['js'] ?? null;
+        $js = static::$componentsAssets[$name]['js'] ?? null;
         $css = static::$componentsAssets[$name]['css'] ?? null;
 
         $js && static::js($js);

@@ -28,7 +28,7 @@ class MigrationCreator extends BaseMigrationCreator
 
         $path = $this->getPath($name, $path);
 
-        $stub = $this->files->get(__DIR__ . '/stubs/create.stub');
+        $stub = $this->files->get(__DIR__.'/stubs/create.stub');
 
         $this->files->put($path, $this->populateStub($name, $stub, $table));
 

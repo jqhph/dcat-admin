@@ -4,7 +4,6 @@ namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
 class Navbar extends Widget
@@ -27,7 +26,7 @@ class Navbar extends Widget
      */
     protected $items = [
         'right' => [],
-        'left' => [],
+        'left'  => [],
     ];
 
     protected $active;
@@ -43,7 +42,7 @@ class Navbar extends Widget
         $this->add($items);
 
         $this->class('navbar navbar-default');
-        $this->id = 'navbar-' . Str::random(8);
+        $this->id = 'navbar-'.Str::random(8);
     }
 
     public function title($title)

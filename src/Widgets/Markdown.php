@@ -14,16 +14,16 @@ class Markdown extends Widget
     protected $content;
 
     /**
-     * 配置
+     * 配置.
      *
      * @var array
      */
     protected $options = [
-        'htmlDecode' => 'style,script,iframe',
-        'emoji' => true,
-        'taskList' => true,
-        'tex' => true,
-        'flowChart' => true,
+        'htmlDecode'      => 'style,script,iframe',
+        'emoji'           => true,
+        'taskList'        => true,
+        'tex'             => true,
+        'flowChart'       => true,
         'sequenceDiagram' => true,
     ];
 
@@ -33,7 +33,7 @@ class Markdown extends Widget
 
         Admin::css([
             'vendor/dcat-admin/editor-md/css/editormd.preview.min.css',
-            'vendor/dcat-admin/dcat-admin/markdown.css'
+            'vendor/dcat-admin/dcat-admin/markdown.css',
         ]);
 
         Admin::js([
@@ -44,13 +44,14 @@ class Markdown extends Widget
             'vendor/dcat-admin/editor-md/lib/sequence-diagram.min.js',
             'vendor/dcat-admin/editor-md/lib/flowchart.min.js',
             'vendor/dcat-admin/editor-md/lib/jquery.flowchart.min.js',
-            'vendor/dcat-admin/editor-md/editormd.min.js'
+            'vendor/dcat-admin/editor-md/editormd.min.js',
         ]);
     }
 
     /**
      * @param mixed $k
      * @param mixed $v
+     *
      * @return $this
      */
     public function option($k, $v)
@@ -61,13 +62,14 @@ class Markdown extends Widget
     }
 
     /**
-     *
      * @param string|Renderable $markdown
+     *
      * @return $this
      */
     public function content($markdown)
     {
         $this->content = &$markdown;
+
         return $this;
     }
 

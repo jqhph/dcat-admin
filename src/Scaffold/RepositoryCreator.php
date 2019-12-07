@@ -9,6 +9,7 @@ class RepositoryCreator
     /**
      * @param string $controllerClass
      * @param string $modelClass
+     *
      * @return string
      */
     public function create(string $controllerClass, string $modelClass)
@@ -44,7 +45,7 @@ class RepositoryCreator
             $baseController,
             $controller,
             $modelClass,
-            $model
+            $model,
         ], $content));
 
         return $path;
@@ -52,6 +53,6 @@ class RepositoryCreator
 
     protected function stub()
     {
-        return __DIR__ . '/stubs/repository.stub';
+        return __DIR__.'/stubs/repository.stub';
     }
 }

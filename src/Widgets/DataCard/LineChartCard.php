@@ -55,6 +55,7 @@ class LineChartCard extends Card
      * Return JsonResponse instance.
      *
      * @param array $data
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function toJsonResponse(array $data = [])

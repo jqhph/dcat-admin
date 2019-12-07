@@ -4,7 +4,6 @@ namespace Dcat\Admin\Models\Repositories;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Repositories\EloquentRepository;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Pagination\AbstractPaginator;
 
 class Administrator extends EloquentRepository
@@ -32,7 +31,7 @@ class Administrator extends EloquentRepository
 
         $items = collect($items);
 
-        $roleKeyName = (new $roleModel)->getKeyName();
+        $roleKeyName = (new $roleModel())->getKeyName();
 
         $roleIds = $items
             ->pluck('roles')

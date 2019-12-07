@@ -86,7 +86,7 @@ class Show implements Renderable
      * Show constructor.
      *
      * @param Model|Repository|array|Arrayable $model
-     * @param \Closure $builder
+     * @param \Closure                         $builder
      */
     public function __construct($model = null, ?\Closure $builder = null)
     {
@@ -117,6 +117,7 @@ class Show implements Renderable
      * Create a show instance.
      *
      * @param mixed ...$params
+     *
      * @return $this
      */
     public static function make(...$params)
@@ -126,6 +127,7 @@ class Show implements Renderable
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setKeyName(string $value)
@@ -142,7 +144,7 @@ class Show implements Renderable
      */
     public function getKeyName()
     {
-        if (! $this->repository) {
+        if (!$this->repository) {
             return $this->keyName;
         }
 
@@ -178,7 +180,7 @@ class Show implements Renderable
      */
     public function model()
     {
-        if (! $this->model) {
+        if (!$this->model) {
             $this->setupModel();
         }
 
@@ -199,6 +201,7 @@ class Show implements Renderable
      *
      * @param string $view
      * @param array  $variables
+     *
      * @return $this
      */
     public function setView($view, $variables = [])
@@ -216,6 +219,7 @@ class Show implements Renderable
      * Add variables to show view.
      *
      * @param array $variables
+     *
      * @return $this
      */
     public function with($variables = [])
@@ -486,6 +490,7 @@ class Show implements Renderable
      *
      * @param null|string $width
      * @param null|string $height
+     *
      * @return $this
      */
     public function showQuickEdit(?string $width = null, ?string $height = null)
@@ -562,6 +567,7 @@ class Show implements Renderable
     /**
      * @param $method
      * @param array $arguments
+     *
      * @return bool|Show|Field|Relation
      */
     protected function call($method, $arguments = [])
@@ -636,6 +642,7 @@ class Show implements Renderable
      * Add a model field to show.
      *
      * @param string $name
+     *
      * @return Field|Collection
      */
     public function __get($name)

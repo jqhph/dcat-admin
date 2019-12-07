@@ -27,7 +27,7 @@ class Dump extends Widget
      * Dump constructor.
      *
      * @param array|object|string $content
-     * @param string|null $padding
+     * @param string|null         $padding
      */
     public function __construct($content, string $padding = null)
     {
@@ -52,6 +52,7 @@ class Dump extends Widget
 
     /**
      * @param string|null $padding
+     *
      * @return $this
      */
     public function padding(?string $padding)
@@ -65,6 +66,7 @@ class Dump extends Widget
 
     /**
      * @param string $width
+     *
      * @return $this
      */
     public function maxWidth($width)
@@ -76,6 +78,7 @@ class Dump extends Widget
 
     /**
      * @param mixed $content
+     *
      * @return array|null
      */
     protected function convertJsonToArray($content)

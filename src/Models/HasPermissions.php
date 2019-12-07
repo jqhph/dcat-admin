@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Models;
 
-use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
 trait HasPermissions
@@ -100,7 +99,7 @@ trait HasPermissions
     {
         $all = $this->roles;
 
-        $roles = (array)$roles;
+        $roles = (array) $roles;
 
         return $all->pluck('slug')->intersect($roles)->isNotEmpty() ?:
             $all->pluck('id')->intersect($roles)->isNotEmpty();

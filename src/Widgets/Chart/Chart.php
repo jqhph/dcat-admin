@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Widgets\Chart;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Color;
 use Dcat\Admin\Widgets\AjaxRequestBuilder;
+use Dcat\Admin\Widgets\Color;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
@@ -45,6 +45,7 @@ abstract class Chart extends Widget
 
     /**
      * Chart constructor.
+     *
      * @param mixed ...$params
      */
     public function __construct(...$params)
@@ -69,9 +70,10 @@ abstract class Chart extends Widget
      * Composite the chart.
      *
      * @param Chart $chart
+     *
      * @return $this
      */
-    public function composite(Chart $chart)
+    public function composite(self $chart)
     {
         $this->data['datasets']
             = array_merge($this->data['datasets'], $chart->getDatasets());
@@ -83,6 +85,7 @@ abstract class Chart extends Widget
      * Set labels.
      *
      * @param $labels
+     *
      * @return $this
      */
     public function labels(array $labels)
@@ -102,8 +105,9 @@ abstract class Chart extends Widget
      *     ]);
      *
      * @param string|array $label
-     * @param array $data
+     * @param array        $data
      * @param string|array $fillColor
+     *
      * @return $this
      */
     public function add($label, $data = [], $fillColor = null)
@@ -145,6 +149,7 @@ abstract class Chart extends Widget
 
     /**
      * @param bool $val
+     *
      * @return $this
      */
     public function responsive(bool $val = true)
@@ -156,6 +161,7 @@ abstract class Chart extends Widget
      * @see https://www.chartjs.org/docs/latest/configuration/legend.html
      *
      * @param array $opts
+     *
      * @return $this
      */
     public function legend(array $opts)
@@ -189,6 +195,7 @@ abstract class Chart extends Widget
      * @see https://www.chartjs.org/docs/latest/configuration/tooltip.html
      *
      * @param array $opts
+     *
      * @return $this
      */
     public function tooltips(array $opts)
@@ -216,6 +223,7 @@ abstract class Chart extends Widget
      * @see https://www.chartjs.org/docs/latest/configuration/title.html
      *
      * @param array $options
+     *
      * @return $this
      */
     public function title($options)
@@ -233,6 +241,7 @@ abstract class Chart extends Widget
      * @see https://www.chartjs.org/docs/latest/configuration/elements.html
      *
      * @param array $options
+     *
      * @return $this
      */
     public function elements(array $options)
@@ -250,6 +259,7 @@ abstract class Chart extends Widget
      * @see https://www.chartjs.org/docs/latest/configuration/layout.html
      *
      * @param array $opts
+     *
      * @return $this
      */
     public function layout(array $opts)
@@ -267,6 +277,7 @@ abstract class Chart extends Widget
      * The padding to add inside the chart.
      *
      * @param array|int $opts
+     *
      * @return Chart
      */
     public function padding($opts)
@@ -276,6 +287,7 @@ abstract class Chart extends Widget
 
     /**
      * @param array $opts
+     *
      * @return $this
      */
     public function animation(array $opts)
@@ -293,6 +305,7 @@ abstract class Chart extends Widget
      * Set width of container.
      *
      * @param string $width
+     *
      * @return Chart
      */
     public function width($width)
@@ -304,6 +317,7 @@ abstract class Chart extends Widget
      * Set height of container.
      *
      * @param string $height
+     *
      * @return Chart
      */
     public function height($height)
@@ -313,7 +327,8 @@ abstract class Chart extends Widget
 
     /**
      * @param string $style
-     * @param bool $append
+     * @param bool   $append
+     *
      * @return $this
      */
     public function setContainerStyle(string $style, bool $append = true)
@@ -331,6 +346,7 @@ abstract class Chart extends Widget
      * Fill default color.
      *
      * @param array $colors
+     *
      * @return void
      */
     protected function fillColor(array $colors = [])
@@ -451,7 +467,8 @@ HTML;
 
     /**
      * @param string $method
-     * @param array $parameters
+     * @param array  $parameters
+     *
      * @return $this
      */
     public function __call($method, $parameters)
@@ -468,8 +485,9 @@ HTML;
     /**
      * Return JsonResponse instance.
      *
-     * @param bool $returnOptions
+     * @param bool  $returnOptions
      * @param array $data
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function toJsonResponse(bool $returnOptions = true, array $data = [])
@@ -489,7 +507,7 @@ HTML;
      */
     protected function setDefaultColors()
     {
-        if (! $this->colors) {
+        if (!$this->colors) {
             $this->colors = Color::$chartTheme['blue'];
         }
     }

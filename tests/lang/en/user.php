@@ -3,10 +3,10 @@
 return [
     'fields' => [
         'username' => '用户名',
-        'email' => '邮箱',
+        'email'    => '邮箱',
 
         'profile' => [
-            'postcode' => '邮政编码'
+            'postcode' => '邮政编码',
         ],
 
     ],

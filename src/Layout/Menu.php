@@ -69,7 +69,7 @@ class Menu
 
     /**
      * @param array $nodes
-     * @param int $priority
+     * @param int   $priority
      */
     public function add(array $nodes = [], int $priority = 10)
     {
@@ -82,8 +82,10 @@ class Menu
      * Build html.
      *
      * @param array $nodes
-     * @return string
+     *
      * @throws \Throwable
+     *
+     * @return string
      */
     public function build(array $nodes)
     {
@@ -97,6 +99,7 @@ class Menu
 
     /**
      * @param array $item
+     *
      * @return array|string
      */
     protected function renderMenu(array $item)
@@ -105,8 +108,9 @@ class Menu
     }
 
     /**
-     * @param array $item
+     * @param array       $item
      * @param null|string $path
+     *
      * @return bool
      */
     public function isActive(array $item, ?string $path = null)
@@ -119,6 +123,7 @@ class Menu
             if (empty($item['uri'])) {
                 return false;
             }
+
             return trim($this->getPath($item['uri']), '/') == $path;
         }
 
@@ -138,6 +143,7 @@ class Menu
 
     /**
      * @param array $menuItem
+     *
      * @return bool
      */
     public function show(array $menuItem)

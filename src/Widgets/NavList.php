@@ -47,7 +47,7 @@ class NavList extends Widget
             $items = $items->toArray();
         }
 
-        $this->items = (array)$items;
+        $this->items = (array) $items;
 
         return $this;
     }

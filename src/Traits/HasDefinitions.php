@@ -24,6 +24,7 @@ trait HasDefinitions
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     public static function hasDefinition(string $name)

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Dcat\Admin\Models\Role;
 use Dcat\Admin\Models\Administrator;
+use Dcat\Admin\Models\Role;
+use Tests\TestCase;
 
 class RolesTest extends TestCase
 {

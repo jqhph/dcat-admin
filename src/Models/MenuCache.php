@@ -12,6 +12,7 @@ trait MenuCache
      * Get an item from the cache, or execute the given Closure and store the result.
      *
      * @param \Closure $builder
+     *
      * @return mixed
      */
     protected function remember(\Closure $builder)
@@ -31,7 +32,7 @@ trait MenuCache
     public function destroyCache()
     {
         if (!$this->enableCache()) {
-            return null;
+            return;
         }
 
         return $this->getStore()->delete($this->getCacheKey());
@@ -42,7 +43,7 @@ trait MenuCache
      */
     protected function getCacheKey()
     {
-        return sprintf($this->cacheKey, (int)static::withPermission());
+        return sprintf($this->cacheKey, (int) static::withPermission());
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Widgets\DataCard;
 
 use Dcat\Admin\Widgets\Chart\Doughnut;
-use Dcat\Admin\Widgets\Color;
 use Illuminate\Contracts\Support\Arrayable;
 
 class DoughnutChartCard extends Card
@@ -53,7 +52,8 @@ class DoughnutChartCard extends Card
 
     /**
      * @param \Closure|array $builder
-     * @param array $data
+     * @param array          $data
+     *
      * @return $this
      */
     public function chart($builder, array $data = [])
@@ -154,6 +154,7 @@ HTML;
      * Return JsonResponse instance.
      *
      * @param array $data
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function toJsonResponse(array $data = [])

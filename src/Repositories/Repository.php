@@ -62,7 +62,6 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
         return 'updated_at';
     }
 
-
     /**
      * @return bool
      */
@@ -177,7 +176,6 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
     }
 
     /**
-     *
      * @param mixed ...$params
      *
      * @return $this
@@ -200,7 +198,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
         $array = $storage->get('repository.listeners') ?: [];
 
         foreach ((array) $repositories as $v) {
-            if (! isset($array[$v])) {
+            if (!isset($array[$v])) {
                 $array[$v] = [];
             }
 
@@ -219,7 +217,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public static function getListeners(?string $repository)
     {
-        if (! $repository) {
+        if (!$repository) {
             return null;
         }
 
@@ -236,7 +234,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
 
         $resolves[$repository] = [];
 
-        if (! isset($listeners[$repository])) {
+        if (!isset($listeners[$repository])) {
             return $any;
         }
 
@@ -244,7 +242,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
             if (!class_exists($class)) {
                 continue;
             }
-            $listener = new $class;
+            $listener = new $class();
 
             if (!$listener instanceof RepositoryListener) {
                 continue;

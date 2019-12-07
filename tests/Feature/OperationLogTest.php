@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Dcat\Admin\Models\OperationLog;
+use Tests\TestCase;
 
 class OperationLogTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Middleware;
 
-use Dcat\Admin\Auth\Permission as Checker;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Auth\Permission as Checker;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

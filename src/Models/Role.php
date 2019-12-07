@@ -86,6 +86,7 @@ class Role extends Model
      * Get id of the permission by id.
      *
      * @param array $roleIds
+     *
      * @return \Illuminate\Support\Collection
      */
     public static function getPermissionId(array $roleIds)
@@ -95,7 +96,7 @@ class Role extends Model
         }
         $related = config('admin.database.role_permissions_table');
 
-        $model   = new static;
+        $model = new static();
         $keyName = $model->getKeyName();
 
         return $model->newQuery()
@@ -113,6 +114,7 @@ class Role extends Model
 
     /**
      * @param string $slug
+     *
      * @return bool
      */
     public static function isAdministrator(?string $slug)

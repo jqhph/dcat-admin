@@ -7,11 +7,11 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 
@@ -89,7 +89,8 @@ abstract class EloquentRepository extends Repository
     /**
      * Set the relationships that should be eager loaded.
      *
-     * @param  mixed  $relations
+     * @param mixed $relations
+     *
      * @return $this
      */
     public function with($relations)
@@ -103,6 +104,7 @@ abstract class EloquentRepository extends Repository
      * Get the grid data.
      *
      * @param Grid\Model $model
+     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|array
      */
     public function get(Grid\Model $model)
@@ -130,6 +132,7 @@ abstract class EloquentRepository extends Repository
      * Get data to build edit form.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function edit(Form $form): array
@@ -151,6 +154,7 @@ abstract class EloquentRepository extends Repository
      * Get detail data.
      *
      * @param Show $show
+     *
      * @return array
      */
     public function detail(Show $show): array
@@ -172,6 +176,7 @@ abstract class EloquentRepository extends Repository
      * Store a new record.
      *
      * @param Form $form
+     *
      * @return mixed
      */
     public function store(Form $form)
@@ -205,6 +210,7 @@ abstract class EloquentRepository extends Repository
      * Get data before update.
      *
      * @param Form $form
+     *
      * @return array
      */
     public function getDataWhenUpdating(Form $form): array
@@ -216,6 +222,7 @@ abstract class EloquentRepository extends Repository
      * Update form data.
      *
      * @param Form $form
+     *
      * @return bool
      */
     public function update(Form $form)
@@ -290,6 +297,7 @@ abstract class EloquentRepository extends Repository
      * Destroy data.
      *
      * @param Form $form
+     *
      * @return bool
      */
     public function destroy(Form $form, array $deletingData)
@@ -324,6 +332,7 @@ abstract class EloquentRepository extends Repository
 
     /**
      * @param Form $form
+     *
      * @return array
      */
     public function getDataWhenDeleting(Form $form): array
@@ -348,7 +357,7 @@ abstract class EloquentRepository extends Repository
     }
 
     /**
-     * Get the eloquent model
+     * Get the eloquent model.
      *
      * @return EloquentModel
      */
@@ -359,11 +368,12 @@ abstract class EloquentRepository extends Repository
 
     /**
      * @param array $data
+     *
      * @return EloquentModel
      */
     public function createEloquent(array $data = [])
     {
-        $model = new $this->eloquentClass;
+        $model = new $this->eloquentClass();
 
         if ($data) {
             $model->forceFill($data);
@@ -418,7 +428,7 @@ abstract class EloquentRepository extends Repository
      * Get inputs for relations.
      *
      * @param EloquentModel $model
-     * @param array $inputs
+     * @param array         $inputs
      *
      * @return array
      */

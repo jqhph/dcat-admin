@@ -599,7 +599,6 @@ class Filter implements Renderable
     }
 
     /**
-     *
      * @param string $style
      *
      * @return $this

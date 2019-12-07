@@ -172,7 +172,6 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     *
      * @return string
      */
     public function getFilename()

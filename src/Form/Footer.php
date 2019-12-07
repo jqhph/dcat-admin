@@ -147,7 +147,7 @@ class Footer implements Renderable
         }
 
         if (in_array('view', $this->checkboxes)) {
-            $options[3] =  sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.view'));
+            $options[3] = sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.view'));
         }
 
         if (!$options) {

@@ -16,17 +16,19 @@ class Checkbox extends Radio
 
     /**
      * @param $id
+     *
      * @return $this
      */
     public function checked($id)
     {
-        $this->checked = (array)$id;
+        $this->checked = (array) $id;
 
         return $this;
     }
 
     /**
      * @param $excepts
+     *
      * @return Checkbox
      */
     public function checkedAll($excepts = [])
@@ -45,7 +47,6 @@ class Checkbox extends Radio
     {
         return $this->circle(false);
     }
-
 
     public function variables()
     {

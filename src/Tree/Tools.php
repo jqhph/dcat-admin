@@ -4,7 +4,6 @@ namespace Dcat\Admin\Tree;
 
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Tree;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
@@ -26,11 +25,10 @@ class Tools implements Renderable
 
     /**
      * Create a new Tools instance.
-     *
      */
     public function __construct(Tree $tree)
     {
-        $this->tree  = $tree;
+        $this->tree = $tree;
         $this->tools = new Collection();
     }
 

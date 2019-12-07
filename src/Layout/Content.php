@@ -6,7 +6,6 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Arr;
 
 class Content implements Renderable
 {
@@ -61,6 +60,7 @@ class Content implements Renderable
      * Create a content instance.
      *
      * @param mixed ...$params
+     *
      * @return $this
      */
     public static function make(...$params)
@@ -144,8 +144,10 @@ class Content implements Renderable
 
     /**
      * @param array $breadcrumb
-     * @return void
+     *
      * @throws \Exception
+     *
+     * @return void
      */
     protected function formatBreadcrumb(array &$breadcrumb)
     {
@@ -172,7 +174,7 @@ class Content implements Renderable
                     'text' => $breadcrumb[0] ?? null,
                     'url'  => $breadcrumb[1] ?? null,
                     'icon' => $breadcrumb[2] ?? null,
-                ]
+                ],
             ];
         }
     }
@@ -193,6 +195,7 @@ class Content implements Renderable
      * Add one row for content body.
      *
      * @param $content
+     *
      * @return $this
      */
     public function row($content)
@@ -210,6 +213,7 @@ class Content implements Renderable
 
     /**
      * @param $content
+     *
      * @return $this
      */
     public function prepend($content)
@@ -324,6 +328,7 @@ class Content implements Renderable
      * Set content view.
      *
      * @param null|string $view
+     *
      * @return $this
      */
     public function setView(?string $view)
@@ -340,7 +345,7 @@ class Content implements Renderable
     {
         if (
             $this->view !== 'admin::contents.simple'
-            && in_array('fixed', (array)config('admin.layout'))
+            && in_array('fixed', (array) config('admin.layout'))
         ) {
             Admin::style(
                 <<<'CSS'

@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Str;
 
 class Radio extends Widget
 {
@@ -28,12 +27,13 @@ class Radio extends Widget
 
     /**
      * @param null $options
+     *
      * @return $this
      */
     public function disabled($options = null)
     {
         if ($options) {
-            $this->disabledValues = (array)$options;
+            $this->disabledValues = (array) $options;
 
             return $this;
         }
@@ -55,6 +55,7 @@ class Radio extends Widget
 
     /**
      * @param $id
+     *
      * @return $this
      */
     public function checked($id)
@@ -72,6 +73,7 @@ class Radio extends Widget
      *         2 => 'bar',
      *         ...
      *     ]
+     *
      * @param array $opts
      *
      * @return $this
@@ -87,9 +89,10 @@ class Radio extends Widget
     }
 
     /**
-     * "info", "primary", "inverse", "danger", "success", "purple"
+     * "info", "primary", "inverse", "danger", "success", "purple".
      *
      * @param $v
+     *
      * @return $this
      */
     public function style($v)

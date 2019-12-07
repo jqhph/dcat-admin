@@ -2,10 +2,10 @@
 
 namespace Tests\Repositories;
 
+use Dcat\Admin\Grid;
 use Dcat\Admin\Repositories\Repository;
 use Faker\Factory;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Dcat\Admin\Grid;
 
 class Report extends Repository
 {
@@ -27,7 +27,7 @@ class Report extends Repository
     }
 
     /**
-     * 这里生成假数据演示报表功能
+     * 这里生成假数据演示报表功能.
      *
      * @return array
      */
@@ -39,20 +39,20 @@ class Report extends Repository
 
         for ($i = 0; $i < 20; $i++) {
             $data[] = [
-                'content' => $faker->text,
-                'cost' => $faker->randomFloat(),
-                'avgMonthCost' => $faker->randomFloat(),
+                'content'        => $faker->text,
+                'cost'           => $faker->randomFloat(),
+                'avgMonthCost'   => $faker->randomFloat(),
                 'avgQuarterCost' => $faker->randomFloat(),
-                'avgYearCost' => $faker->randomFloat(),
-                'incrs' => $faker->numberBetween(1, 999999999),
-                'avgMonthVist' => $faker->numberBetween(1, 999999),
+                'avgYearCost'    => $faker->randomFloat(),
+                'incrs'          => $faker->numberBetween(1, 999999999),
+                'avgMonthVist'   => $faker->numberBetween(1, 999999),
                 'avgQuarterVist' => $faker->numberBetween(1, 999999),
-                'avgYearVist' => $faker->numberBetween(1, 999999),
-                'avgVists' => $faker->numberBetween(1, 999999),
-                'topCost' => $faker->numberBetween(1, 999999999),
-                'topVist' => $faker->numberBetween(1, 9999990009),
-                'topIncr' => $faker->numberBetween(1, 99999999),
-                'date' => $faker->date(),
+                'avgYearVist'    => $faker->numberBetween(1, 999999),
+                'avgVists'       => $faker->numberBetween(1, 999999),
+                'topCost'        => $faker->numberBetween(1, 999999999),
+                'topVist'        => $faker->numberBetween(1, 9999990009),
+                'topIncr'        => $faker->numberBetween(1, 99999999),
+                'date'           => $faker->date(),
             ];
         }
 

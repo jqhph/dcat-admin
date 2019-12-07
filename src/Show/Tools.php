@@ -2,10 +2,8 @@
 
 namespace Dcat\Admin\Show;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -79,7 +77,7 @@ class Tools implements Renderable
     {
         $this->panel = $panel;
 
-        $this->appends  = new Collection();
+        $this->appends = new Collection();
         $this->prepends = new Collection();
     }
 
@@ -163,6 +161,7 @@ class Tools implements Renderable
 
     /**
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableQuickEdit(bool $disable = true)
@@ -175,6 +174,7 @@ class Tools implements Renderable
     /**
      * @param string $width
      * @param string $height
+     *
      * @return $this
      */
     public function showQuickEdit(?string $width = null, ?string $height = null)
@@ -257,7 +257,7 @@ HTML;
         }
 
         $edit = trans('admin.edit');
-        $url  = $this->getEditPath();
+        $url = $this->getEditPath();
 
         $quickBtn = $btn = '';
 
