@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Layout;
 
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
@@ -29,7 +30,7 @@ class Navbar implements Renderable
     }
 
     /**
-     * @param $element
+     * @param string|\Closure|Renderable|Htmlable $element
      *
      * @return $this
      */
@@ -41,7 +42,7 @@ class Navbar implements Renderable
     }
 
     /**
-     * @param $element
+     * @param string|\Closure|Renderable|Htmlable $element
      *
      * @return $this
      */
@@ -65,16 +66,6 @@ class Navbar implements Renderable
             return '';
         }
 
-        return $this->elements[$part]->map(function ($element) {
-            if ($element instanceof Htmlable) {
-                return $element->toHtml();
-            }
-
-            if ($element instanceof Renderable) {
-                return $element->render();
-            }
-
-            return (string) $element;
-        })->implode('');
+        return $this->elements[$part]->map([Helper::class, 'render'])->implode('');
     }
 }

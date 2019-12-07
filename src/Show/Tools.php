@@ -4,6 +4,7 @@ namespace Dcat\Admin\Show;
 
 use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -84,7 +85,7 @@ class Tools implements Renderable
     /**
      * Append a tools.
      *
-     * @param mixed $tool
+     * @param string|\Closure|Renderable|Htmlable $tool
      *
      * @return $this
      */
@@ -98,7 +99,7 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param mixed $tool
+     * @param string|\Closure|Renderable|Htmlable $tool
      *
      * @return $this
      */

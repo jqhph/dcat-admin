@@ -8,6 +8,7 @@ use Dcat\Admin\Grid\Tools\BatchActions;
 use Dcat\Admin\Grid\Tools\FilterButton;
 use Dcat\Admin\Grid\Tools\RefreshButton;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
@@ -54,7 +55,7 @@ class Tools implements Renderable
     /**
      * Append tools.
      *
-     * @param AbstractTool|string $tool
+     * @param AbstractTool|string|\Closure|Renderable|Htmlable $tool
      *
      * @return $this
      */
@@ -68,7 +69,7 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param AbstractTool|string $tool
+     * @param AbstractTool|string|\Closure|Renderable|Htmlable $tool
      *
      * @return $this
      */

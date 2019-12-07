@@ -4,6 +4,7 @@ namespace Dcat\Admin\Tree;
 
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Tree;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 
@@ -35,7 +36,7 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param string $tool
+     * @param string|\Closure|Renderable|Htmlable $tool
      *
      * @return $this
      */
