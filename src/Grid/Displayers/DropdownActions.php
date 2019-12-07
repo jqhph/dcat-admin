@@ -148,7 +148,7 @@ JS;
     {
         if ($disable) {
             array_delete($this->defaultClass, Show::class);
-        } elseif (!in_array(Show::class, $this->defaultClass)) {
+        } elseif (! in_array(Show::class, $this->defaultClass)) {
             array_push($this->defaultClass, Show::class);
         }
 
@@ -166,7 +166,7 @@ JS;
     {
         if ($disable) {
             array_delete($this->defaultClass, Delete::class);
-        } elseif (!in_array(Delete::class, $this->defaultClass)) {
+        } elseif (! in_array(Delete::class, $this->defaultClass)) {
             array_push($this->defaultClass, Delete::class);
         }
 
@@ -184,7 +184,7 @@ JS;
     {
         if ($disable) {
             array_delete($this->defaultClass, Edit::class);
-        } elseif (!in_array(Edit::class, $this->defaultClass)) {
+        } elseif (! in_array(Edit::class, $this->defaultClass)) {
             array_push($this->defaultClass, Edit::class);
         }
 
@@ -200,7 +200,7 @@ JS;
     {
         if ($disable) {
             array_delete($this->defaultClass, QuickEdit::class);
-        } elseif (!in_array(Show::class, $this->defaultClass)) {
+        } elseif (! in_array(Show::class, $this->defaultClass)) {
             array_push($this->defaultClass, QuickEdit::class);
         }
 
@@ -214,10 +214,10 @@ JS;
      */
     public function display($callbacks = [])
     {
-        $this->disableView(!$this->grid->option('show_view_button'));
-        $this->disableEdit(!$this->grid->option('show_edit_button'));
-        $this->disableQuickEdit(!$this->grid->option('show_quick_edit_button'));
-        $this->disableDelete(!$this->grid->option('show_delete_button'));
+        $this->disableView(! $this->grid->option('show_view_button'));
+        $this->disableEdit(! $this->grid->option('show_edit_button'));
+        $this->disableQuickEdit(! $this->grid->option('show_quick_edit_button'));
+        $this->disableDelete(! $this->grid->option('show_delete_button'));
 
         $this->addScript();
 

@@ -48,7 +48,7 @@ class Administrator extends Model implements AuthenticatableContract
         $avatar = $this->avatar;
 
         if ($avatar) {
-            if (!URL::isValidUrl($avatar)) {
+            if (! URL::isValidUrl($avatar)) {
                 $avatar = Storage::disk(config('admin.upload.disk'))->url($avatar);
             }
 

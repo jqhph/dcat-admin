@@ -63,7 +63,7 @@ class ScaffoldController extends Controller
 
     public function index(Content $content)
     {
-        if (!config('app.debug')) {
+        if (! config('app.debug')) {
             Permission::error();
         }
 
@@ -84,7 +84,7 @@ class ScaffoldController extends Controller
 
     public function store(Request $request)
     {
-        if (!config('app.debug')) {
+        if (! config('app.debug')) {
             Permission::error();
         }
 
@@ -168,7 +168,7 @@ class ScaffoldController extends Controller
     {
         $db = addslashes(\request('db'));
         $table = \request('tb');
-        if (!$table || !$db) {
+        if (! $table || ! $db) {
             return ['status' => 1, 'list' => []];
         }
 
@@ -212,7 +212,7 @@ class ScaffoldController extends Controller
                 $tmp = DB::connection($connectName)->select($sql);
 
                 $collection = collect($tmp)->map(function ($v) use ($value) {
-                    if (!$p = Arr::get($value, 'prefix')) {
+                    if (! $p = Arr::get($value, 'prefix')) {
                         return (array) $v;
                     }
                     $v = (array) $v;

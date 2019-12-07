@@ -41,7 +41,7 @@ class ExtensionController extends Controller
     {
         $extension = request('id');
 
-        if (!$extension) {
+        if (! $extension) {
             return response()->json(['status' => false, 'messages' => 'Invalid extension hash.']);
         }
 
@@ -111,7 +111,7 @@ class ExtensionController extends Controller
             })
             ->limit(14)
             ->expand(function ($expand) {
-                if (!$this->description) {
+                if (! $this->description) {
                     return;
                 }
 
@@ -168,7 +168,7 @@ class ExtensionController extends Controller
     protected function getExpandHandler($key = 'require')
     {
         return function () use ($key) {
-            if (!$this->{$key}) {
+            if (! $this->{$key}) {
                 return;
             }
 
@@ -204,7 +204,7 @@ class ExtensionController extends Controller
         };
 
         $authors = function ($v) {
-            if (!$v) {
+            if (! $v) {
                 return;
             }
 
@@ -216,7 +216,7 @@ class ExtensionController extends Controller
         };
 
         $imported = function ($v) {
-            if (!$v) {
+            if (! $v) {
                 $text = trans('admin.is_not_import');
 
                 return "<label class='label label-default'>$text</label>";

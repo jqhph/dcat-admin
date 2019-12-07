@@ -277,7 +277,7 @@ JS
      */
     public static function prepare(Form $form)
     {
-        if (!static::is()) {
+        if (! static::is()) {
             return;
         }
 

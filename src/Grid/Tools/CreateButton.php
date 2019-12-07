@@ -19,14 +19,14 @@ class CreateButton
 
     protected function renderQuickCreateButton()
     {
-        if (!$this->grid->option('show_quick_create_btn')) {
+        if (! $this->grid->option('show_quick_create_btn')) {
             return;
         }
 
         $new = trans('admin.new');
         $url = $this->grid->getCreateUrl();
 
-        list($width, $height) = $this->grid->option('dialog_form_area');
+        [$width, $height] = $this->grid->option('dialog_form_area');
 
         Form::modal($new)
             ->click(".{$this->grid->getGridRowName()}-create")
@@ -41,7 +41,7 @@ class CreateButton
 
     protected function renderCreateButton()
     {
-        if (!$this->grid->option('show_create_btn')) {
+        if (! $this->grid->option('show_create_btn')) {
             return;
         }
 
@@ -55,7 +55,7 @@ class CreateButton
 
     public function render()
     {
-        if (!$this->grid->option('show_create_btn') && !$this->grid->option('show_quick_create_btn')) {
+        if (! $this->grid->option('show_create_btn') && ! $this->grid->option('show_quick_create_btn')) {
             return;
         }
 

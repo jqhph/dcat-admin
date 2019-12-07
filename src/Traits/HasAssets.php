@@ -190,7 +190,7 @@ trait HasAssets
      */
     public static function css($css = null)
     {
-        if (!is_null($css)) {
+        if (! is_null($css)) {
             self::$css = array_merge(self::$css, (array) $css);
 
             return;
@@ -198,7 +198,7 @@ trait HasAssets
 
         static::$css = array_merge(static::$css, (array) $css);
 
-        if (!request()->pjax()) {
+        if (! request()->pjax()) {
             static::$css = array_merge(static::baseCss(), static::$css);
         }
 
@@ -218,13 +218,13 @@ trait HasAssets
      */
     public static function baseCss($css = null)
     {
-        if (!is_null($css)) {
+        if (! is_null($css)) {
             static::$baseCss = $css;
 
             return;
         }
 
-        if (!static::$disableSkinCss) {
+        if (! static::$disableSkinCss) {
             $skin = config('admin.skin', 'skin-blue-light');
 
             array_unshift(static::$baseCss, "vendor/dcat-admin/AdminLTE/dist/css/skins/{$skin}.min.css");
@@ -244,7 +244,7 @@ trait HasAssets
      */
     public static function js($js = null)
     {
-        if (!is_null($js)) {
+        if (! is_null($js)) {
             self::$js = array_merge(self::$js, (array) $js);
 
             return;
@@ -252,7 +252,7 @@ trait HasAssets
 
         static::$js = array_merge(static::$js, (array) $js);
 
-        if (!request()->pjax()) {
+        if (! request()->pjax()) {
             static::$js = array_merge(static::baseJs(), static::$js);
         }
 
@@ -272,7 +272,7 @@ trait HasAssets
      */
     public static function html($html = '')
     {
-        if (!empty($html)) {
+        if (! empty($html)) {
             static::$html = array_merge(static::$html, (array) $html);
 
             return;
@@ -290,7 +290,7 @@ trait HasAssets
      */
     public static function headerJs($js = null)
     {
-        if (!is_null($js)) {
+        if (! is_null($js)) {
             self::$headerJs = array_merge(self::$headerJs, (array) $js);
 
             return;
@@ -312,7 +312,7 @@ trait HasAssets
      */
     public static function baseJs($js = null)
     {
-        if (!is_null($js)) {
+        if (! is_null($js)) {
             static::$baseJs = $js;
 
             return;
@@ -348,7 +348,7 @@ trait HasAssets
      */
     public static function style($style = '')
     {
-        if (!empty($style)) {
+        if (! empty($style)) {
             self::$style = array_merge(self::$style, (array) $style);
 
             return;

@@ -81,7 +81,7 @@ class Tools implements Renderable
 
     public function has()
     {
-        return !$this->tools->isEmpty();
+        return ! $this->tools->isEmpty();
     }
 
     /**
@@ -151,7 +151,7 @@ class Tools implements Renderable
     {
         return $this->tools->map(function ($tool) {
             if ($tool instanceof AbstractTool) {
-                if (!$tool->allowed()) {
+                if (! $tool->allowed()) {
                     return '';
                 }
 

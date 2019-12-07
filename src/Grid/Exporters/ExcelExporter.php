@@ -11,7 +11,7 @@ class ExcelExporter extends AbstractExporter
     {
         parent::__construct($titles);
 
-        if (!class_exists(Excel::class)) {
+        if (! class_exists(Excel::class)) {
             throw new \Exception('To use exporter, please install [dcat/easy-excel] first.');
         }
     }

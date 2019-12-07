@@ -82,7 +82,7 @@ class File extends Field
 
         $rules = $attributes = [];
 
-        if (!$this->hasRule('required')) {
+        if (! $this->hasRule('required')) {
             return false;
         }
 
@@ -159,7 +159,7 @@ class File extends Field
     {
         $this->setDefaultServer();
 
-        if (!empty($this->value())) {
+        if (! empty($this->value())) {
             $this->setupPreviewOptions();
         }
 

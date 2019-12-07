@@ -209,7 +209,7 @@ abstract class AbstractFilter
      */
     public function siblings($index = null)
     {
-        if (!is_null($index)) {
+        if (! is_null($index)) {
             return Arr::get($this->parent->filters(), $index);
         }
 
@@ -401,7 +401,7 @@ abstract class AbstractFilter
      */
     protected function presenter()
     {
-        if (!$this->presenter) {
+        if (! $this->presenter) {
             $this->setupDefaultPresenter();
         }
 

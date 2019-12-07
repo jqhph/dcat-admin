@@ -101,11 +101,11 @@ class Between extends Filter
             }, $value);
         }
 
-        if (!isset($value['start'])) {
+        if (! isset($value['start'])) {
             return $model->where($this->getColumnName(), '<=', $value['end']);
         }
 
-        if (!isset($value['end'])) {
+        if (! isset($value['end'])) {
             return $model->where($this->getColumnName(), '=>', $value['start']);
         }
 
@@ -114,7 +114,7 @@ class Between extends Filter
 
     protected function addScript()
     {
-        if (!$this->dateFormat) {
+        if (! $this->dateFormat) {
             return;
         }
 

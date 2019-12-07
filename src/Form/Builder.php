@@ -241,7 +241,7 @@ class Builder
      */
     public function step(?\Closure $callback = null)
     {
-        if (!$this->stepBuilder) {
+        if (! $this->stepBuilder) {
             $this->view = 'admin::form.steps';
 
             $this->stepBuilder = new StepBuilder($this->form);
@@ -478,7 +478,7 @@ class Builder
      */
     public function stepField($name)
     {
-        if (!$builder = $this->getStepBuilder()) {
+        if (! $builder = $this->getStepBuilder()) {
             return;
         }
 
@@ -496,7 +496,7 @@ class Builder
     {
         $fields = new Collection();
 
-        if (!$builder = $this->getStepBuilder()) {
+        if (! $builder = $this->getStepBuilder()) {
             return $fields;
         }
 
@@ -526,7 +526,7 @@ class Builder
      */
     public function hasRows()
     {
-        return !empty($this->form->getRows());
+        return ! empty($this->form->getRows());
     }
 
     /**
@@ -597,7 +597,7 @@ class Builder
      */
     public function disableHeader(bool $disable = true)
     {
-        $this->showHeader = !$disable;
+        $this->showHeader = ! $disable;
     }
 
     /**
@@ -607,7 +607,7 @@ class Builder
      */
     public function disableFooter(bool $disable = true)
     {
-        $this->showFooter = !$disable;
+        $this->showFooter = ! $disable;
     }
 
     /**
@@ -676,7 +676,7 @@ class Builder
     {
         $previous = URL::previous();
 
-        if (!$previous || $previous == URL::current()) {
+        if (! $previous || $previous == URL::current()) {
             return;
         }
 
@@ -741,7 +741,7 @@ class Builder
      */
     protected function removeReservedFields()
     {
-        if (!$this->isMode(static::MODE_CREATE)) {
+        if (! $this->isMode(static::MODE_CREATE)) {
             return;
         }
 
@@ -774,7 +774,7 @@ class Builder
      */
     public function renderFooter()
     {
-        if (!$this->showFooter) {
+        if (! $this->showFooter) {
             return;
         }
 
@@ -792,7 +792,7 @@ class Builder
 
         $tabObj = $this->form->getTab();
 
-        if (!$tabObj->isEmpty()) {
+        if (! $tabObj->isEmpty()) {
             $this->setupTabScript();
         }
 

@@ -33,7 +33,7 @@ trait HasSteps
         if (
             empty($stepBuilder)
             || empty($stepBuilder->count())
-            || (!isset($data[StepBuilder::ALL_STEPS]) && !$this->isStepFormValidationRequest())
+            || (! isset($data[StepBuilder::ALL_STEPS]) && ! $this->isStepFormValidationRequest())
         ) {
             return;
         }
@@ -54,7 +54,7 @@ trait HasSteps
             return;
         }
 
-        if (!empty($data[StepBuilder::ALL_STEPS])) {
+        if (! empty($data[StepBuilder::ALL_STEPS])) {
             foreach ($steps as $stepForm) {
                 foreach ($stepForm->fields() as $field) {
                     $this->pushField($field);
@@ -98,7 +98,7 @@ trait HasSteps
      */
     protected function responseDoneStep()
     {
-        if (!$builder = $this->builder->getStepBuilder()) {
+        if (! $builder = $this->builder->getStepBuilder()) {
             return;
         }
 

@@ -207,7 +207,7 @@ class UserController extends Controller
 //        print_r($tags);die;
 
         $form->multipleSelect('tags', 'Tags')->options(Tag::all()->pluck('name', 'id'))->customFormat(function ($value) {
-            if (!$value) {
+            if (! $value) {
                 return [];
             }
 

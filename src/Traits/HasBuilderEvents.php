@@ -55,7 +55,7 @@ trait HasBuilderEvents
         $listeners = $storage->get($key) ?: [];
 
         foreach ($listeners as $k => $listener) {
-            list($callback, $once) = $listener;
+            [$callback, $once] = $listener;
 
             if ($once) {
                 unset($listeners[$k]);

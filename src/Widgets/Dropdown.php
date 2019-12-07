@@ -71,7 +71,7 @@ class Dropdown extends Widget
      */
     public function options($options = [], string $title = null)
     {
-        if (!$options) {
+        if (! $options) {
             return $this;
         }
 
@@ -81,7 +81,7 @@ class Dropdown extends Widget
 
         $options = (array) $options;
 
-        if (!$this->options) {
+        if (! $this->options) {
             $this->firstOptions = &$options;
         }
 
@@ -209,7 +209,7 @@ class Dropdown extends Widget
      */
     protected function renderButton()
     {
-        if (is_null($this->button['text']) && !$this->click) {
+        if (is_null($this->button['text']) && ! $this->click) {
             return;
         }
 
@@ -217,7 +217,7 @@ class Dropdown extends Widget
         $class = $this->button['class'];
         $style = $this->button['style'];
 
-        if ($this->click && !$text) {
+        if ($this->click && ! $text) {
             if (Arr::isAssoc($this->firstOptions)) {
                 $text = array_keys($this->firstOptions)[0];
             } else {
@@ -262,7 +262,7 @@ HTML
         $opt = '';
 
         foreach ($this->options as &$items) {
-            list($title, $options) = $items;
+            [$title, $options] = $items;
 
             if ($title) {
                 $opt .= "<li class='dropdown-header'>$title</li>";
@@ -308,19 +308,19 @@ HTML
      */
     public function render()
     {
-        if (is_null($this->button['text']) && !$this->options) {
+        if (is_null($this->button['text']) && ! $this->options) {
             return '';
         }
 
         $button = $this->renderButton();
 
-        if (!$this->options) {
+        if (! $this->options) {
             return $button;
         }
 
         $opt = $this->renderOptions();
 
-        if (!$button) {
+        if (! $button) {
             return sprintf('<ul class="dropdown-menu">%s</ul>', $opt);
         }
 

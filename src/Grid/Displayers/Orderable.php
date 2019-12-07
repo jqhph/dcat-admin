@@ -12,7 +12,7 @@ class Orderable extends AbstractDisplayer
     {
         parent::__construct($value, $grid, $column, $row);
 
-        if (!trait_exists('\Spatie\EloquentSortable\SortableTrait')) {
+        if (! trait_exists('\Spatie\EloquentSortable\SortableTrait')) {
             throw new \Exception('To use orderable grid, please install package [spatie/eloquent-sortable] first.');
         }
     }

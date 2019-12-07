@@ -35,7 +35,7 @@ trait HasPermissions
      */
     public function can($ability) : bool
     {
-        if (!$ability) {
+        if (! $ability) {
             return false;
         }
 
@@ -60,7 +60,7 @@ trait HasPermissions
      */
     public function cannot(string $permission) : bool
     {
-        return !$this->can($permission);
+        return ! $this->can($permission);
     }
 
     /**

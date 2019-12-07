@@ -74,10 +74,10 @@ class Line extends Sparkline
             ->maxSpotColor($color[0])
             ->spotColor($color[0]);
 
-        if (!isset($this->options['lineWidth'])) {
+        if (! isset($this->options['lineWidth'])) {
             $this->lineWidth(2);
         }
-        if (!isset($this->options['spotRadius'])) {
+        if (! isset($this->options['spotRadius'])) {
             $this->spotRadius(3);
         }
 
@@ -86,7 +86,7 @@ class Line extends Sparkline
 
     public function render()
     {
-        if (!isset($this->options['lineColor'])) {
+        if (! isset($this->options['lineColor'])) {
             $this->fillDefaultColor();
         }
 

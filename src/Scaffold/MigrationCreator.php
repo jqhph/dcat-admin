@@ -70,7 +70,7 @@ class MigrationCreator extends BaseMigrationCreator
     public function buildBluePrint($fields = [], $keyName = 'id', $useTimestamps = true, $softDeletes = false)
     {
         $fields = array_filter($fields, function ($field) {
-            return isset($field['name']) && !empty($field['name']);
+            return isset($field['name']) && ! empty($field['name']);
         });
 
         if (empty($fields)) {

@@ -862,7 +862,7 @@ class Field implements Renderable
      */
     protected function getElementClass()
     {
-        if (!$this->elementClass) {
+        if (! $this->elementClass) {
             $name = $this->elementName ?: $this->formatName($this->column);
 
             $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
@@ -1134,7 +1134,7 @@ class Field implements Renderable
      */
     public function render()
     {
-        if (!$this->shouldRender()) {
+        if (! $this->shouldRender()) {
             return '';
         }
 

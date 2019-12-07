@@ -47,7 +47,7 @@ trait HasSelector
         $active = $this->_selector->parseSelected();
 
         $this->_selector->getSelectors()->each(function ($selector, $column) use ($active) {
-            if (!array_key_exists($column, $active)) {
+            if (! array_key_exists($column, $active)) {
                 return;
             }
 

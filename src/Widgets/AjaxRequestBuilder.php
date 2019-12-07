@@ -149,7 +149,7 @@ trait AjaxRequestBuilder
      */
     public function buildFetchingScript()
     {
-        if (!$this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildFetchingScript()) {
             return false;
         }
 

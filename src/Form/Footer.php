@@ -54,7 +54,7 @@ class Footer implements Renderable
     {
         if ($disable) {
             array_delete($this->buttons, 'reset');
-        } elseif (!in_array('reset', $this->buttons)) {
+        } elseif (! in_array('reset', $this->buttons)) {
             array_push($this->buttons, 'reset');
         }
 
@@ -70,7 +70,7 @@ class Footer implements Renderable
     {
         if ($disable) {
             array_delete($this->buttons, 'submit');
-        } elseif (!in_array('submit', $this->buttons)) {
+        } elseif (! in_array('submit', $this->buttons)) {
             array_push($this->buttons, 'submit');
         }
 
@@ -86,7 +86,7 @@ class Footer implements Renderable
     {
         if ($disable) {
             array_delete($this->checkboxes, 'view');
-        } elseif (!in_array('view', $this->checkboxes)) {
+        } elseif (! in_array('view', $this->checkboxes)) {
             array_push($this->checkboxes, 'view');
         }
 
@@ -102,7 +102,7 @@ class Footer implements Renderable
     {
         if ($disable) {
             array_delete($this->checkboxes, 'continue_editing');
-        } elseif (!in_array('continue_editing', $this->checkboxes)) {
+        } elseif (! in_array('continue_editing', $this->checkboxes)) {
             array_push($this->checkboxes, 'continue_editing');
         }
 
@@ -118,7 +118,7 @@ class Footer implements Renderable
     {
         if ($disable) {
             array_delete($this->checkboxes, 'continue_creating');
-        } elseif (!in_array('continue_creating', $this->checkboxes)) {
+        } elseif (! in_array('continue_creating', $this->checkboxes)) {
             array_push($this->checkboxes, 'continue_creating');
         }
 
@@ -150,7 +150,7 @@ class Footer implements Renderable
             $options[3] = sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.view'));
         }
 
-        if (!$options) {
+        if (! $options) {
             return;
         }
 

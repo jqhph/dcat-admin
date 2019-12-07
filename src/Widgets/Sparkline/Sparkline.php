@@ -177,7 +177,7 @@ $('#{$this->id}').sparkline($v, $o);
 JS;
         }
 
-        if (!$this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildFetchingScript()) {
             return <<<JS
 $('#{$this->id}').sparkline($values, $options);
 {$combos};

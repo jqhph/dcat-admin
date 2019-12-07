@@ -73,7 +73,7 @@ trait HasQuickSearch
      */
     public function renderQuickSearch()
     {
-        if (!$this->quickSearch) {
+        if (! $this->quickSearch) {
             return '';
         }
 
@@ -87,11 +87,11 @@ trait HasQuickSearch
      */
     public function applyQuickSearch()
     {
-        if (!$this->quickSearch) {
+        if (! $this->quickSearch) {
             return;
         }
 
-        if (!$query = request()->get($this->quickSearch->getQueryName())) {
+        if (! $query = request()->get($this->quickSearch->getQueryName())) {
             return;
         }
 
@@ -120,13 +120,13 @@ trait HasQuickSearch
     protected function addWhereBindings($query)
     {
         $queries = preg_split('/\s(?=([^"]*"[^"]*")*[^"]*$)/', trim($query));
-        if (!$queries = $this->parseQueryBindings($queries)) {
+        if (! $queries = $this->parseQueryBindings($queries)) {
             $this->addWhereBasicBinding($this->getKeyName(), false, '=', '___');
 
             return;
         }
 
-        foreach ($queries as list($column, $condition, $or)) {
+        foreach ($queries as [$column, $condition, $or]) {
             if (preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match) !== 0) {
                 $this->addWhereInBinding($column, $or, (bool) $match['not'], $match['values']);
                 continue;
@@ -187,7 +187,7 @@ trait HasQuickSearch
             }
 
             $or = false;
-            list($column, $condition) = $segments;
+            [$column, $condition] = $segments;
 
             if (Str::startsWith($column, '|')) {
                 $or = true;
@@ -196,7 +196,7 @@ trait HasQuickSearch
 
             $column = $columnMap[$column] ?? null;
 
-            if (!$column) {
+            if (! $column) {
                 return;
             }
 

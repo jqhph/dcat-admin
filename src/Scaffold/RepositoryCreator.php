@@ -24,7 +24,7 @@ class RepositoryCreator
         $path = app_path("{$this->path}/{$controller}.php");
         $dir = dirname($path);
 
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             $files->makeDirectory($dir, 0755, true);
         }
 

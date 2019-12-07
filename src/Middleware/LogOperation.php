@@ -48,7 +48,7 @@ class LogOperation
     protected function shouldLogOperation(Request $request)
     {
         return config('admin.operation_log.enable')
-            && !$this->inExceptArray($request)
+            && ! $this->inExceptArray($request)
             && $this->inAllowedMethods($request->method());
     }
 

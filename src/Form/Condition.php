@@ -48,7 +48,7 @@ class Condition
         $self = $this;
 
         $condition = $this->form->if(function () use ($self) {
-            return !$self->getResult();
+            return ! $self->getResult();
         });
 
         if ($next) {
@@ -65,7 +65,7 @@ class Condition
         }
         $this->done = true;
 
-        if (!$this->is()) {
+        if (! $this->is()) {
             return;
         }
 

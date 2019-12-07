@@ -63,17 +63,17 @@ class SectionManager
      */
     protected function put($section, $content, bool $append = false, int $priority = 10)
     {
-        if (!$section) {
+        if (! $section) {
             throw new \InvalidArgumentException('Section name is required.');
         }
 
-        if (!isset($this->sections[$section])) {
+        if (! isset($this->sections[$section])) {
             unset($this->defaultSections[$section]);
 
             $this->sections[$section] = [];
         }
 
-        if (!isset($this->sections[$section][$priority])) {
+        if (! isset($this->sections[$section][$priority])) {
             $this->sections[$section][$priority] = [];
         }
 
@@ -96,7 +96,7 @@ class SectionManager
     {
         $defaultSection = $this->defaultSections[$section] ?? null;
 
-        if (!$this->hasSection($section) && $defaultSection === null) {
+        if (! $this->hasSection($section) && $defaultSection === null) {
             return Helper::render($default, [new Fluent()]);
         }
 
@@ -174,7 +174,7 @@ class SectionManager
             return $content;
         }
 
-        if (!is_array($content)) {
+        if (! is_array($content)) {
             $content = [['append' => true, 'value' => $content]];
         }
 
@@ -187,7 +187,7 @@ class SectionManager
             $value = Helper::render($item['value'] ?? '', [$options]);
             $append = $item['append'] ?? false;
 
-            if (!$append) {
+            if (! $append) {
                 $result = '';
             }
             $result .= $value;

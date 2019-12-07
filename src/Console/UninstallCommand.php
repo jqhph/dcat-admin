@@ -27,7 +27,7 @@ class UninstallCommand extends Command
      */
     public function handle()
     {
-        if (!$this->confirm('Are you sure to uninstall dcat-admin?')) {
+        if (! $this->confirm('Are you sure to uninstall dcat-admin?')) {
             return;
         }
 

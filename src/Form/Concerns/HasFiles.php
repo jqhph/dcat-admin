@@ -19,7 +19,7 @@ trait HasFiles
         $column = $data['upload_column'] ?? null;
         $file = $data['file'] ?? null;
 
-        if (!$column && !$file instanceof UploadedFile) {
+        if (! $column && ! $file instanceof UploadedFile) {
             return;
         }
 
@@ -37,14 +37,14 @@ trait HasFiles
      */
     protected function handleFileDeleteBeforeCreate(array $data)
     {
-        if (!array_key_exists(Field::FILE_DELETE_FLAG, $data)) {
+        if (! array_key_exists(Field::FILE_DELETE_FLAG, $data)) {
             return;
         }
 
         $column = $data['_column'] ?? null;
         $file = $data['key'] ?? null;
 
-        if (!$column && !$file) {
+        if (! $column && ! $file) {
             return;
         }
 
@@ -85,7 +85,7 @@ trait HasFiles
     public function deleteFiles($data, $forceDelete = false)
     {
         // If it's a soft delete, the files in the data will not be deleted.
-        if (!$forceDelete && $this->isSoftDeletes) {
+        if (! $forceDelete && $this->isSoftDeletes) {
             return;
         }
 
@@ -106,14 +106,14 @@ trait HasFiles
      */
     protected function handleFileDelete(array $input = [])
     {
-        if (!array_key_exists(Field::FILE_DELETE_FLAG, $input)) {
+        if (! array_key_exists(Field::FILE_DELETE_FLAG, $input)) {
             return $input;
         }
 
         $input[Field::FILE_DELETE_FLAG] = $input['key'];
         unset($input['key']);
 
-        if (!empty($input['_column'])) {
+        if (! empty($input['_column'])) {
             $input[$input['_column']] = '';
 
             unset($input['_column']);

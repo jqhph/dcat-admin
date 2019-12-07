@@ -35,13 +35,13 @@ class ImportCommand extends VendorPublishCommand
 
         $extensions = Admin::getExtensions();
 
-        if (empty($extension) || !Arr::has($extensions, $extension)) {
+        if (empty($extension) || ! Arr::has($extensions, $extension)) {
             $extension = $this->choice('Please choose a extension to import', array_keys($extensions));
         }
 
         $className = Arr::get($extensions, $extension);
 
-        if (!class_exists($className) || !is_subclass_of($className, Extension::class) || !$className::make()->getName()) {
+        if (! class_exists($className) || ! is_subclass_of($className, Extension::class) || ! $className::make()->getName()) {
             $this->error("Invalid Extension [$className]");
 
             return;

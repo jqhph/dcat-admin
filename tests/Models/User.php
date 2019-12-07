@@ -17,7 +17,7 @@ class User extends Model
 
     public function getFullNameAttribute()
     {
-        if (!$this->profile) {
+        if (! $this->profile) {
             return;
         }
 
@@ -26,7 +26,7 @@ class User extends Model
 
     public function getPositionAttribute()
     {
-        if (!$this->profile) {
+        if (! $this->profile) {
             return;
         }
 

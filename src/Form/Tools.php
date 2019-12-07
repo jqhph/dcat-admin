@@ -96,7 +96,7 @@ class Tools implements Renderable
      */
     public function disableList(bool $disable = true)
     {
-        $this->showList = !$disable;
+        $this->showList = ! $disable;
 
         return $this;
     }
@@ -108,7 +108,7 @@ class Tools implements Renderable
      */
     public function disableDelete(bool $disable = true)
     {
-        $this->showDelete = !$disable;
+        $this->showDelete = ! $disable;
 
         return $this;
     }
@@ -120,7 +120,7 @@ class Tools implements Renderable
      */
     public function disableView(bool $disable = true)
     {
-        $this->showView = !$disable;
+        $this->showView = ! $disable;
 
         return $this;
     }
@@ -176,7 +176,7 @@ class Tools implements Renderable
      */
     protected function renderList()
     {
-        if (!$this->showList) {
+        if (! $this->showList) {
             return;
         }
 
@@ -196,7 +196,7 @@ EOT;
      */
     protected function renderView()
     {
-        if (!$this->showView) {
+        if (! $this->showView) {
             return;
         }
 
@@ -218,7 +218,7 @@ HTML;
      */
     protected function renderDelete()
     {
-        if (!$this->showDelete) {
+        if (! $this->showDelete) {
             return;
         }
 

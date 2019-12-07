@@ -151,21 +151,21 @@ class Content implements Renderable
      */
     protected function formatBreadcrumb(array &$breadcrumb)
     {
-        if (!$breadcrumb) {
+        if (! $breadcrumb) {
             throw new \Exception('Breadcrumb format error!');
         }
 
         $notArray = false;
         foreach ($breadcrumb as &$item) {
             $isArray = is_array($item);
-            if ($isArray && !isset($item['text'])) {
+            if ($isArray && ! isset($item['text'])) {
                 throw new \Exception('Breadcrumb format error!');
             }
-            if (!$isArray && $item) {
+            if (! $isArray && $item) {
                 $notArray = true;
             }
         }
-        if (!$breadcrumb) {
+        if (! $breadcrumb) {
             throw new \Exception('Breadcrumb format error!');
         }
         if ($notArray) {

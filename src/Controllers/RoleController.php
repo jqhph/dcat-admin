@@ -107,7 +107,7 @@ class RoleController extends Controller
         $grid->slug->label('primary');
         $grid->name;
 
-        if (!$mini) {
+        if (! $mini) {
             $grid->created_at;
             $grid->updated_at->sortable();
         }
@@ -181,7 +181,7 @@ class RoleController extends Controller
                     return $permissionModel->allNodes();
                 })
                 ->customFormat(function ($v) {
-                    if (!$v) {
+                    if (! $v) {
                         return [];
                     }
 

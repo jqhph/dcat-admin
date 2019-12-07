@@ -448,7 +448,7 @@ JS;
      */
     protected function renderCreateButton()
     {
-        if (!$this->useQuickCreate && !$this->useCreate) {
+        if (! $this->useQuickCreate && ! $this->useCreate) {
             return '';
         }
 
@@ -474,7 +474,7 @@ JS;
     protected function renderQuickEditButton()
     {
         if ($this->useQuickEdit) {
-            list($width, $height) = $this->dialogFormDimensions;
+            [$width, $height] = $this->dialogFormDimensions;
 
             Form::modal(trans('admin.edit'))
                 ->click('.tree-quick-edit')
@@ -490,7 +490,7 @@ JS;
     protected function renderQuickCreateButton()
     {
         if ($this->useQuickCreate) {
-            list($width, $height) = $this->dialogFormDimensions;
+            [$width, $height] = $this->dialogFormDimensions;
 
             Form::modal(trans('admin.new'))
                 ->click('.tree-quick-create')
@@ -537,7 +537,7 @@ JS;
     {
         $view = view($this->view['tree'], $this->variables());
 
-        if (!$wrapper = $this->wrapper) {
+        if (! $wrapper = $this->wrapper) {
             return "<div class='card material'>{$view->render()}</div>";
         }
 

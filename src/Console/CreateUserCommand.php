@@ -25,7 +25,7 @@ class CreateUserCommand extends Command
      */
     public function handle()
     {
-        if (!config('app.debug')) {
+        if (! config('app.debug')) {
             $this->error('Permission deny!');
 
             return;

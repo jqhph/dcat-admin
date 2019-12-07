@@ -198,7 +198,7 @@ abstract class Extension
      */
     final public static function disabled()
     {
-        return !static::enabled();
+        return ! static::enabled();
     }
 
     /**

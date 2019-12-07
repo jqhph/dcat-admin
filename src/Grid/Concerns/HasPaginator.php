@@ -49,7 +49,7 @@ trait HasPaginator
      */
     public function paginator()
     {
-        if (!$this->options['show_pagination']) {
+        if (! $this->options['show_pagination']) {
             return;
         }
 
@@ -95,9 +95,9 @@ trait HasPaginator
      */
     public function disablePagination(bool $disable = true)
     {
-        $this->model->usePaginate(!$disable);
+        $this->model->usePaginate(! $disable);
 
-        return $this->option('show_pagination', !$disable);
+        return $this->option('show_pagination', ! $disable);
     }
 
     /**
@@ -109,6 +109,6 @@ trait HasPaginator
      */
     public function showPagination(bool $val = true)
     {
-        return $this->disablePagination(!$val);
+        return $this->disablePagination(! $val);
     }
 }

@@ -197,8 +197,8 @@ trait HasEvents
 
             if (
                 $response
-                || !$ret
-                || !$ret instanceof Response
+                || ! $ret
+                || ! $ret instanceof Response
                 || ($ret instanceof RedirectResponse && $this->isAjaxRequest())
             ) {
                 continue;

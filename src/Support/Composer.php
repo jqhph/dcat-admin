@@ -27,7 +27,7 @@ class Composer
      */
     public static function getVersion(?string $packageName, ?string $lockFile = null)
     {
-        if (!$packageName) {
+        if (! $packageName) {
             return null;
         }
 
@@ -52,7 +52,7 @@ class Composer
             return static::$files[$path];
         }
 
-        if (!$path || !is_file($path)) {
+        if (! $path || ! is_file($path)) {
             return static::$files[$path] = [];
         }
 

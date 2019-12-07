@@ -119,7 +119,7 @@ class Alert extends Widget
      */
     public function disableCloseButton(bool $value = true)
     {
-        $this->showCloseBtn = !$value;
+        $this->showCloseBtn = ! $value;
 
         return $this;
     }

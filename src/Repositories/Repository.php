@@ -198,7 +198,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
         $array = $storage->get('repository.listeners') ?: [];
 
         foreach ((array) $repositories as $v) {
-            if (!isset($array[$v])) {
+            if (! isset($array[$v])) {
                 $array[$v] = [];
             }
 
@@ -217,7 +217,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public static function getListeners(?string $repository)
     {
-        if (!$repository) {
+        if (! $repository) {
             return null;
         }
 
@@ -234,17 +234,17 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
 
         $resolves[$repository] = [];
 
-        if (!isset($listeners[$repository])) {
+        if (! isset($listeners[$repository])) {
             return $any;
         }
 
         foreach ($listeners[$repository] as $class) {
-            if (!class_exists($class)) {
+            if (! class_exists($class)) {
                 continue;
             }
             $listener = new $class();
 
-            if (!$listener instanceof RepositoryListener) {
+            if (! $listener instanceof RepositoryListener) {
                 continue;
             }
 

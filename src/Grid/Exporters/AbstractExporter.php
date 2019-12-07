@@ -189,7 +189,7 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function buildData(?int $page = null, ?int $perPage = null)
     {
-        if (!is_null($this->data)) {
+        if (! is_null($this->data)) {
             return $this->data;
         }
 

@@ -241,7 +241,7 @@ class Grid
     public function column($name, $label = '')
     {
         if (strpos($name, '.') !== false) {
-            list($relationName, $relationColumn) = explode('.', $name);
+            [$relationName, $relationColumn] = explode('.', $name);
 
             $label = empty($label) ? admin_trans_field($relationColumn) : $label;
 
@@ -372,7 +372,7 @@ class Grid
      */
     protected function prependRowSelectorColumn()
     {
-        if (!$this->options['show_row_selector']) {
+        if (! $this->options['show_row_selector']) {
             return;
         }
 
@@ -514,7 +514,7 @@ HTML
      */
     public function renderCreateButton()
     {
-        if (!$this->options['show_create_btn'] && !$this->options['show_quick_create_btn']) {
+        if (! $this->options['show_create_btn'] && ! $this->options['show_quick_create_btn']) {
             return '';
         }
 
@@ -540,7 +540,7 @@ HTML
      */
     public function header($content = null)
     {
-        if (!$content) {
+        if (! $content) {
             return $this->header;
         }
 
@@ -556,7 +556,7 @@ HTML
      */
     public function renderHeader()
     {
-        if (!$this->header) {
+        if (! $this->header) {
             return '';
         }
 
@@ -588,7 +588,7 @@ HTML;
      */
     public function footer($content = null)
     {
-        if (!$content) {
+        if (! $content) {
             return $this->footer;
         }
 
@@ -604,7 +604,7 @@ HTML;
      */
     public function renderFooter()
     {
-        if (!$this->footer) {
+        if (! $this->footer) {
             return '';
         }
 
@@ -655,7 +655,7 @@ HTML;
     {
         $this->tools->disableBatchActions($disable);
 
-        return $this->option('show_row_selector', !$disable);
+        return $this->option('show_row_selector', ! $disable);
     }
 
     /**
@@ -665,7 +665,7 @@ HTML;
      */
     public function showRowSelector(bool $val = true)
     {
-        return $this->disableRowSelector(!$val);
+        return $this->disableRowSelector(! $val);
     }
 
     /**
@@ -675,7 +675,7 @@ HTML;
      */
     public function disableCreateButton(bool $disable = true)
     {
-        return $this->option('show_create_btn', !$disable);
+        return $this->option('show_create_btn', ! $disable);
     }
 
     /**
@@ -685,7 +685,7 @@ HTML;
      */
     public function showCreateButton(bool $val = true)
     {
-        return $this->disableCreateButton(!$val);
+        return $this->disableCreateButton(! $val);
     }
 
     /**
@@ -695,7 +695,7 @@ HTML;
      */
     public function disableQuickCreateButton(bool $disable = true)
     {
-        return $this->option('show_quick_create_btn', !$disable);
+        return $this->option('show_quick_create_btn', ! $disable);
     }
 
     /**
@@ -705,7 +705,7 @@ HTML;
      */
     public function showQuickCreateButton(bool $val = true)
     {
-        return $this->disableQuickCreateButton(!$val);
+        return $this->disableQuickCreateButton(! $val);
     }
 
     /**
@@ -737,7 +737,7 @@ HTML;
      */
     public function resource(string $path)
     {
-        if (!empty($path)) {
+        if (! empty($path)) {
             $this->resourcePath = admin_url($path);
         }
 
@@ -777,7 +777,7 @@ HTML;
      */
     public function responsive()
     {
-        if (!$this->responsive) {
+        if (! $this->responsive) {
             $this->responsive = new Responsive($this);
         }
 
@@ -847,7 +847,7 @@ HTML;
      */
     public function setView($view, $variables = [])
     {
-        if (!empty($variables)) {
+        if (! empty($variables)) {
             $this->with($variables);
         }
 
@@ -923,7 +923,7 @@ HTML;
     {
         $view = view($this->view, $this->variables());
 
-        if (!$wrapper = $this->wrapper) {
+        if (! $wrapper = $this->wrapper) {
             return $view->render();
         }
 

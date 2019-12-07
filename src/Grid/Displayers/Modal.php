@@ -10,7 +10,7 @@ class Modal extends AbstractDisplayer
     {
         $title = $this->trans('title');
         if (func_num_args() == 2) {
-            list($title, $callback) = func_get_args();
+            [$title, $callback] = func_get_args();
         }
 
         $html = $this->value;

@@ -144,7 +144,7 @@ class Show implements Renderable
      */
     public function getKeyName()
     {
-        if (!$this->repository) {
+        if (! $this->repository) {
             return $this->keyName;
         }
 
@@ -180,7 +180,7 @@ class Show implements Renderable
      */
     public function model()
     {
-        if (!$this->model) {
+        if (! $this->model) {
             $this->setupModel();
         }
 
@@ -206,7 +206,7 @@ class Show implements Renderable
      */
     public function setView($view, $variables = [])
     {
-        if (!empty($variables)) {
+        if (! empty($variables)) {
             $this->with($variables);
         }
 
@@ -288,7 +288,7 @@ class Show implements Renderable
      */
     public function fields(array $fields = [])
     {
-        if (!Arr::isAssoc($fields)) {
+        if (! Arr::isAssoc($fields)) {
             $fields = array_combine($fields, $fields);
         }
 

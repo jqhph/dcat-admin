@@ -230,7 +230,7 @@ abstract class EloquentRepository extends Repository
         /* @var EloquentModel $builder */
         $model = $this->eloquent();
 
-        if (!$model->getKey()) {
+        if (! $model->getKey()) {
             $model->exists = true;
 
             $model->setAttribute($model->getKeyName(), $form->getKey());
@@ -309,7 +309,7 @@ abstract class EloquentRepository extends Repository
         collect(explode(',', $id))->filter()->each(function ($id) use ($form, $deletingData) {
             $data = $deletingData->get($id, []);
 
-            if (!$data) {
+            if (! $data) {
                 return;
             }
 
@@ -407,7 +407,7 @@ abstract class EloquentRepository extends Repository
 
         foreach (Arr::flatten($columns) as $column) {
             if (Str::contains($column, '.')) {
-                list($relation) = explode('.', $column);
+                [$relation] = explode('.', $column);
 
                 if (method_exists($model, $relation) &&
                     $model->$relation() instanceof Relations\Relation
@@ -415,7 +415,7 @@ abstract class EloquentRepository extends Repository
                     $relations[] = $relation;
                 }
             } elseif (method_exists($model, $column) &&
-                !method_exists(EloquentModel::class, $column)
+                ! method_exists(EloquentModel::class, $column)
             ) {
                 $relations[] = $column;
             }
@@ -459,7 +459,7 @@ abstract class EloquentRepository extends Repository
     protected function updateRelation(Form $form, EloquentModel $model, $relationsData)
     {
         foreach ($relationsData as $name => $values) {
-            if (!method_exists($model, $name)) {
+            if (! method_exists($model, $name)) {
                 continue;
             }
 
@@ -516,7 +516,7 @@ abstract class EloquentRepository extends Repository
                     $parent->save();
 
                     // When in creating, associate two models
-                    if (!$model->{$relation->getForeignKey()}) {
+                    if (! $model->{$relation->getForeignKey()}) {
                         $model->{$relation->getForeignKey()} = $parent->getKey();
 
                         $model->save();

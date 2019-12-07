@@ -75,7 +75,7 @@ trait UploadField
     {
         $this->disk(config('admin.upload.disk'));
 
-        if (!$this->storage) {
+        if (! $this->storage) {
             $this->storage = false;
         }
     }
@@ -167,11 +167,11 @@ trait UploadField
     {
         try {
             $id = request('_id');
-            if (!$id) {
+            if (! $id) {
                 return $this->responseError(403, 'Missing id');
             }
 
-            if (!($file = $this->mergeChunks($id, $file))) {
+            if (! ($file = $this->mergeChunks($id, $file))) {
                 return $this->response(['merge' => 1]);
             }
 
@@ -187,7 +187,7 @@ trait UploadField
 
             $this->prepareFile($file);
 
-            if (!is_null($this->storagePermission)) {
+            if (! is_null($this->storagePermission)) {
                 $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name, $this->storagePermission);
             } else {
                 $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name);
@@ -244,13 +244,13 @@ trait UploadField
 
         $done = true;
         for ($index = 0; $index < $chunks; $index++) {
-            if (!is_file("{$tmpDir}/{$newFilename}.{$index}.part")) {
+            if (! is_file("{$tmpDir}/{$newFilename}.{$index}.part")) {
                 $done = false;
                 break;
             }
         }
 
-        if (!$done) {
+        if (! $done) {
             return;
         }
 
@@ -271,13 +271,13 @@ trait UploadField
      */
     public function deleteTempFile()
     {
-        if (!$this->tempFilePath) {
+        if (! $this->tempFilePath) {
             return;
         }
         @unlink($this->tempFilePath);
 
         if (
-            !Finder::create()
+            ! Finder::create()
             ->in($dir = dirname($this->tempFilePath))
             ->files()
             ->count()
@@ -298,7 +298,7 @@ trait UploadField
         if (flock($out, LOCK_EX)) {
             for ($index = 0; $index < $chunks; $index++) {
                 $partPath = "{$tmpDir}/{$newFileame}.{$index}.part";
-                if (!$in = @fopen($partPath, 'rb')) {
+                if (! $in = @fopen($partPath, 'rb')) {
                     break;
                 }
 
@@ -325,7 +325,7 @@ trait UploadField
     {
         $tmpDir = storage_path('tmp/'.$id);
 
-        if (!is_dir($tmpDir)) {
+        if (! is_dir($tmpDir)) {
             app('files')->makeDirectory($tmpDir, 0755, true);
         }
 
@@ -473,7 +473,7 @@ trait UploadField
     {
         $rules = $attributes = [];
 
-        if (!$fieldRules = $this->getRules()) {
+        if (! $fieldRules = $this->getRules()) {
             return false;
         }
 
@@ -483,7 +483,7 @@ trait UploadField
         /* @var \Illuminate\Validation\Validator $validator */
         $validator = Validator::make([$this->column => $file], $rules, $this->validationMessages, $attributes);
 
-        if (!$validator->passes()) {
+        if (! $validator->passes()) {
             $errors = $validator->errors()->getMessages()[$this->column];
 
             return implode('; ', $errors);
@@ -511,7 +511,7 @@ trait UploadField
      */
     public function destroyIfChanged($file)
     {
-        if (!$file || !$this->original) {
+        if (! $file || ! $this->original) {
             return $this->destroy();
         }
 
@@ -528,7 +528,7 @@ trait UploadField
      */
     public function deleteFile($path)
     {
-        if (!$path) {
+        if (! $path) {
             return;
         }
 
@@ -582,7 +582,7 @@ trait UploadField
         try {
             $this->storage = Storage::disk($disk);
         } catch (\Exception $exception) {
-            if (!array_key_exists($disk, config('filesystems.disks'))) {
+            if (! array_key_exists($disk, config('filesystems.disks'))) {
                 admin_error(
                     'Config error.',
                     "Disk [$disk] not configured, please add a disk config in `config/filesystems.php`."

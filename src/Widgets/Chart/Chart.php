@@ -51,11 +51,11 @@ abstract class Chart extends Widget
     public function __construct(...$params)
     {
         if (count($params) == 2) {
-            list($title, $labels) = $params;
+            [$title, $labels] = $params;
 
             $title && $this->title($title);
             $labels && $this->labels($labels);
-        } elseif (!empty($params[0])) {
+        } elseif (! empty($params[0])) {
             if (is_string($params[0])) {
                 $this->title($params[0]);
             } elseif (is_array($params[0])) {
@@ -166,7 +166,7 @@ abstract class Chart extends Widget
      */
     public function legend(array $opts)
     {
-        if (!isset($this->options['legend'])) {
+        if (! isset($this->options['legend'])) {
             $this->options['legend'] = [];
         }
 
@@ -200,7 +200,7 @@ abstract class Chart extends Widget
      */
     public function tooltips(array $opts)
     {
-        if (!isset($this->options['tooltips'])) {
+        if (! isset($this->options['tooltips'])) {
             $this->options['tooltips'] = [];
         }
 
@@ -246,7 +246,7 @@ abstract class Chart extends Widget
      */
     public function elements(array $options)
     {
-        if (!isset($this->options['elements'])) {
+        if (! isset($this->options['elements'])) {
             $this->options['elements'] = [];
         }
 
@@ -264,7 +264,7 @@ abstract class Chart extends Widget
      */
     public function layout(array $opts)
     {
-        if (!isset($this->options['layout'])) {
+        if (! isset($this->options['layout'])) {
             $this->options['layout'] = [];
         }
 
@@ -292,7 +292,7 @@ abstract class Chart extends Widget
      */
     public function animation(array $opts)
     {
-        if (!isset($this->options['animation'])) {
+        if (! isset($this->options['animation'])) {
             $this->options['animation'] = [];
         }
 
@@ -400,7 +400,7 @@ abstract class Chart extends Widget
             $globalSettings .= sprintf('Chart.defaults.global.%s="%s";', $k, $v);
         }
 
-        if (!$this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildFetchingScript()) {
             return <<<JS
 {$globalSettings}
 setTimeout(function(){ new Chart($("#{$this->id}").get(0).getContext("2d"), $options) },60)
@@ -507,7 +507,7 @@ HTML;
      */
     protected function setDefaultColors()
     {
-        if (!$this->colors) {
+        if (! $this->colors) {
             $this->colors = Color::$chartTheme['blue'];
         }
     }

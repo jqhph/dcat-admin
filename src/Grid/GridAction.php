@@ -100,7 +100,7 @@ abstract class GridAction implements Renderable
      */
     public static function makeSelector($class, $prefix)
     {
-        if (!isset(static::$selectors[$class])) {
+        if (! isset(static::$selectors[$class])) {
             static::$selectors[$class] = uniqid($prefix);
         }
 

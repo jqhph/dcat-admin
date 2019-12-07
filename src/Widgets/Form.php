@@ -248,7 +248,7 @@ class Form implements Renderable
      */
     public function model()
     {
-        if (!$this->data) {
+        if (! $this->data) {
             $this->data([]);
         }
 
@@ -518,7 +518,7 @@ HTML;
      */
     public function disableAjaxSubmit(bool $disable = true)
     {
-        $this->useAjaxSubmit = !$disable;
+        $this->useAjaxSubmit = ! $disable;
 
         return $this;
     }

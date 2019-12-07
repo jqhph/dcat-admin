@@ -126,12 +126,12 @@ class Tree extends Widget
     protected function formatNodes()
     {
         $value = $this->value;
-        if ($value && !is_array($value)) {
+        if ($value && ! is_array($value)) {
             $value = explode(',', $value);
         }
         $value = (array) $value;
 
-        if (!$this->nodes) {
+        if (! $this->nodes) {
             return;
         }
 

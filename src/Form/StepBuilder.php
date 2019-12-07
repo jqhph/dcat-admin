@@ -190,7 +190,7 @@ class StepBuilder
      */
     public function getDoneStep()
     {
-        if (!$this->doneStep) {
+        if (! $this->doneStep) {
             $this->setDefaultDonePage();
         }
 
@@ -226,7 +226,7 @@ class StepBuilder
      */
     public function stash(array $data, bool $merge = false)
     {
-        if (!$this->options['remember']) {
+        if (! $this->options['remember']) {
             return;
         }
 
@@ -244,7 +244,7 @@ class StepBuilder
      */
     public function fetchStash()
     {
-        if (!$this->options['remember']) {
+        if (! $this->options['remember']) {
             return [];
         }
 
@@ -258,7 +258,7 @@ class StepBuilder
      */
     public function flushStash()
     {
-        if (!$this->options['remember']) {
+        if (! $this->options['remember']) {
             return;
         }
 
@@ -288,7 +288,7 @@ class StepBuilder
      */
     public function stashIndexByField($field)
     {
-        if (!$this->options['remember']) {
+        if (! $this->options['remember']) {
             return;
         }
 
@@ -323,7 +323,7 @@ class StepBuilder
      */
     protected function selectStep()
     {
-        if (!$this->options['remember'] || !$input = $this->fetchStash()) {
+        if (! $this->options['remember'] || ! $input = $this->fetchStash()) {
             return;
         }
 
@@ -332,11 +332,11 @@ class StepBuilder
 
         unset($input[static::CURRENT_VALIDATION_STEP], $input[static::ALL_STEPS]);
 
-        if ($current !== null && $current !== '' && !empty($input)) {
+        if ($current !== null && $current !== '' && ! empty($input)) {
             $this->select((int) ($current + 1));
         }
 
-        if (!empty($allStep) && !empty($input)) {
+        if (! empty($allStep) && ! empty($input)) {
             $this->select($this->count() - 1);
         }
     }

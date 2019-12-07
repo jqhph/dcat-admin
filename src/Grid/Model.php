@@ -371,7 +371,7 @@ class Model
         ) {
             if ($isA) {
                 $data = collect($data);
-            } elseif (!empty($isP)) {
+            } elseif (! empty($isP)) {
                 $this->model = $data;
                 $this->data = $data->getCollection();
 
@@ -472,7 +472,7 @@ class Model
      */
     public function getCurrentPage()
     {
-        if (!$this->usePaginate) {
+        if (! $this->usePaginate) {
             return;
         }
 
@@ -496,7 +496,7 @@ class Model
      */
     public function getPerPage()
     {
-        if (!$this->usePaginate) {
+        if (! $this->usePaginate) {
             return;
         }
 
@@ -516,7 +516,7 @@ class Model
             return $query['method'] == 'paginate';
         });
 
-        if (!$this->usePaginate) {
+        if (! $this->usePaginate) {
             $query = [
                 'method'    => 'get',
                 'arguments' => [],
@@ -615,7 +615,7 @@ class Model
      */
     protected function setRelationSort($column)
     {
-        list($relationName, $relationColumn) = explode('.', $column);
+        [$relationName, $relationColumn] = explode('.', $column);
 
         if ($this->queries->contains(function ($query) use ($relationName) {
             return $query['method'] == 'with' && in_array($relationName, $query['arguments']);

@@ -42,7 +42,7 @@ trait WebUploader
      */
     public function disableChunked(bool $disable = true)
     {
-        $this->options['chunked'] = !$disable;
+        $this->options['chunked'] = ! $disable;
 
         return $this;
     }
@@ -176,7 +176,7 @@ trait WebUploader
 
     protected function setDefaultServer()
     {
-        if (!$this->form || !method_exists($this->form, 'getAction')) {
+        if (! $this->form || ! method_exists($this->form, 'getAction')) {
             return;
         }
 

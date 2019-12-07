@@ -59,7 +59,7 @@ trait HasDisplayers
     public function bold($color = 'text-80')
     {
         return $this->display(function ($value) use ($color) {
-            if (!$value) {
+            if (! $value) {
                 return $value;
             }
 
@@ -77,7 +77,7 @@ trait HasDisplayers
     public function long2ip($default = null)
     {
         return $this->display(function ($value) use ($default) {
-            if (!$value) {
+            if (! $value) {
                 return $default;
             }
 
