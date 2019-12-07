@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Tests\Models\Profile as ProfileModel;
 use Tests\Models\User as UserModel;
+use Tests\TestCase;
 
 class UserGridTest extends TestCase
 {

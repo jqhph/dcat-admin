@@ -1,16 +1,17 @@
 <?php
 
-use Illuminate\Support\MessageBag;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\MessageBag;
 
 if (!function_exists('admin_section')) {
     /**
      * Get the string contents of a section.
      *
      * @param $section
-     * @param null $default
+     * @param null  $default
      * @param array $options
+     *
      * @return mixed
      */
     function admin_section($section, $default = null, array $options = [])
@@ -24,6 +25,7 @@ if (!function_exists('admin_has_section')) {
      * Check if section exists.
      *
      * @param $section
+     *
      * @return mixed
      */
     function admin_has_section($section)
@@ -39,7 +41,7 @@ if (!function_exists('admin_inject_section')) {
      * @param $section
      * @param null $content
      * @param bool $append
-     * @param int $priority
+     * @param int  $priority
      */
     function admin_inject_section($section, $content = null, bool $append = true, int $priority = 10)
     {
@@ -55,7 +57,7 @@ if (!function_exists('admin_inject_section_if')) {
      * @param $section
      * @param null $content
      * @param bool $append
-     * @param int $priority
+     * @param int  $priority
      */
     function admin_inject_section_if($condition, $section, $content = null, bool $append = false, int $priority = 10)
     {
@@ -70,6 +72,7 @@ if (!function_exists('admin_has_default_section')) {
      * Check if default section exists.
      *
      * @param $section
+     *
      * @return mixed
      */
     function admin_has_default_section($section)
@@ -97,6 +100,7 @@ if (!function_exists('admin_trans_field')) {
      *
      * @param $field
      * @param null $locale
+     *
      * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     function admin_trans_field($field, $locale = null)
@@ -113,13 +117,14 @@ if (!function_exists('admin_trans_label')) {
      *
      * @param $label
      * @param array $replace
-     * @param null $locale
+     * @param null  $locale
+     *
      * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     function admin_trans_label($label = null, $replace = [], $locale = null)
     {
         $label = $label ?: admin_controller_name();
-        $slug  = admin_controller_slug();
+        $slug = admin_controller_slug();
 
         return admin_trans("{$slug}.labels.{$label}", $replace, $locale);
     }
@@ -131,7 +136,8 @@ if (!function_exists('admin_trans_option')) {
      *
      * @param $field
      * @param array $replace
-     * @param null $locale
+     * @param null  $locale
+     *
      * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     function admin_trans_option($optionValue, $field, $replace = [], $locale = null)
@@ -146,9 +152,10 @@ if (!function_exists('admin_trans')) {
     /**
      * Translate the given message.
      *
-     * @param  string  $key
-     * @param  array   $replace
-     * @param  string  $locale
+     * @param string $key
+     * @param array  $replace
+     * @param string $locale
+     *
      * @return \Illuminate\Contracts\Translation\Translator|string|array|null
      */
     function admin_trans($key, $replace = [], $locale = null)
@@ -209,17 +216,18 @@ if (!function_exists('admin_controller_name')) {
 
         $router = app('router');
 
-        if (! $router->current()) {
+        if (!$router->current()) {
             return 'undefined';
         }
 
         $actionName = $router->current()->getActionName();
 
-        if (! isset($name[$actionName])) {
+        if (!isset($name[$actionName])) {
             $controller = class_basename(explode('@', $actionName)[0]);
 
             $name[$actionName] = str_replace('Controller', '', $controller);
         }
+
         return $name[$actionName];
     }
 }

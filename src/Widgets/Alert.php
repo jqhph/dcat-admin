@@ -56,6 +56,7 @@ class Alert extends Widget
      * Set title.
      *
      * @param string $title
+     *
      * @return $this
      */
     public function title($title)
@@ -69,6 +70,7 @@ class Alert extends Widget
      * Set contents.
      *
      * @param string|\Closure|Renderable $content
+     *
      * @return $this
      */
     public function content($content)
@@ -112,11 +114,12 @@ class Alert extends Widget
      * Disable close button.
      *
      * @param bool $value
+     *
      * @return $this
      */
     public function disableCloseButton(bool $value = true)
     {
-        $this->showCloseBtn = ! $value;
+        $this->showCloseBtn = !$value;
 
         return $this;
     }

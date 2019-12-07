@@ -6,8 +6,6 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\URL;
 
 class Authenticate
 {

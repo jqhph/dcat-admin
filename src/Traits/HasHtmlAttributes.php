@@ -14,7 +14,8 @@ trait HasHtmlAttributes
 
     /**
      * @param string|array $key
-     * @param mixed $value
+     * @param mixed        $value
+     *
      * @return $this
      */
     public function setHtmlAttribute($key, $value = null)
@@ -31,6 +32,7 @@ trait HasHtmlAttributes
 
     /**
      * @param string|array $keys
+     *
      * @return $this
      */
     public function forgetHtmlAttribute($keys)
@@ -52,7 +54,8 @@ trait HasHtmlAttributes
      * Set default attribute.
      *
      * @param string $attribute
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return $this
      */
     public function defaultHtmlAttribute($attribute, $value)
@@ -67,6 +70,7 @@ trait HasHtmlAttributes
     /**
      * @param mixed $key
      * @param mixed $default
+     *
      * @return |null
      */
     public function getHtmlAttribute($key, $default = null)
@@ -76,6 +80,7 @@ trait HasHtmlAttributes
 
     /**
      * @param mixed $key
+     *
      * @return |null
      */
     public function hasHtmlAttribute($key)

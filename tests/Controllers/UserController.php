@@ -3,11 +3,10 @@
 namespace Tests\Controllers;
 
 use App\Http\Controllers\Controller;
-use Dcat\Admin\Admin;
+use Dcat\Admin\Controllers\HasResourceActions;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Controllers\HasResourceActions;
 use Dcat\Admin\Show;
 use Tests\Models\Tag;
 use Tests\Repositories\User;
@@ -61,8 +60,9 @@ class UserController extends Controller
     /**
      * Show interface.
      *
-     * @param mixed $id
+     * @param mixed   $id
      * @param Content $content
+     *
      * @return Content
      */
     public function show($id, Content $content)
@@ -146,6 +146,7 @@ class UserController extends Controller
      * Make a show builder.
      *
      * @param mixed $id
+     *
      * @return Show
      */
     protected function detail($id)
@@ -206,9 +207,10 @@ class UserController extends Controller
 //        print_r($tags);die;
 
         $form->multipleSelect('tags', 'Tags')->options(Tag::all()->pluck('name', 'id'))->customFormat(function ($value) {
-            if (! $value) {
+            if (!$value) {
                 return [];
             }
+
             return array_column($value, 'id');
         }); //->rules('max:10|min:3');
 

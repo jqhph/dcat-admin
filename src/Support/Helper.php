@@ -15,12 +15,13 @@ class Helper
      * Update extension config.
      *
      * @param array $config
+     *
      * @return bool
      */
     public static function updateExtensionConfig(array $config)
     {
-        $files  = app('files');
-        $result = (bool)$files->put(config_path('admin-extensions.php'), Helper::exportArrayPhp($config));
+        $files = app('files');
+        $result = (bool) $files->put(config_path('admin-extensions.php'), self::exportArrayPhp($config));
 
         if ($result && is_file(base_path('bootstrap/cache/config.php'))) {
             Artisan::call('config:cache');
@@ -31,12 +32,12 @@ class Helper
         return $result;
     }
 
-
     /**
      * Converts the given value to an array.
      *
      * @param $value
      * @param bool $filter
+     *
      * @return array
      */
     public static function array($value, bool $filter = true)
@@ -68,7 +69,8 @@ class Helper
      *
      * @param $value
      * @param array $params
-     * @param null $bindTo
+     * @param null  $bindTo
+     *
      * @return mixed|string
      */
     public static function render($value, $params = [], $bindTo = null)
@@ -85,7 +87,7 @@ class Helper
             if ($bindTo) {
                 $value->bindTo($bindTo);
             }
-            $value = $value(...(array)$params);
+            $value = $value(...(array) $params);
         }
 
         if ($value instanceof Renderable) {
@@ -96,20 +98,21 @@ class Helper
             return $value->toHtml();
         }
 
-        return (string)$value;
+        return (string) $value;
     }
 
     /**
      * Build an HTML attribute string from an array.
      *
      * @param array $attributes
+     *
      * @return string
      */
     public static function buildHtmlAttributes($attributes)
     {
         $html = '';
 
-        foreach ((array)$attributes as $key => &$value) {
+        foreach ((array) $attributes as $key => &$value) {
             if (is_numeric($key)) {
                 $key = $value;
             }
@@ -130,7 +133,8 @@ class Helper
      * Get url with the added query string parameters.
      *
      * @param string $url
-     * @param array $query
+     * @param array  $query
+     *
      * @return string
      */
     public static function urlWithQuery(?string $url, array $query = [])
@@ -159,8 +163,9 @@ class Helper
      *      Helper::matchRequestPath('auth/user/* /edit')
      *      Helper::matchRequestPath('GET,POST:auth/user')
      *
-     * @param string $path
+     * @param string      $path
      * @param null|string $current
+     *
      * @return bool
      */
     public static function matchRequestPath($path, ?string $current = null)
@@ -190,11 +195,12 @@ class Helper
     /**
      * Build nested array.
      *
-     * @param array $nodes
-     * @param int $parentId
+     * @param array       $nodes
+     * @param int         $parentId
      * @param string|null $primaryKeyName
      * @param string|null $parentKeyName
      * @param string|null $childrenKeyName
+     *
      * @return array
      */
     public static function buildNestedArray(
@@ -205,15 +211,15 @@ class Helper
         ?string $childrenKeyName = null
     ) {
         $branch = [];
-        $primaryKeyName  = $primaryKeyName ?: 'id';
-        $parentKeyName   = $parentKeyName ?: 'parent_id';
+        $primaryKeyName = $primaryKeyName ?: 'id';
+        $parentKeyName = $parentKeyName ?: 'parent_id';
         $childrenKeyName = $childrenKeyName ?: 'children';
 
-        $parentId = is_numeric($parentId) ? (int)$parentId : $parentId;
+        $parentId = is_numeric($parentId) ? (int) $parentId : $parentId;
 
         foreach ($nodes as $node) {
             $pk = Arr::get($node, $parentKeyName);
-            $pk = is_numeric($pk) ? (int)$pk : $pk;
+            $pk = is_numeric($pk) ? (int) $pk : $pk;
 
             if ($pk === $parentId) {
                 $children = static::buildNestedArray(
@@ -239,28 +245,30 @@ class Helper
      *
      * @param string $name
      * @param string $symbol
+     *
      * @return mixed
      */
     public static function slug(string $name, string $symbol = '-')
     {
         $text = preg_replace_callback('/([A-Z])/', function (&$text) use ($symbol) {
-            return $symbol . strtolower($text[1]);
+            return $symbol.strtolower($text[1]);
         }, $name);
 
         return str_replace('_', $symbol, ltrim($text, $symbol));
     }
 
     /**
-     * 把php数据转化成文本形式
+     * 把php数据转化成文本形式.
      *
      * @param array $array
      * @param int   $level
+     *
      * @return string
      */
     public static function exportArray(array &$array, $level = 1)
     {
         $start = '[';
-        $end   = ']';
+        $end = ']';
 
         $txt = "$start\n";
 
@@ -268,7 +276,7 @@ class Helper
             if (is_array($v)) {
                 $pre = is_string($k) ? "'$k' => " : "$k => ";
 
-                $txt .= str_repeat(' ', $level * 4) . $pre . static::exportArray($v, $level + 1) . ",\n";
+                $txt .= str_repeat(' ', $level * 4).$pre.static::exportArray($v, $level + 1).",\n";
 
                 continue;
             }
@@ -287,20 +295,21 @@ class Helper
 
             $pre = is_string($k) ? "'$k' => " : "$k => ";
 
-            $txt .= str_repeat(' ', $level * 4). "{$pre}{$t},\n";
+            $txt .= str_repeat(' ', $level * 4)."{$pre}{$t},\n";
         }
 
-        return $txt . str_repeat(' ', ($level - 1) * 4) . $end;
+        return $txt.str_repeat(' ', ($level - 1) * 4).$end;
     }
 
     /**
-     * 把php数据转化成文本形式，并以"return"形式返回
+     * 把php数据转化成文本形式，并以"return"形式返回.
      *
      * @param array $array
+     *
      * @return string
      */
     public static function exportArrayPhp(array $array)
     {
-        return "<?php \nreturn " . static::exportArray($array) . ";\n";
+        return "<?php \nreturn ".static::exportArray($array).";\n";
     }
 }

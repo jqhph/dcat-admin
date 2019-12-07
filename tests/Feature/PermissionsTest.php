@@ -57,7 +57,6 @@ class PermissionsTest extends TestCase
             ->seeInDatabase(config('admin.database.role_permissions_table'), ['role_id' => 1, 'permission_id' => 1]);
     }
 
-
     public function testPermissionThroughRole()
     {
         $user = [

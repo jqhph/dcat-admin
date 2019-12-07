@@ -5,7 +5,7 @@ return [
         'id' => 'ID',
 
         'profile' => [
-            'address' => '地址'
+            'address' => '地址',
         ],
 
     ],

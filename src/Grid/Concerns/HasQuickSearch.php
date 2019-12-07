@@ -223,7 +223,7 @@ trait HasQuickSearch
      * Add where date time function binding to model query.
      *
      * @param string $column
-     * @param bool $or
+     * @param bool   $or
      * @param string $function
      * @param string $value
      */

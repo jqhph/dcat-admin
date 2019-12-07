@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Widgets\DataCard;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Dropdown;
 use Dcat\Admin\Widgets\AjaxRequestBuilder;
+use Dcat\Admin\Widgets\Dropdown;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
@@ -58,6 +58,7 @@ class Card extends Widget
 
     /**
      * @param $number
+     *
      * @return $this
      */
     public function number($number)
@@ -67,7 +68,8 @@ class Card extends Widget
 
     /**
      * @param string|\Closure|Renderable $content
-     * @param string $position
+     * @param string                     $position
+     *
      * @return $this
      */
     public function content($content, string $position = 'left')
@@ -79,6 +81,7 @@ class Card extends Widget
 
     /**
      * @param string|\Closure|Renderable $content
+     *
      * @return $this
      */
     public function rightContent($content)
@@ -87,8 +90,9 @@ class Card extends Widget
     }
 
     /**
-     * @param int $number
+     * @param int    $number
      * @param string $style
+     *
      * @return $this
      */
     public function progress($number, $style = 'primary')
@@ -103,6 +107,7 @@ class Card extends Widget
 
     /**
      * @param string|\Closure|Renderable $content
+     *
      * @return $this
      */
     public function tool($content)
@@ -113,9 +118,10 @@ class Card extends Widget
     }
 
     /**
-     * @param array $options
-     * @param \Closure $builder
+     * @param array       $options
+     * @param \Closure    $builder
      * @param string|null $defaultLabel
+     *
      * @return $this
      */
     public function dropdown(array $options, \Closure $builder, ?string $defaultLabel = null)
@@ -160,7 +166,7 @@ JS
         );
 
         $this->fetched(
-            <<<JS
+            <<<'JS'
 if (!result.status) {
     return LA.error(result.message || 'Server internal error.');
 }     
@@ -202,6 +208,7 @@ JS
      * Return JsonResponse instance.
      *
      * @param array $data
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function toJsonResponse(array $data = [])

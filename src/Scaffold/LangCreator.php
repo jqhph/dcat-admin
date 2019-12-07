@@ -16,9 +16,10 @@ class LangCreator
     }
 
     /**
-     * 生成语言包
+     * 生成语言包.
      *
      * @param string $controller
+     *
      * @return string
      */
     public function create(string $controller)
@@ -34,7 +35,7 @@ class LangCreator
             'labels' => [
                 $controller => $controller,
             ],
-            'fields' => [],
+            'fields'  => [],
             'options' => [],
         ];
         foreach ($this->fields as $field) {
@@ -51,15 +52,16 @@ class LangCreator
     }
 
     /**
-     * 获取语言包路径
+     * 获取语言包路径.
      *
      * @param string $controller
+     *
      * @return string
      */
     protected function getLangPath(string $controller)
     {
         $path = resource_path('lang/'.App::getLocale());
 
-        return $path . '/' . Str::slug($controller) . '.php';
+        return $path.'/'.Str::slug($controller).'.php';
     }
 }

@@ -177,7 +177,7 @@ class StepBuilder
     {
         if ($title instanceof Closure) {
             $callback = $title;
-            $title    = trans('admin.done');
+            $title = trans('admin.done');
         }
 
         $this->doneStep = new DoneStep($this->form, $title, $callback);
@@ -190,7 +190,7 @@ class StepBuilder
      */
     public function getDoneStep()
     {
-        if (! $this->doneStep) {
+        if (!$this->doneStep) {
             $this->setDefaultDonePage();
         }
 
@@ -288,15 +288,15 @@ class StepBuilder
      */
     public function stashIndexByField($field)
     {
-        if (! $this->options['remember']) {
+        if (!$this->options['remember']) {
             return;
         }
 
         $data = $this->fetchStash();
 
-        $data[StepBuilder::CURRENT_VALIDATION_STEP] = ($this->getFieldIndex($field) ?: 0) - 1;
+        $data[self::CURRENT_VALIDATION_STEP] = ($this->getFieldIndex($field) ?: 0) - 1;
 
-        unset($data[StepBuilder::ALL_STEPS]);
+        unset($data[self::ALL_STEPS]);
 
         $this->stash($data);
     }

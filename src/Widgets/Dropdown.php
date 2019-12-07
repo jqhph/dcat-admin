@@ -64,8 +64,9 @@ class Dropdown extends Widget
     /**
      * Set the options of dropdown menus.
      *
-     * @param array $options
+     * @param array       $options
      * @param string|null $title
+     *
      * @return $this
      */
     public function options($options = [], string $title = null)
@@ -78,7 +79,7 @@ class Dropdown extends Widget
             $options = $options->toArray();
         }
 
-        $options = (array)$options;
+        $options = (array) $options;
 
         if (!$this->options) {
             $this->firstOptions = &$options;
@@ -93,6 +94,7 @@ class Dropdown extends Widget
      * Set the button text.
      *
      * @param string|null $text
+     *
      * @return $this
      */
     public function button(?string $text)
@@ -116,6 +118,7 @@ class Dropdown extends Widget
      * Set the button class.
      *
      * @param string $class
+     *
      * @return $this
      */
     public function buttonClass(string $class)
@@ -129,6 +132,7 @@ class Dropdown extends Widget
      * Set the button style.
      *
      * @param string $class
+     *
      * @return $this
      */
     public function buttonStyle(string $style)
@@ -142,6 +146,7 @@ class Dropdown extends Widget
      * Show divider.
      *
      * @param string $class
+     *
      * @return $this
      */
     public function divider()
@@ -155,6 +160,7 @@ class Dropdown extends Widget
      * Applies the callback to the elements of the options.
      *
      * @param string $class
+     *
      * @return $this
      */
     public function map(\Closure $builder)
@@ -168,6 +174,7 @@ class Dropdown extends Widget
      * Add click event listener.
      *
      * @param string|null $defaultLabel
+     *
      * @return $this
      */
     public function click(?string $defaultLabel = null)
@@ -187,6 +194,7 @@ class Dropdown extends Widget
      * Set the template of dropdown menu.
      *
      * @param string|\Closure|Renderable $template
+     *
      * @return $this
      */
     public function template($template)
@@ -205,7 +213,7 @@ class Dropdown extends Widget
             return;
         }
 
-        $text  = $this->button['text'];
+        $text = $this->button['text'];
         $class = $this->button['class'];
         $style = $this->button['style'];
 
@@ -227,7 +235,7 @@ class Dropdown extends Widget
                 $this->buttonId,
                 $class,
                 $style ? "style='$style'" : '',
-                $text ? " $text &nbsp;" : ''
+                $text ? " $text &nbsp;" : '',
             ],
             <<<'HTML'
 <a id="{id}" class="{class} dropdown-toggle " data-toggle="dropdown" href="javascript:void(0)" {style}>
@@ -271,6 +279,7 @@ HTML
     /**
      * @param mixed $k
      * @param mixed $v
+     *
      * @return mixed|string
      */
     protected function renderOption($k, $v)

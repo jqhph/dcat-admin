@@ -27,6 +27,7 @@ class Tooltip extends Widget
 
     /**
      * @param $selector
+     *
      * @return $this
      */
     public function selector($selector)
@@ -40,6 +41,7 @@ class Tooltip extends Widget
      * Set max width for tooltip.
      *
      * @param string $width
+     *
      * @return $this
      */
     public function maxWidth(string $width)
@@ -53,6 +55,7 @@ class Tooltip extends Widget
      * Set tooltip content.
      *
      * @param $content
+     *
      * @return $this
      */
     public function content($content)
@@ -66,11 +69,13 @@ class Tooltip extends Widget
      * Set the backgroud of tooltip.
      *
      * @param string $color
+     *
      * @return $this
      */
     public function background(string $color)
     {
         $this->bg = $color;
+
         return $this;
     }
 
@@ -138,6 +143,7 @@ class Tooltip extends Widget
      * How to position the tooltip - top | bottom | left | right.
      *
      * @param string $val
+     *
      * @return $this
      */
     public function placement(string $val = 'left')

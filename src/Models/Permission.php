@@ -98,6 +98,7 @@ class Permission extends Model
      * Get options for Select field in form.
      *
      * @param \Closure|null $closure
+     *
      * @return array
      */
     public static function selectOptions(\Closure $closure = null)
@@ -109,6 +110,7 @@ class Permission extends Model
 
     /**
      * @param string $path
+     *
      * @return mixed
      */
     public function getHttpPathAttribute($path)

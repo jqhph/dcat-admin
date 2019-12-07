@@ -53,7 +53,7 @@ trait HasExporter
      */
     protected function handleExportRequest($forceExport = false)
     {
-        if (! $scope = request($this->getExporter()->getQueryName())) {
+        if (!$scope = request($this->getExporter()->getQueryName())) {
             return;
         }
 
@@ -107,7 +107,6 @@ trait HasExporter
         return $this->exportDriver->withScope($scope);
     }
 
-
     /**
      * Get the export url.
      *
@@ -137,7 +136,7 @@ trait HasExporter
         if (!$this->allowExporter()) {
             return '';
         }
-        
+
         return (new Tools\ExportButton($this))->render();
     }
 

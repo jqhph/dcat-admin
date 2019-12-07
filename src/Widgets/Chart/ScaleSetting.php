@@ -4,11 +4,11 @@ namespace Dcat\Admin\Widgets\Chart;
 
 trait ScaleSetting
 {
-
     /**
      * @see https://www.chartjs.org/docs/latest/axes/
      *
      * @param array $opts
+     *
      * @return $this
      */
     public function scales(array $opts)
@@ -24,6 +24,7 @@ trait ScaleSetting
 
     /**
      * @param string|null $label
+     *
      * @return $this
      */
     public function displayScaleLabelOnX(?string $label)
@@ -31,7 +32,7 @@ trait ScaleSetting
         return $this->xAxes([
             [
                 'scaleLabel' => [
-                    'display' => true,
+                    'display'     => true,
                     'labelString' => $label,
                 ],
             ],
@@ -40,6 +41,7 @@ trait ScaleSetting
 
     /**
      * @param string|null $label
+     *
      * @return $this
      */
     public function displayScaleLabelOnY(?string $label)
@@ -47,7 +49,7 @@ trait ScaleSetting
         return $this->yAxes([
             [
                 'scaleLabel' => [
-                    'display' => true,
+                    'display'     => true,
                     'labelString' => $label,
                 ],
             ],
@@ -56,6 +58,7 @@ trait ScaleSetting
 
     /**
      * @param array $opts
+     *
      * @return $this
      */
     public function yAxes(array $opts)
@@ -65,6 +68,7 @@ trait ScaleSetting
 
     /**
      * @param array $opts
+     *
      * @return $this
      */
     public function xAxes(array $opts)
@@ -76,6 +80,7 @@ trait ScaleSetting
      * @see https://www.chartjs.org/docs/latest/axes/radial/linear.html
      *
      * @param array $opts
+     *
      * @return $this
      */
     public function scale(array $opts)

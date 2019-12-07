@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Show;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Illuminate\Support\Fluent;
@@ -46,9 +45,9 @@ class Relation extends Field
      */
     public function __construct($name, $builder, $title = '')
     {
-        $this->name    = $name;
+        $this->name = $name;
         $this->builder = $builder;
-        $this->title   = $this->formatLabel($title);
+        $this->title = $this->formatLabel($title);
     }
 
     /**
@@ -75,11 +74,11 @@ class Relation extends Field
         $view = call_user_func($this->builder, $this->model);
 
         if ($view instanceof Show) {
-            return $this->renderTitle() . $view->render();
+            return $this->renderTitle().$view->render();
         }
 
         if (!$view instanceof Grid) {
-            return $this->renderTitle() . $view;
+            return $this->renderTitle().$view;
         }
 
         $view->setName($this->name)
@@ -96,7 +95,7 @@ class Relation extends Field
 
         $filter = "<div class='row'><div class='col-md-12'>{$filter->render()}</div></div>";
 
-        return $this->renderTitle() . $filter . $view->render();
+        return $this->renderTitle().$filter.$view->render();
     }
 
     /**

@@ -10,7 +10,7 @@ class StringOutput extends Output
 
     public function __construct($verbosity = self::VERBOSITY_NORMAL, $decorated = false, $formatter = null)
     {
-        $formatter = $formatter ?: new OutputFormatter;
+        $formatter = $formatter ?: new OutputFormatter();
 
         parent::__construct($verbosity, $decorated, $formatter);
     }

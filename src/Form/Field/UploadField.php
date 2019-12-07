@@ -348,7 +348,6 @@ trait UploadField
     }
 
     /**
-     *
      * @param array $message
      *
      * @return \Illuminate\Http\JsonResponse

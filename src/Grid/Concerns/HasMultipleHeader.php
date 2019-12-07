@@ -81,7 +81,7 @@ trait HasMultipleHeader
         }
 
         $beforeHeaders = $this->createHeaderWithColumns($before);
-        $afterHeaders  = $this->createHeaderWithColumns($after);
+        $afterHeaders = $this->createHeaderWithColumns($after);
 
         $this->columnNames = array_merge(
             array_keys($before),

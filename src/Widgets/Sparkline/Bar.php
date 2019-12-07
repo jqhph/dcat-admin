@@ -2,9 +2,6 @@
 
 namespace Dcat\Admin\Widgets\Sparkline;
 
-use Dcat\Admin\Admin;
-use Illuminate\Contracts\Support\Arrayable;
-
 /**
  * @see https://omnipotent.net/jquery.sparkline
  *

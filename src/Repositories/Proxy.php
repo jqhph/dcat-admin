@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Repositories;
 
 use Dcat\Admin\Form;
-use Dcat\Admin\Show;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Show;
 
 class Proxy implements \Dcat\Admin\Contracts\Repository
 {

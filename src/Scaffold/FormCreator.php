@@ -6,14 +6,15 @@ trait FormCreator
 {
     /**
      * @param string $primaryKey
-     * @param array $fields
-     * @param bool $timestamps
+     * @param array  $fields
+     * @param bool   $timestamps
+     *
      * @return string
      */
     protected function generateForm(string $primaryKey = null, array $fields = [], $timestamps = null)
     {
         $primaryKey = $primaryKey ?: request('primary_key', 'id');
-        $fields     = $fields ?: request('fields', []);
+        $fields = $fields ?: request('fields', []);
         $timestamps = $timestamps === null ? request('timestamps', true) : $timestamps;
 
         $rows = [
@@ -35,10 +36,10 @@ EOF
             $rows[] = "            \$form->text('{$field['name']}');";
         }
         if ($timestamps) {
-            $rows[] = <<<EOF
+            $rows[] = <<<'EOF'
         
-            \$form->display('created_at');
-            \$form->display('updated_at');
+            $form->display('created_at');
+            $form->display('updated_at');
 EOF;
         }
 

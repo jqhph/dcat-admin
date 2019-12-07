@@ -33,6 +33,7 @@ trait AjaxRequestBuilder
      * Set request url.
      *
      * @param string $url
+     *
      * @return $this
      */
     public function request(string $url)
@@ -44,6 +45,7 @@ trait AjaxRequestBuilder
      * Set current url to request.
      *
      * @param string $url
+     *
      * @return $this
      */
     public function requestCurrent(array $query = [])
@@ -57,6 +59,7 @@ trait AjaxRequestBuilder
      * Set request url.
      *
      * @param string $url
+     *
      * @return $this
      */
     public function setUrl(string $url)
@@ -86,12 +89,13 @@ trait AjaxRequestBuilder
      * Set css selectors of refetch links.
      *
      * @param string|array $selector
+     *
      * @return $this
      */
     public function refetch($selector)
     {
         $this->buttonSelectors =
-            array_merge($this->buttonSelectors, (array)$selector);
+            array_merge($this->buttonSelectors, (array) $selector);
 
         return $this;
     }
@@ -108,6 +112,7 @@ trait AjaxRequestBuilder
      * Set the script before fetch data.
      *
      * @param string $script
+     *
      * @return $this
      */
     public function fetching(string $script)
@@ -121,6 +126,7 @@ trait AjaxRequestBuilder
      * Set the script after fetch data.
      *
      * @param string $script
+     *
      * @return $this
      */
     public function fetched(string $script)
@@ -150,7 +156,7 @@ trait AjaxRequestBuilder
         $this->fn = 'frd_'.Str::random(8);
 
         $fetching = implode(';', $this->javascripts['fetching']);
-        $fetched  = implode(';', $this->javascripts['fetched']);
+        $fetched = implode(';', $this->javascripts['fetched']);
 
         $binding = '';
         foreach ($this->buttonSelectors as $v) {
@@ -173,6 +179,7 @@ JS;
      * Copy the given AjaxRequestBuilder.
      *
      * @param AjaxRequestBuilder $fetcher
+     *
      * @return $this
      */
     public function copy($fetcher)
@@ -184,7 +191,7 @@ JS;
         $scripts = $fetcher->getJavascripts();
 
         $this->javascripts['fetching'] = array_merge($this->javascripts['fetching'], $scripts['fetching']);
-        $this->javascripts['fetched']  = array_merge($this->javascripts['fetched'], $scripts['fetched']);
+        $this->javascripts['fetched'] = array_merge($this->javascripts['fetched'], $scripts['fetched']);
 
         return $this;
     }

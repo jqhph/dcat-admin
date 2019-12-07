@@ -23,7 +23,7 @@ class Layout
     }
 
     /**
-     * @param int   $width 1~12
+     * @param int   $width   1~12
      * @param mixed $content
      */
     public function column(int $width, $content)

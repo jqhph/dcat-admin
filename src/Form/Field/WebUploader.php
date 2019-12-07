@@ -18,7 +18,7 @@ trait WebUploader
 
     /**
      * @param string      $extensions exp. gif,jpg,jpeg,bmp,png
-     * @param string|null $mimeTypes exp. image/*
+     * @param string|null $mimeTypes  exp. image/*
      *
      * @return $this
      */

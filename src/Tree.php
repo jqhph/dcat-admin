@@ -104,7 +104,6 @@ class Tree implements Renderable
      */
     public $useDelete = true;
 
-
     /**
      * @var array
      */
@@ -130,8 +129,8 @@ class Tree implements Renderable
     public function __construct(Model $model = null, ?\Closure $callback = null)
     {
         $this->model = $model;
-        $this->path  = $this->path ?: request()->getPathInfo();
-        $this->url   = url($this->path);
+        $this->path = $this->path ?: request()->getPathInfo();
+        $this->url = url($this->path);
 
         $this->elementId .= uniqid();
 
@@ -233,6 +232,7 @@ class Tree implements Renderable
     /**
      * @param string $width
      * @param string $height
+     *
      * @return $this
      */
     public function setdialogFormDimensions(string $width, string $height)
@@ -279,6 +279,7 @@ class Tree implements Renderable
 
     /**
      * @param Closure $closure
+     *
      * @return $this;
      */
     public function wrap(\Closure $closure)
@@ -451,7 +452,7 @@ JS;
             return '';
         }
 
-        $url = $this->url . '/create';
+        $url = $this->url.'/create';
         $new = trans('admin.new');
 
         $quickBtn = $btn = '';
@@ -556,8 +557,9 @@ JS;
     /**
      * Create a tree instance.
      *
-     * @param Model|null $model
+     * @param Model|null   $model
      * @param Closure|null $callback
+     *
      * @return Tree
      */
     public static function make(Model $model = null, \Closure $callback = null)

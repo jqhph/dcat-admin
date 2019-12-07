@@ -51,6 +51,7 @@ abstract class Widget implements Renderable
      * Create a widget instance.
      *
      * @param mixed ...$params
+     *
      * @return static
      */
     public static function make(...$params)
@@ -59,8 +60,8 @@ abstract class Widget implements Renderable
     }
 
     /**
-     *
      * @param array $options
+     *
      * @return $this
      */
     public function options($options = [])
@@ -107,6 +108,7 @@ abstract class Widget implements Renderable
      * To string.
      *
      * @param $value
+     *
      * @return string
      */
     protected function toString($value)
@@ -145,12 +147,13 @@ abstract class Widget implements Renderable
     /**
      * @param $method
      * @param $parameters
+     *
      * @return $this
      */
     public function __call($method, $parameters)
     {
         if ($method === 'style' || $method === 'class') {
-            $value  = $parameters[0] ?? null;
+            $value = $parameters[0] ?? null;
             $append = $parameters[1] ?? ($method === 'class' ? false : true);
 
             if ($append) {
@@ -158,7 +161,7 @@ abstract class Widget implements Renderable
 
                 $de = $method === 'style' ? ';' : ' ';
 
-                $value = $original . $de . $value;
+                $value = $original.$de.$value;
             }
 
             return $this->setHtmlAttribute($method, $value);
@@ -170,7 +173,8 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * @param  string  $key
+     * @param string $key
+     *
      * @return mixed
      */
     public function __get($key)
@@ -179,8 +183,9 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * @param  string  $key
-     * @param  mixed   $value
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return void
      */
     public function __set($key, $value)

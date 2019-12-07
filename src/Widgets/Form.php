@@ -9,11 +9,11 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 
 /**
  * Class Form.
@@ -68,7 +68,6 @@ use Illuminate\Support\Str;
  * @method Field\Timezone       timezone($column, $label = '')
  * @method Field\KeyValue       keyValue($column, $label = '')
  * @method Field\Tel            tel($column, $label = '')
- *
  * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
  * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
  * @method Field\BootstrapMultipleImage bootstrapMultipleImage($column, $label = '')
@@ -204,6 +203,7 @@ class Form implements Renderable
      * Set primary key.
      *
      * @param mixed $value
+     *
      * @return $this
      */
     public function key($value)
@@ -223,6 +223,7 @@ class Form implements Renderable
 
     /**
      * @param array|Arrayable|Closure $data
+     *
      * @return $this
      */
     public function data($data)
@@ -234,6 +235,7 @@ class Form implements Renderable
 
     /**
      * @param array|Arrayable|Closure $data
+     *
      * @return $this
      */
     public function fill($data)
@@ -246,7 +248,7 @@ class Form implements Renderable
      */
     public function model()
     {
-        if (! $this->data) {
+        if (!$this->data) {
             $this->data([]);
         }
 
@@ -278,6 +280,7 @@ class Form implements Renderable
      * Get specify field.
      *
      * @param string|Field $name
+     *
      * @return Field|null
      */
     public function field($name)
@@ -463,6 +466,7 @@ HTML;
 
     /**
      * @param $id
+     *
      * @return $this
      */
     public function setFormId($id)
@@ -509,6 +513,7 @@ HTML;
      * Disable submit with ajax.
      *
      * @param bool $disable
+     *
      * @return $this
      */
     public function disableAjaxSubmit(bool $disable = true)

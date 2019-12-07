@@ -89,7 +89,7 @@ class Color
         'dark90'        => '#252d37',
         'dark90half'    => '#5c7089',
     ];
-    
+
     public static $default = [
         'green' => [
             'rgba(33,185,120, 1)',

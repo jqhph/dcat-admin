@@ -47,6 +47,7 @@ class Tab extends Widget
      * Set style.
      *
      * @param string $style
+     *
      * @return $this
      */
     public function style($style)

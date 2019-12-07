@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Dcat\Admin\Models\Administrator;
 use Tests\TestCase;
-use Illuminate\Support\Facades\File;
 
 class UserSettingTest extends TestCase
 {

@@ -2,9 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-
 use Dcat\Admin\Models\Menu;
+use Tests\TestCase;
 
 class MenuTest extends TestCase
 {

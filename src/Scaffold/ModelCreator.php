@@ -57,7 +57,7 @@ class ModelCreator
     public function create($keyName = 'id', $timestamps = true, $softDeletes = false)
     {
         $path = $this->getpath($this->name);
-        $dir  = dirname($path);
+        $dir = dirname($path);
 
         if (!is_dir($dir)) {
             $this->files->makeDirectory($dir, 0755, true);
@@ -240,6 +240,6 @@ class ModelCreator
      */
     public function getStub()
     {
-        return __DIR__ . '/stubs/model.stub';
+        return __DIR__.'/stubs/model.stub';
     }
 }

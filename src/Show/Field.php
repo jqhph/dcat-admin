@@ -117,8 +117,8 @@ class Field implements Renderable
      */
     public function __construct($name = '', $label = '')
     {
-        $this->name   = $name;
-        $this->label  = $this->formatLabel($label);
+        $this->name = $name;
+        $this->label = $this->formatLabel($label);
         $this->showAs = new Collection();
 
         $this->callResolving();
@@ -150,11 +150,13 @@ class Field implements Renderable
 
     /**
      * @param int $width
+     *
      * @return $this
      */
     public function width(int $width)
     {
         $this->width = $width;
+
         return $this;
     }
 
@@ -380,6 +382,7 @@ HTML;
 
     /**
      * @param string $val
+     *
      * @return $this
      */
     public function prepend($val)
@@ -392,12 +395,14 @@ HTML;
             } elseif ($v instanceof Collection) {
                 return $v->prepend($val);
             }
-            return $val . $v;
+
+            return $val.$v;
         });
     }
 
     /**
      * @param string $val
+     *
      * @return $this
      */
     public function append($val)
@@ -410,14 +415,16 @@ HTML;
             } elseif ($v instanceof Collection) {
                 return $v->push($val);
             }
-            return $v . $val;
+
+            return $v.$val;
         });
     }
 
     /**
-     * Split a string by string
+     * Split a string by string.
      *
      * @param string $d
+     *
      * @return $this
      */
     public function explode(string $d = ',')
@@ -571,6 +578,7 @@ HTML;
         }
 
         $field = $this;
+
         return $this->as(function ($value) use ($extend, $field, $arguments) {
             if (!$extend->border) {
                 $field->wrap(false);
@@ -605,7 +613,6 @@ HTML;
         });
     }
 
-
     /**
      * Get all variables passed to field view.
      *
@@ -639,6 +646,7 @@ HTML;
 
                 if (!$callable instanceof \Closure) {
                     $this->value = $callable;
+
                     return;
                 }
 

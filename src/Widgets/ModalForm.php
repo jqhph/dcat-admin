@@ -48,8 +48,8 @@ class ModalForm
     }
 
     /**
-     *
      * @param array $options
+     *
      * @return $this
      */
     public function options($options = [])
@@ -64,9 +64,10 @@ class ModalForm
     }
 
     /**
-     * 设置弹窗标题
+     * 设置弹窗标题.
      *
      * @param string $title
+     *
      * @return $this
      */
     public function title(?string $title)
@@ -77,9 +78,10 @@ class ModalForm
     }
 
     /**
-     * 绑定点击按钮
+     * 绑定点击按钮.
      *
      * @param string $buttonSelector
+     *
      * @return $this
      */
     public function click(string $buttonSelector)
@@ -90,7 +92,7 @@ class ModalForm
     }
 
     /**
-     * 强制每次点击按钮都重新渲染表单弹窗
+     * 强制每次点击按钮都重新渲染表单弹窗.
      *
      * @return $this
      */
@@ -102,7 +104,7 @@ class ModalForm
     }
 
     /**
-     * 禁用重置按钮
+     * 禁用重置按钮.
      *
      * @return $this
      */
@@ -114,9 +116,10 @@ class ModalForm
     }
 
     /**
-     * 保存后触发的js的代码（不论成功还是失败）
+     * 保存后触发的js的代码（不论成功还是失败）.
      *
      * @param string $script
+     *
      * @return $this
      */
     public function saved(string $script)
@@ -130,6 +133,7 @@ class ModalForm
      * 保存失败时触发的js代码
      *
      * @param string $script
+     *
      * @return $this
      */
     public function error(string $script)
@@ -143,6 +147,7 @@ class ModalForm
      * 保存成功后触发的js代码
      *
      * @param string $script
+     *
      * @return $this
      */
     public function success(string $script)
@@ -154,10 +159,11 @@ class ModalForm
 
     /**
      * 设置弹窗宽高
-     * 支持百分比和"px"
+     * 支持百分比和"px".
      *
      * @param string $width
      * @param string $height
+     *
      * @return $this
      */
     public function dimensions(string $width, string $height)
@@ -167,12 +173,12 @@ class ModalForm
         return $this;
     }
 
-
     /**
      * 设置弹窗宽度
-     * 支持百分比和"px"
+     * 支持百分比和"px".
      *
      * @param string|null $width
+     *
      * @return $this
      */
     public function width(?string $width)
@@ -184,9 +190,10 @@ class ModalForm
 
     /**
      * 设置弹窗高度
-     * 支持百分比和"px"
+     * 支持百分比和"px".
      *
      * @param string|null $height
+     *
      * @return $this
      */
     public function height(?string $height)
@@ -197,9 +204,10 @@ class ModalForm
     }
 
     /**
-     * 设置默认的表单页面url
+     * 设置默认的表单页面url.
      *
      * @param null|string $url
+     *
      * @return $this
      */
     public function url(?string $url)
@@ -274,8 +282,8 @@ JS
         }
 
         Admin::$baseCss = [];
-        Admin::$baseJs  = [];
-        Admin::$fonts   = '';
+        Admin::$baseJs = [];
+        Admin::$fonts = '';
 
         Admin::$disableSkinCss = true;
 

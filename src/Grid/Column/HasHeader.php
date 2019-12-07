@@ -62,7 +62,7 @@ trait HasHeader
      * Add a help tooltip to column header.
      *
      * @param string|\Closure $message
-     * @param null|string     $style 'green', 'blue', 'red', 'purple'
+     * @param null|string     $style     'green', 'blue', 'red', 'purple'
      * @param null|string     $placement 'bottom', 'left', 'right', 'top'
      *
      * @return $this

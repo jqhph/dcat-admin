@@ -52,7 +52,7 @@ class TranslationTest extends TestCase
 
     protected function load()
     {
-        $loader = new FileLoader(app('files'), __DIR__ . '/../lang');
+        $loader = new FileLoader(app('files'), __DIR__.'/../lang');
 
         $translator = new Translator($loader, 'en');
 

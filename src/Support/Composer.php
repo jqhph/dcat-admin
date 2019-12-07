@@ -2,9 +2,6 @@
 
 namespace Dcat\Admin\Support;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Arr;
-
 class Composer
 {
     /**
@@ -14,6 +11,7 @@ class Composer
 
     /**
      * @param $path
+     *
      * @return ComposerProperty
      */
     public static function parse(?string $path)
@@ -24,6 +22,7 @@ class Composer
     /**
      * @param null|string $packageName
      * @param null|string $lockFile
+     *
      * @return null
      */
     public static function getVersion(?string $packageName, ?string $lockFile = null)
@@ -44,6 +43,7 @@ class Composer
 
     /**
      * @param null|string $path
+     *
      * @return array
      */
     public static function readJson(?string $path)
@@ -57,7 +57,7 @@ class Composer
         }
 
         try {
-            return static::$files[$path] = (array)json_decode(app('files')->get($path), true);
+            return static::$files[$path] = (array) json_decode(app('files')->get($path), true);
         } catch (\Throwable $e) {
         }
 

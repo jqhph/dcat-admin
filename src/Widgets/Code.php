@@ -13,8 +13,8 @@ class Code extends Markdown
 
     /**
      * @param string $content
-     * @param int $start
-     * @param int $end
+     * @param int    $start
+     * @param int    $end
      */
     public function __construct($content = '', int $start = 1, int $end = 10)
     {
@@ -30,6 +30,7 @@ class Code extends Markdown
      * 设置语言
      *
      * @param string $lang
+     *
      * @return $this
      */
     public function lang(string $lang)
@@ -68,11 +69,12 @@ class Code extends Markdown
     }
 
     /**
-     * 读取指定行上下区间文件内容
+     * 读取指定行上下区间文件内容.
      *
      * @param string $file
-     * @param int $lineNumber
-     * @param int $padding
+     * @param int    $lineNumber
+     * @param int    $padding
+     *
      * @return $this
      */
     public function padding($file, $lineNumber = 1, $padding = 5)
@@ -81,11 +83,12 @@ class Code extends Markdown
     }
 
     /**
-     * 读取指定行文件内容
+     * 读取指定行文件内容.
      *
      * @param string $file
-     * @param int $start
-     * @param int $end
+     * @param int    $start
+     * @param int    $end
+     *
      * @return $this
      */
     public function read($file, $start = 1, $end = 10)

@@ -8,7 +8,7 @@ trait HasBuilderEvents
      * Register a resolving listener.
      *
      * @param callable $callback
-     * @param bool $once
+     * @param bool     $once
      */
     public static function resolving(callable $callback, bool $once = false)
     {
@@ -27,7 +27,7 @@ trait HasBuilderEvents
      * Register a composing listener.
      *
      * @param callable $callback
-     * @param bool $once
+     * @param bool     $once
      */
     public static function composing(callable $callback, bool $once = false)
     {
@@ -68,9 +68,9 @@ trait HasBuilderEvents
     }
 
     /**
-     * @param string $key
+     * @param string   $key
      * @param callable $callback
-     * @param bool $once
+     * @param bool     $once
      */
     protected static function setListeners($key, $callback, $once)
     {

@@ -291,7 +291,7 @@ trait ModelTree
 
                 Request::offsetUnset('_order');
 
-                Tree::make(new static)->saveOrder($order);
+                Tree::make(new static())->saveOrder($order);
 
                 return false;
             }

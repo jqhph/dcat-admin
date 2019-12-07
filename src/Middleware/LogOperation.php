@@ -2,11 +2,10 @@
 
 namespace Dcat\Admin\Middleware;
 
-use Dcat\Admin\Models\OperationLog as OperationLogModel;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Models\OperationLog as OperationLogModel;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class LogOperation
 {

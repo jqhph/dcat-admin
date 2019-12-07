@@ -3,11 +3,9 @@
 namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Fluent;
-use InvalidArgumentException;
-use Illuminate\Contracts\View\View;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Fluent;
 
 class SectionManager
 {
@@ -26,10 +24,11 @@ class SectionManager
     /**
      * Inject content into a section.
      *
-     * @param  string  $section
+     * @param string                              $section
      * @param string|Renderable|Htmlable|callable $content
-     * @param bool $append
-     * @param int $priority
+     * @param bool                                $append
+     * @param int                                 $priority
+     *
      * @return void
      */
     public function inject($section, $content, bool $append = true, int $priority = 10)
@@ -38,8 +37,9 @@ class SectionManager
     }
 
     /**
-     * @param  string  $section
+     * @param string                              $section
      * @param string|Renderable|Htmlable|callable $content
+     *
      * @return void
      */
     public function injectDefault($section, $content)
@@ -51,35 +51,35 @@ class SectionManager
         $this->defaultSections[$section] = &$content;
     }
 
-
     /**
      * Set content to a given section.
      *
-     * @param string  $section
+     * @param string                              $section
      * @param string|Renderable|Htmlable|callable $content
-     * @param bool $append
-     * @param int $priority
+     * @param bool                                $append
+     * @param int                                 $priority
+     *
      * @return void
      */
     protected function put($section, $content, bool $append = false, int $priority = 10)
     {
-        if (! $section) {
-            throw new \InvalidArgumentException("Section name is required.");
+        if (!$section) {
+            throw new \InvalidArgumentException('Section name is required.');
         }
 
-        if (! isset($this->sections[$section])) {
+        if (!isset($this->sections[$section])) {
             unset($this->defaultSections[$section]);
 
             $this->sections[$section] = [];
         }
 
-        if (! isset($this->sections[$section][$priority])) {
+        if (!isset($this->sections[$section][$priority])) {
             $this->sections[$section][$priority] = [];
         }
 
         $this->sections[$section][$priority][] = [
             'append' => $append,
-            'value' => &$content,
+            'value'  => &$content,
         ];
     }
 
@@ -88,14 +88,15 @@ class SectionManager
      *
      * @param $section
      * @param string $default
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function yieldContent($section, $default = '', array $options = [])
     {
         $defaultSection = $this->defaultSections[$section] ?? null;
 
-        if (! $this->hasSection($section) && $defaultSection === null) {
+        if (!$this->hasSection($section) && $defaultSection === null) {
             return Helper::render($default, [new Fluent()]);
         }
 
@@ -107,7 +108,8 @@ class SectionManager
     /**
      * Get all of the sections for a given name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return array
      */
     public function getSections($name)
@@ -118,7 +120,8 @@ class SectionManager
     /**
      * Sort the listeners for a given event by priority.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return array
      */
     protected function sortSections($name)
@@ -137,7 +140,8 @@ class SectionManager
     /**
      * Check if section exists.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return bool
      */
     public function hasSection($name)
@@ -148,7 +152,8 @@ class SectionManager
     /**
      * Check if default section exists.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return bool
      */
     public function hasDefaultSection($name)
@@ -160,6 +165,7 @@ class SectionManager
      * @param $name
      * @param $content
      * @param array $options
+     *
      * @return string
      */
     protected function resolveContent($name, &$content, array &$options)
@@ -178,7 +184,7 @@ class SectionManager
 
         $result = '';
         foreach ($content as &$item) {
-            $value  = Helper::render($item['value'] ?? '', [$options]);
+            $value = Helper::render($item['value'] ?? '', [$options]);
             $append = $item['append'] ?? false;
 
             if (!$append) {

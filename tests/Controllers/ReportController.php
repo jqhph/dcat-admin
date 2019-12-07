@@ -17,7 +17,7 @@ class ReportController extends Controller
 
     protected function grid()
     {
-        $grid = new Grid(new Report);
+        $grid = new Grid(new Report());
 
         // 开启responsive插件
         $grid->responsive();

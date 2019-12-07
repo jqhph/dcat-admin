@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Models\Repositories;
 
-use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Models\OperationLog as OperationLogModel;
+use Dcat\Admin\Repositories\EloquentRepository;
 
 class OperationLog extends EloquentRepository
 {

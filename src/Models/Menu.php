@@ -4,9 +4,7 @@ namespace Dcat\Admin\Models;
 
 use Dcat\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -95,7 +93,7 @@ class Menu extends Model
 
         $byOrder = 'ROOT ASC, '.$orderColumn;
 
-        $self = new static;
+        $self = new static();
         if ($this->queryCallback instanceof \Closure) {
             $self = call_user_func($this->queryCallback, $self);
         }

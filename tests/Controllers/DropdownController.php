@@ -6,7 +6,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Widgets\Box;
-use Dcat\Admin\Widgets\Code;
 use Dcat\Admin\Widgets\Dropdown;
 use Illuminate\Routing\Controller;
 
@@ -52,6 +51,7 @@ class DropdownController extends Controller
                 $this->divider();
             }
             $k++;
+
             return "{$k}. $v";
         });
 
@@ -74,7 +74,7 @@ class DropdownController extends Controller
             });
 
         Admin::script(
-            <<<JS
+            <<<'JS'
 $('.test_item').click(function () {
     LA.info("Selected: " + JSON.stringify($(this).data()));
 });

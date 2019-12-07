@@ -44,7 +44,7 @@ class Table extends Widget
         $this->setRows($rows);
         $this->setStyle($style);
 
-        $this->class('table '.implode(' ', (array)$this->style), true);
+        $this->class('table '.implode(' ', (array) $this->style), true);
     }
 
     /**
@@ -63,6 +63,7 @@ class Table extends Widget
 
     /**
      * @param int $depth
+     *
      * @return $this
      */
     public function depth(int $depth)
@@ -81,7 +82,7 @@ class Table extends Widget
      */
     public function setRows($rows = [])
     {
-        if (! Arr::isAssoc($rows)) {
+        if (!Arr::isAssoc($rows)) {
             $this->rows = $rows;
 
             return $this;

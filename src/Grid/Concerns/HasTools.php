@@ -170,7 +170,6 @@ trait HasTools
         return $this->disableRefreshButton(!$val);
     }
 
-
     /**
      * If grid show toolbar.
      *

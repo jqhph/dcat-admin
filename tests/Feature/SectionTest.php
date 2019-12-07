@@ -61,7 +61,6 @@ class SectionTest extends TestCase
 
         $this->assertEquals(admin_section('key2'), 'test3,');
 
-
         // 3 overwrite
         admin_inject_section('key3', 'test1,');
         admin_inject_section('key3', 'test2,', false);

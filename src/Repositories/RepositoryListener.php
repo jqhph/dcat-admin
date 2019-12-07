@@ -18,7 +18,7 @@ abstract class RepositoryListener
     /**
      * Created event.
      *
-     * @param Form $form
+     * @param Form  $form
      * @param mixed $newId
      */
     public function created(Form $form, $newId)
@@ -28,7 +28,7 @@ abstract class RepositoryListener
     /**
      * Updating event.
      *
-     * @param Form $form
+     * @param Form  $form
      * @param array $originalAttributes
      */
     public function updating(Form $form, array $originalAttributes)
@@ -38,9 +38,9 @@ abstract class RepositoryListener
     /**
      * Updated event.
      *
-     * @param Form $form
+     * @param Form  $form
      * @param array $originalAttributes
-     * @param bool $result
+     * @param bool  $result
      */
     public function updated(Form $form, array $originalAttributes, $result)
     {
@@ -49,7 +49,7 @@ abstract class RepositoryListener
     /**
      * Deleting event.
      *
-     * @param Form $form
+     * @param Form  $form
      * @param array $originalAttributes
      */
     public function deleting(Form $form, array $originalAttributes)
@@ -59,7 +59,7 @@ abstract class RepositoryListener
     /**
      * Deleted event.
      *
-     * @param Form $form
+     * @param Form  $form
      * @param array $originalAttributes
      * @param $result
      */

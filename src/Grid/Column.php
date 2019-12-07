@@ -454,7 +454,7 @@ class Column
      * Set help message for column.
      *
      * @param string|\Closure $help
-     * @param null|string     $style 'green', 'blue', 'red', 'purple'
+     * @param null|string     $style     'green', 'blue', 'red', 'purple'
      * @param null|string     $placement 'bottom', 'left', 'right', 'top'
      *
      * @return $this
