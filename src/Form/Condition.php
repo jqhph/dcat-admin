@@ -28,7 +28,7 @@ class Condition
     public function __construct($condition, Form $form)
     {
         $this->condition = $condition;
-        $this->form      = $form;
+        $this->form = $form;
     }
 
     public function then(\Closure $closure)
@@ -48,7 +48,7 @@ class Condition
         $self = $this;
 
         $condition = $this->form->if(function () use ($self) {
-            return ! $self->getResult();
+            return !$self->getResult();
         });
 
         if ($next) {
@@ -65,7 +65,7 @@ class Condition
         }
         $this->done = true;
 
-        if (! $this->is()) {
+        if (!$this->is()) {
             return;
         }
 
@@ -107,5 +107,4 @@ class Condition
             return $form->$name(...$arguments);
         });
     }
-
 }

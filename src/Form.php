@@ -560,7 +560,6 @@ class Form implements Renderable
         }
 
         return response()->json($response);
-
     }
 
     /**
@@ -599,7 +598,6 @@ class Form implements Renderable
         );
     }
 
-
     /**
      * Before store.
      *
@@ -623,7 +621,7 @@ class Form implements Renderable
         }
 
         if ($response = $this->handleUploadFile($data)) {
-            if (($value = $response->getData()) && ! empty($value->id)) {
+            if (($value = $response->getData()) && !empty($value->id)) {
                 $this->step()->stash(
                     [$data['upload_column'] => $value->id],
                     true
@@ -663,6 +661,7 @@ class Form implements Renderable
      * @param $message
      * @param null $redirect
      * @param bool $status
+     *
      * @return bool|\Illuminate\Http\JsonResponse
      */
     public function ajaxResponse($message, $redirect = null, bool $status = true)
@@ -679,13 +678,13 @@ class Form implements Renderable
     }
 
     /**
-     * ajax but not pjax
+     * Ajax but not pjax.
      *
      * @return bool
      */
     public function isAjaxRequest()
     {
-        return $this->request->ajax() && ! $this->request->pjax();
+        return $this->request->ajax() && !$this->request->pjax();
     }
 
     /**
@@ -775,8 +774,7 @@ class Form implements Renderable
         $id,
         ?array $data = null,
         $redirectTo = null
-    )
-    {
+    ) {
         $data = $data ?: $this->request->all();
 
         if ($response = $this->beforeUpdate($id, $data)) {
@@ -851,19 +849,19 @@ class Form implements Renderable
      */
     protected function makeValidationErrorsResponse($validationMessages)
     {
-        if (! $this->isAjaxRequest()) {
+        if (!$this->isAjaxRequest()) {
             return back()->withInput()->withErrors($validationMessages);
         }
 
         return response()->json([
-            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages()
+            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages(),
         ], 422);
     }
 
     /**
      * Get redirect response.
      *
-     * @param string $url
+     * @param string       $url
      * @param array|string $options
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -892,7 +890,6 @@ class Form implements Renderable
         }
 
         return redirect($url, $status);
-
     }
 
     /**
@@ -903,7 +900,9 @@ class Form implements Renderable
      */
     public function getRedirectUrl($key, $redirectTo = null)
     {
-        if ($redirectTo) return $redirectTo;
+        if ($redirectTo) {
+            return $redirectTo;
+        }
 
         $resourcesPath = $this->builder->isCreating() ?
             $this->getResource(0) : $this->getResource(-1);
@@ -913,12 +912,15 @@ class Form implements Renderable
             if ($this->builder->isEditing() && $this->isAjaxRequest()) {
                 return false;
             }
+
             return rtrim($resourcesPath, '/')."/{$key}/edit";
         }
+
         if ($this->request->get('after-save') == 2) {
             // continue creating
             return rtrim($resourcesPath, '/').'/create';
         }
+
         if ($this->request->get('after-save') == 3) {
             // view resource
             return rtrim($resourcesPath, '/')."/{$key}";
@@ -1051,9 +1053,8 @@ class Form implements Renderable
      * Is input data is has-one relation.
      *
      * @param array $inserts
-     *
      */
-    function prepareHasOneRelation(array &$inserts)
+    public function prepareHasOneRelation(array &$inserts)
     {
         $relations = [];
         $this->builder->fields()->each(function ($field) use (&$relations) {
@@ -1082,7 +1083,6 @@ class Form implements Renderable
                 $inserts = array_merge($inserts, Arr::dot([$first => $inserts[$first]]));
             }
         }
-
     }
 
     /**
@@ -1106,7 +1106,7 @@ class Form implements Renderable
      */
     public function getKeyName()
     {
-        if (! $this->repository) {
+        if (!$this->repository) {
             return 'id';
         }
 
@@ -1118,7 +1118,7 @@ class Form implements Renderable
      */
     public function getCreatedAtColumn()
     {
-        if (! $this->repository) {
+        if (!$this->repository) {
             return;
         }
 
@@ -1130,7 +1130,7 @@ class Form implements Renderable
      */
     public function getUpdatedAtColumn()
     {
-        if (! $this->repository) {
+        if (!$this->repository) {
             return;
         }
 
@@ -1316,7 +1316,7 @@ class Form implements Renderable
 
     /**
      * @param string|array|MessageProvider $column
-     * @param string|array $messages
+     * @param string|array                 $messages
      *
      * @return $this
      */
@@ -1327,7 +1327,7 @@ class Form implements Renderable
         }
 
         if (!$this->validationMessages) {
-            $this->validationMessages = new MessageBag;
+            $this->validationMessages = new MessageBag();
         }
 
         if (!$column) {
@@ -1336,16 +1336,15 @@ class Form implements Renderable
 
         if (is_array($column)) {
             foreach ($column as $k => &$v) {
-                $v = (array)$v;
+                $v = (array) $v;
             }
             $this->validationMessages->merge($column);
         } elseif ($messages) {
-            $this->validationMessages->merge([$column => (array)$messages]);
+            $this->validationMessages->merge([$column => (array) $messages]);
         }
 
         return $this;
     }
-
 
     /**
      * Merge validation messages from input validators.
@@ -1691,7 +1690,7 @@ class Form implements Renderable
     }
 
     /**
-     * @param int $width
+     * @param int     $width
      * @param Closure $callback
      */
     public function block(int $width, \Closure $callback)
@@ -1730,7 +1729,7 @@ class Form implements Renderable
      */
     public function inModal(\Closure $callback = null)
     {
-        if (! $callback) {
+        if (!$callback) {
             return ModalForm::is();
         }
 
@@ -1824,7 +1823,7 @@ class Form implements Renderable
      * Setter.
      *
      * @param string $name
-     * @param $value
+     * @param mixed  $value
      */
     public function __set($name, $value)
     {

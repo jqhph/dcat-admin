@@ -73,7 +73,7 @@ JS;
         $result = [];
         foreach ($messages as $key => $message) {
             $column = explode('.', $key);
-            $rule   = array_pop($column);
+            $rule = array_pop($column);
             $column = join('.', $column);
 
             if ($this->column['start'] == $column) {

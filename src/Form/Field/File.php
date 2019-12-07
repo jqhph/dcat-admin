@@ -7,7 +7,6 @@ use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class File extends Field
 {
@@ -137,9 +136,9 @@ class File extends Field
 
         foreach ($this->value() as $value) {
             $previews[] = [
-                'id' => $value,
+                'id'   => $value,
                 'path' => basename($value),
-                'url' => $this->objectUrl($value)
+                'url'  => $this->objectUrl($value),
             ];
         }
 
@@ -160,7 +159,7 @@ class File extends Field
     {
         $this->setDefaultServer();
 
-        if (! empty($this->value())) {
+        if (!empty($this->value())) {
             $this->setupPreviewOptions();
         }
 
@@ -183,9 +182,9 @@ class File extends Field
     protected function formatValue()
     {
         if ($this->value !== null) {
-            $this->value = join(',', $this->value);
+            $this->value = implode(',', $this->value);
         } elseif (is_array($this->default)) {
-            $this->default = join(',', $this->default);
+            $this->default = implode(',', $this->default);
         }
     }
 
@@ -196,5 +195,4 @@ class File extends Field
     {
         return 'file-'.Str::random(8);
     }
-
 }

@@ -90,7 +90,7 @@ class ScaffoldController extends Controller
 
         $paths = [];
         $message = '';
-        
+
         $creates = (array) $request->get('create');
 
         try {
@@ -150,11 +150,8 @@ class ScaffoldController extends Controller
                     $paths['ide-helper'] = 'dcat_admin_ide_helper.php';
                 } catch (\Throwable $e) {
                 }
-
             }
-
         } catch (\Exception $exception) {
-
             // Delete generated files if exception thrown.
             app('files')->delete($paths);
 

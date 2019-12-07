@@ -30,7 +30,6 @@ class ImportButton implements Renderable
         return <<<HTML
 <a href="javascript:void(0)" class="import-extension" data-id="{$this->row->id}">$button</a>
 HTML;
-
     }
 
     protected function setupScript()

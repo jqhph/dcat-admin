@@ -4,8 +4,8 @@ namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Models\Repositories\OperationLog;
 use Dcat\Admin\Models\OperationLog as OperationLogModel;
+use Dcat\Admin\Models\Repositories\OperationLog;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 
@@ -89,7 +89,6 @@ class LogController extends Controller
             $filter->between('created_at')
                 ->width(4)
                 ->datetime();
-
         });
 
         return $grid;

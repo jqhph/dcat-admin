@@ -74,5 +74,4 @@ class Currency extends Text
     {
         Admin::collectComponentAssets('jquery.inputmask');
     }
-
 }

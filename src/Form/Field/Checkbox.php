@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Arrayable;
 
 class Checkbox extends MultipleSelect
 {
@@ -44,7 +43,7 @@ class Checkbox extends MultipleSelect
     }
 
     /**
-     * "info", "primary", "inverse", "danger", "success", "purple"
+     * "info", "primary", "inverse", "danger", "success", "purple".
      *
      * @param $v
      * @return $this
@@ -97,7 +96,9 @@ class Checkbox extends MultipleSelect
     public function value($value = null)
     {
         if (is_null($value)) {
-            if ($this->value === null) return $this->getDefault();
+            if ($this->value === null) {
+                return $this->getDefault();
+            }
 
             if (count($this->value) === 0) {
                 return $this->getDefault();

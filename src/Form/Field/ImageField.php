@@ -3,10 +3,10 @@
 namespace Dcat\Admin\Form\Field;
 
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManagerStatic;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Intervention\Image\Constraint;
 use Intervention\Image\Facades\Image as InterventionImage;
+use Intervention\Image\ImageManagerStatic;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 trait ImageField
 {
@@ -25,7 +25,7 @@ trait ImageField
     protected $thumbnails = [];
 
     protected static $interventionAlias = [
-        'filling' => 'fill'
+        'filling' => 'fill',
     ];
 
     /**
@@ -117,18 +117,18 @@ trait ImageField
      * Destroy original thumbnail files.
      *
      * @param string|array $file
-     * @param bool $force
+     * @param bool         $force
      *
      * @return void.
      */
     public function destroyThumbnail($file = null, bool $force = false)
     {
-        if ($this->retainable && ! $force) {
+        if ($this->retainable && !$force) {
             return;
         }
 
         $file = $file ?: $this->original;
-        if (! $file) {
+        if (!$file) {
             return;
         }
 
@@ -136,6 +136,7 @@ trait ImageField
             foreach ($file as $f) {
                 $this->destroyThumbnail($f);
             }
+
             return;
         }
 
@@ -194,5 +195,4 @@ trait ImageField
 
         return $this;
     }
-
 }

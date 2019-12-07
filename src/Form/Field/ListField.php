@@ -39,6 +39,7 @@ class ListField extends Field
     public function max(int $size)
     {
         $this->max = $size;
+
         return $this;
     }
 
@@ -52,6 +53,7 @@ class ListField extends Field
     public function min(int $size)
     {
         $this->min = $size;
+
         return $this;
     }
 

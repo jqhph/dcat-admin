@@ -80,7 +80,6 @@ class BootstrapImage extends BootstrapFile
         return $this->uploadAndDeleteOriginal($image);
     }
 
-
     /**
      * Render a image form field.
      *

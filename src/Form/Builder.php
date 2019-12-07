@@ -147,16 +147,17 @@ class Builder
      */
     public function __construct(Form $form)
     {
-        $this->form   = $form;
+        $this->form = $form;
         $this->fields = new Collection();
         $this->layout = new Layout($form);
-        $this->tools  = new Tools($this);
+        $this->tools = new Tools($this);
         $this->footer = new Footer($this);
     }
 
 
     /**
      * @param \Closure $closure
+     *
      * @return Layout
      */
     public function layout($closure = null)
@@ -170,6 +171,7 @@ class Builder
 
     /**
      * @param Closure $closure
+     *
      * @return $this;
      */
     public function wrap(Closure $closure)
@@ -189,6 +191,7 @@ class Builder
 
     /**
      * @param int $width
+     *
      * @return $this
      */
     public function setDefaultBlockWidth(int $width)
@@ -234,11 +237,12 @@ class Builder
 
     /**
      * @param \Closure $callback
+     *
      * @return StepBuilder
      */
     public function step(?\Closure $callback = null)
     {
-        if (! $this->stepBuilder) {
+        if (!$this->stepBuilder) {
             $this->view = 'admin::form.steps';
 
             $this->stepBuilder = new StepBuilder($this->form);
@@ -470,11 +474,12 @@ class Builder
 
     /**
      * @param string $name
+     *
      * @return Field|null
      */
     public function stepField($name)
     {
-        if (! $builder = $this->getStepBuilder()) {
+        if (!$builder = $this->getStepBuilder()) {
             return;
         }
 
@@ -492,7 +497,7 @@ class Builder
     {
         $fields = new Collection();
 
-        if (! $builder = $this->getStepBuilder()) {
+        if (!$builder = $this->getStepBuilder()) {
             return $fields;
         }
 
@@ -505,6 +510,7 @@ class Builder
 
     /**
      * @param $column
+     *
      * @return void
      */
     public function removeField($column)
@@ -587,6 +593,7 @@ class Builder
 
     /**
      * @param bool $disable
+     *
      * @return void
      */
     public function disableHeader(bool $disable = true)
@@ -596,6 +603,7 @@ class Builder
 
     /**
      * @param bool $disable
+     *
      * @return void
      */
     public function disableFooter(bool $disable = true)
@@ -605,6 +613,7 @@ class Builder
 
     /**
      * @param $id
+     *
      * @return void
      */
     public function setFormId($id)
@@ -688,18 +697,18 @@ class Builder
     {
         $attributes = [];
 
-        if ($this->isMode(self::MODE_EDIT)) {
+        if ($this->isMode(static::MODE_EDIT)) {
             $this->addHiddenField((new Hidden('_method'))->value('PUT'));
         }
 
         $this->addRedirectUrlField();
 
-        $attributes['id']             = $this->getFormId();
-        $attributes['action']         = $this->getAction();
-        $attributes['method']         = Arr::get($options, 'method', 'post');
+        $attributes['id'] = $this->getFormId();
+        $attributes['action'] = $this->getAction();
+        $attributes['method'] = Arr::get($options, 'method', 'post');
         $attributes['accept-charset'] = 'UTF-8';
-        $attributes['data-toggle']    = 'validator';
-        $attributes['class']          = Arr::get($options, 'class');
+        $attributes['data-toggle'] = 'validator';
+        $attributes['class'] = Arr::get($options, 'class');
 
         if ($this->hasFile()) {
             $attributes['enctype'] = 'multipart/form-data';
@@ -733,7 +742,7 @@ class Builder
      */
     protected function removeReservedFields()
     {
-        if (! $this->isMode(static::MODE_CREATE)) {
+        if (!$this->isMode(static::MODE_CREATE)) {
             return;
         }
 
@@ -811,7 +820,6 @@ class Builder
         return <<<EOF
 {$open} {$this->layout->build()} {$this->close()}
 EOF;
-
     }
 
     /**
@@ -859,7 +867,6 @@ EOF;
     });
 })()
 JS
-
         );
     }
 

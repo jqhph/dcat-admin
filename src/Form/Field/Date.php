@@ -43,5 +43,4 @@ class Date extends Text
         Admin::collectComponentAssets('moment');
         Admin::collectComponentAssets('bootstrap-datetimepicker');
     }
-
 }

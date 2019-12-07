@@ -148,7 +148,6 @@ class RoleController extends Controller
             if ($show->getKey() == RoleModel::ADMINISTRATOR_ID) {
                 $show->disableDeleteButton();
             }
-
         });
     }
 
@@ -213,5 +212,4 @@ class RoleController extends Controller
 
         return $this->delete($id);
     }
-
 }

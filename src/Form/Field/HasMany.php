@@ -6,8 +6,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
-use Illuminate\Database\Eloquent\Relations\HasMany as Relation;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -670,8 +668,8 @@ JS;
     protected function renderTable()
     {
         $headers = [];
-        $fields  = [];
-        $hidden  = [];
+        $fields = [];
+        $hidden = [];
         $scripts = [];
 
         /* @var Field $field */

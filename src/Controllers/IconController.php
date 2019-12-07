@@ -34,8 +34,6 @@ class IconController extends Controller
             $tab->add('Glyphicons', view('admin::helpers.glyphicons'));
 
             $row->column(12, $tab);
-
         });
     }
-
 }

@@ -176,7 +176,7 @@ class UserController extends Controller
             $show->divider();
 
             $show->roles->width(6)->as(function ($roles) {
-                if (! $roles) {
+                if (!$roles) {
                     return;
                 }
 

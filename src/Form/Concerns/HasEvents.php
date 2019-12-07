@@ -31,7 +31,7 @@ trait HasEvents
     public function creating(Closure $callback)
     {
         $this->__hooks['creating'][] = $callback;
-        
+
         return $this;
     }
 
@@ -166,7 +166,7 @@ trait HasEvents
     }
 
     /**
-     * @return  mixed|null
+     * @return mixed|null
      */
     protected function callDeleting()
     {
@@ -174,7 +174,7 @@ trait HasEvents
     }
 
     /**
-     * @return  mixed|null
+     * @return mixed|null
      */
     protected function callDeleted()
     {
@@ -183,6 +183,7 @@ trait HasEvents
 
     /**
      * @param string $name
+     *
      * @return RedirectResponse|\Illuminate\Http\Response|void
      */
     protected function callListeners($name)
@@ -195,10 +196,10 @@ trait HasEvents
             $ret = $func($this);
 
             if (
-                $response ||
-                ! $ret ||
-                ! $ret instanceof Response ||
-                ($ret instanceof RedirectResponse && $this->isAjaxRequest())
+                $response
+                || !$ret
+                || !$ret instanceof Response
+                || ($ret instanceof RedirectResponse && $this->isAjaxRequest())
             ) {
                 continue;
             }

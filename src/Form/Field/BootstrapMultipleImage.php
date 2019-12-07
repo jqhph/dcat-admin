@@ -38,7 +38,6 @@ class BootstrapMultipleImage extends BootstrapMultipleFile
         });
     }
 
-
     /**
      * Render a image form field.
      *

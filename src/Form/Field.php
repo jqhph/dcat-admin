@@ -5,7 +5,6 @@ namespace Dcat\Admin\Form;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Widgets\Form as WidgetForm;
-use Dcat\Admin\Form\Concerns;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -18,7 +17,7 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Field implements Renderable
 {
-    use Macroable, Concerns\HasFieldValidator;
+    use Macroable, Form\Concerns\HasFieldValidator;
 
     const FILE_DELETE_FLAG = '_file_del_';
 
@@ -211,14 +210,14 @@ class Field implements Renderable
     /**
      * Field constructor.
      *
-     * @param       $column
-     * @param array $arguments
+     * @param string|array $column
+     * @param array        $arguments
      */
     public function __construct($column, $arguments = [])
     {
         $this->column = $column;
-        $this->label  = $this->formatLabel($arguments);
-        $this->id     = $this->formatId($column);
+        $this->label = $this->formatLabel($arguments);
+        $this->id = $this->formatId($column);
     }
 
     /**
@@ -343,6 +342,7 @@ class Field implements Renderable
      * Format field data.
      *
      * @param array $data
+     *
      * @return mixed
      */
     protected function formatFieldData($data)
@@ -378,6 +378,7 @@ class Field implements Renderable
      * Set original value to the field.
      *
      * @param array $data
+     *
      * @return void
      */
     final public function setOriginal($data)
@@ -388,7 +389,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param string $key
+     * @param string      $key
      * @param Fluent|null $dataremoveField
      */
     protected function callCustomFormatter($key = 'value', Fluent $data = null)
@@ -421,7 +422,7 @@ class Field implements Renderable
      */
     public function getFormModel()
     {
-        return $this->form ? $this->form->model() : new Fluent;
+        return $this->form ? $this->form->model() : new Fluent();
     }
 
     /**
@@ -473,7 +474,7 @@ class Field implements Renderable
             $checked = $checked->toArray();
         }
 
-        $this->checked = array_merge($this->checked, (array)$checked);
+        $this->checked = array_merge($this->checked, (array) $checked);
 
         return $this;
     }
@@ -525,12 +526,12 @@ class Field implements Renderable
      *
      * @param array $data
      *
-     * @return $this
+     * @return $this|Fluent
      */
     public function data(array $data = null)
     {
         if (is_null($data)) {
-            return $this->data ?: ($this->data = new Fluent);
+            return $this->data ?: ($this->data = new Fluent());
         }
 
         $this->data = new Fluent($data);
@@ -595,6 +596,7 @@ class Field implements Renderable
      * Get or set label of the field.
      *
      * @param null $label
+     *
      * @return $this|string
      */
     public function label($label = null)
@@ -757,6 +759,7 @@ class Field implements Renderable
      * Prepare for a field value before update or insert.
      *
      * @param mixed $value
+     *
      * @return mixed
      */
     protected function prepareToSave($value)
@@ -766,6 +769,7 @@ class Field implements Renderable
 
     /**
      * @param \Closure $closure
+     *
      * @return $this
      */
     public function saving(\Closure $closure)
@@ -779,6 +783,7 @@ class Field implements Renderable
      * Prepare for a field value before update or insert.
      *
      * @param mixed $value
+     *
      * @return mixed
      */
     final public function prepare($value)
@@ -904,13 +909,13 @@ class Field implements Renderable
             $classes = [];
 
             foreach ($elementClass as $index => $class) {
-                $classes[$index] = $formId . ' .'.(is_array($class) ? implode('.', $class) : $class);
+                $classes[$index] = $formId.' .'.(is_array($class) ? implode('.', $class) : $class);
             }
 
             return $classes;
         }
 
-        return $formId . ' .'.implode('.', $elementClass);
+        return $formId.' .'.implode('.', $elementClass);
     }
 
     /**
@@ -1002,7 +1007,7 @@ class Field implements Renderable
 
     /**
      * @param array|string $labelClass
-     * @param bool $append
+     * @param bool         $append
      * @return $this
      */
     public function setLabelClass($labelClass, bool $append = true)
@@ -1120,7 +1125,6 @@ class Field implements Renderable
         static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);
     }
-
 
     /**
      * Render this filed.

@@ -100,7 +100,6 @@ class Admin
         return static::$metaTitle ?: config('admin.title');
     }
 
-
     /**
      * @param null|string $favicon
      *

@@ -2,8 +2,6 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Form\Field;
-use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -74,20 +72,23 @@ class Image extends File
 
     /**
      * @param array $options support:
-     *     [
-     *         'width' => 100,
-     *         'height' => 100,
-     *         'min_width' => 100,
-     *         'min_height' => 100,
-     *         'max_width' => 100,
-     *         'max_height' => 100,
-     *         'ratio' => 3/2, // (width / height)
-     *     ]
+     *                       [
+     *                       'width' => 100,
+     *                       'height' => 100,
+     *                       'min_width' => 100,
+     *                       'min_height' => 100,
+     *                       'max_width' => 100,
+     *                       'max_height' => 100,
+     *                       'ratio' => 3/2, // (width / height)
+     *                       ]
+     *
      * @return $this
      */
     public function dimensions(array $options)
     {
-        if (!$options) return $this;
+        if (!$options) {
+            return $this;
+        }
 
         $this->options(['dimensions' => $options]);
 
@@ -95,13 +96,14 @@ class Image extends File
             $v = "$k=$v";
         }
 
-        return $this->rules('dimensions:'.join(',', $options));
+        return $this->rules('dimensions:'.implode(',', $options));
     }
 
     /**
      * Set ratio constraint.
      *
      * @param float $ratio width/height
+     *
      * @return $this
      */
     public function ratio($ratio)
@@ -109,6 +111,7 @@ class Image extends File
         if ($ratio <= 0) {
             return $this;
         }
+
         return $this->dimensions(['ratio' => $ratio]);
     }
 
@@ -134,5 +137,4 @@ class Image extends File
 
         $this->destroyThumbnail();
     }
-
 }

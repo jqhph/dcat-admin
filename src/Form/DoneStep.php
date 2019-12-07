@@ -37,8 +37,8 @@ class DoneStep
 
     public function __construct(Form $form, $title, \Closure $callback)
     {
-        $this->form      = $form;
-        $this->builder   = $callback;
+        $this->form = $form;
+        $this->builder = $callback;
         $this->elementId = 'done-step-'.Str::random();
 
         $this->title($title);
@@ -54,6 +54,7 @@ class DoneStep
 
     /**
      * @param string $title
+     *
      * @return $this|string
      */
     public function title($title = null)
@@ -69,6 +70,7 @@ class DoneStep
 
     /**
      * @param string|\Closure|Renderable $contents
+     *
      * @return $this
      */
     public function content($contents)
@@ -96,7 +98,8 @@ class DoneStep
 
     /**
      * @param string|null $key
-     * @param mixed|null $default
+     * @param mixed|null  $default
+     *
      * @return array|mixed
      */
     public function input($key = null, $default = null)
@@ -131,5 +134,4 @@ class DoneStep
     {
         return Helper::render($this->contents);
     }
-
 }

@@ -15,7 +15,7 @@ class Captcha extends Text
         }
 
         $this->column = '__captcha__';
-        $this->label  = trans('admin.captcha');
+        $this->label = trans('admin.captcha');
     }
 
     public function setForm($form = null)
@@ -31,7 +31,7 @@ class Captcha extends Text
 
     public function render()
     {
-        $this->script = <<<JS
+        $this->script = <<<'JS'
 $('.field-refresh-captcha').off('click').click(function () {
     $(this).attr('src', $(this).attr('data-url')+'?'+Math.random());
 });

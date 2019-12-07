@@ -175,6 +175,7 @@ class AuthController extends Controller
                 if ($v == $this->password) {
                     return;
                 }
+
                 return $v;
             });
         $form->password('password_confirmation', trans('admin.password_confirmation'))->same('password');

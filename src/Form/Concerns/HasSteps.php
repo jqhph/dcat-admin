@@ -13,6 +13,7 @@ trait HasSteps
 {
     /**
      * @param Closure|null $builder
+     *
      * @return StepBuilder
      */
     public function step(\Closure $builder = null)
@@ -22,6 +23,7 @@ trait HasSteps
 
     /**
      * @param array $data
+     *
      * @return void
      */
     protected function prepareStepFormFields(array $data)
@@ -31,7 +33,7 @@ trait HasSteps
         if (
             empty($stepBuilder)
             || empty($stepBuilder->count())
-            || (! isset($data[StepBuilder::ALL_STEPS]) && ! $this->isStepFormValidationRequest())
+            || (!isset($data[StepBuilder::ALL_STEPS]) && !$this->isStepFormValidationRequest())
         ) {
             return;
         }
@@ -51,7 +53,7 @@ trait HasSteps
             return;
         }
 
-        if (! empty($data[StepBuilder::ALL_STEPS])) {
+        if (!empty($data[StepBuilder::ALL_STEPS])) {
             foreach ($steps as $stepForm) {
                 foreach ($stepForm->fields() as $field) {
                     $this->pushField($field);
@@ -74,6 +76,7 @@ trait HasSteps
      * Validate step form.
      *
      * @param array $data
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     protected function validateStepForm(array $data)
@@ -94,7 +97,7 @@ trait HasSteps
      */
     protected function responseDoneStep()
     {
-        if (! $builder = $this->builder->getStepBuilder()) {
+        if (!$builder = $this->builder->getStepBuilder()) {
             return;
         }
 
@@ -107,6 +110,7 @@ trait HasSteps
 
     /**
      * @param array $input
+     *
      * @return void
      */
     protected function deleteFileInStepFormStashData($input = [])

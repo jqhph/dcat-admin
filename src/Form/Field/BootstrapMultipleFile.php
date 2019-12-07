@@ -140,7 +140,7 @@ class BootstrapMultipleFile extends Field
             return explode(',', $value);
         }
 
-        return $value ? (array)$value : [];
+        return $value ? (array) $value : [];
     }
 
     /**

@@ -2,11 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MultipleFile extends File
 {
@@ -16,6 +12,7 @@ class MultipleFile extends File
      * Set a limit of files.
      *
      * @param int $limit
+     *
      * @return $this
      */
     public function limit(int $limit)
@@ -32,6 +29,7 @@ class MultipleFile extends File
      * Prepare for saving.
      *
      * @param string|array $file
+     *
      * @return array
      */
     protected function prepareToSave($file)

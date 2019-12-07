@@ -162,6 +162,7 @@ class ExtensionController extends Controller
 
     /**
      * @param string $key
+     *
      * @return \Closure
      */
     protected function getExpandHandler($key = 'require')
@@ -206,9 +207,11 @@ class ExtensionController extends Controller
             if (!$v) {
                 return;
             }
+
             foreach ($v as &$item) {
                 $item = "<span class='text-80 bold'>{$item['name']}</span> <<code>{$item['email']}</code>>";
             }
+
             return implode('<br/>', $v);
         };
 

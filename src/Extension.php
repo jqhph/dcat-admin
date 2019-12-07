@@ -286,6 +286,7 @@ abstract class Extension
 
     /**
      * @param $path
+     *
      * @return bool
      */
     protected function checkMenuExist($path)

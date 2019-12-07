@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Form\Concerns;
 
 use Dcat\Admin\Form\Builder;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Dcat\Admin\Form\Field;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @property Builder $builder
@@ -17,8 +17,9 @@ trait HasFiles
     protected function handleUploadFile($data)
     {
         $column = $data['upload_column'] ?? null;
-        $file   = $data['file'] ?? null;
-        if (! $column && ! $file instanceof UploadedFile) {
+        $file = $data['file'] ?? null;
+
+        if (!$column && !$file instanceof UploadedFile) {
             return;
         }
 
@@ -27,11 +28,11 @@ trait HasFiles
         if ($field && $field instanceof Field\File) {
             return $field->upload($file);
         }
-
     }
 
     /**
      * @param array $data
+     *
      * @return \Illuminate\Http\JsonResponse|void
      */
     protected function handleFileDeleteBeforeCreate(array $data)
@@ -41,7 +42,8 @@ trait HasFiles
         }
 
         $column = $data['_column'] ?? null;
-        $file   = $data['key'] ?? null;
+        $file = $data['key'] ?? null;
+
         if (!$column && !$file) {
             return;
         }
@@ -57,6 +59,7 @@ trait HasFiles
 
     /**
      * @param array $input
+     *
      * @return void
      */
     public function deleteFilesWhenCreating(array $input)
@@ -103,14 +106,14 @@ trait HasFiles
      */
     protected function handleFileDelete(array $input = [])
     {
-        if (! array_key_exists(Field::FILE_DELETE_FLAG, $input)) {
+        if (!array_key_exists(Field::FILE_DELETE_FLAG, $input)) {
             return $input;
         }
 
         $input[Field::FILE_DELETE_FLAG] = $input['key'];
         unset($input['key']);
 
-        if (! empty($input['_column'])) {
+        if (!empty($input['_column'])) {
             $input[$input['_column']] = '';
 
             unset($input['_column']);
@@ -123,6 +126,7 @@ trait HasFiles
 
     /**
      * @param array $input
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     protected function handleFileDeleteWhenCreating(array $input)
@@ -143,5 +147,4 @@ trait HasFiles
             return \response()->json(['status' => true]);
         }
     }
-
 }

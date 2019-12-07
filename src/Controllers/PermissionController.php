@@ -106,7 +106,6 @@ class PermissionController extends Controller
         return $grid;
     }
 
-
     /**
      * @return \Dcat\Admin\Tree
      */

@@ -49,7 +49,7 @@ trait HasFieldValidator
      * Set the update validation rules for the field.
      *
      * @param array|callable|string $rules
-     * @param array $messages
+     * @param array                 $messages
      *
      * @return $this
      */
@@ -66,7 +66,7 @@ trait HasFieldValidator
      * Set the creation validation rules for the field.
      *
      * @param array|callable|string $rules
-     * @param array $messages
+     * @param array                 $messages
      *
      * @return $this
      */
@@ -82,7 +82,7 @@ trait HasFieldValidator
     /**
      * Get or set rules.
      *
-     * @param null $rules
+     * @param null  $rules
      * @param array $messages
      *
      * @return $this
@@ -133,7 +133,7 @@ trait HasFieldValidator
             return $rules;
         }
 
-        if (method_exists($this->form, 'getKey') || ! $id = $this->form->getKey()) {
+        if (method_exists($this->form, 'getKey') || !$id = $this->form->getKey()) {
             return $rules;
         }
 
@@ -164,10 +164,9 @@ trait HasFieldValidator
         return array_filter((array) $rules);
     }
 
-
     /**
      * @param string|array|\Closure $input
-     * @param string|array         $original
+     * @param string|array          $original
      *
      * @return array|\Closure
      */
@@ -175,7 +174,6 @@ trait HasFieldValidator
     {
         if ($input instanceof \Closure) {
             $rules = $input;
-
         } else {
             if (!empty($original)) {
                 $original = $this->formatRules($original);
@@ -227,6 +225,7 @@ trait HasFieldValidator
     /**
      * @param $rules
      * @param $rule
+     *
      * @return void
      */
     protected function deleteRuleByKeyword(&$rules, $rule)
@@ -279,6 +278,7 @@ trait HasFieldValidator
     /**
      * @param $rules
      * @param $rule
+     *
      * @return bool
      */
     protected function isRuleExists($rules, $rule)
@@ -293,7 +293,7 @@ trait HasFieldValidator
 
         $pattern = "/{$rule}[^\|]?(\||$)/";
 
-        return (bool)preg_match($pattern, $rules);
+        return (bool) preg_match($pattern, $rules);
     }
 
     /**
@@ -345,21 +345,20 @@ trait HasFieldValidator
                 if (!array_key_exists($column, $input)) {
                     continue;
                 }
-                $input[$column . $key] = Arr::get($input, $column);
-                $rules[$column . $key] = $fieldRules;
-                $attributes[$column . $key] = $this->label . "[$column]";
+                $input[$column.$key] = Arr::get($input, $column);
+                $rules[$column.$key] = $fieldRules;
+                $attributes[$column.$key] = "{$this->label}[$column]";
             }
         }
 
         return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
-
     /**
      * Set validation messages for column.
      *
      * @param string $key
-     * @param array $messages
+     * @param array  $messages
      *
      * @return $this
      */
@@ -395,7 +394,7 @@ trait HasFieldValidator
             }
 
             if (is_string($this->column)) {
-                $k = $this->column . '.' . $k;
+                $k = $this->column.'.'.$k;
 
                 $result[$k] = $v;
                 continue;
@@ -409,7 +408,6 @@ trait HasFieldValidator
         return $result;
     }
 
-
     /**
      * Set error messages for individual form field.
      *
@@ -417,6 +415,7 @@ trait HasFieldValidator
      *
      * @param string $error
      * @param string $key
+     *
      * @return $this
      */
     public function setClientValidationError(string $error, string $key = null)
@@ -425,6 +424,4 @@ trait HasFieldValidator
 
         return $this->attribute("data-{$key}error", $error);
     }
-
-
 }
