@@ -108,4 +108,8 @@ abstract class RowAction extends GridAction
             $this->name()
         );
     }
+
+    protected function addScript()
+    {
+    }
 }
