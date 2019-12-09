@@ -27,6 +27,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\ExtendCommand::class,
         Console\ExportSeedCommand::class,
         Console\IdeHelperCommand::class,
+        Console\FormCommand::class,
     ];
 
     /**
