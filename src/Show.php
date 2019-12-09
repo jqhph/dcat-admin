@@ -173,7 +173,7 @@ class Show implements Renderable
     public function model(Fluent $model = null)
     {
         if ($model === null) {
-            if (!$this->model) {
+            if (! $this->model) {
                 $this->setupModel();
             }
 

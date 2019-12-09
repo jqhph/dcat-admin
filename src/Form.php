@@ -1285,7 +1285,6 @@ class Form implements Renderable
             return $value;
         }
 
-
         return $this;
     }
 
