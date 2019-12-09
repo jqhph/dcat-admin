@@ -311,12 +311,16 @@ class Field implements Renderable
      *
      * @param string $name
      *
-     * @return $this
+     * @return $this|string
      *
      * @author Edwin Hui
      */
-    public function setElementName($name)
+    public function elementName($name = null)
     {
+        if ($name === null) {
+            return $this->elementName ?: $this->formatName($this->column);
+        }
+
         $this->elementName = $name;
 
         return $this;
@@ -480,24 +484,18 @@ class Field implements Renderable
     }
 
     /**
-     * Get key for error message.
-     *
-     * @return string
-     */
-    public function errorKey()
-    {
-        return $this->errorKey ?: $this->column;
-    }
-
-    /**
-     * Set key for error message.
+     * Get or set key for error message.
      *
      * @param string $key
      *
-     * @return $this
+     * @return $this|string
      */
-    public function setErrorKey($key)
+    public function errorKey($key = null)
     {
+        if ($key === null) {
+            return $this->errorKey ?: $this->column;
+        }
+
         $this->errorKey = $key;
 
         return $this;
@@ -996,14 +994,6 @@ class Field implements Renderable
             : (array) $labelClass;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function elementName()
-    {
-        return $this->elementName ?: $this->formatName($this->column);
     }
 
     /**

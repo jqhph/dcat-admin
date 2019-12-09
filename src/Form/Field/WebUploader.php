@@ -187,7 +187,11 @@ trait WebUploader
             $this->options['deleteUrl'] = $this->form->action();
         }
 
-        if ($this->form->builder() && $this->form->builder()->isCreating()) {
+        if (
+            method_exists($this->form, 'builder')
+            && $this->form->builder()
+            && $this->form->builder()->isCreating()
+        ) {
             unset(
                 $this->options['formData']['_method'],
                 $this->options['deleteData']['_method'],

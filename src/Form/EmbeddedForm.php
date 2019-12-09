@@ -246,9 +246,9 @@ class EmbeddedForm
             $elementClass = "{$this->column}_$jsonKey";
         }
 
-        $field->setElementName($elementName)
-            ->setErrorKey($errorKey)
-            ->setElementClass($elementClass);
+        $field->elementName($elementName)
+            ->errorKey($errorKey)
+            ->elementClass($elementClass);
 
         return $field;
     }
