@@ -115,7 +115,7 @@ trait HasExporter
      *
      * @return string
      */
-    public function getExportUrl($scope = 1, $args = null)
+    public function exportUrl($scope = 1, $args = null)
     {
         $input = array_merge(request()->all(), $this->exporter()->formatExportQuery($scope, $args));
 

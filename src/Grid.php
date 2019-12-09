@@ -843,7 +843,7 @@ HTML;
      *
      * @return $this
      */
-    public function setTitle($title)
+    public function title($title)
     {
         $this->variables['title'] = $title;
 
@@ -857,7 +857,7 @@ HTML;
      *
      * @return $this
      */
-    public function setDescription($description)
+    public function description($description)
     {
         $this->variables['description'] = $description;
 

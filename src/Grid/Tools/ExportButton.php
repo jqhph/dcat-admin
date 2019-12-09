@@ -54,7 +54,7 @@ JS;
         }
         $all = trans('admin.all');
 
-        return "<li><a href=\"{$this->grid->getExportUrl('all')}\" target=\"_blank\">{$all}</a></li>";
+        return "<li><a href=\"{$this->grid->exportUrl('all')}\" target=\"_blank\">{$all}</a></li>";
     }
 
     /**
@@ -69,7 +69,7 @@ JS;
         $page = $this->grid->model()->getCurrentPage() ?: 1;
         $currentPage = trans('admin.current_page');
 
-        return "<li><a href=\"{$this->grid->getExportUrl('page', $page)}\" target=\"_blank\">{$currentPage}</a></li>";
+        return "<li><a href=\"{$this->grid->exportUrl('page', $page)}\" target=\"_blank\">{$currentPage}</a></li>";
     }
 
     /**
@@ -86,7 +86,7 @@ JS;
 
         $selectedRows = trans('admin.selected_rows');
 
-        return "<li><a href=\"{$this->grid->getExportUrl('selected', '__rows__')}\" target=\"_blank\" class='{$this->grid->exportSelectedName()}'>{$selectedRows}</a></li>";
+        return "<li><a href=\"{$this->grid->exportUrl('selected', '__rows__')}\" target=\"_blank\" class='{$this->grid->exportSelectedName()}'>{$selectedRows}</a></li>";
     }
 
     /**
