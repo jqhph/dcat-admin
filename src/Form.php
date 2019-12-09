@@ -11,6 +11,7 @@ use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Widgets\ModalForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
@@ -85,6 +86,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Form implements Renderable
 {
     use HasBuilderEvents,
+        HasFormResponse,
         Concerns\HasEvents,
         Concerns\HasFiles,
         Concerns\HasSteps,
@@ -645,7 +647,7 @@ class Form implements Renderable
 
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
-            return $this->makeValidationErrorsResponse($validationMessages);
+            return $this->validationErrorsResponse($validationMessages);
         }
 
         if (($response = $this->prepare($data))) {
@@ -653,38 +655,6 @@ class Form implements Renderable
 
             return $response;
         }
-    }
-
-    /**
-     * Get ajax response.
-     *
-     * @param $message
-     * @param null $redirect
-     * @param bool $status
-     *
-     * @return bool|\Illuminate\Http\JsonResponse
-     */
-    public function ajaxResponse($message, $redirect = null, bool $status = true)
-    {
-        if ($this->isAjaxRequest()) {
-            return response()->json([
-                'status'   => $status,
-                'message'  => $message,
-                'redirect' => $redirect,
-            ]);
-        }
-
-        return false;
-    }
-
-    /**
-     * Ajax but not pjax.
-     *
-     * @return bool
-     */
-    public function isAjaxRequest()
-    {
-        return $this->request->ajax() && ! $this->request->pjax();
     }
 
     /**
@@ -831,7 +801,7 @@ class Form implements Renderable
 
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
-            return $this->makeValidationErrorsResponse(
+            return $this->validationErrorsResponse(
                 $isEditable ? Arr::dot($validationMessages->toArray()) : $validationMessages
             );
         }
@@ -839,56 +809,6 @@ class Form implements Renderable
         if ($response = $this->prepare($data)) {
             return $response;
         }
-    }
-
-    /**
-     * @param array|MessageBag $validationMessages
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    protected function makeValidationErrorsResponse($validationMessages)
-    {
-        if (! $this->isAjaxRequest()) {
-            return back()->withInput()->withErrors($validationMessages);
-        }
-
-        return response()->json([
-            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages(),
-        ], 422);
-    }
-
-    /**
-     * Get redirect response.
-     *
-     * @param string       $url
-     * @param array|string $options
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function redirect(?string $url, $options = null)
-    {
-        if (is_string($options)) {
-            $message = $options;
-            $options = [];
-        } else {
-            $message = $options['message'] ?? null;
-        }
-
-        $status = (bool) ($options['status'] ?? true);
-
-        if ($this->isAjaxRequest()) {
-            $message = $message ?: trans('admin.save_succeeded');
-
-            return $this->ajaxResponse($message, $url, $status);
-        }
-
-        $status = (int) ($options['status_code'] ?? 302);
-
-        if ($message) {
-            admin_alert($message);
-        }
-
-        return redirect($url, $status);
     }
 
     /**

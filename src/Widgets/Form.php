@@ -6,14 +6,18 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
+use Illuminate\Validation\Validator;
 
 /**
  * Class Form.
@@ -75,9 +79,11 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Form implements Renderable
 {
-    use HasHtmlAttributes, Macroable {
-        __call as macroCall;
-    }
+    use HasHtmlAttributes,
+        HasFormResponse,
+        Macroable {
+            __call as macroCall;
+        }
 
     /**
      * @var string
@@ -137,7 +143,9 @@ class Form implements Renderable
      */
     public function __construct($data = [], $key = null)
     {
-        $this->data($data);
+        if ($data) {
+            $this->fill($data);
+        }
         $this->key($key);
 
         $this->initFields();
@@ -224,13 +232,15 @@ class Form implements Renderable
     /**
      * @param array|Arrayable|Closure $data
      *
-     * @return $this
+     * @return Fluent
      */
-    public function data($data)
+    public function data()
     {
-        $this->data = new Fluent(Helper::array($data));
+        if (! $this->data) {
+            $this->fill([]);
+        }
 
-        return $this;
+        return $this->data;
     }
 
     /**
@@ -240,7 +250,9 @@ class Form implements Renderable
      */
     public function fill($data)
     {
-        return $this->data($data);
+        $this->data = new Fluent(Helper::array($data));
+
+        return $this;
     }
 
     /**
@@ -248,11 +260,7 @@ class Form implements Renderable
      */
     public function model()
     {
-        if (! $this->data) {
-            $this->data([]);
-        }
-
-        return $this->data;
+        return $this->data();
     }
 
     /**
@@ -298,6 +306,55 @@ class Form implements Renderable
     public function fields()
     {
         return $this->fields;
+    }
+
+    /**
+     * Validate this form fields.
+     *
+     * @param Request $request
+     *
+     * @return bool|MessageBag
+     */
+    public function validate(Request $request)
+    {
+        if (method_exists($this, 'form')) {
+            $this->form();
+        }
+
+        $failedValidators = [];
+
+        /** @var \Dcat\Admin\Form\Field $field */
+        foreach ($this->fields() as $field) {
+            if (! $validator = $field->getValidator($request->all())) {
+                continue;
+            }
+
+            if (($validator instanceof Validator) && ! $validator->passes()) {
+                $failedValidators[] = $validator;
+            }
+        }
+
+        $message = $this->mergeValidationMessages($failedValidators);
+
+        return $message->any() ? $message : false;
+    }
+
+    /**
+     * Merge validation messages from input validators.
+     *
+     * @param \Illuminate\Validation\Validator[] $validators
+     *
+     * @return MessageBag
+     */
+    protected function mergeValidationMessages($validators)
+    {
+        $messageBag = new MessageBag();
+
+        foreach ($validators as $validator) {
+            $messageBag = $messageBag->merge($validator->messages());
+        }
+
+        return $messageBag;
     }
 
     /**
@@ -422,11 +479,11 @@ class Form implements Renderable
         }
 
         return [
-            'start'      => $this->open(),
-            'end'        => $this->close(),
-            'fields'     => $this->fields,
-            'method'     => $this->getHtmlAttribute('method'),
-            'buttons'    => $this->buttons,
+            'start'   => $this->open(),
+            'end'     => $this->close(),
+            'fields'  => $this->fields,
+            'method'  => $this->getHtmlAttribute('method'),
+            'buttons' => $this->buttons,
         ];
     }
 
@@ -531,6 +588,9 @@ HTML;
         return $this->useAjaxSubmit === true;
     }
 
+    /**
+     * @return void
+     */
     protected function setupSubmitScript()
     {
         Admin::script(
@@ -565,12 +625,53 @@ JS
     }
 
     /**
+     * @param array $input
+     *
+     * @return array
+     */
+    public function sanitize(array $input)
+    {
+        Arr::forget($input, ['_form_', '_token', '_current_']);
+
+        return $input;
+    }
+
+    protected function prepareForm()
+    {
+        if (method_exists($this, 'form')) {
+            $this->form();
+        }
+
+        if (! $this->data && method_exists($this, 'default')) {
+            $data = $this->default();
+
+            if (is_array($data)) {
+                $this->fill($data);
+            }
+        }
+    }
+
+    protected function prepareHandle()
+    {
+        if (method_exists($this, 'handle')) {
+            $this->method('POST');
+            $this->action(admin_url('_handle_form_'));
+            $this->hidden('_form_')->default(get_called_class());
+            $this->hidden('_current_')->default($this->getCurrentUrl());
+        }
+    }
+
+    /**
      * Render the form.
      *
      * @return string
      */
     public function render()
     {
+        $this->prepareForm();
+
+        $this->prepareHandle();
+
         if ($this->allowAjaxSubmit()) {
             $this->setupSubmitScript();
         }

@@ -302,6 +302,8 @@ class Admin
                     $router->resource('auth/roles', 'RoleController');
                     $router->resource('auth/permissions', 'PermissionController');
                 }
+
+                $router->post('_handle_form_', 'HandleFormController@handle')->name('admin.handle-form');
             });
 
             $authController = config('admin.auth.controller', AuthController::class);
