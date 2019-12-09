@@ -30,7 +30,7 @@ EOT;
         Admin::script($this->script());
 
         return <<<EOT
-<form class="form-group grid-radio-$name" style="text-align: left" data-key="{$this->getKey()}">
+<form class="form-group grid-radio-$name" style="text-align: left" data-key="{$this->key()}">
     $radios
     <button type="submit" class="btn btn-primary btn-xs pull-left">
         <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}
@@ -57,7 +57,7 @@ $('form.grid-radio-$name').on('submit', function () {
     btn.button('loading');
 
     $.ajax({
-        url: "{$this->getResource()}/" + $(this).data('key'),
+        url: "{$this->resource()}/" + $(this).data('key'),
         type: "POST",
         data: {
             $name: value,

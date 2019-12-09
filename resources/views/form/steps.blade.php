@@ -12,27 +12,27 @@
             <ul class="la-step-horizontal la-step-label-horizontal la-step ">
                 @foreach($steps->all() as $step)
                 <li class="la-step-item">
-                    <a href="#{{ $step->getFormId() }}" class="la-step-item-container">
+                    <a href="#{{ $step->elementId() }}" class="la-step-item-container">
                         <div class="la-step-line"></div>
                         <div class="la-step-icons">
-                            <span class="la-step-icon" data-index="{{ $step->getIndex() }}">{{ $step->getIndex() + 1 }}</span>
+                            <span class="la-step-icon" data-index="{{ $step->index() }}">{{ $step->index() + 1 }}</span>
                         </div>
                         <div class="la-step-content">
-                            <div class="la-step-title">{!! $step->getTitle() !!}</div>
-                            <div class="la-step-desc"> {{ $step->getDescription() }} </div>
+                            <div class="la-step-title">{!! $step->title() !!}</div>
+                            <div class="la-step-desc"> {{ $step->description() }} </div>
                         </div>
                     </a>
                 </li>
                 @endforeach
 
                 <li class="la-step-item">
-                    <a href="#{{ $steps->getDoneStep()->getElementId() }}" class="la-step-item-container">
+                    <a href="#{{ $steps->doneStep()->elementId() }}" class="la-step-item-container">
                         <div class="la-step-line"></div>
                         <div class="la-step-icons">
                             <span class="la-step-icon" data-index="{{ $steps->count() }}"> {{ $steps->count() + 1 }} </span>
                         </div>
                         <div class="la-step-content">
-                            <div class="la-step-title">{{ $steps->getDoneStep()->title() }}</div>
+                            <div class="la-step-title">{{ $steps->doneStep()->title() }}</div>
                             <div class="la-step-desc"></div>
                         </div>
                     </a>
@@ -41,14 +41,14 @@
             <div class="la-step-form">
                 {!! $steps->build() !!}
 
-                <div id="{{ $steps->getDoneStep()->getElementId() }}" class="la-done-step" style="display: none;">
+                <div id="{{ $steps->doneStep()->elementId() }}" class="la-done-step" style="display: none;">
                 </div>
             </div>
         </div>
     @endif
 </div>
 
-@foreach($form->getHiddenFields() as $field)
+@foreach($form->hiddenFields() as $field)
     {!! $field->render() !!}
 @endforeach
 
@@ -62,7 +62,7 @@ $lastStep = $step;
 
 <script>
 LA.ready(function () {
-    var form = $('#{{ $form->getFormId() }}'),
+    var form = $('#{{ $form->elementId() }}'),
         box = form.find('.la-step-box'),
         stepInput = form.find('.current-step-input'),
         allStepInput = form.find('.all-steps-input'),
@@ -254,7 +254,7 @@ LA.ready(function () {
 
     // 按钮显示隐藏切换
     function toggle_btn() {
-        var last = {{ $lastStep->getIndex() }},
+        var last = {{ $lastStep->index() }},
             sbm = box.find('.step-submit-btn');
 
         if (smartWizard.current_index == last) {

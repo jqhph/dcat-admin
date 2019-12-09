@@ -394,7 +394,7 @@ JS;
      *
      * @param string $view
      */
-    public function setView($view)
+    public function view($view)
     {
         $this->view = $view;
     }

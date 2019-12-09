@@ -137,7 +137,7 @@ class Exporter
      *
      * @return string
      */
-    public function getQueryName(): string
+    public function queryName(): string
     {
         return $this->queryName;
     }
@@ -170,7 +170,7 @@ class Exporter
             return $driver;
         }
 
-        return $this->getExporter($driver);
+        return $this->exporter($driver);
     }
 
     /**
@@ -180,10 +180,10 @@ class Exporter
      *
      * @return Grid\Exporters\AbstractExporter
      */
-    protected function getExporter($driver): ExporterInterface
+    protected function exporter($driver): ExporterInterface
     {
         if (! $driver || ! array_key_exists($driver, static::$drivers)) {
-            return $this->getDefaultExporter();
+            return $this->makeDefaultExporter();
         }
 
         $driver = new static::$drivers[$driver]();
@@ -200,7 +200,7 @@ class Exporter
      *
      * @return Grid\Exporters\ExcelExporter
      */
-    public function getDefaultExporter()
+    public function makeDefaultExporter()
     {
         return Grid\Exporters\ExcelExporter::make()->setGrid($this->grid);
     }

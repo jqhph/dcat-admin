@@ -52,7 +52,7 @@ class StepForm extends WidgetForm
     public function __construct(Form $form, int $index = 0, string $title = null)
     {
         $this->form = $form;
-        $this->parent = $form->builder()->getStepBuilder();
+        $this->parent = $form->builder()->stepBuilder();
         $this->index = $index;
 
         $this->initFields();
@@ -63,10 +63,14 @@ class StepForm extends WidgetForm
     /**
      * @param string|\Closure $title
      *
-     * @return $this
+     * @return $this|string
      */
-    public function title($title)
+    public function title($title = null)
     {
+        if ($title === null) {
+            return $this->title;
+        }
+
         $this->title = value($title);
 
         return $this;
@@ -75,10 +79,14 @@ class StepForm extends WidgetForm
     /**
      * @param string|\Closure $content
      *
-     * @return $this
+     * @return $this|string
      */
-    public function description($content)
+    public function description($content = null)
     {
+        if ($content === null) {
+            return $this->description;
+        }
+
         $this->description = value($content);
 
         return $this;
@@ -87,25 +95,9 @@ class StepForm extends WidgetForm
     /**
      * @return int
      */
-    public function getIndex()
+    public function index()
     {
         return $this->index;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

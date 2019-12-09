@@ -18,7 +18,7 @@ class MultipleSelect extends Select
      */
     public function loadMore($target, $resourceUrl, $idField = 'id', $textField = 'text'): self
     {
-        $column = $this->filter->getColumn();
+        $column = $this->filter->column();
 
         $script = <<<JS
 

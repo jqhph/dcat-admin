@@ -108,7 +108,7 @@ class Filter implements Renderable
     protected $model;
 
     /**
-     * @var array
+     * @var AbstractFilter[]
      */
     protected $filters = [];
 
@@ -280,7 +280,7 @@ class Filter implements Renderable
      */
     public function input($key = null, $default = null)
     {
-        $inputs = $this->getInputs();
+        $inputs = $this->inputs();
 
         if ($key === null) {
             return $inputs;
@@ -294,7 +294,7 @@ class Filter implements Renderable
      *
      * @return Model
      */
-    public function getModel()
+    public function model()
     {
         return $this->model;
     }
@@ -304,7 +304,7 @@ class Filter implements Renderable
      *
      * @return \Dcat\Admin\Grid
      */
-    public function getGrid()
+    public function grid()
     {
         return $this->model->getGrid();
     }
@@ -328,7 +328,7 @@ class Filter implements Renderable
      *
      * @return string
      */
-    public function getFilterID()
+    public function filterID()
     {
         return $this->filterID;
     }
@@ -376,17 +376,17 @@ class Filter implements Renderable
     {
         $this->filters = array_filter($this->filters, function (AbstractFilter $filter) use (&$column) {
             if (is_array($column)) {
-                return ! in_array($filter->getColumn(), $column);
+                return ! in_array($filter->column(), $column);
             }
 
-            return $filter->getColumn() != $column;
+            return $filter->column() != $column;
         });
     }
 
     /**
      * @return array
      */
-    public function getInputs()
+    public function inputs()
     {
         if (! is_null($this->inputs)) {
             return $this->inputs;
@@ -410,7 +410,7 @@ class Filter implements Renderable
      */
     public function conditions()
     {
-        $inputs = $this->getInputs();
+        $inputs = $this->inputs();
 
         if (empty($inputs)) {
             return [];
@@ -513,7 +513,7 @@ class Filter implements Renderable
      *
      * @return Collection
      */
-    public function getScopes()
+    public function scopes()
     {
         return $this->scopes;
     }
@@ -523,7 +523,7 @@ class Filter implements Renderable
      *
      * @return Scope|null
      */
-    public function getCurrentScope()
+    public function currentScope()
     {
         $key = request(Scope::QUERY_NAME);
 
@@ -537,7 +537,7 @@ class Filter implements Renderable
      *
      * @return string
      */
-    public function getCurrentScopeName()
+    public function currentScopeName()
     {
         return request(Scope::QUERY_NAME);
     }
@@ -549,7 +549,7 @@ class Filter implements Renderable
      */
     protected function scopeConditions()
     {
-        if ($scope = $this->getCurrentScope()) {
+        if ($scope = $this->currentScope()) {
             return $scope->condition();
         }
 
@@ -655,11 +655,11 @@ class Filter implements Renderable
     public function urlWithoutFilters()
     {
         /** @var Collection $columns */
-        $columns = collect($this->filters)->map->getColumn()->flatten();
+        $columns = collect($this->filters)->map->column()->flatten();
 
         $pageKey = 'page';
 
-        if ($gridName = $this->model->getGrid()->getName()) {
+        if ($gridName = $this->model->grid()->getName()) {
             $pageKey = "{$gridName}_{$pageKey}";
         }
 
@@ -751,7 +751,7 @@ class Filter implements Renderable
     /**
      * @return array
      */
-    public static function getExtensions()
+    public static function extensions()
     {
         return static::$supports;
     }

@@ -106,7 +106,7 @@ class Selector
      *
      * @return array|Collection
      */
-    public function getSelectors()
+    public function all()
     {
         return $this->selectors;
     }

@@ -30,7 +30,7 @@ JS;
 
     protected function renderCheckbox()
     {
-        $value = $this->getFilterValue([]);
+        $value = $this->value([]);
 
         $this->addScript();
 
@@ -41,7 +41,7 @@ JS;
 
         return <<<HTML
 &nbsp;<span class="dropdown" style="position:absolute;">
-<form action="{$this->getFormAction()}" pjax-container style="display: inline-block;">
+<form action="{$this->formAction()}" pjax-container style="display: inline-block;">
     <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-toggle="dropdown">
         <i class="fa fa-filter"></i>
     </a>
@@ -80,7 +80,7 @@ HTML;
             return <<<HTML
 <li style="margin: 0;padding-left:5px">
     <div class="checkbox checkbox-primary checkbox-inline ">
-        <input id="$id" type="checkbox" class="{$this->class['item']}" name="{$this->getFormName()}[]" value="{$key}" {$checked}/>
+        <input id="$id" type="checkbox" class="{$this->class['item']}" name="{$this->queryName()}[]" value="{$key}" {$checked}/>
         <label for="$id">&nbsp;{$label}</label>
     </div>
 </li>

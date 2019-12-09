@@ -98,11 +98,11 @@ class Checkbox extends MultipleSelect
     {
         if (is_null($value)) {
             if ($this->value === null) {
-                return $this->getDefault();
+                return $this->default();
             }
 
             if (count($this->value) === 0) {
-                return $this->getDefault();
+                return $this->default();
             }
 
             return $this->value;
@@ -120,7 +120,7 @@ class Checkbox extends MultipleSelect
     {
         if ($this->options instanceof \Closure) {
             $this->options(
-                $this->options->call($this->getFormModel(), $this->value(), $this)
+                $this->options->call($this->values(), $this->value(), $this)
             );
         }
 

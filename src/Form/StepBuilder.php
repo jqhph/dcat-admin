@@ -188,7 +188,7 @@ class StepBuilder
     /**
      * @return DoneStep|null
      */
-    public function getDoneStep()
+    public function doneStep()
     {
         if (! $this->doneStep) {
             $this->setDefaultDonePage();
@@ -234,7 +234,7 @@ class StepBuilder
             $data = array_merge($this->fetchStash(), $data);
         }
 
-        session()->put($this->getStashKey(), $data);
+        session()->put($this->stashKey(), $data);
     }
 
     /**
@@ -248,7 +248,7 @@ class StepBuilder
             return [];
         }
 
-        return session()->get($this->getStashKey()) ?: [];
+        return session()->get($this->stashKey()) ?: [];
     }
 
     /**
@@ -262,7 +262,7 @@ class StepBuilder
             return;
         }
 
-        session()->remove($this->getStashKey());
+        session()->remove($this->stashKey());
     }
 
     /**
@@ -294,7 +294,7 @@ class StepBuilder
 
         $data = $this->fetchStash();
 
-        $data[self::CURRENT_VALIDATION_STEP] = ($this->getFieldIndex($field) ?: 0) - 1;
+        $data[self::CURRENT_VALIDATION_STEP] = ($this->fieldIndex($field) ?: 0) - 1;
 
         unset($data[self::ALL_STEPS]);
 
@@ -304,7 +304,7 @@ class StepBuilder
     /**
      * @return string
      */
-    protected function getStashKey()
+    protected function stashKey()
     {
         return 'step-form-input:'.admin_controller_slug();
     }
@@ -359,7 +359,7 @@ class StepBuilder
     protected function setAction()
     {
         foreach ($this->stepForms as $step) {
-            $step->action($this->form->getAction());
+            $step->action($this->form->action());
 
             foreach ($step->fields() as $field) {
                 if ($field instanceof Form\Field\File) {
@@ -428,7 +428,7 @@ JS;
      *
      * @return false|int
      */
-    public function getFieldIndex($column)
+    public function fieldIndex($column)
     {
         foreach ($this->stepForms as $index => $form) {
             if ($form->field($column)) {

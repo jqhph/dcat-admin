@@ -102,14 +102,14 @@ class Between extends Filter
         }
 
         if (! isset($value['start'])) {
-            return $model->where($this->getColumnName(), '<=', $value['end']);
+            return $model->where($this->columnName(), '<=', $value['end']);
         }
 
         if (! isset($value['end'])) {
-            return $model->where($this->getColumnName(), '=>', $value['start']);
+            return $model->where($this->columnName(), '=>', $value['start']);
         }
 
-        return $model->whereBetween($this->getColumnName(), array_values($value));
+        return $model->whereBetween($this->columnName(), array_values($value));
     }
 
     protected function addScript()
@@ -146,12 +146,12 @@ JS;
 
         $this->addScript();
 
-        $value = $this->getFilterValue(['start' => '', 'end' => '']);
+        $value = $this->value(['start' => '', 'end' => '']);
         $active = empty(array_filter($value)) ? '' : 'active';
 
         return <<<EOT
 &nbsp;<span class="dropdown" style="position:absolute">
-<form action="{$this->getFormAction()}" pjax-container style="display: inline-block;">
+<form action="{$this->formAction()}" pjax-container style="display: inline-block;">
     <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-toggle="dropdown">
         <i class="fa fa-filter"></i>
     </a>
@@ -159,7 +159,7 @@ JS;
         <li>
             <input type="text" 
                 class="form-control input-sm {$this->class['start']}" 
-                name="{$this->getFormName()}[start]" 
+                name="{$this->queryName()}[start]" 
                 placeholder="{$this->trans('between_start')}" 
                 value="{$value['start']}" 
                 autocomplete="off" />
@@ -168,7 +168,7 @@ JS;
         <li>
             <input type="text" 
                 class="form-control input-sm {$this->class['start']}" 
-                name="{$this->getFormName()}[end]"  
+                name="{$this->queryName()}[end]"  
                 placeholder="{$this->trans('between_end')}" 
                 value="{$value['end']}" 
                 autocomplete="off"/>

@@ -83,7 +83,7 @@ class DoneStep
     /**
      * @return string
      */
-    public function getElementId(): string
+    public function elementId(): string
     {
         return $this->elementId;
     }
@@ -91,9 +91,9 @@ class DoneStep
     /**
      * @return array
      */
-    public function getNewId()
+    public function newId()
     {
-        return $this->form->getKey();
+        return $this->form->key();
     }
 
     /**
@@ -104,7 +104,7 @@ class DoneStep
      */
     public function input($key = null, $default = null)
     {
-        $input = $this->form->getUpdates();
+        $input = $this->form->updates();
 
         if ($key === null) {
             return $input;

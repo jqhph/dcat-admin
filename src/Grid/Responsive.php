@@ -48,7 +48,7 @@ class Responsive
      */
     public function all()
     {
-        $this->grid->getColumns()->each->responsive();
+        $this->grid->columns()->each->responsive();
 
         return $this;
     }

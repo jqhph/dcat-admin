@@ -6,7 +6,6 @@ use Dcat\Admin\Grid;
 
 /**
  * @method Grid\Model model()
- * @method Grid\Filter getFilter()
  */
 trait HasElementNames
 {
@@ -48,7 +47,7 @@ trait HasElementNames
             ->setPageName("{$name}_{$model->getPageName()}")
             ->setSortName("{$name}_{$model->getSortName()}");
 
-        $this->getFilter()->setName($name);
+        $this->filter()->setName($name);
 
         $this->setExporterQueryName($name);
 
@@ -70,7 +69,7 @@ trait HasElementNames
     /**
      * @return string
      */
-    public function getGridRowName()
+    public function rowName()
     {
         return $this->elementNameWithPrefix('grid_row');
     }
@@ -78,7 +77,7 @@ trait HasElementNames
     /**
      * @return string
      */
-    public function getSelectAllName()
+    public function selectAllName()
     {
         return $this->elementNameWithPrefix('grid_select_all');
     }
@@ -94,7 +93,7 @@ trait HasElementNames
     /**
      * @return string
      */
-    public function getGridBatchName()
+    public function batchName()
     {
         return $this->elementNameWithPrefix('grid_batch');
     }
@@ -102,7 +101,7 @@ trait HasElementNames
     /**
      * @return string
      */
-    public function getExportSelectedName()
+    public function exportSelectedName()
     {
         return $this->elementNameWithPrefix('export_selected');
     }
@@ -110,7 +109,7 @@ trait HasElementNames
     /**
      * @return string
      */
-    public function getSelectedRowsName()
+    public function selectedRowsName()
     {
         $elementName = $this->elementNames['selected_rows'];
 

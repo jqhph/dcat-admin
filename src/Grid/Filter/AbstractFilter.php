@@ -458,7 +458,7 @@ abstract class AbstractFilter
      *
      * @return string
      */
-    public function getColumn()
+    public function column()
     {
         $parenName = $this->parent->getName();
 
@@ -506,7 +506,7 @@ abstract class AbstractFilter
     {
         $variables = $this->presenter()->variables();
 
-        $value = $this->value ?: Arr::get($this->parent->getInputs(), $this->column);
+        $value = $this->value ?: Arr::get($this->parent->inputs(), $this->column);
 
         return array_merge([
             'id'        => $this->id,

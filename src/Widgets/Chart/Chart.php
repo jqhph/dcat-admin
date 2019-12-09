@@ -76,7 +76,7 @@ abstract class Chart extends Widget
     public function composite(self $chart)
     {
         $this->data['datasets']
-            = array_merge($this->data['datasets'], $chart->getDatasets());
+            = array_merge($this->data['datasets'], $chart->datasets());
 
         return $this;
     }
@@ -142,7 +142,7 @@ abstract class Chart extends Widget
     /**
      * @return array
      */
-    public function getData()
+    public function data()
     {
         return $this->data;
     }
@@ -429,7 +429,7 @@ JS
      *
      * @return array
      */
-    public function getDatasets()
+    public function datasets()
     {
         $this->fillColor();
 
@@ -495,7 +495,7 @@ HTML;
         return response()->json(array_merge(
             [
                 'status'   => 1,
-                'datasets' => $this->getDatasets(),
+                'datasets' => $this->datasets(),
                 'options'  => $returnOptions ? $this->getOptions() : [],
             ],
             $data

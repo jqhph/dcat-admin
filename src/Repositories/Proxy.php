@@ -57,7 +57,7 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 
     public function edit(Form $form): array
     {
-        $id = $form->getKey();
+        $id = $form->key();
 
         if (array_key_exists($id, $this->__caches['edit'])) {
             return $this->__caches['edit'][$id];
@@ -68,7 +68,7 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 
     public function detail(Show $show): array
     {
-        $id = $show->getKey();
+        $id = $show->key();
 
         if (array_key_exists($id, $this->__caches['detail'])) {
             return $this->__caches['detail'][$id];
@@ -94,7 +94,7 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
 
     public function getDataWhenUpdating(Form $form): array
     {
-        $id = $form->getKey();
+        $id = $form->key();
 
         if (array_key_exists($id, $this->__caches['updating'])) {
             return $this->__caches['updating'][$id];

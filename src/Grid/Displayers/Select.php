@@ -23,7 +23,7 @@ $('.$class').select2().on('change', function(){
     var value = $(this).val();
     LA.NP.start();
     $.ajax({
-        url: "{$this->getResource()}/" + pk,
+        url: "{$this->resource()}/" + pk,
         type: "POST",
         data: {
             $name: value,
@@ -41,7 +41,7 @@ JS;
 
         Admin::script($script);
 
-        $key = $this->row->{$this->grid->getKeyName()};
+        $key = $this->row->{$this->grid->keyName()};
 
         $optionsHtml = '';
 

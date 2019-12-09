@@ -166,7 +166,7 @@ abstract class AbstractExporter implements ExporterInterface
     public function setGrid(Grid $grid)
     {
         $this->grid = $grid;
-        $this->parent = $grid->getExporter();
+        $this->parent = $grid->exporter();
 
         return $this;
     }
@@ -209,7 +209,7 @@ abstract class AbstractExporter implements ExporterInterface
             $model->forPage($page, $perPage);
         }
 
-        $array = $this->grid->getFilter()->execute(true);
+        $array = $this->grid->filter()->execute(true);
 
         $model->reset();
         $model->rejectQueries('forPage');
@@ -247,7 +247,7 @@ abstract class AbstractExporter implements ExporterInterface
         if ($scope == Grid\Exporter::SCOPE_SELECTED_ROWS) {
             $selected = explode(',', $args);
 
-            $this->grid->model()->whereIn($this->grid->getKeyName(), $selected);
+            $this->grid->model()->whereIn($this->grid->keyName(), $selected);
         }
 
         return $this;

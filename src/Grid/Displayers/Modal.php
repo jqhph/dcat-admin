@@ -20,7 +20,7 @@ class Modal extends AbstractDisplayer
             $html = Helper::render($callback($this));
         }
 
-        $key = $this->grid->getName().$this->getKey();
+        $key = $this->grid->getName().$this->key();
 
         return <<<EOT
 <span class="grid-expand" data-toggle="modal" data-target="#grid-modal-{$key}">

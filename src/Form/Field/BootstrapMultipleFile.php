@@ -227,7 +227,7 @@ class BootstrapMultipleFile extends Field
         $options = json_encode($this->options);
 
         $this->script = <<<JS
-$("{$this->getElementClassSelector()}").fileinput({$options});
+$("{$this->elementClassSelector()}").fileinput({$options});
 JS;
 
         return parent::render();

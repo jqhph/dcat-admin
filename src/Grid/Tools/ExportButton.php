@@ -28,10 +28,10 @@ class ExportButton extends AbstractTool
     protected function setUpScripts()
     {
         $script = <<<JS
-$('.{$this->grid->getExportSelectedName()}').click(function (e) {
+$('.{$this->grid->exportSelectedName()}').click(function (e) {
     e.preventDefault();
     
-    var rows = {$this->grid->getSelectedRowsName()}().join(',');
+    var rows = {$this->grid->selectedRowsName()}().join(',');
     if (!rows) {
         return false;
     }
@@ -49,7 +49,7 @@ JS;
      */
     protected function renderExportAll()
     {
-        if (! $this->grid->getExporter()->option('show_export_all')) {
+        if (! $this->grid->exporter()->option('show_export_all')) {
             return;
         }
         $all = trans('admin.all');
@@ -62,7 +62,7 @@ JS;
      */
     protected function renderExportCurrentPage()
     {
-        if (! $this->grid->getExporter()->option('show_export_current_page')) {
+        if (! $this->grid->exporter()->option('show_export_current_page')) {
             return;
         }
 
@@ -79,14 +79,14 @@ JS;
     {
         if (
             ! $this->grid->option('show_row_selector')
-            || ! $this->grid->getExporter()->option('show_export_selected_rows')
+            || ! $this->grid->exporter()->option('show_export_selected_rows')
         ) {
             return;
         }
 
         $selectedRows = trans('admin.selected_rows');
 
-        return "<li><a href=\"{$this->grid->getExportUrl('selected', '__rows__')}\" target=\"_blank\" class='{$this->grid->getExportSelectedName()}'>{$selectedRows}</a></li>";
+        return "<li><a href=\"{$this->grid->getExportUrl('selected', '__rows__')}\" target=\"_blank\" class='{$this->grid->exportSelectedName()}'>{$selectedRows}</a></li>";
     }
 
     /**

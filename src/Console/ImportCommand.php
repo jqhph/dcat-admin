@@ -33,7 +33,7 @@ class ImportCommand extends VendorPublishCommand
     {
         $extension = $this->argument('extension');
 
-        $extensions = Admin::getExtensions();
+        $extensions = Admin::extensions();
 
         if (empty($extension) || ! Arr::has($extensions, $extension)) {
             $extension = $this->choice('Please choose a extension to import', array_keys($extensions));

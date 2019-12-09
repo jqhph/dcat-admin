@@ -42,7 +42,7 @@ class QuickSearch extends AbstractTool
     /**
      * @return string
      */
-    public function getQueryName()
+    public function queryName()
     {
         return $this->queryName;
     }
@@ -76,7 +76,7 @@ class QuickSearch extends AbstractTool
     /**
      * @return string
      */
-    public function getInput()
+    public function value()
     {
         return request($this->queryName);
     }
@@ -100,7 +100,7 @@ class QuickSearch extends AbstractTool
         $vars = [
             'action'      => $request->url().'?'.http_build_query($query),
             'key'         => $this->queryName,
-            'value'       => $this->getInput(),
+            'value'       => $this->value(),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
             'width'       => $this->width,
         ];

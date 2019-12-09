@@ -76,7 +76,7 @@ class SelectResource extends Field
         if ($this->options instanceof \Closure) {
             $value = Helper::array(old($this->column, $this->value()));
 
-            $this->options = $this->options->call($this->getFormModel(), $value, $this);
+            $this->options = $this->options->call($this->values(), $value, $this);
         }
 
         $this->options = Helper::array($this->options);
@@ -176,13 +176,13 @@ class SelectResource extends Field
             Admin::style(".select-resource .nav li a{padding:8px 10px;font-size:13px;font-weight:bold;color:{$primayDark}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}");
         }
 
-        $this->defaultAttribute('class', 'form-control '.$this->getElementClassString());
+        $this->defaultAttribute('class', 'form-control '.$this->elementClassString());
 
         $name = $this->elementName ?: $this->formatName($this->column);
 
         $this->prepend('<i class="fa fa-long-arrow-up"></i>')
             ->defaultAttribute('type', 'text')
-            ->defaultAttribute('id', $this->id.$this->getFormId())
+            ->defaultAttribute('id', $this->id.$this->formElementId())
             ->defaultAttribute('name', $name);
 
         $this->addVariables([
@@ -192,10 +192,10 @@ class SelectResource extends Field
             'area'             => json_encode($this->area),
             'maxItem'          => $this->maxItem,
             'source'           => $this->source,
-            'placeholder'      => $this->getPlaceholder(),
+            'placeholder'      => $this->placeholder(),
             'style'            => $this->style,
             'disabled'         => empty($this->attributes['disabled']) ? '' : 'disabled',
-            'inputContainerId' => $this->id.$this->getFormId(),
+            'inputContainerId' => $this->id.$this->formElementId(),
         ]);
 
         return parent::render();

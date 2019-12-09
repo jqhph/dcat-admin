@@ -92,7 +92,7 @@ trait HasHeader
     public function bindFilterQuery(Model $model)
     {
         if ($this->filter) {
-            $this->filter->addBinding($this->filter->getFilterValue(), $model);
+            $this->filter->addBinding($this->filter->value(), $model);
         }
     }
 

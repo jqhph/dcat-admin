@@ -19,6 +19,6 @@ class Ngt extends Equal
             return;
         }
 
-        $model->where($this->getColumnName(), '<=', $value);
+        $model->where($this->columnName(), '<=', $value);
     }
 }

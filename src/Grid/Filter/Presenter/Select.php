@@ -106,7 +106,7 @@ class Select extends Presenter
             $configs = substr($configs, 1, strlen($configs) - 2);
 
             $this->script = <<<SCRIPT
-$(".{$this->getElementClass()}").select2({
+$(".{$this->elementClass()}").select2({
   placeholder: $placeholder,
   $configs
 });
@@ -193,7 +193,7 @@ SCRIPT;
         $this->script = <<<JS
 
 $.ajax($ajaxOptions).done(function(data) {
-  $(".{$this->getElementClass()}").select2({
+  $(".{$this->elementClass()}").select2({
     data: data,
     $configs
   }).val($values).trigger("change");
@@ -223,7 +223,7 @@ JS;
 
         $this->script = <<<JS
 
-$(".{$this->getElementClass()}").select2({
+$(".{$this->elementClass()}").select2({
   ajax: {
     url: "$resourceUrl",
     dataType: 'json',
@@ -266,7 +266,7 @@ JS;
     {
         return [
             'options'   => $this->buildOptions(),
-            'class'     => $this->getElementClass(),
+            'class'     => $this->elementClass(),
             'selectAll' => $this->selectAll,
         ];
     }
@@ -274,10 +274,10 @@ JS;
     /**
      * @return string
      */
-    protected function getElementClass() : string
+    protected function elementClass() : string
     {
         return $this->elementClass ?:
-            ($this->elementClass = $this->getClass($this->filter->getColumn()));
+            ($this->elementClass = $this->getClass($this->filter->column()));
     }
 
     /**
@@ -292,7 +292,7 @@ JS;
      */
     public function load($target, $resourceUrl, $idField = 'id', $textField = 'text') : self
     {
-        $class = $this->getElementClass();
+        $class = $this->elementClass();
 
         $script = <<<JS
 $(document).off('change', ".{$class}");

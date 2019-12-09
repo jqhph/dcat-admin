@@ -18,10 +18,14 @@ trait HasSelector
     /**
      * @param \Closure $closure
      *
-     * @return $this
+     * @return $this|Selector
      */
-    public function selector(\Closure $closure)
+    public function selector(\Closure $closure = null)
     {
+        if ($closure === null) {
+            return $this->_selector;
+        }
+
         $this->_selector = new Selector($this);
 
         call_user_func($closure, $this->_selector);
@@ -46,7 +50,7 @@ trait HasSelector
 
         $active = $this->_selector->parseSelected();
 
-        $this->_selector->getSelectors()->each(function ($selector, $column) use ($active) {
+        $this->_selector->all()->each(function ($selector, $column) use ($active) {
             if (! array_key_exists($column, $active)) {
                 return;
             }
@@ -64,14 +68,6 @@ trait HasSelector
         });
 
         return $this;
-    }
-
-    /**
-     * @return Selector
-     */
-    public function getSelector()
-    {
-        return $this->_selector;
     }
 
     /**

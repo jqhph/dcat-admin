@@ -70,8 +70,8 @@ class SwitchDisplay extends AbstractDisplayer
 
         $this->setupScript();
 
-        $name = $this->getElementName();
-        $key = $this->row->{$this->grid->getKeyName()};
+        $name = $this->elementName();
+        $key = $this->row->{$this->grid->keyName()};
         $checked = $this->value ? 'checked' : '';
         $color = $this->color ?: Color::primary();
 
@@ -102,7 +102,7 @@ EOF;
         LA.NP.start();
     
         $.ajax({
-            url: "{$this->getResource()}/" + id,
+            url: "{$this->resource()}/" + id,
             type: "POST",
             data: data,
             success: function (d) {

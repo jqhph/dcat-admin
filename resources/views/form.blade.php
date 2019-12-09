@@ -10,7 +10,7 @@
     @else
         <div class="fields-group">
             @if($form->hasRows())
-                @foreach($form->getRows() as $row)
+                @foreach($form->rows() as $row)
                     {!! $row->render() !!}
                 @endforeach
             @else
@@ -23,6 +23,6 @@
 </div>
 {!! $form->renderFooter() !!}
 
-@foreach($form->getHiddenFields() as $field)
+@foreach($form->hiddenFields() as $field)
     {!! $field->render() !!}
 @endforeach

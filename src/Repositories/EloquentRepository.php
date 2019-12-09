@@ -145,7 +145,7 @@ abstract class EloquentRepository extends Repository
 
         $this->model = $eloquent
             ->with($this->getRelations($form))
-            ->findOrFail($form->getKey(), $this->getFormColumns());
+            ->findOrFail($form->key(), $this->getFormColumns());
 
         return $this->model->toArray();
     }
@@ -167,7 +167,7 @@ abstract class EloquentRepository extends Repository
 
         $this->model = $eloquent
             ->with($this->getRelations($show))
-            ->findOrFail($show->getKey(), $this->getDetailColumns());
+            ->findOrFail($show->key(), $this->getDetailColumns());
 
         return $this->model->toArray();
     }
@@ -186,7 +186,7 @@ abstract class EloquentRepository extends Repository
         DB::transaction(function () use ($form, &$result) {
             $model = $this->eloquent();
 
-            $updates = $form->getUpdates();
+            $updates = $form->updates();
 
             $relations = $this->getRelationInputs($model, $updates);
 
@@ -233,13 +233,13 @@ abstract class EloquentRepository extends Repository
         if (! $model->getKey()) {
             $model->exists = true;
 
-            $model->setAttribute($model->getKeyName(), $form->getKey());
+            $model->setAttribute($model->getKeyName(), $form->key());
         }
 
         $result = null;
 
         DB::transaction(function () use ($form, $model, &$result) {
-            $updates = $form->getUpdates();
+            $updates = $form->updates();
 
             $relations = $this->getRelationInputs($model, $updates);
 
@@ -302,7 +302,7 @@ abstract class EloquentRepository extends Repository
      */
     public function destroy(Form $form, array $deletingData)
     {
-        $id = $form->getKey();
+        $id = $form->key();
 
         $deletingData = collect($deletingData)->keyBy($this->getKeyName());
 
@@ -345,7 +345,7 @@ abstract class EloquentRepository extends Repository
 
         $builder = $model->newQuery();
 
-        $id = $form->getKey();
+        $id = $form->key();
 
         return $builder
             ->with($this->getRelations($form))
@@ -398,7 +398,7 @@ abstract class EloquentRepository extends Repository
             }
         } elseif ($builder instanceof Show) {
             /** @var Show\Field $field */
-            foreach ($builder->getFields() as $field) {
+            foreach ($builder->fields() as $field) {
                 $columns[] = $field->getName();
             }
         }

@@ -34,7 +34,7 @@
                                 @continue
                             @endif
 
-                            <td>{!! $field->setLabelClass(['hidden'])->setWidth(12, 0)->render() !!}</td>
+                            <td>{!! $field->labelClass(['hidden'])->setWidth(12, 0)->render() !!}</td>
                         @endforeach
 
                         <td class="hidden">{!! $hidden !!}</td>

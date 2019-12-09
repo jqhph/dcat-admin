@@ -142,7 +142,7 @@ class Tags extends Field
     public function value($value = null)
     {
         if (is_null($value)) {
-            return empty($this->value) ? Helper::array($this->getDefault()) : $this->value;
+            return empty($this->value) ? Helper::array($this->default()) : $this->value;
         }
 
         $this->value = Helper::array($value);
@@ -159,7 +159,7 @@ class Tags extends Field
 
         if ($this->options instanceof \Closure) {
             $this->options(
-                $this->options->call($this->getFormModel(), $value, $this)
+                $this->options->call($this->values(), $value, $this)
             );
         }
 
@@ -182,7 +182,7 @@ class Tags extends Field
         // 解决部分浏览器开启 tags: true 后无法输入中文的BUG
         // 支持【逗号】【分号】【空格】结尾生成tags
         $this->script = <<<JS
-$("{$this->getElementClassSelector()}").select2({
+$("{$this->elementClassSelector()}").select2({
     tags: true,
     tokenSeparators: [',', ';', '，', '；', ' '],
     createTag: function(params) {

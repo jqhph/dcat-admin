@@ -22,7 +22,7 @@ class FilterButton extends AbstractTool
      */
     protected function filter()
     {
-        return $this->grid->getFilter();
+        return $this->grid->filter();
     }
 
     /**
@@ -44,7 +44,7 @@ class FilterButton extends AbstractTool
      */
     protected function setupScripts()
     {
-        $id = $this->filter()->getFilterID();
+        $id = $this->filter()->filterID();
 
         Admin::script(
             <<<JS
@@ -60,7 +60,7 @@ JS
      */
     protected function renderScopes()
     {
-        return $this->filter()->getScopes()->map->render()->implode("\r\n");
+        return $this->filter()->scopes()->map->render()->implode("\r\n");
     }
 
     /**
@@ -68,9 +68,9 @@ JS
      *
      * @return string
      */
-    protected function getCurrentScopeLabel()
+    protected function currentScopeLabel()
     {
-        if ($scope = $this->filter()->getCurrentScope()) {
+        if ($scope = $this->filter()->currentScope()) {
             return "&nbsp;{$scope->getLabel()}&nbsp;";
         }
 
@@ -84,7 +84,7 @@ JS
     {
         $filter = $this->filter();
 
-        $scopres = $filter->getScopes();
+        $scopres = $filter->scopes();
         $filters = $filter->filters();
 
         if ($scopres->isEmpty() && ! $filters) {
@@ -97,7 +97,7 @@ JS
 
         $variables = [
             'scopes'           => $scopres,
-            'current_label'    => $this->getCurrentScopeLabel(),
+            'current_label'    => $this->currentScopeLabel(),
             'url_no_scopes'    => $filter->urlWithoutScopes(),
             'btn_class'        => $this->getElementClassName(),
             'expand'           => $filter->expand,

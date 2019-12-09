@@ -207,7 +207,7 @@ class Tools implements Renderable
      */
     protected function getEditPath()
     {
-        $key = $this->panel->getParent()->getKey();
+        $key = $this->panel->getParent()->key();
 
         return $this->getListPath().'/'.$key.'/edit';
     }
@@ -219,7 +219,7 @@ class Tools implements Renderable
      */
     protected function getDeletePath()
     {
-        $key = $this->panel->getParent()->getKey();
+        $key = $this->panel->getParent()->key();
 
         return $this->getListPath().'/'.$key;
     }

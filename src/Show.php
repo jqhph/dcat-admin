@@ -105,11 +105,11 @@ class Show implements Renderable
         if ($model instanceof Repository) {
             $this->repository = Admin::repository($model);
         } elseif ($model instanceof Arrayable) {
-            $this->setModel(new Fluent($model->toArray()));
+            $this->model(new Fluent($model->toArray()));
         } elseif (is_array($model)) {
-            $this->setModel(new Fluent($model));
+            $this->model(new Fluent($model));
         } else {
-            $this->setModel(new Fluent());
+            $this->model(new Fluent());
         }
     }
 
@@ -153,46 +153,42 @@ class Show implements Renderable
 
     /**
      * @param mixed $id
+     *
+     * @return mixed
      */
-    public function setKey($id)
+    public function key($id = null)
     {
+        if ($id === null) {
+            return $this->__id;
+        }
+
         $this->__id = $id;
     }
 
     /**
-     * @return mixed
-     */
-    public function getKey()
-    {
-        return $this->__id;
-    }
-
-    /**
-     * @param $model
-     */
-    public function setModel(Fluent $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
+     * @param Fluent|null $model
+     *
      * @return Fluent
      */
-    public function model()
+    public function model(Fluent $model = null)
     {
-        if (! $this->model) {
-            $this->setupModel();
+        if ($model === null) {
+            if (!$this->model) {
+                $this->setupModel();
+            }
+
+            return $this->model;
         }
 
-        return $this->model;
+        $this->model = $model;
     }
 
     protected function setupModel()
     {
         if ($this->repository) {
-            $this->setModel(new Fluent($this->repository->detail($this)));
+            $this->model(new Fluent($this->repository->detail($this)));
         } else {
-            $this->setModel(new Fluent());
+            $this->model(new Fluent());
         }
     }
 
@@ -204,13 +200,13 @@ class Show implements Renderable
      *
      * @return $this
      */
-    public function setView($view, $variables = [])
+    public function view($view, $variables = [])
     {
         if (! empty($variables)) {
             $this->with($variables);
         }
 
-        $this->panel->setView($view);
+        $this->panel->view($view);
 
         return $this;
     }
@@ -280,14 +276,18 @@ class Show implements Renderable
     }
 
     /**
-     * Add multiple fields.
+     * Get fields or add multiple fields.
      *
      * @param array $fields
      *
-     * @return $this
+     * @return $this|Collection
      */
-    public function fields(array $fields = [])
+    public function fields(array $fields = null)
     {
+        if ($fields === null) {
+            return $this->fields;
+        }
+
         if (! Arr::isAssoc($fields)) {
             $fields = array_combine($fields, $fields);
         }
@@ -302,15 +302,7 @@ class Show implements Renderable
     /**
      * @return Collection
      */
-    public function getFields()
-    {
-        return $this->fields;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getRelations()
+    public function relations()
     {
         return $this->relations;
     }
@@ -456,7 +448,7 @@ class Show implements Renderable
      */
     public function disableListButton(bool $disable = true)
     {
-        $this->panel->getTools()->disableList($disable);
+        $this->panel->tools()->disableList($disable);
 
         return $this;
     }
@@ -468,7 +460,7 @@ class Show implements Renderable
      */
     public function disableDeleteButton(bool $disable = true)
     {
-        $this->panel->getTools()->disableDelete($disable);
+        $this->panel->tools()->disableDelete($disable);
 
         return $this;
     }
@@ -480,7 +472,7 @@ class Show implements Renderable
      */
     public function disableEditButton(bool $disable = true)
     {
-        $this->panel->getTools()->disableEdit($disable);
+        $this->panel->tools()->disableEdit($disable);
 
         return $this;
     }
@@ -495,7 +487,7 @@ class Show implements Renderable
      */
     public function showQuickEdit(?string $width = null, ?string $height = null)
     {
-        $this->panel->getTools()->showQuickEdit($width, $height);
+        $this->panel->tools()->showQuickEdit($width, $height);
 
         return $this;
     }
@@ -507,7 +499,7 @@ class Show implements Renderable
      */
     public function disableQuickEdit()
     {
-        $this->panel->getTools()->disableQuickEdit();
+        $this->panel->tools()->disableQuickEdit();
 
         return $this;
     }
@@ -622,8 +614,8 @@ class Show implements Renderable
                 $this->fields($this->builder);
             }
 
-            $this->fields->each->setValue($model);
-            $this->relations->each->setModel($model);
+            $this->fields->each->fill($model);
+            $this->relations->each->model($model);
 
             $this->callComposing();
 

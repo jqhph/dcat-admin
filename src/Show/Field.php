@@ -501,15 +501,29 @@ HTML;
     }
 
     /**
-     * Set value for this field.
-     *
      * @param Fluent $model
      *
-     * @return $this
+     * @return void
      */
-    public function setValue(Fluent $model)
+    public function fill(Fluent $model)
     {
-        $this->value = $model->get($this->name);
+        $this->value($model->get($this->name));
+    }
+
+    /**
+     * Get or set value for this field.
+     *
+     * @param mixed $value
+     *
+     * @return $this|mixed
+     */
+    public function value($value = null)
+    {
+        if ($value === null) {
+            return $this->value;
+        }
+
+        $this->value = $value;
 
         return $this;
     }
@@ -693,7 +707,7 @@ HTML;
     /**
      * @return array
      */
-    public static function getExtensions()
+    public static function extensions()
     {
         return static::$extendedFields;
     }

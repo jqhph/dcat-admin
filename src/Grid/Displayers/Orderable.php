@@ -24,10 +24,10 @@ class Orderable extends AbstractDisplayer
         return <<<EOT
 
 <div class="">
-    <a href="javascript:void(0)" class=" font-14 {$this->grid->getGridRowName()}-orderable" data-id="{$this->getKey()}" data-direction="1">
+    <a href="javascript:void(0)" class=" font-14 {$this->grid->rowName()}-orderable" data-id="{$this->key()}" data-direction="1">
         <i class="fa fa-hand-o-up fa-fw"></i>
     </a>
-    <a href="javascript:void(0)" class=" font-14 {$this->grid->getGridRowName()}-orderable" data-id="{$this->getKey()}" data-direction="0">
+    <a href="javascript:void(0)" class=" font-14 {$this->grid->rowName()}-orderable" data-id="{$this->key()}" data-direction="0">
         <i class="fa fa-hand-o-down fa-fw"></i>
     </a>
 </div>
@@ -38,12 +38,12 @@ EOT;
     {
         return <<<JS
 
-$('.{$this->grid->getGridRowName()}-orderable').on('click', function() {
+$('.{$this->grid->rowName()}-orderable').on('click', function() {
 
     var key = $(this).data('id');
     var direction = $(this).data('direction');
 
-    $.post('{$this->getResource()}/' + key, {_method:'PUT', _token:LA.token, _orderable:direction}, function(data){
+    $.post('{$this->resource()}/' + key, {_method:'PUT', _token:LA.token, _orderable:direction}, function(data){
         if (data.status) {
             LA.reload();
             LA.success(data.message);

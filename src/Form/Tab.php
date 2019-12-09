@@ -69,7 +69,7 @@ class Tab
 
         $all = $fields->toArray();
 
-        foreach ($this->form->rows as $row) {
+        foreach ($this->form->rows() as $row) {
             $rowFields = array_map(function ($field) {
                 return $field['element'];
             }, $row->getFields());

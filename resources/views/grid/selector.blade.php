@@ -54,7 +54,7 @@
 </style>
 
 <div class="grid-selector">
-    @foreach($self->getSelectors() as $column => $selector)
+    @foreach($self->all() as $column => $selector)
         <div class="wrap">
             <div class="select-label">{{ $selector['label'] }}</div>
             <div class="select-options">

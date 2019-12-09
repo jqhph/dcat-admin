@@ -125,7 +125,7 @@ class UserController extends Controller
             $grid->quickSearch(['id', 'name', 'username']);
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
-                if ($actions->getKey() == AdministratorModel::DEFAULT_ID) {
+                if ($actions->key() == AdministratorModel::DEFAULT_ID) {
                     $actions->disableDelete();
                 }
             });
@@ -211,7 +211,7 @@ class UserController extends Controller
                 return $tree->render();
             });
 
-            if ($show->getKey() == AdministratorModel::DEFAULT_ID) {
+            if ($show->key() == AdministratorModel::DEFAULT_ID) {
                 $show->disableDeleteButton();
             }
         });
@@ -229,7 +229,7 @@ class UserController extends Controller
 
             $connection = config('admin.database.connection');
 
-            $id = $form->getKey();
+            $id = $form->key();
 
             $form->display('id', 'ID');
 

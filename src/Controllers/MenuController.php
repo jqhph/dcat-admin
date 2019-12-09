@@ -49,7 +49,7 @@ class MenuController extends Controller
                     }
                     $form->hidden('_token')->default(csrf_token());
 
-                    $form->setWidth(9, 2);
+                    $form->width(9, 2);
 
                     $column->append(Card::make(trans('admin.new'), $form)->class('card material'));
                 });

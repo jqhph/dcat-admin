@@ -183,7 +183,7 @@ class Grid
     public function __construct(?Repository $repository = null, ?\Closure $builder = null)
     {
         if ($repository) {
-            $this->keyName = $repository->getKeyName();
+            $this->keyName($repository->getKeyName());
         }
 
         $this->model = new Model(request(), $repository);
@@ -205,28 +205,24 @@ class Grid
      *
      * @return string
      */
-    public function getTableId()
+    public function tableId()
     {
         return $this->tableId;
     }
 
     /**
-     * Get primary key name of model.
-     *
-     * @return string
-     */
-    public function getKeyName()
-    {
-        return $this->keyName ?: 'id';
-    }
-
-    /**
-     * Set primary key name.
+     * Get or set primary key name.
      *
      * @param string $name
+     *
+     * @return string|void
      */
-    public function setKeyName(string $name)
+    public function keyName(string $name = null)
     {
+        if ($name === null) {
+            return $this->keyName ?: 'id';
+        }
+
         $this->keyName = $name;
     }
 
@@ -274,11 +270,11 @@ class Grid
      *
      * @param array $columns
      *
-     * @return null
+     * @return Collection|null
      */
-    public function columns($columns = [])
+    public function columns($columns = null)
     {
-        if (func_num_args() == 0) {
+        if ($columns === null) {
             return $this->columns;
         }
 
@@ -293,14 +289,6 @@ class Grid
         foreach (func_get_args() as $column) {
             $this->column($column);
         }
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getColumns()
-    {
-        return $this->columns;
     }
 
     /**
@@ -334,7 +322,7 @@ class Grid
     /**
      * @return array
      */
-    public function getColumnNames()
+    public function columnNames()
     {
         return $this->columnNames;
     }
@@ -382,7 +370,7 @@ class Grid
             Column::SELECT_COLUMN_NAME,
             <<<HTML
 <div class="checkbox checkbox-{$this->options['row_selector_style']} $circle checkbox-grid">
-    <input type="checkbox" class="select-all {$this->getSelectAllName()}"><label></label>
+    <input type="checkbox" class="select-all {$this->selectAllName()}"><label></label>
 </div>
 HTML
         );
@@ -479,7 +467,7 @@ HTML
      *
      * @return string
      */
-    public function getCreateUrl()
+    public function createUrl()
     {
         $queryString = '';
 
@@ -489,7 +477,7 @@ HTML
 
         return sprintf(
             '%s/create%s',
-            $this->getResource(),
+            $this->resource(),
             $queryString ? ('?'.$queryString) : ''
         );
     }
@@ -729,31 +717,25 @@ HTML;
     }
 
     /**
-     * Set resource path.
+     * Get or set resource path.
      *
      * @param string $path
      *
-     * @return $this
+     * @return $this|string
      */
-    public function resource(string $path)
+    public function resource(string $path = null)
     {
+        if ($path === null) {
+            return $this->resourcePath ?: (
+            $this->resourcePath = url(app('request')->getPathInfo())
+            );
+        }
+
         if (! empty($path)) {
             $this->resourcePath = admin_url($path);
         }
 
         return $this;
-    }
-
-    /**
-     * Get resource path.
-     *
-     * @return string
-     */
-    public function getResource()
-    {
-        return $this->resourcePath ?: (
-            $this->resourcePath = url(app('request')->getPathInfo())
-        );
     }
 
     /**
@@ -845,7 +827,7 @@ HTML;
      * @param string $view
      * @param array  $variables
      */
-    public function setView($view, $variables = [])
+    public function view($view, $variables = [])
     {
         if (! empty($variables)) {
             $this->with($variables);

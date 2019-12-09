@@ -55,15 +55,15 @@ abstract class GridAction implements Renderable
      *
      * @return string
      */
-    public function getResource()
+    public function resource()
     {
-        return $this->parent->getResource();
+        return $this->parent->resource();
     }
 
     /**
      * @return string
      */
-    protected function getElementClass()
+    protected function elementClass()
     {
         return ltrim($this->selector($this->selectorPrefix), '.');
     }

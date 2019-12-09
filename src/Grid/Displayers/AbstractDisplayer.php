@@ -76,7 +76,7 @@ abstract class AbstractDisplayer
     /**
      * @return string
      */
-    public function getElementName()
+    public function elementName()
     {
         $name = explode('.', $this->column->getName());
 
@@ -97,9 +97,9 @@ abstract class AbstractDisplayer
      *
      * @return mixed
      */
-    public function getKey()
+    public function key()
     {
-        return $this->row->get($this->grid->getKeyName());
+        return $this->row->get($this->grid->keyName());
     }
 
     /**
@@ -107,9 +107,9 @@ abstract class AbstractDisplayer
      *
      * @return string
      */
-    public function getResource()
+    public function resource()
     {
-        return $this->grid->getResource();
+        return $this->grid->resource();
     }
 
     /**

@@ -91,7 +91,7 @@ trait HasQuickSearch
             return;
         }
 
-        if (! $query = request()->get($this->quickSearch->getQueryName())) {
+        if (! $query = request()->get($this->quickSearch->queryName())) {
             return;
         }
 

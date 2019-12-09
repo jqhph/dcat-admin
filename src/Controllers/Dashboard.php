@@ -79,7 +79,7 @@ class Dashboard
         ];
 
         foreach ($extensions as &$extension) {
-            $extension['installed'] = array_key_exists($extension['key'], Admin::getExtensions());
+            $extension['installed'] = array_key_exists($extension['key'], Admin::extensions());
         }
 
         return view('admin::dashboard.extensions', compact('extensions'));

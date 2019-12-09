@@ -331,7 +331,7 @@ class Content implements Renderable
      *
      * @return $this
      */
-    public function setView(?string $view)
+    public function view(?string $view)
     {
         $this->view = $view;
 

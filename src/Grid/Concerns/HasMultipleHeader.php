@@ -58,7 +58,7 @@ trait HasMultipleHeader
         foreach ($originalHeaders as $header) {
             $headersColumns = array_merge(
                 $headersColumns,
-                $tmp = $header->getColumnNames()
+                $tmp = $header->columnNames()
             );
             foreach ($tmp as &$name) {
                 if ($column = $originalColumns->get($name)) {

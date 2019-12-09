@@ -26,9 +26,9 @@ abstract class RowAction extends GridAction
      *
      * @return mixed
      */
-    protected function getKey()
+    protected function key()
     {
-        return $this->row->get($this->parent->getKeyName());
+        return $this->row->get($this->parent->keyName());
     }
 
     /**
@@ -102,9 +102,9 @@ abstract class RowAction extends GridAction
 
         return sprintf(
             "<a data-_key='%s' href='%s' class='%s' {$attributes}>%s</a>",
-            $this->getKey(),
+            $this->key(),
             $href,
-            $this->getElementClass(),
+            $this->elementClass(),
             $this->name()
         );
     }

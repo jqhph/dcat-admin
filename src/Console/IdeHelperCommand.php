@@ -224,7 +224,7 @@ class IdeHelperCommand extends Command
 
         $reject = $fields[1];
 
-        $fields = collect(Grid\Filter::getExtensions())->reject(function ($value, $key) use (&$reject) {
+        $fields = collect(Grid\Filter::extensions())->reject(function ($value, $key) use (&$reject) {
             return in_array($key, $reject);
         });
 
@@ -244,7 +244,7 @@ class IdeHelperCommand extends Command
      */
     protected function generateShowFields()
     {
-        $extensions = collect(Show\Field::getExtensions());
+        $extensions = collect(Show\Field::extensions());
 
         $space = str_repeat(' ', 5);
 
@@ -268,7 +268,7 @@ class IdeHelperCommand extends Command
 
         $reject = $fields[1];
 
-        $fields = collect(Form::getExtensions())->reject(function ($value, $key) use (&$reject) {
+        $fields = collect(Form::extensions())->reject(function ($value, $key) use (&$reject) {
             return in_array($key, $reject);
         });
 
@@ -294,7 +294,7 @@ class IdeHelperCommand extends Command
 
         $reject = $column[1];
 
-        $columns = collect(array_keys(Grid\Column::getExtensions()))->reject(function ($displayer) use (&$reject) {
+        $columns = collect(array_keys(Grid\Column::extensions()))->reject(function ($displayer) use (&$reject) {
             return in_array($displayer, $reject);
         });
 

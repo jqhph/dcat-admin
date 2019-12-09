@@ -55,10 +55,14 @@ class Relation extends Field
      *
      * @param Fluent $model
      *
-     * @return $this
+     * @return $this|Fluent
      */
-    public function setModel(Fluent $model)
+    public function model(Fluent $model = null)
     {
+        if ($model === null) {
+            return $this->model;
+        }
+
         $this->model = $model;
 
         return $this;
@@ -86,7 +90,7 @@ class Relation extends Field
             ->disableBatchDelete()
             ->disableFilter();
 
-        $filter = $view->getFilter()
+        $filter = $view->filter()
             ->expand()
             ->withoutInputBorder()
             ->hiddenResetButtonText()

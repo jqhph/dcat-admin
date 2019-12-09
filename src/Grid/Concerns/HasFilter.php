@@ -26,16 +26,6 @@ trait HasFilter
     }
 
     /**
-     * Get filter of Grid.
-     *
-     * @return Grid\Filter
-     */
-    public function getFilter()
-    {
-        return $this->filter;
-    }
-
-    /**
      * Process the grid filter.
      *
      * @param bool $toArray
@@ -56,14 +46,18 @@ trait HasFilter
     }
 
     /**
-     * Set the grid filter.
+     * Get or set the grid filter.
      *
      * @param Closure $callback
      *
-     * @return $this
+     * @return $this|Grid\Filter
      */
-    public function filter(Closure $callback)
+    public function filter(Closure $callback = null)
     {
+        if ($callback === null) {
+            return $this->filter;
+        }
+
         call_user_func($callback, $this->filter);
 
         return $this;

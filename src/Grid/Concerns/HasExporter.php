@@ -28,7 +28,7 @@ trait HasExporter
      *
      * @return Grid\Exporters\AbstractExporter
      */
-    public function exporter($exporter = null)
+    public function export($exporter = null)
     {
         $titles = [];
 
@@ -39,7 +39,7 @@ trait HasExporter
 
         $this->showExporter();
 
-        $driver = $this->exportDriver ?: ($this->exportDriver = $this->getExporter()->resolve($exporter));
+        $driver = $this->exportDriver ?: ($this->exportDriver = $this->exporter()->resolve($exporter));
 
         return $driver->titles($titles);
     }
@@ -53,7 +53,7 @@ trait HasExporter
      */
     protected function handleExportRequest($forceExport = false)
     {
-        if (! $scope = request($this->getExporter()->getQueryName())) {
+        if (! $scope = request($this->exporter()->queryName())) {
             return;
         }
 
@@ -76,7 +76,7 @@ trait HasExporter
     /**
      * @return Exporter
      */
-    public function getExporter()
+    public function exporter()
     {
         return $this->exporter ?: ($this->exporter = new Exporter($this));
     }
@@ -90,7 +90,7 @@ trait HasExporter
             return;
         }
 
-        $this->getExporter()->setQueryName($gridName.'_export_');
+        $this->exporter()->setQueryName($gridName.'_export_');
     }
 
     /**
@@ -101,7 +101,7 @@ trait HasExporter
     protected function resolveExportDriver($scope)
     {
         if (! $this->exportDriver) {
-            $this->exportDriver = $this->getExporter()->resolve();
+            $this->exportDriver = $this->exporter()->resolve();
         }
 
         return $this->exportDriver->withScope($scope);
@@ -117,13 +117,13 @@ trait HasExporter
      */
     public function getExportUrl($scope = 1, $args = null)
     {
-        $input = array_merge(request()->all(), $this->getExporter()->formatExportQuery($scope, $args));
+        $input = array_merge(request()->all(), $this->exporter()->formatExportQuery($scope, $args));
 
         if ($constraints = $this->model()->getConstraints()) {
             $input = array_merge($input, $constraints);
         }
 
-        return $this->getResource().'?'.http_build_query($input);
+        return $this->resource().'?'.http_build_query($input);
     }
 
     /**

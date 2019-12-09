@@ -188,7 +188,7 @@ class Admin
                     $show = new Show($id);
                 } else {
                     $show = new Show();
-                    $show->setKey($id);
+                    $show->key($id);
                 }
 
                 break;
@@ -198,17 +198,17 @@ class Admin
                 } elseif ($repository instanceof \Closure) {
                     $show = new Show(null, $repository);
 
-                    $show->setKey($id);
+                    $show->key($id);
                 } elseif ($repository instanceof Repository) {
                     $show = new Show($repository);
 
-                    $show->setKey($id);
+                    $show->key($id);
                 }
                 break;
             case 3:
                 $show = new Show($repository, $callable);
 
-                $show->setKey($id);
+                $show->key($id);
         }
 
         return $show;
@@ -371,7 +371,7 @@ class Admin
      *
      * @return array
      */
-    public static function getExtensions()
+    public static function extensions()
     {
         return static::$extensions;
     }

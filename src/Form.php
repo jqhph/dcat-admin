@@ -283,7 +283,7 @@ class Form implements Renderable
         $this->builder = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
-        $this->setModel(new Fluent());
+        $this->model(new Fluent());
         $this->prepareModalForm();
         $this->callResolving();
     }
@@ -369,18 +369,16 @@ class Form implements Renderable
     }
 
     /**
-     * @return Fluent
-     */
-    public function model()
-    {
-        return $this->model;
-    }
-
-    /**
      * @param Fluent $model
+     *
+     * @return Fluent|void
      */
-    public function setModel(Fluent $model)
+    public function model(Fluent $model = null)
     {
+        if ($model === null) {
+            return $this->model;
+        }
+
         $this->model = $model;
     }
 
@@ -389,9 +387,9 @@ class Form implements Renderable
      *
      * @return mixed
      */
-    public function getKey()
+    public function key()
     {
-        return $this->builder()->getResourceId();
+        return $this->builder()->resourceId();
     }
 
     /**
@@ -439,9 +437,9 @@ class Form implements Renderable
     /**
      * @return string
      */
-    public function getFormId()
+    public function elementId()
     {
-        return $this->builder->getFormId();
+        return $this->builder->elementId();
     }
 
     /**
@@ -461,8 +459,8 @@ class Form implements Renderable
      */
     public function edit($id)
     {
-        $this->builder->setMode(Builder::MODE_EDIT);
-        $this->builder->setResourceId($id);
+        $this->builder->mode(Builder::MODE_EDIT);
+        $this->builder->resourceId($id);
 
         $this->setFieldValue();
 
@@ -529,12 +527,12 @@ class Form implements Renderable
     public function destroy($id)
     {
         try {
-            $this->builder->setResourceId($id);
-            $this->builder->setMode(Builder::MODE_DELETE);
+            $this->builder->resourceId($id);
+            $this->builder->mode(Builder::MODE_DELETE);
 
             $data = $this->repository->getDataWhenDeleting($this);
 
-            $this->setModel(new Fluent($data));
+            $this->model(new Fluent($data));
 
             $this->build();
 
@@ -584,7 +582,7 @@ class Form implements Renderable
 
         $id = $this->repository->store($this);
 
-        $this->builder->setResourceId($id);
+        $this->builder->resourceId($id);
 
         if (($response = $this->callSaved())) {
             return $response;
@@ -595,7 +593,7 @@ class Form implements Renderable
         }
 
         return $this->redirect(
-            $this->getRedirectUrl($id, $redirectTo),
+            $this->redirectUrl($id, $redirectTo),
             trans('admin.save_succeeded')
         );
     }
@@ -690,24 +688,18 @@ class Form implements Renderable
     }
 
     /**
-     * Get data for insert or update.
-     *
-     * @return array
-     */
-    public function getUpdates(): array
-    {
-        return $this->updates;
-    }
-
-    /**
-     * Set data for insert or update.
+     * Get or Set data for insert or update.
      *
      * @param array $updates
      *
-     * @return $this
+     * @return $this|array
      */
-    public function setUpdates(array $updates)
+    public function updates(array $updates = null)
     {
+        if ($updates === null) {
+            return $this->updates;
+        }
+
         $this->updates = array_merge($this->updates, $updates);
 
         return $this;
@@ -759,7 +751,7 @@ class Form implements Renderable
         }
 
         return $this->redirect(
-            $this->getRedirectUrl($id, $redirectTo),
+            $this->redirectUrl($id, $redirectTo),
             trans('admin.update_succeeded')
         );
     }
@@ -773,8 +765,8 @@ class Form implements Renderable
      */
     protected function beforeUpdate($id, array &$data)
     {
-        $this->builder->setResourceId($id);
-        $this->builder->setMode(Builder::MODE_EDIT);
+        $this->builder->resourceId($id);
+        $this->builder->mode(Builder::MODE_EDIT);
 
         $this->build();
 
@@ -792,7 +784,7 @@ class Form implements Renderable
 
         $data = $this->handleFileDelete($data);
 
-        $this->setModel(new Fluent($this->repository->getDataWhenUpdating($this)));
+        $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
         $this->setFieldOriginalValue();
 
         if ($response = $this->handleOrderable($data)) {
@@ -817,7 +809,7 @@ class Form implements Renderable
      *
      * @return string|false
      */
-    public function getRedirectUrl($key, $redirectTo = null)
+    public function redirectUrl($key, $redirectTo = null)
     {
         if ($redirectTo) {
             return $redirectTo;
@@ -1022,7 +1014,7 @@ class Form implements Renderable
      *
      * @return string
      */
-    public function getKeyName()
+    public function keyName()
     {
         if (! $this->repository) {
             return 'id';
@@ -1034,7 +1026,7 @@ class Form implements Renderable
     /**
      * @return string|void
      */
-    public function getCreatedAtColumn()
+    public function createdAtColumn()
     {
         if (! $this->repository) {
             return;
@@ -1046,21 +1038,13 @@ class Form implements Renderable
     /**
      * @return string|void
      */
-    public function getUpdatedAtColumn()
+    public function updatedAtColumn()
     {
         if (! $this->repository) {
             return;
         }
 
         return $this->repository->getUpdatedAtColumn();
-    }
-
-    /**
-     * @return Repository
-     */
-    public function getRepository(): Repository
-    {
-        return $this->repository;
     }
 
     /**
@@ -1175,7 +1159,7 @@ class Form implements Renderable
     protected function rendering()
     {
         if ($isEditing = $this->isEditing()) {
-            $this->setModel(new Fluent($this->repository->edit($this)));
+            $this->model(new Fluent($this->repository->edit($this)));
         }
 
         $this->build();
@@ -1287,25 +1271,22 @@ class Form implements Renderable
     }
 
     /**
-     * Set action for form.
+     * Get or set action for form.
      *
-     * @param string $action
+     * @param string|null $action
      *
-     * @return $this
+     * @return $this|string
      */
-    public function setAction($action)
+    public function action($action = null)
     {
-        $this->builder->setAction($action);
+        $value = $this->builder->action($action);
+
+        if ($action === null) {
+            return $value;
+        }
+
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAction()
-    {
-        return $this->builder->getAction();
     }
 
     /**
@@ -1316,7 +1297,7 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function setWidth($fieldWidth = 8, $labelWidth = 2)
+    public function width($fieldWidth = 8, $labelWidth = 2)
     {
         $this->builder->fields()->each(function ($field) use ($fieldWidth, $labelWidth) {
             /* @var Field $field  */
@@ -1335,23 +1316,23 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function setView($view)
+    public function view($view)
     {
-        $this->builder->setView($view);
+        $this->builder->view($view);
 
         return $this;
     }
 
     /**
-     * Set title for form.
+     * Get or set title for form.
      *
      * @param string $title
      *
      * @return $this
      */
-    public function setTitle($title = '')
+    public function title($title = null)
     {
-        $this->builder->setTitle($title);
+        $this->builder->title($title);
 
         return $this;
     }
@@ -1373,7 +1354,7 @@ class Form implements Renderable
     /**
      * @return Row[]
      */
-    public function getRows()
+    public function rows()
     {
         return $this->rows;
     }
@@ -1387,7 +1368,7 @@ class Form implements Renderable
      */
     public function tools(Closure $callback)
     {
-        $callback->call($this, $this->builder->getTools());
+        $callback->call($this, $this->builder->tools());
 
         return $this;
     }
@@ -1423,7 +1404,7 @@ class Form implements Renderable
      */
     public function disableSubmitButton(bool $disable = true)
     {
-        $this->builder->getFooter()->disableSubmit($disable);
+        $this->builder->footer()->disableSubmit($disable);
 
         return $this;
     }
@@ -1435,7 +1416,7 @@ class Form implements Renderable
      */
     public function disableResetButton(bool $disable = true)
     {
-        $this->builder->getFooter()->disableReset($disable);
+        $this->builder->footer()->disableReset($disable);
 
         return $this;
     }
@@ -1447,7 +1428,7 @@ class Form implements Renderable
      */
     public function disableViewCheck(bool $disable = true)
     {
-        $this->builder->getFooter()->disableViewCheck($disable);
+        $this->builder->footer()->disableViewCheck($disable);
 
         return $this;
     }
@@ -1459,7 +1440,7 @@ class Form implements Renderable
      */
     public function disableEditingCheck(bool $disable = true)
     {
-        $this->builder->getFooter()->disableEditingCheck($disable);
+        $this->builder->footer()->disableEditingCheck($disable);
 
         return $this;
     }
@@ -1471,7 +1452,7 @@ class Form implements Renderable
      */
     public function disableCreatingCheck(bool $disable = true)
     {
-        $this->builder->getFooter()->disableCreatingCheck($disable);
+        $this->builder->footer()->disableCreatingCheck($disable);
 
         return $this;
     }
@@ -1483,7 +1464,7 @@ class Form implements Renderable
      */
     public function disableViewButton(bool $disable = true)
     {
-        $this->builder->getTools()->disableView($disable);
+        $this->builder->tools()->disableView($disable);
 
         return $this;
     }
@@ -1495,7 +1476,7 @@ class Form implements Renderable
      */
     public function disableListButton(bool $disable = true)
     {
-        $this->builder->getTools()->disableList($disable);
+        $this->builder->tools()->disableList($disable);
 
         return $this;
     }
@@ -1507,7 +1488,7 @@ class Form implements Renderable
      */
     public function disableDeleteButton(bool $disable = true)
     {
-        $this->builder->getTools()->disableDelete($disable);
+        $this->builder->tools()->disableDelete($disable);
 
         return $this;
     }
@@ -1521,7 +1502,7 @@ class Form implements Renderable
      */
     public function footer(Closure $callback)
     {
-        call_user_func($callback, $this->builder->getFooter());
+        call_user_func($callback, $this->builder->footer());
 
         return $this;
     }
@@ -1543,7 +1524,7 @@ class Form implements Renderable
             $segments = array_slice($segments, 0, $slice);
         }
 
-        return \url(implode('/', $segments));
+        return url(implode('/', $segments));
     }
 
     /**
@@ -1684,7 +1665,7 @@ class Form implements Renderable
     /**
      * @return array
      */
-    public static function getExtensions()
+    public static function extensions()
     {
         return static::$availableFields;
     }

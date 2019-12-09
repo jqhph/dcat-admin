@@ -201,7 +201,7 @@ class Column
     /**
      * @return array
      */
-    public static function getExtensions()
+    public static function extensions()
     {
         return static::$displayers;
     }

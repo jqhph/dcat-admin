@@ -4,11 +4,12 @@ namespace Dcat\Admin\Grid;
 
 use Closure;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Fluent;
 
 class Row implements Arrayable
 {
@@ -20,7 +21,7 @@ class Row implements Arrayable
     /**
      * Row data.
      *
-     * @var
+     * @var Fluent
      */
     protected $data;
 
@@ -34,7 +35,7 @@ class Row implements Arrayable
     public function __construct(Grid $grid, $data)
     {
         $this->grid = $grid;
-        $this->data = $data;
+        $this->data = new Fluent(Helper::array($data));
     }
 
     /**
@@ -42,9 +43,9 @@ class Row implements Arrayable
      *
      * @return mixed
      */
-    public function getKey()
+    public function key()
     {
-        return $this->model->getKey();
+        return $this->data->get($this->grid->keyName());
     }
 
     /**
@@ -52,7 +53,7 @@ class Row implements Arrayable
      *
      * @return string
      */
-    public function getRowAttributes()
+    public function rowAttributes()
     {
         return $this->formatHtmlAttributes($this->attributes);
     }
@@ -64,10 +65,10 @@ class Row implements Arrayable
      *
      * @return string
      */
-    public function getColumnAttributes($column)
+    public function columnAttributes($column)
     {
         if (
-            ($column = $this->grid->getColumns()->get($column))
+            ($column = $this->grid->columns()->get($column))
             && ($attributes = $column->getAttributes())
         ) {
             return $this->formatHtmlAttributes($attributes);
@@ -140,7 +141,7 @@ class Row implements Arrayable
      */
     public function __get($attr)
     {
-        return Arr::get($this->data, $attr);
+        return $this->data->get($attr);
     }
 
     /**
@@ -153,7 +154,7 @@ class Row implements Arrayable
      */
     public function __set($attr, $value)
     {
-        Arr::set($this->data, $attr, $value);
+        $this->data[$attr] = $value;
     }
 
     /**
@@ -167,7 +168,7 @@ class Row implements Arrayable
     public function column($name, $value = null)
     {
         if (is_null($value)) {
-            $column = Arr::get($this->data, $name);
+            $column = $this->data->get($name);
 
             return $this->output($column);
         }
@@ -176,7 +177,7 @@ class Row implements Arrayable
             $value = $value->call($this, $this->column($name));
         }
 
-        Arr::set($this->data, $name, $value);
+        $this->data[$name] = $value;
 
         return $this;
     }
@@ -186,11 +187,7 @@ class Row implements Arrayable
      */
     public function toArray()
     {
-        if ($this->data instanceof Arrayable) {
-            return $this->data->toArray();
-        }
-
-        return (array) $this->data;
+        return $this->data->toArray();
     }
 
     /**

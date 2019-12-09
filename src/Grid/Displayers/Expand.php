@@ -54,7 +54,7 @@ EOT;
      */
     protected function getDataKey()
     {
-        $key = $this->getKey();
+        $key = $this->key();
 
         static::$counter[$key] = static::$counter[$key] ?? 0;
         static::$counter[$key]++;

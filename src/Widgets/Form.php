@@ -125,7 +125,7 @@ class Form implements Renderable
     /**
      * @var string
      */
-    protected $formId;
+    protected $elementId;
 
     /**
      * @var array
@@ -180,19 +180,15 @@ class Form implements Renderable
      *
      * @param string $action
      *
-     * @return $this
+     * @return $this|string
      */
-    public function action($action)
+    public function action($action = null)
     {
-        return $this->setHtmlAttribute('action', $action);
-    }
+        if ($action === null) {
+            return $this->getHtmlAttribute('action');
+        }
 
-    /**
-     * @return mixed
-     */
-    public function getAction()
-    {
-        return $this->getHtmlAttribute('action');
+        return $this->setHtmlAttribute('action', $action);
     }
 
     /**
@@ -208,25 +204,21 @@ class Form implements Renderable
     }
 
     /**
-     * Set primary key.
+     * Get or set primary key.
      *
      * @param mixed $value
      *
      * @return $this
      */
-    public function key($value)
+    public function key($value = null)
     {
+        if ($value === null) {
+            return $this->primaryKey;
+        }
+
         $this->primaryKey = $value;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getKey()
-    {
-        return $this->primaryKey;
     }
 
     /**
@@ -413,7 +405,7 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function setWidth($fieldWidth = 8, $labelWidth = 2)
+    public function width($fieldWidth = 8, $labelWidth = 2)
     {
         $this->width = [
             'label' => $labelWidth,
@@ -437,7 +429,7 @@ class Form implements Renderable
      */
     public static function findFieldClass($method)
     {
-        $class = Arr::get(\Dcat\Admin\Form::getExtensions(), $method);
+        $class = Arr::get(\Dcat\Admin\Form::extensions(), $method);
 
         if (class_exists($class)) {
             return $class;
@@ -470,9 +462,9 @@ class Form implements Renderable
      *
      * @return array
      */
-    protected function getVariables()
+    protected function variables()
     {
-        $this->setHtmlAttribute('id', $this->getFormId());
+        $this->setHtmlAttribute('id', $this->elementId());
 
         foreach ($this->fields as $field) {
             $field->fill($this->model()->toArray());
@@ -528,7 +520,7 @@ HTML;
      */
     public function setFormId($id)
     {
-        $this->formId = $id;
+        $this->elementId = $id;
 
         return $this;
     }
@@ -536,9 +528,9 @@ HTML;
     /**
      * @return string
      */
-    public function getFormId()
+    public function elementId()
     {
-        return $this->formId ?: ($this->formId = 'form-'.Str::random(8));
+        return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
     }
 
     /**
@@ -564,6 +556,8 @@ HTML;
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $arguments);
         }
+
+        throw new \Exception("Field [{$method}] does not exist.");
     }
 
     /**
@@ -596,7 +590,7 @@ HTML;
         Admin::script(
             <<<JS
 (function () {
-    var f = $('#{$this->getFormId()}');
+    var f = $('#{$this->elementId()}');
 
     f.find('[type="submit"]').click(function () {
         var t = $(this);
@@ -676,7 +670,7 @@ JS
             $this->setupSubmitScript();
         }
 
-        return view($this->view, $this->getVariables())->render();
+        return view($this->view, $this->variables())->render();
     }
 
     /**

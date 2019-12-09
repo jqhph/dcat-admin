@@ -12,7 +12,7 @@ class BatchDelete extends BatchAction
     public function render()
     {
         return <<<HTML
-<li><a href="#" data-method="{$this->grid->getSelectedRowsName()}" data-action="batch-delete" data-url="{$this->resource}">{$this->title}</a></li>
+<li><a href="#" data-method="{$this->grid->selectedRowsName()}" data-action="batch-delete" data-url="{$this->resource}">{$this->title}</a></li>
 HTML;
     }
 

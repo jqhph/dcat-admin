@@ -225,7 +225,7 @@ class Field implements Renderable
      *
      * @return string|array
      */
-    public function getElementId()
+    public function elementId()
     {
         return $this->id;
     }
@@ -420,7 +420,7 @@ class Field implements Renderable
     /**
      * @return Fluent
      */
-    public function getFormModel()
+    public function values()
     {
         return $this->form ? $this->form->model() : new Fluent();
     }
@@ -484,7 +484,7 @@ class Field implements Renderable
      *
      * @return string
      */
-    public function getErrorKey()
+    public function errorKey()
     {
         return $this->errorKey ?: $this->column;
     }
@@ -513,7 +513,7 @@ class Field implements Renderable
     public function value($value = null)
     {
         if (is_null($value)) {
-            return is_null($this->value) ? $this->getDefault() : $this->value;
+            return is_null($this->value) ? $this->default() : $this->value;
         }
 
         $this->value = $value;
@@ -540,31 +540,25 @@ class Field implements Renderable
     }
 
     /**
-     * Set default value for field.
+     * Get or set default value for field.
      *
      * @param $default
      *
      * @return $this
      */
-    public function default($default)
+    public function default($default = null)
     {
+        if ($default === null) {
+            if ($this->default instanceof \Closure) {
+                return call_user_func($this->default, $this->form);
+            }
+
+            return $this->default;
+        }
+
         $this->default = $default;
 
         return $this;
-    }
-
-    /**
-     * Get default value.
-     *
-     * @return mixed
-     */
-    public function getDefault()
-    {
-        if ($this->default instanceof \Closure) {
-            return call_user_func($this->default, $this->form);
-        }
-
-        return $this->default;
     }
 
     /**
@@ -693,7 +687,7 @@ class Field implements Renderable
     public function required($isLabelAsterisked = true)
     {
         if ($isLabelAsterisked) {
-            $this->setLabelClass(['asterisk']);
+            $this->labelClass(['asterisk']);
         }
 
         $this->rules('required');
@@ -732,27 +726,21 @@ class Field implements Renderable
     }
 
     /**
-     * Set field placeholder.
+     * Get or set field placeholder.
      *
      * @param string $placeholder
      *
-     * @return $this
+     * @return $this|string
      */
-    public function placeholder($placeholder = '')
+    public function placeholder($placeholder = null)
     {
+        if ($placeholder === null) {
+            return $this->placeholder ?: trans('admin.input').' '.$this->label;
+        }
+
         $this->placeholder = $placeholder;
 
         return $this;
-    }
-
-    /**
-     * Get placeholder.
-     *
-     * @return string
-     */
-    public function getPlaceholder()
-    {
-        return $this->placeholder ?: trans('admin.input').' '.$this->label;
     }
 
     /**
@@ -828,17 +816,17 @@ class Field implements Renderable
     /**
      * @return array
      */
-    public function getViewElementClasses()
+    public function viewElementClasses()
     {
         if ($this->horizontal) {
             return [
-                'label'      => "col-sm-{$this->width['label']} {$this->getLabelClass()}",
+                'label'      => "col-sm-{$this->width['label']} {$this->labelClass()}",
                 'field'      => "col-sm-{$this->width['field']}",
                 'form-group' => 'form-group ',
             ];
         }
 
-        return ['label' => $this->getLabelClass(), 'field' => '', 'form-group' => ''];
+        return ['label' => $this->labelClass(), 'field' => '', 'form-group' => ''];
     }
 
     /**
@@ -846,29 +834,23 @@ class Field implements Renderable
      *
      * @param string|array $class
      *
-     * @return $this
+     * @return $this|array
      */
-    public function setElementClass($class)
+    public function elementClass($class = null)
     {
+        if ($class === null) {
+            if (! $this->elementClass) {
+                $name = $this->elementName ?: $this->formatName($this->column);
+
+                $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
+            }
+
+            return $this->elementClass;
+        }
+
         $this->elementClass = array_merge($this->elementClass, (array) $class);
 
         return $this;
-    }
-
-    /**
-     * Get element class.
-     *
-     * @return array
-     */
-    protected function getElementClass()
-    {
-        if (! $this->elementClass) {
-            $name = $this->elementName ?: $this->formatName($this->column);
-
-            $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
-        }
-
-        return $this->elementClass;
     }
 
     /**
@@ -876,9 +858,9 @@ class Field implements Renderable
      *
      * @return mixed
      */
-    protected function getElementClassString()
+    protected function elementClassString()
     {
-        $elementClass = $this->getElementClass();
+        $elementClass = $this->elementClass();
 
         if (Arr::isAssoc($elementClass)) {
             $classes = [];
@@ -898,11 +880,11 @@ class Field implements Renderable
      *
      * @return string|array
      */
-    protected function getElementClassSelector()
+    protected function elementClassSelector()
     {
-        $elementClass = $this->getElementClass();
+        $elementClass = $this->elementClass();
 
-        $formId = $this->getFormId();
+        $formId = $this->formElementId();
         $formId = $formId ? '#'.$formId : '';
 
         if (Arr::isAssoc($elementClass)) {
@@ -938,9 +920,9 @@ class Field implements Renderable
     /**
      * @return string|null
      */
-    protected function getFormId()
+    protected function formElementId()
     {
-        return $this->form ? $this->form->getFormId() : null;
+        return $this->form ? $this->form->elementId() : null;
     }
 
     /**
@@ -998,21 +980,17 @@ class Field implements Renderable
     }
 
     /**
-     * @return string
-     */
-    public function getLabelClass(): string
-    {
-        return implode(' ', $this->labelClass);
-    }
-
-    /**
      * @param array|string $labelClass
      * @param bool         $append
      *
-     * @return $this
+     * @return $this|string
      */
-    public function setLabelClass($labelClass, bool $append = true)
+    public function labelClass($labelClass = null, bool $append = true)
     {
+        if ($labelClass === null) {
+            return implode(' ', $this->labelClass);
+        }
+
         $this->labelClass = $append
             ? array_unique(array_merge($this->labelClass, (array) $labelClass))
             : (array) $labelClass;
@@ -1023,7 +1001,7 @@ class Field implements Renderable
     /**
      * @return string
      */
-    public function getElementName()
+    public function elementName()
     {
         return $this->elementName ?: $this->formatName($this->column);
     }
@@ -1037,18 +1015,18 @@ class Field implements Renderable
     {
         return array_merge($this->variables, [
             'id'          => $this->id,
-            'name'        => $this->getElementName(),
+            'name'        => $this->elementName(),
             'help'        => $this->help,
-            'class'       => $this->getElementClassString(),
+            'class'       => $this->elementClassString(),
             'value'       => $this->value(),
             'label'       => $this->label,
-            'viewClass'   => $this->getViewElementClasses(),
+            'viewClass'   => $this->viewElementClasses(),
             'column'      => $this->column,
-            'errorKey'    => $this->getErrorKey(),
+            'errorKey'    => $this->errorKey(),
             'attributes'  => $this->formatAttributes(),
-            'placeholder' => $this->getPlaceholder(),
+            'placeholder' => $this->placeholder(),
             'disabled'    => $this->attributes['disabled'] ?? false,
-            'formId'      => $this->getFormId(),
+            'formId'      => $this->formElementId(),
         ]);
     }
 
@@ -1067,7 +1045,7 @@ class Field implements Renderable
      *
      * @return string
      */
-    public function setView($view)
+    public function view($view)
     {
         $this->view = $view;
 
@@ -1148,6 +1126,8 @@ class Field implements Renderable
      */
     public function __toString()
     {
-        return $this->render()->render();
+        $view = $this->render();
+
+        return $view instanceof Renderable ? $view->render() : (string) $view;
     }
 }

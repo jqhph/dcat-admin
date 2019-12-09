@@ -294,11 +294,11 @@ JS
         $form->disableHeader();
         $form->disableFooter();
 
-        $form->setWidth(9, 2);
+        $form->width(9, 2);
         $form->hidden('_token')->value(csrf_token());
 
         Content::composing(function (Content $content) {
-            $content->setView(static::$contentView);
+            $content->view(static::$contentView);
         });
     }
 }

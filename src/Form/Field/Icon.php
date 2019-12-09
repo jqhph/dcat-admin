@@ -10,7 +10,7 @@ class Icon extends Text
     {
         $this->script = <<<JS
 setTimeout(function () {
-    $('{$this->getElementClassSelector()}').iconpicker({placement:'bottomLeft'});
+    $('{$this->elementClassSelector()}').iconpicker({placement:'bottomLeft'});
 }, 10);
 JS;
 

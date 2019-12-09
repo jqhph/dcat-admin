@@ -40,7 +40,7 @@ class Header extends Widget
     /**
      * @return array
      */
-    public function getColumnNames()
+    public function columnNames()
     {
         return $this->columnNames;
     }

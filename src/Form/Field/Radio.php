@@ -70,25 +70,13 @@ class Radio extends Field
     }
 
     /**
-     * Set options.
-     *
-     * @param array|callable|string $values
-     *
-     * @return $this
-     */
-    public function values($values)
-    {
-        return $this->options($values);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function render()
     {
         if ($this->options instanceof \Closure) {
             $this->options(
-                $this->options->call($this->getFormModel(), $this->value(), $this)
+                $this->options->call($this->values(), $this->value(), $this)
             );
         }
 

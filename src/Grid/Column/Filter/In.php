@@ -41,7 +41,7 @@ class In extends Filter
             return;
         }
 
-        $model->whereIn($this->getColumnName(), $value);
+        $model->whereIn($this->columnName(), $value);
     }
 
     /**

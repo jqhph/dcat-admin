@@ -159,7 +159,7 @@ class SelectResource extends Presenter
     protected function setDefaultSource()
     {
         if (! $this->source) {
-            $column = $this->filter->getColumn();
+            $column = $this->filter->column();
             if (strpos($column, '.')) {
                 $this->path(str_replace('_id', '', last(explode('.', $column))));
             } else {
@@ -174,7 +174,7 @@ class SelectResource extends Presenter
     public function variables() : array
     {
         $this->value = request(
-            $this->filter->getColumn(),
+            $this->filter->column(),
             $this->filter->getValue() ?: $this->filter->getDefault()
         );
 

@@ -30,24 +30,22 @@ abstract class BatchAction implements Renderable
     /**
      * @param $id
      */
-    public function setId($id)
+    public function id($id = null)
     {
+        if ($id === null) {
+            return $this->id;
+        }
+
         $this->id = $id;
     }
 
-    public function setTitle($title)
+    public function title($title = null)
     {
+        if ($title === null) {
+            return $this->title;
+        }
+
         $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -57,13 +55,13 @@ abstract class BatchAction implements Renderable
     {
         $this->grid = $grid;
 
-        $this->resource = $grid->getResource();
+        $this->resource = $grid->resource();
     }
 
     /**
      * @return string
      */
-    public function getToken()
+    public function token()
     {
         return csrf_token();
     }
@@ -73,11 +71,11 @@ abstract class BatchAction implements Renderable
      *
      * @return string
      */
-    public function getElementClass()
+    public function elementClass()
     {
         return sprintf(
             '%s-%s',
-            $this->grid->getGridBatchName(),
+            $this->grid->batchName(),
             $this->id
         );
     }
@@ -85,9 +83,9 @@ abstract class BatchAction implements Renderable
     /**
      * @return string
      */
-    public function getElementSelector()
+    public function elementSelector()
     {
-        return '.'.$this->getElementClass();
+        return '.'.$this->elementClass();
     }
 
     /**
@@ -100,7 +98,7 @@ abstract class BatchAction implements Renderable
     public function render()
     {
         return <<<HTML
-<li><a href="#" class="{$this->getElementClass()}">{$this->getTitle()}</a></li>
+<li><a href="#" class="{$this->elementClass()}">{$this->title()}</a></li>
 HTML;
     }
 }

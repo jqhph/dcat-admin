@@ -118,7 +118,7 @@ class Builder
     /**
      * @var string
      */
-    protected $formId;
+    protected $elementId;
 
     /**
      * @var \Closure
@@ -219,7 +219,7 @@ class Builder
      *
      * @return Tools
      */
-    public function getTools()
+    public function tools()
     {
         return $this->tools;
     }
@@ -229,7 +229,7 @@ class Builder
      *
      * @return Footer
      */
-    public function getFooter()
+    public function footer()
     {
         return $this->footer;
     }
@@ -257,7 +257,7 @@ class Builder
     /**
      * @return StepBuilder
      */
-    public function getStepBuilder()
+    public function stepBuilder()
     {
         return $this->stepBuilder;
     }
@@ -267,19 +267,15 @@ class Builder
      *
      * @param string $mode
      *
-     * @return void
+     * @return void|string
      */
-    public function setMode(string $mode = self::MODE_CREATE)
+    public function mode(string $mode = null)
     {
-        $this->mode = $mode;
-    }
+        if ($mode === null) {
+            return $this->mode;
+        }
 
-    /**
-     * @return string
-     */
-    public function getMode()
-    {
-        return $this->mode;
+        $this->mode = $mode;
     }
 
     /**
@@ -329,21 +325,15 @@ class Builder
      *
      * @param $id
      *
-     * @return void
+     * @return mixed|void
      */
-    public function setResourceId($id)
+    public function resourceId($id = null)
     {
-        $this->id = $id;
-    }
+        if ($id === null) {
+            return $this->id;
+        }
 
-    /**
-     * Get Resource id.
-     *
-     * @return mixed
-     */
-    public function getResourceId()
-    {
-        return $this->id;
+        $this->id = $id;
     }
 
     /**
@@ -388,22 +378,18 @@ class Builder
     }
 
     /**
-     * Set form action.
+     * Get or set action for form.
      *
-     * @param string $action
+     * @return string|void
      */
-    public function setAction($action)
+    public function action($action = null)
     {
-        $this->action = $action;
-    }
+        if ($action !== null) {
+            $this->action = $action;
 
-    /**
-     * Get Form action.
-     *
-     * @return string
-     */
-    public function getAction()
-    {
+            return;
+        }
+
         if ($this->action) {
             return $this->action;
         }
@@ -426,7 +412,7 @@ class Builder
      *
      * @return $this
      */
-    public function setView($view)
+    public function view($view)
     {
         $this->view = $view;
 
@@ -434,17 +420,33 @@ class Builder
     }
 
     /**
-     * Set title for form.
+     * Get or set title for form.
      *
      * @param string $title
      *
-     * @return $this
+     * @return $this|string
      */
-    public function setTitle($title)
+    public function title($title = null)
     {
-        $this->title = $title;
+        if ($title !== null) {
+            $this->title = $title;
 
-        return $this;
+            return $this;
+        }
+
+        if ($this->title) {
+            return $this->title;
+        }
+
+        if ($this->mode == static::MODE_CREATE) {
+            return trans('admin.create');
+        }
+
+        if ($this->mode == static::MODE_EDIT) {
+            return trans('admin.edit');
+        }
+
+        return '';
     }
 
     /**
@@ -478,7 +480,7 @@ class Builder
      */
     public function stepField($name)
     {
-        if (! $builder = $this->getStepBuilder()) {
+        if (! $builder = $this->stepBuilder()) {
             return;
         }
 
@@ -496,7 +498,7 @@ class Builder
     {
         $fields = new Collection();
 
-        if (! $builder = $this->getStepBuilder()) {
+        if (! $builder = $this->stepBuilder()) {
             return $fields;
         }
 
@@ -526,7 +528,7 @@ class Builder
      */
     public function hasRows()
     {
-        return ! empty($this->form->getRows());
+        return ! empty($this->form->rows());
     }
 
     /**
@@ -534,15 +536,15 @@ class Builder
      *
      * @return array
      */
-    public function getRows()
+    public function rows()
     {
-        return $this->form->getRows();
+        return $this->form->rows();
     }
 
     /**
      * @return array
      */
-    public function getHiddenFields()
+    public function hiddenFields()
     {
         return $this->hiddenFields;
     }
@@ -615,37 +617,17 @@ class Builder
      *
      * @return void
      */
-    public function setFormId($id)
+    public function setElementId($id)
     {
-        $this->formId = $id;
+        $this->elementId = $id;
     }
 
     /**
      * @return string
      */
-    public function getFormId()
+    public function elementId()
     {
-        return $this->formId ?: ($this->formId = 'form-'.Str::random(8));
-    }
-
-    /**
-     * @return string
-     */
-    public function title()
-    {
-        if ($this->title) {
-            return $this->title;
-        }
-
-        if ($this->mode == static::MODE_CREATE) {
-            return trans('admin.create');
-        }
-
-        if ($this->mode == static::MODE_EDIT) {
-            return trans('admin.edit');
-        }
-
-        return '';
+        return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
     }
 
     /**
@@ -702,8 +684,8 @@ class Builder
 
         $this->addRedirectUrlField();
 
-        $attributes['id'] = $this->getFormId();
-        $attributes['action'] = $this->getAction();
+        $attributes['id'] = $this->elementId();
+        $attributes['action'] = $this->action();
         $attributes['method'] = Arr::get($options, 'method', 'post');
         $attributes['accept-charset'] = 'UTF-8';
         $attributes['data-toggle'] = 'validator';
@@ -746,9 +728,9 @@ class Builder
         }
 
         $reservedColumns = [
-            $this->form->getKeyName(),
-            $this->form->getCreatedAtColumn(),
-            $this->form->getUpdatedAtColumn(),
+            $this->form->keyName(),
+            $this->form->createdAtColumn(),
+            $this->form->updatedAtColumn(),
         ];
 
         $this->fields = $this->fields()->reject(function (Field $field) use (&$reservedColumns) {
@@ -806,7 +788,7 @@ class Builder
             'form'       => $this,
             'tabObj'     => $tabObj,
             'width'      => $this->width,
-            'formId'     => $this->getFormId(),
+            'elementId'  => $this->elementId(),
             'showHeader' => $this->showHeader,
             'steps'      => $this->stepBuilder,
         ];
@@ -843,7 +825,7 @@ EOF;
         Admin::script(
             <<<JS
 (function () {
-    var f = $('#{$this->getFormId()}');
+    var f = $('#{$this->elementId()}');
 
     f.find('[type="submit"]').click(function () {
         var t = $(this);
@@ -875,27 +857,27 @@ JS
      */
     protected function setupTabScript()
     {
-        $formId = $this->getFormId();
+        $elementId = $this->elementId();
 
         $script = <<<JS
 (function () {
     var hash = document.location.hash;
     if (hash) {
-        $('#$formId .nav-tabs a[href="' + hash + '"]').tab('show');
+        $('#$elementId .nav-tabs a[href="' + hash + '"]').tab('show');
     }
     
     // Change hash for page-reload
-    $('#$formId .nav-tabs a').on('shown.bs.tab', function (e) {
+    $('#$elementId .nav-tabs a').on('shown.bs.tab', function (e) {
         history.pushState(null,null, e.target.hash);
     });
     
-    if ($('#$formId .has-error').length) {
-        $('#$formId .has-error').each(function () {
+    if ($('#$elementId .has-error').length) {
+        $('#$elementId .has-error').each(function () {
             var tabId = '#'+$(this).closest('.tab-pane').attr('id');
             $('li a[href="'+tabId+'"] i').removeClass('hide');
         });
     
-        var first = $('#$formId .has-error:first').closest('.tab-pane').attr('id');
+        var first = $('#$elementId .has-error:first').closest('.tab-pane').attr('id');
         $('li a[href="#'+first+'"]').tab('show');
     }
 })();

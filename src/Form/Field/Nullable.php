@@ -14,4 +14,8 @@ class Nullable extends Field
     {
         return $this;
     }
+
+    public function render()
+    {
+    }
 }

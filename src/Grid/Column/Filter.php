@@ -33,7 +33,7 @@ abstract class Filter implements Renderable
      *
      * @return string
      */
-    public function getColumnName()
+    public function columnName()
     {
         return $this->parent->getName();
     }
@@ -41,11 +41,11 @@ abstract class Filter implements Renderable
     /**
      * @return string
      */
-    public function getFormName()
+    public function queryName()
     {
         return $this->parent->grid()->getName().
             '_filter_'.
-            $this->getColumnName();
+            $this->columnName();
     }
 
     /**
@@ -55,9 +55,9 @@ abstract class Filter implements Renderable
      *
      * @return array|\Illuminate\Http\Request|string
      */
-    public function getFilterValue($default = '')
+    public function value($default = '')
     {
-        return request($this->getFormName(), $default);
+        return request($this->queryName(), $default);
     }
 
     /**
@@ -65,13 +65,13 @@ abstract class Filter implements Renderable
      *
      * @return string
      */
-    public function getFormAction()
+    public function formAction()
     {
         $request = request();
 
         $query = $request->query();
         Arr::forget($query, [
-            $this->getColumnName(),
+            $this->columnName(),
             $this->parent->grid()->model()->getPageName(),
             '_pjax',
         ]);
@@ -89,7 +89,7 @@ abstract class Filter implements Renderable
     protected function urlWithoutFilter()
     {
         $query = app('request')->all();
-        unset($query[$this->getFormName()]);
+        unset($query[$this->queryName()]);
 
         return Helper::urlWithQuery(url()->current(), $query);
     }

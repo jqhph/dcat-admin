@@ -40,7 +40,7 @@
                 </tr>
             @endif
             <tr>
-                @foreach($grid->getColumns() as $column)
+                @foreach($grid->columns() as $column)
                     <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
                 @endforeach
             </tr>
@@ -48,9 +48,9 @@
 
             <tbody>
             @foreach($grid->rows() as $row)
-                <tr {!! $row->getRowAttributes() !!}>
-                    @foreach($grid->getColumnNames() as $name)
-                        <td {!! $row->getColumnAttributes($name) !!}>
+                <tr {!! $row->rowAttributes() !!}>
+                    @foreach($grid->columnNames() as $name)
+                        <td {!! $row->columnAttributes($name) !!}>
                             {!! $row->column($name) !!}
                         </td>
                     @endforeach
@@ -58,7 +58,7 @@
             @endforeach
             @if ($grid->rows()->isEmpty())
                 <tr>
-                    <td colspan="{!! count($grid->getColumnNames()) !!}">
+                    <td colspan="{!! count($grid->columnNames()) !!}">
                         <div style="margin:5px 0 0 10px;"><span class="help-block" style="margin-bottom:0"><i class="fa fa-info-circle"></i>&nbsp;{{ trans('admin.no_data') }}</span></div>
                     </td>
                 </tr>

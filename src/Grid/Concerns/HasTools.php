@@ -23,22 +23,18 @@ trait HasTools
     }
 
     /**
-     * @return Tools
-     */
-    public function getTools()
-    {
-        return $this->tools;
-    }
-
-    /**
-     * Setup grid tools.
+     * Get or setup grid tools.
      *
      * @param Closure $callback
      *
-     * @return $this
+     * @return $this|Tools
      */
-    public function tools(Closure $callback)
+    public function tools(Closure $callback = null)
     {
+        if ($callback === null) {
+            return $this->tools;
+        }
+
         call_user_func($callback, $this->tools);
 
         return $this;
@@ -180,7 +176,7 @@ trait HasTools
         if (
             $this->option('show_toolbar')
             && (
-                $this->getTools()->has()
+                $this->tools()->has()
                 || $this->allowExporter()
                 || $this->allowCreateBtn()
                 || $this->allowQuickCreateBtn()

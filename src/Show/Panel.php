@@ -123,7 +123,7 @@ class Panel implements Renderable
      *
      * @return $this
      */
-    public function setView($view)
+    public function view($view)
     {
         $this->view = $view;
 
@@ -166,18 +166,16 @@ class Panel implements Renderable
      * Build panel tools.
      *
      * @param $callable
+     *
+     * @return Tools|null
      */
-    public function tools($callable)
+    public function tools($callable = null)
     {
-        call_user_func($callable, $this->data['tools']);
-    }
+        if ($callable === null) {
+            return $this->data['tools'];
+        }
 
-    /**
-     * @return Tools
-     */
-    public function getTools()
-    {
-        return $this->data['tools'];
+        call_user_func($callable, $this->data['tools']);
     }
 
     /**

@@ -67,7 +67,7 @@ class SwitchGroup extends SwitchDisplay
         LA.NP.start();
     
          $.ajax({
-            url: "{$this->grid->getResource()}/" + id,
+            url: "{$this->resource()}/" + id,
             type: "POST",
             data: data,
             success: function (d) {
@@ -84,7 +84,7 @@ class SwitchGroup extends SwitchDisplay
 JS;
         Admin::script($script);
 
-        $key = $this->row->{$this->grid->getKeyName()};
+        $key = $this->row->{$this->grid->keyName()};
         $checked = $this->row->$name ? 'checked' : '';
 
         return <<<EOT

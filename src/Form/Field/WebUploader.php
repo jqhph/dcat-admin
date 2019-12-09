@@ -155,7 +155,7 @@ trait WebUploader
             'fileSizeLimit'       => 20971520000, // 20000M
             'fileSingleSizeLimit' => 10485760, // 10M
             'autoUpdateColumn'    => true, // 上传完图片后自动保存图片路径
-            'elementName'         => $this->getElementName(), // 字段name属性值
+            'elementName'         => $this->elementName(), // 字段name属性值
             'lang'                => trans('admin.uploader'),
 
             'deleteData' => [
@@ -176,15 +176,15 @@ trait WebUploader
 
     protected function setDefaultServer()
     {
-        if (! $this->form || ! method_exists($this->form, 'getAction')) {
+        if (! $this->form || ! method_exists($this->form, 'action')) {
             return;
         }
 
         if (empty($this->options['server'])) {
-            $this->options['server'] = $this->form->getAction();
+            $this->options['server'] = $this->form->action();
         }
         if (empty($this->options['deleteUrl'])) {
-            $this->options['deleteUrl'] = $this->form->getAction();
+            $this->options['deleteUrl'] = $this->form->action();
         }
 
         if ($this->form->builder() && $this->form->builder()->isCreating()) {

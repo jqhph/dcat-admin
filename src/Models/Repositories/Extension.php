@@ -15,7 +15,7 @@ class Extension extends Repository
     public function get(Grid\Model $model)
     {
         $data = [];
-        foreach (Admin::getExtensions() as $class) {
+        foreach (Admin::extensions() as $class) {
             $data[] = $this->each($class::make());
         }
 
@@ -57,15 +57,15 @@ class Extension extends Repository
 
     public function update(Form $form)
     {
-        $id = $form->builder()->getResourceId();
+        $id = $form->key();
 
-        $extension = Admin::getExtensions()[$id] ?? null;
+        $extension = Admin::extensions()[$id] ?? null;
 
         if (! $extension) {
             return false;
         }
 
-        $attributes = $form->getUpdates();
+        $attributes = $form->updates();
 
         $enable = (bool) ($attributes['enable'] ?? false);
 

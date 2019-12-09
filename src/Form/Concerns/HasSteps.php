@@ -28,7 +28,7 @@ trait HasSteps
      */
     protected function prepareStepFormFields(array $data)
     {
-        $stepBuilder = $this->builder->getStepBuilder();
+        $stepBuilder = $this->builder->stepBuilder();
 
         if (
             empty($stepBuilder)
@@ -84,7 +84,7 @@ trait HasSteps
     {
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
-            return $this->makeValidationErrorsResponse($validationMessages);
+            return $this->validationErrorsResponse($validationMessages);
         }
 
         // Stash input data.
@@ -98,12 +98,12 @@ trait HasSteps
      */
     protected function responseDoneStep()
     {
-        if (! $builder = $this->builder->getStepBuilder()) {
+        if (! $builder = $this->builder->stepBuilder()) {
             return;
         }
 
         return response(
-            $builder->getDoneStep()
+            $builder->doneStep()
                 ->finish()
                 ->render()
         );

@@ -100,8 +100,8 @@ class Select extends Field
         }
 
         $script = <<<JS
-$(document).off('change', "{$this->getElementClassSelector()}");
-$(document).on('change', "{$this->getElementClassSelector()}", function () {
+$(document).off('change', "{$this->elementClassSelector()}");
+$(document).on('change', "{$this->elementClassSelector()}", function () {
     var target = $(this).closest('.fields-group').find(".$class");
     $.get("$sourceUrl?q="+this.value, function (data) {
         target.find("option").remove();
@@ -152,8 +152,8 @@ var refreshOptions = function(url, target) {
     });
 };
 
-$(document).off('change', "{$this->getElementClassSelector()}");
-$(document).on('change', "{$this->getElementClassSelector()}", function () {
+$(document).off('change', "{$this->elementClassSelector()}");
+$(document).on('change', "{$this->elementClassSelector()}", function () {
     var _this = this;
     var promises = [];
 
@@ -244,7 +244,7 @@ JS;
 
 $.ajax($ajaxOptions).done(function(data) {
 
-  var select = $("{$this->getElementClassSelector()}");
+  var select = $("{$this->elementClassSelector()}");
 
   select.select2({
     data: data,
@@ -286,7 +286,7 @@ JS;
 
         $this->script = <<<JS
 
-$("{$this->getElementClassSelector()}").select2({
+$("{$this->elementClassSelector()}").select2({
   ajax: {
     url: "$url",
     dataType: 'json',
@@ -367,11 +367,11 @@ JS;
         $configs = json_encode($configs);
 
         if (empty($this->script)) {
-            $this->script = "$(\"{$this->getElementClassSelector()}\").select2($configs);";
+            $this->script = "$(\"{$this->elementClassSelector()}\").select2($configs);";
         }
 
         if ($this->options instanceof \Closure) {
-            $this->options = $this->options->bindTo($this->getFormModel());
+            $this->options = $this->options->bindTo($this->values());
 
             $this->options(call_user_func($this->options, $this->value(), $this));
         }

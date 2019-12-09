@@ -21,10 +21,10 @@ class Text extends Field
         $this->prepend('<i class="ti-pencil"></i>')
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id)
-            ->defaultAttribute('name', $this->getElementName())
+            ->defaultAttribute('name', $this->elementName())
             ->defaultAttribute('value', old($this->column, $this->value()))
-            ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
-            ->defaultAttribute('placeholder', $this->getPlaceholder());
+            ->defaultAttribute('class', 'form-control '.$this->elementClassString())
+            ->defaultAttribute('placeholder', $this->placeholder());
 
         $this->addVariables([
             'prepend' => $this->prepend,
@@ -68,7 +68,7 @@ class Text extends Field
         }
 
         $attributes = [
-            'data-match'       => '#'.$field->getElementId(),
+            'data-match'       => '#'.$field->elementId(),
             'data-match-error' => str_replace([':attribute', ':other'], [$this->label, $name], $error ?: trans('admin.validation.match')),
         ];
 
@@ -134,7 +134,7 @@ JS
     {
         $options = $this->jsonEncodeOptions($options);
 
-        $this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
+        $this->script = "$('{$this->elementClassSelector()}').inputmask($options);";
 
         return $this;
     }

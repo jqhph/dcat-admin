@@ -16,7 +16,7 @@ class RowSelector extends AbstractDisplayer
 
         return <<<EOT
 <div class="checkbox $circle checkbox-$style checkbox-grid">
-    <input type="checkbox" class="{$this->grid->getGridRowName()}-checkbox" data-id="{$this->getKey()}" data-label="{$this->getLabel()}">
+    <input type="checkbox" class="{$this->grid->rowName()}-checkbox" data-id="{$this->key()}" data-label="{$this->label()}">
     <label></label>
 </div>
 EOT;
@@ -30,9 +30,9 @@ EOT;
         Admin::script(
             <<<JS
 LA.RowSelector({
-    checkbox: '.{$this->grid->getGridRowName()}-checkbox',
-    selectAll: '.{$this->grid->getSelectAllName()}', 
-    getSelectedRowsMethod: '{$this->grid->getSelectedRowsName()}',
+    checkbox: '.{$this->grid->rowName()}-checkbox',
+    selectAll: '.{$this->grid->selectAllName()}', 
+    getSelectedRowsMethod: '{$this->grid->selectedRowsName()}',
     clickTr: {$clickTr},
     bg: '{$background}',
 });
@@ -40,7 +40,7 @@ JS
         );
     }
 
-    protected function getLabel()
+    protected function label()
     {
         if ($column = $this->grid->option('row_selector_label_key')) {
             $label = $this->row->{$column};
@@ -48,11 +48,11 @@ JS
                 return $label;
             }
 
-            return $this->getKey();
+            return $this->key();
         }
 
         $label = $this->row->name ?: $this->row->title;
 
-        return $label ?: ($this->row->username ?: $this->getKey());
+        return $label ?: ($this->row->username ?: $this->key());
     }
 }

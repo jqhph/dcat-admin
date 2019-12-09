@@ -60,7 +60,7 @@ class BatchActions extends AbstractTool
     {
         $id = $this->actions->count();
 
-        $action->setId($id);
+        $action->id($id);
 
         $this->actions->push($action);
 

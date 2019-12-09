@@ -177,7 +177,7 @@ class Model
      */
     public function getKeyName()
     {
-        return $this->grid->getKeyName();
+        return $this->grid->keyName();
     }
 
     /**
@@ -285,7 +285,7 @@ class Model
      *
      * @return Grid
      */
-    public function getGrid()
+    public function grid()
     {
         return $this->grid;
     }
@@ -295,9 +295,9 @@ class Model
      *
      * @return Filter
      */
-    public function getFilter()
+    public function filter()
     {
-        return $this->grid->getFilter();
+        return $this->grid->filter();
     }
 
     /**
