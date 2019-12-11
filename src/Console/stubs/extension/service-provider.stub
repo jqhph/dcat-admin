@@ -43,5 +43,4 @@ class :class_nameServiceProvider extends ServiceProvider
     public function register()
     {
     }
-
 }

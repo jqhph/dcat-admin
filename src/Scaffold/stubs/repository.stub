@@ -13,5 +13,4 @@ class {controller} extends EloquentRepository
      * @var string
      */
     protected $eloquentClass = {model}Model::class;
-
 }

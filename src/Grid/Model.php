@@ -123,10 +123,10 @@ class Model
     /**
      * Create a new grid model instance.
      *
-     * @param Repository $repository
-     * @param Request    $request
+     * @param Repository|\Illuminate\Database\Eloquent\Model $repository
+     * @param Request                                        $request
      */
-    public function __construct(Request $request, ?Repository $repository = null)
+    public function __construct(Request $request, $repository = null)
     {
         if ($repository) {
             $this->repository = Admin::repository($repository);

@@ -15,6 +15,7 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
@@ -177,10 +178,10 @@ class Grid
      *
      * Grid constructor.
      *
-     * @param Repository|null $repository
-     * @param null|\Closure   $builder
+     * @param Repository|\Illuminate\Database\Eloquent\Model|Builder|null $repository
+     * @param null|\Closure                                       $builder
      */
-    public function __construct(?Repository $repository = null, ?\Closure $builder = null)
+    public function __construct($repository = null, ?\Closure $builder = null)
     {
         if ($repository) {
             $this->keyName($repository->getKeyName());

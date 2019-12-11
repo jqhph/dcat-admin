@@ -3,11 +3,11 @@
 namespace DummyNamespace;
 
 use DummyModelNamespace;
-use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Controllers\AdminController;
 
 class DummyClass extends AdminController
 {
@@ -34,6 +34,7 @@ class DummyClass extends AdminController
      * Make a show builder.
      *
      * @param mixed $id
+     *
      * @return Show
      */
     protected function detail($id)
@@ -54,5 +55,4 @@ class DummyClass extends AdminController
             {form}
         });
     }
-
 }

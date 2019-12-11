@@ -15,6 +15,7 @@ use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Widgets\ModalForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -272,10 +273,10 @@ class Form implements Renderable
     /**
      * Create a new form instance.
      *
-     * @param Repository $model
-     * @param \Closure   $callback
+     * @param Repository|Model|\Illuminate\Database\Eloquent\Builder|string $model
+     * @param \Closure                                                      $callback
      */
-    public function __construct(?Repository $repository = null, ?Closure $callback = null, Request $request = null)
+    public function __construct($repository = null, ?Closure $callback = null, Request $request = null)
     {
         $this->repository = $repository ? Admin::repository($repository) : null;
         $this->callback = $callback;

@@ -11,6 +11,7 @@ use Dcat\Admin\Show\Relation;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -85,7 +86,7 @@ class Show implements Renderable
     /**
      * Show constructor.
      *
-     * @param Model|Repository|array|Arrayable $model
+     * @param Model|Builder|Repository|array|Arrayable $model
      * @param \Closure                         $builder
      */
     public function __construct($model = null, ?\Closure $builder = null)
@@ -102,8 +103,17 @@ class Show implements Renderable
 
     protected function initModel($model)
     {
-        if ($model instanceof Repository) {
+        if ($model instanceof Repository || $model instanceof Builder) {
             $this->repository = Admin::repository($model);
+        } elseif ($model instanceof Model) {
+            if ($key = $model->getKey()) {
+                $this->key = $model->getKey();
+                $this->keyName = $model->getKeyName();
+
+                $this->model(new Fluent($model->toArray()));
+            } else {
+                $this->repository = Admin::repository($model);
+            }
         } elseif ($model instanceof Arrayable) {
             $this->model(new Fluent($model->toArray()));
         } elseif (is_array($model)) {

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 
-abstract class EloquentRepository extends Repository
+class EloquentRepository extends Repository
 {
     /**
      * @var string
@@ -27,17 +27,51 @@ abstract class EloquentRepository extends Repository
      */
     protected $model;
 
-    protected $relations;
+    /**
+     * @var Builder
+     */
+    protected $queryBuilder;
 
-    public function __construct($relations = [])
+    /**
+     * @var array
+     */
+    protected $relations = [];
+
+    /**
+     * EloquentRepository constructor.
+     *
+     * @param EloquentModel|array|string $modelOrRelations $modelOrRelations
+     */
+    public function __construct($modelOrRelations = [])
     {
+        $this->initModel($modelOrRelations);
+    }
+
+    /**
+     * Init model.
+     *
+     * @param EloquentModel|Builder|array|string $modelOrRelations
+     */
+    protected function initModel($modelOrRelations)
+    {
+        if (is_string($modelOrRelations) && class_exists($modelOrRelations)) {
+            $this->eloquentClass = $modelOrRelations;
+        } elseif ($modelOrRelations instanceof EloquentModel) {
+            $this->eloquentClass = get_class($modelOrRelations);
+            $this->model = $modelOrRelations;
+        } elseif ($modelOrRelations instanceof Builder) {
+            $this->model = $modelOrRelations->getModel();
+            $this->eloquentClass = get_class($this->model);
+            $this->queryBuilder = $modelOrRelations;
+        } else {
+            $this->with($modelOrRelations);
+        }
+
         $this->setKeyName($this->eloquent()->getKeyName());
 
         $this->setIsSoftDeletes(
             in_array(SoftDeletes::class, class_uses($this->eloquent()))
         );
-
-        $this->with($relations);
     }
 
     /**
@@ -109,23 +143,23 @@ abstract class EloquentRepository extends Repository
      */
     public function get(Grid\Model $model)
     {
-        $eloquent = $this->eloquent();
+        $query = $this->newQuery();
 
         if ($this->relations) {
-            $eloquent = $eloquent->with($this->relations);
+            $query->with($this->relations);
         }
 
-        $model->getQueries()->unique()->each(function ($query) use (&$eloquent) {
-            if ($query['method'] == 'paginate') {
-                $query['arguments'][1] = $this->getGridColumns();
-            } elseif ($query['method'] == 'get') {
-                $query['arguments'] = $this->getGridColumns();
+        $model->getQueries()->unique()->each(function ($value) use (&$query) {
+            if ($value['method'] == 'paginate') {
+                $value['arguments'][1] = $this->getGridColumns();
+            } elseif ($value['method'] == 'get') {
+                $value['arguments'] = $this->getGridColumns();
             }
 
-            $eloquent = call_user_func_array([$eloquent, $query['method']], $query['arguments'] ?? []);
+            $query = call_user_func_array([$query, $value['method']], $value['arguments'] ?? []);
         });
 
-        return $eloquent;
+        return $query;
     }
 
     /**
@@ -137,13 +171,13 @@ abstract class EloquentRepository extends Repository
      */
     public function edit(Form $form): array
     {
-        $eloquent = $this->eloquent();
+        $query = $this->newQuery();
 
         if ($this->isSoftDeletes) {
-            $eloquent = $eloquent->withTrashed();
+            $query->withTrashed();
         }
 
-        $this->model = $eloquent
+        $this->model = $query
             ->with($this->getRelations($form))
             ->findOrFail($form->key(), $this->getFormColumns());
 
@@ -159,13 +193,13 @@ abstract class EloquentRepository extends Repository
      */
     public function detail(Show $show): array
     {
-        $eloquent = $this->eloquent();
+        $query = $this->newQuery();
 
         if ($this->isSoftDeletes) {
-            $eloquent = $eloquent->withTrashed();
+            $query->withTrashed();
         }
 
-        $this->model = $eloquent
+        $this->model = $query
             ->with($this->getRelations($show))
             ->findOrFail($show->key(), $this->getDetailColumns());
 
@@ -337,23 +371,33 @@ abstract class EloquentRepository extends Repository
      */
     public function getDataWhenDeleting(Form $form): array
     {
-        $model = $this->eloquent();
+        $query = $this->newQuery();
 
         if ($this->isSoftDeletes) {
-            $model = $model->withTrashed();
+            $query->withTrashed();
         }
-
-        $builder = $model->newQuery();
 
         $id = $form->key();
 
-        return $builder
+        return $query
             ->with($this->getRelations($form))
             ->findOrFail(
                 collect(explode(',', $id))->filter()->toArray(),
                 $this->getFormColumns()
             )
             ->toArray();
+    }
+
+    /**
+     * @return Builder
+     */
+    protected function newQuery()
+    {
+        if ($this->queryBuilder) {
+            return clone $this->queryBuilder;
+        }
+
+        return $this->eloquent()->newQuery();
     }
 
     /**

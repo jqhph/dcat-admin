@@ -11,11 +11,13 @@ use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Models\HasPermissions;
+use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Repositories\Proxy;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAssets;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
@@ -135,7 +137,7 @@ class Admin
      *
      * @return Form
      */
-    public static function form(Repository $repository, Closure $callable = null)
+    public static function form($repository, Closure $callable = null)
     {
         return new Form($repository, $callable);
     }
@@ -159,12 +161,8 @@ class Admin
      * @example
      *     $show = Admin::show();
      *
-     *     $show = Admin::show($id);
      *     $show = Admin::show(new Repository);
-     *     $show = Admin::show(function (Show $show) {});
      *
-     *     $show = Admin::show($id, new Repository);
-     *     $show = Admin::show($id, function (Show $show) {});
      *     $show = Admin::show(new Repository, function (Show $show) {});
      *
      *     $show = Admin::show($id, new Repository, function (Show $show) {});
@@ -182,28 +180,12 @@ class Admin
 
                 break;
             case 1:
-                if ($id instanceof \Closure) {
-                    $show = new Show(null, $id);
-                } elseif ($id instanceof Repository) {
-                    $show = new Show($id);
-                } else {
-                    $show = new Show();
-                    $show->key($id);
-                }
+                $show = new Show($id);
 
                 break;
             case 2:
-                if ($id instanceof Repository && $repository instanceof \Closure) {
-                    $show = new Show($id, $repository);
-                } elseif ($repository instanceof \Closure) {
-                    $show = new Show(null, $repository);
+                $show = new Show($id, $repository);
 
-                    $show->key($id);
-                } elseif ($repository instanceof Repository) {
-                    $show = new Show($repository);
-
-                    $show->key($id);
-                }
                 break;
             case 3:
                 $show = new Show($repository, $callable);
@@ -344,8 +326,8 @@ class Admin
     /**
      * Create a repository instance.
      *
-     * @param string $class
-     * @param array  $args
+     * @param string|Repository|Model|Builder $class
+     * @param array                   $args
      *
      * @return Repository
      */
@@ -355,8 +337,13 @@ class Admin
         if (is_string($repository)) {
             $repository = new $class($args);
         }
+
+        if ($repository instanceof Model || $repository instanceof Builder) {
+            $repository = EloquentRepository::make($repository);
+        }
+
         if (! $repository instanceof Repository) {
-            throw new \InvalidArgumentException("[$class] must be a valid repository class.");
+            throw new \InvalidArgumentException("The class [{$class}] must be a type of [".Repository::class.'].');
         }
 
         if ($repository instanceof Proxy) {
