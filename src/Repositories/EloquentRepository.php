@@ -222,10 +222,10 @@ class EloquentRepository extends Repository
 
             $updates = $form->updates();
 
-            $relations = $this->getRelationInputs($model, $updates);
+            list($relations, $relationKeyMap) = $this->getRelationInputs($model, $updates);
 
             if ($relations) {
-                $updates = Arr::except($updates, array_keys($relations));
+                $updates = Arr::except($updates, array_keys($relationKeyMap));
             }
 
             foreach ($updates as $column => $value) {
@@ -234,7 +234,7 @@ class EloquentRepository extends Repository
 
             $result = $model->save();
 
-            $this->updateRelation($form, $model, $relations);
+            $this->updateRelation($form, $model, $relations, $relationKeyMap);
         });
 
         return $this->eloquent()->getKey();
@@ -275,9 +275,11 @@ class EloquentRepository extends Repository
         DB::transaction(function () use ($form, $model, &$result) {
             $updates = $form->updates();
 
-            $relations = $this->getRelationInputs($model, $updates);
+            list($relations, $relationKeyMap) = $this->getRelationInputs($model, $updates);
 
-            $updates = Arr::except($updates, array_keys($relations));
+            if ($relations) {
+                $updates = Arr::except($updates, array_keys($relationKeyMap));
+            }
 
             foreach ($updates as $column => $value) {
                 /* @var EloquentModel $model */
@@ -286,7 +288,7 @@ class EloquentRepository extends Repository
 
             $result = $model->update();
 
-            $this->updateRelation($form, $model, $relations);
+            $this->updateRelation($form, $model, $relations, $relationKeyMap);
         });
 
         return $result;
@@ -478,36 +480,54 @@ class EloquentRepository extends Repository
      */
     protected function getRelationInputs($model, $inputs = [])
     {
+        $map = [];
         $relations = [];
 
         foreach ($inputs as $column => $value) {
-            if (method_exists($model, $column)) {
-                $relation = call_user_func([$model, $column]);
+            $relationColumn = null;
 
-                if ($relation instanceof Relations\Relation) {
-                    $relations[$column] = $value;
-                }
+            if (method_exists($model, $column)) {
+                $relationColumn = $column;
+            } elseif (method_exists($model, $camelColumn = Str::camel($column))) {
+                $relationColumn = $camelColumn;
+            }
+
+            if (! $relationColumn) {
+                continue;
+            }
+
+            $relation = call_user_func([$model, $relationColumn]);
+
+            if ($relation instanceof Relations\Relation) {
+                $relations[$column] = $value;
+
+                $map[$column] = $relationColumn;
             }
         }
 
-        return $relations;
+        return [&$relations, $map];
     }
 
     /**
      * Update relation data.
      *
-     * @param array $relationsData
+     * @param Form          $form
+     * @param EloquentModel $model
+     * @param array         $relationsData
+     * @param array         $relationKeyMap
      *
-     * @return void
+     * @throws \Exception
      */
-    protected function updateRelation(Form $form, EloquentModel $model, $relationsData)
+    protected function updateRelation(Form $form, EloquentModel $model, array $relationsData, array $relationKeyMap)
     {
         foreach ($relationsData as $name => $values) {
-            if (! method_exists($model, $name)) {
+            $relationName = $relationKeyMap[$name];
+
+            if (! method_exists($model, $relationName)) {
                 continue;
             }
 
-            $relation = $model->$name();
+            $relation = $model->$relationName();
 
             $oneToOneRelation = $relation instanceof Relations\HasOne
                 || $relation instanceof Relations\MorphOne
@@ -582,7 +602,7 @@ class EloquentRepository extends Repository
 
                     foreach ($prepared[$name] as $related) {
                         /** @var Relations\Relation $relation */
-                        $relation = $model->$name();
+                        $relation = $model->$relationName();
 
                         $keyName = $relation->getRelated()->getKeyName();
 
