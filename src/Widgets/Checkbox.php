@@ -15,7 +15,7 @@ class Checkbox extends Radio
     protected $checked = [];
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return $this
      */
@@ -27,18 +27,18 @@ class Checkbox extends Radio
     }
 
     /**
-     * @param $excepts
+     * @param string|array $excepts
      *
-     * @return Checkbox
+     * @return $this
      */
     public function checkedAll($excepts = [])
     {
         return $this->checked(array_keys(Arr::except($this->options, $excepts)));
     }
 
-    public function circle(bool $flag)
+    public function circle(bool $value = true)
     {
-        $this->circle = $flag;
+        $this->circle = $value;
 
         return $this;
     }

@@ -56,9 +56,9 @@ class Checkbox extends MultipleSelect
         return $this;
     }
 
-    public function circle(bool $flag)
+    public function circle(bool $value = true)
     {
-        $this->circle = $flag;
+        $this->circle = $value;
 
         return $this;
     }

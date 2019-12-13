@@ -26,14 +26,14 @@ class Radio extends Widget
     }
 
     /**
-     * @param null $options
+     * @param string|array $values
      *
      * @return $this
      */
-    public function disabled($options = null)
+    public function disabled($values = null)
     {
-        if ($options) {
-            $this->disabledValues = (array) $options;
+        if ($values) {
+            $this->disabledValues = (array) $values;
 
             return $this;
         }
@@ -54,7 +54,7 @@ class Radio extends Widget
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return $this
      */
@@ -91,7 +91,7 @@ class Radio extends Widget
     /**
      * "info", "primary", "inverse", "danger", "success", "purple".
      *
-     * @param $v
+     * @param string $v
      *
      * @return $this
      */

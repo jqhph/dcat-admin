@@ -222,7 +222,7 @@ class EloquentRepository extends Repository
 
             $updates = $form->updates();
 
-            list($relations, $relationKeyMap) = $this->getRelationInputs($model, $updates);
+            [$relations, $relationKeyMap] = $this->getRelationInputs($model, $updates);
 
             if ($relations) {
                 $updates = Arr::except($updates, array_keys($relationKeyMap));
@@ -275,7 +275,7 @@ class EloquentRepository extends Repository
         DB::transaction(function () use ($form, $model, &$result) {
             $updates = $form->updates();
 
-            list($relations, $relationKeyMap) = $this->getRelationInputs($model, $updates);
+            [$relations, $relationKeyMap] = $this->getRelationInputs($model, $updates);
 
             if ($relations) {
                 $updates = Arr::except($updates, array_keys($relationKeyMap));
