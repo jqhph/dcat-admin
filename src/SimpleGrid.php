@@ -3,13 +3,12 @@
 namespace Dcat\Admin;
 
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Repositories\Repository;
 
 class SimpleGrid extends Grid
 {
     const QUERY_NAME = '_mini';
 
-    public function __construct(Repository $repository, $builder = null)
+    public function __construct($repository, $builder = null)
     {
         parent::__construct($repository, $builder);
 
