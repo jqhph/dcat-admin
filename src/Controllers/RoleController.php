@@ -7,10 +7,10 @@ use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Models\Repositories\Role;
 use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
+use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Routing\Controller;
 
