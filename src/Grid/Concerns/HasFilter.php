@@ -34,9 +34,7 @@ trait HasFilter
      */
     public function processFilter($toArray = true)
     {
-        if ($this->builder) {
-            call_user_func($this->builder, $this);
-        }
+        $this->callBuilder();
 
         $this->applyQuickSearch();
         $this->applyColumnFilter();

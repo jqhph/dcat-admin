@@ -418,13 +418,23 @@ HTML
 
         $this->buildRows($data);
 
-        $this->built = true;
-
         if ($data && $this->responsive) {
             $this->responsive->build();
         }
 
         $this->sortHeaders();
+    }
+
+    /**
+     * @return void
+     */
+    protected function callBuilder()
+    {
+        if ($this->builder && ! $this->built) {
+            call_user_func($this->builder, $this);
+        }
+
+        $this->built = true;
     }
 
     /**

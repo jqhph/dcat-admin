@@ -57,11 +57,7 @@ trait HasExporter
             return;
         }
 
-        if ($this->builder) {
-            call_user_func($this->builder, $this);
-
-            $this->builder = null;
-        }
+        $this->callBuilder();
 
         // clear output buffer.
         if (ob_get_length()) {
