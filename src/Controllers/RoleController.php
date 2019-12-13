@@ -7,7 +7,7 @@ use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\MiniGrid;
+use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Models\Repositories\Role;
 use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
@@ -89,8 +89,8 @@ class RoleController extends Controller
      */
     protected function grid()
     {
-        if ($mini = request('_mini')) {
-            $grid = new MiniGrid(new Role());
+        if ($mini = request(SimpleGrid::QUERY_NAME)) {
+            $grid = new SimpleGrid(new Role());
         } else {
             $grid = new Grid(new Role());
         }

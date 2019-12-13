@@ -7,7 +7,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
-use Dcat\Admin\MiniGrid;
+use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Models\Repositories\Permission;
 use Dcat\Admin\Show;
 use Dcat\Admin\Tree;
@@ -27,8 +27,8 @@ class PermissionController extends Controller
      */
     public function index(Content $content)
     {
-        if (request('_mini')) {
-            return $content->body($this->miniGrid());
+        if (request(SimpleGrid::QUERY_NAME)) {
+            return $content->body($this->simpleGrid());
         }
 
         return $content
@@ -90,9 +90,9 @@ class PermissionController extends Controller
             ->body($this->form());
     }
 
-    protected function miniGrid()
+    protected function simpleGrid()
     {
-        $grid = new MiniGrid(new Permission());
+        $grid = new SimpleGrid(new Permission());
 
         $grid->id->bold()->sortable();
         $grid->slug;

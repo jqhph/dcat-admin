@@ -7,7 +7,7 @@ use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\MiniGrid;
+use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Models\Administrator as AdministratorModel;
 use Dcat\Admin\Models\Repositories\Administrator;
 use Dcat\Admin\Show;
@@ -28,8 +28,8 @@ class UserController extends Controller
      */
     public function index(Content $content)
     {
-        if (request('_mini')) {
-            return $content->body($this->miniGrid());
+        if (request(SimpleGrid::QUERY_NAME)) {
+            return $content->body($this->simpleGrid());
         }
 
         return $content
@@ -133,11 +133,11 @@ class UserController extends Controller
     }
 
     /**
-     * @return MiniGrid
+     * @return SimpleGrid
      */
-    protected function miniGrid()
+    protected function simpleGrid()
     {
-        $grid = new MiniGrid(new Administrator());
+        $grid = new SimpleGrid(new Administrator());
 
         $grid->quickSearch(['id', 'name', 'username']);
 

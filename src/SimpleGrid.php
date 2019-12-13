@@ -5,13 +5,15 @@ namespace Dcat\Admin;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Repositories\Repository;
 
-class MiniGrid extends Grid
+class SimpleGrid extends Grid
 {
+    const QUERY_NAME = '_mini';
+
     public function __construct(Repository $repository, $builder = null)
     {
         parent::__construct($repository, $builder);
 
-        $this->setName('mini');
+        $this->setName('simple');
         $this->disableCreateButton();
         $this->disableActions();
         $this->disableExporter();
