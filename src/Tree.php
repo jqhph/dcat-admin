@@ -235,7 +235,7 @@ class Tree implements Renderable
      *
      * @return $this
      */
-    public function setdialogFormDimensions(string $width, string $height)
+    public function setDialogFormDimensions(string $width, string $height)
     {
         $this->dialogFormDimensions = [$width, $height];
 
@@ -557,13 +557,12 @@ JS;
     /**
      * Create a tree instance.
      *
-     * @param Model|null   $model
-     * @param Closure|null $callback
+     * @param mixed ...$param
      *
-     * @return Tree
+     * @return $this
      */
-    public static function make(Model $model = null, \Closure $callback = null)
+    public static function make(...$param)
     {
-        return new static($model, $callback);
+        return new static(...$param);
     }
 }

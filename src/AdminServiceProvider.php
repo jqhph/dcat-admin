@@ -156,7 +156,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function registerExtensionProviders()
     {
-        foreach (Admin::getAvailableExtensions() as $extension) {
+        foreach (Admin::availableExtensions() as $extension) {
             if ($provider = $extension->serviceProvider()) {
                 $this->app->register($provider);
             }

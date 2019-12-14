@@ -61,7 +61,7 @@ class Admin
      *
      * @return string The long application version
      */
-    public static function getLongVersion()
+    public static function longVersion()
     {
         return sprintf('Dcat Admin <comment>version</comment> <info>%s</info>', static::VERSION);
     }
@@ -83,23 +83,17 @@ class Admin
     }
 
     /**
-     * Set admin title.
+     * Get or set admin title.
      *
-     * @return void
+     * @return string|void
      */
-    public static function setTitle($title)
+    public static function title($title = null)
     {
-        static::$metaTitle = $title;
-    }
+        if ($title === null) {
+            return static::$metaTitle ?: config('admin.title');
+        }
 
-    /**
-     * Get admin title.
-     *
-     * @return string
-     */
-    public static function title()
-    {
-        return static::$metaTitle ?: config('admin.title');
+        static::$metaTitle = $title;
     }
 
     /**
@@ -368,7 +362,7 @@ class Admin
      *
      * @return Extension[]
      */
-    public static function getAvailableExtensions()
+    public static function availableExtensions()
     {
         if (static::$availableExtensions !== null) {
             return static::$availableExtensions;

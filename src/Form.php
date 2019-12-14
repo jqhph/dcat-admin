@@ -275,6 +275,7 @@ class Form implements Renderable
      *
      * @param Repository|Model|\Illuminate\Database\Eloquent\Builder|string $model
      * @param \Closure                                                      $callback
+     * @param Request                                                       $request
      */
     public function __construct($repository = null, ?Closure $callback = null, Request $request = null)
     {

@@ -682,4 +682,14 @@ JS
     {
         return $this->render();
     }
+
+    /**
+     * @param mixed ...$params
+     *
+     * @return $this
+     */
+    public static function make(...$params)
+    {
+        return new static(...$params);
+    }
 }

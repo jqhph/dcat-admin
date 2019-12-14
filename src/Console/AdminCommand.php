@@ -42,7 +42,7 @@ LOGO;
     public function handle()
     {
         $this->line(static::$logo);
-        $this->line(Admin::getLongVersion());
+        $this->line(Admin::longVersion());
 
         $this->comment('');
         $this->comment('Available commands:');
