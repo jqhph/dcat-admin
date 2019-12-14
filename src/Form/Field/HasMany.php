@@ -680,7 +680,7 @@ JS;
             } else {
                 /* Hide label and set field width 100% */
                 $field->labelClass(['hidden']);
-                $field->setWidth(12, 0);
+                $field->width(12, 0);
                 $fields[] = $field->render();
                 $headers[] = $field->label();
             }

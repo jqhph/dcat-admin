@@ -40,7 +40,7 @@ class Between extends AbstractFilter
     public function formatId($column)
     {
         $id = str_replace('.', '_', $column);
-        $prefix = 'filter_column_'.$this->parent->getGrid()->getName().'_';
+        $prefix = 'filter_column_'.$this->parent->grid()->getName().'_';
 
         return ['start' => "{$prefix}{$id}_start", 'end' => "{$prefix}{$id}_end"];
     }
@@ -54,7 +54,7 @@ class Between extends AbstractFilter
      */
     protected function formatName($column)
     {
-        $gridName = $this->parent->getGrid()->getName();
+        $gridName = $this->parent->grid()->getName();
         $prefix = $gridName ? $gridName.'_' : '';
         $columns = explode('.', $column);
 

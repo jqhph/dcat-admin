@@ -306,7 +306,7 @@ class Filter implements Renderable
      */
     public function grid()
     {
-        return $this->model->getGrid();
+        return $this->model->grid();
     }
 
     /**

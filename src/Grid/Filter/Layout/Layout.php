@@ -57,7 +57,7 @@ class Layout
         if ($this->columns->isEmpty()) {
             $column = $this->current;
 
-            $column->setWidth($width);
+            $column->width($width);
         } else {
             $column = new Column($width);
 

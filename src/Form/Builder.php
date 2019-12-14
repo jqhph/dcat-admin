@@ -357,7 +357,7 @@ class Builder
      *
      * @return $this
      */
-    public function setWidth($field = 8, $label = 2)
+    public function width($field = 8, $label = 2)
     {
         $this->width = [
             'label' => $label,

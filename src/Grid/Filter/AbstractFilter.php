@@ -187,7 +187,7 @@ abstract class AbstractFilter
      */
     protected function formatId($columns)
     {
-        return 'filter_column_'.$this->parent->getGrid()->getName().'_'.str_replace('.', '_', $columns);
+        return 'filter_column_'.$this->parent->grid()->getName().'_'.str_replace('.', '_', $columns);
     }
 
     /**

@@ -414,7 +414,7 @@ class Form implements Renderable
 
         $this->fields->each(function ($field) use ($fieldWidth, $labelWidth) {
             /* @var Field $field  */
-            $field->setWidth($fieldWidth, $labelWidth);
+            $field->width($fieldWidth, $labelWidth);
         });
 
         return $this;
@@ -450,7 +450,7 @@ class Form implements Renderable
         $this->fields->push($field);
 
         $field->setForm($this);
-        $field->setWidth($this->width['field'], $this->width['label']);
+        $field->width($this->width['field'], $this->width['label']);
 
         $field::collectAssets();
 

@@ -151,10 +151,14 @@ class Field implements Renderable
     /**
      * @param int $width
      *
-     * @return $this
+     * @return $this|int
      */
-    public function width(int $width)
+    public function width(int $width = null)
     {
+        if ($width === null) {
+            return $this->width;
+        }
+
         $this->width = $width;
 
         return $this;

@@ -314,7 +314,7 @@ class Form implements Renderable
 
         $width = $this->builder->getWidth();
 
-        $field->setWidth($width['field'], $width['label']);
+        $field->width($width['field'], $width['label']);
 
         $field::collectAssets();
 
@@ -1301,10 +1301,10 @@ class Form implements Renderable
     {
         $this->builder->fields()->each(function ($field) use ($fieldWidth, $labelWidth) {
             /* @var Field $field  */
-            $field->setWidth($fieldWidth, $labelWidth);
+            $field->width($fieldWidth, $labelWidth);
         });
 
-        $this->builder->setWidth($fieldWidth, $labelWidth);
+        $this->builder->width($fieldWidth, $labelWidth);
 
         return $this;
     }

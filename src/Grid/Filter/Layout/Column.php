@@ -49,23 +49,17 @@ class Column
     }
 
     /**
-     * Set column width.
+     * Get or set column width.
      *
-     * @param int $width
+     * @return int|void
      */
-    public function setWidth($width)
+    public function width($width = null)
     {
-        $this->width = $width;
-    }
+        if ($width === null) {
+            return $this->width;
+        }
 
-    /**
-     * Get column width.
-     *
-     * @return int
-     */
-    public function width()
-    {
-        return $this->width;
+        $this->width = $width;
     }
 
     /**
