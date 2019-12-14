@@ -623,7 +623,7 @@ class Form implements Renderable
 
         if ($response = $this->handleUploadFile($data)) {
             if (($value = $response->getData()) && ! empty($value->id)) {
-                $this->step()->stash(
+                $this->multipleSteps()->stash(
                     [$data['upload_column'] => $value->id],
                     true
                 );

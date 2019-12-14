@@ -32,7 +32,7 @@
     <div class="card-body panel-collapse collapse in table-responsive" {!! $grid->option('show_bordered') ? 'style="padding:3px 10px 10px"' : '' !!}>
         <table class=" table table-hover responsive {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{$tableId}}">
             <thead>
-            @if ($headers = $grid->getMutipleHeaders())
+            @if ($headers = $grid->getMultipleHeaders())
                 <tr>
                     @foreach($headers as $header)
                         {!! $header->render() !!}

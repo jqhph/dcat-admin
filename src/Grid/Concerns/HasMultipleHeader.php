@@ -12,7 +12,7 @@ trait HasMultipleHeader
      *
      * @var Header[]
      */
-    protected $mutipleHeaders = [];
+    protected $multipleHeaders = [];
 
     /**
      * Merge cells.
@@ -30,15 +30,15 @@ trait HasMultipleHeader
 
         $this->withBorder();
 
-        return $this->mutipleHeaders[$label] = new Header($this, $label, $columnNames);
+        return $this->multipleHeaders[$label] = new Header($this, $label, $columnNames);
     }
 
     /**
      * @return Header[]
      */
-    public function getMutipleHeaders()
+    public function getMultipleHeaders()
     {
-        return $this->mutipleHeaders;
+        return $this->multipleHeaders;
     }
 
     /**
@@ -46,14 +46,14 @@ trait HasMultipleHeader
      */
     protected function sortHeaders()
     {
-        if (! $this->mutipleHeaders) {
+        if (! $this->multipleHeaders) {
             return;
         }
 
-        $originalHeaders = $this->mutipleHeaders;
+        $originalHeaders = $this->multipleHeaders;
         $originalColumns = $this->columns;
 
-        $headersColumns = $this->mutipleHeaders = $this->columns = [];
+        $headersColumns = $this->multipleHeaders = $this->columns = [];
 
         foreach ($originalHeaders as $header) {
             $headersColumns = array_merge(
@@ -90,7 +90,7 @@ trait HasMultipleHeader
         );
 
         $this->columns = collect($this->columns);
-        $this->mutipleHeaders = array_merge(
+        $this->multipleHeaders = array_merge(
             $beforeHeaders,
             array_values($originalHeaders),
             $afterHeaders

@@ -16,9 +16,9 @@ trait HasSteps
      *
      * @return StepBuilder
      */
-    public function step(\Closure $builder = null)
+    public function multipleSteps(\Closure $builder = null)
     {
-        return $this->builder->step($builder);
+        return $this->builder->multipleSteps($builder);
     }
 
     /**
@@ -88,7 +88,7 @@ trait HasSteps
         }
 
         // Stash input data.
-        $this->step()->stash($data);
+        $this->multipleSteps()->stash($data);
 
         return $this->ajaxResponse('Success');
     }
@@ -120,7 +120,7 @@ trait HasSteps
             return;
         }
 
-        $this->step()->stashIndexByField($input['_column']);
-        $this->step()->forgetStash($input['_column']);
+        $this->multipleSteps()->stashIndexByField($input['_column']);
+        $this->multipleSteps()->forgetStash($input['_column']);
     }
 }

@@ -239,7 +239,7 @@ class Builder
      *
      * @return StepBuilder
      */
-    public function step(?\Closure $callback = null)
+    public function multipleSteps(?\Closure $callback = null)
     {
         if (! $this->stepBuilder) {
             $this->view = 'admin::form.steps';
