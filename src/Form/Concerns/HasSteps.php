@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Concerns;
 use Closure;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\StepBuilder;
+use Dcat\Admin\Form\StepForm;
 
 /**
  * @property Builder $builder
@@ -12,11 +13,11 @@ use Dcat\Admin\Form\StepBuilder;
 trait HasSteps
 {
     /**
-     * @param Closure|null $builder
+     * @param Closure|StepForm[]|null $builder
      *
      * @return StepBuilder
      */
-    public function multipleSteps(\Closure $builder = null)
+    public function multipleSteps($builder = null)
     {
         return $this->builder->multipleSteps($builder);
     }

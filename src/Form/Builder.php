@@ -235,11 +235,11 @@ class Builder
     }
 
     /**
-     * @param \Closure $callback
+     * @param \Closure|StepForm[]|null $builder
      *
      * @return StepBuilder
      */
-    public function multipleSteps(?\Closure $callback = null)
+    public function multipleSteps($builder = null)
     {
         if (! $this->stepBuilder) {
             $this->view = 'admin::form.steps';
@@ -247,8 +247,12 @@ class Builder
             $this->stepBuilder = new StepBuilder($this->form);
         }
 
-        if ($callback) {
-            $callback($this->stepBuilder);
+        if ($builder) {
+            if ($builder instanceof \Closure) {
+                $builder($this->stepBuilder);
+            } elseif (is_array($builder)) {
+                $this->stepBuilder->add($builder);
+            }
         }
 
         return $this->stepBuilder;

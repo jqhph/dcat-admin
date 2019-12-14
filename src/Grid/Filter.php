@@ -654,8 +654,10 @@ class Filter implements Renderable
      */
     public function urlWithoutFilters()
     {
+        $filters = collect($this->filters);
+
         /** @var Collection $columns */
-        $columns = collect($this->filters)->map->column()->flatten();
+        $columns = $filters->map->column()->flatten();
 
         $pageKey = 'page';
 
@@ -665,7 +667,7 @@ class Filter implements Renderable
 
         $columns->push($pageKey);
 
-        $groupNames = collect($this->filters)->filter(function ($filter) {
+        $groupNames = $filters->filter(function ($filter) {
             return $filter instanceof Group;
         })->map(function (AbstractFilter $filter) {
             return "{$filter->getId()}_group";

@@ -46,48 +46,78 @@ class StepForm extends WidgetForm
      * StepForm constructor.
      *
      * @param Form   $form
-     * @param int    $index
      * @param string $title
+     * @param int    $index
      */
-    public function __construct(Form $form, int $index = 0, string $title = null)
+    public function __construct(string $title = null, int $index = 0)
+    {
+        $this->initFields();
+
+        $this->setTitle($title);
+        $this->setIndex($index);
+    }
+
+    /**
+     * @param Form $form
+     *
+     * @return $this
+     */
+    public function setForm(?Form $form)
     {
         $this->form = $form;
         $this->parent = $form->builder()->stepBuilder();
-        $this->index = $index;
 
-        $this->initFields();
-
-        $this->title($title);
+        return $this;
     }
 
     /**
      * @param string|\Closure $title
      *
-     * @return $this|string
+     * @return $this
      */
-    public function title($title = null)
+    public function setTitle($title)
     {
-        if ($title === null) {
-            return $this->title;
-        }
-
         $this->title = value($title);
 
         return $this;
     }
 
     /**
+     * @return string
+     */
+    public function title()
+    {
+        return $this->title;
+    }
+
+    /**
      * @param string|\Closure $content
      *
-     * @return $this|string
+     * @return $this
      */
-    public function description($content = null)
+    public function setDescription($content)
     {
-        if ($content === null) {
-            return $this->description;
-        }
-
         $this->description = value($content);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function description()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param int $content
+     *
+     * @return $this
+     */
+    public function setIndex(int $index = null)
+    {
+        $this->index = $index;
 
         return $this;
     }

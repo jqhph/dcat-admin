@@ -49,20 +49,44 @@ class StepBuilder
     }
 
     /**
-     * @param string   $title
-     * @param \Closure $callback
+     * @param string|StepForm|StepForm[] $title
+     * @param \Closure|null              $callback
      *
      * @return $this
      */
-    public function add(string $title, \Closure $callback)
+    public function add($title, ?\Closure $callback = null)
     {
-        $form = new StepForm($this->form, count($this->stepForms), $title);
+        if (is_array($title)) {
+            foreach ($title as $key => $form) {
+                $this->addForm($form, $callback);
+            }
+
+            return $this;
+        }
+
+        $form = $title instanceof StepForm ? $title : new StepForm($title);
+
+        $this->addForm($form, $callback);
+
+        return $this;
+    }
+
+    /**
+     * @param StepForm      $form
+     * @param \Closure|null $callback
+     *
+     * @return void
+     */
+    protected function addForm(StepForm $form, ?\Closure $callback = null)
+    {
+        $form->setForm($this->form);
+        $form->setIndex(count($this->stepForms));
 
         $this->stepForms[] = $form;
 
-        $callback($form);
-
-        return $this;
+        if ($callback) {
+            $callback($form);
+        }
     }
 
     /**
