@@ -128,16 +128,6 @@ JS;
     }
 
     /**
-     * @param RowAction $action
-     */
-    protected function prepareAction(RowAction $action)
-    {
-        $action->setGrid($this->grid)
-            ->setColumn($this->column)
-            ->setRow($this->row);
-    }
-
-    /**
      * Disable view action.
      *
      * @param bool $disable

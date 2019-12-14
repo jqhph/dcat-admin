@@ -279,6 +279,7 @@ class Admin
                     $router->resource('auth/permissions', 'PermissionController');
                 }
 
+                $router->post('_handle_action_', 'HandleActionController@handle')->name('admin.handle-action');
                 $router->post('_handle_form_', 'HandleFormController@handle')->name('admin.handle-form');
             });
 

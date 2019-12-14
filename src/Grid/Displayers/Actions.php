@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Grid\RowAction;
 use Dcat\Admin\Support\Helper;
 
 class Actions extends AbstractDisplayer
@@ -40,6 +41,10 @@ class Actions extends AbstractDisplayer
      */
     public function append($action)
     {
+        if ($action instanceof RowAction) {
+            $this->prepareAction($action);
+        }
+
         array_push($this->appends, $action);
 
         return $this;
@@ -54,9 +59,23 @@ class Actions extends AbstractDisplayer
      */
     public function prepend($action)
     {
+        if ($action instanceof RowAction) {
+            $this->prepareAction($action);
+        }
+
         array_unshift($this->prepends, $action);
 
         return $this;
+    }
+
+    /**
+     * @param RowAction $action
+     */
+    protected function prepareAction(RowAction $action)
+    {
+        $action->setGrid($this->grid)
+            ->setColumn($this->column)
+            ->setRow($this->row);
     }
 
     /**

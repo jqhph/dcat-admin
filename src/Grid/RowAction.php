@@ -26,9 +26,13 @@ abstract class RowAction extends GridAction
      *
      * @return mixed
      */
-    protected function key()
+    public function key()
     {
-        return $this->row->get($this->parent->keyName());
+        if ($this->row) {
+            return $this->row->get($this->parent->keyName());
+        }
+
+        return parent::key();
     }
 
     /**
@@ -90,10 +94,8 @@ abstract class RowAction extends GridAction
      *
      * @return string
      */
-    public function render()
+    public function html()
     {
-        $this->addScript();
-
         if (! $href = $this->href()) {
             $href = 'javascript:void(0);';
         }
@@ -107,9 +109,5 @@ abstract class RowAction extends GridAction
             $this->elementClass(),
             $this->name()
         );
-    }
-
-    protected function addScript()
-    {
     }
 }
