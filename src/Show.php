@@ -3,6 +3,7 @@
 namespace Dcat\Admin;
 
 use Dcat\Admin\Contracts\Repository;
+use Dcat\Admin\Show\AbstractTool;
 use Dcat\Admin\Show\Divider;
 use Dcat\Admin\Show\Field;
 use Dcat\Admin\Show\Newline;
@@ -10,6 +11,7 @@ use Dcat\Admin\Show\Panel;
 use Dcat\Admin\Show\Relation;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -270,6 +272,28 @@ class Show implements Renderable
     public function panel()
     {
         return $this->panel;
+    }
+
+    /**
+     * @param \Closure|array|AbstractTool|Renderable|Htmlable|string $callback
+     *
+     * @return $this
+     */
+    public function tools($callback)
+    {
+        if ($callback instanceof \Closure) {
+            $callback->call($this->model, $this->panel->tools());
+
+            return $this;
+        }
+
+        if (! is_array($callback)) {
+            $callback = [$callback];
+        }
+
+        foreach ($callback as $tool) {
+            $this->panel->tools()->append($tool);
+        }
     }
 
     /**
