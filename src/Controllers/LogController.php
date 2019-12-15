@@ -33,12 +33,6 @@ class LogController extends Controller
     {
         $grid = new Grid(new OperationLog());
 
-        $grid->disableCreateButton();
-        $grid->disableQuickEditButton();
-        $grid->disableQuickCreateButton();
-
-        $grid->model()->with('user')->orderBy('id', 'DESC');
-
         $grid->id('ID')->bold()->sortable();
         $grid->user(trans('admin.user'))->get('name')->responsive();
         $grid->method(trans('admin.method'))->responsive()->display(function ($method) {
@@ -62,6 +56,11 @@ class LogController extends Controller
 
         $grid->created_at(trans('admin.created_at'))->responsive();
 
+        $grid->model()->with('user')->orderBy('id', 'DESC');
+
+        $grid->disableCreateButton();
+        $grid->disableQuickEditButton();
+        $grid->disableQuickCreateButton();
         $grid->disableEditButton();
         $grid->disableViewButton();
 

@@ -2,9 +2,12 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
+use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid\RowAction;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Renderable;
 
 class Actions extends AbstractDisplayer
 {
@@ -35,7 +38,7 @@ class Actions extends AbstractDisplayer
     /**
      * Append a action.
      *
-     * @param $action
+     * @param string|Renderable|Action|Htmlable $action
      *
      * @return $this
      */
@@ -53,7 +56,7 @@ class Actions extends AbstractDisplayer
     /**
      * Prepend a action.
      *
-     * @param $action
+     * @param string|Renderable|Action|Htmlable $action
      *
      * @return $this
      */

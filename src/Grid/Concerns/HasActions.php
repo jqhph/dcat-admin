@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Concerns;
 
 use Closure;
 use Dcat\Admin\Grid;
+use Illuminate\Contracts\Support\Renderable;
 
 trait HasActions
 {
@@ -54,14 +55,28 @@ trait HasActions
     }
 
     /**
-     * Set grid action callback.
+     * Set grid action callback or add actions.
      *
-     * @param Closure $callback
+     * @param Closure|array|string|Renderable|Grid\RowAction $callback
      *
      * @return $this
      */
-    public function actions(Closure $callback)
+    public function actions($callback)
     {
+        if (! $callback instanceof Closure) {
+            $action = $callback;
+
+            $callback = function (Grid\Displayers\Actions $actions) use (&$action) {
+                if (! is_array($action)) {
+                    $action = [$action];
+                }
+
+                foreach ($action as $v) {
+                    $actions->append($v);
+                }
+            };
+        }
+
         $this->actionsCallback[] = $callback;
 
         return $this;

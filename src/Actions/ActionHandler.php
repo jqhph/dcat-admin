@@ -75,7 +75,7 @@ trait ActionHandler
         $parameters = json_encode($this->parameters());
 
         $resolveScript = <<<JS
-target.data('working', 1);
+target.attr('working', 1);
 Object.assign(data, {$parameters});
 {$this->buildActionPromise()}
 {$this->handleActionPromise()}
@@ -85,7 +85,7 @@ JS;
 $('{$this->selector($this->selectorPrefix)}').off('{$this->event}').on('{$this->event}', function() {
     var data = $(this).data(),
         target = $(this);
-    if (target.data('working')) {
+    if (target.attr('working') > 0) {
         return;
     }
     {$this->actionScript()}
@@ -139,12 +139,12 @@ var process = new Promise(function (resolve,reject) {
         url: '{$this->getHandleRoute()}',
         data: data,
         success: function (data) {
-            target.data('working', 0);
+            target.attr('working', 0);
             LA.NP.done();
             resolve([data, target]);
         },
         error:function(request){
-            target.data('working', 0);
+            target.attr('working', 0);
             LA.NP.done();
             reject([request, target]);
         }
