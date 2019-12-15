@@ -15,6 +15,7 @@ abstract class BatchAction extends GridAction
     public function actionScript()
     {
         $warning = __('No data selected!');
+
         return <<<JS
     var key = LA.grid.selected('{$this->parent->getName()}');
     
@@ -28,10 +29,11 @@ JS;
 
     protected function html()
     {
-        return sprintf(
-            "<li><a href='javascript:void(0);' class='%s'>%s</a></li>",
-            $this->elementClass(),
-            $this->title()
-        );
+        $this->setHtmlAttribute([
+            'href'  => 'javascript:void(0);',
+            'class' => $this->elementClass(),
+        ]);
+
+        return "<li><a {$this->formatHtmlAttributes()}>{$this->title()}</a></li>";
     }
 }

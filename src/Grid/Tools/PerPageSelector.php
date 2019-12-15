@@ -4,9 +4,15 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Illuminate\Contracts\Support\Renderable;
 
-class PerPageSelector extends AbstractTool
+class PerPageSelector implements Renderable
 {
+    /**
+     * @var Grid
+     */
+    protected $parent;
+
     /**
      * @var string
      */
@@ -24,7 +30,7 @@ class PerPageSelector extends AbstractTool
      */
     public function __construct(Grid $grid)
     {
-        $this->grid = $grid;
+        $this->parent = $grid;
 
         $this->initialize();
     }
@@ -36,11 +42,11 @@ class PerPageSelector extends AbstractTool
      */
     protected function initialize()
     {
-        $this->perPageName = $this->grid->model()->getPerPageName();
+        $this->perPageName = $this->parent->model()->getPerPageName();
 
         $this->perPage = (int) app('request')->input(
             $this->perPageName,
-            $this->grid->getPerPage()
+            $this->parent->getPerPage()
         );
     }
 
@@ -51,8 +57,8 @@ class PerPageSelector extends AbstractTool
      */
     public function getOptions()
     {
-        return collect($this->grid->getPerPages())
-            ->push($this->grid->getPerPage())
+        return collect($this->parent->getPerPages())
+            ->push($this->parent->getPerPage())
             ->push($this->perPage)
             ->unique()
             ->sort();
@@ -81,7 +87,7 @@ class PerPageSelector extends AbstractTool
 
 <label class="control-label pull-right hidden-xs" style="margin-right: 10px; font-weight: 100;">
         <small>$show</small>&nbsp;
-        <select class="input-sm form-shadow {$this->grid->getPerPageName()}" name="per-page">
+        <select class="input-sm form-shadow {$this->parent->getPerPageName()}" name="per-page">
             $options
         </select>
         &nbsp;<small>$entries</small>
@@ -96,10 +102,10 @@ EOT;
      */
     protected function script()
     {
-        return <<<EOT
-$('.{$this->grid->getPerPageName()}').change(function() {
+        return <<<JS
+$('.{$this->parent->getPerPageName()}').change(function() {
     LA.reload(this.value);
 });
-EOT;
+JS;
     }
 }

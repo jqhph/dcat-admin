@@ -3,8 +3,11 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Closure;
+use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Grid\BatchAction;
 use Dcat\Admin\Grid\Tools;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Renderable;
 
 trait HasTools
 {
@@ -26,17 +29,29 @@ trait HasTools
     /**
      * Get or setup grid tools.
      *
-     * @param Closure $callback
+     * @param Closure|array|Action|Tools\AbstractTool|Renderable|Htmlable|string $value
      *
      * @return $this|Tools
      */
-    public function tools(Closure $callback = null)
+    public function tools($value = null)
     {
-        if ($callback === null) {
+        if ($value === null) {
             return $this->tools;
         }
 
-        call_user_func($callback, $this->tools);
+        if ($value instanceof Closure) {
+            $value($this->tools);
+
+            return $this;
+        }
+
+        if (! is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach ($value as $tool) {
+            $this->tools->append($tool);
+        }
 
         return $this;
     }

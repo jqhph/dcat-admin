@@ -96,18 +96,16 @@ abstract class RowAction extends GridAction
      */
     public function html()
     {
-        if (! $href = $this->href()) {
-            $href = 'javascript:void(0);';
+        if ($href = $this->href()) {
+            $this->disabledHandler = true;
         }
 
-        $attributes = $this->formatHtmlAttributes();
+        $this->setHtmlAttribute([
+            'data-_key' => $this->key(),
+            'href'      => $this->href() ?: 'javascript:void(0);',
+            'class'     => $this->elementClass(),
+        ]);
 
-        return sprintf(
-            "<a data-_key='%s' href='%s' class='%s' {$attributes}>%s</a>",
-            $this->key(),
-            $href,
-            $this->elementClass(),
-            $this->title()
-        );
+        return "<a {$this->formatHtmlAttributes()}>{$this->title()}</a>";
     }
 }

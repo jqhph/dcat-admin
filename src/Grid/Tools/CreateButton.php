@@ -4,8 +4,9 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Illuminate\Contracts\Support\Renderable;
 
-class CreateButton
+class CreateButton implements Renderable
 {
     /**
      * @var Grid

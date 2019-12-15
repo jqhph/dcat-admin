@@ -61,6 +61,8 @@ class Tools implements Renderable
      */
     public function append($tool)
     {
+        $this->prepareAction($tool);
+
         $this->tools->push($tool);
 
         return $this;
@@ -75,11 +77,28 @@ class Tools implements Renderable
      */
     public function prepend($tool)
     {
+        $this->prepareAction($tool);
+
         $this->tools->prepend($tool);
 
         return $this;
     }
 
+    /**
+     * @param mixed $tool
+     *
+     * @return void
+     */
+    protected function prepareAction($tool)
+    {
+        if ($tool instanceof GridAction) {
+            $tool->setGrid($this->grid);
+        }
+    }
+
+    /**
+     * @return bool
+     */
     public function has()
     {
         return ! $this->tools->isEmpty();
@@ -165,16 +184,6 @@ class Tools implements Renderable
      */
     public function render()
     {
-        return $this->tools->map(function ($tool) {
-            if ($tool instanceof AbstractTool) {
-                if (! $tool->allowed()) {
-                    return '';
-                }
-
-                return $tool->setGrid($this->grid)->render();
-            }
-
-            return Helper::render($tool);
-        })->implode(' ');
+        return $this->tools->map([Helper::class, 'render'])->implode(' ');
     }
 }

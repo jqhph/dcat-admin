@@ -73,7 +73,7 @@ class BatchActions extends AbstractTool
     protected function prepareActions()
     {
         foreach ($this->actions as $action) {
-            $action->setGrid($this->grid);
+            $action->setGrid($this->parent);
         }
     }
 

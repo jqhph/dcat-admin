@@ -4,8 +4,9 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Illuminate\Contracts\Support\Renderable;
 
-class ExportButton extends AbstractTool
+class ExportButton implements Renderable
 {
     /**
      * @var Grid

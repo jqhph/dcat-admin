@@ -22,7 +22,7 @@ class FilterButton extends AbstractTool
      */
     protected function filter()
     {
-        return $this->grid->filter();
+        return $this->parent->filter();
     }
 
     /**
@@ -93,7 +93,7 @@ JS
 
         $this->setupScripts();
 
-        $onlyScopes = ((! $filters || $this->grid->option('show_filter') === false) && ! $scopres->isEmpty()) ? true : false;
+        $onlyScopes = ((! $filters || $this->parent->option('show_filter') === false) && ! $scopres->isEmpty()) ? true : false;
 
         $variables = [
             'scopes'           => $scopres,

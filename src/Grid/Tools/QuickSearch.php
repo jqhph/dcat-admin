@@ -93,7 +93,7 @@ class QuickSearch extends AbstractTool
 
         Arr::forget($query, [
             $this->queryName,
-            $this->grid->model()->getPageName(),
+            $this->parent->model()->getPageName(),
             '_pjax',
         ]);
 

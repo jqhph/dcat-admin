@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Actions;
 
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -43,6 +44,53 @@ abstract class Action implements Renderable
      * @var string
      */
     protected $event = 'click';
+
+    /**
+     * @var bool
+     */
+    protected $disabled = false;
+
+    /**
+     * @var bool
+     */
+    protected $disabledHandler = false;
+
+    /**
+     * Action constructor.
+     *
+     * @param mixed  $key
+     * @param string $title
+     */
+    public function __construct($key = null, $title = null)
+    {
+        $this->setKey($key);
+
+        $this->title = $title;
+    }
+
+    /**
+     * Toggle this button.
+     *
+     * @param bool $disable
+     *
+     * @return $this
+     */
+    public function disable(bool $disable = true)
+    {
+        $this->disabled = $disable;
+
+        return $this;
+    }
+
+    /**
+     * If the action is allowed.
+     *
+     * @return bool
+     */
+    public function allowed()
+    {
+        return ! $this->disabled;
+    }
 
     /**
      * Get primary key value of action.
@@ -127,9 +175,15 @@ abstract class Action implements Renderable
     {
     }
 
+    /**
+     * @return void
+     */
     protected function prepareHandle()
     {
-        if (! method_exists($this, 'handle')) {
+        if (
+            $this->disabledHandler
+            || ! method_exists($this, 'handle')
+        ) {
             return;
         }
 
@@ -137,13 +191,37 @@ abstract class Action implements Renderable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function render()
     {
+        if (! $this->allowed()) {
+            return '';
+        }
+
         $this->prepareHandle();
         $this->addScript();
 
         return $this->html();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return Helper::render($this->render());
+    }
+
+    /**
+     * Create a action instance.
+     *
+     * @param mixed ...$params
+     *
+     * @return $this
+     */
+    public static function make(...$params)
+    {
+        return new static(...$params);
     }
 }

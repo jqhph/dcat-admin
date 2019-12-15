@@ -3,66 +3,41 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Grid;
-use Illuminate\Contracts\Support\Renderable;
 
-abstract class AbstractTool implements Renderable
+abstract class AbstractTool extends Grid\GridAction
 {
     /**
-     * @var Grid
+     * @var string
      */
-    protected $grid;
+    public $selectorPrefix = '.tool-action-';
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $disabled = false;
+    protected $style = 'btn btn-sm btn-primary';
 
     /**
-     * Toggle this button.
-     *
-     * @param bool $disable
-     *
-     * @return $this
+     * @return string|void
      */
-    public function disable(bool $disable = true)
+    protected function href()
     {
-        $this->disabled = $disable;
-
-        return $this;
     }
 
     /**
-     * If the tool is allowed.
+     * @return string|void
      */
-    public function allowed()
+    public function html()
     {
-        return ! $this->disabled;
-    }
+        if ($href = $this->href()) {
+            $this->disabledHandler = true;
+        }
 
-    /**
-     * Set parent grid.
-     *
-     * @param Grid $grid
-     *
-     * @return $this
-     */
-    public function setGrid(Grid $grid)
-    {
-        $this->grid = $grid;
+        $this->setHtmlAttribute([
+            'data-_key' => $this->key(),
+            'href'      => $href ?: 'javascript:void(0);',
+            'class'     => $this->style.' '.$this->elementClass(),
+        ]);
 
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    abstract public function render();
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->render();
+        return "<a {$this->formatHtmlAttributes()}>{$this->title()}</a>";
     }
 }

@@ -3,11 +3,18 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Grid;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Color;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class Paginator extends AbstractTool
+class Paginator implements Renderable
 {
+    /**
+     * @var Grid
+     */
+    protected $grid;
+
     /**
      * @var \Illuminate\Pagination\LengthAwarePaginator
      */
@@ -60,7 +67,7 @@ class Paginator extends AbstractTool
             return;
         }
 
-        return new PerPageSelector($this->grid);
+        return (new PerPageSelector($this->grid))->render();
     }
 
     /**
@@ -95,5 +102,10 @@ class Paginator extends AbstractTool
         return $this->paginationRanger().
             $this->paginationLinks().
             $this->perPageSelector();
+    }
+
+    public function __toString()
+    {
+        return Helper::render($this->render());
     }
 }

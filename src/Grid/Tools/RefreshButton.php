@@ -2,7 +2,9 @@
 
 namespace Dcat\Admin\Grid\Tools;
 
-class RefreshButton extends AbstractTool
+use Illuminate\Contracts\Support\Renderable;
+
+class RefreshButton implements Renderable
 {
     /**
      * Render refresh button of grid.
