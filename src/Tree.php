@@ -4,7 +4,9 @@ namespace Dcat\Admin;
 
 use Closure;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Tree\AbstractTool;
 use Dcat\Admin\Tree\Tools;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
@@ -432,15 +434,33 @@ JS;
     }
 
     /**
-     * Setup grid tools.
+     * Setup tools.
      *
-     * @param Closure $callback
+     * @param Closure|array|AbstractTool|Renderable|Htmlable|string $callback
      *
-     * @return void
+     * @return $this|Tools
      */
-    public function tools(Closure $callback)
+    public function tools($callback = null)
     {
-        call_user_func($callback, $this->tools);
+        if ($callback === null) {
+            return $this->tools;
+        }
+
+        if ($callback instanceof \Closure) {
+            call_user_func($callback, $this->tools);
+
+            return $this;
+        }
+
+        if (! is_array($callback)) {
+            $callback = [$callback];
+        }
+
+        foreach ($callback as $tool) {
+            $this->tools->add($tool);
+        }
+
+        return $this;
     }
 
     /**

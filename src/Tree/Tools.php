@@ -36,12 +36,16 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param string|\Closure|Renderable|Htmlable $tool
+     * @param string|\Closure|AbstractTool|Renderable|Htmlable $tool
      *
      * @return $this
      */
     public function add($tool)
     {
+        if ($tool instanceof AbstractTool) {
+            $tool->setParent($this->tree);
+        }
+
         $this->tools->push($tool);
 
         return $this;

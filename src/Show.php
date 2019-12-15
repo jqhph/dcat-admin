@@ -9,6 +9,7 @@ use Dcat\Admin\Show\Field;
 use Dcat\Admin\Show\Newline;
 use Dcat\Admin\Show\Panel;
 use Dcat\Admin\Show\Relation;
+use Dcat\Admin\Show\Tools;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
@@ -277,10 +278,14 @@ class Show implements Renderable
     /**
      * @param \Closure|array|AbstractTool|Renderable|Htmlable|string $callback
      *
-     * @return $this
+     * @return $this|Tools
      */
-    public function tools($callback)
+    public function tools($callback = null)
     {
+        if ($callback === null) {
+            return $this->panel->tools();
+        }
+
         if ($callback instanceof \Closure) {
             $callback->call($this->model, $this->panel->tools());
 
@@ -294,6 +299,8 @@ class Show implements Renderable
         foreach ($callback as $tool) {
             $this->panel->tools()->append($tool);
         }
+
+        return $this;
     }
 
     /**
