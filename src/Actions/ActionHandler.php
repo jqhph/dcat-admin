@@ -231,7 +231,7 @@ JS;
     }
 
     /**
-     * @param Model|Authenticatable|HasPermissions $user
+     * @param Model|Authenticatable|HasPermissions|null $user
      *
      * @return bool
      */

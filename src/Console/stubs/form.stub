@@ -20,7 +20,7 @@ class DummyClass extends Form
 
         // return $this->error('Your error message.');
 
-        return $this->success('Processed successfully.', admin_url('/'));
+        return $this->success('Processed successfully.', '/');
     }
 
     /**

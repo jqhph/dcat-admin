@@ -1,0 +1,61 @@
+<?php
+
+namespace DummyNamespace;
+
+use Dcat\Admin\Grid\BatchAction;
+use Dcat\Admin\Actions\Response;
+use Dcat\Admin\Models\HasPermissions;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+
+class DummyClass extends BatchAction
+{
+    /**
+     * Handle the action request.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function handle(Request $request)
+    {
+        return $this->response()
+            ->success('Processed successfully: '.json_encode($this->key()))
+            ->redirect('/');
+    }
+
+    /**
+     * @return string
+     */
+    public function title()
+    {
+        return 'Title';
+    }
+
+    /**
+     * @return string|void
+     */
+    public function confirm()
+    {
+        // return 'Confirm?';
+    }
+
+    /**
+     * @param Model|Authenticatable|HasPermissions|null $user
+     *
+     * @return bool
+     */
+    protected function authorize($user): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    protected function parameters()
+    {
+        return [];
+    }
+}

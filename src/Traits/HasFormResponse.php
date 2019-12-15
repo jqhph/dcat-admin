@@ -22,7 +22,7 @@ trait HasFormResponse
             return response()->json([
                 'status'   => $status,
                 'message'  => $message,
-                'redirect' => $redirect,
+                'redirect' => admin_url($redirect),
             ]);
         }
 
@@ -133,7 +133,7 @@ trait HasFormResponse
             admin_alert($message);
         }
 
-        return redirect($url, $status);
+        return redirect(admin_url($url), $status);
     }
 
     /**
