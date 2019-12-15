@@ -50,7 +50,7 @@ class ActionCommand extends GeneratorCommand
     public function handle()
     {
         $this->choice = $this->choice(
-            "Which type of action would you like to make?",
+            'Which type of action would you like to make?',
             $choices = $this->actionTyps()
         );
 
