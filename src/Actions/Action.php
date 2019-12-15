@@ -69,7 +69,7 @@ abstract class Action implements Renderable
     }
 
     /**
-     * Toggle this button.
+     * Toggle this action.
      *
      * @param bool $disable
      *

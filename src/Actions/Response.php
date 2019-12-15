@@ -91,7 +91,7 @@ class Response
      */
     public function redirect(string $url)
     {
-        return $this->then(['action' => 'redirect', 'value' => $url]);
+        return $this->then(['action' => 'redirect', 'value' => admin_url($url)]);
     }
 
     /**
@@ -103,7 +103,7 @@ class Response
      */
     public function location(string $location)
     {
-        return $this->then(['action' => 'location', 'value' => $location]);
+        return $this->then(['action' => 'location', 'value' => admin_url($location)]);
     }
 
     /**
@@ -167,11 +167,11 @@ class Response
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Throwable $exception
      *
      * @return mixed
      */
-    public static function withException(\Exception $exception)
+    public static function withException(\Throwable $exception)
     {
         $response = new static();
 

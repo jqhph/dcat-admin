@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Controllers;
 
+use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Actions\Response;
-use Dcat\Admin\Grid\GridAction;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -38,9 +38,9 @@ class HandleActionController
      *
      * @throws Exception
      *
-     * @return GridAction
+     * @return Action
      */
-    protected function resolveActionInstance(Request $request): GridAction
+    protected function resolveActionInstance(Request $request): Action
     {
         if (! $request->has('_action')) {
             throw new Exception('Invalid action request.');
@@ -52,7 +52,7 @@ class HandleActionController
             throw new Exception("Action [{$actionClass}] does not exist.");
         }
 
-        /** @var GridAction $action */
+        /** @var Action $action */
         $action = app($actionClass);
 
         if (! method_exists($action, 'handle')) {

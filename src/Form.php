@@ -3,7 +3,9 @@
 namespace Dcat\Admin;
 
 use Closure;
+use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Contracts\Repository;
+use Dcat\Admin\Form\AbstractTool;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
@@ -1363,13 +1365,25 @@ class Form implements Renderable
     /**
      * Tools setting for form.
      *
-     * @param Closure $callback
+     * @param Closure|string|AbstractTool|Renderable|Action|array $callback
      *
      * @return $this;
      */
-    public function tools(Closure $callback)
+    public function tools($callback)
     {
-        $callback->call($this, $this->builder->tools());
+        if ($callback instanceof Closure) {
+            $callback->call($this, $this->builder->tools());
+
+            return $this;
+        }
+
+        if (! is_array($callback)) {
+            $callback = [$callback];
+        }
+
+        foreach ($callback as $tool) {
+            $this->builder->tools()->append($tool);
+        }
 
         return $this;
     }

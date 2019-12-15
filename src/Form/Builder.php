@@ -546,6 +546,14 @@ class Builder
     }
 
     /**
+     * @return Form
+     */
+    public function form()
+    {
+        return $this->form;
+    }
+
+    /**
      * @return array
      */
     public function hiddenFields()

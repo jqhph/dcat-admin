@@ -65,12 +65,14 @@ class Tools implements Renderable
     /**
      * Append a tools.
      *
-     * @param string|\Closure|Renderable|Htmlable $tool
+     * @param string|\Closure|Renderable|Htmlable|AbstractTool $tool
      *
      * @return $this
      */
     public function append($tool)
     {
+        $this->prepareTool($tool);
+
         $this->appends->push($tool);
 
         return $this;
@@ -79,15 +81,29 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param string|\Closure|Renderable|Htmlable $tool
+     * @param string|\Closure|Renderable|Htmlable|AbstractTool $tool
      *
      * @return $this
      */
     public function prepend($tool)
     {
+        $this->prepareTool($tool);
+
         $this->prepends->push($tool);
 
         return $this;
+    }
+
+    /**
+     * @param mixed $tool
+     *
+     * @return void
+     */
+    protected function prepareTool($tool)
+    {
+        if ($tool instanceof AbstractTool) {
+            $tool->setForm($this->form->form());
+        }
     }
 
     /**
