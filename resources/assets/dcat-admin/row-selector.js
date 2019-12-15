@@ -8,7 +8,6 @@ LA.RowSelector = function RowSelector(opts) {
         checkbox: '', // checkbox css选择器
         selectAll: '', // 全选checkbox css选择器
         bg: 'rgba(255, 255,213,0.4)', // 选中效果颜色
-        getSelectedRowsMethod: 'getSelectRows',
         clickTr: false, // 点击行事件
     }, opts);
 
@@ -49,7 +48,7 @@ LA.RowSelector = function RowSelector(opts) {
         }
     });
 
-    this.getIds = window[opts.getSelectedRowsMethod] = function () {
+    this.getIds = function () {
         var selected = [];
         $(checkboxSelector+':checked').each(function() {
             selected.push($(this).data('id'));
@@ -57,7 +56,7 @@ LA.RowSelector = function RowSelector(opts) {
 
         return selected;
     };
-    this.getItems = window[opts.getSelectedRowsMethod + 'Options'] = function () {
+    this.getRows = function () {
         var selected = [];
         $(checkboxSelector+':checked').each(function(){
             selected.push({'id': $(this).data('id'), 'label': $(this).data('label')})

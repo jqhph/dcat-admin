@@ -33,6 +33,25 @@ window.require = window.define = window.exports = window.module = undefined;
             setTimeout(NP.done, 200);
         };
 
+        LA.grid = {
+            _defaultName: '_def_',
+            _selectors: {},
+
+            addSelector: function (selector, name) {
+                this._selectors[name || this._defaultName] = selector;
+            },
+
+            // 获取行选择器选中的ID字符串
+            selected: function (name) {
+                return this._selectors[name || this._defaultName].getIds()
+            },
+
+            // 获取行选择器选中的行
+            selectedRows: function (name) {
+                return this._selectors[name || this._defaultName].getRows()
+            },
+        };
+
         $.pjax.defaults.timeout = 5000;
         $.pjax.defaults.maxCacheLength = 0;
 
@@ -77,8 +96,8 @@ window.require = window.define = window.exports = window.module = undefined;
         batchDeleteAction: function () {
             $('[data-action="batch-delete"]').off('click').on('click', function() {
                 var url = $(this).data('url'),
-                    method = $(this).data('method'),
-                    id = win[method]().join();
+                    name = $(this).data('name'),
+                    id = LA.grid.selected(name).join();
                 if (!id) {
                     return;
                 }
@@ -437,7 +456,6 @@ window.require = window.define = window.exports = window.module = undefined;
                 checkbox: '', // checkbox css选择器
                 selectAll: '', // 全选checkbox css选择器
                 bg: 'rgba(255, 255,213,0.4)', // 选中效果颜色
-                getSelectedRowsMethod: 'getSelectRows',
                 clickTr: false, // 点击行事件
             }, opts);
 
@@ -478,7 +496,7 @@ window.require = window.define = window.exports = window.module = undefined;
                 }
             });
 
-            this.getIds = window[opts.getSelectedRowsMethod] = function () {
+            this.getIds = function () {
                 var selected = [];
                 $(checkboxSelector+':checked').each(function() {
                     selected.push($(this).data('id'));
@@ -486,7 +504,7 @@ window.require = window.define = window.exports = window.module = undefined;
 
                 return selected;
             };
-            this.getItems = window[opts.getSelectedRowsMethod + 'Options'] = function () {
+            this.getRows = function () {
                 var selected = [];
                 $(checkboxSelector+':checked').each(function(){
                     selected.push({'id': $(this).data('id'), 'label': $(this).data('label')})

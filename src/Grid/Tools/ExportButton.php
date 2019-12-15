@@ -31,8 +31,8 @@ class ExportButton extends AbstractTool
 $('.{$this->grid->exportSelectedName()}').click(function (e) {
     e.preventDefault();
     
-    var rows = {$this->grid->selectedRowsName()}().join(',');
-    if (!rows) {
+    var rows = LA.grid.selected('{$this->grid->getName()}').join(',');
+    if (! rows) {
         return false;
     }
     

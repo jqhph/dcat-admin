@@ -27,7 +27,6 @@ trait HasElementNames
         'grid_per_page'   => 'grid-per-pager',
         'grid_batch'      => 'grid-batch',
         'export_selected' => 'export-selected',
-        'selected_rows'   => 'selectedRows',
     ];
 
     /**
@@ -104,20 +103,6 @@ trait HasElementNames
     public function exportSelectedName()
     {
         return $this->elementNameWithPrefix('export_selected');
-    }
-
-    /**
-     * @return string
-     */
-    public function selectedRowsName()
-    {
-        $elementName = $this->elementNames['selected_rows'];
-
-        if ($this->__name) {
-            return sprintf('%s%s', $this->__name, ucfirst($elementName));
-        }
-
-        return $elementName;
     }
 
     /**

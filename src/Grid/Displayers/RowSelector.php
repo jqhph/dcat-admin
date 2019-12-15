@@ -29,13 +29,13 @@ EOT;
 
         Admin::script(
             <<<JS
-LA.RowSelector({
+var selector = LA.RowSelector({
     checkbox: '.{$this->grid->rowName()}-checkbox',
     selectAll: '.{$this->grid->selectAllName()}', 
-    getSelectedRowsMethod: '{$this->grid->selectedRowsName()}',
     clickTr: {$clickTr},
     bg: '{$background}',
 });
+LA.grid.addSelector(selector, '{$this->grid->getName()}');
 JS
         );
     }
