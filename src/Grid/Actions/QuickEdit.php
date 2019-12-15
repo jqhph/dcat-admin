@@ -12,7 +12,7 @@ class QuickEdit extends RowAction
     /**
      * @return array|null|string
      */
-    public function name()
+    public function title()
     {
         return __('admin.quick_edit');
     }

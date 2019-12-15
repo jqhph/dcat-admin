@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Closure;
+use Dcat\Admin\Grid\BatchAction;
 use Dcat\Admin\Grid\Tools;
 
 trait HasTools
@@ -43,14 +44,14 @@ trait HasTools
     /**
      * Set grid batch-action callback.
      *
-     * @param Closure $closure
+     * @param Closure|BatchAction|BatchAction[] $value
      *
      * @return $this
      */
-    public function batchActions(Closure $closure)
+    public function batchActions($value)
     {
-        $this->tools(function (Tools $tools) use ($closure) {
-            $tools->batch($closure);
+        $this->tools(function (Tools $tools) use ($value) {
+            $tools->batch($value);
         });
 
         return $this;

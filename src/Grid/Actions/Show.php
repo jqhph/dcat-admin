@@ -9,7 +9,7 @@ class Show extends RowAction
     /**
      * @return array|null|string
      */
-    public function name()
+    public function title()
     {
         return __('admin.show');
     }

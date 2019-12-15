@@ -3,6 +3,9 @@
 namespace Dcat\Admin\Actions;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Models\HasPermissions;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
 trait ActionHandler
 {
@@ -40,11 +43,11 @@ trait ActionHandler
     }
 
     /**
-     * Return the confirm message.
+     * Confirm message of action.
      *
      * @return string|void
      */
-    protected function confirm()
+    public function confirm()
     {
     }
 
@@ -74,22 +77,20 @@ trait ActionHandler
         $resolveScript = <<<JS
 target.data('working', 1);
 Object.assign(data, {$parameters});
-{$this->actionScript()}
 {$this->buildActionPromise()}
 {$this->handleActionPromise()}
 JS;
 
         $script = <<<JS
-(function ($) {
-    $('{$this->selector($this->selectorPrefix)}').off('{$this->event}').on('{$this->event}', function() {
-        var data = $(this).data(),
-            target = $(this);
-        if (target.data('working')) {
-            return;
-        }
-        {$this->confirmScript($resolveScript)}
-    });
-})(jQuery);
+$('{$this->selector($this->selectorPrefix)}').off('{$this->event}').on('{$this->event}', function() {
+    var data = $(this).data(),
+        target = $(this);
+    if (target.data('working')) {
+        return;
+    }
+    {$this->actionScript()}
+    {$this->confirmScript($resolveScript)}
+});
 JS;
 
         Admin::script($script);
@@ -128,22 +129,23 @@ JS;
     {
         return <<<JS
 var process = new Promise(function (resolve,reject) {
-    
     Object.assign(data, {
         _token: LA.token,
         _action: '{$this->getCalledClass()}',
     });
-
+    LA.NP.start();
     $.ajax({
         method: '{$this->getMethod()}',
         url: '{$this->getHandleRoute()}',
         data: data,
         success: function (data) {
             target.data('working', 0);
+            LA.NP.done();
             resolve([data, target]);
         },
         error:function(request){
             target.data('working', 0);
+            LA.NP.done();
             reject([request, target]);
         }
     });
@@ -218,5 +220,31 @@ window.ACTION_CATCHER = function (data) {
     console.error(request);
 };
 JS;
+    }
+
+    /**
+     * @return bool
+     */
+    public function passesAuthorization()
+    {
+        return $this->authorize(Admin::user());
+    }
+
+    /**
+     * @param Model|Authenticatable|HasPermissions $user
+     *
+     * @return bool
+     */
+    protected function authorize($user): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return Response
+     */
+    public function failedAuthorization()
+    {
+        return $this->response()->error(__('admin.deny'));
     }
 }

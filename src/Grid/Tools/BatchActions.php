@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Grid\Tools;
 
-use Dcat\Admin\Admin;
+use Dcat\Admin\Grid\BatchAction;
 use Illuminate\Support\Collection;
 
 class BatchActions extends AbstractTool
@@ -58,9 +58,7 @@ class BatchActions extends AbstractTool
      */
     public function add(BatchAction $action)
     {
-        $id = $this->actions->count();
-
-        $action->id($id);
+        $action->selectorPrefix = '.grid-batch-action-'.$this->actions->count();
 
         $this->actions->push($action);
 
@@ -68,16 +66,14 @@ class BatchActions extends AbstractTool
     }
 
     /**
-     * Setup scripts of batch actions.
+     * Prepare batch actions.
      *
      * @return void
      */
-    protected function setUpScripts()
+    protected function prepareActions()
     {
         foreach ($this->actions as $action) {
             $action->setGrid($this->grid);
-
-            Admin::script($action->script());
         }
     }
 
@@ -96,7 +92,7 @@ class BatchActions extends AbstractTool
             return '';
         }
 
-        $this->setUpScripts();
+        $this->prepareActions();
 
         $data = [
             'actions' => $this->actions,

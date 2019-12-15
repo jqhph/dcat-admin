@@ -107,7 +107,7 @@ abstract class RowAction extends GridAction
             $this->key(),
             $href,
             $this->elementClass(),
-            $this->name()
+            $this->title()
         );
     }
 }

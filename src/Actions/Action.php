@@ -7,9 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 
 abstract class Action implements Renderable
 {
-    use HasHtmlAttributes,
-        Authorizable,
-        ActionHandler;
+    use HasHtmlAttributes, ActionHandler;
 
     /**
      * @var array
@@ -17,14 +15,14 @@ abstract class Action implements Renderable
     protected static $selectors = [];
 
     /**
-     * @var mixed
+     * @var array|string
      */
     protected $primaryKey;
 
     /**
      * @var string
      */
-    protected $name;
+    protected $title;
 
     /**
      * @var string
@@ -49,7 +47,7 @@ abstract class Action implements Renderable
     /**
      * Get primary key value of action.
      *
-     * @return mixed
+     * @return array|string
      */
     public function key()
     {
@@ -77,13 +75,13 @@ abstract class Action implements Renderable
     }
 
     /**
-     * Get batch action title.
+     * Get action title.
      *
      * @return string
      */
-    public function name()
+    public function title()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**

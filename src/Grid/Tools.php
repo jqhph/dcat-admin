@@ -134,13 +134,28 @@ class Tools implements Renderable
     }
 
     /**
-     * @param \Closure $closure
+     * @param \Closure|BatchAction|BatchAction[] $value
      */
-    public function batch(\Closure $closure)
+    public function batch($value)
     {
-        call_user_func($closure, $this->tools->first(function ($tool) {
+        /* @var BatchActions $batchActions */
+        $batchActions = $this->tools->first(function ($tool) {
             return $tool instanceof BatchActions;
-        }));
+        });
+
+        if ($value instanceof \Closure) {
+            $value($batchActions);
+
+            return;
+        }
+
+        if (! is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach ($value as $action) {
+            $batchActions->add($action);
+        }
     }
 
     /**
