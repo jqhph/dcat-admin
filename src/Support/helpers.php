@@ -384,21 +384,3 @@ if (! function_exists('admin_asset')) {
         return (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
     }
 }
-
-if (! function_exists('array_delete')) {
-
-    /**
-     * Delete from array by value.
-     *
-     * @param array $array
-     * @param mixed $value
-     */
-    function array_delete(&$array, $value)
-    {
-        foreach ($array as $index => $item) {
-            if ($value == $item) {
-                unset($array[$index]);
-            }
-        }
-    }
-}

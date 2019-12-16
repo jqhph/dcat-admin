@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Form\Concerns;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -231,7 +232,7 @@ trait HasFieldValidator
     protected function deleteRuleByKeyword(&$rules, $rule)
     {
         if (is_array($rules)) {
-            array_delete($rules, $rule);
+            Helper::deleteByValue($rules, $rule);
 
             return;
         }

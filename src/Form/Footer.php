@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form;
 
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Checkbox;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -55,7 +56,7 @@ class Footer implements Renderable
     public function disableReset(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->buttons, 'reset');
+            Helper::deleteByValue($this->buttons, 'reset');
         } elseif (! in_array('reset', $this->buttons)) {
             array_push($this->buttons, 'reset');
         }
@@ -73,7 +74,7 @@ class Footer implements Renderable
     public function disableSubmit(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->buttons, 'submit');
+            Helper::deleteByValue($this->buttons, 'submit');
         } elseif (! in_array('submit', $this->buttons)) {
             array_push($this->buttons, 'submit');
         }
@@ -91,7 +92,7 @@ class Footer implements Renderable
     public function disableViewCheck(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->checkboxes, 'view');
+            Helper::deleteByValue($this->checkboxes, 'view');
         } elseif (! in_array('view', $this->checkboxes)) {
             array_push($this->checkboxes, 'view');
         }
@@ -109,7 +110,7 @@ class Footer implements Renderable
     public function disableEditingCheck(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->checkboxes, 'continue_editing');
+            Helper::deleteByValue($this->checkboxes, 'continue_editing');
         } elseif (! in_array('continue_editing', $this->checkboxes)) {
             array_push($this->checkboxes, 'continue_editing');
         }
@@ -127,7 +128,7 @@ class Footer implements Renderable
     public function disableCreatingCheck(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->checkboxes, 'continue_creating');
+            Helper::deleteByValue($this->checkboxes, 'continue_creating');
         } elseif (! in_array('continue_creating', $this->checkboxes)) {
             array_push($this->checkboxes, 'continue_creating');
         }

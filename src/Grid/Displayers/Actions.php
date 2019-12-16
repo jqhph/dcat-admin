@@ -89,7 +89,7 @@ class Actions extends AbstractDisplayer
     public function disableView(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->actions, 'view');
+            Helper::deleteByValue($this->actions, 'view');
         } elseif (! in_array('view', $this->actions)) {
             array_push($this->actions, 'view');
         }
@@ -105,7 +105,7 @@ class Actions extends AbstractDisplayer
     public function disableDelete(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->actions, 'delete');
+            Helper::deleteByValue($this->actions, 'delete');
         } elseif (! in_array('delete', $this->actions)) {
             array_push($this->actions, 'delete');
         }
@@ -121,7 +121,7 @@ class Actions extends AbstractDisplayer
     public function disableEdit(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->actions, 'edit');
+            Helper::deleteByValue($this->actions, 'edit');
         } elseif (! in_array('edit', $this->actions)) {
             array_push($this->actions, 'edit');
         }
@@ -137,7 +137,7 @@ class Actions extends AbstractDisplayer
     public function disableQuickEdit(bool $disable = true)
     {
         if ($disable) {
-            array_delete($this->actions, 'quickEdit');
+            Helper::deleteByValue($this->actions, 'quickEdit');
         } elseif (! in_array('quickEdit', $this->actions)) {
             array_push($this->actions, 'quickEdit');
         }

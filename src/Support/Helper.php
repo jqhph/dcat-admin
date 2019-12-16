@@ -307,4 +307,21 @@ class Helper
     {
         return "<?php \nreturn ".static::exportArray($array).";\n";
     }
+
+    /**
+     * Delete from array by value.
+     *
+     * @param array $array
+     * @param mixed $value
+     */
+    public static function deleteByValue(&$array, $value)
+    {
+        $value = (array) $value;
+
+        foreach ($array as $index => $item) {
+            if (in_array($item, $value)) {
+                unset($array[$index]);
+            }
+        }
+    }
 }
