@@ -67,26 +67,21 @@ class Helper
     /**
      * Converts the given value to string.
      *
-     * @param $value
-     * @param array $params
-     * @param null  $bindTo
+     * @param mixed  $value
+     * @param array  $params
+     * @param object $newThis
      *
      * @return mixed|string
      */
-    public static function render($value, $params = [], $bindTo = null)
+    public static function render($value, $params = [], $newThis = null)
     {
-        if (! $value) {
-            return '';
-        }
-
         if (is_string($value)) {
             return $value;
         }
 
         if ($value instanceof \Closure) {
-            if ($bindTo) {
-                $value->bindTo($bindTo);
-            }
+            $newThis && $value = $value->bindTo($newThis);
+
             $value = $value(...(array) $params);
         }
 

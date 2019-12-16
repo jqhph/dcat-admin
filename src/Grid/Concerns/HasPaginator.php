@@ -79,6 +79,14 @@ trait HasPaginator
     }
 
     /**
+     * @return $this
+     */
+    public function disablePerPages()
+    {
+        return $this->perPages([]);
+    }
+
+    /**
      * Get per-page options.
      *
      * @return array

@@ -49,6 +49,11 @@ class Menu
     ];
 
     /**
+     * @var string
+     */
+    protected $view = 'admin::partials.menu';
+
+    /**
      * Register menu.
      */
     public function register()
@@ -57,12 +62,11 @@ class Menu
             admin_inject_default_section(\AdminSection::LEFT_SIDEBAR_MENU, function () {
                 $menuModel = config('admin.database.menu_model');
 
-                return $this->build((new $menuModel())->allNodes());
+                return $this->toHtml((new $menuModel())->allNodes());
             });
         }
 
         if (config('app.debug')) {
-            // Register the menu of helpers.
             $this->add(static::$helperNodes, 20);
         }
     }
@@ -70,11 +74,13 @@ class Menu
     /**
      * @param array $nodes
      * @param int   $priority
+     *
+     * @return void
      */
     public function add(array $nodes = [], int $priority = 10)
     {
         admin_inject_section(\AdminSection::LEFT_SIDEBAR_MENU_BOTTOM, function () use (&$nodes) {
-            return $this->build($nodes);
+            return $this->toHtml($nodes);
         }, true, $priority);
     }
 
@@ -87,24 +93,36 @@ class Menu
      *
      * @return string
      */
-    public function build(array $nodes)
+    public function toHtml(array $nodes)
     {
         $html = '';
         foreach (Helper::buildNestedArray($nodes) as $item) {
-            $html .= $this->renderMenu($item);
+            $html .= $this->render($item);
         }
 
         return $html;
     }
 
     /**
+     * @param string $view
+     *
+     * @return $this
+     */
+    public function view(string $view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    /**
      * @param array $item
      *
-     * @return array|string
+     * @return string
      */
-    protected function renderMenu(array $item)
+    public function render(array $item)
     {
-        return view('admin::partials.menu', ['item' => &$item])->render();
+        return view($this->view, ['item' => &$item, 'builder' => $this])->render();
     }
 
     /**
@@ -132,7 +150,7 @@ class Menu
                 return true;
             }
             if (! empty($v['children'])) {
-                if (static::isActive($v, $path)) {
+                if ($this->isActive($v, $path)) {
                     return true;
                 }
             }
@@ -142,15 +160,15 @@ class Menu
     }
 
     /**
-     * @param array $menuItem
+     * @param array $item
      *
      * @return bool
      */
-    public function show(array $menuItem)
+    public function isVisible(array $item)
     {
-        $permissionIds = $menuItem['permission_id'] ?? null;
-        $roles = array_column($menuItem['roles'] ?? [], 'slug');
-        $permissions = array_column($menuItem['permissions'] ?? [], 'slug');
+        $permissionIds = $item['permission_id'] ?? null;
+        $roles = array_column($item['roles'] ?? [], 'slug');
+        $permissions = array_column($item['permissions'] ?? [], 'slug');
 
         if (! $permissionIds && ! $roles && ! $permissions) {
             return true;
@@ -172,30 +190,24 @@ class Menu
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      *
      * @return string
      */
     public function getPath($uri)
     {
-        if (! $uri) {
-            return $uri;
-        }
-
-        return url()->isValidUrl($uri) ? $uri : admin_base_path($uri);
+        return $uri
+            ? (url()->isValidUrl($uri) ? $uri : admin_base_path($uri))
+            : $uri;
     }
 
     /**
-     * @param $uri
+     * @param string $uri
      *
      * @return string
      */
     public function getUrl($uri)
     {
-        if (! $uri) {
-            return $uri;
-        }
-
-        return admin_url($uri);
+        return $uri ? admin_url($uri) : $uri;
     }
 }

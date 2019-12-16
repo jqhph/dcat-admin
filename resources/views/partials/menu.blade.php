@@ -1,11 +1,7 @@
-@if(Dcat\Admin\Admin::Menu()->show($item))
-    @if(!isset($item['children']))
-        @php
-            $url = Dcat\Admin\Admin::menu()->getUrl($item['uri']);
-        @endphp
-
-        <li {!! Dcat\Admin\Admin::Menu()->isActive($item) ? 'class="active"' : '' !!}>
-                <a href="{{ $url }}">
+@if($builder->isVisible($item))
+    @if(! isset($item['children']))
+        <li {!! $builder->isActive($item) ? 'class="active"' : '' !!}>
+                <a href="{{ $builder->getUrl($item['uri']) }}">
 
                 <i class="fa {{$item['icon']}}"></i>
                 @if (Lang::has($titleTranslation = 'admin.menu_titles.' . trim(str_replace(' ', '_', strtolower($item['title'])))))
@@ -17,7 +13,7 @@
         </li>
     @else
         @php
-            $active = Dcat\Admin\Admin::Menu()->isActive($item);
+            $active = $builder->isActive($item);
         @endphp
         <li class="treeview {!! $active ? 'active' : '' !!}">
             <a href="#">
