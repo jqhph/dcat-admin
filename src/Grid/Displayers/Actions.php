@@ -31,7 +31,7 @@ class Actions extends AbstractDisplayer
     protected $actions = [
         'view'      => true,
         'edit'      => true,
-        'quickEdit' => true,
+        'quickEdit' => false,
         'delete'    => true,
     ];
 
@@ -183,34 +183,41 @@ class Actions extends AbstractDisplayer
     }
 
     /**
+     * @param array $callbacks
+     *
+     * @return void
+     */
+    protected function call(array $callbacks = [])
+    {
+        foreach ($callbacks as $callback) {
+            if ($callback instanceof \Closure) {
+                $callback->call($this->row, $this);
+            }
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function display(array $callbacks = [])
     {
         $this->resetDefaultActions();
 
-        foreach ($callbacks as $callback) {
-            if ($callback instanceof \Closure) {
-                $callback->call($this->row, $this);
-            }
-        }
+        $this->call($callbacks);
 
-        $map = [Helper::class, 'render'];
+        $toString = [Helper::class, 'render'];
 
-        $prepends = array_map($map, $this->prepends);
-        $appends = array_map($map, $this->appends);
-        $actions = &$prepends;
+        $prepends = array_map($toString, $this->prepends);
+        $appends = array_map($toString, $this->appends);
 
         foreach ($this->actions as $action => $enable) {
             if ($enable) {
                 $method = 'render'.ucfirst($action);
-                array_push($actions, $this->{$method}());
+                array_push($prepends, $this->{$method}());
             }
         }
 
-        $actions = array_merge($actions, $appends);
-
-        return implode('', $actions);
+        return implode('', array_merge($prepends, $appends));
     }
 
     /**

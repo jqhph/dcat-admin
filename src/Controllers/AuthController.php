@@ -101,7 +101,7 @@ class AuthController extends Controller
         );
 
         return $content
-            ->header(trans('admin.user_setting'))
+            ->title(trans('admin.user_setting'))
             ->body($form->edit(Admin::user()->getKey()));
     }
 
@@ -153,6 +153,8 @@ class AuthController extends Controller
     {
         $form = new Form(new Administrator());
 
+        $form->action(admin_url('auth/setting'));
+
         $form->disableCreatingCheck();
         $form->disableEditingCheck();
         $form->disableViewCheck();
@@ -179,8 +181,6 @@ class AuthController extends Controller
                 return $v;
             });
         $form->password('password_confirmation', trans('admin.password_confirmation'))->same('password');
-
-        $form->setAction(admin_url('auth/setting'));
 
         $form->ignore(['password_confirmation', 'old_password']);
 

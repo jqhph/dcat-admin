@@ -25,7 +25,7 @@ class MenuController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header(trans('admin.menu'))
+            ->title(trans('admin.menu'))
             ->description(trans('admin.list'))
             ->row(function (Row $row) {
                 $row->column(7, $this->treeView()->render());
@@ -98,7 +98,7 @@ class MenuController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header(trans('admin.menu'))
+            ->title(trans('admin.menu'))
             ->description(trans('admin.edit'))
             ->row($this->form()->edit($id));
     }

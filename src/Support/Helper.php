@@ -27,7 +27,7 @@ class Helper
             Artisan::call('config:cache');
         }
 
-        \config(['admin-extensions' => $config]);
+        config(['admin-extensions' => $config]);
 
         return $result;
     }
@@ -40,7 +40,7 @@ class Helper
      *
      * @return array
      */
-    public static function array($value, bool $filter = true)
+    public static function array($value, bool $filter = true): array
     {
         if (! $value) {
             return [];
@@ -71,9 +71,9 @@ class Helper
      * @param array  $params
      * @param object $newThis
      *
-     * @return mixed|string
+     * @return string
      */
-    public static function render($value, $params = [], $newThis = null)
+    public static function render($value, $params = [], $newThis = null): string
     {
         if (is_string($value)) {
             return $value;
@@ -86,11 +86,11 @@ class Helper
         }
 
         if ($value instanceof Renderable) {
-            return $value->render();
+            return (string) $value->render();
         }
 
         if ($value instanceof Htmlable) {
-            return $value->toHtml();
+            return (string) $value->toHtml();
         }
 
         return (string) $value;

@@ -176,7 +176,7 @@ class Menu
 
         $user = Admin::user();
 
-        if ($user->visible($roles)) {
+        if (! $user || $user->visible($roles)) {
             return true;
         }
 

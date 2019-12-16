@@ -197,6 +197,7 @@ class Tools implements Renderable
     public function showQuickEdit(?string $width = null, ?string $height = null)
     {
         $this->showQuickEdit = true;
+        $this->showEdit = false;
 
         $width && ($this->dialogFormDimensions[0] = $width);
         $height && ($this->dialogFormDimensions[1] = $height);

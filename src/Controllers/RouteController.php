@@ -16,7 +16,7 @@ class RouteController extends Controller
     {
         $content = new Content();
 
-        $content->header(trans('admin.routes'))->description(trans('admin.list'));
+        $content->title(trans('admin.routes'))->description(trans('admin.list'));
 
         $content->body(function (Row $row) {
             $colors = [

@@ -21,7 +21,7 @@ class LogController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header(trans('admin.operation_log'))
+            ->title(trans('admin.operation_log'))
             ->description(trans('admin.list'))
             ->body($this->grid());
     }

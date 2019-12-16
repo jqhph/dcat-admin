@@ -181,11 +181,15 @@ class AdminServiceProvider extends ServiceProvider
     {
         Content::composing(function () {
             if (! admin_has_default_section(\AdminSection::NAVBAR_USER_PANEL)) {
-                admin_inject_default_section(\AdminSection::NAVBAR_USER_PANEL, view('admin::partials.navbar-user-panel'));
+                admin_inject_default_section(\AdminSection::NAVBAR_USER_PANEL, function () {
+                    return view('admin::partials.navbar-user-panel', ['user' => Admin::user()]);
+                });
             }
 
             if (! admin_has_default_section(\AdminSection::LEFT_SIDEBAR_USER_PANEL)) {
-                admin_inject_default_section(\AdminSection::LEFT_SIDEBAR_USER_PANEL, view('admin::partials.sidebar-user-panel'));
+                admin_inject_default_section(\AdminSection::LEFT_SIDEBAR_USER_PANEL, function () {
+                    return view('admin::partials.sidebar-user-panel', ['user' => Admin::user()]);
+                });
             }
 
             // Register menu

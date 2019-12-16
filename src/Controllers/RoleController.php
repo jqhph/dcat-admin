@@ -30,7 +30,7 @@ class RoleController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header(trans('admin.roles'))
+            ->title(trans('admin.roles'))
             ->description(trans('admin.list'))
             ->body($this->grid());
     }
@@ -46,7 +46,7 @@ class RoleController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header(trans('admin.roles'))
+            ->title(trans('admin.roles'))
             ->description(trans('admin.detail'))
             ->body($this->detail($id));
     }
@@ -62,7 +62,7 @@ class RoleController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header(trans('admin.roles'))
+            ->title(trans('admin.roles'))
             ->description(trans('admin.edit'))
             ->body($this->form()->edit($id));
     }
@@ -77,7 +77,7 @@ class RoleController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header(trans('admin.roles'))
+            ->title(trans('admin.roles'))
             ->description(trans('admin.create'))
             ->body($this->form());
     }
@@ -95,14 +95,6 @@ class RoleController extends Controller
             $grid = new Grid(new Role());
         }
 
-        $grid->disableBatchDelete();
-        $grid->disableCreateButton();
-        $grid->showQuickCreateButton();
-        $grid->disableEditButton();
-        $grid->showQuickEditButton();
-        $grid->disableFilterButton();
-        $grid->quickSearch(['id', 'name', 'slug']);
-
         $grid->id('ID')->bold()->sortable();
         $grid->slug->label('primary');
         $grid->name;
@@ -111,6 +103,14 @@ class RoleController extends Controller
             $grid->created_at;
             $grid->updated_at->sortable();
         }
+
+        $grid->disableBatchDelete();
+        $grid->disableCreateButton();
+        $grid->showQuickCreateButton();
+        $grid->disableEditButton();
+        $grid->showQuickEditButton();
+        $grid->disableFilterButton();
+        $grid->quickSearch(['id', 'name', 'slug']);
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $roleModel = config('admin.database.roles_model');

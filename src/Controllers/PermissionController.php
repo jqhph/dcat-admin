@@ -32,7 +32,7 @@ class PermissionController extends Controller
         }
 
         return $content
-            ->header(trans('admin.permissions'))
+            ->title(trans('admin.permissions'))
             ->description(trans('admin.list'))
             ->body(function (Row $row) {
                 if (request('_layout')) {
@@ -54,7 +54,7 @@ class PermissionController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header(trans('admin.permissions'))
+            ->title(trans('admin.permissions'))
             ->description(trans('admin.detail'))
             ->body($this->detail($id));
     }
@@ -70,7 +70,7 @@ class PermissionController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header(trans('admin.permissions'))
+            ->title(trans('admin.permissions'))
             ->description(trans('admin.edit'))
             ->body($this->form()->edit($id));
     }
@@ -85,7 +85,7 @@ class PermissionController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header(trans('admin.permissions'))
+            ->title(trans('admin.permissions'))
             ->description(trans('admin.create'))
             ->body($this->form());
     }
@@ -176,8 +176,6 @@ class PermissionController extends Controller
     {
         $grid = new Grid(new Permission());
 
-        $grid->disableCreateButton();
-
         $grid->id('ID')->bold()->sortable();
         $grid->slug->label('primary');
         $grid->name;
@@ -215,6 +213,11 @@ class PermissionController extends Controller
         $grid->created_at;
         $grid->updated_at->sortable();
 
+        $grid->disableCreateButton();
+        $grid->showQuickCreateButton();
+        $grid->disableEditButton();
+        $grid->showQuickEditButton();
+
         $grid->tools(function (Grid\Tools $tools) {
             $tools->batch(function (Grid\Tools\BatchActions $actions) {
                 $actions->disableDelete();
@@ -245,7 +248,7 @@ class PermissionController extends Controller
     {
         $show = new Show(new Permission());
 
-        $show->setKey($id);
+        $show->key($id);
 
         $show->id;
         $show->slug;

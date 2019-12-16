@@ -29,7 +29,7 @@ class ExtensionController extends Controller
         $this->define();
 
         return $content
-            ->header(admin_trans_label('Extensions'))
+            ->title(admin_trans_label('Extensions'))
             ->description(trans('admin.list'))
             ->body($this->grid());
     }

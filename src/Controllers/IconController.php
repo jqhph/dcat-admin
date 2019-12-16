@@ -25,7 +25,7 @@ class IconController extends Controller
             width: 40px;
         }');
 
-        return $content->header('Icons')->description(' ')->body(function (Row $row) {
+        return $content->title('Icons')->description(' ')->body(function (Row $row) {
             $tab = Tab::make()->padding('20px')->custom();
 
             $tab->add('Themify', view('admin::helpers.themify'));

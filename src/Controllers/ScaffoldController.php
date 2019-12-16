@@ -77,7 +77,7 @@ class ScaffoldController extends Controller
         })->toArray();
 
         return $content
-            ->header(ucfirst(trans('admin.scaffold.header')))
+            ->title(ucfirst(trans('admin.scaffold.header')))
             ->description(' ')
             ->body(view('admin::helpers.scaffold', compact('dbTypes', 'action', 'tables', 'dataTypeMap')));
     }

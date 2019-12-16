@@ -7,10 +7,8 @@ use Dcat\Admin\Grid\Actions\Delete;
 use Dcat\Admin\Grid\Actions\Edit;
 use Dcat\Admin\Grid\Actions\QuickEdit;
 use Dcat\Admin\Grid\Actions\Show;
-use Dcat\Admin\Grid\RowAction;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Color;
-use Illuminate\Contracts\Support\Renderable;
 
 class DropdownActions extends Actions
 {
@@ -131,23 +129,18 @@ JS;
         }
     }
 
-
     /**
      * @param \Closure[] $callback
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function display($callbacks = [])
+    public function display(array $callbacks = [])
     {
         $this->resetDefaultActions();
 
         $this->addScript();
 
-        foreach ($callbacks as $callback) {
-            if ($callback instanceof \Closure) {
-                $callback->call($this->row, $this);
-            }
-        }
+        $this->call($callbacks);
 
         $this->prependDefaultActions();
 

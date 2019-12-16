@@ -69,6 +69,8 @@ class Content implements Renderable
     }
 
     /**
+     * @deprecated
+     *
      * @param string $header
      *
      * @return $this

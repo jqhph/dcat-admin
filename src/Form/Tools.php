@@ -19,7 +19,7 @@ class Tools implements Renderable
      *
      * @var array
      */
-    protected $tools = ['delete', 'view', 'list'];
+    protected $tools = ['delete' => true, 'view' => true, 'list' => true];
 
     /**
      * Tools should be appends to default tools.
@@ -34,21 +34,6 @@ class Tools implements Renderable
      * @var Collection
      */
     protected $prepends;
-
-    /**
-     * @var bool
-     */
-    protected $showList = true;
-
-    /**
-     * @var bool
-     */
-    protected $showDelete = true;
-
-    /**
-     * @var bool
-     */
-    protected $showView = true;
 
     /**
      * Create a new Tools instance.
@@ -113,7 +98,7 @@ class Tools implements Renderable
      */
     public function disableList(bool $disable = true)
     {
-        $this->showList = ! $disable;
+        $this->tools['list'] = ! $disable;
 
         return $this;
     }
@@ -125,7 +110,7 @@ class Tools implements Renderable
      */
     public function disableDelete(bool $disable = true)
     {
-        $this->showDelete = ! $disable;
+        $this->tools['delete'] = ! $disable;
 
         return $this;
     }
@@ -137,7 +122,7 @@ class Tools implements Renderable
      */
     public function disableView(bool $disable = true)
     {
-        $this->showView = ! $disable;
+        $this->tools['view'] = ! $disable;
 
         return $this;
     }
@@ -193,10 +178,6 @@ class Tools implements Renderable
      */
     protected function renderList()
     {
-        if (! $this->showList) {
-            return;
-        }
-
         $text = trans('admin.list');
 
         return <<<EOT
@@ -213,10 +194,6 @@ EOT;
      */
     protected function renderView()
     {
-        if (! $this->showView) {
-            return;
-        }
-
         $view = trans('admin.view');
 
         return <<<HTML
@@ -235,10 +212,6 @@ HTML;
      */
     protected function renderDelete()
     {
-        if (! $this->showDelete) {
-            return;
-        }
-
         $delete = trans('admin.delete');
 
         return <<<HTML
@@ -280,10 +253,12 @@ HTML;
     {
         $output = $this->renderCustomTools($this->prepends);
 
-        foreach ($this->tools as $tool) {
-            $renderMethod = 'render'.ucfirst($tool);
+        foreach ($this->tools as $tool => $enable) {
+            if ($enable) {
+                $renderMethod = 'render' . ucfirst($tool);
 
-            $output .= $this->$renderMethod();
+                $output .= $this->$renderMethod();
+            }
         }
 
         return $output.$this->renderCustomTools($this->appends);

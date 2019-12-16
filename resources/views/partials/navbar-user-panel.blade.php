@@ -1,19 +1,20 @@
+@if($user)
 <li class="dropdown user user-menu">
     <!-- Menu Toggle Button -->
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <!-- The user image in the navbar-->
-        <img src="{{ Dcat\Admin\Admin::user()->getAvatar() }}" class="user-image" alt="User Image">
+        <img src="{{ $user->getAvatar() }}" class="user-image" alt="User Image">
         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-        <span class="hidden-xs">{{ Dcat\Admin\Admin::user()->name }}</span>
+        <span class="hidden-xs">{{ $user->name }}</span>
     </a>
     <ul class="dropdown-menu">
         <!-- The user image in the menu -->
         <li class="user-header">
-            <img src="{{ Dcat\Admin\Admin::user()->getAvatar() }}" class="img-circle" alt="User Image">
+            <img src="{{ $user->getAvatar() }}" class="img-circle" alt="User Image">
 
             <p>
-                {{ Dcat\Admin\Admin::user()->name }}
-                <small>Member since admin {{ Dcat\Admin\Admin::user()->created_at }}</small>
+                {{ $user->name }}
+                <small>Member since admin {{ $user->created_at }}</small>
             </p>
         </li>
         <li class="user-footer">
@@ -26,3 +27,4 @@
         </li>
     </ul>
 </li>
+@endif
