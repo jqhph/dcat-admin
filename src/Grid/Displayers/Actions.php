@@ -28,7 +28,12 @@ class Actions extends AbstractDisplayer
      *
      * @var array
      */
-    protected $actions = ['view', 'edit', 'quickEdit', 'delete'];
+    protected $actions = [
+        'view'      => true,
+        'edit'      => true,
+        'quickEdit' => true,
+        'delete'    => true,
+    ];
 
     /**
      * @var string
@@ -44,9 +49,7 @@ class Actions extends AbstractDisplayer
      */
     public function append($action)
     {
-        if ($action instanceof RowAction) {
-            $this->prepareAction($action);
-        }
+        $this->prepareAction($action);
 
         array_push($this->appends, $action);
 
@@ -62,9 +65,7 @@ class Actions extends AbstractDisplayer
      */
     public function prepend($action)
     {
-        if ($action instanceof RowAction) {
-            $this->prepareAction($action);
-        }
+        $this->prepareAction($action);
 
         array_unshift($this->prepends, $action);
 
@@ -72,75 +73,76 @@ class Actions extends AbstractDisplayer
     }
 
     /**
-     * @param RowAction $action
+     * @param mixed $action
+     *
+     * @return void
      */
-    protected function prepareAction(RowAction $action)
+    protected function prepareAction(&$action)
     {
-        $action->setGrid($this->grid)
-            ->setColumn($this->column)
-            ->setRow($this->row);
+        if ($action instanceof RowAction) {
+            $action->setGrid($this->grid)
+                ->setColumn($this->column)
+                ->setRow($this->row);
+        }
     }
 
     /**
      * Disable view action.
      *
+     * @param bool $disable
+     *
      * @return $this
      */
     public function disableView(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->actions, 'view');
-        } elseif (! in_array('view', $this->actions)) {
-            array_push($this->actions, 'view');
-        }
-
-        return $this;
+        return $this->disableDefaultAction('view', $disable);
     }
 
     /**
      * Disable delete.
      *
+     * @param bool $disable
+     *
      * @return $this.
      */
     public function disableDelete(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->actions, 'delete');
-        } elseif (! in_array('delete', $this->actions)) {
-            array_push($this->actions, 'delete');
-        }
-
-        return $this;
+        return $this->disableDefaultAction('delete', $disable);
     }
 
     /**
      * Disable edit.
      *
+     * @param bool $disable
+     *
      * @return $this.
      */
     public function disableEdit(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->actions, 'edit');
-        } elseif (! in_array('edit', $this->actions)) {
-            array_push($this->actions, 'edit');
-        }
-
-        return $this;
+        return $this->disableDefaultAction('edit', $disable);
     }
 
     /**
      * Disable quick edit.
      *
+     * @param bool $disable
+     *
      * @return $this.
      */
     public function disableQuickEdit(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->actions, 'quickEdit');
-        } elseif (! in_array('quickEdit', $this->actions)) {
-            array_push($this->actions, 'quickEdit');
-        }
+        return $this->disableDefaultAction('quickEdit', $disable);
+    }
+
+    /**
+     * @param string $key
+     * @param bool $disable
+     *
+     * @return $this
+     */
+    protected function disableDefaultAction(string $key, bool $disable)
+    {
+        $this->actions[$key] = ! $disable;
 
         return $this;
     }
@@ -170,14 +172,22 @@ class Actions extends AbstractDisplayer
     }
 
     /**
-     * {@inheritdoc}
+     * @return void
      */
-    public function display(array $callbacks = [])
+    protected function resetDefaultActions()
     {
         $this->disableView(! $this->grid->option('show_view_button'));
         $this->disableEdit(! $this->grid->option('show_edit_button'));
         $this->disableQuickEdit(! $this->grid->option('show_quick_edit_button'));
         $this->disableDelete(! $this->grid->option('show_delete_button'));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function display(array $callbacks = [])
+    {
+        $this->resetDefaultActions();
 
         foreach ($callbacks as $callback) {
             if ($callback instanceof \Closure) {
@@ -191,9 +201,11 @@ class Actions extends AbstractDisplayer
         $appends = array_map($map, $this->appends);
         $actions = &$prepends;
 
-        foreach ($this->actions as $action) {
-            $method = 'render'.ucfirst($action);
-            array_push($actions, $this->{$method}());
+        foreach ($this->actions as $action => $enable) {
+            if ($enable) {
+                $method = 'render'.ucfirst($action);
+                array_push($actions, $this->{$method}());
+            }
         }
 
         $actions = array_merge($actions, $appends);

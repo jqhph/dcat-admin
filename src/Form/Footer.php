@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Checkbox;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -27,14 +26,14 @@ class Footer implements Renderable
      *
      * @var array
      */
-    protected $buttons = ['reset', 'submit'];
+    protected $buttons = ['reset' => true, 'submit' => true];
 
     /**
      * Available checkboxes.
      *
      * @var array
      */
-    protected $checkboxes = ['view', 'continue_editing', 'continue_creating'];
+    protected $checkboxes = ['view' => true, 'continue_editing' => true, 'continue_creating' => true];
 
     /**
      * Footer constructor.
@@ -55,11 +54,7 @@ class Footer implements Renderable
      */
     public function disableReset(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->buttons, 'reset');
-        } elseif (! in_array('reset', $this->buttons)) {
-            array_push($this->buttons, 'reset');
-        }
+        $this->buttons['reset'] = ! $disable;
 
         return $this;
     }
@@ -73,11 +68,7 @@ class Footer implements Renderable
      */
     public function disableSubmit(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->buttons, 'submit');
-        } elseif (! in_array('submit', $this->buttons)) {
-            array_push($this->buttons, 'submit');
-        }
+        $this->buttons['submit'] = ! $disable;
 
         return $this;
     }
@@ -91,11 +82,7 @@ class Footer implements Renderable
      */
     public function disableViewCheck(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->checkboxes, 'view');
-        } elseif (! in_array('view', $this->checkboxes)) {
-            array_push($this->checkboxes, 'view');
-        }
+        $this->checkboxes['view'] = ! $disable;
 
         return $this;
     }
@@ -109,11 +96,7 @@ class Footer implements Renderable
      */
     public function disableEditingCheck(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->checkboxes, 'continue_editing');
-        } elseif (! in_array('continue_editing', $this->checkboxes)) {
-            array_push($this->checkboxes, 'continue_editing');
-        }
+        $this->checkboxes['continue_editing'] = ! $disable;
 
         return $this;
     }
@@ -127,11 +110,7 @@ class Footer implements Renderable
      */
     public function disableCreatingCheck(bool $disable = true)
     {
-        if ($disable) {
-            Helper::deleteByValue($this->checkboxes, 'continue_creating');
-        } elseif (! in_array('continue_creating', $this->checkboxes)) {
-            array_push($this->checkboxes, 'continue_creating');
-        }
+        $this->checkboxes['continue_creating'] = ! $disable;
 
         return $this;
     }
@@ -149,15 +128,15 @@ class Footer implements Renderable
 
         $options = [];
 
-        if (in_array('continue_editing', $this->checkboxes)) {
+        if ($this->checkboxes['continue_editing']) {
             $options[1] = sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.continue_editing'));
         }
 
-        if (in_array('continue_creating', $this->checkboxes)) {
+        if ($this->checkboxes['continue_creating']) {
             $options[2] = sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.continue_creating'));
         }
 
-        if (in_array('view', $this->checkboxes)) {
+        if ($this->checkboxes['view']) {
             $options[3] = sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.view'));
         }
 

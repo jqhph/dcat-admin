@@ -115,7 +115,7 @@ class Form implements Renderable
      *
      * @var array
      */
-    protected $buttons = ['reset', 'submit'];
+    protected $buttons = ['reset' => true, 'submit' => true];
 
     /**
      * @var bool
@@ -380,7 +380,7 @@ class Form implements Renderable
      */
     public function disableResetButton()
     {
-        Helper::deleteByValue($this->buttons, 'reset');
+        $this->buttons['reset'] = false;
 
         return $this;
     }
@@ -392,7 +392,7 @@ class Form implements Renderable
      */
     public function disableSubmitButton()
     {
-        Helper::deleteByValue($this->buttons, 'submit');
+        $this->buttons['submit'] = false;
 
         return $this;
     }

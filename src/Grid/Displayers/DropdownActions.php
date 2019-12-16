@@ -27,7 +27,12 @@ class DropdownActions extends Actions
     /**
      * @var array
      */
-    protected $defaultClass = [Edit::class, QuickEdit::class, Show::class, Delete::class];
+    protected $defaultClass = [
+        'view'      => Show::class,
+        'edit'      => Edit::class,
+        'quickEdit' => QuickEdit::class,
+        'delete'    => Delete::class,
+    ];
 
     /**
      * Add JS script into pages.
@@ -75,31 +80,27 @@ JS;
         Admin::script($script);
     }
 
-    /**
-     * @param RowAction|string|Renderable $action
-     *
-     * @return $this
-     */
-    public function append($action)
-    {
-        if ($action instanceof RowAction) {
-            $this->prepareAction($action);
-        }
-
-        array_push($this->custom, $this->wrapCustomAction($action));
-
-        return $this;
-    }
-
     public function prepend($action)
     {
         return $this->append($action);
     }
 
     /**
-     * @param $action
+     * @param mixed $action
      *
-     * @return mixed
+     * @return void
+     */
+    protected function prepareAction(&$action)
+    {
+        parent::prepareAction($action);
+
+        $action = $this->wrapCustomAction($action);
+    }
+
+    /**
+     * @param mixed $action
+     *
+     * @return string
      */
     protected function wrapCustomAction($action)
     {
@@ -117,9 +118,12 @@ JS;
      */
     protected function prependDefaultActions()
     {
-        foreach ($this->defaultClass as $class) {
-            /** @var RowAction $action */
-            $action = new $class();
+        foreach ($this->actions as $action => $enable) {
+            if (! $enable) {
+                continue;
+            }
+
+            $action = new $this->defaultClass[$action]();
 
             $this->prepareAction($action);
 
@@ -127,75 +131,6 @@ JS;
         }
     }
 
-    /**
-     * Disable view action.
-     *
-     * @param bool $disable
-     *
-     * @return $this
-     */
-    public function disableView(bool $disable = true)
-    {
-        if ($disable) {
-            Helper::deleteByValue($this->defaultClass, Show::class);
-        } elseif (! in_array(Show::class, $this->defaultClass)) {
-            array_push($this->defaultClass, Show::class);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Disable delete.
-     *
-     * @param bool $disable
-     *
-     * @return $this.
-     */
-    public function disableDelete(bool $disable = true)
-    {
-        if ($disable) {
-            Helper::deleteByValue($this->defaultClass, Delete::class);
-        } elseif (! in_array(Delete::class, $this->defaultClass)) {
-            array_push($this->defaultClass, Delete::class);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Disable edit.
-     *
-     * @param bool $disable
-     *
-     * @return $this
-     */
-    public function disableEdit(bool $disable = true)
-    {
-        if ($disable) {
-            Helper::deleteByValue($this->defaultClass, Edit::class);
-        } elseif (! in_array(Edit::class, $this->defaultClass)) {
-            array_push($this->defaultClass, Edit::class);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Disable quick edit.
-     *
-     * @return $this.
-     */
-    public function disableQuickEdit(bool $disable = true)
-    {
-        if ($disable) {
-            Helper::deleteByValue($this->defaultClass, QuickEdit::class);
-        } elseif (! in_array(Show::class, $this->defaultClass)) {
-            array_push($this->defaultClass, QuickEdit::class);
-        }
-
-        return $this;
-    }
 
     /**
      * @param \Closure[] $callback
@@ -204,10 +139,7 @@ JS;
      */
     public function display($callbacks = [])
     {
-        $this->disableView(! $this->grid->option('show_view_button'));
-        $this->disableEdit(! $this->grid->option('show_edit_button'));
-        $this->disableQuickEdit(! $this->grid->option('show_quick_edit_button'));
-        $this->disableDelete(! $this->grid->option('show_delete_button'));
+        $this->resetDefaultActions();
 
         $this->addScript();
 
@@ -221,7 +153,7 @@ JS;
 
         $actions = [
             'default' => $this->default,
-            'custom'  => $this->custom,
+            'custom'  => $this->appends,
         ];
 
         return view('admin::grid.dropdown-actions', $actions);
