@@ -3,14 +3,14 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid\Column;
-use Dcat\Admin\Grid\Header;
+use Dcat\Admin\Grid\FirstRowHeader;
 
-trait HasMultipleHeader
+trait HasMultipleHeaders
 {
     /**
      * Table multiple headers.
      *
-     * @var Header[]
+     * @var FirstRowHeader[]
      */
     protected $multipleHeaders = [];
 
@@ -20,23 +20,23 @@ trait HasMultipleHeader
      * @param string $label
      * @param array  $columnNames
      *
-     * @return Header
+     * @return FirstRowHeader
      */
     public function combine(string $label, array $columnNames)
     {
         if (count($columnNames) < 2) {
-            throw new \InvalidArgumentException('The number of "$columnNames" must be greater than 2');
+            throw new \InvalidArgumentException('Invalid column names.');
         }
 
         $this->withBorder();
 
-        return $this->multipleHeaders[$label] = new Header($this, $label, $columnNames);
+        return $this->multipleHeaders[$label] = new FirstRowHeader($this, $label, $columnNames);
     }
 
     /**
-     * @return Header[]
+     * @return FirstRowHeader[]
      */
-    public function getMultipleHeaders()
+    public function multipleHeaders()
     {
         return $this->multipleHeaders;
     }
@@ -103,7 +103,7 @@ trait HasMultipleHeader
 
         /* @var Column $column */
         foreach ($columns as $name => $column) {
-            $header = new Header($this, $column->getLabel(), [$name]);
+            $header = new FirstRowHeader($this, $column->getLabel(), [$name]);
             $prio = $column->getDataPriority();
 
             if (is_int($prio)) {

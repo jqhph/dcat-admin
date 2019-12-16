@@ -6,7 +6,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column\Help;
 use Dcat\Admin\Widgets\Widget;
 
-class Header extends Widget
+class FirstRowHeader extends Widget
 {
     /**
      * @var Grid
@@ -96,8 +96,6 @@ class Header extends Widget
     }
 
     /**
-     * Add a help tooltip to column header.
-     *
      * @param string|\Closure $message
      * @param null|string     $style     'green', 'blue', 'red', 'purple'
      * @param null|string     $placement 'bottom', 'left', 'right', 'top'

@@ -29,7 +29,7 @@ class Grid
         Concerns\HasActions,
         Concerns\HasPaginator,
         Concerns\HasExporter,
-        Concerns\HasMultipleHeader,
+        Concerns\HasMultipleHeaders,
         Concerns\HasQuickSearch,
         Concerns\HasSelector,
         Macroable {
