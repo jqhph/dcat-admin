@@ -48,6 +48,8 @@ class Footer implements Renderable
     /**
      * Disable reset button.
      *
+     * @param bool $disable
+     *
      * @return $this
      */
     public function disableReset(bool $disable = true)
@@ -63,6 +65,8 @@ class Footer implements Renderable
 
     /**
      * Disable submit button.
+     *
+     * @param bool $disable
      *
      * @return $this
      */
@@ -80,6 +84,8 @@ class Footer implements Renderable
     /**
      * Disable View Checkbox.
      *
+     * @param bool $disable
+     *
      * @return $this
      */
     public function disableViewCheck(bool $disable = true)
@@ -96,6 +102,8 @@ class Footer implements Renderable
     /**
      * Disable Editing Checkbox.
      *
+     * @param bool $disable
+     *
      * @return $this
      */
     public function disableEditingCheck(bool $disable = true)
@@ -111,6 +119,8 @@ class Footer implements Renderable
 
     /**
      * Disable Creating Checkbox.
+     *
+     * @param bool $disable
      *
      * @return $this
      */

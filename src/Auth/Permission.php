@@ -6,15 +6,16 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Middleware\Pjax;
 use Dcat\Admin\Models\Role;
+use Illuminate\Contracts\Support\Arrayable;
 
 class Permission
 {
     /**
      * Check permission.
      *
-     * @param $permission
+     * @param string|array|Arrayable $permission
      *
-     * @return true
+     * @return true|void
      */
     public static function check($permission)
     {
@@ -22,12 +23,12 @@ class Permission
             return true;
         }
 
-        if (is_array($permission)) {
+        if (is_array($permission) || $permission instanceof Arrayable) {
             collect($permission)->each(function ($permission) {
                 static::check($permission);
             });
 
-            return;
+            return true;
         }
 
         if (Admin::user()->cannot($permission)) {
@@ -38,9 +39,9 @@ class Permission
     /**
      * Roles allowed to access.
      *
-     * @param $roles
+     * @param string|array|Arrayable $roles
      *
-     * @return true
+     * @return true|void
      */
     public static function allow($roles)
     {
@@ -66,9 +67,9 @@ class Permission
     /**
      * Roles denied to access.
      *
-     * @param $roles
+     * @param string|array|Arrayable $roles
      *
-     * @return true
+     * @return true|void
      */
     public static function deny($roles)
     {

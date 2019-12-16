@@ -87,10 +87,6 @@ class Row implements Buildable, Renderable
 
         $this->build();
 
-        $contents = ob_get_contents();
-
-        ob_end_clean();
-
-        return $contents;
+        return ob_get_clean();
     }
 }

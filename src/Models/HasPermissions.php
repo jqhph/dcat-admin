@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Models;
 
+use Dcat\Admin\Support\Helper;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 
 trait HasPermissions
@@ -82,6 +84,7 @@ trait HasPermissions
      */
     public function isRole(string $role) : bool
     {
+        /* @var Collection $roles */
         $roles = $this->roles;
 
         return $roles->pluck('slug')->contains($role) ?:
@@ -91,15 +94,16 @@ trait HasPermissions
     /**
      * Check if user in $roles.
      *
-     * @param array $roles
+     * @param string|array|Arrayable $roles
      *
      * @return mixed
      */
     public function inRoles($roles = []) : bool
     {
+        /* @var Collection $all */
         $all = $this->roles;
 
-        $roles = (array) $roles;
+        $roles = Helper::array($roles);
 
         return $all->pluck('slug')->intersect($roles)->isNotEmpty() ?:
             $all->pluck('id')->intersect($roles)->isNotEmpty();

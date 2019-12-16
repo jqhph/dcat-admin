@@ -145,7 +145,7 @@ class Response
      *
      * @return $this
      */
-    protected function data(array $value)
+    public function data(array $value)
     {
         $this->data = array_merge($this->data, $value);
 
@@ -169,7 +169,7 @@ class Response
     /**
      * @param \Throwable $exception
      *
-     * @return mixed
+     * @return $this
      */
     public static function withException(\Throwable $exception)
     {

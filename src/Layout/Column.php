@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Grid;
-use Illuminate\Contracts\Support\Renderable;
+use Dcat\Admin\Support\Helper;
 
 class Column implements Buildable
 {
@@ -81,11 +81,7 @@ class Column implements Buildable
 
         $row->build();
 
-        $contents = ob_get_contents();
-
-        ob_end_clean();
-
-        return $this->append($contents);
+        return $this->append(ob_get_clean());
     }
 
     /**
@@ -96,10 +92,10 @@ class Column implements Buildable
         $this->startColumn();
 
         foreach ($this->contents as $content) {
-            if ($content instanceof Renderable || $content instanceof Grid) {
+            if ($content instanceof Grid) {
                 echo $content->render();
             } else {
-                echo (string) $content;
+                echo Helper::render($content);
             }
         }
 
