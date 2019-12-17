@@ -42,7 +42,7 @@ class SectionManager
      *
      * @return void
      */
-    public function injectDefault($section, $content)
+    public function injectDefault(string $section, $content)
     {
         if ($this->hasSection($section)) {
             return;
@@ -61,7 +61,7 @@ class SectionManager
      *
      * @return void
      */
-    protected function put($section, $content, bool $append = false, int $priority = 10)
+    protected function put(string $section, $content, bool $append = false, int $priority = 10)
     {
         if (! $section) {
             throw new \InvalidArgumentException('Section name is required.');
@@ -86,13 +86,13 @@ class SectionManager
     /**
      * Get the string contents of a section.
      *
-     * @param $section
-     * @param string $default
+     * @param string $section
+     * @param mixed  $default
      * @param array  $options
      *
      * @return string
      */
-    public function yieldContent($section, $default = '', array $options = [])
+    public function yieldContent(string $section, $default = '', array $options = [])
     {
         $defaultSection = $this->defaultSections[$section] ?? null;
 
@@ -112,7 +112,7 @@ class SectionManager
      *
      * @return array
      */
-    public function getSections($name)
+    public function getSections(string $name)
     {
         return $this->sortSections($name);
     }
@@ -124,7 +124,7 @@ class SectionManager
      *
      * @return array
      */
-    protected function sortSections($name)
+    protected function sortSections(string $name)
     {
         if (empty($this->sections[$name])) {
             return [];
@@ -144,7 +144,7 @@ class SectionManager
      *
      * @return bool
      */
-    public function hasSection($name)
+    public function hasSection(string $name)
     {
         return array_key_exists($name, $this->sections);
     }
@@ -156,19 +156,19 @@ class SectionManager
      *
      * @return bool
      */
-    public function hasDefaultSection($name)
+    public function hasDefaultSection(string $name)
     {
         return array_key_exists($name, $this->defaultSections);
     }
 
     /**
-     * @param $name
-     * @param $content
-     * @param array $options
+     * @param string $name
+     * @param mixed  $content
+     * @param array  $options
      *
      * @return string
      */
-    protected function resolveContent($name, &$content, array &$options)
+    protected function resolveContent(string $name, &$content, array &$options)
     {
         if (is_string($content)) {
             return $content;

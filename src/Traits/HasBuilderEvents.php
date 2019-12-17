@@ -48,7 +48,7 @@ trait HasBuilderEvents
      */
     protected function callBuilderListeners($key, ...$params)
     {
-        $storage = app('admin.temp');
+        $storage = app('admin.context');
 
         $key = static::formatBuilderEventKey($key);
 
@@ -74,7 +74,7 @@ trait HasBuilderEvents
      */
     protected static function setListeners($key, $callback, $once)
     {
-        $storage = app('admin.temp');
+        $storage = app('admin.context');
 
         $key = static::formatBuilderEventKey($key);
 

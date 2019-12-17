@@ -19,26 +19,30 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if (Admin::guard()->guest() && ! $this->shouldPassThrough($request)) {
-            $loginPage = admin_base_path('auth/login');
-
-            if ($request->ajax() && ! $request->pjax()) {
-                return response()->json(['message' => 'Unauthorized.', 'login' => $loginPage], 401);
-            }
-
-            $response = redirect()->guest($loginPage);
-
-            if ($request->pjax()) {
-                $response->headers->remove('Location');
-                $response->setStatusCode(200);
-
-                return $response->setContent("<script>location.href = '$loginPage';</script>");
-            }
-
-            return $response;
+        if (
+            ! config('admin.auth.enable', true)
+            || ! Admin::guard()->guest()
+            || $this->shouldPassThrough($request)
+        ) {
+            return $next($request);
         }
 
-        return $next($request);
+        $loginPage = admin_base_path('auth/login');
+
+        if ($request->ajax() && ! $request->pjax()) {
+            return response()->json(['message' => 'Unauthorized.', 'login' => $loginPage], 401);
+        }
+
+        $response = redirect()->guest($loginPage);
+
+        if ($request->pjax()) {
+            $response->headers->remove('Location');
+            $response->setStatusCode(200);
+
+            return $response->setContent("<script>location.href = '$loginPage';</script>");
+        }
+
+        return $response;
     }
 
     /**

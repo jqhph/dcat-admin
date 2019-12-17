@@ -245,7 +245,7 @@ class Admin
      */
     public static function section(Closure $builder = null)
     {
-        $manager = app('sectionManager');
+        $manager = app('admin.sections');
 
         $builder && $builder($manager);
 
@@ -253,11 +253,11 @@ class Admin
     }
 
     /**
-     * Register the auth routes.
+     * Register the admin routes.
      *
      * @return void
      */
-    public static function registerAuthRoutes()
+    public static function routes()
     {
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
@@ -265,32 +265,38 @@ class Admin
         ];
 
         app('router')->group($attributes, function ($router) {
+            $enableAuth = config('admin.auth.enable', true);
 
             /* @var \Illuminate\Routing\Router $router */
-            $router->namespace('Dcat\Admin\Controllers')->group(function ($router) {
+            $router->namespace('Dcat\Admin\Controllers')->group(function ($router) use ($enableAuth) {
+                if ($enableAuth) {
+                    /* @var \Illuminate\Routing\Router $router */
+                    $router->resource('auth/users', 'UserController');
+                    $router->resource('auth/menu', 'MenuController', ['except' => ['create', 'show']]);
+                    $router->resource('auth/logs', 'LogController', ['only' => ['index', 'destroy']]);
 
-                /* @var \Illuminate\Routing\Router $router */
-                $router->resource('auth/users', 'UserController');
-                $router->resource('auth/menu', 'MenuController', ['except' => ['create', 'show']]);
-                $router->resource('auth/logs', 'LogController', ['only' => ['index', 'destroy']]);
-
-                if (config('admin.permission.enable')) {
-                    $router->resource('auth/roles', 'RoleController');
-                    $router->resource('auth/permissions', 'PermissionController');
+                    if (config('admin.permission.enable')) {
+                        $router->resource('auth/roles', 'RoleController');
+                        $router->resource('auth/permissions', 'PermissionController');
+                    }
                 }
 
                 $router->post('_handle_action_', 'HandleActionController@handle')->name('admin.handle-action');
                 $router->post('_handle_form_', 'HandleFormController@handle')->name('admin.handle-form');
             });
 
-            $authController = config('admin.auth.controller', AuthController::class);
+            if ($enableAuth) {
+                $authController = config('admin.auth.controller', AuthController::class);
 
-            $router->get('auth/login', $authController.'@getLogin');
-            $router->post('auth/login', $authController.'@postLogin');
-            $router->get('auth/logout', $authController.'@getLogout');
-            $router->get('auth/setting', $authController.'@getSetting');
-            $router->put('auth/setting', $authController.'@putSetting');
+                $router->get('auth/login', $authController . '@getLogin');
+                $router->post('auth/login', $authController . '@postLogin');
+                $router->get('auth/logout', $authController . '@getLogout');
+                $router->get('auth/setting', $authController . '@getSetting');
+                $router->put('auth/setting', $authController . '@putSetting');
+            }
         });
+
+        static::registerHelperRoutes();
     }
 
     /**
@@ -298,8 +304,12 @@ class Admin
      *
      * @return void
      */
-    public static function registerHelperRoutes()
+    protected static function registerHelperRoutes()
     {
+        if (! config('admin.helpers.enable', true) || ! config('app.debug')) {
+            return;
+        }
+
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),

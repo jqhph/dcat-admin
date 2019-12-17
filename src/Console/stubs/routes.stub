@@ -4,11 +4,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Dcat\Admin\Admin;
 
-Admin::registerAuthRoutes();
-
-if (config('app.debug')) {
-    Admin::registerHelperRoutes();
-}
+Admin::routes();
 
 Route::group([
     'prefix'        => config('admin.route.prefix'),

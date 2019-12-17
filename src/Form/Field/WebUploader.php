@@ -2,9 +2,9 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 /**
  * @property Form $form
@@ -143,8 +143,6 @@ trait WebUploader
      */
     protected function setupDefaultOptions()
     {
-        $primaryKey = Admin::user() ? Admin::user()->getKey() : null;
-
         $defaultOptions = [
             'isImage'             => false,
             'disableRemove'       => false,
@@ -164,7 +162,7 @@ trait WebUploader
                 '_method'                => 'PUT',
             ],
             'formData' => [
-                '_id'           => $primaryKey,
+                '_id'           => Str::random(),
                 'upload_column' => $this->column,
                 '_method'       => 'PUT',
                 '_token'        => csrf_token(),

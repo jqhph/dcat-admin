@@ -115,6 +115,7 @@ return [
     |
     */
     'auth' => [
+        'enable' => true,
 
         'controller' => Dcat\Admin\Controllers\AuthController::class,
 
@@ -154,6 +155,15 @@ return [
         |--------------------------------------------------------------------------
         */
         'grid_action_class' => Dcat\Admin\Grid\Displayers\DropdownActions::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin helpers setting.
+    |--------------------------------------------------------------------------
+    */
+    'helpers' => [
+        'enable' => true,
     ],
 
     /*

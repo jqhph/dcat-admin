@@ -193,7 +193,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public static function listen($repositories, $listeners)
     {
-        $storage = app('admin.temp');
+        $storage = app('admin.context');
 
         $array = $storage->get('repository.listeners') ?: [];
 
@@ -223,7 +223,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
 
         $any = $repository !== '*' ? static::getListeners('*') : [];
 
-        $storage = app('admin.temp');
+        $storage = app('admin.context');
 
         $listeners = $storage->get('repository.listeners') ?: [];
         $resolves = $storage->get('repository.listeners.resolves') ?: [];

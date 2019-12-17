@@ -1,5 +1,6 @@
 <?php
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\MessageBag;
@@ -8,15 +9,15 @@ if (! function_exists('admin_section')) {
     /**
      * Get the string contents of a section.
      *
-     * @param $section
-     * @param null  $default
-     * @param array $options
+     * @param string $section
+     * @param mixed  $default
+     * @param array  $options
      *
      * @return mixed
      */
-    function admin_section($section, $default = null, array $options = [])
+    function admin_section(string $section, $default = null, array $options = [])
     {
-        return app('sectionManager')->yieldContent($section, $default, $options);
+        return app('admin.sections')->yieldContent($section, $default, $options);
     }
 }
 
@@ -24,13 +25,13 @@ if (! function_exists('admin_has_section')) {
     /**
      * Check if section exists.
      *
-     * @param $section
+     * @param string $section
      *
      * @return mixed
      */
-    function admin_has_section($section)
+    function admin_has_section(string $section)
     {
-        return app('sectionManager')->hasSection($section);
+        return app('admin.sections')->hasSection($section);
     }
 }
 
@@ -38,14 +39,14 @@ if (! function_exists('admin_inject_section')) {
     /**
      * Injecting content into a section.
      *
-     * @param $section
-     * @param null $content
-     * @param bool $append
-     * @param int  $priority
+     * @param string $section
+     * @param mixed  $content
+     * @param bool   $append
+     * @param int    $priority
      */
-    function admin_inject_section($section, $content = null, bool $append = true, int $priority = 10)
+    function admin_inject_section(string $section, $content = null, bool $append = true, int $priority = 10)
     {
-        app('sectionManager')->inject($section, $content, $append, $priority);
+        app('admin.sections')->inject($section, $content, $append, $priority);
     }
 }
 
@@ -53,16 +54,16 @@ if (! function_exists('admin_inject_section_if')) {
     /**
      * Injecting content into a section.
      *
-     * @param $condition
-     * @param $section
-     * @param null $content
-     * @param bool $append
-     * @param int  $priority
+     * @param mixed  $condition
+     * @param string $section
+     * @param mixed  $content
+     * @param bool   $append
+     * @param int    $priority
      */
     function admin_inject_section_if($condition, $section, $content = null, bool $append = false, int $priority = 10)
     {
         if ($condition) {
-            app('sectionManager')->inject($section, $content, $append, $priority);
+            app('admin.sections')->inject($section, $content, $append, $priority);
         }
     }
 }
@@ -71,13 +72,13 @@ if (! function_exists('admin_has_default_section')) {
     /**
      * Check if default section exists.
      *
-     * @param $section
+     * @param string $section
      *
      * @return mixed
      */
-    function admin_has_default_section($section)
+    function admin_has_default_section(string $section)
     {
-        return app('sectionManager')->hasDefaultSection($section);
+        return app('admin.sections')->hasDefaultSection($section);
     }
 }
 
@@ -85,12 +86,12 @@ if (! function_exists('admin_inject_default_section')) {
     /**
      * Injecting content into a section.
      *
-     * @param $section
+     * @param string                              $section
      * @param string|Renderable|Htmlable|callable $content
      */
-    function admin_inject_default_section($section, $content)
+    function admin_inject_default_section(string $section, $content)
     {
-        app('sectionManager')->injectDefault($section, $content);
+        app('admin.sections')->injectDefault($section, $content);
     }
 }
 
@@ -200,7 +201,7 @@ if (! function_exists('admin_controller_slug')) {
 
         $controller = admin_controller_name();
 
-        return $slug[$controller] ?? ($slug[$controller] = \Dcat\Admin\Support\Helper::slug($controller));
+        return $slug[$controller] ?? ($slug[$controller] = Helper::slug($controller));
     }
 }
 

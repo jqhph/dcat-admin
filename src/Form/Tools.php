@@ -255,7 +255,7 @@ HTML;
 
         foreach ($this->tools as $tool => $enable) {
             if ($enable) {
-                $renderMethod = 'render' . ucfirst($tool);
+                $renderMethod = 'render'.ucfirst($tool);
 
                 $output .= $this->$renderMethod();
             }

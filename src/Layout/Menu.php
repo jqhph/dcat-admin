@@ -66,7 +66,7 @@ class Menu
             });
         }
 
-        if (config('app.debug')) {
+        if (config('app.debug') && config('admin.helpers.enable', true)) {
             $this->add(static::$helperNodes, 20);
         }
     }

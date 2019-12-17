@@ -83,7 +83,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once __DIR__.'/Support/AdminSection.php';
+        require __DIR__.'/Support/AdminSection.php';
 
         $this->registerExtensionProviders();
         $this->loadAdminAuthConfig();
@@ -202,13 +202,10 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerServices()
     {
-        $this->app->singleton('sectionManager', SectionManager::class);
-
+        $this->app->singleton('admin.sections', SectionManager::class);
         $this->app->singleton('admin.navbar', Navbar::class);
-
         $this->app->singleton('admin.menu', Menu::class);
-
-        $this->app->singleton('admin.temp', Fluent::class);
+        $this->app->singleton('admin.context', Fluent::class);
     }
 
     /**
