@@ -119,6 +119,8 @@ return [
 
         'controller' => Dcat\Admin\Controllers\AuthController::class,
 
+        'login_view' => 'admin::login',
+
         'guard' => 'admin',
 
         'guards' => [

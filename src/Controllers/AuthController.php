@@ -31,7 +31,7 @@ class AuthController extends Controller
             return redirect($this->redirectPath());
         }
 
-        return view(config('admin.login_view') ?: 'admin::login');
+        return view(config('admin.auth.login_view') ?: 'admin::login');
     }
 
     /**

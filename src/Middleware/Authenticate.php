@@ -33,16 +33,11 @@ class Authenticate
             return response()->json(['message' => 'Unauthorized.', 'login' => $loginPage], 401);
         }
 
-        $response = redirect()->guest($loginPage);
-
         if ($request->pjax()) {
-            $response->headers->remove('Location');
-            $response->setStatusCode(200);
-
-            return $response->setContent("<script>location.href = '$loginPage';</script>");
+            return response("<script>location.href = '$loginPage';</script>");
         }
 
-        return $response;
+        return redirect()->guest($loginPage);
     }
 
     /**

@@ -288,11 +288,11 @@ class Admin
             if ($enableAuth) {
                 $authController = config('admin.auth.controller', AuthController::class);
 
-                $router->get('auth/login', $authController . '@getLogin');
-                $router->post('auth/login', $authController . '@postLogin');
-                $router->get('auth/logout', $authController . '@getLogout');
-                $router->get('auth/setting', $authController . '@getSetting');
-                $router->put('auth/setting', $authController . '@putSetting');
+                $router->get('auth/login', $authController.'@getLogin');
+                $router->post('auth/login', $authController.'@postLogin');
+                $router->get('auth/logout', $authController.'@getLogout');
+                $router->get('auth/setting', $authController.'@getSetting');
+                $router->put('auth/setting', $authController.'@putSetting');
             }
         });
 
