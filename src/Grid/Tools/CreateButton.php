@@ -20,7 +20,7 @@ class CreateButton implements Renderable
 
     protected function renderQuickCreateButton()
     {
-        if (! $this->grid->option('show_quick_create_btn')) {
+        if (! $this->grid->option('show_quick_create_button')) {
             return;
         }
 
@@ -35,14 +35,14 @@ class CreateButton implements Renderable
             ->dimensions($width, $height)
             ->render();
 
-        $text = $this->grid->option('show_create_btn') ? '<i class="fa fa-clone"></i>' : "<i class='ti-plus'></i><span class='hidden-xs'> &nbsp; $new</span>";
+        $text = $this->grid->option('show_create_button') ? '<i class="fa fa-clone"></i>' : "<i class='ti-plus'></i><span class='hidden-xs'> &nbsp; $new</span>";
 
         return "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->rowName()}-create'>$text</a>";
     }
 
     protected function renderCreateButton()
     {
-        if (! $this->grid->option('show_create_btn')) {
+        if (! $this->grid->option('show_create_button')) {
             return;
         }
 
@@ -56,7 +56,7 @@ class CreateButton implements Renderable
 
     public function render()
     {
-        if (! $this->grid->option('show_create_btn') && ! $this->grid->option('show_quick_create_btn')) {
+        if (! $this->grid->option('show_create_button') && ! $this->grid->option('show_quick_create_button')) {
             return;
         }
 

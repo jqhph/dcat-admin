@@ -100,10 +100,9 @@ class Role extends Model
         $keyName = $model->getKeyName();
 
         return $model->newQuery()
-            ->select(['permission_id', 'role_id'])
             ->leftJoin($related, $keyName, '=', 'role_id')
             ->whereIn($keyName, $roleIds)
-            ->get()
+            ->get(['permission_id', 'role_id'])
             ->groupBy('role_id')
             ->map(function ($v) {
                 $v = $v instanceof Arrayable ? $v->toArray() : $v;

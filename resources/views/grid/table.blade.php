@@ -46,6 +46,10 @@
             </tr>
             </thead>
 
+            @if ($grid->hasQuickCreate())
+                {!! $grid->renderQuickCreate() !!}
+            @endif
+
             <tbody>
             @foreach($grid->rows() as $row)
                 <tr {!! $row->rowAttributes() !!}>

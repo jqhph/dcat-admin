@@ -32,9 +32,14 @@ class Grid
         Concerns\HasMultipleHeaders,
         Concerns\HasQuickSearch,
         Concerns\HasSelector,
+        Concerns\HasQuickCreate,
         Macroable {
             __call as macroCall;
         }
+
+    const CREATE_MODE_DEFAULT = 'default';
+    const CREATE_MODE_MODAL = 'modal';
+    const CREATE_MODE_QUICK = 'quick';
 
     /**
      * The grid data model instance.
@@ -149,19 +154,20 @@ class Grid
      * @var array
      */
     protected $options = [
-        'show_pagination'        => true,
-        'show_filter'            => true,
-        'show_actions'           => true,
-        'show_quick_edit_button' => false,
-        'show_edit_button'       => true,
-        'show_view_button'       => true,
-        'show_delete_button'     => true,
-        'show_row_selector'      => true,
-        'show_create_btn'        => true,
-        'show_quick_create_btn'  => false,
-        'show_bordered'          => false,
-        'show_toolbar'           => true,
-        'show_exporter'          => false,
+        'show_pagination'          => true,
+        'show_filter'              => true,
+        'show_actions'             => true,
+        'show_quick_edit_button'   => false,
+        'show_edit_button'         => true,
+        'show_view_button'         => true,
+        'show_delete_button'       => true,
+        'show_row_selector'        => true,
+        'show_create_button'       => true,
+        'show_quick_create_button' => false,
+        'show_bordered'            => false,
+        'show_toolbar'             => true,
+        'show_exporter'            => false,
+        'create_mode'              => self::CREATE_MODE_DEFAULT,
 
         'row_selector_style'     => 'primary',
         'row_selector_circle'    => true,
@@ -513,7 +519,7 @@ HTML
      */
     public function renderCreateButton()
     {
-        if (! $this->options['show_create_btn'] && ! $this->options['show_quick_create_btn']) {
+        if (! $this->options['show_create_button'] && ! $this->options['show_quick_create_button']) {
             return '';
         }
 
@@ -674,7 +680,7 @@ HTML;
      */
     public function disableCreateButton(bool $disable = true)
     {
-        return $this->option('show_create_btn', ! $disable);
+        return $this->option('show_create_button', ! $disable);
     }
 
     /**
@@ -694,7 +700,7 @@ HTML;
      */
     public function disableQuickCreateButton(bool $disable = true)
     {
-        return $this->option('show_quick_create_btn', ! $disable);
+        return $this->option('show_quick_create_button', ! $disable);
     }
 
     /**
@@ -712,9 +718,9 @@ HTML;
      *
      * @return bool
      */
-    public function allowCreateBtn()
+    public function allowCreateButton()
     {
-        return $this->options['show_create_btn'];
+        return $this->options['show_create_button'];
     }
 
     /**
@@ -722,9 +728,19 @@ HTML;
      *
      * @return bool
      */
-    public function allowQuickCreateBtn()
+    public function allowQuickCreateButton()
     {
-        return $this->options['show_quick_create_btn'];
+        return $this->options['show_quick_create_button'];
+    }
+
+    /**
+     * @param string $mode
+     *
+     * @return $this
+     */
+    public function createMode(string $mode)
+    {
+        return $this->option('create_mode', $mode);
     }
 
     /**

@@ -194,8 +194,8 @@ trait HasTools
             && (
                 $this->tools()->has()
                 || $this->allowExporter()
-                || $this->allowCreateBtn()
-                || $this->allowQuickCreateBtn()
+                || $this->allowCreateButton()
+                || $this->allowQuickCreateButton()
                 || $this->allowResponsive()
                 || ! empty($this->variables['title'])
             )

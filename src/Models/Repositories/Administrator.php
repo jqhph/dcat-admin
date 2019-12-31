@@ -17,14 +17,14 @@ class Administrator extends EloquentRepository
 
     public function get(Grid\Model $model)
     {
-        $model = parent::get($model);
+        $results = parent::get($model);
 
-        $isPaginator = $model instanceof AbstractPaginator;
+        $isPaginator = $results instanceof AbstractPaginator;
 
-        $items = collect($isPaginator ? $model->items() : $model)->toArray();
+        $items = collect($isPaginator ? $results->items() : $results)->toArray();
 
         if (! $items) {
-            return $model;
+            return $results;
         }
 
         $roleModel = config('admin.database.roles_model');
@@ -36,8 +36,7 @@ class Administrator extends EloquentRepository
         $roleIds = $items
             ->pluck('roles')
             ->flatten(1)
-            ->keyBy($roleKeyName)
-            ->keys()
+            ->pluck($roleKeyName)
             ->toArray();
 
         $permissions = $roleModel::getPermissionId($roleIds);
@@ -57,9 +56,9 @@ class Administrator extends EloquentRepository
         }
 
         if ($isPaginator) {
-            $model->setCollection($items);
+            $results->setCollection($items);
 
-            return $model;
+            return $results;
         }
 
         return $items;
