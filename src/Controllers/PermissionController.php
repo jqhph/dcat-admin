@@ -213,10 +213,9 @@ class PermissionController extends Controller
         $grid->created_at;
         $grid->updated_at->sortable();
 
-        $grid->disableCreateButton();
-        $grid->showQuickCreateButton();
         $grid->disableEditButton();
         $grid->showQuickEditButton();
+        $grid->createMode(Grid::CREATE_MODE_DIALOG);
 
         $grid->tools(function (Grid\Tools $tools) {
             $tools->batch(function (Grid\Tools\BatchActions $actions) {

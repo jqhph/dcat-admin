@@ -1,5 +1,5 @@
 <thead>
-<tr class="quick-create">
+<tr class="{{ $elementClass }}" @if($hidden) style="display: none" @endif>
     <td colspan="{{ $columnCount }}" style="height: 43px;padding-left: 57px;background-color: #f9f9f9; vertical-align: middle;">
 
         <span class="create" style="color: #bdbdbd;cursor: pointer;display: block;">
@@ -11,7 +11,7 @@
                 &nbsp;{!! $field->render() !!}
             @endforeach
                 &nbsp;
-            <button class="btn btn-primary btn-sm">{{ __('admin.submit') }}</button>&nbsp;
+            <button type="submit" class="btn btn-primary btn-sm">{{ __('admin.submit') }}</button>&nbsp;
             <a href="javascript:void(0);" class="cancel">{{ __('admin.cancel') }}</a>
             {{ csrf_field() }}
         </form>

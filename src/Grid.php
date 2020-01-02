@@ -38,7 +38,7 @@ class Grid
         }
 
     const CREATE_MODE_DEFAULT = 'default';
-    const CREATE_MODE_MODAL = 'modal';
+    const CREATE_MODE_DIALOG = 'dialog';
     const CREATE_MODE_QUICK = 'quick';
 
     /**
@@ -163,7 +163,6 @@ class Grid
         'show_delete_button'       => true,
         'show_row_selector'        => true,
         'show_create_button'       => true,
-        'show_quick_create_button' => false,
         'show_bordered'            => false,
         'show_toolbar'             => true,
         'show_exporter'            => false,
@@ -519,7 +518,7 @@ HTML
      */
     public function renderCreateButton()
     {
-        if (! $this->options['show_create_button'] && ! $this->options['show_quick_create_button']) {
+        if (! $this->options['show_create_button']) {
             return '';
         }
 
@@ -694,26 +693,6 @@ HTML;
     }
 
     /**
-     * @param bool $disable
-     *
-     * @return $this
-     */
-    public function disableQuickCreateButton(bool $disable = true)
-    {
-        return $this->option('show_quick_create_button', ! $disable);
-    }
-
-    /**
-     * @param bool $val
-     *
-     * @return $this
-     */
-    public function showQuickCreateButton(bool $val = true)
-    {
-        return $this->disableQuickCreateButton(! $val);
-    }
-
-    /**
      * If allow creation.
      *
      * @return bool
@@ -721,16 +700,6 @@ HTML;
     public function allowCreateButton()
     {
         return $this->options['show_create_button'];
-    }
-
-    /**
-     * If grid show quick create button.
-     *
-     * @return bool
-     */
-    public function allowQuickCreateButton()
-    {
-        return $this->options['show_quick_create_button'];
     }
 
     /**

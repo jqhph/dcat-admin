@@ -61,7 +61,6 @@ class RouteController extends Controller
             $grid->disableActions();
             $grid->disableCreateButton();
             $grid->disableExporter();
-            $grid->disableQuickCreateButton();
 
             $grid->filter(function (Grid\Filter $filter) use ($colors) {
                 $values = array_keys($colors);

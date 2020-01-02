@@ -24,7 +24,6 @@ class ReportController extends Controller
         $grid->disableActions();
         $grid->disableBatchDelete();
         $grid->disableCreateButton();
-        $grid->disableQuickCreateButton();
 
         $grid->setRowSelectorOptions(['style' => 'success', 'clicktr' => true]);
 

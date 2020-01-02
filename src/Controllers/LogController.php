@@ -60,7 +60,6 @@ class LogController extends Controller
 
         $grid->disableCreateButton();
         $grid->disableQuickEditButton();
-        $grid->disableQuickCreateButton();
         $grid->disableEditButton();
         $grid->disableViewButton();
 

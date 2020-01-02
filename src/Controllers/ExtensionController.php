@@ -82,7 +82,6 @@ class ExtensionController extends Controller
 
         $grid->disablePagination();
         $grid->disableCreateButton();
-        $grid->disableQuickCreateButton();
         $grid->disableDeleteButton();
         $grid->disableBatchDelete();
         $grid->disableFilterButton();

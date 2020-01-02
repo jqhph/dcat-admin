@@ -13,14 +13,17 @@ class CreateButton implements Renderable
      */
     protected $grid;
 
+    protected $mode;
+
     public function __construct(Grid $grid)
     {
         $this->grid = $grid;
+        $this->mode = $grid->option('create_mode');
     }
 
-    protected function renderQuickCreateButton()
+    protected function renderDialogCreateButton()
     {
-        if (! $this->grid->option('show_quick_create_button')) {
+        if ($this->mode !== Grid::CREATE_MODE_DIALOG) {
             return;
         }
 
@@ -30,19 +33,28 @@ class CreateButton implements Renderable
         [$width, $height] = $this->grid->option('dialog_form_area');
 
         Form::modal($new)
-            ->click(".{$this->grid->rowName()}-create")
+            ->click(".{$this->grid->getName()}-create")
             ->success('LA.reload()')
             ->dimensions($width, $height)
             ->render();
 
-        $text = $this->grid->option('show_create_button') ? '<i class="fa fa-clone"></i>' : "<i class='ti-plus'></i><span class='hidden-xs'> &nbsp; $new</span>";
+        return "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->getName()}-create'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
+    }
 
-        return "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->rowName()}-create'>$text</a>";
+    protected function renderQuickCreateButton()
+    {
+        if ($this->mode !== Grid::CREATE_MODE_QUICK) {
+            return;
+        }
+
+        $new = trans('admin.new');
+
+        return "<a class='btn btn-sm btn-success {$this->grid->getName()}-quick-create-button'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
     }
 
     protected function renderCreateButton()
     {
-        if (! $this->grid->option('show_create_button')) {
+        if ($this->mode && $this->mode !== Grid::CREATE_MODE_DEFAULT) {
             return;
         }
 
@@ -56,10 +68,6 @@ class CreateButton implements Renderable
 
     public function render()
     {
-        if (! $this->grid->option('show_create_button') && ! $this->grid->option('show_quick_create_button')) {
-            return;
-        }
-
-        return "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderQuickCreateButton()}</div>";
+        return "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderQuickCreateButton()}{$this->renderDialogCreateButton()}</div>";
     }
 }

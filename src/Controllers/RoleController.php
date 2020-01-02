@@ -105,12 +105,11 @@ class RoleController extends Controller
         }
 
         $grid->disableBatchDelete();
-        $grid->disableCreateButton();
-        $grid->showQuickCreateButton();
         $grid->disableEditButton();
         $grid->showQuickEditButton();
         $grid->disableFilterButton();
         $grid->quickSearch(['id', 'name', 'slug']);
+        $grid->createMode(Grid::CREATE_MODE_DIALOG);
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $roleModel = config('admin.database.roles_model');

@@ -254,27 +254,49 @@ CSS
     {
         $url = request()->url();
 
-        $script = <<<JS
+        $uniqueName = $this->parent->getName();
 
+        $script = <<<JS
 (function () {
-    $('.quick-create .create').click(function () {
-        $('.quick-create .create-form').show();
-        $(this).hide();
+    var ctr = $('.{$uniqueName}-quick-create'),
+        btn = $('.{$uniqueName}-quick-create-button');
+    
+    btn.click(function () {
+        ctr.toggle().click();
     });
     
-    $('.quick-create .cancel').click(function () {
-        $('.quick-create .create-form').hide();
-        $('.quick-create .create').show();
+    ctr.click(function () {
+        ctr.find('.create-form').show();
+        ctr.find('.create').hide();
     });
     
-    $('.quick-create .create-form').submit(function (e) {
+    ctr.find('.cancel').click(function () {
+        if (btn.length) {
+            ctr.hide();
+            return;
+        }
+        
+        ctr.find('.create-form').hide();
+        ctr.find('.create').show();
+        return false;
+    });
+
+    ctr.find('.create-form').submit(function (e) {
         e.preventDefault();
+        if (ctr.attr('working')) {
+            return;
+        }
+        
+        ctr.attr('working', 1);
+        LA.NP.start();
     
         $.ajax({
             url: '{$url}',
             type: 'POST',
             data: $(this).serialize(),
-            success: function(data, textStatus, jqXHR) {
+            success: function(data) {
+                LA.NP.done();
+                ctr.attr('working', '');
                 console.info(data);
                 
                 if (data.status == true) {
@@ -287,7 +309,9 @@ CSS
                     LA.warning(data.message)
                 }
             },
-            error:function(xhq, textStatus){
+            error:function(xhq){
+                LA.NP.done();
+                ctr.attr('working', '');
                 var json = xhq.responseJSON;
                 if (typeof json === 'object') {
                     if (json.message) {
@@ -326,8 +350,10 @@ JS;
         $this->script();
 
         $vars = [
-            'columnCount' => $columnCount,
-            'fields'      => $this->fields,
+            'columnCount'  => $columnCount,
+            'fields'       => $this->fields,
+            'elementClass' => $this->parent->getName().'-quick-create',
+            'hidden'       => $this->parent->option('create_mode') === Grid::CREATE_MODE_QUICK,
         ];
 
         return view('admin::grid.quick-create.form', $vars)->render();
