@@ -95,7 +95,7 @@ class Tags extends Field
      */
     public function options($options = [])
     {
-        if ($this->options instanceof \Closure) {
+        if ($options instanceof \Closure) {
             $this->options = $options;
 
             return $this;
@@ -201,7 +201,7 @@ JS;
             <<<'JS'
 $(document).off('keyup', '.select2-selection--multiple .select2-search__field').on('keyup', '.select2-selection--multiple .select2-search__field', function (event) {
     try {
-        if(event.keyCode == 13){
+        if (event.keyCode == 13) {
             var $this = $(this), optionText = $this.val();
             if (optionText != "" && $this.find("option[value='" + optionText + "']").length === 0) {
                 var $select = $this.parents('.select2-container').prev("select");
