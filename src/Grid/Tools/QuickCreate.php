@@ -49,7 +49,7 @@ class QuickCreate implements Renderable
     {
         $field = new Text($column, $this->formatPlaceholder($placeholder));
 
-        $this->addField($field->width('200px'));
+        $this->addField($field->attribute('style', 'width:180px'));
 
         return $field;
     }
@@ -76,7 +76,7 @@ class QuickCreate implements Renderable
     {
         return $this->text($column, $placeholder)
             ->inputmask(['alias' => 'ip'])
-            ->width('120px');
+            ->attribute('style', 'width:120px');
     }
 
     /**
@@ -101,7 +101,7 @@ class QuickCreate implements Renderable
     {
         return $this->text($column, $placeholder)
             ->attribute('type', 'password')
-            ->width('100px');
+            ->attribute('style', 'width:120px');
     }
 
     /**
@@ -114,7 +114,7 @@ class QuickCreate implements Renderable
     {
         return $this->text($column, $placeholder)
             ->inputmask(['mask' => '99999999999'])
-            ->width('100px');
+            ->attribute('style', 'width:120px');
     }
 
     /**
@@ -127,7 +127,7 @@ class QuickCreate implements Renderable
     {
         return $this->text($column, $placeholder)
             ->inputmask(['alias' => 'integer'])
-            ->width('120px');
+            ->attribute('style', 'width:150px');
     }
 
     /**
