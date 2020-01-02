@@ -16,7 +16,7 @@
                 <th style="width: 75px;"></th>
             </tr>
             </thead>
-            <tbody class="kv-{{$column}}-table">
+            <tbody class="kv-{{ $class }}-table">
 
             @foreach(old("{$column}.keys", ($value ?: [])) as $k => $v)
 
@@ -33,7 +33,7 @@
                                         <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</label><br/>
                                     @endforeach
                                 @endif
-                                <input name="{{ $column }}[keys][{{ (int) $k }}]" value="{{ old("{$column}.keys.{$k}", $k) }}" class="form-control" required/>
+                                <input name="{{ $name }}[keys][{{ (int) $k }}]" value="{{ old("{$column}.keys.{$k}", $k) }}" class="form-control" required/>
 
                             </div>
                         </div>
@@ -47,14 +47,14 @@
                                         <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</label><br/>
                                     @endforeach
                                 @endif
-                                <input name="{{ $column }}[values][{{ (int) $k }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
+                                <input name="{{ $name }}[values][{{ (int) $k }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
                             </div>
                         </div>
                     </td>
 
                     <td class="form-group">
                         <div>
-                            <div class="{{$column}}-remove btn btn-warning btn-sm pull-right">
+                            <div class="{{ $class }}-remove btn btn-warning btn-sm pull-right">
                                 <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                    <div class="{{ $column }}-add btn btn-success btn-sm pull-right">
+                    <div class="{{ $class }}-add btn btn-success btn-sm pull-right">
                         <i class="fa fa-save"></i>&nbsp;{{ __('admin.new') }}
                     </div>
                 </td>
@@ -77,13 +77,13 @@
     </div>
 </div>
 
-<template class="{{$column}}-tpl">
+<template class="{{$class}}-tpl">
     <tr>
         <td>
             <div class="form-group  ">
                 <div class="col-sm-12">
                     <error></error>
-                    <input name="{{ $column }}[keys][{key}]" class="form-control" required/>
+                    <input name="{{ $name }}[keys][{key}]" class="form-control" required/>
                 </div>
             </div>
         </td>
@@ -91,14 +91,14 @@
             <div class="form-group  ">
                 <div class="col-sm-12">
                     <error></error>
-                    <input name="{{ $column }}[values][{key}]" class="form-control" />
+                    <input name="{{ $name }}[values][{key}]" class="form-control" />
                 </div>
             </div>
         </td>
 
         <td class="form-group">
             <div>
-                <div class="{{$column}}-remove btn btn-warning btn-sm pull-right">
+                <div class="{{ $class }}-remove btn btn-warning btn-sm pull-right">
                     <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
                 </div>
             </div>

@@ -74,23 +74,22 @@ class KeyValue extends Field
         $value = old($this->column, $this->value());
 
         $number = $value ? count($value) : 0;
+        $class = $this->elementClassString();
 
         $this->script = <<<JS
-
 (function () {
     var index = {$number};
-    $('.{$this->column}-add').on('click', function () {
-        var tpl = $('template.{$this->column}-tpl').html().replace('{key}', index).replace('{key}', index);
-        $('tbody.kv-{$this->column}-table').append(tpl);
+    $('.{$class}-add').on('click', function () {
+        var tpl = $('template.{$class}-tpl').html().replace('{key}', index).replace('{key}', index);
+        $('tbody.kv-{$class}-table').append(tpl);
         
         index++;
     });
     
-    $('tbody').on('click', '.{$this->column}-remove', function () {
+    $('tbody').on('click', '.{$class}-remove', function () {
         $(this).closest('tr').remove();
     });
 })();
-
 JS;
     }
 
