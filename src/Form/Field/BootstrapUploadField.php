@@ -80,7 +80,7 @@ trait BootstrapUploadField
             'showRemove'           => false,
             'showUpload'           => false,
             'dropZoneEnabled'      => false,        //dropzone disabled by default for backward compatibility
-//            'initialCaption'       => $this->initialCaption($this->value),
+            //            'initialCaption'       => $this->initialCaption($this->value),
             'deleteExtraData'      => [
                 $this->formatName($this->column) => static::FILE_DELETE_FLAG,
                 static::FILE_DELETE_FLAG         => '',

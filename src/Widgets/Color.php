@@ -145,8 +145,8 @@ class Color
             '#483D8B', // blue darker
         ],
 
-       'green' => [
-           'rgba(64,153,222,.5)', // primary
+        'green' => [
+            'rgba(64,153,222,.5)', // primary
             '#21b978', // success
             '#47C1BF', // tear
             '#8FC15D', // green
