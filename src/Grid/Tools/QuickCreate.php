@@ -231,6 +231,8 @@ CSS
 
         $field->view($this->resolveView(get_class($field)));
 
+        $field::collectAssets();
+
         $this->fields->push($field);
 
         return $field;
