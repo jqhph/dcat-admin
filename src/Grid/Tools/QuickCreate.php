@@ -139,7 +139,7 @@ class QuickCreate implements Renderable
     public function select($column, $placeholder = '')
     {
         Admin::style(
-            <<<CSS
+            <<<'CSS'
 .quick-create .select2-selection--single {
     padding: 3px 12px !important;
     height: 30px !important;
@@ -164,7 +164,7 @@ CSS
     public function multipleSelect($column, $placeholder = '')
     {
         Admin::style(
-            <<<CSS
+            <<<'CSS'
 .quick-create .select2-selection--multiple {
     padding: 0 !important;
     height: 30px !important;

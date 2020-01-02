@@ -67,7 +67,7 @@ trait HasHeader
      *
      * @return $this
      */
-    protected function addHelp($message, ?string $style = null, ? string $placement = 'bottom')
+    protected function addHelp($message, ?string $style = null, ?string $placement = 'bottom')
     {
         return $this->addHeader(new Help($message, $style, $placement));
     }

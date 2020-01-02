@@ -102,7 +102,7 @@ class FirstRowHeader extends Widget
      *
      * @return $this
      */
-    public function help($message, ?string $style = null, ? string $placement = 'bottom')
+    public function help($message, ?string $style = null, ?string $placement = 'bottom')
     {
         return $this->append((new Help($message, $style, $placement))->render());
     }
