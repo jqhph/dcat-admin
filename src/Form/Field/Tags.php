@@ -123,9 +123,13 @@ class Tags extends Field
      */
     protected function prepareToSave($value)
     {
+        if (! is_array($value)) {
+            return $value;
+        }
+
         $value = array_filter($value, 'strlen');
 
-        if (is_array($value) && ! Arr::isAssoc($value)) {
+        if ($value && ! Arr::isAssoc($value)) {
             $value = implode(',', $value);
         }
 

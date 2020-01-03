@@ -439,8 +439,8 @@ class HasMany extends Field
             }
         } else {
             if (is_array($this->value)) {
-                foreach ($this->value as $data) {
-                    $key = Arr::get($data, $this->getKeyName());
+                foreach ($this->value as $idx => $data) {
+                    $key = Arr::get($data, $this->getKeyName(), $idx);
 
                     $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)
                         ->fill($data);

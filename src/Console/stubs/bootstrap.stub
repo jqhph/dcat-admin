@@ -24,19 +24,3 @@ use Dcat\Admin\Show;
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
-
-Grid\Column::resolving(function () {
-
-//    Grid\Column::define('code', function ($v) {
-//        return "<code>$v</code>";
-//    });
-
-}, true);
-
-Show\Field::resolving(function () {
-
-//    Show\Field::define('code', function ($v) {
-//        return "<code>$v</code>";
-//    });
-
-}, true);
