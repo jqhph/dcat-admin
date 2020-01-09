@@ -6,7 +6,6 @@ use DummyModelNamespace;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Admin;
 use Dcat\Admin\Controllers\AdminController;
 
 class DummyClass extends AdminController
@@ -25,7 +24,7 @@ class DummyClass extends AdminController
      */
     protected function grid()
     {
-        return Admin::grid(new DummyModel(), function (Grid $grid) {
+        return Grid::make(new DummyModel(), function (Grid $grid) {
             {grid}
         });
     }
@@ -39,9 +38,9 @@ class DummyClass extends AdminController
      */
     protected function detail($id)
     {
-        return Admin::show($id, new DummyModel(), function (Show $show) {
+        return Show::make(new DummyModel(), function (Show $show) {
             {show}
-        });
+        })->key($id);
     }
 
     /**
@@ -51,7 +50,7 @@ class DummyClass extends AdminController
      */
     protected function form()
     {
-        return Admin::form(new DummyModel(), function (Form $form) {
+        return Form::make(new DummyModel(), function (Form $form) {
             {form}
         });
     }

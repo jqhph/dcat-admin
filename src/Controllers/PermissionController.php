@@ -289,7 +289,7 @@ class PermissionController extends Controller
      */
     public function form()
     {
-        return Admin::form(new Permission(), function (Form $form) {
+        return Form::make(new Permission(), function (Form $form) {
             $permissionTable = config('admin.database.permissions_table');
             $connection = config('admin.database.connection');
 

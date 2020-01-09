@@ -16,7 +16,7 @@
         'controller' => ucfirst(trans('admin.scaffold.create_controller')),
         'migrate' => ucfirst(trans('admin.scaffold.run_migrate')),
         'lang' => ucfirst(trans('admin.scaffold.create_lang')),
-    ])->checkedAll(['migrate', 'repository', 'migration']);
+    ])->checkedAll(['migrate', 'migration']);
 @endphp
 <style>
     /*.table>thead>tr>th {*/

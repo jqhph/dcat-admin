@@ -176,12 +176,14 @@ class Show implements Renderable
         }
 
         $this->__id = $id;
+
+        return $this;
     }
 
     /**
      * @param Fluent|null $model
      *
-     * @return Fluent
+     * @return Fluent|$this
      */
     public function model(Fluent $model = null)
     {
@@ -194,6 +196,8 @@ class Show implements Renderable
         }
 
         $this->model = $model;
+
+        return $this;
     }
 
     protected function setupModel()

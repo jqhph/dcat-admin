@@ -130,7 +130,7 @@ class RoleController extends Controller
      */
     protected function detail($id)
     {
-        return Admin::show($id, new Role('permissions'), function (Show $show) {
+        return Show::make(new Role('permissions'), function (Show $show) use ($id) {
             $show->id;
             $show->slug;
             $show->name;
@@ -144,10 +144,10 @@ class RoleController extends Controller
             $show->created_at;
             $show->updated_at;
 
-            if ($show->key() == RoleModel::ADMINISTRATOR_ID) {
+            if ($id == RoleModel::ADMINISTRATOR_ID) {
                 $show->disableDeleteButton();
             }
-        });
+        })->key($id);
     }
 
     /**
@@ -157,7 +157,7 @@ class RoleController extends Controller
      */
     public function form()
     {
-        return Admin::form(new Role('permissions'), function (Form $form) {
+        return Form::make(new Role('permissions'), function (Form $form) {
             $roleTable = config('admin.database.roles_table');
             $connection = config('admin.database.connection');
 

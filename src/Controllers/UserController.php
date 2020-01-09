@@ -89,7 +89,7 @@ class UserController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(new Administrator('roles'), function (Grid $grid) {
+        return Grid::make(new Administrator('roles'), function (Grid $grid) {
             $grid->id('ID')->bold()->sortable();
             $grid->username;
             $grid->name;
@@ -160,7 +160,7 @@ class UserController extends Controller
      */
     protected function detail($id)
     {
-        return Admin::show($id, new Administrator('roles'), function (Show $show) {
+        return Show::make(new Administrator('roles'), function (Show $show) use ($id) {
             $show->id;
             $show->username;
             $show->name;
@@ -210,10 +210,10 @@ class UserController extends Controller
                 return $tree->render();
             });
 
-            if ($show->key() == AdministratorModel::DEFAULT_ID) {
+            if ($id == AdministratorModel::DEFAULT_ID) {
                 $show->disableDeleteButton();
             }
-        });
+        })->key($id);
     }
 
     /**
@@ -223,7 +223,7 @@ class UserController extends Controller
      */
     public function form()
     {
-        return Admin::form(new Administrator('roles'), function (Form $form) {
+        return Form::make(new Administrator('roles'), function (Form $form) {
             $userTable = config('admin.database.users_table');
 
             $connection = config('admin.database.connection');
