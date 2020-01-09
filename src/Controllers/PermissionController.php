@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;

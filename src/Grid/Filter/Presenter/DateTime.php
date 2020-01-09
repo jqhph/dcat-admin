@@ -47,7 +47,7 @@ class DateTime extends Presenter
         Admin::script($script);
     }
 
-    public function variables() : array
+    public function variables(): array
     {
         $this->prepare();
 
