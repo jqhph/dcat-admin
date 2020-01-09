@@ -63,7 +63,7 @@ class Administrator extends Model implements AuthenticatableContract
      *
      * @return BelongsToMany
      */
-    public function roles() : BelongsToMany
+    public function roles(): BelongsToMany
     {
         $pivotTable = config('admin.database.role_users_table');
 

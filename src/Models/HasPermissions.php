@@ -15,7 +15,7 @@ trait HasPermissions
      *
      * @return mixed
      */
-    public function allPermissions() : Collection
+    public function allPermissions(): Collection
     {
         if ($this->allPermissions) {
             return $this->allPermissions;
@@ -35,7 +35,7 @@ trait HasPermissions
      *
      * @return bool
      */
-    public function can($ability) : bool
+    public function can($ability): bool
     {
         if (! $ability) {
             return false;
@@ -60,7 +60,7 @@ trait HasPermissions
      *
      * @return bool
      */
-    public function cannot(string $permission) : bool
+    public function cannot(string $permission): bool
     {
         return ! $this->can($permission);
     }
@@ -70,7 +70,7 @@ trait HasPermissions
      *
      * @return mixed
      */
-    public function isAdministrator() : bool
+    public function isAdministrator(): bool
     {
         return $this->isRole(Role::ADMINISTRATOR);
     }
@@ -82,7 +82,7 @@ trait HasPermissions
      *
      * @return mixed
      */
-    public function isRole(string $role) : bool
+    public function isRole(string $role): bool
     {
         /* @var Collection $roles */
         $roles = $this->roles;
@@ -98,7 +98,7 @@ trait HasPermissions
      *
      * @return mixed
      */
-    public function inRoles($roles = []) : bool
+    public function inRoles($roles = []): bool
     {
         /* @var Collection $all */
         $all = $this->roles;
@@ -116,7 +116,7 @@ trait HasPermissions
      *
      * @return bool
      */
-    public function visible($roles = []) : bool
+    public function visible($roles = []): bool
     {
         if (empty($roles)) {
             return false;
