@@ -635,10 +635,14 @@ JS;
      *
      * @throws \Exception
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\View\View|string
      */
     public function render()
     {
+        if (! $this->shouldRender()) {
+            return '';
+        }
+
         if ($this->viewMode == 'table') {
             return $this->renderTable();
         }

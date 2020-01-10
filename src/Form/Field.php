@@ -909,7 +909,7 @@ class Field implements Renderable
             $this->form instanceof Form
             && $this->form->inModal()
         ) {
-            $this->setDisplay(false);
+            $this->display(false);
         }
 
         return $this;
@@ -1057,7 +1057,7 @@ class Field implements Renderable
      *
      * @return self
      */
-    public function setScript($script)
+    public function script($script)
     {
         $this->script = $script;
 
@@ -1069,7 +1069,7 @@ class Field implements Renderable
      *
      * @return self
      */
-    public function setDisplay(bool $display)
+    public function display(bool $display)
     {
         $this->display = $display;
 

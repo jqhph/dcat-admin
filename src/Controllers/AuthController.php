@@ -18,6 +18,11 @@ class AuthController extends Controller
     /**
      * @var string
      */
+    protected $view = 'admin::login';
+
+    /**
+     * @var string
+     */
     protected $redirectTo;
 
     /**
@@ -31,7 +36,7 @@ class AuthController extends Controller
             return redirect($this->redirectPath());
         }
 
-        return view(config('admin.auth.login_view') ?: 'admin::login');
+        return view(config('admin.auth.login_view') ?: $this->view);
     }
 
     /**
@@ -221,10 +226,6 @@ class AuthController extends Controller
      */
     protected function redirectPath()
     {
-        if (method_exists($this, 'redirectTo')) {
-            return $this->redirectTo();
-        }
-
         return $this->redirectTo ?: config('admin.route.prefix');
     }
 

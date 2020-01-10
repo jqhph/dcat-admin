@@ -103,6 +103,10 @@ class Table extends HasMany
 
     public function render()
     {
+        if (! $this->shouldRender()) {
+            return '';
+        }
+
         Admin::style(
             <<<'CSS'
 .table-has-many .fields-group .form-group {
