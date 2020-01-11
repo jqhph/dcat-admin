@@ -97,8 +97,6 @@ class Show implements Renderable
     {
         switch (func_num_args()) {
             case 1:
-                $model = $id;
-                break;
             case 2:
                 if (is_scalar($id)) {
                     $this->key($id);
