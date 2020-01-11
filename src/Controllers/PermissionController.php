@@ -244,9 +244,7 @@ class PermissionController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(new Permission());
-
-        $show->key($id);
+        $show = new Show($id, new Permission());
 
         $show->id;
         $show->slug;

@@ -89,15 +89,31 @@ class Show implements Renderable
     /**
      * Show constructor.
      *
+     * @param mixed $id                                $id
      * @param Model|Builder|Repository|array|Arrayable $model
-     * @param \Closure                         $builder
+     * @param \Closure                                 $builder
      */
-    public function __construct($model = null, ?\Closure $builder = null)
+    public function __construct($id = null, $model = null, ?\Closure $builder = null)
     {
-        $this->initModel($model);
+        switch (func_num_args()) {
+            case 1:
+                $model = $id;
+                break;
+            case 2:
+                if (is_scalar($id)) {
+                    $this->key($id);
+                } else {
+                    $builder = $model;
+                    $model = $id;
+                }
+                break;
+            default:
+                $this->key($id);
+        }
 
         $this->builder = $builder;
 
+        $this->initModel($model);
         $this->initPanel();
         $this->initContents();
 

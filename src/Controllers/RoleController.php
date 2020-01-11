@@ -129,7 +129,7 @@ class RoleController extends Controller
      */
     protected function detail($id)
     {
-        return Show::make(new Role('permissions'), function (Show $show) use ($id) {
+        return Show::make($id, new Role('permissions'), function (Show $show) {
             $show->id;
             $show->slug;
             $show->name;
@@ -143,10 +143,10 @@ class RoleController extends Controller
             $show->created_at;
             $show->updated_at;
 
-            if ($id == RoleModel::ADMINISTRATOR_ID) {
+            if ($show->key() == RoleModel::ADMINISTRATOR_ID) {
                 $show->disableDeleteButton();
             }
-        })->key($id);
+        });
     }
 
     /**

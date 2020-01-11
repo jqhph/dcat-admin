@@ -140,11 +140,8 @@ class UserController extends Controller
         $grid->quickSearch(['id', 'name', 'username']);
 
         $grid->id->bold()->sortable();
-
         $grid->username;
-
         $grid->name;
-
         $grid->created_at;
 
         return $grid;
@@ -159,7 +156,7 @@ class UserController extends Controller
      */
     protected function detail($id)
     {
-        return Show::make(new Administrator('roles'), function (Show $show) use ($id) {
+        return Show::make($id, new Administrator('roles'), function (Show $show) {
             $show->id;
             $show->username;
             $show->name;
@@ -209,10 +206,10 @@ class UserController extends Controller
                 return $tree->render();
             });
 
-            if ($id == AdministratorModel::DEFAULT_ID) {
+            if ($show->key() == AdministratorModel::DEFAULT_ID) {
                 $show->disableDeleteButton();
             }
-        })->key($id);
+        });
     }
 
     /**

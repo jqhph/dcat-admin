@@ -38,9 +38,9 @@ class DummyClass extends AdminController
      */
     protected function detail($id)
     {
-        return Show::make(new DummyModel(), function (Show $show) {
+        return Show::make($id, new DummyModel(), function (Show $show) {
             {show}
-        })->key($id);
+        });
     }
 
     /**
