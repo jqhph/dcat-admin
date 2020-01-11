@@ -30,7 +30,7 @@ class IdeHelperCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Make ide-helper file.';
+    protected $description = 'Create the ide-helper file';
 
     /**
      * @var array

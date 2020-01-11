@@ -29,6 +29,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\IdeHelperCommand::class,
         Console\FormCommand::class,
         Console\ActionCommand::class,
+        Console\MenuCacheCommand::class,
     ];
 
     /**
@@ -83,7 +84,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require __DIR__.'/Support/AdminSection.php';
+        require_once __DIR__.'/Support/AdminSection.php';
 
         $this->registerExtensionProviders();
         $this->loadAdminAuthConfig();

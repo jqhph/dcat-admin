@@ -25,11 +25,9 @@ trait MenuCache
     }
 
     /**
-     * Delete all items from the cache.
-     *
-     * @return bool
+     * @return bool|void
      */
-    public function destroyCache()
+    public function flushCache()
     {
         if (! $this->enableCache()) {
             return;
