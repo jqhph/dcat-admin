@@ -460,7 +460,11 @@ class Field implements Renderable
             $options = $options->toArray();
         }
 
-        $this->options = array_merge($this->options, $options);
+        if (is_array($this->options)) {
+            $this->options = array_merge($this->options, $options);
+        } else {
+            $this->options = $options;
+        }
 
         return $this;
     }
