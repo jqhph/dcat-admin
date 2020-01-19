@@ -189,43 +189,73 @@ a {
 }
 
 /*main-header*/
-/*.main-header .logo {*/
-/*height:60px;*/
-/*line-height:60px;*/
-/*}*/
-/*.main-header>.navbar {*/
-/*height:60px;*/
-/*}*/
-/*.main-header .sidebar-toggle {*/
-/*padding: 20px 15px;*/
-/*}*/
-/*.main-sidebar, .left-side {*/
-/*padding-top:60px;*/
-/*}*/
-/*.control-sidebar {*/
-/*padding-top:60px;*/
-/*}*/
-/*@media (min-width: 768px) {*/
-/*.navbar-custom-menu .navbar-nav>li>a {*/
-/*padding-top: 20px;*/
-/*padding-bottom: 20px;*/
-/*}*/
-/*.sidebar-mini.sidebar-collapse .main-sidebar {*/
-/*width: 60px !important;*/
-/*}*/
-/*.sidebar-mini.sidebar-collapse .main-header .logo {*/
-/*width: 60px;*/
-/*}*/
-/*.sidebar-mini.sidebar-collapse .main-header .navbar {*/
-/*margin-left: 60px;*/
-/*}*/
-/*}*/
-/*.sidebar-mini.sidebar-collapse .sidebar-menu>li>a {*/
-/*padding: 12px 5px 12px 18px;*/
-/*}*/
-/*.fixed .content-wrapper, .fixed .right-side {*/
-/*padding-top: 60px;*/
-/*}*/
+.main-header .logo {
+    height: 60px;
+    line-height: 60px;
+}
+
+.main-header > .navbar {
+    height: 60px;
+}
+
+.main-header .sidebar-toggle {
+    padding: 20px 15px;
+}
+
+.main-sidebar, .left-side, .control-sidebar {
+    padding-top: 60px;
+}
+
+.main-sidebar, .left-side {
+    width: 244px;
+}
+
+.main-header .logo {
+    width: 244px;
+}
+.main-header>.navbar, .content-wrapper, .right-side, .main-footer {
+    margin-left: 244px;
+}
+
+@media (min-width: 768px) {
+    .navbar-custom-menu .navbar-nav > li > a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .sidebar-mini.sidebar-collapse .main-sidebar {
+        width: 75px !important;
+        font-size: 16px;
+    }
+
+    .sidebar-mini.sidebar-collapse .main-header .logo {
+        width: 75px;
+    }
+
+    .sidebar-mini.sidebar-collapse .main-header .navbar {
+        margin-left: 75px;
+    }
+
+    .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .right-side, .sidebar-mini.sidebar-collapse .main-footer {
+        margin-left: 75px !important;
+    }
+
+    .sidebar-mini.sidebar-collapse .main-header .logo>.logo-mini {
+        font-size: 20px;
+    }
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu > li > a {
+    padding: 12px 5px 12px 23px;
+}
+
+.fixed .content-wrapper, .fixed .right-side {
+    padding-top: 60px;
+}
+
+.main-sidebar .user-panel {
+    padding: 14px;
+}
 /*main-header*/
 
 .main-footer {
@@ -994,13 +1024,13 @@ code {
 }
 
 .btn-group-sm > .btn, .btn-sm {
-    border-radius: 1px
+    border-radius: 2px
 }
 
 .btn {
     will-change: box-shadow !important;
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .1), 0 2px 2px 0 rgba(0, 0, 0, .1), 0 1px 5px 1px rgba(0,0,0, .1);
-    border-radius: 1px;
+    border-radius: 2px;
     border:1px solid transparent;
 }
 .btn-circle {
@@ -1046,7 +1076,7 @@ code {
 
 .btn-group .btn {
     box-shadow: none !important;
-    border-radius: 0;
+    /*border-radius: 0;*/
 }
 
 .box, .panel {
@@ -1270,8 +1300,17 @@ select.form-shadow {
     border-color: var(--primary-50);
 }
 input.form-control {
-    border-radius: 0 !important
+    border-radius: 2px
 }
+.input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn {
+    border-radius: 2px
+}
+
+.input-group-addon:first-child {
+    border-top-left-radius: 2px ;
+    border-bottom-left-radius: 2px ;
+}
+
 
 .form-horizontal .form-group {
     margin-right: -5px;
@@ -1302,7 +1341,7 @@ input.form-control {
 }
 
 .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
-    border-radius: 0 !important
+    border-radius: 2px !important
 }
 
 .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
@@ -1836,9 +1875,9 @@ pre.dump {
     box-shadow:0 2px 10px rgba(0, 0, 0, .2);
 }
 
-.input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn {
-    border-radius: 0
-}
+/*.input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn {*/
+/*    border-radius: 0*/
+/*}*/
 
 .input-no-border .input-group {
     box-shadow:0 2px 4px 0 rgba(0, 0, 0, .05);
