@@ -338,7 +338,7 @@ input.label {
 }
 
 .btn-group .btn + .btn, .btn-group .btn + .btn-group, .btn-group .btn-group + .btn, .btn-group .btn-group + .btn-group {
-    margin-left: 0
+    margin-left: 0;
 }
 
 .btn-group.open .dropdown-toggle {
@@ -594,7 +594,7 @@ input.label {
     z-index: 999
 }
 .panel-group .panel {
-    border-radius:1px;
+    border-radius:2px;
     border: 0;
     cursor: pointer
 }
@@ -632,7 +632,7 @@ input.label {
 }
 .panel-heading {
     padding:12px 26px;
-    border-radius:1px;
+    border-radius:2px;
     width:100%;
 }
 
@@ -1076,7 +1076,7 @@ code {
 
 .btn-group .btn {
     box-shadow: none !important;
-    /*border-radius: 0;*/
+    border-radius: 0;
 }
 
 .box, .panel {
@@ -1137,7 +1137,7 @@ code {
 .card-box {
     padding: 20px;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, .06), 0 1px 0 0 rgba(0, 0, 0, .02);
-    border-radius: 1px;
+    border-radius: 2px;
     background-clip: padding-box;
     margin-bottom: 20px;
     background-color: #fff
@@ -1174,7 +1174,7 @@ code {
 .card {
     background: #fff;
     margin-bottom: 15px;
-    border-radius: 1px;
+    border-radius: 2px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05);
     /*border: 1px solid rgba(0, 40, 100, 0.12);*/
 }
@@ -1302,7 +1302,7 @@ select.form-shadow {
 input.form-control {
     border-radius: 2px
 }
-.input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn {
+.input-group .form-control:not(:first-child):not(:last-child), .input-group-sm>.form-control, .input-group-sm>.input-group-addon, .input-group-sm>.input-group-btn>.btn {
     border-radius: 2px
 }
 
@@ -1570,7 +1570,7 @@ pre.dump {
 }
 
 .alert {
-    border-radius: 1px;
+    border-radius: 2px;
     border: 0;
     -moz-box-shadow: 0 1px 3px 1px rgba(34, 25, 25, .17);
     box-shadow: 0 1px 3px 1px rgba(34, 25, 25, .17) !important
@@ -1644,7 +1644,7 @@ pre.dump {
 .nav-tabs-default {
     margin-bottom: 20px;
     background: #fff;
-    border-radius: 1px;
+    border-radius: 2px;
     box-shadow: none;
 }
 .nav-tabs-default>.nav-tabs {
@@ -1697,12 +1697,12 @@ pre.dump {
 }
 
 .nav-tabs-custom > .nav-tabs > li:not(.active) > a, .nav-tabs-custom > .nav-tabs > li:not(.active) > a:hover {
-    border-top-color: #e1e1e1;
-    border-left-color: #e1e1e1;
-    border-right-color: #e1e1e1;
+    border-top-color: #eee;
+    border-left-color: #eee;
+    border-right-color: #eee;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
-    border-bottom-color: #e1e1e1;
+    border-bottom-color: #eee;
     margin-bottom: -20px;
     z-index: 11;
     background: #fff;
@@ -1722,7 +1722,7 @@ pre.dump {
 }
 
 .nav-tabs-custom > .nav-tabs > li:first-of-type.active > a {
-    border-left-color: #e1e1e1;
+    border-left-color: #eee;
 }
 
 .nav-tabs-custom > .nav-tabs > li:first-of-type > a {
@@ -1730,17 +1730,17 @@ pre.dump {
 }
 
 .nav-tabs-custom > .nav-tabs > li.active > a {
-    border-top-color: #e1e1e1;
-    border-left-color: #e1e1e1;
-    border-right-color: #e1e1e1;
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
+    border-top-color: #eee;
+    border-left-color: #eee;
+    border-right-color: #eee;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
 }
 
 .nav-tabs-custom > .tab-content {
     background: #fff;
-    border: 1px solid #e1e1e1;
-    border-radius: 4px
+    border: 1px solid #eee;
+    border-radius: 3px
 }
 .navbar-brand {
     font-size:16px;
@@ -1752,7 +1752,7 @@ pre.dump {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05);
 }
 .navbar {
-    border-radius: 1px;
+    border-radius: 2px;
     margin-bottom:15px;
 }
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
@@ -2233,8 +2233,8 @@ div.layui-layer-btn{
 }
 
 .material .box-header,.material .card-header {
-    padding: 12px;
-    border-top: 2px solid #fff
+    padding: 13px;
+    /*border-top: 2px solid #fff*/
 }
 .material .box-header .btn, .material .card-header .btn {
     /*text-transform: uppercase;*/

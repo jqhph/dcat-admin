@@ -69,8 +69,6 @@ class Content implements Renderable
     }
 
     /**
-     * @deprecated
-     *
      * @param string $header
      *
      * @return $this
@@ -351,7 +349,7 @@ class Content implements Renderable
         ) {
             Admin::style(
                 <<<'CSS'
-#nprogress .spinner{position:fixed!important;top:65px;}#nprogress .bar{top:50px;}.fixed-solution .sticky-table-header{top:50px!important}
+#nprogress .spinner{position:fixed!important;top:75px;}#nprogress .bar{top:61px;}.fixed-solution .sticky-table-header{top:61px!important}
 CSS
             );
         }

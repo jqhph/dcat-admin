@@ -6,7 +6,7 @@ use Dcat\Admin\Admin;
 
 class Tooltip extends Widget
 {
-    public static $style = '.tooltip-inner{padding:7px 13px;border-radius:1px;font-size:13px;max-width:250px}';
+    public static $style = '.tooltip-inner{padding:7px 13px;border-radius:2px;font-size:13px;max-width:250px}';
 
     protected $selector;
 
