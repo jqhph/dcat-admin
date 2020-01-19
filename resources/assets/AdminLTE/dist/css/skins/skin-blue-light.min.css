@@ -195,41 +195,41 @@
     background-color: #297ec0
 }
 
-.skin-blue-light .navbar-search-from {
+.skin-blue-light .navbar-search-form {
     width: 250px;
-    margin: 3px 0 0 20px;
+    margin: 7px 0 0 20px;
     border-radius: 3px;
     float: left
 }
 
-.skin-blue-light .navbar-search-from input {
+.skin-blue-light .navbar-search-form input {
     color: #fff;
     border: 0;
     background: rgba(255, 255, 255, .2)
 }
 
-.skin-blue-light .navbar-search-from input::placeholder {
+.skin-blue-light .navbar-search-form input::placeholder {
     color: hsla(0, 0%, 100%, .6)
 }
 
-.skin-blue-light .navbar-search-from input:focus {
+.skin-blue-light .navbar-search-form input:focus {
     border: 1px solid rgba(255, 255, 255, .4);
     background: rgba(255, 255, 255, .25);
     border-right: 0
 }
 
-.skin-blue-light .navbar-search-from .btn {
+.skin-blue-light .navbar-search-form .btn {
     color: #fff;
     background-color: rgba(255, 255, 255, .2);
     border:1px solid transparent;
     box-shadow: none
 }
 
-.skin-blue-light .navbar-search-from .input-group-btn:last-child > .btn {
+.skin-blue-light .navbar-search-form .input-group-btn:last-child > .btn {
     margin-left: 0
 }
 
-.skin-blue-light .navbar-search-from input:focus + span .btn {
+.skin-blue-light .navbar-search-form input:focus + span .btn {
     border: 1px solid rgba(255, 255, 255, .4);
     background: rgba(255, 255, 255, .25);
     border-left: 0;
