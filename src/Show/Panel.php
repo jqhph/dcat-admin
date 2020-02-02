@@ -210,7 +210,7 @@ class Panel implements Renderable
         $view = view($this->view, $this->data);
 
         if (! $wrapper = $this->wrapper) {
-            return "<div class='card material'>{$view->render()}</div>";
+            return "<div class='card da-box'>{$view->render()}</div>";
         }
 
         return $wrapper($view);

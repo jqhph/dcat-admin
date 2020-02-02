@@ -51,7 +51,7 @@ class MenuController extends Controller
 
                     $form->width(9, 2);
 
-                    $column->append(Card::make(trans('admin.new'), $form)->class('card material'));
+                    $column->append(Card::make(trans('admin.new'), $form)->class('card da-box'));
                 });
             });
     }

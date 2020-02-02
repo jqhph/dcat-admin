@@ -558,7 +558,7 @@ JS;
         $view = view($this->view['tree'], $this->variables());
 
         if (! $wrapper = $this->wrapper) {
-            return "<div class='card material'>{$view->render()}</div>";
+            return "<div class='card da-box'>{$view->render()}</div>";
         }
 
         return $wrapper($view);

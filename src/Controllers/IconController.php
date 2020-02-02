@@ -29,7 +29,7 @@ class IconController extends Controller
             $tab = Tab::make()->padding('20px')->custom();
 
             $tab->add('Themify', view('admin::helpers.themify'));
-//            $tab->add('Material Design', view('admin::helpers.material'));
+//            $tab->add('da-box Design', view('admin::helpers.da-box'));
             $tab->add('Font Awesome', view('admin::helpers.font-awesome'));
             $tab->add('Glyphicons', view('admin::helpers.glyphicons'));
 

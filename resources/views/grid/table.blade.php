@@ -1,6 +1,6 @@
 {!! $grid->renderQuickSearch() !!}
 
-<div class="card material">
+<div class="card da-box">
 
     @if ($grid->allowToolbar())
         <div class="box-header">
