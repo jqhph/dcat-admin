@@ -256,6 +256,30 @@ a {
 .main-sidebar .user-panel {
     padding: 14px;
 }
+
+@media (max-width: 767px) {
+    .fixed .content-wrapper, .fixed .right-side {
+        padding-top: 110px;
+    }
+
+    .main-header .logo, .main-header .navbar {
+        width: 100%;
+    }
+
+    .main-sidebar, .left-side {
+        padding-top: 110px;
+        width: 230px;
+    }
+
+    .main-header>.navbar, .content-wrapper, .right-side, .main-footer {
+        margin: 0;
+    }
+
+    .navbar-custom-menu .navbar-nav>li>a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
 /*main-header*/
 
 .main-footer {
@@ -2300,6 +2324,19 @@ div.layui-layer-btn{
     color: var(--font)!important;
 }
 
+.layui-layer {
+    border-radius: 0!important;
+    box-shadow: 1px 1px 30px rgba(0,0,0,.2)!important;
+}
+
+.layui-layer-title {
+    border-radius: 0!important;
+    height: 46px!important;
+    line-height: 46px!important;
+}
+.layui-layer-border {
+    border: 0 !important;
+}
 
 /*!
  * Waves v0.7.6
