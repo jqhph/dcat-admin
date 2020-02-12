@@ -1,6 +1,6 @@
 <script>
     function LA() {}
-    LA.token = "{{ csrf_token() }}";
+
     LA.lang = {!! json_encode(trans('admin.client') ?: []) !!};
 
     LA.components = {booting:[]};

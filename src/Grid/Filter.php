@@ -127,7 +127,7 @@ class Filter implements Renderable
     /**
      * @var string
      */
-    protected $filterID = 'filter-box';
+    protected $filterID;
 
     /**
      * @var string
@@ -219,7 +219,7 @@ class Filter implements Renderable
      */
     protected function generateFilterId()
     {
-        return 'filter-box-'.Str::random(8);
+        return $this->model->grid()->getName().'-filter-box';
     }
 
     /**
@@ -559,11 +559,13 @@ class Filter implements Renderable
     /**
      * Expand filter container.
      *
+     * @param bool $value
+     *
      * @return $this
      */
-    public function expand()
+    public function expand(bool $value = true)
     {
-        $this->expand = true;
+        $this->expand = $value;
 
         return $this;
     }
@@ -575,7 +577,7 @@ class Filter implements Renderable
      *
      * @return array|Collection|mixed
      */
-    public function execute($toArray = true)
+    public function execute(bool $toArray = true)
     {
         $conditions = array_merge(
             $this->conditions(),
