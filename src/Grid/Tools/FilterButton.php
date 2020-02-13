@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Grid\Filter;
 use Illuminate\Support\Str;
 
 class FilterButton extends AbstractTool
@@ -44,15 +45,57 @@ class FilterButton extends AbstractTool
      */
     protected function setupScripts()
     {
-        $id = $this->filter()->filterID();
+        $filter = $this->filter();
+        $id = $filter->filterID();
 
-        Admin::script(
-            <<<JS
+        if ($filter->mode() === Filter::MODE_RIGHT_SIDE) {
+            $expand = $filter->expand ? 'true' : 'false';
+
+            $script = <<<JS
+(function () {
+    var slider, 
+        expand = {$expand};
+    
+     function initSlider() {
+        slider = new LA.Slider({
+            direction: 'r',
+            dom: '#{$id}',
+            background: '#FFF',
+            shade: false,
+        });
+        
+        $(document).one('pjax:complete', function () {// 跳转新页面时移除弹窗
+            slider.destroy();
+        });
+        
+        expand && slider.open();
+    }
+    
+    expand && setTimeout(initSlider, 10);
+    
+    $('.{$this->getElementClassName()}').click(function () {
+        if (! slider) {
+            initSlider()
+        }
+        slider.toggle();
+       
+        return false
+    });
+    
+    $('#{$id} .close-slider').click(function () {
+        slider.close()
+    })
+})();
+JS;
+        } else {
+            $script = <<<JS
 $('.{$this->getElementClassName()}').click(function(){
     $('#{$id}').parent().collapse('toggle');
 }); 
-JS
-        );
+JS;
+        }
+
+        Admin::script($script);
     }
 
     /**

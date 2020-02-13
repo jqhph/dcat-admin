@@ -84,9 +84,7 @@ class LogController extends Controller
 
             $filter->equal('ip', 'IP');
 
-            $filter->between('created_at')
-                ->width(4)
-                ->datetime();
+            $filter->between('created_at')->datetime();
         });
 
         return $grid;

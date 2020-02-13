@@ -63,12 +63,8 @@ class Filter implements Renderable
 {
     use HasBuilderEvents;
 
-    /**
-     * Ignore value.
-     *
-     * @var string
-     */
-    const IGNORE_VALUE = '___';
+    const MODE_PANEL = 'panel';
+    const MODE_RIGHT_SIDE = 'right-side';
 
     /**
      * @var array
@@ -122,7 +118,7 @@ class Filter implements Renderable
     /**
      * @var string
      */
-    protected $view = 'admin::filter.container';
+    protected $view;
 
     /**
      * @var string
@@ -187,6 +183,11 @@ class Filter implements Renderable
     protected $inputs;
 
     /**
+     * @var string
+     */
+    protected $mode = self::MODE_RIGHT_SIDE;
+
+    /**
      * Create a new filter instance.
      *
      * @param Model $model
@@ -197,7 +198,7 @@ class Filter implements Renderable
 
         $this->primaryKey = $model->getKeyName();
 
-        $this->filterID = $this->generateFilterId();
+        $this->filterID = $this->formatFilterId();
 
         $this->initLayout();
 
@@ -217,9 +218,11 @@ class Filter implements Renderable
     /**
      * @return string
      */
-    protected function generateFilterId()
+    protected function formatFilterId()
     {
-        return $this->model->grid()->getName().'-filter-box';
+        $gridName = $this->model->grid()->getName();
+
+        return 'filter-box'.($gridName ? '-'.$gridName : '');
     }
 
     /**
@@ -324,6 +327,38 @@ class Filter implements Renderable
     }
 
     /**
+     * @param string|null $mode
+     *
+     * @return $this|string
+     */
+    public function mode(string $mode = null)
+    {
+        if ($mode === null) {
+            return $this->mode;
+        }
+
+        $this->mode = $mode;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function panel()
+    {
+        return $this->mode(self::MODE_PANEL);
+    }
+
+    /**
+     * @return $this
+     */
+    public function rightSide()
+    {
+        return $this->mode(self::MODE_RIGHT_SIDE);
+    }
+
+    /**
      * Get filter ID.
      *
      * @return string
@@ -395,7 +430,7 @@ class Filter implements Renderable
         $this->inputs = Arr::dot(request()->all());
 
         $this->inputs = array_filter($this->inputs, function ($input) {
-            return $input !== '' && ! is_null($input) && $input !== static::IGNORE_VALUE;
+            return $input !== '' && ! is_null($input);
         });
 
         $this->sanitizeInputs($this->inputs);
@@ -436,9 +471,9 @@ class Filter implements Renderable
     }
 
     /**
-     * @param $inputs
+     * @param array $inputs
      *
-     * @return array
+     * @return void
      */
     protected function sanitizeInputs(&$inputs)
     {
@@ -636,6 +671,10 @@ class Filter implements Renderable
         }
 
         $this->callComposing();
+
+        Admin::style('.right-side-filter-container{border-bottom: 1px solid #f5f5f5;margin:-25px -25px 20px;height:48px;line-height: 48px;padding: 0 15px 12px;}');
+
+        $this->view = $this->mode === self::MODE_RIGHT_SIDE ? 'admin::filter.right-side-container' : 'admin::filter.container';
 
         return view($this->view)->with([
             'action'             => $this->action ?: $this->urlWithoutFilters(),

@@ -12,6 +12,11 @@ class In extends AbstractFilter
     protected $query = 'whereIn';
 
     /**
+     * @var int
+     */
+    protected $width = 10;
+
+    /**
      * Get condition of this filter.
      *
      * @param array $inputs

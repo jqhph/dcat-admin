@@ -17,5 +17,5 @@
     <div class="input-group-addon">
         <b>{{$label}}</b> &nbsp;<i class="fa fa-calendar"></i>
     </div>
-        <input class="form-control" id="{{$id}}" placeholder="{{$label}}" name="{{$name}}" value="{{ request($name, $value) }}">
+        <input class="form-control" id="{{$id}}" autocomplete="off" placeholder="{{$label}}" name="{{$name}}" value="{{ request($name, $value) }}">
 </div>

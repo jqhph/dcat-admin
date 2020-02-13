@@ -21,23 +21,17 @@ class SimpleGrid extends Grid
         $this->option('row_selector_clicktr', true);
 
         $this->tools->disableBatchActions();
+        $this->tools->disableFilterButton();
+
+        Content::composing(function (Content $content) {
+            $content->simple();
+        }, true);
     }
 
     protected function setupFilter()
     {
         parent::setupFilter();
 
-        $this->disableFilter();
-        $this->tools->disableFilterButton();
-
-        $this->filter
-            ->withoutInputBorder()
-            ->expand()
-            ->resetPosition()
-            ->hiddenResetButtonText();
-
-        Content::composing(function (Content $content) {
-            $content->simple()->prepend($this->filter);
-        }, true);
+        $this->filter->panel();
     }
 }

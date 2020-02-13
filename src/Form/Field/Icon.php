@@ -14,7 +14,8 @@ setTimeout(function () {
 }, 10);
 JS;
 
-        $this->defaultAttribute('style', 'width: 200px');
+        $this->defaultAttribute('style', 'width: 200px')
+            ->defaultAttribute('autocomplete', 'off');
 
         return parent::render();
     }

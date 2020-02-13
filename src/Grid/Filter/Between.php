@@ -14,6 +14,11 @@ class Between extends AbstractFilter
     protected $view = 'admin::filter.between';
 
     /**
+     * @var int
+     */
+    protected $width = 11;
+
+    /**
      * @var bool
      */
     protected $timestamp = false;
@@ -122,7 +127,7 @@ class Between extends AbstractFilter
      */
     public function datetime($options = [])
     {
-        $this->view = 'admin::filter.betweenDatetime';
+        $this->view = 'admin::filter.between-datetime';
 
         DateTime::collectAssets();
 

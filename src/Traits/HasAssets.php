@@ -57,6 +57,7 @@ trait HasAssets
         'jquery.form'       => 'vendor/dcat-admin/jquery-form/dist/jquery.form.min.js',
         'waves'             => 'vendor/dcat-admin/waves/waves.min.js',
         'main'              => 'vendor/dcat-admin/dcat-admin/main.min.js',
+        'slider'            => 'vendor/dcat-admin/dcat-admin/slider.min.js',
     ];
 
     /**
