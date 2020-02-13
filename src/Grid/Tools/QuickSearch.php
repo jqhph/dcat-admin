@@ -25,7 +25,7 @@ class QuickSearch extends AbstractTool
     /**
      * @var int rem
      */
-    protected $width = 25;
+    protected $width = 27;
 
     /**
      * @param string|null $name

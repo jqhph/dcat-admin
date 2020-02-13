@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Filter;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Grid\Filter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -37,6 +38,14 @@ class Group extends AbstractFilter
         $this->builder = $builder;
         $this->column = $column;
         $this->label = $this->formatLabel($label);
+    }
+
+    /**
+     * @param Filter $filter
+     */
+    public function setParent(Filter $filter)
+    {
+        parent::setParent($filter);
 
         $this->initialize();
     }
