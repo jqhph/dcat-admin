@@ -14,7 +14,7 @@ class Menu
         [
             'id'        => 1,
             'title'     => 'Helpers',
-            'icon'      => 'fa-gears',
+            'icon'      => 'fa-wrench',
             'uri'       => '',
             'parent_id' => 0,
         ],
