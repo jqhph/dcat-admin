@@ -117,27 +117,41 @@ class QuickSearch extends AbstractTool
     {
         $script = <<<'JS'
 (function () {
-    var toggleClearBtn = function () {
-        var t = $(this),
-            clear = t.parent().find('.quick-search-clear');
-    
-        if (t.val()) {
-            clear.css({color: '#333'});
-        } else {
-            clear.css({color: '#fff'});
-        }
-        return false;
-    };
+    var inputting = false,
+        $ipt = $('input.quick-search-input'), 
+        val = $ipt.val(),
+        ignoreKeys = [16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144];
     
     var submit = LA.debounce(function (input) {
-        $(input).parents('form').submit()
-    }, 500);
+        inputting || $(input).parents('form').submit()
+    }, 600);
     
-    var $ipt = $('input.quick-search-input'), val = $ipt.val();
-    $ipt.on('focus', toggleClearBtn).on('keyup', function () {
-        toggleClearBtn.apply(this);
-        submit(this);
-    }).on('mousemove', toggleClearBtn).on('mouseout', toggleClearBtn);
+    function toggleBtn() {
+        var t = $(this),
+            btn = t.parent().find('.quick-search-clear');
+    
+        if (t.val()) {
+            btn.css({color: '#333'});
+        } else {
+            btn.css({color: '#fff'});
+        }
+        return false;
+    }
+    
+    $ipt.on('focus', toggleBtn)
+        .on('keyup', function (e) {
+            toggleBtn.apply(this);
+            
+            ignoreKeys.indexOf(e.keyCode) == -1 && submit(this)
+        })
+        .on('mousemove', toggleBtn)
+        .on('mouseout', toggleBtn)
+        .on('compositionstart', function(){
+            inputting = true
+        })
+        .on('compositionend', function() {
+            inputting = false
+        });
     val !== '' && $ipt.val('').focus().val(val).focus();
     
     $('.quick-search-clear').click(function () {

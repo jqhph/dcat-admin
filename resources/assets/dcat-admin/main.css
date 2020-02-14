@@ -2312,13 +2312,9 @@ div.layui-layer-btn{
 }
 
 .grid-column-header a {
-    color: #9ab1c3 !important;
+    color: #8aa5b9 !important;
     font-size: 13px;
 }
-/*.grid-column-header a:hover {*/
-/*    color:#7c858e!important;*/
-/*    color: var(--80)!important;*/
-/*}*/
 
 .grid-column-header a.active, .grid-column-header a:hover {
     color:#297ec0!important;
