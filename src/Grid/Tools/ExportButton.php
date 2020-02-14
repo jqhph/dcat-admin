@@ -104,7 +104,7 @@ JS;
         return <<<EOT
 <div class="btn-group " style="margin-right:3px">
     <button type="button" class="btn btn-sm btn-custom dropdown-toggle" data-toggle="dropdown">
-        <span class="hidden-xs">{$export}&nbsp;&nbsp;</span>
+        <span class="hidden-xs">{$export}&nbsp;</span>
         <span class="caret"></span>
         <span class="sr-only"></span>
     </button>

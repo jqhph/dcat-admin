@@ -94,6 +94,10 @@ class Sorter implements Renderable
             ]);
         }
 
+        if ($icon) {
+            $icon .= ' active';
+        }
+
         return " <a class=' glyphicon glyphicon-sort{$icon} $color' href='$url'></a>";
     }
 }

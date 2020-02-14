@@ -23,9 +23,19 @@ class QuickSearch extends AbstractTool
     protected $queryName = '__search__';
 
     /**
+     * @var string
+     */
+    protected $id;
+
+    /**
      * @var int rem
      */
-    protected $width = 27;
+    protected $width = 29;
+
+    public function __construct($key = null, $title = null)
+    {
+        parent::__construct($key, $title);
+    }
 
     /**
      * @param string|null $name
@@ -34,6 +44,7 @@ class QuickSearch extends AbstractTool
      */
     public function setQueryName(?string $name)
     {
+        $this->id = 'grid-quick-search-'.$name;
         $this->queryName = $name;
 
         return $this;
@@ -78,7 +89,7 @@ class QuickSearch extends AbstractTool
      */
     public function value()
     {
-        return request($this->queryName);
+        return trim(request($this->queryName));
     }
 
     /**
@@ -86,10 +97,10 @@ class QuickSearch extends AbstractTool
      */
     public function render()
     {
-        $this->setupScript();
-
         $request = request();
         $query = $request->query();
+
+        $this->setupScript();
 
         Arr::forget($query, [
             $this->queryName,
@@ -103,6 +114,7 @@ class QuickSearch extends AbstractTool
             'value'       => $this->value(),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
             'width'       => $this->width,
+            'id'          => $this->id,
         ];
 
         return view($this->view, $vars);
@@ -111,25 +123,36 @@ class QuickSearch extends AbstractTool
     protected function setupScript()
     {
         $script = <<<'JS'
-var show = function () {
-    var t = $(this),
-        clear = t.parent().find('.quick-search-clear');
-
-    if (t.val()) {
-        clear.css({color: '#333'});
-    } else {
-        clear.css({color: '#fff'});
-    }
-    return false;
-};
-
-$('input.quick-search-input').on('focus', show).on('keyup', show);
-
-$('.quick-search-clear').click(function () {
-    $(this).parent().find('.quick-search-input').val('');
-
-    $(this).closest('form').submit();
-});
+(function () {
+    var show = function () {
+        var t = $(this),
+            clear = t.parent().find('.quick-search-clear');
+    
+        if (t.val()) {
+            clear.css({color: '#333'});
+        } else {
+            clear.css({color: '#fff'});
+        }
+        return false;
+    };
+    
+    var request = LA.debounce(function (input) {
+        $(input).parents('form').submit()
+    }, 500);
+    var $input = $('input.quick-search-input');
+    $input.on('focus', show).on('keyup', function () {
+        show.apply(this);
+        request(this);
+    });
+    var val = $input.val();
+    val !== '' && $input.val('').focus().val(val);
+    
+    $('.quick-search-clear').click(function () {
+        $(this).parent().find('.quick-search-input').val('');
+    
+        $(this).closest('form').submit();
+    });
+})()
 JS;
 
         Admin::script($script);

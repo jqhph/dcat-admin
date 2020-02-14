@@ -1,13 +1,13 @@
 <style>::-ms-clear,::-ms-reveal{display: none;}</style>
 
-<form action="{!! $action !!}" class="input-no-border" pjax-container style="display:inline-block;margin:0 5px 13px 0;">
+<form id="{{ $id }}" action="{!! $action !!}" class="input-no-border" pjax-container style="display:inline-block;margin:0 5px 13px 0;">
     <div class="input-group quick-search" style="width:{{$width}}rem;">
 
         <input type="text"
                placeholder="{{ $placeholder }}"
                name="{{ $key }}"
                class="form-control quick-search-input"
-               style="margin-left:-1px;padding:0 1.6rem 0 3.6rem;height:36px;line-height:36px;"
+               style="margin-left:-1px;padding:0 1.6rem 0 3.8rem;height:36px;line-height:36px;"
                value="{{ $value }}"
         >
         <a onclick="$(this).submit()" style="overflow:hidden;position:absolute;top:8px;margin-left:-{{$width - 0.9}}rem;cursor:pointer;z-index:100">

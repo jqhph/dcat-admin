@@ -889,8 +889,8 @@ input.label {
     border-bottom: 1px solid #e3e7eb;
     text-transform: capitalize;
     font-weight: bold;
-    font-size: 13px;
-    padding: .75rem 8px;
+    font-size: 14px;
+    padding: .8rem 8px;
     letter-spacing: .05em;
 }
 .table-header-default.table>thead>tr>th {
@@ -926,10 +926,6 @@ input.label {
 
 .table-bordered.table > thead > tr > th {
     vertical-align: bottom !important;
-}
-
-td {
-    font-size: 13px
 }
 
 .table-bordered {
@@ -2267,7 +2263,7 @@ div.layui-layer-btn{
 }
 
 .da-box .box-header,.da-box .card-header {
-    padding: 13px;
+    padding: 14px;
     /*border-top: 2px solid #fff*/
 }
 .da-box .box-header .btn, .da-box .card-header .btn {
@@ -2278,7 +2274,7 @@ div.layui-layer-btn{
     color: #7c858e!important;
     color:var(--80)!important;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
 }
 .da-box .box-header .btn:hover,.da-box .card-header .btn:hover {
     background-color: #ebf0f3!important;
@@ -2316,12 +2312,17 @@ div.layui-layer-btn{
 }
 
 .grid-column-header a {
-    color: rgba(0, 0, 0, 0.5)!important;
+    color: #9ab1c3 !important;
     font-size: 13px;
 }
-.grid-column-header a:hover,.grid-column-header a.active {
-    color:#414750!important;
-    color: var(--font)!important;
+/*.grid-column-header a:hover {*/
+/*    color:#7c858e!important;*/
+/*    color: var(--80)!important;*/
+/*}*/
+
+.grid-column-header a.active, .grid-column-header a:hover {
+    color:#297ec0!important;
+    color: var(--primary-dark)!important;
 }
 
 .layui-layer {
