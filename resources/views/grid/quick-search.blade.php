@@ -1,6 +1,6 @@
 <style>::-ms-clear,::-ms-reveal{display: none;}</style>
 
-<form id="{{ $id }}" action="{!! $action !!}" class="input-no-border" pjax-container style="display:inline-block;margin:0 5px 13px 0;">
+<form action="{!! $action !!}" class="input-no-border" pjax-container style="display:inline-block;margin:0 5px 13px 0;">
     <div class="input-group quick-search" style="width:{{$width}}rem;">
 
         <input type="text"

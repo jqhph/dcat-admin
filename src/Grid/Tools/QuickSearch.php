@@ -23,11 +23,6 @@ class QuickSearch extends AbstractTool
     protected $queryName = '__search__';
 
     /**
-     * @var string
-     */
-    protected $id;
-
-    /**
      * @var int rem
      */
     protected $width = 29;
@@ -44,7 +39,6 @@ class QuickSearch extends AbstractTool
      */
     public function setQueryName(?string $name)
     {
-        $this->id = 'grid-quick-search-'.$name;
         $this->queryName = $name;
 
         return $this;
@@ -114,7 +108,6 @@ class QuickSearch extends AbstractTool
             'value'       => $this->value(),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
             'width'       => $this->width,
-            'id'          => $this->id,
         ];
 
         return view($this->view, $vars);
@@ -124,7 +117,7 @@ class QuickSearch extends AbstractTool
     {
         $script = <<<'JS'
 (function () {
-    var show = function () {
+    var toggleClearBtn = function () {
         var t = $(this),
             clear = t.parent().find('.quick-search-clear');
     
@@ -136,16 +129,16 @@ class QuickSearch extends AbstractTool
         return false;
     };
     
-    var request = LA.debounce(function (input) {
+    var submit = LA.debounce(function (input) {
         $(input).parents('form').submit()
     }, 500);
-    var $input = $('input.quick-search-input');
-    $input.on('focus', show).on('keyup', function () {
-        show.apply(this);
-        request(this);
-    });
-    var val = $input.val();
-    val !== '' && $input.val('').focus().val(val);
+    
+    var $ipt = $('input.quick-search-input'), val = $ipt.val();
+    $ipt.on('focus', toggleClearBtn).on('keyup', function () {
+        toggleClearBtn.apply(this);
+        submit(this);
+    }).on('mousemove', toggleClearBtn).on('mouseout', toggleClearBtn);
+    val !== '' && $ipt.val('').focus().val(val).focus();
     
     $('.quick-search-clear').click(function () {
         $(this).parent().find('.quick-search-input').val('');
