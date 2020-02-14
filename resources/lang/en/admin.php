@@ -119,7 +119,6 @@ return [
     'tree'                  => 'Tree',
     'table'                 => 'Table',
     'default'               => 'Default',
-    'create_extension'      => 'Create Extension',
     'import'                => 'Import',
     'is_not_import'         => 'No',
     'selected_options'      => ':num options selected',

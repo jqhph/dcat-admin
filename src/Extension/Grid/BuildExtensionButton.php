@@ -17,7 +17,7 @@ CSS
 
         $this->setupScript();
 
-        $label = trans('admin.create_extension');
+        $label = trans('admin.new');
 
         return "<a id='create-extension' class='btn btn-success btn-sm'><i class=\"ti-plus\"></i> &nbsp;$label</a>";
     }
