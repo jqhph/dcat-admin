@@ -880,7 +880,7 @@ input.label {
     border: 1px solid var(--40)
 }
 .table>tbody>tr>td {
-    height:53px;
+    height:54px;
 }
 .table > thead > tr > th {
     color: #555;
@@ -918,7 +918,6 @@ input.label {
 .table-header-gray.table>thead>tr>th {
     color:#7c858e;
     color:var(--80);
-    font-weight:bold;
 }
 .table.table-bordered thead tr {
     background: transparent;
@@ -2263,11 +2262,10 @@ div.layui-layer-btn{
 }
 
 .da-box .box-header,.da-box .card-header {
-    padding: 14px;
+    padding: 13px;
     /*border-top: 2px solid #fff*/
 }
 .da-box .box-header .btn, .da-box .card-header .btn {
-    /*text-transform: uppercase;*/
     background-color: transparent !important;
     border-color: transparent !important;
     box-shadow:none!important;

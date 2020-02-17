@@ -672,7 +672,7 @@ class Filter implements Renderable
 
         $this->callComposing();
 
-        Admin::style('.right-side-filter-container{border-bottom: 1px solid #f5f5f5;margin:-25px -25px 20px;height:48px;line-height: 48px;padding: 0 15px 12px;}');
+        Admin::style('.right-side-filter-container{border-bottom: 1px solid #f5f5f5;margin:-25px -10px 20px;height:48px;line-height: 48px;padding: 0 15px 12px;}');
 
         $this->view = $this->mode === self::MODE_RIGHT_SIDE ? 'admin::filter.right-side-container' : 'admin::filter.container';
 

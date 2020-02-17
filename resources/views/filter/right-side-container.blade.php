@@ -3,11 +3,11 @@
         <form action="{!! $action !!}" class="form-horizontal" pjax-container method="get">
             <div class="right-side-filter-container">
                 <div class="pull-left">
-                    <button type="submit" class=" btn btn-trans submit">
+                    <button type="submit" class=" btn btn-sm btn-primary submit">
                         <i class="fa fa-search"></i> &nbsp;{{ __('admin.search') }}
-                    </button>
+                    </button>&nbsp;
                     @if(!$disableResetButton)
-                        <a href="{!! $action !!}" class="reset btn btn-trans btn-default">
+                        <a href="{!! $action !!}" class="reset btn btn-sm btn-default">
                             <i class="fa fa-undo"></i> &nbsp;{{ __('admin.reset') }}
                         </a>
                     @endif
