@@ -6,5 +6,14 @@
         $radio->checked(request($name, is_null($value) ? [] : $value));
 
     @endphp
-    {!! $radio !!}
+    @if($showLabel)
+        <div class="pull-left" style="margin-top: 6px;margin-right: 15px;">
+            <b>{{ $label }}</b>
+        </div>
+        <div class="pull-left">
+            {!! $radio !!}
+        </div>
+    @else
+        {!! $radio !!}
+    @endif
 </div>

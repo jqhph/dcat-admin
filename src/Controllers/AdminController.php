@@ -13,7 +13,7 @@ class AdminController extends Controller
      *
      * @var string
      */
-    protected $title = 'Title';
+    protected $title;
 
     /**
      * Set description for following 4 action pages.
@@ -34,7 +34,7 @@ class AdminController extends Controller
      */
     protected function title()
     {
-        return $this->title;
+        return $this->title ?: admin_trans_label();
     }
 
     /**
