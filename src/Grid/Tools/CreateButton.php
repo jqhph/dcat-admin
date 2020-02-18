@@ -49,7 +49,7 @@ class CreateButton implements Renderable
 
         $new = trans('admin.new');
 
-        return "<a class='btn btn-sm btn-success {$this->grid->getName()}-quick-create-button'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
+        return "<a class='btn btn-sm btn-success quick-create-button-{$this->grid->getName()}'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
     }
 
     protected function renderCreateButton()

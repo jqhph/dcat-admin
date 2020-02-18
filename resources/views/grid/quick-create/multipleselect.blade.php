@@ -1,4 +1,4 @@
-<div class="input-group input-group-sm">
+<div class="input-group input-group-sm quick-form-field">
     <select class="form-control {{$class}}" style="width: 100%;" name="{{$name}}" {!! $attributes !!} multiple data-placeholder="{{ $label }}">
 
         <option value=""></option>

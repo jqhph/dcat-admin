@@ -134,6 +134,21 @@ class QuickCreate implements Renderable
      * @param string $column
      * @param string $placeholder
      *
+     * @return Field\SelectResource
+     */
+    public function selectResource($column, $placeholder = '')
+    {
+        $field = new Field\SelectResource($column, $this->formatPlaceholder($placeholder));
+
+        $this->addField($field->attribute('style', 'width:150px'));
+
+        return $field;
+    }
+
+    /**
+     * @param string $column
+     * @param string $placeholder
+     *
      * @return Select
      */
     public function select($column, $placeholder = '')
@@ -159,14 +174,40 @@ CSS
      * @param string $column
      * @param string $placeholder
      *
+     * @return Field\Tags
+     */
+    public function tags($column, $placeholder = '')
+    {
+        Admin::style(
+            <<<'CSS'
+.quick-create .select2-selection--multiple {
+    padding-left: 5px !important;
+    height: 30px !important;
+    width: 200px !important;
+    min-height: 30px !important;
+}
+CSS
+        );
+
+        $field = new Field\Tags($column, $this->formatPlaceholder($placeholder));
+
+        $this->addField($field);
+
+        return $field;
+    }
+
+    /**
+     * @param string $column
+     * @param string $placeholder
+     *
      * @return MultipleSelect
      */
     public function multipleSelect($column, $placeholder = '')
     {
         Admin::style(
-            <<<'CSS'
+            <<<CSS
 .quick-create .select2-selection--multiple {
-    padding: 0 !important;
+    padding-left: 5px !important;
     height: 30px !important;
     width: 200px !important;
     min-height: 30px !important;
@@ -225,7 +266,7 @@ CSS
      */
     protected function addField(Field $field)
     {
-        $elementClass = array_merge(['quick-create'], $field->elementClass());
+        $elementClass = array_merge([$this->elementClass()], $field->elementClass());
 
         $field->addElementClass($elementClass);
 
@@ -260,8 +301,8 @@ CSS
 
         $script = <<<JS
 (function () {
-    var ctr = $('.{$uniqueName}-quick-create'),
-        btn = $('.{$uniqueName}-quick-create-button');
+    var ctr = $('.{$this->elementClass()}'),
+        btn = $('.quick-create-button-{$uniqueName}');
     
     btn.click(function () {
         ctr.toggle().click();
@@ -338,6 +379,13 @@ JS;
         Admin::script($script);
     }
 
+    public function elementClass()
+    {
+        $name = $this->parent->getName();
+
+        return 'quick-create'.($name ? "-{$name}" : '');
+    }
+
     /**
      * @param int $columnCount
      *
@@ -351,10 +399,12 @@ JS;
 
         $this->script();
 
+        Admin::style('.quick-form-field{margin: 5px 0}');
+
         $vars = [
             'columnCount'  => $columnCount,
             'fields'       => $this->fields,
-            'elementClass' => $this->parent->getName().'-quick-create',
+            'elementClass' => $this->elementClass(),
             'hidden'       => $this->parent->option('create_mode') === Grid::CREATE_MODE_QUICK,
         ];
 

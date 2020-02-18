@@ -24,6 +24,8 @@ class SelectResource extends Field
 
     protected $style = 'primary';
 
+    protected $btnId;
+
     /**
      * Set window's area.
      *
@@ -161,41 +163,78 @@ class SelectResource extends Field
         return Helper::array($value, true);
     }
 
+    protected function setupScript()
+    {
+        $label = ucfirst(trans('admin.choose')).' '.$this->label;
+        $area = json_encode($this->area);
+        $closeLabel = ucfirst(trans('admin.close'));
+        $lessThenLabel = trans('admin.selected_must_less_then', ['num' => $this->maxItem]);
+        $selectedOptionsLabel = trans('admin.selected_options');
+        $disabled = empty($this->attributes['disabled']) ? '' : 'disabled';
+        $containerId = $this->id.$this->formElementId();
+
+        Admin::script(
+            <<<JS
+LA.ResourceSelector({
+    title: '{$label}',
+    column: "{$this->elementName()}",
+    source: '{$this->source}',
+    selector: '#{$this->btnId}',
+    maxItem: {$this->maxItem}, 
+    area: {$area},
+    items: {$this->value()},
+    placeholder: '{$this->placeholder()}',
+    showCloseButton: false,
+    closeButtonText: '{$closeLabel}',
+    exceedMaxItemTip: '{$lessThenLabel}',
+    selectedOptionsTip: '{$selectedOptionsLabel}',
+    disabled: '{$disabled}',
+    displayer: 'navList',
+    \$displayerContainer: $('#{$containerId}'),
+});
+JS
+        );
+    }
+
+    protected function setupStyle()
+    {
+        if (! $this->maxItem || $this->maxItem > 1) {
+            $primayDark = Color::primarydark();
+
+            Admin::style(
+                ".select-resource .nav li a{padding:8px 10px;font-size:13px;font-weight:bold;color:{$primayDark}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}"
+            );
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
     public function render()
     {
+        $this->btnId = $this->id.'-select-resource';
+
         $this->formatOptions();
         $this->formatValue();
         $this->setDefaultSource();
-
-        if (! $this->maxItem || $this->maxItem > 1) {
-            $primayDark = Color::primarydark();
-
-            Admin::style(".select-resource .nav li a{padding:8px 10px;font-size:13px;font-weight:bold;color:{$primayDark}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}");
-        }
-
-        $this->defaultAttribute('class', 'form-control '.$this->elementClassString());
+        $this->setupStyle();
+        $this->setupScript();
 
         $name = $this->elementName ?: $this->formatName($this->column);
 
         $this->prepend('<i class="fa fa-long-arrow-up"></i>')
+            ->defaultAttribute('class', 'form-control '.$this->elementClassString())
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id.$this->formElementId())
             ->defaultAttribute('name', $name);
 
         $this->addVariables([
-            'className'        => str_replace(['[', ']'], '_', $name),
-            'prepend'          => $this->prepend,
-            'append'           => $this->append,
-            'area'             => json_encode($this->area),
-            'maxItem'          => $this->maxItem,
-            'source'           => $this->source,
-            'placeholder'      => $this->placeholder(),
-            'style'            => $this->style,
-            'disabled'         => empty($this->attributes['disabled']) ? '' : 'disabled',
-            'inputContainerId' => $this->id.$this->formElementId(),
+            'className'   => str_replace(['[', ']'], '_', $name),
+            'prepend'     => $this->prepend,
+            'append'      => $this->append,
+            'placeholder' => $this->placeholder(),
+            'style'       => $this->style,
+            'btnId'       => $this->btnId,
         ]);
 
         return parent::render();
