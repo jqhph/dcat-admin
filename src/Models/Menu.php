@@ -132,11 +132,11 @@ class Menu extends Model
             $model->roles()->detach();
             $model->permissions()->detach();
 
-            $model->destroyCache();
+            $model->flushCache();
         });
 
         static::saved(function ($model) {
-            $model->destroyCache();
+            $model->flushCache();
         });
     }
 }
