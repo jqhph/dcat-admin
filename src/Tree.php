@@ -193,7 +193,7 @@ class Tree implements Renderable
     /**
      * Set query callback this tree.
      *
-     * @return Model
+     * @return $this
      */
     public function query(\Closure $callback)
     {

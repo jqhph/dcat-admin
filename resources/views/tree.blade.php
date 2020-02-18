@@ -34,9 +34,13 @@
 <div class="card-body table-responsive">
     <div class="dd" id="{{ $id }}" style="margin:18px">
         <ol class="dd-list">
-            @foreach($items as $branch)
-                @include($branchView)
-            @endforeach
+            @if($items)
+                @foreach($items as $branch)
+                    @include($branchView)
+                @endforeach
+            @else
+                <span class="help-block" style="margin-bottom:0"><i class="fa fa-info-circle"></i>&nbsp;{{ trans('admin.no_data') }}</span>
+            @endif
         </ol>
     </div>
 </div>

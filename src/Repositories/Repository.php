@@ -6,9 +6,14 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\Macroable;
 
 abstract class Repository implements \Dcat\Admin\Contracts\Repository
 {
+    use Macroable {
+        __call as __macroCall;
+    }
+
     /**
      * @var array
      */
@@ -264,6 +269,10 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function __call($method, $arguments)
     {
+        if (static::hasMacro($method)) {
+            return static::__macroCall($method, $arguments);
+        }
+
         $this->attributes[$method] = $arguments;
 
         return $this;
