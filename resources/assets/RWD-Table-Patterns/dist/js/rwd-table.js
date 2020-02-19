@@ -18,7 +18,7 @@
         this.options = options;
         this.$tableWrapper = null; //defined later in wrapTable
         this.$tableScrollWrapper = $(element); //defined later in wrapTable
-        this.$table = $(element).find('table');
+        this.$table = $(element).find('table').first();
 
         if(this.$table.length !== 1) {
             throw new Error('Exactly one table is expected in a .table-responsive div.');
@@ -36,7 +36,7 @@
         this.$stickyTableHeader = null; //defined farther down
 
         //good to have - for easy access
-        this.$thead = this.$table.find('thead');
+        this.$thead = this.$table.find('thead').first();
         this.$hdrCells = this.$thead.find("tr").first().find('th');
         this.$bodyRows = this.$table.find('tbody, tfoot').find('tr');
 

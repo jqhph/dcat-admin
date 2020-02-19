@@ -9,27 +9,17 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 
+/**
+ * @property string $parentColumn
+ * @property string $titleColumn
+ * @property string $orderColumn
+ */
 trait ModelTree
 {
     /**
      * @var array
      */
     protected static $branchOrder = [];
-
-    /**
-     * @var string
-     */
-    protected $parentColumn = 'parent_id';
-
-    /**
-     * @var string
-     */
-    protected $titleColumn = 'title';
-
-    /**
-     * @var string
-     */
-    protected $orderColumn = 'order';
 
     /**
      * @var \Closure
@@ -43,7 +33,7 @@ trait ModelTree
      */
     public function children()
     {
-        return $this->hasMany(static::class, $this->parentColumn);
+        return $this->hasMany(static::class, $this->getParentColumn());
     }
 
     /**
@@ -53,7 +43,7 @@ trait ModelTree
      */
     public function parent()
     {
-        return $this->belongsTo(static::class, $this->parentColumn);
+        return $this->belongsTo(static::class, $this->getParentColumn());
     }
 
     /**
@@ -61,7 +51,7 @@ trait ModelTree
      */
     public function getParentColumn()
     {
-        return $this->parentColumn;
+        return empty($this->parentColumn) ? 'parent_id' : $this->parentColumn;
     }
 
     /**
@@ -81,7 +71,7 @@ trait ModelTree
      */
     public function getTitleColumn()
     {
-        return $this->titleColumn;
+        return empty($this->titleColumn) ? 'title' : $this->titleColumn;
     }
 
     /**
@@ -101,7 +91,7 @@ trait ModelTree
      */
     public function getOrderColumn()
     {
-        return $this->orderColumn;
+        return empty($this->orderColumn) ? 'order' : $this->orderColumn;
     }
 
     /**
@@ -143,7 +133,7 @@ trait ModelTree
             $nodes,
             0,
             $this->getKeyName(),
-            $this->parentColumn
+            $this->getParentColumn()
         );
     }
 
@@ -154,7 +144,7 @@ trait ModelTree
      */
     public function allNodes()
     {
-        $orderColumn = DB::getQueryGrammar()->wrap($this->orderColumn);
+        $orderColumn = DB::getQueryGrammar()->wrap($this->getOrderColumn());
         $byOrder = 'ROOT ASC, '.$orderColumn;
 
         $self = new static();
@@ -246,12 +236,15 @@ trait ModelTree
             $nodes = $this->allNodes();
         }
 
+        $titleColumn = $this->getTitleColumn();
+        $parentColumn = $this->getParentColumn();
+
         foreach ($nodes as $node) {
-            $node[$this->titleColumn] = $prefix.'&nbsp;'.$node[$this->titleColumn];
-            if ($node[$this->parentColumn] == $parentId) {
+            $node[$titleColumn] = $prefix.'&nbsp;'.$node[$titleColumn];
+            if ($node[$parentColumn] == $parentId) {
                 $children = $this->buildSelectOptions($nodes, $node[$this->getKeyName()], $prefix.$prefix);
 
-                $options[$node[$this->getKeyName()]] = $node[$this->titleColumn];
+                $options[$node[$this->getKeyName()]] = $node[$titleColumn];
 
                 if ($children) {
                     $options += $children;
@@ -267,7 +260,7 @@ trait ModelTree
      */
     public function delete()
     {
-        $this->where($this->parentColumn, $this->getKey())->delete();
+        $this->where($this->getParentColumn(), $this->getKey())->delete();
 
         return parent::delete();
     }
