@@ -15,7 +15,7 @@ trait FormCreator
     {
         $primaryKey = $primaryKey ?: request('primary_key', 'id');
         $fields = $fields ?: request('fields', []);
-        $timestamps = $timestamps === null ? request('timestamps', true) : $timestamps;
+        $timestamps = $timestamps === null ? request('timestamps') : $timestamps;
 
         $rows = [
             <<<EOF
