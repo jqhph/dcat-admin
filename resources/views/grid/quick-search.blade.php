@@ -7,10 +7,10 @@
                placeholder="{{ $placeholder }}"
                name="{{ $key }}"
                class="form-control quick-search-input"
-               style="margin-left:-1px;padding:0 1.6rem 0 3.8rem;height:36px;line-height:36px;"
+               style="margin-left:-1px;padding:0 1.6rem 0 3.8rem;"
                value="{{ $value }}"
         >
-        <a onclick="$(this).submit()" style="overflow:hidden;position:absolute;top:8px;margin-left:-{{$width - 0.9}}rem;cursor:pointer;z-index:100">
+        <a onclick="$(this).submit()" style="overflow:hidden;position:absolute;top:7px;margin-left:-{{$width - 0.9}}rem;cursor:pointer;z-index:100">
             <svg xmlns="http://www.w3.org/2000/svg"
                  width="20"
                  height="20"

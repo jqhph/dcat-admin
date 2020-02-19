@@ -152,7 +152,7 @@ class QuickSearch extends AbstractTool
         .on('compositionend', function() {
             inputting = false
         });
-    val !== '' && $ipt.val('').focus().val(val).focus();
+    val !== '' && $ipt.val('').focus().val(val);
     
     $('.quick-search-clear').click(function () {
         $(this).parent().find('.quick-search-input').val('');
