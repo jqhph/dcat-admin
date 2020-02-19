@@ -172,6 +172,7 @@ class SelectResource extends Field
         $selectedOptionsLabel = trans('admin.selected_options');
         $disabled = empty($this->attributes['disabled']) ? '' : 'disabled';
         $containerId = $this->id.$this->formElementId();
+        $maxItem = (int) $this->maxItem;
 
         Admin::script(
             <<<JS
@@ -180,7 +181,7 @@ LA.ResourceSelector({
     column: "{$this->elementName()}",
     source: '{$this->source}',
     selector: '#{$this->btnId}',
-    maxItem: {$this->maxItem}, 
+    maxItem: {$maxItem}, 
     area: {$area},
     items: {$this->value()},
     placeholder: '{$this->placeholder()}',
