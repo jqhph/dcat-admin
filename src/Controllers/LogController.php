@@ -34,7 +34,12 @@ class LogController extends Controller
         $grid = new Grid(new OperationLog());
 
         $grid->id('ID')->bold()->sortable();
-        $grid->user(trans('admin.user'))->get('name')->responsive();
+        $grid->user(trans('admin.user'))
+            ->get('name')
+            ->link(function () {
+                return admin_url('auth/users/'.$this->user['id']);
+            })
+            ->responsive();
         $grid->method(trans('admin.method'))->responsive()->display(function ($method) {
             $color = Arr::get(OperationLogModel::$methodColors, $method, 'default');
 
@@ -43,7 +48,7 @@ class LogController extends Controller
         $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {
             return "<code>$v</code>";
         });
-        $grid->ip('IP')->responsive()->label('default');
+        $grid->ip('IP')->responsive();
         $grid->input->responsive()->display(function ($input) {
             $input = json_decode($input, true);
             $input = Arr::except($input, ['_pjax', '_token', '_method', '_previous_']);

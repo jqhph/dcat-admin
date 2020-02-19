@@ -25,13 +25,12 @@ class IconController extends Controller
             width: 40px;
         }');
 
-        return $content->title('Icons')->description(' ')->body(function (Row $row) {
+        return $content->title('Icon')->body(function (Row $row) {
             $tab = Tab::make()->padding('20px')->custom();
 
-            $tab->add('Themify', view('admin::helpers.themify'));
-//            $tab->add('da-box Design', view('admin::helpers.da-box'));
-            $tab->add('Font Awesome', view('admin::helpers.font-awesome'));
-            $tab->add('Glyphicons', view('admin::helpers.glyphicons'));
+            $tab->add(('Themify'), view('admin::helpers.themify'));
+            $tab->add(('Font Awesome'), view('admin::helpers.font-awesome'));
+            $tab->add(('Glyphicons'), view('admin::helpers.glyphicons'));
 
             $row->column(12, $tab);
         });
