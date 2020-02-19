@@ -86,16 +86,21 @@ class MigrationCreator extends BaseMigrationCreator
                 $column .= "->{$field['key']}()";
             }
 
-            if (isset($field['default']) && $field['default']) {
+            $hasDefault = isset($field['default'])
+                && ! is_null($field['default'])
+                && $field['default'] !== '';
+            if ($hasDefault) {
                 $column .= "->default('{$field['default']}')";
-            }
-
-            if (isset($field['comment']) && $field['comment']) {
-                $column .= "->comment('{$field['comment']}')";
             }
 
             if (Arr::get($field, 'nullable') == 'on') {
                 $column .= '->nullable()';
+            } elseif (! $hasDefault && $field['type'] === 'string') {
+                $column .= "->default('')";
+            }
+
+            if (isset($field['comment']) && $field['comment']) {
+                $column .= "->comment('{$field['comment']}')";
             }
 
             $rows[] = $column.";\n";
