@@ -9,7 +9,7 @@ window.require = window.define = window.exports = window.module = undefined;
 /*pjax*/eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('(3(b){3 J(a,d,e){8 c=12;9 12.2x("1n.2",a,3(a){8 f=b.1m({},m(d,e));f.o||(f.o=b(12).10("11-2")||c);A(a,f)})}3 A(a,d,e){e=m(d,e);d=a.2l;6("A"!==d.2e.1g())1y"$.1H.2 2T $.2.1n 2r 3r 3p 1W";6(!(1<a.3R||a.37||a.38||a.2K||a.3Y||19.2u!==d.2u||19.2f!==d.2f||-1<d.Y.3I("#")&&d.Y.17(/#.*/,"")==19.Y.17(/#.*/,"")||a.1P())){8 c={5:d.Y,o:b(d).10("11-2"),1O:d};e=b.1m({},c,e);c=b.1w("2:1n");b(d).1c(c,[e]);c.1P()||(f(e),a.22(),b(d).1c("2:3a",[e]))}}3 K(a,d,e){e=m(d,e);d=a.2l;8 c=b(d);6("3W"!==d.2e.1g())1y"$.2.1z 2r a 2g 1W";c={Z:(c.10("2i")||"16").1g(),5:c.10("2z"),o:c.10("11-2"),1O:d};6("16"!==c.Z&&3O 0!==R.21)c.11=1N 21(d),c.2Q=!1,c.2S=!1;1f{6(b(d).1k(":39").1a)9;c.11=b(d).3e()}f(b.1m({},c,e));a.22()}3 f(a){3 d(a,d,c){c||(c={});c.3o=p;a=b.1w(a,c);h.1c(a,d);9!a.1P()}3 e(a){6(a){8 d=[];a.1i(3(){d.2n(b(12).10("1M"))});k(d,!0)}}3 c(a){6(a){8 d=[];a.1i(3(){d.2n(b(12).10("Y"))});k(d)}}3 k(a,b){1>a.1a?b&&d("2:1C"):3Z.40([a.2D()],3(){k(a,b)})}a=b.1m(!0,{},b.2P,f.1b,a);b.1X(a.5)&&(a.5=a.5());8 p=a.1O,n=u(a.5).1L,h=a.27=B(a.o);a.11||(a.11={});b.2c(a.11)?a.11.14({1d:"1I",1e:h.15}):a.11.1I=h.15;8 l;a.2v=3(b,c){"16"!==c.Z&&(c.W=0);b.2A("X-1h","2L");b.2A("X-1h-2M",h.15);6(!d("2:2v",[b,c]))9!1;0<c.W&&(l=2N(3(){d("2:W",[b,a])&&b.1G("W")},c.W),c.W=0);c=u(c.5);n&&(c.1L=n);a.1F=C(c)};a.23=3(b,c){l&&35(l);d("2:23",[b,c,a]);d("2:24",[b,a])};a.25=3(b,c,e){8 f=D("",b,a);b=d("2:25",[b,c,e,a]);"16"==a.Z&&"1G"!==c&&b&&v(f.5)};a.2a=3(k,p,l){8 q=f.j,m="3"===1u b.2.1b.1v?b.2.1b.1v():b.2.1b.1v,r=l.2j("X-1h-3S"),g=D(k,l,a),t=u(g.5);n&&(t.1L=n,g.5=t.Y);6(m&&r&&m!==r)v(g.5);1f 6(g.T){f.j={V:a.V||(1N 2t).2I(),5:g.5,7:g.7,o:h.15,13:a.13,W:a.W};(a.14||a.17)&&R.18.1A(f.j,g.7,g.5);6(b.2R(a.o,U.1D))2W{U.1D.2X()}31(Q){}g.7&&(U.7=g.7);d("2:2E",[g.T,a],{j:f.j,2F:q});h.1B(g.T);(q=h.1k("1p[1Y], 3c[1Y]").1Z()[0])&&U.1D!==q&&q.3h();c(g.1V);e(g.1E);g=a.1r;n&&(q=3u(n.3v(1)),q=U.3w(q)||U.3x(q)[0])&&(g=b(q).3y().3z);"3B"==1u g&&b(R).3D(g);d("2:2a",[k,p,l,a])}1f v(g.5)};f.j||(f.j={V:(1N 2t).2I(),5:R.19.Y,7:U.7,o:h.15,13:a.13,W:a.W},R.18.1A(f.j,U.7));E(f.1q);f.3P=a;8 m=f.1q=b.3Q(a);0<m.26&&(a.14&&!a.17&&(L(f.j.V,F(h)),R.18.28(1x,"",a.1F)),d("2:29",[m,a]),d("2:2J",[m,a]));9 f.1q}3 M(a,d){9 f(b.1m({5:R.19.Y,14:!1,17:!0,1r:!1},m(a,d)))}3 v(a){R.18.1A(1x,"",f.j.5);R.19.17(a)}3 G(a){r||E(f.1q);8 d=f.j,e=a.j;6(e&&e.o){6(r&&N==e.5)9;6(d){6(d.V===e.V)9;8 c=d.V<e.V?"2b":"2O"}8 k=l[e.V]||[];a=b(k[0]||e.o);k=k[1];6(a.1a){6(d){8 p=c,n=d.V,h=F(a);l[n]=h;"2b"===p?(p=t,h=x):(p=x,h=t);p.14(n);(n=h.2D())&&2d l[n];y(p,f.1b.1J)}c=b.1w("2:1K",{j:e,2U:c});a.1c(c);c={V:e.V,5:e.5,o:a,14:!1,13:e.13,W:e.W,1r:!1};k?(a.1c("2:29",[1x,c]),f.j=e,e.7&&(U.7=e.7),d=b.1w("2:2E",{j:e,2F:d}),a.1c(d,[k,c]),a.1B(k),a.1c("2:24",[1x,c])):f(c);a[0].2V}1f v(19.Y)}r=!1}3 O(a){8 d=b.1X(a.5)?a.5():a.5,e=a.Z?a.Z.1g():"16",c=b("<2g>",{2i:"16"===e?"16":"2h",2z:d,2Y:"2Z:30"});"16"!==e&&"2h"!==e&&c.1j(b("<1p>",{Z:"1t",1d:"32",1e:e.33()}));a=a.11;6("34"===1u a)b.1i(a.2k("&"),3(a,d){a=d.2k("=");c.1j(b("<1p>",{Z:"1t",1d:a[0],1e:a[1]}))});1f 6(b.2c(a))b.1i(a,3(a,d){c.1j(b("<1p>",{Z:"1t",1d:d.1d,1e:d.1e}))});1f 6("36"===1u a)1s(8 f 2m a)c.1j(b("<1p>",{Z:"1t",1d:f,1e:a[f]}));b(U.1l).1j(c);c.1z()}3 E(a){a&&4>a.26&&(a.3b=b.1o,a.1G())}3 F(a){8 b=a.3d();b.1k("1C").1i(3(){12.1M||2p.3f(12,"3g",!1)});9[a.15,b.T()]}3 C(a){a.2q=a.2q.17(/([?&])(1I|3i)=[^&]*/g,"");9 a.Y.17(/\\?($|#)/,"$1")}3 u(a){8 b=U.3j("a");b.Y=a;9 b}3 m(a,d){a&&d?d.o=a:d=b.3k(a)?a:{o:a};d.o&&(d.o=B(d.o));9 d}3 B(a){a=b(a);6(a.1a){6(""!==a.15&&a.27===U)9 a;6(a.10("V"))9 b("#"+a.10("V"));1y"3l 3m 15 1s 2 o!";}1y"3n 2 o 1s "+a.15;}3 w(a,b){9 a.2s(b).3q(a.1k(b))}3 D(a,d,e){8 c={},f=/<1B/i.3s(a);d=d.2j("X-1h-3t");c.5=d?C(u(d)):e.1F;f?(d=b(b.1Q(a.1R(/<2w[^>]*>([\\s\\S.]*)<\\/2w>/i)[0],U,!0)),a=b(b.1Q(a.1R(/<1l[^>]*>([\\s\\S.]*)<\\/1l>/i)[0],U,!0))):d=a=b(b.1Q(a,U,!0));6(0===a.1a)9 c;c.7=w(d,"7").1Z().2y();e.13?(f="1l"===e.13?a:w(a,e.13).3A(),f.1a&&(c.T="1l"===e.13?f:f.T(),c.7||(c.7=f.10("7")||f.11("7")))):f||(c.T=a);c.T&&(c.T=c.T.1S(3(){9 b(12).3C("7")}),c.T.1k("7").1T(),c.1E=w(c.T,"1C[1M]").1T(),c.T=c.T.1S(c.1E),c.1V=w(c.T,\'3E[Z="2y/3F"]\').1T(),c.T=c.T.1S(c.1V));c.7&&(c.7=b.3G(c.7));9 c}3 L(a,b){l[a]=b;t.14(a);y(x,0);y(t,f.1b.1J)}3 y(a,b){1s(;a.1a>b;)2d l[a.3H()]}3 P(){9 b("3J").2s(3(){8 a=b(12).10("3K-3L");9 a&&"X-1h-3M"===a.1g()}).10("3N")}3 H(){b.1H.2=J;b.2=f;b.2.2B=b.1o;b.2.2C=I;b.2.1n=A;b.2.1z=K;b.2.1U=M;b.2.1b={W:3T,14:!0,17:!1,Z:"16",3U:"1B",1r:0,1J:20,1v:P};b(R).2x("1K.2",G)}3 I(){b.1H.2=3(){9 12};b.2=O;b.2.2B=H;b.2.2C=b.1o;b.2.1n=b.1o;b.2.1z=b.1o;b.2.1U=3(){R.19.1U()};b(R).3V("1K.2",G)}8 r=!0,N=R.19.Y,z=R.18.j;z&&z.o&&(f.j=z);"j"2m R.18&&(r=!1);8 l={},x=[],t=[];0>b.3X("j",b.2G.2H)&&b.2G.2H.14("j");b.2o.2=R.18&&R.18.28&&R.18.1A&&!41.42.1R(/((43|44|45).+\\46\\s+[1-4]\\D|47\\/.+48)/);b.2o.2?H():I()})(2p);',62,257,'||pjax|function||url|if|title|var|return||||||||||state|||||container|||||||||||||||||||||||||||||window||contents|document|id|timeout||href|type|attr|data|this|fragment|push|selector|GET|replace|history|location|length|defaults|trigger|name|value|else|toUpperCase|PJAX|each|append|find|body|extend|click|noop|input|xhr|scrollTo|for|hidden|typeof|version|Event|null|throw|submit|replaceState|html|script|activeElement|scripts|requestUrl|abort|fn|_pjax|maxCacheLength|popstate|hash|src|new|target|isDefaultPrevented|parseHTML|match|not|remove|reload|styles|element|isFunction|autofocus|last||FormData|preventDefault|complete|end|error|readyState|context|pushState|start|success|forward|isArray|delete|tagName|hostname|form|POST|method|getResponseHeader|split|currentTarget|in|unshift|support|jQuery|search|requires|filter|Date|protocol|beforeSend|head|on|text|action|setRequestHeader|enable|disable|pop|beforeReplace|previousState|event|props|getTime|send|shiftKey|true|Container|setTimeout|back|ajaxSettings|processData|contains|contentType|or|direction|offsetHeight|try|blur|style|display|none|catch|_method|toLowerCase|string|clearTimeout|object|metaKey|ctrlKey|file|clicked|onreadystatechange|textarea|clone|serializeArray|_data|globalEval|focus|_|createElement|isPlainObject|cant|get|no|relatedTarget|anchor|add|an|test|URL|decodeURIComponent|slice|getElementById|getElementsByName|offset|top|first|number|is|scrollTop|link|css|trim|shift|indexOf|meta|http|equiv|VERSION|content|void|options|ajax|which|Version|650|dataType|off|FORM|inArray|altKey|seajs|use|navigator|userAgent|iPod|iPhone|iPad|bOS|WebApps|CFNetwork'.split('|'),0,{}));
 
 /*mian*/
-(function (win) {
+(function (w) {
     var $d = $(document),
         NP = NProgress,
         booting = {},
@@ -499,15 +499,26 @@ window.require = window.define = window.exports = window.module = undefined;
             this.getIds = function () {
                 var selected = [];
                 $(checkboxSelector+':checked').each(function() {
-                    selected.push($(this).data('id'));
+                    var id = $(this).data('id');
+                    if (selected.indexOf(id) === -1) {
+                        selected.push(id);
+                    }
                 });
 
                 return selected;
             };
             this.getRows = function () {
                 var selected = [];
-                $(checkboxSelector+':checked').each(function(){
-                    selected.push({'id': $(this).data('id'), 'label': $(this).data('label')})
+                $(checkboxSelector+':checked').each(function() {
+                    var id = $(this).data('id'), i, exist;
+
+                    for (i in selected) {
+                        if (selected[i].id === id) {
+                            exist = true
+                        }
+                    }
+
+                    exist || selected.push({'id': id, 'label': $(this).data('label')})
                 });
 
                 return selected;
@@ -1297,7 +1308,7 @@ window.require = window.define = window.exports = window.module = undefined;
     };
 })();
 
-(function (win) {
+(function (w) {
     function AssetsLoader () {
     }
 

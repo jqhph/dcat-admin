@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Tools;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\BatchAction;
 use Illuminate\Support\Collection;
 
@@ -16,6 +17,11 @@ class BatchActions extends AbstractTool
      * @var bool
      */
     protected $enableDelete = true;
+
+    /**
+     * @var bool
+     */
+    protected $isHoldSelectAllCheckbox = false;
 
     /**
      * BatchActions constructor.
@@ -50,6 +56,20 @@ class BatchActions extends AbstractTool
     }
 
     /**
+     * Disable delete And Hode SelectAll Checkbox.
+     *
+     * @return $this
+     */
+    public function disableDeleteAndHodeSelectAll()
+    {
+        $this->enableDelete = false;
+
+        $this->isHoldSelectAllCheckbox = true;
+
+        return $this;
+    }
+
+    /**
      * Add a batch action.
      *
      * @param BatchAction $action
@@ -78,6 +98,32 @@ class BatchActions extends AbstractTool
     }
 
     /**
+     * Scripts of BatchActions button groups.
+     */
+    protected function setupScript()
+    {
+        $name = $this->parent->getName();
+        $allName = $this->parent->selectAllName();
+        $rowName = $this->parent->rowName();
+
+        $selected = trans('admin.grid_items_selected');
+
+        $script = <<<JS
+$('.{$rowName}-checkbox').on('change', function () {
+    var btn = $('.{$allName}-btn');
+    if (this.checked) {
+        btn.show()
+    } else {
+        btn.hide()
+    }
+    btn.find('.selected').html("{$selected}".replace('{n}', LA.grid.selectedRows('$name').length));
+});
+JS;
+
+        Admin::script($script);
+    }
+
+    /**
      * Render BatchActions button groups.
      *
      * @return string
@@ -92,10 +138,13 @@ class BatchActions extends AbstractTool
             return '';
         }
 
+        $this->setupScript();
         $this->prepareActions();
 
         $data = [
-            'actions' => $this->actions,
+            'actions'                 => $this->actions,
+            'selectAllName'           => $this->parent->selectAllName(),
+            'isHoldSelectAllCheckbox' => $this->isHoldSelectAllCheckbox,
         ];
 
         return view('admin::grid.batch-actions', $data)->render();
