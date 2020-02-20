@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Support;
 
+use Dcat\Admin\Grid;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
@@ -77,6 +78,10 @@ class Helper
     {
         if (is_string($value)) {
             return $value;
+        }
+
+        if ($value instanceof Grid) {
+            return (string) $value->render();
         }
 
         if ($value instanceof \Closure) {

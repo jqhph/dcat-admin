@@ -251,17 +251,13 @@ class Content implements Renderable
      */
     public function build()
     {
-        ob_start();
+        $html = '';
 
         foreach ($this->rows as $row) {
-            $row->build();
+            $html .= $row->render();
         }
 
-        $contents = ob_get_contents();
-
-        ob_end_clean();
-
-        return $contents;
+        return $html;
     }
 
     /**

@@ -2,10 +2,10 @@
 
 namespace Dcat\Admin\Layout;
 
-use Dcat\Admin\Grid;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Contracts\Support\Renderable;
 
-class Column implements Buildable
+class Column implements Renderable
 {
     /**
      * grid system prefix width.
@@ -77,33 +77,29 @@ class Column implements Buildable
             call_user_func($content, $row);
         }
 
-        ob_start();
-
-        $row->build();
-
-        return $this->append(ob_get_clean());
+        return $this->append($row);
     }
 
     /**
      * Build column html.
+     *
+     * @return string
      */
-    public function build()
+    public function render()
     {
-        $this->startColumn();
+        $html = $this->startColumn();
 
         foreach ($this->contents as $content) {
-            if ($content instanceof Grid) {
-                echo $content->render();
-            } else {
-                echo Helper::render($content);
-            }
+            $html .= Helper::render($content);
         }
 
-        $this->endColumn();
+        return $html.$this->endColumn();
     }
 
     /**
      * Start column.
+     *
+     * @return string
      */
     protected function startColumn()
     {
@@ -112,14 +108,16 @@ class Column implements Buildable
             return "col-$key-$value";
         })->implode(' ');
 
-        echo "<div class=\"{$classnName}\">";
+        return "<div class=\"{$classnName}\">";
     }
 
     /**
      * End column.
+     *
+     * @return string
      */
     protected function endColumn()
     {
-        echo '</div>';
+        return '</div>';
     }
 }

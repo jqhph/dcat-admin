@@ -4,7 +4,7 @@ namespace Dcat\Admin\Layout;
 
 use Illuminate\Contracts\Support\Renderable;
 
-class Row implements Buildable, Renderable
+class Row implements Renderable
 {
     /**
      * @var Column[]
@@ -48,45 +48,37 @@ class Row implements Buildable, Renderable
 
     /**
      * Build row column.
-     */
-    public function build()
-    {
-        $this->startRow();
-
-        foreach ($this->columns as $column) {
-            $column->build();
-        }
-
-        $this->endRow();
-    }
-
-    /**
-     * Start row.
-     */
-    protected function startRow()
-    {
-        echo '<div class="row">';
-    }
-
-    /**
-     * End column.
-     */
-    protected function endRow()
-    {
-        echo '</div>';
-    }
-
-    /**
-     * Render row.
      *
      * @return string
      */
     public function render()
     {
-        ob_start();
+        $html = $this->startRow();
 
-        $this->build();
+        foreach ($this->columns as $column) {
+            $html .= $column->render();
+        }
 
-        return ob_get_clean();
+        return $html.$this->endRow();
+    }
+
+    /**
+     * Start row.
+     *
+     * @return string
+     */
+    protected function startRow()
+    {
+        return '<div class="row">';
+    }
+
+    /**
+     * End column.
+     *
+     * @return string
+     */
+    protected function endRow()
+    {
+        return '</div>';
     }
 }
