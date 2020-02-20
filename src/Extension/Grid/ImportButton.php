@@ -3,21 +3,10 @@
 namespace Dcat\Admin\Extension\Grid;
 
 use Dcat\Admin\Admin;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Fluent;
+use Dcat\Admin\Grid\RowAction;
 
-class ImportButton implements Renderable
+class ImportButton extends RowAction
 {
-    /**
-     * @var Fluent
-     */
-    protected $row;
-
-    public function __construct($row)
-    {
-        $this->row = $row;
-    }
-
     /**
      * @return string
      */
@@ -28,7 +17,7 @@ class ImportButton implements Renderable
         $this->setupScript();
 
         return <<<HTML
-<a href="javascript:void(0)" class="import-extension" data-id="{$this->row->id}">$button</a>
+<a href="javascript:void(0)" class="import-extension" data-id="{$this->key()}">$button</a>
 HTML;
     }
 

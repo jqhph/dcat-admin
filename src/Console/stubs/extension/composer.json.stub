@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "dcat/laravel-admin": "~1.0"
+        "dcat/laravel-admin": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0"

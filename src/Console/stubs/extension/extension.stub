@@ -10,18 +10,19 @@ class :class_name extends Extension
 
     protected $serviceProvider = :class_nameServiceProvider::class;
 
-//    protected $views = __DIR__.'/../resources/views';
+    protected $composer = __DIR__.'/../composer.json';
+
+    protected $configs = __DIR__.'/../config';
 
     protected $assets = __DIR__.'/../resources/assets';
 
-//    protected $lang = __DIR__.'/../resources/lang';
+    protected $views = __DIR__.'/../resources/views';
 
-    protected $composerJson = __DIR__.'/../composer.json';
+//    protected $lang = __DIR__.'/../resources/lang';
 
     protected $menu = [
         'title' => ':title',
         'path'  => ':path',
         'icon'  => 'fa-gears',
     ];
-
 }

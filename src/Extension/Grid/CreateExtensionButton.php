@@ -5,7 +5,7 @@ namespace Dcat\Admin\Extension\Grid;
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
 
-class BuildExtensionButton implements Renderable
+class CreateExtensionButton implements Renderable
 {
     public function render()
     {
@@ -30,7 +30,6 @@ CSS
 
         Admin::script(
             <<<JS
-            
 $('#create-extension').popover({
     html: true,
     title: false,
@@ -98,9 +97,7 @@ $('#create-extension').on('shown.bs.popover', function () {
     function isValid(str) { 
         return /^[\w-\/\\\\]+$/.test(str); 
     }
-    
 });
-
 JS
         );
     }

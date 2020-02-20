@@ -17,16 +17,6 @@ abstract class Extension
     protected $serviceProvider;
 
     /**
-     * @var array
-     */
-    protected $css = [];
-
-    /**
-     * @var array
-     */
-    protected $js = [];
-
-    /**
      * @var string
      */
     protected $assets = '';
@@ -49,7 +39,7 @@ abstract class Extension
     /**
      * @var string
      */
-    protected $composerJson = '';
+    protected $composer = '';
 
     /**
      * @var array
@@ -86,7 +76,7 @@ abstract class Extension
     /**
      * @return string
      */
-    public function getName()
+    final public function getName()
     {
         return static::NAME;
     }
@@ -94,9 +84,9 @@ abstract class Extension
     /**
      * @return string
      */
-    public function composerJson()
+    public function composer()
     {
-        return $this->composerJson;
+        return $this->composer;
     }
 
     /**
@@ -115,26 +105,6 @@ abstract class Extension
     public function assets()
     {
         return $this->assets;
-    }
-
-    /**
-     * Get the paths of css files.
-     *
-     * @return array
-     */
-    public function css()
-    {
-        return $this->css;
-    }
-
-    /**
-     * Get the paths of js files.
-     *
-     * @return array
-     */
-    public function js()
-    {
-        return $this->js;
     }
 
     /**

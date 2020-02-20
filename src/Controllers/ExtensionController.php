@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Extension\Grid\BuildExtensionButton;
+use Dcat\Admin\Extension\Grid\CreateExtensionButton;
 use Dcat\Admin\Extension\Grid\ImportButton;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -61,9 +61,14 @@ class ExtensionController extends Controller
     {
         $name = request('name');
         $namespace = trim(request('namespace'), '\\');
+        $contents = "<span>admin:extend <small>$name --namespace=$namespace</small></span>";
+        $terminal = Terminal::call('admin:extend', [
+            'extension' => $name,
+            '--namespace' => $namespace,
+        ]);
 
-        $box = Box::make("<span>admin:extend <small>$name --namespace=$namespace</small></span>")
-            ->content(Terminal::call('admin:extend', ['extension' => $name, '--namespace' => $namespace]))
+        $box = Box::make($contents)
+            ->content($terminal)
             ->style('default')
             ->collapsable()
             ->removable();
@@ -79,25 +84,6 @@ class ExtensionController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Extension());
-
-        $grid->disablePagination();
-        $grid->disableCreateButton();
-        $grid->disableDeleteButton();
-        $grid->disableBatchDelete();
-        $grid->disableFilterButton();
-        $grid->disableFilter();
-        $grid->disableQuickEditButton();
-        $grid->disableEditButton();
-        $grid->disableDeleteButton();
-        $grid->disableViewButton();
-
-        $grid->actions(function (Grid\Displayers\Actions $actions) {
-            $actions->append(new ImportButton($this));
-        });
-
-        $grid->tools(function (Grid\Tools $tools) {
-            $tools->append(new BuildExtensionButton());
-        });
 
         $grid->number();
         $grid->name;
@@ -118,13 +104,10 @@ class ExtensionController extends Controller
             });
 
         $grid->authors;
-
         $grid->enable->switch();
-
         $grid->imported;
 
         $view = ucfirst(trans('admin.view'));
-
         $grid->config
             ->if(function () {
                 return $this->config ? true : false;
@@ -141,6 +124,20 @@ class ExtensionController extends Controller
         $grid->require_dev
             ->display($view)
             ->expand($this->getExpandHandler('require_dev'));
+
+        $grid->disablePagination();
+        $grid->disableCreateButton();
+        $grid->disableDeleteButton();
+        $grid->disableBatchDelete();
+        $grid->disableFilterButton();
+        $grid->disableFilter();
+        $grid->disableQuickEditButton();
+        $grid->disableEditButton();
+        $grid->disableDeleteButton();
+        $grid->disableViewButton();
+
+        $grid->actions(new ImportButton());
+        $grid->tools(new CreateExtensionButton());
 
         return $grid;
     }

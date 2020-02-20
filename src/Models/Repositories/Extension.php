@@ -29,7 +29,7 @@ class Extension extends Repository
      */
     protected function each(AbstractExtension $extension)
     {
-        $property = Composer::parse($extension->composerJson());
+        $property = Composer::parse($extension->composer());
 
         $config = (array) config('admin-extensions.'.$extension->getName());
 

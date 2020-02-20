@@ -50,14 +50,9 @@ class ImportCommand extends VendorPublishCommand
         $extension = $className::make();
 
         $this->setServiceProvider($extension);
+        $this->publish($extension);
 
         $extension->import($this);
-
-        $extensionName = $extension->getName();
-
-        if ($assets = $extension->assets()) {
-            $this->publishItem($assets, public_path('vendor/dcat-admin-extensions/'.$extensionName));
-        }
 
         $this->publishTag(null);
         $this->call('view:clear');
@@ -68,9 +63,20 @@ class ImportCommand extends VendorPublishCommand
         $this->info("Extension [$className] imported");
     }
 
+    protected function publish(Extension $extension)
+    {
+        if (
+            ($assets = $extension->assets())
+            && file_exists($assets)
+        ) {
+            $this->publishItem($assets, public_path('vendor/dcat-admin-extensions/'.$extension::NAME));
+        }
+    }
+
     protected function setServiceProvider(Extension $extension)
     {
         $this->provider = $extension->serviceProvider();
+
         $this->laravel->register($this->provider);
     }
 

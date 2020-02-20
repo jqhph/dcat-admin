@@ -28,11 +28,6 @@ class :class_nameServiceProvider extends ServiceProvider
         $this->app->booted(function () use ($extension) {
             $extension->routes(__DIR__.'/../routes/web.php');
         });
-
-//        if ($this->app->runningInConsole() || request()->getMethod() == 'POST') {
-//            $this->publishes([__DIR__.'/../config' => config_path()]);
-//        }
-
     }
 
     /**
