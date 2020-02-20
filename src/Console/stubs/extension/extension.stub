@@ -12,8 +12,6 @@ class :class_name extends Extension
 
     protected $composer = __DIR__.'/../composer.json';
 
-    protected $configs = __DIR__.'/../config';
-
     protected $assets = __DIR__.'/../resources/assets';
 
     protected $views = __DIR__.'/../resources/views';

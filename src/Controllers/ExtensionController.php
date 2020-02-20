@@ -218,7 +218,7 @@ class ExtensionController extends Controller
                 return "<label class='label label-default'>$text</label>";
             }
 
-            return "<label class='label label-success'>{$this->imported_at}</label>";
+            return $this->imported_at;
         };
 
         Grid\Column::define('name', $name);
