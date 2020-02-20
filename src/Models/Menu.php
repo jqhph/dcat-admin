@@ -89,7 +89,7 @@ class Menu extends Model
     protected function fetchAll(): array
     {
         $connection = config('admin.database.connection') ?: config('database.default');
-        $orderColumn = DB::connection($connection)->getQueryGrammar()->wrap($this->orderColumn);
+        $orderColumn = DB::connection($connection)->getQueryGrammar()->wrap($this->getOrderColumn());
 
         $byOrder = 'ROOT ASC, '.$orderColumn;
 

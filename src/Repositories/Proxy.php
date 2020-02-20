@@ -144,14 +144,4 @@ class Proxy implements \Dcat\Admin\Contracts\Repository
     {
         return $this->repository->$method(...$arguments);
     }
-
-    public function __get($name)
-    {
-        return $this->repository->$name;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->repository->$name = $value;
-    }
 }

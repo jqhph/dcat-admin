@@ -10,14 +10,7 @@ use Illuminate\Support\Traits\Macroable;
 
 abstract class Repository implements \Dcat\Admin\Contracts\Repository
 {
-    use Macroable {
-        __call as __macroCall;
-    }
-
-    /**
-     * @var array
-     */
-    protected $attributes = [];
+    use Macroable;
 
     /**
      * @var string
@@ -259,32 +252,5 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
         $storage['repository.listeners.resolves'] = $resolves;
 
         return array_merge($resolves[$repository], $any);
-    }
-
-    /**
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return $this
-     */
-    public function __call($method, $arguments)
-    {
-        if (static::hasMacro($method)) {
-            return static::__macroCall($method, $arguments);
-        }
-
-        $this->attributes[$method] = $arguments;
-
-        return $this;
-    }
-
-    public function __get($name)
-    {
-        return $this->attributes[$name] ?? null;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->attributes[$name] = $value;
     }
 }

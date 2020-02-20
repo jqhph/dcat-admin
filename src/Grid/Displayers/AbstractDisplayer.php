@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid\Displayers;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Fluent;
 
@@ -53,13 +54,9 @@ abstract class AbstractDisplayer
         $this->value = $value;
         $this->grid = $grid;
         $this->column = $column;
-        $this->row = $row;
 
+        $this->setRow($row);
         $this->collectAssets();
-
-        if ($this->row instanceof Model) {
-            $this->row = new Fluent($this->row->toArray());
-        }
     }
 
     protected function collectAssets()
@@ -71,6 +68,15 @@ abstract class AbstractDisplayer
         if (static::$css) {
             Admin::css(static::$css);
         }
+    }
+
+    protected function setRow($row)
+    {
+        if ($row instanceof Arrayable) {
+            $row = $row->toArray();
+        }
+
+        $this->row = new Fluent($row);
     }
 
     /**

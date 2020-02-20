@@ -146,7 +146,7 @@ class Grid
     /**
      * @var string
      */
-    protected $tableId;
+    protected $tableId = 'grid-table';
 
     /**
      * Options for grid.
@@ -196,7 +196,6 @@ class Grid
         $this->columns = new Collection();
         $this->rows = new Collection();
         $this->builder = $builder;
-        $this->tableId = 'grid-'.Str::random(8);
 
         $this->model()->setGrid($this);
 
@@ -812,7 +811,7 @@ HTML;
     protected function variables()
     {
         $this->variables['grid'] = $this;
-        $this->variables['tableId'] = $this->tableId;
+        $this->variables['tableId'] = $this->tableId();
 
         return $this->variables;
     }

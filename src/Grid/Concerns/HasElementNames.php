@@ -39,6 +39,7 @@ trait HasElementNames
     public function setName($name)
     {
         $this->__name = $name;
+        $this->tableId = $this->tableId.'-'.$name;
 
         $model = $this->model();
 
@@ -47,9 +48,7 @@ trait HasElementNames
             ->setSortName("{$name}_{$model->getSortName()}");
 
         $this->filter()->setName($name);
-
         $this->setExporterQueryName($name);
-
         $this->setQuickSearchQueryName($name);
 
         return $this;

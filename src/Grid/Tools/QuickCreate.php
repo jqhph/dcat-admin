@@ -153,16 +153,6 @@ class QuickCreate implements Renderable
      */
     public function select($column, $placeholder = '')
     {
-        Admin::style(
-            <<<'CSS'
-.quick-create .select2-selection--single {
-    padding: 3px 12px !important;
-    height: 30px !important;
-    width: 150px !important;
-}
-CSS
-        );
-
         $field = new Select($column, $this->formatPlaceholder($placeholder));
 
         $this->addField($field);
@@ -178,17 +168,6 @@ CSS
      */
     public function tags($column, $placeholder = '')
     {
-        Admin::style(
-            <<<'CSS'
-.quick-create .select2-selection--multiple {
-    padding-left: 5px !important;
-    height: 30px !important;
-    width: 200px !important;
-    min-height: 30px !important;
-}
-CSS
-        );
-
         $field = new Field\Tags($column, $this->formatPlaceholder($placeholder));
 
         $this->addField($field);
@@ -204,17 +183,6 @@ CSS
      */
     public function multipleSelect($column, $placeholder = '')
     {
-        Admin::style(
-            <<<CSS
-.quick-create .select2-selection--multiple {
-    padding-left: 5px !important;
-    height: 30px !important;
-    width: 200px !important;
-    min-height: 30px !important;
-}
-CSS
-        );
-
         $field = new MultipleSelect($column, $this->formatPlaceholder($placeholder));
 
         $this->addField($field);
@@ -398,8 +366,6 @@ JS;
         }
 
         $this->script();
-
-        Admin::style('.quick-form-field{margin: 5px 0}');
 
         $vars = [
             'columnCount'  => $columnCount,

@@ -1419,6 +1419,11 @@ input.form-control {
     margin: 6px 12px;
     display: block;
 }
+
+.select2-container--default .select2-search--inline .select2-search__field {
+    padding-left: 5px!important;
+}
+
 .input-group-sm .select2-selection--multiple .default-text {
     margin: 6px;
 }
@@ -2309,6 +2314,23 @@ div.layui-layer-btn{
 
 .quick-search:hover .quick-search-clear{
     display:inline!important;
+}
+
+.quick-create .select2-selection--single {
+    padding: 3px 12px !important;
+    height: 30px !important;
+    width: 150px !important;
+}
+
+.quick-create .select2-selection--multiple {
+    padding-left: 5px !important;
+    height: 30px !important;
+    width: 200px !important;
+    min-height: 30px !important;
+}
+
+.quick-form-field {
+    margin: 5px 0;
 }
 
 .grid-column-header a {
