@@ -2,13 +2,16 @@
 
 namespace Dcat\Admin\Repositories;
 
+use Dcat\Admin\Contracts\TreeRepository;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
+use Dcat\Admin\Contracts\Repository as RepositoryInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
+use RuntimeException;
 
-abstract class Repository implements \Dcat\Admin\Contracts\Repository
+abstract class Repository implements RepositoryInterface, TreeRepository
 {
     use Macroable;
 
@@ -85,7 +88,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function get(Grid\Model $model)
     {
-        return [];
+        throw new RuntimeException('This repository does not support "get" method.');
     }
 
     /**
@@ -97,7 +100,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function edit(Form $form): array
     {
-        return [];
+        throw new RuntimeException('This repository does not support "edit" method.');
     }
 
     /**
@@ -109,7 +112,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function detail(Show $show): array
     {
-        return [];
+        throw new RuntimeException('This repository does not support "detail" method.');
     }
 
     /**
@@ -121,7 +124,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function store(Form $form)
     {
-        return false;
+        throw new RuntimeException('This repository does not support "store" method.');
     }
 
     /**
@@ -133,7 +136,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function getDataWhenUpdating(Form $form): array
     {
-        return [];
+        throw new RuntimeException('This repository does not support "getDataWhenUpdating" method.');
     }
 
     /**
@@ -145,7 +148,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function update(Form $form)
     {
-        return false;
+        throw new RuntimeException('This repository does not support "update" method.');
     }
 
     /**
@@ -158,7 +161,7 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function destroy(Form $form, array $deletingData)
     {
-        return false;
+        throw new RuntimeException('This repository does not support "destroy" method.');
     }
 
     /**
@@ -170,7 +173,76 @@ abstract class Repository implements \Dcat\Admin\Contracts\Repository
      */
     public function getDataWhenDeleting(Form $form): array
     {
-        return [];
+        throw new RuntimeException('This repository does not support "getDataWhenDeleting" method.');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrimaryKeyColumn()
+    {
+        return $this->getKeyName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getParentColumn()
+    {
+        return 'parent_id';
+    }
+
+    /**
+     * Get title column.
+     *
+     * @return string
+     */
+    public function getTitleColumn()
+    {
+        return 'title';
+    }
+
+    /**
+     * Get order column name.
+     *
+     * @return string
+     */
+    public function getOrderColumn()
+    {
+        return 'order';
+    }
+
+    /**
+     * Save tree order from a tree like array.
+     *
+     * @param array $tree
+     * @param int   $parentId
+     */
+    public function saveOrder($tree = [], $parentId = 0)
+    {
+        throw new RuntimeException('This repository does not support "saveOrder" method.');
+    }
+
+    /**
+     * Set query callback to model.
+     *
+     * @param \Closure|null $query
+     *
+     * @return $this
+     */
+    public function withQuery($queryCallback)
+    {
+        throw new RuntimeException('This repository does not support "withQuery" method.');
+    }
+
+    /**
+     * Format data to tree like array.
+     *
+     * @return array
+     */
+    public function toTree()
+    {
+        throw new RuntimeException('This repository does not support "toTree" method.');
     }
 
     /**

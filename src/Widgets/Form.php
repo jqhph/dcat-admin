@@ -557,7 +557,7 @@ HTML;
             return $this->macroCall($method, $arguments);
         }
 
-        throw new \Exception("Field [{$method}] does not exist.");
+        throw new \BadMethodCallException("Field [{$method}] does not exist.");
     }
 
     /**

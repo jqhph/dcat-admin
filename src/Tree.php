@@ -3,11 +3,14 @@
 namespace Dcat\Admin;
 
 use Closure;
+use Dcat\Admin\Contracts\TreeRepository;
+use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Tree\AbstractTool;
 use Dcat\Admin\Tree\Tools;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
 
@@ -27,9 +30,9 @@ class Tree implements Renderable
     protected $elementId = 'tree-';
 
     /**
-     * @var Model
+     * @var TreeRepository
      */
-    protected $model;
+    protected $repository;
 
     /**
      * @var \Closure
@@ -126,11 +129,11 @@ class Tree implements Renderable
     /**
      * Menu constructor.
      *
-     * @param Model|null $model
+     * @param Model|TreeRepository|string|null $model
      */
-    public function __construct(Model $model = null, ?\Closure $callback = null)
+    public function __construct($repository = null, ?\Closure $callback = null)
     {
-        $this->model = $model;
+        $this->repository = $this->makeRepository($repository);
         $this->path = $this->path ?: request()->getPathInfo();
         $this->url = url($this->path);
 
@@ -154,6 +157,33 @@ class Tree implements Renderable
         $this->tools = new Tools($this);
     }
 
+    /**
+     * @param $repository
+     *
+     * @return TreeRepository
+     */
+    public function makeRepository($repository)
+    {
+        if (is_string($repository)) {
+            $repository = new $repository();
+        }
+
+        if ($repository instanceof Model || $repository instanceof Builder) {
+            $repository = EloquentRepository::make($repository);
+        }
+
+        if (! $repository instanceof TreeRepository) {
+            $class = get_class($repository);
+
+            throw new \InvalidArgumentException("The class [{$class}] must be a type of [".TreeRepository::class.'].');
+        }
+
+        return $repository;
+    }
+
+    /**
+     * Collect assets.
+     */
     protected function collectAssets()
     {
         Admin::collectComponentAssets('jquery.nestable');
@@ -168,8 +198,8 @@ class Tree implements Renderable
     {
         if (is_null($this->branchCallback)) {
             $this->branchCallback = function ($branch) {
-                $key = $branch[$this->model->getKeyName()];
-                $title = $branch[$this->model->getTitleColumn()];
+                $key = $branch[$this->repository->getPrimaryKeyColumn()];
+                $title = $branch[$this->repository->getTitleColumn()];
 
                 return "$key - $title";
             };
@@ -314,7 +344,7 @@ class Tree implements Renderable
             throw new \InvalidArgumentException(json_last_error_msg());
         }
 
-        $this->model->saveOrder($tree);
+        $this->repository->saveOrder($tree);
 
         return true;
     }
@@ -408,7 +438,7 @@ JS;
      */
     public function getItems()
     {
-        return $this->model->withQuery($this->queryCallback)->toTree();
+        return $this->repository->withQuery($this->queryCallback)->toTree();
     }
 
     /**
@@ -539,7 +569,7 @@ JS;
 
             view()->share([
                 'path'           => $this->url,
-                'keyName'        => $this->model->getKeyName(),
+                'keyName'        => $this->repository->getKeyName(),
                 'branchView'     => $this->view['branch'],
                 'branchCallback' => $this->branchCallback,
             ]);

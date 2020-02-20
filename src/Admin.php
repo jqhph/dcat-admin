@@ -251,16 +251,15 @@ class Admin
     /**
      * Create a repository instance.
      *
-     * @param string|Repository|Model|Builder $class
+     * @param string|Repository|Model|Builder $value
      * @param array                   $args
      *
      * @return Repository
      */
-    public static function repository($class, array $args = [])
+    public static function repository($repository, array $args = [])
     {
-        $repository = $class;
         if (is_string($repository)) {
-            $repository = new $class($args);
+            $repository = new $repository($args);
         }
 
         if ($repository instanceof Model || $repository instanceof Builder) {
@@ -268,6 +267,8 @@ class Admin
         }
 
         if (! $repository instanceof Repository) {
+            $class = is_object($repository) ? get_class($repository) : $repository;
+
             throw new \InvalidArgumentException("The class [{$class}] must be a type of [".Repository::class.'].');
         }
 
