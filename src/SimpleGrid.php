@@ -20,7 +20,7 @@ class SimpleGrid extends Grid
         $this->disableBatchActions();
         $this->disableFilterButton();
 
-        $this->option('row_selector_clicktr', true);
+        $this->rowSelector()->rowClickable(true);
 
         Content::composing(function (Content $content) {
             $content->simple();

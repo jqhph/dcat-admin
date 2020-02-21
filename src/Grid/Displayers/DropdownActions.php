@@ -39,7 +39,7 @@ class DropdownActions extends Actions
      */
     protected function addScript()
     {
-        $background = $this->grid->option('row_selector_bg') ?: Color::dark20();
+        $background = Color::dark20();
         $checkbox = ".{$this->grid->rowName()}-checkbox";
 
         $script = <<<JS

@@ -30,9 +30,10 @@ class Grid
         Concerns\HasPaginator,
         Concerns\HasExporter,
         Concerns\HasMultipleHeaders,
-        Concerns\HasQuickSearch,
         Concerns\HasSelector,
+        Concerns\HasRowSelector,
         Concerns\HasQuickCreate,
+        Concerns\HasQuickSearch,
         Macroable {
             __call as macroCall;
         }
@@ -167,12 +168,6 @@ class Grid
         'show_toolbar'             => true,
         'show_exporter'            => false,
         'create_mode'              => self::CREATE_MODE_DEFAULT,
-
-        'row_selector_style'     => 'primary',
-        'row_selector_circle'    => true,
-        'row_selector_clicktr'   => false,
-        'row_selector_label_key' => null,
-        'row_selector_bg'        => null,
 
         'dialog_form_area'   => ['700px', '670px'],
         'table_header_style' => 'table-header-gray',
@@ -330,60 +325,6 @@ class Grid
     public function columnNames()
     {
         return $this->columnNames;
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function setRowSelectorOptions(array $options = [])
-    {
-        if (isset($options['style'])) {
-            $this->options['row_selector_style'] = $options['style'];
-        }
-        if (isset($options['circle'])) {
-            $this->options['row_selector_circle'] = $options['circle'];
-        }
-        if (isset($options['clicktr'])) {
-            $this->options['row_selector_clicktr'] = $options['clicktr'];
-        }
-        if (isset($options['label'])) {
-            $this->options['row_selector_label_key'] = $options['label_name'];
-        }
-        if (isset($options['bg'])) {
-            $this->options['row_selector_bg'] = $options['bg'];
-        }
-
-        return $this;
-    }
-
-    /**
-     * Prepend checkbox column for grid.
-     *
-     * @return void
-     */
-    protected function prependRowSelectorColumn()
-    {
-        if (! $this->options['show_row_selector']) {
-            return;
-        }
-
-        $circle = $this->options['row_selector_circle'] ? 'checkbox-circle' : '';
-
-        $column = new Column(
-            Column::SELECT_COLUMN_NAME,
-            <<<HTML
-<div class="checkbox checkbox-{$this->options['row_selector_style']} $circle checkbox-grid">
-    <input type="checkbox" class="select-all {$this->selectAllName()}"><label></label>
-</div>
-HTML
-        );
-        $column->setGrid($this);
-
-        $column->displayUsing(Displayers\RowSelector::class);
-
-        $this->columns->prepend($column, Column::SELECT_COLUMN_NAME);
     }
 
     /**
