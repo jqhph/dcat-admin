@@ -116,7 +116,9 @@ $('.{$rowName}-checkbox').on('change', function () {
     } else {
         btn.hide()
     }
-    btn.find('.selected').html("{$selected}".replace('{n}', LA.grid.selectedRows('$name').length));
+    setTimeout(function () {
+         btn.find('.selected').html("{$selected}".replace('{n}', LA.grid.selectedRows('$name').length));
+    }, 50)
 });
 JS;
 

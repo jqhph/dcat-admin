@@ -18,11 +18,9 @@ class SimpleGrid extends Grid
         $this->disableExporter();
         $this->disablePerPages();
         $this->disableBatchActions();
+        $this->disableFilterButton();
 
         $this->option('row_selector_clicktr', true);
-
-        $this->tools->disableBatchActions();
-        $this->tools->disableFilterButton();
 
         Content::composing(function (Content $content) {
             $content->simple();

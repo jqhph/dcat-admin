@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid;
 
+use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Tools\AbstractTool;
 use Dcat\Admin\Grid\Tools\BatchActions;
@@ -184,6 +185,12 @@ class Tools implements Renderable
      */
     public function render()
     {
-        return $this->tools->map([Helper::class, 'render'])->implode(' ');
+        return $this->tools->map(function ($tool) {
+            if ($tool instanceof Action && ! $tool->allowed()) {
+                return;
+            }
+
+            return Helper::render($tool);
+        })->implode(' ');
     }
 }
