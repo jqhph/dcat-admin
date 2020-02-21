@@ -258,8 +258,6 @@ class Helper
     }
 
     /**
-     * 把php数据转化成文本形式.
-     *
      * @param array $array
      * @param int   $level
      *
@@ -302,8 +300,6 @@ class Helper
     }
 
     /**
-     * 把php数据转化成文本形式，并以"return"形式返回.
-     *
      * @param array $array
      *
      * @return string
@@ -328,5 +324,32 @@ class Helper
                 unset($array[$index]);
             }
         }
+    }
+
+    /**
+     * Get full url without query strings.
+     *
+     * @param Arrayable|array|string $keys
+     *
+     * @return string
+     */
+    public static function fullUrlWithoutQuery($keys)
+    {
+        if ($keys instanceof Arrayable) {
+            $keys = $keys->toArray();
+        }
+
+        $keys = (array) $keys;
+
+        $request = request();
+
+        $query = $request->query();
+        Arr::forget($query, $keys);
+
+        $question = $request->getBaseUrl().$request->getPathInfo() == '/' ? '/?' : '?';
+
+        return count($request->query()) > 0
+            ? $request->url().$question.http_build_query($query)
+            : $request->fullUrl();
     }
 }

@@ -7,7 +7,7 @@ use Dcat\Admin\Grid;
 /**
  * @method Grid\Model model()
  */
-trait HasElementNames
+trait HasNames
 {
     /**
      * Grid name.

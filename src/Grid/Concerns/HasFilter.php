@@ -16,6 +16,11 @@ trait HasFilter
     protected $filter;
 
     /**
+     * @var array
+     */
+    protected $beforeApplyFilterCallbacks = [];
+
+    /**
      * Setup grid filter.
      *
      * @return void
@@ -35,6 +40,10 @@ trait HasFilter
     public function processFilter($toArray = true)
     {
         $this->callBuilder();
+
+        foreach ($this->beforeApplyFilterCallbacks as $callback) {
+            $callback($this);
+        }
 
         $this->applyQuickSearch();
         $this->applyColumnFilter();
@@ -59,6 +68,16 @@ trait HasFilter
         call_user_func($callback, $this->filter);
 
         return $this;
+    }
+
+    /**
+     * @param Closure $callback
+     *
+     * @return void
+     */
+    public function filtering(\Closure $callback)
+    {
+        $this->beforeApplyFilterCallbacks[] = $callback;
     }
 
     /**
@@ -94,7 +113,6 @@ trait HasFilter
      */
     public function disableFilter(bool $disable = true)
     {
-//        $this->tools->disableFilterButton($disable);
         $this->filter->disableCollapse($disable);
 
         return $this->option('show_filter', ! $disable);

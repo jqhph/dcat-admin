@@ -27,6 +27,7 @@ use Dcat\Admin\Grid\Filter\Scope;
 use Dcat\Admin\Grid\Filter\StartWith;
 use Dcat\Admin\Grid\Filter\Where;
 use Dcat\Admin\Grid\Filter\Year;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -712,7 +713,7 @@ class Filter implements Renderable
             return "{$filter->getId()}_group";
         });
 
-        return $this->fullUrlWithoutQuery(
+        return Helper::fullUrlWithoutQuery(
             $columns->merge($groupNames)
         );
     }
@@ -724,34 +725,7 @@ class Filter implements Renderable
      */
     public function urlWithoutScopes()
     {
-        return $this->fullUrlWithoutQuery(Scope::QUERY_NAME);
-    }
-
-    /**
-     * Get full url without query strings.
-     *
-     * @param Arrayable|array|string $keys
-     *
-     * @return string
-     */
-    protected function fullUrlWithoutQuery($keys)
-    {
-        if ($keys instanceof Arrayable) {
-            $keys = $keys->toArray();
-        }
-
-        $keys = (array) $keys;
-
-        $request = request();
-
-        $query = $request->query();
-        Arr::forget($query, $keys);
-
-        $question = $request->getBaseUrl().$request->getPathInfo() == '/' ? '/?' : '?';
-
-        return count($request->query()) > 0
-            ? $request->url().$question.http_build_query($query)
-            : $request->fullUrl();
+        return Helper::fullUrlWithoutQuery(Scope::QUERY_NAME);
     }
 
     /**

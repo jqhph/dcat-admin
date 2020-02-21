@@ -11,6 +11,11 @@ use Illuminate\Support\Collection;
 trait HasDisplayers
 {
     /**
+     * @var ValueFilter
+     */
+    protected $valueFilter;
+
+    /**
      * Display using display abstract.
      *
      * @param string $abstract
@@ -203,8 +208,36 @@ trait HasDisplayers
     /**
      * @return $this
      */
-    public function showEmpty()
+    public function asEmpty()
     {
         return $this->display('');
+    }
+
+    /**
+     * @param string|\Closure $operator
+     *
+     * @return $this
+     */
+    public function valueAsFilter($operator = '=')
+    {
+        $valueFilter = $this->valueFilter();
+
+        $valueFilter->setup($operator);
+
+        return $this->display(function ($value) use ($valueFilter) {
+            return $valueFilter->render($value);
+        });
+    }
+
+    /**
+     * @return ValueFilter
+     */
+    public function valueFilter()
+    {
+        if (! $this->valueFilter) {
+            $this->valueFilter = new ValueFilter($this);
+        }
+
+        return $this->valueFilter;
     }
 }

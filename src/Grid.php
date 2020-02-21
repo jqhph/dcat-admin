@@ -23,7 +23,7 @@ use Illuminate\Support\Traits\Macroable;
 class Grid
 {
     use HasBuilderEvents,
-        Concerns\HasElementNames,
+        Concerns\HasNames,
         Concerns\HasFilter,
         Concerns\HasTools,
         Concerns\HasActions,

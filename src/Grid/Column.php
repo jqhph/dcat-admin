@@ -257,7 +257,7 @@ class Column
      *         ->display($view)
      *         ->expand(...)
      *         ->else()
-     *         ->showEmpty()
+     *         ->asEmpty()
      *
      *    $grid->config
      *         ->if(function () {
@@ -267,7 +267,7 @@ class Column
      *             $column ->display($view)->expand(...);
      *         })
      *         ->else(function (Column $column) {
-     *             $column->showEmpty();
+     *             $column->asEmpty();
      *         })
      *
      * @param \Closure $condition
@@ -482,14 +482,14 @@ class Column
      */
     public function filter(Grid\Column\Filter $filter)
     {
-        return $this->addFilter($filter);
+        return $this->addHeader($filter);
     }
 
     /**
      * Add a display callback.
      *
-     * @param \Closure $callback
-     * @param array    $params
+     * @param \Closure|string $callback
+     * @param array           $params
      *
      * @return $this
      */

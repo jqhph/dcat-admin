@@ -97,6 +97,9 @@ a {
     color: #297ec0;
     color: var(--primary-dark)
 }
+a:focus, a:hover {
+    color: #206296;
+}
 
 #app {
     padding: 12px 12px 5px;

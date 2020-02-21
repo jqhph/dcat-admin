@@ -73,18 +73,6 @@ trait HasHeader
     }
 
     /**
-     * Add a filter to column header.
-     *
-     * @param \Closure $builder
-     *
-     * @return $this
-     */
-    protected function addFilter(Filter $filter)
-    {
-        return $this->addHeader($filter);
-    }
-
-    /**
      * Add a binding based on filter to the model query.
      *
      * @param Model $model

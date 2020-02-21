@@ -111,7 +111,7 @@ class UserController extends Controller
                     }
                 })
                 ->else()
-                ->showEmpty();
+                ->asEmpty();
 
             $grid->created_at;
             $grid->updated_at->sortable();
