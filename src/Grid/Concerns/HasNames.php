@@ -48,8 +48,8 @@ trait HasNames
             ->setSortName("{$name}_{$model->getSortName()}");
 
         $this->filter()->setName($name);
-        $this->setExporterQueryName($name);
-        $this->setQuickSearchQueryName($name);
+        $this->setExporterQueryName();
+        $this->setQuickSearchQueryName();
 
         return $this;
     }

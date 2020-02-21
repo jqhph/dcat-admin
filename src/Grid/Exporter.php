@@ -51,6 +51,8 @@ class Exporter
     public function __construct(Grid $grid)
     {
         $this->grid = $grid;
+
+        $grid->setExporterQueryName();
     }
 
     /**

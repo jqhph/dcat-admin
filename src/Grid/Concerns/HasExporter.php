@@ -77,16 +77,13 @@ trait HasExporter
         return $this->exporter ?: ($this->exporter = new Exporter($this));
     }
 
-    /**
-     * @param string $gridName
-     */
-    public function setExporterQueryName($gridName)
+    public function setExporterQueryName()
     {
         if (! $this->allowExporter()) {
             return;
         }
 
-        $this->exporter()->setQueryName($gridName.'_export_');
+        $this->exporter()->setQueryName($this->getName().'_export_');
     }
 
     /**

@@ -53,10 +53,12 @@ trait HasQuickSearch
     /**
      * @param string $gridName
      */
-    protected function setQuickSearchQueryName($gridName)
+    public function setQuickSearchQueryName()
     {
         if ($this->quickSearch) {
-            $this->quickSearch->setQueryName($gridName.'__search');
+            $this->quickSearch->setQueryName(
+                $this->getName().$this->quickSearch->queryName()
+            );
         }
     }
 
