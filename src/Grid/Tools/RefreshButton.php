@@ -16,7 +16,7 @@ class RefreshButton implements Renderable
         $refresh = trans('admin.refresh');
 
         return <<<EOT
-<a data-action="refresh" class="btn btn-sm btn-primary grid-refresh btn-mini" style="margin-right:3px"><i class="ti-reload"></i><span class="hidden-xs">&nbsp; $refresh</span></a>
+<a data-action="refresh" class="btn btn-sm btn-primary grid-refresh btn-mini" style="margin-right:3px"><i class="fa fa-refresh"></i><span class="hidden-xs">&nbsp; $refresh</span></a>
 EOT;
     }
 }

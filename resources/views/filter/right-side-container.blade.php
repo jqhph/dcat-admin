@@ -14,8 +14,8 @@
                 </div>
 
                 <div class="pull-right">
-                    <span class="btn btn-trans close-slider">
-                        <i class=" ti-shift-right"></i>
+                    <span class="btn btn-trans close-slider font-16">
+                        <i class="fa  fa-long-arrow-right"></i>
                     </span>
                 </div>
             </div>

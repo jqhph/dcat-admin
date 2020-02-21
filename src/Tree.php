@@ -507,11 +507,11 @@ JS;
 
         $quickBtn = $btn = '';
         if ($this->useCreate) {
-            $btn = "<a href='{$url}' class='btn btn-sm btn-success'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span></a>";
+            $btn = "<a href='{$url}' class='btn btn-sm btn-success'><i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp;{$new}</span></a>";
         }
 
         if ($this->useQuickCreate) {
-            $text = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='ti-plus'></i><span class='hidden-xs'> &nbsp; $new</span>";
+            $text = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp; $new</span>";
             $quickBtn = "<a data-url='$url' class='btn btn-sm btn-success tree-quick-create'>$text</a>";
         }
 

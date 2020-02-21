@@ -157,8 +157,8 @@ return [
         'filter_placeholder' => '过滤',
     ],
     'responsive'      => [
-        'display'     => '<i class="ti-layout-list-thumb"></i>',
-        'display_all' => '<i class="ti-layout-grid3"></i>',
+        'display'     => '<i class="fa fa-th-list"></i>',
+        'display_all' => '<i class="fa fa-th"></i>',
         'focus'       => '聚焦',
     ],
     'uploader' => [

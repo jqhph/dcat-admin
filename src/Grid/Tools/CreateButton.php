@@ -38,7 +38,7 @@ class CreateButton implements Renderable
             ->dimensions($width, $height)
             ->render();
 
-        return "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->getName()}-create'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
+        return "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->getName()}-create'><i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
     }
 
     protected function renderQuickCreateButton()
@@ -49,7 +49,7 @@ class CreateButton implements Renderable
 
         $new = trans('admin.new');
 
-        return "<a class='btn btn-sm btn-success quick-create-button-{$this->grid->getName()}'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
+        return "<a class='btn btn-sm btn-success quick-create-button-{$this->grid->getName()}'><i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
     }
 
     protected function renderCreateButton()
@@ -62,7 +62,7 @@ class CreateButton implements Renderable
         $url = $this->grid->createUrl();
 
         return "<a href='{$url}' class='btn btn-sm btn-success btn-mini'>
-    <i class='ti-plus'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span>
+    <i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span>
 </a>";
     }
 

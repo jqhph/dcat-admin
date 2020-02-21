@@ -156,8 +156,8 @@ return [
         'filter_placeholder' => 'Filter',
     ],
     'responsive' => [
-        'display'     => '<i class="ti-layout-list-thumb"></i>',
-        'display_all' => '<i class="ti-layout-grid3"></i>',
+        'display'     => '<i class="fa fa-th-list"></i>',
+        'display_all' => '<i class="fa fa-th"></i>',
         'focus'       => 'Focus',
     ],
     'uploader' => [
