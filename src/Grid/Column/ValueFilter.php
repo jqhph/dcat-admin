@@ -131,6 +131,6 @@ class ValueFilter
             $pageName          => null,
         ]);
 
-        return "<a class='value-filter' href='{$url}'>{$this->wrap($value)}</a> &nbsp;<a style='opacity:0;' class='fa fa-filter'></a>";
+        return "<a class='value-filter' href='{$url}'>{$this->wrap($value)}</a> &nbsp;<a style='opacity:0;' class='fa fa-search'></a>";
     }
 }

@@ -219,7 +219,7 @@ trait HasDisplayers
      *
      * @return $this
      */
-    public function valueAsFilter($valueKey = '', $operator = '=')
+    public function valueAsFilter($valueKey = null, $operator = '=')
     {
         $valueFilter = $this->getValueFilter();
 
