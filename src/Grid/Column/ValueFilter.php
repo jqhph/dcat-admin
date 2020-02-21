@@ -87,8 +87,12 @@ class ValueFilter
     public function render($value)
     {
         $original = $this->column->getOriginal();
+        $pageName = $this->column->grid()->model()->getPageName();
 
-        $url = request()->fullUrlWithQuery([$this->queryName() => $original]);
+        $url = request()->fullUrlWithQuery([
+            $this->queryName() => $original,
+            $pageName          => null,
+        ]);
 
         return "<a class='value-filter' href='$url'>{$value}</a> &nbsp;<a style='opacity: 0;' class='fa fa-filter'></a>";
     }
