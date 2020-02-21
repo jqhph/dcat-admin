@@ -40,15 +40,19 @@ class LogController extends Controller
                 return admin_url('auth/users/'.$this->user['id']);
             })
             ->responsive();
+
         $grid->method(trans('admin.method'))->responsive()->display(function ($method) {
             $color = Arr::get(OperationLogModel::$methodColors, $method, 'default');
 
             return "<span class=\"label label-$color\">$method</span>";
-        });
+        })->valueAsFilter();
+
         $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {
             return "<code>$v</code>";
-        });
-        $grid->ip('IP')->responsive();
+        })->valueAsFilter();
+
+        $grid->ip('IP')->valueAsFilter()->responsive();
+
         $grid->input->responsive()->display(function ($input) {
             $input = json_decode($input, true);
             $input = Arr::except($input, ['_pjax', '_token', '_method', '_previous_']);

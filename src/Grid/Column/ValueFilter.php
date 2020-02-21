@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid\Column;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Support\Arr;
 
 class ValueFilter
 {
@@ -16,6 +17,11 @@ class ValueFilter
     /**
      * @var string|\Closure
      */
+    protected $valueKey;
+
+    /**
+     * @var string|\Closure
+     */
     protected $operator;
 
     public function __construct(Column $column)
@@ -23,8 +29,9 @@ class ValueFilter
         $this->column = $column;
     }
 
-    public function setup($operator)
+    public function setup($valueKey, $operator)
     {
+        $this->valueKey = $valueKey;
         $this->operator = $operator;
 
         $this->addStyle();
@@ -34,7 +41,7 @@ class ValueFilter
 
     protected function addStyle()
     {
-        Admin::style('.value-filter{border-bottom:1px dashed}.value-filter:hover+a{opacity:1!important}');
+        Admin::style('.value-filter .dashed{border-bottom:1px dashed}.value-filter:hover+a{opacity:1!important}');
     }
 
     protected function addResetButton()
@@ -55,13 +62,13 @@ class ValueFilter
                 return;
             }
             $operator = $this->operator;
-            $column = $this->column->getName();
+            $columnName = $this->column->getName();
             $model = $this->column->grid()->model();
 
             if (is_string($operator)) {
-                $model->where($column, $operator, $value);
+                $model->where($columnName, $operator, $value);
             } elseif ($operator instanceof \Closure) {
-                $operator($model, $column, $value);
+                $operator($model, $value, $columnName);
             }
         });
     }
@@ -84,16 +91,46 @@ class ValueFilter
         return request($this->queryName());
     }
 
+    protected function originalValue()
+    {
+        if (! $this->valueKey) {
+            return $this->column->getOriginal();
+        }
+
+        $row = $this->column->getOriginalModel();
+
+        if ($this->valueKey instanceof \Closure) {
+            return $this->valueKey->call(
+                $row,
+                $this->column->getName()
+            );
+        }
+
+        return Arr::get(
+            $row->toArray(),
+            $this->valueKey,
+            $this->column->getOriginal()
+        );
+    }
+
+    protected function wrap($value)
+    {
+        if (! preg_match('/<[^>]+>(.*)<\/[^>]+>/', $value)) {
+            return "<span class='dashed'>{$value}</span>";
+        }
+
+        return $value;
+    }
+
     public function render($value)
     {
-        $original = $this->column->getOriginal();
         $pageName = $this->column->grid()->model()->getPageName();
 
         $url = request()->fullUrlWithQuery([
-            $this->queryName() => $original,
+            $this->queryName() => $this->originalValue(),
             $pageName          => null,
         ]);
 
-        return "<a class='value-filter' href='$url'>{$value}</a> &nbsp;<a style='opacity: 0;' class='fa fa-filter'></a>";
+        return "<a class='value-filter' href='{$url}'>{$this->wrap($value)}</a> &nbsp;<a style='opacity:0;' class='fa fa-filter'></a>";
     }
 }

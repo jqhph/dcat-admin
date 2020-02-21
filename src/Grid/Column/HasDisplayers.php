@@ -214,15 +214,16 @@ trait HasDisplayers
     }
 
     /**
+     * @param string|\Closure $valueKey
      * @param string|\Closure $operator
      *
      * @return $this
      */
-    public function valueAsFilter($operator = '=')
+    public function valueAsFilter($valueKey = '', $operator = '=')
     {
         $valueFilter = $this->getValueFilter();
 
-        $valueFilter->setup($operator);
+        $valueFilter->setup($valueKey, $operator);
 
         return $this->display(function ($value) use ($valueFilter) {
             return $valueFilter->render($value);
