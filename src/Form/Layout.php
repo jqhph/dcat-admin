@@ -76,10 +76,7 @@ class Layout
         $html = '<div class="row">';
 
         foreach ($this->columns as $column) {
-            ob_start();
-            $column->build();
-
-            $html .= ob_get_clean();
+            $html .= $column->render();
         }
 
         return $html.'</div>';
