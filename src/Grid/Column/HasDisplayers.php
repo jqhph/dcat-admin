@@ -220,7 +220,7 @@ trait HasDisplayers
      */
     public function valueAsFilter($operator = '=')
     {
-        $valueFilter = $this->valueFilter();
+        $valueFilter = $this->getValueFilter();
 
         $valueFilter->setup($operator);
 
@@ -232,7 +232,7 @@ trait HasDisplayers
     /**
      * @return ValueFilter
      */
-    public function valueFilter()
+    public function getValueFilter()
     {
         if (! $this->valueFilter) {
             $this->valueFilter = new ValueFilter($this);

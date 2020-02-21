@@ -17,6 +17,7 @@ class SimpleGrid extends Grid
         $this->disableActions();
         $this->disableExporter();
         $this->disablePerPages();
+        $this->disableBatchActions();
 
         $this->option('row_selector_clicktr', true);
 

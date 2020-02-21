@@ -34,7 +34,7 @@ class ValueFilter
 
     protected function addStyle()
     {
-        Admin::style('.value-filter{border-bottom:1px dashed}.value-filter:hover>span{display:inline!important}');
+        Admin::style('.value-filter{border-bottom:1px dashed}.value-filter:hover+a{opacity:1!important}');
     }
 
     protected function addResetButton()
@@ -52,7 +52,7 @@ class ValueFilter
     {
         $this->column->grid()->filtering(function () {
             if (! ($value = $this->value())) {
-               return;
+                return;
             }
             $operator = $this->operator;
             $column = $this->column->getName();
@@ -90,6 +90,6 @@ class ValueFilter
 
         $url = request()->fullUrlWithQuery([$this->queryName() => $original]);
 
-        return "<a class='value-filter' href='$url'>{$value}<span style='display:none'> &nbsp;<i class='fa fa-filter'></i></span></a>";
+        return "<a class='value-filter' href='$url'>{$value}</a> &nbsp;<a style='opacity: 0;' class='fa fa-filter'></a>";
     }
 }
