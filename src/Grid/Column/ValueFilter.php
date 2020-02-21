@@ -3,40 +3,26 @@
 namespace Dcat\Admin\Grid\Column;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid\Column;
-use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class ValueFilter
 {
     /**
-     * @var Column
+     * @var Filter
      */
-    protected $column;
+    protected $filter;
 
     /**
      * @var string|\Closure
      */
     protected $valueKey;
 
-    /**
-     * @var string|\Closure
-     */
-    protected $operator;
-
-    public function __construct(Column $column)
+    public function __construct(Filter $filter, $valueKey)
     {
-        $this->column = $column;
-    }
-
-    public function setup($valueKey, $operator)
-    {
+        $this->filter = $filter;
         $this->valueKey = $valueKey;
-        $this->operator = $operator;
 
         $this->addStyle();
-        $this->addResetButton();
-        $this->addApplyFilterCallback();
     }
 
     protected function addStyle()
@@ -44,72 +30,40 @@ class ValueFilter
         Admin::style('.value-filter .dashed{border-bottom:1px dashed}.value-filter:hover+a{opacity:1!important}');
     }
 
-    protected function addResetButton()
+    protected function column()
     {
-        $this->column->grid()->filtering(function () {
-            if (! $this->value()) {
-                return;
-            }
-
-            return $this->column->addHeader("&nbsp;<a class='fa fa-undo' href='{$this->resetUrl()}'></a>");
-        });
-    }
-
-    protected function addApplyFilterCallback()
-    {
-        $this->column->grid()->filtering(function () {
-            if (! ($value = $this->value())) {
-                return;
-            }
-            $operator = $this->operator;
-            $columnName = $this->column->getName();
-            $model = $this->column->grid()->model();
-
-            if (is_string($operator)) {
-                $model->where($columnName, $operator, $value);
-            } elseif ($operator instanceof \Closure) {
-                $operator($model, $value, $columnName);
-            }
-        });
+        return $this->filter->parent();
     }
 
     public function queryName()
     {
-        $name = $this->column->grid()->getName();
-        $column = $this->column->getName();
-
-        return 'value-filter'.($name ? "-{$name}" : '')."-{$column}";
-    }
-
-    public function resetUrl()
-    {
-        return Helper::fullUrlWithoutQuery($this->queryName());
+        return $this->filter->queryName();
     }
 
     public function value()
     {
-        return request($this->queryName());
+        return $this->filter->value();
     }
 
     protected function originalValue()
     {
         if (! $this->valueKey) {
-            return $this->column->getOriginal();
+            return $this->column()->getOriginal();
         }
 
-        $row = $this->column->getOriginalModel();
+        $row = $this->column()->getOriginalModel();
 
         if ($this->valueKey instanceof \Closure) {
             return $this->valueKey->call(
                 $row,
-                $this->column->getName()
+                $this->column()->getName()
             );
         }
 
         return Arr::get(
             $row->toArray(),
             $this->valueKey,
-            $this->column->getOriginal()
+            $this->column()->getOriginal()
         );
     }
 
@@ -124,7 +78,7 @@ class ValueFilter
 
     public function render($value)
     {
-        $pageName = $this->column->grid()->model()->getPageName();
+        $pageName = $this->column()->grid()->model()->getPageName();
 
         $url = request()->fullUrlWithQuery([
             $this->queryName() => $this->originalValue(),

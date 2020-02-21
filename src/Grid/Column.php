@@ -468,6 +468,14 @@ class Column
      * Set column filter.
      *
      * @example
+     *      $grid->username()->filter();
+     *
+     *      $grid->user()->filter('user.id');
+     *
+     *      $grid->user()->filter(function () {
+     *          return $this->user['id'];
+     *      });
+     *
      *      $grid->username()->filter(
      *          Grid\Column\Filter\StartWith::make(__('admin.username'))
      *      );
@@ -476,13 +484,37 @@ class Column
      *          Grid\Column\Filter\Equal::make(__('admin.created_at'))->date()
      *      );
      *
-     * @param Grid\Column\Filter $builder
+     * @param Grid\Column\Filter|string $filter
      *
      * @return $this
      */
-    public function filter(Grid\Column\Filter $filter)
+    public function filter($filter = null)
     {
+        $valueKey = is_string($filter) || $filter instanceof \Closure ? $filter : null;
+
+        if (! $filter || $valueKey) {
+            $filter = Grid\Column\Filter\Equal::make()->valueAsFilter($valueKey);
+        }
+
+        if (! $filter instanceof Grid\Column\Filter) {
+            throw new \InvalidArgumentException('The "$filter" must be a type of '.Grid\Column\Filter::class.'.');
+        }
+
         return $this->addHeader($filter);
+    }
+
+    /**
+     * @param string|\Closure $valueKey
+     *
+     * @return Column
+     */
+    public function onlyValueFilter($valueKey = null)
+    {
+        return $this->filter(
+            Grid\Column\Filter\Equal::make()
+                ->valueAsFilter($valueKey)
+                ->hide()
+        );
     }
 
     /**

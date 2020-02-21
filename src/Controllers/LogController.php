@@ -45,13 +45,13 @@ class LogController extends Controller
             $color = Arr::get(OperationLogModel::$methodColors, $method, 'default');
 
             return "<span class=\"label label-$color\">$method</span>";
-        })->valueAsFilter();
+        })->onlyValueFilter();
 
         $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {
             return "<code>$v</code>";
-        })->valueAsFilter();
+        })->onlyValueFilter();
 
-        $grid->ip('IP')->valueAsFilter()->responsive();
+        $grid->ip('IP')->onlyValueFilter()->responsive();
 
         $grid->input->responsive()->display(function ($input) {
             $input = json_decode($input, true);
@@ -90,9 +90,7 @@ class LogController extends Controller
                 );
 
             $filter->like('path', trans('admin.uri'));
-
             $filter->equal('ip', 'IP');
-
             $filter->between('created_at')->datetime();
         });
 

@@ -21,11 +21,64 @@ abstract class Filter implements Renderable
     protected $parent;
 
     /**
+     * @var string
+     */
+    protected $columnName;
+
+    /**
+     * @var \Closure[]
+     */
+    protected $resolvings = [];
+
+    /**
+     * @var bool
+     */
+    protected $display = true;
+
+    /**
      * @param Column $column
      */
     public function setParent(Column $column)
     {
         $this->parent = $column;
+
+        $this->addResetButton();
+
+        foreach ($this->resolvings as $closure) {
+            $closure($this);
+        }
+    }
+
+    /**
+     * @return Column
+     */
+    public function parent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function resolving(\Closure $callback)
+    {
+        $this->resolvings[] = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setColumnName(string $name)
+    {
+        $this->columnName = $name;
+
+        return $this;
     }
 
     /**
@@ -35,7 +88,7 @@ abstract class Filter implements Renderable
      */
     public function columnName()
     {
-        return $this->parent->getName();
+        return $this->columnName ?: $this->parent->getName();
     }
 
     /**
@@ -58,6 +111,24 @@ abstract class Filter implements Renderable
     public function value($default = '')
     {
         return request($this->queryName(), $default);
+    }
+
+    /**
+     * Add reset button.
+     */
+    protected function addResetButton()
+    {
+        $this->parent->grid()->filtering(function () {
+            if (! $this->value()) {
+                return;
+            }
+
+            $style = $this->shouldDisplay() ? 'style=\'margin:3px 12px\'' : '';
+
+            return $this->parent->addHeader(
+                "&nbsp;<a class='fa fa-undo' href='{$this->urlWithoutFilter()}' {$style}></a>"
+            );
+        });
     }
 
     /**
@@ -102,6 +173,34 @@ abstract class Filter implements Renderable
     protected function trans($key)
     {
         return __("admin.{$key}");
+    }
+
+    /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function display(bool $value)
+    {
+        $this->display = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function hide()
+    {
+        return $this->display(false);
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldDisplay()
+    {
+        return $this->display;
     }
 
     /**

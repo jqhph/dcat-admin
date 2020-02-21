@@ -136,6 +136,10 @@ class Between extends Filter
      */
     public function render()
     {
+        if (! $this->shouldDisplay()) {
+            return;
+        }
+
         $script = <<<'JS'
 $('.dropdown-menu input').click(function(e) {
     e.stopPropagation();
@@ -176,7 +180,6 @@ JS;
         <li class="divider"></li>
         <li class="">
             <button class="btn btn-sm btn-primary column-filter-submit "><i class="fa fa-search"></i></button>
-            <span onclick="LA.reload('{$this->urlWithoutFilter()}')" class="btn btn-sm btn-default column-filter-all"><i class="fa fa-undo"></i></span>
         </li>
     </ul>
     </form>
