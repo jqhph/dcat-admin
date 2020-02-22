@@ -120,7 +120,7 @@ class UserController extends Controller
             $grid->showQuickEditButton();
             $grid->disableFilterButton();
             $grid->quickSearch(['id', 'name', 'username']);
-            $grid->createMode(Grid::CREATE_MODE_DIALOG);
+            $grid->enableDialogCreate();
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if ($actions->key() == AdministratorModel::DEFAULT_ID) {

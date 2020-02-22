@@ -108,7 +108,7 @@ class RoleController extends Controller
         $grid->showQuickEditButton();
         $grid->disableFilterButton();
         $grid->quickSearch(['id', 'name', 'slug']);
-        $grid->createMode(Grid::CREATE_MODE_DIALOG);
+        $grid->enableDialogCreate();
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $roleModel = config('admin.database.roles_model');

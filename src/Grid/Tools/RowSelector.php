@@ -72,7 +72,7 @@ HTML;
 
     }
 
-    public function render($row, $id)
+    public function renderColumn($row, $id)
     {
         $this->setupScript();
 

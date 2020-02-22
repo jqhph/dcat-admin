@@ -29,27 +29,18 @@ class CreateButton implements Renderable
 
         $new = trans('admin.new');
         $url = $this->grid->createUrl();
+        $gridName = $this->grid->getName();
+        $class = 'dialog-create'.($gridName ? "-{$gridName}" : $gridName);
 
         [$width, $height] = $this->grid->option('dialog_form_area');
 
         Form::modal($new)
-            ->click(".{$this->grid->getName()}-create")
+            ->click(".{$class}")
             ->success('LA.reload()')
             ->dimensions($width, $height)
             ->render();
 
-        return "<a data-url='$url' class='btn btn-sm btn-success {$this->grid->getName()}-create'><i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
-    }
-
-    protected function renderQuickCreateButton()
-    {
-        if ($this->mode !== Grid::CREATE_MODE_QUICK) {
-            return;
-        }
-
-        $new = trans('admin.new');
-
-        return "<a class='btn btn-sm btn-success quick-create-button-{$this->grid->getName()}'><i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
+        return "<a data-url='$url' class='btn btn-sm btn-success {$class}'><i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
     }
 
     protected function renderCreateButton()
@@ -68,6 +59,6 @@ class CreateButton implements Renderable
 
     public function render()
     {
-        return "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderQuickCreateButton()}{$this->renderDialogCreateButton()}</div>";
+        return "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderDialogCreateButton()}</div>";
     }
 }

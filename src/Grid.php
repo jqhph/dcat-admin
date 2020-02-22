@@ -31,7 +31,6 @@ class Grid
         Concerns\HasExporter,
         Concerns\HasMultipleHeaders,
         Concerns\HasSelector,
-        Concerns\HasRowSelector,
         Concerns\HasQuickCreate,
         Concerns\HasQuickSearch,
         Macroable {
@@ -40,7 +39,6 @@ class Grid
 
     const CREATE_MODE_DEFAULT = 'default';
     const CREATE_MODE_DIALOG = 'dialog';
-    const CREATE_MODE_QUICK = 'quick';
 
     /**
      * The grid data model instance.
@@ -150,27 +148,31 @@ class Grid
     protected $tableId = 'grid-table';
 
     /**
+     * @var Grid\Tools\RowSelector
+     */
+    protected $rowSelector;
+
+    /**
      * Options for grid.
      *
      * @var array
      */
     protected $options = [
-        'show_pagination'          => true,
-        'show_filter'              => true,
-        'show_actions'             => true,
-        'show_quick_edit_button'   => false,
-        'show_edit_button'         => true,
-        'show_view_button'         => true,
-        'show_delete_button'       => true,
-        'show_row_selector'        => true,
-        'show_create_button'       => true,
-        'show_bordered'            => false,
-        'show_toolbar'             => true,
-        'show_exporter'            => false,
-        'create_mode'              => self::CREATE_MODE_DEFAULT,
-
-        'dialog_form_area'   => ['700px', '670px'],
-        'table_header_style' => 'table-header-gray',
+        'show_pagination'        => true,
+        'show_filter'            => true,
+        'show_actions'           => true,
+        'show_quick_edit_button' => false,
+        'show_edit_button'       => true,
+        'show_view_button'       => true,
+        'show_delete_button'     => true,
+        'show_row_selector'      => true,
+        'show_create_button'     => true,
+        'show_bordered'          => false,
+        'show_toolbar'           => true,
+        'show_exporter'          => false,
+        'create_mode'            => self::CREATE_MODE_DEFAULT,
+        'dialog_form_area'       => ['700px', '670px'],
+        'table_header_style'     => 'table-header-gray',
     ];
 
     /**
@@ -270,7 +272,7 @@ class Grid
      *
      * @param array $columns
      *
-     * @return Collection|null
+     * @return Collection|void
      */
     public function columns($columns = null)
     {
@@ -301,10 +303,23 @@ class Grid
      */
     protected function addColumn($field = '', $label = '')
     {
-        $column = new Column($field, $label);
-        $column->setGrid($this);
+        $column = $this->newColumn($field, $label);
 
         $this->columns->put($field, $column);
+
+        return $column;
+    }
+
+    /**
+     * @param string $field
+     * @param string $label
+     *
+     * @return Column
+     */
+    public function newColumn($field = '', $label = '')
+    {
+        $column = new Column($field, $label);
+        $column->setGrid($this);
 
         return $column;
     }
@@ -407,7 +422,7 @@ class Grid
      *
      * @param Closure $callable
      *
-     * @return Collection|null
+     * @return Collection|void
      */
     public function rows(Closure $callable = null)
     {
@@ -439,12 +454,49 @@ class Grid
     }
 
     /**
+     * @param \Closure $closure
+     *
+     * @return Grid\Tools\RowSelector
+     */
+    public function rowSelector()
+    {
+        return $this->rowSelector ?: ($this->rowSelector = new Grid\Tools\RowSelector($this));
+    }
+
+    /**
+     * Prepend checkbox column for grid.
+     *
+     * @return void
+     */
+    protected function prependRowSelectorColumn()
+    {
+        if (! $this->options['show_row_selector']) {
+            return;
+        }
+
+        $rowSelector = $this->rowSelector();
+        $keyName = $this->keyName();
+
+        $column = $this->newColumn(
+            Grid\Column::SELECT_COLUMN_NAME,
+            $rowSelector->renderHeader()
+        );
+        $column->setGrid($this);
+
+        $column->display(function () use ($rowSelector, $keyName)  {
+            return $rowSelector->renderColumn($this, $this->{$keyName});
+        });
+
+        $this->columns->prepend($column, Grid\Column::SELECT_COLUMN_NAME);
+    }
+
+    /**
      * @param string $width
      * @param string $height
      *
      * @return $this
      */
-    public function setModalFormDimensions(string $width, string $height)
+    public function setDialogFormDimensions(string $width, string $height)
     {
         $this->options['dialog_form_area'] = [$width, $height];
 
@@ -650,6 +702,14 @@ HTML;
     public function createMode(string $mode)
     {
         return $this->option('create_mode', $mode);
+    }
+
+    /**
+     * @return $this
+     */
+    public function enableDialogCreate()
+    {
+        return $this->createMode(self::CREATE_MODE_DIALOG);
     }
 
     /**
