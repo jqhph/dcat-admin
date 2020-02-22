@@ -371,7 +371,6 @@ JS;
             'columnCount'  => $columnCount,
             'fields'       => $this->fields,
             'elementClass' => $this->elementClass(),
-            'hidden'       => $this->parent->option('create_mode') === Grid::CREATE_MODE_QUICK,
         ];
 
         return view('admin::grid.quick-create.form', $vars)->render();

@@ -1,5 +1,5 @@
 <thead>
-<tr class="{{ $elementClass }} quick-create" @if($hidden) style="display: none" @endif>
+<tr class="{{ $elementClass }} quick-create">
     <td colspan="{{ $columnCount }}" style="height: 43px;padding-left: 57px;background-color: #f9f9f9; vertical-align: middle;">
 
         <span class="create" style="color: #bdbdbd;cursor: pointer;display: block;">
