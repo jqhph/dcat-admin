@@ -14,7 +14,7 @@ class In extends AbstractFilter
     /**
      * @var int
      */
-    protected $width = 10;
+    protected $width = 12;
 
     /**
      * Get condition of this filter.

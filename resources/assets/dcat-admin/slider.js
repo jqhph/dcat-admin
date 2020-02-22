@@ -3,7 +3,7 @@
     function Slider(cnf) {
         this.opts = {
             direction: cnf.direction || "left",
-            wight: cnf.width || null,
+            width: cnf.width || null,
             height: cnf.height || null,
             dom: $(cnf.dom),
             time: cnf.time || null,

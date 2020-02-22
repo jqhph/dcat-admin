@@ -62,6 +62,7 @@ class FilterButton extends AbstractTool
             dom: '#{$id}',
             background: '#FFF',
             shade: false,
+            width: '480px',
         });
         
         $(document).one('pjax:complete', function () {// 跳转新页面时移除弹窗

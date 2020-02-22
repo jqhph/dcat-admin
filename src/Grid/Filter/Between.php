@@ -16,7 +16,7 @@ class Between extends AbstractFilter
     /**
      * @var int
      */
-    protected $width = 11;
+    protected $width = 12;
 
     /**
      * @var bool
