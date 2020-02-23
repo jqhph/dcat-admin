@@ -164,10 +164,24 @@ trait HasAjaxRequest
 
         return <<<JS
 (function () {
+    var f;
     function request(p) {
+        if (f) return;
+        f = 1;
+        
         $fetching;     
-        $.getJSON('{$this->__url}', $.extend({_token:LA.token}, p || {}), function (response) {
+        $.ajax({
+          url: '{$this->__url}',
+          dataType: 'json',
+          data: $.extend({_token:LA.token}, p || {}),
+          success: function (response) {
+            f = 0;
             {$fetched};
+          },
+          error: function (a, b, c) {
+              f = 0;
+              LA.ajaxError(a, b, c)
+          },
         });
     }
     request();

@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
+use Illuminate\Support\Str;
 
 class Radio extends AbstractDisplayer
 {
@@ -16,7 +17,7 @@ class Radio extends AbstractDisplayer
         $name = $this->column->getName();
 
         foreach ($options as $value => $label) {
-            $id = 'rdo'.\Illuminate\Support\Str::random(8);
+            $id = 'rdo'.Str::random(8);
 
             $checked = ($value == $this->value) ? 'checked' : '';
             $radios .= <<<EOT
@@ -30,7 +31,7 @@ EOT;
         Admin::script($this->script());
 
         return <<<EOT
-<form class="form-group grid-radio-$name" style="text-align: left" data-key="{$this->key()}">
+<form class="form-group {$this->elementClass()}" style="text-align: left" data-key="{$this->key()}">
     $radios
     <button type="submit" class="btn btn-primary btn-xs pull-left">
         <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}
@@ -42,43 +43,47 @@ EOT;
 EOT;
     }
 
+    protected function elementClass()
+    {
+        return 'grid-radio-'.$this->column->getName();
+    }
+
     protected function script()
     {
-        $name = $this->column->getName();
-
         return <<<JS
-var _ckreq;
-$('form.grid-radio-$name').on('submit', function () {
-    var value = $(this).find('input:radio:checked').val(), btn = $(this).find('[type="submit"]');
+(function () {
+    var f;
+    $('form.{$this->elementClass()}').on('submit', function () {
+        var value = $(this).find('input:radio:checked').val(), btn = $(this).find('[type="submit"]');
+        
+        if (f) return;
+        f = 1;
+        
+        btn.button('loading');
     
-    if (_ckreq) return;
-    _ckreq = 1;
+        $.ajax({
+            url: "{$this->resource()}/" + $(this).data('key'),
+            type: "POST",
+            data: {
+                {$this->column->getName()}: value,
+                _token: LA.token,
+                _method: 'PUT'
+            },
+            success: function (data) {
+                btn.button('reset');
+                f = 0;
+                LA.success(data.message);
+            },
+            error: function (a, b, c) {
+                btn.button('reset');
+                f = 0;
+                LA.ajaxError(a, b, c);
+            },
+        });
     
-    btn.button('loading');
-
-    $.ajax({
-        url: "{$this->resource()}/" + $(this).data('key'),
-        type: "POST",
-        data: {
-            $name: value,
-            _token: LA.token,
-            _method: 'PUT'
-        },
-        success: function (data) {
-            btn.button('reset');
-            _ckreq = 0;
-            LA.success(data.message);
-        },
-        error: function (a, b, c) {
-            btn.button('reset');
-            _ckreq = 0;
-            LA.ajaxError(a, b, c);
-        },
+        return false;
     });
-
-    return false;
-});
-
+})()
 JS;
     }
 }

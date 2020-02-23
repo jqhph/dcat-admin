@@ -40,7 +40,7 @@ EOT;
         Admin::script($this->script());
 
         return <<<EOT
-<form class="form-group grid-checkbox-$name" style="text-align:left;" data-key="{$this->key()}">
+<form class="form-group {$this->elementClass()}" style="text-align:left;" data-key="{$this->key()}">
     $radios
     <button type="submit" class="btn btn-primary btn-xs pull-left">
         <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}
@@ -52,47 +52,52 @@ EOT;
 EOT;
     }
 
+    protected function elementClass()
+    {
+        return 'grid-checkbox-'.$this->column->getName();
+    }
+
     protected function script()
     {
-        $name = $this->column->getName();
-
         return <<<JS
-var _ckreq;
-$('form.grid-checkbox-$name').on('submit', function () {
-    var values = $(this).find('input:checkbox:checked').map(function (_, el) {
-        return $(el).val();
-    }).get(), btn = $(this).find('[type="submit"]');
+(function () {
+    var f;
+    $('form.{$this->elementClass()}').on('submit', function () {
+        var values = $(this).find('input:checkbox:checked').map(function (_, el) {
+            return $(el).val();
+        }).get(), btn = $(this).find('[type="submit"]');
+        
+        if (f) return;
+        f = 1;
+        
+        btn.button('loading');
     
-    if (_ckreq) return;
-    _ckreq = 1;
+        var data = {
+            {$this->column->getName()}: values,
+            _token: LA.token,
+            _method: 'PUT'
+        };
+        
+        $.ajax({
+            url: "{$this->resource()}/" + $(this).data('key'),
+            type: "POST",
+            contentType: 'application/json;charset=utf-8',
+            data: JSON.stringify(data),
+            success: function (data) {
+                btn.button('reset');
+                f = 0;
+                LA.success(data.message);
+            },
+            error: function (a, b, c) {
+                btn.button('reset');
+                f = 0;
+                LA.ajaxError(a, b, c);
+            },
+        });
     
-    btn.button('loading');
-
-    var data = {
-        $name: values,
-        _token: LA.token,
-        _method: 'PUT'
-    };
-    
-    $.ajax({
-        url: "{$this->resource()}/" + $(this).data('key'),
-        type: "POST",
-        contentType: 'application/json;charset=utf-8',
-        data: JSON.stringify(data),
-        success: function (data) {
-            btn.button('reset');
-            _ckreq = 0;
-            LA.success(data.message);
-        },
-        error: function (a, b, c) {
-            btn.button('reset');
-            _ckreq = 0;
-            LA.ajaxError(a, b, c);
-        },
+        return false;
     });
-
-    return false;
-});
+})();
 JS;
     }
 }
