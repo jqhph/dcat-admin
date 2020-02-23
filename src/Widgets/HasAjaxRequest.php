@@ -81,8 +81,6 @@ trait HasAjaxRequest
     }
 
     /**
-     * Set css selectors of refetch links.
-     *
      * @param string|array $selector
      *
      * @return $this
