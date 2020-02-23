@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Widgets\Sparkline;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\AjaxRequestBuilder;
+use Dcat\Admin\Widgets\HasAjaxRequest;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
  */
 class Sparkline extends Widget
 {
-    use AjaxRequestBuilder;
+    use HasAjaxRequest;
 
     protected static $optionMethods = [
         'highlightSpotColor',
@@ -177,7 +177,7 @@ $('#{$this->id}').sparkline($v, $o);
 JS;
         }
 
-        if (! $this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildRequestScript()) {
             return <<<JS
 $('#{$this->id}').sparkline($values, $options);
 {$combos};
@@ -186,16 +186,16 @@ JS;
 
         $this->fetched(
             <<<JS
-if (!result.status) {
-    return LA.error(result.message || 'Server internal error.');
+if (!response.status) {
+    return LA.error(response.message || 'Server internal error.');
 }        
 var id = '{$this->id}', opt = $options;
-opt = $.extend(opt, result.options || {});
-$('#'+id).sparkline(result.values || $values, opt);
+opt = $.extend(opt, response.options || {});
+$('#'+id).sparkline(response.values || $values, opt);
 JS
         );
 
-        return $this->buildFetchingScript();
+        return $this->buildRequestScript();
     }
 
     /**

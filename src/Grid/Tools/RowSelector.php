@@ -46,7 +46,7 @@ class RowSelector
         return $this;
     }
 
-    public function rowClickable(bool $value = true)
+    public function click(bool $value = true)
     {
         $this->rowClickable = $value;
 

@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Widgets\DataCard;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\AjaxRequestBuilder;
+use Dcat\Admin\Widgets\HasAjaxRequest;
 use Dcat\Admin\Widgets\Dropdown;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Contracts\Support\Renderable;
@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class Card extends Widget
 {
-    use AjaxRequestBuilder;
+    use HasAjaxRequest;
 
     protected $view = 'admin::widgets.data-card';
 
@@ -142,13 +142,13 @@ class Card extends Widget
      */
     protected function script()
     {
-        if (! $this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildRequestScript()) {
             return;
         }
 
         $this->setupFetchScript();
 
-        return $this->buildFetchingScript();
+        return $this->buildRequestScript();
     }
 
     /**
@@ -167,14 +167,14 @@ JS
 
         $this->fetched(
             <<<'JS'
-if (!result.status) {
-    return LA.error(result.message || 'Server internal error.');
+if (!response.status) {
+    return LA.error(response.message || 'Server internal error.');
 }     
-var w = (result.progress || 0) + '%', pg = card.find('.progress-bar');
+var w = (response.progress || 0) + '%', pg = card.find('.progress-bar');
  
 card.loading(false)
-card.find('.right-content').html(result.content.right || '');
-card.find('.main-content').html(result.content.left || '');
+card.find('.right-content').html(response.content.right || '');
+card.find('.main-content').html(response.content.left || '');
 pg.css({width: 0});
 setTimeout(function(){ pg.css({width: w});}, 150);
 card.find('number').counterUp({time: 550});

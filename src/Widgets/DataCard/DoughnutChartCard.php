@@ -134,7 +134,7 @@ HTML;
     {
         $this->buildDots();
 
-        if (! $this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildRequestScript()) {
             return;
         }
 

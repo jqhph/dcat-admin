@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Widgets\Chart;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\AjaxRequestBuilder;
+use Dcat\Admin\Widgets\HasAjaxRequest;
 use Dcat\Admin\Widgets\Color;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
  */
 abstract class Chart extends Widget
 {
-    use AjaxRequestBuilder;
+    use HasAjaxRequest;
 
     public static $globalSettings = [
         'defaultFontColor'  => '#555',
@@ -400,7 +400,7 @@ abstract class Chart extends Widget
             $globalSettings .= sprintf('Chart.defaults.global.%s="%s";', $k, $v);
         }
 
-        if (! $this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildRequestScript()) {
             return <<<JS
 {$globalSettings}
 setTimeout(function(){ new Chart($("#{$this->id}").get(0).getContext("2d"), $options) },60)
@@ -409,19 +409,19 @@ JS;
 
         $this->fetched(
             <<<JS
-if (!result.status) {
-    return LA.error(result.message || 'Server internal error.');
+if (!response.status) {
+    return LA.error(response.message || 'Server internal error.');
 }        
 var id = '{$this->id}', opt = $options, prev = window['obj'+id];
-opt.options = $.extend(opt.options, result.options || {});
-opt.data.datasets = result.datasets || opt.data.datasets;
+opt.options = $.extend(opt.options, response.options || {});
+opt.data.datasets = response.datasets || opt.data.datasets;
 if (prev) prev.destroy();
 
 window['obj'+id] = new Chart($("#"+id).get(0).getContext("2d"), opt);
 JS
         );
 
-        return $globalSettings.$this->buildFetchingScript();
+        return $globalSettings.$this->buildRequestScript();
     }
 
     /**

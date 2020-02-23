@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Illuminate\Support\Str;
 
-trait AjaxRequestBuilder
+trait HasAjaxRequest
 {
     /**
      * @var string
@@ -14,17 +14,12 @@ trait AjaxRequestBuilder
     /**
      * @var array
      */
-    protected $buttonSelectors = [];
-
-    /**
-     * @var string
-     */
-    protected $fn;
+    protected $__selectors = [];
 
     /**
      * @var array
      */
-    protected $javascripts = [
+    protected $__scripts = [
         'fetching' => [],
         'fetched'  => [],
     ];
@@ -80,9 +75,9 @@ trait AjaxRequestBuilder
     /**
      * @return array
      */
-    public function getJavascripts()
+    public function getScripts()
     {
-        return $this->javascripts;
+        return $this->__scripts;
     }
 
     /**
@@ -94,8 +89,8 @@ trait AjaxRequestBuilder
      */
     public function refetch($selector)
     {
-        $this->buttonSelectors =
-            array_merge($this->buttonSelectors, (array) $selector);
+        $this->__selectors =
+            array_merge($this->__selectors, (array) $selector);
 
         return $this;
     }
@@ -105,7 +100,7 @@ trait AjaxRequestBuilder
      */
     public function getButtonSelectors()
     {
-        return $this->buttonSelectors;
+        return $this->__selectors;
     }
 
     /**
@@ -117,7 +112,7 @@ trait AjaxRequestBuilder
      */
     public function fetching(string $script)
     {
-        $this->javascripts['fetching'][] = $script;
+        $this->__scripts['fetching'][] = $script;
 
         return $this;
     }
@@ -131,7 +126,7 @@ trait AjaxRequestBuilder
      */
     public function fetched(string $script)
     {
-        $this->javascripts['fetched'][] = $script;
+        $this->__scripts['fetched'][] = $script;
 
         return $this;
     }
@@ -139,46 +134,54 @@ trait AjaxRequestBuilder
     /**
      * @return bool
      */
-    public function allowBuildFetchingScript()
+    public function allowBuildRequestScript()
     {
         return $this->__url === null ? false : true;
     }
 
     /**
+     * @return string
+     */
+    public function generateScriptFunctionName()
+    {
+        return 'ajax_request_'.Str::random(8);
+    }
+
+    /**
      * @return bool|string
      */
-    public function buildFetchingScript()
+    public function buildRequestScript()
     {
-        if (! $this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildRequestScript()) {
             return false;
         }
 
-        $this->fn = 'frd_'.Str::random(8);
-
-        $fetching = implode(';', $this->javascripts['fetching']);
-        $fetched = implode(';', $this->javascripts['fetched']);
+        $fetching = implode(';', $this->__scripts['fetching']);
+        $fetched = implode(';', $this->__scripts['fetched']);
 
         $binding = '';
-        foreach ($this->buttonSelectors as $v) {
-            $binding .= "$('{$v}').click(function () { {$this->fn}($(this).data()) });";
+        foreach ($this->__selectors as $v) {
+            $binding .= "$('{$v}').click(function () { request($(this).data()) });";
         }
 
         return <<<JS
-window.{$this->fn} = function (p) {
-    $fetching;     
-    $.getJSON('{$this->__url}', $.extend({_token:LA.token}, p || {}), function (result) {
-        {$fetched};
-    });
-}
-{$this->fn}();
-$binding;
+(function () {
+    function request(p) {
+        $fetching;     
+        $.getJSON('{$this->__url}', $.extend({_token:LA.token}, p || {}), function (response) {
+            {$fetched};
+        });
+    }
+    request();
+    $binding
+})();
 JS;
     }
 
     /**
      * Copy the given AjaxRequestBuilder.
      *
-     * @param AjaxRequestBuilder $fetcher
+     * @param HasAjaxRequest $fetcher
      *
      * @return $this
      */
@@ -186,12 +189,12 @@ JS;
     {
         $this->__url = $fetcher->getUrl();
 
-        $this->buttonSelectors = $fetcher->getButtonSelectors();
+        $this->__selectors = $fetcher->getButtonSelectors();
 
-        $scripts = $fetcher->getJavascripts();
+        $scripts = $fetcher->getScripts();
 
-        $this->javascripts['fetching'] = array_merge($this->javascripts['fetching'], $scripts['fetching']);
-        $this->javascripts['fetched'] = array_merge($this->javascripts['fetched'], $scripts['fetched']);
+        $this->__scripts['fetching'] = array_merge($this->__scripts['fetching'], $scripts['fetching']);
+        $this->__scripts['fetched'] = array_merge($this->__scripts['fetched'], $scripts['fetched']);
 
         return $this;
     }

@@ -42,7 +42,7 @@ class LineChartCard extends Card
 
     protected function script()
     {
-        if (! $this->allowBuildFetchingScript()) {
+        if (! $this->allowBuildRequestScript()) {
             return;
         }
 
