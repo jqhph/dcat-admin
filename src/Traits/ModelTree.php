@@ -4,6 +4,7 @@ namespace Dcat\Admin\Traits;
 
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Tree;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,9 @@ trait ModelTree
     protected static $branchOrder = [];
 
     /**
-     * @var \Closure
+     * @var \Closure[]
      */
-    protected $queryCallback;
+    protected $queryCallbacks = [];
 
     /**
      * Get children of current node.
@@ -113,7 +114,7 @@ trait ModelTree
      */
     public function withQuery(\Closure $query = null)
     {
-        $this->queryCallback = $query;
+        $this->queryCallbacks[] = $query;
 
         return $this;
     }
@@ -147,16 +148,27 @@ trait ModelTree
         $orderColumn = DB::getQueryGrammar()->wrap($this->getOrderColumn());
         $byOrder = 'ROOT ASC, '.$orderColumn;
 
-        $self = new static();
-
-        if ($this->queryCallback instanceof \Closure) {
-            $self = call_user_func($this->queryCallback, $self);
-        }
-
-        return $self->selectRaw('*, '.$orderColumn.' ROOT')
+        return $this->callQueryCallbacks(new static())
+            ->selectRaw('*, '.$orderColumn.' ROOT')
             ->orderByRaw($byOrder)
             ->get()
             ->toArray();
+    }
+
+    /**
+     * @param $this $model
+     *
+     * @return $this|Builder
+     */
+    protected function callQueryCallbacks($model)
+    {
+        foreach ($this->queryCallbacks as $callback) {
+            if ($callback) {
+                $model = $callback($model);
+            }
+        }
+
+        return $model;
     }
 
     /**

@@ -451,6 +451,12 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function toTree()
     {
+        if ($this->relations) {
+            $this->withQuery(function ($model) {
+                return $model->with($this->relations);
+            });
+        }
+
         return $this->eloquent()->toTree();
     }
 

@@ -18,8 +18,8 @@ class Menu extends Model
 {
     use MenuCache,
         ModelTree {
-            ModelTree::boot as treeBoot;
-        }
+        ModelTree::boot as treeBoot;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -74,7 +74,7 @@ class Menu extends Model
      */
     public function allNodes(bool $force = false): array
     {
-        if ($force || $this->queryCallback instanceof \Closure) {
+        if ($force || $this->queryCallbacks) {
             return $this->fetchAll();
         }
 
@@ -93,10 +93,7 @@ class Menu extends Model
 
         $byOrder = 'ROOT ASC, '.$orderColumn;
 
-        $self = new static();
-        if ($this->queryCallback instanceof \Closure) {
-            $self = call_user_func($this->queryCallback, $self);
-        }
+        $self = $this->callQueryCallbacks(new static());
 
         if (static::withPermission()) {
             $self = $self->with('permissions');
