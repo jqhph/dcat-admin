@@ -18,8 +18,8 @@ class Menu extends Model
 {
     use MenuCache,
         ModelTree {
-        ModelTree::boot as treeBoot;
-    }
+            ModelTree::boot as treeBoot;
+        }
 
     /**
      * The attributes that are mass assignable.
