@@ -40,6 +40,11 @@ class Table extends Widget
      */
     public function __construct($headers = [], $rows = [], $style = [])
     {
+        if ($headers && ! $rows) {
+            $rows = $headers;
+            $headers = [];
+        }
+
         $this->setHeaders($headers);
         $this->setRows($rows);
         $this->setStyle($style);

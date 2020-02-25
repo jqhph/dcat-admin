@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 
 class Expand extends AbstractDisplayer
 {
@@ -12,7 +13,7 @@ class Expand extends AbstractDisplayer
     /**
      * @var array
      */
-    protected static $counter = [];
+    protected static $counter = 0;
 
     public function button($button)
     {
@@ -54,12 +55,11 @@ EOT;
      */
     protected function getDataKey()
     {
-        $key = $this->key();
+        $key = $this->key() ?: Str::random(8);
 
-        static::$counter[$key] = static::$counter[$key] ?? 0;
-        static::$counter[$key]++;
+        static::$counter++;
 
-        return $key.static::$counter[$key];
+        return $this->grid->getName().$key.'-'.static::$counter;
     }
 
     protected function setupScript()
