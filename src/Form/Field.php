@@ -533,7 +533,11 @@ class Field implements Renderable
     public function data(array $data = null)
     {
         if (is_null($data)) {
-            return $this->data ?: ($this->data = new Fluent());
+            if (! $this->data || is_array($this->data)) {
+                $this->data = new Fluent((array) $this->data);
+            }
+
+            return $this->data;
         }
 
         $this->data = new Fluent($data);
@@ -781,7 +785,7 @@ class Field implements Renderable
         $value = $this->prepareToSave($value);
 
         if ($handler = $this->prepareCallback) {
-            $handler->bindTo($this->data);
+            $handler->bindTo($this->data());
 
             return $handler($value);
         }
