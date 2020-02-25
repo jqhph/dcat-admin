@@ -94,7 +94,7 @@ class Equal extends Filter
     public function addBinding($value, Model $model)
     {
         $value = trim($value);
-        if (empty($value)) {
+        if ($value === '') {
             return;
         }
 

@@ -15,7 +15,7 @@ class Ngt extends Equal
     public function addBinding($value, Model $model)
     {
         $value = trim($value);
-        if (empty($value)) {
+        if ($value === '') {
             return;
         }
 

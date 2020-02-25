@@ -119,7 +119,8 @@ abstract class Filter implements Renderable
     protected function addResetButton()
     {
         $this->parent->grid()->filtering(function () {
-            if (! $this->value()) {
+            $value = $this->value();
+            if ($value === '' || $value === null) {
                 return;
             }
 
