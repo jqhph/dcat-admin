@@ -6,6 +6,13 @@ use Dcat\Admin\Support\Helper;
 
 class Modal extends AbstractDisplayer
 {
+    protected $title;
+
+    public function title(string $title)
+    {
+        $this->title = $title;
+    }
+
     public function display($callback = null)
     {
         $title = $this->trans('title');
@@ -15,11 +22,12 @@ class Modal extends AbstractDisplayer
 
         $html = $this->value;
         if ($callback instanceof \Closure) {
-            $callback = $callback->bindTo($this->row);
-
-            $html = Helper::render($callback($this));
+            $html = Helper::render(
+                $callback->call($this->row, $this)
+            );
         }
 
+        $title = $this->title ?: $title;
         $key = $this->grid->getName().$this->key();
 
         return <<<EOT
