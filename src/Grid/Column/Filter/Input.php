@@ -69,7 +69,6 @@ JS;
 HTML;
     }
 
-
     /**
      * @param string|\Closure $valueKey
      *

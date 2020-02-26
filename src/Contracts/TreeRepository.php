@@ -10,11 +10,6 @@
 
 namespace Dcat\Admin\Contracts;
 
-use Dcat\Admin\Form;
-use Dcat\Admin\Grid;
-use Dcat\Admin\Show;
-use Illuminate\Support\Collection;
-
 interface TreeRepository
 {
     /**

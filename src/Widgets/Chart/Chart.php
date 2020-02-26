@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Widgets\Chart;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\HasAjaxRequest;
 use Dcat\Admin\Widgets\Color;
+use Dcat\Admin\Widgets\HasAjaxRequest;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 

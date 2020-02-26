@@ -6,7 +6,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Fluent;
 
 abstract class AbstractDisplayer

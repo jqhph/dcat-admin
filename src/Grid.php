@@ -6,7 +6,6 @@ use Closure;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Concerns;
-use Dcat\Admin\Grid\Displayers;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Responsive;
 use Dcat\Admin\Grid\Row;
@@ -483,7 +482,7 @@ class Grid
         );
         $column->setGrid($this);
 
-        $column->display(function () use ($rowSelector, $keyName)  {
+        $column->display(function () use ($rowSelector, $keyName) {
             return $rowSelector->renderColumn($this, $this->{$keyName});
         });
 

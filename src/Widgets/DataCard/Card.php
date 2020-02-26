@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Widgets\DataCard;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\HasAjaxRequest;
 use Dcat\Admin\Widgets\Dropdown;
+use Dcat\Admin\Widgets\HasAjaxRequest;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
