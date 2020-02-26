@@ -33,11 +33,6 @@ abstract class AbstractExporter implements ExporterInterface
     protected $titles = [];
 
     /**
-     * @var array
-     */
-    protected $data;
-
-    /**
      * @var string
      */
     protected $filename;
@@ -88,20 +83,6 @@ abstract class AbstractExporter implements ExporterInterface
     public function filename($filename)
     {
         $this->filename = value($filename);
-
-        return $this;
-    }
-
-    /**
-     * Set export data.
-     *
-     * @param array $data
-     *
-     * @return $this
-     */
-    public function data($data)
-    {
-        $this->data = $data;
 
         return $this;
     }
@@ -189,10 +170,6 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function buildData(?int $page = null, ?int $perPage = null)
     {
-        if (! is_null($this->data)) {
-            return $this->data;
-        }
-
         $model = $this->grid->model();
 
         // current page
@@ -214,11 +191,21 @@ abstract class AbstractExporter implements ExporterInterface
         $model->reset();
         $model->rejectQueries('forPage');
 
-        if ($this->builder) {
-            return ($this->builder)($array);
+        return $this->callBuilder($array);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function callBuilder(array &$data)
+    {
+        if ($data && $this->builder) {
+            return ($this->builder)($data);
         }
 
-        return $array;
+        return $data;
     }
 
     /**
