@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <title>列过滤器 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
     <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="canonical" href="../../docs-master-widgets-dialog-form.html" />
+            <link rel="canonical" href="../../docs-master-model-grid-column-filter.html" />
     
      <link rel="stylesheet" href="../../assets/css/laravel.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
@@ -72,7 +72,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-widgets-dialog-form.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-column-filter.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -127,7 +127,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-widgets-dialog-form.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-column-filter.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -411,7 +411,148 @@
 	</style>
 
 	<article>
-		
+		<h1>列过滤器</h1>
+<p>这个功能可以给表格的列设置一个过滤器，可以更方便的根据这一列进行数据表格过滤操作</p>
+<p><a href="../../assets/img/screenshots/column-filter.png" target="_blank"></p>
+<img class="img" width="400px" src="../../assets/img/screenshots/column-filter.png">
+<p></a></p>
+<h2>字符串比较查询</h2>
+<pre><code   class="language-php">use Dcat\Admin\Grid;
+
+// WHERE `username` = "$input"
+$grid-&gt;username-&gt;filter(
+    Grid\Column\Filter\Equal::make()
+);</code></pre>
+<p>上面的调用可以给 <code  >username</code> 这一列的头部加上一个 <code  >input</code> 类型的过滤器，点击过滤器图标展开过滤器，输入查询提交后，会对这一列执行 <code  >等于</code> 查询。</p>
+<h3>开启字段值查询</h3>
+<p>这个功能可以给每一列字段的值设置一个过滤器，点击该列字段的值就可以进行数据表格过滤操作，非常方便。</p>
+<blockquote>
+<p>{tip} 开启此功能之后会把这个字段的原始值作为搜索内容，不会受 <code  >display</code> 方法影响。</p>
+</blockquote>
+<pre><code   class="language-php">use Dcat\Admin\Grid;
+
+// 设置为 label 或调用 display 方法不会影响查询内容
+$grid-&gt;ip-&gt;label()-&gt;filter();
+
+// 相当于
+$grid-&gt;ip-&gt;filter(
+    Grid\Column\Filter\Equal::make()-&gt;valueFilter()
+);</code></pre>
+<p>鼠标移动到开启了值查询功能的列上面，右边会显示一个“放大镜”图标
+<a href="../../assets/img/screenshots/column-value-filter-1.png" target="_blank"></p>
+<img class="img" width="400px" src="../../assets/img/screenshots/column-value-filter-1.png">
+<p></a></p>
+<p>点击列之后，表头会出现“重置”按钮，点击可以取消筛选</p>
+<p><a href="../../assets/img/screenshots/column-value-filter-search.png" target="_blank"></p>
+<img class="img" width="400px" src="../../assets/img/screenshots/column-value-filter-search.png">
+<p></a></p>
+<h4>设置值的字段名称</h4>
+<p>如果当前列的值并非用户想要搜索的值，可以通过以下方法更改字段名称。</p>
+<pre><code   class="language-php">$grid-&gt;model()-&gt;with(&#039;user&#039;);
+
+// 实际搜索的会是 name 字段的值
+$grid-&gt;username-&gt;filter(&#039;name&#039;);
+
+// 二维数组
+$grid-&gt;user_id-&gt;filter(&#039;user.id&#039;);
+
+// 闭包
+$grid-&gt;user_id-&gt;filter(function () {
+    return $this-&gt;user[&#039;id&#039;];
+});</code></pre>
+<h4>隐藏表头的筛选器图标</h4>
+<pre><code   class="language-php">use Dcat\Admin\Grid;
+
+$grid-&gt;user_id-&gt;onlyValueFilter();
+
+// 相当于
+$grid-&gt;user_id-&gt;filter(
+    Grid\Column\Filter\Equal::make()
+        -&gt;valueFilter()
+        -&gt;hide()
+);</code></pre>
+<p>效果如下</p>
+<p><a href="../../assets/img/screenshots/column-value-filter.png" target="_blank"></p>
+<img class="img" width="400px" src="../../assets/img/screenshots/column-value-filter.png">
+<p></a></p>
+<h3>其余Input表单类型过滤器</h3>
+<pre><code   class="language-php">use Dcat\Admin\Grid;
+
+// WHERE `username` LIKE "%{$input}%"
+$grid-&gt;username-&gt;filter(
+    Grid\Column\Filter\Like::make()
+);
+
+// WHERE `username` LIKE "{$input}%"
+$grid-&gt;username-&gt;filter(
+    Grid\Column\Filter\StartWith::make()
+);
+
+// WHERE `username` &gt; "$input"
+$grid-&gt;username-&gt;filter(
+    Grid\Column\Filter\Gt::make()
+);
+
+// WHERE `username` &lt;= "$input"
+$grid-&gt;username-&gt;filter(
+    Grid\Column\Filter\Ngt::make()
+);
+
+// WHERE `username` &lt; "$input"
+$grid-&gt;username-&gt;filter(
+    Grid\Column\Filter\Lt::make()
+);
+
+// WHERE `username` &gt;= "$input"
+$grid-&gt;username-&gt;filter(
+    Grid\Column\Filter\Nlt::make()
+);</code></pre>
+<h3>时间日期</h3>
+<p>如果字段是时间、日期相关的字段，可以使用下面的方法</p>
+<pre><code   class="language-php">use Dcat\Admin\Grid;
+
+$grid-&gt;date()-&gt;filter(
+    Grid\Column\Filter\Equal::make()-&gt;date()
+);
+
+$grid-&gt;time()-&gt;filter(
+    Grid\Column\Filter\Like::make()-&gt;time()
+);
+
+$grid-&gt;datetime()-&gt;filter(
+    Grid\Column\Filter\Gt::make()-&gt;datetime(&#039;YYYY-MM-DD HH:mm:ss&#039;)
+);</code></pre>
+<h2>多选查询</h2>
+<p>假设需要在表格数据中通过 <code  >status</code> 字段过滤一个或者多个状态的数据，使用多选过滤可以非常方便的实现</p>
+<pre><code   class="language-php">use Dcat\Admin\Grid;
+
+$grid-&gt;column(&#039;status&#039;, &#039;状态&#039;)-&gt;filter(
+    Grid\Column\Filter\In::make([
+        0 =&gt; &#039;未知&#039;,
+        1 =&gt; &#039;已下单&#039;,
+        2 =&gt; &#039;已付款&#039;,
+        3 =&gt; &#039;已取消&#039;,
+    ])
+);</code></pre>
+<h2>范围查询</h2>
+<p>假设需要通过 <code  >price</code> 字段过滤出某个价格范围内的数据</p>
+<pre><code   class="language-php">$grid-&gt;column(&#039;price&#039;)-&gt;filter(
+    Grid\Column\Filter\Between::make()
+);</code></pre>
+<p>或者是时间、日期范围的过滤</p>
+<pre><code   class="language-php">use Dcat\Admin\Grid;
+
+$grid-&gt;date()-&gt;filter(
+    Grid\Column\Filter\Between::make()-&gt;date()
+);
+
+$grid-&gt;time()-&gt;filter(
+    Grid\Column\Filter\Between::make()-&gt;time()
+);
+
+$grid-&gt;datetime()-&gt;filter(
+    Grid\Column\Filter\Between::make()-&gt;datetime()
+);</code></pre>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>
@@ -465,7 +606,7 @@
         },
     };
 
-    DMS.config.comment.id = 'master/widgets-dialog-form';
+    DMS.config.comment.id = 'master/model-grid-column-filter';
 
     (function () {
         function indices() {

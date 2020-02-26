@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <title>表单分步 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
     <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="canonical" href="../../docs-master-widgets-dialog-form.html" />
+            <link rel="canonical" href="../../docs-master-model-form-step.html" />
     
      <link rel="stylesheet" href="../../assets/css/laravel.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
@@ -72,7 +72,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-widgets-dialog-form.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-form-step.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -127,7 +127,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-widgets-dialog-form.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-form-step.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -411,7 +411,244 @@
 	</style>
 
 	<article>
-		
+		<h1>表单分步</h1>
+<h2>简单示例</h2>
+<pre><code   class="language-php">protected function form()
+{
+    $form = new Form();
+
+    $form-&gt;setTitle(&#039;分步表单&#039;);
+    $form-&gt;setAction(&#039;step&#039;);
+    $form-&gt;disableListButton();
+
+    $form-&gt;step()
+        -&gt;remember()
+        -&gt;width(&#039;950px&#039;)
+        -&gt;add(&#039;基本信息&#039;, function (Form\StepForm $step) {
+            $info = &#039;&lt;i class="fa fa-exclamation-circle"&gt;&lt;/i&gt; 表单字段支持前端验证和后端验证混用，前端验证支持H5表单验证以及自定义验证。&#039;;
+
+            $step-&gt;html(Alert::make($info)-&gt;info());
+
+            $step-&gt;text(&#039;name&#039;, &#039;姓名&#039;)-&gt;required()-&gt;maxLength(20);
+            // h5 表单验证
+            $step-&gt;text(&#039;age&#039;, &#039;年龄&#039;)
+                -&gt;required()
+                -&gt;type(&#039;number&#039;)
+                -&gt;attribute(&#039;max&#039;, 150)
+                -&gt;help(&#039;前端验证&#039;);
+
+            $step-&gt;radio(&#039;sex&#039;, &#039;性别&#039;)-&gt;options([&#039;未知&#039;, &#039;男&#039;, &#039;女&#039;])-&gt;default(0);
+
+            // 后端验证
+            $step-&gt;text(&#039;birthplace&#039;, &#039;籍贯&#039;)
+                -&gt;rules(&#039;required&#039;)
+                -&gt;help(&#039;演示后端字段验证&#039;);
+
+            $step-&gt;url(&#039;homepage&#039;, &#039;个人主页&#039;);
+
+            $step-&gt;textarea(&#039;description&#039;, &#039;简介&#039;);
+
+        })
+        -&gt;add(&#039;兴趣爱好&#039;, function (Form\StepForm $step) {
+            $step-&gt;tags(&#039;hobbies&#039;, &#039;爱好&#039;)
+                -&gt;options([&#039;唱&#039;, &#039;跳&#039;, &#039;RAP&#039;, &#039;踢足球&#039;])
+                -&gt;required();
+
+            $step-&gt;text(&#039;books&#039;, &#039;书籍&#039;);
+            $step-&gt;text(&#039;music&#039;, &#039;音乐&#039;);
+
+            // 事件
+            $step-&gt;shown(function () {
+                return &lt;&lt;&lt;JS
+LA.info(&#039;兴趣爱好&#039;);
+console.log(&#039;兴趣爱好&#039;, args);
+JS;
+            });
+
+        })
+        -&gt;add(&#039;地址&#039;, function (Form\StepForm $step) {
+            $step-&gt;text(&#039;address&#039;, &#039;街道地址&#039;);
+            $step-&gt;text(&#039;post_code&#039;, &#039;邮政编码&#039;);
+            $step-&gt;tel(&#039;tel&#039;, &#039; 联系电话&#039;);
+        })
+        -&gt;done(function () use ($form) {
+            $resource = $form-&gt;getResource(0);
+
+            $data = [
+                &#039;title&#039;       =&gt; &#039;操作成功&#039;,
+                &#039;description&#039; =&gt; &#039;恭喜您成为第10086位用户&#039;,
+                &#039;createUrl&#039;   =&gt; $resource,
+                &#039;backUrl&#039;     =&gt; $resource,
+            ];
+
+            return view(&#039;admin::form.done-step&#039;, $data);
+        });
+
+    return $form;
+}</code></pre>
+<p>效果</p>
+<p><a href="../../assets/img/screenshots/step-form-1.png" target="_blank"></p>
+<img style="box-shadow:0 1px 6px 1px rgba(0, 0, 0, 0.12)" width="100%" src="../../assets/img/screenshots/step-form-1.png">
+<p></a></p>
+<h2>运行逻辑</h2>
+<p>分步表单的使用很简单，运行逻辑也与普通表单没有太大区别，下面简单说说分步表单的运行逻辑。</p>
+<blockquote>
+<p>{tip} 分步表单没有 <code  >update</code> 的概念。</p>
+</blockquote>
+<h4>参数验证</h4>
+<p>当用户点击 <code  >下一步</code> 时，会向后端发起请求验证参数是否正确，如果参数不符合要求则显示错误信息，验证通过才会进入下一个步骤。</p>
+<h4>表单提交</h4>
+<p>当进行到最后一步时，会对所有步骤的表单参数一起提交到后端并进行验证，如果参数不符合要求则显示错误信息，验证通过则保存表单数据，保存的方法与普通表单完全一致。</p>
+<blockquote>
+<p>{tip} 最后保存表单的方法是 <code  >Form::store</code>。</p>
+</blockquote>
+<h4>完成页面</h4>
+<p>表单保存完成之后会显示完成页面，此步骤无法忽略。</p>
+<h2>功能接口</h2>
+<h3>设置容器最大宽度</h3>
+<p>默认 <code  >1000px</code>。</p>
+<blockquote>
+<p>{tip} 此方法只针对大屏幕，手机端页面会自动调节大小。</p>
+</blockquote>
+<pre><code   class="language-php">$form-&gt;step()-&gt;width(&#039;900px&#039;);</code></pre>
+<h3>记住表单数据</h3>
+<p>开启此功能之后，当用户点击 <code  >下一步</code> 按钮并且参数验证通过后，会把表单数据保存在 <code  >session</code> 中，直到整个分步表单保存完毕之后才会销毁。</p>
+<blockquote>
+<p>{tip} 此功能默认不开启。</p>
+</blockquote>
+<pre><code   class="language-php">// 开启
+$form-&gt;step()-&gt;remember();
+
+// 关闭
+$form-&gt;step()-&gt;remember(false);</code></pre>
+<h3>设置容器间距</h3>
+<p>默认值 <code  >30px 18px 30px</code>。</p>
+<pre><code   class="language-php">$form-&gt;step()-&gt;padding(&#039;30px 18px 30px&#039;);</code></pre>
+<h3>监听页面离开事件</h3>
+<p>监听所有步骤表单页面离开事件，可添加多个。</p>
+<pre><code   class="language-php">$form-&gt;step()-&gt;leaving(&lt;&lt;&lt;JS
+     // 获取当前页面的步骤索引
+     var index = args.index; 
+
+     LA.info("你将要离开第 " + (index + 1) + " 个页面");
+
+     // args变量是一个js对象，包含当前事件对象、当前步骤选项、表单对象和表单值等字段。
+     console.log("leaving", args);
+
+     // 获取当前事件对象
+     var evt = args.event;
+     // 获取步骤表单标题tap对象
+     var tab = args.tab;
+     // 获取动向是前往上一步还是下一步页面："forward"、"backward"
+     var direction = args.direction;
+     // 获取当前步骤的表单JQ对象
+     var $form = args.form;
+     // 获取当前步骤页的表单值
+     var formArray = args.formArray;
+
+     // 获取指定步骤的表单JQ对象
+     var $firstForm = args.getForm(0);
+     // 获取指定步骤的表单值
+     var firstFormArray = args.getFormArray(0);
+
+     // 停止离开当前页面
+     return false;
+JS    
+)-&gt;leaving(...);</code></pre>
+<h3>监听页面显示事件</h3>
+<p>监听所有步骤表单页面显示事件，可添加多个。</p>
+<pre><code   class="language-php">$form-&gt;step()-&gt;shown(&lt;&lt;&lt;JS
+     // 获取当前页面的步骤索引
+     var index = args.index; 
+
+     LA.info("当前显示的是第 " + (index + 1) + " 个页面");
+
+     // args变量的值与“leaving”事件的值相同。
+     console.log("shown", args);
+JS    
+)-&gt;shown(...);</code></pre>
+<h3>增加步骤表单</h3>
+<p>步骤表单支持所有表单字段。</p>
+<pre><code   class="language-php">use Dcat\Admin\Form;
+
+$form-&gt;step()-&gt;add(&#039;标题&#039;, function (Form\StepForm $step) {
+
+    $step-&gt;text(&#039;username&#039;)-&gt;rules(&#039;required&#039;);
+
+    ...
+});</code></pre>
+<h4>监听步骤页面离开事件</h4>
+<p>监听当前步骤页面离开事件，支持监听多次。</p>
+<pre><code   class="language-php">use Dcat\Admin\Form;
+
+$form-&gt;step()-&gt;add(&#039;基本信息&#039;, function (Form\StepForm $step) {
+    ...
+
+    $step-&gt;leaving(&lt;&lt;&lt;JS
+
+    LA.info("你将要离开 基本信息 页面");
+
+    // args变量是一个js对象，包含当前事件对象、当前步骤选项、表单对象和表单值等字段。
+    console.log("离开 基本信息", args);
+
+    // 获取当前事件对象
+    var evt = args.event;
+    // 获取当前页面的步骤索引
+    var index = args.index;
+    // 获取步骤表单标题tap对象
+    var tab = args.tab;
+    // 获取动向是前往上一步还是下一步页面："forward"、"backward"
+    var direction = args.direction;
+    // 获取当前步骤的表单JQ对象
+    var $form = args.form;
+    // 获取当前步骤页的表单值
+    var formArray = args.formArray;
+
+    // 获取指定步骤的表单JQ对象
+    var $firstForm = args.getForm(0);
+    // 获取指定步骤的表单值
+    var firstFormArray = args.getFormArray(0);
+
+    // 停止离开当前页面
+    return false;
+JS    
+    );
+
+    // 监听多次
+    $step-&gt;leaving(...);
+});</code></pre>
+<h4>监听步骤页面显示事件</h4>
+<p>监听当前步骤页面显示事件，支持监听多次。</p>
+<pre><code   class="language-php">use Dcat\Admin\Form;
+
+$form-&gt;step()-&gt;add(&#039;基本信息&#039;, function (Form\StepForm $step) {
+    ...
+
+    $step-&gt;shown(&lt;&lt;&lt;JS
+
+    LA.info("当前步骤是 基本信息");
+
+    // args变量的值与“leaving”事件的值相同。
+    console.log("显示 基本信息", args);
+JS    
+    );
+
+    // 监听多次
+    $step-&gt;shown(...);
+});</code></pre>
+<h3>设置完成页面</h3>
+<p>当所有步骤都完成之后会显示完成页面，系统提供一个默认的完成页面，开发者也可以通过以下方法自定义完成页面要显示的内容。</p>
+<pre><code   class="language-php">use Dcat\Admin\Form;
+
+$form-&gt;step()-&gt;done(function (Form\DoneStep $done) {
+
+    // 获取新增ID
+    // 由 Repository::store 返回的值
+    $newId = $done-&gt;getNewId();
+
+    // 返回你要显示的内容，可以使一个视图也可以是一个字符串。
+    return view(...);
+});</code></pre>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>
@@ -465,7 +702,7 @@
         },
     };
 
-    DMS.config.comment.id = 'master/widgets-dialog-form';
+    DMS.config.comment.id = 'master/model-form-step';
 
     (function () {
         function indices() {
