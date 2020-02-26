@@ -9,14 +9,13 @@
         font-size:20px;
     }
 </style>
-<ul class="products-list product-list-in-box" id="extension-box" style="margin-top:10px">
-
+<ul class="products-list product-list-in-box" id="extension-box" style="margin-top:10px;min-height: 100px">
     @foreach($extensions as $extension)
-        <li class="item">
+        <li class="item hidden">
             <div class="product-img">
-                <i class="fa {{$extension['icon']}} fa-2x ext-icon"></i>
+                <i class="{{$extension['icon']}} fa-2x ext-icon"></i>
             </div>
-            <div class="product-info">
+            <div class="product-info" data-key="{{$extension['key']}}">
                 <a href="{{ $extension['link'] }}" target="_blank" class="">
                     {{ $extension['name'] }}
                 </a>
@@ -27,15 +26,27 @@
         </li>
 @endforeach
 
-<!-- /.item -->
 </ul>
-<!-- /.box-body -->
+
 <div class="box-footer text-center">
-    <a href="https://github.com/dcat-admin-extensions" target="_blank" class="uppercase">View All Extensions</a>
+    <a href="https://github.com/jqhph/dcat-admin#%E6%89%A9%E5%B1%95" target="_blank" class="uppercase">View All Extensions</a>
 </div>
 
 <script>LA.ready(function () {
-//    $('#extension-box').loading({style: 'left:0;right:0'});
+    var $box = $('#extension-box');
+    $box.loading();
 
+    $.ajax({
+        url: 'https://jqhph.github.io/dcat-admin/extra/extensions.html',
+        success: function (response) {
+            $box.loading(false);
 
+            $box.html(response);
+        },
+        error: function () {
+            $box.loading(false);
+
+            $box.find('.item').removeClass('hidden');
+        }
+    });
 })</script>

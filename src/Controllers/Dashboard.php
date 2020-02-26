@@ -58,24 +58,29 @@ class Dashboard
     {
         $extensions = [
             'Dcat Page' => [
-                'name' => '一个简洁的静态站点生成工具 - Dcat Page',
+                'name' => 'Dcat Page 简洁的静态站点生成工具',
                 'link' => 'https://github.com/jqhph/dcat-page',
-                'icon' => ' fa-file-text-o',
+                'icon' => 'fa fa-file-text-o',
                 'key'  => 'dcat-page',
             ],
             'UEditor' => [
-                'name' => '百度在线编辑器 UEditor',
+                'name' => 'UEditor 百度在线编辑器',
                 'link' => 'https://github.com/jqhph/dcat-admin-ueditor',
-                'icon' => 'fa-underline',
+                'icon' => 'fa fa-underline',
                 'key'  => 'ueditor',
+            ],
+            'Sortable' => [
+                'name' => 'Grid-sortable 列表拖曳排序工具',
+                'link' => 'https://github.com/jqhph/dcat-admin-grid-sortable',
+                'icon' => 'glyphicon glyphicon-sort ',
+                'key'  => 'grid-sortable',
             ],
             '干货集中营' => [
                 'name' => '干货集中营',
                 'link' => 'https://github.com/jqhph/dcat-admin-gank',
-                'icon' => 'fa-newspaper-o',
+                'icon' => 'fa fa-newspaper-o',
                 'key'  => 'gank',
             ],
-
         ];
 
         foreach ($extensions as &$extension) {

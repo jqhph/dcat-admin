@@ -112,9 +112,10 @@ php artisan admin:install
 
 | 扩展                                        | 描述                              | dcat-admin 版本                             |
 | ------------------------------------------------ | ---------------------------------------- |---------------------------------------- |
-| [dcat-page](https://github.com/jqhph/dcat-page)             | 一个简洁的静态站点构建工具 | * |
-| [ueditor](https://github.com/jqhph/dcat-admin-ueditor) | 百度在线编辑器          | * |
-| [gank](https://github.com/jqhph/dcat-admin-gank) | 干货集中营          |* |
+| [dcat-page](https://github.com/jqhph/dcat-page)    | 简洁的静态站点构建工具 | * |
+| [ueditor](https://github.com/jqhph/dcat-admin-ueditor) | 百度在线编辑器     | * |
+| [grid-sortable](https://github.com/jqhph/dcat-admin-grid-sortable) | 表格拖曳排序工具      | * |
+| [gank](https://github.com/jqhph/dcat-admin-gank) | 干货集中营      |* |
 
 
 ## 贡献
@@ -131,18 +132,23 @@ php artisan admin:install
 + [font-awesome](http://fontawesome.io)
 + [jquery-form](https://github.com/jquery-form/form)
 + [moment](http://momentjs.com/)
-+ [Google map](https://www.google.com/maps)
-+ [Tencent map](http://lbs.qq.com/)
++ [webuploader](http://fex.baidu.com/webuploader/)
 + [bootstrap-fileinput](https://github.com/kartik-v/bootstrap-fileinput)
 + [jquery-pjax](https://github.com/defunkt/jquery-pjax)
 + [Nestable](http://dbushell.github.io/Nestable/)
 + [toastr](http://codeseven.github.io/toastr/)
++ [editor-md](https://github.com/pandao/editor.md)
 + [X-editable](http://github.com/vitalets/x-editable)
 + [bootstrap-number-input](https://github.com/wpic/bootstrap-number-input)
 + [fontawesome-iconpicker](https://github.com/itsjavi/fontawesome-iconpicker)
 + [layer弹出层](http://layer.layui.com/)
 + [waves](https://github.com/fians/Waves)
-
++ [bootstrap-duallistbox](https://www.virtuosoft.eu/code/bootstrap-duallistbox/)
++ [char.js](https://www.chartjs.org)
++ [nprogress](https://ricostacruz.com/nprogress/)
++ [bootstrap-validator](https://github.com/1000hz/bootstrap-validator)
++ [Google map](https://www.google.com/maps)
++ [Tencent map](http://lbs.qq.com/)
 
 ## License
 ------------
