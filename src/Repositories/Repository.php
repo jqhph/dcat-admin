@@ -2,11 +2,11 @@
 
 namespace Dcat\Admin\Repositories;
 
+use Dcat\Admin\Contracts\Repository as RepositoryInterface;
 use Dcat\Admin\Contracts\TreeRepository;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Contracts\Repository as RepositoryInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 use RuntimeException;

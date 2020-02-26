@@ -69,7 +69,6 @@ class RowSelector
     <input type="checkbox" class="select-all {$this->grid->selectAllName()}"><label></label>
 </div>
 HTML;
-
     }
 
     public function renderColumn($row, $id)
