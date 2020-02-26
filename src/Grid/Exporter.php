@@ -4,7 +4,12 @@ namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Exporters\ExporterInterface;
+use phpDocumentor\Reflection\Types\Mixed_;
 
+/**
+ * @mixin Grid\Exporters\AbstractExporter
+ * @method mixed export
+ */
 class Exporter
 {
     /**
@@ -34,6 +39,11 @@ class Exporter
     protected $grid;
 
     /**
+     * @var Grid\Exporters\AbstractExporter
+     */
+    protected $driver;
+
+    /**
      * @var array
      */
     protected $options = [
@@ -52,7 +62,7 @@ class Exporter
     {
         $this->grid = $grid;
 
-        $grid->setExporterQueryName();
+        $this->setQueryName($grid->getName().$this->queryName);
     }
 
     /**
@@ -164,15 +174,27 @@ class Exporter
      */
     public function resolve($driver = null)
     {
+        if ($this->driver) {
+            return $this->driver;
+        }
+
         if ($driver && $driver instanceof Grid\Exporters\AbstractExporter) {
-            return $driver->setGrid($this->grid);
+            $this->driver = $driver->setGrid($this->grid);
+        } else if ($driver && $driver instanceof ExporterInterface) {
+            $this->driver = $driver;
+        } else {
+            $this->driver = $this->newDriver($driver);
         }
 
-        if ($driver && $driver instanceof ExporterInterface) {
-            return $driver;
-        }
+        return $this->driver;
+    }
 
-        return $this->exporter($driver);
+    /**
+     * @return Exporters\AbstractExporter
+     */
+    public function driver()
+    {
+        return $this->driver ?: $this->resolve();
     }
 
     /**
@@ -182,10 +204,10 @@ class Exporter
      *
      * @return Grid\Exporters\AbstractExporter
      */
-    protected function exporter($driver): ExporterInterface
+    protected function newDriver($driver): ExporterInterface
     {
         if (! $driver || ! array_key_exists($driver, static::$drivers)) {
-            return $this->makeDefaultExporter();
+            return $this->makeDefaultDriver();
         }
 
         $driver = new static::$drivers[$driver]();
@@ -202,7 +224,7 @@ class Exporter
      *
      * @return Grid\Exporters\ExcelExporter
      */
-    public function makeDefaultExporter()
+    public function makeDefaultDriver()
     {
         return Grid\Exporters\ExcelExporter::make()->setGrid($this->grid);
     }
@@ -232,5 +254,18 @@ class Exporter
         }
 
         return [$this->queryName => $query];
+    }
+
+    /**
+     * @param $method
+     * @param $arguments
+     *
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        $this->driver()->$method(...$arguments);
+
+        return $this;
     }
 }

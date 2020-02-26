@@ -12,36 +12,38 @@ trait HasExporter
     /**
      * @var Exporter
      */
-    protected $exporter;
+    protected $__exporter;
 
     /**
-     * Export driver.
-     *
-     * @var string|Grid\Exporters\AbstractExporter
+     * @var bool
      */
-    protected $exportDriver;
+    protected $enableExporter = false;
 
     /**
      * Set exporter driver for Grid to export.
      *
-     * @param string|Grid\Exporters\AbstractExporter|array $exporter
+     * @param string|Grid\Exporters\AbstractExporter|array $exporterDriver
      *
-     * @return Grid\Exporters\AbstractExporter
+     * @return Exporter
      */
-    public function export($exporter = null)
+    public function export($exporterDriver = null)
     {
+        $this->enableExporter = true;
+
         $titles = [];
 
-        if (is_array($exporter) || $exporter === false) {
-            $titles = $exporter;
-            $exporter = null;
+        if (is_array($exporterDriver) || $exporterDriver === false) {
+            $titles = $exporterDriver;
+            $exporterDriver = null;
         }
 
-        $this->showExporter();
+        $exporter = $this->exporter();
 
-        $driver = $this->exportDriver ?: ($this->exportDriver = $this->exporter()->resolve($exporter));
+        if ($exporterDriver) {
+            $exporter->resolve($exporterDriver);
+        }
 
-        return $driver->titles($titles);
+        return $exporter->titles($titles);
     }
 
     /**
@@ -74,16 +76,21 @@ trait HasExporter
      */
     public function exporter()
     {
-        return $this->exporter ?: ($this->exporter = new Exporter($this));
+        return $this->__exporter ?: ($this->__exporter = new Exporter($this));
     }
 
-    public function setExporterQueryName()
+    /**
+     * @param string $name
+     *
+     * @return void
+     */
+    protected function setExporterQueryName(string $name = null)
     {
         if (! $this->allowExporter()) {
             return;
         }
 
-        $this->exporter()->setQueryName($this->getName().'_export_');
+        $this->exporter()->setQueryName(($name ?: $this->getName()).'_export_');
     }
 
     /**
@@ -93,11 +100,7 @@ trait HasExporter
      */
     protected function resolveExportDriver($scope)
     {
-        if (! $this->exportDriver) {
-            $this->exportDriver = $this->exporter()->resolve();
-        }
-
-        return $this->exportDriver->withScope($scope);
+        return $this->exporter()->driver()->withScope($scope);
     }
 
     /**
@@ -134,32 +137,12 @@ trait HasExporter
     }
 
     /**
-     * Disable export.
-     *
-     * @return $this
-     */
-    public function disableExporter(bool $disable = true)
-    {
-        return $this->option('show_exporter', ! $disable);
-    }
-
-    /**
-     * Show export button.
-     *
-     * @return $this
-     */
-    public function showExporter(bool $val = true)
-    {
-        return $this->disableExporter(! $val);
-    }
-
-    /**
      * If grid show export btn.
      *
      * @return bool
      */
     public function allowExporter()
     {
-        return $this->options['show_exporter'];
+        return $this->enableExporter;
     }
 }

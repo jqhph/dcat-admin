@@ -168,7 +168,6 @@ class Grid
         'show_create_button'     => true,
         'show_bordered'          => false,
         'show_toolbar'           => true,
-        'show_exporter'          => false,
         'create_mode'            => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'       => ['700px', '670px'],
         'table_header_style'     => 'table-header-gray',
