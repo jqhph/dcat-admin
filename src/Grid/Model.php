@@ -6,7 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Middleware\Pjax;
 use Dcat\Admin\Repositories\Repository;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -32,9 +32,9 @@ class Model
     protected $repository;
 
     /**
-     * @var EloquentModel
+     * @var AbstractPaginator
      */
-    protected $model;
+    protected $paginator;
 
     /**
      * Array of queries of the model.
@@ -51,9 +51,14 @@ class Model
     protected $sort;
 
     /**
-     * @var Collection|LengthAwarePaginator
+     * @var Collection
      */
-    protected $data = null;
+    protected $data;
+
+    /**
+     * @var callable
+     */
+    protected $builder;
 
     /*
      * 20 items per page as default.
@@ -163,11 +168,33 @@ class Model
     }
 
     /**
-     * @return LengthAwarePaginator|Collection
+     * @return AbstractPaginator
      */
-    public function paginator()
+    public function paginator(): AbstractPaginator
     {
-        return $this->get();
+        $this->buildData();
+
+        return $this->paginator;
+    }
+
+    /**
+     * @param int              $total
+     * @param Collection|array $data
+     *
+     * @return LengthAwarePaginator
+     */
+    public function makePaginator($total, $data, string $url = null)
+    {
+        $paginator = new LengthAwarePaginator(
+            $data,
+            $total,
+            $this->getPerPage(), // 传入每页显示行数
+            $this->getCurrentPage() // 传入当前页码
+        );
+
+        return $paginator->setPath(
+            $url ?: url()->current()
+        );
     }
 
     /**
@@ -343,43 +370,51 @@ class Model
      *
      * @return array|Collection|mixed
      */
-    public function buildData(bool $toArray = true)
+    public function buildData(bool $toArray = false)
     {
-        if (is_null($this->data) || $this->data instanceof \Closure) {
-            $this->setData($this->get());
+        if (is_null($this->data)) {
+            $this->setData($this->fetch());
         }
 
         return $toArray ? $this->data->toArray() : $this->data;
     }
 
     /**
-     * @param Collection|\Closure|array $data
+     * @param Collection|callable|array|AbstractPaginator $data
+     *
+     * @return $this
      */
     public function setData($data)
     {
+        if (is_callable($data)) {
+            $this->builder = $data;
+
+            return $this;
+        }
+
         if ($this->collectionCallback) {
             foreach ($this->collectionCallback as $cb) {
-                $data = call_user_func($cb, $data);
+                $data = call_user_func($cb, $this->data);
             }
         }
 
-        if (
-            ($isA = is_array($data))
-            || $data instanceof Collection
-            || $data instanceof \Closure
-            || ($isP = $data instanceof AbstractPaginator)
-        ) {
-            if ($isA) {
-                $data = collect($data);
-            } elseif (! empty($isP)) {
-                $this->model = $data;
-                $this->data = $data->getCollection();
+        if ($data instanceof AbstractPaginator) {
+            $this->setPaginator($data);
 
-                return;
-            }
+            $data = $data->getCollection();
+        } elseif (is_array($data)) {
+            $data = collect($data);
+        } elseif ($data instanceof Arrayable) {
+            $data = collect($data->toArray());
+        }
 
+        if ($data instanceof Collection) {
             $this->data = $data;
+        } else {
+            $this->data = collect();
         }
+
+        return $this;
     }
 
     /**
@@ -401,46 +436,50 @@ class Model
     /**
      * @throws \Exception
      *
-     * @return Collection|LengthAwarePaginator
+     * @return Collection|array
      */
-    public function get()
+    protected function fetch()
     {
-        if (
-            $this->model instanceof LengthAwarePaginator
-            || $this->model instanceof Collection
-        ) {
-            return $this->model;
+        if ($this->paginator) {
+            return $this->paginator->getCollection();
         }
 
         $this->setSort();
         $this->setPaginate();
 
-        if ($this->data instanceof \Closure) {
-            $data = $this->data;
-            $this->data = collect();
-
-            return $this->model = $data($this);
+        if ($this->builder && is_callable($this->builder)) {;
+            $results = call_user_func($this->builder, $this);
+        } else {
+            $results = $this->repository->get($this);
         }
 
-        $this->model = $this->repository->get($this);
-
-        if (is_array($this->model)) {
-            $this->model = collect($this->model);
+        if (is_array($results) || $results instanceof Collection) {
+            return $results;
         }
 
-        if ($this->model instanceof Collection) {
-            return $this->model;
-        }
+        if ($results instanceof AbstractPaginator) {
+            $this->setPaginator($results);
 
-        if ($this->model instanceof LengthAwarePaginator) {
-            $this->model->setPageName($this->pageName);
-
-            $this->handleInvalidPage($this->model);
-
-            return $this->model->getCollection();
+            return $results->getCollection();
         }
 
         throw new \Exception('Grid query error');
+    }
+
+    /**
+     * @param AbstractPaginator $paginator
+     *
+     * @return void
+     */
+    protected function setPaginator(AbstractPaginator $paginator)
+    {
+        $this->paginator = $paginator;
+
+        $paginator->setPageName($this->pageName);
+
+        if ($paginator instanceof LengthAwarePaginator) {
+            $this->handleInvalidPage($paginator);
+        }
     }
 
     /**
@@ -711,20 +750,6 @@ class Model
         }
 
         return $this->__call('with', (array) $relations);
-    }
-
-    /**
-     * @param $key
-     *
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        $data = $this->buildData();
-
-        if (array_key_exists($key, $data)) {
-            return $data[$key];
-        }
     }
 
     /**

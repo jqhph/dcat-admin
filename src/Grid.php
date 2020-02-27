@@ -560,14 +560,6 @@ class Grid
             return '';
         }
 
-        if ($content instanceof Renderable) {
-            $content = $content->render();
-        }
-
-        if ($content instanceof Htmlable) {
-            $content = $content->toHtml();
-        }
-
         return <<<HTML
 <div class="box-header clearfix" style="border-top:1px solid #ebeff2">{$content}</div>
 HTML;
@@ -608,16 +600,8 @@ HTML;
             return '';
         }
 
-        if ($content instanceof Renderable) {
-            $content = $content->render();
-        }
-
-        if ($content instanceof Htmlable) {
-            $content = $content->toHtml();
-        }
-
         return <<<HTML
-    <div class="box-footer clearfix">{$content}</div>
+<div class="box-footer clearfix">{$content}</div>
 HTML;
     }
 

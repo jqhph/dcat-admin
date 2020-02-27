@@ -59,7 +59,7 @@ class Paginator implements Renderable
     /**
      * Get per-page selector.
      *
-     * @return PerPageSelector|null
+     * @return string|null
      */
     protected function perPageSelector()
     {
@@ -102,10 +102,5 @@ class Paginator implements Renderable
         return $this->paginationRanger().
             $this->paginationLinks().
             $this->perPageSelector();
-    }
-
-    public function __toString()
-    {
-        return Helper::render($this->render());
     }
 }

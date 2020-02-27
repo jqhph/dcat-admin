@@ -75,7 +75,7 @@
 
     @if ($paginator = $grid->paginator())
         <div class="box-footer clearfix " style="padding-bottom:5px;">
-            {!! $paginator !!}
+            {!! $paginator->render() !!}
         </div>
     @else
         <div class="box-footer clearfix text-80 " style="height:48px;line-height:25px;">

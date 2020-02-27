@@ -125,7 +125,7 @@ class Row implements Arrayable
     /**
      * Get data of this row.
      *
-     * @return mixed
+     * @return Fluent
      */
     public function model()
     {
