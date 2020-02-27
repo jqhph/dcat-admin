@@ -7,7 +7,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasDefinitions;
-use Dcat\EasyExcel\Support\Traits\Macroable;
+use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
