@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>表单数据源 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <title>数据表格事件 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
     <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="canonical" href="../../docs-master-model-form-data.html" />
+            <link rel="canonical" href="../../docs-master-model-grid-events.html" />
     
      <link rel="stylesheet" href="../../assets/css/laravel.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
@@ -74,7 +74,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-model-form-data.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-events.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -131,7 +131,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-model-form-data.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-events.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -397,125 +397,79 @@
 	</section>
 
 	<article>
-		<h1>表单数据源</h1>
-<h2>模型与数据仓库</h2>
-<p><code  >Dcat Admin</code>中表单对数据的操作并非直接依赖于<code  >Eloquent Model</code>，而是依赖于<code  >Repository</code>提供的数据操作接口。</p>
-<blockquote>
-<p>{tip} <code  >Repository</code>提供更简单更清晰数据操作接口，开发者可以通过实现不同的数据操作接口轻松支持多数据源，具体使用方法请参照<a href="../../docs/master/model-repository.html">数据仓库</a>。</p>
-</blockquote>
-<h2>数据来自模型</h2>
-<p>当数据源支持模型时，只需创建一个非常简单的<code  >Repository</code>类既可：</p>
-<pre><code   class="language-php">&lt;?php
+		<h1>数据表格事件</h1>
+<h3>初始化</h3>
+<p>通过 <code  >Grid::resolving</code> 方法可以监听表格初始化事件。</p>
+<p>开发者可以在这两个事件中改变 <code  >Grid</code> 的一些设置或行为，比如需要禁用掉某些操作，可以在 <code  >app/Admin/bootstrap.php</code> 加入下面的代码：</p>
+<pre><code   class="language-php">use Dcat\Admin\Grid;
 
-namespace App\Admin\Repositories;
+Grid::resolving(function (Grid $grid) {
+    $grid-&gt;disableActions();
 
-use Dcat\Admin\Repositories\EloquentRepository;
-use App\Models\Movie as MovieModel;
+    $grid-&gt;disablePagination();
 
-class Movie extends EloquentRepository
-{
-    // 这里定义你的模型类名
-    protected $eloquentClass = MovieModel::class;
+    $grid-&gt;disableCreateButton();
 
-    // 通过这个方法可以指定表单页查询的字段，默认"*"
-    public function getFormColumns()
-    {
-        return [$this-&gt;getKeyName(), &#039;name&#039;, &#039;title&#039;, &#039;created_at&#039;];
+    $grid-&gt;disableFilter();
+
+    $grid-&gt;disableRowSelector();
+
+    $grid-&gt;disableTools();
+
+    $grid-&gt;disableExport();
+});
+
+// 只需要监听一次
+Grid::resolving(function (Grid $grid) {
+    ...
+}, true);</code></pre>
+<p>这样就不用在每一个控制器的代码中来设置了。</p>
+<p>如果全局设置后，要在其中某一个表格中开启设置，比如开启显示操作列，在对应的实例上调用 <code  >$grid-&gt;disableActions(false);</code> 就可以了</p>
+<h3>构建</h3>
+<p>通过 <code  >Grid::composing</code> 方法可以监听表格被调用事件。</p>
+<pre><code   class="language-php">Grid::composing(function (Grid $grid) {
+    ...
+});
+
+// 只需要监听一次
+Grid::composing(function (Grid $grid) {
+    ...
+}, true);</code></pre>
+<h3>获取数据之前</h3>
+<p>通过 <code  >Grid::fetching</code> 方法可以监听表格获取数据之前事件，此事件在 <code  >composing</code> 事件之后触发。</p>
+<pre><code   class="language-php">
+$grid = new Grid(...);
+
+$grid-&gt;fetching(function () {
+    ...
+});
+
+// 可以在 composing 事件中使用
+Grid::composing(function (Grid $grid) {
+    $grid-&gt;fetching(function (Grid $grid) {
+        ...
+    });
+});</code></pre>
+<h3>获取数据之后</h3>
+<p>通过 <code  >Grid::rows</code> 方法可以监听表格获取数据之后事件。</p>
+<pre><code   class="language-php">use Dcat\Admin\Grid\Row;
+use Illuminate\Support\Collection;
+
+$grid-&gt;rows(function (Collection $rows) {
+    /**
+     * 获取第一行数据
+     *
+     * @var Row $firstRow
+     */
+    $firstRow = $rows-&gt;first();
+
+    if ($firstRow) {
+        // 获取第一行的 id
+        $id = $firstRow-&gt;id;
+        // 转化为数组
+        $row = $firstRow-&gt;toArray();
     }
-}</code></pre>
-<p>使用：</p>
-<pre><code   class="language-php">use App\Admin\Repositories\Movie;
-
-$form = new Form(new Movie);
-
-...</code></pre>
-<h2>数据来自外部API</h2>
-<p>当下面用<code  >豆瓣电影</code>的API为例子，来展示<code  >Repository</code>的写操作相关接口：</p>
-<pre><code   class="language-php">&lt;?php
-namespace App\Admin\Repositories;
-
-use Dcat\Admin\Repositories\Repository;
-use Dcat\Admin\Form;
-
-class ComingSoon extends Repository
-{
-    protected $api = &#039;https://api.douban.com/v2/movie/coming_soon&#039;;
-
-    // 返回你的id字段名称，默认“id”
-    protected $keyName = &#039;_id&#039;;
-
-    // 查询编辑页数据
-    // 这个方法需要返回一个数组
-    public function edit(Form $form): array
-    {
-        // 获取id
-        $id = $form-&gt;builder()-&gt;getResourceId();
-
-        $data = file_get_contents("http://api.douban.com/v2/movie/subject/$id");
-
-        return json_decode($data, true);
-    }
-
-    // 这个方法用于在修改数据前查询原记录
-    // 如果使用了文件上传表单，当文件发生变更时会根据这个原始记录自动删除旧文件
-     // 如果不需要此数据返回空数组即可
-    public function getDataWhenUpdating(Form $form): array
-    {
-        // 获取id
-        $id = $form-&gt;builder()-&gt;getResourceId();
-
-        return [];
-    }
-
-    // 修改操作
-    // 返回一个bool类型的数据
-    public function update(Form $form)
-    {
-        // 获取id
-        $id = $form-&gt;builder()-&gt;getResourceId();
-
-        // 获取要修改的数据
-        $attributes = $form-&gt;getUpdates();
-
-        // TODO
-        // 这里写你的修改逻辑
-
-        return true;
-    }
-
-    // 这个方法用于在修改数据前查询原始数据
-    // 如果使用了文件上传表单，会根据这个数据自动删除文件
-    // 如果不需要此数据返回空数组即可
-    public function getDataWhenDeleting(Form $form): array
-    {
-        $id = $form-&gt;builder()-&gt;getResourceId();
-
-        $id = explode(&#039;,&#039;, $id);
-
-//        $data = file_get_contents("http://api.douban.com/v2/movie/subject/$id");
-//
-//        return json_decode($data, true);
-
-        return [];
-    }
-
-    // 删除数据
-    // $deletingData 是由 getDataWhenDeleting 方法返回的数据
-    public function destroy(Form $form, array $deletingData)
-    {
-        // 注意这里的id可能是多个
-        $id = $form-&gt;builder()-&gt;getResourceId();
-
-        // 当使用批量删除功能时，这里的id是用“,”隔开的字符串
-        $id = explode(&#039;,&#039;, $id);
-
-        // TODO
-//        var_dump($id, $deletingData);
-
-        return true;
-    }
-
-}</code></pre>
+});</code></pre>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>
@@ -571,7 +525,7 @@ class ComingSoon extends Repository
         },
     };
 
-    DMS.config.comment.id = 'master/model-form-data';
+    DMS.config.comment.id = 'master/model-grid-events';
 
     (function () {
         function indices() {
