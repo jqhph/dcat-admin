@@ -7,6 +7,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasDefinitions;
+use Dcat\EasyExcel\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -55,7 +56,10 @@ class Column
     use HasBuilderEvents,
         HasDefinitions,
         Grid\Column\HasHeader,
-        Grid\Column\HasDisplayers;
+        Grid\Column\HasDisplayers,
+        Macroable {
+            __call as __macroCall;
+        }
 
     const SELECT_COLUMN_NAME = '__row_selector__';
 
@@ -846,6 +850,13 @@ class Column
      */
     public function __call($method, $arguments)
     {
+        if (
+            ! isset(static::$displayers[$method])
+            && static::hasMacro($method)
+        ) {
+            return $this->__macroCall($method, $arguments);
+        }
+
         return $this->resolveDisplayer($method, $arguments);
     }
 }

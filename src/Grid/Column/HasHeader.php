@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Model;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -91,17 +92,16 @@ trait HasHeader
      */
     public function renderHeader()
     {
-        $headers = collect($this->headers)->map(function ($item) {
-            if ($item instanceof Renderable) {
-                return $item->render();
-            }
-
-            if ($item instanceof Htmlable) {
-                return $item->toHtml();
-            }
-
-            return (string) $item;
-        })->implode('');
+        if (! $this->headers) {
+            return '';
+        }
+        $headers = implode(
+            '',
+            array_map(
+                [Helper::class, 'render'],
+                $this->headers
+            )
+        );
 
         return "<span class='grid-column-header'>$headers</span>";
     }
