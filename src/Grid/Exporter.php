@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Exporters\ExporterInterface;
-use phpDocumentor\Reflection\Types\Mixed_;
 
 /**
  * @mixin Grid\Exporters\AbstractExporter
@@ -180,7 +179,7 @@ class Exporter
 
         if ($driver && $driver instanceof Grid\Exporters\AbstractExporter) {
             $this->driver = $driver->setGrid($this->grid);
-        } else if ($driver && $driver instanceof ExporterInterface) {
+        } elseif ($driver && $driver instanceof ExporterInterface) {
             $this->driver = $driver;
         } else {
             $this->driver = $this->newDriver($driver);

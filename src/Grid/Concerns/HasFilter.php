@@ -13,7 +13,7 @@ trait HasFilter
      *
      * @var Grid\Filter
      */
-    protected $filter;
+    protected $__filter;
 
     /**
      * @var array
@@ -27,7 +27,7 @@ trait HasFilter
      */
     protected function setupFilter()
     {
-        $this->filter = new Grid\Filter($this->model());
+        $this->__filter = new Grid\Filter($this->model());
     }
 
     /**
@@ -40,16 +40,13 @@ trait HasFilter
     public function processFilter($toArray = true)
     {
         $this->callBuilder();
-
-        foreach ($this->beforeApplyFilterCallbacks as $callback) {
-            $callback($this);
-        }
+        $this->callFetchingCallbacks();
 
         $this->applyQuickSearch();
         $this->applyColumnFilter();
         $this->applySelectorQuery();
 
-        return $this->filter->execute($toArray);
+        return $this->__filter->execute($toArray);
     }
 
     /**
@@ -62,10 +59,10 @@ trait HasFilter
     public function filter(Closure $callback = null)
     {
         if ($callback === null) {
-            return $this->filter;
+            return $this->__filter;
         }
 
-        call_user_func($callback, $this->filter);
+        call_user_func($callback, $this->__filter);
 
         return $this;
     }
@@ -75,9 +72,19 @@ trait HasFilter
      *
      * @return void
      */
-    public function filtering(\Closure $callback)
+    public function fetching(\Closure $callback)
     {
         $this->beforeApplyFilterCallbacks[] = $callback;
+    }
+
+    /**
+     * @return void
+     */
+    protected function callFetchingCallbacks()
+    {
+        foreach ($this->beforeApplyFilterCallbacks as $callback) {
+            $callback($this);
+        }
     }
 
     /**
@@ -91,7 +98,7 @@ trait HasFilter
             return '';
         }
 
-        return $this->filter->render();
+        return $this->__filter->render();
     }
 
     /**
@@ -101,7 +108,7 @@ trait HasFilter
      */
     public function expandFilter()
     {
-        $this->filter->expand();
+        $this->__filter->expand();
 
         return $this;
     }
@@ -113,7 +120,7 @@ trait HasFilter
      */
     public function disableFilter(bool $disable = true)
     {
-        $this->filter->disableCollapse($disable);
+        $this->__filter->disableCollapse($disable);
 
         return $this->option('show_filter', ! $disable);
     }
