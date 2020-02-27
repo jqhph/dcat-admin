@@ -447,7 +447,7 @@ class Model
         $this->setSort();
         $this->setPaginate();
 
-        if ($this->builder && is_callable($this->builder)) {;
+        if ($this->builder && is_callable($this->builder)) {
             $results = call_user_func($this->builder, $this);
         } else {
             $results = $this->repository->get($this);
