@@ -12,6 +12,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 class Tree implements Renderable
@@ -137,7 +138,7 @@ class Tree implements Renderable
         $this->path = $this->path ?: request()->getPathInfo();
         $this->url = url($this->path);
 
-        $this->elementId .= uniqid();
+        $this->elementId .= Str::random(8);
 
         $this->setupTools();
         $this->collectAssets();
@@ -356,43 +357,11 @@ class Tree implements Renderable
      */
     protected function script()
     {
-        $deleteConfirm = trans('admin.delete_confirm');
         $saveSucceeded = trans('admin.save_succeeded');
-        $deleteSucceeded = trans('admin.delete_succeeded');
-        $confirm = trans('admin.confirm');
-        $cancel = trans('admin.cancel');
-
         $nestableOptions = json_encode($this->nestableOptions);
 
         return <<<JS
 $('#{$this->elementId}').nestable($nestableOptions);
-
-$('.tree_branch_delete').click(function() {
-    var id = $(this).data('id');
-    
-     LA.confirm("$deleteConfirm", function () {
-        LA.NP.start();
-        $.ajax({
-            method: 'post',
-            url:  '{$this->url}/' + id,
-            data: {
-                _method:'delete',
-                _token:LA.token,
-            },
-            success: function (data) {
-                LA.NP.done();
-                if (typeof data === 'object') {
-                    if (data.status) {
-                        LA.reload();
-                        LA.success("$deleteSucceeded");
-                    } else {
-                        LA.error(data.message || 'Delete failed.');
-                    }
-                }
-            }
-        });
-    }, "$confirm", "$cancel");
-});
 
 $('.{$this->elementId}-save').click(function () {
     var serialize = $('#{$this->elementId}').nestable('serialize');
@@ -401,7 +370,7 @@ $('.{$this->elementId}-save').click(function () {
         _token: LA.token,
         _order: JSON.stringify(serialize)
     },
-    function(data){
+    function () {
         LA.NP.done();
         LA.reload();
         LA.success('{$saveSucceeded}');

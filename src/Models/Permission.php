@@ -27,6 +27,8 @@ class Permission extends Model
         'GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD',
     ];
 
+    protected $titleColumn = 'name';
+
     /**
      * Create a new Eloquent model instance.
      *
@@ -39,8 +41,6 @@ class Permission extends Model
         $this->setConnection($connection);
 
         $this->setTable(config('admin.database.permissions_table'));
-
-        $this->titleColumn = 'name';
 
         parent::__construct($attributes);
     }
