@@ -176,8 +176,8 @@ class PermissionController extends Controller
         $grid = new Grid(new Permission());
 
         $grid->id('ID')->bold()->sortable();
+        $grid->name->tree();
         $grid->slug->label('primary');
-        $grid->name;
 
         $grid->http_path->display(function ($path) {
             if (! $path) {

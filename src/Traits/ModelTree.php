@@ -9,14 +9,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
+use Spatie\EloquentSortable\SortableTrait;
 
 /**
  * @property string $parentColumn
  * @property string $titleColumn
  * @property string $orderColumn
+ * @property array  $sortable
  */
 trait ModelTree
 {
+    use SortableTrait;
+
     /**
      * @var array
      */
@@ -60,7 +64,7 @@ trait ModelTree
      *
      * @param string $column
      */
-    public function setParentColumn($column)
+    public function setParentColumn(string $column)
     {
         $this->parentColumn = $column;
     }
@@ -80,7 +84,7 @@ trait ModelTree
      *
      * @param string $column
      */
-    public function setTitleColumn($column)
+    public function setTitleColumn(string $column)
     {
         $this->titleColumn = $column;
     }
@@ -100,10 +104,11 @@ trait ModelTree
      *
      * @param string $column
      */
-    public function setOrderColumn($column)
+    public function setOrderColumn(string $column)
     {
         $this->orderColumn = $column;
     }
+
 
     /**
      * Set query callback to model.
@@ -212,6 +217,79 @@ trait ModelTree
         }
     }
 
+    protected function determineOrderColumnName()
+    {
+        return $this->getOrderColumn();
+    }
+
+    public function moveOrderDown()
+    {
+        $orderColumnName = $this->determineOrderColumnName();
+        $parentColumnName = $this->getParentColumn();
+
+        $swapWithModel = $this->buildSortQuery()->limit(1)
+            ->ordered()
+            ->where($orderColumnName, '>', $this->$orderColumnName)
+            ->where($parentColumnName, $this->$parentColumnName)
+            ->first();
+
+        if (! $swapWithModel) {
+            return $this;
+        }
+
+        return $this->swapOrderWithModel($swapWithModel);
+    }
+
+    public function moveOrderUp()
+    {
+        $orderColumnName = $this->determineOrderColumnName();
+        $parentColumnName = $this->getParentColumn();
+
+        $swapWithModel = $this->buildSortQuery()->limit(1)
+            ->ordered('desc')
+            ->where($orderColumnName, '<', $this->$orderColumnName)
+            ->where($parentColumnName, $this->$parentColumnName)
+            ->first();
+
+        if (! $swapWithModel) {
+            return $this;
+        }
+
+        return $this->swapOrderWithModel($swapWithModel);
+    }
+
+    public function moveToStart()
+    {
+        $parentColumnName = $this->getParentColumn();
+
+        $firstModel = $this->buildSortQuery()->limit(1)
+            ->ordered()
+            ->where($parentColumnName, $this->$parentColumnName)
+            ->first();
+
+        if ($firstModel->id === $this->id) {
+            return $this;
+        }
+
+        $orderColumnName = $this->determineOrderColumnName();
+
+        $this->$orderColumnName = $firstModel->$orderColumnName;
+        $this->save();
+
+        $this->buildSortQuery()->where($this->getKeyName(), '!=', $this->id)->increment($orderColumnName);
+
+        return $this;
+    }
+
+    public function getHighestOrderNumber(): int
+    {
+        $parentColumnName = $this->getParentColumn();
+
+        return (int) $this->buildSortQuery()
+            ->where($parentColumnName, $this->$parentColumnName)
+            ->max($this->determineOrderColumnName());
+    }
+
     /**
      * Get options for Select field in form.
      *
@@ -283,6 +361,10 @@ trait ModelTree
     protected static function boot()
     {
         parent::boot();
+
+        if (! trait_exists('\Spatie\EloquentSortable\SortableTrait')) {
+            throw new \Exception('To use ModelTree, please install package [spatie/eloquent-sortable] first.');
+        }
 
         static::saving(function (Model $branch) {
             $parentColumn = $branch->getParentColumn();

@@ -101,7 +101,7 @@ class UserController extends Controller
                 ->if(function () {
                     return ! empty($this->roles);
                 })
-                ->tree(function (Grid\Displayers\Tree $tree) use (&$nodes, $roleModel) {
+                ->showTreeInDialog(function (Grid\Displayers\DialogTree $tree) use (&$nodes, $roleModel) {
                     $tree->nodes($nodes);
 
                     foreach (array_column($this->roles, 'slug') as $slug) {

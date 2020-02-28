@@ -93,7 +93,7 @@ EOF;
         })
     } 
     init();
-    swt.change(function(e) {
+    swt.off('change').change(function(e) {
         var t = $(this), id = t.data('key'), checked = t.is(':checked'), name = t.attr('name'), data = {
             _token: LA.token,
             _method: 'PUT'

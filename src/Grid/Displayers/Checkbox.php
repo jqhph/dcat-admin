@@ -62,7 +62,7 @@ EOT;
         return <<<JS
 (function () {
     var f;
-    $('form.{$this->elementClass()}').on('submit', function () {
+    $('form.{$this->elementClass()}').off('submit').on('submit', function () {
         var values = $(this).find('input:checkbox:checked').map(function (_, el) {
             return $(el).val();
         }).get(), btn = $(this).find('[type="submit"]');

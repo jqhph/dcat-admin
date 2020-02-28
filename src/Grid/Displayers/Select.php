@@ -18,7 +18,7 @@ class Select extends AbstractDisplayer
 
         $script = <<<JS
 
-$('.$class').select2().on('change', function(){
+$('.$class').off('change').select2().on('change', function(){
     var pk = $(this).data('key');
     var value = $(this).val();
     LA.NP.start();

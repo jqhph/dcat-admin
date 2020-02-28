@@ -21,6 +21,8 @@ use Illuminate\Support\Str;
  */
 class Model
 {
+    use Grid\Concerns\HasTree;
+
     /**
      * @var Request
      */
@@ -168,7 +170,7 @@ class Model
     }
 
     /**
-     * @return AbstractPaginator
+     * @return AbstractPaginator|LengthAwarePaginator
      */
     public function paginator(): AbstractPaginator
     {
@@ -374,6 +376,16 @@ class Model
     {
         if (is_null($this->data)) {
             $this->setData($this->fetch());
+
+            if ($this->collectionCallback) {
+                $data = $this->data;
+
+                foreach ($this->collectionCallback as $cb) {
+                    $data = call_user_func($cb, $data);
+                }
+
+                $this->setData($data);
+            }
         }
 
         return $toArray ? $this->data->toArray() : $this->data;
@@ -390,12 +402,6 @@ class Model
             $this->builder = $data;
 
             return $this;
-        }
-
-        if ($this->collectionCallback) {
-            foreach ($this->collectionCallback as $cb) {
-                $data = call_user_func($cb, $this->data);
-            }
         }
 
         if ($data instanceof AbstractPaginator) {
@@ -476,10 +482,6 @@ class Model
         $this->paginator = $paginator;
 
         $paginator->setPageName($this->pageName);
-
-        if ($paginator instanceof LengthAwarePaginator) {
-            $this->handleInvalidPage($paginator);
-        }
     }
 
     /**
@@ -589,7 +591,12 @@ class Model
             $this->perPage = (int) $perPage;
         }
 
-        return [$this->perPage, '*', $this->pageName, $this->getCurrentPage()];
+        return [
+            $this->perPage,
+            $this->repository->getGridColumns(),
+            $this->pageName,
+            $this->getCurrentPage(),
+        ];
     }
 
     /**

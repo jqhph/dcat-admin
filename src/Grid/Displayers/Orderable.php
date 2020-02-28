@@ -37,19 +37,136 @@ EOT;
     protected function script()
     {
         return <<<JS
-
-$('.{$this->grid->rowName()}-orderable').on('click', function() {
-
-    var key = $(this).data('id');
-    var direction = $(this).data('direction');
-
-    $.post('{$this->resource()}/' + key, {_method:'PUT', _token:LA.token, _orderable:direction}, function(data){
-        if (data.status) {
-            LA.reload();
-            LA.success(data.message);
+(function () {
+    var req = 0;
+    
+    $('.{$this->grid->rowName()}-orderable').off('click').on('click', function() {
+        if (req) return;
+        
+        var key = $(this).data('id'),
+            direction = $(this).data('direction'),
+            row = $(this).closest('tr'),
+            prevAll = row.prevAll(),
+            nextAll = row.nextAll(),
+            prev = row.prevAll('tr').first(),
+            next = row.nextAll('tr').first(),
+            level = getLevel(row);
+        
+        req = 1;
+        LA.loading();
+        
+        function swapable(_o) {
+            if (
+                _o
+                && _o.length 
+                && level === getLevel(_o)
+            ) {
+                return true
+            }
         }
+        
+        function isTr(v) {
+            return $(v).prop('tagName').toLocaleLowerCase() === 'tr'
+        }
+        
+        function getLevel(v) {
+            return parseInt($(v).data('level') || 0);
+        }
+        
+        function isChildren(parent, child) {
+            return getLevel(child) > getLevel(parent);
+        }
+        
+        function getChildren(all, parent) {
+            var arr = [], isBreak = false, firstTr;
+            all.each(function (_, v) {
+                 // 过滤非tr标签
+                 if (! isTr(v) || isBreak) return;
+                
+                 firstTr || (firstTr = $(v));
+          
+                 // 非连续的子节点
+                 if (firstTr && ! isChildren(parent, firstTr)) {
+                     return;
+                 }
+                
+                 if (isChildren(parent, v)) {
+                     arr.push(v)
+                 } else {
+                     isBreak = true;
+                 }
+            });
+            
+            return arr;
+        }
+        
+        function sibling(all) {
+            var next;
+            
+            all.each(function (_, v) {
+                 if (getLevel(v) === level && ! next && isTr(v)) {
+                     next = $(v);
+                 }
+            });
+            
+            return next;
+        }
+        
+        $.ajax({
+            type: 'POST',
+            url: '{$this->resource()}/' + key,
+            data: {_method:'PUT', _token:LA.token, _orderable:direction},
+            success: function(data){
+                LA.loading(false);
+                req = 0;
+                if (data.status) {
+                    LA.success(data.message);
+                    
+                    if (direction) {
+                        var prevRow = sibling(prevAll);
+                        if (swapable(prevRow) && prev.length && getLevel(prev) >= level) {
+                            prevRow.before(row);
+                            
+                            // 把所有子节点上移
+                            getChildren(nextAll, row).forEach(function (v) {
+                                prevRow.before(v)
+                            });
+                        }
+                    } else {
+                        var nextRow = sibling(nextAll),
+                            nextRowChildren = nextRow ? getChildren(nextRow.nextAll(), nextRow) : [];
+                        
+                        if (swapable(nextRow) && next.length && getLevel(next) >= level) {
+                            nextAll = row.nextAll();
+
+                            if (nextRowChildren.length) {
+                                nextRow = $(nextRowChildren.pop())
+                            }
+                            
+                             // 把所有子节点下移
+                             var all = [];
+                            getChildren(nextAll, row).forEach(function (v) {
+                                all.unshift(v)
+                            });
+                            
+                            all.forEach(function(v) {
+                                nextRow.after(v)
+                            });
+                            
+                            nextRow.after(row);
+                        }
+                    }
+                }
+            },
+            error: function (a, b, c) {
+                req = 0;
+                LA.loading(false);
+                LA.ajaxError(a, b, c)
+            }
+        });
+    
     });
-});
+})()
 JS;
     }
 }

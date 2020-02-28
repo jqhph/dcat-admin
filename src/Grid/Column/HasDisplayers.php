@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Column;
 
+use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 use Dcat\Admin\Support\Helper;
@@ -9,6 +10,9 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
+/**
+ * @property Grid $grid
+ */
 trait HasDisplayers
 {
     /**
@@ -221,5 +225,31 @@ trait HasDisplayers
     public function asEmpty()
     {
         return $this->display('');
+    }
+
+    /**
+     * Show children of current node.
+     *
+     * @param bool $showAll
+     * @param bool $sortable
+     *
+     * @return $this
+     */
+    public function tree(bool $showAll = false, bool $sortable = true)
+    {
+        $this->grid->model()->enableTree($showAll, $sortable);
+
+        $this->grid->fetching(function () use ($showAll) {
+            if ($this->grid->model()->getParentIdFromRequest()) {
+                $this->grid->disableFilter();
+                $this->grid->disableToolbar();
+
+                if ($showAll) {
+                    $this->grid->disablePagination();
+                }
+            }
+        });
+
+        return $this->displayUsing(Grid\Displayers\Tree::class);
     }
 }

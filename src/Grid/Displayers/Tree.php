@@ -3,273 +3,156 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Arrayable;
 
 class Tree extends AbstractDisplayer
 {
-    protected $url;
-
-    protected $title;
-
-    protected $area = ['650px', '600px'];
-
-    protected $options = [
-        'plugins' => ['checkbox', 'types'],
-        'core'    => [
-            'check_callback' => true,
-
-            'themes' => [
-                'name'       => 'proton',
-                'responsive' => true,
-            ],
-        ],
-        'checkbox' => [
-            'keep_selected_style' => false,
-        ],
-        'types' => [
-            'default' => [
-                'icon' => false,
-            ],
-        ],
-    ];
-
-    /**
-     * @var array
-     */
-    protected $columnNames = [
-        'id'     => 'id',
-        'text'   => 'name',
-        'parent' => 'parent_id',
-    ];
-
-    protected $nodes = [];
-
-    protected $checkedAll;
-
-    /**
-     * @param array $data exp:
-     *                    {
-     *                    "id": "1",
-     *                    "parent": "#",
-     *                    "text": "Dashboard",
-     *                    // "state": {"selected": true}
-     *                    }
-     * @param array $data
-     *
-     * @return $this
-     */
-    public function nodes($data)
+    public function display()
     {
-        if ($data instanceof Arrayable) {
-            $data = $data->toArray();
-        }
-
-        $this->nodes = &$data;
-
-        return $this;
-    }
-
-    public function url(string $source)
-    {
-        $this->url = admin_url($source);
-
-        return $this;
-    }
-
-    public function checkedAll()
-    {
-        $this->checkedAll = true;
-
-        return $this;
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function options($options = [])
-    {
-        if ($options instanceof Arrayable) {
-            $options = $options->toArray();
-        }
-
-        $this->options = array_merge($this->options, $options);
-
-        return $this;
-    }
-
-    public function title($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * @param string $width
-     * @param string $height
-     *
-     * @return $this
-     */
-    public function area(string $width, string $height)
-    {
-        $this->area = [$width, $height];
-
-        return $this;
-    }
-
-    /**
-     * @param string $idColumn
-     * @param string $textColumn
-     * @param string $parentColumn
-     *
-     * @return $this
-     */
-    public function columnNames(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
-    {
-        $this->columnNames['id'] = $idColumn;
-        $this->columnNames['text'] = $textColumn;
-        $this->columnNames['parent'] = $parentColumn;
-
-        return $this;
-    }
-
-    public function display($callbackOrNodes = null)
-    {
-        if (is_array($callbackOrNodes) || $callbackOrNodes instanceof Arrayable) {
-            $this->nodes($callbackOrNodes);
-        } elseif ($callbackOrNodes instanceof \Closure) {
-            $callbackOrNodes->call($this->row, $this);
-        }
-
-        $btn = $this->trans('view');
-
         $this->setupScript();
 
-        $val = $this->format($this->value);
+        $key = $this->key();
+        $tableId = $this->grid->tableId();
 
-        return <<<EOF
-<a href="javascript:void(0)" class="{$this->getSelectorPrefix()}-open-tree" data-checked="{$this->checkedAll}" data-val="{$val}"><i class='ti-layout-list-post'></i> $btn</a>
-EOF;
+        $level = $this->grid->model()->getLevelFromRequest();
+        $indents = str_repeat(' &nbsp; &nbsp; &nbsp; &nbsp; ', $level);
+
+        return <<<EOT
+<a href="javascript:void(0)" class="{$tableId}-grid-load-children" data-level="{$level}" data-inserted="0" data-key="{$key}">
+   {$indents}<i class="fa fa-angle-right"></i> &nbsp; {$this->value}
+</a>
+EOT;
     }
 
-    protected function format($val)
+    protected function showNextPage()
     {
-        return implode(',', Helper::array($val, true));
-    }
+        $model = $this->grid->model();
 
-    protected function getSelectorPrefix()
-    {
-        return $this->grid->getName().'_'.$this->column->getName();
+        $showNextPage = $this->grid->allowPagination();
+        if (! $model->showAllChildrenNodes() && $showNextPage) {
+            $showNextPage =
+                $model->getCurrentChildrenPage() < $model->paginator()->lastPage()
+                && $model->buildData()->count() == $model->getPerPage();
+        }
+
+        return $showNextPage;
     }
 
     protected function setupScript()
     {
-        $title = $this->title ?: $this->column->getLabel();
+        // 分页问题
+        $url = request()->fullUrl();
+        $tableId = $this->grid->tableId();
 
-        $area = json_encode($this->area);
-        $opts = json_encode($this->options);
-        $nodes = json_encode($this->nodes);
+        $model = $this->grid->model();
 
-        Admin::script(
-            <<<JS
-$('.{$this->getSelectorPrefix()}-open-tree').click(function () {
-    var tpl = '<div class="jstree-wrapper" style="border:0"><div class="_tree" style="margin-top:10px"></div></div>', 
-        opts = $opts,
-        url = '{$this->url}',
-        t = $(this),
-        val = t.data('val'),
-        ckall = t.data('checked'),
-        idx,
-        requesting;
+        // 是否显示下一页按钮
+        $pageName = $model->getChildrenPageName(':key');
+        $perPage = $model->getPerPage();
+        $showNextPage = $model->showAllChildrenNodes() ? 'false' : 'true';
 
-    val = val ? String(val).split(',') : [];
-        
-    if (url) {
-        if (requesting) return;
-        requesting = 1;
-        
-        t.button('loading');
-        $.getJSON(url, {_token: LA.token, value: val}, function (resp) {
-             requesting = 0;
-             t.button('reset');
-             
-             if (!resp.status) {
-                return LA.error(resp.message || '系统繁忙，请稍后再试');
-             }
-             
-             build(resp.value);
-        });
-    } else {
-        build(val);
-    }    
-        
-    function build(val) {
-        opts.core.data = formatNodes(val, $nodes);    
+        $script = <<<JS
+(function () {
+    var req = 0;
     
-        idx = layer.open({
-            type: 1,
-            area: $area,
-            content: tpl,
-            title: '{$title}',
-            success: function (a, idx) {
-                var tree = $('#layui-layer'+idx).find('._tree');
-                
-                tree.on("loaded.jstree", function () {
-                    tree.jstree('open_all');
-                }).jstree(opts);
-            }
-        });
+    $('.{$tableId}-grid-load-children').off('click').click(function () {
+        if (req) {
+            return;
+        }
         
-        $(document).one('pjax:complete', function () { 
-            layer.close(idx);
-        });
-    }
+        var key = $(this).data('key'),
+            level = $(this).data('level'),
+            trClass = '{$tableId}-tr-'+key,
+            data = {
+                    _token: LA.token, 
+                    '{$model->getParentIdQueryName()}': key, 
+                    '{$model->getLevelQueryName()}': level + 1, 
+                };
+        
+         $('.'+trClass).toggle();
     
-    function formatNodes(value, all) {
-        var idColumn = '{$this->columnNames['id']}', 
-           textColumn = '{$this->columnNames['text']}', 
-           parentColumn = '{$this->columnNames['parent']}';
-        var parentIds = [], nodes = [], i, v, parentId;
-
-        for (i in all) {
-            v = all[i];
-            if (!v[idColumn]) continue;
-
-            parentId = v[parentColumn] || '#';
-            if (!parentId) {
-                parentId = '#';
-            } else {
-                parentIds.push(parentId);
-            }
-
-            v['state'] = {'disabled': true};
-
-            if (ckall || (value && LA.arr.in(value, v[idColumn]))) {
-                v['state']['selected'] = true;
-            }
-
-            nodes.push({
-                'id'     : v[idColumn],
-                'text'   : v[textColumn] || null,
-                'parent' : parentId,
-                'state'  : v['state'],
-            });
+        if ($(this).data('inserted') == '0') {
+            var row = $(this).closest('tr');
+            request(1);
+            $(this).data('inserted', 1);
         }
        
-        return nodes;
-    }
-    
-});
-JS
-        );
-    }
+        $("i", this).toggleClass("fa-angle-right fa-angle-down");
+        
+        function request(page, after) {
+            if (req) {
+                return;
+            }
+            req = 1;
+             LA.loading();
+             
+             data['{$pageName}'.replace(':key', key)] = page;
+           
+            $.ajax({
+                url: '$url',
+                type: 'GET',
+                data: data,
+                cache: false,
+                headers: {'X-PJAX': true},
+                success: function (resp) {
+                    after && after();
+                    LA.loading(false);
+                    req = 0;
+                    
+                    // 获取最后一行
+                    var children = $('.'+trClass);
+                    row = children.length ? children.last() : row;
+                    
+                    var _body = $('<div>'+resp+'</div>'),
+                        _tbody = _body.find('#{$tableId} tbody'),
+                        lastPage = _body.find('last-page').text(),
+                        nextPage = _body.find('next-page').text();
+  
+                    // 标记子节点行
+                    _tbody.find('tr').each(function (_, v) {
+                        $(v).addClass(trClass);
+                        $(v).attr('data-level', level + 1) 
+                    });
+                    
+                    var html = _tbody.html(),
+                        icon = '<svg style="fill:currentColor" t="1582877365167" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="32874" width="24" height="24"><path d="M162.8 515m-98.3 0a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32875"></path><path d="M511.9 515m-98.3 0a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32876"></path><path d="M762.8 515a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32877"></path></svg>';
+                    
+                    if ({$showNextPage} && _tbody.find('tr').length == '{$perPage}' && lastPage >= page) {
+                        // 加载更多
+                        html += "<tr data-page='"+nextPage+"' class='{$tableId}-load-next-"+key+" "
+                            +trClass+"'><td colspan='"+(row.find('td').length)
+                            +"' align='center' style='cursor: pointer'> <a>"+icon+"</a> </td></tr>";
+                    }
+                    
+                    // 附加子节点
+                    row.after(html);
 
-    protected function collectAssets()
-    {
-        Admin::css('vendor/dcat-admin/jstree-theme/themes/proton/style.min.css');
-        Admin::collectComponentAssets('jstree');
+                     // 加载更多
+                    $('.{$tableId}-load-next-'+key).off('click').click(function () {
+                        var _t = $(this);
+                        request(_t.data('page'), function () {
+                            _t.remove();
+                        });
+                    });
+                   
+                    // 附加子节点js脚本以及触发子节点js脚本执行
+                    _body.find('script').each(function (_, v) {
+                        row.after(v);
+                    });
+                    $(document).trigger('pjax:script')
+                },
+                error:function(a, b, c){
+                    after && after();
+                    LA.loading(false);
+                    req = 0;
+                    if (a.status != 404) {
+                        LA.ajaxError(a, b, c)
+                    }
+                }
+            });
+        }   
+    });
+})();
+JS;
+        Admin::script($script);
     }
 }

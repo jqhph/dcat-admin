@@ -14,7 +14,7 @@ class Copyable extends AbstractDisplayer
     protected function addScript()
     {
         $script = <<<'JS'
-$('.grid-column-copyable').click(function (e) {
+$('.grid-column-copyable').off('click').click(function (e) {
     
     var content = $(this).data('content');
     
