@@ -361,32 +361,35 @@ class Tree implements Renderable
         $nestableOptions = json_encode($this->nestableOptions);
 
         return <<<JS
-$('#{$this->elementId}').nestable($nestableOptions);
+(function () {
+    var tree = $('#{$this->elementId}');
+    
+    tree.nestable($nestableOptions);
 
-$('.{$this->elementId}-save').click(function () {
-    var serialize = $('#{$this->elementId}').nestable('serialize');
-    LA.NP.start();
-    $.post('{$this->url}', {
-        _token: LA.token,
-        _order: JSON.stringify(serialize)
-    },
-    function () {
-        LA.NP.done();
-        LA.reload();
-        LA.success('{$saveSucceeded}');
+    $('.{$this->elementId}-save').click(function () {
+        var serialize = tree.nestable('serialize');
+        LA.NP.start();
+        $.post('{$this->url}', {
+            _token: LA.token,
+            _order: JSON.stringify(serialize)
+        },
+        function () {
+            LA.NP.done();
+            LA.reload();
+            LA.success('{$saveSucceeded}');
+        });
     });
-});
-
-$('.{$this->elementId}-tree-tools').on('click', function(e){
-    var action = $(this).data('action');
-    if (action === 'expand') {
-        $('.dd').nestable('expandAll');
-    }
-    if (action === 'collapse') {
-        $('.dd').nestable('collapseAll');
-    }
-});
-
+    
+    $('.{$this->elementId}-tree-tools').on('click', function(e){
+        var action = $(this).data('action');
+        if (action === 'expand') {
+            tree.nestable('expandAll');
+        }
+        if (action === 'collapse') {
+            tree.nestable('collapseAll');
+        }
+    });
+})()
 JS;
     }
 
