@@ -49,7 +49,7 @@ trait HasTree
             $this->sortTree($sortable);
             $this->bindChildrenNodesQuery();
 
-            if (! $this->getParentIdFromRequest()) {
+            if ($this->getParentIdFromRequest()) {
                 $this->setPageName(
                     $this->getChildrenPageName($this->getParentIdFromRequest())
                 );

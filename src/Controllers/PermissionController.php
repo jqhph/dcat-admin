@@ -177,6 +177,7 @@ class PermissionController extends Controller
 
         $grid->id('ID')->bold()->sortable();
         $grid->name->tree();
+        $grid->order->orderable();
         $grid->slug->label('primary');
 
         $grid->http_path->display(function ($path) {

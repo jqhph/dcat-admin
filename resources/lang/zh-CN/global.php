@@ -14,6 +14,7 @@ return [
         'permissions'           => '权限',
         'slug'                  => '标识',
         'user'                  => '用户',
+        'order'                 => '排序',
         'ip'                    => 'IP',
         'method'                => '方法',
         'uri'                   => 'URI',
