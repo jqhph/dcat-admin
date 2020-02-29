@@ -261,7 +261,7 @@ class Column
      *         ->display($view)
      *         ->expand(...)
      *         ->else()
-     *         ->asEmpty()
+     *         ->emptyString()
      *
      *    $grid->config
      *         ->if(function () {
@@ -271,7 +271,7 @@ class Column
      *             $column ->display($view)->expand(...);
      *         })
      *         ->else(function (Column $column) {
-     *             $column->asEmpty();
+     *             $column->emptyString();
      *         })
      *
      * @param \Closure $condition
@@ -497,7 +497,7 @@ class Column
         $valueKey = is_string($filter) || $filter instanceof \Closure ? $filter : null;
 
         if (! $filter || $valueKey) {
-            $filter = Grid\Column\Filter\Equal::make()->valueAsFilter($valueKey);
+            $filter = Grid\Column\Filter\Equal::make()->valueFilter($valueKey);
         }
 
         if (! $filter instanceof Grid\Column\Filter) {
@@ -512,11 +512,11 @@ class Column
      *
      * @return Column
      */
-    public function onlyValueFilter($valueKey = null)
+    public function filterByValue($valueKey = null)
     {
         return $this->filter(
             Grid\Column\Filter\Equal::make()
-                ->valueAsFilter($valueKey)
+                ->valueFilter($valueKey)
                 ->hide()
         );
     }

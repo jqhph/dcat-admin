@@ -23,6 +23,11 @@ trait HasTree
     protected $showAllChildrenNodes = false;
 
     /**
+     * @var bool
+     */
+    protected $allowedTreeQuery = true;
+
+    /**
      * @param bool $showAll
      * @param bool $sortable
      *
@@ -33,22 +38,14 @@ trait HasTree
         $this->showAllChildrenNodes = $showAll;
 
         $this->grid->fetching(function () use ($sortable) {
-            $parentId = $this->getParentIdFromRequest();
+            $this->sortTree($sortable);
+            $this->bindChildrenNodesQuery();
 
-            if (
-                $sortable
-                && ! $this->findQueryByMethod('orderBy')
-                && ! $this->findQueryByMethod('orderByDesc')
-                && ($orderColumn = $this->repository->getOrderColumn())
-            ) {
-                $this->orderBy($orderColumn);
+            if (! $this->getParentIdFromRequest()) {
+                $this->setPageName(
+                    $this->getChildrenPageName($this->getParentIdFromRequest())
+                );
             }
-
-            $this->where($this->repository->getParentColumn(), $parentId);
-
-            $this->setPageName(
-                $this->getChildrenPageName($parentId)
-            );
         });
 
         $this->collection(function (Collection $collection) {
@@ -60,18 +57,62 @@ trait HasTree
                 abort(404);
             }
 
-            if ($this->grid()->allowPagination()) {
-                $nextPage = $this->getCurrentChildrenPage() + 1;
-                Admin::html(
-                    <<<HTML
-<next-page class="hidden">{$nextPage}</next-page>
-<last-page class="hidden">{$this->paginator()->lastPage()}</last-page>
-HTML
-                );
-            }
+            $this->buildChildrenNodesPagination();
 
             return $collection;
         });
+    }
+
+    public function disableBindTreeQuery()
+    {
+        $this->allowedTreeQuery = false;
+
+        return $this->filterQueryBy(function ($query) {
+            if (
+                $query['method'] === 'where'
+                && $query['arguments']
+                && $query['arguments'][0] === $this->repository->getParentColumn()
+            ) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+    protected function buildChildrenNodesPagination()
+    {
+        if ($this->grid()->allowPagination()) {
+            $nextPage = $this->getCurrentChildrenPage() + 1;
+
+            Admin::html(
+                <<<HTML
+<next-page class="hidden">{$nextPage}</next-page>
+<last-page class="hidden">{$this->paginator()->lastPage()}</last-page>
+HTML
+            );
+        }
+    }
+
+    protected function sortTree(bool $sortable)
+    {
+        if (
+            $sortable
+            && ! $this->findQueryByMethod('orderBy')
+            && ! $this->findQueryByMethod('orderByDesc')
+            && ($orderColumn = $this->repository->getOrderColumn())
+        ) {
+            $this->orderBy($orderColumn);
+        }
+    }
+
+    protected function bindChildrenNodesQuery()
+    {
+        if (! $this->allowedTreeQuery) {
+            return;
+        }
+
+        $this->where($this->repository->getParentColumn(), $this->getParentIdFromRequest());
     }
 
     /**

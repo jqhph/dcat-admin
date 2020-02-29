@@ -45,13 +45,13 @@ class LogController extends Controller
             $color = Arr::get(OperationLogModel::$methodColors, $method, 'default');
 
             return "<span class=\"label label-$color\">$method</span>";
-        })->onlyValueFilter();
+        })->filterByValue();
 
         $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {
             return "<code>$v</code>";
-        })->onlyValueFilter();
+        })->filterByValue();
 
-        $grid->ip('IP')->onlyValueFilter()->responsive();
+        $grid->ip('IP')->filterByValue()->responsive();
 
         $grid->input->responsive()->display(function ($input) {
             $input = json_decode($input, true);

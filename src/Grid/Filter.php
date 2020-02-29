@@ -466,6 +466,8 @@ class Filter implements Renderable
         return tap(array_filter($conditions), function ($conditions) {
             if (! empty($conditions)) {
                 $this->expand();
+
+                $this->grid()->model()->disableBindTreeQuery();
             }
         });
     }
@@ -698,13 +700,9 @@ class Filter implements Renderable
         /** @var Collection $columns */
         $columns = $filters->map->column()->flatten();
 
-        $pageKey = 'page';
-
-        if ($gridName = $this->model->grid()->getName()) {
-            $pageKey = "{$gridName}_{$pageKey}";
-        }
-
-        $columns->push($pageKey);
+        $columns->push(
+            $this->grid()->model()->getPageName()
+        );
 
         $groupNames = $filters->filter(function ($filter) {
             return $filter instanceof Group;

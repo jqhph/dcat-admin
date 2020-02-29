@@ -74,7 +74,7 @@ HTML;
      *
      * @return $this
      */
-    public function valueAsFilter($valueKey = null)
+    public function valueFilter($valueKey = null)
     {
         return $this->resolving(function () use ($valueKey) {
             $valueFilter = new ValueFilter($this, $valueKey);

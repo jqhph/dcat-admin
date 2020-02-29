@@ -222,7 +222,7 @@ trait HasDisplayers
     /**
      * @return $this
      */
-    public function asEmpty()
+    public function emptyString()
     {
         return $this->display('');
     }

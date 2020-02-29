@@ -614,6 +614,31 @@ class Model
     }
 
     /**
+     * @param string|callable $method
+     *
+     * @return $this
+     */
+    public function filterQueryBy($method)
+    {
+        $this->queries = $this->queries->filter(function ($query, $k) use ($method) {
+            if (
+                (is_string($method) && $query['method'] === $method)
+                || (is_array($method) && in_array($query['method'], $method, true))
+            ) {
+                return false;
+            }
+
+            if (is_callable($method)) {
+                return call_user_func($method, $query, $k);
+            }
+
+            return true;
+        });
+
+        return $this;
+    }
+
+    /**
      * Get the grid sort.
      *
      * @return array exp: ['name', 'desc']

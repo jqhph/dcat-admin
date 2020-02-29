@@ -115,7 +115,7 @@ class ExtensionController extends Controller
             ->display($view)
             ->expand($this->getExpandHandler('config'))
             ->else()
-            ->asEmpty();
+            ->emptyString();
 
         $grid->require
             ->display($view)
