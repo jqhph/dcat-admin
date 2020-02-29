@@ -289,10 +289,13 @@ class PermissionController extends Controller
         return Form::make(new Permission(), function (Form $form) {
             $permissionTable = config('admin.database.permissions_table');
             $connection = config('admin.database.connection');
+            $permissionModel = config('admin.database.permissions_model');
 
             $id = $form->key();
 
             $form->display('id', 'ID');
+
+            $form->select('parent_id', trans('admin.parent_id'))->options($permissionModel::selectOptions());
 
             $form->text('slug', trans('admin.slug'))
                 ->required()
