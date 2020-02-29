@@ -154,6 +154,51 @@ class Helper
         return $url.'?'.http_build_query(array_merge($originalQuery, $query));
     }
 
+
+    /**
+     * @param string                 $url
+     * @param string|array|Arrayable $keys
+     *
+     * @return string
+     */
+    public static function urlWithoutQuery($url, $keys)
+    {
+        if (! Str::contains($url, '?') || ! $keys) {
+            return $url;
+        }
+
+        if ($keys instanceof Arrayable) {
+            $keys = $keys->toArray();
+        }
+
+        $keys = (array) $keys;
+
+        $urlInfo = parse_url($url);
+
+        parse_str($urlInfo['query'], $query);
+
+        Arr::forget($query, $keys);
+
+        $baseUrl = "{$urlInfo['scheme']}://{$urlInfo['host']}{$urlInfo['path']}";
+
+        return $query
+            ? $baseUrl.'?'.http_build_query($query)
+            : $baseUrl;
+    }
+
+
+    /**
+     * Get full url without query strings.
+     *
+     * @param Arrayable|array|string $keys
+     *
+     * @return string
+     */
+    public static function fullUrlWithoutQuery($keys)
+    {
+        return static::urlWithoutQuery(request()->fullUrl(), $keys);
+    }
+
     /**
      * If a request match the specific path.
      *
@@ -324,32 +369,5 @@ class Helper
                 unset($array[$index]);
             }
         }
-    }
-
-    /**
-     * Get full url without query strings.
-     *
-     * @param Arrayable|array|string $keys
-     *
-     * @return string
-     */
-    public static function fullUrlWithoutQuery($keys)
-    {
-        if ($keys instanceof Arrayable) {
-            $keys = $keys->toArray();
-        }
-
-        $keys = (array) $keys;
-
-        $request = request();
-
-        $query = $request->query();
-        Arr::forget($query, $keys);
-
-        $question = $request->getBaseUrl().$request->getPathInfo() == '/' ? '/?' : '?';
-
-        return count($request->query()) > 0
-            ? $request->url().$question.http_build_query($query)
-            : $request->fullUrl();
     }
 }

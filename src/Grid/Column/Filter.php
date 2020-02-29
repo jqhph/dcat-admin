@@ -42,7 +42,13 @@ abstract class Filter implements Renderable
     {
         $this->parent = $column;
 
-        $this->addResetButton();
+        $this->parent->grid()->fetching(function () {
+            $this->addResetButton();
+
+            $this->parent->grid()->model()->treeUrlWithoutQuery(
+                $this->queryName()
+            );
+        });
 
         foreach ($this->resolvings as $closure) {
             $closure($this);
@@ -118,18 +124,16 @@ abstract class Filter implements Renderable
      */
     protected function addResetButton()
     {
-        $this->parent->grid()->fetching(function () {
-            $value = $this->value();
-            if ($value === '' || $value === null) {
-                return;
-            }
+        $value = $this->value();
+        if ($value === '' || $value === null) {
+            return;
+        }
 
-            $style = $this->shouldDisplay() ? 'style=\'margin:3px 12px\'' : '';
+        $style = $this->shouldDisplay() ? 'style=\'margin:3px 12px\'' : '';
 
-            return $this->parent->addHeader(
-                "&nbsp;<a class='fa fa-undo' href='{$this->urlWithoutFilter()}' {$style}></a>"
-            );
-        });
+        return $this->parent->addHeader(
+            "&nbsp;<a class='fa fa-undo' href='{$this->urlWithoutFilter()}' {$style}></a>"
+        );
     }
 
     /**
@@ -160,7 +164,7 @@ abstract class Filter implements Renderable
      */
     protected function urlWithoutFilter()
     {
-        $query = app('request')->all();
+        $query = request()->query();
         unset($query[$this->queryName()]);
 
         return Helper::urlWithQuery(url()->current(), $query);

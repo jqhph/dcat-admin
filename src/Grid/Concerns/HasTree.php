@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
 trait HasTree
@@ -28,6 +29,13 @@ trait HasTree
     protected $allowedTreeQuery = true;
 
     /**
+     * @var array
+     */
+    protected $treeIgnoreQueryNames = [];
+
+    /**
+     * 开启树形表格功能
+     *
      * @param bool $showAll
      * @param bool $sortable
      *
@@ -63,6 +71,11 @@ trait HasTree
         });
     }
 
+    /**
+     * 禁止树形表格查询
+     *
+     * @return $this
+     */
     public function disableBindTreeQuery()
     {
         $this->allowedTreeQuery = false;
@@ -78,6 +91,31 @@ trait HasTree
 
             return true;
         });
+    }
+
+    /**
+     * 设置子节点查询链接需要忽略的字段
+     *
+     * @param string|array $keys
+     *
+     * @return $this
+     */
+    public function treeUrlWithoutQuery($keys)
+    {
+        $this->treeIgnoreQueryNames = array_merge(
+            $this->treeIgnoreQueryNames,
+            (array) $keys
+        );
+
+        return $this;
+    }
+
+    public function generateTreeUrl()
+    {
+        return Helper::urlWithoutQuery(
+            $this->grid->filter()->urlWithoutFilters(),
+            $this->treeIgnoreQueryNames
+        );
     }
 
     protected function buildChildrenNodesPagination()

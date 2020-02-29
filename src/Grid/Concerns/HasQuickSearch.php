@@ -93,9 +93,14 @@ trait HasQuickSearch
             return;
         }
 
-        if (! $query = request()->get($this->quickSearch->queryName())) {
+        $query = request()->get($this->quickSearch->queryName());
+
+        if ($query === '' || $query === null) {
             return;
         }
+
+        $this->model()->disableBindTreeQuery();
+        $this->model()->treeUrlWithoutQuery($this->quickSearch->queryName());
 
         if ($this->search instanceof \Closure) {
             return call_user_func($this->search, $this->model(), $query);
@@ -123,7 +128,7 @@ trait HasQuickSearch
     {
         $queries = preg_split('/\s(?=([^"]*"[^"]*")*[^"]*$)/', trim($query));
         if (! $queries = $this->parseQueryBindings($queries)) {
-            $this->addWhereBasicBinding($this->getKeyName(), false, '=', '___');
+            $this->addWhereBasicBinding($this->keyName(), false, '=', '___');
 
             return;
         }

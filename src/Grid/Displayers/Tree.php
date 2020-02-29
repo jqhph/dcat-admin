@@ -8,10 +8,10 @@ class Tree extends AbstractDisplayer
 {
     protected function setupScript()
     {
-        $url = $this->grid->filter()->urlWithoutFilters();
         $tableId = $this->grid->tableId();
 
         $model = $this->grid->model();
+        $url = $model->generateTreeUrl();
 
         // 是否显示下一页按钮
         $pageName = $model->getChildrenPageName(':key');
