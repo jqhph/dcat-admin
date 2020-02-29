@@ -303,13 +303,19 @@ class EloquentRepository extends Repository implements TreeRepository
     public function moveOrderUp()
     {
         $model = $this->eloquent();
-        if ($model instanceof Sortable) {
-            $model->moveOrderUp();
 
-            return true;
+        if (! $model instanceof Sortable) {
+            throw new \RuntimeException(
+                sprintf(
+                    'The model "%s" must be a type of %s.',
+                    get_class($model),
+                    Sortable::class
+                )
+            );
         }
+        $model->moveOrderUp();
 
-        return false;
+        return true;
     }
 
     /**
@@ -321,13 +327,19 @@ class EloquentRepository extends Repository implements TreeRepository
     {
         $model = $this->eloquent();
 
-        if ($model instanceof Sortable) {
-            $model->moveOrderDown();
-
-            return true;
+        if (! $model instanceof Sortable) {
+            throw new \RuntimeException(
+                sprintf(
+                    'The model "%s" must be a type of %s.',
+                    get_class($model),
+                    Sortable::class
+                )
+            );
         }
 
-        return false;
+        $model->moveOrderDown();
+
+        return true;
     }
 
     /**

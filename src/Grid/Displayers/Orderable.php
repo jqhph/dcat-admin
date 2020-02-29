@@ -8,15 +8,6 @@ use Dcat\Admin\Grid\Column;
 
 class Orderable extends AbstractDisplayer
 {
-    public function __construct($value, Grid $grid, Column $column, $row)
-    {
-        parent::__construct($value, $grid, $column, $row);
-
-        if (! trait_exists('\Spatie\EloquentSortable\SortableTrait')) {
-            throw new \Exception('To use orderable grid, please install package [spatie/eloquent-sortable] first.');
-        }
-    }
-
     public function display()
     {
         Admin::script($this->script());

@@ -118,9 +118,10 @@ EOT;
                     
                     if ({$showNextPage} && _tbody.find('tr').length == '{$perPage}' && lastPage >= page) {
                         // 加载更多
-                        html += "<tr data-page='"+nextPage+"' class='{$tableId}-load-next-"+key+" "
-                            +trClass+"'><td colspan='"+(row.find('td').length)
-                            +"' align='center' style='cursor: pointer'> <a>"+icon+"</a> </td></tr>";
+                        html += "<tr data-level='" + (level + 1) + "' data-page='" + nextPage 
+                            + "' class='{$tableId}-load-next-" + key + " "
+                            + trClass + "'><td colspan='"+(row.find('td').length)
+                            + "' align='center' style='cursor: pointer'> <a>" + icon + "</a> </td></tr>";
                     }
                     
                     // 附加子节点
