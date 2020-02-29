@@ -234,7 +234,7 @@ trait ModelTree
             ->first();
 
         if (! $swapWithModel) {
-            return $this;
+            return false;
         }
 
         return $this->swapOrderWithModel($swapWithModel);
@@ -252,7 +252,7 @@ trait ModelTree
             ->first();
 
         if (! $swapWithModel) {
-            return $this;
+            return false;
         }
 
         return $this->swapOrderWithModel($swapWithModel);

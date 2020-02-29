@@ -188,6 +188,7 @@ return [
     'selected_must_less_then'  => '最多只能选择:num个选项',
     'quick_create'             => '快速创建',
     'grid_items_selected'      => '已选择 {n} 项',
+    'nothing_updated'          => '没有任何数据被更改',
     'validation'               => [
         'match'     => '与 :attribute 不匹配。',
         'minlength' => ':attribute 字符长度不能少于 :min。',

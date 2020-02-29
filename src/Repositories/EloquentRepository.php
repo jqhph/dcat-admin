@@ -313,9 +313,7 @@ class EloquentRepository extends Repository implements TreeRepository
                 )
             );
         }
-        $model->moveOrderUp();
-
-        return true;
+        return $model->moveOrderUp() ? true : false;
     }
 
     /**
@@ -337,9 +335,7 @@ class EloquentRepository extends Repository implements TreeRepository
             );
         }
 
-        $model->moveOrderDown();
-
-        return true;
+        return $model->moveOrderDown() ? true : false;
     }
 
     /**
