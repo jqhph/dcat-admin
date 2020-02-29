@@ -362,10 +362,6 @@ trait ModelTree
     {
         parent::boot();
 
-        if (! trait_exists('\Spatie\EloquentSortable\SortableTrait')) {
-            throw new \Exception('To use ModelTree, please install package [spatie/eloquent-sortable] first.');
-        }
-
         static::saving(function (Model $branch) {
             $parentColumn = $branch->getParentColumn();
 

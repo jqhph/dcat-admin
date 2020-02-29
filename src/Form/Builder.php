@@ -839,7 +839,7 @@ EOF;
 (function () {
     var f = $('#{$this->elementId()}');
 
-    f.find('[type="submit"]').click(function () {
+    f.find('button.submit').click(function () {
         var t = $(this);
     
         LA.Form({

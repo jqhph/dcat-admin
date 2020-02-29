@@ -6,6 +6,7 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\ViewErrorBag;
 
 class Content implements Renderable
 {
@@ -351,6 +352,13 @@ CSS
         }
     }
 
+    protected function shareDefaultErrors()
+    {
+        if (! session()->all()) {
+            view()->share(['errors' => new ViewErrorBag()]);
+        }
+    }
+
     /**
      * Render this content.
      *
@@ -359,8 +367,8 @@ CSS
     public function render()
     {
         $this->callComposing();
-
         $this->setupStyles();
+        $this->shareDefaultErrors();
 
         $items = [
             'header'      => $this->title,

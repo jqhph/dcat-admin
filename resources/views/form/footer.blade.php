@@ -9,7 +9,7 @@
 
         @if(! empty($buttons['submit']))
         <div class="btn-group pull-right">
-            <button type="submit" class="btn btn-primary">{{ trans('admin.submit') }}</button>
+            <button class="btn btn-primary submit">{{ trans('admin.submit') }}</button>
         </div>
 
         @if($checkboxes)
