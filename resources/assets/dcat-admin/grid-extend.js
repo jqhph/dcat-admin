@@ -32,17 +32,11 @@
 
                 var $this = $(this),
                     _i = $("i", this),
-                    data = {
-                        _token: LA.token,
-                    };
+                    shown = _i.hasClass('fa-angle-right');
 
                 _this.key = $this.data('key');
                 _this.level = $this.data('level');
                 _this.row = $this.closest('tr');
-                _this.data = data;
-
-                data[_this.options.parentIdQueryName] = _this.key;
-                data[_this.options.levelQueryName] = _this.level + 1;
 
                 if ($this.data('inserted') == '0') {
                     _this._request(1);
@@ -51,22 +45,29 @@
 
                 _i.toggleClass("fa-angle-right fa-angle-down");
 
+                var children = [];
+
                 getChildren(_this.row.nextAll(), _this.row).forEach(function (v) {
-                    var level = getLevel(v),
-                        isNextLevel = level === (_this.level + 1),
-                        currentIcon = $("i", v);
-
-                    if (_i.hasClass('fa-angle-right')) {
-                        isNextLevel && $(v).hide();
-                    } else {
-                        isNextLevel && $(v).show();
+                    if (! (getLevel(v) === (_this.level + 1))) {
+                        return;
                     }
 
-                    // 如果第二级以下节点是展开状态，则关闭
-                    if (level >= (_this.level + 1) && currentIcon.hasClass('fa-angle-down')) {
-                        currentIcon.parent().click()
-                    }
+                    children.push(v);
+
+                    shown ? $(v).show() : $(v).hide();
                 });
+
+                children.forEach(function (v) {
+                    if (shown) {
+                        return
+                    }
+
+                    var icon = $(v).find('a[data-level=' + getLevel(v) + '] i');
+
+                    if (icon.hasClass('fa-angle-down')) {
+                        icon.parent().click();
+                    }
+                })
             })
         },
 
@@ -83,12 +84,18 @@
             _this._req = 1;
             LA.loading();
 
-            _this.data[_this.options.pageQueryName.replace(':key', key)] = page;
+            var data = {
+                _token: LA.token,
+            };
+
+            data[_this.options.parentIdQueryName] = key;
+            data[_this.options.levelQueryName] = level + 1;
+            data[_this.options.pageQueryName.replace(':key', key)] = page;
 
             $.ajax({
                 url: _this.options.url,
                 type: 'GET',
-                data: _this.data,
+                data: data,
                 headers: {'X-PJAX': true},
                 success: function (resp) {
                     after && after();
@@ -199,7 +206,6 @@
                 nextAll = row.nextAll(),
                 prev = row.prevAll('tr').first(),
                 next = row.nextAll('tr').first();
-
 
             $.ajax({
                 type: 'POST',
