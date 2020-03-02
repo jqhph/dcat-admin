@@ -50,13 +50,66 @@ trait HasHeader
      *
      * @return $this
      */
-    protected function addSorter($cast = null)
+    public function sortable($cast = null)
     {
         $sortName = $this->grid->model()->getSortName();
 
         $sorter = new Sorter($sortName, $this->getName(), $cast);
 
         return $this->addHeader($sorter);
+    }
+
+    /**
+     * Set column filter.
+     *
+     * @example
+     *      $grid->username()->filter();
+     *
+     *      $grid->user()->filter('user.id');
+     *
+     *      $grid->user()->filter(function () {
+     *          return $this->user['id'];
+     *      });
+     *
+     *      $grid->username()->filter(
+     *          Grid\Column\Filter\StartWith::make(__('admin.username'))
+     *      );
+     *
+     *      $grid->created_at()->filter(
+     *          Grid\Column\Filter\Equal::make(__('admin.created_at'))->date()
+     *      );
+     *
+     * @param Grid\Column\Filter|string $filter
+     *
+     * @return $this
+     */
+    public function filter($filter = null)
+    {
+        $valueKey = is_string($filter) || $filter instanceof \Closure ? $filter : null;
+
+        if (! $filter || $valueKey) {
+            $filter = Grid\Column\Filter\Equal::make()->valueFilter($valueKey);
+        }
+
+        if (! $filter instanceof Grid\Column\Filter) {
+            throw new \InvalidArgumentException('The "$filter" must be a type of '.Grid\Column\Filter::class.'.');
+        }
+
+        return $this->addHeader($filter);
+    }
+
+    /**
+     * @param string|\Closure $valueKey
+     *
+     * @return $this
+     */
+    public function filterByValue($valueKey = null)
+    {
+        return $this->filter(
+            Grid\Column\Filter\Equal::make()
+                ->valueFilter($valueKey)
+                ->hide()
+        );
     }
 
     /**
@@ -68,7 +121,7 @@ trait HasHeader
      *
      * @return $this
      */
-    protected function addHelp($message, ?string $style = null, ?string $placement = 'bottom')
+    public function help($message, ?string $style = null, ?string $placement = 'top')
     {
         return $this->addHeader(new Help($message, $style, $placement));
     }
