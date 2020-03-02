@@ -9,6 +9,8 @@
             pageQueryName: '',
             parentIdQueryName: '',
             levelQueryName: '',
+            showIcon: 'fa-angle-right',
+            hideIcon: 'fa-angle-down',
             loadMoreText: '<svg style="fill:currentColor" t="1582877365167" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="32874" width="24" height="24"><path d="M162.8 515m-98.3 0a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32875"></path><path d="M511.9 515m-98.3 0a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32876"></path><path d="M762.8 515a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32877"></path></svg>',
         }, opts);
 
@@ -23,16 +25,17 @@
         },
 
         _bindClick: function () {
-            var _this = this;
+            var _this = this,
+                opts = _this.options;
 
-            $(this.options.button).off('click').click(function () {
+            $(opts.button).off('click').click(function () {
                 if (_this._req) {
                     return;
                 }
 
                 var $this = $(this),
                     _i = $("i", this),
-                    shown = _i.hasClass('fa-angle-right');
+                    shown = _i.hasClass(opts.showIcon);
 
                 _this.key = $this.data('key');
                 _this.level = $this.data('level');
@@ -43,7 +46,7 @@
                     $this.data('inserted', 1);
                 }
 
-                _i.toggleClass("fa-angle-right fa-angle-down");
+                _i.toggleClass(opts.showIcon + ' ' + opts.hideIcon);
 
                 var children = [];
 
@@ -64,7 +67,7 @@
 
                     var icon = $(v).find('a[data-level=' + getLevel(v) + '] i');
 
-                    if (icon.hasClass('fa-angle-down')) {
+                    if (icon.hasClass(opts.hideIcon)) {
                         icon.parent().click();
                     }
                 })

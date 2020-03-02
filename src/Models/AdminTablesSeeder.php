@@ -41,7 +41,7 @@ class AdminTablesSeeder extends Seeder
             [
                 'id'          => 1,
                 'name'        => 'Auth management',
-                'slug'        => 'auth.management',
+                'slug'        => 'auth-management',
                 'http_method' => '',
                 'http_path'   => '',
                 'parent_id'   => 0,
