@@ -883,7 +883,7 @@ input.label {
     border: 1px solid var(--40)
 }
 .table>tbody>tr>td {
-    height:54px;
+    height:57px;
 }
 .table > thead > tr > th {
     color: #555;
@@ -893,7 +893,7 @@ input.label {
     text-transform: capitalize;
     font-weight: bold;
     font-size: 14px;
-    padding: .8rem 8px;
+    padding: .7rem 8px;
     letter-spacing: .05em;
 }
 .table-header-default.table>thead>tr>th {
