@@ -18,6 +18,7 @@ class Menu extends Model
 {
     use MenuCache,
         ModelTree {
+            allNodes as treeAllNodes;
             ModelTree::boot as treeBoot;
         }
 
@@ -68,6 +69,8 @@ class Menu extends Model
     }
 
     /**
+     * Get all elements.
+     *
      * @param bool $force
      *
      * @return array
@@ -84,26 +87,19 @@ class Menu extends Model
     }
 
     /**
+     * Fetch all elements.
+     *
      * @return array
      */
-    protected function fetchAll(): array
+    public function fetchAll(): array
     {
-        $connection = config('admin.database.connection') ?: config('database.default');
-        $orderColumn = DB::connection($connection)->getQueryGrammar()->wrap($this->getOrderColumn());
+        return $this->withQuery(function ($query) {
+            if (static::withPermission()) {
+                $query = $query->with('permissions');
+            }
 
-        $byOrder = 'ROOT ASC, '.$orderColumn;
-
-        $self = $this->callQueryCallbacks(new static());
-
-        if (static::withPermission()) {
-            $self = $self->with('permissions');
-        }
-
-        return $self->with('roles')
-            ->selectRaw('*, '.$orderColumn.' ROOT')
-            ->orderByRaw($byOrder)
-            ->get()
-            ->toArray();
+            return $query->with('roles');
+        })->treeAllNodes();
     }
 
     /**

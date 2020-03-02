@@ -7,7 +7,6 @@ use Dcat\Admin\Tree;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Spatie\EloquentSortable\SortableTrait;
 
@@ -150,12 +149,8 @@ trait ModelTree
      */
     public function allNodes()
     {
-        $orderColumn = DB::getQueryGrammar()->wrap($this->getOrderColumn());
-        $byOrder = 'ROOT ASC, '.$orderColumn;
-
         return $this->callQueryCallbacks(new static())
-            ->selectRaw('*, '.$orderColumn.' ROOT')
-            ->orderByRaw($byOrder)
+            ->orderBy($this->getOrderColumn(), 'asc')
             ->get()
             ->toArray();
     }
