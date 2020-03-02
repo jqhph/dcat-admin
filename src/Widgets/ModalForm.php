@@ -227,7 +227,7 @@ class ModalForm
     /**
      * @return string
      */
-    public function render()
+    protected function render()
     {
         $this->setupOptions();
 

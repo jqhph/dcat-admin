@@ -46,7 +46,7 @@ class Help implements Renderable
 
         $tooltip = Tooltip::make('.'.$class);
 
-        if (in_array($this->style, ['primary', 'green', 'blue', 'red', 'purple'])) {
+        if (in_array($this->style, ['green', 'blue', 'red', 'purple'])) {
             $tooltip->{$this->style}();
         }
 
@@ -54,7 +54,7 @@ class Help implements Renderable
             $tooltip->{$this->placement}();
         }
 
-        $tooltip->content($this->message);
+        $tooltip->title($this->message);
 
         return <<<HELP
 &nbsp;<a href="javascript:void(0);" class="{$class} fa fa-question-circle" ></a>
