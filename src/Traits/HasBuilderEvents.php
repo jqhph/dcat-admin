@@ -5,7 +5,7 @@ namespace Dcat\Admin\Traits;
 trait HasBuilderEvents
 {
     /**
-     * Register a resolving listener.
+     * Register a resolving event.
      *
      * @param callable $callback
      * @param bool     $once
@@ -16,6 +16,8 @@ trait HasBuilderEvents
     }
 
     /**
+     * Call the resolving callbacks.
+     *
      * @param array ...$params
      */
     protected function callResolving(...$params)
@@ -24,7 +26,7 @@ trait HasBuilderEvents
     }
 
     /**
-     * Register a composing listener.
+     * Register a composing event.
      *
      * @param callable $callback
      * @param bool     $once
@@ -35,11 +37,34 @@ trait HasBuilderEvents
     }
 
     /**
+     * Call the composing callbacks.
+     *
      * @param array ...$params
      */
     protected function callComposing(...$params)
     {
         $this->callBuilderListeners('builder.composing', ...$params);
+    }
+
+    /**
+     * Register a composed event.
+     *
+     * @param callable $callback
+     * @param bool     $once
+     */
+    public static function composed(callable $callback, bool $once = false)
+    {
+        static::setListeners('builder.composed', $callback, $once);
+    }
+
+    /**
+     * Call the composed callbacks.
+     *
+     * @param array ...$params
+     */
+    protected function callComposed(...$params)
+    {
+        $this->callBuilderListeners('builder.composed', ...$params);
     }
 
     /**

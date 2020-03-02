@@ -45,6 +45,8 @@ class ModalForm
         $this->title($title);
 
         $this->url($url);
+
+        $this->autoRender();
     }
 
     /**
@@ -250,6 +252,20 @@ class ModalForm
 })();
 JS
         );
+    }
+
+    /**
+     * Automatically render to the body element.
+     *
+     * @return void
+     */
+    protected function autoRender()
+    {
+        Content::composed(function () {
+            if ($results = Helper::render($this->render())) {
+                Admin::html($results);
+            }
+        });
     }
 
     protected function setupOptions()

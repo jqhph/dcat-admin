@@ -54,7 +54,7 @@ class Help implements Renderable
             $tooltip->{$this->placement}();
         }
 
-        $tooltip->content($this->message)->render();
+        $tooltip->content($this->message);
 
         return <<<HELP
 &nbsp;<a href="javascript:void(0);" class="{$class} fa fa-question-circle" ></a>

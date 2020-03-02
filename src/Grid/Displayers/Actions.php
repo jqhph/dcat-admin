@@ -261,8 +261,7 @@ EOT;
             Form::modal(trans('admin.edit'))
                 ->click(".{$this->grid->rowName()}-edit")
                 ->dimensions($width, $height)
-                ->success('LA.reload()')
-                ->render();
+                ->success('LA.reload()');
         }
 
         return <<<EOF

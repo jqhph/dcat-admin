@@ -377,6 +377,8 @@ CSS
             'content'     => $this->build(),
         ];
 
+        $this->callComposed();
+
         return view($this->view, $items)->render();
     }
 }

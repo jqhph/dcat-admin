@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
@@ -124,6 +125,20 @@ abstract class Widget implements Renderable
         $this->collectAssets();
 
         return view($this->view, $this->variables())->render();
+    }
+
+    /**
+     * Automatically render to the body element.
+     *
+     * @return void
+     */
+    protected function autoRender()
+    {
+        Content::composed(function () {
+            if ($results = Helper::render($this->render())) {
+                Admin::html($results);
+            }
+        });
     }
 
     /**

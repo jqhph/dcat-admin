@@ -23,6 +23,8 @@ class Tooltip extends Widget
     public function __construct($selector = null)
     {
         $this->selector($selector);
+
+        $this->autoRender();
     }
 
     /**

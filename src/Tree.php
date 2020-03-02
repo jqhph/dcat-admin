@@ -501,8 +501,7 @@ JS;
             Form::modal(trans('admin.edit'))
                 ->click('.tree-quick-edit')
                 ->success('LA.reload()')
-                ->dimensions($width, $height)
-                ->render();
+                ->dimensions($width, $height);
         }
     }
 
@@ -517,8 +516,7 @@ JS;
             Form::modal(trans('admin.new'))
                 ->click('.tree-quick-create')
                 ->success('LA.reload()')
-                ->dimensions($width, $height)
-                ->render();
+                ->dimensions($width, $height);
         }
     }
 
