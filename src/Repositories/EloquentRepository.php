@@ -643,6 +643,7 @@ class EloquentRepository extends Repository implements TreeRepository
                     $related->save();
                     break;
                 case $relation instanceof Relations\BelongsTo:
+                case $relation instanceof Relations\MorphTo:
 
                     $parent = $model->$name;
 
@@ -658,8 +659,9 @@ class EloquentRepository extends Repository implements TreeRepository
                     $parent->save();
 
                     // When in creating, associate two models
-                    if (! $model->{$relation->getForeignKey()}) {
-                        $model->{$relation->getForeignKey()} = $parent->getKey();
+                    $foreignKeyMethod = version_compare(app()->version(), '5.8.0', '<') ? 'getForeignKey' : 'getForeignKeyName';
+                    if (! $model->{$foreignKeyMethod}) {
+                        $model->{$foreignKeyMethod} = $parent->getKey();
 
                         $model->save();
                     }
