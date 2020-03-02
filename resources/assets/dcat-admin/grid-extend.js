@@ -52,10 +52,19 @@
                 _i.toggleClass("fa-angle-right fa-angle-down");
 
                 getChildren(_this.row.nextAll(), _this.row).forEach(function (v) {
+                    var level = getLevel(v),
+                        isNextLevel = level === (_this.level + 1),
+                        currentIcon = $("i", v);
+
                     if (_i.hasClass('fa-angle-right')) {
-                        $(v).hide();
+                        isNextLevel && $(v).hide();
                     } else {
-                        $(v).show();
+                        isNextLevel && $(v).show();
+                    }
+
+                    // 如果第二级以下节点是展开状态，则关闭
+                    if (level >= (_this.level + 1) && currentIcon.hasClass('fa-angle-down')) {
+                        currentIcon.parent().click()
                     }
                 });
             })
@@ -199,42 +208,44 @@
                 success: function(data){
                     LA.loading(false);
                     _this._req = 0;
-                    if (data.status) {
-                        LA.success(data.message);
+                    if (! data.status) {
+                        return data.message && LA.warning(data.message, 'rt');
+                    }
 
-                        if (direction) {
-                            var prevRow = sibling(prevAll, level);
-                            if (swapable(prevRow, level) && prev.length && getLevel(prev) >= level) {
-                                prevRow.before(row);
+                    LA.success(data.message);
 
-                                // 把所有子节点上移
-                                getChildren(nextAll, row).forEach(function (v) {
-                                    prevRow.before(v)
-                                });
+                    if (direction) {
+                        var prevRow = sibling(prevAll, level);
+                        if (swapable(prevRow, level) && prev.length && getLevel(prev) >= level) {
+                            prevRow.before(row);
+
+                            // 把所有子节点上移
+                            getChildren(nextAll, row).forEach(function (v) {
+                                prevRow.before(v)
+                            });
+                        }
+                    } else {
+                        var nextRow = sibling(nextAll, level),
+                            nextRowChildren = nextRow ? getChildren(nextRow.nextAll(), nextRow) : [];
+
+                        if (swapable(nextRow, level) && next.length && getLevel(next) >= level) {
+                            nextAll = row.nextAll();
+
+                            if (nextRowChildren.length) {
+                                nextRow = $(nextRowChildren.pop())
                             }
-                        } else {
-                            var nextRow = sibling(nextAll, level),
-                                nextRowChildren = nextRow ? getChildren(nextRow.nextAll(), nextRow) : [];
 
-                            if (swapable(nextRow, level) && next.length && getLevel(next) >= level) {
-                                nextAll = row.nextAll();
+                            // 把所有子节点下移
+                            var all = [];
+                            getChildren(nextAll, row).forEach(function (v) {
+                                all.unshift(v)
+                            });
 
-                                if (nextRowChildren.length) {
-                                    nextRow = $(nextRowChildren.pop())
-                                }
+                            all.forEach(function(v) {
+                                nextRow.after(v)
+                            });
 
-                                // 把所有子节点下移
-                                var all = [];
-                                getChildren(nextAll, row).forEach(function (v) {
-                                    all.unshift(v)
-                                });
-
-                                all.forEach(function(v) {
-                                    nextRow.after(v)
-                                });
-
-                                nextRow.after(row);
-                            }
+                            nextRow.after(row);
                         }
                     }
                 },
