@@ -179,7 +179,7 @@ class Helper
 
         Arr::forget($query, $keys);
 
-        $baseUrl = "{$urlInfo['scheme']}://{$urlInfo['host']}{$urlInfo['path']}";
+        $baseUrl = explode('?', $url)[0];
 
         return $query
             ? $baseUrl.'?'.http_build_query($query)
