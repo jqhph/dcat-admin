@@ -11,7 +11,12 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'admin:publish {--force}';
+    protected $signature = 'admin:publish 
+    {--force : Overwrite any existing files} 
+    {--lang : Publish language files} 
+    {--assets : Publish assets files} 
+    {--migrations : Publish migrations files} 
+    {--config : Publish configuration files}';
 
     /**
      * The console command description.
@@ -27,11 +32,22 @@ class PublishCommand extends Command
      */
     public function handle()
     {
-        $force = $this->option('force');
         $options = ['--provider' => 'Dcat\Admin\AdminServiceProvider'];
-        if ($force == true) {
+
+        if ($this->option('force')) {
             $options['--force'] = true;
         }
+
+        if ($this->option('lang')) {
+            $options['--tag'] = 'dcat-admin-lang';
+        } elseif ($this->option('migrations')) {
+            $options['--tag'] = 'dcat-admin-migrations';
+        } elseif ($this->option('assets')) {
+            $options['--tag'] = 'dcat-admin-assets';
+        } elseif ($this->option('config')) {
+            $options['--tag'] = 'dcat-admin-config';
+        }
+
         $this->call('vendor:publish', $options);
         $this->call('view:clear');
     }
