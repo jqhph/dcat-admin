@@ -33,7 +33,7 @@ class Selector
     /**
      * @var string
      */
-    protected $queryName;
+    protected $queryNameSuffix = '_selector';
 
     /**
      * Selector constructor.
@@ -43,7 +43,6 @@ class Selector
         $this->grid = $grid;
         $this->request = request();
         $this->selectors = new Collection();
-        $this->queryName = $grid->getName().'_selector';
     }
 
     /**
@@ -103,6 +102,14 @@ class Selector
     }
 
     /**
+     * @return string
+     */
+    public function queryName()
+    {
+        return $this->grid->getName().$this->queryNameSuffix;
+    }
+
+    /**
      * Get all selectors.
      *
      * @return array|Collection
@@ -121,7 +128,7 @@ class Selector
             return $this->selected;
         }
 
-        $selected = $this->request->get($this->queryName, []);
+        $selected = $this->request->get($this->queryName(), []);
         if (! is_array($selected)) {
             return [];
         }
@@ -149,11 +156,11 @@ class Selector
         $query = $this->request->query();
 
         $selected = $this->parseSelected();
-
         $options = Arr::get($selected, $column, []);
+        $queryName = "{$this->queryName()}.{$column}";
 
         if (is_null($value)) {
-            Arr::forget($query, "{$this->queryName}.{$column}");
+            Arr::forget($query, $queryName);
 
             return $this->request->fullUrlWithQuery($query);
         }
@@ -168,9 +175,9 @@ class Selector
         }
 
         if (! empty($options)) {
-            Arr::set($query, "{$this->queryName}.{$column}", implode(',', $options));
+            Arr::set($query, $queryName, implode(',', $options));
         } else {
-            Arr::forget($query, "{$this->queryName}.{$column}");
+            Arr::forget($query, $queryName);
         }
 
         return $this->request->fullUrlWithQuery($query);

@@ -99,8 +99,11 @@ trait HasQuickSearch
             return;
         }
 
-        $this->model()->disableBindTreeQuery();
-        $this->model()->treeUrlWithoutQuery($this->quickSearch->queryName());
+        $this->model()
+            ->disableBindTreeQuery()
+            ->treeUrlWithoutQuery(
+                $this->quickSearch->queryName()
+            );
 
         if ($this->search instanceof \Closure) {
             return call_user_func($this->search, $this->model(), $query);

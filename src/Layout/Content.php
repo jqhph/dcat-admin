@@ -381,4 +381,25 @@ CSS
 
         return view($this->view, $items)->render();
     }
+
+    /**
+     * Register a composed event.
+     *
+     * @param callable $callback
+     * @param bool     $once
+     */
+    public static function composed(callable $callback, bool $once = false)
+    {
+        static::addBuilderListeners('builder.composed', $callback, $once);
+    }
+
+    /**
+     * Call the composed callbacks.
+     *
+     * @param array ...$params
+     */
+    protected function callComposed(...$params)
+    {
+        $this->fireBuilderEvent('builder.composed', ...$params);
+    }
 }

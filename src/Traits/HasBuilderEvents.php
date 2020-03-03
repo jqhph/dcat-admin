@@ -12,7 +12,7 @@ trait HasBuilderEvents
      */
     public static function resolving(callable $callback, bool $once = false)
     {
-        static::setListeners('builder.resolving', $callback, $once);
+        static::addBuilderListeners('builder.resolving', $callback, $once);
     }
 
     /**
@@ -22,7 +22,7 @@ trait HasBuilderEvents
      */
     protected function callResolving(...$params)
     {
-        $this->callBuilderListeners('builder.resolving', ...$params);
+        $this->fireBuilderEvent('builder.resolving', ...$params);
     }
 
     /**
@@ -33,7 +33,7 @@ trait HasBuilderEvents
      */
     public static function composing(callable $callback, bool $once = false)
     {
-        static::setListeners('builder.composing', $callback, $once);
+        static::addBuilderListeners('builder.composing', $callback, $once);
     }
 
     /**
@@ -43,35 +43,14 @@ trait HasBuilderEvents
      */
     protected function callComposing(...$params)
     {
-        $this->callBuilderListeners('builder.composing', ...$params);
-    }
-
-    /**
-     * Register a composed event.
-     *
-     * @param callable $callback
-     * @param bool     $once
-     */
-    public static function composed(callable $callback, bool $once = false)
-    {
-        static::setListeners('builder.composed', $callback, $once);
-    }
-
-    /**
-     * Call the composed callbacks.
-     *
-     * @param array ...$params
-     */
-    protected function callComposed(...$params)
-    {
-        $this->callBuilderListeners('builder.composed', ...$params);
+        $this->fireBuilderEvent('builder.composing', ...$params);
     }
 
     /**
      * @param $listeners
      * @param array ...$params
      */
-    protected function callBuilderListeners($key, ...$params)
+    protected function fireBuilderEvent($key, ...$params)
     {
         $storage = app('admin.context');
 
@@ -97,7 +76,7 @@ trait HasBuilderEvents
      * @param callable $callback
      * @param bool     $once
      */
-    protected static function setListeners($key, $callback, $once)
+    protected static function addBuilderListeners($key, $callback, $once)
     {
         $storage = app('admin.context');
 
