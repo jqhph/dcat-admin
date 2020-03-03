@@ -144,6 +144,9 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function get(Grid\Model $model)
     {
+        $this->setSort($model);
+        $this->setPaginate($model);
+
         $query = $this->newQuery();
 
         if ($this->relations) {
@@ -161,6 +164,104 @@ class EloquentRepository extends Repository implements TreeRepository
         });
 
         return $query;
+    }
+
+    /**
+     * Set the grid sort.
+     *
+     * @param Grid\Model $model
+     *
+     * @return void
+     */
+    protected function setSort(Grid\Model $model)
+    {
+        list($column, $type) = $model->getSort();
+
+        if (empty($column) || empty($type)) {
+            return;
+        }
+
+        if (Str::contains($column, '.')) {
+            $this->setRelationSort($model, $column, $type);
+        } else {
+            $model->resetOrderBy();
+
+            $model->addQuery('orderBy', [$column, $type]);
+        }
+    }
+
+    /**
+     * Set relation sort.
+     *
+     * @param Grid\Model $model
+     * @param string     $column
+     * @param string     $type
+     *
+     * @return void
+     */
+    protected function setRelationSort(Grid\Model $model, $column, $type)
+    {
+        [$relationName, $relationColumn] = explode('.', $column);
+
+        if ($model->getQueries()->contains(function ($query) use ($relationName) {
+            return $query['method'] == 'with' && in_array($relationName, $query['arguments']);
+        })) {
+            $model->addQuery('select', [$this->getGridColumns()]);
+
+            $model->resetOrderBy();
+
+            $model->addQuery('orderBy', [
+                $relationColumn,
+                $type,
+            ]);
+        }
+    }
+
+
+    /**
+     * Set the grid paginate.
+     *
+     * @param Grid\Model $model
+     *
+     * @return void
+     */
+    protected function setPaginate(Grid\Model $model)
+    {
+        $paginate = $model->findQueryByMethod('paginate');
+
+        $model->rejectQuery(['paginate']);
+
+        if (! $model->allowPagination()) {
+            $model->addQuery('get', [$this->getGridColumns()]);
+        } else {
+            $model->addQuery('paginate', $this->resolvePerPage($model, $paginate));
+        }
+    }
+
+    /**
+     * Resolve perPage for pagination.
+     *
+     * @param Grid\Model $model
+     * @param array|null $paginate
+     *
+     * @return array
+     */
+    protected function resolvePerPage(Grid\Model $model, $paginate)
+    {
+        if ($paginate && is_array($paginate)) {
+            if ($perPage = request()->input($model->getPerPageName())) {
+                $paginate['arguments'][0] = (int) $perPage;
+            }
+
+            return $paginate['arguments'];
+        }
+
+        return [
+            $model->getPerPage(),
+            $this->getGridColumns(),
+            $model->getPageName(),
+            $model->getCurrentPage(),
+        ];
     }
 
     /**

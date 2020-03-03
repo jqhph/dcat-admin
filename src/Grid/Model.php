@@ -220,6 +220,14 @@ class Model
     }
 
     /**
+     * @return bool
+     */
+    public function allowPagination()
+    {
+        return $this->usePaginate;
+    }
+
+    /**
      * Get the query string variable used to store the per-page.
      *
      * @return string
@@ -450,9 +458,6 @@ class Model
             return $this->paginator->getCollection();
         }
 
-        $this->setSort();
-        $this->setPaginate();
-
         if ($this->builder && is_callable($this->builder)) {
             $results = call_user_func($this->builder, $this);
         } else {
@@ -545,61 +550,6 @@ class Model
     }
 
     /**
-     * Set the grid paginate.
-     *
-     * @return void
-     */
-    protected function setPaginate()
-    {
-        $paginate = $this->findQueryByMethod('paginate');
-
-        $this->queries = $this->queries->reject(function ($query) {
-            return $query['method'] == 'paginate';
-        });
-
-        if (! $this->usePaginate) {
-            $query = [
-                'method'    => 'get',
-                'arguments' => [],
-            ];
-        } else {
-            $query = [
-                'method'    => 'paginate',
-                'arguments' => $this->resolvePerPage($paginate),
-            ];
-        }
-
-        $this->queries->push($query);
-    }
-
-    /**
-     * Resolve perPage for pagination.
-     *
-     * @param array|null $paginate
-     *
-     * @return array
-     */
-    protected function resolvePerPage($paginate)
-    {
-        if ($perPage = app('request')->input($this->perPageName)) {
-            if (is_array($paginate)) {
-                $paginate['arguments'][0] = (int) $perPage;
-
-                return $paginate['arguments'];
-            }
-
-            $this->perPage = (int) $perPage;
-        }
-
-        return [
-            $this->perPage,
-            $this->repository->getGridColumns(),
-            $this->pageName,
-            $this->getCurrentPage(),
-        ];
-    }
-
-    /**
      * Find query by method name.
      *
      * @param $method
@@ -645,6 +595,10 @@ class Model
      */
     public function getSort()
     {
+        if (empty($this->sort)) {
+            $this->sort = $this->request->get($this->getSortName());
+        }
+
         if (empty($this->sort['column']) || empty($this->sort['type'])) {
             return [null, null];
         }
@@ -653,72 +607,18 @@ class Model
     }
 
     /**
-     * Set the grid sort.
-     *
-     * @return void
-     */
-    protected function setSort()
-    {
-        $this->sort = $this->request->get($this->sortName, []);
-
-        if (empty($this->sort['column']) || empty($this->sort['type'])) {
-            return;
-        }
-
-        if (Str::contains($this->sort['column'], '.')) {
-            $this->setRelationSort($this->sort['column']);
-        } else {
-            $this->resetOrderBy();
-
-            $this->queries->push([
-                'method'    => 'orderBy',
-                'arguments' => [$this->sort['column'], $this->sort['type']],
-            ]);
-        }
-    }
-
-    /**
-     * Set relation sort.
-     *
-     * @param string $column
-     *
-     * @return void
-     */
-    protected function setRelationSort($column)
-    {
-        [$relationName, $relationColumn] = explode('.', $column);
-
-        if ($this->queries->contains(function ($query) use ($relationName) {
-            return $query['method'] == 'with' && in_array($relationName, $query['arguments']);
-        })) {
-            $this->queries->push([
-                'method'    => 'select',
-                'arguments' => ['*'],
-            ]);
-
-            $this->resetOrderBy();
-
-            $this->queries->push([
-                'method'    => 'orderBy',
-                'arguments' => [
-                    $relationColumn,
-                    $this->sort['type'],
-                ],
-            ]);
-        }
-    }
-
-    /**
      * @param string|array $method
      *
      * @return void
      */
-    public function rejectQueries($method)
+    public function rejectQuery($method)
     {
-        $method = (array) $method;
-
         $this->queries = $this->queries->reject(function ($query) use ($method) {
-            return in_array($query['method'], $method);
+            if (is_callable($method)) {
+                return call_user_func($method, $query);
+            }
+
+            return in_array($query['method'], (array) $method, true);
         });
     }
 
@@ -729,7 +629,7 @@ class Model
      */
     public function resetOrderBy()
     {
-        $this->rejectQueries(['orderBy', 'orderByDesc']);
+        $this->rejectQuery(['orderBy', 'orderByDesc']);
     }
 
     /**
@@ -739,6 +639,17 @@ class Model
      * @return $this
      */
     public function __call($method, $arguments)
+    {
+        return $this->addQuery($method, $arguments);
+    }
+
+    /**
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return $this
+     */
+    public function addQuery(string $method, array $arguments = [])
     {
         $this->queries->push([
             'method'    => $method,
@@ -781,7 +692,7 @@ class Model
             $this->eagerLoads[] = $relations;
         }
 
-        return $this->__call('with', (array) $relations);
+        return $this->addQuery('with', (array) $relations);
     }
 
     /**

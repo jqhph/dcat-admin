@@ -189,7 +189,7 @@ abstract class AbstractExporter implements ExporterInterface
         $array = $this->grid->processFilter(true);
 
         $model->reset();
-        $model->rejectQueries('forPage');
+        $model->rejectQuery('forPage');
 
         return $this->callBuilder($array);
     }
