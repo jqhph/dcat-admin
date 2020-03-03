@@ -140,7 +140,8 @@ HTML
             && ! $this->findQueryByMethod('orderByDesc')
             && ($orderColumn = $this->repository->getOrderColumn())
         ) {
-            $this->orderBy($orderColumn);
+            $this->orderBy($orderColumn)
+                ->orderBy($this->repository->getKeyName());
         }
     }
 
