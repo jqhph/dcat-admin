@@ -222,7 +222,17 @@ trait ModelTree
         $orderColumnName = $this->determineOrderColumnName();
         $parentColumnName = $this->getParentColumn();
 
-        $swapWithModel = $this->buildSortQuery()->limit(1)
+        $sameOrderModel = $this->getSameOrderModel('>');
+
+        if ($sameOrderModel) {
+            $this->$orderColumnName = $this->$orderColumnName + 1;
+
+            $this->save();
+            return $this;
+        }
+
+        $swapWithModel = $this->buildSortQuery()
+            ->limit(1)
             ->ordered()
             ->where($orderColumnName, '>', $this->$orderColumnName)
             ->where($parentColumnName, $this->$parentColumnName)
@@ -240,24 +250,49 @@ trait ModelTree
         $orderColumnName = $this->determineOrderColumnName();
         $parentColumnName = $this->getParentColumn();
 
-        $swapWithModel = $this->buildSortQuery()->limit(1)
+        $swapWithModel = $this->buildSortQuery()
+            ->limit(1)
             ->ordered('desc')
             ->where($orderColumnName, '<', $this->$orderColumnName)
             ->where($parentColumnName, $this->$parentColumnName)
             ->first();
 
-        if (! $swapWithModel) {
-            return false;
+        if ($swapWithModel) {
+            return $this->swapOrderWithModel($swapWithModel);
         }
 
-        return $this->swapOrderWithModel($swapWithModel);
+        $sameOrderModel = $this->getSameOrderModel('<');
+
+        if (! $sameOrderModel) {
+            return false;
+        }
+        $sameOrderModel->$orderColumnName = $sameOrderModel->$orderColumnName + 1;
+        $sameOrderModel->save();
+
+        return $this;
+    }
+
+    protected function getSameOrderModel(string $operator = '<')
+    {
+        $orderColumnName = $this->determineOrderColumnName();
+        $parentColumnName = $this->getParentColumn();
+
+        return $this->buildSortQuery()
+            ->limit(1)
+            ->orderBy($orderColumnName)
+            ->orderBy($this->getKeyName())
+            ->where($this->getKeyName(), $operator, $this->getKey())
+            ->where($orderColumnName, $this->$orderColumnName)
+            ->where($parentColumnName, $this->$parentColumnName)
+            ->first();
     }
 
     public function moveToStart()
     {
         $parentColumnName = $this->getParentColumn();
 
-        $firstModel = $this->buildSortQuery()->limit(1)
+        $firstModel = $this->buildSortQuery()
+            ->limit(1)
             ->ordered()
             ->where($parentColumnName, $this->$parentColumnName)
             ->first();
@@ -274,15 +309,6 @@ trait ModelTree
         $this->buildSortQuery()->where($this->getKeyName(), '!=', $this->id)->increment($orderColumnName);
 
         return $this;
-    }
-
-    public function getHighestOrderNumber(): int
-    {
-        $parentColumnName = $this->getParentColumn();
-
-        return (int) $this->buildSortQuery()
-            ->where($parentColumnName, $this->$parentColumnName)
-            ->max($this->determineOrderColumnName());
     }
 
     /**

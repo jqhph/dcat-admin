@@ -296,7 +296,11 @@ class PermissionController extends Controller
 
             $form->display('id', 'ID');
 
-            $form->select('parent_id', trans('admin.parent_id'))->options($permissionModel::selectOptions());
+            $form->select('parent_id', trans('admin.parent_id'))
+                ->options($permissionModel::selectOptions())
+                ->saving(function ($v) {
+                   return (int) $v;
+                });
 
             $form->text('slug', trans('admin.slug'))
                 ->required()
