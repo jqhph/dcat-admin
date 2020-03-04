@@ -1,12 +1,15 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
 use Dcat\Admin\Models\Administrator;
 use Dcat\Admin\Models\Permission;
 use Dcat\Admin\Models\Role;
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group permissions
+ */
 class PermissionsTest extends TestCase
 {
     public function testPermissionsIndex()

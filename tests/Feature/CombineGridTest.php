@@ -1,9 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group combine-grid
+ */
 class CombineGridTest extends TestCase
 {
     public function test()
@@ -17,7 +20,7 @@ class CombineGridTest extends TestCase
             ->see('top');
 
         // Column::help
-        $this->assertCount(1, $this->crawler()->filter('th a i[class*=fa-question-circle]'));
+        $this->assertCount(1, $this->crawler()->filter('th a[class*=fa-question-circle]'));
 
         $this->assertCount(2, $this->crawler()->filter('thead tr'));
 

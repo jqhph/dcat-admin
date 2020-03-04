@@ -1,18 +1,22 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
+use Dcat\Admin\Tests\TestCase;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
-use Tests\TestCase;
 
+/**
+ * @group trans
+ */
 class TranslationTest extends TestCase
 {
     public function testTransField()
     {
-        $this->visit('admin/tests/users');
+        $this->visit('admin/tests/users')
+            ->see('Post code');
 
-        $this->load();
+        $this->registerTranslator();
 
         $this->assertEquals('user', admin_controller_slug());
 
@@ -27,7 +31,7 @@ class TranslationTest extends TestCase
     {
         $this->visit('admin/tests/users');
 
-        $this->load();
+        $this->registerTranslator();
 
         $this->assertEquals('user', admin_controller_slug());
 
@@ -38,7 +42,7 @@ class TranslationTest extends TestCase
     {
         $this->visit('admin/tests/users');
 
-        $this->load();
+        $this->registerTranslator();
 
         $this->assertEquals('user', admin_controller_slug());
 
@@ -50,9 +54,10 @@ class TranslationTest extends TestCase
         $this->assertEquals(admin_trans_label('Create'), 'Create');
     }
 
-    protected function load()
+
+    protected function registerTranslator()
     {
-        $loader = new FileLoader(app('files'), __DIR__.'/../lang');
+        $loader = new FileLoader(app('files'), __DIR__ . '/../resources/lang');
 
         $translator = new Translator($loader, 'en');
 

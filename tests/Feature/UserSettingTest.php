@@ -1,10 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
 use Dcat\Admin\Models\Administrator;
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group user-setting
+ */
 class UserSettingTest extends TestCase
 {
     public function testVisitSettingPage()

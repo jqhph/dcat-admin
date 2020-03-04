@@ -1,11 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
 use Dcat\Admin\Models\Administrator;
 use Dcat\Admin\Models\Role;
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group role
+ */
 class RolesTest extends TestCase
 {
     public function testRolesIndex()

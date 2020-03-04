@@ -1,11 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
 use Tests\Models\Profile as ProfileModel;
 use Tests\Models\User as UserModel;
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group user-grid
+ */
 class UserGridTest extends TestCase
 {
     public function testIndexPage()

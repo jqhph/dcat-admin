@@ -1,18 +1,19 @@
 <?php
 
-namespace Tests\Controllers;
+namespace Dcat\Admin\Tests\Controllers;
 
 use App\Http\Controllers\Controller;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
-use Illuminate\Contracts\Support\Renderable;
-use Tests\Repositories\Report;
+use Dcat\Admin\Tests\Repositories\Report;
 
 class ReportController extends Controller
 {
     public function index(Content $content)
     {
-        return $content->header('报表')->body($this->grid());
+        return $content
+            ->header('报表')
+            ->body($this->grid());
     }
 
     protected function grid()
@@ -21,16 +22,12 @@ class ReportController extends Controller
 
         // 开启responsive插件
         $grid->responsive();
+
         $grid->disableActions();
         $grid->disableBatchDelete();
         $grid->disableCreateButton();
 
-        $grid->setRowSelectorOptions(['style' => 'success', 'clicktr' => true]);
-
-        // 更改表格外层容器
-        $grid->wrap(function (Renderable $view) {
-            return $view;
-        });
+        $grid->rowSelector()->style('success')->click();
 
         $grid->combine('avgCost', ['avgMonthCost', 'avgQuarterCost', 'avgYearCost'])->responsive()->help('test');
         $grid->combine('avgVist', ['avgMonthVist', 'avgQuarterVist', 'avgYearVist'])->responsive();

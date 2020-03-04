@@ -2,7 +2,7 @@
 
 Route::group([
     'prefix'     => config('admin.route.prefix'),
-    'namespace'  => 'Tests\Controllers',
+    'namespace'  => 'Dcat\Admin\Tests\Controllers',
     'middleware' => ['web', 'admin'],
 ], function ($router) {
     $router->resource('tests/users', UserController::class);

@@ -1,9 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group user
+ */
 class UsersTest extends TestCase
 {
     public function testUsersIndexPage()

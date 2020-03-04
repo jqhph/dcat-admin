@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Dcat\Admin\Tests;
 
 use Dcat\Admin\Models\Administrator;
 use Facebook\WebDriver\Chrome\ChromeOptions;

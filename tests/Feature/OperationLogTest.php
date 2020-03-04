@@ -1,10 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
 use Dcat\Admin\Models\OperationLog;
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group log
+ */
 class OperationLogTest extends TestCase
 {
     public function testOperationLogIndex()

@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests\Repositories;
+namespace Dcat\Admin\Tests\Repositories;
 
+use Dcat\Admin\Tests\Models\User as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 
 class User extends EloquentRepository
 {
-    protected $eloquentClass = \Tests\Models\User::class;
+    protected $eloquentClass = Model::class;
 }

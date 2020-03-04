@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Models;
+namespace Dcat\Admin\Tests\Models;
 
 use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
 class SectionTest extends TestCase
 {

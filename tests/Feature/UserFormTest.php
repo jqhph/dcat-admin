@@ -1,10 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
 use Tests\Models\User as UserModel;
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group user-form
+ */
 class UserFormTest extends TestCase
 {
     public function testCreatePage()

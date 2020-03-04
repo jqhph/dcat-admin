@@ -1,9 +1,5 @@
 <?php
 
-use Dcat\Admin\Models\Menu;
-use Dcat\Admin\Models\Permission;
-use Dcat\Admin\Models\Role;
-
 return [
 
     /*
@@ -38,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>Da</b>',
+    'logo-mini' => 'Da',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +91,7 @@ return [
     |--------------------------------------------------------------------------
     |
    */
-    'cdn' => false,
+    'cdn' => env('ADMIN_CDN', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -119,8 +115,11 @@ return [
     |
     */
     'auth' => [
+        'enable' => true,
 
         'controller' => Dcat\Admin\Controllers\AuthController::class,
+
+        'login_view' => 'admin::login',
 
         'guard' => 'admin',
 
@@ -158,6 +157,15 @@ return [
         |--------------------------------------------------------------------------
         */
         'grid_action_class' => Dcat\Admin\Grid\Displayers\DropdownActions::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | dcat-admin helpers setting.
+    |--------------------------------------------------------------------------
+    */
+    'helpers' => [
+        'enable' => true,
     ],
 
     /*
@@ -319,7 +327,7 @@ return [
     | "sidebar-mini".
     |
     */
-    'layout' => ['sidebar-mini', 'sidebar-collapse', 'fixed'],
+    'layout' => ['sidebar-mini', 'fixed'],
 
     /*
     |--------------------------------------------------------------------------
@@ -336,7 +344,7 @@ return [
     | The exception handler class
     |--------------------------------------------------------------------------
     |
-   */
+    */
     'exception_handler' => \Dcat\Admin\Exception\Handler::class,
 
     /*

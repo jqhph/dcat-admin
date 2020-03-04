@@ -1,10 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
 use Dcat\Admin\Models\Menu;
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group menu
+ */
 class MenuTest extends TestCase
 {
     public function testMenuIndex()

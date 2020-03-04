@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Controllers;
+namespace Dcat\Admin\Tests\Controllers;
 
 use App\Http\Controllers\Controller;
 use Dcat\Admin\Controllers\HasResourceActions;
@@ -9,7 +9,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
 use Tests\Models\Tag;
-use Tests\Repositories\User;
+use Dcat\Admin\Tests\Repositories\User;
 
 class UserController extends Controller
 {
@@ -122,7 +122,7 @@ class UserController extends Controller
         $grid->created_at();
         $grid->updated_at();
 
-        $grid->showExporter();
+        $grid->export();
 
         $grid->filter(function (Grid\Filter $filter) {
             $filter->equal('id');
@@ -134,7 +134,7 @@ class UserController extends Controller
         });
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
-            if ($actions->getKey() % 2 == 0) {
+            if ($actions->key() % 2 == 0) {
                 $actions->append('<a href="/" class="btn btn-xs btn-danger">detail</a>');
             }
         });
@@ -151,22 +151,18 @@ class UserController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(new User());
+        return Show::make($id, new User(), function (Show $show) {
+            $show->id('ID');
+            $show->username();
+            $show->email;
 
-        $show->setId($id);
+            $show->divider();
 
-        $show->id('ID');
-        $show->username();
-        $show->email;
+            $show->full_name();
+            $show->field('profile.postcode');
 
-        $show->divider();
-
-        $show->full_name();
-        $show->field('profile.postcode');
-
-        $show->tags->json();
-
-        return $show;
+            $show->tags->json();
+        });
     }
 
     /**
@@ -203,16 +199,13 @@ class UserController extends Controller
         $form->datetime('profile.start_at');
         $form->datetime('profile.end_at');
 
-//        $tags = Tag::all()->pluck('name', 'id');
-//        print_r($tags);die;
-
         $form->multipleSelect('tags', 'Tags')->options(Tag::all()->pluck('name', 'id'))->customFormat(function ($value) {
             if (! $value) {
                 return [];
             }
 
             return array_column($value, 'id');
-        }); //->rules('max:10|min:3');
+        });
 
         $form->display('created_at', 'Created At');
         $form->display('updated_at', 'Updated At');

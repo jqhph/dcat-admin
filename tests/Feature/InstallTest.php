@@ -1,9 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Dcat\Admin\Tests\Feature;
 
-use Tests\TestCase;
+use Dcat\Admin\Tests\TestCase;
 
+/**
+ * @group install
+ */
 class InstallTest extends TestCase
 {
     public function testInstalledDirectories()
@@ -19,8 +22,6 @@ class InstallTest extends TestCase
         $this->assertFileExists(admin_path('Controllers/HomeController.php'));
 
         $this->assertFileExists(admin_path('Controllers/AuthController.php'));
-
-        $this->assertFileExists(admin_path('Controllers/ExampleController.php'));
 
         $this->assertFileExists(config_path('admin.php'));
 
