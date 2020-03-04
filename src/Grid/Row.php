@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
 
 class Row implements Arrayable
@@ -35,7 +36,7 @@ class Row implements Arrayable
     public function __construct(Grid $grid, $data)
     {
         $this->grid = $grid;
-        $this->data = new Fluent(Helper::array($data));
+        $this->data = new Fluent($data);
     }
 
     /**
@@ -168,9 +169,9 @@ class Row implements Arrayable
     public function column($name, $value = null)
     {
         if (is_null($value)) {
-            $column = $this->data->get($name);
-
-            return $this->output($column);
+            return $this->output(
+                Arr::get($this->toArray(), $name)
+            );
         }
 
         if ($value instanceof Closure) {
