@@ -175,7 +175,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     protected function setSort(Grid\Model $model)
     {
-        list($column, $type) = $model->getSort();
+        [$column, $type] = $model->getSort();
 
         if (empty($column) || empty($type)) {
             return;
@@ -216,7 +216,6 @@ class EloquentRepository extends Repository implements TreeRepository
             ]);
         }
     }
-
 
     /**
      * Set the grid paginate.
@@ -414,6 +413,7 @@ class EloquentRepository extends Repository implements TreeRepository
                 )
             );
         }
+
         return $model->moveOrderUp() ? true : false;
     }
 
