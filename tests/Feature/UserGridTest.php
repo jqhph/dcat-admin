@@ -32,6 +32,9 @@ class UserGridTest extends TestCase
 
         $action = url('/admin/tests/users');
 
+        //$this->seeInElement('a[href="http://localhost:8000/admin/tests/users?_export_=all"]', 'All')
+        //    ->seeInElement('a[href="http://localhost:8000/admin/tests/users/create"]', 'New');
+
         $this->seeElement("form[action='$action'][method=get]")
 //            ->seeElement("form[action='$action'][method=get] input[name=id]")
             ->seeElement("form[action='$action'][method=get] input[name=username]")
@@ -40,9 +43,6 @@ class UserGridTest extends TestCase
             ->seeElement("form[action='$action'][method=get] input[name='profile[start_at][end]']")
             ->seeElement("form[action='$action'][method=get] input[name='profile[end_at][start]']")
             ->seeElement("form[action='$action'][method=get] input[name='profile[end_at][end]']");
-
-        $this->seeInElement('a[href="http://localhost:8000/admin/tests/users?_export_=all"]', 'All')
-            ->seeInElement('a[href="http://localhost:8000/admin/tests/users/create"]', 'New');
     }
 
     protected function seedsTable($count = 100)
