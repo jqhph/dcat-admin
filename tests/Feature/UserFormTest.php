@@ -2,7 +2,9 @@
 
 namespace Dcat\Admin\Tests\Feature;
 
-use Tests\Models\User as UserModel;
+use Dcat\Admin\Tests\Models\Profile;
+use Dcat\Admin\Tests\Models\Tag;
+use Dcat\Admin\Tests\Models\User as UserModel;
 use Dcat\Admin\Tests\TestCase;
 
 /**
@@ -59,7 +61,6 @@ class UserFormTest extends TestCase
 
         $this->visit('admin/tests/users/create')
 //            ->attach(__DIR__.'/assets/test.jpg', 'avatar')
-
             ->submitForm('Submit', $data);
 
         $this->seePageIs('admin/tests/users')
@@ -100,11 +101,11 @@ class UserFormTest extends TestCase
 
     protected function seedsTable($count = 100)
     {
-        factory(\Tests\Models\User::class, $count)
+        factory(UserModel::class, $count)
             ->create()
             ->each(function ($u) {
-                $u->profile()->save(factory(\Tests\Models\Profile::class)->make());
-                $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
+                $u->profile()->save(factory(Profile::class)->make());
+                $u->tags()->saveMany(factory(Tag::class, 5)->make());
             });
     }
 

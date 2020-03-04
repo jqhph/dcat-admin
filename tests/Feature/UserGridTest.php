@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Tests\Feature;
 
-use Tests\Models\Profile as ProfileModel;
-use Tests\Models\User as UserModel;
+use Dcat\Admin\Tests\Models\Profile as ProfileModel;
+use Dcat\Admin\Tests\Models\User as UserModel;
 use Dcat\Admin\Tests\TestCase;
 
 /**
@@ -47,11 +47,11 @@ class UserGridTest extends TestCase
 
     protected function seedsTable($count = 100)
     {
-        factory(\Tests\Models\User::class, $count)
+        factory(\Dcat\Admin\Tests\Models\User::class, $count)
             ->create()
             ->each(function ($u) {
-                $u->profile()->save(factory(\Tests\Models\Profile::class)->make());
-                $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
+                $u->profile()->save(factory(\Dcat\Admin\Tests\Models\Profile::class)->make());
+                $u->tags()->saveMany(factory(\Dcat\Admin\Tests\Models\Tag::class, 5)->make());
             });
     }
 
@@ -170,11 +170,11 @@ class UserGridTest extends TestCase
 
     public function testHasManyRelation()
     {
-        factory(\Tests\Models\User::class, 10)
+        factory(\Dcat\Admin\Tests\Models\User::class, 10)
             ->create()
             ->each(function ($u) {
-                $u->profile()->save(factory(\Tests\Models\Profile::class)->make());
-                $u->tags()->saveMany(factory(\Tests\Models\Tag::class, 5)->make());
+                $u->profile()->save(factory(\Dcat\Admin\Tests\Models\Profile::class)->make());
+                $u->tags()->saveMany(factory(\Dcat\Admin\Tests\Models\Tag::class, 5)->make());
             });
 
         $this->visit('admin/tests/users')

@@ -8,7 +8,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
-use Tests\Models\Tag;
+use Dcat\Admin\Tests\Models\Tag;
 use Dcat\Admin\Tests\Repositories\User;
 
 class UserController extends Controller
@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         $grid = new Grid(new User());
 
-        $grid->model()->with('tags');
+        $grid->model()->with(['tags', 'profile']);
 
         $grid->id('ID')->sortable();
 
@@ -94,13 +94,9 @@ class UserController extends Controller
             return "<img src='{$avatar}' />";
         });
         $grid->column('profile.postcode', 'Post code');
-//        $grid->profile()->address();
         $grid->column('profile.address');
-//        $grid->position('Position');
         $grid->column('profile.color');
-//        $grid->profile()->start_at('开始时间');
         $grid->column('profile.start_at', '开始时间');
-//        $grid->profile()->end_at('结束时间');
         $grid->column('profile.end_at', '结束时间');
 
         $grid->column('column1_not_in_table')->display(function () {
