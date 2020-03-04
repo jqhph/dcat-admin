@@ -51,7 +51,7 @@ class PermissionsTest extends TestCase
             ->submitForm('Submit', ['slug' => 'can-create', 'name' => 'Can Create', 'http_path' => ['users/create'], 'http_method' => ['GET']])
             ->seePageIs('admin/auth/permissions');
 
-        $this->assertEquals(7, Permission::count());
+        $this->assertSame(7, Permission::count());
 
         $this->visit('admin/auth/roles/1/edit')
             ->see('Edit')
@@ -103,7 +103,7 @@ class PermissionsTest extends TestCase
             ->submitForm('Submit', ['slug' => 'can-remove', 'name' => 'Can Remove', 'http_path' => ['users/*'], 'http_method' => ['DELETE']])
             ->seePageIs('admin/auth/permissions');
 
-        $this->assertEquals(7, Permission::count());
+        $this->assertSame(7, Permission::count());
 
         $this->assertTrue(Administrator::find(2)->cannot('can-remove'));
 

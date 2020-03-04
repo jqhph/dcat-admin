@@ -153,7 +153,7 @@ class UserFormTest extends TestCase
 
         $user = UserModel::with('profile')->find($id);
 
-        $this->assertEquals($user->username, 'hello world');
+        $this->assertSame($user->username, 'hello world');
     }
 
     public function testUpdateFormWithRule()

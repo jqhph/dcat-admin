@@ -128,7 +128,7 @@ class UserGridTest extends TestCase
 
         $this->visit('admin/tests/users?username=mi');
 
-        $this->assertEquals($this->crawler()->filter('td a i[class*=fa-ellipsis-v]')->count(), count($users->toArray()));
+        $this->assertSame($this->crawler()->filter('td a i[class*=fa-ellipsis-v]')->count(), count($users->toArray()));
 
         foreach ($users as $user) {
             $this->seeInElement('td', $user->username);
@@ -214,7 +214,7 @@ class UserGridTest extends TestCase
             ->seeInElement('select option', 50)
             ->seeInElement('select option', 100);
 
-        $this->assertEquals('http://localhost:8000/admin/tests/users?per_page=20', $this->crawler()->filter('select option[selected]')->attr('value'));
+        $this->assertSame('http://localhost:8000/admin/tests/users?per_page=20', $this->crawler()->filter('select option[selected]')->attr('value'));
 
         $perPage = mt_rand(1, 98);
 

@@ -18,13 +18,13 @@ class TranslationTest extends TestCase
 
         $this->registerTranslator();
 
-        $this->assertEquals('user', admin_controller_slug());
+        $this->assertSame('user', admin_controller_slug());
 
-        $this->assertEquals(admin_trans_field('username'), '用户名');
-        $this->assertEquals(admin_trans_field('profile.postcode'), '邮政编码');
+        $this->assertSame(admin_trans_field('username'), '用户名');
+        $this->assertSame(admin_trans_field('profile.postcode'), '邮政编码');
 
-        $this->assertEquals(admin_trans_field('value'), 'value');
-        $this->assertEquals(admin_trans_field('profile.value'), 'value');
+        $this->assertSame(admin_trans_field('value'), 'value');
+        $this->assertSame(admin_trans_field('profile.value'), 'value');
     }
 
     public function testTransLabel()
@@ -33,9 +33,9 @@ class TranslationTest extends TestCase
 
         $this->registerTranslator();
 
-        $this->assertEquals('user', admin_controller_slug());
+        $this->assertSame('user', admin_controller_slug());
 
-        $this->assertEquals(admin_trans_label('user'), '用户');
+        $this->assertSame(admin_trans_label('user'), '用户');
     }
 
     public function testTransGlobal()
@@ -44,14 +44,14 @@ class TranslationTest extends TestCase
 
         $this->registerTranslator();
 
-        $this->assertEquals('user', admin_controller_slug());
+        $this->assertSame('user', admin_controller_slug());
 
-        $this->assertEquals(admin_trans_field('id'), 'ID');
-        $this->assertEquals(admin_trans_field('profile.address'), '地址');
+        $this->assertSame(admin_trans_field('id'), 'ID');
+        $this->assertSame(admin_trans_field('profile.address'), '地址');
 
-        $this->assertEquals(admin_trans_label('List'), '列表');
+        $this->assertSame(admin_trans_label('List'), '列表');
 
-        $this->assertEquals(admin_trans_label('Create'), 'Create');
+        $this->assertSame(admin_trans_label('Create'), 'Create');
     }
 
     protected function registerTranslator()

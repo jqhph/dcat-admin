@@ -27,15 +27,15 @@ class CombineGridTest extends TestCase
         $firstTr = $this->crawler()->filter('thead tr')->first()->filter('th');
 
         // cost
-        $this->assertEquals('2', (string) $firstTr->eq(2)->attr('rowspan'));
+        $this->assertSame('2', (string) $firstTr->eq(2)->attr('rowspan'));
 
         // avgCost
-        $this->assertEquals('3', (string) $firstTr->eq(3)->attr('colspan'));
+        $this->assertSame('3', (string) $firstTr->eq(3)->attr('colspan'));
 
         // avgVist
-        $this->assertEquals('3', (string) $firstTr->eq(4)->attr('colspan'));
+        $this->assertSame('3', (string) $firstTr->eq(4)->attr('colspan'));
 
         // top
-        $this->assertEquals('3', (string) $firstTr->eq(5)->attr('colspan'));
+        $this->assertSame('3', (string) $firstTr->eq(5)->attr('colspan'));
     }
 }

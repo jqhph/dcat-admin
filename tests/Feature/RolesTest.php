@@ -44,7 +44,7 @@ class RolesTest extends TestCase
             ->seePageIs('admin/auth/users')
             ->seeInDatabase(config('admin.database.users_table'), ['username' => 'Test']);
 
-        $this->assertEquals(1, Role::count());
+        $this->assertSame(1, Role::count());
 
         $this->visit('admin/auth/roles/create')
             ->see('Roles')
@@ -69,7 +69,7 @@ class RolesTest extends TestCase
 
     public function testDeleteRole()
     {
-        $this->assertEquals(1, Role::count());
+        $this->assertSame(1, Role::count());
 
         $this->visit('admin/auth/roles/create')
             ->see('Roles')
@@ -79,7 +79,7 @@ class RolesTest extends TestCase
 //            ->assertEquals(2, Role::count());
 
         $this->delete('admin/auth/roles/2');
-        $this->assertEquals(1, Role::count());
+        $this->assertSame(1, Role::count());
 
 //        $this->delete('admin/auth/roles/1');
 //        $this->assertEquals(0, Role::count());
