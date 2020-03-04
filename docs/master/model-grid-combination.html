@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>双表头 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <title>组合表头 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
     <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="canonical" href="../../docs-master-model-grid-double.html" />
+            <link rel="canonical" href="../../docs-master-model-grid-combination.html" />
     
      <link rel="stylesheet" href="../../assets/css/laravel.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
@@ -74,7 +74,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-double.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-combination.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -131,7 +131,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-double.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-combination.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -160,11 +160,13 @@
 <li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
 <li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
 <li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
-<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-tree.html">树状表格</a></li>
+<li><a href="../../docs/master/model-grid-combination.html">组合表头</a></li>
 <li><a href="../../docs/master/model-grid-data.html">数据源</a></li>
 <li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
 <li><a href="../../docs/master/model-grid-column-filter.html">列过滤器</a></li>
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
@@ -291,11 +293,13 @@
 <li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
 <li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
 <li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
-<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-tree.html">树状表格</a></li>
+<li><a href="../../docs/master/model-grid-combination.html">组合表头</a></li>
 <li><a href="../../docs/master/model-grid-data.html">数据源</a></li>
 <li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
 <li><a href="../../docs/master/model-grid-column-filter.html">列过滤器</a></li>
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
@@ -397,39 +401,40 @@
 	</section>
 
 	<article>
-		<h1>双表头</h1>
-<p>双表头的定义非常简单：</p>
-<pre><code   class="language-php">$grid = new Grid(new Report);
-
-$grid-&gt;setRowSelectorOptions([&#039;style&#039; =&gt; &#039;success&#039;, &#039;clicktr&#039; =&gt; true]);
-
-// 第一个参数为一级表头字段名称，第二个字段为二级表头字段名称，二级表头字段最少设置两个
-$grid-&gt;combine(&#039;avgCost&#039;, [&#039;avgMonthCost&#039;, &#039;avgQuarterCost&#039;, &#039;avgYearCost&#039;]);
-
-// 启用RWD-Table-Patterns插件
-$grid-&gt;combine(&#039;avgVist&#039;, [&#039;avgMonthVist&#039;, &#039;avgQuarterVist&#039;, &#039;avgYearVist&#039;])-&gt;responsive();
-
-// 启用RWD-Table-Patterns插件并设置样式
-$grid-&gt;combine(&#039;top&#039;, [&#039;topCost&#039;, &#039;topVist&#039;, &#039;topIncr&#039;])-&gt;responsive()-&gt;style(&#039;color:#1867c0&#039;);
-
-$grid-&gt;content-&gt;limit(50)-&gt;responsive();
-$grid-&gt;cost-&gt;sortable()-&gt;responsive();
-$grid-&gt;avgMonthCost-&gt;responsive();
-$grid-&gt;avgQuarterCost-&gt;responsive()-&gt;setHeaderAttributes([&#039;style&#039; =&gt; &#039;color:#5b69bc&#039;]);
-$grid-&gt;avgYearCost-&gt;responsive();
-$grid-&gt;avgMonthVist-&gt;responsive();
-$grid-&gt;avgQuarterVist-&gt;responsive();
-$grid-&gt;avgYearVist-&gt;responsive();
-$grid-&gt;incrs-&gt;hide();
-$grid-&gt;avgVists-&gt;hide();
-$grid-&gt;topCost-&gt;responsive();
-$grid-&gt;topVist-&gt;responsive();
-$grid-&gt;topIncr-&gt;responsive();
-$grid-&gt;date-&gt;sortable()-&gt;responsive();</code></pre>
-<p>效果如下：
-<a href="../../assets/img/screenshots/grid-column-combine.png" target="_blank"></p>
-<img style="box-shadow:0 1px 6px 1px rgba(0, 0, 0, 0.12)" width="100%" src="../../assets/img/screenshots/grid-column-combine.png">
+		<h1>组合表头</h1>
+<p>通过 <code  >Grid::combine</code> 方法可以很方便的把任意两个以上的字段组合成一级表头</p>
+<p><a href="http://103.39.211.179:8080/admin/reports" target="_blank"></p>
+<img style="box-shadow:0 1px 6px 1px rgba(0, 0, 0, 0.12)" width="100%" src="../../assets/img/screenshots/grid-combination.png">
 <p></a></p>
+<p>示例</p>
+<pre><code   class="language-php">protected function grid()
+{
+    return Grid::make(new Report(), function (Grid $grid) {
+        // 第一个参数为一级表头字段名称，第二个字段为二级表头字段名称，二级表头字段最少设置两个
+        $grid-&gt;combine(&#039;avgCost&#039;, [&#039;avgMonthCost&#039;, &#039;avgQuarterCost&#039;, &#039;avgYearCost&#039;]);
+
+        // 启用RWD-Table-Patterns插件
+        $grid-&gt;combine(&#039;avgVist&#039;, [&#039;avgMonthVist&#039;, &#039;avgQuarterVist&#039;, &#039;avgYearVist&#039;])-&gt;responsive();
+
+        // 启用RWD-Table-Patterns插件并设置样式
+        $grid-&gt;combine(&#039;top&#039;, [&#039;topCost&#039;, &#039;topVist&#039;, &#039;topIncr&#039;])-&gt;responsive()-&gt;style(&#039;color:#1867c0&#039;);
+
+        $grid-&gt;content-&gt;limit(50)-&gt;responsive();
+        $grid-&gt;cost-&gt;sortable()-&gt;responsive();
+        $grid-&gt;avgMonthCost-&gt;responsive();
+        $grid-&gt;avgQuarterCost-&gt;responsive()-&gt;setHeaderAttributes([&#039;style&#039; =&gt; &#039;color:#5b69bc&#039;]);
+        $grid-&gt;avgYearCost-&gt;responsive();
+        $grid-&gt;avgMonthVist-&gt;responsive();
+        $grid-&gt;avgQuarterVist-&gt;responsive();
+        $grid-&gt;avgYearVist-&gt;responsive();
+        $grid-&gt;incrs-&gt;hide();
+        $grid-&gt;avgVists-&gt;hide();
+        $grid-&gt;topCost-&gt;responsive();
+        $grid-&gt;topVist-&gt;responsive();
+        $grid-&gt;topIncr-&gt;responsive();
+        $grid-&gt;date-&gt;sortable()-&gt;responsive();
+    });
+}</code></pre>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>
@@ -485,7 +490,7 @@ $grid-&gt;date-&gt;sortable()-&gt;responsive();</code></pre>
         },
     };
 
-    DMS.config.comment.id = 'master/model-grid-double';
+    DMS.config.comment.id = 'master/model-grid-combination';
 
     (function () {
         function indices() {

@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <title>树状表格 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
     <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="canonical" href="../../docs-master-widgets-alert.html" />
+            <link rel="canonical" href="../../docs-master-model-grid-tree.html" />
     
      <link rel="stylesheet" href="../../assets/css/laravel.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
@@ -74,7 +74,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-widgets-alert.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-tree.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -131,7 +131,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-widgets-alert.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-model-grid-tree.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -401,7 +401,180 @@
 	</section>
 
 	<article>
-		
+		<h1>树状表格</h1>
+<p>树状表格支持分页和点击加载功能，特别适合用来展示数据量较大的多层级结构数据。</p>
+<p><a href="http://103.39.211.179:8080/admin/tree" target="_blank"></p>
+<img class="img img-full" src="../../assets/img/screenshots/grid-tree.png">
+<p></a></p>
+<h3>表结构和模型</h3>
+<p>要使用树状表格，要遵守约定的表结构：</p>
+<blockquote>
+<p>{tip} 此表结构和模型可完全兼容 <code><a href="../../docs/master/model-tree.html">模型树</a></code> 。</p>
+</blockquote>
+<pre><code   class="language-sql">CREATE TABLE `demo_categories` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT &#039;0&#039;,
+  `order` int(11) NOT NULL DEFAULT &#039;0&#039;, // order 字段不是必须的，不设置也可以
+  `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci</code></pre>
+<p>上面的表格结构里面有三个必要的字段<code  >parent_id</code>、<code  >title</code>,其它字段没有要求。</p>
+<p>对应的模型为<code  >app/Models/Category.php</code>:</p>
+<blockquote>
+<p>{tip} 为了便于阅读，这里不再展示 <code  >Repository</code> 代码。</p>
+</blockquote>
+<pre><code   class="language-php">&lt;?php
+
+namespace App\Models\Demo;
+
+use Dcat\Admin\Traits\ModelTree;
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
+{
+    use ModelTree;
+
+    protected $table = &#039;demo_categories&#039;;
+}</code></pre>
+<p>表结构中的三个字段<code  >parent_id</code>、<code  >order</code>、<code  >title</code>的字段名也是可以修改的：</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace App\Models\Demo;
+
+use Dcat\Admin\Traits\ModelTree;
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
+{
+    use ModelTree;
+
+    protected $table = &#039;demo_categories&#039;;
+
+    protected $titleColumn = &#039;name&#039;;
+
+    protected $orderColumn = &#039;sort&#039;;
+
+    protected $parentColumn = &#039;pid&#039;;
+}</code></pre>
+<p>如果你的数据表不需要 <code  >order</code> 字段排序，则在模型中添加如下代码即可</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace App\Models\Demo;
+
+use Dcat\Admin\Traits\ModelTree;
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
+{
+    use ModelTree;
+
+    protected $table = &#039;demo_categories&#039;;
+
+    // 返回空值即可禁用 order 字段
+    public function getOrderColumn()
+    {
+        return null;
+    }
+}</code></pre>
+<h3>使用</h3>
+<p>通过调用 <code  >Grid\Column::tree</code> 方法即可开启树状表格功能，开启之后默认只查询最顶级节点的数据，子节点数据需要点击加载</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace App\Admin\Controllers\Demo;
+
+use App\Models\Category;
+use Dcat\Admin\Grid;
+use Dcat\Admin\Controllers\AdminController;
+
+class CategoryController extends AdminController
+{
+    protected function grid()
+    {
+        return Grid::make(new Category(), function (Grid $grid) {
+            $grid-&gt;id(&#039;ID&#039;)-&gt;bold()-&gt;sortable();
+            $grid-&gt;title-&gt;tree(); // 开启树状表格功能 
+            $grid-&gt;order;
+
+            $grid-&gt;created_at;
+            $grid-&gt;updated_at-&gt;sortable();
+
+            $grid-&gt;filter(function (Grid\Filter $filter) {
+                $filter-&gt;like(&#039;slug&#039;);
+                $filter-&gt;like(&#039;name&#039;);
+                $filter-&gt;like(&#039;http_path&#039;);
+            });
+        });
+    }
+}</code></pre>
+<p>上面的代码执行的 <code  >sql</code> 如下（默认只查询 <code  >parent = 0</code> 的数据）：</p>
+<pre><code   class="language-sql">select count(*) as aggregate from `demo_categories` where `parent_id` = 0
+
+select * from `demo_categories` where `parent_id` = 0 order by `order` asc, `id` asc limit 20 offset 0</code></pre>
+<p><code  >Grid\Column::tree</code> 方法参数</p>
+<ul>
+<li><code  >bool</code> <code  >$showAll</code>  <code  >false</code>  是否一次性展示下一层级的所有节点，默认分页展示</li>
+<li><code  >bool</code> <code  >$sortable</code> <code  >true</code>   是否开启排序功能</li>
+</ul>
+<pre><code   class="language-php">// 禁用分页功能，一次性加载所有下一层级节点
+$grid-&gt;title-&gt;tree(true);
+
+// 不需要 order 字段排序，第二个参数传 false 即可
+$grid-&gt;title-&gt;tree(false, false);</code></pre>
+<h3>orderable排序</h3>
+<p><code  >orderable</code> 排序功能依赖 <a href="https://github.com/spatie/eloquent-sortable" target="__blank">spatie/eloquent-sortable</a> 组件，需要修改模型：</p>
+<pre><code   class="language-php">use Spatie\EloquentSortable\Sortable;
+
+class Category extends Model implements Sortable
+{
+    use ModelTree;
+
+    // 设置排序字段，默认order
+    protected $orderColumn = &#039;sort&#039;;
+}</code></pre>
+<p>下面是使用示例</p>
+<pre><code   class="language-php">class CategoryController extends AdminController
+{
+    protected function grid()
+    {
+        return Grid::make(new Category(), function (Grid $grid) {
+            $grid-&gt;id(&#039;ID&#039;)-&gt;bold()-&gt;sortable();
+            $grid-&gt;title-&gt;tree(); // 开启树状表格功能 
+            $grid-&gt;order-&gt;orderable(); // 开启排序功能
+
+            ...;
+        });
+    }
+}</code></pre>
+<h3>关于数据搜索</h3>
+<p>如果在树状表格中使用了搜索功能（<code  >Grid::filter</code>、<code  >Grid\Column::filter</code>、<code  >Grid::quickSearch</code>），为了让用户能搜索到想要的数据，则会<b>取消只查最顶级数据的操作</b>。</p>
+<blockquote>
+<p>{note} 使用 <a href="../../docs/master/model-grid-filters.html">查询过滤</a>、<a href="../../docs/master/model-grid-column-filter.html">列过滤器</a>、<a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a> 等搜索功能都会<b>取消只查最顶级数据的操作</b>，只有 <a href="../../docs/master/model-grid-selector.html">筛选器</a> 和 <a href="../../docs/master/model-grid-filters.html#scope">范围查询scope</a> 等功能例外。</p>
+</blockquote>
+<p>例如下面的代码开启了快捷搜索</p>
+<pre><code   class="language-php">class CategoryController extends AdminController
+{
+    protected function grid()
+    {
+        return Grid::make(new Category(), function (Grid $grid) {
+            $grid-&gt;id(&#039;ID&#039;)-&gt;bold()-&gt;sortable();
+            $grid-&gt;title-&gt;tree(); // 开启树状表格功能 
+            $grid-&gt;order-&gt;orderable(); // 开启排序功能
+
+            $grid-&gt;quickSearch([&#039;id&#039;, &#039;title&#039;]);
+            ...;
+        });
+    }
+}</code></pre>
+<p>且用户在浏览器中使用了快捷搜索，则产生<code  >sql</code>如下</p>
+<pre><code   class="language-sql">select count(*) as aggregate from `demo_categories` where `id` like "%xxx%" or `title` like "%xxx%"
+
+select * from `demo_categories` where `id` like "%xxx%" or `title` like "%xxx%" order by `order` asc, `id` asc limit 20 offset 0</code></pre>
+<h3>与模型树功能的差别</h3>
+<p><a href="../../docs/master/model-tree.html">模型树</a>同样可用于展示多层级结构数据，并且支持用拖拽的方式实现数据的层级、排序等操作，但是不支持分页和点击加载功能，只能一次性加载完所有数据，
+因此<a href="../../docs/master/model-tree.html">模型树</a>并不适合用来展示数据量较大的数据。</p>
+<p>而树状表格支持分页和点击加载功能，适合用来展示数据量较大的多层级结构数据，但不支持用拖拽的方式实现数据的层级、排序操作。</p>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>
@@ -457,7 +630,7 @@
         },
     };
 
-    DMS.config.comment.id = 'master/widgets-alert';
+    DMS.config.comment.id = 'master/model-grid-tree';
 
     (function () {
         function indices() {

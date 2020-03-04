@@ -160,11 +160,13 @@
 <li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
 <li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
 <li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
-<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-tree.html">树状表格</a></li>
+<li><a href="../../docs/master/model-grid-combination.html">组合表头</a></li>
 <li><a href="../../docs/master/model-grid-data.html">数据源</a></li>
 <li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
 <li><a href="../../docs/master/model-grid-column-filter.html">列过滤器</a></li>
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
@@ -291,11 +293,13 @@
 <li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
 <li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
 <li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
-<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-tree.html">树状表格</a></li>
+<li><a href="../../docs/master/model-grid-combination.html">组合表头</a></li>
 <li><a href="../../docs/master/model-grid-data.html">数据源</a></li>
 <li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
 <li><a href="../../docs/master/model-grid-column-filter.html">列过滤器</a></li>
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
@@ -398,15 +402,16 @@
 
 	<article>
 		<h1>表格数据源</h1>
-<p><a name="model-repository"></a></p>
-<h2>模型与数据仓库</h2>
-<p>表格的数据获取并非直接依赖<code  >Model</code>，而是依赖<code  >Repository</code>。这样做的好处是当数据源不支持<code  >Model</code>时，只要简单的覆写<code  >Repository</code>中对应的数据操作方法就可以轻松支持多数据源。</p>
+<p>表格数据是通过 <code  >Dcat\Admin\Contracts\Repository::get</code> 接口获取的。</p>
+<p>如果你的数据源是 <code  >MySQL</code>，则可以直接使用 <code  >Dcat\Admin\Repositories\EloquentRepository</code>，
+<code  >EloquentRepository</code> 已实现了对 <code  >Eloquent Model</code> 的支持。</p>
+<p>如果数据来自其他源，则只需重新实现 <code  >Dcat\Admin\Contracts\Repository::get</code> 接口即可。</p>
 <blockquote>
 <p>{tip} <code  >Repository</code>提供更简单更清晰数据操作接口，开发者可以通过实现不同的数据操作接口轻松支持多数据源，具体使用方法请参照<a href="../../docs/master/model-repository.html">数据仓库</a>。</p>
 </blockquote>
 <p><a name="model"></a></p>
 <h2>数据来自模型</h2>
-<p>当数据源支持模型时，只需创建一个非常简单的<code  >Repository</code>类既可：</p>
+<p>当数据源支持<code  >Eloquent Model</code>时，只需创建一个简单的<code  >Repository</code>类继承<code  >Dcat\Admin\Repositories\EloquentRepository</code>即可</p>
 <pre><code   class="language-php">&lt;?php
 
 namespace App\Admin\Repositories;
@@ -425,10 +430,18 @@ class Movie extends EloquentRepository
         return [$this-&gt;getKeyName(), &#039;name&#039;, &#039;title&#039;, &#039;created_at&#039;];
     }
 }</code></pre>
-<p>如果使用模型来获取数据，那么修改来源数据就非常简单：</p>
+<h3>直接使用模型</h3>
+<p>如果你还觉得创建 <code  >Repository</code> 类麻烦，也可以直接把 <code  >Eloquent Model</code> 的示例传递到 <code  >Grid</code> 中，底层会自动把 <code  >Eloquent Model</code> 转化为 <code  >EloquentRepository</code> 实例 </p>
+<pre><code   class="language-php">use App\Models\Movie as MovieModel;
+
+$grid = new Grid(new MovieModel());
+
+...</code></pre>
+<h3>修改来源数据</h3>
+<p>1、使用 <code  >Grid\Model</code></p>
 <pre><code   class="language-php">use App\Admin\Repositories\Movie;
 
-$grid = new Grid(new Movie);
+$grid = new Grid(new Movie());
 
 // 添加默认查询条件
 $grid-&gt;model()-&gt;where(&#039;id&#039;, &#039;&gt;&#039;, 100);
@@ -438,7 +451,42 @@ $grid-&gt;model()-&gt;orderBy(&#039;id&#039;, &#039;desc&#039;);
 
 ...
 </code></pre>
-<p>其它查询方法可以参考<code  >eloquent</code>的查询方法.</p>
+<p>其它查询方法可以参考<code  >eloquent</code>的查询方法。</p>
+<p>2、使用 <code  >Model Query</code></p>
+<pre><code   class="language-php">use App\Models\Movie as MovieModel;
+
+$grid = new Grid(MovieModel::where(&#039;id&#039;, &#039;&gt;&#039;, 100));
+
+...</code></pre>
+<h3>关联数据</h3>
+<p>有以下三种方式让你的表格支持关联数据</p>
+<p>1、使用Repository</p>
+<pre><code   class="language-php">use App\Admin\Repositories\Movie;
+
+// 相当于 MovieModel::with(&#039;categories&#039;)
+$grid = new Grid(new Movie([&#039;categories&#039;]));
+
+$grid-&gt;categories;
+
+...</code></pre>
+<p>2、使用 <code  >Grid\Model</code></p>
+<pre><code   class="language-php">use App\Admin\Repositories\Movie;
+
+$grid = new Grid(new Movie());
+
+$grid-&gt;model()-&gt;with(&#039;categories&#039;);
+
+$grid-&gt;categories;
+
+...</code></pre>
+<p>3、使用 <code  >Model Query</code></p>
+<pre><code   class="language-php">use App\Models\Movie as MovieModel;
+
+$grid = new Grid(MovieModel::with(&#039;categories&#039;));
+
+$grid-&gt;categories;
+
+...</code></pre>
 <p><a name="api"></a></p>
 <h2>数据来自外部API</h2>
 <p><a name="example"></a></p>
@@ -457,6 +505,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class ComingSoon extends Repository
 {
     protected $api = &#039;https://api.douban.com/v2/movie/coming_soon&#039;;
+
+    /**
+     * 定义主键字段名称 
+     * 
+     * @return string
+     */
+    public function getPrimaryKeyColumn()
+    {
+        return &#039;_id&#039;;
+    }
 
     /**
      * 查询表格数据

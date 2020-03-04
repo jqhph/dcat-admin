@@ -160,11 +160,13 @@
 <li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
 <li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
 <li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
-<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-tree.html">树状表格</a></li>
+<li><a href="../../docs/master/model-grid-combination.html">组合表头</a></li>
 <li><a href="../../docs/master/model-grid-data.html">数据源</a></li>
 <li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
 <li><a href="../../docs/master/model-grid-column-filter.html">列过滤器</a></li>
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
@@ -291,11 +293,13 @@
 <li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
 <li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
 <li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
-<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-tree.html">树状表格</a></li>
+<li><a href="../../docs/master/model-grid-combination.html">组合表头</a></li>
 <li><a href="../../docs/master/model-grid-data.html">数据源</a></li>
 <li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
 <li><a href="../../docs/master/model-grid-column-filter.html">列过滤器</a></li>
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
@@ -448,6 +452,19 @@ composer create-project --prefer-dist laravel/laravel 项目名称</code></pre>
 <p><a name="lang"></a></p>
 <h3>语言包</h3>
 <p>语言包文件在<code  >/resources/lang</code>目录下。</p>
+<h2>版本升级</h2>
+<p>升级命令</p>
+<pre><code   class="language-bash">composer update dcat/laravel-admin</code></pre>
+<p>升级成功之后一般需要重新发布语言包、配置文件、前端静态资源和数据库迁徙等文件</p>
+<pre><code   class="language-bash">php artisan admin:publish --force</code></pre>
+<p>只更新语言包</p>
+<pre><code   class="language-bash">php artisan admin:publish --force --lang</code></pre>
+<p>只更新配置文件</p>
+<pre><code   class="language-bash">php artisan admin:publish --force --config</code></pre>
+<p>只更新前端静态资源</p>
+<pre><code   class="language-bash">php artisan admin:publish --force --assets</code></pre>
+<p>只更新数据库迁徙文件</p>
+<pre><code   class="language-bash">php artisan admin:publish --force --migrations</code></pre>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>

@@ -160,11 +160,13 @@
 <li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
 <li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
 <li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
-<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-tree.html">树状表格</a></li>
+<li><a href="../../docs/master/model-grid-combination.html">组合表头</a></li>
 <li><a href="../../docs/master/model-grid-data.html">数据源</a></li>
 <li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
 <li><a href="../../docs/master/model-grid-column-filter.html">列过滤器</a></li>
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
@@ -291,11 +293,13 @@
 <li><a href="../../docs/master/model-grid-column-display.html">列的显示和扩展</a></li>
 <li><a href="../../docs/master/model-grid-actions.html">行的使用和扩展</a></li>
 <li><a href="../../docs/master/model-grid-custom-tools.html">工具栏</a></li>
-<li><a href="../../docs/master/model-grid-double.html">双表头</a></li>
+<li><a href="../../docs/master/model-grid-tree.html">树状表格</a></li>
+<li><a href="../../docs/master/model-grid-combination.html">组合表头</a></li>
 <li><a href="../../docs/master/model-grid-data.html">数据源</a></li>
 <li><a href="../../docs/master/model-grid-filters.html">查询过滤</a></li>
 <li><a href="../../docs/master/model-grid-column-filter.html">列过滤器</a></li>
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
+<li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
@@ -398,10 +402,10 @@
 
 	<article>
 		<h1>模型树</h1>
-<p>可以通过<code  >model-tree</code>来实现一个树状组件，可以用拖拽的方式实现数据的层级、排序等操作，下面是基本的用法。</p>
-<blockquote>
-<p>{tip} 模型树只支持模型，不支持数据仓库。</p>
-</blockquote>
+<p>这个功能可以实现一个树状组件，可以用拖拽的方式实现数据的层级、排序等操作，下面是基本的用法。</p>
+<p><a href="http://103.39.211.179:8080/admin/auth/permissions" target="_blank"></p>
+<img class="img img-full" src="../../assets/img/screenshots/model-tree.png">
+<p></a></p>
 <h2>表结构和模型</h2>
 <p>要使用<code  >model-tree</code>，要遵守约定的表结构：</p>
 <pre><code   class="language-sql">CREATE TABLE `demo_categories` (
@@ -429,6 +433,9 @@ class Category extends Model
     protected $table = &#039;demo_categories&#039;;
 }</code></pre>
 <p>表结构中的三个字段<code  >parent_id</code>、<code  >order</code>、<code  >title</code>的字段名也是可以修改的：</p>
+<blockquote>
+<p>{tip} 为了便于阅读，这里不再展示 <code  >Repository</code> 代码。</p>
+</blockquote>
 <pre><code   class="language-php">&lt;?php
 
 namespace App\Models\Demo;
