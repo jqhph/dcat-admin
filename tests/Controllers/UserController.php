@@ -118,8 +118,6 @@ class UserController extends Controller
         $grid->created_at();
         $grid->updated_at();
 
-        $grid->export();
-
         $grid->filter(function (Grid\Filter $filter) {
             $filter->equal('id');
             $filter->like('username');
