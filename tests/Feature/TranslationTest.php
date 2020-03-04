@@ -54,10 +54,9 @@ class TranslationTest extends TestCase
         $this->assertEquals(admin_trans_label('Create'), 'Create');
     }
 
-
     protected function registerTranslator()
     {
-        $loader = new FileLoader(app('files'), __DIR__ . '/../resources/lang');
+        $loader = new FileLoader(app('files'), __DIR__.'/../resources/lang');
 
         $translator = new Translator($loader, 'en');
 

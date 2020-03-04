@@ -3,11 +3,11 @@
 namespace Dcat\Admin\Tests;
 
 use Dcat\Admin\Models\Administrator;
-use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
 {
@@ -42,9 +42,9 @@ class TestCase extends BaseTestCase
 
         require __DIR__.'/routes.php';
 
-        require __DIR__ . '/resources/seeds/factory.php';
+        require __DIR__.'/resources/seeds/factory.php';
 
-        view()->addNamespace('admin-tests', __DIR__ . '/resources/views');
+        view()->addNamespace('admin-tests', __DIR__.'/resources/views');
 
         if ($this->login) {
             $this->be($this->getUser(), 'admin');
@@ -53,7 +53,7 @@ class TestCase extends BaseTestCase
 
     protected function config()
     {
-        $adminConfig = require __DIR__ . '/resources/config/admin.php';
+        $adminConfig = require __DIR__.'/resources/config/admin.php';
 
         $config = $this->app['config'];
 
@@ -63,7 +63,7 @@ class TestCase extends BaseTestCase
         $config->set('database.connections.mysql.username', env('MYSQL_USER', 'root'));
         $config->set('database.connections.mysql.password', env('MYSQL_PASSWORD', ''));
         $config->set('app.key', 'AckfSECXIvnK5r28GVIWUAxmbBSjTsmF');
-        $config->set('filesystems', require __DIR__ . '/resources/config/filesystems.php');
+        $config->set('filesystems', require __DIR__.'/resources/config/filesystems.php');
         $config->set('admin', $adminConfig);
         $config->set('app.debug', true);
 
@@ -105,7 +105,7 @@ class TestCase extends BaseTestCase
     {
         $fileSystem = new Filesystem();
 
-        $fileSystem->requireOnce(__DIR__ . '/resources/migrations/2016_11_22_093148_create_test_tables.php');
+        $fileSystem->requireOnce(__DIR__.'/resources/migrations/2016_11_22_093148_create_test_tables.php');
 
         (new \CreateTestTables())->up();
     }

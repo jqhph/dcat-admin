@@ -108,7 +108,6 @@ trait ModelTree
         $this->orderColumn = $column;
     }
 
-
     /**
      * Set query callback to model.
      *
@@ -228,6 +227,7 @@ trait ModelTree
             $this->$orderColumnName = $this->$orderColumnName + 1;
 
             $this->save();
+
             return $this;
         }
 

@@ -34,7 +34,7 @@ trait HasTree
     protected $treeIgnoreQueryNames = [];
 
     /**
-     * 开启树形表格功能
+     * 开启树形表格功能.
      *
      * @param bool $showAll
      * @param bool $sortable
@@ -72,7 +72,7 @@ trait HasTree
     }
 
     /**
-     * 禁止树形表格查询
+     * 禁止树形表格查询.
      *
      * @return $this
      */
@@ -94,7 +94,7 @@ trait HasTree
     }
 
     /**
-     * 设置子节点查询链接需要忽略的字段
+     * 设置子节点查询链接需要忽略的字段.
      *
      * @param string|array $keys
      *
@@ -209,7 +209,6 @@ HTML
     {
         return $this->getChildrenQueryNamePrefix().$this->levelQueryName;
     }
-
 
     /**
      * @return int

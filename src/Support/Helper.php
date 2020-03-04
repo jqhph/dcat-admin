@@ -154,7 +154,6 @@ class Helper
         return $url.'?'.http_build_query(array_merge($originalQuery, $query));
     }
 
-
     /**
      * @param string                 $url
      * @param string|array|Arrayable $keys
@@ -185,7 +184,6 @@ class Helper
             ? $baseUrl.'?'.http_build_query($query)
             : $baseUrl;
     }
-
 
     /**
      * Get full url without query strings.
