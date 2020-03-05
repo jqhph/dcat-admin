@@ -505,7 +505,11 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getParentColumn()
     {
-        return $this->eloquent()->getParentColumn();
+        $model = $this->eloquent();
+
+        if (method_exists($model, 'getParentColumn')) {
+            return $model->getParentColumn();
+        }
     }
 
     /**
@@ -515,7 +519,11 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getTitleColumn()
     {
-        return $this->eloquent()->getTitleColumn();
+        $model = $this->eloquent();
+
+        if (method_exists($model, 'getTitleColumn')) {
+            return $model->getTitleColumn();
+        }
     }
 
     /**
@@ -525,7 +533,11 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getOrderColumn()
     {
-        return $this->eloquent()->getOrderColumn();
+        $model = $this->eloquent();
+
+        if (method_exists($model, 'getOrderColumn')) {
+            return $model->getOrderColumn();
+        }
     }
 
     /**

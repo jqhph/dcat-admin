@@ -22,7 +22,7 @@
     <a href="https://styleci.io/repos/182349597">
         <img src="https://github.styleci.io/repos/182349597/shield" alt="StyleCI">
     </a>
-    <a href="https://github.com/jqhph/dcat-admin/releases" ><img src="https://img.shields.io/github/release/jqhph/dcat-admin.svg?color=4099DE" /></a> 
+    <a href="https://packagist.org/packages/dcat/laravel-admin" ><img src="https://poser.pugx.org/dcat/laravel-admin/v/stable" /></a> 
     <a href="https://packagist.org/packages/dcat/laravel-admin"><img src="https://img.shields.io/packagist/dt/dcat/laravel-admin.svg?color=" /></a> 
     <a><img src="https://img.shields.io/badge/php-7.1+-59a9f8.svg?style=flat" /></a> 
     <a><img src="https://img.shields.io/badge/laravel-5.5+-59a9f8.svg?style=flat" ></a>
