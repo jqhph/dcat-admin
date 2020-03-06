@@ -53,7 +53,7 @@ abstract class Action implements Renderable
     /**
      * @var bool
      */
-    protected $disabledHandler = false;
+    protected $usingHandler = true;
 
     /**
      * Action constructor.
@@ -178,10 +178,10 @@ abstract class Action implements Renderable
     /**
      * @return void
      */
-    protected function prepareHandle()
+    protected function prepareHandlerScript()
     {
         if (
-            $this->disabledHandler
+            ! $this->usingHandler
             || ! method_exists($this, 'handle')
         ) {
             return;
@@ -199,7 +199,7 @@ abstract class Action implements Renderable
             return '';
         }
 
-        $this->prepareHandle();
+        $this->prepareHandlerScript();
         $this->addScript();
 
         return $this->html();

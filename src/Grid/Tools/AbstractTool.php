@@ -29,7 +29,7 @@ abstract class AbstractTool extends Grid\GridAction
     public function html()
     {
         if ($href = $this->href()) {
-            $this->disabledHandler = true;
+            $this->usingHandler = false;
         }
 
         $this->setHtmlAttribute([
