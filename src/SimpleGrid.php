@@ -15,7 +15,6 @@ class SimpleGrid extends Grid
         $this->setName('simple');
         $this->disableCreateButton();
         $this->disableActions();
-        $this->disableExporter();
         $this->disablePerPages();
         $this->disableBatchActions();
         $this->disableFilterButton();
@@ -31,6 +30,6 @@ class SimpleGrid extends Grid
     {
         parent::setupFilter();
 
-        $this->filter->panel();
+        $this->filter()->panel();
     }
 }
