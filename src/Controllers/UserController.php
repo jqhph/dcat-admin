@@ -12,73 +12,17 @@ use Dcat\Admin\Show;
 use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Tree;
-use Illuminate\Routing\Controller;
 
-class UserController extends Controller
+class UserController extends AdminController
 {
-    use HasResourceActions {
-        destroy as delete;
-    }
-
     /**
-     * Index interface.
+     * Get content title.
      *
-     * @return Content
+     * @return string
      */
-    public function index(Content $content)
+    public function title()
     {
-        if (request(SimpleGrid::QUERY_NAME)) {
-            return $content->body($this->simpleGrid());
-        }
-
-        return $content
-            ->title(trans('admin.administrator'))
-            ->description(trans('admin.list'))
-            ->body($this->grid());
-    }
-
-    /**
-     * Show interface.
-     *
-     * @param mixed   $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function show($id, Content $content)
-    {
-        return $content
-            ->title(trans('admin.administrator'))
-            ->description(trans('admin.detail'))
-            ->body($this->detail($id));
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     *
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->title(trans('admin.administrator'))
-            ->description(trans('admin.edit'))
-            ->body($this->form()->edit($id));
-    }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->title(trans('admin.administrator'))
-            ->description(trans('admin.create'))
-            ->body($this->form());
+        return trans('admin.administrator');
     }
 
     /**
@@ -297,6 +241,6 @@ class UserController extends Controller
             Permission::error();
         }
 
-        return $this->delete($id);
+        return parent::destroy($id);
     }
 }

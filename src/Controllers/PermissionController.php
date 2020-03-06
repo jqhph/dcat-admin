@@ -10,12 +10,19 @@ use Dcat\Admin\Models\Repositories\Permission;
 use Dcat\Admin\Show;
 use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Tree;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 
-class PermissionController extends Controller
+class PermissionController extends AdminController
 {
-    use HasResourceActions;
+    /**
+     * Get content title.
+     *
+     * @return string
+     */
+    protected function title()
+    {
+        return trans('admin.permissions');
+    }
 
     /**
      * Index interface.
@@ -31,7 +38,7 @@ class PermissionController extends Controller
         }
 
         return $content
-            ->title(trans('admin.permissions'))
+            ->title($this->title())
             ->description(trans('admin.list'))
             ->body(function (Row $row) {
                 if (request('_layout')) {
@@ -40,53 +47,6 @@ class PermissionController extends Controller
                     $row->column(12, $this->treeView());
                 }
             });
-    }
-
-    /**
-     * Show interface.
-     *
-     * @param mixed   $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function show($id, Content $content)
-    {
-        return $content
-            ->title(trans('admin.permissions'))
-            ->description(trans('admin.detail'))
-            ->body($this->detail($id));
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->title(trans('admin.permissions'))
-            ->description(trans('admin.edit'))
-            ->body($this->form()->edit($id));
-    }
-
-    /**
-     * Create interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->title(trans('admin.permissions'))
-            ->description(trans('admin.create'))
-            ->body($this->form());
     }
 
     protected function simpleGrid()

@@ -9,11 +9,18 @@ use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Models\Repositories\Menu;
 use Dcat\Admin\Tree;
 use Dcat\Admin\Widgets\Card;
-use Illuminate\Routing\Controller;
 
-class MenuController extends Controller
+class MenuController extends AdminController
 {
-    use HasResourceActions;
+    /**
+     * Get content title.
+     *
+     * @return string
+     */
+    public function title()
+    {
+        return trans('admin.menu');
+    }
 
     /**
      * Index interface.
@@ -25,7 +32,7 @@ class MenuController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->title(trans('admin.menu'))
+            ->title($this->title())
             ->description(trans('admin.list'))
             ->row(function (Row $row) {
                 $row->column(7, $this->treeView()->render());
@@ -85,22 +92,6 @@ class MenuController extends Controller
         });
 
         return $tree;
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param string  $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->title(trans('admin.menu'))
-            ->description(trans('admin.edit'))
-            ->row($this->form()->edit($id));
     }
 
     /**

@@ -5,80 +5,22 @@ namespace Dcat\Admin\Controllers;
 use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Repositories\Role;
 use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
 use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Routing\Controller;
 
-class RoleController extends Controller
+class RoleController extends AdminController
 {
-    use HasResourceActions {
-        destroy as delete;
-    }
-
     /**
-     * Index interface.
+     * Get content title.
      *
-     * @param Content $content
-     *
-     * @return Content
+     * @return string
      */
-    public function index(Content $content)
+    public function title()
     {
-        return $content
-            ->title(trans('admin.roles'))
-            ->description(trans('admin.list'))
-            ->body($this->grid());
-    }
-
-    /**
-     * Show interface.
-     *
-     * @param mixed   $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function show($id, Content $content)
-    {
-        return $content
-            ->title(trans('admin.roles'))
-            ->description(trans('admin.detail'))
-            ->body($this->detail($id));
-    }
-
-    /**
-     * Edit interface.
-     *
-     * @param mixed   $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->title(trans('admin.roles'))
-            ->description(trans('admin.edit'))
-            ->body($this->form()->edit($id));
-    }
-
-    /**
-     * Create interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->title(trans('admin.roles'))
-            ->description(trans('admin.create'))
-            ->body($this->form());
+        return trans('admin.roles');
     }
 
     /**
@@ -208,6 +150,6 @@ class RoleController extends Controller
             Permission::error();
         }
 
-        return $this->delete($id);
+        return parent::destroy($id);
     }
 }
