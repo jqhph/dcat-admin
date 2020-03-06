@@ -27,6 +27,16 @@ abstract class BatchAction extends GridAction
 JS;
     }
 
+    /**
+     * @return string
+     */
+    public function getSelectedKeysScript()
+    {
+        return <<<JS
+LA.grid.selected('{$this->parent->getName()}');
+JS;
+    }
+
     protected function html()
     {
         $this->setHtmlAttribute([
