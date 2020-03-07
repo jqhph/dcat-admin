@@ -36,14 +36,4 @@ JS;
 LA.grid.selected('{$this->parent->getName()}');
 JS;
     }
-
-    protected function html()
-    {
-        $this->setHtmlAttribute([
-            'href'  => 'javascript:void(0);',
-            'class' => $this->elementClass(),
-        ]);
-
-        return "<li><a {$this->formatHtmlAttributes()}>{$this->title()}</a></li>";
-    }
 }

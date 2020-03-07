@@ -17,15 +17,12 @@ abstract class AbstractTool extends Grid\GridAction
     protected $style = 'btn btn-sm btn-primary';
 
     /**
-     * @return string|void
+     * @return void
      */
-    public function html()
+    public function setupHtmlAttributes()
     {
-        $this->setHtmlAttribute([
-            'data-_key' => $this->key(),
-            'class'     => $this->style.' '.$this->elementClass(),
-        ]);
+        $this->addHtmlClass($this->style);
 
-        return parent::html();
+        parent::setupHtmlAttributes();
     }
 }

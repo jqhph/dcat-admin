@@ -81,19 +81,4 @@ abstract class RowAction extends GridAction
 
         return $this;
     }
-
-    /**
-     * Render row action.
-     *
-     * @return string
-     */
-    public function html()
-    {
-        $this->setHtmlAttribute([
-            'data-_key' => $this->key(),
-            'class'     => $this->elementClass(),
-        ]);
-
-        return parent::html();
-    }
 }
