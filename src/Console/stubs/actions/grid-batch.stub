@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 class DummyClass extends BatchAction
 {
     /**
+     * @return string
+     */
+	protected $title = 'Title';
+
+    /**
      * Handle the action request.
      *
      * @param Request $request
@@ -23,14 +28,6 @@ class DummyClass extends BatchAction
         return $this->response()
             ->success('Processed successfully: '.json_encode($this->key()))
             ->redirect('/');
-    }
-
-    /**
-     * @return string
-     */
-    public function title()
-    {
-        return 'Title';
     }
 
     /**

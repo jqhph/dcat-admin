@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 class DummyClass extends RowAction
 {
     /**
+     * @return string
+     */
+	protected $title = 'Title';
+
+    /**
      * Handle the action request.
      *
      * @param Request $request
@@ -20,17 +25,11 @@ class DummyClass extends RowAction
      */
     public function handle(Request $request)
     {
+        // dump($this->key());
+
         return $this->response()
             ->success('Processed successfully: '.$this->key())
             ->redirect('/');
-    }
-
-    /**
-     * @return string
-     */
-    public function title()
-    {
-        return 'Title';
     }
 
     /**

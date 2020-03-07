@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 class DummyClass extends AbstractTool
 {
     /**
+     * @return string
+     */
+	protected $title = 'Title';
+
+    /**
      * Handle the action request.
      *
      * @param Request $request
@@ -25,14 +30,6 @@ class DummyClass extends AbstractTool
         return $this->response()
             ->success('Processed successfully.')
             ->redirect('/');
-    }
-
-    /**
-     * @return string
-     */
-    public function title()
-    {
-        return 'Title';
     }
 
     /**

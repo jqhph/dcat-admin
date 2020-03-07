@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 class DummyClass extends Action
 {
     /**
+     * @return string
+     */
+	protected $title = 'Title';
+
+    /**
      * Handle the action request.
      *
      * @param Request $request
@@ -23,14 +28,6 @@ class DummyClass extends Action
         // dump($this->key());
 
         return $this->response()->success('Processed successfully.')->redirect('/');
-    }
-
-    /**
-     * @return string
-     */
-    public function title()
-    {
-        return 'Title';
     }
 
     /**
