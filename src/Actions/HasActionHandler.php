@@ -29,7 +29,7 @@ trait HasActionHandler
     /**
      * @return string
      */
-    public function getMethod()
+    public function method()
     {
         return $this->method;
     }
@@ -54,7 +54,7 @@ trait HasActionHandler
     /**
      * @return mixed
      */
-    public function getCalledClass()
+    public function makeCalledClass()
     {
         return str_replace('\\', '_', get_called_class());
     }
@@ -62,7 +62,7 @@ trait HasActionHandler
     /**
      * @return string
      */
-    public function getHandleRoute()
+    public function handlerRoute()
     {
         return admin_url('_handle_action_');
     }
@@ -127,13 +127,13 @@ JS;
 var process = new Promise(function (resolve,reject) {
     Object.assign(data, {
         _token: LA.token,
-        _action: '{$this->getCalledClass()}',
+        _action: '{$this->makeCalledClass()}',
         _key: '{$this->key()}',
     });
     LA.NP.start();
     $.ajax({
-        method: '{$this->getMethod()}',
-        url: '{$this->getHandleRoute()}',
+        method: '{$this->method()}',
+        url: '{$this->handlerRoute()}',
         data: data,
         success: function (data) {
             target.attr('working', 0);
