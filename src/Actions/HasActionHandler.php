@@ -156,7 +156,7 @@ JS;
     protected function resolverScript()
     {
         return <<<JS
-function (data, target) {
+function (data) {
     var response = data[0],
         target   = data[1];
         
@@ -177,6 +177,11 @@ function (data, target) {
                 break;
             case 'location':
                 window.location = then.value;
+                break;
+            case 'script':
+                (function () {
+                    eval(then.value);
+                })();
                 break;
         }
     };

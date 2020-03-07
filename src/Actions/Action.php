@@ -68,14 +68,13 @@ abstract class Action implements Renderable
     /**
      * Action constructor.
      *
-     * @param mixed  $key
      * @param string $title
      */
-    public function __construct($key = null, $title = null)
+    public function __construct($title = null)
     {
-        $this->setKey($key);
-
-        $this->title = $title;
+        if ($title) {
+            $this->title = $title;
+        }
     }
 
     /**
