@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <title>动作基本使用 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
     <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="canonical" href="../../docs-master-widgets-charts.html" />
+            <link rel="canonical" href="../../docs-master-action.html" />
     
      <link rel="stylesheet" href="../../assets/css/laravel.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css">
@@ -74,7 +74,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-widgets-charts.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-action.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -131,7 +131,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="../../docs-master-widgets-charts.html">Master</a>
+					<a role="menuitem" tabindex="-1" href="../../docs-master-action.html">Master</a>
 				</li>
 					</ul>
 	</div>
@@ -415,7 +415,456 @@
 	</section>
 
 	<article>
-		
+		<h1>动作基本使用</h1>
+<p>开发者通过 <code  >Action</code> 动作类可以非常方便的开发出一个含有特定功能的操作，可以非常方便的让用户与服务器产生交互。</p>
+<p>例如，页面上需要一个按钮，用户点击之后可以向服务器发起请求，通过弹窗展示当前登录用户的信息，那么这个功能按钮就可以用 <code  >Action</code> 来开发。</p>
+<h2>示例</h2>
+<p>下面我们就开始开发一个用于查看登录用户信息的按钮：</p>
+<h3>使用命令创建Action类</h3>
+<p>首先需要先创建 <code  >Action</code> 类，运行命令</p>
+<pre><code   class="language-bash">php artisan admin:action</code></pre>
+<p>运行成功之后会看到命令窗口出现如下信息，让开发者选择一个 <code  >Action</code> 类的类型，这里我们输入 <code  >0</code> 就行</p>
+<pre><code   class="language-bash"> Which type of action would you like to make?:
+  [0] default
+  [1] grid-batch
+  [2] grid-row
+  [3] grid-tool
+  [4] form-tool
+  [5] show-tool
+  [6] tree-tool
+ &gt; 0 # 输入 0
+</code></pre>
+<p>接着输入 <code  >Action</code> 类名称，这里需要输入 <code  >大驼峰</code> 风格的英文字母</p>
+<pre><code   class="language-bash">
+ Please enter a name of action class:
+ &gt; ShowCurrentAdminUser
+</code></pre>
+<p>类名输入完成之后会出现以下信息让开发者输入类的命名空间，默认的命名空间是 <code  >App\Admin\Actions</code>，这里我们直接按回车跳过就行了</p>
+<pre><code   class="language-bash">
+ Please enter the namespace of action class [App\Admin\Actions]:
+ &gt;
+</code></pre>
+<p>这样一个 <code  >Action</code> 类就创建完成了，刚刚创建的类路径是 <code  >app/Admin/Actions/ShowCurrentAdminUser.php</code></p>
+<h3>使用</h3>
+<p>修改 <code  >Action</code> 类如下</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace App\Admin\Actions;
+
+use Dcat\Admin\Admin;
+use Dcat\Admin\Widgets\Table;
+use Dcat\Admin\Actions\Action;
+use Dcat\Admin\Actions\Response;
+use Dcat\Admin\Models\HasPermissions;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+
+class ShowCurrentAdminUser extends Action
+{
+    /**
+     * 按钮标题
+     *
+     * @var string
+     */
+    protected $title = &#039;个人信息&#039;;
+
+    /**
+     * @var string
+     */
+    protected $modalId = &#039;show-current-user&#039;;
+
+    /**
+     * 处理当前动作的请求
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function handle(Request $request)
+    {
+        // 获取当前登录用户模型
+        $user = Admin::user();
+        // 这里我们用表格展示模型数据
+        $table = Table::make($user-&gt;toArray());
+
+        return $this-&gt;response()
+            -&gt;success(&#039;查询成功&#039;)
+            -&gt;html($table);
+    }
+
+    /**
+     * 处理响应的HTML字符串，附加到弹窗节点中
+     *
+     * @return string
+     */
+    protected function handleHtmlResponse()
+    {
+        return &lt;&lt;&lt;&#039;JS&#039;
+var $modal = $(target.data(&#039;target&#039;)); 
+
+$modal.find(&#039;.modal-body&#039;).html(response.html)
+$modal.modal(&#039;show&#039;)
+JS;
+    }
+
+    /**
+     * 设置HTML标签的属性
+     *
+     * @return void
+     */
+    protected function setupHtmlAttributes()
+    {
+        // 添加class
+        $this-&gt;addHtmlClass(&#039;btn btn-primary&#039;);
+
+        // 保存弹窗的ID
+        $this-&gt;setHtmlAttribute(&#039;data-target&#039;, &#039;#&#039;.$this-&gt;modalId);
+
+        parent::setupHtmlAttributes();
+    }
+
+    /**
+     * 设置按钮的HTML，这里我们需要附加上弹窗的HTML
+     *
+     * @return string|void
+     */
+    public function html()
+    {
+        // 按钮的html
+        $html = parent::html();
+
+        return &lt;&lt;&lt;HTML
+{$html}        
+&lt;div class="modal fade" id="{$this-&gt;modalId}" tabindex="-1" role="dialog"&gt;
+  &lt;div class="modal-dialog modal-lg" role="document"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;button type="button" class="close" data-dismiss="modal" aria-label="Close"&gt;&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;&lt;/button&gt;
+        &lt;h4 class="modal-title"&gt;{$this-&gt;title()}&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+HTML;
+    }
+
+    /**
+     * 确认信息，如果此方法返回不为空，则点击按钮之后会弹出确认框
+     *
+     * @return string|void
+     */
+    public function confirm()
+    {
+    }
+
+    /**
+     * 动作权限判断，返回false则表示无权限
+     *
+     * @param Model|Authenticatable|HasPermissions|null $user
+     *
+     * @return bool
+     */
+    protected function authorize($user): bool
+    {
+        return true;
+    }
+
+    /**
+     * 通过这个方法可以设置动作发起请求时需要附带的参数
+     *
+     * @return array
+     */
+    protected function parameters()
+    {
+        return [];
+    }
+}</code></pre>
+<p>修改完之后就可以开始使用了</p>
+<pre><code   class="language-php">&lt;?php
+
+use App\Admin\Actions\ShowCurrentAdminUser;
+
+class IndexController
+{
+    public function index(Content $content)
+    {
+        return $content-&gt;body(ShowCurrentAdminUser::make());
+    }
+}</code></pre>
+<p>效果如下</p>
+<p><a href="../../assets/img/screenshots/action-default.png" target="_blank"></p>
+<img class="img img-full" src="../../assets/img/screenshots/action-default.png" />
+<p></a></p>
+<h2>属性</h2>
+<p><code  >Dcat\Admin\Actions\Action</code> 类可用属性说明</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td><code  >string</code></td>
+<td></td>
+<td>标题</td>
+</tr>
+<tr>
+<td>selectorPrefix</td>
+<td><code  >public</code> <code  >string</code></td>
+<td><code  >.admin-action-</code></td>
+<td>目标元素的<code  >Css</code>选择器</td>
+</tr>
+<tr>
+<td>method</td>
+<td><code  >string</code></td>
+<td><code  >POST</code></td>
+<td>与服务器交互的请求方法</td>
+</tr>
+<tr>
+<td>event</td>
+<td><code  >string</code></td>
+<td><code  >click</code></td>
+<td>目标元素绑定的事件，默认为点击事件</td>
+</tr>
+<tr>
+<td>disabled</td>
+<td><code  >bool</code></td>
+<td><code  >false</code></td>
+<td>是否渲染动作元素，设置<code  >true</code>则不渲染</td>
+</tr>
+<tr>
+<td>usingHandler</td>
+<td><code  >bool</code></td>
+<td><code  >true</code></td>
+<td>当此属性设置为<code  >false</code>，则无论<code  >Action</code>中是否包含<code  >handle</code>方法都不会向服务器发起请求</td>
+</tr>
+</tbody>
+</table>
+<h2>方法</h2>
+<p><code  >Dcat\Admin\Actions\Action</code> 类方法说明</p>
+<h3>make</h3>
+<p>此方法是一个静态方法，用于实例化动作类</p>
+<pre><code   class="language-php">$action = MyAction::make($param1, $param2...);</code></pre>
+<h3>handle</h3>
+<p>当<code  >Action</code>类中包含此方法之时，目标元素会被绑定通过<code  >event</code>属性设置的事件（默认为<code  >click</code>）。如果事件被触发，则会向服务器发起请求，而<code  >handle</code>方法则可以处理并响应此请求。</p>
+<blockquote>
+<p>{tip} 如果没有此方法，则目标元素不会被绑定事件。</p>
+</blockquote>
+<h3>response</h3>
+<p>此方法用于获取<code  >Response</code>对象，然后响应前端发起的请求，此方法仅在<code  >handle</code>方法内有效。</p>
+<pre><code   class="language-php">&lt;?php
+
+use Dcat\Admin\Actions\Action;
+use Illuminate\Http\Request;
+
+class MyAction extends Action
+{
+    public function handle(Request $request) 
+    {
+        return $this-&gt;response()-&gt;success(&#039;成功！&#039;);
+    }
+}
+</code></pre>
+<h4>展示成功信息</h4>
+<p>此方法接收一个<code  >string</code>类型参数</p>
+<pre><code   class="language-php">$this-&gt;response()-&gt;success(&#039;成功！&#039;);</code></pre>
+<h4>展示错误信息</h4>
+<p>此方法接收一个<code  >string</code>类型参数</p>
+<pre><code   class="language-php">$this-&gt;response()-&gt;error(&#039;出错了！&#039;);</code></pre>
+<h4>展示警告信息</h4>
+<p>此方法接收一个<code  >string</code>类型参数</p>
+<pre><code   class="language-php">$this-&gt;response()-&gt;warning(&#039;警告&#039;);</code></pre>
+<h4>跳转</h4>
+<p>此方法接收一个<code  >string</code>类型参数，可以与<code  >success</code>、<code  >error</code>、<code  >warning</code>等方法同时使用</p>
+<pre><code   class="language-php">$this-&gt;response()-&gt;redirect(&#039;auth/users&#039;);</code></pre>
+<h4>跳转(location)</h4>
+<p>此方法接收一个<code  >string</code>类型参数</p>
+<pre><code   class="language-php">$this-&gt;response()-&gt;location(&#039;auth/users&#039;);</code></pre>
+<h4>刷新当前页面</h4>
+<p>此方法可以与<code  >success</code>、<code  >error</code>、<code  >warning</code>等方法同时使用</p>
+<pre><code   class="language-php">$this-&gt;response()-&gt;refresh();</code></pre>
+<h4>下载</h4>
+<p>此方法接收一个<code  >string</code>类型参数</p>
+<pre><code   class="language-php">$this-&gt;response()-&gt;download(&#039;auth/users?_export_=1&#039;);</code></pre>
+<h4>返回HTML</h4>
+<p>此方法可接收一个<code  >string</code>、<code  >Renderable</code>、<code  >Htmlable</code>类型参数，可以与<code  >success</code>、<code  >error</code>、<code  >warning</code>等方法同时使用</p>
+<blockquote>
+<p>{tip} 响应的<code  >HTML</code>字符默认会被置入动作按钮元素上，如果需要自己控制，则覆写<code  >Action::handleHtmlResponse</code>方法即可。</p>
+</blockquote>
+<pre><code   class="language-php">$this-&gt;response()-&gt;html(&#039;&lt;a&gt;a标签&lt;/a&gt;&#039;);
+
+$this-&gt;response()-&gt;html(view(&#039;...&#039;));</code></pre>
+<h4>执行JS代码</h4>
+<p>此方法接收一个<code  >string</code>类型参数，可以与<code  >success</code>、<code  >error</code>、<code  >warning</code>等方法同时使用</p>
+<pre><code   class="language-php">$this-&gt;response()-&gt;script(
+    &lt;&lt;&lt;JS
+console.log(&#039;response&#039;, response, target);  
+JS  
+);</code></pre>
+<h3>parameters</h3>
+<p>通过这个方法可以设置动作发起请求时需要附带的参数</p>
+<pre><code   class="language-php">&lt;?php
+
+use Dcat\Admin\Actions\Action;
+use Illuminate\Http\Request;
+
+class MyAction extends Action
+{
+    public function handle(Request $request) 
+    {
+        // 接收参数
+        $key1 = $request-&gt;get(&#039;key1&#039;);
+        $key2 = $request-&gt;get(&#039;key2&#039;);
+
+        return $this-&gt;response()-&gt;success(&#039;成功！&#039;);
+    }
+
+    public function parameters()
+    {
+        return [
+            &#039;key1&#039; =&gt; &#039;value1&#039;,
+            &#039;key2&#039; =&gt; &#039;value2&#039;,    
+        ];
+    }
+}
+</code></pre>
+<h3>confirm</h3>
+<p>设置确认信息，此方法要求返回一个<code  >string</code>类型参数。</p>
+<p>当此方法返回值不为空时会加入确认窗功能，当事件被触发时自动弹出确认框，点击确认后才会进行下一步操作。</p>
+<pre><code   class="language-php">public function confirm()
+{
+    return &#039;你确定要删除此行内容吗？&#039;;
+}</code></pre>
+<h3>actionScript</h3>
+<p>设置动作执行的前置<code  >js</code>代码，当按钮绑定的事件被触发后，发起请求之前会执行通过此方法设置的<code  >js</code>代码。</p>
+<pre><code   class="language-php">protected function actionScript()
+{
+    return &lt;&lt;&lt;JS
+console.log(&#039;发起请求之前&#039;, target);
+
+// return 在这里return可以终止执行后面的操作  
+JS  
+}</code></pre>
+<h3>buildRequestScript</h3>
+<p>生成与服务器交互的<code  >js</code>代码，有需要可以覆写此方法</p>
+<h3>handleHtmlResponse</h3>
+<p>处理服务器响应的<code  >HTML</code>代码</p>
+<pre><code   class="language-php">protected function handleHtmlResponse()
+    {
+        return &lt;&lt;&lt;&#039;JS&#039;
+console.log(&#039;打印HTML代码&#039;, response.html);
+
+// 附加到页面中
+$(&#039;xxx&#039;).html(response.html)
+JS;
+    }</code></pre>
+<h3>authorize</h3>
+<p>此方法用于判断登录用户的操作权限，默认返回<code  >true</code></p>
+<pre><code   class="language-php">protected function authorize($user): bool
+{
+    return $user-&gt;can(&#039;do-action&#039;);
+}</code></pre>
+<h3>failedAuthorization</h3>
+<p>此方法用于设置鉴权失败的响应内容，如果需要则可覆写此方法</p>
+<pre><code   class="language-php">public function failedAuthorization()
+{
+    return $this-&gt;response()-&gt;error(__(&#039;admin.deny&#039;));
+}</code></pre>
+<h3>disable</h3>
+<p>设置显示或隐藏此动作</p>
+<pre><code   class="language-php">// 隐藏
+MyAction::make()-&gt;disable();
+
+// 显示
+MyAction::make()-&gt;disable(true);</code></pre>
+<h3>allowed</h3>
+<p>判断动作是否允许显示</p>
+<pre><code   class="language-php">if (MyAction::make()-&gt;allowed()) {
+    ...
+}</code></pre>
+<h3>setKey</h3>
+<p>设置数据主键</p>
+<pre><code   class="language-php">$id = ...;
+
+MyAction::make()-&gt;setKey($id);</code></pre>
+<h3>key</h3>
+<p>获取数据主键，此方法在<code  >handle</code>方法内也同样可用</p>
+<pre><code   class="language-php">&lt;?php
+
+use Dcat\Admin\Actions\Action;
+use Illuminate\Http\Request;
+
+class MyAction extends Action
+{
+    public function handle(Request $request) 
+    {
+        $id = $this-&gt;key();
+
+        ...
+
+        return $this-&gt;response()-&gt;success(&#039;成功！&#039;);
+    }
+
+    public function title()
+    {
+        return "标题 {$this-&gt;key()}";
+    }
+}</code></pre>
+<h3>elementClass</h3>
+<p>获取动作目标元素（按钮）的<code  >class</code></p>
+<pre><code   class="language-php">$class = MyAction::make()-&gt;elementClass();</code></pre>
+<h3>selector</h3>
+<p>获取动作目标元素（按钮）的CSS选择器</p>
+<pre><code   class="language-php">$selector = MyAction::make()-&gt;selector();
+
+Admin::script(
+    &lt;&lt;&lt;JS
+    $(&#039;$selector&#039;).click(...);
+JS  
+);</code></pre>
+<h3>addHtmlClass</h3>
+<p>追加获取动作目标元素（按钮）的<code  >class</code></p>
+<pre><code   class="language-php">MyAction::make()-&gt;addHtmlClass(&#039;btn btn-primary&#039;);
+
+MyAction::make()-&gt;addHtmlClass([&#039;btn&#039;, &#039;btn-primary&#039;]);</code></pre>
+<h3>html</h3>
+<p>此方法用于设置动作目标元素的<code  >HTML</code>代码，如有需要可以覆写</p>
+<pre><code   class="language-php">protected function html()
+{
+    return &lt;&lt;&lt;HTML
+&lt;a {$this-&gt;formatHtmlAttributes()}&gt;{$this-&gt;title()}&lt;/a&gt;
+HTML;
+}</code></pre>
+<h3>addScript</h3>
+<p>此方法用于在<code  >render</code>方法执行完毕之前添加<code  >JS</code>代码</p>
+<pre><code   class="language-php">protected function addScript()
+{
+    return &lt;&lt;&lt;JS
+console.log(&#039;...&#039;)
+JS;
+}</code></pre>
+<h3>setHtmlAttribute</h3>
+<p>设置目标元素的<code  >HTML</code>标签属性</p>
+<pre><code   class="language-php">MyAction::make()-&gt;setHtmlAttribute(&#039;name&#039;, $value);
+
+MyAction::make()-&gt;setHtmlAttribute([&#039;name&#039; =&gt; $value]);
+</code></pre>
+<h3>setupHtmlAttributes</h3>
+<p>此方法用于在<code  >render</code>方法执行完毕之前给目标元素设置属性</p>
+<pre><code   class="language-php">protected function setupHtmlAttributes()
+{
+    $this-&gt;setHtmlAttribute(&#039;data-target&#039;, &#039;xxx&#039;);
+
+    // 覆写时别忘了调用父级方法
+    parent::setupHtmlAttributes();
+}</code></pre>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>
@@ -471,7 +920,7 @@
         },
     };
 
-    DMS.config.comment.id = 'master/widgets-charts';
+    DMS.config.comment.id = 'master/action';
 
     (function () {
         function indices() {

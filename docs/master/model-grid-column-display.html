@@ -206,6 +206,16 @@
 <h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
 </li>
 <li>
+<h2>动作</h2>
+<ul>
+<li><a href="../../docs/master/action.html">基本使用</a></li>
+<li><a href="../../docs/master/action-grid.html">数据表格</a></li>
+<li><a href="../../docs/master/action-form.html">数据表单</a></li>
+<li><a href="../../docs/master/action-show.html">数据详情</a></li>
+<li><a href="../../docs/master/action-tree.html">模型树</a></li>
+</ul>
+</li>
+<li>
 <h2><a href="../../docs/master/trans.html">多语言</a></h2>
 </li>
 <li>
@@ -232,7 +242,7 @@
 </ul>
 </li>
 <li>
-<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+<h2><a href="../../docs/master/assets.html">CSS/JavaScript</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/section.html">区块（section）</a></h2>
@@ -257,9 +267,6 @@
 </li>
 <li>
 <h2><a href="../../docs/master/qa.html">常见问题</a></h2>
-</li>
-<li>
-<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/change-log.html">Change log</a></h2>
@@ -339,6 +346,16 @@
 <h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
 </li>
 <li>
+<h2>动作</h2>
+<ul>
+<li><a href="../../docs/master/action.html">基本使用</a></li>
+<li><a href="../../docs/master/action-grid.html">数据表格</a></li>
+<li><a href="../../docs/master/action-form.html">数据表单</a></li>
+<li><a href="../../docs/master/action-show.html">数据详情</a></li>
+<li><a href="../../docs/master/action-tree.html">模型树</a></li>
+</ul>
+</li>
+<li>
 <h2><a href="../../docs/master/trans.html">多语言</a></h2>
 </li>
 <li>
@@ -365,7 +382,7 @@
 </ul>
 </li>
 <li>
-<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+<h2><a href="../../docs/master/assets.html">CSS/JavaScript</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/section.html">区块（section）</a></h2>
@@ -390,9 +407,6 @@
 </li>
 <li>
 <h2><a href="../../docs/master/qa.html">常见问题</a></h2>
-</li>
-<li>
-<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/change-log.html">Change log</a></h2>
@@ -579,16 +593,16 @@ $grid-&gt;rate-&gt;progressBar(&#039;success&#039;);
 
 // 设置进度条尺寸和最大值
 $grid-&gt;rate-&gt;progressBar(&#039;success&#039;, &#039;sm&#039;, 100);</code></pre>
-<h3>tree</h3>
-<p><code  >tree</code>方法可以把一个带有层级关系的数组呈现为树形弹窗，比如权限就可以用此方法展示</p>
+<h3>showTreeInDialog</h3>
+<p><code  >showTreeInDialog</code>方法可以把一个带有层级关系的数组呈现为树形弹窗，比如权限就可以用此方法展示</p>
 <pre><code   class="language-php">// 查出所有的权限数据
 $nodes = (new $permissionModel)-&gt;allNodes();
 
 // 传入二维数组（未分层级）
-$grid-&gt;permissions-&gt;tree($nodes);
+$grid-&gt;permissions-&gt;showTreeInDialog($nodes);
 
 // 也可以传入闭包
-$grid-&gt;permissions-&gt;tree(function (Grid\Displayers\Tree $tree) use (&amp;$nodes, $roleModel) {
+$grid-&gt;permissions-&gt;showTreeInDialog(function (Grid\Displayers\Tree $tree) use (&amp;$nodes, $roleModel) {
     // 设置所有节点
     $tree-&gt;nodes($nodes);
 
@@ -611,27 +625,32 @@ $grid-&gt;permissions-&gt;tree(function (Grid\Displayers\Tree $tree) use (&amp;$
 
 // 第二个参数为默认值
 $grid-&gt;gender-&gt;using([1 =&gt; &#039;男&#039;, 2 =&gt; &#039;女&#039;], &#039;未知&#039;);</code></pre>
-<h3>explode</h3>
+<h3>字符串分割为数组</h3>
 <p><code  >explode</code>方法可以把字符串分割为数组。</p>
 <pre><code   class="language-php">$grid-&gt;tag-&gt;explode()-&gt;label();
 
 // 可以指定分隔符，默认","
 $grid-&gt;tag-&gt;explode(&#039;|&#039;)-&gt;label();</code></pre>
 <h3>prepend</h3>
+<p><code  >prepend</code> 方法用于给 <code  >string</code> 或 <code  >array</code> 类型的值前面插入内容。</p>
 <pre><code   class="language-php">// 当字段值是一个字符串
 $grid-&gt;email-&gt;prepend(&#039;mailto:&#039;);
 
 // 当字段值是一个数组
 $grid-&gt;arr-&gt;prepend(&#039;first item&#039;);</code></pre>
 <h3>append</h3>
+<p><code  >prepend</code> 方法用于给 <code  >string</code> 或 <code  >array</code> 类型的值后面插入内容。</p>
 <pre><code   class="language-php">// 当字段值是一个字符串
 $grid-&gt;email-&gt;append(&#039;@gmail.com&#039;);
 
 // 当字段值是一个数组
 $grid-&gt;arr-&gt;append(&#039;last item&#039;);</code></pre>
-<h3>列字符串截取</h3>
+<h3>列字符串或数组截取</h3>
 <pre><code   class="language-php">// 最多显示50个字符
-$grid-&gt;contents-&gt;limit(50, &#039;...&#039;);</code></pre>
+$grid-&gt;contents-&gt;limit(50, &#039;...&#039;);
+
+// 如果字段值是数组也支持
+$grid-&gt;tags-&gt;limit(3);</code></pre>
 <h3>列二维码</h3>
 <pre><code   class="language-php">$grid-&gt;website-&gt;qrcode(function () {
     return $this-&gt;url;

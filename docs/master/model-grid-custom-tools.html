@@ -206,6 +206,16 @@
 <h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
 </li>
 <li>
+<h2>动作</h2>
+<ul>
+<li><a href="../../docs/master/action.html">基本使用</a></li>
+<li><a href="../../docs/master/action-grid.html">数据表格</a></li>
+<li><a href="../../docs/master/action-form.html">数据表单</a></li>
+<li><a href="../../docs/master/action-show.html">数据详情</a></li>
+<li><a href="../../docs/master/action-tree.html">模型树</a></li>
+</ul>
+</li>
+<li>
 <h2><a href="../../docs/master/trans.html">多语言</a></h2>
 </li>
 <li>
@@ -232,7 +242,7 @@
 </ul>
 </li>
 <li>
-<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+<h2><a href="../../docs/master/assets.html">CSS/JavaScript</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/section.html">区块（section）</a></h2>
@@ -257,9 +267,6 @@
 </li>
 <li>
 <h2><a href="../../docs/master/qa.html">常见问题</a></h2>
-</li>
-<li>
-<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/change-log.html">Change log</a></h2>
@@ -339,6 +346,16 @@
 <h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
 </li>
 <li>
+<h2>动作</h2>
+<ul>
+<li><a href="../../docs/master/action.html">基本使用</a></li>
+<li><a href="../../docs/master/action-grid.html">数据表格</a></li>
+<li><a href="../../docs/master/action-form.html">数据表单</a></li>
+<li><a href="../../docs/master/action-show.html">数据详情</a></li>
+<li><a href="../../docs/master/action-tree.html">模型树</a></li>
+</ul>
+</li>
+<li>
 <h2><a href="../../docs/master/trans.html">多语言</a></h2>
 </li>
 <li>
@@ -365,7 +382,7 @@
 </ul>
 </li>
 <li>
-<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+<h2><a href="../../docs/master/assets.html">CSS/JavaScript</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/section.html">区块（section）</a></h2>
@@ -392,9 +409,6 @@
 <h2><a href="../../docs/master/qa.html">常见问题</a></h2>
 </li>
 <li>
-<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
-</li>
-<li>
 <h2><a href="../../docs/master/change-log.html">Change log</a></h2>
 </li>
 </ul>
@@ -402,9 +416,8 @@
 
 	<article>
 		<h1>工具栏</h1>
-<p><a name="tools"></a></p>
 <h2>工具按钮</h2>
-<p>在<code  >model-grid</code>的头部默认有<code  >批量删除</code>和<code  >刷新</code>两个操作工具，如果有更多的操作需求，<code  >model-grid</code>提供了自定义工具的功能,下面的示例添加一个性别分类选择的按钮组工具。</p>
+<p>在<code  >model-grid</code>的头部默认有<code  >批量删除</code>和<code  >刷新</code>两个操作工具，如果有更多的操作需求，<code  >Grid</code> 提供了自定义工具的功能,下面的示例添加一个性别分类选择的按钮组工具。</p>
 <p>先定义工具类<code  >app/Admin/Extensions/Tools/UserGender.php</code>：</p>
 <pre><code   class="language-php">&lt;?php
 
@@ -420,17 +433,13 @@ class UserGender extends AbstractTool
     {
         $url = Request::fullUrlWithQuery([&#039;gender&#039; =&gt; &#039;_gender_&#039;]);
 
-        return &lt;&lt;&lt;EOT
-
+        return &lt;&lt;&lt;JS
 $(&#039;input:radio.user-gender&#039;).change(function () {
-
     var url = "$url".replace(&#039;_gender_&#039;, $(this).val());
 
-    $.pjax({container:&#039;#pjax-container&#039;, url: url });
-
+    LA.reload(url);
 });
-
-EOT;
+JS;
     }
 
     public function render()
@@ -448,25 +457,35 @@ EOT;
 }
 </code></pre>
 <p>视图<code  >admin.tools.gender</code>文件为<code  >resources/views/admin/tools/gender.blade.php</code>:</p>
-<pre><code   class="language-php">&lt;div class="btn-group" data-toggle="buttons"&gt;
+<pre><code   class="language-html">&lt;div class="btn-group" data-toggle="buttons"&gt;
     @foreach($options as $option =&gt; $label)
     &lt;label class="btn btn-default btn-sm {{ \Request::get(&#039;gender&#039;, &#039;all&#039;) == $option ? &#039;active&#039; : &#039;&#039; }}"&gt;
         &lt;input type="radio" class="user-gender" value="{{ $option }}"&gt;{{$label}}
     &lt;/label&gt;
     @endforeach
 &lt;/div&gt;</code></pre>
-<p>在<code  >model-grid</code>引入这个工具：</p>
-<pre><code   class="language-php">
-$grid-&gt;tools(function ($tools) {
-    $tools-&gt;append(new UserGender());
-});
-</code></pre>
+<p>在<code  >Grid</code>引入这个工具：</p>
+<pre><code   class="language-php">$grid-&gt;tools(new UserGender());</code></pre>
 <p>在<code  >model-grid</code>定义中接收到<code  >gender</code>参数后，做好数据查询就可以了：</p>
 <pre><code   class="language-php">if (in_array(Request::get(&#039;gender&#039;), [&#039;m&#039;, &#039;f&#039;])) {
     $grid-&gt;model()-&gt;where(&#039;gender&#039;, Request::get(&#039;gender&#039;));
 }</code></pre>
 <p>可以参考上面的方式来添加自己的工具。</p>
-<p><a name="tools"></a></p>
+<h3>tools用法</h3>
+<p><code  >Grid::tools</code> 方法允许传入 <code  >string</code>，<code  >array</code>, <code  >AbstractTool</code> 和 <code  >闭包</code>等类型参数，下面是演示。</p>
+<pre><code   class="language-php">// 传入字符串
+$grid-&gt;tools(&#039;&lt;a class="btn btn-sm btn-default"&gt;工具按钮测试&lt;/a&gt;&#039;);
+
+// 传入数组
+$grid-&gt;tools([
+    &#039;&lt;a class="btn btn-sm btn-default"&gt;工具按钮测试&lt;/a&gt;&#039;,
+    new UserGender(),
+]);
+
+// 传入闭包
+$grid-&gt;tools(function (Grid\Tools $tools) {
+    $tools-&gt;append(new UserGender());
+});</code></pre>
 <h2>批量操作</h2>
 <p>目前默认实现了批量删除操作的功能，如果要关掉批量删除操作：</p>
 <pre><code   class="language-php">$grid-&gt;tools(function ($tools) {
@@ -474,7 +493,14 @@ $grid-&gt;tools(function ($tools) {
         $batch-&gt;disableDelete();
     });
 });
-</code></pre>
+
+// 也可以这样
+$grid-&gt;disableBatchDelete();
+
+// 或
+$grid-&gt;batchActions(function (Grid\Tools\BatchActions $batch) {
+    $batch-&gt;disableDelete();
+});</code></pre>
 <p>如果要添加自定义的批量操作，可以参考下面的例子。</p>
 <p>下面是扩展一个对文章批量发布的功能：</p>
 <p>先定义操作类<code  >app/Admin/Extensions/Tools/ReleasePost.php</code>：</p>
@@ -482,14 +508,15 @@ $grid-&gt;tools(function ($tools) {
 
 namespace App\Admin\Extensions\Tools;
 
-use Dcat\Admin\Grid\Tools\BatchAction;
+use Dcat\Admin\Grid\BatchAction;
 
 class ReleasePost extends BatchAction
 {
     protected $action;
 
-    public function __construct($action = 1)
+    public function __construct($title, $action = 1)
     {
+        $this-&gt;title = $title;
         $this-&gt;action = $action;
     }
 
@@ -497,40 +524,47 @@ class ReleasePost extends BatchAction
     {
         return &lt;&lt;&lt;JS
 
-$(&#039;{$this-&gt;getElementClass()}&#039;).on(&#039;click&#039;, function() {
+$(&#039;{$this-&gt;elementClass()}&#039;).on(&#039;click&#039;, function() {
+    // 获取选中的id数组
+    var idArray = {$this-&gt;getSelectedKeysScript()}
 
     $.ajax({
         method: &#039;post&#039;,
-        url: &#039;{$this-&gt;resource}/release&#039;,
+        url: &#039;{$this-&gt;resource()}/release&#039;,
         data: {
             _token:LA.token,
-            ids: selectedRows(),
+            ids: idArray.join(),
             action: {$this-&gt;action}
         },
         success: function () {
-            $.pjax.reload(&#039;#pjax-container&#039;);
+            LA.reload();
             LA.success(&#039;操作成功&#039;);
         }
     });
 });
-
 JS;
 
     }
 }</code></pre>
 <p>看代码的实现，通过click操作发送一个post请求，把选中的行数据<code  >id</code>通过数组的形式传给后端接口，后端接口拿到<code  >id</code>列表和要修改的状态来更新数据，然后前端刷新页面(pjax reload)，并弹出<code  >toastr</code>提示操作成功。</p>
 <p>在<code  >model-grid</code>中加入这个批量操作功能：</p>
-<pre><code   class="language-php">$grid-&gt;tools(function ($tools) {
-    $tools-&gt;batch(function ($batch) {
-        $batch-&gt;add(&#039;发布文章&#039;, new ReleasePost(1));
-        $batch-&gt;add(&#039;文章下线&#039;, new ReleasePost(0));
-    });
-});
+<pre><code   class="language-php">$grid-&gt;batchActions([
+    new ReleasePost(&#039;发布文章&#039;, 1),
+    new ReleasePost(&#039;文章下线&#039;, 0)
+]);  
 
 // 也可以这么写
 $grid-&gt;batchActions(function ($batch) {
-    $batch-&gt;add(&#039;发布文章&#039;, new ReleasePost(1));
-    $batch-&gt;add(&#039;文章下线&#039;, new ReleasePost(0));
+    $batch-&gt;add(new ReleasePost(&#039;发布文章&#039;, 1));
+    $batch-&gt;add(new ReleasePost(&#039;文章下线&#039;, 0));
+});
+
+// 或
+$grid-&gt;tools(function ($tools) {
+    $tools-&gt;batch(function ($batch) {
+        $batch-&gt;add(new ReleasePost(&#039;发布文章&#039;, 1));
+        $batch-&gt;add(new ReleasePost(&#039;文章下线&#039;, 0));
+    });
 });</code></pre>
 <p>这样批量操作下拉按钮下面就会添加两个操作项，最后一步就是添加一个接口来处理批量操作的请求了，接口代码如下：</p>
 <pre><code   class="language-php">

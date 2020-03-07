@@ -206,6 +206,16 @@
 <h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
 </li>
 <li>
+<h2>动作</h2>
+<ul>
+<li><a href="../../docs/master/action.html">基本使用</a></li>
+<li><a href="../../docs/master/action-grid.html">数据表格</a></li>
+<li><a href="../../docs/master/action-form.html">数据表单</a></li>
+<li><a href="../../docs/master/action-show.html">数据详情</a></li>
+<li><a href="../../docs/master/action-tree.html">模型树</a></li>
+</ul>
+</li>
+<li>
 <h2><a href="../../docs/master/trans.html">多语言</a></h2>
 </li>
 <li>
@@ -232,7 +242,7 @@
 </ul>
 </li>
 <li>
-<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+<h2><a href="../../docs/master/assets.html">CSS/JavaScript</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/section.html">区块（section）</a></h2>
@@ -257,9 +267,6 @@
 </li>
 <li>
 <h2><a href="../../docs/master/qa.html">常见问题</a></h2>
-</li>
-<li>
-<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/change-log.html">Change log</a></h2>
@@ -339,6 +346,16 @@
 <h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
 </li>
 <li>
+<h2>动作</h2>
+<ul>
+<li><a href="../../docs/master/action.html">基本使用</a></li>
+<li><a href="../../docs/master/action-grid.html">数据表格</a></li>
+<li><a href="../../docs/master/action-form.html">数据表单</a></li>
+<li><a href="../../docs/master/action-show.html">数据详情</a></li>
+<li><a href="../../docs/master/action-tree.html">模型树</a></li>
+</ul>
+</li>
+<li>
 <h2><a href="../../docs/master/trans.html">多语言</a></h2>
 </li>
 <li>
@@ -365,7 +382,7 @@
 </ul>
 </li>
 <li>
-<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+<h2><a href="../../docs/master/assets.html">CSS/JavaScript</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/section.html">区块（section）</a></h2>
@@ -390,9 +407,6 @@
 </li>
 <li>
 <h2><a href="../../docs/master/qa.html">常见问题</a></h2>
-</li>
-<li>
-<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/change-log.html">Change log</a></h2>
@@ -512,9 +526,9 @@ $content-&gt;row(function(Row $row) {
 |          |444      |555        |
 |          |         |           |
 ----------------------------------</code></pre>
-<h3>初始化和页面构建事件</h3>
+<h3>事件</h3>
 <p>系统会在<code  >Dcat\Admin\Layout\Content</code>类被实例化时和<code  >render()</code>方法被调用时触发以下两个事件，开发者可以在这两个事件中改变或添加一些行为。</p>
-<h4>Content::resolving</h4>
+<h4>resolving</h4>
 <p>通过<code  >Content::resolving</code>方法设置的回调函数会在<code  >Dcat\Admin\Layout\Content</code>类被实例化时触发；</p>
 <pre><code   class="language-php">use Dcat\Admin\Layout\Content;
 
@@ -523,7 +537,7 @@ Content::resolving(function (Content $content) {
     $content-&gt;setView(&#039;app.admin.content&#039;);
 
 });</code></pre>
-<h4>Content::composing</h4>
+<h4>composing</h4>
 <p>通过<code  >Content::composing</code>方法设置的回调函数会在<code  >Dcat\Admin\Layout\Content::render</code>方法被调用时触发；</p>
 <pre><code   class="language-php">use Dcat\Admin\Layout\Content;
 
@@ -532,6 +546,28 @@ Content::composing(function (Content $content) {
     $content-&gt;setView(&#039;app.admin.content&#039;);
 
 });</code></pre>
+<h4>composed</h4>
+<p>通过<code  >Content::composed</code>方法设置的回调函数会在所有通过<code  >Content::row</code>或<code  >Content::body</code>方法设置的内容都构建完毕后触发。</p>
+<pre><code   class="language-php">use Dcat\Admin\Layout\Content;
+
+class IndexController
+{
+    public function index(Content $content)
+    {
+        Content::composed(function (Content $content) {
+            // Grid已执行render方法
+
+        });
+
+        return $content-&gt;body(function ($row) {
+            $grid = new Grid(...);
+
+            ...
+
+            $row-&gt;column(12, $grid);
+        });
+    }
+}</code></pre>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>

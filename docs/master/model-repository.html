@@ -206,6 +206,16 @@
 <h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
 </li>
 <li>
+<h2>动作</h2>
+<ul>
+<li><a href="../../docs/master/action.html">基本使用</a></li>
+<li><a href="../../docs/master/action-grid.html">数据表格</a></li>
+<li><a href="../../docs/master/action-form.html">数据表单</a></li>
+<li><a href="../../docs/master/action-show.html">数据详情</a></li>
+<li><a href="../../docs/master/action-tree.html">模型树</a></li>
+</ul>
+</li>
+<li>
 <h2><a href="../../docs/master/trans.html">多语言</a></h2>
 </li>
 <li>
@@ -232,7 +242,7 @@
 </ul>
 </li>
 <li>
-<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+<h2><a href="../../docs/master/assets.html">CSS/JavaScript</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/section.html">区块（section）</a></h2>
@@ -257,9 +267,6 @@
 </li>
 <li>
 <h2><a href="../../docs/master/qa.html">常见问题</a></h2>
-</li>
-<li>
-<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/change-log.html">Change log</a></h2>
@@ -339,6 +346,16 @@
 <h2><a href="../../docs/master/model-repository.html">数据仓库</a></h2>
 </li>
 <li>
+<h2>动作</h2>
+<ul>
+<li><a href="../../docs/master/action.html">基本使用</a></li>
+<li><a href="../../docs/master/action-grid.html">数据表格</a></li>
+<li><a href="../../docs/master/action-form.html">数据表单</a></li>
+<li><a href="../../docs/master/action-show.html">数据详情</a></li>
+<li><a href="../../docs/master/action-tree.html">模型树</a></li>
+</ul>
+</li>
+<li>
 <h2><a href="../../docs/master/trans.html">多语言</a></h2>
 </li>
 <li>
@@ -365,7 +382,7 @@
 </ul>
 </li>
 <li>
-<h2><a href="../../docs/master/assets.html">静态资源加载</a></h2>
+<h2><a href="../../docs/master/assets.html">CSS/JavaScript</a></h2>
 </li>
 <li>
 <h2><a href="../../docs/master/section.html">区块（section）</a></h2>
@@ -392,9 +409,6 @@
 <h2><a href="../../docs/master/qa.html">常见问题</a></h2>
 </li>
 <li>
-<h2><a href="../../docs/master/upgrade.html">升级注意事项</a></h2>
-</li>
-<li>
 <h2><a href="../../docs/master/change-log.html">Change log</a></h2>
 </li>
 </ul>
@@ -402,8 +416,9 @@
 
 	<article>
 		<h1>数据仓库</h1>
-<p>数据仓库是对数据的<code  >CURD</code>操作抽象而成的接口，开发者通过实现<code  >Repository</code>接口即可对数据进行<code  >CURD</code>操作。这样做的好处是可以把数据源和界面的构建完全解耦分离，数据源的改变完全不影响界面的构建，开发者只需实现不同的<code  >Repository</code>接口即可实现对多数据源的支持，非常简单。</p>
-<p>数据表格<code  >Grid</code>、数据表单<code  >Form</code>、数据详情<code  >Show</code>等组件不再直接依赖于<code  >Model</code>，而是依赖于提供更简单清晰的接口的数据仓库，下面是<code  >Repository</code>的所有接口：</p>
+<p>数据仓库是对数据的<code  >CURD</code>操作抽象而成的接口，开发者通过实现<code  >Repository</code>接口即可对数据进行<code  >CURD</code>操作。
+这样做的好处是可以把数据和界面的构建完全解耦分离，数据源的改变完全不影响界面的构建，开发者只需实现不同的<code  >Repository</code>接口即可实现对多数据源的支持。</p>
+<p>数据表格<code  >Grid</code>、数据表单<code  >Form</code>、数据详情<code  >Show</code>、<code  >Tree</code> 等组件不再直接依赖于<code  >Model</code>，而是依赖于提供更简单清晰的接口的数据仓库，下面是<code  >Repository</code>的所有接口：</p>
 <pre><code   class="language-php">&lt;?php
 
 namespace Dcat\Admin\Contracts;
@@ -439,7 +454,62 @@ interface Repository
 
     public function destroy(Form $form, array $deletingData);
 }</code></pre>
-<h2>接口</h2>
+<p>如果你的数据是多层级结构，则还需要实现以下接口</p>
+<pre><code   class="language-php">&lt;?php
+
+namespace Dcat\Admin\Contracts;
+
+interface TreeRepository
+{
+    /**
+     * @return string
+     */
+    public function getPrimaryKeyColumn();
+
+    /**
+     * @return string
+     */
+    public function getParentColumn();
+
+    /**
+     * Get title column.
+     *
+     * @return string
+     */
+    public function getTitleColumn();
+
+    /**
+     * Get order column name.
+     *
+     * @return string
+     */
+    public function getOrderColumn();
+
+    /**
+     * Save tree order from a tree like array.
+     *
+     * @param array $tree
+     * @param int   $parentId
+     */
+    public function saveOrder($tree = [], $parentId = 0);
+
+    /**
+     * Set query callback to model.
+     *
+     * @param \Closure|null $query
+     *
+     * @return $this
+     */
+    public function withQuery($queryCallback);
+
+    /**
+     * Format data to tree like array.
+     *
+     * @return array
+     */
+    public function toTree();
+}</code></pre>
+<h2>Repository接口</h2>
 <h3>getKeyName</h3>
 <p>此接口要求返回数据的主键字段名称，需要返回<code  >string</code>类型值。</p>
 <pre><code   class="language-php">    public function getKeyName()
@@ -589,7 +659,110 @@ interface Repository
         // 注意这里需要返回二维数组
         return true;
     }</code></pre>
-<h2>对数据模型的支持</h2>
+<h2>TreeRepository接口</h2>
+<h3>getPrimaryKeyColumn</h3>
+<p>此接口用于返回数据的主键字段名称，需要返回<code  >string</code>类型值。</p>
+<pre><code   class="language-php">    public function getPrimaryKeyColumn()
+    {
+        return $this-&gt;getKeyName();
+    }</code></pre>
+<h3>getParentColumn</h3>
+<p>此接口用于返回数据的父ID字段名称，需要返回<code  >string</code>类型值。</p>
+<pre><code   class="language-php">    public function getParentColumn()
+    {
+        return &#039;parent_id&#039;;
+    }</code></pre>
+<h3>getTitleColumn</h3>
+<p>此接口用于返回数据标题字段名称，需要返回<code  >string</code>类型值。</p>
+<pre><code   class="language-php">    public function getTitleColumn()
+    {
+        return &#039;title&#039;;
+    }</code></pre>
+<h3>getOrderColumn</h3>
+<p>此接口用于返回数据排序字段名称，需要返回<code  >string</code>类型值。</p>
+<blockquote>
+<p>{tip} 此字段不是必须的，如果你的数据不支持或不需要排序，请返回空值！</p>
+</blockquote>
+<pre><code   class="language-php">    public function getOrderColumn()
+    {
+        return &#039;order&#039;;
+    }</code></pre>
+<h3>saveOrder</h3>
+<p>此接口用于保存层级数据的排序，并且接收两个参数</p>
+<ul>
+<li><code  >$tree</code> <code  >array</code> 此字段是一个已分好层级的数组</li>
+<li><code  >$parentId</code> <code  >int</code> 此字段主要用于递归时传递父ID使用</li>
+</ul>
+<blockquote>
+<p>{tip} 如果你的数据不支持 <code  >MySQL</code>，可参考 <code  >Dcat\Admin\Traits\ModelTree::saveOrder</code> 方法自行实现。</p>
+</blockquote>
+<pre><code   class="language-php">$tree = [
+    [
+        &#039;id&#039;        =&gt; 1,
+        &#039;title&#039;     =&gt; &#039;title&#039;,
+        &#039;parent_id&#039; =&gt; 0,
+
+        &#039;children&#039; =&gt; [
+            [
+                &#039;id&#039;        =&gt; 2,
+                &#039;title&#039;     =&gt; &#039;child1&#039;,
+                &#039;parent_id&#039; =&gt; 1,
+            ],
+            [
+                &#039;id&#039;        =&gt; 3,
+                &#039;title&#039;     =&gt; &#039;child2&#039;,
+                &#039;parent_id&#039; =&gt; 1,
+            ],
+        ],
+    ]
+];
+
+// 保存排序，内层逻辑请自行实现
+$repository-&gt;saveOrder($tree);  </code></pre>
+<h3>withQuery</h3>
+<p>此接口需结合 <code  >toTree</code> 接口使用，接收一个参数：主要用于设置数据查询操作的相关回调或参数。</p>
+<pre><code   class="language-php">&lt;?php
+
+use Dcat\Admin\Contracts\Repository;
+use Dcat\Admin\Contracts\TreeRepository;
+use Dcat\Admin\Support\Helper;
+
+class Category implements Repository, TreeRepository
+{
+    protected $queryCallbacks = [];
+
+    public function withQuery($queryCallback)
+    {
+        $this-&gt;queryCallbacks[] = $queryCallback;
+
+        return $this;
+    }
+
+    public function toTree()
+    {
+        // 这里演示的代码只是为了说明 withQuery 方法的作用
+        $client = ...;
+
+        foreach ($this-&gt;queryCallbacks as $callback) {
+            $callback($client);
+        }
+
+        return Helper::buildNestedArray($client-&gt;get());
+    }
+}   </code></pre>
+<h3>toTree</h3>
+<p>此接口主要用于查询数据并分好层级返回，需要返回 <code  >array</code> 类型值。</p>
+<pre><code   class="language-php">    public function toTree()
+    {
+        $client = ...;
+
+        foreach ($this-&gt;queryCallbacks as $callback) {
+            $callback($client);
+        }
+
+        return Helper::buildNestedArray($client-&gt;get());
+    }</code></pre>
+<h2>模型</h2>
 <p><code  >Dcat Admin</code>已经内置了对<code  >Eloquent</code>的支持，如果你的数据源是支持<code  >Model</code>的，那么只需继承<code  >Dcat\Admin\Repositories\EloquentRepository</code>类即可实现对数据的<code  >CURD</code>操作，如：</p>
 <pre><code   class="language-php">&lt;?php
 
