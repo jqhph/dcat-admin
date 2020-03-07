@@ -97,7 +97,7 @@ abstract class RowAction extends GridAction
     public function html()
     {
         if ($href = $this->href()) {
-            $this->disabledHandler = true;
+            $this->usingHandler = true;
         }
 
         $this->setHtmlAttribute([

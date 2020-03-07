@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 
 abstract class Action implements Renderable
 {
-    use HasHtmlAttributes, ActionHandler;
+    use HasHtmlAttributes, HasActionHandler;
 
     /**
      * @var array
@@ -119,7 +119,7 @@ abstract class Action implements Renderable
      */
     protected function elementClass()
     {
-        return ltrim($this->selector($this->selectorPrefix), '.');
+        return ltrim($this->selector(), '.');
     }
 
     /**
@@ -133,27 +133,27 @@ abstract class Action implements Renderable
     }
 
     /**
-     * @param string $prefix
-     *
      * @return mixed|string
      */
-    public function selector($prefix)
+    public function selector()
     {
         if (is_null($this->selector)) {
-            return static::makeSelector(get_called_class(), $prefix);
+            return static::makeSelector($this->selectorPrefix);
         }
 
         return $this->selector;
     }
 
     /**
-     * @param string $class
      * @param string $prefix
+     * @param string $class
      *
      * @return string
      */
-    public static function makeSelector($class, $prefix)
+    public static function makeSelector($prefix, $class = null)
     {
+        $class = $class ?: static::class;
+
         if (! isset(static::$selectors[$class])) {
             static::$selectors[$class] = uniqid($prefix);
         }
@@ -178,13 +178,17 @@ abstract class Action implements Renderable
     /**
      * @return void
      */
-    protected function prepareHandlerScript()
+    protected function setupHandler()
     {
         if (
             ! $this->usingHandler
             || ! method_exists($this, 'handle')
         ) {
             return;
+        }
+
+        if ($confirm = $this->confirm()) {
+            $this->setHtmlAttribute('data-confirm', $confirm);
         }
 
         $this->addHandlerScript();
@@ -199,7 +203,7 @@ abstract class Action implements Renderable
             return '';
         }
 
-        $this->prepareHandlerScript();
+        $this->setupHandler();
         $this->addScript();
 
         return $this->html();

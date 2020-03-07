@@ -7,7 +7,7 @@ use Dcat\Admin\Models\HasPermissions;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-trait ActionHandler
+trait HasActionHandler
 {
     /**
      * @var Response
@@ -72,24 +72,15 @@ trait ActionHandler
      */
     protected function addHandlerScript()
     {
-        $parameters = json_encode($this->parameters());
-
-        $resolveScript = <<<JS
-target.attr('working', 1);
-Object.assign(data, {$parameters});
-{$this->buildActionPromise()}
-{$this->handleActionPromise()}
-JS;
-
         $script = <<<JS
-$('{$this->selector($this->selectorPrefix)}').off('{$this->event}').on('{$this->event}', function() {
+$('{$this->selector()}').off('{$this->event}').on('{$this->event}', function() {
     var data = $(this).data(),
         target = $(this);
     if (target.attr('working') > 0) {
         return;
     }
     {$this->actionScript()}
-    {$this->confirmScript($resolveScript)}
+    {$this->buildRequestScript()}
 });
 JS;
 
@@ -97,20 +88,25 @@ JS;
     }
 
     /**
-     * @param string $resolveScript
-     *
      * @return string
      */
-    protected function confirmScript($resolveScript)
+    protected function buildRequestScript()
     {
-        if (! $message = $this->confirm()) {
-            return $resolveScript;
-        }
+        $parameters = json_encode($this->parameters());
 
         return <<<JS
-LA.confirm('{$message}', function () {
-    {$resolveScript}
-});
+function request() {
+    target.attr('working', 1);
+    Object.assign(data, {$parameters});
+    {$this->buildActionPromise()}
+    {$this->handleActionPromise()}
+}
+
+if (data['confirm']) {
+    LA.confirm(data['confirm'], request);
+} else {
+    request()
+}
 JS;
     }
 
@@ -156,22 +152,10 @@ JS;
     /**
      * @return string
      */
-    public function handleActionPromise()
-    {
-        Admin::script($this->buildDefaultPromiseCallbacks());
-
-        return <<<'JS'
-process.then(window.ACTION_RSOLVER).catch(window.ACTION_CATCHER);
-JS;
-    }
-
-    /**
-     * @return string
-     */
-    protected function buildDefaultPromiseCallbacks()
+    protected function resolverScript()
     {
         return <<<'JS'
-window.ACTION_RSOLVER = function (data) {
+function (data, target) {
     var response = data[0],
         target   = data[1];
         
@@ -209,16 +193,34 @@ window.ACTION_RSOLVER = function (data) {
     if (response.then) {
       then(response.then);
     }
-};
+}
+JS;
+    }
 
-window.ACTION_CATCHER = function (data) {
+    /**
+     * @return string
+     */
+    protected function rejectScript()
+    {
+        return <<<'JS'
+function (data) {
     var request = data[0], target = data[1];
     
     if (request && typeof request.responseJSON === 'object') {
         LA.error(request.responseJSON.message)
     }
     console.error(request);
-};
+}
+JS;
+    }
+
+    /**
+     * @return string
+     */
+    public function handleActionPromise()
+    {
+        return <<<JS
+process.then({$this->resolverScript()}).catch({$this->rejectScript()});
 JS;
     }
 
