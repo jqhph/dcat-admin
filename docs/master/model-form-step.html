@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>表单分步 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
+    <title>分步表单 - Dcat Admin - 使用很少的代码快速构建一个完善的后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="使用很少的代码快速构建一个功能完善的漂亮的管理后台">
     <meta name="keywords" content="Dcat Admin, Laravel Admin, Web Admin, 后台">
@@ -415,7 +415,7 @@
 	</section>
 
 	<article>
-		<h1>表单分步</h1>
+		<h1>分步表单</h1>
 <h2>简单示例</h2>
 <pre><code   class="language-php">protected function form()
 {
@@ -425,7 +425,7 @@
     $form-&gt;setAction(&#039;step&#039;);
     $form-&gt;disableListButton();
 
-    $form-&gt;step()
+    $form-&gt;multipleSteps()
         -&gt;remember()
         -&gt;width(&#039;950px&#039;)
         -&gt;add(&#039;基本信息&#039;, function (Form\StepForm $step) {
@@ -514,23 +514,23 @@ JS;
 <blockquote>
 <p>{tip} 此方法只针对大屏幕，手机端页面会自动调节大小。</p>
 </blockquote>
-<pre><code   class="language-php">$form-&gt;step()-&gt;width(&#039;900px&#039;);</code></pre>
+<pre><code   class="language-php">$form-&gt;multipleSteps()-&gt;width(&#039;900px&#039;);</code></pre>
 <h3>记住表单数据</h3>
 <p>开启此功能之后，当用户点击 <code  >下一步</code> 按钮并且参数验证通过后，会把表单数据保存在 <code  >session</code> 中，直到整个分步表单保存完毕之后才会销毁。</p>
 <blockquote>
 <p>{tip} 此功能默认不开启。</p>
 </blockquote>
 <pre><code   class="language-php">// 开启
-$form-&gt;step()-&gt;remember();
+$form-&gt;multipleSteps()-&gt;remember();
 
 // 关闭
-$form-&gt;step()-&gt;remember(false);</code></pre>
+$form-&gt;multipleSteps()-&gt;remember(false);</code></pre>
 <h3>设置容器间距</h3>
 <p>默认值 <code  >30px 18px 30px</code>。</p>
-<pre><code   class="language-php">$form-&gt;step()-&gt;padding(&#039;30px 18px 30px&#039;);</code></pre>
+<pre><code   class="language-php">$form-&gt;multipleSteps()-&gt;padding(&#039;30px 18px 30px&#039;);</code></pre>
 <h3>监听页面离开事件</h3>
 <p>监听所有步骤表单页面离开事件，可添加多个。</p>
-<pre><code   class="language-php">$form-&gt;step()-&gt;leaving(&lt;&lt;&lt;JS
+<pre><code   class="language-php">$form-&gt;multipleSteps()-&gt;leaving(&lt;&lt;&lt;JS
      // 获取当前页面的步骤索引
      var index = args.index; 
 
@@ -561,7 +561,7 @@ JS
 )-&gt;leaving(...);</code></pre>
 <h3>监听页面显示事件</h3>
 <p>监听所有步骤表单页面显示事件，可添加多个。</p>
-<pre><code   class="language-php">$form-&gt;step()-&gt;shown(&lt;&lt;&lt;JS
+<pre><code   class="language-php">$form-&gt;multipleSteps()-&gt;shown(&lt;&lt;&lt;JS
      // 获取当前页面的步骤索引
      var index = args.index; 
 
@@ -575,7 +575,7 @@ JS
 <p>步骤表单支持所有表单字段。</p>
 <pre><code   class="language-php">use Dcat\Admin\Form;
 
-$form-&gt;step()-&gt;add(&#039;标题&#039;, function (Form\StepForm $step) {
+$form-&gt;multipleSteps()-&gt;add(&#039;标题&#039;, function (Form\StepForm $step) {
 
     $step-&gt;text(&#039;username&#039;)-&gt;rules(&#039;required&#039;);
 
@@ -585,7 +585,7 @@ $form-&gt;step()-&gt;add(&#039;标题&#039;, function (Form\StepForm $step) {
 <p>监听当前步骤页面离开事件，支持监听多次。</p>
 <pre><code   class="language-php">use Dcat\Admin\Form;
 
-$form-&gt;step()-&gt;add(&#039;基本信息&#039;, function (Form\StepForm $step) {
+$form-&gt;multipleSteps()-&gt;add(&#039;基本信息&#039;, function (Form\StepForm $step) {
     ...
 
     $step-&gt;leaving(&lt;&lt;&lt;JS
@@ -625,7 +625,7 @@ JS
 <p>监听当前步骤页面显示事件，支持监听多次。</p>
 <pre><code   class="language-php">use Dcat\Admin\Form;
 
-$form-&gt;step()-&gt;add(&#039;基本信息&#039;, function (Form\StepForm $step) {
+$form-&gt;multipleSteps()-&gt;add(&#039;基本信息&#039;, function (Form\StepForm $step) {
     ...
 
     $step-&gt;shown(&lt;&lt;&lt;JS
@@ -644,7 +644,7 @@ JS
 <p>当所有步骤都完成之后会显示完成页面，系统提供一个默认的完成页面，开发者也可以通过以下方法自定义完成页面要显示的内容。</p>
 <pre><code   class="language-php">use Dcat\Admin\Form;
 
-$form-&gt;step()-&gt;done(function (Form\DoneStep $done) {
+$form-&gt;multipleSteps()-&gt;done(function (Form\DoneStep $done) {
 
     // 获取新增ID
     // 由 Repository::store 返回的值
