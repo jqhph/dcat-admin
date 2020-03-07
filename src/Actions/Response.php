@@ -116,7 +116,7 @@ class Response
      */
     public function download($url)
     {
-        return $this->then(['action' => 'download', 'value' => $url]);
+        return $this->then(['action' => 'download', 'value' => admin_url($url)]);
     }
 
     /**
@@ -127,6 +127,16 @@ class Response
     public function refresh()
     {
         return $this->then(['action' => 'refresh', 'value' => true]);
+    }
+
+    /**
+     * @param string $script
+     *
+     * @return $this
+     */
+    public function script($script)
+    {
+        return $this->then(['action' => 'script', 'value' => $script]);
     }
 
     /**
