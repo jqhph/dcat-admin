@@ -59,13 +59,6 @@ abstract class AbstractTool extends Action
     }
 
     /**
-     * @return string|void
-     */
-    protected function href()
-    {
-    }
-
-    /**
      * @return string
      */
     public function render()
@@ -86,17 +79,12 @@ abstract class AbstractTool extends Action
      */
     public function html()
     {
-        if ($href = $this->href()) {
-            $this->disabledHandler = true;
-        }
-
         $this->setHtmlAttribute([
             'data-_key' => $this->key(),
-            'href'      => $href ?: 'javascript:void(0);',
             'class'     => $this->style.' '.$this->elementClass(),
         ]);
 
-        return "<a {$this->formatHtmlAttributes()}>{$this->title()}</a>";
+        return parent::html();
     }
 
     /**

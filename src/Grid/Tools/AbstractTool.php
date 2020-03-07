@@ -19,25 +19,13 @@ abstract class AbstractTool extends Grid\GridAction
     /**
      * @return string|void
      */
-    protected function href()
-    {
-    }
-
-    /**
-     * @return string|void
-     */
     public function html()
     {
-        if ($href = $this->href()) {
-            $this->usingHandler = false;
-        }
-
         $this->setHtmlAttribute([
             'data-_key' => $this->key(),
-            'href'      => $href ?: 'javascript:void(0);',
             'class'     => $this->style.' '.$this->elementClass(),
         ]);
 
-        return "<a {$this->formatHtmlAttributes()}>{$this->title()}</a>";
+        return parent::html();
     }
 }

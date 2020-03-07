@@ -83,29 +83,17 @@ abstract class RowAction extends GridAction
     }
 
     /**
-     * @return string
-     */
-    public function href()
-    {
-    }
-
-    /**
      * Render row action.
      *
      * @return string
      */
     public function html()
     {
-        if ($href = $this->href()) {
-            $this->usingHandler = true;
-        }
-
         $this->setHtmlAttribute([
             'data-_key' => $this->key(),
-            'href'      => $this->href() ?: 'javascript:void(0);',
             'class'     => $this->elementClass(),
         ]);
 
-        return "<a {$this->formatHtmlAttributes()}>{$this->title()}</a>";
+        return parent::html();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Actions;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Validation\ValidationException;
 
 class Response
@@ -194,7 +195,7 @@ class Response
         $data = ['status' => $this->status, 'data' => $this->data];
 
         if ($this->html) {
-            $data['html'] = $this->html;
+            $data['html'] = Helper::render($this->html);
         }
 
         return response()->json($data);

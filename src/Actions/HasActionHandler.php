@@ -37,7 +37,7 @@ trait HasActionHandler
     /**
      * @return array
      */
-    public function parameters()
+    protected function parameters()
     {
         return [];
     }
@@ -154,7 +154,7 @@ JS;
      */
     protected function resolverScript()
     {
-        return <<<'JS'
+        return <<<JS
 function (data, target) {
     var response = data[0],
         target   = data[1];
@@ -162,8 +162,6 @@ function (data, target) {
     if (typeof response !== 'object') {
         return LA.error({type: 'error', title: 'Oops!'});
     }
-    
-    response = response.data;
     
     var then = function (then) {
         switch (then.action) {
@@ -181,19 +179,29 @@ function (data, target) {
                 break;
         }
     };
-    
-    if (typeof response.html === 'string') {
-        target.html(response.html);
+
+    if (typeof response.html === 'string' && response.html) {
+        {$this->handleHtmlResponse()};
     }
 
-    if (typeof response.message === 'string' && response.type) {
-        LA[response.type](response.message);
+    if (typeof response.data.message === 'string' && response.data.type) {
+        LA[response.data.type](response.data.message);
     }
     
-    if (response.then) {
-      then(response.then);
+    if (response.data.then) {
+      then(response.data.then);
     }
 }
+JS;
+    }
+
+    /**
+     * @return string
+     */
+    protected function handleHtmlResponse()
+    {
+        return <<<'JS'
+target.html(response.html);
 JS;
     }
 

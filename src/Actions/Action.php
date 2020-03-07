@@ -6,6 +6,11 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
 
+/**
+ * Class Action
+ *
+ * @method string href
+ */
 abstract class Action implements Renderable
 {
     use HasHtmlAttributes, HasActionHandler;
@@ -54,6 +59,11 @@ abstract class Action implements Renderable
      * @var bool
      */
     protected $usingHandler = true;
+
+    /**
+     * @var array
+     */
+    protected $htmlClasses = [];
 
     /**
      * Action constructor.
@@ -162,6 +172,18 @@ abstract class Action implements Renderable
     }
 
     /**
+     * @param string|array $class
+     *
+     * @return $this
+     */
+    public function addHtmlClass($class)
+    {
+        $this->htmlClasses = array_merge($this->htmlClasses, (array) $class);
+
+        return $this;
+    }
+
+    /**
      * @return void
      */
     protected function addScript()
@@ -173,6 +195,9 @@ abstract class Action implements Renderable
      */
     protected function html()
     {
+        return <<<HTML
+<a {$this->formatHtmlAttributes()}>{$this->title()}</a>
+HTML;
     }
 
     /**
@@ -205,8 +230,38 @@ abstract class Action implements Renderable
 
         $this->setupHandler();
         $this->addScript();
+        $this->setupHtmlAttributes();
 
         return $this->html();
+    }
+
+    /**
+     * @return string
+     */
+    protected function formatHtmlClasses()
+    {
+        return implode(' ', array_unique($this->htmlClasses));
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupHtmlAttributes()
+    {
+        $this->addHtmlClass($this->elementClass());
+
+        $attributes = [
+            'class' => $this->formatHtmlClasses(),
+        ];
+
+        if (method_exists($this, 'href') && ($href = $this->href())) {
+            $this->usingHandler = false;
+
+            $attributes['href'] = $href;
+        }
+
+        $this->defaultHtmlAttribute('style', 'cursor: pointer');
+        $this->setHtmlAttribute($attributes);
     }
 
     /**
