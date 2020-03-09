@@ -17,7 +17,7 @@ abstract class BatchAction extends GridAction
         $warning = __('No data selected!');
 
         return <<<JS
-    var key = LA.grid.selected('{$this->parent->getName()}');
+    var key = {$this->getSelectedKeysScript()}
     
     if (key.length === 0) {
         LA.warning('{$warning}');
@@ -32,8 +32,6 @@ JS;
      */
     public function getSelectedKeysScript()
     {
-        return <<<JS
-LA.grid.selected('{$this->parent->getName()}');
-JS;
+        return "LA.grid.selected('{$this->parent->getName()}');";
     }
 }

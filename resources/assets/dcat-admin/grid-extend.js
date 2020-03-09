@@ -8,13 +8,13 @@
             showNextPage: '',
             pageQueryName: '',
             parentIdQueryName: '',
-            levelQueryName: '',
+            tierQueryName: '',
             showIcon: 'fa-angle-right',
             hideIcon: 'fa-angle-down',
             loadMoreText: '<svg style="fill:currentColor" t="1582877365167" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="32874" width="24" height="24"><path d="M162.8 515m-98.3 0a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32875"></path><path d="M511.9 515m-98.3 0a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32876"></path><path d="M762.8 515a98.3 98.3 0 1 0 196.6 0 98.3 98.3 0 1 0-196.6 0Z" p-id="32877"></path></svg>',
         }, opts);
 
-        this.key = this.level = this.row = this.data = this._req = null;
+        this.key = this.tier = this.row = this.data = this._req = null;
 
         this._init();
     }
@@ -38,7 +38,7 @@
                     shown = _i.hasClass(opts.showIcon);
 
                 _this.key = $this.data('key');
-                _this.level = $this.data('level');
+                _this.tier = $this.data('tier');
                 _this.row = $this.closest('tr');
 
                 if ($this.data('inserted') == '0') {
@@ -51,7 +51,7 @@
                 var children = [];
 
                 getChildren(_this.row.nextAll(), _this.row).forEach(function (v) {
-                    if (! (getLevel(v) === (_this.level + 1))) {
+                    if (getTier(v) !== (_this.tier + 1)) {
                         return;
                     }
 
@@ -65,7 +65,7 @@
                         return
                     }
 
-                    var icon = $(v).find('a[data-level=' + getLevel(v) + '] i');
+                    var icon = $(v).find('a[data-tier=' + getTier(v) + '] i');
 
                     if (icon.hasClass(opts.hideIcon)) {
                         icon.parent().click();
@@ -78,7 +78,7 @@
             var _this = this,
                 row = _this.row,
                 key = _this.key,
-                level = _this.level,
+                tier = _this.tier,
                 tableSelector = _this.options.table;
 
             if (_this._req) {
@@ -92,7 +92,7 @@
             };
 
             data[_this.options.parentIdQueryName] = key;
-            data[_this.options.levelQueryName] = level + 1;
+            data[_this.options.tierQueryName] = tier + 1;
             data[_this.options.pageQueryName.replace(':key', key)] = page;
 
             $.ajax({
@@ -116,7 +116,7 @@
 
                     // 标记子节点行
                     _tbody.find('tr').each(function (_, v) {
-                        $(v).attr('data-level', level + 1)
+                        $(v).attr('data-tier', tier + 1)
                     });
 
                     if (
@@ -125,7 +125,7 @@
                         && lastPage >= page
                     ) {
                         // 加载更多
-                        var loadMore = $("<tr data-level='" + (level + 1) + "' data-page='" + nextPage
+                        var loadMore = $("<tr data-tier='" + (tier + 1) + "' data-page='" + nextPage
                             + "'><td colspan='"+(row.find('td').length)
                             + "' align='center' style='cursor: pointer'> <a>" + _this.options.loadMoreText + "</a> </td></tr>");
 
@@ -167,7 +167,7 @@
             url: '',
         }, opts);
 
-        this.direction = this.key = this.level = this.row = this._req = null;
+        this.direction = this.key = this.tier = this.row = this._req = null;
 
         this._init();
     }
@@ -193,7 +193,7 @@
                 _this.key = $this.data('id');
                 _this.direction = $this.data('direction');
                 _this.row = $this.closest('tr');
-                _this.level = getLevel(_this.row);
+                _this.tier = getTier(_this.row);
 
                 _this._request();
             })
@@ -203,7 +203,7 @@
             var _this = this,
                 key = _this.key,
                 row = _this.row,
-                level = _this.level,
+                tier = _this.tier,
                 direction = _this.direction,
                 prevAll = row.prevAll(),
                 nextAll = row.nextAll(),
@@ -224,8 +224,8 @@
                     LA.success(data.message);
 
                     if (direction) {
-                        var prevRow = sibling(prevAll, level);
-                        if (swapable(prevRow, level) && prev.length && getLevel(prev) >= level) {
+                        var prevRow = sibling(prevAll, tier);
+                        if (swapable(prevRow, tier) && prev.length && getTier(prev) >= tier) {
                             prevRow.before(row);
 
                             // 把所有子节点上移
@@ -234,10 +234,10 @@
                             });
                         }
                     } else {
-                        var nextRow = sibling(nextAll, level),
+                        var nextRow = sibling(nextAll, tier),
                             nextRowChildren = nextRow ? getChildren(nextRow.nextAll(), nextRow) : [];
 
-                        if (swapable(nextRow, level) && next.length && getLevel(next) >= level) {
+                        if (swapable(nextRow, tier) && next.length && getTier(next) >= tier) {
                             nextAll = row.nextAll();
 
                             if (nextRowChildren.length) {
@@ -271,12 +271,12 @@
         return $(v).prop('tagName').toLocaleLowerCase() === 'tr'
     }
 
-    function getLevel(v) {
-        return parseInt($(v).data('level') || 0);
+    function getTier(v) {
+        return parseInt($(v).data('tier') || 0);
     }
 
     function isChildren(parent, child) {
-        return getLevel(child) > getLevel(parent);
+        return getTier(child) > getTier(parent);
     }
 
     function getChildren(all, parent) {
@@ -302,21 +302,21 @@
         return arr;
     }
 
-    function swapable(_o, level) {
+    function swapable(_o, tier) {
         if (
             _o
             && _o.length
-            && level === getLevel(_o)
+            && tier === getTier(_o)
         ) {
             return true
         }
     }
 
-    function sibling(all, level) {
+    function sibling(all, tier) {
         var next;
 
         all.each(function (_, v) {
-            if (getLevel(v) === level && ! next && isTr(v)) {
+            if (getTier(v) === tier && ! next && isTr(v)) {
                 next = $(v);
             }
         });

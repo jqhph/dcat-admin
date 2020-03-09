@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Filter;
 
+use Dcat\Admin\Grid\Filter;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
@@ -11,7 +12,10 @@ use Illuminate\Support\Collection;
  */
 class Scope implements Renderable
 {
-    const QUERY_NAME = '_scope_';
+    /**
+     * @var Filter
+     */
+    protected $filter;
 
     /**
      * @var string
@@ -31,13 +35,15 @@ class Scope implements Renderable
     /**
      * Scope constructor.
      *
-     * @param $key
+     * @param Filter $filter
+     * @param string $key
      * @param string $label
      */
-    public function __construct($key, $label = '')
+    public function __construct(Filter $filter, $key, $label = '')
     {
+        $this->filter = $filter;
         $this->key = $key;
-        $this->label = $label ? $label : admin_trans_field($key);
+        $this->label = $label ?: admin_trans_field($key);
 
         $this->queries = new Collection();
     }
@@ -69,7 +75,9 @@ class Scope implements Renderable
      */
     public function render()
     {
-        $url = request()->fullUrlWithQuery([static::QUERY_NAME => $this->key]);
+        $url = request()->fullUrlWithQuery(
+            [$this->filter->getScopeQueryName() => $this->key]
+        );
 
         return "<li><a href=\"{$url}\">{$this->label}</a></li>";
     }

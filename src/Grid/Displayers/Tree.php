@@ -29,7 +29,7 @@ LA.grid.tree({
     showNextPage: {$showNextPage},
     pageQueryName: '{$pageName}',
     parentIdQueryName: '{$model->getParentIdQueryName()}',
-    levelQueryName: '{$model->getLevelQueryName()}',
+    tierQueryName: '{$model->getTierQueryName()}',
 });
 JS;
         Admin::script($script);
@@ -42,11 +42,11 @@ JS;
         $key = $this->key();
         $tableId = $this->grid->tableId();
 
-        $level = $this->grid->model()->getLevelFromRequest();
-        $indents = str_repeat(' &nbsp; &nbsp; &nbsp; &nbsp; ', $level);
+        $tier = $this->grid->model()->getTierFromRequest();
+        $indents = str_repeat(' &nbsp; &nbsp; &nbsp; &nbsp; ', $tier);
 
         return <<<EOT
-<a href="javascript:void(0)" class="{$tableId}-grid-load-children" data-level="{$level}" data-inserted="0" data-key="{$key}">
+<a href="javascript:void(0)" class="{$tableId}-grid-load-children" data-tier="{$tier}" data-inserted="0" data-key="{$key}">
    {$indents}<i class="fa fa-angle-right"></i> &nbsp; {$this->value}
 </a>
 EOT;

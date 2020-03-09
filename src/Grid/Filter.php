@@ -390,11 +390,17 @@ class Filter implements Renderable
         return $this->name;
     }
 
+    /**
+     * @return $this
+     */
     public function withoutBorder()
     {
         return $this->withBorder('');
     }
 
+    /**
+     * @return $this
+     */
     public function withBorder($border = null)
     {
         $this->border = is_null($border) ? 'border-top:1px solid #f4f4f4;' : $border;
@@ -443,7 +449,7 @@ class Filter implements Renderable
      *
      * @return array
      */
-    public function conditions()
+    public function getConditions()
     {
         $inputs = $this->inputs();
 
@@ -538,11 +544,19 @@ class Filter implements Renderable
      */
     public function scope($key, $label = '')
     {
-        $scope = new Scope($key, $label);
+        $scope = new Scope($this, $key, $label);
 
         $this->scopes->push($scope);
 
         return $scope;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScopeQueryName()
+    {
+        return $this->grid()->getName().'_scope_';
     }
 
     /**
@@ -560,9 +574,9 @@ class Filter implements Renderable
      *
      * @return Scope|null
      */
-    public function currentScope()
+    public function getCurrentScope()
     {
-        $key = request(Scope::QUERY_NAME);
+        $key = $this->getCurrentScopeName();
 
         return $this->scopes->first(function ($scope) use ($key) {
             return $scope->key == $key;
@@ -574,9 +588,9 @@ class Filter implements Renderable
      *
      * @return string
      */
-    public function currentScopeName()
+    public function getCurrentScopeName()
     {
-        return request(Scope::QUERY_NAME);
+        return request($this->getScopeQueryName());
     }
 
     /**
@@ -584,9 +598,9 @@ class Filter implements Renderable
      *
      * @return array
      */
-    protected function scopeConditions()
+    protected function getScopeConditions()
     {
-        if ($scope = $this->currentScope()) {
+        if ($scope = $this->getCurrentScope()) {
             return $scope->condition();
         }
 
@@ -617,8 +631,8 @@ class Filter implements Renderable
     public function execute(bool $toArray = true)
     {
         $conditions = array_merge(
-            $this->conditions(),
-            $this->scopeConditions()
+            $this->getConditions(),
+            $this->getScopeConditions()
         );
 
         return $this->model->addConditions($conditions)->buildData($toArray);
@@ -649,11 +663,17 @@ class Filter implements Renderable
         return $this;
     }
 
-    public function resetPosition()
+    /**
+     * @return $this
+     */
+    public function noPadding()
     {
         return $this->style('padding:0;left:-4px;');
     }
 
+    /**
+     * @return $this
+     */
     public function hiddenResetButtonText()
     {
         Admin::style(".{$this->containerClass} a.reset .hidden-xs{display:none}");
@@ -722,7 +742,7 @@ class Filter implements Renderable
      */
     public function urlWithoutScopes()
     {
-        return Helper::fullUrlWithoutQuery(Scope::QUERY_NAME);
+        return Helper::fullUrlWithoutQuery($this->getScopeQueryName());
     }
 
     /**

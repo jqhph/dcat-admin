@@ -45,6 +45,7 @@ class AdminTablesSeeder extends Seeder
                 'http_method' => '',
                 'http_path'   => '',
                 'parent_id'   => 0,
+                'order'       => 1,
                 'created_at'  => $createdAt,
             ],
             [
@@ -54,6 +55,7 @@ class AdminTablesSeeder extends Seeder
                 'http_method' => '',
                 'http_path'   => '/auth/users*',
                 'parent_id'   => 1,
+                'order'       => 2,
                 'created_at'  => $createdAt,
             ],
             [
@@ -63,6 +65,7 @@ class AdminTablesSeeder extends Seeder
                 'http_method' => '',
                 'http_path'   => '/auth/roles*',
                 'parent_id'   => 1,
+                'order'       => 3,
                 'created_at'  => $createdAt,
             ],
             [
@@ -72,6 +75,7 @@ class AdminTablesSeeder extends Seeder
                 'http_method' => '',
                 'http_path'   => '/auth/permissions*',
                 'parent_id'   => 1,
+                'order'       => 4,
                 'created_at'  => $createdAt,
             ],
             [
@@ -81,6 +85,7 @@ class AdminTablesSeeder extends Seeder
                 'http_method' => '',
                 'http_path'   => '/auth/menu*',
                 'parent_id'   => 1,
+                'order'       => 5,
                 'created_at'  => $createdAt,
             ],
             [
@@ -90,6 +95,7 @@ class AdminTablesSeeder extends Seeder
                 'http_method' => '',
                 'http_path'   => '/auth/logs*',
                 'parent_id'   => 1,
+                'order'       => 6,
                 'created_at'  => $createdAt,
             ],
 

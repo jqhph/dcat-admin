@@ -114,7 +114,7 @@ JS;
      */
     protected function currentScopeLabel()
     {
-        if ($scope = $this->filter()->currentScope()) {
+        if ($scope = $this->filter()->getCurrentScope()) {
             return "&nbsp;{$scope->getLabel()}&nbsp;";
         }
 

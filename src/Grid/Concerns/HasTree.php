@@ -11,12 +11,12 @@ trait HasTree
     /**
      * @var string
      */
-    protected $parentIdQueryName = '__parent_id__';
+    protected $parentIdQueryName = '_parent_id_';
 
     /**
      * @var string
      */
-    protected $levelQueryName = '__level__';
+    protected $tierQueryName = '_tier_';
 
     /**
      * @var bool
@@ -169,7 +169,7 @@ HTML
      */
     public function getChildrenPageName($parentId)
     {
-        return $this->getChildrenQueryNamePrefix().'children_page_'.$parentId;
+        return $this->getChildrenQueryNamePrefix().'_children_page_'.$parentId;
     }
 
     /**
@@ -205,18 +205,18 @@ HTML
     /**
      * @return string
      */
-    public function getLevelQueryName()
+    public function getTierQueryName()
     {
-        return $this->getChildrenQueryNamePrefix().$this->levelQueryName;
+        return $this->getChildrenQueryNamePrefix().$this->tierQueryName;
     }
 
     /**
      * @return int
      */
-    public function getLevelFromRequest()
+    public function getTierFromRequest()
     {
         return $this->request->get(
-            $this->getLevelQueryName()
+            $this->getTierQueryName()
         ) ?: 0;
     }
 
