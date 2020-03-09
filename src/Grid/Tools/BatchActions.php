@@ -103,8 +103,8 @@ class BatchActions extends AbstractTool
     protected function setupScript()
     {
         $name = $this->parent->getName();
-        $allName = $this->parent->selectAllName();
-        $rowName = $this->parent->rowName();
+        $allName = $this->parent->getSelectAllName();
+        $rowName = $this->parent->getRowName();
 
         $selected = trans('admin.grid_items_selected');
 
@@ -145,7 +145,7 @@ JS;
 
         $data = [
             'actions'                 => $this->actions,
-            'selectAllName'           => $this->parent->selectAllName(),
+            'selectAllName'           => $this->parent->getSelectAllName(),
             'isHoldSelectAllCheckbox' => $this->isHoldSelectAllCheckbox,
         ];
 

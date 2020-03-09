@@ -4,8 +4,8 @@ namespace Dcat\Admin\Form\Concerns;
 
 use Closure;
 use Dcat\Admin\Form\Builder;
-use Dcat\Admin\Form\StepBuilder;
-use Dcat\Admin\Form\StepForm;
+use Dcat\Admin\Form\Step\Builder as StepBuilder;
+use Dcat\Admin\Form\Step\Form as StepForm;
 
 /**
  * @property Builder $builder
@@ -97,17 +97,13 @@ trait HasSteps
     /**
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|void
      */
-    protected function responseDoneStep()
+    protected function responseMultipleStepsDonePage()
     {
         if (! $builder = $this->builder->stepBuilder()) {
             return;
         }
 
-        return response(
-            $builder->doneStep()
-                ->finish()
-                ->render()
-        );
+        return response($builder->done()->render());
     }
 
     /**

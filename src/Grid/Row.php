@@ -43,9 +43,9 @@ class Row implements Arrayable
      *
      * @return mixed
      */
-    public function key()
+    public function getKey()
     {
-        return $this->data->get($this->grid->keyName());
+        return $this->data->get($this->grid->getKeyName());
     }
 
     /**

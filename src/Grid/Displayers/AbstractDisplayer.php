@@ -102,9 +102,9 @@ abstract class AbstractDisplayer
      *
      * @return mixed
      */
-    public function key()
+    public function getKey()
     {
-        return $this->row->get($this->grid->keyName());
+        return $this->row->get($this->grid->getKeyName());
     }
 
     /**

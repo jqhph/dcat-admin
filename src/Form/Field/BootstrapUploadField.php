@@ -90,7 +90,7 @@ trait BootstrapUploadField
         ];
 
         if ($this->form instanceof Form) {
-            $defaultOptions['deleteUrl'] = $this->form->getResource().'/'.$this->form->key();
+            $defaultOptions['deleteUrl'] = $this->form->getResource().'/'.$this->form->getKey();
         }
 
         $this->options($defaultOptions);

@@ -106,7 +106,7 @@ abstract class Action implements Renderable
      *
      * @return array|string
      */
-    public function key()
+    public function getKey()
     {
         return $this->primaryKey;
     }

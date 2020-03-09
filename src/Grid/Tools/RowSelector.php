@@ -66,7 +66,7 @@ class RowSelector
 
         return <<<HTML
 <div class="checkbox checkbox-{$this->style} {$circle} checkbox-grid">
-    <input type="checkbox" class="select-all {$this->grid->selectAllName()}"><label></label>
+    <input type="checkbox" class="select-all {$this->grid->getSelectAllName()}"><label></label>
 </div>
 HTML;
     }
@@ -79,7 +79,7 @@ HTML;
 
         return <<<EOT
 <div class="checkbox {$circle} checkbox-{$this->style} checkbox-grid">
-    <input type="checkbox" class="{$this->grid->rowName()}-checkbox" data-id="{$id}" data-label="{$this->title($row, $id)}">
+    <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" data-label="{$this->title($row, $id)}">
     <label></label>
 </div>
 EOT;
@@ -93,8 +93,8 @@ EOT;
         Admin::script(
             <<<JS
 var selector = LA.RowSelector({
-    checkbox: '.{$this->grid->rowName()}-checkbox',
-    selectAll: '.{$this->grid->selectAllName()}', 
+    checkbox: '.{$this->grid->getRowName()}-checkbox',
+    selectAll: '.{$this->grid->getSelectAllName()}', 
     clickTr: {$clickable},
     bg: '{$background}',
 });

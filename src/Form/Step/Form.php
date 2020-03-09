@@ -1,11 +1,11 @@
 <?php
 
-namespace Dcat\Admin\Form;
+namespace Dcat\Admin\Form\Step;
 
-use Dcat\Admin\Form;
+use Dcat\Admin\Form as ParentForm;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 
-class StepForm extends WidgetForm
+class Form extends WidgetForm
 {
     /**
      * @var string
@@ -18,12 +18,12 @@ class StepForm extends WidgetForm
     protected $buttons = [];
 
     /**
-     * @var Form
+     * @var ParentForm
      */
     protected $form;
 
     /**
-     * @var StepBuilder
+     * @var Builder
      */
     protected $parent;
 
@@ -45,12 +45,13 @@ class StepForm extends WidgetForm
     /**
      * StepForm constructor.
      *
-     * @param Form   $form
-     * @param string $title
-     * @param int    $index
+     * @param ParentForm $form
+     * @param string     $title
+     * @param int        $index
      */
-    public function __construct(string $title = null, int $index = 0)
+    public function __construct(ParentForm $form, string $title = null, int $index = 0)
     {
+        $this->setForm($form);
         $this->initFields();
 
         $this->setTitle($title);
@@ -62,10 +63,12 @@ class StepForm extends WidgetForm
      *
      * @return $this
      */
-    public function setForm(?Form $form)
+    protected function setForm(?ParentForm $form)
     {
         $this->form = $form;
         $this->parent = $form->builder()->stepBuilder();
+
+        $this->prepareFileFields();
 
         return $this;
     }
@@ -167,6 +170,21 @@ HTML;
         if ($input = $this->parent->fetchStash()) {
             $this->fill($input);
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function prepareFileFields()
+    {
+        $this->form->uploaded(function (ParentForm $form, ParentForm\Field $field, $file, $response) {
+            if (($value = $response->getData()) && ! empty($value->id)) {
+                $form->multipleSteps()->stash(
+                    [$field->column() => $value->id],
+                    true
+                );
+            }
+        });
     }
 
     /**

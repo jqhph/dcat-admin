@@ -41,7 +41,7 @@ JS;
 
         Admin::script($script);
 
-        $key = $this->row->{$this->grid->keyName()};
+        $key = $this->row->{$this->grid->getKeyName()};
 
         $optionsHtml = '';
 

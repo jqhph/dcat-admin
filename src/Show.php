@@ -99,14 +99,14 @@ class Show implements Renderable
             case 1:
             case 2:
                 if (is_scalar($id)) {
-                    $this->key($id);
+                    $this->setKey($id);
                 } else {
                     $builder = $model;
                     $model = $id;
                 }
                 break;
             default:
-                $this->key($id);
+                $this->setKey($id);
         }
 
         $this->builder = $builder;
@@ -183,15 +183,19 @@ class Show implements Renderable
      *
      * @return mixed
      */
-    public function key($id = null)
+    public function setKey($id)
     {
-        if ($id === null) {
-            return $this->__id;
-        }
-
         $this->__id = $id;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->__id;
     }
 
     /**
@@ -479,7 +483,7 @@ class Show implements Renderable
     /**
      * @return Repository
      */
-    public function getRepository(): Repository
+    public function repository()
     {
         return $this->repository;
     }

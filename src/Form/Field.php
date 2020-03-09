@@ -225,7 +225,7 @@ class Field implements Renderable
      *
      * @return string|array
      */
-    public function elementId()
+    public function getElementId()
     {
         return $this->id;
     }
@@ -928,7 +928,7 @@ class Field implements Renderable
      */
     protected function formElementId()
     {
-        return $this->form ? $this->form->elementId() : null;
+        return $this->form ? $this->form->getElementId() : null;
     }
 
     /**

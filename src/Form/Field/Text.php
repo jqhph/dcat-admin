@@ -68,7 +68,7 @@ class Text extends Field
         }
 
         $attributes = [
-            'data-match'       => '#'.$field->elementId(),
+            'data-match'       => '#'.$field->getElementId(),
             'data-match-error' => str_replace([':attribute', ':other'], [$this->label, $name], $error ?: trans('admin.validation.match')),
         ];
 

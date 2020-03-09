@@ -29,7 +29,7 @@ class ExportButton implements Renderable
     protected function setUpScripts()
     {
         $script = <<<JS
-$('.{$this->grid->exportSelectedName()}').click(function (e) {
+$('.{$this->grid->getExportSelectedName()}').click(function (e) {
     e.preventDefault();
     
     var rows = LA.grid.selected('{$this->grid->getName()}').join(',');
@@ -87,7 +87,7 @@ JS;
 
         $selectedRows = trans('admin.selected_rows');
 
-        return "<li><a href=\"{$this->grid->exportUrl('selected', '__rows__')}\" target=\"_blank\" class='{$this->grid->exportSelectedName()}'>{$selectedRows}</a></li>";
+        return "<li><a href=\"{$this->grid->exportUrl('selected', '__rows__')}\" target=\"_blank\" class='{$this->grid->getExportSelectedName()}'>{$selectedRows}</a></li>";
     }
 
     /**

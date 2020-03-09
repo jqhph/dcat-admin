@@ -182,16 +182,16 @@ class Grid
      */
     public function __construct($repository = null, ?\Closure $builder = null)
     {
-        if ($repository) {
-            $this->keyName($repository->getKeyName());
-        }
-
         $this->model = new Model(request(), $repository);
         $this->columns = new Collection();
         $this->rows = new Collection();
         $this->builder = $builder;
 
-        $this->model()->setGrid($this);
+        if ($repository = $this->model->repository()) {
+            $this->setKeyName($repository->getKeyName());
+        }
+
+        $this->model->setGrid($this);
 
         $this->setupTools();
         $this->setupFilter();
@@ -204,25 +204,33 @@ class Grid
      *
      * @return string
      */
-    public function tableId()
+    public function getTableId()
     {
         return $this->tableId;
     }
 
     /**
-     * Get or set primary key name.
+     * Set primary key name.
      *
      * @param string $name
      *
+     * @return $this
+     */
+    public function setKeyName(string $name)
+    {
+        $this->keyName = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get or set primary key name.
+     *
      * @return string|void
      */
-    public function keyName(string $name = null)
+    public function getKeyName()
     {
-        if ($name === null) {
-            return $this->keyName ?: 'id';
-        }
-
-        $this->keyName = $name;
+        return $this->keyName ?: 'id';
     }
 
     /**
@@ -435,7 +443,7 @@ class Grid
      *
      * @return string
      */
-    public function createUrl()
+    public function getCreateUrl()
     {
         $queryString = '';
 
@@ -472,7 +480,7 @@ class Grid
         }
 
         $rowSelector = $this->rowSelector();
-        $keyName = $this->keyName();
+        $keyName = $this->getKeyName();
 
         $column = $this->newColumn(
             Grid\Column::SELECT_COLUMN_NAME,
@@ -793,7 +801,7 @@ HTML;
     protected function variables()
     {
         $this->variables['grid'] = $this;
-        $this->variables['tableId'] = $this->tableId();
+        $this->variables['tableId'] = $this->getTableId();
 
         return $this->variables;
     }

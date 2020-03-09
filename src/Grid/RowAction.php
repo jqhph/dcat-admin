@@ -26,13 +26,13 @@ abstract class RowAction extends GridAction
      *
      * @return mixed
      */
-    public function key()
+    public function getKey()
     {
         if ($this->row) {
-            return $this->row->get($this->parent->keyName());
+            return $this->row->get($this->parent->getKeyName());
         }
 
-        return parent::key();
+        return parent::getKey();
     }
 
     /**

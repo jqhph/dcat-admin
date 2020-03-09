@@ -55,7 +55,7 @@ EOT;
      */
     protected function getDataKey()
     {
-        $key = $this->key() ?: Str::random(8);
+        $key = $this->getKey() ?: Str::random(8);
 
         static::$counter++;
 

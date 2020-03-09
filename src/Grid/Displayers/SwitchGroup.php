@@ -84,7 +84,7 @@ class SwitchGroup extends SwitchDisplay
 JS;
         Admin::script($script);
 
-        $key = $this->row->{$this->grid->keyName()};
+        $key = $this->row->{$this->grid->getKeyName()};
         $checked = $this->row->$name ? 'checked' : '';
 
         return <<<EOT

@@ -3,6 +3,8 @@
 namespace Dcat\Admin\Form;
 
 use Closure;
+use Dcat\Admin\Form\Step\Builder as StepBuilder;
+use Dcat\Admin\Form\Step\Form as StepForm;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
@@ -331,13 +333,17 @@ class Builder
      *
      * @return mixed|void
      */
-    public function resourceId($id = null)
+    public function setResourceId($id)
     {
-        if ($id === null) {
-            return $this->id;
-        }
-
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResourceId()
+    {
+        return $this->id;
     }
 
     /**
@@ -637,7 +643,7 @@ class Builder
     /**
      * @return string
      */
-    public function elementId()
+    public function getElementId()
     {
         return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
     }
@@ -696,7 +702,7 @@ class Builder
 
         $this->addRedirectUrlField();
 
-        $attributes['id'] = $this->elementId();
+        $attributes['id'] = $this->getElementId();
         $attributes['action'] = $this->action();
         $attributes['method'] = Arr::get($options, 'method', 'post');
         $attributes['accept-charset'] = 'UTF-8';
@@ -800,7 +806,7 @@ class Builder
             'form'       => $this,
             'tabObj'     => $tabObj,
             'width'      => $this->width,
-            'elementId'  => $this->elementId(),
+            'elementId'  => $this->getElementId(),
             'showHeader' => $this->showHeader,
             'steps'      => $this->stepBuilder,
         ];
@@ -837,7 +843,7 @@ EOF;
         Admin::script(
             <<<JS
 (function () {
-    var f = $('#{$this->elementId()}');
+    var f = $('#{$this->getElementId()}');
 
     f.find('button.submit').click(function () {
         var t = $(this);
@@ -869,7 +875,7 @@ JS
      */
     protected function setupTabScript()
     {
-        $elementId = $this->elementId();
+        $elementId = $this->getElementId();
 
         $script = <<<JS
 (function () {

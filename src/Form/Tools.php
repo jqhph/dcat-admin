@@ -154,7 +154,7 @@ class Tools implements Renderable
      */
     protected function getViewPath()
     {
-        if ($key = $this->form->resourceId()) {
+        if ($key = $this->form->getResourceId()) {
             return $this->getListPath().'/'.$key;
         }
 

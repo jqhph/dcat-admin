@@ -85,7 +85,7 @@ class RoleController extends AdminController
             $show->created_at;
             $show->updated_at;
 
-            if ($show->key() == RoleModel::ADMINISTRATOR_ID) {
+            if ($show->getKey() == RoleModel::ADMINISTRATOR_ID) {
                 $show->disableDeleteButton();
             }
         });
@@ -102,7 +102,7 @@ class RoleController extends AdminController
             $roleTable = config('admin.database.roles_table');
             $connection = config('admin.database.connection');
 
-            $id = $form->key();
+            $id = $form->getKey();
 
             $form->display('id', 'ID');
 

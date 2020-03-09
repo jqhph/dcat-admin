@@ -16,7 +16,7 @@ class Modal extends AbstractDisplayer
 
     protected function generateElementId()
     {
-        $key = $this->key() ?: Str::random(8);
+        $key = $this->getKey() ?: Str::random(8);
 
         return 'grid-modal-'.$this->grid->getName().$key;
     }

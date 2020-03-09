@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Form;
+namespace Dcat\Admin\Form\Step;
 
 use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class DoneStep
+class Done
 {
     /**
      * @var Form
@@ -39,7 +39,7 @@ class DoneStep
     {
         $this->form = $form;
         $this->builder = $callback;
-        $this->elementId = 'done-step-'.Str::random();
+        $this->elementId = 'step-finish-'.Str::random();
 
         $this->title($title);
     }
@@ -73,7 +73,7 @@ class DoneStep
      *
      * @return $this
      */
-    public function content($contents)
+    public function contents($contents)
     {
         $this->contents = $contents;
 
@@ -83,7 +83,7 @@ class DoneStep
     /**
      * @return string
      */
-    public function elementId(): string
+    public function getElementId(): string
     {
         return $this->elementId;
     }
@@ -91,9 +91,9 @@ class DoneStep
     /**
      * @return array
      */
-    public function newId()
+    public function getNewId()
     {
-        return $this->form->key();
+        return $this->form->getKey();
     }
 
     /**
@@ -114,17 +114,17 @@ class DoneStep
     }
 
     /**
-     * @return $this
+     * @return void
      */
-    public function finish()
+    protected function callBuilder()
     {
-        $value = call_user_func($this->builder, $this);
-
-        if ($value) {
-            $this->content($value);
+        if (! $this->builder) {
+            return;
         }
 
-        return $this;
+        if ($value = call_user_func($this->builder, $this)) {
+            $this->contents($value);
+        }
     }
 
     /**
@@ -132,6 +132,8 @@ class DoneStep
      */
     public function render()
     {
+        $this->callBuilder();
+
         return Helper::render($this->contents);
     }
 }

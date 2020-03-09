@@ -228,7 +228,7 @@ class Actions extends AbstractDisplayer
     protected function renderView()
     {
         return <<<EOT
-<a href="{$this->resource()}/{$this->key()}">
+<a href="{$this->resource()}/{$this->getKey()}">
     <i class="ti-eye grid-action-icon"></i>
 </a>&nbsp;
 EOT;
@@ -242,7 +242,7 @@ EOT;
     protected function renderEdit()
     {
         return <<<EOT
-<a href="{$this->resource()}/{$this->key()}/edit">
+<a href="{$this->resource()}/{$this->getKey()}/edit">
     <i class="ti-pencil-alt grid-action-icon"></i>
 </a>&nbsp;
 EOT;
@@ -259,13 +259,13 @@ EOT;
             [$width, $height] = $this->grid->option('dialog_form_area');
 
             Form::modal(trans('admin.edit'))
-                ->click(".{$this->grid->rowName()}-edit")
+                ->click(".{$this->grid->getRowName()}-edit")
                 ->dimensions($width, $height)
                 ->success('LA.reload()');
         }
 
         return <<<EOF
-<a class="{$this->grid->rowName()}-edit" data-url="{$this->resource()}/{$this->key()}/edit" href="javascript:void(0);">
+<a class="{$this->grid->getRowName()}-edit" data-url="{$this->resource()}/{$this->getKey()}/edit" href="javascript:void(0);">
     <i class=" fa fa-clone grid-action-icon"></i>
 </a>&nbsp;
 EOF;
@@ -279,7 +279,7 @@ EOF;
     protected function renderDelete()
     {
         return <<<EOT
-<a href="javascript:void(0);" data-url="{$this->resource()}/{$this->key()}" data-action="delete">
+<a href="javascript:void(0);" data-url="{$this->resource()}/{$this->getKey()}" data-action="delete">
     <i class="ti-trash grid-action-icon"></i>
 </a>&nbsp;
 EOT;

@@ -66,7 +66,7 @@ class UserController extends AdminController
             $grid->enableDialogCreate();
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
-                if ($actions->key() == AdministratorModel::DEFAULT_ID) {
+                if ($actions->getKey() == AdministratorModel::DEFAULT_ID) {
                     $actions->disableDelete();
                 }
             });
@@ -149,7 +149,7 @@ class UserController extends AdminController
                 return $tree->render();
             });
 
-            if ($show->key() == AdministratorModel::DEFAULT_ID) {
+            if ($show->getKey() == AdministratorModel::DEFAULT_ID) {
                 $show->disableDeleteButton();
             }
         });
@@ -167,7 +167,7 @@ class UserController extends AdminController
 
             $connection = config('admin.database.connection');
 
-            $id = $form->key();
+            $id = $form->getKey();
 
             $form->display('id', 'ID');
 

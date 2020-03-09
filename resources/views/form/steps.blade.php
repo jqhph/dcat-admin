@@ -12,7 +12,7 @@
             <ul class="la-step-horizontal la-step-label-horizontal la-step ">
                 @foreach($steps->all() as $step)
                 <li class="la-step-item">
-                    <a href="#{{ $step->elementId() }}" class="la-step-item-container">
+                    <a href="#{{ $step->getElementId() }}" class="la-step-item-container">
                         <div class="la-step-line"></div>
                         <div class="la-step-icons">
                             <span class="la-step-icon" data-index="{{ $step->index() }}">{{ $step->index() + 1 }}</span>
@@ -26,13 +26,13 @@
                 @endforeach
 
                 <li class="la-step-item">
-                    <a href="#{{ $steps->doneStep()->elementId() }}" class="la-step-item-container">
+                    <a href="#{{ $steps->done()->getElementId() }}" class="la-step-item-container">
                         <div class="la-step-line"></div>
                         <div class="la-step-icons">
                             <span class="la-step-icon" data-index="{{ $steps->count() }}"> {{ $steps->count() + 1 }} </span>
                         </div>
                         <div class="la-step-content">
-                            <div class="la-step-title">{{ $steps->doneStep()->title() }}</div>
+                            <div class="la-step-title">{{ $steps->done()->title() }}</div>
                             <div class="la-step-desc"></div>
                         </div>
                     </a>
@@ -41,7 +41,7 @@
             <div class="la-step-form">
                 {!! $steps->build() !!}
 
-                <div id="{{ $steps->doneStep()->elementId() }}" class="la-done-step" style="display: none;">
+                <div id="{{ $steps->done()->getElementId() }}" class="la-done-step" style="display: none;">
                 </div>
             </div>
         </div>
@@ -52,8 +52,8 @@
     {!! $field->render() !!}
 @endforeach
 
-<input type="hidden" class="current-step-input" name="{{ Dcat\Admin\Form\StepBuilder::CURRENT_VALIDATION_STEP }}" />
-<input type="hidden" class="all-steps-input" name="{{ Dcat\Admin\Form\StepBuilder::ALL_STEPS }}" />
+<input type="hidden" class="current-step-input" name="{{ Dcat\Admin\Form\Step\Builder::CURRENT_VALIDATION_STEP }}" />
+<input type="hidden" class="all-steps-input" name="{{ Dcat\Admin\Form\Step\Builder::ALL_STEPS }}" />
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 @php
@@ -62,7 +62,7 @@ $lastStep = $step;
 
 <script>
 LA.ready(function () {
-    var form = $('#{{ $form->elementId() }}'),
+    var form = $('#{{ $form->getElementId() }}'),
         box = form.find('.la-step-box'),
         stepInput = form.find('.current-step-input'),
         allStepInput = form.find('.all-steps-input'),

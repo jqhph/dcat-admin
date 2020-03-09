@@ -4,7 +4,9 @@ namespace Dcat\Admin\Form\Concerns;
 
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @property Builder $builder
@@ -13,6 +15,8 @@ trait HasFiles
 {
     /**
      * @param array $data
+     *
+     * @return Response|void
      */
     protected function handleUploadFile($data)
     {
@@ -25,8 +29,18 @@ trait HasFiles
 
         $field = $this->builder->field($column) ?: $this->builder->stepField($column);
 
-        if ($field && $field instanceof Field\File) {
-            return $field->upload($file);
+        if ($field && $field instanceof UploadFieldInterface) {
+            if (($results = $this->callUploading($field, $file)) && $results instanceof Response) {
+                return $results;
+            }
+
+            $response = $field->upload($file);
+
+            if (($results = $this->callUploaded($field, $file, $response)) && $results instanceof Response) {
+                return $results;
+            }
+
+            return $response;
         }
     }
 
@@ -50,7 +64,7 @@ trait HasFiles
 
         $field = $this->builder->field($column) ?: $this->builder->stepField($column);
 
-        if ($field && in_array(Field\UploadField::class, class_uses($field))) {
+        if ($field && $field instanceof UploadFieldInterface) {
             $field->deleteFile($file);
 
             return response()->json(['status' => true]);
@@ -67,9 +81,9 @@ trait HasFiles
         $this->builder
             ->fields()
             ->filter(function ($field) {
-                return $field instanceof Field\File;
+                return $field instanceof UploadFieldInterface;
             })
-            ->each(function (Field\File $file) use ($input) {
+            ->each(function (UploadFieldInterface $file) use ($input) {
                 $file->setOriginal($input);
 
                 $file->destroy();
@@ -91,8 +105,8 @@ trait HasFiles
 
         $this->builder->fields()->filter(function ($field) {
             return $field instanceof Field\BootstrapFile
-                || $field instanceof Field\File;
-        })->each(function ($file) use ($data) {
+                || $field instanceof UploadFieldInterface;
+        })->each(function (UploadFieldInterface $file) use ($data) {
             $file->setOriginal($data);
 
             $file->destroy();
@@ -139,8 +153,8 @@ trait HasFiles
             $this->builder->fields()->filter(function ($field) use ($column) {
                 /* @var Field $field */
 
-                return $column === $field->column() && $field instanceof Field\File;
-            })->each(function (Field\File $file) use ($input) {
+                return $column === $field->column() && $field instanceof UploadFieldInterface;
+            })->each(function (UploadFieldInterface $file) use ($input) {
                 $file->deleteFile($input[Field::FILE_DELETE_FLAG]);
             });
 

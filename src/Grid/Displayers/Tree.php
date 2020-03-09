@@ -12,7 +12,7 @@ class Tree extends AbstractDisplayer
 
     protected function setupScript()
     {
-        $tableId = $this->grid->tableId();
+        $tableId = $this->grid->getTableId();
 
         $model = $this->grid->model();
 
@@ -39,8 +39,8 @@ JS;
     {
         $this->setupScript();
 
-        $key = $this->key();
-        $tableId = $this->grid->tableId();
+        $key = $this->getKey();
+        $tableId = $this->grid->getTableId();
 
         $tier = $this->grid->model()->getTierFromRequest();
         $indents = str_repeat(' &nbsp; &nbsp; &nbsp; &nbsp; ', $tier);

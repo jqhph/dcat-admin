@@ -524,7 +524,7 @@ trait UploadField
     /**
      * Destroy files.
      *
-     * @param $path
+     * @param string|array $path
      */
     public function deleteFile($path)
     {

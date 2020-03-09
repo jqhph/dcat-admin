@@ -17,7 +17,7 @@ class ImportButton extends RowAction
         $this->setupScript();
 
         return <<<HTML
-<a href="javascript:void(0)" class="import-extension" data-id="{$this->key()}">$button</a>
+<a href="javascript:void(0)" class="import-extension" data-id="{$this->getKey()}">$button</a>
 HTML;
     }
 

@@ -146,7 +146,7 @@ class Model
     /**
      * @return Repository|null
      */
-    public function getRepository()
+    public function repository()
     {
         return $this->repository;
     }
@@ -206,7 +206,7 @@ class Model
      */
     public function getKeyName()
     {
-        return $this->grid->keyName();
+        return $this->grid->getKeyName();
     }
 
     /**

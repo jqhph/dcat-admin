@@ -391,9 +391,9 @@ class Form implements Renderable
      *
      * @return mixed
      */
-    public function key()
+    public function getKey()
     {
-        return $this->builder()->resourceId();
+        return $this->builder()->getResourceId();
     }
 
     /**
@@ -441,9 +441,9 @@ class Form implements Renderable
     /**
      * @return string
      */
-    public function elementId()
+    public function getElementId()
     {
-        return $this->builder->elementId();
+        return $this->builder->getElementId();
     }
 
     /**
@@ -464,7 +464,7 @@ class Form implements Renderable
     public function edit($id)
     {
         $this->builder->mode(Builder::MODE_EDIT);
-        $this->builder->resourceId($id);
+        $this->builder->setResourceId($id);
 
         $this->setFieldValue();
 
@@ -531,7 +531,7 @@ class Form implements Renderable
     public function destroy($id)
     {
         try {
-            $this->builder->resourceId($id);
+            $this->builder->setResourceId($id);
             $this->builder->mode(Builder::MODE_DELETE);
 
             $data = $this->repository->getDataWhenDeleting($this);
@@ -586,13 +586,13 @@ class Form implements Renderable
 
         $id = $this->repository->store($this);
 
-        $this->builder->resourceId($id);
+        $this->builder->setResourceId($id);
 
         if (($response = $this->callSaved())) {
             return $response;
         }
 
-        if ($response = $this->responseDoneStep()) {
+        if ($response = $this->responseMultipleStepsDonePage()) {
             return $response;
         }
 
@@ -625,13 +625,6 @@ class Form implements Renderable
         }
 
         if ($response = $this->handleUploadFile($data)) {
-            if (($value = $response->getData()) && ! empty($value->id)) {
-                $this->multipleSteps()->stash(
-                    [$data['upload_column'] => $value->id],
-                    true
-                );
-            }
-
             return $response;
         }
 
@@ -773,7 +766,7 @@ class Form implements Renderable
      */
     protected function beforeUpdate($id, array &$data)
     {
-        $this->builder->resourceId($id);
+        $this->builder->setResourceId($id);
         $this->builder->mode(Builder::MODE_EDIT);
 
         $this->build();

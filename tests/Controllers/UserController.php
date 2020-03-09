@@ -128,7 +128,7 @@ class UserController extends Controller
         });
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
-            if ($actions->key() % 2 == 0) {
+            if ($actions->getKey() % 2 == 0) {
                 $actions->append('<a href="/" class="btn btn-xs btn-danger">detail</a>');
             }
         });

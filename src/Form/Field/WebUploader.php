@@ -152,20 +152,18 @@ trait WebUploader
             'disableGlobalDnd'    => true,
             'fileSizeLimit'       => 20971520000, // 20000M
             'fileSingleSizeLimit' => 10485760, // 10M
-            'autoUpdateColumn'    => true, // 上传完图片后自动保存图片路径
+            'autoUpdateColumn'    => false, // 上传完图片后自动保存图片路径
             'elementName'         => $this->elementName(), // 字段name属性值
             'lang'                => trans('admin.uploader'),
 
             'deleteData' => [
                 static::FILE_DELETE_FLAG => '',
                 '_token'                 => csrf_token(),
-                '_method'                => 'PUT',
             ],
             'formData' => [
                 '_id'           => Str::random(),
-                'upload_column' => $this->column,
-                '_method'       => 'PUT',
                 '_token'        => csrf_token(),
+                'upload_column' => $this->column()
             ],
         ];
 
@@ -188,13 +186,11 @@ trait WebUploader
         if (
             method_exists($this->form, 'builder')
             && $this->form->builder()
-            && $this->form->builder()->isCreating()
+            && $this->form->builder()->isEditing()
         ) {
-            unset(
-                $this->options['formData']['_method'],
-                $this->options['deleteData']['_method'],
-                $this->options['autoUpdateColumn']
-            );
+            $this->options['formData']['_method'] = 'PUT';
+            $this->options['deleteData']['_method'] = 'PUT';
+            $this->options['autoUpdateColumn'] = true;
         }
     }
 

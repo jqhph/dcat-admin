@@ -28,7 +28,7 @@ class CreateButton implements Renderable
         }
 
         $new = trans('admin.new');
-        $url = $this->grid->createUrl();
+        $url = $this->grid->getCreateUrl();
         $gridName = $this->grid->getName();
         $class = 'dialog-create'.($gridName ? "-{$gridName}" : $gridName);
 
@@ -49,7 +49,7 @@ class CreateButton implements Renderable
         }
 
         $new = trans('admin.new');
-        $url = $this->grid->createUrl();
+        $url = $this->grid->getCreateUrl();
 
         return "<a href='{$url}' class='btn btn-sm btn-success btn-mini'>
     <i class='ti-plus'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span>

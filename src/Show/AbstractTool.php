@@ -35,13 +35,13 @@ abstract class AbstractTool extends Action
     /**
      * @return array|mixed|string|null
      */
-    public function key()
+    public function getKey()
     {
         if ($this->primaryKey) {
             return $this->primaryKey;
         }
 
-        return $this->parent ? $this->parent->key() : null;
+        return $this->parent ? $this->parent->getKey() : null;
     }
 
     /**

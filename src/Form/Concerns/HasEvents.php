@@ -3,6 +3,8 @@
 namespace Dcat\Admin\Form\Concerns;
 
 use Closure;
+use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +21,8 @@ trait HasEvents
         'saved'     => [],
         'deleting'  => [],
         'deleted'   => [],
+        'uploading' => [],
+        'uploaded'  => [],
     ];
 
     /**
@@ -116,6 +120,30 @@ trait HasEvents
     }
 
     /**
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function uploading(Closure $callback)
+    {
+        $this->__hooks['uploading'][] = $callback;
+
+        return $this;
+    }
+
+    /**
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function uploaded(Closure $callback)
+    {
+        $this->__hooks['uploaded'][] = $callback;
+
+        return $this;
+    }
+
+    /**
      * Call creating callbacks.
      *
      * @return mixed
@@ -182,18 +210,41 @@ trait HasEvents
     }
 
     /**
+     * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
+     * @param UploadedFile                                $file
+     *
+     * @return mixed|null
+     */
+    protected function callUploading($field, $file)
+    {
+        return $this->callListeners('uploading', [$field, $file]);
+    }
+
+    /**
+     * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
+     * @param UploadedFile                                $file
+     * @param Response                                    $response
+     *
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\RedirectResponse|void
+     */
+    protected function callUploaded($field, $file, $response)
+    {
+        return $this->callListeners('uploaded', [$field, $file, $response]);
+    }
+
+    /**
      * @param string $name
      *
      * @return RedirectResponse|\Illuminate\Http\Response|void
      */
-    protected function callListeners($name)
+    protected function callListeners($name, array $params = [])
     {
         $response = null;
 
         foreach ($this->__hooks[$name] as $func) {
             $this->model && $func->bindTo($this->model);
 
-            $ret = $func($this);
+            $ret = $func($this, ...$params);
 
             if (
                 $response

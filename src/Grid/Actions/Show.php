@@ -19,6 +19,6 @@ class Show extends RowAction
      */
     public function href()
     {
-        return "{$this->resource()}/{$this->key()}";
+        return "{$this->resource()}/{$this->getKey()}";
     }
 }

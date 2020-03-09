@@ -252,7 +252,7 @@ class PermissionController extends AdminController
             $connection = config('admin.database.connection');
             $permissionModel = config('admin.database.permissions_model');
 
-            $id = $form->key();
+            $id = $form->getKey();
 
             $form->display('id', 'ID');
 

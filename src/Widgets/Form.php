@@ -146,7 +146,7 @@ class Form implements Renderable
         if ($data) {
             $this->fill($data);
         }
-        $this->key($key);
+        $this->setKey($key);
 
         $this->initFields();
 
@@ -204,21 +204,27 @@ class Form implements Renderable
     }
 
     /**
-     * Get or set primary key.
+     * Set primary key.
      *
      * @param mixed $value
      *
      * @return $this
      */
-    public function key($value = null)
+    public function setKey($value)
     {
-        if ($value === null) {
-            return $this->primaryKey;
-        }
-
         $this->primaryKey = $value;
 
         return $this;
+    }
+
+    /**
+     * Get primary key.
+     *
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->primaryKey;
     }
 
     /**
@@ -464,7 +470,7 @@ class Form implements Renderable
      */
     protected function variables()
     {
-        $this->setHtmlAttribute('id', $this->elementId());
+        $this->setHtmlAttribute('id', $this->getElementId());
 
         foreach ($this->fields as $field) {
             $field->fill($this->model()->toArray());
@@ -528,7 +534,7 @@ HTML;
     /**
      * @return string
      */
-    public function elementId()
+    public function getElementId()
     {
         return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
     }
@@ -590,7 +596,7 @@ HTML;
         Admin::script(
             <<<JS
 (function () {
-    var f = $('#{$this->elementId()}');
+    var f = $('#{$this->getElementId()}');
 
     f.find('[type="submit"]').click(function () {
         var t = $(this);

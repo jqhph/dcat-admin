@@ -131,7 +131,7 @@ trait HasQuickSearch
     {
         $queries = preg_split('/\s(?=([^"]*"[^"]*")*[^"]*$)/', trim($query));
         if (! $queries = $this->parseQueryBindings($queries)) {
-            $this->addWhereBasicBinding($this->keyName(), false, '=', '___');
+            $this->addWhereBasicBinding($this->getKeyName(), false, '=', '___');
 
             return;
         }

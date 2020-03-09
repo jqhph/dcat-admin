@@ -234,7 +234,7 @@ abstract class AbstractExporter implements ExporterInterface
         if ($scope == Grid\Exporter::SCOPE_SELECTED_ROWS) {
             $selected = explode(',', $args);
 
-            $this->grid->model()->whereIn($this->grid->keyName(), $selected);
+            $this->grid->model()->whereIn($this->grid->getKeyName(), $selected);
         }
 
         return $this;

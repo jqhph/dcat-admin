@@ -31,7 +31,7 @@ EOT;
         Admin::script($this->script());
 
         return <<<EOT
-<form class="form-group {$this->elementClass()}" style="text-align: left" data-key="{$this->key()}">
+<form class="form-group {$this->elementClass()}" style="text-align: left" data-key="{$this->getKey()}">
     $radios
     <button type="submit" class="btn btn-primary btn-xs pull-left">
         <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}

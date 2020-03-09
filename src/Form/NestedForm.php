@@ -192,6 +192,16 @@ class NestedForm
     }
 
     /**
+     * Get key for current form.
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
      * Set key for current form.
      *
      * @param mixed $key

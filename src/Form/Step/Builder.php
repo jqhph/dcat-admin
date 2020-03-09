@@ -1,31 +1,32 @@
 <?php
 
-namespace Dcat\Admin\Form;
+namespace Dcat\Admin\Form\Step;
 
 use Closure;
+use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Admin;
-use Dcat\Admin\Form;
+use Dcat\Admin\Form as ParentForm;
 use Illuminate\Support\Arr;
 
-class StepBuilder
+class Builder
 {
     const CURRENT_VALIDATION_STEP = 'CURRENT_VALIDATION_STEP';
     const ALL_STEPS = 'ALL_STEPS';
 
     /**
-     * @var Form
+     * @var ParentForm
      */
     protected $form;
 
     /**
-     * @var StepForm[]
+     * @var Form[]
      */
     protected $stepForms = [];
 
     /**
-     * @var DoneStep
+     * @var Done
      */
-    protected $doneStep;
+    protected $done;
 
     /**
      * @var array
@@ -39,7 +40,7 @@ class StepBuilder
         'leaving'  => [],
     ];
 
-    public function __construct(Form $form)
+    public function __construct(ParentForm $form)
     {
         $this->form = $form->saved(function () {
             $this->flushStash();
@@ -49,8 +50,8 @@ class StepBuilder
     }
 
     /**
-     * @param string|StepForm|StepForm[] $title
-     * @param \Closure|null              $callback
+     * @param string|Form|Form[] $title
+     * @param \Closure|null      $callback
      *
      * @return $this
      */
@@ -64,7 +65,7 @@ class StepBuilder
             return $this;
         }
 
-        $form = $title instanceof StepForm ? $title : new StepForm($title);
+        $form = $title instanceof Form ? $title : new Form($this->form, $title);
 
         $this->addForm($form, $callback);
 
@@ -72,14 +73,13 @@ class StepBuilder
     }
 
     /**
-     * @param StepForm      $form
+     * @param Form          $form
      * @param \Closure|null $callback
      *
      * @return void
      */
-    protected function addForm(StepForm $form, ?\Closure $callback = null)
+    protected function addForm(Form $form, ?\Closure $callback = null)
     {
-        $form->setForm($this->form);
         $form->setIndex(count($this->stepForms));
 
         $this->stepForms[] = $form;
@@ -92,7 +92,7 @@ class StepBuilder
     /**
      * Get all step forms.
      *
-     * @return StepForm[]
+     * @return Form[]
      */
     public function all()
     {
@@ -195,36 +195,32 @@ class StepBuilder
      * @param string|Closure $title
      * @param Closure|null   $callback
      *
-     * @return $this
+     * @return $this|Done
      */
-    public function done($title, Closure $callback = null)
+    public function done($title = null, Closure $callback = null)
     {
+        if ($title === null && $callback === null) {
+            if (! $this->done) {
+                $this->makeDefaultDonePage();
+            }
+
+            return $this->done;
+        }
+
         if ($title instanceof Closure) {
             $callback = $title;
             $title = trans('admin.done');
         }
 
-        $this->doneStep = new DoneStep($this->form, $title, $callback);
+        $this->done = new Done($this->form, $title, $callback);
 
         return $this;
     }
 
     /**
-     * @return DoneStep|null
-     */
-    public function doneStep()
-    {
-        if (! $this->doneStep) {
-            $this->setDefaultDonePage();
-        }
-
-        return $this->doneStep;
-    }
-
-    /**
      * @return void
      */
-    protected function setDefaultDonePage()
+    protected function makeDefaultDonePage()
     {
         $this->done(function () {
             $resource = $this->form->getResource(0);
@@ -258,7 +254,7 @@ class StepBuilder
             $data = array_merge($this->fetchStash(), $data);
         }
 
-        session()->put($this->stashKey(), $data);
+        session()->put($this->getStashKey(), $data);
     }
 
     /**
@@ -272,7 +268,7 @@ class StepBuilder
             return [];
         }
 
-        return session()->get($this->stashKey()) ?: [];
+        return session()->get($this->getStashKey()) ?: [];
     }
 
     /**
@@ -286,7 +282,7 @@ class StepBuilder
             return;
         }
 
-        session()->remove($this->stashKey());
+        session()->remove($this->getStashKey());
     }
 
     /**
@@ -306,7 +302,7 @@ class StepBuilder
     }
 
     /**
-     * @param string|Field $field
+     * @param string|\Dcat\Admin\Form\Field $field
      *
      * @return void
      */
@@ -328,7 +324,7 @@ class StepBuilder
     /**
      * @return string
      */
-    protected function stashKey()
+    protected function getStashKey()
     {
         return 'step-form-input:'.admin_controller_slug();
     }
@@ -372,7 +368,7 @@ class StepBuilder
     {
         $this->selectStep();
 
-        $this->setAction();
+        $this->prepareForm();
 
         return $this->renderFields();
     }
@@ -380,15 +376,13 @@ class StepBuilder
     /**
      * @return void
      */
-    protected function setAction()
+    protected function prepareForm()
     {
         foreach ($this->stepForms as $step) {
             $step->action($this->form->action());
 
             foreach ($step->fields() as $field) {
-                if ($field instanceof Form\Field\File) {
-                    $field->setForm($this->form);
-                }
+                $field->setForm($this->form);
             }
         }
     }
@@ -448,7 +442,7 @@ JS;
     }
 
     /**
-     * @param string|Field $column
+     * @param string|\Dcat\Admin\Form\Field $column
      *
      * @return false|int
      */

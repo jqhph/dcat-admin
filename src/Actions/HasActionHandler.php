@@ -128,7 +128,7 @@ var process = new Promise(function (resolve,reject) {
     Object.assign(data, {
         _token: LA.token,
         _action: '{$this->makeCalledClass()}',
-        _key: '{$this->key()}',
+        _key: '{$this->getKey()}',
     });
     LA.NP.start();
     $.ajax({

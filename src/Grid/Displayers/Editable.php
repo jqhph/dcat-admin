@@ -209,8 +209,8 @@ JS
             'href'       => '#',
             'class'      => "$class",
             'data-type'  => $this->type,
-            'data-pk'    => "{$this->key()}",
-            'data-url'   => "{$this->resource()}/{$this->key()}",
+            'data-pk'    => "{$this->getKey()}",
+            'data-url'   => "{$this->resource()}/{$this->getKey()}",
             'data-value' => "{$this->value}",
         ];
 

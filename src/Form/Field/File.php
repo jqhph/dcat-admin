@@ -4,11 +4,12 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class File extends Field
+class File extends Field implements UploadFieldInterface
 {
     use WebUploader, UploadField;
 

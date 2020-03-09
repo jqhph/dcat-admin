@@ -280,7 +280,7 @@ class EloquentRepository extends Repository implements TreeRepository
 
         $this->model = $query
             ->with($this->getRelations($form))
-            ->findOrFail($form->key(), $this->getFormColumns());
+            ->findOrFail($form->getKey(), $this->getFormColumns());
 
         return $this->model->toArray();
     }
@@ -302,7 +302,7 @@ class EloquentRepository extends Repository implements TreeRepository
 
         $this->model = $query
             ->with($this->getRelations($show))
-            ->findOrFail($show->key(), $this->getDetailColumns());
+            ->findOrFail($show->getKey(), $this->getDetailColumns());
 
         return $this->model->toArray();
     }
@@ -368,7 +368,7 @@ class EloquentRepository extends Repository implements TreeRepository
         if (! $model->getKey()) {
             $model->exists = true;
 
-            $model->setAttribute($model->getKeyName(), $form->key());
+            $model->setAttribute($model->getKeyName(), $form->getKey());
         }
 
         $result = null;
@@ -448,7 +448,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function destroy(Form $form, array $deletingData)
     {
-        $id = $form->key();
+        $id = $form->getKey();
 
         $deletingData = collect($deletingData)->keyBy($this->getKeyName());
 
@@ -489,7 +489,7 @@ class EloquentRepository extends Repository implements TreeRepository
             $query->withTrashed();
         }
 
-        $id = $form->key();
+        $id = $form->getKey();
 
         return $query
             ->with($this->getRelations($form))

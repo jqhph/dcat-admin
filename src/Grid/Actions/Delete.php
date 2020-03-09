@@ -26,6 +26,6 @@ class Delete extends RowAction
 
     public function url()
     {
-        return "{$this->resource()}/{$this->key()}";
+        return "{$this->resource()}/{$this->getKey()}";
     }
 }

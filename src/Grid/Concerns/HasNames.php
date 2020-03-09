@@ -25,7 +25,6 @@ trait HasNames
         'grid_row'        => 'grid-row',
         'grid_select_all' => 'grid-select-all',
         'grid_per_page'   => 'grid-per-pager',
-        'grid_batch'      => 'grid-batch',
         'export_selected' => 'export-selected',
     ];
 
@@ -67,17 +66,17 @@ trait HasNames
     /**
      * @return string
      */
-    public function rowName()
+    public function getRowName()
     {
-        return $this->elementNameWithPrefix('grid_row');
+        return $this->getElementNameWithPrefix('grid_row');
     }
 
     /**
      * @return string
      */
-    public function selectAllName()
+    public function getSelectAllName()
     {
-        return $this->elementNameWithPrefix('grid_select_all');
+        return $this->getElementNameWithPrefix('grid_select_all');
     }
 
     /**
@@ -85,29 +84,21 @@ trait HasNames
      */
     public function getPerPageName()
     {
-        return $this->elementNameWithPrefix('grid_per_page');
+        return $this->getElementNameWithPrefix('grid_per_page');
     }
 
     /**
      * @return string
      */
-    public function batchName()
+    public function getExportSelectedName()
     {
-        return $this->elementNameWithPrefix('grid_batch');
+        return $this->getElementNameWithPrefix('export_selected');
     }
 
     /**
      * @return string
      */
-    public function exportSelectedName()
-    {
-        return $this->elementNameWithPrefix('export_selected');
-    }
-
-    /**
-     * @return string
-     */
-    protected function elementNameWithPrefix($name)
+    protected function getElementNameWithPrefix($name)
     {
         $elementName = $this->elementNames[$name];
 

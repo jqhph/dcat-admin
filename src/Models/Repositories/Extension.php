@@ -57,7 +57,7 @@ class Extension extends Repository
 
     public function update(Form $form)
     {
-        $id = $form->key();
+        $id = $form->getKey();
 
         $extension = Admin::extensions()[$id] ?? null;
 
