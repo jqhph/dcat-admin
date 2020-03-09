@@ -11,8 +11,7 @@ use Laravel\Dusk\TestCase as BaseTestCase;
 
 abstract class DuskTestCase extends BaseTestCase
 {
-    use CreatesApplication,
-        BasicTestCase;
+    use CreatesApplication;
 
     /**
      * @var Administrator
@@ -24,6 +23,21 @@ abstract class DuskTestCase extends BaseTestCase
     public function login(Browser $browser)
     {
         $browser->loginAs($this->getUser(), 'admin');
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->boot();
+    }
+
+
+    public function tearDown(): void
+    {
+        $this->destory();
+
+        parent::tearDown();
     }
 
     /**

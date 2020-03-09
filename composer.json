@@ -26,7 +26,8 @@
         "phpunit/phpunit": "^7.5",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "matt-allan/laravel-code-style": "^0.3.0"
+        "matt-allan/laravel-code-style": "^0.3.0",
+        "beyondcode/dusk-dashboard": "^1.2"
     },
     "autoload": {
         "psr-4": {
