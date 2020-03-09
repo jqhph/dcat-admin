@@ -32,15 +32,23 @@ $app = require_once __DIR__.'/../vendor/laravel/laravel/bootstrap/app.php';
 
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 
+Illuminate\Console\Application::starting(function ($artisan) {
+    $artisan->resolveCommands([
+        \Dcat\Admin\Tests\Console\InstallCommand::class,
+    ]);
+});
+
+$app->booting(function () use ($app) {
+    $app['env'] = 'local';
+
+    $app->register(\Laravel\Dusk\DuskServiceProvider::class);
+    $app->register(\BeyondCode\DuskDashboard\DuskDashboardServiceProvider::class);
+});
+
 $status = $kernel->handle(
     $input = new Symfony\Component\Console\Input\ArgvInput,
     new Symfony\Component\Console\Output\ConsoleOutput
 );
-
-$app['env'] = false;
-
-$app->register(\Laravel\Dusk\DuskServiceProvider::class);
-$app->register(\BeyondCode\DuskDashboard\DuskDashboardServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
