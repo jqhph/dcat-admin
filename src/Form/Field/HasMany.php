@@ -683,7 +683,7 @@ JS;
                 $hidden[] = $field->render();
             } else {
                 /* Hide label and set field width 100% */
-                $field->labelClass(['hidden']);
+                $field->setLabelClass(['hidden']);
                 $field->width(12, 0);
                 $fields[] = $field->render();
                 $headers[] = $field->label();

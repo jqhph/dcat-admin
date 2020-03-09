@@ -18,7 +18,7 @@ class Button extends Field
     public function on($event, $callback)
     {
         $this->script = <<<JS
-        $('{$this->elementClassSelector()}').on('$event', function() {
+        $('{$this->getElementClassSelector()}').on('$event', function() {
             $callback
         });
 JS;

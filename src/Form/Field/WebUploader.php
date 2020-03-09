@@ -153,7 +153,7 @@ trait WebUploader
             'fileSizeLimit'       => 20971520000, // 20000M
             'fileSingleSizeLimit' => 10485760, // 10M
             'autoUpdateColumn'    => false, // 上传完图片后自动保存图片路径
-            'elementName'         => $this->elementName(), // 字段name属性值
+            'elementName'         => $this->getElementName(), // 字段name属性值
             'lang'                => trans('admin.uploader'),
 
             'deleteData' => [

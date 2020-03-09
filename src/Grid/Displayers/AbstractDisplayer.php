@@ -81,7 +81,7 @@ abstract class AbstractDisplayer
     /**
      * @return string
      */
-    public function elementName()
+    public function getElementName()
     {
         $name = explode('.', $this->column->getName());
 

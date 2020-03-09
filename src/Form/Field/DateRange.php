@@ -44,7 +44,7 @@ class DateRange extends Field
         $startOptions = json_encode($this->options);
         $endOptions = json_encode($this->options + ['useCurrent' => false]);
 
-        $class = $this->elementClassSelector();
+        $class = $this->getElementClassSelector();
 
         $this->script = <<<JS
             $('{$class['start']}').datetimepicker($startOptions);

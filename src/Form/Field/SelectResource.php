@@ -171,14 +171,14 @@ class SelectResource extends Field
         $lessThenLabel = trans('admin.selected_must_less_then', ['num' => $this->maxItem]);
         $selectedOptionsLabel = trans('admin.selected_options');
         $disabled = empty($this->attributes['disabled']) ? '' : 'disabled';
-        $containerId = $this->id.$this->formElementId();
+        $containerId = $this->id.$this->getFormElementId();
         $maxItem = (int) $this->maxItem;
 
         Admin::script(
             <<<JS
 LA.ResourceSelector({
     title: '{$label}',
-    column: "{$this->elementName()}",
+    column: "{$this->getElementName()}",
     source: '{$this->source}',
     selector: '#{$this->btnId}',
     maxItem: {$maxItem}, 
@@ -224,9 +224,9 @@ JS
         $name = $this->elementName ?: $this->formatName($this->column);
 
         $this->prepend('<i class="fa fa-long-arrow-up"></i>')
-            ->defaultAttribute('class', 'form-control '.$this->elementClassString())
+            ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('type', 'text')
-            ->defaultAttribute('id', $this->id.$this->formElementId())
+            ->defaultAttribute('id', $this->id.$this->getFormElementId())
             ->defaultAttribute('name', $name);
 
         $this->addVariables([

@@ -21,9 +21,9 @@ class Text extends Field
         $this->prepend('<i class="ti-pencil"></i>')
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id)
-            ->defaultAttribute('name', $this->elementName())
+            ->defaultAttribute('name', $this->getElementName())
             ->defaultAttribute('value', old($this->column, $this->value()))
-            ->defaultAttribute('class', 'form-control '.$this->elementClassString())
+            ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('placeholder', $this->placeholder());
 
         $this->addVariables([
@@ -134,7 +134,7 @@ JS
     {
         $options = $this->jsonEncodeOptions($options);
 
-        $this->script = "$('{$this->elementClassSelector()}').inputmask($options);";
+        $this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
 
         return $this;
     }

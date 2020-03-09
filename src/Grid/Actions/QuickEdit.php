@@ -27,7 +27,7 @@ class QuickEdit extends RowAction
             $title = trans('admin.edit').' - '.$this->getKey();
 
             Form::modal($title)
-                ->click(".{$this->elementClass()}")
+                ->click(".{$this->getElementClass()}")
                 ->dimensions($width, $height)
                 ->forceRefresh()
                 ->success('LA.reload()');

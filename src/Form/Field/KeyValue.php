@@ -74,7 +74,7 @@ class KeyValue extends Field
         $value = old($this->column, $this->value());
 
         $number = $value ? count($value) : 0;
-        $class = $this->elementClassString();
+        $class = $this->getElementClassString();
 
         $this->script = <<<JS
 (function () {

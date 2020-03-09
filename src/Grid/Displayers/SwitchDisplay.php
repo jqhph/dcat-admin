@@ -70,7 +70,7 @@ class SwitchDisplay extends AbstractDisplayer
 
         $this->setupScript();
 
-        $name = $this->elementName();
+        $name = $this->getElementName();
         $key = $this->row->{$this->grid->getKeyName()};
         $checked = $this->value ? 'checked' : '';
         $color = $this->color ?: Color::primary();

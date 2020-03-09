@@ -100,14 +100,14 @@ class SwitchField extends Field
             $this->primary();
         }
 
-        $this->attribute('name', $this->elementName());
+        $this->attribute('name', $this->getElementName());
         $this->attribute('value', 1);
         $this->attribute('type', 'checkbox');
-        $this->attribute('data-plugin', $this->formElementId().'switchery');
+        $this->attribute('data-plugin', $this->getFormElementId().'switchery');
 
         Admin::script(
             <<<JS
-function swty(){\$('[data-plugin="{$this->formElementId()}switchery"]').each(function(){new Switchery($(this)[0],$(this).data())})} swty();
+function swty(){\$('[data-plugin="{$this->getFormElementId()}switchery"]').each(function(){new Switchery($(this)[0],$(this).data())})} swty();
 JS
         );
 

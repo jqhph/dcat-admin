@@ -25,7 +25,7 @@ class Slider extends Field
     {
         $option = json_encode($this->options);
 
-        $this->script = "setTimeout(function () { $('{$this->elementClassSelector()}').ionRangeSlider($option) }, 400);";
+        $this->script = "setTimeout(function () { $('{$this->getElementClassSelector()}').ionRangeSlider($option) }, 400);";
 
         return parent::render();
     }

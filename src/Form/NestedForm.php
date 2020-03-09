@@ -400,9 +400,9 @@ class NestedForm
             $elementClass = [$this->relationName, $column];
         }
 
-        return $field->errorKey($errorKey)
-            ->elementName($elementName)
-            ->elementClass($elementClass);
+        return $field->setErrorKey($errorKey)
+            ->setElementName($elementName)
+            ->setElementClass($elementClass);
     }
 
     /**

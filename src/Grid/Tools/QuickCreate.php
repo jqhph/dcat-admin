@@ -234,11 +234,11 @@ class QuickCreate implements Renderable
      */
     protected function addField(Field $field)
     {
-        $elementClass = array_merge([$this->elementClass()], $field->elementClass());
+        $elementClass = array_merge([$this->getElementClass()], $field->getElementClass());
 
         $field->addElementClass($elementClass);
 
-        $field->view($this->resolveView(get_class($field)));
+        $field->setView($this->resolveView(get_class($field)));
 
         $field::collectAssets();
 
@@ -269,7 +269,7 @@ class QuickCreate implements Renderable
 
         $script = <<<JS
 (function () {
-    var ctr = $('.{$this->elementClass()}'),
+    var ctr = $('.{$this->getElementClass()}'),
         btn = $('.quick-create-button-{$uniqueName}');
     
     btn.click(function () {
@@ -347,7 +347,7 @@ JS;
         Admin::script($script);
     }
 
-    public function elementClass()
+    public function getElementClass()
     {
         $name = $this->parent->getName();
 
@@ -370,7 +370,7 @@ JS;
         $vars = [
             'columnCount'  => $columnCount,
             'fields'       => $this->fields,
-            'elementClass' => $this->elementClass(),
+            'elementClass' => $this->getElementClass(),
         ];
 
         return view('admin::grid.quick-create.form', $vars)->render();

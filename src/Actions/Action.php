@@ -126,7 +126,7 @@ abstract class Action implements Renderable
     /**
      * @return string
      */
-    protected function elementClass()
+    protected function getElementClass()
     {
         return ltrim($this->selector(), '.');
     }
@@ -247,7 +247,7 @@ HTML;
      */
     protected function setupHtmlAttributes()
     {
-        $this->addHtmlClass($this->elementClass());
+        $this->addHtmlClass($this->getElementClass());
 
         $attributes = [
             'class' => $this->formatHtmlClasses(),

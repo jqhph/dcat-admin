@@ -62,7 +62,7 @@ class Html extends Field
             return $this->html;
         }
 
-        $viewClass = $this->viewElementClasses();
+        $viewClass = $this->getViewElementClasses();
 
         return <<<EOT
 <div class="form-group">

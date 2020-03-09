@@ -33,7 +33,7 @@ class Listbox extends MultipleSelect
         $settings = json_encode($settings);
 
         $this->script = <<<JS
-$("{$this->elementClassSelector()}").bootstrapDualListbox($settings);
+$("{$this->getElementClassSelector()}").bootstrapDualListbox($settings);
 JS;
 
         return parent::render();

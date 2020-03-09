@@ -31,7 +31,7 @@ EOT;
         Admin::script($this->script());
 
         return <<<EOT
-<form class="form-group {$this->elementClass()}" style="text-align: left" data-key="{$this->getKey()}">
+<form class="form-group {$this->getElementClass()}" style="text-align: left" data-key="{$this->getKey()}">
     $radios
     <button type="submit" class="btn btn-primary btn-xs pull-left">
         <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}
@@ -43,7 +43,7 @@ EOT;
 EOT;
     }
 
-    protected function elementClass()
+    protected function getElementClass()
     {
         return 'grid-radio-'.$this->column->getName();
     }
@@ -53,7 +53,7 @@ EOT;
         return <<<JS
 (function () {
     var f;
-    $('form.{$this->elementClass()}').on('submit', function () {
+    $('form.{$this->getElementClass()}').on('submit', function () {
         var value = $(this).find('input:radio:checked').val(), btn = $(this).find('[type="submit"]');
         
         if (f) return;
