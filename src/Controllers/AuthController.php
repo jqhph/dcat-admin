@@ -226,7 +226,7 @@ class AuthController extends Controller
      */
     protected function redirectPath()
     {
-        return $this->redirectTo ?: config('admin.route.prefix');
+        return $this->redirectTo ?: admin_url('/');
     }
 
     /**
