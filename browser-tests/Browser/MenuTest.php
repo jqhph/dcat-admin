@@ -58,16 +58,21 @@ class MenuTest extends TestCase
         $this->delete('admin/auth/menu/8');
         $this->assertEquals(7, Menu::count());
     }
-    //
-    //public function testEditMenu()
-    //{
-    //    $this->visit('admin/auth/menu/1/edit')
-    //        ->see('Menu')
-    //        ->submitForm('Submit', ['title' => 'blablabla'])
-    //        ->seePageIs('admin/auth/menu')
-    //        ->seeInDatabase(config('admin.database.menu_table'), ['title' => 'blablabla'])
-    //        ->assertEquals(7, Menu::count());
-    //}
+
+    public function testEditMenu()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit(test_admin_path('auth/menu/1/edit'))
+                ->assertSee('Menu')
+                ->assertSee('Edit')
+                ->type('title', 'blablabla')
+                ->press('Submit')
+                ->waitForLocation(test_admin_path('auth/menu'), 2);
+
+            $this->seeInDatabase(config('admin.database.menu_table'), ['title' => 'blablabla'])
+                ->assertEquals(7, Menu::count());
+        });
+    }
     //
     //public function testEditMenuParent()
     //{

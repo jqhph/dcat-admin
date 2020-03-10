@@ -37,7 +37,6 @@ abstract class DuskTestCase extends BaseTestCase
         $this->boot();
     }
 
-
     public function tearDown(): void
     {
         $this->destory();
@@ -63,7 +62,7 @@ abstract class DuskTestCase extends BaseTestCase
      */
     protected function newBrowser($driver)
     {
-        $browser = parent::newBrowser($driver)->resize(1440, 1080);
+        $browser = parent::newBrowser($driver)->resize(1566, 1080);
 
         if ($this->login) {
             $this->login($browser);
@@ -90,5 +89,18 @@ abstract class DuskTestCase extends BaseTestCase
                 ChromeOptions::CAPABILITY_W3C, $options
             )
         );
+    }
+
+    /**
+     * Build the process to run the Chromedriver.
+     *
+     * @param  array  $arguments
+     * @return \Symfony\Component\Process\Process
+     *
+     * @throws \RuntimeException
+     */
+    protected static function buildChromeProcess(array $arguments = [])
+    {
+        return (new ChromeProcess(static::$chromeDriver))->toProcess($arguments);
     }
 }
