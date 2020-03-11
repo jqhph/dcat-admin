@@ -127,7 +127,7 @@ class DialogTree extends AbstractDisplayer
      *
      * @return $this
      */
-    public function columnNames(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
+    public function name(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
     {
         $this->columnNames['id'] = $idColumn;
         $this->columnNames['text'] = $textColumn;
@@ -176,7 +176,7 @@ EOF;
         Admin::script(
             <<<JS
 $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
-    var tpl = '<div class="jstree-wrapper" style="border:0"><div class="_tree" style="margin-top:10px"></div></div>', 
+    var tpl = '<div class="jstree-wrapper" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>', 
         opts = $opts,
         url = '{$this->url}',
         t = $(this),
@@ -215,7 +215,7 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
             content: tpl,
             title: '{$title}',
             success: function (a, idx) {
-                var tree = $('#layui-layer'+idx).find('._tree');
+                var tree = $('#layui-layer'+idx).find('.da-tree');
                 
                 tree.on("loaded.jstree", function () {
                     tree.jstree('open_all');

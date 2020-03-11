@@ -116,7 +116,7 @@ class Tree extends Field
      *
      * @return $this
      */
-    public function columnNames(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
+    public function name(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
     {
         $this->columnNames['id'] = $idColumn;
         $this->columnNames['text'] = $textColumn;

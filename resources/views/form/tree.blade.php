@@ -11,7 +11,7 @@
 
             <div class="jstree-wrapper {{$class}}-tree-wrapper">
                 {!! $checkboxes !!}
-                <div class="_tree" style="margin-top:10px"></div>
+                <div class="da-tree" style="margin-top:10px"></div>
             </div>
         </div>
 
@@ -25,7 +25,7 @@
 @endphp
 <script data-exec-on-popstate>
 LA.ready(function () {
-    var $tree = $('{!!$formId !!} .{{$class}}-tree-wrapper').find('._tree'),
+    var $tree = $('{!!$formId !!} .{{$class}}-tree-wrapper').find('.da-tree'),
         opts = {!! $options !!},
         $input = $('{!!$formId !!} input[name="{{$name}}"]'),
         parents = {!! $parents !!};
