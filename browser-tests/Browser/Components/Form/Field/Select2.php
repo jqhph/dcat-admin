@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Browser\Components;
+namespace Tests\Browser\Components\Form\Field;
 
 use Laravel\Dusk\Browser;
-use Laravel\Dusk\Component as BaseComponent;
+use Tests\Browser\Components\Component;
 
-class Select2 extends BaseComponent
+class Select2 extends Component
 {
     protected $selector;
 
@@ -54,14 +54,16 @@ class Select2 extends BaseComponent
      * @param  Browser  $browser
      * @param  mixed    $value
      *
-     * @return void
+     * @return Browser
      */
-    public function choose($browser, $value)
+    public function choose(Browser $browser, $value)
     {
         $browser->script(
             <<<JS
-$('{$this->selector()}').val('{$value}').change();
+$('{$this->formatSelector($browser)}').val('{$value}').change();
 JS
         );
+
+        return $browser;
     }
 }

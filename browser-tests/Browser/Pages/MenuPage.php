@@ -3,6 +3,7 @@
 namespace Tests\Browser\Pages;
 
 use Laravel\Dusk\Browser;
+use Tests\Browser\Components\Form\MenuCreationForm;
 
 class MenuPage extends Page
 {
@@ -39,13 +40,14 @@ class MenuPage extends Page
                     ->assertSee('Operation log');
             }, 1)
             ->within('@form', function (Browser $browser) {
-                $browser->assertSee('Parent')
-                    ->assertSee('Title')
-                    ->assertSee('Icon')
-                    ->assertSee('URI')
-                    ->assertSee('Roles')
-                    ->assertSee('Permission')
-                    ->assertSee('Select all')
+                $browser->assertSee(__('admin.parent_id'))
+                    ->assertSee(__('admin.title'))
+                    ->assertSee(__('admin.icon'))
+                    ->assertSee(__('admin.uri'))
+                    ->assertSee(__('admin.roles'))
+                    ->assertSee(__('admin.permissions'))
+                    ->assertSee(__('admin.selectall'))
+                    ->assertSee(__('admin.expand'))
                     ->assertSelected('parent_id', 0)
                     ->hasInput('title')
                     ->hasInput('icon')
@@ -53,6 +55,24 @@ class MenuPage extends Page
                     ->assertButtonEnabled('Submit')
                     ->assertButtonEnabled('Reset');
             });
+    }
+
+    /**
+     * 创建
+     *
+     * @param Browser $browser
+     * @param array $input
+     *
+     * @return Browser
+     */
+    public function newMenu(Browser $browser, array $input)
+    {
+        return $browser->within(new MenuCreationForm(), function (Browser $browser) use ($input) {
+            $browser->fill($input);
+
+            $browser->pressAndWaitFor(__('admin.submit'), 2);
+            $browser->waitForLocation($this->url(), 2);
+        });
     }
 
     /**

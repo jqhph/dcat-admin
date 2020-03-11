@@ -16,7 +16,7 @@ class AuthTest extends TestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(test_admin_path('auth/login'))
-                ->assertSee('Login');
+                ->assertSee(__('admin.login'));
         });
     }
 

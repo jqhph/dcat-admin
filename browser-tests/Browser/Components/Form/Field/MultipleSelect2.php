@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Components;
+namespace Tests\Browser\Components\Form\Field;
 
 use Laravel\Dusk\Browser;
 
@@ -11,18 +11,22 @@ class MultipleSelect2 extends Select2
      *
      * @param  Browser $browser
      * @param  array   $values
-     * @param  int  $day
-     * @return void
+     *
+     * @return Browser
      */
     public function choose($browser, $values)
     {
         $values = implode(',', (array) $values);
 
+//dump($browser->resolver->prefix.' || '.$this->formatSelector($browser));
+
         $browser->script(
             <<<JS
 var values = '{$values}';
-$('{$this->selector()}').val(values.split(',')).change();
+$('{$this->formatSelector($browser)}').val(values.split(',')).change();
 JS
         );
+
+        return $browser;
     }
 }

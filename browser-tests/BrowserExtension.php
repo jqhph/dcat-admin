@@ -6,119 +6,85 @@ use Facebook\WebDriver\Exception\TimeoutException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Dusk\Browser;
+use Laravel\Dusk\Component;
 use PHPUnit\Framework\Assert as PHPUnit;
 
 trait BrowserExtension
 {
     public function extendBrowser()
     {
-        $this->extendBrowserWhenTextAvailable();
-        $this->extendBrowserWhenElementAvailable();
-        $this->extendBrowserWait();
-        $this->extendBrowserAssertHasInput();
-        $this->extendBrowserAssertHidden();
-    }
+        $functions = [
+            'whenTextAvailable' => function ($text, $callbackOrSeconds = null, $seconds = null) {
+                $callback = null;
 
-    private function extendBrowserAssertHidden()
-    {
-        Browser::macro('assertHidden', function ($selector) {
-            $fullSelector = $this->resolver->format($selector);
-
-            PHPUnit::assertTrue(
-                $this->resolver->findOrFail($selector)->isDisplayed(),
-                "Element [{$fullSelector}] is visible."
-            );
-
-            return $this;
-        });
-    }
-
-    private function extendBrowserWait()
-    {
-        $self = $this;
-
-        Browser::macro('wait', function ($seconds, \Closure $callback = null) use ($self) {
-            $delayBrowser = $self->makeDelayBrowser($this);
-
-            try {
-                $this->waitUsing($seconds, 200, function () {});
-            } catch (TimeoutException $e) {
-                $callback && $callback();
-
-                $delayBrowser();
-            }
-
-            return $delayBrowser;
-        });
-    }
-
-    private function extendBrowserAssertHasInput()
-    {
-        Browser::macro('hasInput', function ($field) {
-            /* @var \Facebook\WebDriver\Remote\RemoteWebElement $element */
-            $this->resolver->resolveForTyping($field);
-
-            return $this;
-        });
-    }
-
-    private function extendBrowserWhenElementAvailable()
-    {
-        $self = $this;
-
-        Browser::macro('whenElementAvailable', function ($selector, $callbackOrSeconds = null, $seconds = null) use ($self) {
-            /* @var Browser $this */
-
-            $callback = null;
-            if (is_callable($callbackOrSeconds)) {
-                $callback = $callbackOrSeconds;
-            } elseif (is_int($callbackOrSeconds)) {
-                $seconds = $callbackOrSeconds;
-            }
-
-            $delayBrowser = $self->makeDelayBrowser($this);
-
-            $this->waitFor($selector, $seconds)->with($selector, function ($value) use ($callback, $delayBrowser) {
-                $callback && $callback($value);
-
-                return $delayBrowser();
-            });
-
-            return $delayBrowser;
-        });
-    }
-
-    private function extendBrowserWhenTextAvailable()
-    {
-        $self = $this;
-
-        Browser::macro('whenTextAvailable', function ($text, $callbackOrSeconds = null, $seconds = null) use ($self) {
-            $callback = null;
-
-            if (is_callable($callbackOrSeconds)) {
-                $callback = $callbackOrSeconds;
-            } elseif (is_int($callbackOrSeconds)) {
-                $seconds = $callbackOrSeconds;
-            }
-
-            $delayBrowser = $self->makeDelayBrowser($this);
-            $text = Arr::wrap($text);
-            $message = $this->formatTimeOutMessage('Waited %s seconds for text', implode("', '", $text));
-
-            $this->waitUsing($seconds, 100, function () use ($text, $callback, $delayBrowser)  {
-                $results = Str::contains($this->resolver->findOrFail('')->getText(), $text);
-
-                if ($results) {
-                    $callback && $callback($this);
-
-                    $delayBrowser();
+                if (is_callable($callbackOrSeconds)) {
+                    $callback = $callbackOrSeconds;
+                } elseif (is_int($callbackOrSeconds)) {
+                    $seconds = $callbackOrSeconds;
                 }
 
-                return $results;
-            }, $message);
+                $text = Arr::wrap($text);
+                $message = $this->formatTimeOutMessage('Waited %s seconds for text', implode("', '", $text));
 
-            return $delayBrowser;
-        });
+                return $this->waitUsing($seconds, 100, function () use ($text, $callback)  {
+                    $results = Str::contains($this->resolver->findOrFail('')->getText(), $text);
+
+                    if ($results) {
+                        $callback && $callback($this);
+                    }
+
+                    return $results;
+                }, $message);
+            },
+
+            'whenElementAvailable' => function ($selector, $callbackOrSeconds = null, $seconds = null) {
+                $callback = null;
+                if (is_callable($callbackOrSeconds)) {
+                    $callback = $callbackOrSeconds;
+                } elseif (is_int($callbackOrSeconds)) {
+                    $seconds = $callbackOrSeconds;
+                }
+
+                return $this->whenAvailable($selector, function ($value) use ($callback) {
+                    $callback && $callback($value);
+                }, $seconds);
+            },
+
+            'hasInput' => function ($field) {
+                /* @var \Facebook\WebDriver\Remote\RemoteWebElement $element */
+                $this->resolver->resolveForTyping($field);
+
+                return $this;
+            },
+
+            'wait' => function ($seconds, \Closure $callback = null) {
+                try {
+                    $this->waitUsing($seconds, 200, function () {});
+                } catch (TimeoutException $e) {
+                    $callback && $callback();
+                }
+
+                return $this;
+            },
+
+            'assertHidden' => function ($selector) {
+                $fullSelector = $this->resolver->format($selector);
+
+                PHPUnit::assertTrue(
+                    $this->resolver->findOrFail($selector)->isDisplayed(),
+                    "Element [{$fullSelector}] is visible."
+                );
+
+                return $this;
+            },
+            'assert' => function (Component $component) {
+                return $this->with($component, function () {});
+            },
+        ];
+
+        foreach ($functions as $method => $callback) {
+            Browser::macro($method, $callback);
+        }
     }
 
     public function makeDelayBrowser($browser)

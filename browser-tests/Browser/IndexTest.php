@@ -44,14 +44,16 @@ class IndexTest extends TestCase
                         ->assertPathIs(test_admin_path('auth/menu'))
                         ->clickLink('Operation log')
                         ->assertPathIs(test_admin_path('auth/logs'))
+                        ->clickLink('Helpers')
+                        ->whenTextAvailable('Extensions', 2)
                         ->clickLink('Extensions')
-                        ->assertPathIs(test_admin_path('auth/extensions'))
+                        ->assertPathIs(test_admin_path('helpers/extensions'))
                         ->clickLink('Scaffold')
-                        ->assertPathIs(test_admin_path('auth/scaffold'))
+                        ->assertPathIs(test_admin_path('helpers/scaffold'))
                         ->clickLink('Routes')
-                        ->assertPathIs(test_admin_path('auth/routes'))
+                        ->assertPathIs(test_admin_path('helpers/routes'))
                         ->clickLink('Icons')
-                        ->assertPathIs(test_admin_path('auth/icons'));
+                        ->assertPathIs(test_admin_path('helpers/icons'));
                 });
         });
     }
