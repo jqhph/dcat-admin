@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Routing\Router;
+
 Route::group([
     'prefix'     => config('admin.route.prefix'),
     'namespace'  => 'Dcat\Admin\Tests\Controllers',
     'middleware' => ['web', 'admin'],
-], function ($router) {
-    $router->resource('tests/users', UserController::class);
-    $router->resource('tests/report', ReportController::class);
+], function (Router $router) {
+    $router->resource('tests/users', 'UserController');
+    $router->resource('tests/report', 'ReportController');
 });
