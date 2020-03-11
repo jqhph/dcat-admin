@@ -1,0 +1,117 @@
+// ================================================================================================
+//   File Name: aggrid.scss
+//   Description: SCC file for Aggrid.
+//   ----------------------------------------------------------------------------------------------
+//   Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//   Author: PIXINVENT
+//   Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Core variables and mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+.aggrid {
+  height: 600px;
+  font-size: 1rem;
+  color: $body-color;
+  // Checkbox Color
+  .ag-icon-checkbox-checked,
+  .ag-icon-checkbox-indeterminate {
+    color: $primary;
+  }
+
+  /*** TABLE BODY HEIGHT - FOOTER HEIGHT ***/
+  .ag-root-wrapper-body {
+    min-height: calc(100% - 56px);
+  }
+
+  /*** HEADER TEXT  ***/
+  .ag-header-cell-text {
+    font-size: 1rem;
+    font-family: $font-family-sans-serif;
+  }
+  /*** PAGINATION STYLING ***/
+  .ag-paging-panel {
+    display: block !important;
+    align-items: center;
+    height: 98px;
+    .ag-paging-row-summary-panel {
+      display: none;
+    }
+    .ag-paging-page-summary-panel {
+      justify-content: center;
+      margin-left: 0;
+      margin-top: 18px;
+
+      [ref="lbCurrent"],
+      [ref="lbTotal"] {
+        color: $white;
+        padding: 0.7rem 0.95rem;
+        border-radius: 0.5rem;
+      }
+    }
+    .ag-paging-button {
+      background-color: $gray-300;
+      border-radius: 50%;
+      padding: 0.5rem 0rem;
+      margin: 0 0.5rem;
+      color: $body-color !important;
+      .ag-icon {
+        color: $body-color !important;
+        opacity: 1 !important;
+      }
+      &.ag-disabled {
+        opacity: 0.5 !important;
+      }
+    }
+    span[ref="lbCurrent"] {
+      background-color: $primary;
+    }
+    span[ref="lbTotal"] {
+      background-color: $gray-300;
+      color: $body-color !important;
+    }
+  }
+
+  /*** TABLE SCROLLBAR ***/
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $gray-300;
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $body-bg;
+    border-radius: 20px;
+  }
+}
+
+/*** PAGE FILTER DROPDOWN ***/
+.filter-btn {
+  padding: 1.2rem !important;
+  border-radius: 5rem;
+  font-size: 0.95rem;
+  &:after {
+    left: 5px;
+  }
+}
+
+/*** SORTING DROPDOWN WIDTH ***/
+.sort-dropdown {
+  .dropdown-menu {
+    min-width: 4rem;
+  }
+}

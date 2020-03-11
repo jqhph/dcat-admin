@@ -1,0 +1,360 @@
+//  =========================================================================================
+// File Name: main-menu-mixin.scss
+// Description: Common mixin for menus, contain dark and light version scss.
+// ----------------------------------------------------------------------------------------
+// Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+// Author: PIXINVENT
+// Author URL: http://www.themeforest.net/user/pixinvent
+//==========================================================================================
+
+// Header navbar content and brand expanded & collapsed stats
+// spacing and sizing.
+// ================================================
+
+// Mixins for the menu and navbar position, margin and width change
+@mixin main-menu-width($menu-width){
+    margin-left: $menu-width;
+}
+@mixin menu-navbar-width($menu-width){
+    float: left;
+    width: $menu-width;
+    // z-index: 999;
+}
+// Mixins for the menu show hide based on width
+@mixin vertical-menu-transform-show($transform-width){
+    transform: translate3d($transform-width,0,0);
+    backface-visibility: hidden;
+    perspective: 1000;
+}
+@mixin vertical-menu-transform-hide(){
+    transform: translate3d(0,0,0);
+}
+// Mixins for the menu flipped menu
+@mixin vertical-flipped-menu($menu-width){
+    margin: 0;
+    margin-right: $menu-width;
+}
+// Mixins for the sub menu arrow
+@mixin vertical-menu-has-sub-arrow($arrow-font-size){
+    &.has-sub{
+        > a:not(.mm-next):after{
+            content: "\f105";
+            font-family: 'FontAwesome';
+            font-size: $arrow-font-size;
+            display: inline-block;
+            position: absolute;
+            right: 25px;
+            top: 10px;
+            transform: rotate(0deg);
+            transition: transform 0.2s ease-in-out;
+        }
+    }
+    &.open{
+        > a:not(.mm-next):after{
+            transform: rotate(90deg);
+        }
+    }
+}
+
+
+
+
+// Light & Dark menu mixin
+// $theme-color : Menu text color
+// $theme-bg    : Menu background color
+// ================================================
+@mixin menu-theme($theme-color, $theme-bg){
+
+    $main-menu-top-hover-bg:            darken($theme-bg, 4%);  //$primary
+    $main-menu-top-hover-color:         darken($theme-color, 10%);
+
+    $main-menu-top-open-color:          darken($theme-color, 10%);
+    $main-menu-top-open-bg:             darken($theme-bg, 4%);
+    $main-menu-top-open-hover-bg:       darken($theme-bg, 6%);
+    $main-menu-top-open-head-bg:        darken($theme-bg, 4%);
+
+    $main-menu-active-color:            lighten($theme-color, 10%);
+    $main-menu-active-bg:               darken($theme-bg, 4%);
+
+    $main-menu-top-active-bg:           darken($theme-bg, 4%);  //$primary
+    $main-menu-top-active-color:        $white;
+    $main-menu-top-active-head-bg:      darken($theme-bg, 4%);  //$primary
+
+    $main-menu-sub-bg:                  darken($theme-bg, 4%);
+    $main-menu-sub-color:               $theme-color;
+    $main-menu-sub-hover-bg:            darken($theme-bg, 4%);
+    $main-menu-sub-hover-color:         lighten($theme-color, 4%);
+    $main-menu-sub-active-bg:           rgba(0, 0, 0, .06);
+
+    $main-menu-sub-open-bg:             darken($theme-bg, 4%);
+    $main-menu-sub-open-color:          $theme-color;
+    $main-menu-sub-open-hover-bg:       darken($theme-bg, 4%);
+
+    color:$theme-color;
+    background:$theme-bg;
+
+    .main-menu-header{
+        padding: 20px;
+        .menu-search{
+            background: darken($theme-bg, 10%);
+            padding: 0.5rem 1rem;
+            color: $main-menu-top-hover-color;
+            &:focus{
+                border-color: darken($theme-bg, 15%);
+            }
+        }
+    }
+    .navigation{
+        background: $theme-bg;
+        .navigation-header{
+            color: lighten($theme-color, 21.5%);
+            margin: calc(#{$content-padding} - 0.2rem) 0 .8rem $content-padding;
+            padding: 0;
+            line-height: 1.5;
+            letter-spacing: .01rem;
+            span{
+                font-weight:500;
+            }
+        }
+        li{
+            &.has-sub{
+              ul.menu-content{
+                padding: 7px;
+                margin: -7px -7px 0 -7px;
+              }
+            }
+            a{
+                color: darken($theme-color,4.9%);
+                padding: $menu-padding;
+                line-height: 1.45;
+                transition: padding 0.35s ease 0s !important;
+
+                span.menu-sub-title{
+                    color: lighten($theme-color, 30%);
+                }
+            }
+            &.hover{
+                > a{
+                    padding-left: 25px;
+                    transition: padding 0.35s ease 0s !important;
+                }
+            }
+        }
+
+        > li {
+            padding: 0 15px;
+            > a {
+                .label{
+                    margin-top: 4px;
+                    margin-right: 5px;
+                }
+                i{
+                    position: relative;
+                    top: 1px;
+                }
+            }
+            &.open, &.sidebar-group-active {
+                > a {
+                    color: $main-menu-top-open-color;
+                    background: $main-menu-top-open-head-bg;
+                    transition: transform 0.25s ease 0s, -webkit-transform 0.25s ease 0s;
+                    border-radius: 6px;
+                    margin-bottom: 7px;
+                }
+            }
+
+            &:not(.open){
+                > ul{
+                    display:none;
+                }
+            }
+            &.active {
+                > a {
+                    background: linear-gradient(118deg,rgba($primary,1),rgba($primary,.7));
+                    box-shadow: 0 0 10px 1px rgba($primary,.7);
+                    color:$white;
+                    font-weight: 400;
+                    border-radius: 4px;
+                }
+            }
+
+            .active {
+                background: $main-menu-top-open-hover-bg;
+
+                > a {
+                    color: $primary;
+          margin-bottom: 0;
+                    // font-weight: 500;
+                }
+
+                .hover {
+                    > a {
+                        background: $main-menu-top-active-head-bg;
+                    }
+                }
+            }
+
+            ul {
+                padding:0;
+                margin: 0;
+                // font-size: 1rem;
+
+                li {
+                    color: $main-menu-sub-color;
+                    background: transparent;
+                    > a{
+                            padding: $menu-second-level-padding;
+
+                    }
+                }
+                .has-sub {
+                    &:not(.open){
+                        > ul{
+                            display:none;
+                        }
+                    }
+                }
+                .open, .sidebar-group-active {
+                    > a {
+                        color: $main-menu-sub-open-color;
+                    }
+                    //for 2rd level menu
+                    > ul{
+                        display: block;
+                        //for 3rd level menu
+                        .open {
+                            > ul{
+                                display: block;
+                            }
+                        }
+                    }
+                }
+
+                .hover, &:hover {
+                    > a {
+                        color: $main-menu-sub-hover-color;
+                    }
+                }
+
+                .active {
+                    background: linear-gradient(118deg,rgba($primary,1),rgba($primary,.7));
+                    box-shadow: 0 0 10px 1px rgba($primary,.7);
+                    border-radius: 4px;
+                    > a {
+                        color: $white;
+                        // font-weight: 500;
+                    }
+                }
+            }
+
+            >ul{
+                background: $theme-bg;
+            }
+        }
+    }
+
+    //For popout menu
+    ul.menu-popout{
+        background: $theme-bg;
+        li{
+            a{
+                color: $theme-color;
+                span.menu-sub-title{
+                    color: lighten($theme-color, 30%);
+                }
+            }
+            &.hover,&:hover,&.open{
+                > a{
+                    background:$main-menu-top-open-hover-bg;
+                }
+            }
+        }
+
+        .has-sub {
+            &:not(.open){
+                > ul{
+                    display:none;
+                }
+            }
+        }
+        .open {
+            > a {
+                color: $main-menu-sub-open-color;
+            }
+            //for 2rd level menu
+            > ul{
+                display: block;
+                //for 3rd level menu
+                .open {
+                    background: darken($main-menu-sub-open-bg,5%);
+                    > ul{
+                        display: block;
+                        background: darken($main-menu-sub-open-bg,5%);
+                    }
+                }
+            }
+        }
+
+        .hover, &:hover {
+            > a {
+                color: $main-menu-sub-hover-color;
+                background-color: $main-menu-sub-hover-bg;
+            }
+        }
+
+        .active {
+            background: $main-menu-sub-active-bg;
+
+            > a {
+                color: $main-menu-active-color;
+                background-color: $main-menu-active-bg;
+            }
+
+            .hover,:hover {
+                > a {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+    //For pop
+}
+// Menucontent display mixin
+// $menu-expanded-width : Expanded menu width
+// $menu-collapsed-width: Collapsed menu width
+// ================================================
+@mixin menu-content($menu-expanded-width, $menu-collapsed-width, $theme-color, $theme-bg){
+    .main-menu-content{
+        > span.menu-title, a.menu-title{
+            right: -($menu-expanded-width);
+            width: $menu-expanded-width;
+            font-weight:600;
+            color: #fff;
+            text-transform:uppercase;
+            text-align: left;
+            background-color: $primary;
+            border-color: $primary;
+            padding: 13px 20px;
+        }
+        > ul.menu-content{
+            left: $menu-collapsed-width;
+            width: $menu-expanded-width;
+            transition: visibility .25s,opacity .25s;
+            box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+            border-left: 1px solid rgba(0, 0, 0, 0.02);
+
+            li {
+                white-space: nowrap;
+                position: relative;
+
+                a {
+                    display: block;
+                    padding: 8px 20px 8px 20px;
+                }
+
+                @include vertical-menu-has-sub-arrow(1rem);
+            }
+        }
+    }
+}

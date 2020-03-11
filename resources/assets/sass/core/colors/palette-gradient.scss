@@ -1,0 +1,51 @@
+// ================================================================================================
+//   File Name: pallette-gradient.scss
+//   Description: gradient color system styles
+//   ----------------------------------------------------------------------------------------------
+//   Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//   Author: PIXINVENT
+//   Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+
+@function color-function($color, $type) {
+  @if map-has-key($colors, $color) {
+    $curr_color: map-get($colors, $color);
+    @if map-has-key($curr_color, $type) {
+      @return map-get($curr_color, $type);
+    }
+  }
+  // @warn "Unknown `#{name}` in $colors.";
+  @return null;
+}
+
+// Color palettes
+@import "palette-variables";
+
+@import "../../bootstrap/mixins/_gradients";
+@import "../../bootstrap/mixins/gradients";
+
+@each $color_name, $color in $colors {
+  @each $color_type, $color_value in $color {
+    @if $color_type == "base" {
+      .bg-gradient-#{$color_name}{
+        background: map-get(($color),'gradient-bg');
+        color: #fff;
+        @if (color-function($color_name, "base") != null) {
+          @include gradient-directional(map-get(($color),'base'), rgba(map-get(($color),'base'),0.5), 30deg);
+        }
+        &:hover, &:active{
+          color: #fff;
+        }
+      }
+
+      .gradient-light-#{$color-name}{
+        background: linear-gradient(30deg, $color-value 0%, map-get(($color),'gradient-light') 100%);
+        color: #fff;
+        &:hover, &:active{
+          color: #fff;
+        }
+      }
+    }
+  }
+}

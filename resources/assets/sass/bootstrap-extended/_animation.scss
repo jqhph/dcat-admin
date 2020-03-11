@@ -1,0 +1,67 @@
+.collapse-icon {
+  .card-header {
+    position: relative;
+  }
+
+  [data-toggle="collapse"] {
+    &:after {
+      position: absolute;
+      top: 48%;
+      right: 20px;
+      margin-top: -8px;
+      font-family: 'feather';
+      content: "\e845";
+      transition: all 300ms linear 0s;
+      font-size: 0.9rem;
+    }
+
+    &:before {
+      position: absolute;
+      top: 48%;
+      right: 20px;
+      margin-top: -8px;
+      font-family: 'feather';
+      content: "\e842";
+      transition: all 300ms linear 0s;
+      font-size: 0.9rem;
+    }
+  }
+
+  &.left {
+    a {
+      padding-left: 28px;
+
+      &:before,
+      &:after {
+        left: 20px;
+        right: auto;
+      }
+    }
+  }
+
+  [aria-expanded="true"] {
+    &:before {
+      opacity: 0;
+    }
+  }
+
+  [aria-expanded="false"] {
+    &:after {
+      opacity: 0;
+    }
+  }
+
+  &.accordion-icon-rotate {
+    [aria-expanded="true"] {
+      &:before {
+        transform: rotate(180deg);
+      }
+    }
+
+    [aria-expanded="false"] {
+      &:after {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+}

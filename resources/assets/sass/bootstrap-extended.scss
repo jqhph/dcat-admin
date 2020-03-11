@@ -1,0 +1,56 @@
+// ================================================================================================
+//  File Name: bootstrap-extended.scss
+//  Description: List of modified Bootstrap files. This is an actual copy of bootstrap.scss
+//                excluding files that have not been modified.
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Core variables and mixins
+@import "bootstrap/functions";
+@import "bootstrap/mixins";
+@import "bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "core/variables/variables";
+@import "bootstrap/variables";
+
+// Custom template mixins
+@import "core/mixins/alert";
+
+// Overrides user variable
+@import "core/variables/components-variables";
+
+// // Core CSS
+@import "bootstrap-extended/reboot";
+@import "bootstrap-extended/type";
+@import "bootstrap-extended/code";
+@import "bootstrap-extended/grid";
+@import "bootstrap-extended/tables";
+@import "bootstrap-extended/forms";
+@import "bootstrap-extended/buttons";
+
+// // Components
+@import "bootstrap-extended/animation";
+@import "bootstrap-extended/dropdown";
+@import "bootstrap-extended/navbar";
+@import "bootstrap-extended/card";
+@import "bootstrap-extended/breadcrumb";
+@import "bootstrap-extended/badge";
+@import "bootstrap-extended/nav";
+@import "bootstrap-extended/alert";
+@import "bootstrap-extended/media";
+@import "bootstrap-extended/progress";
+@import "bootstrap-extended/list-group";
+@import "bootstrap-extended/toast";
+@import 'bootstrap-extended/collapse';
+@import 'bootstrap-extended/pagination';
+
+// // Components w/ JavaScript
+@import "bootstrap-extended/modal";
+@import "bootstrap-extended/popover";
+
+// // Utility classes
+@import "bootstrap-extended/utilities";

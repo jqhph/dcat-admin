@@ -1,0 +1,68 @@
+// ================================================================================================
+//     File Name: Footer.scss
+//     Description: *  Main footer styles.
+//     ----------------------------------------------------------------------------------------------
+//     Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//     Author: PIXINVENT
+//     Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Stick footer to the bottom of the page
+footer{
+	&.footer {
+		padding: $spacer ($spacer*2.2);
+
+    // a tag margin - PIXINVENT text
+    a{
+      margin: 0 0.3rem;
+    }
+    // heart icon scss
+    span{
+      i{
+        margin-left: 0.5rem;
+        font-size: $h3-font-size;
+        color: $danger;
+        position: relative;
+        top: 2px;
+      }
+    }
+    .scroll-top{
+      padding: .81rem .83rem;
+    }
+	}
+
+	//shadow & border options
+	&.navbar-shadow {
+		box-shadow: 0px -1px 4px 0px rgba(0,0,0,0.15);
+	}
+	&.navbar-border {
+		border-top: 1px solid $custom-border-color;
+	}
+}
+
+// Fixed Footer
+body{
+  &.fixed-footer{
+    footer{
+      // Footer Light
+      &.footer-light{
+        background: $white;
+        box-shadow: 0px -1px 4px 0px rgba(0,0,0,0.15);
+      }
+      // Footer Dark
+      &.footer-dark{
+        background: $gray-600;
+        color: $white;
+      }
+    }
+  }
+}
+
+// scroll to Top Footer Button
+.scroll-top{
+  position:fixed;
+  bottom:5%;
+  right:30px;
+  display: none;
+  z-index: 99;
+}

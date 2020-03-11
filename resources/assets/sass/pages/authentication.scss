@@ -1,0 +1,44 @@
+// ================================================================================================
+// 	File Name: authentication.scss
+// 	Description: Page content different authentication pages layouts SCSS.
+// 	----------------------------------------------------------------------------------------------
+// 	Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+// 	Author: PIXINVENT
+// 	Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Core mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+// authentication pages background
+.bg-authentication{
+  background-color: $blank-bg-color;
+  .login-footer{
+    padding: 0rem 1.5rem 0.5rem;
+    .footer-btn{
+      .btn{
+        padding: 0.9rem 1.2rem !important;
+        margin: 1rem 1rem 1rem 0rem;
+      }
+    }
+  }
+
+}
+
+// IE Specific CSS
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+  // Authentication Pages scss
+  .bg-authentication{
+    width: 100%;
+  }
+}

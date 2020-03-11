@@ -1,0 +1,92 @@
+// ===============================================================================================
+//  File Name: faq.scss
+//  Description: FAQ Page Content SCSS
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+@import "../core/variables/components-variables";
+
+
+// FAQ jumbotron scss
+.faq-bg{
+    background: url(../../images/pages/faq.jpg) no-repeat;
+    background-size: cover;
+    .form-control{
+        &:focus{
+            // after focus search icon color
+            ~.form-control-position{
+                i{
+                    color: $primary;
+                }
+            }
+        }
+    }
+}
+
+.faq{
+    //faq sidebar scss
+    .faq-content{
+        .faq-table-content{
+            cursor: pointer;
+            padding: 0.5rem;
+            font-weight: $headings-font-weight;
+            i{
+                margin-right: 0.5rem;
+            }
+        }
+    }
+    //supporter details
+    .supporter-details{
+        .supporter-img{
+            img{
+                width: 35px;
+                height: 35px;
+                margin-right: 0.5rem;
+                cursor: pointer;
+            }
+        }
+    }
+    //supporter info
+    .supporter-info{
+        vertical-align: middle;
+    }
+    // faq Accordion font-weight
+    .accordion{
+        .collapse-title{
+            font-weight: $headings-font-weight;
+      color: $headings-color;
+        }
+    .collapse-margin{
+      background-color: $white;
+    }
+    }
+
+}
+
+// make jumbotron card body padding
+@media only screen and (min-width: 992px){
+    .faq-bg{
+        .card-body{
+            padding: 8rem !important;
+        }
+    }
+}
+// make jumbotron card body padding
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    .faq-bg{
+        .card-body{
+            padding: 6rem !important;
+        }
+    }
+}

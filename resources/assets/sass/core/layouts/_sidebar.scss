@@ -1,0 +1,60 @@
+/*=========================================================================================
+    File Name: sidebar.scss
+    Description: content sidebar specific scss.
+    ----------------------------------------------------------------------------------------
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+
+
+// Sidebar base
+// ------------------------------
+
+// Base
+.sidebar {
+    position: relative;
+    width: 100%;
+
+    // For desktop only
+    @include media-breakpoint-up(lg){
+        // display: table-cell;
+        vertical-align: top;
+        // width: $sidebar-width;
+    }
+}
+.sidebar-fixed{
+    position: fixed;
+    height: 100%;
+    overflow: scroll;
+}
+
+.sidenav-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 997;
+    display: none;
+}
+
+.drag-target {
+    height: 100%;
+    width: 40px;
+    position: fixed;
+    top: 0;
+    left:-10px;
+    z-index: 1036;
+}
+
+@include media-breakpoint-up(lg){
+    .sidebar-left{
+        float:left;
+    }
+    .sidebar-right{
+        float:right;
+    }
+}

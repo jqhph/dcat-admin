@@ -1,0 +1,444 @@
+// ================================================================================================
+//   File Name: pallette.scss
+//   Description: Custom color system styles, includes background, border and text colors
+//   ----------------------------------------------------------------------------------------------
+//   Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//   Author: PIXINVENT
+//   Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+//  ================================================================================================
+//  WARNING: PLEASE DO NOT CHANGE THIS VARIABLE FILE.
+//  THIS FILE WILL GET OVERWRITTEN WITH EACH VUEXY HTML TEMPLATE RELEASE.
+//  TIP:
+//  We suggest you to use this (assets/scss/colors/palette.scss) file for overriding color variables.
+//  ================================================================================================
+
+// usage: theme-color("name_of_color", "type_of_color")
+// to avoid to repeating map-get($colors, ...)
+
+@function color-function($color, $type) {
+  @if map-has-key($colors, $color) {
+    $curr_color: map-get($colors, $color);
+
+    @if map-has-key($curr_color, $type) {
+      @return map-get($curr_color, $type);
+    }
+  }
+
+  // @warn "Unknown `#{name}` in $colors.";
+  @return null;
+}
+
+// Color palettes
+@import "palette-variables";
+
+// Color Classes
+//   Text color: .color .lighten-* / .darken-* / .accent-*
+//   Background: .bg-color .bg-lighten-* / .bg-darken-* / .bg-accent-*
+//   border: .border-color .border-lighten-* / .border-darken-* / .border-accent-*
+//   border-top: .border-top-color .border-top-lighten-* / .border-top-darken-* / .border-top-accent-*
+//   border-bottom: .border-bottom-color .border-bottom-lighten-* / .border-bottom-darken-* / .border-bottom-accent-*
+//   border-left: .border-left-color .border-left-lighten-* / .border-left-darken-* / .border-left-accent-*
+//   border-right: .border-right-color .border-right-lighten-* / .border-right-darken-* / .border-right-accent-*
+
+@each $color_name,
+$color in $colors {
+
+  @each $color_type,
+  $color_value in $color {
+    @if $color_type=="base" {
+      .#{$color_name} {
+        color: $color_value !important;
+      }
+
+      // background color
+      .bg-#{$color_name} {
+        background-color: $color_value !important;
+
+        .card-header,
+        .card-footer {
+          background-color: transparent;
+        }
+      }
+
+      // Alert
+      .alert-#{$color_name} {
+        background: rgba($color_value, 0.2) !important;
+        color: $color_value !important;
+
+        .alert-heading {
+          @include alert-heading-bs($color_value);
+        }
+
+        .alert-link {
+          color: darken($color_value, 5%) !important;
+        }
+      }
+
+      // bg color lighten for rgba - opacity set
+      .bg-rgba-#{$color_name} {
+        background: rgba($color_value, 0.15) !important;
+      }
+
+      // Border colors
+      .border-#{$color_name} {
+        border: 1px solid $color_value !important;
+      }
+
+      .border-top-#{$color_name} {
+        border-top: 1px solid $color_value;
+      }
+
+      .border-bottom-#{$color_name} {
+        border-bottom: 1px solid $color_value;
+      }
+
+      .border-left-#{$color_name} {
+        border-left: 1px solid $color_value;
+      }
+
+      .border-right-#{$color_name} {
+        border-right: 1px solid $color_value;
+      }
+
+      // bagde glow colors
+      .bg-#{$color_name},
+      .border-#{$color_name},
+      .badge-#{$color-name} {
+        &.badge-glow {
+          box-shadow: 0px 0px 10px $color_value;
+        }
+      }
+
+      // Badge Background Color
+      .badge{
+        // Badge Background Color
+        &.badge-#{$color_name} {
+          background-color: $color-value;
+        }
+      }
+
+      // Overlay colors
+      .overlay-#{$color_name} {
+        @include bg-opacity($color_value, 0.6);
+      }
+
+      // Basic buttons
+      .btn-#{$color_name} {
+        border-color: color-function($color_name, "darken-2") !important;
+        background-color: $color_value !important;
+        color: #fff;
+
+        &:hover {
+          border-color: color-function($color_name, "darken-1") !important;
+          color: #fff !important;
+          box-shadow: 0 8px 25px -8px rgba($color-value, 1);
+        }
+
+        &:focus,
+        &:active {
+          color: #fff !important;
+        }
+      }
+
+      // For Btn Flat
+      .btn-flat-#{$color-name} {
+        background-color: transparent;
+        color: $color-value;
+
+        &:hover {
+          color: $color-value;
+          background-color: rgba($color-value, 0.1);
+        }
+
+        &:active,
+        &:focus {
+          background-color: $color-value;
+          color: #fff !important;
+        }
+      }
+
+      // For Btn Relief
+      .btn-relief-#{$color-name} {
+        background-color: $color-value;
+        box-shadow: inset 0 -3px 0 0 rgba(0, 0, 0, .2);
+        color: #fff;
+
+        &:hover {
+          color: #fff;
+        }
+
+        &:active,
+        &:focus {
+          outline: none;
+          transform: translateY(3px);
+        }
+      }
+
+      // Outline buttons
+      .btn-outline-#{$color_name} {
+        border: 1px solid $color_value;
+        background-color: transparent;
+        color: $color_value;
+
+        &:hover {
+          background-color: rgba($color: $color_value, $alpha: .08);
+          color: $color_value;
+        }
+        &:active {
+          color: #fff !important;
+        }
+      }
+
+      // Dropdowns
+
+      .btn-#{$color_name},.btn-outline-#{$color_name},.btn-flat-#{$color-name}{
+        &~.dropdown-menu{
+            .dropdown-item{
+              &.active{
+                background-color: $color_value;
+                color: #fff;
+                &:hover{
+                  color: #fff;
+                }
+              }
+
+              &:not(.active):not(:active){
+                &:hover{
+                  color: $color_value;
+                }
+              }
+          }
+        }
+      }
+
+      .dropdown,
+      .dropup,
+      .dropright,
+      .dropleft{
+        &.dropdown-icon-wrapper{
+          .btn-#{$color_name},.btn-outline-#{$color_name},.btn-flat-#{$color-name}{
+            &~.dropdown-menu{
+              .dropdown-item{
+                  &:hover{
+                   i{
+                    color: $color_value;
+                   }
+                }
+                &:active{
+                    i{
+                      color: #fff;
+                    }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Bullet colors for email app
+      .bullet{
+        &.bullet-#{$color_name}{
+          background-color: $color_value;
+        }
+      }
+
+      // For Pagination
+
+      .pagination-#{$color-name} {
+        .page-item {
+          &.active {
+            .page-link {
+              background: $color-value;
+              color: #fff;
+
+              &:hover {
+                color: #fff;
+              }
+
+            }
+          }
+
+          .page-link {
+            &:hover {
+              color: $color_value;
+            }
+          }
+
+          &.prev-item,
+          &.next-item {
+            .page-link:hover {
+              background: $color_value;
+              color: #fff;
+
+            }
+          }
+        }
+      }
+
+      // For Nav Pills
+
+      .nav-pill-#{$color-name} {
+        .nav-item {
+          .nav-link {
+
+            &.active {
+              color: #fff;
+              background-color: $color_value !important;
+            }
+          }
+        }
+      }
+
+      // Progress Bars
+
+      .progress-bar-#{$color_name} {
+        background-color: rgba($color_value, .1);
+
+        .progress-bar {
+          background-color: $color-value;
+        }
+      }
+
+      // Chips
+
+      .chip-#{$color-name}{
+        background-color: $color_value !important;
+        .chip-body{
+          color: #fff !important;
+        }
+      }
+
+      // Divider
+
+      .divider.divider-#{$color-name}{
+        .divider-text{
+          &:before,&:after{
+            border-color: $color-value !important;
+          }
+        }
+      }
+
+      // Form Input Elements
+      // Checkbox & Radio
+      input {
+
+        &[type="checkbox"].bg-#{$color_name},
+        &[type="radio"].bg-#{$color_name} {
+          +.custom-control-label {
+            &:before {
+              background-color: $color_value !important;
+            }
+          }
+        }
+      }
+
+      input:focus~.bg-#{$color_name} {
+        box-shadow: 0 0 0 0.075rem #fff, 0 0 0 0.21rem $color_value !important;
+      }
+
+      // Vuexy Custom Checkbox
+      .vs-checkbox-#{$color_name} {
+        input{
+          &:checked~.vs-checkbox{
+            border-color: $color_value !important;
+            .vs-checkbox--check{
+              background-color: $color_value !important;
+            }
+          }
+          &:active:checked+.vs-checkbox .vs-checkbox--check{
+            background-color: $color_value !important;
+          }
+        }
+      }
+
+      // Bootstrap Custom Switches
+
+      .custom-switch-#{$color-name}{
+        .custom-control-input:checked ~ .custom-control-label::before{
+          background-color: $color_value !important;
+          color: #fff;
+          transition:all .2s ease-out;
+        }
+      }
+
+      // Vuexy Custom Checkbox
+      .vs-radio-#{$color_name} {
+        input{
+          &:checked~.vs-radio{
+            .vs-radio--circle{
+                background: rgba($color_value,1) !important;
+                box-shadow: 0 3px 12px 0 rgba($color_value,.4) !important;
+            }
+          }
+        }
+      }
+
+
+    }
+
+    @else {
+      .#{$color_name}.#{$color_type} {
+        color: $color_value !important;
+      }
+
+      .bg-#{$color_name}.bg-#{$color_type} {
+        background-color: $color_value !important;
+      }
+
+      .btn-#{$color_name}.btn-#{$color_type} {
+        border-color: color-function($color_name, "darken-2") !important;
+        background-color: $color_value !important;
+
+        &:hover {
+          border-color: color-function($color_name, "darken-2") !important;
+          background-color: color-function($color_name, "darken-3") !important;
+        }
+
+        &:focus,
+        &:active {
+          border-color: color-function($color_name, "darken-3") !important;
+          background-color: color-function($color_name, "darken-4") !important;
+        }
+      }
+
+      .btn-outline-#{$color_name}.btn-outline-#{$color_type} {
+        border-color: $color_value !important;
+        color: $color_value !important;
+
+        &:hover {
+          background-color: $color_value !important;
+        }
+      }
+
+      input:focus~.bg-#{$color_name} {
+        box-shadow: 0 0 0 0.075rem #fff, 0 0 0 0.21rem $color_value !important;
+      }
+
+      .border-#{$color_name}.border-#{$color_type} {
+        border: 1px solid $color_value !important;
+      }
+
+      .border-top-#{$color_name}.border-top-#{$color_type} {
+        border-top: 1px solid $color_value !important;
+      }
+
+      .border-bottom-#{$color_name}.border-bottom-#{$color_type} {
+        border-bottom: 1px solid $color_value !important;
+      }
+
+      .border-left-#{$color_name}.border-left-#{$color_type} {
+        border-left: 1px solid $color_value !important;
+      }
+
+      .border-right-#{$color_name}.border-right-#{$color_type} {
+        border-right: 1px solid $color_value !important;
+      }
+
+      .overlay-#{$color_name}.overlay-#{$color_type} {
+        @include bg-opacity($color_value, 0.6);
+      }
+    }
+  }
+}

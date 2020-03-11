@@ -1,0 +1,137 @@
+/*=========================================================================================
+    File Name: vertical-overlay-menu.scss
+    Description: A overlay style vertical menu with show and hide support. It support
+    light & dark version, filpped layout, right side icons, native scroll and borders menu
+    item seperation.
+    ----------------------------------------------------------------------------------------
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+// Core variables and mixins
+@import "../../../bootstrap/functions";
+@import "../../../bootstrap/mixins";
+@import "../../../bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "../../variables/variables";
+@import "../../../bootstrap/variables";
+
+// Overrides user variable
+@import "../../variables/components-variables";
+
+// Import first main menu mixin
+@import "../../mixins/main-menu-mixin";
+
+// Vertical Overlay Menu
+//=========================
+.vertical-overlay-menu {
+    //Content expanded
+    .content{
+        @include main-menu-width(0);
+    }
+    //Navbar expanded
+    .navbar{
+        .navbar-header{
+            @include menu-navbar-width($menu-expanded-width);
+        }
+        &.header-navbar{
+            &.floating-nav{
+                width: calc(100vw - (100vw - 100%) - calc(#{$content-padding} * 2));
+            }
+        }
+    }
+    // Main menu expanded
+    .main-menu{
+        opacity: 0;
+        transform: translate3d(0,0,0);
+        transition: width .25s,opacity .25s,transform .25s;
+        width: $menu-expanded-width;
+        left: -($menu-expanded-width);
+
+        .navigation{
+            .navigation-header{
+                .icon-minus{
+                    display: none;
+                }
+            }
+            > li{
+                > a {
+                    > i {
+                        margin-right: 14px;
+                        float:left;
+                        &:before{
+                          transition: 200ms ease all;
+                          font-size: 1.429rem;
+                        }
+                    }
+                }
+            }
+            li{
+                @include vertical-menu-has-sub-arrow(1rem);
+                a i{
+                   font-size: 1.1rem;
+                }
+            }
+        }
+        .main-menu-footer{
+            bottom:55px;
+        }
+        .main-menu-footer {
+            width: $menu-expanded-width;
+        }
+    }
+    &.menu-open {
+        .main-menu{
+            opacity: 1;
+            transform: translate3d($menu-expanded-width,0,0);
+            transition: width .25s,opacity .25s,transform .25s;
+        }
+    }
+    &.menu-hide {
+        .main-menu{
+            @extend  .main-menu;
+        }
+    }
+
+    // Flipped menu open
+    &.menu-flipped{
+        // Main menu hidden on flipped
+        .main-menu{
+            right: -($menu-expanded-width);
+            left: inherit;
+        }
+        //Navbar flipped
+        .navbar{
+            .navbar-container{
+                @include vertical-flipped-menu($menu-expanded-width);
+            }
+            .navbar-header{
+                float: right;
+            }
+        }
+        &.menu-open {
+            .main-menu{
+                transform: translate3d(-$menu-expanded-width,0,0);
+            }
+        }
+    }
+}
+// @include media-breakpoint-down(lg) {
+//     .vertical-overlay-menu {
+//         .header-navbar{
+//             background: $white;
+//             box-shadow: 0 4px 20px 0 rgba($black, 0.05);
+//         }
+//     }
+// }
+@include media-breakpoint-down(md) {
+    .vertical-overlay-menu {
+        .main-menu{
+            .main-menu-footer{
+                bottom:0px;
+            }
+        }
+    }
+}

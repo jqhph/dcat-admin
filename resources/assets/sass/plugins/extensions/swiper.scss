@@ -1,0 +1,263 @@
+/*=========================================================================================
+    File Name: swiper.scss
+    Description: swiper plugin scss.
+    ----------------------------------------------------------------------------------------
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+// Core variables and mixins
+@import "../../bootstrap/functions";
+@import "../../bootstrap/mixins";
+
+// Core variables and mixins overrides
+@import "../../core/variables/variables";
+@import "../../bootstrap/variables";
+
+// Overrides user variable
+@import "../../core/variables/components-variables";
+
+
+/* Swiper css */
+/* ---------- */
+/* swiper slide shadow */
+.swiper-container {
+  .swiper-shadow {
+    box-shadow: 2px 8px 10px 0 rgba(25, 42, 70, 0.13) !important;
+  }
+}
+
+// centered slides option-1
+.swiper-centered-slides {
+  &.swiper-container {
+    .swiper-slide {
+      text-align: center;
+      font-weight: $headings-font-weight;
+      background-color: $white;
+      height: auto;
+      width: auto !important;
+      padding: 2rem 5.5rem;
+      cursor: pointer;
+
+      &.swiper-slide-active {
+        border: 2px solid $primary;
+
+        i {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    &:after {
+      border-radius: 50%;
+      background-color: $primary;
+      box-shadow: 0 2px 4px 0 rgba($black, 0.5) !important;
+    }
+  }
+}
+
+// centered slides option-2
+.swiper-centered-slides-2 {
+  &.swiper-container {
+    .swiper-slide {
+      font-weight: $headings-font-weight;
+      background-color: $swiper-bg;
+      height: auto;
+      width: auto !important;
+      cursor: pointer;
+
+      &.swiper-slide-active {
+        color: $white;
+        background-color: $primary;
+        box-shadow: 0 3px 6px 0 rgba($primary, 0.5) !important
+      }
+    }
+  }
+}
+
+/* cube effect */
+.swiper-cube-effect {
+  &.swiper-container {
+    width: 300px;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -12px;
+  }
+}
+
+/* swiper coverflow slide width */
+.swiper-coverflow {
+  &.swiper-container {
+    .swiper-slide {
+      width: 300px;
+    }
+  }
+}
+
+.gallery-thumbs {
+  padding: 10px 0;
+  background: $black;
+
+  .swiper-slide {
+    opacity: 0.4;
+  }
+
+  .swiper-slide-thumb-active {
+    opacity: 1;
+  }
+}
+
+// parallax
+.swiper-parallax {
+  .swiper-slide {
+    padding: 2.67rem 4rem;
+
+    .title {
+      font-size: $h5-font-size;
+      padding: .5rem 0;
+    }
+
+    .text {
+      font-size: $font-size-sm;
+    }
+  }
+
+  .parallax-bg {
+    position: absolute;
+    width: 130%;
+  }
+}
+
+.swiper-virtual {
+  &.swiper-container {
+    height: 300px;
+
+    .swiper-slide {
+      /* virtual slides  */
+      font-size: $h3-font-size;
+      background-color: $kbd-bg;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+//navigation button custom feather icons
+.swiper-button-prev,
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+  background-image: none;
+  color: $white;
+  width: 35px;
+  font-size: $h1-font-size;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:after {
+    font-family: 'feather';
+  }
+}
+
+.swiper-button-prev {
+  &:after {
+    content: "\e843";
+    padding-right: 1px;
+  }
+}
+
+.swiper-button-next {
+  &:after {
+    content: "\e844";
+    padding-left: 2px;
+  }
+}
+
+.swiper-container-rtl {
+  .swiper-button-prev {
+    &:after {
+      content: "\e844";
+    }
+  }
+
+  .swiper-button-next {
+    &:after {
+      content: "\e843";
+    }
+  }
+}
+
+// Media query for medium screen
+@media only screen and (max-width: 768px) {
+
+  //navigation button custom boxicons
+  .swiper-button-prev {
+    font-size: $h4-font-size;
+    top: 55%;
+  }
+
+  .swiper-button-next {
+    font-size: $h4-font-size;
+    top: 55%;
+    width: 15px;
+  }
+
+  // parallax
+  .swiper-parallax {
+    .swiper-slide {
+      padding: 1rem 1.2rem;
+    }
+
+    img {
+      height: 100% !important;
+    }
+  }
+}
+
+// Media query for small screen
+@media only screen and (max-width: 576px) {
+
+  // centered slides option-1
+  .swiper-centered-slides {
+    &.swiper-container {
+      .swiper-slide {
+        padding: 1.6rem 2.5rem;
+
+        i {
+          font-size: $h5-font-size !important;
+        }
+      }
+    }
+  }
+
+  // cube effect
+  .swiper-cube-effect {
+    &.swiper-container {
+      width: 150px;
+      left: 70%;
+    }
+  }
+
+  // parallax
+  .swiper-parallax {
+    .swiper-slide {
+      padding: 1rem 1.3rem;
+
+    }
+  }
+
+  // virtual slides
+  .swiper-virtual {
+    &.swiper-container {
+      .swiper-slide {
+        font-size: $font-size-base;
+      }
+    }
+  }
+}

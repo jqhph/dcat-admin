@@ -1,0 +1,935 @@
+{
+  "menu": [
+    {
+      "url": "",
+      "name": "Dashboard",
+      "slug": "dashboard",
+      "icon": "feather icon-home",
+      "i18n": "Dashboard",
+      "submenu": [
+        {
+          "url": "dashboard-analytics",
+          "name": "Analytics",
+          "icon": "feather icon-activity",
+          "i18n": "nav.dashboard_analytics"
+        },
+        {
+          "url": "dashboard-ecommerce",
+          "name": "eCommerce",
+          "icon": "feather icon-shopping-cart",
+          "i18n": "nav.dashboard_ecommerce"
+        }
+      ]
+    },
+    {
+      "url": "#",
+      "name": "Apps",
+      "slug": "apps",
+      "icon": "feather icon-package",
+      "i18n": "Apps",
+      "dropdown": "1",
+      "submenu": [
+        {
+          "url": "app-email",
+          "name": "Email",
+          "i18n": "Email",
+          "icon": "feather icon-mail",
+          "slug": "email-application"
+        },
+        {
+          "url": "app-chat",
+          "name": "Chat",
+          "i18n": "Chat",
+          "icon": "feather icon-message-square",
+          "slug": "chat-application"
+        },
+        {
+          "url": "app-todo",
+          "name": "Todo",
+          "i18n": "Todo",
+          "icon": "feather icon-check-square",
+          "slug": "app-todo"
+        },
+        {
+          "url": "app-calender",
+          "name": "Calender",
+          "i18n": "Calender",
+          "icon": "feather icon-calendar",
+          "slug": "app-calender"
+        },
+        {
+          "url": "#",
+          "name": "Ecommerce",
+          "i18n": "Ecommerce",
+          "icon": "feather icon-shopping-cart",
+          "slug": "",
+          "dropdown": "1",
+          "submenu": [
+            {
+              "url": "app-ecommerce-shop",
+              "name": "Shop",
+              "i18n": "Shop",
+              "icon": "feather icon-circle",
+              "slug": "app-ecommerce-shop"
+            },
+            {
+              "url": "app-ecommerce-details",
+              "name": "Details",
+              "icon": "feather icon-circle",
+              "i18n": "nav.app_ecommerce_details"
+            },
+            {
+              "url": "app-ecommerce-wishlist",
+              "name": "Wish List",
+              "i18n": "Wish List",
+              "icon": "feather icon-circle",
+              "slug": "app-ecommerce-wishlist"
+            },
+            {
+              "url": "app-ecommerce-checkout",
+              "name": "Checkout",
+              "i18n": "Checkout",
+              "icon": "feather icon-circle",
+              "slug": "app-ecommerce-checkout"
+            }
+          ]
+        },
+        {
+          "url": "",
+          "name": "User",
+          "icon": "feather icon-unlock",
+          "submenu": [
+            {
+              "url": "app-user-list",
+              "name": "List",
+              "icon": "feather icon-circle",
+              "i18n": "nav.app_user_list"
+            },
+            {
+              "url": "app-user-view",
+              "name": "View",
+              "icon": "feather icon-circle",
+              "i18n": "nav.app_user_view"
+            },
+            {
+              "url": "app-user-edit",
+              "name": "Edit",
+              "icon": "feather icon-circle",
+              "i18n": "nav.app_user_edit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "#",
+      "name": "UI Elements",
+      "slug": "ui-elements",
+      "icon": "feather icon-layers",
+      "i18n": "UI Elements",
+      "dropdown": "1",
+      "submenu": [
+        {
+          "url": "#",
+          "name": "Data List",
+          "i18n": "Data List",
+          "icon": "feather icon-list",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "data-list-view",
+              "name": "List View",
+              "i18n": "List View",
+              "icon": "feather icon-circle",
+              "slug": "data-list-view"
+            },
+            {
+              "url": "data-thumb-view",
+              "name": "Thumb View",
+              "i18n": "Thumb View",
+              "icon": "feather icon-circle",
+              "slug": "data-thumb-view"
+            }
+          ]
+        },
+        {
+          "url": "#",
+          "name": "Content",
+          "slug": "content",
+          "i18n": "Content",
+          "icon": "feather icon-layout",
+          "submenu": [
+            {
+              "url": "content-grid",
+              "name": "Grid",
+              "i18n": "Grid",
+              "icon": "feather icon-circle",
+              "slug": "content-grid"
+            },
+            {
+              "url": "content-typography",
+              "name": "Typography",
+              "i18n": "Typography",
+              "icon": "feather icon-circle",
+              "slug": "content-typography"
+            },
+            {
+              "url": "content-text-utilities",
+              "name": "Text Utilities",
+              "i18n": "Text Utilities",
+              "icon": "feather icon-circle",
+              "slug": "content-text-utilities"
+            },
+            {
+              "url": "content-syntax-highlighter",
+              "name": "Syntax Highlighter",
+              "i18n": "Syntax Highlighter",
+              "icon": "feather icon-circle",
+              "slug": "content-syntax-highlighter"
+            },
+            {
+              "url": "content-helper-classes",
+              "name": "Helper Classes",
+              "i18n": "Helper Classes",
+              "icon": "feather icon-circle",
+              "slug": "content-helper-classes"
+            }
+          ]
+        },
+        {
+          "url": "colors",
+          "name": "Colors",
+          "i18n": "Colors",
+          "icon": "feather icon-droplet",
+          "slug": "colors"
+        },
+        {
+          "url": "#",
+          "name": "Cards",
+          "i18n": "Cards",
+          "icon": "feather icon-credit-card",
+          "slug": "cards",
+          "submenu": [
+            {
+              "url": "card-basic",
+              "name": "Basic",
+              "i18n": "Basic",
+              "icon": "feather icon-circle",
+              "slug": "card-basic"
+            },
+            {
+              "url": "card-advance",
+              "name": "Advance",
+              "i18n": "Advance",
+              "icon": "feather icon-circle",
+              "slug": "card-advance"
+            },
+            {
+              "url": "card-statistics",
+              "name": "Statistics",
+              "i18n": "Statistics",
+              "icon": "feather icon-circle",
+              "slug": "card-statistics"
+            },
+            {
+              "url": "card-analytics",
+              "name": "Analytics",
+              "i18n": "Analytics",
+              "icon": "feather icon-circle",
+              "slug": "card-analytics"
+            },
+            {
+              "url": "card-actions",
+              "name": "Card Actions",
+              "i18n": "Card Actions",
+              "icon": "feather icon-circle",
+              "slug": "card-actions"
+            }
+          ]
+        },
+        {
+          "url": "#",
+          "name": "Icons",
+          "i18n": "Icons",
+          "icon": "feather icon-eye",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "icons-feather",
+              "name": "Feather",
+              "i18n": "Feather",
+              "icon": "feather icon-circle",
+              "slug": "icons-feather"
+            },
+            {
+              "url": "icons-font-awesome",
+              "name": "Font Awesome",
+              "i18n": "Font Awesome",
+              "icon": "feather icon-circle",
+              "slug": "icons-font-awesome"
+            }
+          ]
+        },
+        {
+          "url": "#",
+          "name": "Components",
+          "i18n": "Components",
+          "icon": "feather icon-briefcase",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "component-alert",
+              "name": "Alerts",
+              "i18n": "Alerts",
+              "icon": "feather icon-circle",
+              "slug": "component-alert"
+            },
+            {
+              "url": "component-buttons",
+              "name": "Buttons",
+              "i18n": "Buttons",
+              "icon": "feather icon-circle",
+              "slug": "component-buttons"
+            },
+            {
+              "url": "component-breadcrumbs",
+              "name": "Breadcrumbs",
+              "i18n": "Breadcrumbs",
+              "icon": "feather icon-circle",
+              "slug": "component-breadcrumbs"
+            },
+            {
+              "url": "component-carousel",
+              "name": "Carousel",
+              "i18n": "Carousel",
+              "icon": "feather icon-circle",
+              "slug": "component-carousel"
+            },
+            {
+              "url": "component-collapse",
+              "name": "Collapse",
+              "i18n": "Collapse",
+              "icon": "feather icon-circle",
+              "slug": "component-collapse"
+            },
+            {
+              "url": "component-dropdowns",
+              "name": "Dropdowns",
+              "i18n": "Dropdowns",
+              "icon": "feather icon-circle",
+              "slug": "component-dropdowns"
+            },
+            {
+              "url": "component-list-group",
+              "name": "List Group",
+              "i18n": "List Group",
+              "icon": "feather icon-circle",
+              "slug": "component-list-group"
+            },
+            {
+              "url": "component-modals",
+              "name": "Modals",
+              "i18n": "Modals",
+              "icon": "feather icon-circle",
+              "slug": "component-modals"
+            },
+            {
+              "url": "component-pagination",
+              "name": "Pagination",
+              "i18n": "Pagination",
+              "icon": "feather icon-circle",
+              "slug": "component-pagination"
+            },
+            {
+              "url": "component-navs",
+              "name": "Navs Component",
+              "i18n": "Navs Component",
+              "icon": "feather icon-circle",
+              "slug": "component-navs"
+            },
+            {
+              "url": "component-navbar",
+              "name": "Navbar",
+              "icon": "feather icon-circle",
+              "i18n": "Navbar",
+              "slug": "component-navbar"
+            },
+            {
+              "url": "component-tabs",
+              "name": "Tabs Component",
+              "i18n": "Tabs Component",
+              "icon": "feather icon-circle",
+              "slug": "component-tabs"
+            },
+            {
+              "url": "component-pills",
+              "name": "Pills Component",
+              "i18n": "Pills Component",
+              "icon": "feather icon-circle",
+              "slug": "component-pills"
+            },
+            {
+              "url": "component-tooltips",
+              "name": "Tooltips",
+              "i18n": "Tooltips",
+              "icon": "feather icon-circle",
+              "slug": "component-tooltips"
+            },
+            {
+              "url": "component-popovers",
+              "name": "Popovers",
+              "i18n": "Popovers",
+              "icon": "feather icon-circle",
+              "slug": "component-popovers"
+            },
+            {
+              "url": "component-badges",
+              "name": "Badges",
+              "i18n": "Badges",
+              "icon": "feather icon-circle",
+              "slug": "component-badges"
+            },
+            {
+              "url": "component-pill-badges",
+              "name": "Pill Badges",
+              "i18n": "Pill Badges",
+              "icon": "feather icon-circle",
+              "slug": "component-pill-badges"
+            },
+            {
+              "url": "component-progress",
+              "name": "Progress",
+              "i18n": "Progress",
+              "icon": "feather icon-circle",
+              "slug": "component-progress"
+            },
+            {
+              "url": "component-media-objects",
+              "name": "Media Objects",
+              "icon": "feather icon-circle",
+              "slug": "component-media-objects"
+            },
+            {
+              "url": "component-spinner",
+              "name": "Spinner",
+              "i18n": "Spinner",
+              "icon": "feather icon-circle",
+              "slug": "component-bs-spinner"
+            },
+            {
+              "url": "component-toast",
+              "name": "Toasts",
+              "i18n": "Toasts",
+              "icon": "feather icon-circle",
+              "slug": "component-toast"
+            }
+          ]
+        },
+        {
+          "url": "#",
+          "name": "Extra Components",
+          "i18n": "Extra Components",
+          "icon": "feather icon-box",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "ex-component-avatar",
+              "name": "Avatar",
+              "i18n": "Avatar",
+              "icon": "feather icon-circle",
+              "slug": "ex-component-avatar"
+            },
+            {
+              "url": "ex-component-chips",
+              "name": "Chips",
+              "i18n": "Chips",
+              "icon": "feather icon-circle",
+              "slug": "ex-component-chips"
+            },
+            {
+              "url": "ex-component-divider",
+              "name": "Divider",
+              "i18n": "Divider",
+              "icon": "feather icon-circle",
+              "slug": "ex-component-divider"
+            }
+          ]
+        },
+        {
+          "url": "#",
+          "name": "Extensions",
+          "i18n": "Extensions",
+          "icon": "feather icon-box",
+          "slug": "extensions",
+          "submenu": [
+            {
+              "url": "ext-component-sweet-alerts",
+              "name": "Sweet Alert",
+              "i18n": "Sweet Alert",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-sweet-alerts"
+            },
+            {
+              "url": "ext-component-toastr",
+              "name": "Toastr",
+              "i18n": "Toastr",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-toastr"
+            },
+            {
+              "url": "ext-component-noui-slider",
+              "name": "NoUi Slider",
+              "i18n": "NoUi Slider",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-noui-slider"
+            },
+            {
+              "url": "ext-component-file-uploader",
+              "name": "File Uploader",
+              "i18n": "File Uploader",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-file-uploader"
+            },
+            {
+              "url": "ext-component-quill-editor",
+              "name": "Quill Editor",
+              "i18n": "Quill Editor",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-quill-editor"
+            },
+            {
+              "url": "ext-component-drag-drop",
+              "name": "Drag & Drop",
+              "i18n": "Drag & Drop",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-drag-drop"
+            },
+            {
+              "url": "ext-component-tour",
+              "name": "Tour",
+              "i18n": "Tour",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-tour"
+            },
+            {
+              "url": "ext-component-clipboard",
+              "name": "Clipboard",
+              "i18n": "Clipboard",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-clipboard"
+            },
+            {
+              "url": "ext-component-plyr",
+              "name": "Media player",
+              "i18n": "Media player",
+              "icon": "feather icon-circle",
+              "slug": "Media Player"
+            },
+            {
+              "url": "ext-component-context-menu",
+              "name": "Context Menu",
+              "i18n": "Context Menu",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-context-menu"
+            },
+            {
+              "url": "ext-component-swiper",
+              "name": "Swiper",
+              "i18n": "swiper",
+              "icon": "feather icon-smartphone",
+              "slug": "nav.ext-component-swiper"
+            },
+            {
+              "url": "ext-component-i18n",
+              "name": "l18n",
+              "i18n": "l18n",
+              "icon": "feather icon-circle",
+              "slug": "ext-component-i18n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "#",
+      "name": "Forms & Tables",
+      "icon": "feather icon-edit-2",
+      "slug": "Forms & Tables",
+      "i18n": "Dashboard",
+      "dropdown": "1",
+      "submenu": [
+        {
+          "url": "#",
+          "name": "Form Elements",
+          "i18n": "Form Elements",
+          "icon": "feather icon-copy",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "form-select",
+              "name": "Select",
+              "i18n": "Select",
+              "icon": "feather icon-circle",
+              "slug": "form-select"
+            },
+            {
+              "url": "form-switch",
+              "name": "Switch",
+              "i18n": "Switch",
+              "icon": "feather icon-circle",
+              "slug": "form-switch"
+            },
+            {
+              "url": "form-checkbox",
+              "name": "Checkbox",
+              "i18n": "Checkbox",
+              "icon": "feather icon-circle",
+              "slug": "form-checkbox"
+            },
+            {
+              "url": "form-radio",
+              "name": "Radio",
+              "i18n": "Radio",
+              "icon": "feather icon-circle",
+              "slug": "form-radio"
+            },
+            {
+              "url": "form-input",
+              "name": "Input",
+              "i18n": "Input",
+              "icon": "feather icon-circle",
+              "slug": "form-input"
+            },
+            {
+              "url": "form-input-groups",
+              "name": "Input Groups",
+              "i18n": "Input Groups",
+              "icon": "feather icon-circle",
+              "slug": "form-input-groups"
+            },
+            {
+              "url": "form-number-input",
+              "name": "Number Input",
+              "i18n": "Number Input",
+              "icon": "feather icon-circle",
+              "slug": "form-number-input"
+            },
+            {
+              "url": "form-textarea",
+              "name": "Textarea",
+              "i18n": "Textarea",
+              "icon": "feather icon-circle",
+              "slug": "form-textarea"
+            },
+            {
+              "url": "form-date-time-picker",
+              "name": "Date & Time Picker",
+              "i18n": "Date & Time Picker",
+              "icon": "feather icon-circle",
+              "slug": "form-date-time-picker"
+            }
+          ]
+        },
+        {
+          "url": "form-layout",
+          "name": "Form Layout",
+          "i18n": "Form Layout",
+          "icon": "feather icon-box",
+          "slug": "form-layout"
+        },
+        {
+          "url": "form-wizard",
+          "name": "Form Wizard",
+          "i18n": "Form Wizard",
+          "icon": "feather icon-package",
+          "slug": "form-wizard"
+        },
+        {
+          "url": "form-validation",
+          "name": "Form Validation",
+          "i18n": "Form Validation",
+          "icon": "feather icon-check-circle",
+          "slug": "form-validation"
+        },
+        {
+          "url": "table",
+          "name": "Table",
+          "i18n": "Table",
+          "icon": "feather icon-server",
+          "slug": "table"
+        },
+        {
+          "url": "table-datatable",
+          "name": "Datatable",
+          "i18n": "Datatable",
+          "icon": "feather icon-grid",
+          "slug": "table-datatable"
+        },
+        {
+          "url": "table-ag-grid",
+          "name": "agGrid Table",
+          "icon": "feather icon-grid",
+          "i18n": "nav.table_ag_grid",
+          "slug": "table-ag-grid"
+        }
+      ]
+    },
+    {
+      "url": "#",
+      "name": "Pages",
+      "icon": "feather icon-file",
+      "slug": "pages",
+      "i18n": "Pages",
+      "dropdown": "1",
+      "submenu": [
+        {
+          "url": "page-user-profile",
+          "name": "Profile",
+          "i18n": "Profile",
+          "icon": "feather icon-user",
+          "slug": "user-profile"
+        },
+        {
+          "url": "page-account-settings",
+          "name": "Account Settings",
+          "icon": "feather icon-settings",
+          "i18n": "nav.page_account_settings"
+        },
+        {
+          "url": "page-faq",
+          "name": "FAQ",
+          "i18n": "FAQ",
+          "icon": "feather icon-help-circle",
+          "slug": "faq"
+        },
+        {
+          "url": "page-knowledge-base",
+          "name": "Knowledge Base",
+          "i18n": "Knowledge Base",
+          "icon": "feather icon-info",
+          "slug": "knowledge-base"
+        },
+        {
+          "url": "page-search",
+          "name": "Search",
+          "i18n": "Search",
+          "icon": "feather icon-search",
+          "slug": "search-page"
+        },
+        {
+          "url": "page-invoice",
+          "name": "Invoice",
+          "i18n": "Invoice",
+          "icon": "feather icon-file",
+          "slug": "invoice"
+        },
+        {
+          "url": "#",
+          "name": "Authentication",
+          "i18n": "Authentication",
+          "icon": "feather icon-unlock",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "auth-login",
+              "name": "Login",
+              "i18n": "Login",
+              "icon": "feather icon-circle",
+              "slug": "login"
+            },
+            {
+              "url": "auth-register",
+              "name": "Register",
+              "i18n": "Register",
+              "icon": "feather icon-circle",
+              "slug": "register"
+            },
+            {
+              "url": "auth-forgot-password",
+              "name": "Forgot Password",
+              "i18n": "Forgot Password",
+              "icon": "feather icon-circle",
+              "slug": "forgot-password"
+            },
+            {
+              "url": "auth-reset-password",
+              "name": "Reset Password",
+              "i18n": "Reset Password",
+              "icon": "feather icon-circle",
+              "slug": "reset-password"
+            },
+            {
+              "url": "auth-lock-screen",
+              "name": "Lock Screen",
+              "i18n": "Lock Screen",
+              "icon": "feather icon-circle",
+              "slug": "lock-screen"
+            }
+          ]
+        },
+        {
+          "url": "#",
+          "name": "Miscellaneous",
+          "i18n": "Miscellaneous",
+          "icon": "feather icon-file-text",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "page-coming-soon",
+              "name": "Coming Soon",
+              "i18n": "Coming Soon",
+              "icon": "feather icon-circle",
+              "slug": "coming-soon"
+            },
+            {
+              "url": "error-404",
+              "name": "Error 404",
+              "i18n": "404",
+              "icon": "feather icon-circle",
+              "slug": "error-404"
+            },
+            {
+              "url": "error-500",
+              "name": "Error 500",
+              "i18n": "500",
+              "icon": "feather icon-circle",
+              "slug": "error-500"
+            },
+            {
+              "url": "page-not-authorized",
+              "name": "Not Authorized",
+              "i18n": "Not Authorized",
+              "icon": "feather icon-circle",
+              "slug": "not-authorized"
+            },
+            {
+              "url": "page-maintenance",
+              "name": "Maintenance",
+              "i18n": "Maintenance",
+              "icon": "feather icon-circle",
+              "slug": "maintenance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "#",
+      "name": "Charts & Maps",
+      "icon": "feather icon-bar-chart-2",
+      "slug": "chart",
+      "i18n": "Charts & Maps",
+      "dropdown": "1",
+      "submenu": [
+        {
+          "url": "#",
+          "name": "Charts",
+          "i18n": "Charts",
+          "icon": "feather icon-pie-chart",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "chart-apex",
+              "name": "Apex",
+              "i18n": "Apex",
+              "icon": "feather icon-circle",
+              "slug": "chart-apex"
+            },
+            {
+              "url": "chart-chartjs",
+              "name": "Chartjs",
+              "i18n": "Chartjs",
+              "icon": "feather icon-circle",
+              "slug": "chart-chartjs"
+            },
+            {
+              "url": "chart-echarts",
+              "name": "Echarts",
+              "i18n": "Echarts",
+              "icon": "feather icon-circle",
+              "slug": "chart-echarts"
+            }
+          ]
+        },
+        {
+          "url": "maps-google",
+          "name": "Google Maps",
+          "i18n": "Google Maps",
+          "icon": "feather icon-map",
+          "slug": "maps-google"
+        }
+      ]
+    },
+    {
+      "url": "#",
+      "name": "Others",
+      "icon": "feather icon-more-horizontal",
+      "slug": "others",
+      "i18n": "Others",
+      "dropdown": "1",
+      "submenu": [
+        {
+          "url": "#",
+          "name": "Menu Levels",
+          "i18n": "Menu Levels",
+          "icon": "feather icon-menu",
+          "slug": "",
+          "submenu": [
+            {
+              "url": "#",
+              "name": "Second Level",
+              "i18n": "Second Level",
+              "icon": "feather icon-circle",
+              "slug": ""
+            },
+            {
+              "url": "#",
+              "name": "Second Level",
+              "i18n": "Second Level",
+              "icon": "feather icon-circle",
+              "slug": "",
+              "submenu": [
+                {
+                  "url": "#",
+                  "name": "Third Level",
+                  "i18n": "Third Level",
+                  "icon": "feather icon-circle",
+                  "slug": ""
+                },
+                {
+                  "url": "#",
+                  "name": "Third Level",
+                  "i18n": "Third Level",
+                  "icon": "feather icon-circle",
+                  "slug": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "url": "",
+          "name": "Disabled Menu",
+          "i18n": "Disabled Menu",
+          "icon": "feather icon-eye-off",
+          "slug": "",
+          "classlist": "disabled"
+        },
+        {
+          "url": "https://pixinvent.com/demo/vuexy-html-bootstrap-admin-template/documentation/documentation-laravel.html",
+          "name": "Documentation",
+          "i18n": "Documentation",
+          "slug": "documentation",
+          "icon": "feather icon-folder"
+        },
+        {
+          "url": "https://pixinvent.ticksy.com/",
+          "name": "Raise Support",
+          "i18n": "Raise Support",
+          "slug": "support-raise-support",
+          "icon": "feather icon-life-buoy"
+        }
+      ]
+    }
+  ]
+}

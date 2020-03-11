@@ -1,0 +1,92 @@
+// ================================================================================================
+//  File Name: app-user.scss
+//  Description: App user SCSS.
+//  ----------------------------------------------------------------------------------------------
+//  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+// Core variables and mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+/* user page css */
+/*---------------*/
+.users-list-wrapper {
+  .actions-dropodown {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
+    border-radius: 0.5rem;
+  }
+
+  a,
+  span {
+    color: inherit;
+
+    i {
+      cursor: pointer;
+      font-size: 1.2rem;
+
+      &.users-delete-icon {
+        font-size: 1.2rem;
+
+        &:hover {
+          color: $danger;
+        }
+      }
+
+      &.users-edit-icon {
+
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  .badge {
+    text-transform: uppercase;
+  }
+
+  // ag Grid
+  .ag-icon-checkbox-unchecked {
+    color: $text-muted !important;
+    font-size: 22px;
+  }
+
+  .ag-icon-checkbox-checked,
+  .ag-icon-checkbox-indeterminate {
+    font-size: 22px;
+  }
+}
+
+// users view page css
+.page-users-view {
+  .users-view-image {
+    width: 150px;
+    flex: none !important;
+  }
+
+  table {
+    td {
+      padding-bottom: .8rem;
+      min-width: 140px;
+      word-break: break-word;
+    }
+  }
+}
+
+// users view & users edit page common css
+.users-view,
+.users-edit {
+  .users-avatar-shadow {
+    box-shadow: 2px 4px 14px 0 rgba($black, 0.4);
+  }
+}

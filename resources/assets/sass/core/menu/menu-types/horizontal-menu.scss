@@ -1,0 +1,393 @@
+/*=========================================================================================
+	File Name: horizontal-menu.scss
+	Description: A classic horizontal menu for easy navingation & support all devices.
+	It support light & dark version, filpped layout, right side icons, borders menu for
+	item seperation.
+	----------------------------------------------------------------------------------------
+	Item Name:  Vusax - Vuejs, HTML & Laravel Admin Dashboard Template
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+// Core variables and mixins
+@import "../../../bootstrap/functions";
+@import "../../../bootstrap/mixins";
+@import "../../../bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "../../variables/variables";
+@import "../../../bootstrap/variables";
+
+// Overrides user variable
+@import "../../variables/components-variables";
+
+// Import first main menu mixin
+@import "../../mixins/main-menu-mixin";
+
+// Horizontal Menu
+//=========================
+.horizontal-menu{
+  //-------------------//
+  // Content Area margin
+  //-------------------//
+  .content{
+    margin-left: 0;
+    .content-wrapper{
+      margin-top: 0 !important;
+    }
+  }
+  footer{
+    position: static;
+  }
+
+  &.navbar-floating{
+    &:not(.blank-page){
+      .app-content{
+        padding-top: 9.75rem;
+      }
+    }
+    .horizontal-menu-wrapper{
+      background: linear-gradient(to bottom, rgba(248, 248, 248, 0.95) 44%, rgba(248, 248, 248, 0.46) 73%, rgba(255, 255, 255, 0) 100%);
+      background-repeat: repeat-x;
+      .navbar-horizontal.floating-nav{
+        margin: 1.3rem 2.2rem 0;
+      }
+    }
+  }
+  &.dark-layout{
+    .header-navbar{
+      background: inherit !important;
+    }
+    .horizontal-menu-wrapper{
+      background: linear-gradient(to bottom, rgba(37, 43, 71, 0.76) 44%, rgba(56, 53, 53, 0.46) 73%, rgba(255, 255, 255, 0) 100%);
+      .header-navbar{
+        background: $menu-dark-bg-color !important;
+        &.navbar-horizontal{
+          ul#main-menu-navigation > li:hover:not(.active) > a{
+            background: $content-dark-bg;
+          }
+        }
+      }
+    }
+  }
+  &.semi-dark-layout{
+    .header-navbar{
+      background: linear-gradient(to bottom, rgba(37, 43, 71, 0.76) 44%, rgba(56, 53, 53, 0.46) 73%, rgba(255, 255, 255, 0) 100% );
+    }
+    .horizontal-menu-wrapper{
+      .header-navbar{
+        background: $menu-dark-bg-color !important;
+        &.navbar-horizontal{
+          ul#main-menu-navigation > li:hover > a{
+            background: $content-dark-bg;
+          }
+        }
+        i,span,.nav-link{
+          color: $theme-dark-text-color;
+        }
+      }
+      .dropdown-menu{
+        background-color: $content-dark-bg;
+      }
+    }
+  }
+  &.navbar-sticky{
+    .app-content{
+      padding-top: 8.5rem;
+    }
+    .header-navbar{
+      background-color: $body-bg;
+    }
+    .horizontal-menu-wrapper{
+      .navbar-horizontal.header-navbar.fixed-top{
+        left: 0;
+        top: 62px;
+        background-color: $white;
+      }
+    }
+  }
+  &.navbar-static{
+    .app-content{
+      padding-top: 2.5rem !important;
+    }
+    .header-navbar{
+      background-color: $body-bg;
+      .navbar-wrapper{
+        width: 100%;
+      }
+    }
+    .horizontal-menu-wrapper{
+      position: relative;
+      .navbar-horizontal.header-navbar{
+        background: $white;
+        &.navbar-static-top{
+          position: static;
+          background: $white;
+          left: 0;
+        }
+      }
+    }
+  }
+  //---------------//
+  // Navbar Header //
+  //---------------//
+  .horizontal-menu-wrapper{
+    position: fixed;
+    top: 62px;
+    z-index: 990;
+    width: 100%;
+    height: 99px;
+    .header-navbar{
+      .navbar-container{
+        padding-left: 1rem;
+        padding-right: 1rem;
+        width: 100%;
+      }
+      .navbar-header{
+        display: none;
+      }
+    }
+  }
+  .header-navbar{
+    background: $white;
+    z-index: 999 !important;
+    line-height: 1;
+    min-height: auto;
+    // Navbar- Brand Center - Logo
+    &.navbar-horizontal.floating-nav{
+      width: calc(100vw - (100vw - 100%) - calc(#{$content-padding} * 2));
+      background: $white;
+    }
+    .navbar-container{
+      padding-left: #{$content-padding};
+      padding-right: calc(#{$content-padding} - 1rem);
+      border-radius: $border-radius;
+    }
+    &.navbar-fixed{
+      position: fixed;
+      width: 100%;
+    }
+    &.navbar-brand-center{
+      .navbar-header{
+        position: absolute;
+        left: 50%;
+        margin-left: -65px;
+        padding: 0;
+        z-index: 1000;
+        .navbar-brand{
+          display: flex;
+          align-items: center;
+          margin-right: 0;
+          // Brand Logo Scss
+          .brand-logo{
+            background: url("../images/logo/vuexy-logo.png") no-repeat;
+            background-position: -65px -54px;
+            height: 24px;
+            width: 35px;
+          }
+
+          // Brand Text Scss
+          .brand-text{
+            color: $white;
+            padding-left: 1rem;
+            letter-spacing: 0.01rem;
+            font-size: 1.57rem;
+          }
+        }
+      }
+    }
+
+    &.navbar-horizontal{
+      .nav-link{
+        &.dropdown-toggle::after{
+          left: 0.4rem;
+        }
+      }
+      .dropdown-menu::before{
+        display: none;
+      }
+      .dropdown-menu{
+        min-width: 215px;
+        border: none;
+        margin-top: 0;
+        min-height: 52px;
+        .disabled{
+          pointer-events: none !important;
+          a{
+            color: $gray-600;
+          }
+        }
+        .dropdown-toggle::after{
+          left: auto;
+          position: absolute;
+          top: 50%;
+          margin-top: -7px;
+          right: 1rem;
+          content: "\e844" !important;
+        }
+        .dropdown-item{
+          font-size: 1rem;
+          padding: 0.965rem 1.428rem;
+          display: flex;
+          align-items: center;
+        }
+        .dropdown-submenu{
+          position: relative;
+          &.openLeft{
+            .dropdown-menu{
+              left: auto;
+              right: 100%;
+            }
+          }
+          &.show{
+            background: $body-bg;
+          }
+          & > .dropdown-menu{
+            position: absolute;
+            top: 0 !important;
+            left: 100% !important;
+            i{
+              font-size: 0.75rem !important;
+            }
+          }
+        }
+      }
+      ul#main-menu-navigation > li{
+        padding-top: 0.965rem;
+        padding-bottom: 0.965rem;
+
+        > .dropdown-menu{
+          margin-top: 0.75rem;
+          a{
+            transition: padding 0.35s ease 0s !important;
+            &:hover{
+              padding-left: 25px;
+              transition: padding 0.35s ease 0s !important;
+              background-color: transparent;
+              color: $body-color;
+            }
+          }
+          .active > a{
+            background: $body-bg;
+            color: $primary;
+            font-weight: 500;
+          }
+          .open{
+            &.active{
+              > a{
+                color: $body-color;
+                font-weight: normal;
+              }
+            }
+          }
+        }
+        i{
+          font-size: 1.11rem;
+          margin-right: 0.75rem;
+        }
+        > a{
+          padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+          display: flex;
+          margin-right: 0.5rem;
+        }
+        &:hover{
+          > a{
+            background: $body-bg;
+            border-radius: 4px;
+          }
+        }
+        &.active{
+          > a{
+            background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
+            box-shadow: 0px 0px 6px 1px rgba($primary, 0.6);
+            color: $white;
+            border-radius: 4px;
+          }
+        }
+      }
+    }
+  }
+  &.menu-collapsed{
+    #main-menu-navigation{
+      .nav-item{
+        > a span{
+          display: none;
+        }
+      }
+    }
+  }
+  .navigation-header{
+    font-family: inherit;
+    color: #929292;
+    padding: 8px 20px;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .navbar-dark{
+    .nav-item{
+      &.active > a{
+        border-bottom: 2px solid $primary;
+        background-color: #313c50;
+      }
+    }
+  }
+  // App related CSS for Horizontal
+	.content.app-content .content-area-wrapper{
+		margin-top: 2.2rem;
+		.content-wrapper{
+      height: calc(100vh - 16rem);
+      height: calc(var(--vh, 1vh) * 100 - 16rem);
+		}
+	}
+  &.chat-application .sidebar-content,
+  &.email-application .content-area-wrapper .sidebar .email-app-sidebar,
+  &.todo-application .content-area-wrapper .sidebar .todo-sidebar{
+		height: calc(100vh - 16rem);
+    height: calc(var(--vh, 1vh) * 100 - 16rem);
+  }
+  &.todo-application .content-area-wrapper .content-right .todo-task-list{
+		height: calc(100vh - 19.5rem);
+    height: calc(var(--vh, 1vh) * 100 - 19.5rem);
+  }
+  &.email-application .app-content .content-area-wrapper .email-user-list{
+		height: calc(100vh - 23.3rem);
+    height: calc(var(--vh, 1vh) * 100 - 23.3rem);
+  }
+  &.chat-application{
+    .user-profile-sidebar{
+      height: calc(100vh - 16.1rem);
+      height: calc(var(--vh, 1vh) * 100 - 16.1rem);
+      bottom: 4.1rem;
+    }
+    .chat-profile-sidebar{
+      height: calc(100vh - 16rem);
+      height: calc(var(--vh, 1vh) * 100 - 16rem);
+    }
+    .chat-app-window .user-chats{
+      height: calc(100vh - 26.5rem);
+      height: calc(var(--vh, 1vh) * 100 - 26.5rem);
+    }
+  }
+}
+
+// Initially menu & content width for md and down screen
+@include media-breakpoint-down(lg){
+  body.horizontal-layout{
+    &.horizontal-menu{
+      .horizontal-menu-wrapper{
+        .header-navbar{
+          display: none;
+        }
+      }
+    }
+		.header-navbar{
+			background: $white;
+		}
+    .content .content-wrapper{
+      margin-top: 5rem;
+    }
+  }
+}
+// Import vertical-overlay-menu.scss for small screen support
+@import "vertical-overlay-menu.scss";

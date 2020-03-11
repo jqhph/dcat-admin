@@ -1,0 +1,86 @@
+/* ===============================================================================================
+	File Name: list-group.scss
+	Description: Contain list item, list group related extended SCSS.
+	----------------------------------------------------------------------------------------------
+	Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================================*/
+
+// Inline list style with pipeline seperator
+
+ul.list-inline {
+  li {
+    display: inline-block;
+  }
+  &.list-inline-pipe {
+    >li+li:before {
+      content: ' | ';
+      padding-right: 2px;
+    }
+  }
+}
+
+// bootstrap list group
+.list-group {
+  .list-group-item {
+    line-height: 1.5;
+    &.active {
+      &:hover {
+        background-color: $primary;
+      }
+      &:focus{
+        // color: $body-color;
+        outline: 0;
+        &:hover{
+          color: $white;
+        }
+      }
+    }
+
+    &:hover {
+      background-color: $body-bg;
+    }
+
+    i {
+      font-size: 1.2rem;
+      font-weight: 100;
+      position: relative;
+    }
+
+    &:not(.active):focus:active{
+      color: inherit;
+    }
+  }
+  .list-group-item-action{
+    // &:active{
+    //   background-color: $primary;
+    //   color: $white;
+    // }
+    &:focus{
+      // background-color: $body-bg;
+      outline: 0;
+    }
+  }
+}
+
+  // for drag and drop border radius on selected
+  .list-group-item.gu-mirror{
+    border-radius: 0;
+  }
+
+// Inline users list
+.users-list{
+  li+li {
+      margin-left: -.785rem;
+  }
+  li{
+    img{
+      border: 2px solid $white;
+      box-shadow: 0px 2px 10px 0px rgba($gray-600, 0.3)
+    }
+    .badge{
+      color: $black;
+    }
+  }
+}

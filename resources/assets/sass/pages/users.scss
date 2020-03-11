@@ -1,0 +1,128 @@
+// ================================================================================================
+// 	File Name: users.scss
+// 	Description: Page content different types of users page layouts SCSS.
+// 	----------------------------------------------------------------------------------------------
+// 	Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+// 	Author: PIXINVENT
+// 	Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+
+// Core variables and mixins overrides
+@import "../bootstrap/functions";
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+// User profile Scss
+#user-profile {
+  .profile-img-container{
+    position: absolute;
+    bottom: -3rem;
+    left: 10%;
+    width: 80%;
+    img{
+      border: .3rem solid $white;
+      height: 85px;
+      width: 85px;
+    }
+  }
+  #profile-info{
+    // scss for icon-more-icon
+    .card-header{
+      i{
+        position: relative;
+        top: -3px;
+      }
+    }
+    .user-like{
+      i{
+        font-size: 1.7rem;
+      }
+    }
+    .suggested-block{
+      .user-page-info{
+        p{
+          margin-bottom: 0;
+          font-weight: 500;
+        }
+      }
+      i{
+        cursor: pointer;
+      }
+
+    }
+  }
+  .relative{
+    position: relative;
+  }
+  .profile-header-nav{
+    background-color: $white;
+    padding: 0.75rem 1rem;
+    .navbar{
+      justify-content: flex-end;
+      .navbar-toggler{
+        font-size: 1.7rem;
+        color: $body-color;
+        &:focus{
+          outline: none;
+        }
+      }
+
+    }
+  }
+  //user-latest-img - hover effect
+  .user-latest-img{
+    transition: all .2s ease-in-out;
+    &:hover{
+        transform: translateY(-4px) scale(1.2);
+        z-index: 30;
+      }
+  }
+  // Load More Button - Block UI
+  .block-element{
+    .spinner-border{
+      border-width: 2px;
+    }
+
+  }
+}
+
+// Profile-header-navbar responsive padding
+@media only screen and (min-width: 992px) {
+  #user-profile {
+    .profile-header-nav{
+      .navbar{
+        .nav-item{
+          padding-left: 2.25rem !important;
+          padding-right: 2.25rem !important;
+        }
+      }
+    }
+  }
+}
+// Latest Photo Section - Image size
+@media only screen and (max-width: 992px) {
+  #user-profile {
+    .user-latest-img{
+      img{
+        width: 100%;
+      }
+    }
+  }
+}
+// Profile-header-navbar responsive padding
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  #user-profile {
+    .profile-header-nav{
+      .navbar{
+        .nav-item{
+          padding-left: 1.5rem !important;
+          padding-right: 1.5rem !important;
+        }
+      }
+    }
+  }
+}

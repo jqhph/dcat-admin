@@ -1,0 +1,90 @@
+// Core variables and mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+
+// list-group item - i position for customer card
+.customer-info{
+  &.list-group {
+    .list-group-item {
+      &:last-child{
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+      .series-info{
+        i{
+          top: 0;
+          margin-right: 0.3rem;
+        }
+      }
+    }
+  }
+}
+
+// avg - sessions
+.avg-sessions{
+  .progress{
+    margin-top: 0.5rem;
+  }
+}
+// analytics list
+.analytics-list{
+  &.list-group{
+    .list-group-item{
+      border: 0;
+      &:first-child{
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+      .btn{
+        display: none;
+      }
+      &:hover{
+        .btn{
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+// Chart-dropdown Button
+.chart-dropdown{
+  .btn{
+    font-size: 0.8rem;
+    font-weight: $headings-font-weight;
+    &:after{
+      left: 0;
+      position: relative;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) and (min-width: 768px) {
+  // buttons in analytics-list
+  .analytics-list{
+    .float-left, .float-right{
+      display: block;
+    }
+  }
+}
+
+// IE Specific CSS
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  // make icon center in avatar-content
+  #dashboard-analytics, #statistics-card{
+    .avatar{
+      .avatar-content{
+        padding: 0 !important;
+      }
+    }
+  }
+}

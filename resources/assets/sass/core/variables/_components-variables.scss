@@ -1,0 +1,199 @@
+//  ================================================================================================
+//  File Name: components-variables.scss
+//  Description: Custom theme specific variables and other content variations
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+//  ================================================================================================
+
+//  ================================================================================================
+//  WARNING: PLEASE DO NOT CHANGE THIS VARIABLE FILE.
+//  THIS FILE WILL GET OVERWRITTEN WITH EACH VUEXY HTML TEMPLATE RELEASE.
+//  TIP:
+//  We suggest you to use this (assets/scss/variables/components-variables.scss) file for overriding app variables.
+//  ================================================================================================
+
+// Bootstrap  variables
+@import "../../bootstrap/variables";
+@import "variables";
+
+$base-font-size: 14px;
+$body-direction: ltr; // Default ltr, change it to rtl for Right To Left support.
+$content-padding: 2.2rem;
+
+//  ------------------------------
+//    Colors
+//  ------------------------------
+$pure-black : #000;
+$nav-component-border-color: #ddd;
+$custom-border-color: #E4E7ED;
+$chip-bg-color: #f0f0f0;
+$chip-avatar-bg : #c3c3c3;
+$avatar-bg : $chip-avatar-bg;
+$swiper-bg: #f2f4f4;
+$hover-color: #eee;
+
+//  ------------------------------
+//    Buttons
+//  ------------------------------
+$btn-border-radius-square: 0;
+$btn-border-radius: 0.42rem;
+$gradient-button-bs: 0 8px 25px -8px #aaa;
+//  ------------------------------
+//    Navbar
+//  ------------------------------
+$navbar-height: 5rem;
+
+
+//  ------------------------------
+//    Dropdown
+//  ------------------------------
+$dropdown-btn-padding-x: 1.5rem;
+$dropdown-btn-padding-y: .85rem;
+$dropdown-btn-split-padding-x: 1rem;
+
+
+
+//  ------------------------------
+//    Pagination
+//  ------------------------------
+$pagination-bg-color: #f0f0f0;
+$pagination-action-padding-y:0.572rem;
+$pagination-action-padding-x:0.651rem;
+$pagination-font-size-lg: 1.5rem;
+
+
+//  ------------------------------
+//    Main Menu
+//  ------------------------------
+
+//main menu dark
+$menu-dark-color: #dcdcdc;
+$menu-dark-bg-color: #10163a;
+
+$menu-padding: 10px 15px 10px 15px;
+$menu-second-level-padding: 10px 15px 10px 20px;
+$menu-third-level-padding: 10px 15px 10px 20px;
+$menu-forth-level-padding: 10px 15px 10px 30px;
+
+// vertical menu
+$menu-expanded-width: 260px;
+$menu-collapsed-width: 80px;
+
+//  ------------------------------
+//    Sidebar
+//  -------------------------------
+$sidebar-width: 260px;
+$chat-sidebar-width: 400px;
+//  -------------------------------
+//    Avatar
+//  -------------------------------
+
+$avatar-size: 32px;
+$avatar-status-size: 11px;
+$avatar-status-size-lg: 17px;
+
+$avatar-size-xl: 70px;
+$avatar-size-lg: 50px;
+$avatar-size-sm: 24px;
+
+
+//  -------------------------------
+//  Progress
+//  -------------------------------
+$progress-size-xl: 1.14rem;
+$progress-size-lg: .857rem;
+$progress-size-md: .57rem;
+$progress-size-sm: 0.143rem;
+
+//  -------------------------------
+//  Form
+//  -------------------------------
+
+// $input-height, $input-height-lg, $input-height-sm are in variables
+$font-size-xs: 0.75rem;
+$font-size-xl: ($font-size-base + 0.5);
+$line-height-xl: 1.7;
+$line-height-xs: 1.5;
+$input-padding-y-xl: 0.5rem !default;
+$input-padding-x-xl: 0.5rem !default;
+
+$input-padding-y-xs: 0.2rem !default;
+$input-padding-x-xs: 0.275rem !default;
+
+$border-radius-xl: 0.35rem !default;
+$border-radius-xs: 0.12rem !default;
+$input-border-radius-xl: $border-radius-xl;
+$input-border-radius-xs: $border-radius-xs;
+
+$input-height-xl: (($font-size-xl * $line-height-xl) + ($input-padding-y-xl * 2)) !default;
+$input-height-xs: (($font-size-xs * $line-height-xs) + ($input-padding-y-xs * 2)) !default;
+$input-height-sm: (($font-size-sm * $line-height-sm) + ($input-padding-y-sm * 2)) !default;
+
+
+//  Custom Vuexy Checkbox
+$vs-checkbox-radio-border-width: 2px;
+$vs-checkbox-radio-border-color: $gray-600;
+$vs-checkbox-box: 20px;
+$vs-checkbox-box-sm: 15px;
+$vs-checkbox-box-lg: 24px;
+$vs-radio-box: 18px;
+$vs-radio-box-sm: 13px;
+$vs-radio-box-lg: 22px;
+
+
+
+//  -------------------------------
+//  Blank Page Bg Color
+//  -------------------------------
+
+$blank-bg-color: #eff2f7;
+
+//  -------------------------------
+//  Data Tables Bg Color
+//  -------------------------------
+
+$datatable-bg-color: #f8f8f8;
+
+//  -------------------------------
+//  Chips
+//  -------------------------------
+
+$chip-min-height : 1.857rem;
+$chip-min-width :$chip-min-height;
+$chip-font-size : .8rem;
+$chip-border-radius: 1.428rem;
+$chip-avatar-min-height: 1.714rem;
+$chip-avatar-min-width: $chip-avatar-min-height;
+$chip-closeable-min-height: 1.428rem;
+$chip-closeable-min-width:$chip-closeable-min-height;
+
+//  -------------------------------
+//  Tables
+//  -------------------------------
+
+$table-th-font-size: .85rem;
+
+//  -------------------------------
+//  Switch
+//  -------------------------------
+$switch-bg-color: #e2e2e2;
+$switch-indicator-color: $white;
+$switch-md-size: 4rem;
+$switch-lg-size: 5.5rem;
+
+
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+$content-dark-bg: #262c49;
+$dark-card-color: #10163a;
+$grid-dark-color: #343661;
+$theme-dark-heading-color: #ebeefd;
+$theme-dark-text-color: #c2c6dc;
+$theme-dark-table-bg : #212744;
+$ex-col-border-color: #808080;
+$dark-chat-bg-color: #171e49;
+$theme-dark-border-color: #414561;

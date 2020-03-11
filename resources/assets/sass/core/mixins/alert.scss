@@ -1,0 +1,5 @@
+// For alert's heading box-shadow
+
+@mixin alert-heading-bs($color) {
+  box-shadow: rgba($color, 0.4) 0px 6px 15px -7px;
+}

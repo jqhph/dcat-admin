@@ -1,0 +1,37 @@
+// Apex chart Scss
+
+.apexcharts-canvas{
+  // Tooltip Color
+  .apexcharts-tooltip{
+    color: $body-color !important;
+    &.dark{
+      color: $white !important;
+    }
+  }
+  // Toolbar Download Option Color
+  .apexcharts-toolbar{
+    .apexcharts-menu{
+      .apexcharts-menu-item{
+        color: $body-color;
+      }
+    }
+  }
+}
+
+// apex charts tooltip
+.apexcharts-xaxistooltip{
+  color: $body-color !important;
+}
+
+// client-retention Chart - legend position for left
+#client-retention-chart{
+  .apexcharts-canvas{
+    .apexcharts-legend{
+      left: -14px !important;
+    }
+  }
+}
+// Toolbar Z-index
+.apexcharts-toolbar{
+  z-index: 10 !important;
+}

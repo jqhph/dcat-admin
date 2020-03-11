@@ -1,0 +1,87 @@
+// Toasts
+
+// toast container customization
+.toast-bs-container{
+    z-index: 1040;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    .toast-position{
+      position: relative;
+      top: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap-reverse;
+
+      .toast.show{
+        // display: block;
+        opacity: 1;
+        z-index: 1030;
+      }
+    }
+  }
+
+  // placement of toast on body
+  .toast-placement{
+    position: static;
+    top: 0;
+    .toast{
+      position: fixed;
+      top: 0;
+      z-index: 1030;
+    }
+  }
+
+  // default toast customization
+  .toast {
+    display: none;
+    background-color: rgba($white,1);
+    margin-top: .75rem;
+
+    .toast-header{
+      .close{
+        &:focus,&:active{
+          outline: none;
+        }
+      }
+    }
+  }
+
+  // toast on show
+
+  .toast.show.toast-wrapper{
+    position: static;
+  }
+
+  // translucent toast opacity and display
+
+  .toast.toast-translucent {
+    opacity: 1;
+    display: block;
+  }
+
+  // toast header img size
+
+  .toast-header{
+      img{
+          width: 35px;
+          height: 24px;
+      }
+  }
+
+ // IE Specific CSS
+ @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none){
+  .toast-bs-container {
+    position: fixed !important;
+    left: 74% !important;
+    }
+ }
+
+  _:-ms-lang(x),
+  .toast-bs-container {
+    position: fixed !important;
+    left: 74% !important;
+  }

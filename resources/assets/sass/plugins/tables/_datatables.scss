@@ -1,0 +1,136 @@
+// ================================================================================================
+//     File Name: datatables.scss
+//     Description: Datatables pages custom scss
+//     ----------------------------------------------------------------------------------------------
+//     Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//     Author: PIXINVENT
+//     Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+table.dataTable{
+  border: 2px solid $datatable-bg-color;
+
+  // datatable th, td
+  th, td{
+      border-bottom: 1px solid $datatable-bg-color;
+      border-top: 0;
+  }
+  // thead, tfoot - font, border
+  thead, tfoot{
+    th, td{
+        font-size: $table-th-font-size;
+        border: 0;
+    }
+  }
+
+  thead{
+    //thead - tr bg-color
+    tr{
+        background-color: $datatable-bg-color;
+    }
+
+    // Sorting Icons Change
+    .sorting, .sorting_asc, .sorting_desc{
+      padding-right: inherit;
+      &:before{
+        font-family: 'feather';
+        content: "\e845";
+        padding-right: 0.3rem;
+        font-size: .7rem;
+        left: 0;
+        top: .9rem;
+      }
+      &:after{
+        font-family: 'feather';
+        content: "\e842";
+        font-size: .7rem;
+        left: 0;
+        top: 1.3rem;
+      }
+    }
+  }
+
+  // table-striped bg color for even row
+  &.table-striped tbody tr:nth-of-type(even){
+    background-color: $datatable-bg-color;
+  }
+  // table-striped bg color for odd row
+  &.table-striped tbody tr:nth-of-type(odd){
+    background-color: $white;
+  }
+
+  // Complex headers table
+  &.complex-headers{
+    border: 1px solid $gray-300;
+    thead, tfoot{
+      th, td{
+        border-bottom: 1px solid $gray-300;
+        border-right: 1px solid $gray-300;
+      }
+    }
+  }
+
+  // selected row bg color
+
+  tbody{
+    tr{
+      &.selected {
+        background-color: rgba($primary, 0.05) !important;
+        color: rgba($primary, 1) !important;
+        box-shadow: 0 0 1px 0 rgba($primary, 1)!important;
+        border-radius: 5px;
+        td, th{
+          border-bottom: 0;
+        }
+      }
+
+    }
+  }
+}
+
+
+// data table search, labels and
+div.dataTables_wrapper {
+  // data table search, labels
+  div.dataTables_filter, div.dataTables_length {
+    label{
+      margin-top: 1rem;
+    }
+    select{
+      background-position:
+      calc(100% - 3px) 5px,
+      calc(100% - 20px) 13px,
+      100% 0;
+      padding: 0 0.8rem;
+    }
+  }
+
+  // pagination
+  div.dataTables_paginate {
+    ul.pagination {
+      margin-top: 1rem;
+      padding-bottom: 7px;
+      // font size for pagination
+      li a{
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+// row grouping
+tr.group {
+  // row grouping color
+  background-color: $gray-200;
+}
+
+
+// pagination in center
+@media only screen and (max-width:768px){
+  div.dataTables_wrapper {
+    div.dataTables_paginate {
+      ul.pagination {
+        justify-content: center;
+      }
+    }
+  }
+}

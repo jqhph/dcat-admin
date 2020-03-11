@@ -1,0 +1,96 @@
+.icon-bg-circle{
+    color: $white;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+.icon-left{
+    margin-right:0.5rem;
+}
+.icon-right{
+    margin-right:0.5rem;
+}
+.icon-spin {
+	display: inline-block;
+  	animation: spin 1s infinite linear;
+}
+
+.blockOverlay{
+  z-index: 1050 !important;
+}
+.blockElement, .blockPage{
+  z-index: 1051 !important;
+}
+
+@-moz-keyframes spin {
+  	from {
+    	-moz-transform: rotate(0deg);
+  	}
+  	to {
+    	-moz-transform: rotate(360deg);
+  	}
+}
+
+@-webkit-keyframes spin {
+  	from {
+    	-webkit-transform: rotate(0deg);
+  	}
+  	to {
+    	-webkit-transform: rotate(360deg);
+  	}
+}
+
+@keyframes spin {
+  	from {
+    	transform: rotate(0deg);
+  	}
+  	to {
+    	transform: rotate(360deg);
+  	}
+}
+
+.hidden{
+	display: none;
+	visibility: hidden;
+}
+
+//Disabled
+a{
+	&.disabled{
+		// color: $dropdown-link-disabled-color !important;
+	}
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.round{@include border-radius(1.5rem);}
+.square{@include border-radius($btn-border-radius-square);}
+
+.icon-line-height{
+    line-height : 1.5rem !important; 
+}
+
+//Tables
+//--------------------------
+.table-middle{
+    td{
+        vertical-align: middle;
+    }
+}
+
+// Spinner classes
+.spinner {
+    display: inline-block;
+    -webkit-animation: spin 1s linear infinite;
+    -o-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Button focus outline
+button:focus{
+	outline: none;
+}

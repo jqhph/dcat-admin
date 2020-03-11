@@ -1,0 +1,370 @@
+/*=========================================================================================
+    File Name: navigations.scss
+    Description: Common mixin for menus, contain dark and light version scss.
+    ----------------------------------------------------------------------------------------
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+// Import first main menu mixin
+@import "../mixins/main-menu-mixin";
+
+// Main menu base
+//==============
+.main-menu {
+    z-index: 1031;
+    position: absolute;
+    display: table-cell;
+    height: 100%;
+    overflow: hidden;
+
+    &.menu-light {
+        @include menu-theme($body-color, $white);
+    }
+
+    &.menu-dark {
+        @include menu-theme($menu-dark-color, $menu-dark-bg-color);
+    }
+
+    &.menu-fixed {
+        position: fixed;
+        /* fallback if needed */
+        // top: $navbar-height;
+        .main-menu-footer {
+            position: fixed;
+        }
+    }
+    &.menu-static{
+        height: 100%;
+        padding-bottom: calc(100% - 20rem);
+        .main-menu-content{
+          height: unset !important;
+        }
+    }
+
+    &.menu-shadow {
+        box-shadow: 0 0 15px 0 rgba(0,0,0,.05);
+    }
+
+    &.menu-border {
+        border-right: 1px solid $custom-border-color;
+    }
+
+    // menu scroll shadow
+    .shadow-bottom{
+        display: none;
+        position: absolute;
+        z-index: 2;
+        height: 60px;
+        width: 100%;
+        pointer-events: none;
+        margin-top: -1.3rem;
+        filter: blur(5px);
+        background: linear-gradient(#fff 41%,hsla(0,0%,100%,.11) 95%,hsla(0,0%,100%,0));
+    }
+
+    // Native Scrollbar (.menu-native-scroll)
+    &.menu-native-scroll {
+        .main-menu-content {
+            overflow-y: scroll;
+        }
+    }
+
+    .navbar-header {
+        height: 100%;
+        width: $menu-expanded-width;
+        height: $navbar-height;
+        position: relative;
+        padding: 0.35rem 1rem 0.3rem 1.64rem;
+        transition: 300ms ease all;
+        .navbar-brand {
+            // padding: 15px 0px;
+            display: flex;
+            align-items: center;
+            margin-top: 1.35rem;
+            .brand-logo {
+                background: url("../images/logo/vuexy-logo.png") no-repeat;
+                background-position: -65px -54px;
+                height: 24px;
+                width: 35px;
+            }
+
+            .brand-text {
+                color: $primary;
+                padding-left: 1rem;
+                font-weight: 600;
+                letter-spacing: 0.01rem;
+                font-size: 1.57rem;
+                animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+            }
+        }
+        .modern-nav-toggle{
+          animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+        }
+    }
+
+    .main-menu-content {
+        height: calc(100% - 6rem) !important;
+        position: relative;
+        // margin-top: 0.45rem;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &.navigation-main {
+            overflow-x: hidden;
+            >li:first-child{
+              margin-top: .5rem;
+            }
+        }
+    }
+
+    a {
+        outline: none;
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+    }
+}
+
+// Main Navigation
+.navigation {
+    font-size: 1.1rem;
+    font-family: $font-family-monospace;
+    font-weight: 400;
+    overflow-y: hidden;
+    padding-bottom: 20px;
+
+    .navigation-header {
+        font-family: $font-family-monospace;
+        font-weight: $headings-font-weight;
+        line-height: $headings-line-height;
+        padding: 12px 22px;
+        font-size: .9rem;
+        text-transform: uppercase;
+    }
+
+    li {
+        position: relative;
+        white-space: nowrap;
+
+        a {
+            display: block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            i{
+              font-size: 0.8rem;
+              margin-right: 1.38rem;
+            }
+        }
+
+        &.disabled {
+            a {
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+// For compact menu popout
+.menu-popout {
+    li {
+        &.disabled {
+            a {
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+
+.dropdown-notification {
+    .nav-link-label{
+      position: relative;
+    }
+    .notification-text {
+        margin-bottom: 0.5rem;
+        font-size: smaller;
+        color: $body-color;
+    }
+    .notification-title{
+      color: rgba($white, .75);
+    }
+
+    .notification-tag {
+        position: relative;
+        top: -4px;
+    }
+    .dropdown-menu.dropdown-menu-right{
+      right: -2px;
+      padding: 0;
+      &::before{
+        background: $primary;
+        border-color: $primary;
+      }
+    }
+    .dropdown-menu-header{
+      border-top-left-radius: $dropdown-border-radius;
+      border-top-right-radius: $dropdown-border-radius;
+      background: $primary;
+      color: $white;
+      text-align: center;
+      .dropdown-header h3{
+        margin-bottom: 0.25rem;
+      }
+    }
+}
+
+// Navigation Header
+//=====================
+.main-menu-header {
+    .user-content {
+        padding: 20px;
+
+        .media {
+            overflow: inherit;
+        }
+
+        .media-body {
+            vertical-align: bottom;
+            opacity: 1;
+            width: 150px;
+            white-space: nowrap;
+            transition: all .3s ease .15s;
+        }
+    }
+}
+
+// Navigation Footer
+//=====================
+.main-menu-footer {
+    position: relative;
+    overflow: hidden;
+    bottom: 0;
+    display: block;
+    z-index: 1000;
+    color: lighten($gray-600, 60%);
+    background-color: darken($gray-600, 10%);
+
+    &.footer-open {
+        max-height: 500px;
+        transition: max-height 0.2s ease-in-out;
+    }
+
+    a {
+        color: lighten($gray-600, 50%);
+
+        &:hover,
+        &:focus {
+            color: $white;
+        }
+    }
+
+    .header {
+        height: 19px;
+        border-bottom: 1px solid darken($gray-600, 5%);
+    }
+
+    .toggle {
+        transform: rotate(0deg);
+        transition: -webkit-transform 0.2s ease-in-out;
+    }
+
+    .content {
+        padding: 0;
+
+        .actions {
+            >a {
+                display: block;
+                float: left;
+                width: (100% / 3);
+                padding: 1rem 0;
+                color: lighten($gray-600, 50%);
+                text-align: center;
+                border-top: 1px solid darken($gray-600, 5%);
+                border-left: 1px solid darken($gray-600, 5%);
+
+                >span {
+                    font-size: 1.35rem;
+                }
+
+                &:hover,
+                &:focus {
+                    color: $white;
+                }
+            }
+        }
+    }
+}
+
+body.vertical-layout {
+    &.vertical-menu.menu-expanded {
+        .main-menu-footer {
+            .content {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+// for collapsed static layout
+body.menu-collapsed{
+  .menu-static{
+    padding-bottom: calc(100% - 14rem);
+  }
+}
+
+// Media queries for small screen devices
+// =========================================
+@include media-breakpoint-down(sm) {
+
+    // menu hide/open animation
+    .menu-hide .main-menu,
+    .menu-open .main-menu {
+        transition: transform .25s, top .35s, height .35s;
+    }
+
+    .main-menu {
+        transform: translate3d(-240px, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000;
+    }
+
+    .menu-open .main-menu {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .drag-target {
+        z-index: 0;
+    }
+}
+
+// For Fixed Layout set menu-fixed height
+body{
+  &.fixed-footer{
+    .main-menu {
+       &.menu-fixed {
+        height: 100%;
+      }
+    }
+  }
+}
+
+// for static main menu height
+@media (max-width: 1200px){
+  body{
+    .main-menu{
+      &.menu-static {
+        padding-bottom: 100%;
+      }
+    }
+  }
+}

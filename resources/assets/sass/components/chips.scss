@@ -1,0 +1,83 @@
+// Chips
+
+// chip styles
+.chip{
+  background-color: $chip-bg-color;
+  font-size: $chip-font-size;
+  border-radius: $chip-border-radius;
+  display: inline-flex;
+  padding:0 10px;
+  margin-bottom: 5px;
+  vertical-align: middle;
+  justify-content: center;
+
+  // chip body customization
+
+  .chip-body{
+    color: rgba($pure-black, .7);
+    display: flex;
+    justify-content: space-between;
+    min-height: $chip-min-height;
+    min-width: $chip-min-width;
+    .avatar{
+      background-color: $chip-avatar-bg;
+      display: flex;
+      width: $avatar-size-sm;
+      height: $avatar-size-sm;
+      margin: 2px 0;
+      border-radius: 50%;
+      justify-content: center;
+      align-items: center;
+      color: $white;
+      transform: translate(-8px);
+      .avatar-content{
+          top: 0;
+      }
+
+      // chip image
+      img{
+        border-radius: 50%;
+        height: $avatar-size-sm;
+        width: $avatar-size-sm;
+      }
+    }
+    // chip text
+    .chip-text{
+      vertical-align: middle;
+      align-self: center;
+    }
+
+    // chip closeable
+    .chip-closeable{
+      min-height: $chip-closeable-min-height;
+      min-width: $chip-closeable-min-width;
+      margin: 0 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-self: center;
+      border-radius: 50%;
+      background: rgba($pure-black, .15);
+      color: $white;
+      transform: translate(10px);
+      cursor: pointer;
+      i{
+        margin-left: 1px;
+        margin-top: 1px;
+      }
+    }
+  }
+}
+
+// IE Specific
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none){
+  .chip {
+    .chip-closeable{
+      i{
+        position: relative;
+        top: 3px;
+      }
+    }
+  }
+}

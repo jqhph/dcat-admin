@@ -1,0 +1,20 @@
+//  ===============================================================================================
+//  File Name: mixins.scss
+//  Description: Extended mixins file with new mixins features.
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+//  ================================================================================================
+
+// // Components
+@import "mixins/_buttons";
+@import "mixins/_label";
+
+@import "mixins/_label";
+@import "mixins/_type"; //(NEW)
+
+// // // Components
+@import "mixins/_buttons";
+@import "mixins/_navs";
+@import "mixins/_forms";

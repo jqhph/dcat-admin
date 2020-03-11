@@ -1,0 +1,217 @@
+/*=========================================================================================
+	File Name: search.scss
+	Description: Search  functionality.
+	----------------------------------------------------------------------------------------
+	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+.navbar-container {
+
+  a.nav-link-search {
+    float: left;
+  }
+
+  .search-input {
+    float: left;
+    // padding-top: 1.2rem;
+    width: 0;
+
+    // select{
+    input {
+      width: 0;
+      border: none;
+      background: none;
+      transition: all 0.2s ease-out;
+      line-height: 16px;
+      padding: 1.6rem 3.6rem;
+    }
+
+    &.open {
+      position: absolute;
+      left: 0;
+      // padding: 1.6rem;
+      background: #fff;
+      right: 0;
+      width: 100%;
+      z-index: 1000;
+      border-radius: 0.5rem;
+
+      .search-input-close,
+      .search-input-icon {
+        display: block;
+      }
+
+      // select{
+
+      input {
+        width: 100%;
+        // padding-right:2rem;
+        outline: none;
+        background: none;
+        transition: all 0.3s ease-out;
+      }
+    }
+
+    .search-list {
+      max-height: 450px;
+      height: calc(100vh - 11rem);
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: $white;
+      width: 100%;
+      margin-top: .5rem;
+      padding-left: 0;
+      border-radius: $border-radius;
+      display: none;
+
+      .avatar{
+        margin-left: 0;
+      }
+
+      &.search-list-bookmark {
+        height: auto !important;
+      }
+
+      &.show {
+        display: block;
+      }
+
+      li {
+        a {
+          padding: .9rem 1rem;
+          color: $body-color;
+
+          span[class*="feather icon-"] {
+            font-size: 1.25rem;
+          }
+        }
+
+        &:first-child {
+          border-top-left-radius: $border-radius;
+          border-top-right-radius: $border-radius;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: $border-radius;
+          border-bottom-right-radius: $border-radius;
+        }
+
+        &.auto-suggestion {
+
+          &:hover,
+          &.current_item {
+            background-color: #f1f1f1;
+          }
+        }
+      }
+    }
+
+    .search-input-icon {
+      z-index: 2;
+      display: none;
+      position: absolute;
+      left: 1.5rem;
+      top: 37%;
+      cursor: pointer;
+
+      i {
+        font-size: 1.25rem
+      }
+    }
+
+    .search-input-close {
+      z-index: 1;
+      display: none;
+      position: absolute;
+      right: 2rem;
+      top: 32%;
+      cursor: pointer;
+
+      i {
+        font-size: 1.75rem
+      }
+    }
+  }
+
+  .bookmark-input {
+    position: absolute;
+    top: 102%;
+    width: 25%;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+
+    .bookmark-input-icon {
+      position: absolute;
+      z-index: 1;
+      top: .85rem;
+      left: 1rem;
+    }
+
+    input {
+      padding: .7rem .7rem .7rem 2.5rem;
+      width: 100%;
+      background: $white;
+      border: 1px solid rgba($pure_black, 0.2);
+
+      &:focus {
+        border: 1px solid $primary;
+      }
+    }
+
+    .search-list {
+      box-shadow: 0 15px 30px 0 rgba($pure_black, .11), 0 5px 15px 0 rgba($pure_black, .08);
+    }
+  }
+
+  .bookmark-icon {
+    cursor: pointer;
+  }
+
+  .dropdown.bookmark-dropdown {
+    padding: 1.4rem 0.5rem 1.35rem;
+
+    .dropdown-toggle:after {
+      display: none;
+    }
+  }
+
+  .search-data-title {
+    line-height: 1.25rem;
+  }
+}
+
+.navbar-dark,
+.navbar-semi-light {
+  .search-input {
+    .input {
+      color: #F5F7FA;
+      border-radius: .5rem;
+    }
+
+    &.open {
+      .input {
+        color: #F5F7FA;
+        border: 1px solid #F5F7FA;
+      }
+    }
+  }
+}
+
+// navbar-sticky
+body {
+  &.navbar-static {
+    .navbar-container {
+      .search-input {
+        &.open {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}
