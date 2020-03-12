@@ -1,0 +1,50 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+@-webkit-keyframes spin-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.semi-circle-spin {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+}
+
+.semi-circle-spin > div {
+  position: absolute;
+  border-width: 0px;
+  border-radius: 100%;
+  -webkit-animation: spin-rotate 0.6s 0s infinite linear;
+          animation: spin-rotate 0.6s 0s infinite linear;
+  background-image: linear-gradient(transparent 0%, transparent 70%, #b8c2cc 30%, #b8c2cc 100%);
+  width: 100%;
+  height: 100%;
+}
+

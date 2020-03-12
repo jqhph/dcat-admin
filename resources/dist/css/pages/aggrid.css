@@ -1,0 +1,110 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.aggrid {
+  height: 600px;
+  font-size: 1rem;
+  color: #626262;
+  /*** TABLE BODY HEIGHT - FOOTER HEIGHT ***/
+  /*** HEADER TEXT  ***/
+  /*** PAGINATION STYLING ***/
+  /*** TABLE SCROLLBAR ***/
+}
+
+.aggrid .ag-icon-checkbox-checked,
+.aggrid .ag-icon-checkbox-indeterminate {
+  color: #7367f0;
+}
+
+.aggrid .ag-root-wrapper-body {
+  min-height: calc(100% - 56px);
+}
+
+.aggrid .ag-header-cell-text {
+  font-size: 1rem;
+  font-family: "Montserrat", Helvetica, Arial, serif;
+}
+
+.aggrid .ag-paging-panel {
+  display: block !important;
+  align-items: center;
+  height: 98px;
+}
+
+.aggrid .ag-paging-panel .ag-paging-row-summary-panel {
+  display: none;
+}
+
+.aggrid .ag-paging-panel .ag-paging-page-summary-panel {
+  justify-content: center;
+  margin-left: 0;
+  margin-top: 18px;
+}
+
+.aggrid .ag-paging-panel .ag-paging-page-summary-panel [ref=lbCurrent],
+.aggrid .ag-paging-panel .ag-paging-page-summary-panel [ref=lbTotal] {
+  color: #fff;
+  padding: 0.7rem 0.95rem;
+  border-radius: 0.5rem;
+}
+
+.aggrid .ag-paging-panel .ag-paging-button {
+  background-color: #dae1e7;
+  border-radius: 50%;
+  padding: 0.5rem 0rem;
+  margin: 0 0.5rem;
+  color: #626262 !important;
+}
+
+.aggrid .ag-paging-panel .ag-paging-button .ag-icon {
+  color: #626262 !important;
+  opacity: 1 !important;
+}
+
+.aggrid .ag-paging-panel .ag-paging-button.ag-disabled {
+  opacity: 0.5 !important;
+}
+
+.aggrid .ag-paging-panel span[ref=lbCurrent] {
+  background-color: #7367f0;
+}
+
+.aggrid .ag-paging-panel span[ref=lbTotal] {
+  background-color: #dae1e7;
+  color: #626262 !important;
+}
+
+.aggrid ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.aggrid ::-webkit-scrollbar-thumb {
+  background: #dae1e7;
+  border-radius: 20px;
+}
+
+.aggrid ::-webkit-scrollbar-track {
+  background: #f8f8f8;
+  border-radius: 20px;
+}
+
+/*** PAGE FILTER DROPDOWN ***/
+
+.filter-btn {
+  padding: 1.2rem !important;
+  border-radius: 5rem;
+  font-size: 0.95rem;
+}
+
+.filter-btn:after {
+  left: 5px;
+}
+
+/*** SORTING DROPDOWN WIDTH ***/
+
+.sort-dropdown .dropdown-menu {
+  min-width: 4rem;
+}
+

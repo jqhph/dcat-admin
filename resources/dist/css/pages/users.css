@@ -1,0 +1,90 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+#user-profile .profile-img-container {
+  position: absolute;
+  bottom: -3rem;
+  left: 10%;
+  width: 80%;
+}
+
+#user-profile .profile-img-container img {
+  border: 0.3rem solid #fff;
+  height: 85px;
+  width: 85px;
+}
+
+#user-profile #profile-info .card-header i {
+  position: relative;
+  top: -3px;
+}
+
+#user-profile #profile-info .user-like i {
+  font-size: 1.7rem;
+}
+
+#user-profile #profile-info .suggested-block .user-page-info p {
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+#user-profile #profile-info .suggested-block i {
+  cursor: pointer;
+}
+
+#user-profile .relative {
+  position: relative;
+}
+
+#user-profile .profile-header-nav {
+  background-color: #fff;
+  padding: 0.75rem 1rem;
+}
+
+#user-profile .profile-header-nav .navbar {
+  justify-content: flex-end;
+}
+
+#user-profile .profile-header-nav .navbar .navbar-toggler {
+  font-size: 1.7rem;
+  color: #626262;
+}
+
+#user-profile .profile-header-nav .navbar .navbar-toggler:focus {
+  outline: none;
+}
+
+#user-profile .user-latest-img {
+  transition: all 0.2s ease-in-out;
+}
+
+#user-profile .user-latest-img:hover {
+  transform: translateY(-4px) scale(1.2);
+  z-index: 30;
+}
+
+#user-profile .block-element .spinner-border {
+  border-width: 2px;
+}
+
+@media only screen and (min-width: 992px) {
+  #user-profile .profile-header-nav .navbar .nav-item {
+    padding-left: 2.25rem !important;
+    padding-right: 2.25rem !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  #user-profile .user-latest-img img {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  #user-profile .profile-header-nav .navbar .nav-item {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+

@@ -1,0 +1,75 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+body.semi-dark-layout {
+  /************ Main Menu **************/
+}
+
+body.semi-dark-layout .main-menu {
+  background-color: #10163a;
+}
+
+body.semi-dark-layout .main-menu .shadow-bottom {
+  background: linear-gradient(180deg, #0f1642 44%, rgba(15, 22, 66, 0.51) 73%, rgba(44, 48, 60, 0));
+}
+
+body.semi-dark-layout .main-menu:not(.expanded) .navigation .sidebar-group-active a {
+  background-color: #262c49;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main {
+  background-color: #10163a;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .nav-item i {
+  color: #c2c6dc;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .nav-item.open a {
+  background-color: #262c49;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .nav-item a:after,
+body.semi-dark-layout .main-menu-content .navigation-main .nav-item a {
+  color: #c2c6dc;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .nav-item .menu-content {
+  background-color: #10163a;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .nav-item .menu-content .active .menu-item {
+  color: #fff;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .nav-item .menu-content li:not(.active) a {
+  background-color: #10163a;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .active .menu-title,
+body.semi-dark-layout .main-menu-content .navigation-main .active i {
+  color: #fff;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .sidebar-group-active a {
+  background: #10163a;
+  border-radius: 4px;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .sidebar-group-active .menu-content {
+  background-color: #10163a;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .sidebar-group-active .menu-content .active {
+  z-index: 1;
+}
+
+body.semi-dark-layout .main-menu-content .navigation-main .sidebar-group-active .menu-content .active a {
+  background-color: transparent;
+}
+
+body.semi-dark-layout.menu-collapsed .main-menu:not(.expanded) .navigation-main li.active a {
+  background: #262c49 !important;
+}
+

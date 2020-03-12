@@ -1,0 +1,197 @@
+// select-2 Theme
+.select2-container--classic{
+  .select2-selection--single {
+    min-height: 40px !important;
+  }
+}
+
+// select2 - default
+.select2-container--classic,
+.select2-container--default {
+	&:focus{
+		outline: none;
+	}
+	// single select
+	.select2-selection--single {
+		min-height: 38px;
+		padding: 5px;
+		border: 1px solid $input-border-color;
+		// Border color on focus
+		&:focus{
+			outline: 0;
+			border-color: $primary  !important;
+			box-shadow: $input-focus-box-shadow !important;
+		}
+
+		// Select with icons scss
+		.select2-selection__rendered {
+			i{
+				margin-right: 0.5rem;
+			}
+		}
+		// dropdown arrow height
+		.select2-selection__arrow{
+			min-height: 38px !important;
+		}
+	}
+	// when select container open - scss
+	&.select2-container--open {
+		.select2-selection--single {
+			border-color: $primary !important;
+			outline: 0;
+		}
+	}
+
+	// select container - focus
+	&.select2-container--focus {
+		outline: 0;
+		.select2-selection--multiple {
+			border-color: $primary !important;
+			outline: 0;
+		}
+	}
+
+	// multiple select scss
+	.select2-selection--multiple {
+		min-height: 38px !important;
+		border: 1px solid $input-border-color;
+		&:focus{
+			outline: 0;
+			border-color: $primary  !important;
+			box-shadow: $input-focus-box-shadow !important;
+		}
+		// selected items bg color for multiple selection
+		.select2-selection__choice{
+			background-color: $primary !important;
+			border-color: darken($primary, 10%) !important;
+			color: $white;
+			padding: 5px;
+		}
+		// font -size for selected options
+		.select2-selection__rendered {
+			li{
+				// font-size: 0.9rem;
+        .select2-search__field
+        {
+          margin-top: 10px;
+        }
+      }
+		}
+		.select2-selection__choice__remove{
+			color: $white !important;
+			float: right;
+			margin-left: 0.5rem;
+		}
+		// select dropdown menu with icons
+		i{
+			position: relative;
+			top: 1px;
+			margin-right: 0.5rem;
+			padding-left: 1px;
+		}
+
+		// Color Options for multiple selected items
+		&[class*=bg-]{
+			.select2-selection__choice{
+				background-color: rgba(0,0,0,0.15) !important;
+			    border-color: rgba(0,0,0,0.2) !important;
+			}
+		}
+	}
+	.select2-results__options{
+		.select2-results__option{
+			i{
+				margin-right: 0.5rem;
+			}
+		}
+	}
+
+	//Loading Remote Data Image Size
+	.select2-result-repository__avatar {
+		img {
+		  width: 50px;
+		}
+	}
+	// select2 - set feather icon in options
+	[class*="icon-"]{
+		font-family: 'feather';
+	}
+
+	// Optional sizing
+	// ------------------------------
+
+	// Large Single select
+	.select-lg {
+		min-height: $input-height !important;
+		font-size: ($font-size-lg - 0.8);
+		margin-bottom: 0 !important;
+		padding: 0.3rem 0.7rem;
+		&.select2-selection--single{
+			.select2-selection__rendered {
+				padding-top: $input-btn-padding-y-lg - 0.9;
+				// padding-left: 0;
+			}
+
+			.select2-selection__arrow{
+				top: $input-btn-padding-y-lg - 0.8 !important;
+			}
+		}
+
+		// large Multiple select
+		&.select2-selection--multiple {
+			padding: 0 0.2rem;
+			.select2-selection__rendered {
+				padding-top: 0 !important;
+				li{
+					font-size: ($font-size-lg - 0.8);
+				}
+				.select2-selection__choice {
+					padding: 5px;
+				}
+			}
+		}
+	}
+	// Small Single select
+	.select-sm {
+		min-height: $input-height-sm !important;
+		padding: 0 $input-padding-y-xs;
+		font-size: $font-size-xs;
+		margin-bottom: 0 !important;
+		line-height: $line-height-xs;
+		// Single
+		&.select2-selection--single {
+
+			.select2-selection__arrow {
+				top: -0.3rem !important;
+			}
+		}
+
+		// Small Multiple select
+		&.select2-selection--multiple {
+			line-height: $line-height-xs - 0.2;
+			.select2-selection__rendered{
+        padding: 3px;
+        li{
+  				font-size: $font-size-xs;
+  				margin-top: 2px;
+        }
+			}
+			.select2-selection__choice {
+				padding: 0 $input-padding-y-xs;
+			}
+
+			.select2-search--inline .select2-search__field {
+				margin-top: 0;
+			}
+		}
+	}
+}
+
+// Form-control focus color for Select2
+.select2{
+	.form-control{
+		&::focus{
+			border-color: $primary !important;
+		}
+	}
+}

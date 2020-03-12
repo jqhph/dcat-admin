@@ -1,0 +1,16 @@
+
+// Inline code
+code {
+  padding: .1rem .4rem;
+  font-size: 90%;
+  color: $code-color;
+  background-color: $kbd-bg;
+  @include border-radius($border-radius/2);
+}
+pre{
+	background-color : #f7f7f9;
+	code
+	{
+		background-color: transparent !important;
+	}
+}

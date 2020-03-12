@@ -1,0 +1,155 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+@-webkit-keyframes ball-triangle-path-1 {
+  33% {
+    transform: translate(25px, -50px);
+  }
+
+  66% {
+    transform: translate(50px, 0px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-1 {
+  33% {
+    transform: translate(25px, -50px);
+  }
+
+  66% {
+    transform: translate(50px, 0px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@-webkit-keyframes ball-triangle-path-2 {
+  33% {
+    transform: translate(25px, 50px);
+  }
+
+  66% {
+    transform: translate(-25px, 50px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-2 {
+  33% {
+    transform: translate(25px, 50px);
+  }
+
+  66% {
+    transform: translate(-25px, 50px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@-webkit-keyframes ball-triangle-path-3 {
+  33% {
+    transform: translate(-50px, 0px);
+  }
+
+  66% {
+    transform: translate(-25px, -50px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes ball-triangle-path-3 {
+  33% {
+    transform: translate(-50px, 0px);
+  }
+
+  66% {
+    transform: translate(-25px, -50px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+.ball-triangle-path {
+  position: relative;
+  transform: translate(-29.9940011998px, -37.5093773443px);
+}
+
+.ball-triangle-path > div:nth-child(1) {
+  -webkit-animation-name: ball-triangle-path-1;
+          animation-name: ball-triangle-path-1;
+  -webkit-animation-delay: 0;
+          animation-delay: 0;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.ball-triangle-path > div:nth-child(2) {
+  -webkit-animation-name: ball-triangle-path-2;
+          animation-name: ball-triangle-path-2;
+  -webkit-animation-delay: 0;
+          animation-delay: 0;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.ball-triangle-path > div:nth-child(3) {
+  -webkit-animation-name: ball-triangle-path-3;
+          animation-name: ball-triangle-path-3;
+  -webkit-animation-delay: 0;
+          animation-delay: 0;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.ball-triangle-path > div {
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  border: 1px solid #b8c2cc;
+}
+
+.ball-triangle-path > div:nth-of-type(1) {
+  top: 50px;
+}
+
+.ball-triangle-path > div:nth-of-type(2) {
+  left: 25px;
+}
+
+.ball-triangle-path > div:nth-of-type(3) {
+  top: 50px;
+  left: 50px;
+}
+

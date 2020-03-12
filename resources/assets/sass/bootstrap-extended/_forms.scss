@@ -1,0 +1,826 @@
+// placeholder spacific scss
+.form-control{
+  &::placeholder{
+     font-size: 0.85rem;
+     color: rgba($black, 0.4);
+     transition: all .2s ease;
+  }
+
+  &:-ms-input-placeholder {
+     color: darken($body-bg, 20%);
+  }
+
+  &:focus{
+    &::placeholder{
+       transform: translate(5px);
+        transition: all .2s ease;
+    }
+    ~.form-control-position{
+      i{
+          color: $primary;
+      }
+    }
+  }
+}
+
+/* Form specific Scss */
+
+// Form Label Scscc
+label{
+    color: darken($body-bg, 70%);
+    font-size: 0.85rem;
+    margin-bottom: 0;
+    padding-left: 0.2rem;
+}
+
+// Text area fontsize and line height
+textarea.form-control{
+  line-height: 1.6rem;
+  font-size: 1rem;
+}
+
+// Form group Scscc
+.form-group{
+    margin-bottom: 1.5rem;
+}
+
+
+// Form control Scscc
+.form-control{
+    border: 1px solid darken($body-bg, 12%);
+    color: darken($body-bg, 60%);
+}
+// Used for Card - Check it and remove if not used
+.form-section{
+    color: $gray-600;
+    line-height: 3rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid $gray-600;
+
+    i{
+        font-size: 20px;
+        margin-left: 5px;
+        margin-right: 10px;
+    }
+}
+
+/* .form-body{
+    overflow: hidden;
+} */
+
+// Used for Card - Check it and remove if not used
+.form-actions{
+    border-top: 1px solid darken($body-bg, 10%);
+    padding: 20px 0;
+    margin-top: 20px;
+
+    &.filled{
+        background-color: $body-bg;
+    }
+    &.center{
+        text-align: center;
+    }
+    &.right{
+        text-align: right;
+    }
+
+    &.top{
+        border-top: 0;
+        border-bottom: 1px solid darken($body-bg, 10%);
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    @include media-breakpoint-down(sm) {
+        .buttons-group{
+            float: left !important;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+// Form-horizotnal layout
+.form-horizontal{
+    .form-group{
+        @include media-breakpoint-up(sm) {
+            .label-control{
+                text-align: right;
+            }
+        }
+    }
+}
+
+// Form Control Large
+.form-control.form-control-lg{
+  padding: 1rem;
+  &::placeholder{
+    font-size: 1.25rem;
+  }
+}
+
+// Form Control Small
+.form-control.form-control-sm{
+  padding: 0.6rem;
+  &::placeholder{
+    font-size: 0.7rem;
+  }
+}
+
+
+// Custom-File-Input
+.custom-file-label{
+  padding: 0.4rem $custom-file-padding-x;
+  &::after{
+    padding: 0.4rem $custom-file-padding-x;
+    height: auto;
+  }
+}
+
+// Select Inputs Specific SCSS
+select.form-control {
+  &:not([multiple="multiple"]){
+    background-image:
+      url("../images/pages/arrow-down.png");
+    background-position:
+      calc(100% - 12px) 13px,
+      calc(100% - 20px) 13px,
+      100% 0;
+    background-size:
+      12px 12px,
+      10px 10px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 1.5rem;
+  }
+}
+
+// For customs-select remove double arrow
+.custom-select{
+    -moz-appearance: none; // For firefox
+    -webkit-appearance: none; // for chorme
+}
+
+// input group addon
+.input-group-addon {
+    background-color: #ECEFF1;
+    border-color: #BABFC7;
+}
+
+// Custom Checkbox
+.custom-control-label::before, .custom-control-label::after{
+  width: 1.143rem;
+  height: 1.143rem;
+  top: 0.08rem;
+}
+// Custom-checkbox when not disabled and active
+.custom-control-input:not(:disabled){
+    &:active ~ .custom-control-label{
+        &::before {
+            background-color: $primary;
+            border-color: $primary;
+        }
+    }
+}
+
+/* Floating label Group */
+.form-label-group{
+    position: relative;
+    margin-bottom: 1.5rem;
+
+    // Form-Control-Large in Floating Label Group
+    .form-control-lg{
+      ~ label{
+        font-size: 1.25rem;
+        padding: 1rem;
+      }
+    }
+
+    // Form-Control-Small in Floating Label Group
+    .form-control-sm{
+      ~ label{
+        font-size: 0.7rem;
+      }
+    }
+
+    // Form-label
+    > label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        transition: all .25s ease-in-out;
+        padding: .6rem;
+        pointer-events: none;
+        cursor: text;
+        color: rgba($black, 0.4);
+        font-size: .85rem;
+        opacity: 0;
+    }
+    // form-input
+    > input, textarea{
+        padding: .6rem;
+
+        // from-input on focus change label color
+        &:focus, &:not(:active){
+            &:not(:placeholder-shown) ~ label {
+                color: rgba($primary, 1) !important;
+                transition: all .25s ease-in-out;
+                opacity: 1;
+            }
+        }
+        &:not(:focus){
+         &:not(:placeholder-shown) ~ label {
+            color: rgba($black, 0.4) !important;
+          }
+        }
+        // form-label after entering text in input box
+        &:not(:placeholder-shown) ~ label {
+            padding : .25rem 0;
+            font-size: .7rem;
+            top: -20px;
+            left: 3px;
+        }
+    }
+
+    // has-icon left with input
+    &.has-icon-left{
+        > label{
+            left: 36px;
+        }
+    }
+}
+
+
+/* Vuexy Custom Checkbox */
+.vs-checkbox-con{
+    position: relative;
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+    margin: .25rem 0;
+    input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 200;
+        cursor: pointer;
+        top: 0;
+        &:checked{
+          ~.vs-checkbox{
+            transform: rotate(0deg);
+            border-color: $primary;
+            .vs-checkbox--check{
+              transform: translate(0);
+              background-color: $primary;
+              .vs-icon{
+                transform: translate(0);
+                line-height: 1.2;
+                opacity: 1;
+              }
+            }
+            &.vs-checkbox-sm{
+              .vs-checkbox--check .vs-icon{
+                font-size: 0.75rem;
+              }
+            }
+            &.vs-checkbox-lg{
+              .vs-checkbox--check .vs-icon{
+                font-size: 1.2rem;
+              }
+            }
+          }
+        }
+        &:active:checked+.vs-checkbox{
+          .vs-checkbox--check{
+            transform: translate(3px);
+            background-color: $primary;
+            .vs-icon{
+              opacity: 1;
+              transform: translate(6px);
+            }
+          }
+        }
+        &:disabled{
+          cursor: default;
+          pointer-events: none;
+          +.vs-checkbox {
+            cursor: default;
+            opacity: .5;
+          }
+        }
+    }
+    .vs-checkbox{
+      cursor: pointer;
+      position: relative;
+      width: $vs-checkbox-box;
+      height: $vs-checkbox-box;
+      border-width: $vs-checkbox-radio-border-width;
+      border-style: solid;
+      border-color: $vs-checkbox-radio-border-color;
+      border-radius: 2px;
+      transform: rotate(-90deg);
+      transition: all .2s ease;
+      overflow: hidden;
+      margin-right: .5rem;
+      &.vs-checkbox-sm{
+        width: $vs-checkbox-box-sm;
+        height: $vs-checkbox-box-sm;
+      }
+      &.vs-checkbox-lg{
+        width: $vs-checkbox-box-lg;
+        height: $vs-checkbox-box-lg;
+      }
+      .vs-checkbox--check{
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          transform: translate(100%);
+          transform-origin: right;
+          transition: all .2s ease;
+          z-index: 10;
+          .vs-icon{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $white;
+          }
+      }
+    }
+}
+
+
+/* Vuexy Custom Radio */
+.vs-radio-con{
+    position: relative;
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+    margin: .25rem 0;
+    input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 200;
+        cursor: pointer;
+        &:checked{
+          ~.vs-radio{
+            transform: rotate(0deg);
+            outline: 0;
+            .vs-radio--circle{
+                background: rgba($primary,1);
+                box-shadow: 0 3px 12px 0 rgba($primary,.4);
+                opacity: 1;
+                transform: scale(1);
+            }
+            .vs-radio--border{
+              opacity: 0;
+              transform: scale(0.3);
+            }
+          }
+        }
+        &:disabled{
+          cursor: default;
+          pointer-events: none;
+          +.vs-radio {
+            cursor: default;
+            opacity: .5;
+          }
+        }
+        &:active{
+          ~.vs-radio{
+            transform: scale(1.1);
+          }
+
+        }
+    }
+    .vs-radio{
+      cursor: pointer;
+      position: relative;
+      width: $vs-radio-box;
+      height: $vs-radio-box;
+      transition: all .2s ease;
+      margin-right: .5rem;
+      &.vs-radio-sm{
+        width: $vs-radio-box-sm;
+        height: $vs-radio-box-sm;
+      }
+      &.vs-radio-lg{
+        width: $vs-radio-box-lg;
+        height: $vs-radio-box-lg;
+      }
+      .vs-radio--border, .vs-radio--circle {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          transition: all .25s ease;
+          top: 0;
+          border-radius: 50%;
+      }
+      .vs-radio--border{
+          background: transparent;
+          border: $vs-checkbox-radio-border-width solid $vs-checkbox-radio-border-color;
+      }
+      .vs-radio--circle{
+        opacity: 0;
+        transform: scale(0.1);
+      }
+    }
+}
+
+
+/* Switches */
+
+.custom-switch{
+  padding-left: 0;
+
+  .custom-control-label{
+    height: 1.571rem;
+    width: 3.1rem;
+    padding: 0;
+
+    /* For bg color of switch*/
+    &::before{
+      border: none;
+      background-color: $switch-bg-color;
+      height: 1.571rem;
+      left: -.2857rem;
+      box-shadow: none !important;
+      transition: all .25s ease;
+      cursor: pointer;
+      user-select: none;
+      top: 0;
+      left: 0;
+    }
+    /*For Switch handle*/
+    &:after{
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      box-shadow: none;
+      background-color: $switch-indicator-color;
+      transition:all .25s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+        /*For Switch text*/
+    .switch-text-left,.switch-text-right,
+    .switch-icon-left,.switch-icon-right{
+      position: absolute;
+      top: 5px;
+      font-size: .7rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .switch-text-left,.switch-icon-left{
+      left: 7px;
+      color: $white
+    }
+    .switch-text-right,.switch-icon-right{
+     right: 7px
+    }
+    &:focus{
+      outline: 0;
+    }
+  }
+
+  /*For Switch label*/
+
+  .switch-label{
+    padding-left: 1rem;
+  }
+
+  // after its checked
+
+  .custom-control-input:checked ~ .custom-control-label::before{
+    box-shadow: none;
+  }
+
+  /*For Switch Handle Animation*/
+  .custom-control-input:checked ~ .custom-control-label::after{
+    transform: translateX(1.4rem);
+  }
+  .custom-control-input:not(:checked) ~ .custom-control-label{
+    .switch-text-left{
+      opacity: 0;
+    }
+    .switch-text-right{
+      opacity: 1;
+    }
+  }
+  .custom-control-input:checked ~ .custom-control-label{
+    .switch-text-right{
+      opacity: 0;
+    }
+    .switch-text-left{
+      opacity: 1;
+    }
+  }
+  .custom-control-input:not(:disabled):active ~ .custom-control-label::before{
+    background-color: $switch-bg-color;
+  }
+  // For Switch Sizes
+
+  // switch md
+  &.switch-md{
+    .custom-control-label{
+      width: $switch-md-size;
+      height: 1.571rem;
+      &::before{
+        width: $switch-md-size;
+        border: none;
+        background-color: $switch-bg-color;
+        height: 1.571rem;
+        left: -.2857rem;
+        box-shadow: none !important;
+        transition: all .25s ease;
+        cursor: pointer;
+        user-select: none;
+      }
+      &:after{
+        box-shadow: none;
+        background-color: $switch-indicator-color;
+        transition:all .25s ease;
+        cursor: pointer;
+        user-select: none;
+        position: absolute;
+        top: 2px;
+        left:-2px;
+      }
+      .switch-text-right,.switch-icon-right{
+        right: 9px;
+
+      }
+      .switch-text-left,.switch-icon-left{
+        left: 5px;
+
+      }
+    }
+    .custom-control-input:checked ~ .custom-control-label::after{
+      transform: translateX(2.3rem);
+    }
+  }
+
+  // switch lg
+  &.switch-lg{
+    .custom-control-label{
+      width: $switch-lg-size;
+      height: 1.571rem;
+      &::before{
+        width: $switch-lg-size;
+        border: none;
+        background-color: $switch-bg-color;
+        height: 1.571rem;
+        left: -.2857rem;
+        box-shadow: none !important;
+        transition: all .25s ease;
+        cursor: pointer;
+        user-select: none;
+      }
+      &:after{
+        position: absolute;
+        top: 2px;
+        left: -2px;
+        box-shadow: none;
+        background-color: $switch-indicator-color;
+        transition:all .25s ease;
+        cursor: pointer;
+        user-select: none;
+      }
+      .switch-text-right,.switch-icon-right{
+        right: 10px;
+
+      }
+    }
+    .custom-control-input:checked ~ .custom-control-label::after{
+      transform: translateX(3.8rem);
+    }
+  }
+}
+
+
+/* Textarea with Counter */
+
+.counter-value{
+  background-color: $primary;
+  color: $white;
+  padding: 1px 6px;
+  font-size: .6rem;
+  border-radius: 0 0 5px 5px;
+  margin-right: 1rem;
+}
+
+
+/* Input box with icon divider */
+
+.form-group{
+  &.input-divider-left{
+    .form-control-position{
+      i{
+        padding: 0.2rem 0.5rem;
+        border-right: 1px solid darken($body-bg, 12%);
+      }
+    }
+  }
+  &.input-divider-right{
+    .form-control-position{
+      i{
+        padding: 0.2rem 0.5rem;
+        border-left: 1px solid darken($body-bg, 12%);
+      }
+    }
+  }
+}
+
+/* input-groups-lg and input-groups-sm  */
+
+.input-group-lg, .input-group-sm{
+  .form-control{
+    padding: 0.7rem;
+  }
+}
+
+/* Bootstrap touchspin */
+
+.bootstrap-touchspin{
+  &.input-group{
+    width: 8.4rem;
+    align-items: center;
+    .form-control{
+      padding: 5px;
+      height: auto;
+      border: 0;
+      background-color: $body-bg;
+      border-radius: 5px !important;
+      text-align: center;
+      font-weight: 500;
+      &:focus{
+        z-index: 1;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .bootstrap-touchspin-injected{
+    margin: 0 !important;
+    .bootstrap-touchspin-down, .bootstrap-touchspin-up{
+      padding: 0;
+      min-width: 22px;
+      min-height: 22px;
+      border-radius: 5px !important;
+      position: relative;
+      i{
+        font-size: 0.8rem;
+        position: relative;
+        top: -1px;
+      }
+    }
+    .bootstrap-touchspin-down{
+      left: 12px;
+    }
+    .bootstrap-touchspin-up{
+      right: 12px;
+    }
+  }
+
+  // Disabled Touchspin
+  &.disabled-touchspin{
+    .bootstrap-touchspin-down, .bootstrap-touchspin-up{
+      background-color: rgba(0,0,0,.5) !important;
+      cursor: default;
+      opacity: .5;
+    }
+  }
+
+  // Touchspin Large
+  &.input-group-lg{
+    width: 9.375rem;
+    .touchspin{
+      &.form-control{
+        height: auto !important;
+      }
+    }
+    .bootstrap-touchspin-down, .bootstrap-touchspin-up{
+      i{
+        font-size: 1rem;
+      }
+    }
+  }
+
+  // Touchspin Small
+  &.input-group-sm{
+    width: 6.25rem;
+    .touchspin{
+      &.form-control{
+        height: auto !important;
+      }
+    }
+    .bootstrap-touchspin-injected{
+      .bootstrap-touchspin-down, .bootstrap-touchspin-up{
+        min-width: 16px;
+        min-height: 16px;
+        padding-top: 2.2px;
+        i{
+          font-size: 0.6rem;
+        }
+      }
+    }
+  }
+}
+
+.btn.disabled-max-min{
+  background-color: rgba(0,0,0,.5) !important;
+  cursor: default;
+}
+
+
+/* Number Type Input Box Scss for - Remove arrow on hover */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
+
+/* Number Type Input Box Scss for Touchspin - Remove arrow for firefox */
+.bootstrap-touchspin{
+  &.input-group{
+    input[type=number] {-moz-appearance: textfield;}
+  }
+}
+
+
+// IE Specific CSS
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+  // floating Label Group
+  .form-label-group{
+      label {
+          display: none;
+      }
+  }
+
+  // Bootstrap Select
+  select.form-control {
+    &:not([multiple="multiple"]){
+      background: none;
+    }
+  }
+ // Custom-File-Input
+  .custom-file-label{
+    &::after{
+      padding: 1.34rem 0.7rem 1.25rem;
+    }
+  }
+}
+
+
+// Date & Time Picker - Form Control Bg color
+.picker__input{
+  &.form-control {
+    background-color: $white;
+  }
+}
+
+// input Groups specific SCSS
+.input-group {
+  .form-control{
+    height: auto;
+  }
+  .input-group-prepend, .input-group-append  {
+    // dropdown arrow position
+    .dropdown-toggle{
+      &::after{
+        left: 0;
+      }
+    }
+    // checkbox and radio margin
+    .vs-checkbox-con, .vs-checkbox, .vs-radio-con, .vs-radio{
+      margin: 0;
+    }
+  }
+  &.input-group-lg{
+    .form-control{
+      &::placeholder{
+        font-size: 1.25rem;
+      }
+    }
+    .input-group-prepend, .input-group-append{
+      .btn{
+        line-height: 1.3;
+        font-size: 1.3rem;
+      }
+    }
+
+  }
+  &.input-group-sm{
+    .form-control{
+      &::placeholder{
+        font-size: 0.7rem;
+      }
+    }
+  }
+}

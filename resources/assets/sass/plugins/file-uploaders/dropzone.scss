@@ -1,0 +1,99 @@
+// Core variables and mixins
+@import "../../bootstrap/functions";
+@import "../../bootstrap/mixins";
+
+// Core variables and mixins overrides
+@import "../../core/variables/variables";
+@import "../../bootstrap/variables";
+
+// Overrides user variable
+@import "../../core/variables/components-variables";
+
+.dropzone{
+	min-height: 350px;
+	border: 2px dashed $primary;
+  background: $body-bg;
+
+  // dropzone message customization
+	.dz-message{
+		font-size: 2rem;
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		height: 300px;
+		margin-top: -30px;
+		color: $primary;
+		text-align: center;
+  }
+
+  // dropzone message icon
+	.dz-message:before{
+		content: "\e864";
+	    font-family: 'feather';
+	    font-size: 80px;
+	    position: absolute;
+	    top: 48px;
+	    width: 80px;
+	    height: 80px;
+	    display: inline-block;
+	    left: 50%;
+	    margin-left: -40px;
+	    line-height: 1;
+	    z-index: 2;
+	    color: $primary;
+	    text-indent: 0px;
+	    font-weight: normal;
+	    -webkit-font-smoothing: antialiased;
+  }
+
+  // for preview of files
+.dz-preview{
+	background: transparent;
+
+	.dz-error-mark,.dz-success-mark{
+		background-image: url("../images/dropzone/spritemap.png")
+	}
+
+    .dz-error-message{
+      min-width: 113px;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  // for dropzone preview and remove icon
+	.dz-preview .dz-remove{
+		font-size: 1.1rem;
+		color: $danger;
+    	line-height: 2rem;
+
+    	&:before{
+			content: "\e8f6";
+		    font-family: 'feather';
+		    display: inline-block;
+		    line-height: 1;
+		    z-index: 2;
+		    text-indent: 0px;
+		    font-weight: normal;
+		    -webkit-font-smoothing: antialiased;
+    	}
+
+    	&:hover{
+			text-decoration: none;
+			color: darken($danger, 10%);
+    	}
+	}
+
+}
+
+// For Small Screen drop Logo
+@media(max-width: 576px){
+  .dropzone{
+    .dz-message{
+      &:before{
+        top: 7.14rem;
+      }
+    }
+  }
+}

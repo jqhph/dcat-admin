@@ -1,0 +1,137 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+@-webkit-keyframes ball-zig-deflect {
+  17% {
+    transform: translate(-15px, -30px);
+  }
+
+  34% {
+    transform: translate(15px, -30px);
+  }
+
+  50% {
+    transform: translate(0, 0);
+  }
+
+  67% {
+    transform: translate(15px, -30px);
+  }
+
+  84% {
+    transform: translate(-15px, -30px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes ball-zig-deflect {
+  17% {
+    transform: translate(-15px, -30px);
+  }
+
+  34% {
+    transform: translate(15px, -30px);
+  }
+
+  50% {
+    transform: translate(0, 0);
+  }
+
+  67% {
+    transform: translate(15px, -30px);
+  }
+
+  84% {
+    transform: translate(-15px, -30px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@-webkit-keyframes ball-zag-deflect {
+  17% {
+    transform: translate(15px, 30px);
+  }
+
+  34% {
+    transform: translate(-15px, 30px);
+  }
+
+  50% {
+    transform: translate(0, 0);
+  }
+
+  67% {
+    transform: translate(-15px, 30px);
+  }
+
+  84% {
+    transform: translate(15px, 30px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes ball-zag-deflect {
+  17% {
+    transform: translate(15px, 30px);
+  }
+
+  34% {
+    transform: translate(-15px, 30px);
+  }
+
+  50% {
+    transform: translate(0, 0);
+  }
+
+  67% {
+    transform: translate(-15px, 30px);
+  }
+
+  84% {
+    transform: translate(15px, 30px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.ball-zig-zag-deflect {
+  position: relative;
+  transform: translate(-15px, -15px);
+}
+
+.ball-zig-zag-deflect > div {
+  background-color: #b8c2cc;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  margin: 2px;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  position: absolute;
+  margin-left: 15px;
+  top: 4px;
+  left: -7px;
+}
+
+.ball-zig-zag-deflect > div:first-child {
+  -webkit-animation: ball-zig-deflect 1.5s 0s infinite linear;
+          animation: ball-zig-deflect 1.5s 0s infinite linear;
+}
+
+.ball-zig-zag-deflect > div:last-child {
+  -webkit-animation: ball-zag-deflect 1.5s 0s infinite linear;
+          animation: ball-zag-deflect 1.5s 0s infinite linear;
+}
+

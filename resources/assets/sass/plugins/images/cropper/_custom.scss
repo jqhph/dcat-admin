@@ -1,0 +1,50 @@
+// Cropper
+// =========================
+.img-container {
+  background-color: #f7f7f7;
+  width: 100%;
+  text-align: center;
+  min-height: 200px;
+  max-height: 450px;
+  margin-bottom: 20px;
+}
+.img-preview {
+  background-color: #f7f7f7;
+  width: 100%;
+  text-align: center;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  >img {
+    max-width: 100%;
+  }
+}
+.docs-preview {
+  margin-right: -15px;
+}
+.preview-lg {
+  width: 263px;
+  height: 148px;
+}
+
+.preview-md {
+  width: 139px;
+  height: 78px;
+}
+
+.preview-sm {
+  width: 69px;
+  height: 39px;
+}
+
+.preview-xs {
+  width: 35px;
+  height: 20px;
+  margin-right: 0;
+}
+@media (min-width: 768px) {
+  .img-container {
+    min-height: 450px;
+  }
+}

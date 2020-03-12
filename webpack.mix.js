@@ -25,7 +25,7 @@ const path = require('path')
 function mixAssetsDir(query, cb) {
   (glob.sync('resources/assets/' + query) || []).forEach(f => {
     f = f.replace(/[\\\/]+/g, '/');
-    cb(f, f.replace('resources/assets', 'resources/dist/dcat-admin'));
+    cb(f, f.replace('resources/assets', 'resources/dist'));
   });
 }
 

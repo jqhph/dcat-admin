@@ -1,0 +1,69 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+/* user page css */
+
+/*---------------*/
+
+.users-list-wrapper .actions-dropodown {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 0.5rem;
+}
+
+.users-list-wrapper a,
+.users-list-wrapper span {
+  color: inherit;
+}
+
+.users-list-wrapper a i,
+.users-list-wrapper span i {
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.users-list-wrapper a i.users-delete-icon,
+.users-list-wrapper span i.users-delete-icon {
+  font-size: 1.2rem;
+}
+
+.users-list-wrapper a i.users-delete-icon:hover,
+.users-list-wrapper span i.users-delete-icon:hover {
+  color: #ea5455;
+}
+
+.users-list-wrapper a i.users-edit-icon:hover,
+.users-list-wrapper span i.users-edit-icon:hover {
+  color: #7367f0;
+}
+
+.users-list-wrapper .badge {
+  text-transform: uppercase;
+}
+
+.users-list-wrapper .ag-icon-checkbox-unchecked {
+  color: #b8c2cc !important;
+  font-size: 22px;
+}
+
+.users-list-wrapper .ag-icon-checkbox-checked,
+.users-list-wrapper .ag-icon-checkbox-indeterminate {
+  font-size: 22px;
+}
+
+.page-users-view .users-view-image {
+  width: 150px;
+  flex: none !important;
+}
+
+.page-users-view table td {
+  padding-bottom: 0.8rem;
+  min-width: 140px;
+  word-break: break-word;
+}
+
+.users-view .users-avatar-shadow,
+.users-edit .users-avatar-shadow {
+  box-shadow: 2px 4px 14px 0 rgba(34, 41, 47, 0.4);
+}
+

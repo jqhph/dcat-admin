@@ -1,0 +1,59 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.customer-info.list-group .list-group-item:last-child {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.customer-info.list-group .list-group-item .series-info i {
+  top: 0;
+  margin-right: 0.3rem;
+}
+
+.avg-sessions .progress {
+  margin-top: 0.5rem;
+}
+
+.analytics-list.list-group .list-group-item {
+  border: 0;
+}
+
+.analytics-list.list-group .list-group-item:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.analytics-list.list-group .list-group-item .btn {
+  display: none;
+}
+
+.analytics-list.list-group .list-group-item:hover .btn {
+  display: inline-block;
+}
+
+.chart-dropdown .btn {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.chart-dropdown .btn:after {
+  left: 0;
+  position: relative;
+}
+
+@media only screen and (max-width: 992px) and (min-width: 768px) {
+  .analytics-list .float-left,
+  .analytics-list .float-right {
+    display: block;
+  }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  #dashboard-analytics .avatar .avatar-content,
+  #statistics-card .avatar .avatar-content {
+    padding: 0 !important;
+  }
+}
+

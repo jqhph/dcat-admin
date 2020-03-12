@@ -1,0 +1,94 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+@-webkit-keyframes ball-spin-loader {
+  75% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ball-spin-loader {
+  75% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.ball-spin-loader {
+  position: relative;
+}
+
+.ball-spin-loader > span:nth-child(1) {
+  top: 45px;
+  left: 0;
+  -webkit-animation: ball-spin-loader 2s 0.9s infinite linear;
+          animation: ball-spin-loader 2s 0.9s infinite linear;
+}
+
+.ball-spin-loader > span:nth-child(2) {
+  top: 30.6818181818px;
+  left: 30.6818181818px;
+  -webkit-animation: ball-spin-loader 2s 1.8s infinite linear;
+          animation: ball-spin-loader 2s 1.8s infinite linear;
+}
+
+.ball-spin-loader > span:nth-child(3) {
+  top: 0;
+  left: 45px;
+  -webkit-animation: ball-spin-loader 2s 2.7s infinite linear;
+          animation: ball-spin-loader 2s 2.7s infinite linear;
+}
+
+.ball-spin-loader > span:nth-child(4) {
+  top: -30.6818181818px;
+  left: 30.6818181818px;
+  -webkit-animation: ball-spin-loader 2s 3.6s infinite linear;
+          animation: ball-spin-loader 2s 3.6s infinite linear;
+}
+
+.ball-spin-loader > span:nth-child(5) {
+  top: -45px;
+  left: 0;
+  -webkit-animation: ball-spin-loader 2s 4.5s infinite linear;
+          animation: ball-spin-loader 2s 4.5s infinite linear;
+}
+
+.ball-spin-loader > span:nth-child(6) {
+  top: -30.6818181818px;
+  left: -30.6818181818px;
+  -webkit-animation: ball-spin-loader 2s 5.4s infinite linear;
+          animation: ball-spin-loader 2s 5.4s infinite linear;
+}
+
+.ball-spin-loader > span:nth-child(7) {
+  top: 0;
+  left: -45px;
+  -webkit-animation: ball-spin-loader 2s 6.3s infinite linear;
+          animation: ball-spin-loader 2s 6.3s infinite linear;
+}
+
+.ball-spin-loader > span:nth-child(8) {
+  top: 30.6818181818px;
+  left: -30.6818181818px;
+  -webkit-animation: ball-spin-loader 2s 7.2s infinite linear;
+          animation: ball-spin-loader 2s 7.2s infinite linear;
+}
+
+.ball-spin-loader > div {
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background: green;
+}
+

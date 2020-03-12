@@ -1,0 +1,265 @@
+// Core variables and mixins
+@import "../../bootstrap/functions";
+@import "../../bootstrap/mixins";
+
+// Core variables and mixins overrides
+@import "../../core/variables/variables";
+@import "../../bootstrap/variables";
+
+// Overrides user variable
+@import "../../core/variables/components-variables";
+
+$ex-val-color: #888;
+
+// default bg for noUi Slider
+.noUi-background{
+    background: darken($body-bg,3%);
+}
+
+.noUi-target{
+    background-color: darken($body-bg,5%);
+    border:none;
+    box-shadow:none;
+    border-radius: 1rem;
+    &.noUi-connect{
+        box-shadow: none;
+    }
+}
+
+// horizontal slider and it's sizes
+
+.noUi-horizontal{
+    height: 10px;
+
+    padding-right: 17px;
+    .noUi-handle{
+        width: 20px;
+        height: 20px;
+        top: -5px;
+        left: -1px;
+        cursor: pointer;
+    }
+
+    .noUi-origin  {
+        left: 17px;
+        right: -17px;
+    }
+
+    &.slider-xl{
+        height: 14px;
+        .noUi-handle{
+            width: 28px;
+            height: 28px;
+            top: -7px;
+        }
+    }
+
+    &.slider-lg{
+        height: 12px;
+        .noUi-handle{
+            width: 24px;
+            height: 24px;
+            top: -6px;
+        }
+    }
+
+    &.slider-sm{
+        height: 6px;
+        .noUi-handle{
+          height: 15px;
+          width: 15px;
+          right: -2px !important;
+        }
+    }
+
+    &.slider-xs{
+        height: 3px;
+        .noUi-handle{
+          height: 10px;
+          width: 10px;
+          top: -4px;
+          right: -2px !important;
+        }
+    }
+}
+
+// slider handle styles
+
+.noUi-handle{
+    box-shadow: none;
+    border:none;
+
+    &:after, &:before {
+        display: none;
+    }
+    border-radius: 50%;
+    background: $white;
+    border:5px solid $primary;
+
+}
+// for noUi square circle filled
+
+.circle-filled{
+    .noUi-handle{
+        &:after, &:before {
+            display: none;
+        }
+        background: $primary;
+        border-radius: 50%;
+    }
+}
+
+// for noUi square and it's sizes
+
+.square{
+    .noUi-handle{
+        background: $primary;
+        border-radius: 3px;
+
+        &:before{
+            display: block;
+            width: 2px;
+            height: 10px;
+            left: 2px;
+            top:0px;
+        }
+
+        &:after{
+            display: block;
+            width: 2px;
+            height: 10px;
+            left: 7px;
+            top:0px;
+        }
+    }
+
+    &.slider-xl{
+        .noUi-handle{
+            &:before{
+                left: 5px;
+                top: 4px;
+            }
+
+            &:after{
+                left: 10px;
+                top: 4px;
+            }
+        }
+    }
+
+
+    &.slider-lg{
+        .noUi-handle{
+            &:before{
+                left: 3px;
+                top: 2px;
+            }
+
+            &:after{
+                left: 8px;
+                top:2px;
+            }
+        }
+    }
+    &.slider-sm{
+      .noUi-handle{
+          &:before{
+              left: -1px;
+              top: -1px;
+              height: 7px;
+          }
+
+          &:after{
+              left: 4px;
+              top: -1px;
+              height: 7px;
+          }
+      }
+    }
+    &.slider-xs{
+      .noUi-handle{
+          &:before{
+              left: -3px;
+              top: -3px;
+              height: 5px;
+          }
+
+          &:after{
+              left: 1px;
+              top: -3px;
+              height: 5px;
+          }
+      }
+    }
+}
+
+// default connect color
+
+.noUi-connect{
+    background:$primary;
+    box-shadow: none;
+}
+
+// noUi Vertical customization
+
+.noUi-vertical {
+    display: inline-block;
+    width: 8px;
+    height: 150px;
+
+    .noUi-handle{
+        width: 20px;
+        height: 20px;
+        top: -5px;
+
+        left: -6px;
+    }
+
+    &.square{
+        .noUi-handle{
+            background: $primary;
+            border-radius: 3px;
+
+            &:before{
+                display: block;
+                width: 12px;
+                height: 2px;
+                left: -1px;
+                top:2px;
+            }
+
+            &:after{
+                display: block;
+                width: 12px;
+                height: 2px;
+                left: -1px;
+                top:7px;
+            }
+        }
+    }
+    
+    .noUi-tooltip{
+        transform: translate(-10%,-50%);
+    }
+
+}
+
+// for example value of noUI Hover
+.example-val {
+    font: 400 12px Arial;
+    color: $ex-val-color;
+    display: block;
+    margin: 15px 0;
+}
+
+// to remove outline on focus
+.noUi-handle:focus{
+  outline: 0;
+}
+
+// IE SPECIFIC FOR SLIDER WITH INPUT
+_:-ms-lang(x),
+.slider-select {
+  flex: 0 0 10%;
+  max-width: 10%;
+}

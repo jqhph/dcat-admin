@@ -1,0 +1,111 @@
+.breadcrumb {
+    font-size: $font-size-base;
+    font-family: $font-family-monospace;
+    background-color: transparent;
+    padding: 0.5rem 0 0.5rem $breadcrumb-padding-x !important;
+    border-left: 1px solid lighten($gray-600, 10%);
+    border-radius: 0;
+    > li {
+        + li::before {
+            padding-right: .6rem;
+            padding-left: .6rem;
+        }
+      }
+    /* .breadcrumb-item:first-child{
+        a{
+            &:after{
+                content: "\e965";
+                font-family: 'feather';
+            }
+        }
+    } */
+    .breadcrumb-item + .breadcrumb-item{
+        padding-left: 0;
+        &:before{
+            content: "\e847";
+            font-family: 'feather';
+            color: $body-color;
+        }
+    }
+    .breadcrumb-item.active{
+        color: $body-color;
+    }
+}
+
+/* Custom scss for page headers style */
+.breadcrumbs-right{
+	.breadcrumb {
+		float:right;
+	}
+}
+.breadcrumbs-top{
+	.breadcrumb {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+
+/* Component Specific */
+
+#component-breadcrumbs{
+  .breadcrumb{
+    border: none;
+    .breadcrumb-item + .breadcrumb-item:before{
+      font-family: none;
+      padding: 0 1rem;
+    }
+  }
+  .default-breadcrumb{
+    &.breadcrumb{
+      .breadcrumb-item + .breadcrumb-item:before{
+          content: "/";
+      }
+    }
+  }
+  .breadcrumb-dots{
+    &.breadcrumb{
+      .breadcrumb-item + .breadcrumb-item:before{
+          content: ".";
+          position: relative;
+          top: -4px;
+      }
+    }
+  }
+  .breadcrumb-dashes{
+    &.breadcrumb{
+      .breadcrumb-item + .breadcrumb-item:before{
+          content: "-";
+      }
+    }
+  }
+  .breadcrumb-pipes{
+    &.breadcrumb{
+      .breadcrumb-item + .breadcrumb-item:before{
+          content: "|";
+      }
+    }
+  }
+  .breadcrumb-chevron{
+    &.breadcrumb{
+      .breadcrumb-item + .breadcrumb-item:before{
+          content: "\e844";
+          font-family: 'feather';
+          position: relative;
+          top: 1px;
+      }
+    }
+  }
+}
+
+#breadcrumb-alignment{
+  .breadcrumb-wrapper{
+    box-shadow: 1px 1px 10px rgba($pure-black,.1);
+    padding: 1px;
+    border-radius: 10px;
+    .breadcrumb{
+      margin-top: .8rem;
+    }
+  }
+}
+

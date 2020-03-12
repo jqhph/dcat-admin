@@ -1,0 +1,476 @@
+// ================================================================================================
+// 	File Name: email-application.scss
+// 	Description: SCC file for email application page.
+// 	----------------------------------------------------------------------------------------------
+// 	Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+// 	Author: PIXINVENT
+// 	Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Core variables and mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+.email-application{
+  .content-area-wrapper{
+    border: 1px solid $gray-300;
+    border-radius: $border-radius-sm;
+    // Sidebar area starts
+    .sidebar{
+      .email-app-sidebar{
+        width: $menu-expanded-width;
+        height: calc(100vh - 13rem);
+        height: calc(var(--vh, 1vh) * 100 - 13rem);
+        background-color: $white;
+        border-top-left-radius: $border-radius-sm;
+        border-bottom-left-radius: $border-radius-sm;
+        transition: all .3s ease;
+        // Close Icon
+        .sidebar-close-icon{
+          position: absolute;
+          right: .25rem;
+          top: .25rem;
+          cursor: pointer;
+          font-size: 1.25rem;
+          z-index: 5;
+          visibility: hidden;
+        }
+        .email-app-menu{
+          width: 100%;
+          padding-bottom: .5rem;
+          box-shadow: 0 0 15px 0 rgba($pure_black,.05);
+          z-index: 3;
+          .compose-btn{
+            padding: 1px 1.5rem;
+            margin-bottom: 0.25rem;
+          }
+          .badge{
+            padding: 0.5rem 0.68rem;
+          }
+          .sidebar-menu-list{
+            padding: 0 1.5rem;
+            position: relative;
+            height: calc(100% - 6.4rem);
+          }
+          .list-group .list-group-item i{
+            top: 3px;
+          }
+          hr{
+            margin-left: -1.5rem;
+            margin-right: -1.5rem;
+          }
+        }
+      }
+      .list-group .list-group-item{
+        padding-left: 0;
+        padding-right: 0;
+        &:hover, &:focus {
+          background-color: transparent;
+          color: $body-color;
+        }
+        &.active{
+          background: transparent;
+          color: $primary;
+        }
+      }
+    }
+    // Sidebar area ends
+
+    // Right content area common css starts
+    .content-right {
+      width: calc(100% - #{$menu-expanded-width});
+      .content-wrapper{
+        padding: 0;
+      }
+      .email-app-list-wrapper{
+        border-left: 1px solid $gray-300;
+      }
+      .app-fixed-search{
+        padding: .35rem .1rem;
+        border-bottom: 1px solid $gray-300;
+        background-color: $white;
+        border-top-right-radius: $border-radius;
+        .form-control-position{
+          font-size: calc(#{$spacer} * 1.1);
+        }
+        input{
+          border:0;
+          background-color: transparent;
+          &:focus {
+              border-color: transparent;
+              box-shadow: none;
+          }
+        }
+      }
+      .action-icon{
+        cursor: pointer;
+      }
+    }
+    // Right content area common css End
+  }
+  // email list section
+  .app-content{
+    .content-area-wrapper{
+      position: relative;
+      // Sidebar toggle icon
+      .sidebar-toggle{
+        cursor: pointer;
+        margin: 0.5rem 0.99rem;
+        float: left;
+        line-height: 1;
+        i{
+          font-size: 1.75rem;
+        }
+      }
+      .go-back{
+        cursor: pointer;
+      }
+      // Content area overlay
+      .app-content-overlay{
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        display: block;
+        z-index: 2;
+        visibility: hidden;
+        opacity: 0;
+        transition: all .3s ease;
+        &.show{
+          visibility: visible;
+          transition: all .3s ease;
+          opacity: 1;
+          background-color: rgba(0, 0, 0, 0.2);
+          border-radius: $border-radius;
+        }
+      }
+      // Email user list area
+      .email-user-list{
+        position: relative;
+        height: calc(100vh - 20.3rem);
+        height: calc(var(--vh, 1vh) * 100 - 20.3rem);
+        .users-list-wrapper{
+          padding: 0;
+          margin: 0;
+          // Set delay per List Item
+          @for $i from 1 through 5000 {
+            li:nth-child(#{$i}) {
+              animation-delay: .1s * $i;
+            }
+          }
+          li{
+            cursor: pointer;
+            transition: all .2s;
+            animation: fadeIn 0.5s linear;
+            animation-fill-mode: both;
+            position: relative;
+            &.media{
+              padding: ($spacer + .5) $spacer;
+              &:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 3px 10px 0 #ccc;
+                transition: all .2s;
+              }
+              .media-left{
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+              }
+              .media-body{
+                width: calc(100vw - (100vw - 100%) - 60px);
+                overflow: hidden;
+              }
+            }
+            .avatar,.avatar img{
+              height: $avatar-size + 8;
+              width: $avatar-size + 8;
+            }
+            .avatar img{
+              border: 2px solid $white;
+            }
+            &.mail-read{
+              background-color: $gray-200;
+            }
+            &:not(:first-child){
+              border-top: 1px solid $gray-300;
+            }
+            .user-details{
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: .75rem;
+              .list-group-item-text{
+                color: $body-color;
+              }
+            }
+            .mail-date{
+              color: $body-color;
+            }
+            .mail-message{
+              p{
+                color: $body-color;
+              }
+            }
+          }
+          .user-action {
+            display: flex;
+            align-items: center;
+            .favorite{
+              i{
+                font-size: 1.2rem;
+                line-height: 1.5;
+              }
+            }
+          }
+        }
+        .no-results{
+          display: none;
+          padding: 1.5rem;
+          text-align: center;
+          &.show{
+            display: block;
+          }
+        }
+      }
+    }
+  }
+  // Action area of email list section
+  .app-action {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid $gray-300;
+      .action-left{
+          .selectAll{
+            margin: .25rem 0 0.108rem;
+              .vs-checkbox{
+                margin-right: 1rem;
+              }
+          }
+      }
+      .action-right{
+        ul{
+          li:not(:last-child){
+            margin-right: 1rem ;
+          }
+        }
+        .dropdown-toggle{
+          color: $body-color;
+          &::after{
+            display: none;
+          }
+          white-space: normal;
+        }
+        i{
+          font-size: 1.5rem;
+          margin-right: 0;
+        }
+      }
+  }
+  // On click of mail Details section slide in from right
+  // Email details section starts
+  .email-app-details{
+      position: absolute;
+      display: block;
+      z-index: 2;
+      visibility: hidden;
+      opacity: 0;
+      top: 0;
+      width: calc(100% - #{$menu-expanded-width});
+      background-color: $body-bg;
+      transform: translateX(100%);
+      transition: all .3s ease;
+      height: 100%;
+      border-left: 1px solid $gray-300;
+      &.show{
+        visibility: visible;
+        transition: all .3s ease;
+        opacity: 1;
+        transform: translateX(0%);
+        transition: all .3s ease;
+      }
+      .email-detail-header{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px rgba($pure_black,.04);
+        border-bottom: 1px solid $kbd-bg;
+        position: relative;
+        padding: 1.643rem 2rem 0;
+        background-color: $white;
+      }
+      .email-header-right{
+        .dropdown-toggle{
+          color: $body-color;
+        }
+      }
+      // Email detail scroll area
+      .email-scroll-area{
+        padding: 0 2rem;
+        position: relative;
+        height: calc(100vh - 18.75rem);
+        height: calc(var(--vh, 1vh) * 100 - 18.75rem);
+        .email-detail-head{
+          border-bottom: 1px solid $gray-300;
+          padding: 1.5rem 1rem .75rem;
+          .mail-meta-item {
+            text-align: right;
+          }
+        }
+        .card-body{
+          &.mail-message-wrapper{
+            border-bottom: 1px solid $gray-300 !important;
+          }
+        }
+        .mail-label{
+          letter-spacing: .25px;
+        }
+        .email-info-dropup{
+          .dropdown-toggle::after{
+            left: 0;
+            margin: 0;
+          }
+        }
+        .mail-message{
+          p{
+            margin-bottom: 1.5rem;
+          }
+        }
+        .mail-attachements{
+          text-transform: uppercase;
+        }
+      }
+  }
+
+  // Modal form editor
+  .ql-editor{
+    height: 150px;
+  }
+}
+@include media-breakpoint-down(sm) {
+  .email-application{
+    .sidebar-content{
+      .sidebar-close-icon{
+        visibility: visible !important;
+      }
+    }
+  }
+}
+@include media-breakpoint-down(md) {
+  .email-application{
+    .app-content{
+      .sidebar-left{
+        position: relative;
+        .email-app-sidebar{
+          transform: translateX(-110%);
+          transition: all .3s ease-in-out;
+          // transition: transform .25s;
+          left: 0;
+          position: fixed;
+          z-index: 5;
+          left: -2px;
+        }
+        &.show{
+          .email-app-sidebar{
+            transform: translateX(13%);
+            transition: all .3s ease;
+            // transition: transform .25s;
+            display: block;
+          }
+        }
+      }
+      .content-right{
+        width: 100%;
+        .app-fixed-search{
+          border-top-left-radius: $border-radius;
+        }
+        .email-app-details{
+          width: 100%;
+          border-radius: $border-radius;
+          .email-scroll-area {
+            height: calc(100vh - 21.5rem);
+            height: calc(var(--vh, 1vh) * 100 - 21.5rem);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+  .email-application {
+    .sidebar-left .email-app-sidebar{
+        left: -1.12rem !important;
+    }
+    .email-detail-head .mail-meta-item{
+      display: flex;
+      justify-content: space-between;
+      .mail-date,.mail-time{
+        margin: 1rem .75rem 0 0;
+      }
+    }
+    .app-content .content-right .email-app-details{
+      .email-scroll-area {
+        height: calc(100vh - 23.25rem);
+        height: calc(var(--vh, 1vh) * 100 - 23.25rem);
+      }
+    }
+    .app-content .content-area-wrapper .email-user-list .users-list-wrapper li .user-details{
+      display: block;
+      .mail-items {
+        width: 70%;
+        display: inline-grid;
+      }
+      .mail-meta-item{
+        width: 15%;
+        position: absolute;
+        right: 1rem;
+        top: 1.5rem;
+        i,.bullet{
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 349.98px){
+  .email-application .content-area-wrapper .sidebar .email-app-sidebar{
+    width: 230px;
+    left: 3px;
+  }
+  .email-application .app-content .content-area-wrapper .email-user-list{
+    height: calc(100vh - 22.3rem);
+    height: calc(var(--vh, 1vh) * 100 - 22.3rem);
+  }
+  .email-application .email-app-details .email-detail-header{
+    padding: 0 1.2rem;
+    .email-prev,.email-next{
+      display: none;
+    }
+  }
+}
+
+// Keyframe animation
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    top: 100px;
+  }
+  75% {
+    opacity: 0.5;
+    top: 0px;
+  }
+  100% {
+    opacity: 1;
+  }
+}

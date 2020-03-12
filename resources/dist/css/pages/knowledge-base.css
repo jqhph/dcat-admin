@@ -1,0 +1,43 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.knowledge-base-bg {
+  background: url(/images/knowledge-base-cover.jpg?254ae2dfebb5476285cb53af3d2fbd4a) no-repeat;
+  background-size: cover;
+}
+
+.knowledge-base-category .list-group-item,
+.knowledge-base-question .list-group-item {
+  padding: 0.5rem 0;
+}
+
+.knowledge-base-category .list-group-item:hover,
+.knowledge-base-question .list-group-item:hover {
+  background-color: transparent;
+}
+
+.article-question li {
+  margin-bottom: 0.5rem;
+  display: flex;
+}
+
+.article-question i {
+  font-size: 1.2rem;
+  top: 2px;
+  position: relative;
+  margin: 0 0.5rem;
+}
+
+@media only screen and (min-width: 992px) {
+  .knowledge-base-bg .card-body {
+    padding: 8rem !important;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .knowledge-base-bg .card-body {
+    padding: 6rem !important;
+  }
+}
+

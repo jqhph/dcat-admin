@@ -1,0 +1,55 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.faq-bg {
+  background: url(/images/faq.jpg?ad04b412ac89dfa2f4fb8734d387cad0) no-repeat;
+  background-size: cover;
+}
+
+.faq-bg .form-control:focus ~ .form-control-position i {
+  color: #7367f0;
+}
+
+.faq .faq-content .faq-table-content {
+  cursor: pointer;
+  padding: 0.5rem;
+  font-weight: 500;
+}
+
+.faq .faq-content .faq-table-content i {
+  margin-right: 0.5rem;
+}
+
+.faq .supporter-details .supporter-img img {
+  width: 35px;
+  height: 35px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.faq .supporter-info {
+  vertical-align: middle;
+}
+
+.faq .accordion .collapse-title {
+  font-weight: 500;
+  color: #2c2c2c;
+}
+
+.faq .accordion .collapse-margin {
+  background-color: #fff;
+}
+
+@media only screen and (min-width: 992px) {
+  .faq-bg .card-body {
+    padding: 8rem !important;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .faq-bg .card-body {
+    padding: 6rem !important;
+  }
+}
+

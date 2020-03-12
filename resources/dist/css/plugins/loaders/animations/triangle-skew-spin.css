@@ -1,0 +1,52 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+@-webkit-keyframes triangle-skew-spin {
+  25% {
+    transform: perspective(100px) rotateX(180deg) rotateY(0);
+  }
+
+  50% {
+    transform: perspective(100px) rotateX(180deg) rotateY(180deg);
+  }
+
+  75% {
+    transform: perspective(100px) rotateX(0) rotateY(180deg);
+  }
+
+  100% {
+    transform: perspective(100px) rotateX(0) rotateY(0);
+  }
+}
+
+@keyframes triangle-skew-spin {
+  25% {
+    transform: perspective(100px) rotateX(180deg) rotateY(0);
+  }
+
+  50% {
+    transform: perspective(100px) rotateX(180deg) rotateY(180deg);
+  }
+
+  75% {
+    transform: perspective(100px) rotateX(0) rotateY(180deg);
+  }
+
+  100% {
+    transform: perspective(100px) rotateX(0) rotateY(0);
+  }
+}
+
+.triangle-skew-spin > div {
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #b8c2cc;
+  -webkit-animation: triangle-skew-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite;
+          animation: triangle-skew-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite;
+}
+

@@ -1,0 +1,30 @@
+// ===============================================================================================
+//  File Name: colors.scss
+//  Description: Colors Page Content SCSS
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+@import "../core/variables/components-variables";
+
+.colors-list{
+  li{
+    padding: 0.4rem;
+    i{
+      font-size: 1.2rem;
+      top: 2px;
+      position: relative;
+      margin-right: 0.25rem;
+    }
+  }
+}

@@ -1,0 +1,523 @@
+@charset "UTF-8";
+
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.data-list-view-header .table-responsive .top,
+.data-thumb-view-header .table-responsive .top {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.data-list-view-header .table-responsive .top .action-btns,
+.data-thumb-view-header .table-responsive .top .action-btns {
+  margin-top: 1.5rem;
+  display: flex;
+}
+
+.data-list-view-header .table-responsive .top .action-btns .actions-dropodown,
+.data-thumb-view-header .table-responsive .top .action-btns .actions-dropodown {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 0.5rem;
+  margin-right: 0.75rem;
+}
+
+.data-list-view-header .table-responsive .top .action-btns .actions-dropodown .dropdown-toggle,
+.data-thumb-view-header .table-responsive .top .action-btns .actions-dropodown .dropdown-toggle {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.data-list-view-header .table-responsive .top .action-btns .actions-dropodown .dropdown-toggle:after,
+.data-thumb-view-header .table-responsive .top .action-btns .actions-dropodown .dropdown-toggle:after {
+  left: 0;
+}
+
+.data-list-view-header .table-responsive .top .action-btns .dt-buttons .btn,
+.data-thumb-view-header .table-responsive .top .action-btns .dt-buttons .btn {
+  padding: 0.9rem 0.938rem;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_length,
+.data-thumb-view-header .table-responsive .top .dataTables_length {
+  display: inline-block;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_length .custom-select,
+.data-thumb-view-header .table-responsive .top .dataTables_length .custom-select {
+  width: 8.714rem;
+  height: 3rem;
+  border-radius: 1.428rem;
+  border: 1px solid #dae1e7;
+  font-size: 1rem;
+  background-position: calc(100% - 12px) 13px, calc(100% - 20px) 13px, 100% 0;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_length .custom-select:focus,
+.data-thumb-view-header .table-responsive .top .dataTables_length .custom-select:focus {
+  box-shadow: none;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_filter,
+.data-thumb-view-header .table-responsive .top .dataTables_filter {
+  display: inline-block;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_filter .form-control,
+.data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
+  padding: 1.45rem 2.8rem !important;
+  border-radius: 1.428rem;
+  border: 1px solid #dae1e7;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_filter label,
+.data-thumb-view-header .table-responsive .top .dataTables_filter label {
+  position: relative;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_filter label:after,
+.data-thumb-view-header .table-responsive .top .dataTables_filter label:after {
+  content: "\E8BD";
+  font-family: "feather";
+  position: absolute;
+  left: 1.428rem;
+  top: 0.928rem;
+}
+
+.data-list-view-header .table-responsive .dataTables_wrapper .dataTables_paginate ul.pagination,
+.data-thumb-view-header .table-responsive .dataTables_wrapper .dataTables_paginate ul.pagination {
+  justify-content: center;
+}
+
+.data-list-view-header .add-new-data-sidebar .overlay-bg,
+.data-thumb-view-header .add-new-data-sidebar .overlay-bg {
+  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  transition: all 0.3s ease;
+  opacity: 0;
+  z-index: 1032;
+}
+
+.data-list-view-header .add-new-data-sidebar .overlay-bg.show,
+.data-thumb-view-header .add-new-data-sidebar .overlay-bg.show {
+  opacity: 1;
+  display: block;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data {
+  width: 28.57rem;
+  max-width: 90vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  background: #fff;
+  position: fixed;
+  left: auto;
+  right: 0;
+  top: 0;
+  z-index: 1033;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
+  transform: translateX(100%);
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data.show,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data.show {
+  transform: translateX(0%);
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .new-data-title,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .new-data-title {
+  padding-bottom: 0.714rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .new-data-title .hide-data-sidebar,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .new-data-title .hide-data-sidebar {
+  position: relative;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .new-data-title .hide-data-sidebar i,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .new-data-title .hide-data-sidebar i {
+  position: absolute;
+  font-size: 1.71rem;
+  right: 0;
+  top: -0.1428rem;
+  cursor: pointer;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .data-items,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .data-items {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  height: calc(100vh - 10rem);
+  position: relative;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col {
+  margin-top: 1.25rem;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col.data-list-upload,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col.data-list-upload {
+  margin-top: 2rem;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone {
+  min-height: 14.285rem;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone .dz-message,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone .dz-message {
+  height: auto;
+}
+
+.data-list-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone .dz-message:before,
+.data-thumb-view-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone .dz-message:before {
+  font-size: 2.857rem;
+}
+
+table.data-list-view.dataTable,
+table.data-thumb-view.dataTable {
+  border-spacing: 0 1.3rem;
+  padding: 0 0.7rem;
+}
+
+table.data-list-view.dataTable thead th,
+table.data-thumb-view.dataTable thead th {
+  padding: 0.714rem 1.785rem;
+  font-weight: 600;
+}
+
+table.data-list-view.dataTable thead th input:focus,
+table.data-thumb-view.dataTable thead th input:focus {
+  outline: 0;
+}
+
+table.data-list-view.dataTable thead th:first-child,
+table.data-thumb-view.dataTable thead th:first-child {
+  padding-left: 0;
+}
+
+table.data-list-view.dataTable thead .sorting_asc,
+table.data-list-view.dataTable thead .sorting_desc,
+table.data-list-view.dataTable thead .sorting,
+table.data-thumb-view.dataTable thead .sorting_asc,
+table.data-thumb-view.dataTable thead .sorting_desc,
+table.data-thumb-view.dataTable thead .sorting {
+  padding-right: inherit;
+}
+
+table.data-list-view.dataTable thead .sorting_asc:before,
+table.data-list-view.dataTable thead .sorting_desc:before,
+table.data-list-view.dataTable thead .sorting:before,
+table.data-thumb-view.dataTable thead .sorting_asc:before,
+table.data-thumb-view.dataTable thead .sorting_desc:before,
+table.data-thumb-view.dataTable thead .sorting:before {
+  font-size: 0.7rem;
+  left: 0.857rem;
+  top: 0.642rem;
+}
+
+table.data-list-view.dataTable thead .sorting_asc:after,
+table.data-list-view.dataTable thead .sorting_desc:after,
+table.data-list-view.dataTable thead .sorting:after,
+table.data-thumb-view.dataTable thead .sorting_asc:after,
+table.data-thumb-view.dataTable thead .sorting_desc:after,
+table.data-thumb-view.dataTable thead .sorting:after {
+  font-size: 0.7rem;
+  left: 0.857rem;
+  top: 1.071rem;
+}
+
+table.data-list-view.dataTable thead .dt-checkboxes-select-all input,
+table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input {
+  width: 0;
+  position: relative;
+}
+
+table.data-list-view.dataTable thead .dt-checkboxes-select-all input:before,
+table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:before {
+  border: 2px solid #b4b4b4;
+  content: "";
+  width: 1.071rem;
+  height: 1.071rem;
+  padding: 0;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  transform: rotate(-90deg);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  position: absolute;
+}
+
+table.data-list-view.dataTable thead .dt-checkboxes-select-all input:after,
+table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:after {
+  background-color: #7367f0;
+  border: 2px solid #7367f0;
+  font-family: "feather";
+  content: "\E83F";
+  font-size: 0.75rem;
+  line-height: 1.2;
+  color: #fff;
+  opacity: 0;
+  position: absolute;
+  width: 0.928rem;
+  height: 1rem;
+  transform: translate(100%);
+  transform-origin: right;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+table.data-list-view.dataTable thead .dt-checkboxes-select-all input:active:checked:after,
+table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:active:checked:after {
+  transform: translate(3px);
+}
+
+table.data-list-view.dataTable thead .dt-checkboxes-select-all input:checked:before,
+table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:checked:before {
+  border: 2px solid #7367f0;
+  transform: rotate(0deg);
+}
+
+table.data-list-view.dataTable thead .dt-checkboxes-select-all input:checked:after,
+table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:checked:after {
+  transition: all 0.2s ease;
+  opacity: 1;
+  transform: translate(0);
+}
+
+table.data-list-view.dataTable tbody tr,
+table.data-thumb-view.dataTable tbody tr {
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 20px 0px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+table.data-list-view.dataTable tbody tr:hover,
+table.data-thumb-view.dataTable tbody tr:hover {
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+}
+
+table.data-list-view.dataTable tbody tr td:first-child,
+table.data-thumb-view.dataTable tbody tr td:first-child {
+  padding-left: 1rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+table.data-list-view.dataTable tbody tr td:last-child,
+table.data-thumb-view.dataTable tbody tr td:last-child {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+table.data-list-view.dataTable tbody tr.selected td,
+table.data-thumb-view.dataTable tbody tr.selected td {
+  border-radius: 0;
+}
+
+table.data-list-view.dataTable tbody td,
+table.data-thumb-view.dataTable tbody td {
+  padding: 1.357rem;
+  border: none;
+  vertical-align: middle;
+}
+
+table.data-list-view.dataTable tbody td input:focus,
+table.data-thumb-view.dataTable tbody td input:focus {
+  outline: 0;
+}
+
+table.data-list-view.dataTable tbody td.product-name,
+table.data-thumb-view.dataTable tbody td.product-name {
+  font-weight: 500;
+}
+
+table.data-list-view.dataTable tbody td:focus,
+table.data-thumb-view.dataTable tbody td:focus {
+  outline: 0;
+}
+
+table.data-list-view.dataTable tbody td.dt-checkboxes-cell input,
+table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input {
+  width: 0;
+  position: relative;
+}
+
+table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:before,
+table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:before {
+  border: 2px solid #b4b4b4;
+  position: absolute;
+  left: -8px;
+  content: "";
+  width: 1.071rem;
+  height: 1.071rem;
+  padding: 0;
+  border-radius: 2px;
+  transform: rotate(-90deg);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:after,
+table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:after {
+  background-color: #7367f0;
+  font-family: "feather";
+  content: "\E83F";
+  font-size: 0.75rem;
+  color: #fff;
+  opacity: 0;
+  position: absolute;
+  left: -0.4285rem;
+  width: 0.857rem;
+  height: 1rem;
+  overflow: hidden;
+  transform: rotate(-90deg) translate(100%);
+  transform-origin: right;
+  transition: all 0.2s ease;
+}
+
+table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:active:checked:after,
+table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:active:checked:after {
+  transform: translate(3px);
+}
+
+table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:checked:before,
+table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:checked:before {
+  transform: rotate(0deg);
+  border: 2px solid #7367f0;
+  transition: all 0.2s ease;
+}
+
+table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:checked:after,
+table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:checked:after {
+  opacity: 1;
+  transition: all 0.2s ease;
+  transform: rotate(0deg) translate(0);
+}
+
+table.data-list-view.dataTable tbody td .progress,
+table.data-thumb-view.dataTable tbody td .progress {
+  margin-bottom: 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+table.data-thumb-view.dataTable tbody tr td {
+  padding-top: 0.714rem;
+  padding-bottom: 0.714rem;
+}
+
+table.data-thumb-view.dataTable tbody tr td.product-img img {
+  height: 7.857rem;
+}
+
+@media (max-width: 768px) {
+  #data-list-view .table-responsive .top,
+  #data-thumb-view .table-responsive .top {
+    flex-direction: column;
+  }
+
+  #data-list-view .table-responsive .dt-buttons,
+  #data-thumb-view .table-responsive .dt-buttons {
+    width: auto;
+    text-align: left;
+  }
+
+  #data-list-view .table-responsive .dataTables_length,
+  #data-list-view .table-responsive .dataTables_filter,
+  #data-thumb-view .table-responsive .dataTables_length,
+  #data-thumb-view .table-responsive .dataTables_filter {
+    text-align: right;
+  }
+}
+
+@media (max-width: 576px) {
+  .add-new-data-sidebar .data-items .data-list-upload .dropzone .dz-message:before {
+    top: 3.428rem;
+  }
+}
+
+_:-ms-lang(x) tbody tr td.dt-checkboxes-cell input,
+_:-ms-lang(x) tbody tr th.dt-checkboxes-cell input,
+_:-ms-lang(x) thead tr td.dt-checkboxes-cell input,
+_:-ms-lang(x) thead tr th.dt-checkboxes-cell input,
+.data-list-view.dataTable tbody tr td.dt-checkboxes-cell input,
+.data-list-view.dataTable tbody tr th.dt-checkboxes-cell input,
+.data-list-view.dataTable thead tr td.dt-checkboxes-cell input,
+.data-list-view.dataTable thead tr th.dt-checkboxes-cell input,
+.data-thumb-view.dataTable tbody tr td.dt-checkboxes-cell input,
+.data-thumb-view.dataTable tbody tr th.dt-checkboxes-cell input,
+.data-thumb-view.dataTable thead tr td.dt-checkboxes-cell input,
+.data-thumb-view.dataTable thead tr th.dt-checkboxes-cell input {
+  width: auto;
+}
+
+_:-ms-lang(x) .table-responsive .top .dataTables_filter .form-control,
+.data-list-view.dataTable .table-responsive .top .dataTables_filter .form-control,
+.data-thumb-view.dataTable .table-responsive .top .dataTables_filter .form-control {
+  height: 1.4rem !important;
+  padding: 0rem 0.5rem !important;
+}
+
+_:-ms-lang(x) .table-responsive .top .dataTables_filter .form-control:after,
+.data-list-view.dataTable .table-responsive .top .dataTables_filter .form-control:after,
+.data-thumb-view.dataTable .table-responsive .top .dataTables_filter .form-control:after {
+  display: none;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  #data-list-view .table-responsive .top .dataTables_filter .form-control,
+  #data-thumb-view .table-responsive .top .dataTables_filter .form-control {
+    height: 3rem !important;
+    padding: 0rem 1rem !important;
+  }
+
+  #data-list-view .table-responsive .top .dataTables_filter label:after,
+  #data-thumb-view .table-responsive .top .dataTables_filter label:after {
+    display: none;
+  }
+}
+
+@supports (-moz-osx-font-smoothing: auto) {
+  .data-list-view input,
+  .data-thumb-view input {
+    width: auto !important;
+  }
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+@supports (-webkit-appearance: none) {
+    table.data-list-view tbody td.dt-checkboxes-cell input:after,
+    table.data-thumb-view tbody td.dt-checkboxes-cell input:after {
+      left: -0.485rem;
+    }
+
+    .data-list-view .dt-checkboxes-cell input,
+    .data-thumb-view .dt-checkboxes-cell input {
+      -webkit-appearance: none;
+      top: -10px;
+    }
+}
+}
+
+.data-list-view .mac-checkbox,
+.data-thumb-view .mac-checkbox {
+  -webkit-appearance: none;
+  top: -10px;
+}
+

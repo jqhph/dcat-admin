@@ -1,0 +1,37 @@
+/*=========================================================================================
+    File Name: laravel-menu.scss
+    Description: laravel Specific menu styles
+    ----------------------------------------------------------------------------------------
+    Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+body.vertical-layout.vertical-menu-modern .horizontal-menu-wrapper {
+  display: none;
+}
+
+.horizontal-menu > .main-menu {
+  display: none;
+}
+
+.horizontal-menu .fixed-top {
+  left: 0;
+}
+
+html body.navbar-static .app-content .header-navbar {
+  background: transparent;
+  box-shadow: none !important;
+}
+
+@media (max-width: 575.98px) {
+  body.vertical-layout:not(.horizontal-layout).navbar-floating .header-navbar {
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+  }
+}
+

@@ -1,0 +1,260 @@
+//  ================================================================================================
+//  File Name: variables.scss
+//  Description: Custom overrides of Bootstrap variables
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+//  ================================================================================================
+
+// Color system
+
+$white: #fff;
+$body-bg: #f8f8f8;
+$gray-100: #babfc7; // $gray-lightest
+$gray-200: #ededed; // $gray-lighter
+$gray-300: #dae1e7; // $gray-light
+$gray-400: #636363;
+$gray-500: #adb5bd;
+$gray-600: #b8c2cc; // $gray
+$gray-700: #4e5154;
+$gray-800: #1e1e1e; // $gray-dark
+$gray-900: #2a2e30;
+$black: #22292f;
+
+$blue: #00cfe8; //$info
+$red: #ea5455; //$danger
+$orange: #ff9f43; //$warning
+$green: #28c76f; //$success
+$cyan: #7367f0; //$primary
+
+$primary: $cyan;
+$info: $blue;
+$warning: $orange;
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+
+// stylelint-disable
+$spacer: 1rem;
+$spacers: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge((0: 0,
+25: ($spacer * .25),
+50: ($spacer * .5),
+75: ($spacer * .75),
+1: ($spacer),
+2: ($spacer * 1.5),
+3: ($spacer * 3),
+4: ($spacer * 3.5),
+5: ($spacer * 4)),
+$spacers);
+
+// Body
+//
+// Settings for the `<body>` element.
+
+// $body-bg: $body-bg;
+$body-color: #626262;
+
+// Links
+//
+// Style anchor elements.
+
+$link-color: $primary;
+$link-hover-color: darken($link-color, 5%);
+$link-hover-decoration: none;
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-gutter-width: 28px;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$line-height-lg: 1.25;
+$line-height-sm: 1;
+$border-width: 1px;
+$border-color: $gray-200;
+$border-radius: 0.5rem;
+$border-radius-lg: 0.6rem;
+$border-radius-sm: 0.25rem;
+
+// Typography
+
+//
+// Font, line-height, and color for body text, headings, and more.
+
+// stylelint-disable value-keyword-case
+$font-family-sans-serif: "Montserrat",
+Helvetica,
+Arial,
+serif;
+$font-family-monospace: "Montserrat",
+Helvetica,
+Arial,
+serif;
+
+// stylelint-enable value-keyword-case
+$font-size-base: 1rem;
+$font-size-sm: ceil($font-size-base * 0.85);
+$font-size-lg: ceil($font-size-base * 1.25);
+
+$line-height-base: 1.45;
+
+$h1-font-size: $font-size-base * 2;
+$h2-font-size: $font-size-base * 1.74;
+$h3-font-size: $font-size-base * 1.51;
+$h4-font-size: $font-size-base * 1.32;
+$h5-font-size: $font-size-base * 1.14;
+
+$headings-margin-bottom: ($spacer / 2);
+$headings-font-family: inherit;
+$headings-font-weight: 500;
+
+$headings-color: #2c2c2c;
+
+$small-font-size: smaller;
+
+// Tables
+
+$table-border-color: $body-bg;
+
+// Buttons + Forms
+$btn-padding-y: 0.9rem;
+$btn-padding-x: 2rem;
+$input-btn-padding-y: .75rem;
+$input-btn-padding-x: 2rem;
+
+$input-btn-padding-y-sm: 0.5rem;
+$input-btn-padding-x-sm: 1.5rem;
+$input-btn-font-size-sm: $font-size-base * 0.7;
+
+$input-btn-padding-y-lg: 1rem;
+$input-btn-padding-x-lg: 2.5rem;
+$input-btn-font-size-lg: $font-size-base * 1.25;
+$btn-line-height: 1;
+$input-btn-border-width: 0;
+$btn-border-radius: .4285rem;
+$btn-border-radius-lg: 0.4285rem;
+$btn-border-radius-sm: 0.4285rem;
+
+// Forms
+
+$input-padding-y: .7rem !default;
+$input-padding-x: .7rem !default;
+$input-font-size: .96rem;
+$input-line-height: $line-height-lg;
+
+$input-padding-y-sm: .5rem !default;
+$input-padding-x-sm: 1.5rem !default;
+
+$input-padding-y-lg: $input-btn-padding-y-lg !default;
+$input-padding-x-lg: 2.5rem !default;
+
+$input-disabled-bg: #f5f5f1;
+
+$input-color: $gray-700;
+$input-border-color: rgba(0,0,0,.2);
+$input-border-width: $border-width;
+
+$input-border-radius: 5px;
+$input-border-radius-lg: 6px;
+$input-border-radius-sm: 4px;
+
+$input-focus-border-color: $primary;
+$input-focus-box-shadow :0 3px 10px 0 rgba(0,0,0,.15);
+
+$input-placeholder-color: rgba(0,0,0,.5);
+$input-plaintext-color: $gray-500;
+
+$input-height: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2} + 1px) !default;
+
+$custom-checkbox-indicator-border-radius: $border-radius-sm;
+
+$custom-select-border-radius:$input-border-radius;
+$custom-select-focus-box-shadow: $input-focus-box-shadow;
+
+$custom-file-line-height:1.5rem;
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+
+$dropdown-border-radius: 5px;
+$dropdown-link-hover-bg: $body-bg;
+$dropdown-divider-bg: rgba(0, 0, 0, 0.08);
+$dropdown-font-size: .9375rem;
+$dropdown-spacer: .5rem;
+$zindex-dropdown: 10;
+
+// Pagination
+
+$pagination-padding-y: 0.65rem;
+$pagination-padding-x: 0.911rem;
+$pagination-padding-y-lg: .5rem;
+$pagination-padding-x-lg: 1rem;
+$pagination-padding-y-sm: .5rem;
+$pagination-padding-x-sm: .75rem;
+
+
+// Cards
+$card-spacer-y: 1.5rem;
+$card-spacer-x: 1.5rem;
+
+//Alerts
+
+$alert-padding-y: 0.71rem;
+$alert-padding-x: 0.71rem;
+
+// Nav tabs
+
+$nav-link-padding-y:0.357rem;
+$nav-link-padding-x: 0.5rem;
+
+// Tooltips
+
+$tooltip-bg: #323232;
+$tooltip-padding-y: .4rem;
+$tooltip-padding-x: .775rem;
+$tooltip-font-size: .857rem;
+$tooltip-border-radius: .428rem;
+$tooltip-opacity: 1;
+$tooltip-max-width: 220px;
+
+// Popovers
+
+$popover-border-radius: .428rem;
+$popover-header-bg: $primary;
+$popover-font-size: .857rem;
+
+// Progress
+
+$progress-height: .357rem;
+$progress-border-radius: 1.28rem;
+
+// Badges
+
+$badge-font-size: 80%;
+$badge-padding-y: .35em;
+$badge-padding-x: .4em;
+$badge-border-radius: .25rem;
+
+// Code
+
+$code-font-size: 90% !default;
+$kbd-bg: #eee;
+
+
+// Switch
+$custom-switch-width: 3rem;
+$custom-switch-indicator-border-radius: .857rem;
+$custom-switch-indicator-size: 1.286rem;
+
+

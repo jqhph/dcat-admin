@@ -1,0 +1,66 @@
+// ===============================================================================================
+//  File Name: knowledge-base.scss
+//  Description: Knowledge Base Page Content SCSS
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+@import "../core/variables/components-variables";
+
+
+// Knowledge-base jumbotron scss
+.knowledge-base-bg{
+    background: url(../../images/pages/knowledge-base-cover.jpg) no-repeat;
+    background-size: cover;
+}
+// knowledge-base-category, knowledge-base-question - list-group-items
+.knowledge-base-category, .knowledge-base-question{
+    .list-group-item{
+        padding: 0.5rem 0;
+        &:hover{
+            background-color: transparent;
+        }
+    }
+}
+
+// Question Page - article question list
+.article-question{
+  li{
+    margin-bottom: 0.5rem;
+    display: flex;
+  }
+    i{
+        font-size: 1.2rem;
+    top: 2px;
+    position: relative;
+    margin: 0 0.5rem;
+    }
+}
+
+
+// make jumbotron card body padding
+@media only screen and (min-width: 992px){
+    .knowledge-base-bg{
+        .card-body{
+            padding: 8rem !important;
+        }
+    }
+}
+// make jumbotron card body padding
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    .knowledge-base-bg{
+        .card-body{
+            padding: 6rem !important;
+        }
+    }
+}

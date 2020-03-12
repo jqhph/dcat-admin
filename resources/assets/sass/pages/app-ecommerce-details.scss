@@ -1,0 +1,142 @@
+// ================================================================================================
+//  File Name: app-ecommerce-details.scss
+//  Description: App Ecommerce Details SCSS.
+//  ----------------------------------------------------------------------------------------------
+//  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Core variables and mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+/* app ecommerce details css */
+/*---------------*/
+$swiper-bg:#f7f7f7;
+
+.app-ecommerce-details {
+  .item-features {
+    background-color: $swiper-bg;
+  }
+}
+
+/* swiper slide shadow */
+.swiper-container {
+  .swiper-shadow {
+    box-shadow: 2px 8px 10px 0 rgba(25, 42, 70, 0.13) !important;
+  }
+}
+
+// centered slides option-1
+.swiper-responsive-breakpoints {
+  &.swiper-container {
+    .swiper-slide {
+      text-align: center;
+      font-weight: $headings-font-weight;
+      background-color: $swiper-bg;
+      ;
+      padding: 1.5rem;
+      cursor: pointer;
+    }
+  }
+}
+
+
+//navigation button custom fearher icons
+.swiper-button-prev,
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+  background-image: none;
+  width: 35px;
+  font-size: $h1-font-size;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:after {
+    font-family: 'feather';
+  }
+}
+
+.swiper-button-prev {
+  left: 0;
+
+  &:after {
+    content: "\e843";
+  }
+}
+
+.swiper-button-next {
+  right: 0;
+
+  &:after {
+    content: "\e844";
+  }
+}
+
+.swiper-container-rtl{
+  .swiper-button-prev {
+    &:after {
+      content: "\e844";
+    }
+  }
+  .swiper-button-next {
+    &:after {
+      content: "\e843";
+    }
+  }
+}
+
+// color options
+
+.product-color-options {
+  .color-option {
+    border: 2px solid transparent;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    padding: .3rem;
+
+    .filloption {
+      height: 21px;
+      width: 21px;
+      border-radius: 50%;
+    }
+  }
+
+  // selected
+  .selected {
+
+    // these use for border color only page specific
+    .b-primary {
+      border-color: $primary;
+    }
+
+    .b-success {
+      border-color: $success;
+    }
+
+    .b-danger {
+      border-color: $danger;
+    }
+
+    .b-warning {
+      border-color: $warning;
+    }
+
+    .b-black {
+      border-color: $black;
+    }
+  }
+}

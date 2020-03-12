@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+/* app ecommerce details css */
+
+/*---------------*/
+
+.app-ecommerce-details .item-features {
+  background-color: #f7f7f7;
+}
+
+/* swiper slide shadow */
+
+.swiper-container .swiper-shadow {
+  box-shadow: 2px 8px 10px 0 rgba(25, 42, 70, 0.13) !important;
+}
+
+.swiper-responsive-breakpoints.swiper-container .swiper-slide {
+  text-align: center;
+  font-weight: 500;
+  background-color: #f7f7f7;
+  padding: 1.5rem;
+  cursor: pointer;
+}
+
+.swiper-button-prev,
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+  background-image: none;
+  width: 35px;
+  font-size: 2rem;
+}
+
+.swiper-button-prev:focus,
+.swiper-button-next:focus,
+.swiper-container-rtl .swiper-button-prev:focus,
+.swiper-container-rtl .swiper-button-next:focus {
+  outline: none;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after,
+.swiper-container-rtl .swiper-button-prev:after,
+.swiper-container-rtl .swiper-button-next:after {
+  font-family: "feather";
+}
+
+.swiper-button-prev {
+  left: 0;
+}
+
+.swiper-button-prev:after {
+  content: "\E843";
+}
+
+.swiper-button-next {
+  right: 0;
+}
+
+.swiper-button-next:after {
+  content: "\E844";
+}
+
+.swiper-container-rtl .swiper-button-prev:after {
+  content: "\E844";
+}
+
+.swiper-container-rtl .swiper-button-next:after {
+  content: "\E843";
+}
+
+.product-color-options .color-option {
+  border: 2px solid transparent;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  padding: 0.3rem;
+}
+
+.product-color-options .color-option .filloption {
+  height: 21px;
+  width: 21px;
+  border-radius: 50%;
+}
+
+.product-color-options .selected .b-primary {
+  border-color: #7367f0;
+}
+
+.product-color-options .selected .b-success {
+  border-color: #28c76f;
+}
+
+.product-color-options .selected .b-danger {
+  border-color: #ea5455;
+}
+
+.product-color-options .selected .b-warning {
+  border-color: #ff9f43;
+}
+
+.product-color-options .selected .b-black {
+  border-color: #22292f;
+}
+

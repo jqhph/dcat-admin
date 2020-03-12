@@ -1,0 +1,40 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.form-group.issue .help-block,
+.form-group.issue .help-inline,
+.form-group.error .help-block,
+.form-group.error .help-inline {
+  color: #ea5455;
+}
+
+.form-group.issue input,
+.form-group.issue select,
+.form-group.issue textarea,
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+  border-color: #ea5455;
+}
+
+.form-group.issue input:focus,
+.form-group.issue select:focus,
+.form-group.issue textarea:focus,
+.form-group.error input:focus,
+.form-group.error select:focus,
+.form-group.error textarea:focus {
+  border-color: #ea5455;
+  box-shadow: 0 3 10px 0 #ea5455;
+}
+
+.form-group .help-block ul {
+  padding-left: 0;
+}
+
+.form-group .help-block ul li {
+  list-style-type: none;
+  font-size: 0.875rem;
+  padding-top: 0.2rem;
+}
+

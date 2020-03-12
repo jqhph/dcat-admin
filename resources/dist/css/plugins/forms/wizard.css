@@ -1,0 +1,319 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.app-content .wizard {
+  width: 100%;
+}
+
+.app-content .wizard .content {
+  margin-left: 0 !important;
+}
+
+.app-content .wizard > .steps {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.app-content .wizard > .steps .current-info {
+  position: absolute;
+  left: -99999px;
+}
+
+.app-content .wizard > .steps > ul {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.app-content .wizard > .steps > ul > li {
+  display: table-cell;
+  width: auto;
+  vertical-align: top;
+  text-align: center;
+  position: relative;
+}
+
+.app-content .wizard > .steps > ul > li a {
+  position: relative;
+  padding-top: 52px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.app-content .wizard > .steps > ul > li:before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 9;
+  left: 0;
+}
+
+.app-content .wizard > .steps > ul > li:after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 9;
+  right: 0;
+}
+
+.app-content .wizard > .steps > ul > li:last-child:after {
+  content: none;
+}
+
+.app-content .wizard > .steps > ul > li.current > a {
+  color: #7367f0;
+  cursor: default;
+}
+
+.app-content .wizard > .steps > ul > li.current .step {
+  border-color: #7367f0;
+  background-color: #7367f0;
+  color: #fff;
+}
+
+.app-content .wizard > .steps > ul > li.disabled a {
+  color: #636363;
+  cursor: default;
+}
+
+.app-content .wizard > .steps > ul > li.disabled a:hover {
+  color: #636363;
+  cursor: default;
+}
+
+.app-content .wizard > .steps > ul > li.disabled a:focus {
+  color: #636363;
+  cursor: default;
+}
+
+.app-content .wizard > .steps > ul > li.disabled .step {
+  color: #b8c2cc;
+}
+
+.app-content .wizard > .steps > ul > li.done a {
+  color: #636363;
+}
+
+.app-content .wizard > .steps > ul > li.done a:hover {
+  color: #636363;
+}
+
+.app-content .wizard > .steps > ul > li.done a:focus {
+  color: #636363;
+}
+
+.app-content .wizard > .steps > ul > li.done .step {
+  background-color: #fff;
+  border-color: #7367f0;
+  color: #b8c2cc;
+}
+
+.app-content .wizard > .steps > ul > li.done:last-child .step {
+  background-color: #7367f0;
+  border-color: #7367f0;
+  color: #fff;
+}
+
+.app-content .wizard > .steps > ul > li.error > a {
+  color: #ea5455;
+}
+
+.app-content .wizard > .steps > ul > li.error .step {
+  border-color: #ea5455;
+  color: #fff;
+  background-color: #ea5455;
+}
+
+.app-content .wizard > .steps .step {
+  background-color: #fff;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -24px;
+  z-index: 10;
+  text-align: center;
+}
+
+.app-content .wizard > .steps .step i {
+  position: relative;
+  top: 2px;
+}
+
+.app-content .wizard > .content {
+  position: relative;
+  width: auto;
+  padding: 0;
+  margin: 0;
+}
+
+.app-content .wizard > .content > .title {
+  position: absolute;
+  left: -99999px;
+}
+
+.app-content .wizard > .content > .body {
+  padding: 0 20px;
+}
+
+.app-content .wizard > .content > iframe {
+  border: 0 none;
+  width: 100%;
+  height: 100%;
+}
+
+.app-content .wizard > .actions {
+  position: relative;
+  display: block;
+  text-align: right;
+  padding: 20px;
+  padding-top: 0;
+}
+
+.app-content .wizard > .actions > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.app-content .wizard > .actions > ul:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.app-content .wizard > .actions > ul > li {
+  float: left;
+}
+
+.app-content .wizard > .actions > ul > li + li {
+  margin-left: 10px;
+  float: right;
+}
+
+.app-content .wizard > .actions > ul > li > a {
+  background: #7367f0;
+  color: #fff;
+  display: block;
+  padding: 7px 12px;
+  border-radius: 0.42rem;
+  border: 1px solid transparent;
+}
+
+.app-content .wizard > .actions > ul > li > a:hover {
+  box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.05) inset;
+}
+
+.app-content .wizard > .actions > ul > li > a:focus {
+  box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.05) inset;
+}
+
+.app-content .wizard > .actions > ul > li > a:active {
+  box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.1) inset;
+}
+
+.app-content .wizard > .actions > ul > li > a[href="#previous"] {
+  background-color: #7367f0;
+  color: #fff;
+  border-radius: 0.42rem;
+}
+
+.app-content .wizard > .actions > ul > li > a[href="#previous"]:hover {
+  box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.02) inset;
+}
+
+.app-content .wizard > .actions > ul > li > a[href="#previous"]:focus {
+  box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.02) inset;
+}
+
+.app-content .wizard > .actions > ul > li > a[href="#previous"]:active {
+  box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.04) inset;
+}
+
+.app-content .wizard > .actions > ul > li.disabled > a {
+  color: #fff;
+}
+
+.app-content .wizard > .actions > ul > li.disabled > a:hover {
+  color: #fff;
+}
+
+.app-content .wizard > .actions > ul > li.disabled > a:focus {
+  color: #fff;
+}
+
+.app-content .wizard > .actions > ul > li.disabled > a[href="#previous"] {
+  box-shadow: none;
+}
+
+.app-content .wizard > .actions > ul > li.disabled > a[href="#previous"]:hover {
+  box-shadow: none;
+}
+
+.app-content .wizard > .actions > ul > li.disabled > a[href="#previous"]:focus {
+  box-shadow: none;
+}
+
+.app-content .wizard.wizard-circle > .steps > ul > li:before,
+.app-content .wizard.wizard-circle > .steps > ul > li:after {
+  top: 43px;
+  width: 50%;
+  height: 3px;
+  background-color: #7367f0;
+}
+
+.app-content .wizard.wizard-circle > .steps > ul > li.current:after {
+  background-color: transparent;
+}
+
+.app-content .wizard.wizard-circle > .steps > ul > li.current ~ li:before {
+  background-color: transparent;
+}
+
+.app-content .wizard.wizard-circle > .steps > ul > li.current ~ li:after {
+  background-color: transparent;
+}
+
+.app-content .wizard.wizard-circle > .steps .step {
+  width: 50px;
+  height: 50px;
+  line-height: 3rem;
+  border: 3px solid #b8c2cc;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .app-content .wizard > .steps > ul {
+    margin-bottom: 20px;
+  }
+
+  .app-content .wizard > .steps > ul > li {
+    display: block;
+    float: left;
+    width: 33%;
+  }
+
+  .app-content .wizard > .steps > ul > li > a {
+    margin-bottom: 0;
+  }
+
+  .app-content .wizard > .steps > ul > li:last-child:after {
+    content: "";
+    background-color: #7367f0;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-content .wizard > .steps > ul > li.current:after {
+    background-color: #7367f0;
+  }
+}
+

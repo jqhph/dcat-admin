@@ -1,0 +1,209 @@
+@charset "UTF-8";
+
+/*=========================================================================================
+    File Name: swiper.scss
+    Description: swiper plugin scss.
+    ----------------------------------------------------------------------------------------
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+/* Swiper css */
+
+/* ---------- */
+
+/* swiper slide shadow */
+
+.swiper-container .swiper-shadow {
+  box-shadow: 2px 8px 10px 0 rgba(25, 42, 70, 0.13) !important;
+}
+
+.swiper-centered-slides.swiper-container .swiper-slide {
+  text-align: center;
+  font-weight: 500;
+  background-color: #fff;
+  height: auto;
+  width: auto !important;
+  padding: 2rem 5.5rem;
+  cursor: pointer;
+}
+
+.swiper-centered-slides.swiper-container .swiper-slide.swiper-slide-active {
+  border: 2px solid #7367f0;
+}
+
+.swiper-centered-slides.swiper-container .swiper-slide.swiper-slide-active i {
+  color: #7367f0;
+}
+
+.swiper-centered-slides .swiper-button-next:after,
+.swiper-centered-slides .swiper-button-prev:after {
+  border-radius: 50%;
+  background-color: #7367f0;
+  box-shadow: 0 2px 4px 0 rgba(34, 41, 47, 0.5) !important;
+}
+
+.swiper-centered-slides-2.swiper-container .swiper-slide {
+  font-weight: 500;
+  background-color: #f2f4f4;
+  height: auto;
+  width: auto !important;
+  cursor: pointer;
+}
+
+.swiper-centered-slides-2.swiper-container .swiper-slide.swiper-slide-active {
+  color: #fff;
+  background-color: #7367f0;
+  box-shadow: 0 3px 6px 0 rgba(115, 103, 240, 0.5) !important;
+}
+
+/* cube effect */
+
+.swiper-cube-effect.swiper-container {
+  width: 300px;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -12px;
+}
+
+/* swiper coverflow slide width */
+
+.swiper-coverflow.swiper-container .swiper-slide {
+  width: 300px;
+}
+
+.gallery-thumbs {
+  padding: 10px 0;
+  background: #22292f;
+}
+
+.gallery-thumbs .swiper-slide {
+  opacity: 0.4;
+}
+
+.gallery-thumbs .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.swiper-parallax .swiper-slide {
+  padding: 2.67rem 4rem;
+}
+
+.swiper-parallax .swiper-slide .title {
+  font-size: 1.14rem;
+  padding: 0.5rem 0;
+}
+
+.swiper-parallax .swiper-slide .text {
+  font-size: 1rem;
+}
+
+.swiper-parallax .parallax-bg {
+  position: absolute;
+  width: 130%;
+}
+
+.swiper-virtual.swiper-container {
+  height: 300px;
+}
+
+.swiper-virtual.swiper-container .swiper-slide {
+  /* virtual slides  */
+  font-size: 1.51rem;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-prev,
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+  background-image: none;
+  color: #fff;
+  width: 35px;
+  font-size: 2rem;
+}
+
+.swiper-button-prev:focus,
+.swiper-button-next:focus,
+.swiper-container-rtl .swiper-button-prev:focus,
+.swiper-container-rtl .swiper-button-next:focus {
+  outline: none;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after,
+.swiper-container-rtl .swiper-button-prev:after,
+.swiper-container-rtl .swiper-button-next:after {
+  font-family: "feather";
+}
+
+.swiper-button-prev:after {
+  content: "\E843";
+  padding-right: 1px;
+}
+
+.swiper-button-next:after {
+  content: "\E844";
+  padding-left: 2px;
+}
+
+.swiper-container-rtl .swiper-button-prev:after {
+  content: "\E844";
+}
+
+.swiper-container-rtl .swiper-button-next:after {
+  content: "\E843";
+}
+
+@media only screen and (max-width: 768px) {
+  .swiper-button-prev {
+    font-size: 1.32rem;
+    top: 55%;
+  }
+
+  .swiper-button-next {
+    font-size: 1.32rem;
+    top: 55%;
+    width: 15px;
+  }
+
+  .swiper-parallax .swiper-slide {
+    padding: 1rem 1.2rem;
+  }
+
+  .swiper-parallax img {
+    height: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .swiper-centered-slides.swiper-container .swiper-slide {
+    padding: 1.6rem 2.5rem;
+  }
+
+  .swiper-centered-slides.swiper-container .swiper-slide i {
+    font-size: 1.14rem !important;
+  }
+
+  .swiper-cube-effect.swiper-container {
+    width: 150px;
+    left: 70%;
+  }
+
+  .swiper-parallax .swiper-slide {
+    padding: 1rem 1.3rem;
+  }
+
+  .swiper-virtual.swiper-container .swiper-slide {
+    font-size: 1rem;
+  }
+}
+

@@ -1,0 +1,23 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.bg-authentication {
+  background-color: #eff2f7;
+}
+
+.bg-authentication .login-footer {
+  padding: 0rem 1.5rem 0.5rem;
+}
+
+.bg-authentication .login-footer .footer-btn .btn {
+  padding: 0.9rem 1.2rem !important;
+  margin: 1rem 1rem 1rem 0rem;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .bg-authentication {
+    width: 100%;
+  }
+}
+

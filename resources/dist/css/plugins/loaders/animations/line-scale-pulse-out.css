@@ -1,0 +1,57 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+@-webkit-keyframes line-scale-pulse-out {
+  0% {
+    transform: scaley(1);
+  }
+
+  50% {
+    transform: scaley(0.4);
+  }
+
+  100% {
+    transform: scaley(1);
+  }
+}
+
+@keyframes line-scale-pulse-out {
+  0% {
+    transform: scaley(1);
+  }
+
+  50% {
+    transform: scaley(0.4);
+  }
+
+  100% {
+    transform: scaley(1);
+  }
+}
+
+.line-scale-pulse-out > div {
+  background-color: #b8c2cc;
+  width: 4px;
+  height: 3.45rem;
+  border-radius: 2px;
+  margin: 2px;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  display: inline-block;
+  -webkit-animation: line-scale-pulse-out 0.9s -0.6s infinite cubic-bezier(0.85, 0.25, 0.37, 0.85);
+          animation: line-scale-pulse-out 0.9s -0.6s infinite cubic-bezier(0.85, 0.25, 0.37, 0.85);
+}
+
+.line-scale-pulse-out > div:nth-child(2),
+.line-scale-pulse-out > div:nth-child(4) {
+  -webkit-animation-delay: -0.4s !important;
+          animation-delay: -0.4s !important;
+}
+
+.line-scale-pulse-out > div:nth-child(1),
+.line-scale-pulse-out > div:nth-child(5) {
+  -webkit-animation-delay: -0.2s !important;
+          animation-delay: -0.2s !important;
+}
+

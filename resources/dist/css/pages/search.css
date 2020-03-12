@@ -1,0 +1,55 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+#search-results .media-list .media {
+  padding: 0.5rem 1rem;
+}
+
+#search-results .media-list .media-body .list-inline i {
+  font-size: 1.2rem;
+}
+
+.search-menu .search-filter,
+.search-menu .dropdown-toggle {
+  padding: 0.55rem 1rem !important;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
+}
+
+.search-menu .dropdown-toggle {
+  border-radius: 1.5rem !important;
+}
+
+.search-menu .dropdown-toggle::after {
+  display: none;
+}
+
+.search-result-info .btn.dropdown-toggle::after {
+  left: 0;
+}
+
+@media only screen and (min-width: 577px) {
+  #search-results li.media .media-object {
+    width: 100px;
+  }
+
+  #search-results li.media iframe {
+    width: 100px;
+    height: 65px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  #search-results li.media .media-left {
+    width: 100%;
+  }
+
+  #search-results li.media .media-left img,
+  #search-results li.media .media-left iframe {
+    width: 100%;
+    text-align: center;
+  }
+}
+

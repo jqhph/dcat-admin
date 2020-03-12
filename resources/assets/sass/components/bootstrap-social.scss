@@ -1,0 +1,147 @@
+$bs-height-base: ($line-height-base + $input-btn-padding-y * 2) !default;
+$bs-height-lg:   (floor($font-size-lg * $line-height-base) + $input-btn-padding-y-lg * 2) !default;
+$bs-height-sm:   (floor($font-size-sm * 1.5) + $input-btn-padding-y-lg * 2) !default;
+$bs-height-xs:   (floor($font-size-sm * 0.2) + $input-btn-padding-y-lg) !default;
+
+.btn-social {
+  position: relative;
+  padding-left: ($bs-height-base + $input-btn-padding-x);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  > :first-child {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    bottom: 0;
+    width: $bs-height-base;
+    line-height: ($bs-height-base - 0.25);
+    font-size: $font-size-base;
+    text-align: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  
+}
+
+.btn-social-icon {
+  @extend .btn-social;
+  height: ($bs-height-base);
+  width: ($bs-height-base);
+  padding: 0;
+  > :first-child {
+    border: none;
+    text-align: center;
+    width: 100%!important;
+  }
+}
+
+// Social button Mixin
+@mixin btn-social($color-bg, $color: #fff, $hover:$color-bg, $border-hover:$color-bg) {
+  background-color: $color-bg;
+  @include button-variant($color-bg, $color, $hover, $border-hover);
+}
+
+// Social Outline Button Mixin
+@mixin btn-social-outline($color-bg) {
+  border: 1px solid $color-bg !important;
+  color: $color-bg;
+}
+
+// Social Outline Button Hover Mixin
+@mixin btn-hover-outline($color-bg) {
+  color: darken($color-bg, 20%);
+  border: 1px solid darken($color-bg, 20%) !important;
+}
+
+// Social button
+.btn-adn           { @include btn-social(#d87a68); }
+.btn-bitbucket     { @include btn-social(#205081); }
+.btn-dropbox       { @include btn-social(#1087dd); }
+.btn-facebook      { @include btn-social(#3b5998); }
+.btn-flickr        { @include btn-social(#ff0084); }
+.btn-foursquare    { @include btn-social(#f94877); }
+.btn-github        { @include btn-social(#444444); }
+.btn-google        { @include btn-social(#dd4b39); }
+.btn-instagram     { @include btn-social(#3f729b); }
+.btn-linkedin      { @include btn-social(#007bb6); }
+.btn-microsoft     { @include btn-social(#2672ec); }
+.btn-odnoklassniki { @include btn-social(#f4731c); }
+.btn-openid        { @include btn-social(#f7931e); }
+.btn-pinterest     { @include btn-social(#cb2027); }
+.btn-reddit        { @include btn-social(#eff7ff, #000, #000, #000); }
+.btn-soundcloud    { @include btn-social(#ff5500); }
+.btn-tumblr        { @include btn-social(#2c4762); }
+.btn-twitter       { @include btn-social(#55acee, #fff); }
+.btn-vimeo         { @include btn-social(#1ab7ea); }
+.btn-vk            { @include btn-social(#587ea3); }
+.btn-yahoo         { @include btn-social(#720e9e); }
+
+// Social Outline button
+.btn-outline-adn           { @include btn-social-outline(#d87a68); }
+.btn-outline-bitbucket     { @include btn-social-outline(#205081); }
+.btn-outline-dropbox       { @include btn-social-outline(#1087dd); }
+.btn-outline-facebook      { @include btn-social-outline(#3b5998); }
+.btn-outline-flickr        { @include btn-social-outline(#ff0084); }
+.btn-outline-foursquare    { @include btn-social-outline(#f94877); }
+.btn-outline-github        { @include btn-social-outline(#444444); }
+.btn-outline-google        { @include btn-social-outline(#dd4b39); }
+.btn-outline-instagram     { @include btn-social-outline(#3f729b); }
+.btn-outline-linkedin      { @include btn-social-outline(#007bb6); }
+.btn-outline-microsoft     { @include btn-social-outline(#2672ec); }
+.btn-outline-odnoklassniki { @include btn-social-outline(#f4731c); }
+.btn-outline-openid        { @include btn-social-outline(#f7931e); }
+.btn-outline-pinterest     { @include btn-social-outline(#cb2027); }
+.btn-outline-reddit        { @include btn-social-outline(#ff4500); }
+.btn-outline-soundcloud    { @include btn-social-outline(#ff5500); }
+.btn-outline-tumblr        { @include btn-social-outline(#2c4762); }
+.btn-outline-twitter       { @include btn-social-outline(#55acee); }
+.btn-outline-vimeo         { @include btn-social-outline(#1ab7ea); }
+.btn-outline-vk            { @include btn-social-outline(#587ea3); }
+.btn-outline-yahoo         { @include btn-social-outline(#720e9e); }
+
+// Social Outline hover button
+.btn-outline-adn:hover           { @include btn-hover-outline(#d87a68); }
+.btn-outline-bitbucket:hover     { @include btn-hover-outline(#205081); }
+.btn-outline-dropbox:hover       { @include btn-hover-outline(#1087dd); }
+.btn-outline-facebook:hover      { @include btn-hover-outline(#3b5998); }
+.btn-outline-flickr:hover        { @include btn-hover-outline(#ff0084); }
+.btn-outline-foursquare:hover    { @include btn-hover-outline(#f94877); }
+.btn-outline-github:hover        { @include btn-hover-outline(#444444); }
+.btn-outline-google:hover        { @include btn-hover-outline(#dd4b39); }
+.btn-outline-instagram:hover     { @include btn-hover-outline(#3f729b); }
+.btn-outline-linkedin:hover      { @include btn-hover-outline(#007bb6); }
+.btn-outline-microsoft:hover     { @include btn-hover-outline(#2672ec); }
+.btn-outline-odnoklassniki:hover { @include btn-hover-outline(#f4731c); }
+.btn-outline-openid:hover        { @include btn-hover-outline(#f7931e); }
+.btn-outline-pinterest:hover     { @include btn-hover-outline(#cb2027); }
+.btn-outline-reddit:hover        { @include btn-hover-outline(#ff4500); }
+.btn-outline-soundcloud:hover    { @include btn-hover-outline(#ff5500); }
+.btn-outline-tumblr:hover        { @include btn-hover-outline(#2c4762); }
+.btn-outline-twitter:hover       { @include btn-hover-outline(#55acee); }
+.btn-outline-vimeo:hover         { @include btn-hover-outline(#1ab7ea); }
+.btn-outline-vk:hover            { @include btn-hover-outline(#587ea3); }
+.btn-outline-yahoo:hover         { @include btn-hover-outline(#720e9e); }
+
+// Social Background colors
+.bg-adn           { background-color: #d87a68; }
+.bg-bitbucket     { background-color: #205081; }
+.bg-dropbox       { background-color: #1087dd; }
+.bg-facebook      { background-color: #3b5998; }
+.bg-flickr        { background-color: #ff0084; }
+.bg-foursquare    { background-color: #f94877; }
+.bg-github        { background-color: #444444; }
+.bg-google        { background-color: #dd4b39; }
+.bg-instagram     { background-color: #3f729b; }
+.bg-linkedin      { background-color: #007bb6; }
+.bg-microsoft     { background-color: #2672ec; }
+.bg-odnoklassniki { background-color: #f4731c; }
+.bg-openid        { background-color: #f7931e; }
+.bg-pinterest     { background-color: #cb2027; }
+.bg-reddit        { background-color: #ff4500; }
+.bg-soundcloud    { background-color: #ff5500; }
+.bg-tumblr        { background-color: #2c4762; }
+.bg-twitter       { background-color: #55acee; }
+.bg-vimeo         { background-color: #1ab7ea; }
+.bg-vk            { background-color: #587ea3; }
+.bg-yahoo         { background-color: #720e9e; }

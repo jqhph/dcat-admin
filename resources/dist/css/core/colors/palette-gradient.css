@@ -1,0 +1,218 @@
+.bg-gradient-white {
+  color: #fff;
+  background-image: linear-gradient(30deg, #FFFFFF, rgba(255, 255, 255, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-white:hover,
+.bg-gradient-white:active {
+  color: #fff;
+}
+
+.gradient-light-white {
+  background: linear-gradient(30deg, #FFFFFF 0%, 100%);
+  color: #fff;
+}
+
+.gradient-light-white:hover,
+.gradient-light-white:active {
+  color: #fff;
+}
+
+.bg-gradient-black {
+  color: #fff;
+  background-image: linear-gradient(30deg, #000000, rgba(0, 0, 0, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-black:hover,
+.bg-gradient-black:active {
+  color: #fff;
+}
+
+.gradient-light-black {
+  background: linear-gradient(30deg, #000000 0%, 100%);
+  color: #fff;
+}
+
+.gradient-light-black:hover,
+.gradient-light-black:active {
+  color: #fff;
+}
+
+.bg-gradient-dark {
+  background: #640064;
+  color: #fff;
+  background-image: linear-gradient(30deg, #1e1e1e, rgba(30, 30, 30, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-dark:hover,
+.bg-gradient-dark:active {
+  color: #fff;
+}
+
+.gradient-light-dark {
+  background: linear-gradient(30deg, #1e1e1e 0%, 100%);
+  color: #fff;
+}
+
+.gradient-light-dark:hover,
+.gradient-light-dark:active {
+  color: #fff;
+}
+
+.bg-gradient-light {
+  background: #640064;
+  color: #fff;
+  background-image: linear-gradient(30deg, #babfc7, rgba(186, 191, 199, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-light:hover,
+.bg-gradient-light:active {
+  color: #fff;
+}
+
+.gradient-light-light {
+  background: linear-gradient(30deg, #babfc7 0%, 100%);
+  color: #fff;
+}
+
+.gradient-light-light:hover,
+.gradient-light-light:active {
+  color: #fff;
+}
+
+.bg-gradient-primary {
+  background: #640064;
+  color: #fff;
+  background-image: linear-gradient(30deg, #7367f0, rgba(115, 103, 240, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-primary:hover,
+.bg-gradient-primary:active {
+  color: #fff;
+}
+
+.gradient-light-primary {
+  background: linear-gradient(30deg, #7367f0 0%, #ce9ffc 100%);
+  color: #fff;
+}
+
+.gradient-light-primary:hover,
+.gradient-light-primary:active {
+  color: #fff;
+}
+
+.bg-gradient-secondary {
+  background: #640064;
+  color: #fff;
+  background-image: linear-gradient(30deg, #b8c2cc, rgba(184, 194, 204, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-secondary:hover,
+.bg-gradient-secondary:active {
+  color: #fff;
+}
+
+.gradient-light-secondary {
+  background: linear-gradient(30deg, #b8c2cc 0%, #dcdeec 100%);
+  color: #fff;
+}
+
+.gradient-light-secondary:hover,
+.gradient-light-secondary:active {
+  color: #fff;
+}
+
+.bg-gradient-success {
+  background: #0064fa;
+  color: #fff;
+  background-image: linear-gradient(30deg, #28c76f, rgba(40, 199, 111, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-success:hover,
+.bg-gradient-success:active {
+  color: #fff;
+}
+
+.gradient-light-success {
+  background: linear-gradient(30deg, #28c76f 0%, #4ae9d3 100%);
+  color: #fff;
+}
+
+.gradient-light-success:hover,
+.gradient-light-success:active {
+  color: #fff;
+}
+
+.bg-gradient-info {
+  background: #640064;
+  color: #fff;
+  background-image: linear-gradient(30deg, #00cfe8, rgba(0, 207, 232, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-info:hover,
+.bg-gradient-info:active {
+  color: #fff;
+}
+
+.gradient-light-info {
+  background: linear-gradient(30deg, #00cfe8 0%, #2d91ff 100%);
+  color: #fff;
+}
+
+.gradient-light-info:hover,
+.gradient-light-info:active {
+  color: #fff;
+}
+
+.bg-gradient-warning {
+  background: #fafafa;
+  color: #fff;
+  background-image: linear-gradient(30deg, #ff9f43, rgba(255, 159, 67, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-warning:hover,
+.bg-gradient-warning:active {
+  color: #fff;
+}
+
+.gradient-light-warning {
+  background: linear-gradient(30deg, #ff9f43 0%, #fff487 100%);
+  color: #fff;
+}
+
+.gradient-light-warning:hover,
+.gradient-light-warning:active {
+  color: #fff;
+}
+
+.bg-gradient-danger {
+  background: #640064;
+  color: #fff;
+  background-image: linear-gradient(30deg, #ea5455, rgba(234, 84, 85, 0.5));
+  background-repeat: repeat-x;
+}
+
+.bg-gradient-danger:hover,
+.bg-gradient-danger:active {
+  color: #fff;
+}
+
+.gradient-light-danger {
+  background: linear-gradient(30deg, #ea5455 0%, #f9b789 100%);
+  color: #fff;
+}
+
+.gradient-light-danger:hover,
+.gradient-light-danger:active {
+  color: #fff;
+}
+

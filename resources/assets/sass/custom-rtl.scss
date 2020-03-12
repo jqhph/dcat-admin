@@ -1,0 +1,308 @@
+// ================================================================================================
+//  File Name: custom-rtl.scss
+//  Description: RTL support SCSS file.
+//  ----------------------------------------------------------------------------------------------
+//  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+/*rtl:begin:ignore*/
+
+// Variables
+// ------------------------------
+
+// Core variables and mixins
+@import "bootstrap/functions";
+@import "bootstrap/mixins";
+@import "bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "core/variables/variables";
+@import "bootstrap/variables";
+
+// Overrides user variable
+@import "core/variables/components-variables";
+
+// Align icons position
+.main-menu {
+    .navigation li > a > i,
+    .dropdown-menu i,
+    .dropdown-user > a > i,
+    .navigation > li > a > i {
+        float: right;
+    }
+    .navigation > li ul li > a {
+        display: flex;
+        align-items: center;
+    }
+}
+
+// Dropdown RTL Changes
+.header-navbar .navbar-container ul.nav li.dropdown{
+    .dropdown-menu{
+        top: 48px !important;
+        &::before{
+            top: 1px;
+        }
+    }
+    &.dropdown-user .dropdown-menu{
+        .dropdown-item{
+            i{
+                float: right;
+            }
+        }
+    }
+}
+
+.header-navbar{
+    .dropdown,.dropup{
+        .dropdown-menu.dropdown-menu-right::before{
+            right: auto;
+            left: .5rem;
+        }
+    }
+}
+.dropdown,.dropup{
+    .dropdown-menu{
+        right: auto !important;
+        top: 0 !important;
+        left: auto !important;
+        &.dropdown-menu-right{
+            left: 0 !important;
+            &::before{
+                right: 0.6rem;
+                left: auto;
+            }
+        }
+    }
+}
+.dropleft .dropdown-toggle{
+    &::before{
+        content: '\e844' !important;
+    }
+}
+.dropright .dropdown-toggle{
+    &::after{
+        content: '\e843' !important;
+    }
+}
+// Input Group dropdown
+.input-group{
+    .dropdown-menu.show{
+        top: 0 !important;
+        right: auto !important;
+        left: 0px  !important;
+    }
+}
+
+// Chartist
+.chartjs-render-monitor{
+    margin-right: 1rem;
+}
+
+// Datatable
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left !important;
+}
+
+// Dashboard Style
+#dashboard-analytics{
+    .img-left{
+        left: 0;
+        right: auto !important;
+    }
+    .img-right{
+        right: 0;
+        left: auto;
+    }
+}
+
+// No UI RTL css
+.square{
+    &.slider-xl{
+        .noUi-handle{
+            &:before{
+                left: 5px;
+            }
+
+            &:after{
+                left: 10px;
+            }
+        }
+    }
+    .noUi-handle{
+        &:before{
+            left: 2px;
+        }
+
+        &:after{
+            left: 7px;
+        }
+    }
+}
+
+.noUi-vertical{
+    &.square{
+        .noUi-handle{
+            &:before{
+                left:-1px;
+            }
+            &:after{
+                left:-1px;
+            }
+        }
+    }
+}
+
+.noUi-horizontal{
+  &.slider-sm{
+    .noUi-handle{
+      left: auto !important;
+      right: -2px !important;
+    }
+  }
+
+  &.slider-xs{
+    .noUi-handle{
+      left: auto !important;
+      right: -2px !important;
+    }
+  }
+}
+
+// Context menu list css
+.context-menu-list{
+    z-index: 1031 !important;
+}
+.context-menu-item>.context-menu-list{
+    right: 100%;
+    margin-right: 0;
+}
+
+// Pagination
+.pagination .page-item.prev-item .page-link:before {
+    content: "\e844";
+    font-family: 'feather';
+}
+.pagination .page-item.next-item .page-link:after {
+    content: "\e843";
+    font-family: 'feather';
+}
+.pagination .page-item.prev .page-link:after,
+.pagination .page-item.previous .page-link:after {
+    content: "\e844";
+    font-family: 'feather';
+}
+.pagination .page-item.prev .page-link:before,
+.pagination .page-item.previous .page-link:before {
+    display: none;
+}
+.pagination .page-item.next .page-link:before {
+    content: "\e843";
+    font-family: 'feather';
+}
+.pagination .page-item.next .page-link:after {
+    display: none;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  direction: ltr;
+}
+@media print {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    text-shadow: none;
+  }
+}
+
+// Application
+.list-group .list-group-item i{
+    float: right;
+}
+
+// Email Application
+
+.email-application {
+    .app-content {
+      .list-group {
+        .list-group-item {
+          i {
+            float: right !important;
+          }
+        }
+      }
+    }
+}
+
+// Ecommerce Application
+.ecommerce-application .sidebar-shop .range-slider.noUi-horizontal .noUi-handle{
+    left: 5px !important;
+}
+
+// Calendar
+.fc .fc-header-toolbar .fc-right .fc-button.fc-prev-button .fc-icon{
+    right: 4px !important;
+}
+.fc .fc-header-toolbar .fc-right .fc-button.fc-next-button .fc-icon{
+    left: -3px !important;
+}
+
+// Button with Icons
+.btn{
+    i{
+        float: right;
+        margin-left: .25rem;
+    }
+    &.btn-icon i{
+        margin-left: 0;
+    }
+}
+
+// carousel changes
+.carousel-control-next{
+    left: auto;
+    right: 0;
+}
+.carousel-control-prev{
+    left: 0;
+    right: auto;
+}
+
+// Tooltip
+.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^='left'] .arrow::before{
+    border-width: 0.4rem 0 0.4rem 0.4rem;
+    border-left-color: $tooltip-bg;
+}
+.bs-tooltip-left .arrow, .bs-tooltip-auto[x-placement^='left'] .arrow {
+    right: 0;
+    left: auto;
+}
+
+.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^='right'] .arrow::before{
+    border-width: 0.4rem 0.4rem 0.4rem 0;
+    border-right-color: $tooltip-bg;
+}
+.bs-tooltip-right .arrow, .bs-tooltip-auto[x-placement^='right'] .arrow {
+    left: 0;
+    right: auto;
+}
+
+// Popover Style
+.popover{
+    right: auto !important;
+}
+
+// Quill Editor
+.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg{
+    right: auto !important;
+}
+
+// Perfact scrollbar RTL fix
+body .ps__rail-y{
+    right: auto !important;
+    left: 1px !important;
+}
+
+/*rtl:end:ignore*/

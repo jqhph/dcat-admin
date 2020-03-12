@@ -1,0 +1,60 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.chat-application .chat-app-window .user-chats {
+  padding: 10px 20px;
+  position: relative;
+  text-align: center;
+  height: 415px;
+}
+
+.chat-application .chat-app-window .user-chats .chats {
+  padding: 0;
+}
+
+.chat-application .chat-app-window .user-chats .chats .chat-body {
+  display: block;
+  margin: 10px 30px 0 0;
+  overflow: hidden;
+}
+
+.chat-application .chat-app-window .user-chats .chats .chat-body .chat-content {
+  text-align: left;
+  display: block;
+  float: right;
+  padding: 0.75rem 1rem;
+  margin: 0 20px 10px 0;
+  clear: both;
+  color: #fff;
+  background: linear-gradient(118deg, #7367f0, rgba(115, 103, 240, 0.7));
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.chat-application .chat-app-window .user-chats .chats .chat-body .chat-content p {
+  margin: 0;
+}
+
+.chat-application .chat-app-window .user-chats .chats .chat-avatar {
+  float: right;
+}
+
+.chat-application .chat-app-window .user-chats .chats .chat-left .chat-avatar {
+  float: left;
+}
+
+.chat-application .chat-app-window .user-chats .chats .chat-left .chat-body {
+  margin: 0;
+}
+
+.chat-application .chat-app-window .user-chats .chats .chat-left .chat-content {
+  text-align: left;
+  float: left;
+  margin: 10px 10px 10px 20px;
+  color: #626262;
+  background: none;
+  background-color: white;
+  border: 1px solid #dae1e7;
+}
+

@@ -1,0 +1,79 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.tippy-popper {
+  border: none;
+  border-radius: 0.5rem;
+  -webkit-filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5));
+          filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.5));
+}
+
+.tippy-popper .tippy-tooltip {
+  width: auto !important;
+}
+
+.tippy-popper .tippy-tooltip .tippy-arrow {
+  border-bottom-color: #7367f0;
+}
+
+.tippy-popper .tippy-tooltip .tippy-content .shepherd-content {
+  background-color: #7367f0;
+  padding: 1.3rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.tippy-popper .tippy-tooltip .tippy-content .shepherd-content .shepherd-header {
+  padding: 0;
+}
+
+.tippy-popper .tippy-tooltip .tippy-content .shepherd-content .shepherd-text {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.tippy-popper .tippy-tooltip .tippy-content .shepherd-content .shepherd-footer {
+  padding: 0;
+}
+
+.tippy-popper .tippy-tooltip .tippy-content .shepherd-content .shepherd-footer .shepherd-buttons li {
+  margin: 0;
+}
+
+.tippy-popper .tippy-tooltip .tippy-content .shepherd-content .shepherd-footer .shepherd-buttons .shepherd-button {
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  padding: 0.7rem 2rem;
+  color: #fff;
+  margin: 0 5px;
+}
+
+.tippy-popper .tippy-tooltip .tippy-content .shepherd-content .shepherd-footer .shepherd-buttons .shepherd-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tippy-popper .tippy-tooltip .tippy-content [data-shepherd-step-id=step-4] .shepherd-footer .shepherd-buttons {
+  text-align: center;
+}
+
+.tippy-popper[x-placement=top] .tippy-arrow {
+  border-color: transparent;
+  border-top-color: #7367f0;
+}
+
+.tippy-popper[x-placement=bottom] .tippy-arrow {
+  border-color: transparent;
+  border-bottom-color: #7367f0;
+}
+
+.tippy-popper[x-placement=right] .tippy-arrow {
+  border-color: transparent;
+  border-right-color: #7367f0;
+}
+
+.tippy-popper[x-placement=left] .tippy-arrow {
+  border-color: transparent;
+  border-left-color: #7367f0;
+}
+

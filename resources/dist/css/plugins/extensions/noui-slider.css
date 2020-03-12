@@ -1,0 +1,226 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.noUi-background {
+  background: #f0f0f0;
+}
+
+.noUi-target {
+  background-color: #ebebeb;
+  border: none;
+  box-shadow: none;
+  border-radius: 1rem;
+}
+
+.noUi-target.noUi-connect {
+  box-shadow: none;
+}
+
+.noUi-horizontal {
+  height: 10px;
+  padding-right: 17px;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 20px;
+  height: 20px;
+  top: -5px;
+  left: -1px;
+  cursor: pointer;
+}
+
+.noUi-horizontal .noUi-origin {
+  left: 17px;
+  right: -17px;
+}
+
+.noUi-horizontal.slider-xl {
+  height: 14px;
+}
+
+.noUi-horizontal.slider-xl .noUi-handle {
+  width: 28px;
+  height: 28px;
+  top: -7px;
+}
+
+.noUi-horizontal.slider-lg {
+  height: 12px;
+}
+
+.noUi-horizontal.slider-lg .noUi-handle {
+  width: 24px;
+  height: 24px;
+  top: -6px;
+}
+
+.noUi-horizontal.slider-sm {
+  height: 6px;
+}
+
+.noUi-horizontal.slider-sm .noUi-handle {
+  height: 15px;
+  width: 15px;
+  right: -2px !important;
+}
+
+.noUi-horizontal.slider-xs {
+  height: 3px;
+}
+
+.noUi-horizontal.slider-xs .noUi-handle {
+  height: 10px;
+  width: 10px;
+  top: -4px;
+  right: -2px !important;
+}
+
+.noUi-handle {
+  box-shadow: none;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  border: 5px solid #7367f0;
+}
+
+.noUi-handle:after,
+.noUi-handle:before {
+  display: none;
+}
+
+.circle-filled .noUi-handle {
+  background: #7367f0;
+  border-radius: 50%;
+}
+
+.circle-filled .noUi-handle:after,
+.circle-filled .noUi-handle:before {
+  display: none;
+}
+
+.square .noUi-handle {
+  background: #7367f0;
+  border-radius: 3px;
+}
+
+.square .noUi-handle:before {
+  display: block;
+  width: 2px;
+  height: 10px;
+  left: 2px;
+  top: 0px;
+}
+
+.square .noUi-handle:after {
+  display: block;
+  width: 2px;
+  height: 10px;
+  left: 7px;
+  top: 0px;
+}
+
+.square.slider-xl .noUi-handle:before {
+  left: 5px;
+  top: 4px;
+}
+
+.square.slider-xl .noUi-handle:after {
+  left: 10px;
+  top: 4px;
+}
+
+.square.slider-lg .noUi-handle:before {
+  left: 3px;
+  top: 2px;
+}
+
+.square.slider-lg .noUi-handle:after {
+  left: 8px;
+  top: 2px;
+}
+
+.square.slider-sm .noUi-handle:before {
+  left: -1px;
+  top: -1px;
+  height: 7px;
+}
+
+.square.slider-sm .noUi-handle:after {
+  left: 4px;
+  top: -1px;
+  height: 7px;
+}
+
+.square.slider-xs .noUi-handle:before {
+  left: -3px;
+  top: -3px;
+  height: 5px;
+}
+
+.square.slider-xs .noUi-handle:after {
+  left: 1px;
+  top: -3px;
+  height: 5px;
+}
+
+.noUi-connect {
+  background: #7367f0;
+  box-shadow: none;
+}
+
+.noUi-vertical {
+  display: inline-block;
+  width: 8px;
+  height: 150px;
+}
+
+.noUi-vertical .noUi-handle {
+  width: 20px;
+  height: 20px;
+  top: -5px;
+  left: -6px;
+}
+
+.noUi-vertical.square .noUi-handle {
+  background: #7367f0;
+  border-radius: 3px;
+}
+
+.noUi-vertical.square .noUi-handle:before {
+  display: block;
+  width: 12px;
+  height: 2px;
+  left: -1px;
+  top: 2px;
+}
+
+.noUi-vertical.square .noUi-handle:after {
+  display: block;
+  width: 12px;
+  height: 2px;
+  left: -1px;
+  top: 7px;
+}
+
+.noUi-vertical .noUi-tooltip {
+  transform: translate(-10%, -50%);
+}
+
+.example-val {
+  font: 400 12px Arial;
+  color: #888;
+  display: block;
+  margin: 15px 0;
+}
+
+.noUi-handle:focus {
+  outline: 0;
+}
+
+_:-ms-lang(x),
+.slider-select {
+  flex: 0 0 10%;
+  max-width: 10%;
+}
+

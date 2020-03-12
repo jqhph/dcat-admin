@@ -1,0 +1,69 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+.invoice-page {
+  padding: 2.2rem;
+}
+
+.invoice-page .recipient-contact i,
+.invoice-page .company-contact i {
+  padding-right: 0.2rem;
+  position: relative;
+  top: 2px;
+}
+
+.invoice-page .recipient-info p,
+.invoice-page .company-info p,
+.invoice-page .company-contact p,
+.invoice-page .recipient-contact p {
+  line-height: 2;
+  margin-bottom: 0;
+}
+
+.invoice-page .invoice-items-table table,
+.invoice-page .invoice-total-table table {
+  border: 2px solid #f8f8f8;
+}
+
+@media print {
+  .content-header,
+  .buy-now,
+  .btn-print,
+  .footer,
+  .open,
+  .main-menu,
+  .invoice-print {
+    display: none;
+  }
+
+  .app-content,
+  #invoice-template,
+  .navbar-container,
+  .navbar-wrapper,
+  .header-navbar,
+  .invoice-print,
+  .content-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #invoice-footer {
+    position: relative;
+    top: -80px !important;
+  }
+
+  #invoice-company-details,
+  #invoice-footer {
+    margin-top: 5rem !important;
+  }
+
+  .table-responsive {
+    -ms-overflow-style: none;
+  }
+}
+
+@page {
+  margin: 10px;
+}
+

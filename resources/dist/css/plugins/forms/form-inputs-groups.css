@@ -1,0 +1,35 @@
+/*========================================================
+        DARK LAYOUT
+=========================================================*/
+
+/* For Input Group TouchPin */
+
+#touchspin .input-group.bootstrap-touchspin .input-group-prepend,
+#touchspin .input-group.bootstrap-touchspin .input-group-append {
+  display: block;
+}
+
+/* For Input Group TouchPin */
+
+.segmented-buttons-with-dropdown .input-group .form-control,
+.buttons-with-dropdown .input-group .form-control {
+  height: 3rem;
+}
+
+.bootstrap-touchspin.touchspin-with-icon .input-group-append .input-group-text i {
+  font-size: 1.25rem;
+}
+
+.bootstrap-touchspin-spinners .touchspin-spinners-wrapper .input-group .touchspin,
+.bootstrap-touchspin-spinners .touchspin-spinners-wrapper .input-group .touchspin-stop-mousewheel {
+  height: calc(calc(1.25em + 1.4rem)-0.05rem + 2.2px);
+}
+
+.bootstrap-touchspin-spinners .touchspin-spinners-wrapper .input-group.touchspin-with-icon .input-group-text.bootstrap-touchspin-postfix {
+  padding: 0.85rem 1rem;
+}
+
+.bootstrap-touchspin-spinners .touchspin-spinners-wrapper .default-height .input-group.touchspin-vertical {
+  height: calc(2.9rem + 2px);
+}
+
