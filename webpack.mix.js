@@ -25,7 +25,7 @@ const path = require('path')
 function mixAssetsDir(query, cb) {
   (glob.sync('resources/assets/' + query) || []).forEach(f => {
     f = f.replace(/[\\\/]+/g, '/');
-    cb(f, f.replace('resources/assets', 'resources/assets/public'));
+    cb(f, f.replace('resources/assets', 'resources/dist/dcat-admin'));
   });
 }
 
@@ -54,31 +54,31 @@ mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest));
  |--------------------------------------------------------------------------
  */
 
-mixAssetsDir('vendors/js/**/*.js', (src, dest) => mix.scripts(src, dest));
-mixAssetsDir('vendors/css/**/*.css', (src, dest) => mix.copy(src, dest));
-mixAssetsDir('vendors/css/editors/quill/fonts/', (src, dest) => mix.copy(src, dest));
-mix.copyDirectory('resources/assets/images', 'resources/assets/public/images');
-mix.copyDirectory('resources/assets/fonts', 'resources/assets/public/fonts');
+mixAssetsDir('assets/vendors/js/**/*.js', (src, dest) => mix.scripts(src, dest));
+mixAssetsDir('assets/vendors/css/**/*.css', (src, dest) => mix.copy(src, dest));
+mixAssetsDir('assets/vendors/css/editors/quill/fonts/', (src, dest) => mix.copy(src, dest));
+mix.copyDirectory('resources/assets/images', 'resources/dist/images');
+mix.copyDirectory('resources/assets/fonts', 'resources/dist/fonts');
 
 
-mix.js('resources/assets/js/core/app-menu.js', 'resources/assets/public/js/core')
-    .js('resources/assets/js/core/app.js', 'resources/assets/public/js/core')
-    .sass('resources/assets/sass/bootstrap.scss', 'resources/assets/public/css')
-    .sass('resources/assets/sass/bootstrap-extended.scss', 'resources/assets/public/css')
-    .sass('resources/assets/sass/colors.scss', 'resources/assets/public/css')
-    .sass('resources/assets/sass/components.scss', 'resources/assets/public/css')
-    .sass('resources/assets/sass/custom-rtl.scss', 'resources/assets/public/css')
-    .sass('resources/assets/sass/custom-laravel.scss', 'resources/assets/public/css');
+mix.js('resources/assets/js/core/app-menu.js', 'resources/dist/js/core')
+    .js('resources/assets/js/core/app.js', 'resources/dist/js/core')
+    .sass('resources/assets/sass/bootstrap.scss', 'resources/dist/css')
+    .sass('resources/assets/sass/bootstrap-extended.scss', 'resources/dist/css')
+    .sass('resources/assets/sass/colors.scss', 'resources/dist/css')
+    .sass('resources/assets/sass/components.scss', 'resources/dist/css')
+    .sass('resources/assets/sass/custom-rtl.scss', 'resources/dist/css')
+    .sass('resources/assets/sass/custom-laravel.scss', 'resources/dist/css');
 
 mix.then(() => {
   if (process.env.MIX_CONTENT_DIRECTION === "rtl") {
-    let command = `node ${path.resolve('node_modules/rtlcss/bin/rtlcss.js')} -d -e ".css" ./resources/assets/public/css/ ./resources/assets/public/css/`;
+    let command = `node ${path.resolve('node_modules/rtlcss/bin/rtlcss.js')} -d -e ".css" ./resources/dist/css/ ./resources/dist/css/`;
     exec(command, function (err, stdout, stderr) {
       if (err !== null) {
         console.log(err);
       }
     });
-    // exec('./node_modules/rtlcss/bin/rtlcss.js -d -e ".css" ./resources/assets/public/css/ ./resources/assets/public/css/');
+    // exec('./node_modules/rtlcss/bin/rtlcss.js -d -e ".css" ./resources/dist/css/ ./resources/dist/css/');
   }
 });
 
@@ -87,7 +87,7 @@ mix.then(() => {
 //   mix.version();
 //   mix.webpackConfig({
 //     output: {
-//       resources/assets/publicPath: '/demo/vuexy-bootstrap-laravel-admin-template/demo-1/'
+//       resources/distPath: '/demo/vuexy-bootstrap-laravel-admin-template/demo-1/'
 //     }
 //   });
 //   mix.setResourceRoot("/demo/vuexy-bootstrap-laravel-admin-template/demo-1/");
