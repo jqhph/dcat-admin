@@ -521,6 +521,6 @@ HTML;
     {
         $this->script && Admin::script($this->script);
 
-        Admin::collectComponentAssets('chartjs');
+        Admin::collectAssets('chartjs');
     }
 }

@@ -113,7 +113,7 @@ class Equal extends Filter
 
     protected function collectAssets()
     {
-        Admin::collectComponentAssets('moment');
-        Admin::collectComponentAssets('bootstrap-datetimepicker');
+        Admin::collectAssets('moment');
+        Admin::collectAssets('bootstrap-datetimepicker');
     }
 }

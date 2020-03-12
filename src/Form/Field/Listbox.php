@@ -41,6 +41,6 @@ JS;
 
     public static function collectAssets()
     {
-        Admin::collectComponentAssets('jquery.bootstrap-duallistbox');
+        Admin::collectAssets('jquery.bootstrap-duallistbox');
     }
 }

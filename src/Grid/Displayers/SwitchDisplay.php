@@ -122,6 +122,6 @@ JS
 
     protected function collectAssets()
     {
-        Admin::collectComponentAssets('switchery');
+        Admin::collectAssets('switchery');
     }
 }

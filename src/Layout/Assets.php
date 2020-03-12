@@ -29,6 +29,7 @@ class Assets
      */
     protected $headerJs = [
         'vendors' => 'dcat-admin/vendors/js/vendors.min.js',
+        'dcat'    => 'dcat-admin/dcat/bootstrap.js',
     ];
 
     /**
@@ -75,6 +76,9 @@ class Assets
      */
     protected $usingFullPage = false;
 
+    /**
+     * Assets constructor.
+     */
     public function __construct()
     {
         $this->isPjax = request()->pjax();

@@ -57,6 +57,11 @@ class Admin
     protected static $favicon;
 
     /**
+     * @var array
+     */
+    public static $jsVariables = [];
+
+    /**
      * Returns the long version of dcat-admin.
      *
      * @return string The long application version
@@ -401,5 +406,18 @@ class Admin
     public static function callBooted()
     {
         Event::dispatch('admin.booted');
+    }
+
+    /**
+     * Get the JSON variables that should be provided to the global Dcat JavaScript object.
+     *
+     * @return string
+     */
+    public static function jsVariables()
+    {
+        static::$jsVariables['token'] = csrf_token();
+        static::$jsVariables['lang'] = __('admin.client') ?: [];
+
+        return json_encode(static::$jsVariables);
     }
 }

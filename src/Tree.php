@@ -187,7 +187,7 @@ class Tree implements Renderable
      */
     protected function collectAssets()
     {
-        Admin::collectComponentAssets('jquery.nestable');
+        Admin::collectAssets('jquery.nestable');
     }
 
     /**

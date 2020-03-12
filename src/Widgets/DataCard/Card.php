@@ -223,7 +223,7 @@ JS
     {
         parent::collectAssets();
 
-        Admin::collectComponentAssets('waypoints');
-        Admin::collectComponentAssets('jquery.counterup');
+        Admin::collectAssets('waypoints');
+        Admin::collectAssets('jquery.counterup');
     }
 }

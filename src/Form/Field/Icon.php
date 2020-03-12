@@ -22,6 +22,6 @@ JS;
 
     public static function collectAssets()
     {
-        Admin::collectComponentAssets('fontawesome-iconpicker');
+        Admin::collectAssets('fontawesome-iconpicker');
     }
 }

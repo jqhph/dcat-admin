@@ -4,7 +4,11 @@
 
     {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
-    @include('admin::partials.script')
+    <script>
+        var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
+
+        console.log(123, Dcat);
+    </script>
 
     @include('admin::partials.sidebar')
 
@@ -57,6 +61,11 @@
             </button>
         </p>
     </footer>
+
+    {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
+
+        <!-- REQUIRED JS SCRIPTS -->
+    {!! Dcat\Admin\Admin::assets()->renderJs() !!}
 
 </body>
 

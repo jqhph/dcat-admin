@@ -286,6 +286,6 @@ HTML;
     protected function collectAssets()
     {
         $this->script && Admin::script($this->script);
-        Admin::collectComponentAssets('jquery.sparkline');
+        Admin::collectAssets('jquery.sparkline');
     }
 }

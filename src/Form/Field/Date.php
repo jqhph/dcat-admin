@@ -40,7 +40,7 @@ class Date extends Text
 
     public static function collectAssets()
     {
-        Admin::collectComponentAssets('moment');
-        Admin::collectComponentAssets('bootstrap-datetimepicker');
+        Admin::collectAssets('moment');
+        Admin::collectAssets('bootstrap-datetimepicker');
     }
 }

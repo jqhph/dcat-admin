@@ -390,6 +390,6 @@ JS;
 
     public static function collectAssets()
     {
-        Admin::collectComponentAssets('select2');
+        Admin::collectAssets('select2');
     }
 }

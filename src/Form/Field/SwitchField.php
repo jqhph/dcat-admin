@@ -116,6 +116,6 @@ JS
 
     public static function collectAssets()
     {
-        Admin::collectComponentAssets('switchery');
+        Admin::collectAssets('switchery');
     }
 }

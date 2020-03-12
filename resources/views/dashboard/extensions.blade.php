@@ -33,20 +33,20 @@
 </div>
 
 <script>Dcat.ready(function () {
-    var $box = $('#extension-box');
-    $box.loading();
-
-    $.ajax({
-        url: 'https://jqhph.github.io/dcat-admin/extra/extensions.html',
-        success: function (response) {
-            $box.loading(false);
-
-            $box.html(response);
-        },
-        error: function () {
-            $box.loading(false);
-
-            $box.find('.item').removeClass('hidden');
-        }
-    });
+    // var $box = $('#extension-box');
+    // $box.loading();
+    //
+    // $.ajax({
+    //     url: 'https://jqhph.github.io/dcat-admin/extra/extensions.html',
+    //     success: function (response) {
+    //         $box.loading(false);
+    //
+    //         $box.html(response);
+    //     },
+    //     error: function () {
+    //         $box.loading(false);
+    //
+    //         $box.find('.item').removeClass('hidden');
+    //     }
+    // });
 })</script>

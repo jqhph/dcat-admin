@@ -27,6 +27,6 @@ class Mobile extends Text
 
     public static function collectAssets()
     {
-        Admin::collectComponentAssets('jquery.inputmask');
+        Admin::collectAssets('jquery.inputmask');
     }
 }

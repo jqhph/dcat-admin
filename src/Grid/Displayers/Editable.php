@@ -229,6 +229,6 @@ JS
 
     protected function collectAssets()
     {
-        Admin::collectComponentAssets('editable');
+        Admin::collectAssets('editable');
     }
 }
