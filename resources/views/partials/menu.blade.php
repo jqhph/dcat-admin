@@ -4,7 +4,7 @@
             <span>{{ $item['title'] }}</span>
         </li>
     @elseif(! isset($item['children']))
-        <li class="nav-item  {!! $builder->isActive($item) ? 'active' : '' !!}">
+        <li class="nav-item {!! $builder->isActive($item) ? 'active' : '' !!}">
             <a href="{{ $builder->getUrl($item['uri']) }}">
 
                 <i class="{{$item['icon']}}"></i>
@@ -19,7 +19,7 @@
         @php
             $active = $builder->isActive($item);
         @endphp
-        <li class="{!! $active ? 'active open' : '' !!}">
+        <li class="nav-item has-sub {!! $active ? 'active open' : '' !!}">
             <a href="#">
                 <i class="fa {{ $item['icon'] }}"></i>
                 @if (Lang::has($titleTranslation = 'admin.menu_titles.' . trim(str_replace(' ', '_', strtolower($item['title'])))))

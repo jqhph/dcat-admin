@@ -18,8 +18,8 @@
 </div>
 
 <script data-exec-on-popstate>
-LA.ready(function () {
-    LA.ResourceSelector({
+Dcat.ready(function () {
+    Dcat.ResourceSelector({
         title: '{!! ucfirst(trans('admin.choose')) !!} {!! $label !!}',
         selector: '#{{$name}}-filter-select-source',
         column: "{!! $name !!}",

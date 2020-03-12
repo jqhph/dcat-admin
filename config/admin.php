@@ -119,7 +119,7 @@ return [
 
         'controller' => Dcat\Admin\Controllers\AuthController::class,
 
-        'login_view' => 'admin::login',
+        'login_view' => 'admin::pages.login',
 
         'guard' => 'admin',
 
@@ -200,7 +200,7 @@ return [
     'menu' => [
         'cache' => [
             // enable cache or not
-            'enable' => true,
+            'enable' => false,
             'store'  => 'file',
         ],
 
@@ -303,31 +303,42 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Skin
-    |--------------------------------------------------------------------------
-    |
-    | This value is the skin of admin pages.
-    | @see https://adminlte.io/docs/2.4/layout
-    |
-    | Supported:
-    |    "skin-blue-light", "skin-black", "skin-black-light".
-    |
-    */
-    'skin' => 'skin-black',
-
-    /*
-    |--------------------------------------------------------------------------
     | Application layout
     |--------------------------------------------------------------------------
     |
     | This value is the layout of admin pages.
-    | @see https://adminlte.io/docs/2.4/layout
-    |
-    | Supported: "fixed", "layout-boxed", "layout-top-nav", "sidebar-collapse",
-    | "sidebar-mini".
-    |
     */
-    'layout' => ['sidebar-mini', 'fixed'],
+    'layout' => [
+        // vertical, horizontal
+        'mainLayout_type' => 'vertical',
+
+        // light, dark, semi-dark
+        'theme' => 'light',
+
+        'body_class' => '',
+
+        'sidebar_collapsed' => false,
+
+        'blank_page' => false,
+
+        // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
+        'navbar_color' => '',
+
+        // floating, static, sticky
+        'horizontal_menu_type' => 'floating',
+
+        // floating, static, sticky, hidden
+        'vertical_menu_navbar_type' => 'floating',
+
+        // static, sticky, hidden
+        'footer_type' => 'static',
+
+        // default, content-left-sidebar, content-right-sidebar, content-detached-left-sidebar, content-detached-right-sidebar
+        'content_layout' => 'default',
+
+        // ltr, rtl
+        'direction' => env('MIX_CONTENT_DIRECTION', 'ltr'),
+    ],
 
     /*
     |--------------------------------------------------------------------------

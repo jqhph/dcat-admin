@@ -32,7 +32,7 @@
 </div>
 
 <script data-exec-on-popstate>
-LA.ready(function () {
+Dcat.ready(function () {
     var upload, options = {!! $options !!}, listenComplete;
 
     init();
@@ -51,7 +51,7 @@ LA.ready(function () {
             paste: '#{{$_id}} .web-uploader'
         }, opts);
 
-        upload = LA.Uploader(opts);
+        upload = Dcat.Uploader(opts);
         upload.build();
         upload.preview();
 

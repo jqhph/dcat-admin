@@ -255,7 +255,7 @@
 </template>
 
 <script>
-    LA.ready(function () {
+    Dcat.ready(function () {
         var typing = 0,
             $model = $('#inputModelName'),
             $controller = $('#inputControllerName'),
@@ -301,14 +301,14 @@
             db = val[0];
             tb = val[1];
 
-            LA.loading();
+            Dcat.loading();
             $table.val(tb);
 
             write_controller(tb);
             write_model(tb);
 
-            $.post('{{admin_url('helpers/scaffold/table')}}', {db: db, tb: tb, _token: LA.token}, function (res) {
-                LA.loading(false);
+            $.post('{{admin_url('helpers/scaffold/table')}}', {db: db, tb: tb, _token: Dcat.token}, function (res) {
+                Dcat.loading(false);
 
                 if (!res.list) return;
                 var i, list = res.list, $id = $('#inputPrimaryKey'), updated, created, soft;
@@ -332,12 +332,12 @@
                         continue;
                     }
 
-                    var c = LA.str.replace(list[i].comment, '"', '');
+                    var c = Dcat.str.replace(list[i].comment, '"', '');
                     add_field({
                         name: i,
                         lang: c,
                         type: list[i].type,
-                        default: LA.str.replace(list[i].default, '"', ''),
+                        default: Dcat.str.replace(list[i].default, '"', ''),
                         comment: c,
                         nullable: list[i].nullable != 'NO',
                     });
@@ -376,23 +376,23 @@
 
             var c;
             if (updated) {
-                c = LA.str.replace(updated.comment, '"', '');
+                c = Dcat.str.replace(updated.comment, '"', '');
                 add_field({
                     name: 'updated_at',
                     lang: c,
                     type: updated.type,
-                    default: LA.str.replace(updated.default, '"', ''),
+                    default: Dcat.str.replace(updated.default, '"', ''),
                     comment: c,
                     nullable: updated.nullable != 'NO',
                 });
             }
             if (created) {
-                c = LA.str.replace(created.comment, '"', '');
+                c = Dcat.str.replace(created.comment, '"', '');
                 add_field({
                     name: 'created_at',
                     lang: c,
                     type: created.type,
-                    default: LA.str.replace(created.default, '"', ''),
+                    default: Dcat.str.replace(created.default, '"', ''),
                     comment: c,
                     nullable: created.nullable != 'NO',
                 });

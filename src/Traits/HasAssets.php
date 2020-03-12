@@ -38,7 +38,7 @@ trait HasAssets
      */
     public static function collectAssets(string $name)
     {
-        static::assets()->withName($name);
+        static::assets()->collect($name);
     }
 
     /**

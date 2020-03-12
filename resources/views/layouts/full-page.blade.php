@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-      data-textdirection="{{ env('MIX_CONTENT_DIRECTION') === 'rtl' ? 'rtl' : 'ltr' }}">
+      data-textdirection="{{ $configData['direction'] === 'rtl' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="utf-8">
@@ -42,8 +42,8 @@
 </div>
 
 {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
+
 {!! Dcat\Admin\Admin::assets()->renderJs() !!}
 
 </body>
-
 </html>

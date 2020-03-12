@@ -61,7 +61,7 @@ $lastStep = $step;
 @endphp
 
 <script>
-LA.ready(function () {
+Dcat.ready(function () {
     var form = $('#{{ $form->getElementId() }}'),
         box = form.find('.la-step-box'),
         stepInput = form.find('.current-step-input'),
@@ -240,7 +240,7 @@ LA.ready(function () {
 
     // 提交表单
     function submit(after) {
-        LA.Form({
+        Dcat.Form({
             $form: form,
             after: function (state, b, c, d) {
                 after(state, b, c, d);

@@ -27,7 +27,9 @@ class Assets
     /**
      * @var array
      */
-    protected $headerJs = [];
+    protected $headerJs = [
+        'vendors' => 'dcat-admin/vendors/js/vendors.min.js',
+    ];
 
     /**
      * @var array
@@ -46,18 +48,17 @@ class Assets
      * @var array
      */
     protected $baseJs = [
-
+        'menu'       => 'dcat-admin/js/core/app-menu.js',
+        'app'        => 'dcat-admin/js/core/app.js',
+        'components' => 'dcat-admin/js/scripts/components.js',
+        'customizer' => 'dcat-admin/js/scripts/customizer.js',
+        'footer'     => 'dcat-admin/js/scripts/footer.js',
     ];
 
     /**
      * @var array
      */
     protected $components = [];
-
-    /**
-     * @var string
-     */
-    protected $jQuery = 'vendor/dcat-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js';
 
     /**
      * @var string
@@ -69,17 +70,24 @@ class Assets
      */
     protected $isPjax = false;
 
+    /**
+     * @var bool
+     */
+    protected $usingFullPage = false;
+
     public function __construct()
     {
         $this->isPjax = request()->pjax();
     }
 
-    public function full()
+    public function full(bool $value = true)
     {
+        $this->usingFullPage = $value;
 
+        return $this;
     }
 
-    public function withName(string $name)
+    public function collect(string $name)
     {
         $this->js($this->components[$name]['js'] ?? null);
         $this->css($this->components[$name]['css'] ?? null);
@@ -138,13 +146,12 @@ class Assets
         $this->style = array_merge($this->style, (array) $style);
     }
 
-    public function jQuery()
-    {
-        return admin_asset($this->jQuery);
-    }
-
     protected function addLayoutCss()
     {
+        if ($this->usingFullPage) {
+            return;
+        }
+
         if (config('admin.layout.main_layout_type') === 'horizontal') {
             $this->baseCss[] = 'dcat-admin/css/core/menu/menu-types/horizontal-menu.css';
         }
@@ -158,7 +165,7 @@ class Assets
             return;
         }
 
-        //$this->baseCss[] = "dcat-admin/css/theme/{$theme}.min.css";
+        $this->baseCss[] = "dcat-admin/css/themes/{$theme}.css";
     }
 
     protected function addFontCss()

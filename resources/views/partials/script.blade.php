@@ -18,8 +18,8 @@ Dcat.ready = Dcat.pjaxResponded = Dcat.booting = Dcat.beforeSubmit = Dcat.submit
             return $(doc).one('pjax:done', callback);
         }
 
-        var $ = _window.$, proxy = function (e) {
-            $($('#pjax-container')).one('pjax:done', proxy);
+        var proxy = function (e) {
+            _window.$(_window.$('#pjax-container')).one('pjax:done', proxy);
 
             callback(e);
         };

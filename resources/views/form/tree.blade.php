@@ -24,7 +24,7 @@
     $formId = $formId ? '#'.$formId : '';
 @endphp
 <script data-exec-on-popstate>
-LA.ready(function () {
+Dcat.ready(function () {
     var $tree = $('{!!$formId !!} .{{$class}}-tree-wrapper').find('.da-tree'),
         opts = {!! $options !!},
         $input = $('{!!$formId !!} input[name="{{$name}}"]'),
@@ -45,7 +45,7 @@ LA.ready(function () {
 
         var i, selected = [];
         for (i in data.selected) {
-            if (LA.arr.in(parents, data.selected[i])) { // 过滤父节点
+            if (Dcat.arr.in(parents, data.selected[i])) { // 过滤父节点
                 continue;
             }
             selected.push(data.selected[i]);
