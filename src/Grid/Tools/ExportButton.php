@@ -32,7 +32,7 @@ class ExportButton implements Renderable
 $('.{$this->grid->getExportSelectedName()}').click(function (e) {
     e.preventDefault();
     
-    var rows = LA.grid.selected('{$this->grid->getName()}').join(',');
+    var rows = Dcat.grid.selected('{$this->grid->getName()}').join(',');
     if (! rows) {
         return false;
     }

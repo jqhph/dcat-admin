@@ -67,14 +67,14 @@ $('#create-extension').on('shown.bs.popover', function () {
         
         $('.popover').loading();
         $.post('$url', {
-            _token: LA.token,
+            _token: Dcat.token,
             name: name,
             namespace: namespace,
         }, function (response) {
             $('.popover').loading(false);
         
            if (!response.status) {
-               LA.error(response.message);
+               Dcat.error(response.message);
            } else {
                $('#create-extension').popover('hide');
            }

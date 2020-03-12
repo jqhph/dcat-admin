@@ -848,7 +848,7 @@ EOF;
     f.find('button.submit').click(function () {
         var t = $(this);
     
-        LA.Form({
+        Dcat.Form({
             \$form: f,
             before: function () {
                 f.validator('validate');

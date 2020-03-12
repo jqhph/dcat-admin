@@ -294,7 +294,7 @@ EOF;
             Form::modal($edit)
                 ->click(".$id")
                 ->dimensions($width, $height)
-                ->success('LA.reload()');
+                ->success('Dcat.reload()');
 
             $text = $this->showEdit ? '' : "<span class='hidden-xs'> &nbsp; $edit</span>";
 

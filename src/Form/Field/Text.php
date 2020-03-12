@@ -105,7 +105,7 @@ class Text extends Field
     {
         Admin::script(
             <<<'JS'
-LA.extendValidator('maxlength', function ($el) {
+Dcat.extendValidator('maxlength', function ($el) {
     return $el.val().length > $el.attr('data-maxlength');
 });
 JS

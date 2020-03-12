@@ -21,7 +21,7 @@ class Tree extends AbstractDisplayer
         $showNextPage = $model->showAllChildrenNodes() ? 'false' : 'true';
 
         $script = <<<JS
-LA.grid.tree({
+Dcat.grid.tree({
     button: '.{$tableId}-grid-load-children',
     table: '#{$tableId}',
     url: '{$model->generateTreeUrl()}',

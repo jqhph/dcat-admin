@@ -23,28 +23,25 @@
     {!! Dcat\Admin\Admin::assets()->renderCss() !!}
 
     {!! Dcat\Admin\Admin::assets()->renderHeaderJs() !!}
+
+    @yield('head')
 </head>
 
 <body
       class="dcat-admin-body vertical-layout vertical-menu-modern 1-column {{ $configData['blank_page_class'] }} {{ $configData['body_class'] }} {{($configData['theme'] === 'light') ? '' : $configData['theme'] }}"
         data-menu="vertical-menu-modern" data-col="1-column" data-layout="{{ $configData['theme'] }}">
 
-<!-- BEGIN: Content-->
+@include('admin::partials.script')
+
 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-body">
-
-            {{-- Include Startkit Content --}}
             @yield('content')
-
         </div>
     </div>
 </div>
-<!-- End: Content-->
 
 {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
-
-<!-- REQUIRED JS SCRIPTS -->
 {!! Dcat\Admin\Admin::assets()->renderJs() !!}
 
 </body>

@@ -18,7 +18,7 @@ class AuthController extends Controller
     /**
      * @var string
      */
-    protected $view = 'admin::login';
+    protected $view = 'admin::pages.login';
 
     /**
      * @var string
@@ -28,15 +28,20 @@ class AuthController extends Controller
     /**
      * Show the login page.
      *
-     * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
+     * @return Content
      */
-    public function getLogin()
+    public function getLogin(Content $content)
     {
         if ($this->guard()->check()) {
             return redirect($this->redirectPath());
         }
 
-        return view(config('admin.auth.login_view') ?: $this->view);
+        return $content
+            ->full()
+            ->withConfig('body_class', 'bg-full-screen-image')
+            ->body(
+                view(config('admin.auth.login_view') ?: $this->view)
+            );
     }
 
     /**

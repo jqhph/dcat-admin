@@ -92,13 +92,13 @@ EOT;
 
         Admin::script(
             <<<JS
-var selector = LA.RowSelector({
+var selector = Dcat.RowSelector({
     checkbox: '.{$this->grid->getRowName()}-checkbox',
     selectAll: '.{$this->grid->getSelectAllName()}', 
     clickTr: {$clickable},
     bg: '{$background}',
 });
-LA.grid.addSelector(selector, '{$this->grid->getName()}');
+Dcat.grid.addSelector(selector, '{$this->grid->getName()}');
 JS
         );
     }

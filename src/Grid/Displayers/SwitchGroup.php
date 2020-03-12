@@ -60,22 +60,22 @@ class SwitchGroup extends SwitchDisplay
     init();
     swt.off('change').change(function(e) {
         var t = $(this), id=t.data('key'),checked = t.is(':checked'), name = t.attr('name'), data = {
-            _token: LA.token,
+            _token: Dcat.token,
             _method: 'PUT'
         };
         data[name] = checked ? 1 : 0;
-        LA.NP.start();
+        Dcat.NP.start();
     
          $.ajax({
             url: "{$this->resource()}/" + id,
             type: "POST",
             data: data,
             success: function (d) {
-                LA.NP.done();
+                Dcat.NP.done();
                  if (d.status) {
-                    LA.success(d.message);
+                    Dcat.success(d.message);
                 } else {
-                    LA.error(d.message);
+                    Dcat.error(d.message);
                 }
             }
         });

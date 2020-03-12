@@ -28,8 +28,4 @@ class AdminSection
     const LEFT_SIDEBAR_MENU_TOP = 'ADMIN_LEFT_SIDEBAR_MENU_TOP';
     // 菜单栏底部区块
     const LEFT_SIDEBAR_MENU_BOTTOM = 'ADMIN_LEFT_SIDEBAR_MENU_BOTTOM';
-    // 右侧导航栏内容区块
-    const RIGHT_SIDEBAR = 'ADMIN_RIGHT_SIDEBAR';
-    // 右侧导航栏样式，支持"control-sidebar-light" 和 "control-sidebar-dark"
-    const RIGHT_SIDEBAR_CLASS = 'ADMIN_RIGHT_SIDEBAR_CLASS';
 }

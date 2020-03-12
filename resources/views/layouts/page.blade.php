@@ -30,4 +30,4 @@
     <![endif]-->
 </head>
 
-@extends('layouts.vertical')
+@extends('admin::layouts.vertical')

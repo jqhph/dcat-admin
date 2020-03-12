@@ -1,42 +1,51 @@
 <script>
-    function LA() {}
+function Dcat () {}
 
-    LA.lang = {!! json_encode(trans('admin.client') ?: []) !!};
+Dcat.ready = Dcat.pjaxResponded = Dcat.booting = Dcat.beforeSubmit = Dcat.submitted = null;
 
-    LA.components = {booting:[]};
+(function (w, doc) {
+    var pjaxResponded = false;
 
-    LA.ready = function (callback, win) {
-        if (!win || win === window) {
-            if (typeof LA.pjaxresponse == 'undefined') {
-                return $(callback, win || window);
+    Dcat.lang = {!! json_encode(__('admin.client') ?: []) !!};
+
+    Dcat._callbacks = {booting:[]};
+
+    Dcat.ready = function (callback, _window) {
+        if (! _window || _window === w) {
+            if (! pjaxResponded) {
+                return $(callback);
             }
-            return $(document, win || window).one('pjax:script', callback);
+            return $(doc).one('pjax:done', callback);
         }
 
-        var proxy = function (e) {
-            win.$(win.$('#pjax-container')).one('pjax:script', proxy);
+        var $ = _window.$, proxy = function (e) {
+            $($('#pjax-container')).one('pjax:done', proxy);
 
             callback(e);
         };
 
-        win.LA.ready(proxy);
+        _window.Dcat.ready(proxy);
     };
 
-    LA._form_ = {
+    Dcat.pjaxResponded = function () {
+        pjaxResponded = true;
+    };
+
+    Dcat._form_ = {
         before: [], success: [], error: []
     };
 
     {{--注册表单提交前钩子事件--}}
     {{--@param {function} call 返回 false 可以阻止表单提交--}}
-    LA.beforeSubmit = function (call) {
-        typeof call == 'function' && (LA._form_.before = [call]);
+    Dcat.beforeSubmit = function (call) {
+        typeof call == 'function' && (Dcat._form_.before = [call]);
     };
 
     {{--@param {function} success 提交成功事件，返回 false 可以阻止默认的表单事件--}}
     {{--@param {function} error 提交出错事件，返回 false 可以阻止默认的表单事件--}}
-    LA.submitted = function (success, error) {
-        typeof success == 'function' && (LA._form_.success = [success]);
-        typeof error == 'function' && (LA._form_.error = [error]);
+    Dcat.submitted = function (success, error) {
+        typeof success == 'function' && (Dcat._form_.success = [success]);
+        typeof error == 'function' && (Dcat._form_.error = [error]);
     };
 
     {{--
@@ -44,9 +53,8 @@
             $(fn);
             $(document).on('pjax:complete', fn);
     --}}
-    LA.booting = function (fn) {
-        typeof fn == 'function' && (LA.components.booting.push(fn));
+    Dcat.booting = function (fn) {
+        typeof fn == 'function' && (Dcat._callbacks.booting.push(fn));
     };
-
-
+})(window, document);
 </script>

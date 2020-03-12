@@ -187,7 +187,7 @@ JS;
         $this->fetched(
             <<<JS
 if (!response.status) {
-    return LA.error(response.message || 'Server internal error.');
+    return Dcat.error(response.message || 'Server internal error.');
 }        
 var id = '{$this->id}', opt = $options;
 opt = $.extend(opt, response.options || {});

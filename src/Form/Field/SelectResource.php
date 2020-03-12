@@ -176,7 +176,7 @@ class SelectResource extends Field
 
         Admin::script(
             <<<JS
-LA.ResourceSelector({
+Dcat.ResourceSelector({
     title: '{$label}',
     column: "{$this->getElementName()}",
     source: '{$this->source}',

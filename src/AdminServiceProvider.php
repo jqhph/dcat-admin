@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin;
 
+use Dcat\Admin\Layout\Assets;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
@@ -31,6 +32,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\ActionCommand::class,
         Console\MenuCacheCommand::class,
         Console\Tests\InstallCommand::class,
+        Console\AssetsLinkCommand::class,
     ];
 
     /**
@@ -204,6 +206,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerServices()
     {
+        $this->app->singleton('admin.assets', Assets::class);
         $this->app->singleton('admin.sections', SectionManager::class);
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.menu', Menu::class);

@@ -168,7 +168,7 @@ JS
         $this->fetched(
             <<<'JS'
 if (!response.status) {
-    return LA.error(response.message || 'Server internal error.');
+    return Dcat.error(response.message || 'Server internal error.');
 }     
 var w = (response.progress || 0) + '%', pg = card.find('.progress-bar');
  

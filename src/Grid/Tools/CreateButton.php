@@ -36,7 +36,7 @@ class CreateButton implements Renderable
 
         Form::modal($new)
             ->click(".{$class}")
-            ->success('LA.reload()')
+            ->success('Dcat.reload()')
             ->dimensions($width, $height);
 
         return "<a data-url='$url' class='btn btn-sm btn-success {$class}'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";

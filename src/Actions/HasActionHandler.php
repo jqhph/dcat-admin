@@ -103,7 +103,7 @@ function request() {
 }
 
 if (data['confirm']) {
-    LA.confirm(data['confirm'], request);
+    Dcat.confirm(data['confirm'], request);
 } else {
     request()
 }
@@ -126,23 +126,23 @@ JS;
         return <<<JS
 var process = new Promise(function (resolve,reject) {
     Object.assign(data, {
-        _token: LA.token,
+        _token: Dcat.token,
         _action: '{$this->makeCalledClass()}',
         _key: '{$this->getKey()}',
     });
-    LA.NP.start();
+    Dcat.NP.start();
     $.ajax({
         method: '{$this->method()}',
         url: '{$this->handlerRoute()}',
         data: data,
         success: function (data) {
             target.attr('working', 0);
-            LA.NP.done();
+            Dcat.NP.done();
             resolve([data, target]);
         },
         error:function(request){
             target.attr('working', 0);
-            LA.NP.done();
+            Dcat.NP.done();
             reject([request, target]);
         }
     });
@@ -161,19 +161,19 @@ function (data) {
         target   = data[1];
         
     if (typeof response !== 'object') {
-        return LA.error({type: 'error', title: 'Oops!'});
+        return Dcat.error({type: 'error', title: 'Oops!'});
     }
     
     var then = function (then) {
         switch (then.action) {
             case 'refresh':
-                LA.reload();
+                Dcat.reload();
                 break;
             case 'download':
                 window.open(then.value, '_blank');
                 break;
             case 'redirect':
-                LA.reload(then.value);
+                Dcat.reload(then.value);
                 break;
             case 'location':
                 window.location = then.value;
@@ -221,7 +221,7 @@ function (data) {
     var request = data[0], target = data[1];
     
     if (request && typeof request.responseJSON === 'object') {
-        LA.error(request.responseJSON.message)
+        Dcat.error(request.responseJSON.message)
     }
     console.error(request);
 }

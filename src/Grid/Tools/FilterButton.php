@@ -57,7 +57,7 @@ class FilterButton extends AbstractTool
         expand = {$expand};
     
      function initSlider() {
-        slider = new LA.Slider({
+        slider = new Dcat.Slider({
             direction: 'r',
             dom: '#{$id}',
             background: '#FFF',

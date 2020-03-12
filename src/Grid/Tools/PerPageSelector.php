@@ -104,7 +104,7 @@ EOT;
     {
         return <<<JS
 $('.{$this->parent->getPerPageName()}').change(function() {
-    LA.reload(this.value);
+    Dcat.reload(this.value);
 });
 JS;
     }

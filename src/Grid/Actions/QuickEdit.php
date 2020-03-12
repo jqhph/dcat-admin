@@ -30,7 +30,7 @@ class QuickEdit extends RowAction
                 ->click(".{$this->getElementClass()}")
                 ->dimensions($width, $height)
                 ->forceRefresh()
-                ->success('LA.reload()');
+                ->success('Dcat.reload()');
         }
 
         $this->setHtmlAttribute([

@@ -368,15 +368,15 @@ class Tree implements Renderable
 
     $('.{$this->elementId}-save').click(function () {
         var serialize = tree.nestable('serialize');
-        LA.NP.start();
+        Dcat.NP.start();
         $.post('{$this->url}', {
-            _token: LA.token,
+            _token: Dcat.token,
             _order: JSON.stringify(serialize)
         },
         function () {
-            LA.NP.done();
-            LA.reload();
-            LA.success('{$saveSucceeded}');
+            Dcat.NP.done();
+            Dcat.reload();
+            Dcat.success('{$saveSucceeded}');
         });
     });
     
@@ -500,7 +500,7 @@ JS;
 
             Form::modal(trans('admin.edit'))
                 ->click('.tree-quick-edit')
-                ->success('LA.reload()')
+                ->success('Dcat.reload()')
                 ->dimensions($width, $height);
         }
     }
@@ -515,7 +515,7 @@ JS;
 
             Form::modal(trans('admin.new'))
                 ->click('.tree-quick-create')
-                ->success('LA.reload()')
+                ->success('Dcat.reload()')
                 ->dimensions($width, $height);
         }
     }

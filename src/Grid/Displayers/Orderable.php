@@ -30,7 +30,7 @@ EOT;
     protected function script()
     {
         return <<<JS
-        LA.grid.orderable({
+        Dcat.grid.orderable({
             button: '.{$this->grid->getRowName()}-orderable',
             url: '{$this->resource()}/:key',
         });

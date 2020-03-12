@@ -117,7 +117,7 @@ $('.{$rowName}-checkbox').on('change', function () {
         btn.hide()
     }
     setTimeout(function () {
-         btn.find('.selected').html("{$selected}".replace('{n}', LA.grid.selectedRows('$name').length));
+         btn.find('.selected').html("{$selected}".replace('{n}', Dcat.grid.selectedRows('$name').length));
     }, 50)
 });
 JS;

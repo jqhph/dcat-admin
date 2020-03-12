@@ -248,7 +248,7 @@ class ModalForm
         {$this->handlers['saved']}
     };
     
-    LA.ModalForm(opts);
+    Dcat.ModalForm(opts);
 })();
 JS
         );

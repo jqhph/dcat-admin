@@ -192,12 +192,12 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
         requesting = 1;
         
         t.button('loading');
-        $.getJSON(url, {_token: LA.token, value: val}, function (resp) {
+        $.getJSON(url, {_token: Dcat.token, value: val}, function (resp) {
              requesting = 0;
              t.button('reset');
              
              if (!resp.status) {
-                return LA.error(resp.message || '系统繁忙，请稍后再试');
+                return Dcat.error(resp.message || '系统繁忙，请稍后再试');
              }
              
              build(resp.value);
@@ -247,7 +247,7 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
 
             v['state'] = {'disabled': true};
 
-            if (ckall || (value && LA.arr.in(value, v[idColumn]))) {
+            if (ckall || (value && Dcat.arr.in(value, v[idColumn]))) {
                 v['state']['selected'] = true;
             }
 

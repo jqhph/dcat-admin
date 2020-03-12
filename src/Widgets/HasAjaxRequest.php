@@ -173,14 +173,14 @@ trait HasAjaxRequest
         $.ajax({
           url: '{$this->__url}',
           dataType: 'json',
-          data: $.extend({_token:LA.token}, p || {}),
+          data: $.extend({_token:Dcat.token}, p || {}),
           success: function (response) {
             f = 0;
             {$fetched};
           },
           error: function (a, b, c) {
               f = 0;
-              LA.ajaxError(a, b, c)
+              Dcat.ajaxError(a, b, c)
           },
         });
     }

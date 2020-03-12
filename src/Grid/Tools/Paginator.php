@@ -52,7 +52,7 @@ class Paginator implements Renderable
      */
     protected function paginationLinks()
     {
-        return $this->paginator->render('admin::pagination');
+        return $this->paginator->render('admin::grid.pagination');
     }
 
     /**

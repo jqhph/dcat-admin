@@ -172,7 +172,7 @@ class Editable extends AbstractDisplayer
             Admin::script(
                 <<<'JS'
 $.fn.editable.defaults.params = function (params) {
-    params._token = LA.token;
+    params._token = Dcat.token;
     params._editable = 1;
     params._method = 'PUT';
     return params;

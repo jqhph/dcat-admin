@@ -66,18 +66,18 @@ EOT;
             type: "POST",
             data: {
                 {$this->column->getName()}: value,
-                _token: LA.token,
+                _token: Dcat.token,
                 _method: 'PUT'
             },
             success: function (data) {
                 btn.button('reset');
                 f = 0;
-                LA.success(data.message);
+                Dcat.success(data.message);
             },
             error: function (a, b, c) {
                 btn.button('reset');
                 f = 0;
-                LA.ajaxError(a, b, c);
+                Dcat.ajaxError(a, b, c);
             },
         });
     

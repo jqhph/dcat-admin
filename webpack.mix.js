@@ -59,7 +59,7 @@ mixAssetsDir('assets/vendors/css/**/*.css', (src, dest) => mix.copy(src, dest));
 mixAssetsDir('assets/vendors/css/editors/quill/fonts/', (src, dest) => mix.copy(src, dest));
 mix.copyDirectory('resources/assets/images', 'resources/dist/images');
 mix.copyDirectory('resources/assets/fonts', 'resources/dist/fonts');
-
+mix.copyDirectory('resources/assets/vendors', 'resources/dist/vendors');
 
 mix.js('resources/assets/js/core/app-menu.js', 'resources/dist/js/core')
     .js('resources/assets/js/core/app.js', 'resources/dist/js/core')
