@@ -13,9 +13,9 @@ import Dcat from './Dcat'
 import NProgress from './nprogress/NProgress.min'
 import AjaxExtension from './extensions/Ajax'
 import DialogExtension from './extensions/Dialog'
-import RowSelector from './extensions/RowSelector'
-import Grid from './extensions/Grid'
-import Debounce from './extensions/Debounce'
+import RowSelectorExtension from './extensions/RowSelector'
+import GridExtension from './extensions/Grid'
+import DebounceExtension from './extensions/Debounce'
 
 import Footer from './bootstrappers/Footer'
 import Pjax from './bootstrappers/Pjax'
@@ -29,21 +29,21 @@ win.NProgress = NProgress;
 function extend (Dcat) {
     new AjaxExtension(Dcat);
     new DialogExtension(Dcat);
-    new Grid(Dcat);
+    new GridExtension(Dcat);
 
     Dcat.NP = NProgress;
     Dcat.RowSelector = function (options) {
-        return new RowSelector(options)
+        return new RowSelectorExtension(options)
     };
-    Dcat.debounce = Debounce;
+    Dcat.debounce = DebounceExtension;
 }
 
 // 初始化事件监听
-function on(Dcat) {
-    new Footer(Dcat);
-    new Pjax(Dcat);
-
+function listen(Dcat) {
     Dcat.booting(function () {
+        new Footer(Dcat);
+        new Pjax(Dcat);
+
         Dcat.NP.configure({parent: '.app-content'});
     });
 }
@@ -51,7 +51,7 @@ function on(Dcat) {
 // 初始化
 function boot(Dcat) {
     extend(Dcat);
-    on(Dcat);
+    listen(Dcat);
 
     $(Dcat.boot);
 

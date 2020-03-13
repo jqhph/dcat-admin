@@ -1,10 +1,10 @@
 
 export default class Footer {
     constructor(Dcat) {
-        Dcat.booting(this.bootScrollTop)
+        this.boot(Dcat)
     }
 
-    bootScrollTop() {
+    boot(Dcat) {
         $(window).scroll(function(){
             if ($(this).scrollTop() > 400) {
                 $('.scroll-top').fadeIn();

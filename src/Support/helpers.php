@@ -294,19 +294,19 @@ if (! function_exists('admin_base_path')) {
     }
 }
 
-if (! function_exists('admin_alert')) {
+if (! function_exists('admin_toastr')) {
     /**
-     * Flash a layer message bag to session.
+     * Flash a toastr message bag to session.
      *
      * @param string $message
      * @param string $type
      * @param string $offset
      */
-    function admin_alert($message = '', $type = 'success', $offset = '')
+    function admin_toastr($message = '', $type = 'success', $offset = '')
     {
         $toastr = new MessageBag(get_defined_vars());
 
-        session()->flash('layer-msg', $toastr);
+        session()->flash('dcat-admin-toastr', $toastr);
     }
 }
 

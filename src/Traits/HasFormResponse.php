@@ -130,7 +130,7 @@ trait HasFormResponse
         $status = (int) ($options['status_code'] ?? 302);
 
         if ($message) {
-            admin_alert($message);
+            admin_toastr($message);
         }
 
         return redirect(admin_url($url), $status);

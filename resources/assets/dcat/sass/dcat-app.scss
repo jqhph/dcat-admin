@@ -15,3 +15,30 @@
 html body {
   background-color: $body-background;
 }
+
+body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
+  font-family: Nunito,system-ui,BlinkMacSystemFont,-apple-system,sans-serif;
+}
+
+body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
+   font-size: 1.3rem;
+}
+
+// 导航栏
+.breadcrumb {
+  border-left: 0;
+}
+
+// 页面标题
+.content-header h1 {
+  font-weight: 400;
+  font-size: 24px;
+  display: inline-block;
+
+  small {
+    font-size: 15px;
+    display: inline-block;
+    padding-left: 5px;
+    font-weight: 300;
+  }
+}

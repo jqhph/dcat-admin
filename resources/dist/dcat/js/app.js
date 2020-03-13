@@ -236,12 +236,12 @@ var Footer = /*#__PURE__*/function () {
   function Footer(Dcat) {
     _classCallCheck(this, Footer);
 
-    Dcat.booting(this.bootScrollTop);
+    this.boot(Dcat);
   }
 
   _createClass(Footer, [{
-    key: "bootScrollTop",
-    value: function bootScrollTop() {
+    key: "boot",
+    value: function boot(Dcat) {
       $(window).scroll(function () {
         if ($(this).scrollTop() > 400) {
           $('.scroll-top').fadeIn();
@@ -287,11 +287,7 @@ var Pjax = /*#__PURE__*/function () {
   function Pjax(Dcat) {
     _classCallCheck(this, Pjax);
 
-    var _this = this;
-
-    Dcat.booting(function () {
-      _this.boot(Dcat);
-    });
+    this.boot(Dcat);
   }
 
   _createClass(Pjax, [{
@@ -404,10 +400,10 @@ function extend(Dcat) {
 } // 初始化事件监听
 
 
-function on(Dcat) {
-  new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_7__["default"](Dcat);
-  new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_8__["default"](Dcat);
+function listen(Dcat) {
   Dcat.booting(function () {
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_7__["default"](Dcat);
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_8__["default"](Dcat);
     Dcat.NP.configure({
       parent: '.app-content'
     });
@@ -417,7 +413,7 @@ function on(Dcat) {
 
 function boot(Dcat) {
   extend(Dcat);
-  on(Dcat);
+  listen(Dcat);
   $(Dcat.boot);
   return Dcat;
 }

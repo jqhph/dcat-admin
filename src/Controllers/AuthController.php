@@ -243,7 +243,7 @@ class AuthController extends Controller
      */
     protected function sendLoginResponse(Request $request)
     {
-        admin_alert(trans('admin.login_successful'));
+        admin_toastr(trans('admin.login_successful'));
 
         $request->session()->regenerate();
 

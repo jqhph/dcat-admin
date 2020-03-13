@@ -3,11 +3,7 @@ let $d = $(document);
 
 export default class Pjax {
     constructor(Dcat) {
-        let _this = this;
-
-        Dcat.booting(function () {
-            _this.boot(Dcat)
-        })
+        this.boot(Dcat)
     }
 
     boot(Dcat) {

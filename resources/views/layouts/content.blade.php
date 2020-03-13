@@ -1,7 +1,7 @@
-@section('content')
-    <section class="content-header">
+@section('content-header')
+    <section class="content-header breadcrumbs-top mb-1">
         @if($header || $description)
-            <h1 style="display:inline">
+            <h1 class=" float-left">
                 {!! $header !!}
                 <small>{!! $description !!}</small>
             </h1>
@@ -12,31 +12,24 @@
         @include('admin::partials.breadcrumb')
 
     </section>
+@endsection
 
-    <section class="content">
+@section('content')
+    @include('admin::partials.alerts')
+    @include('admin::partials.exception')
 
-        @include('admin::partials.alerts')
-        @include('admin::partials.exception')
+    {!! $content !!}
 
-        {!! $content !!}
-
-    </section>
-
-    @if(Session::has('____'))
-        @php
-            $bag     = Session::get('layer-msg');
-            $type    = $bag->get('type')[0] ?? 'success';
-            $message = $bag->get('message')[0] ?? '';
-            $offset  = $bag->get('offset')[0] ?? '';
-        @endphp
-        <script>$(function () { Dcat.{{$type}}('{!!  $message  !!}', '{{ $offset }}'); })</script>
-    @endif
+    @include('admin::partials.toastr')
 @endsection
 
 @section('app')
     {!! Dcat\Admin\Admin::assets()->renderStyle() !!}
 
     {!! admin_section(AdminSection::APP_INNER_BEFORE) !!}
+    <div class="content-header">
+        @yield('content-header')
+    </div>
 
     <div class="content-body" id="app">
         @yield('content')
