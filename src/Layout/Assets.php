@@ -29,7 +29,7 @@ class Assets
      */
     protected $headerJs = [
         'vendors' => 'dcat-admin/vendors/js/vendors.min.js',
-        'dcat'    => 'dcat-admin/dcat/bootstrap.js',
+        'dcat'    => 'dcat-admin/dcat/js/bootstrap.js',
     ];
 
     /**

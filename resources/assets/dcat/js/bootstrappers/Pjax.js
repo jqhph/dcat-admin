@@ -3,21 +3,28 @@ let $d = $(document);
 
 export default class Pjax {
     constructor(Dcat) {
+        let _this = this;
+
         Dcat.booting(function () {
-            this.boot(Dcat)
+            _this.boot(Dcat)
         })
     }
 
     boot(Dcat) {
-        $d.pjax('a:not(a[target="_blank"])', '#pjax-container', { fragment: 'body' });
-        NP.configure({parent: Dcat.pjaxContainer});
+        let container = Dcat.config.pjax_container_selector;
+
+        $('a:not(a[target="_blank"])').click(function (event) {
+            $.pjax.click(event, container, { fragment: 'body' });
+        });
+
+        Dcat.NP.configure({parent: container});
 
         $d.on('pjax:timeout', function (event) {
             event.preventDefault();
         });
 
         $d.on('submit', 'form[pjax-container]', function (event) {
-            $.pjax.submit(event, '#pjax-container')
+            $.pjax.submit(event, container)
         });
 
         $d.on("pjax:popstate", function () {
@@ -36,7 +43,7 @@ export default class Pjax {
                     $submit_btn.button('loading')
                 }
             }
-            NP.start();
+            Dcat.NP.start();
         });
 
         $d.on('pjax:complete', function (xhr) {
@@ -46,7 +53,7 @@ export default class Pjax {
                     $submit_btn.button('reset')
                 }
             }
-            NP.done();
+            Dcat.NP.done();
         });
 
         // 新页面加载，重新初始化

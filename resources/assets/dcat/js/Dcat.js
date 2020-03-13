@@ -3,13 +3,14 @@ let $ = jQuery,
     bootingCallbacks = [],
     formCallbacks = {
         before: [], success: [], error: []
+    },
+    defaultOptions = {
+        pjax_container_selector: '#pjax-container',
     };
 
 export default class Dcat {
     constructor(config) {
         this.withConfig(config);
-
-        this.pjaxContainer = config['pjax_container_selector'] || '#pjax-container'
     }
 
     booting(callback) {
@@ -41,9 +42,12 @@ export default class Dcat {
     }
 
     withConfig(config) {
-        this.config = config;
-        this.withLang(config['lang']);
-        this.withToken(config['token']);
+        this.config = $.extend(defaultOptions, config);
+        this.withLang(config.lang);
+        this.withToken(config.token);
+
+        delete config.lang;
+        delete config.token;
 
         return this
     }
@@ -77,5 +81,14 @@ export default class Dcat {
         typeof error == 'function' && (formCallbacks.error.push(error));
 
         return this
+    }
+
+    reload(url) {
+        let container = this.config.pjax_container_selector;
+        let opt = {container: container};
+
+        url && (opt.url = url);
+
+        $.pjax.reload(opt);
     }
 }
