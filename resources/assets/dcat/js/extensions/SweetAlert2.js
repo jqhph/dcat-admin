@@ -38,13 +38,14 @@ export default class SweetAlert2 {
 
         options = $.extend({
             showCancelButton: true,
+            showLoaderOnConfirm: true,
             confirmButtonText: lang['confirm'],
             cancelButtonText: lang['cancel'],
             confirmButtonClass: btnClass,
             cancelButtonClass: btnClass + 'ml-1',
         }, options);
 
-        this.warning(title, message, options).then(function (result) {
+        this.fire(title, message, 'question', options).then(function (result) {
             if (result.value) {
                 return success && success()
             }

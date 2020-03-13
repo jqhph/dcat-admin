@@ -190,10 +190,8 @@ export default class DialogForm {
         _this.$form = _this.$form || $template.find('form').first();  // 此处必须重新创建jq对象，否则无法操作页面元素
 
         Dcat.Form({
-            $form: _this.$form,
-
+            form: _this.$form,
             disableRedirect: true,
-
             before: function () {
                 _this.$form.validator('validate');
 

@@ -1,277 +1,342 @@
 
-let $eColumns = {};
+import '../jquery-form/jquery.form.min'
 
-export default class Form {
-    /**
-     * 表单提交
-     *
-     * @param options
-     * @constructor
-     */
+let $eColumns = {},
+    formCallbacks = {
+        before: [], success: [], error: []
+    };
+
+class Form {
     constructor(options) {
         let _this = this;
 
         _this.options = $.extend({
-            // 表单的 jquery 对象
+            // 表单的 jquery 对象或者css选择器
             form: null,
+            // 表单错误信息class
             errorClass: 'has-error',
+            // 表单组css选择器
             groupSelector: '.form-group',
-            template: '<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> _message_</label><br/>',
-            disableRedirect: false, //
-            columnSelectors: {}, //
-            disableRemoveError: false,
+            // tab表单css选择器
+            tabSelector: '.tab-pane',
+            // 错误信息模板
+            errorTemplate: '<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {message}</label><br/>',
+            // 保存成功后不允许跳转
+            disableRedirect: false,
+            // 不允许自动移除表单错误信息
+            disableAutoRemoveError: false,
+            // 表单提交之前事件监听，返回false可以中止表单继续提交
             before: function () {},
+            // 表单提交之后事件监听，返回false可以中止后续逻辑
             after: function () {},
         }, options);
+
+        _this.originalValues = {};
+        _this.$form = typeof _this.options.form === 'object'
+            ? _this.options.form
+            : $(_this.options.form).first();
     }
 
     _execute() {
-        var originalVals = {},
-            cls = opts.errorClass,
-            groupSlt = opts.groupSelector,
-            tpl = opts.template,
-            $form = opts.$form,
-            tabSelector = '.tab-pane',
-            get_tab_id = function ($c) {
-                return $c.parents(tabSelector).attr('id');
-            },
-            get_tab_title_error = function ($c) {
-                var id = get_tab_id($c);
-                if (!id) return $('<none></none>');
-                return $("[href='#" + id + "'] .text-red");
-            };
-
-        var self = this;
+        let _this = this,
+            $form = _this.$form,
+            options = _this.options;
 
         // 移除错误信息
-        remove_field_error();
+        removeFieldError(_this);
 
         $form.ajaxSubmit({
-            beforeSubmit: function (d, f, o) {
-                if (opts.before(d, f, o, self) === false) {
+            beforeSubmit: function (fields, $form, options) {
+                if (options.before(fields, $form, options, _this) === false) {
                     return false;
                 }
 
-                if (fire(LA._form_.before, d, f, o, self) === false) {
+                if (fire(formCallbacks.before, fields, $form, options, _this) === false) {
                     return false;
                 }
 
-                LA.NP.start();
+                Dcat.NP.start();
             },
-            success: function (d) {
-                LA.NP.done();
+            success: function (response) {
+                Dcat.NP.done();
 
-                if (opts.after(true, d, self) === false) {
+                if (options.after(true, response, _this) === false) {
                     return;
                 }
 
-                if (fire(LA._form_.success, d, self) === false) {
+                if (fire(formCallbacks.success, response, _this) === false) {
                     return;
                 }
 
-                if (!d.status) {
-                    LA.error(d.message || 'Save failed!');
+                if (! response.status) {
+                    Dcat.error(response.message || 'Save failed!');
                     return;
                 }
 
-                LA.success(d.message || 'Save succeeded!');
+                Dcat.success(response.message || 'Save succeeded!');
 
-                if (opts.disableRedirect || d.redirect === false) return;
+                if (options.disableRedirect || response.redirect === false) {
+                    return;
+                }
 
-                if (d.redirect) {
-                    return LA.reload(d.redirect);
+                if (response.redirect) {
+                    return Dcat.reload(response.redirect);
                 }
 
                 history.back(-1);
             },
-            error: function (v) {
-                LA.NP.done();
+            error: function (response) {
+                Dcat.NP.done();
 
-                if (opts.after(false, v, self) === false) {
+                if (options.after(false, response, _this) === false) {
                     return;
                 }
 
-                if (fire(LA._form_.error, v, self) === false) {
+                if (fire(formCallbacks.error, response, _this) === false) {
                     return;
                 }
 
                 try {
-                    var error = JSON.parse(v.responseText), i;
+                    var error = JSON.parse(response.responseText), i;
 
-                    if (v.status != 422 || !error || !LA.isset(error, 'errors')) {
-                        return LA.error(v.status + ' ' + v.statusText);
+                    if (response.status != 422 || ! error || ! Dcat.helpers.isset(error, 'errors')) {
+                        return Dcat.error(response.status + ' ' + response.statusText);
                     }
                     error = error.errors;
 
                     for (i in error) {
                         // 显示错误信息
-                        $eColumns[i] = show_field_error($form, i, error[i]);
+                        $eColumns[i] = _this.showFieldError($form, i, error[i]);
                     }
 
                 } catch (e) {
-                    return LA.error(v.status + ' ' + v.statusText);
+                    return Dcat.error(response.status + ' ' + response.statusText);
                 }
             }
         });
+    }
 
-        // 触发钩子事件
-        function fire(evs) {
-            var i, j, r, args = arguments, p = [];
-            delete args[0];
-            args = args || [];
+    // 显示错误信息
+    showFieldError($form, column, errors) {
+        let _this = this,
+            $field = _this.queryFieldByName($form, column);
 
-            for (j in args) {
-                p.push(args[j]);
+        queryTabTitleError(_this, $field).removeClass('hide');
+
+        // 保存字段原始数据
+        _this.originalValues[column] = _this.getFieldValue($field);
+
+        if (! $field) {
+            if (Dcat.helpers.len(errors) && errors.length) {
+                Dcat.error(errors.join("  \n  "));
+            }
+            return;
+        }
+
+        let $group = $field.closest(_this.options.groupSelector), j;
+
+        $group.addClass(_this.options.errorClass);
+
+        for (j in errors) {
+            $group.find('error').eq(0).append(
+                _this.options.errorTemplate.replace('{message}', errors[j])
+            );
+        }
+
+        if (! _this.options.disableAutoRemoveError) {
+            removeErrorWhenValChanged(_this, $field, column);
+        }
+
+        return $field;
+    }
+
+    // 获取字段值
+    getFieldValue($field) {
+        let vals = [],
+            type = $field.attr('type'),
+            checker = type === 'checkbox' || type === 'radio',
+            i;
+
+        for (i = 0; i < $field.length; i++) {
+            if (checker) {
+                vals.push($($field[i]).prop('checked'));
+                continue;
             }
 
-            for (i in evs) {
-                r = evs[i].apply(evs[i], p);
+            vals.push($($field[i]).val());
+        }
 
-                if (r === false) return r; // 返回 false 会代码阻止继续执行
+        return vals;
+    }
+
+    // 判断值是否改变
+    isValueChanged($field, column) {
+        return ! Dcat.helpers.equal(this.originalValues[column], this.getFieldValue($field));
+    }
+
+    // 获取字段jq对象
+    queryFieldByName($form, column) {
+        if (column.indexOf('.') !== -1) {
+            column = column.split('.');
+            
+            let first = column.shift(),
+                i,
+                sub = '';
+
+            for (i in column) {
+                sub += '[' + column[i] + ']';
+            }
+            column = first + sub;
+        }
+
+        var $c = $form.find('[name="' + column + '"]');
+
+        if (!$c.length) $c = $form.find('[name="' + column + '[]"]');
+
+        if (!$c.length) {
+            $c = $form.find('[name="' + column.replace(/start$/, '') + '"]');
+        }
+        if (!$c.length) {
+            $c = $form.find('[name="' + column.replace(/end$/, '') + '"]');
+        }
+
+        if (!$c.length) {
+            $c = $form.find('[name="' + column.replace(/start\]$/, ']') + '"]');
+        }
+        if (!$c.length) {
+            $c = $form.find('[name="' + column.replace(/end\]$/, ']') + '"]');
+        }
+
+        return $c;
+    }
+
+    removeError($field) {
+        let parent = $field.parents(this.options.groupSelector),
+            errorClass = this.options.errorClass;
+
+        parent.removeClass(errorClass);
+        parent.find('error').html('');
+
+        // tab页下没有错误信息了，隐藏title的错误图标
+        let tab;
+        
+        if (! queryTabByField(this, $field).find('.'+errorClass).length) {
+            tab = queryTabTitleError(this, $field);
+            if (! tab.hasClass('hide')) {
+                tab.addClass('hide');
             }
         }
 
-        // 删除错误有字段的错误信息
-        function remove_field_error() {
-            var i, p, t;
-            for (i in $eColumns) {
-                p = $eColumns[i].parents(groupSlt);
-                p.removeClass(cls);
-                p.find('error').html('');
+        delete $eColumns[column];
+    }
+}
 
-                t = get_tab_title_error($eColumns[i]);
-                if (!t.hasClass('hide')) {
-                    t.addClass('hide');
-                }
+// 监听表单提交事件
+Form.submitting = function (callback) {
+    typeof callback == 'function' && (formCallbacks.before.push(callback));
 
-            }
-            // 重置
-            $eColumns = {};
+    return this
+};
+
+// 监听表单提交完毕事件
+Form.submitted = function (success, error) {
+    typeof success == 'function' && (formCallbacks.success.push(success));
+    typeof error == 'function' && (formCallbacks.error.push(error));
+
+    return this
+};
+
+// 当字段值变化时移除错误信息
+function removeErrorWhenValChanged(form, $field, column) {
+    let _this = form,
+        removeError = function () {
+            _this.removeError($field)
+        };
+
+    $field.one('change', removeError);
+    $field.off('blur', removeError).on('blur', function () {
+        if (_this.isValueChanged($field, column))  {
+            removeError();
         }
+    });
 
-        // 显示错误信息
-        function show_field_error($form, column, errors) {
-            var $c = get_field_obj($form, column);
-
-            get_tab_title_error($c).removeClass('hide');
-
-            // 保存字段原始数据
-            originalVals[column] = get_val($c);
-
-            if (!$c) {
-                if (LA.len(errors) && errors.length) {
-                    LA.error(errors.join("  \n  "));
-                }
+    // 表单值发生变化就移除错误信息
+    function handle() {
+        setTimeout(function () {
+            if (! $field.length) {
                 return;
             }
-
-            var p = $c.closest(groupSlt), j;
-
-            p.addClass(cls);
-
-            for (j in errors) {
-                p.find('error').eq(0).append(tpl.replace('_message_', errors[j]));
+            if (_this.isValueChanged($field, column)) {
+                return removeError();
             }
 
-            if (!opts.disableRemoveError) {
-                remove_error_when_val_changed($c, column);
-            }
+            handle();
+        }, 500);
+    }
 
-            return $c;
+    handle();
+}
+
+// 删除错误有字段的错误信息
+function removeFieldError(form) {
+    let i, parent, tab;
+
+    for (i in $eColumns) {
+        parent = $eColumns[i].parents(form.options.groupSelector);
+        parent.removeClass(form.options.errorClass);
+        parent.find('error').html('');
+
+        tab = queryTabTitleError($eColumns[i]);
+        if (! tab.hasClass('hide')) {
+            tab.addClass('hide');
         }
 
-        // 获取字段对象
-        function get_field_obj($form, column) {
-            if (column.indexOf('.') != -1) {
-                column = column.split('.');
-                var first = column.shift(), i, sub = '';
-                for (i in column) {
-                    sub += '[' + column[i] + ']';
-                }
-                column = first + sub;
-            }
+    }
+    // 重置
+    $eColumns = {};
+}
 
-            var $c = $form.find('[name="' + column + '"]');
+function getTabId(form, $field) {
+    return $field.parents(form.options.tabSelector).attr('id');
+}
 
-            if (!$c.length) $c = $form.find('[name="' + column + '[]"]');
+function queryTabByField(form, $field)
+{
+    let id = getTabId(form, $field);
 
-            if (!$c.length) {
-                $c = $form.find('[name="' + column.replace(/start$/, '') + '"]');
-            }
-            if (!$c.length) {
-                $c = $form.find('[name="' + column.replace(/end$/, '') + '"]');
-            }
+    if (! id) {
+        return $('<none></none>');
+    }
 
-            if (!$c.length) {
-                $c = $form.find('[name="' + column.replace(/start\]$/, ']') + '"]');
-            }
-            if (!$c.length) {
-                $c = $form.find('[name="' + column.replace(/end\]$/, ']') + '"]');
-            }
+    return $('#' + id);
+}
 
-            return $c;
-        }
+function queryTabTitleError(form, $field) {
+    return queryTabByField(form, $field).find('.text-red');
+}
 
-        // 获取字段值
-        function get_val($c) {
-            var vals = [],
-                t = $c.attr('type'),
-                cked = t === 'checkbox' || t === 'radio',
-                i;
+// 触发钩子事件
+function fire(callbacks) {
+    let i, j,
+        result,
+        args = arguments,
+        argsArr = [];
 
-            for (i = 0; i < $c.length; i++) {
-                if (cked) {
-                    vals.push($($c[i]).prop('checked'));
-                    continue;
-                }
-                vals.push($($c[i]).val());
-            }
+    delete args[0];
 
-            return vals;
-        }
+    args = args || [];
 
-        // 当字段值变化时移除错误信息
-        function remove_error_when_val_changed($c, column) {
-            var p = $c.parents(groupSlt);
+    for (j in args) {
+        argsArr.push(args[j]);
+    }
 
-            $c.one('change', rm);
-            $c.off('blur', rm).on('blur', function () {
-                if (val_changed()) rm();
-            });
+    for (i in callbacks) {
+        result = callbacks[i].apply(callbacks[i], argsArr);
 
-            // 表单值发生变化就移除错误信息
-            function autorm() {
-                setTimeout(function () {
-                    if (!$c.length) return;
-                    if (val_changed()) return rm();
-
-                    autorm();
-                }, 500);
-            }
-
-            autorm();
-
-            // 判断值是否改变
-            function val_changed() {
-                return !LA.arr.equal(originalVals[column], get_val($c));
-            }
-
-            function rm() {
-                p.removeClass(cls);
-                p.find('error').html('');
-
-                // tab页下没有错误信息了，隐藏title的错误图标
-                var id = get_tab_id($c), t;
-                if (id && !$('#'+id).find('.'+cls).length) {
-                    t = get_tab_title_error($c);
-                    if (!t.hasClass('hide')) {
-                        t.addClass('hide');
-                    }
-
-                }
-                delete $eColumns[column];
-            }
-
+        if (result === false) {
+            return result; // 返回 false 会代码阻止继续执行
         }
     }
 }
+
+export default Form

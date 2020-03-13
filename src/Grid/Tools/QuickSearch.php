@@ -130,7 +130,7 @@ class QuickSearch extends AbstractTool
         val = $ipt.val(),
         ignoreKeys = [16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144];
     
-    var submit = Dcat.debounce(function (input) {
+    var submit = Dcat.helpers.debounce(function (input) {
         inputting || $(input).parents('form').submit()
     }, 600);
     

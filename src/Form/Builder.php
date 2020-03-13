@@ -849,7 +849,7 @@ EOF;
         var t = $(this);
     
         Dcat.Form({
-            \$form: f,
+            form: f,
             before: function () {
                 f.validator('validate');
         

@@ -101,7 +101,7 @@ Dcat.ready(function () {
 
                     smartWizard.next();
 
-                    toggle_btn();
+                    toggleBtn();
                 }
             });
 
@@ -138,7 +138,7 @@ Dcat.ready(function () {
             callbacks.push({!! $fun !!});
         @endforeach
 
-        return call_listeners(callbacks, build_args(e, tab, idx, direction));
+        return callListeners(callbacks, buildArgs(e, tab, idx, direction));
         @endif
 
     }).on('showStep', function (e, tab, idx, direction) {
@@ -150,14 +150,14 @@ Dcat.ready(function () {
         callbacks.push({!! $fun !!});
         @endforeach
 
-        return call_listeners(callbacks, build_args(e, tab, idx, direction));
+        return callListeners(callbacks, buildArgs(e, tab, idx, direction));
         @endif
     });
 
     @if ($steps->getOption('leaving') || $steps->getOption('shown'))
 
     // 执行回调函数
-    function call_listeners(func, args) {
+    function callListeners(func, args) {
         for (var i in func) {
             if (func[i](args) === false) {
                 return false;
@@ -166,24 +166,24 @@ Dcat.ready(function () {
     }
 
     // 获取步骤表单
-    function get_form(idx) {
+    function getForm(idx) {
         return box.find('.la-step-form [data-toggle="validator"]').eq(idx);
     }
 
     // 构建参数
-    function build_args(e, tab, idx, direction) {
+    function buildArgs(e, tab, idx, direction) {
         return {
             event: e,
             tab: tab,
             index: idx,
             direction: direction,
-            form: get_form(idx),
+            form: getForm(idx),
             getFrom: function (idx) {
-                return get_form(idx)
+                return getForm(idx)
             },
-            formArray: get_form(idx).formToArray(),
+            formArray: getForm(idx).formToArray(),
             getFormArray: function (idx) {
-                return get_form(idx).formToArray();
+                return getForm(idx).formToArray();
             }
         };
     }
@@ -198,7 +198,7 @@ Dcat.ready(function () {
             smartWizard.prev();
         }
 
-        toggle_btn();
+        toggleBtn();
     });
 
     // 下一步
@@ -232,7 +232,7 @@ Dcat.ready(function () {
                     smartWizard.next();
                 }
 
-                toggle_btn();
+                toggleBtn();
             }
 
         });
@@ -241,7 +241,7 @@ Dcat.ready(function () {
     // 提交表单
     function submit(after) {
         Dcat.Form({
-            $form: form,
+            form: form,
             after: function (state, b, c, d) {
                 after(state, b, c, d);
 
@@ -253,7 +253,7 @@ Dcat.ready(function () {
     }
 
     // 按钮显示隐藏切换
-    function toggle_btn() {
+    function toggleBtn() {
         var last = {{ $lastStep->index() }},
             sbm = box.find('.step-submit-btn');
 
@@ -279,7 +279,7 @@ Dcat.ready(function () {
         }
     }
 
-    toggle_btn();
+    toggleBtn();
 });
 </script>
 

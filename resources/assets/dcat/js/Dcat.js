@@ -2,9 +2,6 @@
 let $ = jQuery,
     pjaxResponded = false,
     bootingCallbacks = [],
-    formCallbacks = {
-        before: [], success: [], error: []
-    },
     defaultOptions = {
         pjax_container_selector: '#pjax-container',
     };
@@ -72,19 +69,6 @@ export default class Dcat {
      */
     pjaxResponded() {
         pjaxResponded = true;
-
-        return this
-    }
-
-    submiting(callback) {
-        typeof callback == 'function' && (formCallbacks.before.push(callback));
-
-        return this
-    }
-
-    submitted(success, error) {
-        typeof success == 'function' && (formCallbacks.success.push(success));
-        typeof error == 'function' && (formCallbacks.error.push(error));
 
         return this
     }

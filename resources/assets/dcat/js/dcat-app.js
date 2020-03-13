@@ -11,6 +11,7 @@
 import Dcat from './Dcat'
 
 import NProgress from './nprogress/NProgress.min'
+import Helpers from './extensions/Helpers'
 import Ajax from './extensions/Ajax'
 import Toastr from './extensions/Toastr'
 import SweetAlert2 from './extensions/SweetAlert2'
@@ -18,7 +19,6 @@ import RowSelector from './extensions/RowSelector'
 import Grid from './extensions/Grid'
 import Form from './extensions/Form'
 import DialogForm from './extensions/DialogForm'
-import Debouncen from './extensions/Debounce'
 
 import Footer from './bootstrappers/Footer'
 import Pjax from './bootstrappers/Pjax'
@@ -28,6 +28,7 @@ let win = window,
 
 // 扩展Dcat对象
 function extend (Dcat) {
+    new Helpers(Dcat);
     new Ajax(Dcat);
     new Toastr(Dcat);
     new SweetAlert2(Dcat);
@@ -41,12 +42,15 @@ function extend (Dcat) {
         return new RowSelector(options)
     };
 
+    // ajax表单提交
+    Dcat.Form = function (options) {
+        return new Form(options)
+    };
+
     // 弹窗表单
     Dcat.DialogForm = function (options) {
         return new DialogForm(Dcat, options);
     };
-
-    Dcat.debounce = Debouncen;
 }
 
 // 初始化事件监听

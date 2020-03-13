@@ -602,8 +602,8 @@ HTML;
         var t = $(this);
         
         Dcat.Form({
-            \$form: f,
-             before: function () {
+            form: f,
+            before: function () {
                 f.validator('validate');
         
                 if (f.find('.has-error').length > 0) {
