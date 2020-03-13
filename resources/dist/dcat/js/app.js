@@ -369,9 +369,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _extensions_SweetAlert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./extensions/SweetAlert2 */ "./resources/assets/dcat/js/extensions/SweetAlert2.js");
 /* harmony import */ var _extensions_RowSelector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./extensions/RowSelector */ "./resources/assets/dcat/js/extensions/RowSelector.js");
 /* harmony import */ var _extensions_Grid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./extensions/Grid */ "./resources/assets/dcat/js/extensions/Grid.js");
-/* harmony import */ var _extensions_Debounce__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./extensions/Debounce */ "./resources/assets/dcat/js/extensions/Debounce.js");
-/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
-/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
+/* harmony import */ var _extensions_Form__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./extensions/Form */ "./resources/assets/dcat/js/extensions/Form.js");
+/* harmony import */ var _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./extensions/DialogForm */ "./resources/assets/dcat/js/extensions/DialogForm.js");
+/* harmony import */ var _extensions_Debounce__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./extensions/Debounce */ "./resources/assets/dcat/js/extensions/Debounce.js");
+/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
+/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
 /*=========================================================================================
   File Name: app.js
   Description: Dcat Admin JS脚本.
@@ -380,6 +382,8 @@ __webpack_require__.r(__webpack_exports__);
   Author: Jqh
   Author URL: https://github.com/jqhph
 ==========================================================================================*/
+
+
 
 
 
@@ -403,16 +407,21 @@ function extend(Dcat) {
 
   Dcat.RowSelector = function (options) {
     return new _extensions_RowSelector__WEBPACK_IMPORTED_MODULE_5__["default"](options);
+  }; // 弹窗表单
+
+
+  Dcat.DialogForm = function (options) {
+    return new _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_8__["default"](Dcat, options);
   };
 
-  Dcat.debounce = _extensions_Debounce__WEBPACK_IMPORTED_MODULE_7__["default"];
+  Dcat.debounce = _extensions_Debounce__WEBPACK_IMPORTED_MODULE_9__["default"];
 } // 初始化事件监听
 
 
 function listen(Dcat) {
   Dcat.booting(function () {
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_8__["default"](Dcat);
-    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_9__["default"](Dcat);
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat);
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat);
     Dcat.NP.configure({
       parent: '.app-content'
     });
@@ -673,6 +682,569 @@ function debounce(func, wait, options) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (debounce);
+
+/***/ }),
+
+/***/ "./resources/assets/dcat/js/extensions/DialogForm.js":
+/*!***********************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/DialogForm.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DialogForm; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var w = top || window;
+
+var DialogForm = /*#__PURE__*/function () {
+  function DialogForm(Dcat, options) {
+    _classCallCheck(this, DialogForm);
+
+    var _this = this,
+        nullFun = function nullFun(a, b) {};
+
+    _this.options = $.extend({
+      // 弹窗标题
+      title: '',
+      // 默认地址
+      defaultUrl: '',
+      // 需要绑定的按钮选择器
+      buttonSelector: '',
+      // 弹窗大小
+      area: [],
+      // 语言包
+      lang: {
+        submit: Dcat.lang['submit'] || 'Submit',
+        reset: Dcat.lang['reset'] || 'Reset'
+      },
+      // get参数名称
+      query: '',
+      // 保存成功后是否刷新页面
+      forceRefresh: false,
+      disableReset: false,
+      // 执行保存操作后回调
+      saved: nullFun,
+      // 保存成功回调
+      success: nullFun,
+      // 保存失败回调
+      error: nullFun
+    }, options);
+    _this.$form = null;
+    _this._dialog = w.layer;
+    _this._counter = 1;
+    _this._idx = {};
+    _this._dialogs = {};
+    _this.isLoading = 0;
+    _this.isSubmitting = 0;
+
+    _this._execute(options);
+  }
+
+  _createClass(DialogForm, [{
+    key: "_execute",
+    value: function _execute(options) {
+      var _this = this,
+          defUrl = options.defaultUrl,
+          $btn;
+
+      !options.buttonSelector || $(options.buttonSelector).off('click').click(function () {
+        $btn = $(this);
+        var num = $btn.attr('counter'),
+            url;
+
+        if (!num) {
+          num = _this._counter;
+          $btn.attr('counter', num);
+          _this._counter++;
+        }
+
+        url = $btn.data('url') || defUrl; // 给弹窗页面链接追加参数
+
+        if (url.indexOf('?') === -1) {
+          url += '?' + options.query + '=1';
+        } else if (url.indexOf(options.query) === -1) {
+          url += '&' + options.query + '=1';
+        }
+
+        _this._build($btn, url, num);
+      });
+      options.buttonSelector || setTimeout(function () {
+        _this._build($btn, defUrl, _this._counter);
+      }, 400);
+    }
+  }, {
+    key: "_build",
+    value: function _build($btn, url, counter) {
+      var _this = this;
+
+      if (!url || _this.isLoading) {
+        return;
+      }
+
+      if (_this._dialogs[counter]) {
+        // 阻止同个类型的弹窗弹出多个
+        _this._dialogs[counter].show();
+
+        try {
+          _this._dialog.restore(_this._idx[counter]);
+        } catch (e) {}
+
+        return;
+      }
+
+      $(w.document).one('pjax:complete', function () {
+        // 跳转新页面时移除弹窗
+        _this._destory(counter);
+      });
+      _this.isLoading = 1;
+      !$btn || $btn.button('loading');
+      $.get(url, function (tpl) {
+        _this.isLoading = 0;
+
+        if ($btn) {
+          $btn.button('reset');
+          setTimeout(function () {
+            $btn.find('.waves-ripple').remove();
+          }, 50);
+        }
+
+        _this._popup(tpl, counter);
+      });
+    }
+  }, {
+    key: "_popup",
+    value: function _popup(tpl, counter) {
+      var _this = this,
+          options = _this.options;
+
+      tpl = LA.AssetsLoader.filterScriptAndAutoLoad(tpl).render();
+      var $template = $(tpl),
+          btns = [options.lang.submit],
+          dialogOpts = {
+        type: 1,
+        area: function (v) {
+          if (w.screen.width <= 800) {
+            return ['100%', '100%'];
+          }
+
+          return v;
+        }(options.area),
+        content: tpl,
+        title: title,
+        yes: function yes() {
+          _this._submit($template);
+        },
+        cancel: function cancel() {
+          if (options.forceRefresh) {
+            // 是否强制刷新
+            _this._dialogs[counter] = _this._idx[counter] = null;
+          } else {
+            _this._dialogs[counter].hide();
+
+            return false;
+          }
+        }
+      };
+
+      if (!options.disableReset) {
+        btns.push(options.lang.reset);
+
+        dialogOpts.btn2 = function () {
+          // 重置按钮
+          _this.$form = _this.$form || $template.find('form').first();
+
+          _this.$form.trigger('reset');
+
+          return false;
+        };
+      }
+
+      dialogOpts.btn = btns;
+      _this._idx[counter] = _this._dialog.open(dialogOpts);
+      _this._dialogs[counter] = w.$('#layui-layer' + _this._idx[counter]);
+    }
+  }, {
+    key: "_destory",
+    value: function _destory(counter) {
+      var dialogs = this._dialogs;
+
+      this._dialog.close(this._idx[counter]);
+
+      dialogs[counter] && dialogs[counter].remove();
+      dialogs[counter] = null;
+    }
+  }, {
+    key: "_submit",
+    value: function _submit($template) {
+      var _this = this,
+          options = _this.options;
+
+      if (_this.isSubmitting) {
+        return;
+      }
+
+      _this.$form = _this.$form || $template.find('form').first(); // 此处必须重新创建jq对象，否则无法操作页面元素
+
+      Dcat.Form({
+        $form: _this.$form,
+        disableRedirect: true,
+        before: function before() {
+          _this.$form.validator('validate');
+
+          if (_this.$form.find('.has-error').length > 0) {
+            return false;
+          }
+
+          _this.isSubmitting = 1;
+
+          _this._dialogs[num].find('.layui-layer-btn0').button('loading');
+        },
+        after: function after(success, res) {
+          _this._dialogs[num].find('.layui-layer-btn0').button('reset');
+
+          _this.isSubmitting = 0;
+          options.saved(success, res);
+
+          if (!success) {
+            return options.error(success, res);
+          }
+
+          if (res.status) {
+            options.success(success, res);
+
+            _this._destory(num);
+
+            return;
+          }
+
+          options.error(success, res);
+          Dcat.error(res.message || 'Save failed.');
+        }
+      });
+      return false;
+    }
+  }]);
+
+  return DialogForm;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/dcat/js/extensions/Form.js":
+/*!*****************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/Form.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Form; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var $eColumns = {};
+
+var Form = /*#__PURE__*/function () {
+  /**
+   * 表单提交
+   *
+   * @param options
+   * @constructor
+   */
+  function Form(options) {
+    _classCallCheck(this, Form);
+
+    var _this = this;
+
+    _this.options = $.extend({
+      // 表单的 jquery 对象
+      form: null,
+      errorClass: 'has-error',
+      groupSelector: '.form-group',
+      template: '<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> _message_</label><br/>',
+      disableRedirect: false,
+      //
+      columnSelectors: {},
+      //
+      disableRemoveError: false,
+      before: function before() {},
+      after: function after() {}
+    }, options);
+  }
+
+  _createClass(Form, [{
+    key: "_execute",
+    value: function _execute() {
+      var originalVals = {},
+          cls = opts.errorClass,
+          groupSlt = opts.groupSelector,
+          tpl = opts.template,
+          $form = opts.$form,
+          tabSelector = '.tab-pane',
+          get_tab_id = function get_tab_id($c) {
+        return $c.parents(tabSelector).attr('id');
+      },
+          get_tab_title_error = function get_tab_title_error($c) {
+        var id = get_tab_id($c);
+        if (!id) return $('<none></none>');
+        return $("[href='#" + id + "'] .text-red");
+      };
+
+      var self = this; // 移除错误信息
+
+      remove_field_error();
+      $form.ajaxSubmit({
+        beforeSubmit: function beforeSubmit(d, f, o) {
+          if (opts.before(d, f, o, self) === false) {
+            return false;
+          }
+
+          if (fire(LA._form_.before, d, f, o, self) === false) {
+            return false;
+          }
+
+          LA.NP.start();
+        },
+        success: function success(d) {
+          LA.NP.done();
+
+          if (opts.after(true, d, self) === false) {
+            return;
+          }
+
+          if (fire(LA._form_.success, d, self) === false) {
+            return;
+          }
+
+          if (!d.status) {
+            LA.error(d.message || 'Save failed!');
+            return;
+          }
+
+          LA.success(d.message || 'Save succeeded!');
+          if (opts.disableRedirect || d.redirect === false) return;
+
+          if (d.redirect) {
+            return LA.reload(d.redirect);
+          }
+
+          history.back(-1);
+        },
+        error: function error(v) {
+          LA.NP.done();
+
+          if (opts.after(false, v, self) === false) {
+            return;
+          }
+
+          if (fire(LA._form_.error, v, self) === false) {
+            return;
+          }
+
+          try {
+            var error = JSON.parse(v.responseText),
+                i;
+
+            if (v.status != 422 || !error || !LA.isset(error, 'errors')) {
+              return LA.error(v.status + ' ' + v.statusText);
+            }
+
+            error = error.errors;
+
+            for (i in error) {
+              // 显示错误信息
+              $eColumns[i] = show_field_error($form, i, error[i]);
+            }
+          } catch (e) {
+            return LA.error(v.status + ' ' + v.statusText);
+          }
+        }
+      }); // 触发钩子事件
+
+      function fire(evs) {
+        var i,
+            j,
+            r,
+            args = arguments,
+            p = [];
+        delete args[0];
+        args = args || [];
+
+        for (j in args) {
+          p.push(args[j]);
+        }
+
+        for (i in evs) {
+          r = evs[i].apply(evs[i], p);
+          if (r === false) return r; // 返回 false 会代码阻止继续执行
+        }
+      } // 删除错误有字段的错误信息
+
+
+      function remove_field_error() {
+        var i, p, t;
+
+        for (i in $eColumns) {
+          p = $eColumns[i].parents(groupSlt);
+          p.removeClass(cls);
+          p.find('error').html('');
+          t = get_tab_title_error($eColumns[i]);
+
+          if (!t.hasClass('hide')) {
+            t.addClass('hide');
+          }
+        } // 重置
+
+
+        $eColumns = {};
+      } // 显示错误信息
+
+
+      function show_field_error($form, column, errors) {
+        var $c = get_field_obj($form, column);
+        get_tab_title_error($c).removeClass('hide'); // 保存字段原始数据
+
+        originalVals[column] = get_val($c);
+
+        if (!$c) {
+          if (LA.len(errors) && errors.length) {
+            LA.error(errors.join("  \n  "));
+          }
+
+          return;
+        }
+
+        var p = $c.closest(groupSlt),
+            j;
+        p.addClass(cls);
+
+        for (j in errors) {
+          p.find('error').eq(0).append(tpl.replace('_message_', errors[j]));
+        }
+
+        if (!opts.disableRemoveError) {
+          remove_error_when_val_changed($c, column);
+        }
+
+        return $c;
+      } // 获取字段对象
+
+
+      function get_field_obj($form, column) {
+        if (column.indexOf('.') != -1) {
+          column = column.split('.');
+          var first = column.shift(),
+              i,
+              sub = '';
+
+          for (i in column) {
+            sub += '[' + column[i] + ']';
+          }
+
+          column = first + sub;
+        }
+
+        var $c = $form.find('[name="' + column + '"]');
+        if (!$c.length) $c = $form.find('[name="' + column + '[]"]');
+
+        if (!$c.length) {
+          $c = $form.find('[name="' + column.replace(/start$/, '') + '"]');
+        }
+
+        if (!$c.length) {
+          $c = $form.find('[name="' + column.replace(/end$/, '') + '"]');
+        }
+
+        if (!$c.length) {
+          $c = $form.find('[name="' + column.replace(/start\]$/, ']') + '"]');
+        }
+
+        if (!$c.length) {
+          $c = $form.find('[name="' + column.replace(/end\]$/, ']') + '"]');
+        }
+
+        return $c;
+      } // 获取字段值
+
+
+      function get_val($c) {
+        var vals = [],
+            t = $c.attr('type'),
+            cked = t === 'checkbox' || t === 'radio',
+            i;
+
+        for (i = 0; i < $c.length; i++) {
+          if (cked) {
+            vals.push($($c[i]).prop('checked'));
+            continue;
+          }
+
+          vals.push($($c[i]).val());
+        }
+
+        return vals;
+      } // 当字段值变化时移除错误信息
+
+
+      function remove_error_when_val_changed($c, column) {
+        var p = $c.parents(groupSlt);
+        $c.one('change', rm);
+        $c.off('blur', rm).on('blur', function () {
+          if (val_changed()) rm();
+        }); // 表单值发生变化就移除错误信息
+
+        function autorm() {
+          setTimeout(function () {
+            if (!$c.length) return;
+            if (val_changed()) return rm();
+            autorm();
+          }, 500);
+        }
+
+        autorm(); // 判断值是否改变
+
+        function val_changed() {
+          return !LA.arr.equal(originalVals[column], get_val($c));
+        }
+
+        function rm() {
+          p.removeClass(cls);
+          p.find('error').html(''); // tab页下没有错误信息了，隐藏title的错误图标
+
+          var id = get_tab_id($c),
+              t;
+
+          if (id && !$('#' + id).find('.' + cls).length) {
+            t = get_tab_title_error($c);
+
+            if (!t.hasClass('hide')) {
+              t.addClass('hide');
+            }
+          }
+
+          delete $eColumns[column];
+        }
+      }
+    }
+  }]);
+
+  return Form;
+}();
+
+
 
 /***/ }),
 

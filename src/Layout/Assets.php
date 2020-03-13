@@ -40,9 +40,9 @@ class Assets
         'bootstrap'          => 'dcat-admin/css/bootstrap.css',
         'bootstrap-extended' => 'dcat-admin/css/bootstrap-extended.css',
         'toastr'             => 'dcat-admin/vendors/css/extensions/toastr.css',
-        'colors'             => 'dcat-admin/css/colors.css',
         'components'         => 'dcat-admin/css/components.css',
         'palette-gradient'   => 'dcat-admin/css/core/colors/palette-gradient.css',
+        'colors'             => 'dcat-admin/css/colors.css',
         //'custom'             => 'dcat-admin/css/custom-laravel.css',
         'dcat'               => 'dcat-admin/dcat/css/app.css',
     ];

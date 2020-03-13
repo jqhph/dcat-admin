@@ -16,6 +16,8 @@ import Toastr from './extensions/Toastr'
 import SweetAlert2 from './extensions/SweetAlert2'
 import RowSelector from './extensions/RowSelector'
 import Grid from './extensions/Grid'
+import Form from './extensions/Form'
+import DialogForm from './extensions/DialogForm'
 import Debouncen from './extensions/Debounce'
 
 import Footer from './bootstrappers/Footer'
@@ -33,10 +35,17 @@ function extend (Dcat) {
 
     // NProgress
     Dcat.NP = NProgress;
+
     // 行选择器
     Dcat.RowSelector = function (options) {
         return new RowSelector(options)
     };
+
+    // 弹窗表单
+    Dcat.DialogForm = function (options) {
+        return new DialogForm(Dcat, options);
+    };
+
     Dcat.debounce = Debouncen;
 }
 
