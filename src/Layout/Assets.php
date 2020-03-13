@@ -55,6 +55,7 @@ class Assets
         'app'        => 'dcat-admin/js/core/app.js',
         'toastr'     => 'dcat-admin/vendors/js/extensions/toastr.min.js',
         'pjax'       => 'dcat-admin/plugins/jquery-pjax/jquery.pjax.min.js',
+        'layer'      => 'dcat-admin/plugins/layer/layer.js',
     ];
 
     /**
