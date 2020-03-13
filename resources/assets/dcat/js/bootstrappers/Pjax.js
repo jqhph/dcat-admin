@@ -17,8 +17,6 @@ export default class Pjax {
             $.pjax.click(event, container, { fragment: 'body' });
         });
 
-        Dcat.NP.configure({parent: container});
-
         $d.on('pjax:timeout', function (event) {
             event.preventDefault();
         });

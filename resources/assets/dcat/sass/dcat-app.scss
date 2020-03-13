@@ -1,0 +1,17 @@
+// ================================================================================================
+//  File Name: dcat-bootstrap.scss
+//  Description: Dcat Admin应用样式
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Dcat Admin
+//  Author: Jqh
+//  Author URL: https://github.com/jqhph
+// ================================================================================================
+
+@import "../../sass/core/variables/variables";
+@import "./variables";
+
+@import "./nprogress/NProgress";
+
+html body {
+  background-color: $body-background;
+}

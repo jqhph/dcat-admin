@@ -29,7 +29,7 @@ class Assets
      */
     protected $headerJs = [
         'vendors' => 'dcat-admin/vendors/js/vendors.min.js',
-        'dcat'    => 'dcat-admin/dcat/js/bootstrap.js',
+        'dcat'    => 'dcat-admin/dcat/js/app.js',
     ];
 
     /**
@@ -44,6 +44,7 @@ class Assets
         'components'         => 'dcat-admin/css/components.css',
         'palette-gradient'   => 'dcat-admin/css/core/colors/palette-gradient.css',
         //'custom'             => 'dcat-admin/css/custom-laravel.css',
+        'dcat'               => 'dcat-admin/dcat/css/app.css',
     ];
 
     /**

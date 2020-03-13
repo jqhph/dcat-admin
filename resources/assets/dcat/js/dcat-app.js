@@ -1,7 +1,16 @@
 
+/*=========================================================================================
+  File Name: app.js
+  Description: Dcat Admin JS脚本.
+  ----------------------------------------------------------------------------------------
+  Item Name: Dcat Admin
+  Author: Jqh
+  Author URL: https://github.com/jqhph
+==========================================================================================*/
+
 import Dcat from './Dcat'
 
-import NProgress from './NProgress/NProgress.min'
+import NProgress from './nprogress/NProgress.min'
 import AjaxExtension from './extensions/Ajax'
 import DialogExtension from './extensions/Dialog'
 import RowSelector from './extensions/RowSelector'
@@ -33,6 +42,10 @@ function extend (Dcat) {
 function on(Dcat) {
     new Footer(Dcat);
     new Pjax(Dcat);
+
+    Dcat.booting(function () {
+        Dcat.NP.configure({parent: '.app-content'});
+    });
 }
 
 // 初始化

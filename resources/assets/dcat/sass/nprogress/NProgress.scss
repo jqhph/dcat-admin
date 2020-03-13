@@ -6,14 +6,14 @@
 }
 
 #nprogress .bar {
-  background:#007ee5;
-  background: var(--blue);
+  //background: $primary-linear-gradient;
+  background: rgba($primary, .8);
   position: fixed;
   z-index: 1031;
   top: 0;
   left: 0;
   width: 100%;
-  height: 2px
+  height: 2.5px
 }
 
 #nprogress .peg {
@@ -22,8 +22,7 @@
   right: 0;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 10px #007ee5, 0 0 5px #007ee5;
-  box-shadow: 0 0 10px var(--blue), 0 0 5px var(--blue);
+  box-shadow: 0 0 10px $primary, 0 0 5px $primary;
   opacity: 1;
   -webkit-transform: rotate(3deg) translate(0, -4px);
   -ms-transform: rotate(3deg) translate(0, -4px);
@@ -34,7 +33,7 @@
   display: block;
   position: fixed;
   z-index: 1031;
-  top: 15px;
+  top: 25px;
   right: 15px
 }
 
@@ -43,10 +42,8 @@
   height: 18px;
   box-sizing: border-box;
   border: solid 2px transparent;
-  border-top-color:#007ee5;
-  border-top-color: var(--blue);
-  border-left-color:#007ee5;
-  border-left-color: var(--blue);
+  border-top-color: $primary;
+  border-left-color: $primary;
   border-radius: 50%;
   -webkit-animation: nprogress-spinner .4s linear infinite;
   animation: nprogress-spinner .4s linear infinite

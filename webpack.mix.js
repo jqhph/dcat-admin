@@ -64,8 +64,8 @@ mix.copyDirectory('resources/assets/plugins', 'resources/dist/plugins');
 
 mix.js('resources/assets/js/core/app-menu.js', 'resources/dist/js/core')
     .js('resources/assets/js/core/app.js', 'resources/dist/js/core')
-    .js('resources/assets/dcat/js/dcat-bootstrap.js', 'resources/dist/dcat/js/bootstrap.js')
-    .sass('resources/assets/dcat/sass/dcat-bootstrap.scss', 'resources/dist/dcat/css/bootstrap.css')
+    .js('resources/assets/dcat/js/dcat-app.js', 'resources/dist/dcat/js/app.js')
+    .sass('resources/assets/dcat/sass/dcat-app.scss', 'resources/dist/dcat/css/app.css')
     .sass('resources/assets/sass/bootstrap.scss', 'resources/dist/css')
     .sass('resources/assets/sass/bootstrap-extended.scss', 'resources/dist/css')
     .sass('resources/assets/sass/colors.scss', 'resources/dist/css')
