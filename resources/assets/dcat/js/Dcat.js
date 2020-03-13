@@ -1,3 +1,4 @@
+
 let $ = jQuery,
     pjaxResponded = false,
     bootingCallbacks = [],
@@ -64,6 +65,11 @@ export default class Dcat {
         return this
     }
 
+    /**
+     * 如果是 pjax 响应的页面，需要调用此方法
+     *
+     * @returns {Dcat}
+     */
     pjaxResponded() {
         pjaxResponded = true;
 

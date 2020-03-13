@@ -26,6 +26,7 @@
 @section('app')
     {!! Dcat\Admin\Admin::assets()->renderStyle() !!}
 
+    {{-- 页面埋点--}}
     {!! admin_section(AdminSection::APP_INNER_BEFORE) !!}
     <div class="content-header">
         @yield('content-header')
@@ -35,6 +36,7 @@
         @yield('content')
     </div>
 
+    {{-- 页面埋点--}}
     {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
 
     {!! Dcat\Admin\Admin::assets()->renderScript() !!}

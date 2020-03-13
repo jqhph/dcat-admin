@@ -11,11 +11,12 @@
 import Dcat from './Dcat'
 
 import NProgress from './nprogress/NProgress.min'
-import AjaxExtension from './extensions/Ajax'
-import DialogExtension from './extensions/Dialog'
-import RowSelectorExtension from './extensions/RowSelector'
-import GridExtension from './extensions/Grid'
-import DebounceExtension from './extensions/Debounce'
+import Ajax from './extensions/Ajax'
+import Toastr from './extensions/Toastr'
+import SweetAlert2 from './extensions/SweetAlert2'
+import RowSelector from './extensions/RowSelector'
+import Grid from './extensions/Grid'
+import Debouncen from './extensions/Debounce'
 
 import Footer from './bootstrappers/Footer'
 import Pjax from './bootstrappers/Pjax'
@@ -23,19 +24,20 @@ import Pjax from './bootstrappers/Pjax'
 let win = window,
     $ = jQuery;
 
-win.NProgress = NProgress;
-
 // 扩展Dcat对象
 function extend (Dcat) {
-    new AjaxExtension(Dcat);
-    new DialogExtension(Dcat);
-    new GridExtension(Dcat);
+    new Ajax(Dcat);
+    new Toastr(Dcat);
+    new SweetAlert2(Dcat);
+    new Grid(Dcat);
 
+    // NProgress
     Dcat.NP = NProgress;
+    // 行选择器
     Dcat.RowSelector = function (options) {
-        return new RowSelectorExtension(options)
+        return new RowSelector(options)
     };
-    Dcat.debounce = DebounceExtension;
+    Dcat.debounce = Debouncen;
 }
 
 // 初始化事件监听

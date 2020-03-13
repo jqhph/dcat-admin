@@ -4,18 +4,22 @@
         @include('admin::partials.exception')
 
         {!! $content !!}
+
+        @include('admin::partials.toastr')
     </section>
 @endsection
 
 @section('app')
     {!! Dcat\Admin\Admin::assets()->renderStyle() !!}
 
+    {{-- 页面埋点--}}
     {!! admin_section(AdminSection::APP_INNER_BEFORE) !!}
 
     <div class="content-body" id="app">
         @yield('content')
     </div>
 
+    {{-- 页面埋点--}}
     {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
 
     {!! Dcat\Admin\Admin::assets()->renderScript() !!}

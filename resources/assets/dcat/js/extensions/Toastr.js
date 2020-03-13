@@ -1,10 +1,6 @@
 
-export default class Dialog {
+export default class Toastr {
     constructor(Dcat) {
-        this.extend(Dcat)
-    }
-
-    extend(Dcat) {
         let _this = this;
 
         Dcat.success = _this.success;
@@ -28,9 +24,5 @@ export default class Dialog {
 
     warning(message, title, options) {
         toastr.warning(message, title, options);
-    }
-
-    confirm(message, title, success, error, options) {
-
     }
 }
