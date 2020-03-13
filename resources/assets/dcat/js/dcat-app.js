@@ -53,17 +53,26 @@ function extend (Dcat) {
     };
 }
 
-// 初始化事件监听
+// 初始化
 function listen(Dcat) {
     Dcat.booting(function () {
         new Footer(Dcat);
         new Pjax(Dcat);
 
+        // layer弹窗设置
+        layer.config({maxmin: true, moveOut: true, shade: false});
+
+        // ajax全局设置
+        $.ajaxSetup({
+            cache: true,
+            error: Dcat.handleAjaxError
+        });
+
         Dcat.NP.configure({parent: '.app-content'});
     });
 }
 
-// 初始化
+// 开始初始化
 function boot(Dcat) {
     extend(Dcat);
     listen(Dcat);

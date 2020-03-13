@@ -93,10 +93,10 @@ EOT;
         Admin::script(
             <<<JS
 var selector = Dcat.RowSelector({
-    checkbox: '.{$this->grid->getRowName()}-checkbox',
-    selectAll: '.{$this->grid->getSelectAllName()}', 
-    clickTr: {$clickable},
-    bg: '{$background}',
+    checkboxSelector: '.{$this->grid->getRowName()}-checkbox',
+    selectAllSelector: '.{$this->grid->getSelectAllName()}', 
+    clickRow: {$clickable},
+    background: '{$background}',
 });
 Dcat.grid.addSelector(selector, '{$this->grid->getName()}');
 JS

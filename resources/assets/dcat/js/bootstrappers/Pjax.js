@@ -9,6 +9,9 @@ export default class Pjax {
     boot(Dcat) {
         let container = Dcat.config.pjax_container_selector;
 
+        $.pjax.defaults.timeout = 5000;
+        $.pjax.defaults.maxCacheLength = 0;
+
         $('a:not(a[target="_blank"])').click(function (event) {
             $.pjax.click(event, container, { fragment: 'body' });
         });
