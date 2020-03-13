@@ -1,5 +1,5 @@
 
-import '../jquery-form/jquery.form.min'
+import '../jquery-form/jquery.form.min';
 
 let $eColumns = {},
     formCallbacks = {

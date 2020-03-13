@@ -944,7 +944,9 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+ // import _f from '../jquery-form/form';
 
+console.log(123, _jquery_form_jquery_form_min__WEBPACK_IMPORTED_MODULE_0___default.a);
 var $eColumns = {},
     formCallbacks = {
   before: [],
@@ -1729,6 +1731,7 @@ var Toastr = /*#__PURE__*/function () {
  * version: 4.2.2
  * Project repository: https://github.com/jquery-form/form
  */
+var module = {};
 eval(function (p, a, c, k, _e, r) {
   _e = function e(c) {
     return (c < a ? '' : _e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36));
