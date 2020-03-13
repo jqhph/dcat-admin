@@ -39,10 +39,11 @@ class Assets
         'vendors'            => 'dcat-admin/vendors/css/vendors.min.css',
         'bootstrap'          => 'dcat-admin/css/bootstrap.css',
         'bootstrap-extended' => 'dcat-admin/css/bootstrap-extended.css',
+        'toastr'             => 'dcat-admin/vendors/css/extensions/toastr.css',
         'colors'             => 'dcat-admin/css/colors.css',
         'components'         => 'dcat-admin/css/components.css',
         'palette-gradient'   => 'dcat-admin/css/core/colors/palette-gradient.css',
-        'custom'             => 'dcat-admin/css/custom-laravel.css',
+        //'custom'             => 'dcat-admin/css/custom-laravel.css',
     ];
 
     /**
@@ -51,20 +52,19 @@ class Assets
     protected $baseJs = [
         'menu'       => 'dcat-admin/js/core/app-menu.js',
         'app'        => 'dcat-admin/js/core/app.js',
-        'components' => 'dcat-admin/js/scripts/components.js',
-        'customizer' => 'dcat-admin/js/scripts/customizer.js',
-        'footer'     => 'dcat-admin/js/scripts/footer.js',
+        'toastr'     => 'dcat-admin/vendors/js/extensions/toastr.min.js',
+        'pjax'       => 'dcat-admin/plugins/jquery-pjax/jquery.pjax.min.js',
     ];
 
     /**
      * @var array
      */
-    protected $components = [];
+    public $components = [];
 
     /**
      * @var string
      */
-    protected $fonts = 'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i';
+    public $fonts = 'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i';
 
     /**
      * @var bool

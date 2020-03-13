@@ -8,21 +8,19 @@ let $ = jQuery,
 export default class Dcat {
     constructor(config) {
         this.withConfig(config);
+
+        this.pjaxContainer = config['pjax_container_selector'] || '#pjax-container'
     }
 
     booting(callback) {
-        bootingCallbacks.push(callback)
+        bootingCallbacks.push(callback);
 
         return this
     }
 
     boot() {
-        bootingCallbacks.forEach(callback => callback(Vue, router, store));
+        bootingCallbacks.forEach(callback => callback(this));
         bootingCallbacks = []
-    }
-
-    liftOff() {
-        this.boot()
     }
 
     ready(callback, _window) {
@@ -30,11 +28,11 @@ export default class Dcat {
             if (! pjaxResponded) {
                 return $(callback);
             }
-            return $(document).one('pjax:done', callback);
+            return $(document).one('pjax:loaded', callback);
         }
 
         var proxy = function (e) {
-            _window.$(_window.$('#pjax-container')).one('pjax:done', proxy);
+            _window.$(_window.$(this.pjaxContainer)).one('pjax:loaded', proxy);
 
             callback(e);
         };
