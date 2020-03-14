@@ -333,6 +333,9 @@ var Pjax = /*#__PURE__*/function () {
     key: "boot",
     value: function boot(Dcat) {
       var container = Dcat.config.pjax_container_selector;
+
+      var _this = this;
+
       $.pjax.defaults.timeout = 5000;
       $.pjax.defaults.maxCacheLength = 0;
       $('a:not(a[target="_blank"])').click(function (event) {
@@ -343,7 +346,7 @@ var Pjax = /*#__PURE__*/function () {
       $d.on('pjax:timeout', function (event) {
         event.preventDefault();
       });
-      $d.on('submit', 'form[pjax-container]', function (event) {
+      $d.off('submit', 'form[pjax-container]').on('submit', 'form[pjax-container]', function (event) {
         $.pjax.submit(event, container);
       });
       $d.on("pjax:popstate", function () {
@@ -376,7 +379,9 @@ var Pjax = /*#__PURE__*/function () {
         Dcat.NP.done();
       }); // 新页面加载，重新初始化
 
-      $d.on('pjax:loaded', Dcat.boot);
+      $d.on('pjax:loaded', function () {
+        _this.boot(Dcat);
+      });
     }
   }]);
 

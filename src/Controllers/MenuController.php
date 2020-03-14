@@ -58,7 +58,7 @@ class MenuController extends AdminController
 
                     $form->width(9, 2);
 
-                    $column->append(Card::make(trans('admin.new'), $form)->class('card da-box'));
+                    $column->append(Card::make(trans('admin.new'), $form)->class('card dcat-box'));
                 });
             });
     }

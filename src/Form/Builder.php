@@ -832,7 +832,7 @@ EOF;
             return $wrapper($view);
         }
 
-        return "<div class='card da-box'>{$view->render()}</div>";
+        return "<div class='card dcat-box'>{$view->render()}</div>";
     }
 
     /**

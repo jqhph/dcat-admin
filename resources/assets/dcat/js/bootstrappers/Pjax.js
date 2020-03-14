@@ -9,6 +9,8 @@ export default class Pjax {
     boot(Dcat) {
         let container = Dcat.config.pjax_container_selector;
 
+        let _this = this;
+
         $.pjax.defaults.timeout = 5000;
         $.pjax.defaults.maxCacheLength = 0;
 
@@ -20,12 +22,11 @@ export default class Pjax {
             event.preventDefault();
         });
 
-        $d.on('submit', 'form[pjax-container]', function (event) {
+        $d.off('submit', 'form[pjax-container]').on('submit', 'form[pjax-container]', function (event) {
             $.pjax.submit(event, container)
         });
 
         $d.on("pjax:popstate", function () {
-
             $d.one("pjax:end", function (event) {
                 $(event.target).find("script[data-exec-on-popstate]").each(function () {
                     $.globalEval(this.text || this.textContent || this.innerHTML || '');
@@ -54,6 +55,8 @@ export default class Pjax {
         });
 
         // 新页面加载，重新初始化
-        $d.on('pjax:loaded', Dcat.boot);
+        $d.on('pjax:loaded', function () {
+            _this.boot(Dcat)
+        });
     }
 }

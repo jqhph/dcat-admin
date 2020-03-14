@@ -1,6 +1,21 @@
 {!! $grid->renderQuickSearch() !!}
 
-<div class="card dcat-box">
+<style>
+    #{{ $tableId }} {
+        border: 0;
+    }
+    #{{ $tableId }} thead tr {
+        background: transparent;
+        text-transform: uppercase;
+        font-family: Montserrat,sans-serif;
+    }
+
+    #{{ $tableId }} thead th {
+        font-size: .95rem;
+    }
+</style>
+
+<div class="dcat-box dt-bootstrap4">
 
     @if ($grid->allowToolbar())
         <div class="box-header">
@@ -29,8 +44,8 @@
 
     {!! $grid->renderHeader() !!}
 
-    <div class="card-body panel-collapse collapse in table-responsive" {!! $grid->option('show_bordered') ? 'style="padding:3px 10px 10px"' : '' !!}>
-        <table class=" table table-hover responsive {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{$tableId}}">
+    <div class="in table-responsive" {!! $grid->option('show_bordered') ? 'style="padding:3px 10px 10px"' : '' !!}>
+        <table class="table data-list-view dataTable dt-checkboxes-select {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{ $tableId }}">
             <thead>
             @if ($headers = $grid->getComplexHeaders())
                 <tr>

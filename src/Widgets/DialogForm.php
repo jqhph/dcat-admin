@@ -304,7 +304,7 @@ JS
 
         Admin::baseCss([]);
         Admin::baseJs([]);
-        Admin::fonts('');
+        Admin::fonts(false);
 
         Admin::assets()->full();
 

@@ -122,11 +122,11 @@ trait HasAssets
     }
 
     /**
-     * @param string $font
+     * @param string|array $font
      *
      * @return void
      */
-    public static function fonts(string $font)
+    public static function fonts($font)
     {
         static::assets()->fonts = $font;
     }

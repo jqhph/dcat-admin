@@ -44,6 +44,10 @@ class Assets
         'palette-gradient'   => 'dcat-admin/css/core/colors/palette-gradient.css',
         'colors'             => 'dcat-admin/css/colors.css',
         //'custom'             => 'dcat-admin/css/custom-laravel.css',
+
+        'datatables' => 'dcat-admin/vendors/css/tables/datatable/datatables.min.css',
+        'data-list-view' => 'dcat-admin/css/pages/data-list-view.css',
+
         'dcat'               => 'dcat-admin/dcat/css/app.css',
     ];
 
@@ -64,9 +68,12 @@ class Assets
     public $components = [];
 
     /**
-     * @var string
+     * @var array
      */
-    public $fonts = 'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i';
+    public $fonts = [
+        'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i',
+        'https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600',
+    ];
 
     /**
      * @var bool
@@ -190,7 +197,12 @@ class Assets
 
     protected function addFontCss()
     {
-        $this->fonts && ($this->baseCss[] = $this->fonts);
+        $this->fonts && (
+            $this->baseCss = array_merge(
+                $this->baseCss,
+                (array) $this->fonts
+            )
+        );
     }
 
     protected function mergeBaseCss()

@@ -1,9 +1,9 @@
 <ul class="pagination pagination-sm no-margin pull-right">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
-    <li class="page-item disabled"><span class="page-link"><i class="fa fa-lg fa-angle-left"></i></span></li>
+    <li class="page-item previous disabled"><span class="page-link">Previous</span></li>
     @else
-    <li class="page-item"><a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev"><i class="fa fa-lg fa-angle-left"></i></a></li>
+    <li class="page-item previous"><a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev">Previous</a></li>
     @endif
 
     <!-- Pagination Elements -->
@@ -27,8 +27,8 @@
 
     <!-- Next Page Link -->
     @if ($paginator->hasMorePages())
-    <li class="page-item"><a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="fa fa-lg fa-angle-right"></i></a></li>
+    <li class="page-item next"><a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next">Next</a></li>
     @else
-    <li class="page-item disabled"><span class="page-link"><i class="fa fa-lg fa-angle-right"></i></span></li>
+    <li class="page-item next disabled"><span class="page-link">Next</span></li>
     @endif
 </ul>
