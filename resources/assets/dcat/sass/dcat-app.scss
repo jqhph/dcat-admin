@@ -140,3 +140,13 @@ table.data-list-view.dataTable, table.data-thumb-view.dataTable {
 .dropdown .dropdown-menu {
   box-shadow: $shadow;
 }
+
+
+// checkbox
+.vs-checkbox-con {
+  margin: 0;
+}
+.vs-checkbox-con .vs-checkbox.vs-checkbox-sm {
+  width: 18px;
+  height: 18px;
+}

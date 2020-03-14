@@ -1840,3 +1840,12 @@ table.data-thumb-view.dataTable {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
 }
 
+.vs-checkbox-con {
+  margin: 0;
+}
+
+.vs-checkbox-con .vs-checkbox.vs-checkbox-sm {
+  width: 18px;
+  height: 18px;
+}
+
