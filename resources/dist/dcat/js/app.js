@@ -461,8 +461,11 @@ function extend(Dcat) {
 
 function listen(Dcat) {
   Dcat.booting(function () {
-    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat);
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat);
+    // 菜单点击选中效果
+    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // 返回顶部按钮
+
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // pjax初始化功能
+
     new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // layer弹窗设置
 
     layer.config({

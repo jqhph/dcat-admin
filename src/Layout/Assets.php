@@ -79,6 +79,14 @@ class Assets
     protected $usingFullPage = false;
 
     /**
+     * @var array
+     */
+    protected $themeCssMap = [
+        'dark' => 'dark-layout',
+        'semi-dark' => 'semi-dark-layout',
+    ];
+
+    /**
      * Assets constructor.
      */
     public function __construct()
@@ -171,7 +179,13 @@ class Assets
             return;
         }
 
-        $this->baseCss[] = "dcat-admin/css/themes/{$theme}.css";
+        $css = $this->themeCssMap[$theme] ?? $theme;
+
+        if ($css === 'light') {
+            return;
+        }
+
+        $this->baseCss[] = "dcat-admin/css/themes/{$css}.css";
     }
 
     protected function addFontCss()

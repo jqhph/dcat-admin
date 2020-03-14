@@ -10,8 +10,6 @@
         console.log(123, Dcat)
         $(function () {
 
-            console.log($('form').ajaxSubmit);
-            console.log($.fn.ajaxSubmit);
         })
     </script>
 

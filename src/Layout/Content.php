@@ -133,7 +133,7 @@ class Content implements Renderable
     /**
      * Set breadcrumb of content.
      *
-     * exp:
+     * @example
      *     $this->breadcrumb('Menu', 'auth/menu', 'fa fa-align-justify');
      *     $this->breadcrumb([
      *         ['text' => 'Menu', 'url' => 'auth/menu', 'icon' => 'fa fa-align-justify']
