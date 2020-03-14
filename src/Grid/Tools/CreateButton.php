@@ -39,7 +39,7 @@ class CreateButton implements Renderable
             ->success('Dcat.reload()')
             ->dimensions($width, $height);
 
-        return "<button data-url='$url' class='btn btn-outline-success {$class}'><i class='feather icon-plus'></i><span class='hidden-xs'>&nbsp; $new</span></button>";
+        return "<button data-url='$url' class='btn btn-outline-primary {$class}'><i class='feather icon-plus'></i><span class='hidden-xs'>&nbsp; $new</span></button>";
     }
 
     protected function renderCreateButton()

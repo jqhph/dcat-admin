@@ -1,5 +1,5 @@
 @section('content-header')
-    <section class="content-header breadcrumbs-top mb-1">
+    <section class="content-header breadcrumbs-top mb-2">
         @if($header || $description)
             <h1 class=" float-left">
                 {!! $header !!}

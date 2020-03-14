@@ -26,7 +26,7 @@ class QuickSearch extends AbstractTool
     /**
      * @var int rem
      */
-    protected $width = 28;
+    protected $width = 18;
 
     public function __construct($key = null, $title = null)
     {
@@ -136,12 +136,12 @@ class QuickSearch extends AbstractTool
     
     function toggleBtn() {
         var t = $(this),
-            btn = t.parent().find('.quick-search-clear');
+            btn = t.parent().parent().find('.quick-search-clear');
     
         if (t.val()) {
-            btn.css({color: '#333'});
+            btn.css({color: '#333', cursor: 'pointer'});
         } else {
-            btn.css({color: '#fff'});
+            btn.css({color: '#fff', cursor: 'none'});
         }
         return false;
     }

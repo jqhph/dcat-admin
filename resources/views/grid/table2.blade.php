@@ -1,42 +1,31 @@
-{!! $grid->renderQuickSearch() !!}
-
-<style>
-    #{{ $tableId }} {
-        border: 0;
-    }
-    #{{ $tableId }} thead tr {
-        background: transparent;
-        text-transform: uppercase;
-        font-family: Montserrat,sans-serif;
-    }
-
-    #{{ $tableId }} thead th {
-        font-size: .95rem;
-    }
-</style>
 
 <div class="dcat-box dt-bootstrap4">
 
     @if ($grid->allowToolbar())
-        <div class="box-header">
-            @if(!empty($title))
-                <h4 class="pull-left" style="margin:5px 10px 0;">
-                    {!! $title !!}&nbsp;
-                    @if(!empty($description))
-                        <small>{!! $description!!}</small>
-                    @endif
-                </h4>
-                <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                    {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
-                </div>
-            @else
-                <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                    {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
-                </div>
+        <div class="data-list-view-header">
+            <div class="table-responsive">
+                <div class="top" style="padding: 0">
+                @if(!empty($title))
+                    <h4 style="margin:5px 10px 0;">
+                        {!! $title !!}&nbsp;
+                        @if(!empty($description))
+                            <small>{!! $description!!}</small>
+                        @endif
+                    </h4>
+                    <div data-responsive-table-toolbar="{{$tableId}}">
+                        {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
+                    </div>
+                @else
+                    <div>
+                        {!! $grid->renderTools() !!}
+                    </div>
 
-                {!! $grid->renderTools() !!}
-            @endif
-
+                    <div data-responsive-table-toolbar="{{$tableId}}">
+                        {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
+                    </div>
+                @endif
+                </div>
+            </div>
         </div>
     @endif
 

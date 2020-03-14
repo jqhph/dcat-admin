@@ -1735,9 +1735,10 @@ h5 {
 }
 
 .btn {
-  padding: 0.9rem 1.4rem;
-  /* font-size: 1rem; */
-  line-height: 0.8;
+  padding: 0 1.4rem !important;
+  font-size: 0.95rem;
+  height: 36px;
+  line-height: 0.7;
   border-radius: 0.4rem;
 }
 
@@ -1774,14 +1775,28 @@ h5 {
   font-weight: 600;
 }
 
+.table th {
+  color: #414750;
+  font-size: 0.95rem;
+}
+
 table.data-list-view.dataTable tbody tr,
 table.data-thumb-view.dataTable tbody tr {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
 
 table.data-list-view.dataTable thead th:first-child,
 table.data-thumb-view.dataTable thead th:first-child {
   padding-left: 1rem;
+}
+
+table.dataTable thead tr {
+  background: transparent;
+  text-transform: uppercase;
+}
+
+table.dataTable {
+  border: 0;
 }
 
 table.data-list-view.dataTable,
@@ -1794,6 +1809,32 @@ table.data-list-view.dataTable tbody tr:hover,
 table.data-thumb-view.dataTable tbody tr:hover {
   transform: none;
   background: #f6fbff;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_filter .form-control,
+.data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
+  padding: 1.23rem 2.8rem !important;
+  border-radius: 1.428rem;
+  border: 1px solid #dae1e7;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_filter label:after,
+.data-thumb-view-header .table-responsive .top .dataTables_filter label:after {
+  top: 0.58rem;
+  font-size: 1rem;
+  left: 1.2rem;
+}
+
+.data-list-view-header .table-responsive .top .dataTables_filter .form-control,
+.data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
+  border: 0;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.quick-search-clear {
+  margin-left: -1.45rem;
+  position: relative;
+  color: #fff;
 }
 
 .grid-column-header a {
@@ -1829,7 +1870,7 @@ table.data-thumb-view.dataTable tbody tr:hover {
 }
 
 .dropdown .dropdown-menu {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
@@ -1853,7 +1894,7 @@ table.data-thumb-view.dataTable tbody tr:hover {
 }
 
 .card {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
 
 .card .card-header {
@@ -1875,7 +1916,7 @@ body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation >
 }
 
 .header-navbar.navbar-shadow {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
 
 .main-menu.menu-shadow {
