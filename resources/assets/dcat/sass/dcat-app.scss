@@ -26,6 +26,25 @@ body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
   font-family: Nunito, Montserrat,system-ui,BlinkMacSystemFont,-apple-system,sans-serif;
 }
 
+
+// 按钮
+@import "./components/button";
+// 分页
+@import "./components/pagination";
+// data-list-view 表格
+@import "./components/table";
+// grid
+@import "./components/grid";
+// 下拉菜单
+@import "./components/dropdown";
+// checkbox
+@import "./components/checkbox";
+// card
+@import "./components/card";
+// tree jquery.nestable
+@import "./components/nestable";
+
+
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
    font-size: 1.3rem;
 }
@@ -64,103 +83,8 @@ body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation >
 code {
   box-shadow: 0 1px 1px rgba(0,0,0,0.125);
   padding: 3px 5px;
-  background: #f1f1f1;
+  background: #f7f7f9;
 }
 pre {
   padding: 7px;
-}
-
-
-// 分页
-.pagination .page-item .page-link {
-  font-weight: 600;
-}
-
-// data-list-view 表格
-table.data-list-view.dataTable tbody tr, table.data-thumb-view.dataTable tbody tr {
-  box-shadow: $shadow;
-}
-table.data-list-view.dataTable thead th:first-child, table.data-thumb-view.dataTable thead th:first-child {
-  padding-left: 1rem;
-}
-table.data-list-view.dataTable, table.data-thumb-view.dataTable {
-  border-spacing: 0 .95rem;
-  padding: 0;
-}
-table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover {
-  transform: none;
-  background: $dark20;
-}
-
-
-// 按钮
-.btn {
-  padding: 0.9rem 1.4rem;
-  /* font-size: 1rem; */
-  line-height: .8;
-  border-radius: 0.4rem;
-}
-
-.btn-sm, .btn-group-sm > .btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.7rem;
-  line-height: 1.4;
-}
-
-
-// grid表格
-.grid-column-header {
-  a {
-    color: $dark70;
-  }
-  a:hover, a.active {
-    color: $primary-darker;
-  }
-}
-// 排序图标
-.grid-sort {
-  display: inline-block;
-  margin: -4px -4px 0 3px;
-  height: 17px;
-
-  .up:before {
-    font-family: "feather";
-    padding-right: 0.3rem;
-    font-size: 0.7rem;
-    content: "\E845";
-  }
-
-  .down {
-    margin: 6px 0 0 -1.17rem;
-  }
-  .down:after {
-    font-family: "feather";
-    content: "\E842";
-    font-size: 0.7rem;
-  }
-}
-
-
-// 下拉菜单
-.dropdown .dropdown-menu {
-  box-shadow: $shadow;
-  border: 1px solid rgba(0, 0, 0, 0.03)
-}
-.dropdown .dropdown-menu::before {
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-  border-left: 1px solid rgba(0, 0, 0, 0.07);
-}
-
-
-// checkbox
-.vs-checkbox-con {
-  margin: 0;
-}
-.vs-checkbox-con .vs-checkbox.vs-checkbox-sm {
-  width: 18px;
-  height: 18px;
-}
-.vs-checkbox-con input:checked ~ .vs-checkbox.vs-checkbox-sm .vs-checkbox--check .vs-icon {
-  font-size: 1rem;
-  margin-top: -1px;
 }

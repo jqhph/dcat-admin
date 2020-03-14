@@ -65,7 +65,12 @@ class Assets
     /**
      * @var array
      */
-    public $components = [];
+    public $components = [
+        'jquery.nestable' => [
+            'js'  => 'dcat-admin/plugins/nestable/jquery.nestable.min.js',
+            'css' => 'dcat-admin/plugins/nestable/nestable.css',
+        ],
+    ];
 
     /**
      * @var array

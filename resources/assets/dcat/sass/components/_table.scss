@@ -1,0 +1,15 @@
+// data-list-view 表格
+table.data-list-view.dataTable tbody tr, table.data-thumb-view.dataTable tbody tr {
+  box-shadow: $shadow;
+}
+table.data-list-view.dataTable thead th:first-child, table.data-thumb-view.dataTable thead th:first-child {
+  padding-left: 1rem;
+}
+table.data-list-view.dataTable, table.data-thumb-view.dataTable {
+  border-spacing: 0 .95rem;
+  padding: 0;
+}
+table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover {
+  transform: none;
+  background: $dark20;
+}

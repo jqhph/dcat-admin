@@ -1,0 +1,8 @@
+.dropdown .dropdown-menu {
+  box-shadow: $shadow;
+  border: 1px solid rgba(0, 0, 0, 0.03)
+}
+.dropdown .dropdown-menu::before {
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  border-left: 1px solid rgba(0, 0, 0, 0.07);
+}

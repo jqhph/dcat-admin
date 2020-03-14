@@ -10,19 +10,19 @@
     </div>
 
     @if($useSave)
-    <div class="btn-group" style="margin-right:3px">
+    &nbsp;<div class="btn-group" style="margin-right:3px">
         <button class="btn btn-primary btn-sm {{ $id }}-save" ><i class="feather icon-save"></i><span class="hidden-xs">&nbsp;{{ trans('admin.save') }}</span></button>
     </div>
     @endif
 
     @if($useRefresh)
-    <div class="btn-group" style="margin-right:3px">
-        <button class="btn btn-custom btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></button>
+        &nbsp;<div class="btn-group" style="margin-right:3px">
+        <button class="btn btn-outline-custom btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></button>
     </div>
     @endif
 
     @if($tools)
-    <div class="btn-group" style="margin-right:3px">
+    &nbsp;<div class="btn-group" style="margin-right:3px">
         {!! $tools !!}
     </div>
     @endif

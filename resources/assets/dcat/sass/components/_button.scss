@@ -1,0 +1,35 @@
+.btn {
+  padding: 0.9rem 1.4rem;
+  /* font-size: 1rem; */
+  line-height: .8;
+  border-radius: 0.4rem;
+}
+
+.btn-sm, .btn-group-sm > .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+
+.btn-custom {
+  background: $custom;
+  border-color: $custom;
+  color: $white;
+}
+
+.btn-custom:hover {
+  color: $white;
+  box-shadow: 0 8px 25px -8px $custom;
+}
+
+.btn-outline-custom {
+  background: $white;
+  border: 1px solid $custom;
+  color: $custom;
+}
+
+.btn-outline-custom:hover {
+  background: rgba($custom, .15);
+  color: $custom;
+}

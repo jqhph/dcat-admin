@@ -1734,44 +1734,40 @@ h5 {
   font-family: Nunito, Montserrat, system-ui, BlinkMacSystemFont, -apple-system, sans-serif;
 }
 
-body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
-  font-size: 1.3rem;
+.btn {
+  padding: 0.9rem 1.4rem;
+  /* font-size: 1rem; */
+  line-height: 0.8;
+  border-radius: 0.4rem;
 }
 
-.header-navbar.navbar-shadow {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+.btn-sm,
+.btn-group-sm > .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
 }
 
-.main-menu.menu-shadow {
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+.btn-custom {
+  background: #59a9f8;
+  border-color: #59a9f8;
+  color: #fff;
 }
 
-.breadcrumb {
-  border-left: 0;
+.btn-custom:hover {
+  color: #fff;
+  box-shadow: 0 8px 25px -8px #59a9f8;
 }
 
-.content-header h1 {
-  font-weight: 400;
-  font-size: 24px;
-  display: inline-block;
-  font-family: Montserrat, Nunito, sans-serif;
+.btn-outline-custom {
+  background: #fff;
+  border: 1px solid #59a9f8;
+  color: #59a9f8;
 }
 
-.content-header h1 small {
-  font-size: 15px;
-  display: inline-block;
-  padding-left: 5px;
-  font-weight: 300;
-}
-
-code {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
-  padding: 3px 5px;
-  background: #f1f1f1;
-}
-
-pre {
-  padding: 7px;
+.btn-outline-custom:hover {
+  background: rgba(89, 169, 248, 0.15);
+  color: #59a9f8;
 }
 
 .pagination .page-item .page-link {
@@ -1798,20 +1794,6 @@ table.data-list-view.dataTable tbody tr:hover,
 table.data-thumb-view.dataTable tbody tr:hover {
   transform: none;
   background: #f6fbff;
-}
-
-.btn {
-  padding: 0.9rem 1.4rem;
-  /* font-size: 1rem; */
-  line-height: 0.8;
-  border-radius: 0.4rem;
-}
-
-.btn-sm,
-.btn-group-sm > .btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.7rem;
-  line-height: 1.4;
 }
 
 .grid-column-header a {
@@ -1861,12 +1843,70 @@ table.data-thumb-view.dataTable tbody tr:hover {
 }
 
 .vs-checkbox-con .vs-checkbox.vs-checkbox-sm {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 }
 
 .vs-checkbox-con input:checked ~ .vs-checkbox.vs-checkbox-sm .vs-checkbox--check .vs-icon {
   font-size: 1rem;
   margin-top: -1px;
+}
+
+.card {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.card .card-header {
+  justify-content: normal;
+}
+
+.dd-item > button:before {
+  font-family: "feather";
+  content: "\E844" !important;
+  margin-top: 3px;
+}
+
+.dd-item > button[data-action=collapse]:before {
+  content: "\E842" !important;
+}
+
+body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
+  font-size: 1.3rem;
+}
+
+.header-navbar.navbar-shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.main-menu.menu-shadow {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+}
+
+.breadcrumb {
+  border-left: 0;
+}
+
+.content-header h1 {
+  font-weight: 400;
+  font-size: 24px;
+  display: inline-block;
+  font-family: Montserrat, Nunito, sans-serif;
+}
+
+.content-header h1 small {
+  font-size: 15px;
+  display: inline-block;
+  padding-left: 5px;
+  font-weight: 300;
+}
+
+code {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+  padding: 3px 5px;
+  background: #f7f7f9;
+}
+
+pre {
+  padding: 7px;
 }
 
