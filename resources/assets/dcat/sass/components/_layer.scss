@@ -1,0 +1,47 @@
+.layui-layer {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2)!important;
+}
+
+.layui-layer-title {
+  padding: 0 80px 0 20px;
+  height: 50px!important;
+  line-height: 50px!important;
+  border-bottom: 0!important;
+  font-size: 1rem!important;
+  text-transform: capitalize;
+  overflow: hidden;
+}
+.layui-layer-setwin .layui-layer-min cite {
+  background: transparent!important;
+  position: initial!important;
+}
+
+.layui-layer-setwin .layui-layer-min cite:before {
+  font-family: "feather";
+  content: "\e897";
+  font-size: 1.15rem;
+  color: $font-color;
+}
+
+.layui-layer-ico {
+  background: transparent!important;
+  color: $font-color;
+}
+
+.layui-layer-setwin .layui-layer-max:before {
+  font-family: "feather";
+  content: "\e908";
+  font-size: 1.1rem;
+}
+.layui-layer-setwin .layui-layer-maxmin:before {
+  content: "\e88d";
+}
+
+.layui-layer-setwin .layui-layer-close1:before {
+  font-family: "feather";
+  content: "\e8f6";
+  font-size: 1.15rem;
+}
+.layui-layer-setwin .layui-layer-close1 {
+  margin-left: 8px!important;
+}

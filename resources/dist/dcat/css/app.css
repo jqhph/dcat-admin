@@ -1735,7 +1735,7 @@ h5 {
 }
 
 .btn {
-  padding: 0 1.4rem !important;
+  padding: 0.75rem 1.4rem !important;
   font-size: 0.95rem;
   height: 36px;
   line-height: 0.7;
@@ -1808,7 +1808,7 @@ table.data-thumb-view.dataTable {
 table.data-list-view.dataTable tbody tr:hover,
 table.data-thumb-view.dataTable tbody tr:hover {
   transform: none;
-  background: #f6fbff;
+  background: #fafafa;
 }
 
 .data-list-view-header .table-responsive .top .dataTables_filter .form-control,
@@ -1909,6 +1909,57 @@ table.data-thumb-view.dataTable tbody tr:hover {
 
 .dd-item > button[data-action=collapse]:before {
   content: "\E842" !important;
+}
+
+.layui-layer {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.layui-layer-title {
+  padding: 0 80px 0 20px;
+  height: 50px !important;
+  line-height: 50px !important;
+  border-bottom: 0 !important;
+  font-size: 1rem !important;
+  text-transform: capitalize;
+  overflow: hidden;
+}
+
+.layui-layer-setwin .layui-layer-min cite {
+  background: transparent !important;
+  position: initial !important;
+}
+
+.layui-layer-setwin .layui-layer-min cite:before {
+  font-family: "feather";
+  content: "\E897";
+  font-size: 1.15rem;
+  color: #414750;
+}
+
+.layui-layer-ico {
+  background: transparent !important;
+  color: #414750;
+}
+
+.layui-layer-setwin .layui-layer-max:before {
+  font-family: "feather";
+  content: "\E908";
+  font-size: 1.1rem;
+}
+
+.layui-layer-setwin .layui-layer-maxmin:before {
+  content: "\E88D";
+}
+
+.layui-layer-setwin .layui-layer-close1:before {
+  font-family: "feather";
+  content: "\E8F6";
+  font-size: 1.15rem;
+}
+
+.layui-layer-setwin .layui-layer-close1 {
+  margin-left: 8px !important;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {

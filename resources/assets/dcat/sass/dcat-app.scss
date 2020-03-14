@@ -43,7 +43,8 @@ body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
 @import "./components/card";
 // tree jquery.nestable
 @import "./components/nestable";
-
+// layer弹窗
+@import "./components/layer";
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
    font-size: 1.3rem;
