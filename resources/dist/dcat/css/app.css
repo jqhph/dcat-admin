@@ -1718,7 +1718,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 }
 
 html body {
-  background-color: #f9fafc;
+  background-color: #f4f7fa;
   color: #414750;
 }
 
@@ -1881,6 +1881,23 @@ table.data-thumb-view.dataTable tbody tr:hover {
 .dropdown .dropdown-menu::before {
   border-top: 1px solid rgba(0, 0, 0, 0.07);
   border-left: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.dropdown .dropdown-menu .dropdown-item,
+.dropup .dropdown-menu .dropdown-item,
+.dropright .dropdown-menu .dropdown-item,
+.dropleft .dropdown-menu .dropdown-item {
+  padding: 0.35rem 1.38rem;
+  color: #333;
+}
+
+.dropdown-item a {
+  color: #333;
+}
+
+.dropdown .dropdown-menu .dropdown-item:hover {
+  background-color: #f4f7fa;
+  color: #333;
 }
 
 .vs-checkbox-con {

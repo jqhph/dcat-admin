@@ -2056,7 +2056,7 @@ eval(function (p, a, c, k, _e, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\js\dcat-app.js */"./resources/assets/dcat/js/dcat-app.js");
+module.exports = __webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\js\dcat-app.js */"./resources/assets/dcat/js/dcat-app.js");
 
 
 /***/ })
