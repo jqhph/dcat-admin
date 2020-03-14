@@ -479,15 +479,15 @@ JS;
 
         $quickBtn = $btn = '';
         if ($this->useCreate) {
-            $btn = "<a href='{$url}' class='btn btn-sm btn-success'><i class='feather icon-plus'></i><span class='hidden-xs'>&nbsp;{$new}</span></a>";
+            $btn = "<button href='{$url}' class='btn btn-sm btn-success'><i class='feather icon-plus'></i><span class='hidden-xs'>&nbsp;{$new}</span></button>";
         }
 
         if ($this->useQuickCreate) {
             $text = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='feather icon-plus'></i><span class='hidden-xs'>&nbsp; $new</span>";
-            $quickBtn = "<a data-url='$url' class='btn btn-sm btn-success tree-quick-create'>$text</a>";
+            $quickBtn = "<button data-url='$url' class='btn btn-sm btn-success tree-quick-create'>$text</button>";
         }
 
-        return "<div class='btn-group pull-right' style='margin-right:3px'>{$btn}{$quickBtn}</div>";
+        return "&nbsp;<div class='btn-group pull-right' style='margin-right:3px'>{$btn}{$quickBtn}</div>";
     }
 
     /**

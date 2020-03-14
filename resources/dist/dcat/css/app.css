@@ -1739,18 +1739,19 @@ html body .content .content-wrapper {
 }
 
 .btn {
-  padding: 0.75rem 1.4rem !important;
+  padding: 0.75rem 1.45rem !important;
   font-size: 0.95rem;
   height: 36px;
   line-height: 0.7;
-  border-radius: 0.4rem;
+  border-radius: 0.35rem;
 }
 
 .btn-sm,
 .btn-group-sm > .btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.7rem;
-  line-height: 1.4;
+  padding: 0.7rem 1.3rem !important;
+  font-size: 0.6rem;
+  line-height: 12px;
+  height: 32px;
 }
 
 .btn-custom {
@@ -1773,6 +1774,14 @@ html body .content .content-wrapper {
 .btn-outline-custom:hover {
   background: rgba(89, 169, 248, 0.15);
   color: #59a9f8;
+}
+
+.btn-shadow {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-shadow:hover {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
 }
 
 .pagination .page-item .page-link {

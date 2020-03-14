@@ -27,7 +27,7 @@ class Dropdown extends Widget
      */
     protected $button = [
         'text'  => null,
-        'class' => 'btn btn-sm btn-default',
+        'class' => 'btn btn-sm btn-white btn-shadow',
         'style' => null,
     ];
 

@@ -300,7 +300,7 @@ class Field implements Renderable
             </div>
             <span class="mailbox-attachment-size">
               {$size}&nbsp;
-              <a href="{$url}" class="btn btn-default btn-xs pull-right" target="_blank"><i class="fa fa-cloud-download"></i></a>
+              <a href="{$url}" class="btn btn-white btn-shadow btn-xs pull-right" target="_blank"><i class="fa fa-cloud-download"></i></a>
             </span>
       </div>
     </li>

@@ -256,7 +256,7 @@ class Tools implements Renderable
 
         return <<<HTML
 <div class="btn-group pull-right btn-mini" style="margin-right: 5px">
-    <a href="{$this->getListPath()}" class="btn btn-sm btn-default">
+    <a href="{$this->getListPath()}" class="btn btn-sm btn-white btn-shadow">
         <i class=" ti-view-list-alt"></i><span class="hidden-xs"> {$list}</span>
     </a>
 </div>

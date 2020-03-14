@@ -1,15 +1,16 @@
 .btn {
-  padding: .75rem 1.4rem!important;
+  padding: .75rem 1.45rem!important;
   font-size: .95rem;
   height: 36px;
   line-height: .7;
-  border-radius: 0.4rem;
+  border-radius: 0.35rem;
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.7rem;
-  line-height: 1.4;
+  padding: 0.7rem 1.3rem!important;;
+  font-size: 0.6rem;
+  line-height: 12px;
+  height: 32px;
 }
 
 
@@ -33,4 +34,11 @@
 .btn-outline-custom:hover {
   background: rgba($custom, .15);
   color: $custom;
+}
+
+.btn-shadow {
+  box-shadow: $btn-shadow;
+}
+.btn-shadow:hover {
+  box-shadow: $btn-shadow-hover;
 }
