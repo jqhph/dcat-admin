@@ -29,9 +29,7 @@ trait HasActions
      */
     public function setActionClass(string $actionClass)
     {
-        if (is_subclass_of($actionClass, Grid\Displayers\Actions::class)) {
-            $this->actionsClass = $actionClass;
-        }
+        $this->actionsClass = $actionClass;
 
         return $this;
     }

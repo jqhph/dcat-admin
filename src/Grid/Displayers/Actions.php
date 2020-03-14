@@ -229,7 +229,7 @@ class Actions extends AbstractDisplayer
     {
         return <<<EOT
 <a href="{$this->resource()}/{$this->getKey()}">
-    <i class="ti-eye grid-action-icon"></i>
+    <i class="feather icon-eye grid-action-icon"></i>
 </a>&nbsp;
 EOT;
     }
@@ -243,7 +243,7 @@ EOT;
     {
         return <<<EOT
 <a href="{$this->resource()}/{$this->getKey()}/edit">
-    <i class="ti-pencil-alt grid-action-icon"></i>
+    <i class="feather icon-edit grid-action-icon"></i>
 </a>&nbsp;
 EOT;
     }
@@ -266,7 +266,7 @@ EOT;
 
         return <<<EOF
 <a class="{$this->grid->getRowName()}-edit" data-url="{$this->resource()}/{$this->getKey()}/edit" href="javascript:void(0);">
-    <i class=" fa fa-clone grid-action-icon"></i>
+    <i class="fa fa-clone grid-action-icon"></i>
 </a>&nbsp;
 EOF;
     }
@@ -280,7 +280,7 @@ EOF;
     {
         return <<<EOT
 <a href="javascript:void(0);" data-url="{$this->resource()}/{$this->getKey()}" data-action="delete">
-    <i class="ti-trash grid-action-icon"></i>
+    <i class="feather icon-trash-2 grid-action-icon"></i>
 </a>&nbsp;
 EOT;
     }

@@ -108,7 +108,7 @@ table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable t
 }
 
 
-// 表格头
+// grid表格
 .grid-column-header {
   a {
     color: $dark70;
@@ -117,7 +117,6 @@ table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable t
     color: $primary-darker;
   }
 }
-
 // 排序图标
 .grid-sort {
   display: inline-block;
