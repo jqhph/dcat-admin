@@ -32,7 +32,7 @@
     <div class="card-body panel-collapse collapse in table-responsive" {!! $grid->option('show_bordered') ? 'style="padding:3px 10px 10px"' : '' !!}>
         <table class=" table table-hover responsive {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{$tableId}}">
             <thead>
-            @if ($headers = $grid->multipleHeaders())
+            @if ($headers = $grid->getComplexHeaders())
                 <tr>
                     @foreach($headers as $header)
                         {!! $header->render() !!}
@@ -53,7 +53,7 @@
             <tbody>
             @foreach($grid->rows() as $row)
                 <tr {!! $row->rowAttributes() !!}>
-                    @foreach($grid->columnNames() as $name)
+                    @foreach($grid->getColumnNames() as $name)
                         <td {!! $row->columnAttributes($name) !!}>
                             {!! $row->column($name) !!}
                         </td>
@@ -62,7 +62,7 @@
             @endforeach
             @if ($grid->rows()->isEmpty())
                 <tr>
-                    <td colspan="{!! count($grid->columnNames()) !!}">
+                    <td colspan="{!! count($grid->getColumnNames()) !!}">
                         <div style="margin:5px 0 0 10px;"><span class="help-block" style="margin-bottom:0"><i class="fa fa-info-circle"></i>&nbsp;{{ trans('admin.no_data') }}</span></div>
                     </td>
                 </tr>

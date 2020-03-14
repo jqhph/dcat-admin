@@ -3,16 +3,14 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid\Column;
-use Dcat\Admin\Grid\FirstRowHeader;
+use Dcat\Admin\Grid\ComplexHeader;
 
-trait HasMultipleHeaders
+trait HasComplexHeaders
 {
     /**
-     * Table multiple headers.
-     *
-     * @var FirstRowHeader[]
+     * @var ComplexHeader[]
      */
-    protected $multipleHeaders = [];
+    protected $complexHeaders = [];
 
     /**
      * Merge cells.
@@ -20,7 +18,7 @@ trait HasMultipleHeaders
      * @param string $label
      * @param array  $columnNames
      *
-     * @return FirstRowHeader
+     * @return ComplexHeader
      */
     public function combine(string $label, array $columnNames)
     {
@@ -30,15 +28,15 @@ trait HasMultipleHeaders
 
         $this->withBorder();
 
-        return $this->multipleHeaders[$label] = new FirstRowHeader($this, $label, $columnNames);
+        return $this->complexHeaders[$label] = new ComplexHeader($this, $label, $columnNames);
     }
 
     /**
-     * @return FirstRowHeader[]
+     * @return ComplexHeader[]
      */
-    public function multipleHeaders()
+    public function getComplexHeaders()
     {
-        return $this->multipleHeaders;
+        return $this->complexHeaders;
     }
 
     /**
@@ -46,19 +44,19 @@ trait HasMultipleHeaders
      */
     protected function sortHeaders()
     {
-        if (! $this->multipleHeaders) {
+        if (! $this->complexHeaders) {
             return;
         }
 
-        $originalHeaders = $this->multipleHeaders;
+        $originalHeaders = $this->complexHeaders;
         $originalColumns = $this->columns;
 
-        $headersColumns = $this->multipleHeaders = $this->columns = [];
+        $headersColumns = $this->complexHeaders = $this->columns = [];
 
         foreach ($originalHeaders as $header) {
             $headersColumns = array_merge(
                 $headersColumns,
-                $tmp = $header->columnNames()
+                $tmp = $header->getColumnNames()
             );
             foreach ($tmp as &$name) {
                 if ($column = $originalColumns->get($name)) {
@@ -90,7 +88,7 @@ trait HasMultipleHeaders
         );
 
         $this->columns = collect($this->columns);
-        $this->multipleHeaders = array_merge(
+        $this->complexHeaders = array_merge(
             $beforeHeaders,
             array_values($originalHeaders),
             $afterHeaders
@@ -103,7 +101,7 @@ trait HasMultipleHeaders
 
         /* @var Column $column */
         foreach ($columns as $name => $column) {
-            $header = new FirstRowHeader($this, $column->getLabel(), [$name]);
+            $header = new ComplexHeader($this, $column->getLabel(), [$name]);
             $prio = $column->getDataPriority();
 
             if (is_int($prio)) {

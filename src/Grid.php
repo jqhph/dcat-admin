@@ -27,7 +27,7 @@ class Grid
         Concerns\HasActions,
         Concerns\HasPaginator,
         Concerns\HasExporter,
-        Concerns\HasMultipleHeaders,
+        Concerns\HasComplexHeaders,
         Concerns\HasSelector,
         Concerns\HasQuickCreate,
         Concerns\HasQuickSearch,
@@ -342,7 +342,7 @@ class Grid
     /**
      * @return array
      */
-    public function columnNames()
+    public function getColumnNames()
     {
         return $this->columnNames;
     }

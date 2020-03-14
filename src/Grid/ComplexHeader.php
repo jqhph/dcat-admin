@@ -6,7 +6,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column\Help;
 use Dcat\Admin\Widgets\Widget;
 
-class FirstRowHeader extends Widget
+class ComplexHeader extends Widget
 {
     /**
      * @var Grid
@@ -40,7 +40,7 @@ class FirstRowHeader extends Widget
     /**
      * @return array
      */
-    public function columnNames()
+    public function getColumnNames()
     {
         return $this->columnNames;
     }
