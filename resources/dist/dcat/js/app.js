@@ -253,6 +253,57 @@ var Footer = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/assets/dcat/js/bootstrappers/Menu.js":
+/*!********************************************************!*\
+  !*** ./resources/assets/dcat/js/bootstrappers/Menu.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Menu; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Menu = /*#__PURE__*/function () {
+  function Menu(Dcat) {
+    _classCallCheck(this, Menu);
+
+    this.bindClick();
+  } // 菜单点击选中效果
+
+
+  _createClass(Menu, [{
+    key: "bindClick",
+    value: function bindClick() {
+      var $content = $('.main-menu-content'),
+          $items = $content.find('li.nav-item'),
+          $hasSubItems = $content.find('li.has-sub');
+      $items.find('a').click(function () {
+        var href = $(this).attr('href');
+
+        if (!href || href === '#') {
+          return;
+        }
+
+        $items.removeClass('active');
+        $hasSubItems.removeClass('sidebar-group-active');
+        $(this).parent().addClass('active');
+      });
+    }
+  }]);
+
+  return Menu;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/dcat/js/bootstrappers/Pjax.js":
 /*!********************************************************!*\
   !*** ./resources/assets/dcat/js/bootstrappers/Pjax.js ***!
@@ -282,6 +333,8 @@ var Pjax = /*#__PURE__*/function () {
     key: "boot",
     value: function boot(Dcat) {
       var container = Dcat.config.pjax_container_selector;
+      $.pjax.defaults.timeout = 5000;
+      $.pjax.defaults.maxCacheLength = 0;
       $('a:not(a[target="_blank"])').click(function (event) {
         $.pjax.click(event, container, {
           fragment: 'body'
@@ -354,8 +407,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _extensions_Grid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./extensions/Grid */ "./resources/assets/dcat/js/extensions/Grid.js");
 /* harmony import */ var _extensions_Form__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./extensions/Form */ "./resources/assets/dcat/js/extensions/Form.js");
 /* harmony import */ var _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./extensions/DialogForm */ "./resources/assets/dcat/js/extensions/DialogForm.js");
-/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
-/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
+/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
+/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
+/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
 /*=========================================================================================
   File Name: app.js
   Description: Dcat Admin JS脚本.
@@ -364,6 +418,7 @@ __webpack_require__.r(__webpack_exports__);
   Author: Jqh
   Author URL: https://github.com/jqhph
 ==========================================================================================*/
+
 
 
 
@@ -401,18 +456,30 @@ function extend(Dcat) {
   Dcat.DialogForm = function (options) {
     return new _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__["default"](Dcat, options);
   };
-} // 初始化事件监听
+} // 初始化
 
 
 function listen(Dcat) {
   Dcat.booting(function () {
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat);
-    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat);
+    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat);
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat);
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // layer弹窗设置
+
+    layer.config({
+      maxmin: true,
+      moveOut: true,
+      shade: false
+    }); // ajax全局设置
+
+    $.ajaxSetup({
+      cache: true,
+      error: Dcat.handleAjaxError
+    });
     Dcat.NP.configure({
       parent: '.app-content'
     });
   });
-} // 初始化
+} // 开始初始化
 
 
 function boot(Dcat) {
@@ -944,9 +1011,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
- // import _f from '../jquery-form/form';
 
-console.log(123, _jquery_form_jquery_form_min__WEBPACK_IMPORTED_MODULE_0___default.a);
 var $eColumns = {},
     formCallbacks = {
   before: [],
@@ -1310,16 +1375,34 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var defaultName = '_def_';
+
 var Grid = /*#__PURE__*/function () {
   function Grid(Dcat) {
     _classCallCheck(this, Grid);
 
     Dcat.grid = this;
-  }
+    this.selectors = {};
+  } // 添加行选择器对象
+
 
   _createClass(Grid, [{
     key: "addSelector",
-    value: function addSelector(selector, name) {}
+    value: function addSelector(selector, name) {
+      this.selectors[name || defaultName] = selector;
+    } // 获取行选择器选中的ID字符串
+
+  }, {
+    key: "selected",
+    value: function selected(name) {
+      return this.selectors[name || defaultName].getSelectedKeys();
+    } // 获取行选择器选中的行
+
+  }, {
+    key: "selectedRows",
+    value: function selectedRows(name) {
+      return this.selectors[name || defaultName].getSelectedRows();
+    }
   }]);
 
   return Grid;
@@ -1557,9 +1640,124 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RowSelector; });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var RowSelector = function RowSelector() {
-  _classCallCheck(this, RowSelector);
-};
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var RowSelector = /*#__PURE__*/function () {
+  function RowSelector(options) {
+    _classCallCheck(this, RowSelector);
+
+    var _this = this;
+
+    _this.options = $.extend({
+      // checkbox css选择器
+      checkboxSelector: '',
+      // 全选checkbox css选择器
+      selectAllSelector: '',
+      // 选中效果颜色
+      background: 'rgba(255, 255,213,0.4)',
+      // 点击行事件
+      clickRow: false
+    }, options);
+
+    _this._bind();
+  }
+
+  _createClass(RowSelector, [{
+    key: "_bind",
+    value: function _bind() {
+      var options = this.options,
+          checkboxSelector = options.checkboxSelector,
+          selectAllSelector = options.selectAllSelector,
+          $ckb = $(checkboxSelector);
+      $(selectAllSelector).on('change', function () {
+        var cbx = $(checkboxSelector);
+
+        for (var i = 0; i < cbx.length; i++) {
+          if (this.checked && !cbx[i].checked) {
+            cbx[i].click();
+          } else if (!this.checked && cbx[i].checked) {
+            cbx[i].click();
+          }
+        }
+      });
+
+      if (options.clickRow) {
+        $ckb.click(function (e) {
+          if (typeof e.cancelBubble != "undefined") {
+            e.cancelBubble = true;
+          }
+
+          if (typeof e.stopPropagation != "undefined") {
+            e.stopPropagation();
+          }
+        }).parents('tr').click(function (e) {
+          $(this).find(checkboxSelector).click();
+        });
+      }
+
+      $ckb.on('change', function () {
+        var tr = $(this).closest('tr');
+
+        if (this.checked) {
+          tr.css('background-color', options.background);
+        } else {
+          tr.css('background-color', '');
+        }
+      });
+    }
+    /**
+     * 获取选中的主键数组
+     *
+     * @returns {Array}
+     */
+
+  }, {
+    key: "getSelectedKeys",
+    value: function getSelectedKeys() {
+      var selected = [];
+      $(this.options.checkboxSelector + ':checked').each(function () {
+        var id = $(this).data('id');
+
+        if (selected.indexOf(id) === -1) {
+          selected.push(id);
+        }
+      });
+      return selected;
+    }
+    /**
+     * 获取选中的行数组
+     *
+     * @returns {Array}
+     */
+
+  }, {
+    key: "getSelectedRows",
+    value: function getSelectedRows() {
+      var selected = [];
+      $(this.options.checkboxSelector + ':checked').each(function () {
+        var id = $(this).data('id'),
+            i,
+            exist;
+
+        for (i in selected) {
+          if (selected[i].id === id) {
+            exist = true;
+          }
+        }
+
+        exist || selected.push({
+          'id': id,
+          'label': $(this).data('label')
+        });
+      });
+      return selected;
+    }
+  }]);
+
+  return RowSelector;
+}();
 
 
 
@@ -1850,7 +2048,7 @@ eval(function (p, a, c, k, _e, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\js\dcat-app.js */"./resources/assets/dcat/js/dcat-app.js");
+module.exports = __webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\js\dcat-app.js */"./resources/assets/dcat/js/dcat-app.js");
 
 
 /***/ })

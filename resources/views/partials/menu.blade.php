@@ -16,10 +16,7 @@
             </a>
         </li>
     @else
-        @php
-            $active = $builder->isActive($item);
-        @endphp
-        <li class="nav-item has-sub {!! $active ? 'active open' : '' !!}">
+        <li class="nav-item has-sub">
             <a href="#">
                 <i class="fa {{ $item['icon'] }}"></i>
                 @if (Lang::has($titleTranslation = 'admin.menu_titles.' . trim(str_replace(' ', '_', strtolower($item['title'])))))

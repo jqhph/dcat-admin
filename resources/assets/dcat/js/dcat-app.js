@@ -20,6 +20,7 @@ import Grid from './extensions/Grid'
 import Form from './extensions/Form'
 import DialogForm from './extensions/DialogForm'
 
+import Menu from './bootstrappers/Menu'
 import Footer from './bootstrappers/Footer'
 import Pjax from './bootstrappers/Pjax'
 
@@ -56,6 +57,7 @@ function extend (Dcat) {
 // 初始化
 function listen(Dcat) {
     Dcat.booting(function () {
+        new Menu(Dcat);
         new Footer(Dcat);
         new Pjax(Dcat);
 
