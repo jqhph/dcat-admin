@@ -1277,7 +1277,7 @@
             <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-rotate-right"></i> fa-rotate-right <span class="text-muted">(alias)</span>
             </div>
 
-            <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-save"></i> fa-save <span class="text-muted">(alias)</span>
+            <div class="col-sm-6 col-md-4 col-lg-3"><i class="feather icon-save"></i> fa-save <span class="text-muted">(alias)</span>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-scissors"></i> fa-scissors</div>

@@ -68,7 +68,7 @@
                 <td></td>
                 <td>
                     <div class="{{ $class }}-add btn btn-success btn-sm pull-right">
-                        <i class="fa fa-save"></i>&nbsp;{{ __('admin.new') }}
+                        <i class="feather icon-save"></i>&nbsp;{{ __('admin.new') }}
                     </div>
                 </td>
             </tr>

@@ -43,7 +43,7 @@ EOT;
 <form class="form-group {$this->getElementClass()}" style="text-align:left;" data-key="{$this->getKey()}">
     $radios
     <button type="submit" class="btn btn-primary btn-xs pull-left">
-        <i class="fa fa-save"></i>&nbsp;{$this->trans('save')}
+        <i class="feather icon-save"></i>&nbsp;{$this->trans('save')}
     </button>
     <button type="reset" class="btn btn-warning btn-xs pull-left" style="margin-left:10px;">
         <i class="ti-trash"></i>&nbsp;{$this->trans('reset')}

@@ -1,23 +1,23 @@
 <div class="card-header">
 
     <div class="btn-group" style="margin-right:3px">
-        <a class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="expand">
-            <i class="fa fa-plus-square-o"></i>&nbsp;<span class="hidden-xs">{{ trans('admin.expand') }}</span>
-        </a>
-        <a class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="collapse">
-            <i class="fa fa-minus-square-o"></i><span class="hidden-xs">&nbsp;{{ trans('admin.collapse') }}</span>
-        </a>
+        <button class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="expand">
+            <i class="feather icon-plus-square"></i>&nbsp;<span class="hidden-xs">{{ trans('admin.expand') }}</span>
+        </button>
+        <button class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="collapse">
+            <i class="feather icon-minus-square"></i><span class="hidden-xs">&nbsp;{{ trans('admin.collapse') }}</span>
+        </button>
     </div>
 
     @if($useSave)
     <div class="btn-group" style="margin-right:3px">
-        <a class="btn btn-primary btn-sm {{ $id }}-save" ><i class="fa fa-save"></i><span class="hidden-xs">&nbsp;{{ trans('admin.save') }}</span></a>
+        <button class="btn btn-primary btn-sm {{ $id }}-save" ><i class="feather icon-save"></i><span class="hidden-xs">&nbsp;{{ trans('admin.save') }}</span></button>
     </div>
     @endif
 
     @if($useRefresh)
     <div class="btn-group" style="margin-right:3px">
-        <a class="btn btn-custom btn-sm" data-action="refresh" ><i class="fa fa-refresh"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></a>
+        <button class="btn btn-custom btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></button>
     </div>
     @endif
 
