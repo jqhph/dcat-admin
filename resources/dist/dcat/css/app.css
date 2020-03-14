@@ -1770,6 +1770,10 @@ code {
   background: #f1f1f1;
 }
 
+pre {
+  padding: 7px;
+}
+
 .pagination .page-item .page-link {
   font-weight: 600;
 }
@@ -1788,6 +1792,12 @@ table.data-list-view.dataTable,
 table.data-thumb-view.dataTable {
   border-spacing: 0 0.95rem;
   padding: 0;
+}
+
+table.data-list-view.dataTable tbody tr:hover,
+table.data-thumb-view.dataTable tbody tr:hover {
+  transform: none;
+  background: #f6fbff;
 }
 
 .btn {
@@ -1838,6 +1848,12 @@ table.data-thumb-view.dataTable {
 
 .dropdown .dropdown-menu {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.dropdown .dropdown-menu::before {
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  border-left: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 .vs-checkbox-con {
@@ -1847,5 +1863,10 @@ table.data-thumb-view.dataTable {
 .vs-checkbox-con .vs-checkbox.vs-checkbox-sm {
   width: 18px;
   height: 18px;
+}
+
+.vs-checkbox-con input:checked ~ .vs-checkbox.vs-checkbox-sm .vs-checkbox--check .vs-icon {
+  font-size: 1rem;
+  margin-top: -1px;
 }
 
