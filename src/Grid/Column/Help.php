@@ -57,7 +57,7 @@ class Help implements Renderable
         $tooltip->title($this->message);
 
         return <<<HELP
-&nbsp;<a href="javascript:void(0);" class="{$class} fa fa-question-circle" ></a>
+&nbsp;<a href="javascript:void(0);" class="{$class} feather icon-alert-circle" ></a>
 HELP;
     }
 }

@@ -1,9 +1,54 @@
 
+// 蓝色
 $blue: #3085d6;
+$blue-darker: #236bb0;
+$blue-20: #c3dcf3;
+$blue-30: #b3d2f0;
+$blue-40: #a3c9ed;
+$blue-50: #92bfe9;
+$blue-60: #82b5e6;
+$blue-70: #71ace3;
+$blue-80: #61a2e0;
+$blue-90: #5198dc;
+$blue-95: #408fd9;
+// 渐变蓝色
+$blue-linear-gradient: linear-gradient(118deg, rgba($blue, 1), rgba($blue, 0.7));
 
+
+// 深色
+$dark20: #f6fbff;
+$dark30: #f4f7fa;
+$dark40: #ebf0f3;
+$dark50: #d3dde5;
+$dark60: #bacad6;
+$dark65: #8aa5b9;
+$dark70: #b3b9bf;
+$dark80: #7c858e;
+$dark85: #5c7089;
+$dark90: #252d37;
+
+
+// 主色
+$primary-darker: #6355ee;
+$primary-20: #f7f6fe;
+$primary-30: #e6e4fc;
+$primary-40: #d6d2fb;
+$primary-50: #c5c0f9;
+$primary-60: #b5aef7;
+$primary-70: #a49df5;
+$primary-80: #948bf4;
+$primary-90: #8379f2;
+// 渐变主色
 $primary-linear-gradient: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
 
+
+// 字体颜色
+$font-color: #414750;
+
+
+// 常用阴影颜色
 $shadow: 0 2px 4px 0 rgba(0,0,0,.05);
 
-//$body-background: #ecf0f5;
+
+// body背景颜色
 $body-background: #f9fafc;

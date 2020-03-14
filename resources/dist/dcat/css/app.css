@@ -1719,6 +1719,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 
 html body {
   background-color: #f9fafc;
+  color: #414750;
 }
 
 body,
@@ -1786,6 +1787,7 @@ table.data-thumb-view.dataTable thead th:first-child {
 table.data-list-view.dataTable,
 table.data-thumb-view.dataTable {
   border-spacing: 0 0.95rem;
+  padding: 0;
 }
 
 .btn {
@@ -1800,5 +1802,41 @@ table.data-thumb-view.dataTable {
   padding: 0.5rem 1rem;
   font-size: 0.7rem;
   line-height: 1.4;
+}
+
+.grid-column-header a {
+  color: #7c858e;
+}
+
+.grid-column-header a:hover,
+.grid-column-header a.active {
+  color: #6355ee;
+}
+
+.grid-sort {
+  display: inline-block;
+  margin: -4px -4px 0 3px;
+  height: 17px;
+}
+
+.grid-sort .up:before {
+  font-family: "feather";
+  padding-right: 0.3rem;
+  font-size: 0.7rem;
+  content: "\E845";
+}
+
+.grid-sort .down {
+  margin: 6px 0 0 -1.17rem;
+}
+
+.grid-sort .down:after {
+  font-family: "feather";
+  content: "\E842";
+  font-size: 0.7rem;
+}
+
+.dropdown .dropdown-menu {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
 }
 

@@ -65,16 +65,13 @@ class Sorter implements Renderable
      */
     public function render()
     {
-        $icon = '';
-        $color = '';
         $type = 'desc';
+        $icon = 'up';
 
-        if ($this->isSorted()) {
+        if ($isSorted = $this->isSorted()) {
             $type = $this->sort['type'] == 'desc' ? 'asc' : 'desc';
-            if ($this->sort['type']) {
-                $icon .= $this->sort['type'] == 'desc' ? '-by-attributes-alt' : '-by-attributes';
-
-                $color = '';
+            if ($this->sort['type'] === 'asc') {
+                $icon = 'down';
             }
         }
 
@@ -94,10 +91,15 @@ class Sorter implements Renderable
             ]);
         }
 
-        if ($icon) {
-            $icon .= ' active';
+        if ($isSorted) {
+            return "&nbsp;<a href='{$url}' class='feather icon-arrow-{$icon} active'></a>";
         }
 
-        return " <a class=' glyphicon glyphicon-sort{$icon} $color' href='$url'></a>";
+        return <<<HTML
+<a href="{$url}" class="grid-sort">
+    <span class="pull-left up"></span>
+    <span class="pull-left down"></span>
+</a>
+HTML;
     }
 }

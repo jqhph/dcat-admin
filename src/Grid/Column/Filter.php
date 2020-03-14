@@ -132,7 +132,7 @@ abstract class Filter implements Renderable
         $style = $this->shouldDisplay() ? 'style=\'margin:3px 12px\'' : '';
 
         return $this->parent->addHeader(
-            "&nbsp;<a class='fa fa-undo' href='{$this->urlWithoutFilter()}' {$style}></a>"
+            "&nbsp;<a class='feather icon-rotate-ccw' href='{$this->urlWithoutFilter()}' {$style}></a>"
         );
     }
 
