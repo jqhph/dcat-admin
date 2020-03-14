@@ -1734,6 +1734,10 @@ h5 {
   font-family: Nunito, Montserrat, system-ui, BlinkMacSystemFont, -apple-system, sans-serif;
 }
 
+html body .content .content-wrapper {
+  padding: calc(2.2rem - 0.4rem) 2.45rem 0;
+}
+
 .btn {
   padding: 0.75rem 1.4rem !important;
   font-size: 0.95rem;
@@ -1775,7 +1779,7 @@ h5 {
   font-weight: 600;
 }
 
-.table th {
+table.dataTable thead th {
   color: #414750;
   font-size: 0.95rem;
 }
@@ -1848,8 +1852,8 @@ table.data-thumb-view.dataTable tbody tr:hover {
 
 .grid-sort {
   display: inline-block;
-  margin: -4px -4px 0 3px;
-  height: 17px;
+  margin: -2px -4px 0 3px;
+  height: 15px;
 }
 
 .grid-sort .up:before {

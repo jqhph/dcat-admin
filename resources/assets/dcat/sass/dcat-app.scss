@@ -26,6 +26,9 @@ body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
   font-family: Nunito, Montserrat,system-ui,BlinkMacSystemFont,-apple-system,sans-serif;
 }
 
+html body .content .content-wrapper {
+  padding: calc(2.2rem - 0.4rem) 2.45rem 0;
+}
 
 // 按钮
 @import "./components/button";
