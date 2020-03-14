@@ -34,7 +34,7 @@ class CreateButton implements Renderable
 
         [$width, $height] = $this->grid->option('dialog_form_area');
 
-        Form::modal($new)
+        Form::dialog($new)
             ->click(".{$class}")
             ->success('Dcat.reload()')
             ->dimensions($width, $height);

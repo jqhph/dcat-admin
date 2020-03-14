@@ -14,7 +14,7 @@ use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
-use Dcat\Admin\Widgets\ModalForm;
+use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -288,7 +288,7 @@ class Form implements Renderable
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
         $this->model(new Fluent());
-        $this->prepareModalForm();
+        $this->prepareDialogForm();
         $this->callResolving();
     }
 
@@ -1626,9 +1626,9 @@ class Form implements Renderable
     /**
      * @return $this
      */
-    protected function prepareModalForm()
+    protected function prepareDialogForm()
     {
-        ModalForm::prepare($this);
+        DialogForm::prepare($this);
 
         return $this;
     }
@@ -1641,24 +1641,24 @@ class Form implements Renderable
     public function inModal(\Closure $callback = null)
     {
         if (! $callback) {
-            return ModalForm::is();
+            return DialogForm::is();
         }
 
-        if (ModalForm::is()) {
+        if (DialogForm::is()) {
             $callback($this);
         }
     }
 
     /**
-     * Create a modal form.
+     * Create a dialog form.
      *
      * @param string|null $title
      *
-     * @return ModalForm
+     * @return DialogForm
      */
-    public static function modal(?string $title = null)
+    public static function dialog(?string $title = null)
     {
-        return new ModalForm($title);
+        return new DialogForm($title);
     }
 
     /**

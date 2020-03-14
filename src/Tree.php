@@ -498,7 +498,7 @@ JS;
         if ($this->useQuickEdit) {
             [$width, $height] = $this->dialogFormDimensions;
 
-            Form::modal(trans('admin.edit'))
+            Form::dialog(trans('admin.edit'))
                 ->click('.tree-quick-edit')
                 ->success('Dcat.reload()')
                 ->dimensions($width, $height);
@@ -513,7 +513,7 @@ JS;
         if ($this->useQuickCreate) {
             [$width, $height] = $this->dialogFormDimensions;
 
-            Form::modal(trans('admin.new'))
+            Form::dialog(trans('admin.new'))
                 ->click('.tree-quick-create')
                 ->success('Dcat.reload()')
                 ->dimensions($width, $height);

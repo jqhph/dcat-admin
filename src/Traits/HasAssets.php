@@ -120,4 +120,14 @@ trait HasAssets
     {
         static::assets()->style($style);
     }
+
+    /**
+     * @param string $font
+     *
+     * @return void
+     */
+    public static function fonts(string $font)
+    {
+        static::assets()->fonts = $font;
+    }
 }

@@ -8,14 +8,14 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 
-class ModalForm
+class DialogForm
 {
-    const QUERY_NAME = '_form_win_';
+    const QUERY_NAME = '_dialog_form_';
 
     /**
      * @var string
      */
-    public static $contentView = 'admin::contents.modal-form';
+    public static $contentView = 'admin::layouts.form-content';
 
     /**
      * @var array
@@ -255,7 +255,7 @@ JS
     }
 
     /**
-     * Automatically render to the body element.
+     * 自动渲染
      *
      * @return void
      */
@@ -268,13 +268,18 @@ JS
         });
     }
 
+    /**
+     * 配置选项初始化
+     *
+     * @return void
+     */
     protected function setupOptions()
     {
         $this->options['lang'] = [
-            'submit'      => trans('admin.submit'),
-            'reset'       => trans('admin.reset'),
-            'save_failed' => trans('admin.save_failed'),
+            'submit' => trans('admin.submit'),
+            'reset'  => trans('admin.reset'),
         ];
+
         $this->options['query'] = static::QUERY_NAME;
     }
 
@@ -297,11 +302,11 @@ JS
             return;
         }
 
-        Admin::$baseCss = [];
-        Admin::$baseJs = [];
-        Admin::$fonts = '';
+        Admin::baseCss([]);
+        Admin::baseJs([]);
+        Admin::fonts('');
 
-        Admin::$disableSkinCss = true;
+        Admin::assets()->full();
 
         $form->wrap(function ($v) {
             return $v;

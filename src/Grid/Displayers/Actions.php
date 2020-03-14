@@ -258,7 +258,7 @@ EOT;
 
             [$width, $height] = $this->grid->option('dialog_form_area');
 
-            Form::modal(trans('admin.edit'))
+            Form::dialog(trans('admin.edit'))
                 ->click(".{$this->grid->getRowName()}-edit")
                 ->dimensions($width, $height)
                 ->success('Dcat.reload()');
