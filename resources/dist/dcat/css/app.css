@@ -1737,6 +1737,14 @@ body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation >
   font-size: 1.3rem;
 }
 
+.header-navbar.navbar-shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.main-menu.menu-shadow {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+}
+
 .breadcrumb {
   border-left: 0;
 }
@@ -1763,5 +1771,34 @@ code {
 
 .pagination .page-item .page-link {
   font-weight: 600;
+}
+
+table.data-list-view.dataTable tbody tr,
+table.data-thumb-view.dataTable tbody tr {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+table.data-list-view.dataTable thead th:first-child,
+table.data-thumb-view.dataTable thead th:first-child {
+  padding-left: 1rem;
+}
+
+table.data-list-view.dataTable,
+table.data-thumb-view.dataTable {
+  border-spacing: 0 0.95rem;
+}
+
+.btn {
+  padding: 0.9rem 1.4rem;
+  /* font-size: 1rem; */
+  line-height: 0.8;
+  border-radius: 0.4rem;
+}
+
+.btn-sm,
+.btn-group-sm > .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
 }
 

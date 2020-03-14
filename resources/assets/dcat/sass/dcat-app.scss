@@ -10,13 +10,17 @@
 @import "../../sass/core/variables/variables";
 @import "./variables";
 
+// 进度条
 @import "./nprogress/NProgress";
+
+// sweetalert弹窗
 @import "./sweetalert/sweetalert2";
 
 html body {
   background-color: $body-background;
 }
 
+// 字体
 body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
   font-family: Nunito, Montserrat,system-ui,BlinkMacSystemFont,-apple-system,sans-serif;
 }
@@ -25,7 +29,17 @@ body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation >
    font-size: 1.3rem;
 }
 
-// 导航栏
+// 顶部导航栏
+.header-navbar.navbar-shadow {
+  box-shadow: $shadow;
+}
+
+// 菜单
+.main-menu.menu-shadow {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+}
+
+// 面包屑导航
 .breadcrumb {
   border-left: 0;
 }
@@ -45,12 +59,42 @@ body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation >
   }
 }
 
+// code
 code {
   box-shadow: 0 1px 1px rgba(0,0,0,0.125);
   padding: 3px 5px;
   background: #f1f1f1;
 }
 
+// 分页
 .pagination .page-item .page-link {
   font-weight: 600;
+}
+
+// data-list-view 表格
+table.data-list-view.dataTable tbody tr, table.data-thumb-view.dataTable tbody tr {
+  box-shadow: $shadow;
+}
+
+table.data-list-view.dataTable thead th:first-child, table.data-thumb-view.dataTable thead th:first-child {
+  padding-left: 1rem;
+}
+
+table.data-list-view.dataTable, table.data-thumb-view.dataTable {
+  border-spacing: 0 .95rem;
+}
+
+
+// 按钮
+.btn {
+  padding: 0.9rem 1.4rem;
+  /* font-size: 1rem; */
+  line-height: .8;
+  border-radius: 0.4rem;
+}
+
+.btn-sm, .btn-group-sm > .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
 }
