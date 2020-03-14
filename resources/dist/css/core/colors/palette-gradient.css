@@ -87,7 +87,7 @@
 .bg-gradient-primary {
   background: #640064;
   color: #fff;
-  background-image: linear-gradient(30deg, #7367f0, rgba(115, 103, 240, 0.5));
+  background-image: linear-gradient(30deg, #4d5ec1, rgba(77, 94, 193, 0.5));
   background-repeat: repeat-x;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .gradient-light-primary {
-  background: linear-gradient(30deg, #7367f0 0%, #ce9ffc 100%);
+  background: linear-gradient(30deg, #4d5ec1 0%, #9175dd 100%);
   color: #fff;
 }
 

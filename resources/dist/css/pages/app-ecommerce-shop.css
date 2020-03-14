@@ -38,7 +38,7 @@
 }
 
 .ecommerce-application .sidebar-shop .vs-radio-con input:checked ~ span {
-  color: #7367f0;
+  color: #4d5ec1;
 }
 
 .ecommerce-application .sidebar-shop .filter-title {
@@ -66,7 +66,7 @@
 .ecommerce-application .sidebar-shop .range-slider.noUi-horizontal .noUi-handle .noUi-tooltip {
   opacity: 0;
   font-size: 0.75rem;
-  background-color: #7367f0;
+  background-color: #4d5ec1;
   color: #fff;
   border-radius: 0.357rem;
   border: none;
@@ -129,12 +129,12 @@
 }
 
 .ecommerce-application .ecommerce-header-items .view-options .view-btn-option .btn.view-btn.active {
-  color: #7367f0 !important;
+  color: #4d5ec1 !important;
 }
 
 .ecommerce-application .ecommerce-header-items .view-options .view-btn-option .btn.view-btn.active:hover,
 .ecommerce-application .ecommerce-header-items .view-options .view-btn-option .btn.view-btn.active:active {
-  color: #7367f0 !important;
+  color: #4d5ec1 !important;
 }
 
 .ecommerce-application .ecommerce-header-items .view-options .view-btn-option .btn.view-btn:hover,
@@ -273,7 +273,7 @@
 }
 
 .ecommerce-application .ecommerce-card .cart {
-  background-color: #7367f0;
+  background-color: #4d5ec1;
   color: #fff;
 }
 
@@ -408,7 +408,7 @@
 }
 
 .ecommerce-application .list-view .ecommerce-card .card-content .card-body .item-company .company-name {
-  color: #7367f0;
+  color: #4d5ec1;
 }
 
 .ecommerce-application .list-view .ecommerce-card .card-content .item-options {
@@ -509,7 +509,7 @@
 }
 
 .ecommerce-application .checkout-options .coupons .apply-coupon {
-  color: #7367f0;
+  color: #4d5ec1;
   font-weight: 500;
   cursor: pointer;
 }
@@ -543,7 +543,7 @@
 }
 
 .ecommerce-application .checkout-options .detail .detail-amt.emi-details {
-  color: #7367f0;
+  color: #4d5ec1;
   cursor: pointer;
 }
 
@@ -561,12 +561,12 @@
 }
 
 .ecommerce-application .wizard.checkout-tab-steps .steps ul li.error > a {
-  color: #7367f0;
+  color: #4d5ec1;
 }
 
 .ecommerce-application .wizard.checkout-tab-steps .steps ul li.error > a .step {
-  border-color: #7367f0;
-  background-color: #7367f0;
+  border-color: #4d5ec1;
+  background-color: #4d5ec1;
 }
 
 .ecommerce-application .wizard.checkout-tab-steps #checkout-address .form-group .error {

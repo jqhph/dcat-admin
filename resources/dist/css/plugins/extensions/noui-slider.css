@@ -81,7 +81,7 @@
   border: none;
   border-radius: 50%;
   background: #fff;
-  border: 5px solid #7367f0;
+  border: 5px solid #4d5ec1;
 }
 
 .noUi-handle:after,
@@ -90,7 +90,7 @@
 }
 
 .circle-filled .noUi-handle {
-  background: #7367f0;
+  background: #4d5ec1;
   border-radius: 50%;
 }
 
@@ -100,7 +100,7 @@
 }
 
 .square .noUi-handle {
-  background: #7367f0;
+  background: #4d5ec1;
   border-radius: 3px;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .noUi-connect {
-  background: #7367f0;
+  background: #4d5ec1;
   box-shadow: none;
 }
 
@@ -183,7 +183,7 @@
 }
 
 .noUi-vertical.square .noUi-handle {
-  background: #7367f0;
+  background: #4d5ec1;
   border-radius: 3px;
 }
 

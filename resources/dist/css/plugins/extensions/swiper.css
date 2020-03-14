@@ -34,17 +34,17 @@
 }
 
 .swiper-centered-slides.swiper-container .swiper-slide.swiper-slide-active {
-  border: 2px solid #7367f0;
+  border: 2px solid #4d5ec1;
 }
 
 .swiper-centered-slides.swiper-container .swiper-slide.swiper-slide-active i {
-  color: #7367f0;
+  color: #4d5ec1;
 }
 
 .swiper-centered-slides .swiper-button-next:after,
 .swiper-centered-slides .swiper-button-prev:after {
   border-radius: 50%;
-  background-color: #7367f0;
+  background-color: #4d5ec1;
   box-shadow: 0 2px 4px 0 rgba(34, 41, 47, 0.5) !important;
 }
 
@@ -58,8 +58,8 @@
 
 .swiper-centered-slides-2.swiper-container .swiper-slide.swiper-slide-active {
   color: #fff;
-  background-color: #7367f0;
-  box-shadow: 0 3px 6px 0 rgba(115, 103, 240, 0.5) !important;
+  background-color: #4d5ec1;
+  box-shadow: 0 3px 6px 0 rgba(77, 94, 193, 0.5) !important;
 }
 
 /* cube effect */
