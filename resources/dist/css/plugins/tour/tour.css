@@ -14,11 +14,11 @@
 }
 
 .tippy-popper .tippy-tooltip .tippy-arrow {
-  border-bottom-color: #4d5ec1;
+  border-bottom-color: #5c6bc6;
 }
 
 .tippy-popper .tippy-tooltip .tippy-content .shepherd-content {
-  background-color: #4d5ec1;
+  background-color: #5c6bc6;
   padding: 1.3rem 1rem;
   border-radius: 0.5rem;
 }
@@ -59,21 +59,21 @@
 
 .tippy-popper[x-placement=top] .tippy-arrow {
   border-color: transparent;
-  border-top-color: #4d5ec1;
+  border-top-color: #5c6bc6;
 }
 
 .tippy-popper[x-placement=bottom] .tippy-arrow {
   border-color: transparent;
-  border-bottom-color: #4d5ec1;
+  border-bottom-color: #5c6bc6;
 }
 
 .tippy-popper[x-placement=right] .tippy-arrow {
   border-color: transparent;
-  border-right-color: #4d5ec1;
+  border-right-color: #5c6bc6;
 }
 
 .tippy-popper[x-placement=left] .tippy-arrow {
   border-color: transparent;
-  border-left-color: #4d5ec1;
+  border-left-color: #5c6bc6;
 }
 

@@ -22,12 +22,13 @@ $gray-800: #1e1e1e; // $gray-dark
 $gray-900: #2a2e30;
 $black: #22292f;
 
-$indigo: #4d5ec1;
+//$indigo: #4d5ec1;
+$indigo: #5c6bc6;
 
 $blue: #00cfe8; //$info
 $red: #ea5455; //$danger
 $orange: #ff9f43; //$warning
-$green: #28c76f; //$success
+$green: #21b978; //$success
 $cyan: #7367f0; //$primary
 
 $primary: $indigo;
@@ -66,8 +67,8 @@ $body-color: #626262;
 //
 // Style anchor elements.
 
-$link-color: $primary;
-$link-hover-color: darken($link-color, 5%);
+$link-color: darken($primary, 5%);
+$link-hover-color: darken($link-color, 10%);
 $link-hover-decoration: none;
 
 // Grid columns

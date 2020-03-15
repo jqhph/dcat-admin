@@ -263,8 +263,8 @@ table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:before {
 
 table.data-list-view.dataTable thead .dt-checkboxes-select-all input:after,
 table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:after {
-  background-color: #4d5ec1;
-  border: 2px solid #4d5ec1;
+  background-color: #5c6bc6;
+  border: 2px solid #5c6bc6;
   font-family: "feather";
   content: "\E83F";
   font-size: 0.75rem;
@@ -287,7 +287,7 @@ table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:active:che
 
 table.data-list-view.dataTable thead .dt-checkboxes-select-all input:checked:before,
 table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:checked:before {
-  border: 2px solid #4d5ec1;
+  border: 2px solid #5c6bc6;
   transform: rotate(0deg);
 }
 
@@ -376,7 +376,7 @@ table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:before {
 
 table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:after,
 table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:after {
-  background-color: #4d5ec1;
+  background-color: #5c6bc6;
   font-family: "feather";
   content: "\E83F";
   font-size: 0.75rem;
@@ -400,7 +400,7 @@ table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:active:checked
 table.data-list-view.dataTable tbody td.dt-checkboxes-cell input:checked:before,
 table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:checked:before {
   transform: rotate(0deg);
-  border: 2px solid #4d5ec1;
+  border: 2px solid #5c6bc6;
   transition: all 0.2s ease;
 }
 

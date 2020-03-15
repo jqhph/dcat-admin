@@ -6,7 +6,7 @@
 
 .dropzone {
   min-height: 350px;
-  border: 2px dashed #4d5ec1;
+  border: 2px dashed #5c6bc6;
   background: #f8f8f8;
 }
 
@@ -18,7 +18,7 @@
   width: 100%;
   height: 300px;
   margin-top: -30px;
-  color: #4d5ec1;
+  color: #5c6bc6;
   text-align: center;
 }
 
@@ -35,7 +35,7 @@
   margin-left: -40px;
   line-height: 1;
   z-index: 2;
-  color: #4d5ec1;
+  color: #5c6bc6;
   text-indent: 0px;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;

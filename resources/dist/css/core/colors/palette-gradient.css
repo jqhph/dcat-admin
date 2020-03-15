@@ -87,7 +87,7 @@
 .bg-gradient-primary {
   background: #640064;
   color: #fff;
-  background-image: linear-gradient(30deg, #4d5ec1, rgba(77, 94, 193, 0.5));
+  background-image: linear-gradient(30deg, #5c6bc6, rgba(92, 107, 198, 0.5));
   background-repeat: repeat-x;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .gradient-light-primary {
-  background: linear-gradient(30deg, #4d5ec1 0%, #9175dd 100%);
+  background: linear-gradient(30deg, #5c6bc6 0%, #9e85e1 100%);
   color: #fff;
 }
 
@@ -131,7 +131,7 @@
 .bg-gradient-success {
   background: #0064fa;
   color: #fff;
-  background-image: linear-gradient(30deg, #28c76f, rgba(40, 199, 111, 0.5));
+  background-image: linear-gradient(30deg, #21b978, rgba(33, 185, 120, 0.5));
   background-repeat: repeat-x;
 }
 
@@ -141,7 +141,7 @@
 }
 
 .gradient-light-success {
-  background: linear-gradient(30deg, #28c76f 0%, #4ae9d3 100%);
+  background: linear-gradient(30deg, #21b978 0%, #34eae8 100%);
   color: #fff;
 }
 

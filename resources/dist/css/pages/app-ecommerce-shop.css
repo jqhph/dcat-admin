@@ -38,7 +38,7 @@
 }
 
 .ecommerce-application .sidebar-shop .vs-radio-con input:checked ~ span {
-  color: #4d5ec1;
+  color: #5c6bc6;
 }
 
 .ecommerce-application .sidebar-shop .filter-title {
@@ -66,7 +66,7 @@
 .ecommerce-application .sidebar-shop .range-slider.noUi-horizontal .noUi-handle .noUi-tooltip {
   opacity: 0;
   font-size: 0.75rem;
-  background-color: #4d5ec1;
+  background-color: #5c6bc6;
   color: #fff;
   border-radius: 0.357rem;
   border: none;
@@ -129,12 +129,12 @@
 }
 
 .ecommerce-application .ecommerce-header-items .view-options .view-btn-option .btn.view-btn.active {
-  color: #4d5ec1 !important;
+  color: #5c6bc6 !important;
 }
 
 .ecommerce-application .ecommerce-header-items .view-options .view-btn-option .btn.view-btn.active:hover,
 .ecommerce-application .ecommerce-header-items .view-options .view-btn-option .btn.view-btn.active:active {
-  color: #4d5ec1 !important;
+  color: #5c6bc6 !important;
 }
 
 .ecommerce-application .ecommerce-header-items .view-options .view-btn-option .btn.view-btn:hover,
@@ -273,7 +273,7 @@
 }
 
 .ecommerce-application .ecommerce-card .cart {
-  background-color: #4d5ec1;
+  background-color: #5c6bc6;
   color: #fff;
 }
 
@@ -408,7 +408,7 @@
 }
 
 .ecommerce-application .list-view .ecommerce-card .card-content .card-body .item-company .company-name {
-  color: #4d5ec1;
+  color: #5c6bc6;
 }
 
 .ecommerce-application .list-view .ecommerce-card .card-content .item-options {
@@ -451,7 +451,7 @@
 }
 
 .ecommerce-application .checkout-items .ecommerce-card .card-content .stock-status-in {
-  color: #28c76f;
+  color: #21b978;
   font-weight: 400;
   font-size: 0.875rem;
 }
@@ -488,7 +488,7 @@
 }
 
 .ecommerce-application .checkout-items .ecommerce-card .card-content .offers {
-  color: #28c76f;
+  color: #21b978;
 }
 
 .ecommerce-application .checkout-options .options-title {
@@ -509,7 +509,7 @@
 }
 
 .ecommerce-application .checkout-options .coupons .apply-coupon {
-  color: #4d5ec1;
+  color: #5c6bc6;
   font-weight: 500;
   cursor: pointer;
 }
@@ -539,11 +539,11 @@
 }
 
 .ecommerce-application .checkout-options .detail .detail-amt.discount-amt {
-  color: #28c76f;
+  color: #21b978;
 }
 
 .ecommerce-application .checkout-options .detail .detail-amt.emi-details {
-  color: #4d5ec1;
+  color: #5c6bc6;
   cursor: pointer;
 }
 
@@ -561,12 +561,12 @@
 }
 
 .ecommerce-application .wizard.checkout-tab-steps .steps ul li.error > a {
-  color: #4d5ec1;
+  color: #5c6bc6;
 }
 
 .ecommerce-application .wizard.checkout-tab-steps .steps ul li.error > a .step {
-  border-color: #4d5ec1;
-  background-color: #4d5ec1;
+  border-color: #5c6bc6;
+  background-color: #5c6bc6;
 }
 
 .ecommerce-application .wizard.checkout-tab-steps #checkout-address .form-group .error {

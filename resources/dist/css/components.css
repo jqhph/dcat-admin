@@ -198,7 +198,7 @@ html body[data-col="1-column"] .footer {
 }
 
 html .pace .pace-progress {
-  background: #4d5ec1;
+  background: #5c6bc6;
 }
 
 .app-content.center-layout {
@@ -485,8 +485,8 @@ body.fixed-footer footer.footer-dark {
 }
 
 .main-menu.menu-light .navigation > li.active > a {
-  background: linear-gradient(118deg, #4d5ec1, rgba(77, 94, 193, 0.7));
-  box-shadow: 0 0 10px 1px rgba(77, 94, 193, 0.7);
+  background: linear-gradient(118deg, #5c6bc6, rgba(92, 107, 198, 0.7));
+  box-shadow: 0 0 10px 1px rgba(92, 107, 198, 0.7);
   color: #fff;
   font-weight: 400;
   border-radius: 4px;
@@ -497,7 +497,7 @@ body.fixed-footer footer.footer-dark {
 }
 
 .main-menu.menu-light .navigation > li .active > a {
-  color: #4d5ec1;
+  color: #5c6bc6;
   margin-bottom: 0;
 }
 
@@ -544,8 +544,8 @@ body.fixed-footer footer.footer-dark {
 }
 
 .main-menu.menu-light .navigation > li ul .active {
-  background: linear-gradient(118deg, #4d5ec1, rgba(77, 94, 193, 0.7));
-  box-shadow: 0 0 10px 1px rgba(77, 94, 193, 0.7);
+  background: linear-gradient(118deg, #5c6bc6, rgba(92, 107, 198, 0.7));
+  box-shadow: 0 0 10px 1px rgba(92, 107, 198, 0.7);
   border-radius: 4px;
 }
 
@@ -700,8 +700,8 @@ body.fixed-footer footer.footer-dark {
 }
 
 .main-menu.menu-dark .navigation > li.active > a {
-  background: linear-gradient(118deg, #4d5ec1, rgba(77, 94, 193, 0.7));
-  box-shadow: 0 0 10px 1px rgba(77, 94, 193, 0.7);
+  background: linear-gradient(118deg, #5c6bc6, rgba(92, 107, 198, 0.7));
+  box-shadow: 0 0 10px 1px rgba(92, 107, 198, 0.7);
   color: #fff;
   font-weight: 400;
   border-radius: 4px;
@@ -712,7 +712,7 @@ body.fixed-footer footer.footer-dark {
 }
 
 .main-menu.menu-dark .navigation > li .active > a {
-  color: #4d5ec1;
+  color: #5c6bc6;
   margin-bottom: 0;
 }
 
@@ -759,8 +759,8 @@ body.fixed-footer footer.footer-dark {
 }
 
 .main-menu.menu-dark .navigation > li ul .active {
-  background: linear-gradient(118deg, #4d5ec1, rgba(77, 94, 193, 0.7));
-  box-shadow: 0 0 10px 1px rgba(77, 94, 193, 0.7);
+  background: linear-gradient(118deg, #5c6bc6, rgba(92, 107, 198, 0.7));
+  box-shadow: 0 0 10px 1px rgba(92, 107, 198, 0.7);
   border-radius: 4px;
 }
 
@@ -897,7 +897,7 @@ body.fixed-footer footer.footer-dark {
 }
 
 .main-menu .navbar-header .navbar-brand .brand-text {
-  color: #4d5ec1;
+  color: #5c6bc6;
   padding-left: 1rem;
   font-weight: 600;
   letter-spacing: 0.01rem;
@@ -1005,14 +1005,14 @@ body.fixed-footer footer.footer-dark {
 }
 
 .dropdown-notification .dropdown-menu.dropdown-menu-right::before {
-  background: #4d5ec1;
-  border-color: #4d5ec1;
+  background: #5c6bc6;
+  border-color: #5c6bc6;
 }
 
 .dropdown-notification .dropdown-menu-header {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  background: #4d5ec1;
+  background: #5c6bc6;
   color: #fff;
   text-align: center;
 }
@@ -1891,7 +1891,7 @@ body.fixed-footer .main-menu.menu-fixed {
 }
 
 .avatar .avatar-status-online {
-  background-color: #28c76f;
+  background-color: #21b978;
 }
 
 .avatar .avatar-status-busy {
@@ -2111,7 +2111,7 @@ body.fixed-footer .main-menu.menu-fixed {
 }
 
 .navbar-container .bookmark-input input:focus {
-  border: 1px solid #4d5ec1;
+  border: 1px solid #5c6bc6;
 }
 
 .navbar-container .bookmark-input .search-list {
@@ -3352,7 +3352,7 @@ body.navbar-static .navbar-container .search-input.open {
 }
 
 .fonticon-container:hover i {
-  color: #4d5ec1;
+  color: #5c6bc6;
   font-size: 2.9rem;
   transform: scale(1.3);
 }
@@ -3461,7 +3461,7 @@ body.navbar-static .navbar-container .search-input.open {
 }
 
 .customizer .customizer-toggle {
-  background: #4d5ec1;
+  background: #5c6bc6;
   color: #fff;
   display: block;
   box-shadow: -3px 0px 8px rgba(0, 0, 0, 0.1);
@@ -3833,7 +3833,7 @@ input[type=month].form-control {
 
 .floating-label-form-group-with-focus label,
 .floating-label-form-group-with-value label {
-  color: #4d5ec1 !important;
+  color: #5c6bc6 !important;
   text-transform: uppercase;
   font-weight: 400;
 }
@@ -3857,7 +3857,7 @@ input[type=month].form-control {
 .select2-container--classic .select2-selection--single:focus,
 .select2-container--default .select2-selection--single:focus {
   outline: 0;
-  border-color: #4d5ec1 !important;
+  border-color: #5c6bc6 !important;
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -3873,7 +3873,7 @@ input[type=month].form-control {
 
 .select2-container--classic.select2-container--open .select2-selection--single,
 .select2-container--default.select2-container--open .select2-selection--single {
-  border-color: #4d5ec1 !important;
+  border-color: #5c6bc6 !important;
   outline: 0;
 }
 
@@ -3884,7 +3884,7 @@ input[type=month].form-control {
 
 .select2-container--classic.select2-container--focus .select2-selection--multiple,
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-  border-color: #4d5ec1 !important;
+  border-color: #5c6bc6 !important;
   outline: 0;
 }
 
@@ -3897,14 +3897,14 @@ input[type=month].form-control {
 .select2-container--classic .select2-selection--multiple:focus,
 .select2-container--default .select2-selection--multiple:focus {
   outline: 0;
-  border-color: #4d5ec1 !important;
+  border-color: #5c6bc6 !important;
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15) !important;
 }
 
 .select2-container--classic .select2-selection--multiple .select2-selection__choice,
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  background-color: #4d5ec1 !important;
-  border-color: #3948a2 !important;
+  background-color: #5c6bc6 !important;
+  border-color: #3e4eb1 !important;
   color: #fff;
   padding: 5px;
 }
@@ -4029,7 +4029,7 @@ input[type=month].form-control {
 }
 
 .select2 .form-control::focus {
-  border-color: #4d5ec1 !important;
+  border-color: #5c6bc6 !important;
 }
 
 table.dataTable {
@@ -4102,9 +4102,9 @@ table.dataTable.complex-headers tfoot td {
 }
 
 table.dataTable tbody tr.selected {
-  background-color: rgba(77, 94, 193, 0.05) !important;
-  color: #4d5ec1 !important;
-  box-shadow: 0 0 1px 0 #4d5ec1 !important;
+  background-color: rgba(92, 107, 198, 0.05) !important;
+  color: #5c6bc6 !important;
+  box-shadow: 0 0 1px 0 #5c6bc6 !important;
   border-radius: 5px;
 }
 

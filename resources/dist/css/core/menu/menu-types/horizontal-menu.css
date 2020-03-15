@@ -271,7 +271,7 @@
 
 .horizontal-menu .header-navbar.navbar-horizontal ul#main-menu-navigation > li > .dropdown-menu .active > a {
   background: #f8f8f8;
-  color: #4d5ec1;
+  color: #5c6bc6;
   font-weight: 500;
 }
 
@@ -297,8 +297,8 @@
 }
 
 .horizontal-menu .header-navbar.navbar-horizontal ul#main-menu-navigation > li.active > a {
-  background: linear-gradient(118deg, #4d5ec1, rgba(77, 94, 193, 0.7));
-  box-shadow: 0px 0px 6px 1px rgba(77, 94, 193, 0.6);
+  background: linear-gradient(118deg, #5c6bc6, rgba(92, 107, 198, 0.7));
+  box-shadow: 0 0 6px 1px rgba(92, 107, 198, 0.6);
   color: #fff;
   border-radius: 4px;
 }
@@ -316,7 +316,7 @@
 }
 
 .horizontal-menu .navbar-dark .nav-item.active > a {
-  border-bottom: 2px solid #4d5ec1;
+  border-bottom: 2px solid #5c6bc6;
   background-color: #313c50;
 }
 

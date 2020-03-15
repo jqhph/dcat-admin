@@ -67,9 +67,12 @@ class Sorter implements Renderable
     {
         $type = 'desc';
         $icon = 'up';
+        $active = '';
 
-        if ($isSorted = $this->isSorted()) {
+        if ($this->isSorted()) {
             $type = $this->sort['type'] == 'desc' ? 'asc' : 'desc';
+            $active = 'active';
+
             if ($this->sort['type'] === 'asc') {
                 $icon = 'down';
             }
@@ -91,15 +94,6 @@ class Sorter implements Renderable
             ]);
         }
 
-        if ($isSorted) {
-            return "&nbsp;<a href='{$url}' class='feather icon-arrow-{$icon} active'></a>";
-        }
-
-        return <<<HTML
-<a href="{$url}" class="grid-sort">
-    <span class="pull-left up"></span>
-    <span class="pull-left down"></span>
-</a>
-HTML;
+        return "&nbsp;<a href='{$url}' class='feather icon-arrow-{$icon} {$active}'></a>";
     }
 }

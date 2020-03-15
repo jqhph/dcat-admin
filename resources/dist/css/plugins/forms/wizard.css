@@ -67,13 +67,13 @@
 }
 
 .app-content .wizard > .steps > ul > li.current > a {
-  color: #4d5ec1;
+  color: #5c6bc6;
   cursor: default;
 }
 
 .app-content .wizard > .steps > ul > li.current .step {
-  border-color: #4d5ec1;
-  background-color: #4d5ec1;
+  border-color: #5c6bc6;
+  background-color: #5c6bc6;
   color: #fff;
 }
 
@@ -110,13 +110,13 @@
 
 .app-content .wizard > .steps > ul > li.done .step {
   background-color: #fff;
-  border-color: #4d5ec1;
+  border-color: #5c6bc6;
   color: #b8c2cc;
 }
 
 .app-content .wizard > .steps > ul > li.done:last-child .step {
-  background-color: #4d5ec1;
-  border-color: #4d5ec1;
+  background-color: #5c6bc6;
+  border-color: #5c6bc6;
   color: #fff;
 }
 
@@ -198,7 +198,7 @@
 }
 
 .app-content .wizard > .actions > ul > li > a {
-  background: #4d5ec1;
+  background: #5c6bc6;
   color: #fff;
   display: block;
   padding: 7px 12px;
@@ -219,7 +219,7 @@
 }
 
 .app-content .wizard > .actions > ul > li > a[href="#previous"] {
-  background-color: #4d5ec1;
+  background-color: #5c6bc6;
   color: #fff;
   border-radius: 0.42rem;
 }
@@ -265,7 +265,7 @@
   top: 43px;
   width: 50%;
   height: 3px;
-  background-color: #4d5ec1;
+  background-color: #5c6bc6;
 }
 
 .app-content .wizard.wizard-circle > .steps > ul > li.current:after {
@@ -307,13 +307,13 @@
 
   .app-content .wizard > .steps > ul > li:last-child:after {
     content: "";
-    background-color: #4d5ec1;
+    background-color: #5c6bc6;
   }
 }
 
 @media (max-width: 480px) {
   .app-content .wizard > .steps > ul > li.current:after {
-    background-color: #4d5ec1;
+    background-color: #5c6bc6;
   }
 }
 

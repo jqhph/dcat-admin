@@ -299,7 +299,7 @@
         &.active{
           > a{
             background: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
-            box-shadow: 0px 0px 6px 1px rgba($primary, 0.6);
+            box-shadow: 0 0 6px 1px rgba($primary, 0.6);
             color: $white;
             border-radius: 4px;
           }
