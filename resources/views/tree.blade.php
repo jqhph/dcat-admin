@@ -18,7 +18,7 @@
 
         @if($useRefresh)
             &nbsp;<div class="btn-group" style="margin-right:3px">
-                <button class="btn btn-custom btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></button>
+                <button class="btn btn-primary btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></button>
             </div>
         @endif
 

@@ -62,15 +62,27 @@ mix.copyDirectory('resources/assets/fonts', 'resources/dist/fonts');
 mix.copyDirectory('resources/assets/vendors', 'resources/dist/vendors');
 
 
+
+// ------------------------------------ Dcat Admin -------------------------------------------
 function dcat_path(path) {
   return 'resources/assets/dcat/' + path;
 }
 
-// dcat-admin
-mix.copyDirectory('resources/assets/plugins', 'resources/dist/plugins');
-mix.js(dcat_path('js/dcat-app.js'), 'resources/dist/dcat/js/app.js')
-    .js(dcat_path('extra/resource-selector.js'), 'resources/dist/dcat/extra/resource-selector.js')
-    .sass(dcat_path('sass/dcat-app.scss'), 'resources/dist/dcat/css/app.css');
+function dcat_dist_path(path) {
+  return 'resources/dist/dcat/' + path;
+}
+
+// 复制第三方插件文件夹
+mix.copyDirectory(dcat_path('plugins'), dcat_dist_path('plugins'));
+// 打包app.js
+mix.js(dcat_path('js/dcat-app.js'), dcat_dist_path('js/app.js'));
+// 打包app.scss
+mix.sass(dcat_path('sass/dcat-app.scss'), dcat_dist_path('css/app.css'));
+
+// 打包所有 extra 里面的所有js
+mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.scripts(src, dest));
+
+// ------------------------------------ Dcat Admin -------------------------------------------
 
 mix.js('resources/assets/js/core/app-menu.js', 'resources/dist/js/core')
     .js('resources/assets/js/core/app.js', 'resources/dist/js/core')

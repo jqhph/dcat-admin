@@ -67,8 +67,7 @@ class Responsive
 
     public function build()
     {
-        Admin::css('dcat-admin/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css');
-        Admin::js('dcat-admin/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js');
+        Admin::collectAssets('rwd-table');
 
         $opt = json_encode($this->options);
 

@@ -58,8 +58,8 @@ class Assets
         'menu'   => 'dcat-admin/js/core/app-menu.js',
         'app'    => 'dcat-admin/js/core/app.js',
         'toastr' => 'dcat-admin/vendors/js/extensions/toastr.min.js',
-        'pjax'   => 'dcat-admin/plugins/jquery-pjax/jquery.pjax.min.js',
-        'layer'  => 'dcat-admin/plugins/layer/layer.js',
+        'pjax'   => 'dcat-admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
+        'layer'  => 'dcat-admin/dcat/plugins/layer/layer.js',
     ];
 
     /**
@@ -67,16 +67,20 @@ class Assets
      */
     public $components = [
         'jquery.nestable' => [
-            'js'  => 'dcat-admin/plugins/nestable/jquery.nestable.min.js',
-            'css' => 'dcat-admin/plugins/nestable/nestable.css',
+            'js'  => 'dcat-admin/dcat/plugins/nestable/jquery.nestable.min.js',
+            'css' => 'dcat-admin/dcat/plugins/nestable/nestable.css',
         ],
         'select2' => [
             'js'  => 'dcat-admin/vendors/js/forms/select/select2.full.min.js',
             'css' => 'dcat-admin/vendors/css/forms/select/select2.min.css',
         ],
         'bootstrap-datetimepicker' => [
-            'js'  => 'dcat-admin/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
-            'css' => 'dcat-admin/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css',
+            'js'  => 'dcat-admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
+            'css' => 'dcat-admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css',
+        ],
+        'rwd-table' => [
+            'js'  => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js',
+            'css' => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css',
         ],
     ];
 
