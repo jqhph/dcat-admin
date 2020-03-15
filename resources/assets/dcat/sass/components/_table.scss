@@ -57,3 +57,14 @@ table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable t
   position: relative;
   color: $white;
 }
+
+// 解决 rwd-table 下拉选框显示bug
+.table-responsive {
+  border: 0!important;
+  margin-bottom: 0!important;
+}
+.data-list-view-header .table-responsive {
+  overflow: visible!important;
+  padding-bottom: 0!important;
+}
+// 解决 rwd-table 下拉选框显示bug

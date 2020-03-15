@@ -52,6 +52,12 @@
   color: $custom;
 }
 
+.btn.btn-white {
+  color: $font-color;
+}
+.btn.btn-white.btn-primary, .btn.btn-white.btn-primary:hover, .btn.btn-white.btn-primary:focus {
+  color: $white !important;
+}
 .btn-white:hover {
   box-shadow: $btn-shadow-hover !important;
 }

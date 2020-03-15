@@ -52,6 +52,11 @@ function extend (Dcat) {
     Dcat.DialogForm = function (options) {
         return new DialogForm(Dcat, options);
     };
+
+    // 滑动窗
+    Dcat.Slider = function (options) {
+
+    };
 }
 
 // 初始化

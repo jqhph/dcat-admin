@@ -67,15 +67,15 @@ class Responsive
 
     public function build()
     {
-        Admin::css('vendor/dcat-admin/RWD-Table-Patterns/dist/css/rwd-table.min.css');
-        Admin::js('vendor/dcat-admin/RWD-Table-Patterns/dist/js/rwd-table.min.js');
+        Admin::css('dcat-admin/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css');
+        Admin::js('dcat-admin/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js');
 
         $opt = json_encode($this->options);
 
         if (request()->pjax()) {
-            Admin::script("$('.table-responsive').responsiveTable($opt);");
+            Admin::script("$('#{$this->grid->getTableId()}').parent().responsiveTable($opt);");
         } else {
-            Admin::script("setTimeout(function(){ $('.table-responsive').responsiveTable($opt); },5);");
+            Admin::script("setTimeout(function(){ $('#{$this->grid->getTableId()}').parent().responsiveTable($opt); },10);");
         }
     }
 }

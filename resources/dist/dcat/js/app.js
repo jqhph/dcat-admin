@@ -460,7 +460,10 @@ function extend(Dcat) {
 
   Dcat.DialogForm = function (options) {
     return new _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__["default"](Dcat, options);
-  };
+  }; // 滑动窗
+
+
+  Dcat.Slider = function (options) {};
 } // 初始化
 
 
