@@ -20,6 +20,7 @@ import Grid from './extensions/Grid'
 import Form from './extensions/Form'
 import DialogForm from './extensions/DialogForm'
 import Loading from './extensions/Loading'
+import PreviewImage from './extensions/PreviewImage'
 
 import Menu from './bootstrappers/Menu'
 import Footer from './bootstrappers/Footer'
@@ -31,14 +32,22 @@ let win = window,
 
 // 扩展Dcat对象
 function extend (Dcat) {
+    // 工具函数
     new Helpers(Dcat);
+    // ajax处理相关扩展函数
     new Ajax(Dcat);
+    // Toastr简化使用函数
     new Toastr(Dcat);
+    // SweetAlert2简化使用函数
     new SweetAlert2(Dcat);
+    // Grid相关功能函数
     new Grid(Dcat);
+    // loading效果
     new Loading(Dcat);
+    // 图片预览功能
+    new PreviewImage(Dcat);
 
-    // NProgress
+    // 加载进度条
     Dcat.NP = NProgress;
 
     // 行选择器
@@ -56,7 +65,7 @@ function extend (Dcat) {
         return new DialogForm(Dcat, options);
     };
 
-    // 滑动窗
+    // 滑动面板
     Dcat.Slider = function (options) {
 
     };
@@ -87,7 +96,7 @@ function listen(Dcat) {
     Dcat.bootingEveryRequest(() => {
         // pjax初始化功能
         new Pjax(Dcat);
-        // data-action 动作绑定
+        // data-action 动作绑定(包括删除、批量删除等操作)
         new DataActions(Dcat);
 
     });

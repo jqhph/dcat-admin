@@ -318,8 +318,7 @@ var actions = {
     var lang = Dcat.lang;
     $('[data-action="delete"]').off('click').click(function () {
       var url = $(this).data('url'),
-          redirect = $(this).data('redirect'),
-          id = $(this).data('id');
+          redirect = $(this).data('redirect');
       Dcat.confirm(lang.delete_confirm, url, function () {
         Dcat.NP.start();
         $.ajax({
@@ -637,10 +636,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _extensions_Form__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./extensions/Form */ "./resources/assets/dcat/js/extensions/Form.js");
 /* harmony import */ var _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./extensions/DialogForm */ "./resources/assets/dcat/js/extensions/DialogForm.js");
 /* harmony import */ var _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./extensions/Loading */ "./resources/assets/dcat/js/extensions/Loading.js");
-/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
-/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
-/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
-/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
+/* harmony import */ var _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./extensions/PreviewImage */ "./resources/assets/dcat/js/extensions/PreviewImage.js");
+/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
+/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
+/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
+/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
 /*=========================================================================================
   File Name: app.js
   Description: Dcat Admin JS脚本.
@@ -664,16 +664,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var win = window,
     $ = jQuery; // 扩展Dcat对象
 
 function extend(Dcat) {
-  new _extensions_Helpers__WEBPACK_IMPORTED_MODULE_2__["default"](Dcat);
-  new _extensions_Ajax__WEBPACK_IMPORTED_MODULE_3__["default"](Dcat);
-  new _extensions_Toastr__WEBPACK_IMPORTED_MODULE_4__["default"](Dcat);
-  new _extensions_SweetAlert2__WEBPACK_IMPORTED_MODULE_5__["default"](Dcat);
-  new _extensions_Grid__WEBPACK_IMPORTED_MODULE_7__["default"](Dcat);
-  new _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // NProgress
+  // 工具函数
+  new _extensions_Helpers__WEBPACK_IMPORTED_MODULE_2__["default"](Dcat); // ajax处理相关扩展函数
+
+  new _extensions_Ajax__WEBPACK_IMPORTED_MODULE_3__["default"](Dcat); // Toastr简化使用函数
+
+  new _extensions_Toastr__WEBPACK_IMPORTED_MODULE_4__["default"](Dcat); // SweetAlert2简化使用函数
+
+  new _extensions_SweetAlert2__WEBPACK_IMPORTED_MODULE_5__["default"](Dcat); // Grid相关功能函数
+
+  new _extensions_Grid__WEBPACK_IMPORTED_MODULE_7__["default"](Dcat); // loading效果
+
+  new _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // 图片预览功能
+
+  new _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // 加载进度条
 
   Dcat.NP = _nprogress_NProgress_min__WEBPACK_IMPORTED_MODULE_1___default.a; // 行选择器
 
@@ -689,7 +698,7 @@ function extend(Dcat) {
 
   Dcat.DialogForm = function (options) {
     return new _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__["default"](Dcat, options);
-  }; // 滑动窗
+  }; // 滑动面板
 
 
   Dcat.Slider = function (options) {};
@@ -700,9 +709,9 @@ function listen(Dcat) {
   // 只初始化一次
   Dcat.booting(function () {
     // 菜单点击选中效果
-    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // 返回顶部按钮
+    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // 返回顶部按钮
 
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // layer弹窗设置
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_13__["default"](Dcat); // layer弹窗设置
 
     layer.config({
       maxmin: true,
@@ -721,9 +730,9 @@ function listen(Dcat) {
 
   Dcat.bootingEveryRequest(function () {
     // pjax初始化功能
-    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_13__["default"](Dcat); // data-action 动作绑定
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // data-action 动作绑定(包括删除、批量删除等操作)
 
-    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat);
+    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat);
   });
 } // 开始初始化
 
@@ -1987,6 +1996,88 @@ function extend(Dcat) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (extend);
+
+/***/ }),
+
+/***/ "./resources/assets/dcat/js/extensions/PreviewImage.js":
+/*!*************************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/PreviewImage.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PreviewImage; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var PreviewImage = /*#__PURE__*/function () {
+  function PreviewImage(Dcat) {
+    _classCallCheck(this, PreviewImage);
+
+    this.dcat = Dcat;
+    Dcat.previewImage = this.preview;
+  }
+
+  _createClass(PreviewImage, [{
+    key: "preview",
+    value: function preview(src, width, title) {
+      var Dcat = this.dcat,
+          img = new Image(),
+          win = Dcat.helpers.isset(window.top) ? top : window,
+          clientWidth = Math.ceil(win.screen.width * 0.6),
+          clientHeight = Math.ceil(win.screen.height * 0.8);
+      img.style.display = 'none';
+      img.style.height = 'auto';
+      img.style.width = width || '100%';
+      img.src = src;
+      document.body.appendChild(img);
+      Dcat.loading();
+
+      img.onload = function () {
+        Dcat.loading(false);
+        var srcw = this.width,
+            srch = this.height,
+            width = srcw > clientWidth ? clientWidth : srcw,
+            height = Math.ceil(width * (srch / srcw));
+        height = height > clientHeight ? clientHeight : height;
+        title = title || src.split('/').pop();
+
+        if (title.length > 50) {
+          title = title.substr(0, 50) + '...';
+        }
+
+        win.layer.open({
+          type: 1,
+          shade: 0.2,
+          title: false,
+          maxmin: false,
+          shadeClose: true,
+          closeBtn: 2,
+          content: $(img),
+          area: [width + 'px', height + 'px'],
+          skin: 'layui-layer-nobg',
+          end: function end() {
+            document.body.removeChild(img);
+          }
+        });
+      };
+
+      img.onerror = function () {
+        Dcat.loading(false);
+        Dcat.warning('预览失败');
+      };
+    }
+  }]);
+
+  return PreviewImage;
+}();
+
+
 
 /***/ }),
 

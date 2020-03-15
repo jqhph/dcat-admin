@@ -12,8 +12,7 @@ let actions = {
 
         $('[data-action="delete"]').off('click').click(function() {
             let url = $(this).data('url'),
-                redirect = $(this).data('redirect'),
-                id = $(this).data('id');
+                redirect = $(this).data('redirect');
 
             Dcat.confirm(lang.delete_confirm, url, function () {
                 Dcat.NP.start();
