@@ -73,11 +73,13 @@ export default class Dcat {
             return this.onPjaxLoaded(callback);
         }
 
-        var proxy = function (e) {
-            _window.$(_window.$(this.pjaxContainer)).one('pjax:loaded', proxy);
+        let _this = this;
+
+        function proxy(e) {
+            _window.$(_this.config.pjax_container_selector).one('pjax:loaded', proxy);
 
             callback(e);
-        };
+        }
 
         _window.Dcat.ready(proxy);
     }

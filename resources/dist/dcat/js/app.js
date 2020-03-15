@@ -186,11 +186,13 @@ var Dcat = /*#__PURE__*/function () {
         return this.onPjaxLoaded(callback);
       }
 
-      var proxy = function proxy(e) {
-        _window.$(_window.$(this.pjaxContainer)).one('pjax:loaded', proxy);
+      var _this = this;
+
+      function proxy(e) {
+        _window.$(_this.config.pjax_container_selector).one('pjax:loaded', proxy);
 
         callback(e);
-      };
+      }
 
       _window.Dcat.ready(proxy);
     }
