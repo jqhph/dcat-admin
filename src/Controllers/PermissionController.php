@@ -79,7 +79,7 @@ class PermissionController extends AdminController
         $tree->tools(function (Tree\Tools $tools) {
             $label = trans('admin.table');
             $url = url(request()->getPathInfo()).'?_layout=1';
-            $tools->add("<a class='btn btn-sm btn-white btn-shadow' href='{$url}'>$label</a>");
+            $tools->add("<a class='btn btn-sm btn-white ' href='{$url}'>$label</a>");
         });
 
         $tree->branch(function ($branch) {
@@ -184,7 +184,7 @@ class PermissionController extends AdminController
 
             $label = trans('admin.default');
             $url = url(request()->getPathInfo());
-            $tools->append("<a class='btn btn-sm btn-white btn-shadow' href='{$url}'>$label</a>");
+            $tools->append("<a class='btn btn-sm btn-white ' href='{$url}'>$label</a>");
         });
 
         $grid->filter(function (Grid\Filter $filter) {

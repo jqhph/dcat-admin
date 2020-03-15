@@ -212,7 +212,7 @@ pre code {
 
 .table-inverse {
   color: #fff;
-  background-color: #00cfe8;
+  background-color: #3085d6;
 }
 
 .table-hover-animation {
@@ -3843,7 +3843,7 @@ _:-ms-lang(x),
 }
 
 .modal .modal-header.bg-info .close span {
-  color: #00cfe8;
+  color: #3085d6;
 }
 
 .modal .modal-header.bg-danger .close span {

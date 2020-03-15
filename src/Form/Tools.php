@@ -182,7 +182,7 @@ class Tools implements Renderable
 
         return <<<EOT
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="{$this->getListPath()}" class="btn btn-sm btn-white btn-shadow"><i class=" ti-view-list-alt"></i><span class="hidden-xs">&nbsp;$text</span></a>
+    <a href="{$this->getListPath()}" class="btn btn-sm btn-white "><i class=" ti-view-list-alt"></i><span class="hidden-xs">&nbsp;$text</span></a>
 </div>
 EOT;
     }

@@ -1,33 +1,37 @@
 <div class="card-header">
 
-    <div class="btn-group" style="margin-right:3px">
-        <button class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="expand">
-            <i class="feather icon-plus-square"></i>&nbsp;<span class="hidden-xs">{{ trans('admin.expand') }}</span>
-        </button>
-        <button class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="collapse">
-            <i class="feather icon-minus-square"></i><span class="hidden-xs">&nbsp;{{ trans('admin.collapse') }}</span>
-        </button>
+    <div>
+        <div class="btn-group" style="margin-right:3px">
+            <button class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="expand">
+                <i class="feather icon-plus-square"></i>&nbsp;<span class="hidden-xs">{{ trans('admin.expand') }}</span>
+            </button>
+            <button class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="collapse">
+                <i class="feather icon-minus-square"></i><span class="hidden-xs">&nbsp;{{ trans('admin.collapse') }}</span>
+            </button>
+        </div>
+
+        @if($useSave)
+            &nbsp;<div class="btn-group" style="margin-right:3px">
+                <button class="btn btn-primary btn-sm {{ $id }}-save" ><i class="feather icon-save"></i><span class="hidden-xs">&nbsp;{{ trans('admin.save') }}</span></button>
+            </div>
+        @endif
+
+        @if($useRefresh)
+            &nbsp;<div class="btn-group" style="margin-right:3px">
+                <button class="btn btn-custom btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></button>
+            </div>
+        @endif
+
+        @if($tools)
+            &nbsp;<div class="btn-group" style="margin-right:3px">
+                {!! $tools !!}
+            </div>
+        @endif
     </div>
 
-    @if($useSave)
-    &nbsp;<div class="btn-group" style="margin-right:3px">
-        <button class="btn btn-primary btn-sm {{ $id }}-save" ><i class="feather icon-save"></i><span class="hidden-xs">&nbsp;{{ trans('admin.save') }}</span></button>
+    <div>
+        {!! $createButton !!}
     </div>
-    @endif
-
-    @if($useRefresh)
-        &nbsp;<div class="btn-group" style="margin-right:3px">
-        <button class="btn btn-outline-custom btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></button>
-    </div>
-    @endif
-
-    @if($tools)
-    &nbsp;<div class="btn-group" style="margin-right:3px">
-        {!! $tools !!}
-    </div>
-    @endif
-
-    {!! $createButton !!}
 
 </div>
 

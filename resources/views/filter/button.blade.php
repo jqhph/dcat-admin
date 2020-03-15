@@ -1,4 +1,4 @@
-<div class="btn-group filter-button-group" style="margin-right:3px">
+<div class="btn-group filter-button-group btn-no-shadow" style="margin-right:3px">
     <label class="btn btn-outline-primary {{ $scopes->isNotEmpty() ? 'dropdown-toggle' : '' }} {{ $btn_class }}" @if($only_scopes)data-toggle="dropdown"@endif>
         <i class="feather icon-filter"></i>@if($show_filter_text)<span class="hidden-xs">&nbsp;&nbsp;{{ trans('admin.filter') }}</span>@endif
     </label>

@@ -153,7 +153,7 @@
 .bg-gradient-info {
   background: #640064;
   color: #fff;
-  background-image: linear-gradient(30deg, #00cfe8, rgba(0, 207, 232, 0.5));
+  background-image: linear-gradient(30deg, #3085d6, rgba(48, 133, 214, 0.5));
   background-repeat: repeat-x;
 }
 
@@ -163,7 +163,7 @@
 }
 
 .gradient-light-info {
-  background: linear-gradient(30deg, #00cfe8 0%, #2d91ff 100%);
+  background: linear-gradient(30deg, #3085d6 0%, #5e6cec 100%);
   color: #fff;
 }
 

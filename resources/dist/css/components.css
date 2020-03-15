@@ -474,7 +474,7 @@ body.fixed-footer footer.footer-dark {
 .main-menu.menu-light .navigation > li.open > a,
 .main-menu.menu-light .navigation > li.sidebar-group-active > a {
   color: #494949;
-  background: whitesmoke;
+  background: #f7f7f7;
   transition: transform 0.25s ease 0s;
   border-radius: 6px;
   margin-bottom: 7px;
@@ -689,7 +689,7 @@ body.fixed-footer footer.footer-dark {
 .main-menu.menu-dark .navigation > li.open > a,
 .main-menu.menu-dark .navigation > li.sidebar-group-active > a {
   color: #c3c3c3;
-  background: #0c102a;
+  background: #0d112e;
   transition: transform 0.25s ease 0s;
   border-radius: 6px;
   margin-bottom: 7px;

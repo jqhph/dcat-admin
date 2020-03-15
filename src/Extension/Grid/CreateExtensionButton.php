@@ -19,7 +19,7 @@ CSS
 
         $label = trans('admin.new');
 
-        return "<a id='create-extension' class='btn btn-success btn-sm'><i class=\"ti-plus\"></i> &nbsp;$label</a>";
+        return "<button id='create-extension' class='btn btn-outline-success'><i class=\"feather icon-plus\"></i> &nbsp;$label</button>";
     }
 
     protected function setupScript()

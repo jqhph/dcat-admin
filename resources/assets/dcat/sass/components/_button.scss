@@ -3,7 +3,22 @@
   font-size: .95rem;
   height: 36px;
   line-height: .7;
-  border-radius: 0.35rem;
+  border-radius: 0.2rem;
+  box-shadow: $shadow-100;
+}
+
+.btn-group {
+  .btn {
+    box-shadow: none;
+  }
+  .btn:not(.btn-white):hover {
+    box-shadow: $shadow-200;
+  }
+  .btn.btn-white {
+    box-shadow: $btn-group-btn-shadow;
+  }
+
+  box-shadow: $shadow-100;
 }
 
 .btn-sm, .btn-group-sm > .btn {
@@ -29,6 +44,7 @@
   background: $white;
   border: 1px solid $custom;
   color: $custom;
+  box-shadow: none;
 }
 
 .btn-outline-custom:hover {
@@ -36,9 +52,26 @@
   color: $custom;
 }
 
-.btn-shadow {
-  box-shadow: $btn-shadow;
+.btn-white:hover {
+  box-shadow: $btn-shadow-hover !important;
 }
-.btn-shadow:hover {
-  box-shadow: $btn-shadow-hover;
+
+.btn-light {
+  border-color: #f0f0f0!important;
+  background-color: #f0f0f0!important;
+  color: #444;
+}
+
+.btn-light:hover {
+  box-shadow: $btn-shadow-hover!important;
+  color: #444!important;
+}
+
+.btn-no-shadow {
+  box-shadow: none;
+}
+
+.btn-outline-primary, .btn-outline-success, .btn-outline-danger, .btn-outline-info, .btn-outline-warning, .btn-outline-dark,
+.btn-flat-primary, .btn-flat-success, .btn-flat-danger, .btn-flat-info, .btn-flat-warning, .btn-flat-dark {
+  box-shadow: none;
 }

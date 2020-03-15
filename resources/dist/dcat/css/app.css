@@ -1743,7 +1743,24 @@ html body .content .content-wrapper {
   font-size: 0.95rem;
   height: 36px;
   line-height: 0.7;
-  border-radius: 0.35rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
+}
+
+.btn-group {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
+}
+
+.btn-group .btn {
+  box-shadow: none;
+}
+
+.btn-group .btn:not(.btn-white):hover {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-group .btn.btn-white {
+  box-shadow: 0 2px 1px 0 rgba(0, 0, 0, 0.08);
 }
 
 .btn-sm,
@@ -1769,6 +1786,7 @@ html body .content .content-wrapper {
   background: #fff;
   border: 1px solid #59a9f8;
   color: #59a9f8;
+  box-shadow: none;
 }
 
 .btn-outline-custom:hover {
@@ -1776,12 +1794,38 @@ html body .content .content-wrapper {
   color: #59a9f8;
 }
 
-.btn-shadow {
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 1px rgba(0, 0, 0, 0.1);
+.btn-white:hover {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 1px rgba(0, 0, 0, 0.1) !important;
 }
 
-.btn-shadow:hover {
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
+.btn-light {
+  border-color: #f0f0f0 !important;
+  background-color: #f0f0f0 !important;
+  color: #444;
+}
+
+.btn-light:hover {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 1px rgba(0, 0, 0, 0.1) !important;
+  color: #444 !important;
+}
+
+.btn-no-shadow {
+  box-shadow: none;
+}
+
+.btn-outline-primary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-info,
+.btn-outline-warning,
+.btn-outline-dark,
+.btn-flat-primary,
+.btn-flat-success,
+.btn-flat-danger,
+.btn-flat-info,
+.btn-flat-warning,
+.btn-flat-dark {
+  box-shadow: none;
 }
 
 .pagination .page-item .page-link {
@@ -1925,10 +1969,6 @@ table.data-thumb-view.dataTable tbody tr:hover {
 
 .card {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-}
-
-.card .card-header {
-  justify-content: normal;
 }
 
 .dd-item > button:before {

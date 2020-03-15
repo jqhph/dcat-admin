@@ -118,20 +118,20 @@
 }
 
 .slider-info .noUi-connect {
-  background: #00cfe8 !important;
+  background: #3085d6 !important;
 }
 
 .slider-info.noUi-connect {
-  background: #00cfe8 !important;
+  background: #3085d6 !important;
 }
 
 .slider-info .noUi-handle {
-  border-color: #00cfe8 !important;
+  border-color: #3085d6 !important;
 }
 
 .slider-info.circle-filled .noUi-handle,
 .slider-info.square .noUi-handle {
-  background: #00cfe8 !important;
+  background: #3085d6 !important;
 }
 
 .slider-warning .noUi-connect {
