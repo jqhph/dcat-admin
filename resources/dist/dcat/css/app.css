@@ -1969,8 +1969,9 @@ table.data-thumb-view.dataTable tbody tr:hover {
   color: #333;
 }
 
-.dropdown-item a {
-  color: #333;
+.dropdown-item a,
+.dropdown-menu label {
+  font-size: 1rem;
 }
 
 .dropdown .dropdown-menu .dropdown-item:hover {

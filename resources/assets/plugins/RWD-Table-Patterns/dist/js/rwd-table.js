@@ -137,7 +137,7 @@
         }
 
         this.$dropdownGroup = $('<div class="btn-group dropdown-btn-group dropdown" />');
-        this.$dropdownBtn = $('<button type="button" class="btn btn-white " data-toggle="dropdown">' + this.options.i18n.display + '</button>');
+        this.$dropdownBtn = $('<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">' + this.options.i18n.display + '</button>');
         this.$dropdownContainer = $('<ul class="dropdown-menu"/>');
 
         // Focus btn
@@ -187,8 +187,7 @@
         }
 
         //add dropdown btn and menu to dropdown-btn-group
-        this.$dropdownGroup.append('<span></span>');
-        this.$dropdownGroup.find('span').append(this.$dropdownBtn).append(this.$dropdownContainer);
+        this.$dropdownGroup.append(this.$dropdownBtn).append(this.$dropdownContainer);
 
         //add dropdown group to toolbar
         this.$btnToolbar.append(this.$dropdownGroup);
