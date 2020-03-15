@@ -1883,29 +1883,115 @@ var Helpers = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Loading; });
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var tpl = '<div class="dcat-loading flex items-center justify-center pin" style="{style}">{svg}</div>',
+    loading = '.dcat-loading',
+    LOADING_SVG = ['<svg width="{width}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-disk" style="background: none;"><g transform="translate(50,50)"><g ng-attr-transform="scale({{config.scale}})" transform="scale(0.5)"><circle cx="0" cy="0" r="50" ng-attr-fill="{{config.c1}}" fill="{color}"></circle><circle cx="0" ng-attr-cy="{{config.cy}}" ng-attr-r="{{config.r}}" ng-attr-fill="{{config.c2}}" cy="-35" r="15" fill="#ffffff" transform="rotate(101.708)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 0 0;360 0 0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>', '<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto block" style="width:{width};{svg_style}" viewBox="0 0 120 30" fill="{color}"><circle cx="15" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="60" cy="15" r="9" fill-opacity="0.3"><animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="105" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle></svg>'];
+
 var Loading = /*#__PURE__*/function () {
-  function Loading(Dcat) {
+  function Loading(Dcat, options) {
     _classCallCheck(this, Loading);
 
-    Dcat.loading = this.loading;
+    options = $.extend({
+      container: Dcat.config.pjax_container_selector,
+      zIndex: 100,
+      width: '52px',
+      color: '#7985d0',
+      background: '#fff',
+      style: '',
+      svg: LOADING_SVG[0]
+    }, options);
+
+    var _this = this,
+        defStyle = 'position:absolute;left:10px;right:10px;',
+        content;
+
+    _this.$container = _typeof(options.container) === 'object' ? options.container : $(options.container);
+    content = $(tpl.replace('{svg}', options.svg).replace('{color}', options.color).replace('{color}', options.color).replace('{width}', options.width).replace('{style}', "".concat(defStyle, "background:").concat(options.background, ";z-index:").concat(options.zIndex, ";").concat(options.style)));
+    content.appendTo(_this.$container);
   }
 
   _createClass(Loading, [{
-    key: "loading",
-    value: function loading() {}
+    key: "remove",
+    value: function remove() {
+      this.$container.find(loading).remove();
+    }
+  }, {
+    key: "destroyAll",
+    value: function destroyAll() {
+      _destroyAll();
+    }
   }]);
 
   return Loading;
 }();
 
+function _destroyAll() {
+  $(loading).remove();
+}
 
+function extend(Dcat) {
+  // 全屏居中loading
+  Dcat.loading = function (options) {
+    if (options === false) {
+      // 关闭loading
+      return setTimeout(_destroyAll, 70);
+    } // 配置参数
+
+
+    options = $.extend({
+      color: '#5c6bc6',
+      zIndex: 999991014,
+      width: '58px',
+      shade: 'rgba(255, 255, 255, 0.1)',
+      background: 'transparent',
+      top: 200,
+      svg: LOADING_SVG[1]
+    }, options);
+    var win = $(window),
+        // 容器
+    $container = $('<div class="dcat-loading" style="z-index:' + options.zIndex + ';width:300px;position:fixed"></div>'),
+        // 遮罩层直接沿用layer
+    shadow = $('<div class="layui-layer-shade dcat-loading" style="z-index:' + (options.zIndex - 2) + '; background-color:' + options.shade + '"></div>');
+    $container.appendTo('body');
+
+    if (options.shade) {
+      shadow.appendTo('body');
+    }
+
+    function resize() {
+      $container.css({
+        left: (win.width() - 300) / 2,
+        top: (win.height() - options.top) / 2
+      });
+    } // 自适应窗口大小
+
+
+    win.on('resize', resize);
+    resize();
+    $container.loading(options);
+  }; //
+
+
+  $.fn.loading = function (opt) {
+    if (opt === false) {
+      return $(this).find(loading).remove();
+    }
+
+    opt = opt || {};
+    opt.container = $(this);
+    return new Loading(Dcat, opt);
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (extend);
 
 /***/ }),
 

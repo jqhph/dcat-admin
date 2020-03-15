@@ -1738,6 +1738,29 @@ html body .content .content-wrapper {
   padding: calc(2.2rem - 0.4rem) 2.45rem 0;
 }
 
+.pin,
+.pin-y {
+  top: 0;
+  bottom: 0;
+}
+
+.pin {
+  right: 0;
+  left: 0;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
 .btn {
   padding: 0.75rem 1.45rem !important;
   font-size: 0.95rem;

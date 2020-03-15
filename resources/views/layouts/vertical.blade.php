@@ -8,7 +8,7 @@
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
 
         console.log(123, Dcat)
-        $(function () {
+        Dcat.ready(function () {
         })
     </script>
 
