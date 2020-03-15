@@ -19,10 +19,12 @@ import RowSelector from './extensions/RowSelector'
 import Grid from './extensions/Grid'
 import Form from './extensions/Form'
 import DialogForm from './extensions/DialogForm'
+import Loading from './extensions/Loading'
 
 import Menu from './bootstrappers/Menu'
 import Footer from './bootstrappers/Footer'
 import Pjax from './bootstrappers/Pjax'
+import DataActions from './bootstrappers/DataActions'
 
 let win = window,
     $ = jQuery;
@@ -34,6 +36,7 @@ function extend (Dcat) {
     new Toastr(Dcat);
     new SweetAlert2(Dcat);
     new Grid(Dcat);
+    new Loading(Dcat);
 
     // NProgress
     Dcat.NP = NProgress;
@@ -84,6 +87,8 @@ function listen(Dcat) {
     Dcat.bootingEveryRequest(() => {
         // pjax初始化功能
         new Pjax(Dcat);
+        // data-action 动作绑定
+        new DataActions(Dcat);
 
     });
 }

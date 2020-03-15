@@ -33,16 +33,16 @@ export default class SweetAlert2 {
     }
 
     confirm(title, message, success, fail, options) {
-        let btnClass = 'btn btn-outline-dark',
-            lang = Dcat.lang;
+        let lang = Dcat.lang;
 
         options = $.extend({
             showCancelButton: true,
             showLoaderOnConfirm: true,
             confirmButtonText: lang['confirm'],
             cancelButtonText: lang['cancel'],
-            confirmButtonClass: btnClass,
-            cancelButtonClass: btnClass + 'ml-1',
+            confirmButtonClass: 'btn btn-info',
+            cancelButtonClass: 'btn btn-white ml-1',
+            buttonsStyling: false,
         }, options);
 
         this.fire(title, message, 'question', options).then(function (result) {
@@ -59,7 +59,6 @@ export default class SweetAlert2 {
             title: title,
             text: message,
             type: type,
-            // buttonsStyling: false,
         }, options);
 
         return this.swal.fire(options);

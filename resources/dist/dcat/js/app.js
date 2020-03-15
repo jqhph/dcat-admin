@@ -294,6 +294,144 @@ var Dcat = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/assets/dcat/js/bootstrappers/DataActions.js":
+/*!***************************************************************!*\
+  !*** ./resources/assets/dcat/js/bootstrappers/DataActions.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DataActions; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var actions = {
+  // 刷新按钮
+  refreshAction: function refreshAction(Dcat) {
+    $('[data-action="refresh"]').off('click').click(function () {
+      Dcat.reload($(this).data('url'));
+    });
+  },
+  // 删除按钮初始化
+  deleteAction: function deleteAction(Dcat) {
+    var lang = Dcat.lang;
+    $('[data-action="delete"]').off('click').click(function () {
+      var url = $(this).data('url'),
+          redirect = $(this).data('redirect'),
+          id = $(this).data('id');
+      Dcat.confirm(lang.delete_confirm, url, function () {
+        Dcat.NP.start();
+        $.ajax({
+          method: 'post',
+          url: url,
+          data: {
+            _method: 'delete',
+            _token: Dcat.token
+          },
+          success: function success(data) {
+            Dcat.NP.done();
+
+            if (data.status) {
+              Dcat.reload(redirect);
+              Dcat.swal.success(data.message);
+            } else {
+              Dcat.swal.error(data.message);
+            }
+          }
+        });
+      });
+    });
+  },
+  // 批量删除按钮初始化
+  batchDeleteAction: function batchDeleteAction(Dcat) {
+    $('[data-action="batch-delete"]').off('click').on('click', function () {
+      var url = $(this).data('url'),
+          name = $(this).data('name'),
+          keys = Dcat.grid.selected(name),
+          lang = Dcat.lang;
+
+      if (!keys.length) {
+        return;
+      }
+
+      Dcat.confirm(lang.delete_confirm, keys.join(', '), function () {
+        Dcat.NP.start();
+        $.ajax({
+          method: 'post',
+          url: url + '/' + keys.join(','),
+          data: {
+            _method: 'delete',
+            _token: Dcat.token
+          },
+          success: function success(data) {
+            Dcat.NP.done();
+
+            if (data.status) {
+              Dcat.reload();
+              Dcat.swal.success(data.message);
+            } else {
+              Dcat.swal.error(data.message);
+            }
+          }
+        });
+      });
+    });
+  },
+  // 进度条初始化
+  progressBar: function progressBar() {
+    $('.progress-bar').each(function (k, v) {
+      v = $(v);
+      var w = v.data('width');
+
+      if (w) {
+        setTimeout(function () {
+          v.css({
+            width: w
+          });
+        }, 80);
+      }
+    });
+  },
+  // 图片预览
+  imagePreview: function imagePreview(Dcat) {
+    $('[data-action="preview"]').off('click').click(function () {
+      return Dcat.previewImage($(this).attr('src'));
+    });
+  },
+  // 数字动画初始化
+  counterUp: function counterUp() {
+    var boot = function boot(k, obj) {
+      try {
+        obj = $(obj);
+        obj.counterUp({
+          delay: obj.attr('data-delay') || 100,
+          time: obj.attr('data-time') || 1200
+        });
+      } catch (e) {}
+    };
+
+    $('[data-action="counterup"]').each(boot);
+    $('number').each(boot);
+  },
+  popover: function popover() {
+    $('.popover').remove();
+    $('[data-action="popover"]').popover();
+  }
+};
+
+var DataActions = function DataActions(Dcat) {
+  _classCallCheck(this, DataActions);
+
+  for (var name in actions) {
+    actions[name](Dcat);
+  }
+};
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/dcat/js/bootstrappers/Footer.js":
 /*!**********************************************************!*\
   !*** ./resources/assets/dcat/js/bootstrappers/Footer.js ***!
@@ -498,9 +636,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _extensions_Grid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./extensions/Grid */ "./resources/assets/dcat/js/extensions/Grid.js");
 /* harmony import */ var _extensions_Form__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./extensions/Form */ "./resources/assets/dcat/js/extensions/Form.js");
 /* harmony import */ var _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./extensions/DialogForm */ "./resources/assets/dcat/js/extensions/DialogForm.js");
-/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
-/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
-/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
+/* harmony import */ var _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./extensions/Loading */ "./resources/assets/dcat/js/extensions/Loading.js");
+/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
+/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
+/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
+/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
 /*=========================================================================================
   File Name: app.js
   Description: Dcat Admin JS脚本.
@@ -522,6 +662,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var win = window,
     $ = jQuery; // 扩展Dcat对象
 
@@ -530,7 +672,8 @@ function extend(Dcat) {
   new _extensions_Ajax__WEBPACK_IMPORTED_MODULE_3__["default"](Dcat);
   new _extensions_Toastr__WEBPACK_IMPORTED_MODULE_4__["default"](Dcat);
   new _extensions_SweetAlert2__WEBPACK_IMPORTED_MODULE_5__["default"](Dcat);
-  new _extensions_Grid__WEBPACK_IMPORTED_MODULE_7__["default"](Dcat); // NProgress
+  new _extensions_Grid__WEBPACK_IMPORTED_MODULE_7__["default"](Dcat);
+  new _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // NProgress
 
   Dcat.NP = _nprogress_NProgress_min__WEBPACK_IMPORTED_MODULE_1___default.a; // 行选择器
 
@@ -557,9 +700,9 @@ function listen(Dcat) {
   // 只初始化一次
   Dcat.booting(function () {
     // 菜单点击选中效果
-    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // 返回顶部按钮
+    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // 返回顶部按钮
 
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // layer弹窗设置
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // layer弹窗设置
 
     layer.config({
       maxmin: true,
@@ -578,7 +721,9 @@ function listen(Dcat) {
 
   Dcat.bootingEveryRequest(function () {
     // pjax初始化功能
-    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat);
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_13__["default"](Dcat); // data-action 动作绑定
+
+    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat);
   });
 } // 开始初始化
 
@@ -1729,6 +1874,41 @@ var Helpers = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/assets/dcat/js/extensions/Loading.js":
+/*!********************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/Loading.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Loading; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Loading = /*#__PURE__*/function () {
+  function Loading(Dcat) {
+    _classCallCheck(this, Loading);
+
+    Dcat.loading = this.loading;
+  }
+
+  _createClass(Loading, [{
+    key: "loading",
+    value: function loading() {}
+  }]);
+
+  return Loading;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/dcat/js/extensions/RowSelector.js":
 /*!************************************************************!*\
   !*** ./resources/assets/dcat/js/extensions/RowSelector.js ***!
@@ -1922,15 +2102,15 @@ var SweetAlert2 = /*#__PURE__*/function () {
   }, {
     key: "confirm",
     value: function confirm(title, message, success, fail, options) {
-      var btnClass = 'btn btn-outline-dark',
-          lang = Dcat.lang;
+      var lang = Dcat.lang;
       options = $.extend({
         showCancelButton: true,
         showLoaderOnConfirm: true,
         confirmButtonText: lang['confirm'],
         cancelButtonText: lang['cancel'],
-        confirmButtonClass: btnClass,
-        cancelButtonClass: btnClass + 'ml-1'
+        confirmButtonClass: 'btn btn-info',
+        cancelButtonClass: 'btn btn-white ml-1',
+        buttonsStyling: false
       }, options);
       this.fire(title, message, 'question', options).then(function (result) {
         if (result.value) {
@@ -1946,8 +2126,7 @@ var SweetAlert2 = /*#__PURE__*/function () {
       options = $.extend({
         title: title,
         text: message,
-        type: type // buttonsStyling: false,
-
+        type: type
       }, options);
       return this.swal.fire(options);
     }

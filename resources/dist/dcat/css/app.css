@@ -1960,7 +1960,7 @@ table.data-thumb-view.dataTable tbody tr:hover {
 .dropup .dropdown-menu .dropdown-item,
 .dropright .dropdown-menu .dropdown-item,
 .dropleft .dropdown-menu .dropdown-item {
-  padding: 0.35rem 1.38rem;
+  padding: 0;
   color: #333;
 }
 
@@ -1968,6 +1968,8 @@ table.data-thumb-view.dataTable tbody tr:hover {
 .dropdown-menu label {
   font-size: 1rem;
   color: #333;
+  padding: 0.35rem 1.38rem;
+  display: block;
 }
 
 .dropdown .dropdown-menu .dropdown-item:hover {
@@ -2096,5 +2098,6 @@ code {
 
 pre {
   padding: 7px;
+  white-space: pre-wrap;
 }
 
