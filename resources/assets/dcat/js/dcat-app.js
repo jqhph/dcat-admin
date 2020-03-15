@@ -61,13 +61,12 @@ function extend (Dcat) {
 
 // 初始化
 function listen(Dcat) {
-    Dcat.booting(function () {
+    // 只初始化一次
+    Dcat.booting(() => {
         // 菜单点击选中效果
         new Menu(Dcat);
         // 返回顶部按钮
         new Footer(Dcat);
-        // pjax初始化功能
-        new Pjax(Dcat);
 
         // layer弹窗设置
         layer.config({maxmin: true, moveOut: true, shade: false});
@@ -80,6 +79,13 @@ function listen(Dcat) {
 
         Dcat.NP.configure({parent: '.app-content'});
     });
+
+    // 每个请求都初始化
+    Dcat.bootingEveryRequest(() => {
+        // pjax初始化功能
+        new Pjax(Dcat);
+
+    });
 }
 
 // 开始初始化
@@ -87,7 +93,7 @@ function boot(Dcat) {
     extend(Dcat);
     listen(Dcat);
 
-    $(Dcat.boot);
+    $(Dcat.boot.bind(Dcat));
 
     return Dcat;
 }

@@ -115,23 +115,66 @@ var Dcat = /*#__PURE__*/function () {
 
     this.withConfig(config);
   }
+  /**
+   * 初始化事件监听方法
+   *
+   * @param callback
+   * @param once
+   * @returns {Dcat}
+   */
+
 
   _createClass(Dcat, [{
     key: "booting",
-    value: function booting(callback) {
-      bootingCallbacks.push(callback);
+    value: function booting(callback, once) {
+      once = once === undefined ? true : once;
+      bootingCallbacks.push([callback, once]);
       return this;
     }
+    /**
+     * 初始化事件监听方法，每个请求都会触发
+     *
+     * @param callback
+     * @returns {Dcat}
+     */
+
+  }, {
+    key: "bootingEveryRequest",
+    value: function bootingEveryRequest(callback) {
+      return this.booting(callback, false);
+    }
+    /**
+     * 初始化
+     */
+
   }, {
     key: "boot",
     value: function boot() {
-      var _this = this;
+      var _this2 = this;
 
-      bootingCallbacks.forEach(function (callback) {
-        return callback(_this);
-      });
+      var _this = this,
+          callbacks = bootingCallbacks;
+
       bootingCallbacks = [];
+      callbacks.forEach(function (data) {
+        data[0](_this2);
+
+        if (data[1] === false) {
+          bootingCallbacks.push(data);
+        }
+      }); // 脚本加载完毕后重新触发
+
+      _this.onPjaxLoaded(_this.boot.bind(this));
     }
+    /**
+     * 监听所有js脚本加载完毕事件，需要用此方法代替 $.ready 方法
+     * 此方法允许在iframe中监听父窗口的事件
+     *
+     * @param callback
+     * @param _window
+     * @returns {*|jQuery|*|jQuery.fn.init|jQuery|HTMLElement}
+     */
+
   }, {
     key: "ready",
     value: function ready(callback, _window) {
@@ -140,7 +183,7 @@ var Dcat = /*#__PURE__*/function () {
           return $(callback);
         }
 
-        return $(document).one('pjax:loaded', callback);
+        return this.onPjaxLoaded(callback);
       }
 
       var proxy = function proxy(e) {
@@ -150,6 +193,73 @@ var Dcat = /*#__PURE__*/function () {
       };
 
       _window.Dcat.ready(proxy);
+    }
+    /**
+     * 如果是 pjax 响应的页面，需要调用此方法
+     *
+     * @returns {Dcat}
+     */
+
+  }, {
+    key: "pjaxResponded",
+    value: function pjaxResponded() {
+      _pjaxResponded = true;
+      return this;
+    }
+    /**
+     * 使用pjax重载页面
+     *
+     * @param url
+     */
+
+  }, {
+    key: "reload",
+    value: function reload(url) {
+      var container = this.config.pjax_container_selector;
+      var opt = {
+        container: container
+      };
+      url && (opt.url = url);
+      $.pjax.reload(opt);
+    }
+    /**
+     * 监听pjax加载js脚本完毕事件方法，此事件在 pjax:complete 事件之后触发
+     *
+     * @param callback
+     * @param once 默认true
+     *
+     * @returns {*|jQuery}
+     */
+
+  }, {
+    key: "onPjaxLoaded",
+    value: function onPjaxLoaded(callback, once) {
+      once = once === undefined ? true : once;
+
+      if (once) {
+        return $(document).one('pjax:loaded', callback);
+      }
+
+      return $(document).on('pjax:loaded', callback);
+    }
+    /**
+     * 监听pjax加载完毕完毕事件方法
+     *
+     * @param callback
+     * @param once 默认true
+     * @returns {*|jQuery}
+     */
+
+  }, {
+    key: "onPjaxComplete",
+    value: function onPjaxComplete(callback, once) {
+      once = once === undefined ? true : once;
+
+      if (once) {
+        return $(document).one('pjax:complete', callback);
+      }
+
+      return $(document).on('pjax:complete', callback);
     }
   }, {
     key: "withConfig",
@@ -172,28 +282,6 @@ var Dcat = /*#__PURE__*/function () {
     value: function withLang(lang) {
       lang && (this.lang = lang);
       return this;
-    }
-    /**
-     * 如果是 pjax 响应的页面，需要调用此方法
-     *
-     * @returns {Dcat}
-     */
-
-  }, {
-    key: "pjaxResponded",
-    value: function pjaxResponded() {
-      _pjaxResponded = true;
-      return this;
-    }
-  }, {
-    key: "reload",
-    value: function reload(url) {
-      var container = this.config.pjax_container_selector;
-      var opt = {
-        container: container
-      };
-      url && (opt.url = url);
-      $.pjax.reload(opt);
     }
   }]);
 
@@ -377,10 +465,6 @@ var Pjax = /*#__PURE__*/function () {
         }
 
         Dcat.NP.done();
-      }); // 新页面加载，重新初始化
-
-      $d.on('pjax:loaded', function () {
-        _this.boot(Dcat);
       });
     }
   }]);
@@ -468,13 +552,12 @@ function extend(Dcat) {
 
 
 function listen(Dcat) {
+  // 只初始化一次
   Dcat.booting(function () {
     // 菜单点击选中效果
     new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // 返回顶部按钮
 
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // pjax初始化功能
-
-    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // layer弹窗设置
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // layer弹窗设置
 
     layer.config({
       maxmin: true,
@@ -489,6 +572,11 @@ function listen(Dcat) {
     Dcat.NP.configure({
       parent: '.app-content'
     });
+  }); // 每个请求都初始化
+
+  Dcat.bootingEveryRequest(function () {
+    // pjax初始化功能
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat);
   });
 } // 开始初始化
 
@@ -496,7 +584,7 @@ function listen(Dcat) {
 function boot(Dcat) {
   extend(Dcat);
   listen(Dcat);
-  $(Dcat.boot);
+  $(Dcat.boot.bind(Dcat));
   return Dcat;
 }
 

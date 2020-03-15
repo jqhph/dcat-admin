@@ -37,19 +37,15 @@ table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable t
 // 快捷搜索
 .data-list-view-header .table-responsive .top .dataTables_filter .form-control, .data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
   padding: 1.23rem 2.8rem !important;
-  border-radius: 1.428rem;
-  border: 1px solid #dae1e7;
+  border-radius: 1.4rem;
+  border: 0;
+  box-shadow: $shadow;
 }
 
 .data-list-view-header .table-responsive .top .dataTables_filter label:after, .data-thumb-view-header .table-responsive .top .dataTables_filter label:after {
   top: 0.58rem;
   font-size: 1rem;
   left: 1.2rem;
-}
-
-.data-list-view-header .table-responsive .top .dataTables_filter .form-control, .data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
-  border: 0;
-  box-shadow: $shadow;
 }
 
 .quick-search-clear {

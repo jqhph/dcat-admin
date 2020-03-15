@@ -53,10 +53,5 @@ export default class Pjax {
             }
             Dcat.NP.done();
         });
-
-        // 新页面加载，重新初始化
-        $d.on('pjax:loaded', function () {
-            _this.boot(Dcat)
-        });
     }
 }
