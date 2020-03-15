@@ -1919,21 +1919,16 @@ var Loading = /*#__PURE__*/function () {
   }
 
   _createClass(Loading, [{
-    key: "remove",
-    value: function remove() {
+    key: "destory",
+    value: function destory() {
       this.$container.find(loading).remove();
-    }
-  }, {
-    key: "destroyAll",
-    value: function destroyAll() {
-      _destroyAll();
     }
   }]);
 
   return Loading;
 }();
 
-function _destroyAll() {
+function destroyAll() {
   $(loading).remove();
 }
 
@@ -1942,7 +1937,7 @@ function extend(Dcat) {
   Dcat.loading = function (options) {
     if (options === false) {
       // 关闭loading
-      return setTimeout(_destroyAll, 70);
+      return setTimeout(destroyAll, 70);
     } // 配置参数
 
 

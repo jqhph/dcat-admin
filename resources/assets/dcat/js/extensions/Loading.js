@@ -35,12 +35,8 @@ class Loading {
         content.appendTo(_this.$container);
     }
 
-    remove() {
+    destory() {
         this.$container.find(loading).remove();
-    }
-
-    destroyAll() {
-        destroyAll()
     }
 }
 
