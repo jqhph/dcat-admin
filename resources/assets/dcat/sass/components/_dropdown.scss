@@ -1,10 +1,22 @@
-.dropdown .dropdown-menu {
-  box-shadow: $shadow;
-  border: 1px solid rgba(0, 0, 0, 0.03)
-}
-.dropdown .dropdown-menu::before {
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-  border-left: 1px solid rgba(0, 0, 0, 0.07);
+.dropdown {
+  .dropdown-menu {
+    box-shadow: $shadow;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+
+    .dropdown-item:hover {
+      background-color: $dark30;
+      color: #333;
+    }
+  }
+
+  .dropdown-menu::before {
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+    border-left: 1px solid rgba(0, 0, 0, 0.07);
+  }
+
+  i {
+    margin-right: 0;
+  }
 }
 .dropdown .dropdown-menu .dropdown-item, .dropup .dropdown-menu .dropdown-item, .dropright .dropdown-menu .dropdown-item, .dropleft .dropdown-menu .dropdown-item {
   padding: 0;
@@ -13,13 +25,8 @@
 .dropdown-item a, .dropdown-menu label {
   font-size: 1rem;
   color: #333;
+}
+.dropdown-item a {
   padding: 0.35rem 1.38rem;
   display: block;
-}
-.dropdown .dropdown-menu .dropdown-item:hover {
-  background-color: $dark30;
-  color: #333;
-}
-.dropdown i {
-  margin-right: 0;
 }
