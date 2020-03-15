@@ -2122,9 +2122,9 @@ var RowSelector = /*#__PURE__*/function () {
     value: function _bind() {
       var options = this.options,
           checkboxSelector = options.checkboxSelector,
-          selectAllSelector = options.selectAllSelector,
-          $ckb = $(checkboxSelector);
-      $(selectAllSelector).on('change', function () {
+          $selectAllSelector = $(options.selectAllSelector),
+          $checkbox = $(checkboxSelector);
+      $selectAllSelector.on('change', function () {
         var cbx = $(checkboxSelector);
 
         for (var i = 0; i < cbx.length; i++) {
@@ -2137,7 +2137,7 @@ var RowSelector = /*#__PURE__*/function () {
       });
 
       if (options.clickRow) {
-        $ckb.click(function (e) {
+        $checkbox.click(function (e) {
           if (typeof e.cancelBubble != "undefined") {
             e.cancelBubble = true;
           }
@@ -2150,11 +2150,15 @@ var RowSelector = /*#__PURE__*/function () {
         });
       }
 
-      $ckb.on('change', function () {
+      $checkbox.on('change', function () {
         var tr = $(this).closest('tr');
 
         if (this.checked) {
           tr.css('background-color', options.background);
+
+          if ($(checkboxSelector + ':checked').length === $checkbox.length) {
+            $selectAllSelector.prop('checked', true);
+          }
         } else {
           tr.css('background-color', '');
         }
