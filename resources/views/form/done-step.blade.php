@@ -40,7 +40,7 @@
         <div class="st-btn">
             <a class="btn btn-success" href="{{ $createUrl }}" >{{ trans('admin.continue_creating') }}</a>
             &nbsp;
-            <a class="btn btn-default" href="{{ $backUrl }}"><i class="fa fa-long-arrow-left"></i> {{ trans('admin.back') }}</a>
+            <a class="btn btn-white" href="{{ $backUrl }}"><i class="fa fa-long-arrow-left"></i> {{ trans('admin.back') }}</a>
         </div>
     </div>
 </div>

@@ -88,7 +88,6 @@ JS;
 
     public static function collectAssets()
     {
-        Admin::collectAssets('moment');
         Admin::collectAssets('bootstrap-datetimepicker');
     }
 }

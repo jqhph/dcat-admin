@@ -2,7 +2,7 @@
     @if($group)
         <div class="input-group-btn">
             <input type="hidden" name="{{ $id }}_group" class="{{ $group_name }}-operation" value="0"/>
-            <a class=" filter-group btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <a class=" filter-group btn btn-white dropdown-toggle" data-toggle="dropdown">
                 <span class="{{ $group_name }}-label">{{ $default['label'] }} </span>
                 <span class="fa fa-caret-down"></span>
             </a>

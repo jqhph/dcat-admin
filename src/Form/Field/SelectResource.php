@@ -13,7 +13,7 @@ class SelectResource extends Field
     use PlainInput;
 
     protected static $js = [
-        'vendor/dcat-admin/dcat-admin/select-resource.min.js',
+        'dcat-admin/dcat/extra/resource-selector.js',
     ];
 
     protected $area = ['51%', '65%'];

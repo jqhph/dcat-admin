@@ -14,7 +14,7 @@
                 </div>
                 <div class="btn-group btn-group-sm default btn-mini" style="margin-left:5px"  >
                     @if(!$disableResetButton)
-                    <a  href="{!! $action !!}" class="reset btn btn-default btn-sm ">
+                    <a  href="{!! $action !!}" class="reset btn btn-white btn-sm ">
                         <i class="fa fa-undo"></i><span class="hidden-xs">&nbsp;&nbsp;{{ trans('admin.reset') }}</span>
                     </a>
                     @endif

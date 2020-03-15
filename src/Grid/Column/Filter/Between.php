@@ -189,7 +189,6 @@ EOT;
 
     protected function collectAssets()
     {
-        Admin::collectAssets('moment');
         Admin::collectAssets('bootstrap-datetimepicker');
     }
 }

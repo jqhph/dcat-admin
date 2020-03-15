@@ -8,7 +8,7 @@ use Dcat\Admin\Support\Helper;
 class SelectResource extends Presenter
 {
     public static $js = [
-        'vendor/dcat-admin/dcat-admin/select-resource.min.js',
+        'dcat-admin/dcat/extra/resource-selector.js',
     ];
 
     /**
@@ -186,7 +186,7 @@ class SelectResource extends Presenter
 
         if (! $this->maxItem || $this->maxItem > 2) {
             // 选项大于两个时使用select2样式布局
-            Admin::css(Admin::$componentsAssets['select2']['css']);
+            Admin::collectAssets('select2', 'css');
 
             $containerClass = 'select2 select2-container select2-container--default select2-container--below select2-container--focus ';
         }

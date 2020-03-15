@@ -55,11 +55,11 @@ class Assets
      * @var array
      */
     protected $baseJs = [
-        'menu'       => 'dcat-admin/js/core/app-menu.js',
-        'app'        => 'dcat-admin/js/core/app.js',
-        'toastr'     => 'dcat-admin/vendors/js/extensions/toastr.min.js',
-        'pjax'       => 'dcat-admin/plugins/jquery-pjax/jquery.pjax.min.js',
-        'layer'      => 'dcat-admin/plugins/layer/layer.js',
+        'menu'   => 'dcat-admin/js/core/app-menu.js',
+        'app'    => 'dcat-admin/js/core/app.js',
+        'toastr' => 'dcat-admin/vendors/js/extensions/toastr.min.js',
+        'pjax'   => 'dcat-admin/plugins/jquery-pjax/jquery.pjax.min.js',
+        'layer'  => 'dcat-admin/plugins/layer/layer.js',
     ];
 
     /**
@@ -69,6 +69,14 @@ class Assets
         'jquery.nestable' => [
             'js'  => 'dcat-admin/plugins/nestable/jquery.nestable.min.js',
             'css' => 'dcat-admin/plugins/nestable/nestable.css',
+        ],
+        'select2' => [
+            'js'  => 'dcat-admin/vendors/js/forms/select/select2.full.min.js',
+            'css' => 'dcat-admin/vendors/css/forms/select/select2.min.css',
+        ],
+        'bootstrap-datetimepicker' => [
+            'js'  => 'dcat-admin/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
+            'css' => 'dcat-admin/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css',
         ],
     ];
 
@@ -113,8 +121,18 @@ class Assets
         return $this;
     }
 
-    public function collect(string $name)
+    public function collect(string $name, string $type = '')
     {
+        if ($type === 'js') {
+            $this->js($this->components[$name]['js'] ?? null);
+
+            return;
+        } elseif ($type === 'css') {
+            $this->css($this->components[$name]['css'] ?? null);
+
+            return;
+        }
+
         $this->js($this->components[$name]['js'] ?? null);
         $this->css($this->components[$name]['css'] ?? null);
     }

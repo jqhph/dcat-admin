@@ -110,14 +110,14 @@ class BatchActions extends AbstractTool
 
         $script = <<<JS
 $('.{$rowName}-checkbox').on('change', function () {
-    var btn = $('.{$allName}-btn');
-    if (this.checked) {
+    var btn = $('.{$allName}-btn'), selected = Dcat.grid.selectedRows('$name').length;
+    if (selected) {
         btn.show()
     } else {
         btn.hide()
     }
     setTimeout(function () {
-         btn.find('.selected').html("{$selected}".replace('{n}', Dcat.grid.selectedRows('$name').length));
+         btn.find('.selected').html("{$selected}".replace('{n}', selected));
     }, 50)
 });
 JS;

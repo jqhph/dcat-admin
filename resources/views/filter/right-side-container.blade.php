@@ -7,7 +7,7 @@
                         <i class="fa fa-search"></i> &nbsp;{{ __('admin.search') }}
                     </button>&nbsp;
                     @if(!$disableResetButton)
-                        <a href="{!! $action !!}" class="reset btn btn-sm btn-default">
+                        <a href="{!! $action !!}" class="reset btn btn-sm btn-white">
                             <i class="fa fa-undo"></i> &nbsp;{{ __('admin.reset') }}
                         </a>
                     @endif
