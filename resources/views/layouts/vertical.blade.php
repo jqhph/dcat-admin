@@ -55,7 +55,7 @@
                 Powered by
                 <a target="_blank" href="https://github.com/jqhph/dcat-admin">Dcat Admin</a>
                 <span>&nbsp;·&nbsp;</span>
-                {{ Dcat\Admin\Admin::VERSION }}
+                v{{ Dcat\Admin\Admin::VERSION }}
             </span>
 
             <button class="btn btn-primary btn-icon scroll-top" type="button">

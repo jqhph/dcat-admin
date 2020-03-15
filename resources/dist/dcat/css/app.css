@@ -1847,6 +1847,11 @@ table.data-thumb-view.dataTable thead th:first-child {
   padding-left: 1rem;
 }
 
+table.data-list-view.dataTable thead th,
+table.data-thumb-view.dataTable thead th {
+  padding: 0.714rem 1.4rem;
+}
+
 table.dataTable thead tr {
   background: transparent;
   text-transform: uppercase;
