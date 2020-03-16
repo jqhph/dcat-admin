@@ -152,7 +152,7 @@ class AdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__.'/../config' => config_path()], 'dcat-admin-config');
             $this->publishes([__DIR__.'/../resources/lang' => resource_path('lang')], 'dcat-admin-lang');
             $this->publishes([__DIR__.'/../database/migrations' => database_path('migrations')], 'dcat-admin-migrations');
-            $this->publishes([__DIR__.'/../resources/assets' => public_path('vendor/dcat-admin')], 'dcat-admin-assets');
+            $this->publishes([__DIR__.'/../resources/assets/dist' => public_path('dcat-admin')], 'dcat-admin-assets');
         }
     }
 
