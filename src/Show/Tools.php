@@ -257,7 +257,7 @@ class Tools implements Renderable
         return <<<HTML
 <div class="btn-group pull-right btn-mini" style="margin-right: 5px">
     <a href="{$this->getListPath()}" class="btn btn-sm btn-white ">
-        <i class=" ti-view-list-alt"></i><span class="hidden-xs"> {$list}</span>
+        <i class=" ti-view-list-alt"></i><span class="d-none d-sm-inline"> {$list}</span>
     </a>
 </div>
 HTML;
@@ -282,7 +282,7 @@ HTML;
         if ($this->showEdit) {
             $btn = <<<EOF
 <a href="{$url}" class="btn btn-sm btn-primary">
-        <i class="ti-pencil-alt "></i><span class="hidden-xs"> {$edit}</span>
+        <i class="ti-pencil-alt "></i><span class="d-none d-sm-inline"> {$edit}</span>
     </a>
 EOF;
         }
@@ -296,7 +296,7 @@ EOF;
                 ->dimensions($width, $height)
                 ->success('Dcat.reload()');
 
-            $text = $this->showEdit ? '' : "<span class='hidden-xs'> &nbsp; $edit</span>";
+            $text = $this->showEdit ? '' : "<span class='d-none d-sm-inline'> &nbsp; $edit</span>";
 
             $quickBtn = "<a data-url='$url' class='btn btn-sm btn-primary {$id}'><i class=' fa fa-clone'></i>$text</a>";
         }
@@ -322,7 +322,7 @@ HTML;
         return <<<HTML
 <div class="btn-group pull-right btn-mini" style="margin-right: 5px">
     <a class="btn btn-sm btn-danger " data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
-        <i class="ti-trash"></i><span class="hidden-xs">  {$delete}</span>
+        <i class="ti-trash"></i><span class="d-none d-sm-inline">  {$delete}</span>
     </a>
 </div>
 HTML;

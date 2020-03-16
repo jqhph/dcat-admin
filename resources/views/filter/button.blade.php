@@ -1,6 +1,6 @@
 <div class="btn-group filter-button-group btn-no-shadow" style="margin-right:3px">
     <label class="btn btn-outline-primary {{ $scopes->isNotEmpty() ? 'dropdown-toggle' : '' }} {{ $btn_class }}" @if($only_scopes)data-toggle="dropdown"@endif>
-        <i class="feather icon-filter"></i>@if($show_filter_text)<span class="hidden-xs">&nbsp;&nbsp;{{ trans('admin.filter') }}</span>@endif
+        <i class="feather icon-filter"></i>@if($show_filter_text)<span class="d-none d-sm-inline">&nbsp;&nbsp;{{ trans('admin.filter') }}</span>@endif
     </label>
     @if($scopes->isNotEmpty())
         <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">

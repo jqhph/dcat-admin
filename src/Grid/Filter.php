@@ -676,7 +676,7 @@ class Filter implements Renderable
      */
     public function hiddenResetButtonText()
     {
-        Admin::style(".{$this->containerClass} a.reset .hidden-xs{display:none}");
+        Admin::style(".{$this->containerClass} a.reset .d-none d-sm-inline{display:none}");
 
         return $this;
     }

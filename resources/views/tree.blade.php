@@ -3,22 +3,22 @@
     <div>
         <div class="btn-group" style="margin-right:3px">
             <button class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="expand">
-                <i class="feather icon-plus-square"></i>&nbsp;<span class="hidden-xs">{{ trans('admin.expand') }}</span>
+                <i class="feather icon-plus-square"></i>&nbsp;<span class="d-none d-sm-inline">{{ trans('admin.expand') }}</span>
             </button>
             <button class="btn btn-primary btn-sm {{ $id }}-tree-tools" data-action="collapse">
-                <i class="feather icon-minus-square"></i><span class="hidden-xs">&nbsp;{{ trans('admin.collapse') }}</span>
+                <i class="feather icon-minus-square"></i><span class="d-none d-sm-inline">&nbsp;{{ trans('admin.collapse') }}</span>
             </button>
         </div>
 
         @if($useSave)
             &nbsp;<div class="btn-group" style="margin-right:3px">
-                <button class="btn btn-primary btn-sm {{ $id }}-save" ><i class="feather icon-save"></i><span class="hidden-xs">&nbsp;{{ trans('admin.save') }}</span></button>
+                <button class="btn btn-primary btn-sm {{ $id }}-save" ><i class="feather icon-save"></i><span class="d-none d-sm-inline">&nbsp;{{ trans('admin.save') }}</span></button>
             </div>
         @endif
 
         @if($useRefresh)
             &nbsp;<div class="btn-group" style="margin-right:3px">
-                <button class="btn btn-primary btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="hidden-xs">&nbsp;{{ trans('admin.refresh') }}</span></button>
+                <button class="btn btn-primary btn-sm" data-action="refresh" ><i class="feather icon-refresh-cw"></i><span class="d-none d-sm-inline">&nbsp;{{ trans('admin.refresh') }}</span></button>
             </div>
         @endif
 

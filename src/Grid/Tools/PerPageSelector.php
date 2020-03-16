@@ -83,7 +83,7 @@ class PerPageSelector implements Renderable
         $dropdown =  Dropdown::make($options)->button($this->perPage)->render();
 
         return <<<EOT
-<label class="pull-right hidden-xs" style="margin-right: 10px">
+<label class="pull-right d-none d-sm-inline" style="margin-right: 10px">
     $dropdown
 </label>
 EOT;
