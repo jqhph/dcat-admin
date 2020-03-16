@@ -2033,6 +2033,15 @@ table.data-thumb-view.dataTable tbody tr:hover {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
 
+.card.dcat-box .card-header {
+  border-bottom: 1px solid #f4f4f4;
+  padding-bottom: 1rem;
+}
+
+.dd {
+  margin: 0 !important;
+}
+
 .dd-item > button:before {
   font-family: "feather";
   content: "\E844" !important;
@@ -2041,6 +2050,11 @@ table.data-thumb-view.dataTable tbody tr:hover {
 
 .dd-item > button[data-action=collapse]:before {
   content: "\E842" !important;
+}
+
+.dd-handle {
+  border: 1px solid #eee !important;
+  border-radius: 0.2rem !important;
 }
 
 .layui-layer {

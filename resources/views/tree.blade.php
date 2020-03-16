@@ -1,4 +1,4 @@
-<div class="card-header">
+<div class="card-header pb-1">
 
     <div>
         <div class="btn-group" style="margin-right:3px">
@@ -36,7 +36,7 @@
 </div>
 
 <div class="card-body table-responsive">
-    <div class="dd" id="{{ $id }}" style="margin:18px">
+    <div class="dd" id="{{ $id }}">
         <ol class="dd-list">
             @if($items)
                 @foreach($items as $branch)

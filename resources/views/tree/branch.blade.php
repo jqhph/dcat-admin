@@ -3,7 +3,7 @@
         {!! $branchCallback($branch) !!}
         <span class="pull-right dd-nodrag">
             @if($useEdit)
-            <a href="{{ $path }}/{{ $branch[$keyName] }}/edit"><i class="feather icon-edit"></i>&nbsp;</a>
+            <a href="{{ $path }}/{{ $branch[$keyName] }}/edit"><i class="feather icon-edit-1"></i>&nbsp;</a>
             @endif
 
             @if($useQuickEdit)

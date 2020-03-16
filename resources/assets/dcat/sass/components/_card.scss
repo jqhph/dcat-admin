@@ -1,3 +1,10 @@
 .card {
   box-shadow: $shadow;
 }
+
+.card.dcat-box {
+  .card-header {
+    border-bottom: 1px solid $divider-color;
+    padding-bottom: 1rem;
+  }
+}

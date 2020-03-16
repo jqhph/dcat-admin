@@ -1,3 +1,7 @@
+.dd {
+  margin: 0!important;
+}
+
 .dd-item > button:before {
   font-family: "feather";
   content: "\e844"!important;
@@ -6,4 +10,9 @@
 
 .dd-item > button[data-action="collapse"]:before {
   content: "\E842"!important;
+}
+
+.dd-handle {
+  border: 1px solid $border-color!important;
+  border-radius: .2rem!important;;
 }

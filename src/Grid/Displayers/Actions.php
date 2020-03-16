@@ -243,7 +243,7 @@ EOT;
     {
         return <<<EOT
 <a href="{$this->resource()}/{$this->getKey()}/edit">
-    <i class="feather icon-edit grid-action-icon"></i>
+    <i class="feather icon-edit-1 grid-action-icon"></i>
 </a>&nbsp;
 EOT;
     }
