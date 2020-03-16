@@ -100,7 +100,7 @@ export default class DialogForm {
 
         // 刷新或跳转页面时移除弹窗
         Dcat.onPjaxComplete(() => {
-            _this.destory(counter);
+            _this._destory(counter);
         });
 
         _this.isLoading = 1;
@@ -140,7 +140,7 @@ export default class DialogForm {
                         return v;
                     })(options.area),
                 content: tpl,
-                title: title,
+                title: options.title,
                 yes: function () {
                     _this._submit($template)
                 },

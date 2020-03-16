@@ -176,9 +176,6 @@ class Assets
 
     public function baseJs(array $js)
     {
-        if (! $js) {
-            return;
-        }
         $this->baseJs = $js;
     }
 

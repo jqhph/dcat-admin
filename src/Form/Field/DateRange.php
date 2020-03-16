@@ -49,11 +49,11 @@ class DateRange extends Field
         $this->script = <<<JS
             $('{$class['start']}').datetimepicker($startOptions);
             $('{$class['end']}').datetimepicker($endOptions);
-            $("{$class['start']}").on("dp.change", function (e) {
-                $('{$class['end']}').data("DateTimePicker").minDate(e.date);
+            $("{$class['start']}").on("changeDate", function (e) {
+                $('{$class['end']}').datetimepicker('setStartDate', e.date);
             });
-            $("{$class['end']}").on("dp.change", function (e) {
-                $('{$class['start']}').data("DateTimePicker").maxDate(e.date);
+            $("{$class['end']}").on("changeDate", function (e) {
+                $('{$class['start']}').datetimepicker('setEndDate', e.date);
             });
 JS;
 

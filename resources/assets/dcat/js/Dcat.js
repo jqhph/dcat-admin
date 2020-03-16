@@ -93,7 +93,7 @@ export default class Dcat {
         }
 
         $(() => {
-            $d.trigger('pjax:loaded');
+            $(document).trigger('pjax:loaded');
         });
     }
 

@@ -2232,6 +2232,28 @@ table.data-thumb-view.dataTable tbody tr:hover {
   }
 }
 
+.datetimepicker table tr td.active,
+.datetimepicker table tr td.active:hover,
+.datetimepicker table tr td.active.disabled,
+.datetimepicker table tr td.active.disabled:hover,
+.datetimepicker table tr td span.active,
+.datetimepicker table tr td span.active:hover,
+.datetimepicker table tr td span.active.disabled,
+.datetimepicker table tr td span.active.disabled:hover {
+  background-image: linear-gradient(to bottom, #5c6bc6, #5c6bc6) !important;
+}
+
+.datetimepicker td,
+.datetimepicker th {
+  padding: 4px;
+}
+
+.datetimepicker {
+  padding: 10px 14px !important;
+  border: 1px solid #f4f4f4 !important;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
   font-size: 1.3rem;
 }

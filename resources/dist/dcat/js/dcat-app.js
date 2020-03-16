@@ -208,7 +208,7 @@ var Dcat = /*#__PURE__*/function () {
       }
 
       $(function () {
-        $d.trigger('pjax:loaded');
+        $(document).trigger('pjax:loaded');
       });
     }
     /**
@@ -1263,7 +1263,7 @@ var DialogForm = /*#__PURE__*/function () {
 
 
       Dcat.onPjaxComplete(function () {
-        _this.destory(counter);
+        _this._destory(counter);
       });
       _this.isLoading = 1;
       $btn && $btn.button('loading');
@@ -1299,7 +1299,7 @@ var DialogForm = /*#__PURE__*/function () {
           return v;
         }(options.area),
         content: tpl,
-        title: title,
+        title: options.title,
         yes: function yes() {
           _this._submit($template);
         },

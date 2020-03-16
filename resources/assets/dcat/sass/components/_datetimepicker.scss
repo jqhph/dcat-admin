@@ -1,0 +1,13 @@
+.datetimepicker table tr td.active, .datetimepicker table tr td.active:hover, .datetimepicker table tr td.active.disabled, .datetimepicker table tr td.active.disabled:hover,
+.datetimepicker table tr td span.active, .datetimepicker table tr td span.active:hover, .datetimepicker table tr td span.active.disabled, .datetimepicker table tr td span.active.disabled:hover{
+  background-image: linear-gradient(to bottom, $primary, $primary) !important;
+}
+.datetimepicker td, .datetimepicker th {
+  padding: 4px;
+}
+
+.datetimepicker {
+  padding: 10px 14px!important;
+  border: 1px solid $divider-color!important;
+  box-shadow: $shadow;
+};
