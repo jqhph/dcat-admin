@@ -2,8 +2,6 @@
         class="dcat-admin-body vertical-layout vertical-menu-modern 2-columns {{ $configData['blank_page_class'] }} {{ $configData['body_class']}} {{($configData['theme'] === 'light') ? '' : $configData['layout_theme'] }}  {{ $configData['vertical_menu_navbar_type'] }} {{ $configData['sidebar_class'] }} {{ $configData['footer_type'] }}"
         data-menu="vertical-menu-modern" data-col="2-columns" data-layout="{{ $configData['theme'] }}">
 
-    {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
-
     <script>
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
 
@@ -14,6 +12,8 @@
             }, 1000)
         })
     </script>
+
+    {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
     @include('admin::partials.sidebar')
 
@@ -31,13 +31,13 @@
                     </div>
                 </div>
                 <div class="{{ $configData['content_sidebar_class'] }}">
-                    <div class="content-wrapper" id="pjax-container">
+                    <div class="content-wrapper" id="{{ $pjaxContainerId }}">
                         @yield('app')
                     </div>
                 </div>
             </div>
         @else
-            <div class="content-wrapper" id="pjax-container">
+            <div class="content-wrapper" id="{{ $pjaxContainerId }}">
                 @yield('app')
             </div>
         @endif

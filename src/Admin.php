@@ -62,6 +62,11 @@ class Admin
     public static $jsVariables = [];
 
     /**
+     * @var string
+     */
+    public static $pjaxContainerId = 'pjax-container';
+
+    /**
      * Returns the long version of dcat-admin.
      *
      * @return string The long application version
@@ -415,6 +420,7 @@ class Admin
      */
     public static function jsVariables()
     {
+        static::$jsVariables['pjax_container_selector'] = '#'.static::$pjaxContainerId;
         static::$jsVariables['token'] = csrf_token();
         static::$jsVariables['lang'] = __('admin.client') ?: [];
 

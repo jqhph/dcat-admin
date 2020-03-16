@@ -35,12 +35,12 @@
     var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
 </script>
 
+{{-- 页面埋点 --}}
+{!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
 <div class="app-content content">
-    <div class="content-wrapper">
-        <div class="content-body">
-            @yield('content')
-        </div>
+    <div class="content-wrapper" id="{{ $pjaxContainerId }}">
+        @yield('app')
     </div>
 </div>
 

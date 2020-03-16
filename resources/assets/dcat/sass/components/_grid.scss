@@ -29,6 +29,7 @@
   }
 }
 
+// 过滤器滑动面板
 .right-side-filter-container .header {
   border-bottom: 1px solid $divider-color;
   width: 100%;
@@ -36,4 +37,14 @@
   z-index: 10;
   top: 0;
   margin-left: -1rem;
+}
+
+// 快捷新增
+.quick-create {
+  td {
+    padding-left: 45px;
+    background-color: $gray-background;
+    vertical-align: middle;
+    border-radius: .5rem;
+  }
 }

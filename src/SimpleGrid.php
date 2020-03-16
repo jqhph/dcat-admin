@@ -22,7 +22,9 @@ class SimpleGrid extends Grid
         $this->rowSelector()->click();
 
         Content::composing(function (Content $content) {
-            $content->simple();
+            Admin::style('#app{padding: 1rem}');
+
+            $content->full();
         }, true);
     }
 

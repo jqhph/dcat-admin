@@ -47,7 +47,6 @@ $primary-90: #8379f2;
 // 渐变主色
 $primary-linear-gradient: linear-gradient(118deg, rgba($primary, 1), rgba($primary, 0.7));
 
-
 // 字体颜色
 $font-color: #414750;
 
@@ -55,6 +54,8 @@ $font-color: #414750;
 //$body-background: #f9fafc;
 $body-background: $dark30;
 
+// 灰背景色
+$gray-background: #f1f1f1;
 
 // 常用阴影颜色
 $shadow: 0 2px 4px 0 rgba(0,0,0,.08);

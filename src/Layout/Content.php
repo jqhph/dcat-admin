@@ -394,11 +394,12 @@ class Content implements Renderable
     protected function variables()
     {
         return array_merge([
-            'header'      => $this->title,
-            'description' => $this->description,
-            'breadcrumb'  => $this->breadcrumb,
-            'configData'  => $this->applClasses(),
-            'content'     => $this->build(),
+            'header'          => $this->title,
+            'description'     => $this->description,
+            'breadcrumb'      => $this->breadcrumb,
+            'configData'      => $this->applClasses(),
+            'content'         => $this->build(),
+            'pjaxContainerId' => Admin::$pjaxContainerId,
         ], $this->variables);
     }
 

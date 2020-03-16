@@ -4,10 +4,10 @@
 
 .layui-layer-title {
   padding: 0 80px 0 20px;
-  height: 50px!important;
-  line-height: 50px!important;
-  border-bottom: 0!important;
-  font-size: 1rem!important;
+  height: 55px!important;
+  line-height: 55px!important;
+  border-bottom: 1px solid $divider-color!important;
+  font-size: 1.1rem!important;
   text-transform: capitalize;
   overflow: hidden;
 }
@@ -19,7 +19,7 @@
 .layui-layer-setwin .layui-layer-min cite:before {
   font-family: "feather";
   content: "\e897";
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: $font-color;
 }
 
@@ -31,7 +31,7 @@
 .layui-layer-setwin .layui-layer-max:before {
   font-family: "feather";
   content: "\e908";
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 .layui-layer-setwin .layui-layer-maxmin:before {
   content: "\e88d";
@@ -40,8 +40,12 @@
 .layui-layer-setwin .layui-layer-close1:before {
   font-family: "feather";
   content: "\e8f6";
-  font-size: 1.15rem;
+  font-size: 1.2rem;
 }
 .layui-layer-setwin .layui-layer-close1 {
-  margin-left: 8px!important;
+  margin-left: 7px!important;
+}
+
+.layui-layer-setwin a {
+  top: 3px;
 }

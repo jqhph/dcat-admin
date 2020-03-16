@@ -12,15 +12,15 @@
 @section('app')
     {!! Dcat\Admin\Admin::assets()->renderStyle() !!}
 
-    {{-- 页面埋点--}}
-    {!! admin_section(AdminSection::APP_INNER_BEFORE) !!}
-
     <div class="content-body" id="app">
-        @yield('content')
-    </div>
+        {{-- 页面埋点--}}
+        {!! admin_section(AdminSection::APP_INNER_BEFORE) !!}
 
-    {{-- 页面埋点--}}
-    {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
+        @yield('content')
+
+        {{-- 页面埋点--}}
+        {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
+    </div>
 
     {!! Dcat\Admin\Admin::assets()->renderScript() !!}
     {!! Dcat\Admin\Admin::html() !!}
