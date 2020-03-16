@@ -731,7 +731,17 @@ function extend(Dcat) {
 function listen(Dcat) {
   // 只初始化一次
   Dcat.booting(function () {
-    // 菜单点击选中效果
+    // ajax全局设置
+    $.ajaxSetup({
+      cache: true,
+      error: Dcat.handleAjaxError
+    });
+    Dcat.NP.configure({
+      parent: '.app-content'
+    }); // 滚动条优化
+
+    new PerfectScrollbar('html'); // 菜单点击选中效果
+
     new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // 返回顶部按钮
 
     new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat); // layer弹窗设置
@@ -740,14 +750,6 @@ function listen(Dcat) {
       maxmin: true,
       moveOut: true,
       shade: false
-    }); // ajax全局设置
-
-    $.ajaxSetup({
-      cache: true,
-      error: Dcat.handleAjaxError
-    });
-    Dcat.NP.configure({
-      parent: '.app-content'
     });
   }); // 每个请求都初始化
 

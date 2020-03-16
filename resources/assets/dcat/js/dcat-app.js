@@ -79,14 +79,6 @@ function extend (Dcat) {
 function listen(Dcat) {
     // 只初始化一次
     Dcat.booting(() => {
-        // 菜单点击选中效果
-        new Menu(Dcat);
-        // 返回顶部按钮
-        new Footer(Dcat);
-
-        // layer弹窗设置
-        layer.config({maxmin: true, moveOut: true, shade: false});
-
         // ajax全局设置
         $.ajaxSetup({
             cache: true,
@@ -94,6 +86,17 @@ function listen(Dcat) {
         });
 
         Dcat.NP.configure({parent: '.app-content'});
+
+        // 滚动条优化
+        new PerfectScrollbar('html');
+
+        // 菜单点击选中效果
+        new Menu(Dcat);
+        // 返回顶部按钮
+        new Footer(Dcat);
+
+        // layer弹窗设置
+        layer.config({maxmin: true, moveOut: true, shade: false});
     });
 
     // 每个请求都初始化
