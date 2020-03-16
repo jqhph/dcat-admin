@@ -58,18 +58,15 @@ class FilterButton extends AbstractTool
     
      function initSlider() {
         slider = new Dcat.Slider({
-            direction: 'r',
-            dom: '#{$id}',
-            background: '#FFF',
-            shade: false,
-            width: '480px',
+            target: '#{$id}',
         });
         
-        $(document).one('pjax:complete', function () {// 跳转新页面时移除弹窗
-            slider.destroy();
-        });
+        slider
+            .\$container
+            .find('.right-side-filter-container .header')
+            .width(slider.\$container.width() - 20);
         
-        expand && slider.open();
+        expand && setTimeout(slider.open, 10);
     }
     
     expand && setTimeout(initSlider, 10);

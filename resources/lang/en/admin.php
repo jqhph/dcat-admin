@@ -28,7 +28,7 @@ return [
     'client' => [
         'delete_confirm'    => 'Are you sure to delete this item ?',
         'confirm'           => 'Confirm',
-        'cancel'            => 'cancel',
+        'cancel'            => 'Cancel',
         'refresh_succeeded' => 'Refresh succeeded !',
 
         '500' => 'Internal server error !',

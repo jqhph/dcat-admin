@@ -116,6 +116,9 @@ function boot(Dcat) {
     return Dcat;
 }
 
+/**
+ * @returns {Dcat}
+ */
 win.CreateDcat = function(config) {
     return boot(new Dcat(config));
 };

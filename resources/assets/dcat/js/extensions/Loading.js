@@ -1,5 +1,5 @@
 
-let tpl = '<div class="dcat-loading flex items-center justify-center pin" style="{style}">{svg}</div>',
+let tpl = '<div class="dcat-loading d-flex items-center align-items-center justify-content-center pin" style="{style}">{svg}</div>',
     loading = '.dcat-loading',
     LOADING_SVG = [
         '<svg width="{width}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-disk" style="background: none;"><g transform="translate(50,50)"><g ng-attr-transform="scale({{config.scale}})" transform="scale(0.5)"><circle cx="0" cy="0" r="50" ng-attr-fill="{{config.c1}}" fill="{color}"></circle><circle cx="0" ng-attr-cy="{{config.cy}}" ng-attr-r="{{config.r}}" ng-attr-fill="{{config.c2}}" cy="-35" r="15" fill="#ffffff" transform="rotate(101.708)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 0 0;360 0 0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>',
@@ -22,7 +22,7 @@ class Loading {
             defStyle = 'position:absolute;left:10px;right:10px;',
             content;
 
-        _this.$container = typeof options.container === 'object' ? options.container : $(options.container);
+        _this.$container = $(options.container);
 
         content = $(
             tpl

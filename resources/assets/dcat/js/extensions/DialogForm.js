@@ -98,13 +98,14 @@ export default class DialogForm {
             return;
         }
 
-        $(w.document).one('pjax:complete', function () { // 跳转新页面时移除弹窗
-            _this._destory(counter);
+        // 刷新或跳转页面时移除弹窗
+        Dcat.onPjaxComplete(() => {
+            _this.destory(counter);
         });
 
         _this.isLoading = 1;
 
-        (! $btn) || $btn.button('loading');
+        $btn && $btn.button('loading');
 
         $.get(url, function (tpl) {
             _this.isLoading = 0;

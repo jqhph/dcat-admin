@@ -28,3 +28,12 @@
     font-size: 0.7rem;
   }
 }
+
+.right-side-filter-container .header {
+  border-bottom: 1px solid $divider-color;
+  width: 100%;
+  background: #fff;
+  z-index: 10;
+  top: 0;
+  margin-left: -1rem;
+}

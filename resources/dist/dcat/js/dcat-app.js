@@ -766,6 +766,10 @@ function boot(Dcat) {
   $(Dcat.boot.bind(Dcat));
   return Dcat;
 }
+/**
+ * @returns {Dcat}
+ */
+
 
 win.CreateDcat = function (config) {
   return boot(new _Dcat__WEBPACK_IMPORTED_MODULE_0__["default"](config));
@@ -1252,14 +1256,14 @@ var DialogForm = /*#__PURE__*/function () {
         } catch (e) {}
 
         return;
-      }
+      } // 刷新或跳转页面时移除弹窗
 
-      $(w.document).one('pjax:complete', function () {
-        // 跳转新页面时移除弹窗
-        _this._destory(counter);
+
+      Dcat.onPjaxComplete(function () {
+        _this.destory(counter);
       });
       _this.isLoading = 1;
-      !$btn || $btn.button('loading');
+      $btn && $btn.button('loading');
       $.get(url, function (tpl) {
         _this.isLoading = 0;
 
@@ -1405,8 +1409,6 @@ var DialogForm = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _jquery_form_jquery_form_min__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../jquery-form/jquery.form.min */ "./resources/assets/dcat/js/jquery-form/jquery.form.min.js");
 /* harmony import */ var _jquery_form_jquery_form_min__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_jquery_form_jquery_form_min__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1448,7 +1450,7 @@ var Form = /*#__PURE__*/function () {
       after: function after() {}
     }, options);
     _this.originalValues = {};
-    _this.$form = _typeof(_this.options.form) === 'object' ? _this.options.form : $(_this.options.form).first();
+    _this.$form = $(_this.options.form).first();
   }
 
   _createClass(Form, [{
@@ -1989,7 +1991,7 @@ var Helpers = /*#__PURE__*/function () {
           len2 = this.len(array2),
           i;
 
-      if (len1 != len2) {
+      if (len1 !== len2) {
         return false;
       }
 
@@ -2002,10 +2004,22 @@ var Helpers = /*#__PURE__*/function () {
           return true;
         }
 
-        if (_typeof(array[i]) == 'object' && _typeof(array2[i]) == 'object') {
-          if (!this.equal(array[i], array2[i], strict)) return false;
-        } else if (array[i] != array2[i]) {
-          return false;
+        if (_typeof(array[i]) === 'object' && _typeof(array2[i]) === 'object') {
+          if (!this.equal(array[i], array2[i], strict)) {
+            return false;
+          }
+
+          continue;
+        }
+
+        if (strict) {
+          if (array[i] !== array2[i]) {
+            return false;
+          }
+        } else {
+          if (array[i] != array2[i]) {
+            return false;
+          }
         }
       }
 
@@ -2020,6 +2034,17 @@ var Helpers = /*#__PURE__*/function () {
       }
 
       return str.replace(new RegExp(_replace, "g"), subject);
+    }
+    /**
+     * 生成随机字符串
+     *
+     * @returns {string}
+     */
+
+  }, {
+    key: "random",
+    value: function random(len) {
+      return Math.random().toString(12).substr(2, len || 16);
     }
   }]);
 
@@ -2039,15 +2064,13 @@ var Helpers = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var tpl = '<div class="dcat-loading flex items-center justify-center pin" style="{style}">{svg}</div>',
+var tpl = '<div class="dcat-loading d-flex items-center align-items-center justify-content-center pin" style="{style}">{svg}</div>',
     loading = '.dcat-loading',
     LOADING_SVG = ['<svg width="{width}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-disk" style="background: none;"><g transform="translate(50,50)"><g ng-attr-transform="scale({{config.scale}})" transform="scale(0.5)"><circle cx="0" cy="0" r="50" ng-attr-fill="{{config.c1}}" fill="{color}"></circle><circle cx="0" ng-attr-cy="{{config.cy}}" ng-attr-r="{{config.r}}" ng-attr-fill="{{config.c2}}" cy="-35" r="15" fill="#ffffff" transform="rotate(101.708)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 0 0;360 0 0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>', '<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto block" style="width:{width};{svg_style}" viewBox="0 0 120 30" fill="{color}"><circle cx="15" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="60" cy="15" r="9" fill-opacity="0.3"><animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="105" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle></svg>'];
 
@@ -2069,7 +2092,7 @@ var Loading = /*#__PURE__*/function () {
         defStyle = 'position:absolute;left:10px;right:10px;',
         content;
 
-    _this.$container = _typeof(options.container) === 'object' ? options.container : $(options.container);
+    _this.$container = $(options.container);
     content = $(tpl.replace('{svg}', options.svg).replace('{color}', options.color).replace('{color}', options.color).replace('{width}', options.width).replace('{style}', "".concat(defStyle, "background:").concat(options.background, ";z-index:").concat(options.zIndex, ";").concat(options.style)));
     content.appendTo(_this.$container);
   }
@@ -2379,9 +2402,67 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Slider; });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Slider = function Slider(options) {
-  _classCallCheck(this, Slider);
-};
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var idPrefix = 'dcat-slider-',
+    template = "<div id=\"{id}\" class=\"customizer {class}\">\n    <div class=\"customizer-content position-fixed p-1 ps ps--active-y\"></div>\n</div>";
+
+var Slider = /*#__PURE__*/function () {
+  function Slider(Dcat, options) {
+    _classCallCheck(this, Slider);
+
+    var _this = this;
+
+    _this.options = $.extend({
+      target: null,
+      "class": null,
+      autoDestory: true
+    }, options);
+    _this.id = idPrefix + Dcat.helpers.random();
+    _this.$target = $(_this.options.target);
+    _this.$container = $(template.replace('{id}', _this.id).replace('{class}', _this.options["class"] || ''));
+
+    _this.$container.appendTo('body');
+
+    _this.$container.find('.customizer-content').append(_this.$target); // 滚动条
+
+
+    new PerfectScrollbar("#".concat(_this.id, " .customizer-content"));
+
+    if (_this.options.autoDestory) {
+      // 刷新或跳转页面时移除面板
+      Dcat.onPjaxComplete(function () {
+        _this.destory();
+      });
+    }
+  }
+
+  _createClass(Slider, [{
+    key: "open",
+    value: function open() {
+      this.$container.addClass('open');
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      this.$container.removeClass('open');
+    }
+  }, {
+    key: "toggle",
+    value: function toggle() {
+      this.$container.toggleClass('open');
+    }
+  }, {
+    key: "destory",
+    value: function destory() {
+      this.$container.remove();
+    }
+  }]);
+
+  return Slider;
+}();
 
 
 

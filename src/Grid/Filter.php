@@ -155,7 +155,7 @@ class Filter implements Renderable
     /**
      * @var string
      */
-    protected $style = 'padding:18px 15px 8px';
+    protected $style = 'padding:0';
 
     /**
      * @var bool

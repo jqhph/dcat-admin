@@ -26,7 +26,7 @@ class Downloadable extends AbstractDisplayer
 
             return <<<HTML
 <a href='$src' download='{$name}' target='_blank' class='text-muted'>
-    <i class="fa fa-download"></i> {$name}
+    <i class="feather icon-download"></i> {$name}
 </a>
 HTML;
         })->implode('<br>');

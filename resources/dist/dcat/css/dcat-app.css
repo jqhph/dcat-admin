@@ -1749,18 +1749,6 @@ html body .content .content-wrapper {
   left: 0;
 }
 
-.justify-center {
-  justify-content: center;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.flex {
-  display: flex;
-}
-
 .btn {
   padding: 0.75rem 1.45rem !important;
   font-size: 0.95rem;
@@ -1977,6 +1965,15 @@ table.data-thumb-view.dataTable tbody tr:hover {
   font-size: 0.7rem;
 }
 
+.right-side-filter-container .header {
+  border-bottom: 1px solid #f4f4f4;
+  width: 100%;
+  background: #fff;
+  z-index: 10;
+  top: 0;
+  margin-left: -1rem;
+}
+
 .dropdown .dropdown-menu {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.03);
@@ -2147,5 +2144,6 @@ code {
 pre {
   padding: 7px;
   white-space: pre-wrap;
+  margin-bottom: 0;
 }
 

@@ -151,7 +151,9 @@ class DialogTree extends AbstractDisplayer
         $val = $this->format($this->value);
 
         return <<<EOF
-<a href="javascript:void(0)" class="{$this->getSelectorPrefix()}-open-tree" data-checked="{$this->checkedAll}" data-val="{$val}"><i class='ti-layout-list-post'></i> $btn</a>
+<a href="javascript:void(0)" class="{$this->getSelectorPrefix()}-open-tree" data-checked="{$this->checkedAll}" data-val="{$val}">
+    <i class='feather icon-align-right'></i> $btn
+</a>
 EOF;
     }
 

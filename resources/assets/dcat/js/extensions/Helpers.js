@@ -136,7 +136,7 @@ export default class Helpers {
         let len1 = this.len(array),
             len2 = this.len(array2), i;
 
-        if (len1 != len2) {
+        if (len1 !== len2) {
             return false;
         }
 
@@ -149,13 +149,23 @@ export default class Helpers {
                 return true;
             }
 
-            if (typeof array[i] == 'object' && typeof array2[i] == 'object') {
-                if (! this.equal(array[i], array2[i], strict))
+            if (typeof array[i] === 'object' && typeof array2[i] === 'object') {
+                if (! this.equal(array[i], array2[i], strict)) {
                     return false;
+                }
+                continue;
             }
-            else if (array[i] != array2[i]) {
-                return false;
+
+            if (strict) {
+                if (array[i] !== array2[i]) {
+                    return false;
+                }
+            } else {
+                if (array[i] != array2[i]) {
+                    return false;
+                }
             }
+
         }
         return true;
     }
@@ -170,5 +180,14 @@ export default class Helpers {
             new RegExp(replace, "g"),
             subject
         );
+    }
+
+    /**
+     * 生成随机字符串
+     *
+     * @returns {string}
+     */
+    random(len) {
+        return Math.random().toString(12).substr(2, len || 16)
     }
 }

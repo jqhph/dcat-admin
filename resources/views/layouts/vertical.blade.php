@@ -9,6 +9,9 @@
 
         console.log(123, Dcat)
         Dcat.ready(function () {
+
+            setTimeout(function () {
+            }, 1000)
         })
     </script>
 

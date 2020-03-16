@@ -32,9 +32,7 @@ class Form {
         }, options);
 
         _this.originalValues = {};
-        _this.$form = typeof _this.options.form === 'object'
-            ? _this.options.form
-            : $(_this.options.form).first();
+        _this.$form = $(_this.options.form).first();
     }
 
     _execute() {
