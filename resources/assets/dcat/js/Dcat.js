@@ -85,6 +85,19 @@ export default class Dcat {
     }
 
     /**
+     * 主动触发 ready 事件
+     */
+    triggerReady() {
+        if (! pjaxResponded) {
+            return;
+        }
+
+        $(() => {
+            $d.trigger('pjax:loaded');
+        });
+    }
+
+    /**
      * 如果是 pjax 响应的页面，需要调用此方法
      *
      * @returns {Dcat}

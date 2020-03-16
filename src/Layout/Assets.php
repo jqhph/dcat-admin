@@ -29,7 +29,7 @@ class Assets
      */
     protected $headerJs = [
         'vendors' => 'dcat-admin/vendors/js/vendors.min.js',
-        'dcat'    => 'dcat-admin/dcat/js/app.js',
+        'dcat'    => 'dcat-admin/dcat/js/dcat-app.js',
     ];
 
     /**
@@ -48,7 +48,7 @@ class Assets
         'datatables' => 'dcat-admin/vendors/css/tables/datatable/datatables.min.css',
         'data-list-view' => 'dcat-admin/css/pages/data-list-view.css',
 
-        'dcat'               => 'dcat-admin/dcat/css/app.css',
+        'dcat'               => 'dcat-admin/dcat/css/dcat-app.css',
     ];
 
     /**
@@ -81,6 +81,10 @@ class Assets
         'rwd-table' => [
             'js'  => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js',
             'css' => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css',
+        ],
+        'jstree' => [
+            'js'  => 'dcat-admin/dcat/plugins/jstree-theme/jstree.min.js',
+            'css' => 'dcat-admin/dcat/plugins/jstree-theme/themes/proton/style.min.css',
         ],
     ];
 

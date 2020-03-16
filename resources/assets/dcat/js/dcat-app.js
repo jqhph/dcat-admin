@@ -21,6 +21,8 @@ import Form from './extensions/Form'
 import DialogForm from './extensions/DialogForm'
 import Loading from './extensions/Loading'
 import PreviewImage from './extensions/PreviewImage'
+import AssetsLoader from './extensions/AssetsLoader'
+import Slider from './extensions/Slider'
 
 import Menu from './bootstrappers/Menu'
 import Footer from './bootstrappers/Footer'
@@ -46,6 +48,8 @@ function extend (Dcat) {
     new Loading(Dcat);
     // 图片预览功能
     new PreviewImage(Dcat);
+    // 静态资源加载器
+    new AssetsLoader(Dcat);
 
     // 加载进度条
     Dcat.NP = NProgress;
@@ -67,7 +71,7 @@ function extend (Dcat) {
 
     // 滑动面板
     Dcat.Slider = function (options) {
-
+        return new Slider(Dcat, options)
     };
 }
 

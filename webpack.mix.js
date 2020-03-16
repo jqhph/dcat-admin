@@ -75,9 +75,9 @@ function dcat_dist_path(path) {
 // 复制第三方插件文件夹
 mix.copyDirectory(dcat_path('plugins'), dcat_dist_path('plugins'));
 // 打包app.js
-mix.js(dcat_path('js/dcat-app.js'), dcat_dist_path('js/app.js'));
+mix.js(dcat_path('js/dcat-app.js'), dcat_dist_path('js/dcat-app.js'));
 // 打包app.scss
-mix.sass(dcat_path('sass/dcat-app.scss'), dcat_dist_path('css/app.css'));
+mix.sass(dcat_path('sass/dcat-app.scss'), dcat_dist_path('css/dcat-app.css'));
 
 // 打包所有 extra 里面的所有js
 mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.scripts(src, dest));

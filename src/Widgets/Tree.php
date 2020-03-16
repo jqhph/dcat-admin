@@ -172,7 +172,6 @@ class Tree extends Widget
 
     protected function collectAssets()
     {
-        Admin::css('vendor/dcat-admin/jstree-theme/themes/proton/style.min.css');
         Admin::collectAssets('jstree');
     }
 }

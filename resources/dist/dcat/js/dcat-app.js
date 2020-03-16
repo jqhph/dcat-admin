@@ -197,6 +197,21 @@ var Dcat = /*#__PURE__*/function () {
       _window.Dcat.ready(proxy);
     }
     /**
+     * 主动触发 ready 事件
+     */
+
+  }, {
+    key: "triggerReady",
+    value: function triggerReady() {
+      if (!_pjaxResponded) {
+        return;
+      }
+
+      $(function () {
+        $d.trigger('pjax:loaded');
+      });
+    }
+    /**
      * 如果是 pjax 响应的页面，需要调用此方法
      *
      * @returns {Dcat}
@@ -637,10 +652,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./extensions/DialogForm */ "./resources/assets/dcat/js/extensions/DialogForm.js");
 /* harmony import */ var _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./extensions/Loading */ "./resources/assets/dcat/js/extensions/Loading.js");
 /* harmony import */ var _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./extensions/PreviewImage */ "./resources/assets/dcat/js/extensions/PreviewImage.js");
-/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
-/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
-/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
-/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
+/* harmony import */ var _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./extensions/AssetsLoader */ "./resources/assets/dcat/js/extensions/AssetsLoader.js");
+/* harmony import */ var _extensions_Slider__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./extensions/Slider */ "./resources/assets/dcat/js/extensions/Slider.js");
+/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
+/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
+/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
+/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
 /*=========================================================================================
   File Name: app.js
   Description: Dcat Admin JS脚本.
@@ -649,6 +666,8 @@ __webpack_require__.r(__webpack_exports__);
   Author: Jqh
   Author URL: https://github.com/jqhph
 ==========================================================================================*/
+
+
 
 
 
@@ -682,7 +701,9 @@ function extend(Dcat) {
 
   new _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // 图片预览功能
 
-  new _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // 加载进度条
+  new _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // 静态资源加载器
+
+  new _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // 加载进度条
 
   Dcat.NP = _nprogress_NProgress_min__WEBPACK_IMPORTED_MODULE_1___default.a; // 行选择器
 
@@ -701,7 +722,9 @@ function extend(Dcat) {
   }; // 滑动面板
 
 
-  Dcat.Slider = function (options) {};
+  Dcat.Slider = function (options) {
+    return new _extensions_Slider__WEBPACK_IMPORTED_MODULE_13__["default"](Dcat, options);
+  };
 } // 初始化
 
 
@@ -709,9 +732,9 @@ function listen(Dcat) {
   // 只初始化一次
   Dcat.booting(function () {
     // 菜单点击选中效果
-    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // 返回顶部按钮
+    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // 返回顶部按钮
 
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_13__["default"](Dcat); // layer弹窗设置
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat); // layer弹窗设置
 
     layer.config({
       maxmin: true,
@@ -730,9 +753,9 @@ function listen(Dcat) {
 
   Dcat.bootingEveryRequest(function () {
     // pjax初始化功能
-    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // data-action 动作绑定(包括删除、批量删除等操作)
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_16__["default"](Dcat); // data-action 动作绑定(包括删除、批量删除等操作)
 
-    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat);
+    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_17__["default"](Dcat);
   });
 } // 开始初始化
 
@@ -829,6 +852,130 @@ var Ajax = /*#__PURE__*/function () {
   }]);
 
   return Ajax;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/dcat/js/extensions/AssetsLoader.js":
+/*!*************************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/AssetsLoader.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AssetsLoader; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var AssetsLoader = /*#__PURE__*/function () {
+  function AssetsLoader(Dcat) {
+    _classCallCheck(this, AssetsLoader);
+
+    var _this = this;
+
+    _this.dcat = Dcat;
+    Dcat.assets = {
+      // 加载js脚本，并触发 ready 事件
+      loadScripts: _this.load.bind(_this),
+      // 从给定的内容中过滤"<script>"标签内容，并自动加载其中的js脚本
+      filterScriptsAndLoad: _this.filterScriptsAndLoad.bind(_this)
+    };
+  } // 按顺序加载静态资源
+  // 并在所有静态资源加载完毕后执行回调函数
+
+
+  _createClass(AssetsLoader, [{
+    key: "load",
+    value: function load(urls, callback, args) {
+      var _this = this;
+
+      if (urls.length < 1) {
+        !callback || callback(args);
+
+        _this.fire();
+
+        return;
+      }
+
+      seajs.use([urls.shift()], function () {
+        _this.load(urls, callback, args);
+      });
+    } // 过滤 <script src> 标签
+
+  }, {
+    key: "filterScripts",
+    value: function filterScripts(content) {
+      var obj = {};
+
+      if (typeof content == 'string') {
+        content = $(content);
+      }
+
+      obj.scripts = this.findAll(content, 'script[src]').remove();
+      obj.contents = content.not(obj.scripts);
+      obj.contents.render = this.toString;
+
+      obj.js = function () {
+        var urls = [];
+        obj.scripts.each(function (k, v) {
+          if (v.src) {
+            urls.push(v.src);
+          }
+        });
+        return urls;
+      }();
+
+      return obj;
+    } // 返回过滤 <script src> 标签后的内容，并在加载完 script 脚本后触发 "pjax:script" 事件
+
+  }, {
+    key: "filterScriptsAndLoad",
+    value: function filterScriptsAndLoad(content, callback) {
+      var obj = this.filterScripts(content);
+      this.load(obj.js, function () {
+        !callback || callback(obj.contents);
+      });
+      return obj.contents;
+    }
+  }, {
+    key: "findAll",
+    value: function findAll(elems, selector) {
+      if (typeof elems == 'string') {
+        elems = $(elems);
+      }
+
+      return elems.filter(selector).add(elems.find(selector));
+    }
+  }, {
+    key: "fire",
+    value: function fire() {
+      this.dcat.pjaxResponded(); // js加载完毕 触发 ready 事件
+      // setTimeout用于保证在所有js代码最后执行
+
+      setTimeout(this.dcat.triggerReady, 1);
+    }
+  }, {
+    key: "toString",
+    value: function toString(th) {
+      var html = '',
+          out;
+      this.each(function (k, v) {
+        if (out = v.outerHTML) {
+          html += out;
+        }
+      });
+      return html;
+    }
+  }]);
+
+  return AssetsLoader;
 }();
 
 
@@ -1132,7 +1279,7 @@ var DialogForm = /*#__PURE__*/function () {
       var _this = this,
           options = _this.options;
 
-      tpl = LA.AssetsLoader.filterScriptAndAutoLoad(tpl).render();
+      tpl = Dcat.assets.filterScriptsAndLoad(tpl).render();
       var $template = $(tpl),
           btns = [options.lang.submit],
           dialogOpts = {
@@ -2215,6 +2362,26 @@ var RowSelector = /*#__PURE__*/function () {
 
   return RowSelector;
 }();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/dcat/js/extensions/Slider.js":
+/*!*******************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/Slider.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Slider; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Slider = function Slider(options) {
+  _classCallCheck(this, Slider);
+};
 
 
 

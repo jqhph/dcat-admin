@@ -122,9 +122,10 @@ export default class DialogForm {
     }
 
     _popup(tpl, counter) {
-        let _this = this, options = _this.options;
+        let _this = this,
+            options = _this.options;
 
-        tpl = LA.AssetsLoader.filterScriptAndAutoLoad(tpl).render();
+        tpl = Dcat.assets.filterScriptsAndLoad(tpl).render();
         
         let $template = $(tpl),
             btns = [options.lang.submit],
