@@ -207,6 +207,7 @@
         }
 
         function unchecked($ckb) {
+            $ckb.parents('tr').css('background-color', '');
             $ckb.prop('checked', false);
         }
 

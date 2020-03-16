@@ -309,6 +309,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
 
     function unchecked($ckb) {
+      $ckb.parents('tr').css('background-color', '');
       $ckb.prop('checked', false);
     } // 勾选默认选项
 
