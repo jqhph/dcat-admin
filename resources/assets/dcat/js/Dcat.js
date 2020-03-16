@@ -66,14 +66,14 @@ export default class Dcat {
      * @returns {*|jQuery|*|jQuery.fn.init|jQuery|HTMLElement}
      */
     ready(callback, _window) {
+        let _this = this;
+
         if (! _window || _window === window) {
             if (! pjaxResponded) {
                 return $(callback);
             }
-            return this.onPjaxLoaded(callback);
+            return _this.onPjaxLoaded(callback);
         }
-
-        let _this = this;
 
         function proxy(e) {
             _window.$(_this.config.pjax_container_selector).one('pjax:loaded', proxy);

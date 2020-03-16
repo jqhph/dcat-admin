@@ -2220,8 +2220,16 @@ table.data-thumb-view.dataTable tbody tr:hover {
 
 .customizer {
   width: 450px;
+  right: -450px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
   z-index: 48;
+}
+
+@media (max-width: 576px) {
+  .customizer {
+    width: 410px;
+    right: -410px;
+  }
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {

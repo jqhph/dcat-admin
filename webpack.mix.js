@@ -64,23 +64,23 @@ mix.copyDirectory('resources/assets/vendors', 'resources/dist/vendors');
 
 
 // ------------------------------------ Dcat Admin -------------------------------------------
-function dcat_path(path) {
+function dcatPath(path) {
   return 'resources/assets/dcat/' + path;
 }
 
-function dcat_dist_path(path) {
+function dcatDistPath(path) {
   return 'resources/dist/dcat/' + path;
 }
 
 // 复制第三方插件文件夹
-mix.copyDirectory(dcat_path('plugins'), dcat_dist_path('plugins'));
+mix.copyDirectory(dcatPath('plugins'), dcatDistPath('plugins'));
 // 打包app.js
-mix.js(dcat_path('js/dcat-app.js'), dcat_dist_path('js/dcat-app.js'));
+mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js'));
 // 打包app.scss
-mix.sass(dcat_path('sass/dcat-app.scss'), dcat_dist_path('css/dcat-app.css'));
+mix.sass(dcatPath('sass/dcat-app.scss'), dcatDistPath('css/dcat-app.css'));
 
 // 打包所有 extra 里面的所有js
-mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.scripts(src, dest));
+mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.js(src, dest));
 
 // ------------------------------------ Dcat Admin -------------------------------------------
 

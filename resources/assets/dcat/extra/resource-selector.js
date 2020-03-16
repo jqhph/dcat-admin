@@ -2,6 +2,8 @@
     let NONE = '';
 
     function ResourceSelector(options) {
+        let Dcat = w.Dcat;
+
         options = $.extend({
             title: '选择', // 弹窗标题
             selector: '', // 选择按钮选择器
@@ -38,7 +40,6 @@
             clearClass = options.clearAllClass || (cls + '-clear-button'),
             maxItem = options.maxItem,
             originalItems = options.items,
-            Dcat = w.Dcat,
             iframeWin,
             layerIdx,
             $layerWin;
