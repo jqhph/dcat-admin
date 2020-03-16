@@ -42,7 +42,7 @@ class Between extends Filter
      */
     public function date()
     {
-        return $this->setDateFormat('YYYY-MM-DD');
+        return $this->setDateFormat('yyyy-mm-dd');
     }
 
     /**
@@ -62,7 +62,7 @@ class Between extends Filter
      */
     public function datetime()
     {
-        return $this->setDateFormat('YYYY-MM-DD HH:mm:ss');
+        return $this->setDateFormat('yyyy-mm-dd HH:mm:ss');
     }
 
     /**

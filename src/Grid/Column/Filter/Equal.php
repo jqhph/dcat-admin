@@ -34,7 +34,7 @@ class Equal extends Filter
      */
     public function date()
     {
-        return $this->setDateFormat('YYYY-MM-DD');
+        return $this->setDateFormat('yyyy-mm-dd');
     }
 
     /**
@@ -52,7 +52,7 @@ class Equal extends Filter
      *
      * @return $this
      */
-    public function datetime(string $format = 'YYYY-MM-DD HH:mm:ss')
+    public function datetime(string $format = 'yyyy-mm-dd HH:mm:ss')
     {
         return $this->setDateFormat($format);
     }

@@ -4,5 +4,5 @@ namespace Dcat\Admin\Form\Field;
 
 class DatetimeRange extends DateRange
 {
-    protected $format = 'YYYY-MM-DD HH:mm:ss';
+    protected $format = 'yyyy-mm-dd HH:mm:ss';
 }

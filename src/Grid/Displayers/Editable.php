@@ -112,7 +112,7 @@ class Editable extends AbstractDisplayer
      */
     public function datetime()
     {
-        $this->combodate('YYYY-MM-DD HH:mm:ss');
+        $this->combodate('yyyy-mm-dd HH:mm:ss');
     }
 
     /**
@@ -144,7 +144,7 @@ class Editable extends AbstractDisplayer
      *
      * @param string $format
      */
-    public function combodate($format = 'YYYY-MM-DD')
+    public function combodate($format = 'yyyy-mm-dd')
     {
         $this->type = 'combodate';
 

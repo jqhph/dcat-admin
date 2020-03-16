@@ -1,5 +1,5 @@
 .btn {
-  padding: .75rem 1.45rem!important;
+  padding: .75rem 1.35rem!important;
   font-size: .95rem;
   height: 36px;
   line-height: .7;
@@ -22,10 +22,10 @@
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.7rem 1.3rem!important;;
+  padding: 0.6rem 1rem!important;;
   font-size: 0.6rem;
   line-height: 12px;
-  height: 32px;
+  height: 30px;
 }
 
 
@@ -80,4 +80,8 @@
 .btn-outline-primary, .btn-outline-success, .btn-outline-danger, .btn-outline-info, .btn-outline-warning, .btn-outline-dark,
 .btn-flat-primary, .btn-flat-success, .btn-flat-danger, .btn-flat-info, .btn-flat-warning, .btn-flat-dark {
   box-shadow: none;
+}
+
+.input-group-sm > .form-control, .input-group-sm > .custom-select, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
+  padding: 0.5rem .7rem;
 }

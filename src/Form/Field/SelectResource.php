@@ -167,9 +167,6 @@ class SelectResource extends Field
     {
         $label = ucfirst(trans('admin.choose')).' '.$this->label;
         $area = json_encode($this->area);
-        $closeLabel = ucfirst(trans('admin.close'));
-        $lessThenLabel = trans('admin.selected_must_less_then', ['num' => $this->maxItem]);
-        $selectedOptionsLabel = trans('admin.selected_options');
         $disabled = empty($this->attributes['disabled']) ? '' : 'disabled';
         $containerId = $this->id.$this->getFormElementId();
         $maxItem = (int) $this->maxItem;
@@ -186,12 +183,9 @@ Dcat.ResourceSelector({
     items: {$this->value()},
     placeholder: '{$this->placeholder()}',
     showCloseButton: false,
-    closeButtonText: '{$closeLabel}',
-    exceedMaxItemTip: '{$lessThenLabel}',
-    selectedOptionsTip: '{$selectedOptionsLabel}',
     disabled: '{$disabled}',
     displayer: 'navList',
-    \$displayerContainer: $('#{$containerId}'),
+    displayerContainer: $('#{$containerId}'),
 });
 JS
         );
@@ -223,7 +217,7 @@ JS
 
         $name = $this->elementName ?: $this->formatName($this->column);
 
-        $this->prepend('<i class="fa fa-long-arrow-up"></i>')
+        $this->prepend('<i class="feather icon-arrow-up"></i>')
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id.$this->getFormElementId())

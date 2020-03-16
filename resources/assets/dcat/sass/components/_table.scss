@@ -63,4 +63,7 @@ table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable t
   overflow: visible!important;
   padding-bottom: 0!important;
 }
+.sticky-table-header {
+  z-index: 45!important;
+}
 // 解决 rwd-table 下拉选框显示bug

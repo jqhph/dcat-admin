@@ -30,6 +30,9 @@ return [
         'confirm'           => 'Confirm',
         'cancel'            => 'Cancel',
         'refresh_succeeded' => 'Refresh succeeded !',
+        'close'             => 'Close',
+        'selected_options'  => ':num options selected',
+        'exceed_max_item'   => 'Maximum items exceeded.',
 
         '500' => 'Internal server error !',
         '403' => 'Permission deny !',
@@ -184,7 +187,6 @@ return [
         'F_DUPLICATE'            => 'Duplicate file.',
     ],
     'import_extension_confirm' => 'Are you sure import the extension?',
-    'selected_must_less_then'  => 'Only supports maximum :num options.',
     'quick_create'             => 'Quick create',
     'grid_items_selected'      => '{n} items selected',
     'nothing_updated'          => 'Nothing has been updated.',

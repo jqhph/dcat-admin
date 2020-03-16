@@ -1750,7 +1750,7 @@ html body .content .content-wrapper {
 }
 
 .btn {
-  padding: 0.75rem 1.45rem !important;
+  padding: 0.75rem 1.35rem !important;
   font-size: 0.95rem;
   height: 36px;
   line-height: 0.7;
@@ -1776,10 +1776,10 @@ html body .content .content-wrapper {
 
 .btn-sm,
 .btn-group-sm > .btn {
-  padding: 0.7rem 1.3rem !important;
+  padding: 0.6rem 1rem !important;
   font-size: 0.6rem;
   line-height: 12px;
-  height: 32px;
+  height: 30px;
 }
 
 .btn-custom {
@@ -1849,12 +1849,110 @@ html body .content .content-wrapper {
   box-shadow: none;
 }
 
+.input-group-sm > .form-control,
+.input-group-sm > .custom-select,
+.input-group-sm > .input-group-prepend > .input-group-text,
+.input-group-sm > .input-group-append > .input-group-text,
+.input-group-sm > .input-group-prepend > .btn,
+.input-group-sm > .input-group-append > .btn {
+  padding: 0.5rem 0.7rem;
+}
+
 .form-control-sm {
   padding: 0.5rem 1.5rem;
 }
 
 select.form-control:not([multiple=multiple]) {
   background-image: url(/dcat-admin/images/arrow-down.png?8338497…);
+}
+
+.input-group-sm > .form-control:not(textarea),
+.input-group-sm > .custom-select,
+.form-control-sm {
+  height: 30px;
+  line-height: 13px;
+}
+
+.input-group-addon {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  min-width: 30px;
+}
+
+.input-group-sm > .input-group-addon {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.input-group-sm .select2-container--classic .select2-selection--single,
+.input-group-sm .select2-container--default .select2-selection--single {
+  min-height: 31px;
+  padding: 1px 2px;
+  font-size: 0.7rem;
+}
+
+.input-group-sm .select2-container--default .select2-selection--multiple {
+  min-height: 30px !important;
+  padding: 0 2px;
+  font-size: 0.7rem;
+  line-height: 14px;
+}
+
+.input-group-sm .select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: -3px;
+}
+
+.input-group-sm .select2-container--classic .select2-selection--multiple .select2-selection__rendered li .select2-search__field,
+.input-group-sm .select2-container--default .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
+  margin-top: 6px;
+}
+
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  border-color: #d9d9d9 !important;
+}
+
+.form-group .select2-container {
+  width: 1% !important;
+  flex: 1 1 auto;
+}
+
+.select2-dropdown {
+  border: 1px solid rgba(0, 0, 0, 0.03) !important;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: #f1f1f1 !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #ebf0f3 !important;
+  color: #414750 !important;
+}
+
+.select2-results__option {
+  padding: 6px 10px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  padding: 2px 5px !important;
+  border: 0 !important;
+}
+
+.select2-selection .default-text {
+  display: inline-block;
+  padding: 6px;
 }
 
 .pagination .page-item .page-link {
@@ -1931,6 +2029,10 @@ table.data-thumb-view.dataTable tbody tr:hover {
 .data-list-view-header .table-responsive {
   overflow: visible !important;
   padding-bottom: 0 !important;
+}
+
+.sticky-table-header {
+  z-index: 45 !important;
 }
 
 .grid-column-header a {
@@ -2114,6 +2216,12 @@ table.data-thumb-view.dataTable tbody tr:hover {
 
 .layui-layer-setwin a {
   top: 3px;
+}
+
+.customizer {
+  width: 450px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+  z-index: 48;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {

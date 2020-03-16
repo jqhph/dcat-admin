@@ -30,6 +30,9 @@ return [
         'confirm'           => '确认',
         'cancel'            => '取消',
         'refresh_succeeded' => '刷新成功 !',
+        'close'             => '关闭',
+        'selected_options'  => '已选中:num个选项',
+        'exceed_max_item'   => '已超出最大可选数量',
 
         '500' => '系统繁忙，请稍后再试！',
         '403' => '对不起，您没有权限访问，请与管理员联系。',
@@ -185,7 +188,6 @@ return [
         'F_DUPLICATE'            => '文件重复',
     ],
     'import_extension_confirm' => '确认导入拓展？',
-    'selected_must_less_then'  => '最多只能选择:num个选项',
     'quick_create'             => '快速创建',
     'grid_items_selected'      => '已选择 {n} 项',
     'nothing_updated'          => '没有任何数据被更改',

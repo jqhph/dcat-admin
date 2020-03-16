@@ -1,8 +1,8 @@
 <div class="input-group input-group-sm">
     @if($group)
-        <div class="input-group-btn">
+        <div class="input-group-prepend">
             <input type="hidden" name="{{ $id }}_group" class="{{ $group_name }}-operation" value="0"/>
-            <a class=" filter-group btn btn-white dropdown-toggle" data-toggle="dropdown">
+            <a class="filter-group input-group-text bg-white dropdown-toggle" data-toggle="dropdown">
                 <span class="{{ $group_name }}-label">{{ $default['label'] }} </span>
                 <span class="fa fa-caret-down"></span>
             </a>
@@ -13,6 +13,8 @@
             </ul>
         </div>
     @endif
-    <span class="input-group-addon"><b>{!! $label !!}</b></span>
+    <div class="input-group-prepend">
+        <span class="input-group-text bg-white"><b>{!! $label !!}</b></span>
+    </div>
     <input type="{{ $type }}" class="form-control {{ $id }}" placeholder="{{$placeholder}}" name="{{$name}}" value="{{ request($name, $value) }}">
 </div>

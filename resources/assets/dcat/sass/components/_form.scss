@@ -9,3 +9,94 @@
 select.form-control:not([multiple=multiple]) {
   background-image: url(/dcat-admin/images/arrow-down.png?8338497…);
 }
+
+.input-group-sm > .form-control:not(textarea), .input-group-sm > .custom-select, .form-control-sm {
+  height: 30px;
+  line-height: 13px;
+}
+
+
+// --------------------- input-group-addon ---------------------
+.input-group-addon {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  background-color: $white;
+  border: 1px solid $input-border-color;
+  min-width: 30px;
+}
+.input-group-sm>.input-group-addon {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: .7rem;
+  line-height: 1.5;
+}
+// --------------------- input-group-addon ---------------------
+
+
+
+// --------------------- select2 ---------------------
+.input-group-sm {
+  .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
+    min-height: 31px;
+    padding: 1px 2px;
+    font-size: 0.7rem;
+  }
+
+  .select2-container--default .select2-selection--multiple {
+    min-height: 30px !important;
+    padding: 0 2px;
+    font-size: 0.7rem;
+    line-height: 14px;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: -3px;
+  }
+
+  .select2-container--classic .select2-selection--multiple .select2-selection__rendered li .select2-search__field, .select2-container--default .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
+    margin-top: 6px;
+  }
+}
+
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  border-color: $input-border-color!important;
+}
+
+.form-group {
+  .select2-container {
+    width: 1%!important;
+    flex: 1 1 auto;
+  }
+}
+.select2-dropdown {
+  border: 1px solid rgba(0, 0, 0, 0.03)!important;
+  box-shadow: $shadow;
+}
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: $gray-background!important;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: $dark40!important;
+  color: $font-color!important;
+}
+.select2-results__option {
+  padding: 6px 10px!important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  padding: 2px 5px!important;
+  border: 0!important;
+}
+// --------------------- select2 ---------------------
+
+
+.select2-selection .default-text {
+  display: inline-block;
+  padding: 6px;
+}

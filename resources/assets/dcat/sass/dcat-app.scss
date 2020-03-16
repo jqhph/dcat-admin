@@ -52,6 +52,8 @@ html body .content .content-wrapper {
 @import "./components/nestable";
 // layer弹窗
 @import "./components/layer";
+// 滑动面板
+@import "./components/slider";
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
    font-size: 1.3rem;
@@ -64,7 +66,7 @@ body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation >
 
 // 菜单
 .main-menu.menu-shadow {
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: $menu-shadow;
 }
 
 // 面包屑导航

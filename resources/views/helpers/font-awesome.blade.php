@@ -455,7 +455,7 @@
             <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-cab"></i> fa-cab <span class="text-muted">(alias)</span>
             </div>
 
-            <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-calendar"></i> fa-calendar</div>
+            <div class="col-sm-6 col-md-4 col-lg-3"><i class="feather icon-calendar"></i> fa-calendar</div>
 
             <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-calendar-o"></i> fa-calendar-o</div>
 
@@ -1413,7 +1413,7 @@
 
             <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-long-arrow-right"></i> fa-long-arrow-right</div>
 
-            <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-long-arrow-up"></i> fa-long-arrow-up</div>
+            <div class="col-sm-6 col-md-4 col-lg-3"><i class="feather icon-arrow-up"></i> fa-long-arrow-up</div>
 
             <div class="col-sm-6 col-md-4 col-lg-3"><i class="fa fa-toggle-down"></i> fa-toggle-down <span class="text-muted">(alias)</span>
             </div>

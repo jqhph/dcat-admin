@@ -188,7 +188,7 @@ class SelectResource extends Presenter
             // 选项大于两个时使用select2样式布局
             Admin::collectAssets('select2', 'css');
 
-            $containerClass = 'select2 select2-container select2-container--default select2-container--below select2-container--focus ';
+            $containerClass = 'select2 select2-container select2-container--default select2-container--below ';
         }
 
         return [

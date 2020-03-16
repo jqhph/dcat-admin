@@ -15,7 +15,7 @@ class DateTime extends Presenter
     /**
      * @var string
      */
-    protected $format = 'YYYY-MM-DD HH:mm:ss';
+    protected $format = 'yyyy-mm-dd HH:mm:ss';
 
     /**
      * DateTime constructor.

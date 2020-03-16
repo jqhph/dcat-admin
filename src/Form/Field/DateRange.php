@@ -7,7 +7,7 @@ use Dcat\Admin\Form\Field;
 
 class DateRange extends Field
 {
-    protected $format = 'YYYY-MM-DD';
+    protected $format = 'yyyy-mm-dd';
 
     /**
      * Column name.

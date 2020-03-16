@@ -13,9 +13,9 @@
             placeholder: '', // input placeholder
             showCloseButton: false,
             lang: {
-                close: '关闭',
-                exceed_max_item: '您已超出最大可选择的数量',
-                selected_options: '已选中:num个选项',
+                close: Dcat.lang.close || '关闭',
+                exceed_max_item: Dcat.lang.exceed_max_item || '您已超出最大可选择的数量',
+                selected_options: Dcat.lang.selected_options || '已选中:num个选项',
             },
             displayerContainer: null, // 选项展示容器dom对象
             hiddenInput: null, // 隐藏表单dom对象

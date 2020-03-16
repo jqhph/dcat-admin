@@ -6,7 +6,7 @@ use Dcat\Admin\Admin;
 
 class Date extends Text
 {
-    protected $format = 'YYYY-MM-DD';
+    protected $format = 'yyyy-mm-dd';
 
     public function format($format)
     {

@@ -141,7 +141,7 @@ class Between extends AbstractFilter
      */
     protected function setupDatetime($options = [])
     {
-        $options['format'] = Arr::get($options, 'format', 'YYYY-MM-DD HH:mm:ss');
+        $options['format'] = Arr::get($options, 'format', 'yyyy-mm-dd HH:mm:ss');
         $options['locale'] = Arr::get($options, 'locale', config('app.locale'));
 
         $startOptions = json_encode($options);
