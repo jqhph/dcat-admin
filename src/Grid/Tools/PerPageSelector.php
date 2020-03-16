@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Widgets\Dropdown;
 use Illuminate\Contracts\Support\Renderable;
 
 class PerPageSelector implements Renderable
@@ -74,24 +75,17 @@ class PerPageSelector implements Renderable
         Admin::script($this->script());
 
         $options = $this->getOptions()->map(function ($option) {
-            $selected = ($option == $this->perPage) ? 'selected' : '';
             $url = app('request')->fullUrlWithQuery([$this->perPageName => $option]);
 
-            return "<option value=\"$url\" $selected>$option</option>";
-        })->implode("\r\n");
+            return "<a href=\"$url\">$option</a>";
+        })->toArray();
 
-        $show = trans('admin.show');
-        $entries = trans('admin.entries');
+        $dropdown =  Dropdown::make($options)->button($this->perPage)->render();
 
         return <<<EOT
-
-<label class="control-label pull-right hidden-xs" style="margin-right: 10px; font-weight: 100;">
-        <small>$show</small>&nbsp;
-        <select class="input-sm form-shadow {$this->parent->getPerPageName()}" name="per-page">
-            $options
-        </select>
-        &nbsp;<small>$entries</small>
-    </label>
+<label class="pull-right hidden-xs" style="margin-right: 10px">
+    $dropdown
+</label>
 EOT;
     }
 

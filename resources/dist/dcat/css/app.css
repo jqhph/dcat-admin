@@ -1861,6 +1861,14 @@ html body .content .content-wrapper {
   box-shadow: none;
 }
 
+.form-control-sm {
+  padding: 0.5rem 1.5rem;
+}
+
+select.form-control:not([multiple=multiple]) {
+  background-image: url(/dcat-admin/images/arrow-down.png?8338497…);
+}
+
 .pagination .page-item .page-link {
   font-weight: 600;
 }
