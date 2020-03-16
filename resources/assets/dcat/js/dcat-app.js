@@ -90,13 +90,15 @@ function listen(Dcat) {
         // 滚动条优化
         new PerfectScrollbar('html');
 
+        // layer弹窗设置
+        layer.config({maxmin: true, moveOut: true, shade: false});
+
+        //////////////////////////////////////////////////////////
+
         // 菜单点击选中效果
         new Menu(Dcat);
         // 返回顶部按钮
         new Footer(Dcat);
-
-        // layer弹窗设置
-        layer.config({maxmin: true, moveOut: true, shade: false});
     });
 
     // 每个请求都初始化

@@ -64,9 +64,11 @@
                 title: options.title,
                 shadeClose: true,
                 maxmin: false,
+                resize: false,
                 shade: false,
+                scrollbar: false,
                 skin: 'select-resource',
-                area: format_area(options.area),
+                area: formatArea(options.area),
                 content: options.source + '?_mini=1',
                 btn: options.showCloseButton ? [options.closeButtonText] : null,
                 success: function (layero) {
@@ -82,7 +84,7 @@
                 },
                 cancel: function () {
                     $layerWin.hide();
-                    
+
                     return false;
                 }
             });
@@ -204,7 +206,6 @@
         }
 
         function unchecked($ckb) {
-            $ckb.parents('tr').css('background-color', 'transparent');
             $ckb.prop('checked', false);
         }
 
@@ -242,7 +243,7 @@
             renderTags(originalItems);
         }
 
-        function format_area(area) {
+        function formatArea(area) {
             if (w.screen.width <= 750) {
                 return ['100%', '100%'];
             }

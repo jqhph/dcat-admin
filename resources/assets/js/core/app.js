@@ -31,18 +31,18 @@
       $html.removeClass("loading").addClass("loaded");
     }, 1200);
 
-    $.app.menu.init(compactMenu);
+    $.app && $.app.menu.init(compactMenu);
 
     // Navigation configurations
     var config = {
       speed: 300 // set speed to expand / collpase menu
     };
-    if ($.app.nav.initialized === false) {
+    if ($.app && $.app.nav.initialized === false) {
       $.app.nav.init(config);
     }
 
     Unison.on("change", function (bp) {
-      $.app.menu.change();
+      $.app && $.app.menu.change();
     });
 
     // Tooltip Initialization
@@ -447,7 +447,7 @@
 
   // Update manual scroller when window is resized
   $(window).resize(function () {
-    $.app.menu.manualScroller.updateHeight();
+    $.app && $.app.menu.manualScroller.updateHeight();
   });
 
   $("#sidebar-page-navigation").on("click", "a.nav-link", function (e) {

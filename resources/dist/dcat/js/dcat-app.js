@@ -740,17 +740,18 @@ function listen(Dcat) {
       parent: '.app-content'
     }); // 滚动条优化
 
-    new PerfectScrollbar('html'); // 菜单点击选中效果
-
-    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // 返回顶部按钮
-
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat); // layer弹窗设置
+    new PerfectScrollbar('html'); // layer弹窗设置
 
     layer.config({
       maxmin: true,
       moveOut: true,
       shade: false
-    });
+    }); //////////////////////////////////////////////////////////
+    // 菜单点击选中效果
+
+    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // 返回顶部按钮
+
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat);
   }); // 每个请求都初始化
 
   Dcat.bootingEveryRequest(function () {

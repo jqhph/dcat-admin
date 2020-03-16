@@ -66,7 +66,7 @@ class FilterButton extends AbstractTool
             .find('.right-side-filter-container .header')
             .width(slider.\$container.width() - 20);
         
-        expand && setTimeout(slider.open, 10);
+        expand && setTimeout(slider.open.bind(slider), 10);
     }
     
     expand && setTimeout(initSlider, 10);

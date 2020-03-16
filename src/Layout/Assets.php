@@ -270,6 +270,10 @@ class Assets
             return;
         }
 
+        if ($this->usingFullPage) {
+            unset($this->baseJs['menu']);
+        }
+
         $this->js = array_merge($this->baseJs, $this->js);
     }
 
