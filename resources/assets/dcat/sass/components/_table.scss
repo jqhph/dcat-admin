@@ -32,7 +32,11 @@ table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable t
   transform: none;
   background: #fafafa;
 }
-
+table.data-list-view.dataTable tbody td, table.data-thumb-view.dataTable tbody td {
+  padding: .6rem;
+  height: 50px;
+  line-height: 1.42857;
+}
 
 // 快捷搜索
 .data-list-view-header .table-responsive .top .dataTables_filter .form-control, .data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {

@@ -14,7 +14,7 @@ class Checkbox extends AbstractDisplayer
             $options = $options->call($this, $this->row);
         }
 
-        $radios = '';
+        $checkboxes = '';
         $name = $this->column->getName();
 
         if (is_string($this->value)) {
@@ -26,13 +26,12 @@ class Checkbox extends AbstractDisplayer
         }
 
         foreach ($options as $value => $label) {
-            $id = 'ckb'.Str::random(8);
-
             $checked = in_array($value, $this->value) ? 'checked' : '';
-            $radios .= <<<EOT
-<div class="checkbox checkbox-primary ">
-    <input id="$id" type="checkbox" name="grid-checkbox-{$name}[]" value="{$value}" $checked />
-    <label for="$id">{$label}</label>
+            $checkboxes .= <<<EOT
+<div class="vs-checkbox-con vs-checkbox-primary" style="margin-bottom: 4px">
+    <input type="checkbox" name="grid-checkbox-{$name}[]" value="{$value}" $checked >
+    <span class="vs-checkbox vs-checkbox-sm"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
+    <span class="">{$label}</span>
 </div>
 EOT;
         }
@@ -41,12 +40,12 @@ EOT;
 
         return <<<EOT
 <form class="form-group {$this->getElementClass()}" style="text-align:left;" data-key="{$this->getKey()}">
-    $radios
-    <button type="submit" class="btn btn-primary btn-xs pull-left">
+    $checkboxes
+    <button type="submit" class="btn btn-primary btn-sm pull-left">
         <i class="feather icon-save"></i>&nbsp;{$this->trans('save')}
     </button>
-    <button type="reset" class="btn btn-warning btn-xs pull-left" style="margin-left:10px;">
-        <i class="ti-trash"></i>&nbsp;{$this->trans('reset')}
+    <button type="reset" class="btn btn-white btn-sm pull-left" style="margin-left:5px;">
+        <i class="feather icon-trash"></i>&nbsp;{$this->trans('reset')}
     </button>
 </form>
 EOT;

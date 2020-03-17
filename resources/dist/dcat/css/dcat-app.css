@@ -2000,6 +2000,13 @@ table.data-thumb-view.dataTable tbody tr:hover {
   background: #fafafa;
 }
 
+table.data-list-view.dataTable tbody td,
+table.data-thumb-view.dataTable tbody td {
+  padding: 0.6rem;
+  height: 50px;
+  line-height: 1.42857;
+}
+
 .data-list-view-header .table-responsive .top .dataTables_filter .form-control,
 .data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
   padding: 1.23rem 2.8rem !important;

@@ -86,6 +86,10 @@ class Assets
             'js'  => 'dcat-admin/dcat/plugins/jstree-theme/jstree.min.js',
             'css' => 'dcat-admin/dcat/plugins/jstree-theme/themes/proton/style.min.css',
         ],
+        'switchery' => [
+            'js'  => 'dcat-admin/dcat/plugins/switchery/switchery.min.js',
+            'css' => 'dcat-admin/dcat/plugins/switchery/switchery.min.css',
+        ],
     ];
 
     /**
