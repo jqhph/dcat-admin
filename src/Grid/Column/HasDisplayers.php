@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Column;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
@@ -61,14 +62,16 @@ trait HasDisplayers
      *
      * @return $this
      */
-    public function bold($color = 'text-80')
+    public function bold($color = null)
     {
+        $color = $color ?: Admin::color()->dark80();
+
         return $this->display(function ($value) use ($color) {
             if (! $value) {
                 return $value;
             }
 
-            return "<b class='$color'>$value</b>";
+            return "<b style='color: {$color}'>$value</b>";
         });
     }
 

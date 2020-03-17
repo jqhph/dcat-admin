@@ -46,6 +46,8 @@ use Dcat\Admin\Support\Helper;
  * @method string dark90half(int $amt = 0)
  * @method string font(int $amt = 0)
  * @method string grayBg(int $amt = 0)
+ * @method string border(int $amt = 0)
+ * @method string inputBorder(int $amt = 0)
  */
 class Color
 {
@@ -128,6 +130,12 @@ class Color
 
         // 灰色背景
         'gray-bg' => '#f1f1f1',
+
+        // 边框颜色
+        'border' => '#ebeff2',
+
+        // 表单边框
+        'input-border' => '#d9d9d9',
     ];
 
     /**

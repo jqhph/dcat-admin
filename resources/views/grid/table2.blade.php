@@ -1,5 +1,5 @@
 
-<div class="dcat-box dt-bootstrap4">
+<div class="dcat-box data-list-view dt-bootstrap4">
 
     @if ($grid->allowToolbar())
         <div class="data-list-view-header">

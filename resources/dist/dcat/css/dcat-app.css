@@ -1959,8 +1959,11 @@ select.form-control:not([multiple=multiple]) {
   font-weight: 600;
 }
 
-table.dataTable thead th {
+.table {
   color: #414750;
+}
+
+table.dataTable thead th {
   font-size: 0.95rem;
 }
 
@@ -2174,7 +2177,7 @@ table.data-thumb-view.dataTable tbody td {
 }
 
 .dd-handle {
-  border: 1px solid #eee !important;
+  border: 1px solid #e6e6e6 !important;
   border-radius: 0.2rem !important;
 }
 
@@ -2267,6 +2270,79 @@ table.data-thumb-view.dataTable tbody td {
   padding: 10px 14px !important;
   border: 1px solid #f4f4f4 !important;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.grid-selector {
+  margin: -1.5rem;
+}
+
+.grid-selector .wrap {
+  position: relative;
+  line-height: 40px;
+  border-bottom: 1px dashed #eee;
+  padding: 0 30px;
+  font-size: 13px;
+  overflow: auto;
+}
+
+.grid-selector .wrap:last-child {
+  border-bottom: none;
+}
+
+.grid-selector .select-label {
+  float: left;
+  width: 100px;
+  padding-left: 10px;
+  color: #888;
+}
+
+.grid-selector .select-options {
+  margin-left: 100px;
+}
+
+.grid-selector ul {
+  height: 25px;
+  list-style: none;
+}
+
+.grid-selector ul > li {
+  margin-right: 30px;
+  float: left;
+}
+
+.grid-selector ul > li a {
+  color: #666;
+  text-decoration: none;
+}
+
+.grid-selector .select-options a.active {
+  color: #495abf;
+  font-weight: bold;
+}
+
+.grid-selector li .add {
+  visibility: hidden;
+}
+
+.grid-selector li:hover .add {
+  visibility: visible;
+}
+
+.grid-selector ul .clear {
+  visibility: hidden;
+}
+
+.grid-selector ul:hover .clear {
+  color: #bd4147;
+  visibility: visible;
+}
+
+.data-list-view .grid-selector .wrap {
+  border-bottom: 0;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 0.4rem;
+  margin: 8px 0;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {

@@ -57,6 +57,8 @@ html body .content .content-wrapper {
 @import "./components/slider";
 // 时间日期插件
 @import "./components/datetimepicker";
+// grid selector
+@import "./components/grid-selector";
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
    font-size: 1.3rem;

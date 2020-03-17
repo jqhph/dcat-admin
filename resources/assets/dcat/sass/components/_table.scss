@@ -1,5 +1,8 @@
-table.dataTable thead th {
+.table {
   color: $font-color;
+}
+
+table.dataTable thead th {
   font-size: .95rem;
 }
 
