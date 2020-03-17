@@ -1,21 +1,22 @@
 <div class="input-group input-group-sm">
     @if($group)
-        <div class="input-group-btn">
+        <div class="input-group-prepend dropdown">
+            <a class="filter-group input-group-text bg-white dropdown-toggle" data-toggle="dropdown">
+                <span class="{{ $group_name }}-label">{{ $default['label'] }}&nbsp; </span>
+            </a>
             <input type="hidden" name="{{ $id }}_group" class="{{ $group_name }}-operation" value="0"/>
-            <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" style="min-width: 32px;">
-                <span class="{{ $group_name }}-label">{{ $default['label'] }}</span>
-                &nbsp;&nbsp;
-                <span class="fa fa-caret-down"></span>
-            </button>
             <ul class="dropdown-menu {{ $group_name }}">
                 @foreach($group as $index => $item)
-                    <li><a href="#" data-index="{{ $index }}"> {{ $item['label'] }} </a></li>
+                    <li class="dropdown-item"><a href="#" data-index="{{ $index }}"> {{ $item['label'] }} </a></li>
                 @endforeach
             </ul>
         </div>
     @endif
-    <div class="input-group-addon">
-        <b>{{$label}}</b> &nbsp;<i class="feather icon-calendar"></i>
+{{--    <div class="input-group-prepend">--}}
+{{--        <b>{{$label}}</b> &nbsp;<i class="feather icon-calendar"></i>--}}
+{{--    </div>--}}
+    <div class="input-group-prepend">
+        <span class="input-group-text bg-white"><b>{!! $label !!}</b>&nbsp;<i class="feather icon-calendar"></i></span>
     </div>
-        <input class="form-control" id="{{$id}}" autocomplete="off" placeholder="{{$label}}" name="{{$name}}" value="{{ request($name, $value) }}">
+    <input class="form-control" id="{{$id}}" autocomplete="off" placeholder="{{$label}}" name="{{$name}}" value="{{ request($name, $value) }}">
 </div>

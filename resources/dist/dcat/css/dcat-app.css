@@ -2132,6 +2132,10 @@ table.data-thumb-view.dataTable tbody td {
   margin: 0;
 }
 
+.vs-checkbox-con input {
+  z-index: 10;
+}
+
 .vs-checkbox-con .vs-checkbox.vs-checkbox-sm {
   width: 17px;
   height: 17px;
@@ -2140,6 +2144,10 @@ table.data-thumb-view.dataTable tbody td {
 .vs-checkbox-con input:checked ~ .vs-checkbox.vs-checkbox-sm .vs-checkbox--check .vs-icon {
   font-size: 1rem;
   margin-top: -1px;
+}
+
+.vs-radio-con input {
+  z-index: 10;
 }
 
 .card {

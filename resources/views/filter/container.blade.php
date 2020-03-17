@@ -9,13 +9,13 @@
             <div class="pull-left" style="margin-bottom:10px">
                 <div class="btn-group btn-group-sm" style="margin-left:5px;">
                     <button class="btn btn-primary btn-sm btn-mini submit">
-                        <i class="fa fa-search"></i><span class="d-none d-sm-inline">&nbsp;&nbsp;{{ trans('admin.search') }}</span>
+                        <i class="feather icon-search"></i><span class="d-none d-sm-inline">&nbsp;&nbsp;{{ trans('admin.search') }}</span>
                     </button>
                 </div>
                 <div class="btn-group btn-group-sm default btn-mini" style="margin-left:5px"  >
                     @if(!$disableResetButton)
                     <a  href="{!! $action !!}" class="reset btn btn-white btn-sm ">
-                        <i class="fa fa-undo"></i><span class="d-none d-sm-inline">&nbsp;&nbsp;{{ trans('admin.reset') }}</span>
+                        <i class="feather icon-rotate-ccw"></i><span class="d-none d-sm-inline">&nbsp;&nbsp;{{ trans('admin.reset') }}</span>
                     </a>
                     @endif
 
