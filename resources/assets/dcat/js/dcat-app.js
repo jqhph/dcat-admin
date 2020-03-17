@@ -91,7 +91,7 @@ function listen(Dcat) {
         Dcat.NP.configure({parent: '.app-content'});
 
         // 滚动条优化
-        new PerfectScrollbar('html');
+        // new PerfectScrollbar('html');
 
         // layer弹窗设置
         layer.config({maxmin: true, moveOut: true, shade: false});

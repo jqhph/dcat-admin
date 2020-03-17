@@ -33,8 +33,8 @@
 
     {!! $grid->renderHeader() !!}
 
-    <div class="table-responsive" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
-        <table class="table dt-checkboxes-select {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{ $tableId }}">
+    <div class="table-responsive complex-container" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
+        <table class="table dt-checkboxes-select  {{ $grid->option('table_class') }} {{ $grid->option('show_bordered') ? 'table-bordered complex-headers dataTable' : '' }} " id="{{ $tableId }}">
             <thead>
             @if ($headers = $grid->getComplexHeaders())
                 <tr>

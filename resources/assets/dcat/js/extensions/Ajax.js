@@ -1,17 +1,13 @@
 
 export default class Ajax {
     constructor(Dcat) {
-        this.Dcat = Dcat;
+        this.dcat = Dcat;
 
-        this.extend(Dcat)
-    }
-
-    extend(Dcat) {
-        Dcat.handleAjaxError = this.handleAjaxError
+        Dcat.handleAjaxError = this.handleAjaxError.bind(this)
     }
 
     handleAjaxError(xhr, text, msg) {
-        let Dcat = this.Dcat;
+        let Dcat = this.dcat;
 
         Dcat.NP.done();
         Dcat.loading(false);// 关闭所有loading效果

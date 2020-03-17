@@ -1,6 +1,7 @@
 .grid-column-header {
   a {
-    color: $dark70;
+    color: darken($dark70, 5%);
+    font-size: 1rem;
   }
   a:hover, a.active {
     color: $primary-darker;

@@ -1971,6 +1971,7 @@ table.dataTable thead tr {
 .table th {
   padding: 0.9rem;
   text-transform: capitalize;
+  font-size: 0.95rem !important;
 }
 
 table.data-list-view.dataTable tbody tr,
@@ -1988,9 +1989,8 @@ table.data-thumb-view.dataTable thead th {
   padding: 0.714rem 1.4rem;
 }
 
-table.dataTable thead tr th {
+table.dataTable:not(.table-bordered) thead tr th {
   text-transform: uppercase;
-  font-size: 0.95rem;
 }
 
 table.dataTable {
@@ -2009,11 +2009,16 @@ table.data-thumb-view.dataTable tbody tr:hover {
   background: #fafafa;
 }
 
-table.data-list-view.dataTable tbody td,
-table.data-thumb-view.dataTable tbody td,
 .table td {
   padding: 0.6rem;
+  height: 64px;
+  line-height: 1.42857;
+}
+
+table.data-list-view.dataTable tbody td,
+table.data-thumb-view.dataTable tbody td {
   height: 51px;
+  padding: 0.6rem;
   line-height: 1.42857;
 }
 
@@ -2061,8 +2066,51 @@ table.data-thumb-view.dataTable tbody td,
   z-index: 45 !important;
 }
 
+table.table-bordered.dataTable:not(.complex-headers) tbody th,
+table.table-bordered.dataTable tbody td {
+  border-bottom-width: 1px;
+}
+
+table.table-bordered.dataTable th:not(.complex-headers),
+table.table-bordered.dataTable td {
+  border-left-width: 1px;
+}
+
+table.table-bordered.dataTable th:last-child,
+table.table-bordered.dataTable th:last-child,
+table.table-bordered.dataTable td:last-child,
+table.table-bordered.dataTable td:last-child {
+  border-right-width: 1px;
+}
+
+table.dataTable.complex-headers {
+  border-color: #eee;
+}
+
+table.dataTable.complex-headers thead th,
+table.dataTable.complex-headers thead td,
+table.dataTable.complex-headers tfoot th,
+table.dataTable.complex-headers tfoot td {
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+.dataTable.table-bordered:not(.complex-headers) thead th {
+  border-right: 1px solid #e2e8ec;
+  border-bottom: 1px solid #e2e8ec;
+}
+
+.dataTable.table-bordered:not(.complex-headers) tr:first-child th {
+  border-top: 1px solid #e2e8ec;
+}
+
+.dataTable.table-bordered:not(.complex-headers) thead tr th:first-child {
+  border-left: 1px solid #e2e8ec;
+}
+
 .grid-column-header a {
-  color: #b3b9bf;
+  color: #a5acb3;
+  font-size: 1rem;
 }
 
 .grid-column-header a:hover,
