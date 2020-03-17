@@ -33,7 +33,7 @@
 
     {!! $grid->renderHeader() !!}
 
-    <div class="in table-responsive" {!! $grid->option('show_bordered') ? 'style="padding:3px 10px 10px"' : '' !!}>
+    <div class="in table-responsive" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!}">
         <table class="table data-list-view dataTable dt-checkboxes-select {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{ $tableId }}">
             <thead>
             @if ($headers = $grid->getComplexHeaders())

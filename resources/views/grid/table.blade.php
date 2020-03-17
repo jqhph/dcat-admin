@@ -1,27 +1,31 @@
-{!! $grid->renderQuickSearch() !!}
 
-<div class="card dcat-box">
+<div class="card dcat-box dt-bootstrap4">
 
     @if ($grid->allowToolbar())
-        <div class="box-header">
-            @if(!empty($title))
-                <h4 class="pull-left" style="margin:5px 10px 0;">
-                    {!! $title !!}&nbsp;
-                    @if(!empty($description))
-                        <small>{!! $description!!}</small>
+        <div class="data-list-view-header card-header">
+            <div class="table-responsive">
+                <div class="top" style="padding: 0;margin: 0">
+                    @if(!empty($title))
+                        <h4 style="margin:5px 10px 0;">
+                            {!! $title !!}&nbsp;
+                            @if(!empty($description))
+                                <small>{!! $description!!}</small>
+                            @endif
+                        </h4>
+                        <div data-responsive-table-toolbar="{{$tableId}}">
+                            {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
+                        </div>
+                    @else
+                        <div>
+                            {!! $grid->renderTools() !!}
+                        </div>
+
+                        <div data-responsive-table-toolbar="{{$tableId}}">
+                            {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
+                        </div>
                     @endif
-                </h4>
-                <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                    {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
                 </div>
-            @else
-                <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                    {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
-                </div>
-
-                {!! $grid->renderTools() !!}
-            @endif
-
+            </div>
         </div>
     @endif
 
@@ -29,8 +33,8 @@
 
     {!! $grid->renderHeader() !!}
 
-    <div class="card-body panel-collapse collapse in table-responsive" {!! $grid->option('show_bordered') ? 'style="padding:3px 10px 10px"' : '' !!}>
-        <table class=" table table-hover responsive {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{$tableId}}">
+    <div class="table-responsive" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
+        <table class="table dt-checkboxes-select {{ $grid->option('show_bordered') ? 'table-bordered' : $grid->option('table_header_style') }} " id="{{ $tableId }}">
             <thead>
             @if ($headers = $grid->getComplexHeaders())
                 <tr>
@@ -74,11 +78,11 @@
     {!! $grid->renderFooter() !!}
 
     @if ($paginator = $grid->paginator())
-        <div class="box-footer clearfix " style="padding-bottom:5px;">
+        <div class="box-footer clearfix mt-1" style="padding:0 1rem;">
             {!! $paginator->render() !!}
         </div>
     @else
-        <div class="box-footer clearfix text-80 " style="height:48px;line-height:25px;">
+        <div class="box-footer clearfix  mt-1 " style="height:48px;line-height:25px;">
             @if ($grid->rows()->isEmpty())
                 {!! trans('admin.pagination.range', ['first' => '<b>0</b>', 'last' => '<b>'.$grid->rows()->count().'</b>', 'total' => '<b>'.$grid->rows()->count().'</b>',]) !!}
             @else

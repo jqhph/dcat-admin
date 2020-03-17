@@ -1961,10 +1961,16 @@ select.form-control:not([multiple=multiple]) {
 
 .table {
   color: #414750;
+  margin-bottom: 0;
 }
 
-table.dataTable thead th {
-  font-size: 0.95rem;
+table.dataTable thead tr {
+  background: transparent;
+}
+
+.table th {
+  padding: 0.9rem;
+  text-transform: capitalize;
 }
 
 table.data-list-view.dataTable tbody tr,
@@ -1982,9 +1988,9 @@ table.data-thumb-view.dataTable thead th {
   padding: 0.714rem 1.4rem;
 }
 
-table.dataTable thead tr {
-  background: transparent;
+table.dataTable thead tr th {
   text-transform: uppercase;
+  font-size: 0.95rem;
 }
 
 table.dataTable {
@@ -2004,10 +2010,16 @@ table.data-thumb-view.dataTable tbody tr:hover {
 }
 
 table.data-list-view.dataTable tbody td,
-table.data-thumb-view.dataTable tbody td {
+table.data-thumb-view.dataTable tbody td,
+.table td {
   padding: 0.6rem;
-  height: 50px;
+  height: 51px;
   line-height: 1.42857;
+}
+
+.table tr td:first-child,
+.table tr th:first-child {
+  padding-left: 1.4rem;
 }
 
 .data-list-view-header .table-responsive .top .dataTables_filter .form-control,
@@ -2016,6 +2028,10 @@ table.data-thumb-view.dataTable tbody td {
   border-radius: 1.4rem;
   border: 0;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.card-header.data-list-view-header .table-responsive .top .dataTables_filter .form-control {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
 }
 
 .data-list-view-header .table-responsive .top .dataTables_filter label:after,
@@ -2159,7 +2175,7 @@ table.data-thumb-view.dataTable tbody td {
 
 .card.dcat-box .card-header {
   border-bottom: 1px solid #f4f4f4;
-  padding-bottom: 1rem;
+  padding: 1.2rem;
 }
 
 .dd {
@@ -2273,7 +2289,7 @@ table.data-thumb-view.dataTable tbody td {
 }
 
 .grid-selector {
-  margin: -1.5rem;
+  width: 100%;
 }
 
 .grid-selector .wrap {
@@ -2337,12 +2353,16 @@ table.data-thumb-view.dataTable tbody td {
   visibility: visible;
 }
 
+.data-list-view .grid-selector {
+  padding: 2px;
+}
+
 .data-list-view .grid-selector .wrap {
   border-bottom: 0;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   border-radius: 0.4rem;
-  margin: 8px 0;
+  margin: 7px 0;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {

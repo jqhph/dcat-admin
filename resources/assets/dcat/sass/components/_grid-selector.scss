@@ -1,5 +1,6 @@
 .grid-selector {
-  margin: -1.5rem;
+  //margin: -1rem;
+  width: 100%;
 }
 .grid-selector .wrap {
   position: relative;
@@ -53,12 +54,14 @@
 
 .data-list-view {
   .grid-selector {
+    padding: 2px;
+
     .wrap {
       border-bottom: 0;
       background: $white;
       box-shadow: $shadow;
       border-radius: .4rem;
-      margin: 8px 0;
+      margin: 7px 0;
     }
   }
 }
