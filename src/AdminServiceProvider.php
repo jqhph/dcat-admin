@@ -207,6 +207,7 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerServices()
     {
         $this->app->singleton('admin.assets', Assets::class);
+        $this->app->singleton('admin.color', Color::class);
         $this->app->singleton('admin.sections', SectionManager::class);
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.menu', Menu::class);

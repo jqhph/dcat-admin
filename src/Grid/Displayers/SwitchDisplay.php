@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Color;
 
 class SwitchDisplay extends AbstractDisplayer
 {
@@ -14,32 +13,32 @@ class SwitchDisplay extends AbstractDisplayer
 
     public function green()
     {
-        $this->color = Color::success();
+        $this->color = Admin::color()->success();
     }
 
     public function custom()
     {
-        $this->color = Color::custom();
+        $this->color = Admin::color()->custom();
     }
 
     public function yellow()
     {
-        $this->color = Color::warning();
+        $this->color = Admin::color()->warning();
     }
 
     public function red()
     {
-        $this->color = Color::danger();
+        $this->color = Admin::color()->danger();
     }
 
     public function purple()
     {
-        $this->color = Color::purple();
+        $this->color = Admin::color()->purple();
     }
 
     public function blue()
     {
-        $this->color = Color::blue();
+        $this->color = Admin::color()->blue();
     }
 
     /**
@@ -73,7 +72,7 @@ class SwitchDisplay extends AbstractDisplayer
         $name = $this->getElementName();
         $key = $this->row->{$this->grid->getKeyName()};
         $checked = $this->value ? 'checked' : '';
-        $color = $this->color ?: Color::primary();
+        $color = $this->color ?: Admin::color()->primary();
 
         return <<<EOF
 <input class="grid-switch-{$this->grid->getName()}" data-size="small" name="{$name}" data-key="$key" {$checked} type="checkbox" data-color="{$color}"/>

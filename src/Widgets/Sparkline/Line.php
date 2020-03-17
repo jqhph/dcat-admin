@@ -2,7 +2,8 @@
 
 namespace Dcat\Admin\Widgets\Sparkline;
 
-use Dcat\Admin\Widgets\Color;
+use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 
 /**
  * @see https://omnipotent.net/jquery.sparkline
@@ -26,53 +27,53 @@ class Line extends Sparkline
 
     public function fillDefaultColor()
     {
-        $this->fillColors(Color::$default['primary']);
+        $this->fillColors(Admin::color()->primary());
     }
 
     public function primary(bool $opaque = false)
     {
-        return $this->fillColors(Color::$default['primary'], $opaque);
+        return $this->fillColors(Admin::color()->primary(), $opaque);
     }
 
     public function green(bool $opaque = false)
     {
-        return $this->fillColors(Color::$default['green'], $opaque);
+        return $this->fillColors(Admin::color()->green(), $opaque);
     }
 
     public function purple(bool $opaque = false)
     {
-        return $this->fillColors(Color::$default['purple'], $opaque);
+        return $this->fillColors(Admin::color()->purple(), $opaque);
     }
 
     public function red(bool $opaque = false)
     {
-        return $this->fillColors(Color::$default['red'], $opaque);
+        return $this->fillColors(Admin::color()->red(), $opaque);
     }
 
     public function custom(bool $opaque = false)
     {
-        return $this->fillColors(Color::$default['custom'], $opaque);
+        return $this->fillColors(Admin::color()->custom(), $opaque);
     }
 
-    public function tear(bool $opaque = false)
+    public function pink(bool $opaque = false)
     {
-        return $this->fillColors(Color::$default['tear'], $opaque);
+        return $this->fillColors(Admin::color()->pink(), $opaque);
     }
 
     public function blue(bool $opaque = false)
     {
-        return $this->fillColors(Color::$default['blue'], $opaque);
+        return $this->fillColors(Admin::color()->blue1(), $opaque);
     }
 
-    protected function fillColors($color, bool $opaque = false)
+    protected function fillColors(string $color, bool $opaque = false)
     {
-        $this->lineColor($color[0])
-            ->fillColor($opaque ? $color[0] : $color[1])
+        $this->lineColor($color)
+            ->fillColor($opaque ? $color : Helper::colorAlpha($color, 0.1))
             ->highlightSpotColor('#fff')
-            ->highlightLineColor($color[0])
-            ->minSpotColor($color[0])
-            ->maxSpotColor($color[0])
-            ->spotColor($color[0]);
+            ->highlightLineColor($color)
+            ->minSpotColor($color)
+            ->maxSpotColor($color)
+            ->spotColor($color);
 
         if (! isset($this->options['lineWidth'])) {
             $this->lineWidth(2);

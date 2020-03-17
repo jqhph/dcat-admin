@@ -5,7 +5,6 @@ namespace Dcat\Admin\Form\Field;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Widgets\Color;
 use Illuminate\Contracts\Support\Arrayable;
 
 class SelectResource extends Field
@@ -194,10 +193,10 @@ JS
     protected function setupStyle()
     {
         if (! $this->maxItem || $this->maxItem > 1) {
-            $primayDark = Color::primarydark();
+            $primayDarker = Admin::color()->primaryDarker();
 
             Admin::style(
-                ".select-resource .nav li a{padding:8px 10px;font-size:13px;font-weight:bold;color:{$primayDark}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}"
+                ".select-resource .nav li a{padding:8px 10px;font-size:13px;font-weight:bold;color:{$primayDarker}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}"
             );
         }
     }

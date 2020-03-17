@@ -368,4 +368,95 @@ class Helper
             }
         }
     }
+
+    /**
+     * 颜色转亮.
+     *
+     * @param string $color
+     * @param int    $amt
+     *
+     * @return string
+     */
+    public static function colorLighten(string $color, int $amt)
+    {
+        if (! $amt) {
+            return $color;
+        }
+
+        $hasPrefix = false;
+
+        if (strpos($color, '#') === 0) {
+            $color = mb_substr($color, 1);
+
+            $hasPrefix = true;
+        }
+
+        [$red, $blue, $green] = static::colorToRBG($color, $amt);
+
+        return ($hasPrefix ? '#' : '').dechex($green + ($blue << 8) + ($red << 16));
+    }
+
+    /**
+     * 颜色转暗.
+     *
+     * @param string $color
+     * @param int    $amt
+     *
+     * @return string
+     */
+    public static function colorDarken(string $color, int $amt)
+    {
+        return static::colorLighten($color, -$amt);
+    }
+
+    /**
+     * 颜色透明度.
+     *
+     * @param string       $color
+     * @param float|string $alpha
+     *
+     * @return string
+     */
+    public static function colorAlpha(string $color, $alpha)
+    {
+        if ($alpha >= 1) {
+            return $color;
+        }
+
+        if (strpos($color, '#') === 0) {
+            $color = mb_substr($color, 1);
+        }
+
+        [$red, $blue, $green] = static::colorToRBG($color);
+
+        return "rgba($red, $blue, $green, $alpha)";
+    }
+
+    /**
+     * @param string $color
+     * @param int    $amt
+     *
+     * @return array
+     */
+    public static function colorToRBG(string $color, int $amt = 0)
+    {
+        $format = function ($value) {
+            if ($value > 255) {
+                return 255;
+            }
+            if ($value < 0) {
+                return 0;
+            }
+
+            return $value;
+        };
+
+        $num = hexdec($color);
+
+        $red = $format(($num >> 16) + $amt);
+        $blue = $format((($num >> 8) & 0x00FF) + $amt);
+        $green = $format(($num & 0x0000FF) + $amt);
+
+        return [$red, $blue, $green];
+    }
 }

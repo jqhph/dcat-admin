@@ -80,7 +80,7 @@ select.form-control:not([multiple=multiple]) {
   box-shadow: $shadow;
 }
 .select2-container--default .select2-results__option[aria-selected=true] {
-  background-color: $gray-background!important;
+  background-color: $gray-bg!important;
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: $dark40!important;

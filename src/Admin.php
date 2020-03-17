@@ -77,6 +77,14 @@ class Admin
     }
 
     /**
+     * @return Color
+     */
+    public static function color()
+    {
+        return app('admin.color');
+    }
+
+    /**
      * Left sider-bar menu.
      *
      * @param Closure|null $builder

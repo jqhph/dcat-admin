@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Widgets\Color;
 
 class RowSelector
 {
@@ -76,7 +75,7 @@ EOT;
     protected function setupScript()
     {
         $clickable = $this->rowClickable ? 'true' : 'false';
-        $background = $this->background ?: Color::dark20();
+        $background = $this->background ?: Admin::color()->dark20();
 
         Admin::script(
             <<<JS

@@ -8,7 +8,6 @@ use Dcat\Admin\Grid\Actions\Edit;
 use Dcat\Admin\Grid\Actions\QuickEdit;
 use Dcat\Admin\Grid\Actions\Show;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Widgets\Color;
 
 class DropdownActions extends Actions
 {
@@ -39,7 +38,7 @@ class DropdownActions extends Actions
      */
     protected function addScript()
     {
-        $background = Color::dark20();
+        $background = Admin::color()->dark20();
         $checkbox = ".{$this->grid->getRowName()}-checkbox";
 
         $script = <<<JS

@@ -1,0 +1,51 @@
+// 自定义颜色
+$custom: #59a9f8;
+
+$dark: #22292f;
+$white: #fff;
+$white50: hsla(0,0%,100%,.5);
+
+// 淡黄色
+$orange-1: #ffcc80;
+
+// 深红
+$red-darker: #bd4147;
+
+// 深主题色
+$primary-darker: darken($primary, 5%);
+
+// 蓝色
+$blue: #3085d6;
+$blue-darker: #236bb0;
+
+// 其他蓝色
+$blue-1: #007ee5;
+$blue-2: #4199de;
+
+$pink: #ff8acc;
+
+// cyan
+$cyan-darker: #6355ee;
+
+
+// 深色
+$dark20: #f6fbff;
+$dark30: #f4f7fa;
+$dark40: #ebf0f3;
+$dark50: #d3dde5;
+$dark60: #bacad6;
+$dark65: #8aa5b9;
+$dark70: #b3b9bf;
+$dark80: #7c858e;
+$dark85: #5c7089;
+$dark90: #252d37;
+
+// 字体颜色
+$font-color: #414750;
+
+// body背景颜色
+//$body-bg: #f9fafc;
+$body-bg: $dark30;
+
+// 灰背景色
+$gray-bg: #f1f1f1;

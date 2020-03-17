@@ -23,6 +23,7 @@ import Loading from './extensions/Loading'
 import PreviewImage from './extensions/PreviewImage'
 import AssetsLoader from './extensions/AssetsLoader'
 import Slider from './extensions/Slider'
+import Color from './extensions/Color'
 
 import Menu from './bootstrappers/Menu'
 import Footer from './bootstrappers/Footer'
@@ -50,6 +51,8 @@ function extend (Dcat) {
     new PreviewImage(Dcat);
     // 静态资源加载器
     new AssetsLoader(Dcat);
+    // 颜色管理
+    new Color(Dcat);
 
     // 加载进度条
     Dcat.NP = NProgress;

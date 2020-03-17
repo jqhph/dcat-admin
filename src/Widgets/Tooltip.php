@@ -65,22 +65,22 @@ class Tooltip extends Widget
 
     public function green()
     {
-        return $this->background(Color::success());
+        return $this->background(Admin::color()->success());
     }
 
     public function blue()
     {
-        return $this->background(Color::blue());
+        return $this->background(Admin::color()->blue());
     }
 
     public function red()
     {
-        return $this->background(Color::danger());
+        return $this->background(Admin::color()->danger());
     }
 
     public function purple()
     {
-        return $this->background(Color::purple());
+        return $this->background(Admin::color()->purple());
     }
 
     public function left()
@@ -132,7 +132,7 @@ class Tooltip extends Widget
         }
         $this->built = true;
 
-        $background = $this->background ?: Color::primary();
+        $background = $this->background ?: Admin::color()->primary();
 
         $this->defaultHtmlAttribute('class', 'tooltip-inner');
         $this->style('background:'.$background, true);

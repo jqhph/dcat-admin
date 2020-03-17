@@ -7,8 +7,7 @@
 //  Author URL: https://github.com/jqhph
 // ================================================================================================
 
-@import "../../sass/core/variables/variables";
-@import "./variables";
+@import "variables/variables";
 
 // 进度条
 @import "./nprogress/NProgress";
@@ -17,7 +16,7 @@
 @import "./sweetalert/sweetalert2";
 
 html body {
-  background-color: $body-background;
+  background-color: $body-bg;
   color: $font-color;
 }
 

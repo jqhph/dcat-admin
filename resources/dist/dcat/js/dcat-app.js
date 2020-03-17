@@ -654,10 +654,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./extensions/PreviewImage */ "./resources/assets/dcat/js/extensions/PreviewImage.js");
 /* harmony import */ var _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./extensions/AssetsLoader */ "./resources/assets/dcat/js/extensions/AssetsLoader.js");
 /* harmony import */ var _extensions_Slider__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./extensions/Slider */ "./resources/assets/dcat/js/extensions/Slider.js");
-/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
-/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
-/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
-/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
+/* harmony import */ var _extensions_Color__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./extensions/Color */ "./resources/assets/dcat/js/extensions/Color.js");
+/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
+/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
+/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
+/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
 /*=========================================================================================
   File Name: app.js
   Description: Dcat Admin JS脚本.
@@ -666,6 +667,7 @@ __webpack_require__.r(__webpack_exports__);
   Author: Jqh
   Author URL: https://github.com/jqhph
 ==========================================================================================*/
+
 
 
 
@@ -703,7 +705,9 @@ function extend(Dcat) {
 
   new _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // 静态资源加载器
 
-  new _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // 加载进度条
+  new _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // 颜色管理
+
+  new _extensions_Color__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // 加载进度条
 
   Dcat.NP = _nprogress_NProgress_min__WEBPACK_IMPORTED_MODULE_1___default.a; // 行选择器
 
@@ -749,16 +753,16 @@ function listen(Dcat) {
     }); //////////////////////////////////////////////////////////
     // 菜单点击选中效果
 
-    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // 返回顶部按钮
+    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat); // 返回顶部按钮
 
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat);
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_16__["default"](Dcat);
   }); // 每个请求都初始化
 
   Dcat.bootingEveryRequest(function () {
     // pjax初始化功能
-    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_16__["default"](Dcat); // data-action 动作绑定(包括删除、批量删除等操作)
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_17__["default"](Dcat); // data-action 动作绑定(包括删除、批量删除等操作)
 
-    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_17__["default"](Dcat);
+    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_18__["default"](Dcat);
   });
 } // 开始初始化
 
@@ -983,6 +987,98 @@ var AssetsLoader = /*#__PURE__*/function () {
   }]);
 
   return AssetsLoader;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/dcat/js/extensions/Color.js":
+/*!******************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/Color.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Color; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Color = /*#__PURE__*/function () {
+  function Color(Dcat) {
+    _classCallCheck(this, Color);
+
+    var colors = Dcat.config.colors || {},
+        _this = this; // 颜色转亮
+
+
+    colors.lighten = _this.lighten.bind(_this); // 颜色转暗
+
+    colors.darken = function (color, amt) {
+      return _this.lighten(color, -amt);
+    }; // 颜色透明度设置
+
+
+    colors.alpha = function (color, alpha) {
+      var results = colors.toRBG(color);
+      return "rgba(".concat(results[0], ", ").concat(results[1], ", ").concat(results[2], ", ").concat(alpha, ")");
+    }; // 16进制颜色转化成10进制
+
+
+    colors.toRBG = function (color, amt) {
+      if (color[0] === '#') {
+        color = color.slice(1);
+      }
+
+      return _this.toRBG(color, amt);
+    };
+
+    Dcat.color = colors;
+  }
+
+  _createClass(Color, [{
+    key: "lighten",
+    value: function lighten(color, amt) {
+      var hasPrefix = false;
+
+      if (color[0] === '#') {
+        color = color.slice(1);
+        hasPrefix = true;
+      }
+
+      var colors = this.toRBG(color, amt);
+      return (hasPrefix ? '#' : '') + (colors[2] | colors[1] << 8 | colors[0] << 16).toString(16);
+    }
+  }, {
+    key: "toRBG",
+    value: function toRBG(color, amt) {
+      var format = function format(value) {
+        if (value > 255) {
+          return 255;
+        }
+
+        if (value < 0) {
+          return 0;
+        }
+
+        return value;
+      };
+
+      amt = amt || 0;
+      var num = parseInt(color, 16),
+          red = format((num >> 16) + amt),
+          blue = format((num >> 8 & 0x00FF) + amt),
+          green = format((num & 0x0000FF) + amt);
+      return [red, blue, green];
+    }
+  }]);
+
+  return Color;
 }();
 
 
