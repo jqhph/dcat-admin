@@ -1753,7 +1753,7 @@ html body .content .content-wrapper {
   padding: 0.75rem 1.35rem !important;
   font-size: 0.95rem;
   height: 36px;
-  line-height: 0.7;
+  line-height: 1.2;
   border-radius: 0.2rem;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
 }
@@ -1778,7 +1778,7 @@ html body .content .content-wrapper {
 .btn-group-sm > .btn {
   padding: 0.6rem 1rem !important;
   font-size: 0.6rem;
-  line-height: 12px;
+  line-height: 1.2;
   height: 30px;
 }
 
@@ -2010,15 +2010,15 @@ table.data-thumb-view.dataTable tbody tr:hover {
 }
 
 .table td {
-  padding: 0.5rem;
-  height: 64px;
+  padding: 0.55rem;
+  height: 62px;
   line-height: 1.42857;
 }
 
 table.data-list-view.dataTable tbody td,
 table.data-thumb-view.dataTable tbody td {
   height: 46px;
-  padding: 0.5rem;
+  padding: 0.55rem;
   line-height: 1.42857;
 }
 
@@ -2453,6 +2453,7 @@ code {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
   padding: 3px 5px;
   background: #f7f7f9;
+  color: #4152b9;
 }
 
 pre {

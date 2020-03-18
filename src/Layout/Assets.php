@@ -21,6 +21,10 @@ class Assets
             'css' => 'dcat-admin/css/custom-laravel.css',
         ],
 
+        'grid-extension' => [
+            'js' => 'dcat-admin/dcat/extra/grid-extend.js',
+        ],
+
         'jquery.nestable' => [
             'js'  => 'dcat-admin/dcat/plugins/nestable/jquery.nestable.min.js',
             'css' => 'dcat-admin/dcat/plugins/nestable/nestable.css',

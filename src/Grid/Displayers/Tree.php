@@ -43,7 +43,7 @@ JS;
         $tableId = $this->grid->getTableId();
 
         $tier = $this->grid->model()->getTierFromRequest();
-        $indents = str_repeat(' &nbsp; &nbsp; &nbsp; &nbsp; ', $tier);
+        $indents = str_repeat(' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ', $tier);
 
         return <<<EOT
 <a href="javascript:void(0)" class="{$tableId}-grid-load-children" data-tier="{$tier}" data-inserted="0" data-key="{$key}">

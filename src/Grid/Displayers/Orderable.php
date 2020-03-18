@@ -7,7 +7,7 @@ use Dcat\Admin\Admin;
 class Orderable extends AbstractDisplayer
 {
     protected static $js = [
-        'vendor/dcat-admin/dcat-admin/grid-extend.min.js',
+        'grid-extension',
     ];
 
     public function display()
@@ -30,7 +30,7 @@ EOT;
     protected function script()
     {
         return <<<JS
-        Dcat.grid.orderable({
+        Dcat.grid.Orderable({
             button: '.{$this->grid->getRowName()}-orderable',
             url: '{$this->resource()}/:key',
         });

@@ -163,7 +163,7 @@ class PermissionController extends AdminController
                 }
 
                 if (! empty(config('admin.route.prefix'))) {
-                    $path = admin_base_path($path);
+                    $path = trim(admin_base_path($path), '/');
                 }
 
                 return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
@@ -184,7 +184,7 @@ class PermissionController extends AdminController
 
             $label = trans('admin.default');
             $url = url(request()->getPathInfo());
-            $tools->append("<a class='btn btn-sm btn-white ' href='{$url}'>$label</a>");
+            $tools->append("<a class='btn btn-white ' href='{$url}'>$label</a>");
         });
 
         $grid->filter(function (Grid\Filter $filter) {
