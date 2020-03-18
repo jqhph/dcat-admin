@@ -2,10 +2,11 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 class Icon extends Text
 {
+    public static $js = 'fontawesome-iconpicker';
+    public static $css = 'fontawesome-iconpicker';
+
     public function render()
     {
         $this->script = <<<JS
@@ -18,10 +19,5 @@ JS;
             ->defaultAttribute('autocomplete', 'off');
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectAssets('fontawesome-iconpicker');
     }
 }

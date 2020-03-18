@@ -7,6 +7,9 @@ use Dcat\Admin\Form\Field;
 
 class SwitchField extends Field
 {
+    public static $js = 'switchery';
+    public static $css = 'switchery';
+
     public function primary()
     {
         return $this->color(Admin::color()->primary());
@@ -111,10 +114,5 @@ JS
         );
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectAssets('switchery');
     }
 }

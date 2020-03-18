@@ -2,10 +2,11 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 class Decimal extends Text
 {
+    public static $js = 'jquery.inputmask';
+    public static $css = 'jquery.inputmask';
+
     /**
      * @see https://github.com/RobinHerbots/Inputmask#options
      *
@@ -24,10 +25,5 @@ class Decimal extends Text
             ->defaultAttribute('style', 'width: 200px');
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectAssets('jquery.inputmask');
     }
 }

@@ -11,6 +11,10 @@ use Illuminate\Support\Str;
 
 class Select extends Field
 {
+    public static $js = 'select2';
+    public static $css = 'select2';
+
+
     /**
      * @var array
      */
@@ -386,10 +390,5 @@ JS;
         $this->attribute('data-value', implode(',', Helper::array($this->value())));
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectAssets('select2');
     }
 }

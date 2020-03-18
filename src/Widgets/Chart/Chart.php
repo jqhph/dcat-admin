@@ -20,6 +20,9 @@ abstract class Chart extends Widget
 {
     use HasAjaxRequest;
 
+    public static $js = 'chartjs';
+    public static $css = 'chartjs';
+
     public static $globalSettings = [
         'defaultFontColor'  => '#555',
         'defaultFontFamily' => 'Nunito,system-ui,sans-serif',
@@ -510,17 +513,5 @@ HTML;
         if (! $this->colors) {
             $this->colors = Color::$chartTheme['blue'];
         }
-    }
-
-    /**
-     * Collect assets.
-     *
-     * @return void
-     */
-    public function collectAssets()
-    {
-        $this->script && Admin::script($this->script);
-
-        Admin::collectAssets('chartjs');
     }
 }

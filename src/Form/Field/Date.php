@@ -2,10 +2,11 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 class Date extends Text
 {
+    public static $js = 'bootstrap-datetimepicker';
+    public static $css = 'bootstrap-datetimepicker';
+
     protected $format = 'yyyy-mm-dd';
 
     public function format($format)
@@ -36,10 +37,5 @@ class Date extends Text
             ->defaultAttribute('style', 'width: 200px');
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectAssets('bootstrap-datetimepicker');
     }
 }

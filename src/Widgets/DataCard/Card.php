@@ -13,6 +13,15 @@ class Card extends Widget
 {
     use HasAjaxRequest;
 
+    public static $js = [
+        'waypoints',
+        'jquery.counterup',
+    ];
+    public static $css = [
+        'waypoints',
+        'jquery.counterup',
+    ];
+
     protected $view = 'admin::widgets.data-card';
 
     protected $options = [
@@ -214,16 +223,5 @@ JS
     public function toJsonResponse(array $data = [])
     {
         return response()->json(array_merge($this->buildJsonResponseArray(), $data));
-    }
-
-    /**
-     * @return void
-     */
-    public function collectAssets()
-    {
-        parent::collectAssets();
-
-        Admin::collectAssets('waypoints');
-        Admin::collectAssets('jquery.counterup');
     }
 }

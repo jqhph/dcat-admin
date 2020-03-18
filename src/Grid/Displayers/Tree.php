@@ -7,7 +7,7 @@ use Dcat\Admin\Admin;
 class Tree extends AbstractDisplayer
 {
     protected static $js = [
-        'vendor/dcat-admin/dcat-admin/grid-extend.min.js',
+        'grid-extension',
     ];
 
     protected function setupScript()
@@ -21,7 +21,7 @@ class Tree extends AbstractDisplayer
         $showNextPage = $model->showAllChildrenNodes() ? 'false' : 'true';
 
         $script = <<<JS
-Dcat.grid.tree({
+Dcat.grid.Tree({
     button: '.{$tableId}-grid-load-children',
     table: '#{$tableId}',
     url: '{$model->generateTreeUrl()}',

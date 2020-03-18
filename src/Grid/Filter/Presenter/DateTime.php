@@ -7,6 +7,14 @@ use Illuminate\Support\Arr;
 
 class DateTime extends Presenter
 {
+    public static $js = [
+        'bootstrap-datetimepicker',
+    ];
+
+    public static $css = [
+        'bootstrap-datetimepicker',
+    ];
+
     /**
      * @var array
      */
@@ -54,10 +62,5 @@ class DateTime extends Presenter
         return [
             'group' => $this->filter->group,
         ];
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectAssets('bootstrap-datetimepicker');
     }
 }

@@ -8,8 +8,21 @@ use Illuminate\Support\Str;
 
 class Tree extends Widget
 {
+    public static $js = [
+        'jstree',
+    ];
+    public static $css = [
+        'jstree',
+    ];
+
+    /**
+     * @var string
+     */
     protected $view = 'admin::widgets.tree';
 
+    /**
+     * @var array
+     */
     protected $options = [
         'plugins' => ['checkbox', 'types'],
         'core'    => [
@@ -30,10 +43,10 @@ class Tree extends Widget
         ],
     ];
 
-    public function __construct($nodes = [])
-    {
-        $this->nodes($nodes);
-    }
+    /**
+     * @var string
+     */
+    protected $id;
 
     /**
      * @var array
@@ -44,11 +57,27 @@ class Tree extends Widget
         'parent' => 'parent_id',
     ];
 
+    /**
+     * @var array
+     */
     protected $nodes = [];
 
+    /**
+     * @var array
+     */
     protected $value = [];
 
-    protected $checkedAll;
+    /**
+     * @var bool
+     */
+    protected $checkedAll = false;
+
+    public function __construct($nodes = [])
+    {
+        $this->nodes($nodes);
+
+        $this->id = 'widget-tree-'.Str::random(8);
+    }
 
     public function checkedAll()
     {
@@ -107,16 +136,14 @@ class Tree extends Widget
 
     public function render()
     {
-        $id = 'widget-tree-'.Str::random(8);
-
-        $this->id($id);
+        $this->id($this->id);
         $this->class('jstree-wrapper');
         $this->defaultHtmlAttribute('style', 'border:0;padding:5px 0');
 
         $this->formatNodes();
 
         $this->variables = [
-            'id'    => $id,
+            'id'    => $this->id,
             'nodes' => &$this->nodes,
         ];
 
@@ -168,10 +195,5 @@ class Tree extends Widget
         }
 
         $this->nodes = &$nodes;
-    }
-
-    protected function collectAssets()
-    {
-        Admin::collectAssets('jstree');
     }
 }

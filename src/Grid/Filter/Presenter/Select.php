@@ -9,6 +9,13 @@ use Illuminate\Support\Arr;
 
 class Select extends Presenter
 {
+    public static $js = [
+        'select2',
+    ];
+    public static $css = [
+        'select2',
+    ];
+
     /**
      * @var string
      */
@@ -327,10 +334,5 @@ JS;
     protected function getClass($target): string
     {
         return str_replace('.', '_', $target);
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectAssets('select2');
     }
 }

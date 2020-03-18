@@ -8,6 +8,9 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class DialogTree extends AbstractDisplayer
 {
+    public static $js = 'jstree';
+    public static $css = 'jstree';
+
     protected $url;
 
     protected $title;
@@ -267,10 +270,5 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
 });
 JS
         );
-    }
-
-    protected function collectAssets()
-    {
-        Admin::collectAssets('jstree');
     }
 }

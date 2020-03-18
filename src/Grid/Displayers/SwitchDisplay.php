@@ -6,6 +6,9 @@ use Dcat\Admin\Admin;
 
 class SwitchDisplay extends AbstractDisplayer
 {
+    public static $js = 'switchery';
+    public static $css = 'switchery';
+
     /**
      * @var string
      */
@@ -117,10 +120,5 @@ EOF;
 })();
 JS
         );
-    }
-
-    protected function collectAssets()
-    {
-        Admin::collectAssets('switchery');
     }
 }
