@@ -7,7 +7,7 @@ use Dcat\Admin\Admin;
 class Orderable extends AbstractDisplayer
 {
     protected static $js = [
-        'grid-extension',
+        '@grid-extension',
     ];
 
     public function display()

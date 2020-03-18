@@ -7,7 +7,7 @@ use Dcat\Admin\Admin;
 class Tree extends AbstractDisplayer
 {
     protected static $js = [
-        'grid-extension',
+        '@grid-extension',
     ];
 
     protected function setupScript()

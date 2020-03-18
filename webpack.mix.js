@@ -79,8 +79,9 @@ mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js'));
 // 打包app.scss
 mix.sass(dcatPath('sass/dcat-app.scss'), dcatDistPath('css/dcat-app.css'));
 
-// 打包所有 extra 里面的所有js
+// 打包所有 extra 里面的所有js和css
 mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.js(src, dest));
+mixAssetsDir('dcat/extra/*.scss', (src, dest) => mix.sass(src, dest.replace('scss', 'css')));
 
 // ------------------------------------ Dcat Admin -------------------------------------------
 

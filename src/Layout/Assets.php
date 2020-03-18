@@ -96,31 +96,51 @@ class Assets
         ],
         '@webuploader' => [
             'js' => [
-                'vendor/dcat-admin/webuploader/webuploader.min.js',
-                'vendor/dcat-admin/dcat-admin/upload.min.js',
+                'dcat-admin/dcat/plugins/webuploader/webuploader.min.js',
+                'dcat-admin/dcat/plugins/dcat-admin/upload.min.js',
             ],
-            'css' => 'vendor/dcat-admin/webuploader/webuploader.min.css',
+            'css' => 'dcat-admin/dcat/plugins/webuploader/webuploader.min.css',
         ],
         '@chartjs' => [
-
+            'js' => 'dcat-admin/dcat/plugins/chart.js/chart.bundle.min.js',
         ],
         '@jquery.sparkline' => [
-
+            'js' => 'dcat-admin/dcat/plugins/jquery.sparkline/jquery.sparkline.min.js',
         ],
         '@jquery.bootstrap-duallistbox' => [
-
+            'js'  => 'dcat-admin/dcat/plugins/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js',
+            'css' => 'dcat-admin/dcat/plugins/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.css',
         ],
         '@number-input' => [
-
+            'js' => 'dcat-admin/dcat/plugins/number-input/bootstrap-number-input.js',
         ],
         '@ionslider' => [
             'js' => [
-                '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.min.js',
+                'dcat-admin/dcat/plugins/ionslider/ion.rangeSlider.min.js',
             ],
             'css' => [
-                '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.css',
-                '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.skinNice.css',
+                'dcat-admin/dcat/plugins/ionslider/ion.rangeSlider.css',
+                'dcat-admin/dcat/plugins/ionslider/ion.rangeSlider.skinNice.css',
             ],
+        ],
+        '@editor-md' => [
+            'js' => [
+                'dcat-admin/dcat/plugins/editor-md/lib/raphael.min.js',
+                'dcat-admin/dcat/plugins/editor-md/lib/marked.min.js',
+                'dcat-admin/dcat/plugins/editor-md/lib/prettify.min.js',
+                'dcat-admin/dcat/plugins/editor-md/lib/underscore.min.js',
+                'dcat-admin/dcat/plugins/editor-md/lib/sequence-diagram.min.js',
+                'dcat-admin/dcat/plugins/editor-md/lib/flowchart.min.js',
+                'dcat-admin/dcat/plugins/editor-md/lib/jquery.flowchart.min.js',
+                'dcat-admin/dcat/plugins/editor-md/editormd.min.js',
+            ],
+            'css' => [
+                'dcat-admin/dcat/plugins/editor-md/css/editormd.preview.min.css',
+                'dcat-admin/dcat/extra/markdown.css',
+            ],
+        ],
+        '@jquery.inputmask' => [
+            'js' => 'dcat-admin/dcat/plugins/input-mask/jquery.inputmask.bundle.min.js',
         ],
     ];
 
