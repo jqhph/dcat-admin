@@ -103,11 +103,11 @@ class Color
         'white50' => 'hsla(0,0%,100%,.5)',
 
          // 其他蓝色
-        'blue-1' => '#007ee5',
-        'blue-2' => '#4199de',
+        'blue1' => '#007ee5',
+        'blue2' => '#4199de',
 
         // 淡黄色
-        'orange-1' => '#ffcc80',
+        'orange1' => '#ffcc80',
 
         'indigo-darker' => '#495abf',
         'red-darker'    => '#bd4147',

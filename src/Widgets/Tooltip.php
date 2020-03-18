@@ -11,15 +11,13 @@ class Tooltip extends Widget
 
     protected $selector;
 
+    protected $title;
+
     protected $background;
 
-    protected $maxWidth;
+    protected $maxWidth = 210;
 
-    protected $options = [
-        'title'     => '',
-        'html'      => true,
-        'placement' => 'top',
-    ];
+    protected $placement = 1;
 
     protected $built;
 
@@ -37,7 +35,7 @@ class Tooltip extends Widget
         return $this;
     }
 
-    public function maxWidth(string $width)
+    public function maxWidth(int $width)
     {
         $this->maxWidth = $width;
 
@@ -51,7 +49,7 @@ class Tooltip extends Widget
      */
     public function title($content)
     {
-        $this->options['title'] = $this->toString($content);
+        $this->title = $this->toString($content);
 
         return $this;
     }
@@ -103,26 +101,43 @@ class Tooltip extends Widget
         return $this->placement('bottom');
     }
 
-    public function placement(string $val = 'left')
+    public function placement(string $placement = 'auto')
     {
-        $this->options['placement'] = $val;
+        $map = [
+            'top'    => 1,
+            'right'  => 2,
+            'bottom' => 3,
+            'left'   => 4,
+        ];
+
+        $this->placement = $map[$placement] ?? 1;
 
         return $this;
     }
 
-    protected function setupStyle()
-    {
-        Admin::style(static::$style);
-        if ($this->maxWidth) {
-            Admin::style(".tooltip-inner{max-width:{$this->maxWidth}}");
-        }
-    }
-
     protected function setupScript()
     {
-        $opts = json_encode($this->options, JSON_UNESCAPED_UNICODE);
+        $background = $this->background ?: Admin::color()->blue2(-5);
+        $title = $this->title;
 
-        Admin::script("$('{$this->selector}').tooltip({$opts});");
+        Admin::script(
+            <<<JS
+$('{$this->selector}').on('mouseover', function () {
+    var title = '{$title}' || $(this).data('title');
+    var idx = layer.tips(title, this, {
+      tips: ['{$this->placement}', '{$background}'],
+      time: 0,
+      maxWidth: {$this->maxWidth},
+    });
+    
+    $(this).attr('layer-idx', idx);
+}).on('mouseleave', function () {
+    layer.close($(this).attr('layer-idx'));
+    
+    $(this).attr('layer-idx', '');
+});
+JS
+        );
     }
 
     public function render()
@@ -132,15 +147,6 @@ class Tooltip extends Widget
         }
         $this->built = true;
 
-        $background = $this->background ?: Admin::color()->primary();
-
-        $this->defaultHtmlAttribute('class', 'tooltip-inner');
-        $this->style('background:'.$background, true);
-
-        $this->options['template'] =
-            "<div class='tooltip' role='tooltip'><div class='tooltip-arrow' style='border-{$this->options['placement']}-color:{$background}'></div><div {$this->formatHtmlAttributes()}></div></div>";
-
-        $this->setupStyle();
         $this->setupScript();
     }
 }

@@ -28,7 +28,7 @@ class Help implements Renderable
      *
      * @param string $message
      */
-    public function __construct($message = '', ?string $style = null, ?string $placement = 'bottom')
+    public function __construct($message = '', ?string $style = null, ?string $placement = null)
     {
         $this->message = value($message);
         $this->style = $style;
@@ -54,10 +54,8 @@ class Help implements Renderable
             $tooltip->{$this->placement}();
         }
 
-        $tooltip->title($this->message);
-
         return <<<HELP
-&nbsp;<a href="javascript:void(0);" class="{$class} feather icon-alert-circle" ></a>
+&nbsp;<a href="javascript:void(0);" class="{$class} feather icon-alert-circle" data-title="{$this->message}"></a>
 HELP;
     }
 }
