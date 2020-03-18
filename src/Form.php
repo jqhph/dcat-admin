@@ -466,7 +466,7 @@ class Form implements Renderable
         $this->builder->mode(Builder::MODE_EDIT);
         $this->builder->setResourceId($id);
 
-        $this->setFieldValue();
+        $this->model(new Fluent($this->repository->edit($this)));
 
         return $this;
     }
@@ -769,6 +769,9 @@ class Form implements Renderable
         $this->builder->setResourceId($id);
         $this->builder->mode(Builder::MODE_EDIT);
 
+        $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
+        $this->setFieldOriginalValue();
+
         $this->build();
 
         if ($response = $this->callSubmitted()) {
@@ -784,9 +787,6 @@ class Form implements Renderable
         $data = $this->handleEditable($data);
 
         $data = $this->handleFileDelete($data);
-
-        $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
-        $this->setFieldOriginalValue();
 
         if ($response = $this->handleOrderable($data)) {
             return $response;
@@ -1100,29 +1100,7 @@ class Form implements Renderable
      */
     protected function setFieldOriginalValue()
     {
-        $values = $this->model->toArray();
-
-        $this->builder->fields()->each(function (Field $field) use ($values) {
-            $field->setOriginal($values);
-        });
-    }
-
-    /**
-     * Set all fields value in form.
-     *
-     * @return void
-     */
-    protected function setFieldValue()
-    {
-        $this->callEditing();
-
-        $data = $this->model->toArray();
-
-        $this->builder->fields()->each(function (Field $field) use ($data) {
-            if (! in_array($field->column(), $this->ignored)) {
-                $field->fill($data);
-            }
-        });
+        $this->fillFields($this->model->toArray());
     }
 
     /**
@@ -1159,17 +1137,30 @@ class Form implements Renderable
      */
     protected function rendering()
     {
-        if ($isEditing = $this->isEditing()) {
-            $this->model(new Fluent($this->repository->edit($this)));
-        }
-
         $this->build();
 
-        if ($isEditing) {
-            $this->setFieldValue();
-        } else {
+        if ($this->isCreating()) {
             $this->callCreating();
+
+            return;
         }
+
+        $this->callEditing();
+        $this->setFieldOriginalValue();
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function fillFields(array $data)
+    {
+        $this->builder->fields()->each(function (Field $field) use ($data) {
+            if (! in_array($field->column(), $this->ignored, true)) {
+                $field->fill($data);
+            }
+        });
     }
 
     /**
