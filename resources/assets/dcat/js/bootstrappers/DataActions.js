@@ -77,22 +77,6 @@ let actions = {
         });
     },
 
-    // 数字动画初始化
-    counterUp: function() {
-        var boot = function(k, obj) {
-            try {
-                obj = $(obj);
-                obj.counterUp({
-                    delay: obj.attr('data-delay') || 100,
-                    time: obj.attr('data-time') || 1200
-                });
-            } catch (e) {}
-        };
-        $('[data-action="counterup"]').each(boot);
-
-        $('number').each(boot);
-    },
-
     popover: function () {
         $('.popover').remove();
 

@@ -13,15 +13,6 @@ class Card extends Widget
 {
     use HasAjaxRequest;
 
-    public static $js = [
-        '@waypoints',
-        '@jquery.counterup',
-    ];
-    public static $css = [
-        '@waypoints',
-        '@jquery.counterup',
-    ];
-
     protected $view = 'admin::widgets.data-card';
 
     protected $options = [
@@ -186,7 +177,6 @@ card.find('.right-content').html(response.content.right || '');
 card.find('.main-content').html(response.content.left || '');
 pg.css({width: 0});
 setTimeout(function(){ pg.css({width: w});}, 150);
-card.find('number').counterUp({time: 550});
 JS
         );
     }

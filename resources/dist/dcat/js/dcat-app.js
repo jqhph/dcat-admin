@@ -409,21 +409,6 @@ var actions = {
       return Dcat.previewImage($(this).attr('src'));
     });
   },
-  // 数字动画初始化
-  counterUp: function counterUp() {
-    var boot = function boot(k, obj) {
-      try {
-        obj = $(obj);
-        obj.counterUp({
-          delay: obj.attr('data-delay') || 100,
-          time: obj.attr('data-time') || 1200
-        });
-      } catch (e) {}
-    };
-
-    $('[data-action="counterup"]').each(boot);
-    $('number').each(boot);
-  },
   popover: function popover() {
     $('.popover').remove();
     $('[data-action="popover"]').popover();
