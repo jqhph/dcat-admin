@@ -92,3 +92,24 @@
     @endif
 
 </div>
+<style>
+    .data-list-view-header .table-responsive .top .dataTables_filter .form-control {
+        padding: 1.1rem 2.8rem !important
+    }
+    .data-list-view-header .table-responsive .top .dataTables_filter label:after {
+        top: 0.42rem;
+        left: 1.1rem;
+    }
+</style>
+<script>
+(function () {
+    function change() {
+        $('#{{ $tableId }}').parents('.card').find('.data-list-view-header').first().find('.btn').addClass('btn-sm');
+    }
+    change();
+
+    Dcat.ready(function () {
+        setTimeout(change, 100);
+    })
+})();
+</script>

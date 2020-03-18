@@ -1999,7 +1999,7 @@ table.dataTable {
 
 table.data-list-view.dataTable,
 table.data-thumb-view.dataTable {
-  border-spacing: 0 0.95rem;
+  border-spacing: 0 0.9rem;
   padding: 0;
 }
 
@@ -2010,15 +2010,15 @@ table.data-thumb-view.dataTable tbody tr:hover {
 }
 
 .table td {
-  padding: 0.6rem;
+  padding: 0.5rem;
   height: 64px;
   line-height: 1.42857;
 }
 
 table.data-list-view.dataTable tbody td,
 table.data-thumb-view.dataTable tbody td {
-  height: 51px;
-  padding: 0.6rem;
+  height: 46px;
+  padding: 0.5rem;
   line-height: 1.42857;
 }
 
@@ -2298,6 +2298,12 @@ table.dataTable.complex-headers tfoot td {
 
 .layui-layer-setwin a {
   top: 3px;
+}
+
+.layui-layer-tips .layui-layer-content,
+.layui-layer-tips {
+  font-size: 13px !important;
+  box-shadow: none !important;
 }
 
 .customizer {

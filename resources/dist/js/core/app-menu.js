@@ -1020,7 +1020,7 @@ window.addEventListener('resize', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\js\core\app-menu.js */"./resources/assets/js/core/app-menu.js");
+module.exports = __webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\js\core\app-menu.js */"./resources/assets/js/core/app-menu.js");
 
 
 /***/ })
