@@ -590,7 +590,17 @@ class Assets
     {
         $script = implode(';', array_unique($this->script));
 
-        return "<script data-exec-on-popstate>Dcat.ready(function () { {$script} });</script>";
+        return <<<HTML
+<script data-exec-on-popstate>
+Dcat.ready(function () { 
+    try {
+        {$script}
+    } catch (e) {
+        console.error(e)
+    }
+ });
+ </script>
+HTML;
     }
 
     /**
