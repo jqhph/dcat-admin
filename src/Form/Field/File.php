@@ -19,7 +19,7 @@ class File extends Field implements UploadFieldInterface
      * @var array
      */
     protected static $css = [
-        'vendor/dcat-admin/webuploader/webuploader.min.css',
+        '@webuploader',
     ];
 
     /**
@@ -28,8 +28,7 @@ class File extends Field implements UploadFieldInterface
      * @var array
      */
     protected static $js = [
-        'vendor/dcat-admin/webuploader/webuploader.min.js',
-        'vendor/dcat-admin/dcat-admin/upload.min.js',
+        '@webuploader',
     ];
 
     /**

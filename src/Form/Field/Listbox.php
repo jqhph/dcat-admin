@@ -9,8 +9,8 @@ namespace Dcat\Admin\Form\Field;
  */
 class Listbox extends MultipleSelect
 {
-    public static $js = 'jquery.bootstrap-duallistbox';
-    public static $css = 'jquery.bootstrap-duallistbox';
+    public static $js = '@jquery.bootstrap-duallistbox';
+    public static $css = '@jquery.bootstrap-duallistbox';
 
     protected $settings = [];
 

@@ -70,19 +70,6 @@ let actions = {
         });
     },
 
-    // 进度条初始化
-    progressBar: function () {
-        $('.progress-bar').each(function (k, v) {
-            v = $(v);
-            var w = v.data('width');
-            if (w) {
-                setTimeout(function () {
-                    v.css({width: w});
-                }, 80);
-            }
-        });
-    },
-
     // 图片预览
     imagePreview: function (Dcat) {
         $('[data-action="preview"]').off('click').click(function () {

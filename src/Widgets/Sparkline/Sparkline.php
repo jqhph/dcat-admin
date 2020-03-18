@@ -24,8 +24,8 @@ class Sparkline extends Widget
 {
     use HasAjaxRequest;
 
-    public static $js = 'jquery.sparkline';
-    public static $css = 'jquery.sparkline';
+    public static $js = '@jquery.sparkline';
+    public static $css = '@jquery.sparkline';
 
     protected static $optionMethods = [
         'highlightSpotColor',

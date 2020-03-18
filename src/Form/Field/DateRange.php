@@ -7,8 +7,8 @@ use Dcat\Admin\Form\Field;
 
 class DateRange extends Field
 {
-    public static $js = 'bootstrap-datetimepicker';
-    public static $css = 'bootstrap-datetimepicker';
+    public static $js = '@bootstrap-datetimepicker';
+    public static $css = '@bootstrap-datetimepicker';
 
     protected $format = 'yyyy-mm-dd';
 

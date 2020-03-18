@@ -10,10 +10,10 @@ use Illuminate\Support\Arr;
 class Select extends Presenter
 {
     public static $js = [
-        'select2',
+        '@select2',
     ];
     public static $css = [
-        'select2',
+        '@select2',
     ];
 
     /**

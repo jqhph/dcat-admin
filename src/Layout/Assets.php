@@ -10,47 +10,117 @@ class Assets
      * @var array
      */
     protected $alias = [
-        'nunito' => [
+        '@nunito' => [
             'css' => ['https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i'],
         ],
-        'montserrat' => [
+        '@montserrat' => [
             'css' => ['https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600'],
         ],
-
-        'custom' => [
+        '@dcat' => [
+            'js'  => 'dcat-admin/dcat/js/dcat-app.js',
+            'css' => 'dcat-admin/dcat/css/dcat-app.css',
+        ],
+        '@vendors' => [
+            'js'  => 'dcat-admin/vendors/js/vendors.min.js',
+            'css' => 'dcat-admin/vendors/css/vendors.min.css',
+        ],
+        '@bootstrap' => [
+            'css' => 'dcat-admin/css/bootstrap.css',
+        ],
+        '@bootstrap-extended' => [
+            'css' => 'dcat-admin/css/bootstrap-extended.css',
+        ],
+        '@default-colors' => [
+            'css' => 'dcat-admin/css/colors.css',
+        ],
+        '@menu' => [
+            'js' => 'dcat-admin/js/core/app-menu.js',
+        ],
+        '@app' => [
+            'js' => 'dcat-admin/js/core/app.js',
+        ],
+        '@components' => [
+            'css' => 'dcat-admin/css/components.css',
+        ],
+        '@palette-gradient' => [
+            'css' => 'dcat-admin/css/core/colors/palette-gradient.css',
+        ],
+        '@datatables' => [
+            'css' => 'dcat-admin/vendors/css/tables/datatable/datatables.min.css',
+        ],
+        '@data-list-view' => [
+            'css' => 'dcat-admin/css/pages/data-list-view.css',
+        ],
+        '@custom' => [
             'css' => 'dcat-admin/css/custom-laravel.css',
         ],
-
-        'grid-extension' => [
+        '@grid-extension' => [
             'js' => 'dcat-admin/dcat/extra/grid-extend.js',
         ],
-
-        'jquery.nestable' => [
+        '@resource-selector' => [
+            'js' => 'dcat-admin/dcat/extra/resource-selector.js',
+        ],
+        '@layer' => [
+            'js' => 'dcat-admin/dcat/plugins/layer/layer.js',
+        ],
+        '@pjax' => [
+            'js' => 'dcat-admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
+        ],
+        '@toastr' => [
+            'js'  => 'dcat-admin/vendors/js/extensions/toastr.min.js',
+            'css' => 'dcat-admin/vendors/css/extensions/toastr.css',
+        ],
+        '@jquery.nestable' => [
             'js'  => 'dcat-admin/dcat/plugins/nestable/jquery.nestable.min.js',
             'css' => 'dcat-admin/dcat/plugins/nestable/nestable.css',
         ],
-        'select2' => [
+        '@select2' => [
             'js'  => 'dcat-admin/vendors/js/forms/select/select2.full.min.js',
             'css' => 'dcat-admin/vendors/css/forms/select/select2.min.css',
         ],
-        'bootstrap-datetimepicker' => [
+        '@bootstrap-datetimepicker' => [
             'js'  => 'dcat-admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
             'css' => 'dcat-admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css',
         ],
-        'rwd-table' => [
+        '@rwd-table' => [
             'js'  => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js',
             'css' => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css',
         ],
-        'jstree' => [
+        '@jstree' => [
             'js'  => 'dcat-admin/dcat/plugins/jstree-theme/jstree.min.js',
             'css' => 'dcat-admin/dcat/plugins/jstree-theme/themes/proton/style.min.css',
         ],
-        'switchery' => [
+        '@switchery' => [
             'js'  => 'dcat-admin/dcat/plugins/switchery/switchery.min.js',
             'css' => 'dcat-admin/dcat/plugins/switchery/switchery.min.css',
         ],
-        'grid-extension' => [
-            'js' => 'dcat-admin/dcat/extra/grid-extend.js',
+        '@webuploader' => [
+            'js' => [
+                'vendor/dcat-admin/webuploader/webuploader.min.js',
+                'vendor/dcat-admin/dcat-admin/upload.min.js',
+            ],
+            'css' => 'vendor/dcat-admin/webuploader/webuploader.min.css',
+        ],
+        '@chartjs' => [
+
+        ],
+        '@jquery.sparkline' => [
+
+        ],
+        '@jquery.bootstrap-duallistbox' => [
+
+        ],
+        '@number-input' => [
+
+        ],
+        '@ionslider' => [
+            'js' => [
+                '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.min.js',
+            ],
+            'css' => [
+                '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.css',
+                '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.skinNice.css',
+            ],
         ],
     ];
 
@@ -88,8 +158,8 @@ class Assets
      * @var array
      */
     protected $headerJs = [
-        'vendors' => 'dcat-admin/vendors/js/vendors.min.js',
-        'dcat'    => 'dcat-admin/dcat/js/dcat-app.js',
+        'vendors' => '@vendors',
+        'dcat'    => '@dcat',
     ];
 
     /**
@@ -98,19 +168,18 @@ class Assets
      * @var array
      */
     protected $baseCss = [
-        'vendors'            => 'dcat-admin/vendors/css/vendors.min.css',
-        'bootstrap'          => 'dcat-admin/css/bootstrap.css',
-        'bootstrap-extended' => 'dcat-admin/css/bootstrap-extended.css',
-        'toastr'             => 'dcat-admin/vendors/css/extensions/toastr.css',
-        'components'         => 'dcat-admin/css/components.css',
-        'palette-gradient'   => 'dcat-admin/css/core/colors/palette-gradient.css',
-        'colors'             => 'dcat-admin/css/colors.css',
-        //'custom'             => 'dcat-admin/css/custom-laravel.css',
+        'vendors'            => '@vendors',
+        'bootstrap'          => '@bootstrap',
+        'bootstrap-extended' => '@bootstrap-extended',
+        'toastr'             => '@toastr',
+        'components'         => '@components',
+        'palette-gradient'   => '@palette-gradient',
+        'colors'             => '@default-colors',
+        //'custom'             => 'custom',
 
-        'datatables' => 'dcat-admin/vendors/css/tables/datatable/datatables.min.css',
-        'data-list-view' => 'dcat-admin/css/pages/data-list-view.css',
-
-        'dcat'               => 'dcat-admin/dcat/css/dcat-app.css',
+        'datatables'     => '@datatables',
+        'data-list-view' => '@data-list-view',
+        'dcat'           => '@dcat',
     ];
 
     /**
@@ -119,19 +188,19 @@ class Assets
      * @var array
      */
     protected $baseJs = [
-        'menu'   => 'dcat-admin/js/core/app-menu.js',
-        'app'    => 'dcat-admin/js/core/app.js',
-        'toastr' => 'dcat-admin/vendors/js/extensions/toastr.min.js',
-        'pjax'   => 'dcat-admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
-        'layer'  => 'dcat-admin/dcat/plugins/layer/layer.js',
+        'menu'   => '@menu',
+        'app'    => '@app',
+        'toastr' => '@toastr',
+        'pjax'   => '@pjax',
+        'layer'  => '@layer',
     ];
 
     /**
      * @var array
      */
     public $fonts = [
-        'nunito',
-        'montserrat',
+        '@nunito',
+        '@montserrat',
     ];
 
     /**
@@ -172,13 +241,19 @@ class Assets
     public function alias($name, $js = null, $css = null)
     {
         if (is_array($name)) {
-            $this->alias = array_merge($this->alias, $name);
+            foreach ($name as $key => $value) {
+                $this->alias($key, $value['js'] ?? [], $value['css'] ?? []);
+            }
 
             return;
         }
 
         if ($js === null && $css === null) {
             return $this->alias[$name] ?? [];
+        }
+
+        if (strpos($name, '@') !== 0) {
+            $name = '@'.$name;
         }
 
         $this->alias[$name] = [
@@ -209,6 +284,10 @@ class Assets
      */
     public function collect(string $alias, string $type = '')
     {
+        if (strpos($alias, '@') !== 0) {
+            $alias = '@'.$alias;
+        }
+
         if ($type === 'js') {
             $this->js($this->alias[$alias]['js'] ?? null);
 

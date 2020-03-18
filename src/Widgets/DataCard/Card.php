@@ -14,12 +14,12 @@ class Card extends Widget
     use HasAjaxRequest;
 
     public static $js = [
-        'waypoints',
-        'jquery.counterup',
+        '@waypoints',
+        '@jquery.counterup',
     ];
     public static $css = [
-        'waypoints',
-        'jquery.counterup',
+        '@waypoints',
+        '@jquery.counterup',
     ];
 
     protected $view = 'admin::widgets.data-card';

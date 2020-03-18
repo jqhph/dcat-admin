@@ -6,8 +6,8 @@ use Dcat\Admin\Admin;
 
 class SwitchDisplay extends AbstractDisplayer
 {
-    public static $js = 'switchery';
-    public static $css = 'switchery';
+    public static $js = '@switchery';
+    public static $css = '@switchery';
 
     /**
      * @var string

@@ -11,8 +11,8 @@ use Illuminate\Support\Collection;
 
 class Tags extends Field
 {
-    public static $js = 'select2';
-    public static $css = 'select2';
+    public static $js = '@select2';
+    public static $css = '@select2';
 
     /**
      * @var array

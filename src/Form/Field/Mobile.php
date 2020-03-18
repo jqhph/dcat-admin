@@ -4,8 +4,8 @@ namespace Dcat\Admin\Form\Field;
 
 class Mobile extends Text
 {
-    public static $js = 'jquery.inputmask';
-    public static $css = 'jquery.inputmask';
+    public static $js = '@jquery.inputmask';
+    public static $css = '@jquery.inputmask';
 
     /**
      * @see https://github.com/RobinHerbots/Inputmask#options

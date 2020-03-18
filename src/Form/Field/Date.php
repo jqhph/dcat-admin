@@ -4,8 +4,8 @@ namespace Dcat\Admin\Form\Field;
 
 class Date extends Text
 {
-    public static $js = 'bootstrap-datetimepicker';
-    public static $css = 'bootstrap-datetimepicker';
+    public static $js = '@bootstrap-datetimepicker';
+    public static $css = '@bootstrap-datetimepicker';
 
     protected $format = 'yyyy-mm-dd';
 

@@ -11,8 +11,8 @@ use Illuminate\Support\Arr;
 
 class Tree extends Field
 {
-    public static $js = 'jstree';
-    public static $css = 'jstree';
+    public static $js = '@jstree';
+    public static $css = '@jstree';
 
     protected $options = [
         'plugins' => ['checkbox', 'types'],

@@ -8,11 +8,11 @@ use Illuminate\Support\Arr;
 class DateTime extends Presenter
 {
     public static $js = [
-        'bootstrap-datetimepicker',
+        '@bootstrap-datetimepicker',
     ];
 
     public static $css = [
-        'bootstrap-datetimepicker',
+        '@bootstrap-datetimepicker',
     ];
 
     /**

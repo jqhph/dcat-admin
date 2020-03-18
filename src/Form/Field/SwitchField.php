@@ -7,8 +7,8 @@ use Dcat\Admin\Form\Field;
 
 class SwitchField extends Field
 {
-    public static $js = 'switchery';
-    public static $css = 'switchery';
+    public static $js = '@switchery';
+    public static $css = '@switchery';
 
     public function primary()
     {

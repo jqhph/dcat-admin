@@ -8,7 +8,7 @@ use Dcat\Admin\Support\Helper;
 class SelectResource extends Presenter
 {
     public static $js = [
-        'dcat-admin/dcat/extra/resource-selector.js',
+        '@resource-selector',
     ];
 
     /**

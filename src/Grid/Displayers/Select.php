@@ -6,8 +6,8 @@ use Dcat\Admin\Admin;
 
 class Select extends AbstractDisplayer
 {
-    public static $js = 'select2';
-    public static $css = 'select2';
+    public static $js = '@select2';
+    public static $css = '@select2';
 
     public function display($options = [])
     {

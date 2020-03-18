@@ -8,8 +8,8 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class DialogTree extends AbstractDisplayer
 {
-    public static $js = 'jstree';
-    public static $css = 'jstree';
+    public static $js = '@jstree';
+    public static $css = '@jstree';
 
     protected $url;
 

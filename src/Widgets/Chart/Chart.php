@@ -20,8 +20,8 @@ abstract class Chart extends Widget
 {
     use HasAjaxRequest;
 
-    public static $js = 'chartjs';
-    public static $css = 'chartjs';
+    public static $js = '@chartjs';
+    public static $css = '@chartjs';
 
     public static $globalSettings = [
         'defaultFontColor'  => '#555',

@@ -9,10 +9,10 @@ use Illuminate\Support\Str;
 class Tree extends Widget
 {
     public static $js = [
-        'jstree',
+        '@jstree',
     ];
     public static $css = [
-        'jstree',
+        '@jstree',
     ];
 
     /**
