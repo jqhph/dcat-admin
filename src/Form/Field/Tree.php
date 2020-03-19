@@ -242,7 +242,7 @@ class Tree extends Field
      *
      * @return array
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return Helper::array($value, true);
     }

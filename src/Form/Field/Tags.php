@@ -124,7 +124,7 @@ class Tags extends Field
     /**
      * {@inheritdoc}
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         if (! is_array($value)) {
             return $value;

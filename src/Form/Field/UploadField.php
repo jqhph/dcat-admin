@@ -526,30 +526,24 @@ trait UploadField
      *
      * @param string|array $path
      */
-    public function deleteFile($path)
+    public function deleteFile($paths)
     {
-        if (! $path) {
-            return;
-        }
-
-        if (is_array($path)) {
-            foreach ($path as $v) {
-                $this->deleteFile($v);
-            }
-
+        if (! $paths) {
             return;
         }
 
         $storage = $this->getStorage();
 
-        if ($storage->exists($path)) {
-            $storage->delete($path);
-        } else {
-            $prefix = $storage->url('');
-            $path = str_replace($prefix, '', $path);
-
+        foreach ((array) $paths as $path) {
             if ($storage->exists($path)) {
                 $storage->delete($path);
+            } else {
+                $prefix = $storage->url('');
+                $path = str_replace($prefix, '', $path);
+
+                if ($storage->exists($path)) {
+                    $storage->delete($path);
+                }
             }
         }
     }

@@ -31,7 +31,7 @@ class DateRange extends Field
         $this->options(['format' => $this->format]);
     }
 
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         if ($value === '') {
             $value = null;

@@ -149,7 +149,7 @@ class SelectResource extends Field
         }
     }
 
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         if ($this->maxItem == 1) {
             if ($value === null || $value === '') {

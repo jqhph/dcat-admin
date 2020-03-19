@@ -28,7 +28,7 @@ JS;
         return parent::render();
     }
 
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return (int) $value;
     }

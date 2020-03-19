@@ -368,7 +368,7 @@
 	bottom: 0;
 	left: 0;
 	overflow: hidden;
-	z-index: 300
+	z-index: 10
 }
 
 .web-uploader .filelist div.file-panel span {

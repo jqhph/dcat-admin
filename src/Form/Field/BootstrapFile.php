@@ -100,7 +100,7 @@ class BootstrapFile extends Field
      *
      * @return mixed|string
      */
-    protected function prepareToSave($file)
+    protected function prepareInputValue($file)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
             return $this->destroy();

@@ -205,7 +205,7 @@ class Field implements Renderable
     /**
      * @var \Closure
      */
-    protected $prepareCallback;
+    protected $savingCallback;
 
     /**
      * Field constructor.
@@ -762,13 +762,11 @@ class Field implements Renderable
     }
 
     /**
-     * Prepare for a field value before update or insert.
-     *
      * @param mixed $value
      *
      * @return mixed
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return $value;
     }
@@ -780,7 +778,7 @@ class Field implements Renderable
      */
     public function saving(\Closure $closure)
     {
-        $this->prepareCallback = $closure;
+        $this->savingCallback = $closure;
 
         return $this;
     }
@@ -794,9 +792,9 @@ class Field implements Renderable
      */
     final public function prepare($value)
     {
-        $value = $this->prepareToSave($value);
+        $value = $this->prepareInputValue($value);
 
-        if ($handler = $this->prepareCallback) {
+        if ($handler = $this->savingCallback) {
             $handler->bindTo($this->data());
 
             return $handler($value);

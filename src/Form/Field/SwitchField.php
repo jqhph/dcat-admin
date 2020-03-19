@@ -88,7 +88,7 @@ class SwitchField extends Field
      *
      * @return int
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return $value ? 1 : 0;
     }

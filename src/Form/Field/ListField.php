@@ -147,7 +147,7 @@ JS;
     /**
      * {@inheritdoc}
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         unset($value['values'][static::DEFAULT_FLAG_NAME]);
 

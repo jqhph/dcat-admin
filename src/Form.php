@@ -529,6 +529,8 @@ class Form implements Renderable
 
             $this->model(new Fluent($data));
 
+            $this->setFieldOriginalValue();
+
             $this->build();
 
             if (($response = $this->callDeleting()) instanceof Response) {
@@ -761,9 +763,10 @@ class Form implements Renderable
         $this->builder->mode(Builder::MODE_EDIT);
 
         $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
-        $this->setFieldOriginalValue();
 
         $this->build();
+
+        $this->setFieldOriginalValue();
 
         if ($response = $this->callSubmitted()) {
             return $response;
@@ -1091,7 +1094,11 @@ class Form implements Renderable
      */
     protected function setFieldOriginalValue()
     {
-        $this->fillFields($this->model->toArray());
+        $data = $this->model()->toArray();
+
+        $this->builder->fields()->each(function (Field $field) use ($data) {
+            $field->setOriginal($data);
+        });
     }
 
     /**
@@ -1136,8 +1143,8 @@ class Form implements Renderable
             return;
         }
 
+        $this->fillFields($this->model()->toArray());
         $this->callEditing();
-        $this->setFieldOriginalValue();
     }
 
     /**

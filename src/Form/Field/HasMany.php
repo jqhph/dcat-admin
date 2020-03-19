@@ -304,7 +304,7 @@ class HasMany extends Field
      *
      * @return array
      */
-    protected function prepareToSave($input)
+    protected function prepareInputValue($input)
     {
         $form = $this->buildNestedForm($this->column, $this->builder);
 

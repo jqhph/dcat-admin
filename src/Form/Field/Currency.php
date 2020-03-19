@@ -53,7 +53,7 @@ class Currency extends Text
     /**
      * {@inheritdoc}
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return (float) $value;
     }
