@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class Html extends Field
@@ -55,7 +56,9 @@ class Html extends Field
     public function render()
     {
         if ($this->html instanceof \Closure) {
-            $this->html = $this->html->call($this->values(), $this->form);
+            $this->html = Helper::render(
+                $this->html->call($this->values(), $this->form)
+            );
         }
 
         if ($this->plain) {
