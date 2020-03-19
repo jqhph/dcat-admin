@@ -8,7 +8,7 @@ class Email extends Text
 
     public function render()
     {
-        $this->prepend('<i class="ti-email"></i>')
+        $this->prepend('<i class="feather icon-mail"></i>')
             ->defaultAttribute('type', 'email');
 
         return parent::render();

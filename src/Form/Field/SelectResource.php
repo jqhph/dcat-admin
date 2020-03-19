@@ -196,7 +196,7 @@ JS
             $primayDarker = Admin::color()->primaryDarker();
 
             Admin::style(
-                ".select-resource .nav li a{padding:8px 10px;font-size:13px;font-weight:bold;color:{$primayDarker}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}"
+                ".select-resource .nav li{width:100%}.select-resource .nav li a{padding:8px 10px;font-size:13px;color:{$primayDarker}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}"
             );
         }
     }

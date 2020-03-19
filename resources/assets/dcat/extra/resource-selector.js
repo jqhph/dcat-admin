@@ -336,7 +336,7 @@
                     return $input.html(buildOne(tag[Object.keys(tag)[0]]));
                 }
 
-                $input.html(buildOne(opts.selectedOptionsTip.replace(':num', Dcat.helpers.len(tag))));
+                $input.html(buildOne(opts.lang.selected_options.replace(':num', Dcat.helpers.len(tag))));
 
                 $app.html(buildMany(tag));
             }
@@ -347,7 +347,7 @@
                 for (let i in tag) {
                     let strVar = "";
                     strVar += "<li>";
-                    strVar += "<a class='pull-left'>" + tag[i] + "</a><a data-id='" + i + "' class='pull-right red ";
+                    strVar += "<a class='pull-left'>" + tag[i] + "</a><a data-id='" + i + "' class='pull-right red text-danger ";
                     strVar += opts.clearOneClass +"' ><i class='fa fa-close'></i></a>";
                     strVar += "<span class='clearfix'></span></li>";
 

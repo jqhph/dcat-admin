@@ -431,7 +431,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return $input.html(buildOne(tag[Object.keys(tag)[0]]));
         }
 
-        $input.html(buildOne(opts.selectedOptionsTip.replace(':num', Dcat.helpers.len(tag))));
+        $input.html(buildOne(opts.lang.selected_options.replace(':num', Dcat.helpers.len(tag))));
         $app.html(buildMany(tag));
       }
 
@@ -441,7 +441,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         for (var i in tag) {
           var strVar = "";
           strVar += "<li>";
-          strVar += "<a class='pull-left'>" + tag[i] + "</a><a data-id='" + i + "' class='pull-right red ";
+          strVar += "<a class='pull-left'>" + tag[i] + "</a><a data-id='" + i + "' class='pull-right red text-danger ";
           strVar += opts.clearOneClass + "' ><i class='fa fa-close'></i></a>";
           strVar += "<span class='clearfix'></span></li>";
           html.push(strVar);

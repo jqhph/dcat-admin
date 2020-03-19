@@ -332,12 +332,12 @@
                         continue;
                     }
 
-                    var c = Dcat.str.replace(list[i].comment, '"', '');
+                    var c = Dcat.helpers.replace(list[i].comment, '"', '');
                     add_field({
                         name: i,
                         lang: c,
                         type: list[i].type,
-                        default: Dcat.str.replace(list[i].default, '"', ''),
+                        default: Dcat.helpers.replace(list[i].default, '"', ''),
                         comment: c,
                         nullable: list[i].nullable != 'NO',
                     });
@@ -376,23 +376,23 @@
 
             var c;
             if (updated) {
-                c = Dcat.str.replace(updated.comment, '"', '');
+                c = Dcat.helpers.replace(updated.comment, '"', '');
                 add_field({
                     name: 'updated_at',
                     lang: c,
                     type: updated.type,
-                    default: Dcat.str.replace(updated.default, '"', ''),
+                    default: Dcat.helpers.replace(updated.default, '"', ''),
                     comment: c,
                     nullable: updated.nullable != 'NO',
                 });
             }
             if (created) {
-                c = Dcat.str.replace(created.comment, '"', '');
+                c = Dcat.helpers.replace(created.comment, '"', '');
                 add_field({
                     name: 'created_at',
                     lang: c,
                     type: created.type,
-                    default: Dcat.str.replace(created.default, '"', ''),
+                    default: Dcat.helpers.replace(created.default, '"', ''),
                     comment: c,
                     nullable: created.nullable != 'NO',
                 });
@@ -464,8 +464,5 @@
                 return m.toUpperCase()
             });
         }
-
-
     });
-
 </script>

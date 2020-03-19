@@ -32,7 +32,6 @@ use Illuminate\Validation\Validator;
  * @method Field\Id             id($column, $label = '')
  * @method Field\Ip             ip($column, $label = '')
  * @method Field\Url            url($column, $label = '')
- * @method Field\Color          color($column, $label = '')
  * @method Field\Email          email($column, $label = '')
  * @method Field\Mobile         mobile($column, $label = '')
  * @method Field\Slider         slider($column, $label = '')
@@ -72,10 +71,6 @@ use Illuminate\Validation\Validator;
  * @method Field\Timezone       timezone($column, $label = '')
  * @method Field\KeyValue       keyValue($column, $label = '')
  * @method Field\Tel            tel($column, $label = '')
- * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
- * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
- * @method Field\BootstrapMultipleImage bootstrapMultipleImage($column, $label = '')
- * @method Field\BootstrapMultipleFile  bootstrapMultipleFile($column, $label = '')
  */
 class Form implements Renderable
 {

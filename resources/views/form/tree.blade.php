@@ -45,7 +45,7 @@ Dcat.ready(function () {
 
         var i, selected = [];
         for (i in data.selected) {
-            if (Dcat.arr.in(parents, data.selected[i])) { // 过滤父节点
+            if (Dcat.helpers.in(parents, data.selected[i])) { // 过滤父节点
                 continue;
             }
             selected.push(data.selected[i]);

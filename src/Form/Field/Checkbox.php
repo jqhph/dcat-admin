@@ -9,12 +9,12 @@ class Checkbox extends MultipleSelect
     /**
      * @var array
      */
-    protected static $css = [];
+    public static $css = [];
 
     /**
      * @var array
      */
-    protected static $js = [];
+    public static $js = [];
 
     protected $inline = true;
 

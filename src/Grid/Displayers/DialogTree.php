@@ -252,7 +252,7 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
 
             v['state'] = {'disabled': true};
 
-            if (ckall || (value && Dcat.arr.in(value, v[idColumn]))) {
+            if (ckall || (value && Dcat.helpers.in(value, v[idColumn]))) {
                 v['state']['selected'] = true;
             }
 
@@ -266,7 +266,6 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
        
         return nodes;
     }
-    
 });
 JS
         );

@@ -35,6 +35,7 @@ select.form-control:not([multiple=multiple]) {
   padding: 7px 5px;
   margin-bottom: 0;
   font-size: 1rem;
+  text-transform: capitalize;
 }
 @media (min-width: 768px) {
   .form-group .control-label {

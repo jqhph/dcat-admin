@@ -1756,7 +1756,7 @@ dl {
 }
 
 .btn {
-  padding: 0.8rem 1.35rem !important;
+  padding: 0.8rem 1.2rem !important;
   font-size: 0.95rem;
   height: 37.6px;
   line-height: 1.2;
@@ -1894,6 +1894,7 @@ select.form-control:not([multiple=multiple]) {
   padding: 7px 5px;
   margin-bottom: 0;
   font-size: 1rem;
+  text-transform: capitalize;
 }
 
 @media (min-width: 768px) {

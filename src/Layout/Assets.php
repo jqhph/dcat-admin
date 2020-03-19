@@ -112,7 +112,7 @@ class Assets
         ],
         '@jquery.bootstrap-duallistbox' => [
             'js'  => 'dcat-admin/dcat/plugins/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js',
-            'css' => 'dcat-admin/dcat/plugins/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.css',
+            'css' => 'dcat-admin/dcat/plugins/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css',
         ],
         '@number-input' => [
             'js' => 'dcat-admin/dcat/plugins/number-input/bootstrap-number-input.js',
