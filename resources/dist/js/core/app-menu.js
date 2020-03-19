@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1013,14 +1013,14 @@ window.addEventListener('resize', function () {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!****************************************************!*\
   !*** multi ./resources/assets/js/core/app-menu.js ***!
   \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\js\core\app-menu.js */"./resources/assets/js/core/app-menu.js");
+module.exports = __webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\js\core\app-menu.js */"./resources/assets/js/core/app-menu.js");
 
 
 /***/ })

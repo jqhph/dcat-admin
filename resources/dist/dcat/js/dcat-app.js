@@ -107,11 +107,17 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Dcat; });
+/* harmony import */ var _extensions_Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./extensions/Helpers */ "./resources/assets/dcat/js/extensions/Helpers.js");
+/* harmony import */ var _extensions_Translator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./extensions/Translator */ "./resources/assets/dcat/js/extensions/Translator.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
 
 var $ = jQuery,
     _pjaxResponded = false,
@@ -124,6 +130,10 @@ var Dcat = /*#__PURE__*/function () {
   function Dcat(config) {
     _classCallCheck(this, Dcat);
 
+    this.token = null;
+    this.lang = null; // 工具函数
+
+    new _extensions_Helpers__WEBPACK_IMPORTED_MODULE_0__["default"](this);
     this.withConfig(config);
   }
   /**
@@ -308,8 +318,17 @@ var Dcat = /*#__PURE__*/function () {
   }, {
     key: "withLang",
     value: function withLang(lang) {
-      lang && (this.lang = lang);
+      if (lang && _typeof(lang) === 'object') {
+        this.lang = this.Translator(lang);
+      }
+
       return this;
+    } // 语言包
+
+  }, {
+    key: "Translator",
+    value: function Translator(lang) {
+      return new _extensions_Translator__WEBPACK_IMPORTED_MODULE_1__["default"](this, lang);
     }
   }]);
 
@@ -623,23 +642,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Dcat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dcat */ "./resources/assets/dcat/js/Dcat.js");
 /* harmony import */ var _nprogress_NProgress_min__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./nprogress/NProgress.min */ "./resources/assets/dcat/js/nprogress/NProgress.min.js");
 /* harmony import */ var _nprogress_NProgress_min__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nprogress_NProgress_min__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _extensions_Helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./extensions/Helpers */ "./resources/assets/dcat/js/extensions/Helpers.js");
-/* harmony import */ var _extensions_Ajax__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./extensions/Ajax */ "./resources/assets/dcat/js/extensions/Ajax.js");
-/* harmony import */ var _extensions_Toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./extensions/Toastr */ "./resources/assets/dcat/js/extensions/Toastr.js");
-/* harmony import */ var _extensions_SweetAlert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./extensions/SweetAlert2 */ "./resources/assets/dcat/js/extensions/SweetAlert2.js");
-/* harmony import */ var _extensions_RowSelector__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./extensions/RowSelector */ "./resources/assets/dcat/js/extensions/RowSelector.js");
-/* harmony import */ var _extensions_Grid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./extensions/Grid */ "./resources/assets/dcat/js/extensions/Grid.js");
-/* harmony import */ var _extensions_Form__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./extensions/Form */ "./resources/assets/dcat/js/extensions/Form.js");
-/* harmony import */ var _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./extensions/DialogForm */ "./resources/assets/dcat/js/extensions/DialogForm.js");
-/* harmony import */ var _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./extensions/Loading */ "./resources/assets/dcat/js/extensions/Loading.js");
-/* harmony import */ var _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./extensions/PreviewImage */ "./resources/assets/dcat/js/extensions/PreviewImage.js");
-/* harmony import */ var _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./extensions/AssetsLoader */ "./resources/assets/dcat/js/extensions/AssetsLoader.js");
-/* harmony import */ var _extensions_Slider__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./extensions/Slider */ "./resources/assets/dcat/js/extensions/Slider.js");
-/* harmony import */ var _extensions_Color__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./extensions/Color */ "./resources/assets/dcat/js/extensions/Color.js");
-/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
-/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
-/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
-/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
+/* harmony import */ var _extensions_Ajax__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./extensions/Ajax */ "./resources/assets/dcat/js/extensions/Ajax.js");
+/* harmony import */ var _extensions_Toastr__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./extensions/Toastr */ "./resources/assets/dcat/js/extensions/Toastr.js");
+/* harmony import */ var _extensions_SweetAlert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./extensions/SweetAlert2 */ "./resources/assets/dcat/js/extensions/SweetAlert2.js");
+/* harmony import */ var _extensions_RowSelector__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./extensions/RowSelector */ "./resources/assets/dcat/js/extensions/RowSelector.js");
+/* harmony import */ var _extensions_Grid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./extensions/Grid */ "./resources/assets/dcat/js/extensions/Grid.js");
+/* harmony import */ var _extensions_Form__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./extensions/Form */ "./resources/assets/dcat/js/extensions/Form.js");
+/* harmony import */ var _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./extensions/DialogForm */ "./resources/assets/dcat/js/extensions/DialogForm.js");
+/* harmony import */ var _extensions_Loading__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./extensions/Loading */ "./resources/assets/dcat/js/extensions/Loading.js");
+/* harmony import */ var _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./extensions/AssetsLoader */ "./resources/assets/dcat/js/extensions/AssetsLoader.js");
+/* harmony import */ var _extensions_Slider__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./extensions/Slider */ "./resources/assets/dcat/js/extensions/Slider.js");
+/* harmony import */ var _extensions_Color__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./extensions/Color */ "./resources/assets/dcat/js/extensions/Color.js");
+/* harmony import */ var _extensions_Validator__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./extensions/Validator */ "./resources/assets/dcat/js/extensions/Validator.js");
+/* harmony import */ var _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./bootstrappers/Menu */ "./resources/assets/dcat/js/bootstrappers/Menu.js");
+/* harmony import */ var _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./bootstrappers/Footer */ "./resources/assets/dcat/js/bootstrappers/Footer.js");
+/* harmony import */ var _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./bootstrappers/Pjax */ "./resources/assets/dcat/js/bootstrappers/Pjax.js");
+/* harmony import */ var _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./bootstrappers/DataActions */ "./resources/assets/dcat/js/bootstrappers/DataActions.js");
 /*=========================================================================================
   File Name: app.js
   Description: Dcat Admin JS脚本.
@@ -666,49 +684,46 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var win = window,
     $ = jQuery; // 扩展Dcat对象
 
 function extend(Dcat) {
-  // 工具函数
-  new _extensions_Helpers__WEBPACK_IMPORTED_MODULE_2__["default"](Dcat); // ajax处理相关扩展函数
+  // ajax处理相关扩展函数
+  new _extensions_Ajax__WEBPACK_IMPORTED_MODULE_2__["default"](Dcat); // Toastr简化使用函数
 
-  new _extensions_Ajax__WEBPACK_IMPORTED_MODULE_3__["default"](Dcat); // Toastr简化使用函数
+  new _extensions_Toastr__WEBPACK_IMPORTED_MODULE_3__["default"](Dcat); // SweetAlert2简化使用函数
 
-  new _extensions_Toastr__WEBPACK_IMPORTED_MODULE_4__["default"](Dcat); // SweetAlert2简化使用函数
+  new _extensions_SweetAlert2__WEBPACK_IMPORTED_MODULE_4__["default"](Dcat); // Grid相关功能函数
 
-  new _extensions_SweetAlert2__WEBPACK_IMPORTED_MODULE_5__["default"](Dcat); // Grid相关功能函数
+  new _extensions_Grid__WEBPACK_IMPORTED_MODULE_6__["default"](Dcat); // loading效果
 
-  new _extensions_Grid__WEBPACK_IMPORTED_MODULE_7__["default"](Dcat); // loading效果
+  new _extensions_Loading__WEBPACK_IMPORTED_MODULE_9__["default"](Dcat); // 静态资源加载器
 
-  new _extensions_Loading__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // 图片预览功能
+  new _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_10__["default"](Dcat); // 颜色管理
 
-  new _extensions_PreviewImage__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat); // 静态资源加载器
+  new _extensions_Color__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // 表单验证器
 
-  new _extensions_AssetsLoader__WEBPACK_IMPORTED_MODULE_12__["default"](Dcat); // 颜色管理
-
-  new _extensions_Color__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // 加载进度条
+  new _extensions_Validator__WEBPACK_IMPORTED_MODULE_13__["default"](Dcat); // 加载进度条
 
   Dcat.NP = _nprogress_NProgress_min__WEBPACK_IMPORTED_MODULE_1___default.a; // 行选择器
 
   Dcat.RowSelector = function (options) {
-    return new _extensions_RowSelector__WEBPACK_IMPORTED_MODULE_6__["default"](options);
+    return new _extensions_RowSelector__WEBPACK_IMPORTED_MODULE_5__["default"](options);
   }; // ajax表单提交
 
 
   Dcat.Form = function (options) {
-    return new _extensions_Form__WEBPACK_IMPORTED_MODULE_8__["default"](options);
+    return new _extensions_Form__WEBPACK_IMPORTED_MODULE_7__["default"](options);
   }; // 弹窗表单
 
 
   Dcat.DialogForm = function (options) {
-    return new _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_9__["default"](Dcat, options);
+    return new _extensions_DialogForm__WEBPACK_IMPORTED_MODULE_8__["default"](Dcat, options);
   }; // 滑动面板
 
 
   Dcat.Slider = function (options) {
-    return new _extensions_Slider__WEBPACK_IMPORTED_MODULE_13__["default"](Dcat, options);
+    return new _extensions_Slider__WEBPACK_IMPORTED_MODULE_11__["default"](Dcat, options);
   };
 } // 初始化
 
@@ -734,16 +749,16 @@ function listen(Dcat) {
     }); //////////////////////////////////////////////////////////
     // 菜单点击选中效果
 
-    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat); // 返回顶部按钮
+    new _bootstrappers_Menu__WEBPACK_IMPORTED_MODULE_14__["default"](Dcat); // 返回顶部按钮
 
-    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_16__["default"](Dcat);
+    new _bootstrappers_Footer__WEBPACK_IMPORTED_MODULE_15__["default"](Dcat);
   }); // 每个请求都初始化
 
   Dcat.bootingEveryRequest(function () {
     // pjax初始化功能
-    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_17__["default"](Dcat); // data-action 动作绑定(包括删除、批量删除等操作)
+    new _bootstrappers_Pjax__WEBPACK_IMPORTED_MODULE_16__["default"](Dcat); // data-action 动作绑定(包括删除、批量删除等操作)
 
-    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_18__["default"](Dcat);
+    new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_17__["default"](Dcat);
   });
 } // 开始初始化
 
@@ -1916,7 +1931,8 @@ var Helpers = /*#__PURE__*/function () {
   function Helpers(Dcat) {
     _classCallCheck(this, Helpers);
 
-    Dcat.helpers = this; // 延迟触发，消除重复触发
+    Dcat.helpers = this;
+    this.dcat = Dcat; // 延迟触发，消除重复触发
 
     this.debounce = _Debounce__WEBPACK_IMPORTED_MODULE_0__["default"];
   }
@@ -2120,6 +2136,56 @@ var Helpers = /*#__PURE__*/function () {
     key: "random",
     value: function random(len) {
       return Math.random().toString(12).substr(2, len || 16);
+    } // 预览图片
+
+  }, {
+    key: "previewImage",
+    value: function previewImage(src, width, title) {
+      var Dcat = this.dcat,
+          img = new Image(),
+          win = this.isset(window.top) ? top : window,
+          clientWidth = Math.ceil(win.screen.width * 0.6),
+          clientHeight = Math.ceil(win.screen.height * 0.8);
+      img.style.display = 'none';
+      img.style.height = 'auto';
+      img.style.width = width || '100%';
+      img.src = src;
+      document.body.appendChild(img);
+      Dcat.loading();
+
+      img.onload = function () {
+        Dcat.loading(false);
+        var srcw = this.width,
+            srch = this.height,
+            width = srcw > clientWidth ? clientWidth : srcw,
+            height = Math.ceil(width * (srch / srcw));
+        height = height > clientHeight ? clientHeight : height;
+        title = title || src.split('/').pop();
+
+        if (title.length > 50) {
+          title = title.substr(0, 50) + '...';
+        }
+
+        win.layer.open({
+          type: 1,
+          shade: 0.2,
+          title: false,
+          maxmin: false,
+          shadeClose: true,
+          closeBtn: 2,
+          content: $(img),
+          area: [width + 'px', height + 'px'],
+          skin: 'layui-layer-nobg',
+          end: function end() {
+            document.body.removeChild(img);
+          }
+        });
+      };
+
+      img.onerror = function () {
+        Dcat.loading(false);
+        Dcat.warning('预览失败');
+      };
     }
   }]);
 
@@ -2241,88 +2307,6 @@ function extend(Dcat) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (extend);
-
-/***/ }),
-
-/***/ "./resources/assets/dcat/js/extensions/PreviewImage.js":
-/*!*************************************************************!*\
-  !*** ./resources/assets/dcat/js/extensions/PreviewImage.js ***!
-  \*************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PreviewImage; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var PreviewImage = /*#__PURE__*/function () {
-  function PreviewImage(Dcat) {
-    _classCallCheck(this, PreviewImage);
-
-    this.dcat = Dcat;
-    Dcat.previewImage = this.preview;
-  }
-
-  _createClass(PreviewImage, [{
-    key: "preview",
-    value: function preview(src, width, title) {
-      var Dcat = this.dcat,
-          img = new Image(),
-          win = Dcat.helpers.isset(window.top) ? top : window,
-          clientWidth = Math.ceil(win.screen.width * 0.6),
-          clientHeight = Math.ceil(win.screen.height * 0.8);
-      img.style.display = 'none';
-      img.style.height = 'auto';
-      img.style.width = width || '100%';
-      img.src = src;
-      document.body.appendChild(img);
-      Dcat.loading();
-
-      img.onload = function () {
-        Dcat.loading(false);
-        var srcw = this.width,
-            srch = this.height,
-            width = srcw > clientWidth ? clientWidth : srcw,
-            height = Math.ceil(width * (srch / srcw));
-        height = height > clientHeight ? clientHeight : height;
-        title = title || src.split('/').pop();
-
-        if (title.length > 50) {
-          title = title.substr(0, 50) + '...';
-        }
-
-        win.layer.open({
-          type: 1,
-          shade: 0.2,
-          title: false,
-          maxmin: false,
-          shadeClose: true,
-          closeBtn: 2,
-          content: $(img),
-          area: [width + 'px', height + 'px'],
-          skin: 'layui-layer-nobg',
-          end: function end() {
-            document.body.removeChild(img);
-          }
-        });
-      };
-
-      img.onerror = function () {
-        Dcat.loading(false);
-        Dcat.warning('预览失败');
-      };
-    }
-  }]);
-
-  return PreviewImage;
-}();
-
-
 
 /***/ }),
 
@@ -2690,6 +2674,126 @@ var Toastr = /*#__PURE__*/function () {
   }]);
 
   return Toastr;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/dcat/js/extensions/Translator.js":
+/*!***********************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/Translator.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Translator; });
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Translator = /*#__PURE__*/function () {
+  function Translator(Dcat, lang) {
+    _classCallCheck(this, Translator);
+
+    this.dcat = Dcat;
+    this.lang = lang;
+
+    for (var i in lang) {
+      if (!Dcat.helpers.isset(this, i)) {
+        this[i] = lang[i];
+      }
+    }
+  }
+  /**
+   * 翻译
+   *
+   * @example
+   *      this.trans('name')
+   *      this.trans('selected_options', {':num': 18}) // :num options selected
+   *
+   * @param {string} label
+   * @param {object} replace
+   * @returns {*}
+   */
+
+
+  _createClass(Translator, [{
+    key: "trans",
+    value: function trans(label, replace) {
+      var _this = this,
+          helpers = _this.dcat.helpers;
+
+      if (_typeof(_this.lang) !== 'object') {
+        return label;
+      }
+
+      var text = helpers.get(_this.lang, label),
+          i;
+
+      if (!helpers.isset(text)) {
+        return label;
+      }
+
+      if (!replace) {
+        return text;
+      }
+
+      for (i in replace) {
+        text = helpers.replace(text, ':' + i, replace[i]);
+      }
+
+      return text;
+    }
+  }]);
+
+  return Translator;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/dcat/js/extensions/Validator.js":
+/*!**********************************************************!*\
+  !*** ./resources/assets/dcat/js/extensions/Validator.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Validator; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Validator = /*#__PURE__*/function () {
+  function Validator(Dcat) {
+    _classCallCheck(this, Validator);
+
+    Dcat.validator = this;
+  } // 注册自定义验证器
+
+
+  _createClass(Validator, [{
+    key: "extend",
+    value: function extend(rule, callback, message) {
+      var DEFAULTS = $.fn.validator.Constructor.DEFAULTS;
+      DEFAULTS.custom[rule] = callback;
+      DEFAULTS.errors[rule] = message || null;
+    }
+  }]);
+
+  return Validator;
 }();
 
 
@@ -3806,97 +3910,97 @@ eval(function (p, a, c, k, _e, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\js\dcat-app.js */"./resources/assets/dcat/js/dcat-app.js");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\animate\animate.scss */"./resources/assets/sass/plugins/animate/animate.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\calendars\fullcalendar.scss */"./resources/assets/sass/plugins/calendars/fullcalendar.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\context-menu.scss */"./resources/assets/sass/plugins/extensions/context-menu.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\drag-and-drop.scss */"./resources/assets/sass/plugins/extensions/drag-and-drop.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\media-plyr.scss */"./resources/assets/sass/plugins/extensions/media-plyr.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\noui-slider.scss */"./resources/assets/sass/plugins/extensions/noui-slider.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\swiper.scss */"./resources/assets/sass/plugins/extensions/swiper.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\toastr.scss */"./resources/assets/sass/plugins/extensions/toastr.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\file-uploaders\dropzone.scss */"./resources/assets/sass/plugins/file-uploaders/dropzone.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\forms\extended\typeahed.scss */"./resources/assets/sass/plugins/forms/extended/typeahed.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\forms\form-inputs-groups.scss */"./resources/assets/sass/plugins/forms/form-inputs-groups.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\forms\validation\form-validation.scss */"./resources/assets/sass/plugins/forms/validation/form-validation.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\forms\wizard.scss */"./resources/assets/sass/plugins/forms/wizard.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-beat.scss */"./resources/assets/sass/plugins/loaders/animations/ball-beat.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate-multiple.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate-pulse.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-grid-beat.scss */"./resources/assets/sass/plugins/loaders/animations/ball-grid-beat.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-grid-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-grid-pulse.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-rise.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-rise.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-round.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-round.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-sync.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-sync.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-rotate.scss */"./resources/assets/sass/plugins/loaders/animations/ball-rotate.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-multiple.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-random.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-random.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-ripple-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-ripple-multiple.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-ripple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-ripple.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-spin-fade-loader.scss */"./resources/assets/sass/plugins/loaders/animations/ball-spin-fade-loader.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-spin-loader.scss */"./resources/assets/sass/plugins/loaders/animations/ball-spin-loader.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-triangle-trace.scss */"./resources/assets/sass/plugins/loaders/animations/ball-triangle-trace.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-zig-zag-deflect.scss */"./resources/assets/sass/plugins/loaders/animations/ball-zig-zag-deflect.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-zig-zag.scss */"./resources/assets/sass/plugins/loaders/animations/ball-zig-zag.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\cube-transition.scss */"./resources/assets/sass/plugins/loaders/animations/cube-transition.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-pulse-out-rapid.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-pulse-out-rapid.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-pulse-out.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-pulse-out.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-random.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-random.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-spin-fade-loader.scss */"./resources/assets/sass/plugins/loaders/animations/line-spin-fade-loader.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\pacman.scss */"./resources/assets/sass/plugins/loaders/animations/pacman.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\semi-circle-spin.scss */"./resources/assets/sass/plugins/loaders/animations/semi-circle-spin.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\square-spin.scss */"./resources/assets/sass/plugins/loaders/animations/square-spin.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\triangle-skew-spin.scss */"./resources/assets/sass/plugins/loaders/animations/triangle-skew-spin.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\loaders.scss */"./resources/assets/sass/plugins/loaders/loaders.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\pickers\bootstrap-datetimepicker-build.scss */"./resources/assets/sass/plugins/pickers/bootstrap-datetimepicker-build.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\tour\tour.scss */"./resources/assets/sass/plugins/tour/tour.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\ui\coming-soon.scss */"./resources/assets/sass/plugins/ui/coming-soon.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\themes\dark-layout.scss */"./resources/assets/sass/themes/dark-layout.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\themes\semi-dark-layout.scss */"./resources/assets/sass/themes/semi-dark-layout.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\aggrid.scss */"./resources/assets/sass/pages/aggrid.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-chat.scss */"./resources/assets/sass/pages/app-chat.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-ecommerce-details.scss */"./resources/assets/sass/pages/app-ecommerce-details.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-ecommerce-shop.scss */"./resources/assets/sass/pages/app-ecommerce-shop.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-email.scss */"./resources/assets/sass/pages/app-email.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-todo.scss */"./resources/assets/sass/pages/app-todo.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-user.scss */"./resources/assets/sass/pages/app-user.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\authentication.scss */"./resources/assets/sass/pages/authentication.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\card-analytics.scss */"./resources/assets/sass/pages/card-analytics.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\colors.scss */"./resources/assets/sass/pages/colors.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\coming-soon.scss */"./resources/assets/sass/pages/coming-soon.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\dashboard-analytics.scss */"./resources/assets/sass/pages/dashboard-analytics.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\dashboard-ecommerce.scss */"./resources/assets/sass/pages/dashboard-ecommerce.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\data-list-view.scss */"./resources/assets/sass/pages/data-list-view.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\error.scss */"./resources/assets/sass/pages/error.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\faq.scss */"./resources/assets/sass/pages/faq.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\invoice.scss */"./resources/assets/sass/pages/invoice.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\knowledge-base.scss */"./resources/assets/sass/pages/knowledge-base.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\register.scss */"./resources/assets/sass/pages/register.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\search.scss */"./resources/assets/sass/pages/search.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\timeline.scss */"./resources/assets/sass/pages/timeline.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\users.scss */"./resources/assets/sass/pages/users.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\colors\palette-gradient.scss */"./resources/assets/sass/core/colors/palette-gradient.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\colors\palette-noui.scss */"./resources/assets/sass/core/colors/palette-noui.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\colors\palette-variables.scss */"./resources/assets/sass/core/colors/palette-variables.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\menu\menu-types\horizontal-menu.scss */"./resources/assets/sass/core/menu/menu-types/horizontal-menu.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\menu\menu-types\vertical-menu.scss */"./resources/assets/sass/core/menu/menu-types/vertical-menu.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\menu\menu-types\vertical-overlay-menu.scss */"./resources/assets/sass/core/menu/menu-types/vertical-overlay-menu.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\mixins\alert.scss */"./resources/assets/sass/core/mixins/alert.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\mixins\hex2rgb.scss */"./resources/assets/sass/core/mixins/hex2rgb.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\mixins\main-menu-mixin.scss */"./resources/assets/sass/core/mixins/main-menu-mixin.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\mixins\transitions.scss */"./resources/assets/sass/core/mixins/transitions.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\sass\dcat-app.scss */"./resources/assets/dcat/sass/dcat-app.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\extra\markdown.scss */"./resources/assets/dcat/extra/markdown.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\bootstrap.scss */"./resources/assets/sass/bootstrap.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\bootstrap-extended.scss */"./resources/assets/sass/bootstrap-extended.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\colors.scss */"./resources/assets/sass/colors.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\components.scss */"./resources/assets/sass/components.scss");
-__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\custom-rtl.scss */"./resources/assets/sass/custom-rtl.scss");
-module.exports = __webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\custom-laravel.scss */"./resources/assets/sass/custom-laravel.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\js\dcat-app.js */"./resources/assets/dcat/js/dcat-app.js");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\animate\animate.scss */"./resources/assets/sass/plugins/animate/animate.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\calendars\fullcalendar.scss */"./resources/assets/sass/plugins/calendars/fullcalendar.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\context-menu.scss */"./resources/assets/sass/plugins/extensions/context-menu.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\drag-and-drop.scss */"./resources/assets/sass/plugins/extensions/drag-and-drop.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\media-plyr.scss */"./resources/assets/sass/plugins/extensions/media-plyr.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\noui-slider.scss */"./resources/assets/sass/plugins/extensions/noui-slider.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\swiper.scss */"./resources/assets/sass/plugins/extensions/swiper.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\toastr.scss */"./resources/assets/sass/plugins/extensions/toastr.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\file-uploaders\dropzone.scss */"./resources/assets/sass/plugins/file-uploaders/dropzone.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\forms\extended\typeahed.scss */"./resources/assets/sass/plugins/forms/extended/typeahed.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\forms\form-inputs-groups.scss */"./resources/assets/sass/plugins/forms/form-inputs-groups.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\forms\validation\form-validation.scss */"./resources/assets/sass/plugins/forms/validation/form-validation.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\forms\wizard.scss */"./resources/assets/sass/plugins/forms/wizard.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-beat.scss */"./resources/assets/sass/plugins/loaders/animations/ball-beat.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate-multiple.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate-pulse.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-grid-beat.scss */"./resources/assets/sass/plugins/loaders/animations/ball-grid-beat.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-grid-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-grid-pulse.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-rise.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-rise.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-round.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-round.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-sync.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-sync.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-rotate.scss */"./resources/assets/sass/plugins/loaders/animations/ball-rotate.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-multiple.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-random.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-random.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-ripple-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-ripple-multiple.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-ripple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-ripple.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-spin-fade-loader.scss */"./resources/assets/sass/plugins/loaders/animations/ball-spin-fade-loader.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-spin-loader.scss */"./resources/assets/sass/plugins/loaders/animations/ball-spin-loader.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-triangle-trace.scss */"./resources/assets/sass/plugins/loaders/animations/ball-triangle-trace.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-zig-zag-deflect.scss */"./resources/assets/sass/plugins/loaders/animations/ball-zig-zag-deflect.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-zig-zag.scss */"./resources/assets/sass/plugins/loaders/animations/ball-zig-zag.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\cube-transition.scss */"./resources/assets/sass/plugins/loaders/animations/cube-transition.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-pulse-out-rapid.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-pulse-out-rapid.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-pulse-out.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-pulse-out.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-random.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-random.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-spin-fade-loader.scss */"./resources/assets/sass/plugins/loaders/animations/line-spin-fade-loader.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\pacman.scss */"./resources/assets/sass/plugins/loaders/animations/pacman.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\semi-circle-spin.scss */"./resources/assets/sass/plugins/loaders/animations/semi-circle-spin.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\square-spin.scss */"./resources/assets/sass/plugins/loaders/animations/square-spin.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\triangle-skew-spin.scss */"./resources/assets/sass/plugins/loaders/animations/triangle-skew-spin.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\loaders.scss */"./resources/assets/sass/plugins/loaders/loaders.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\pickers\bootstrap-datetimepicker-build.scss */"./resources/assets/sass/plugins/pickers/bootstrap-datetimepicker-build.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\tour\tour.scss */"./resources/assets/sass/plugins/tour/tour.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\ui\coming-soon.scss */"./resources/assets/sass/plugins/ui/coming-soon.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\themes\dark-layout.scss */"./resources/assets/sass/themes/dark-layout.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\themes\semi-dark-layout.scss */"./resources/assets/sass/themes/semi-dark-layout.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\aggrid.scss */"./resources/assets/sass/pages/aggrid.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-chat.scss */"./resources/assets/sass/pages/app-chat.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-ecommerce-details.scss */"./resources/assets/sass/pages/app-ecommerce-details.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-ecommerce-shop.scss */"./resources/assets/sass/pages/app-ecommerce-shop.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-email.scss */"./resources/assets/sass/pages/app-email.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-todo.scss */"./resources/assets/sass/pages/app-todo.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-user.scss */"./resources/assets/sass/pages/app-user.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\authentication.scss */"./resources/assets/sass/pages/authentication.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\card-analytics.scss */"./resources/assets/sass/pages/card-analytics.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\colors.scss */"./resources/assets/sass/pages/colors.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\coming-soon.scss */"./resources/assets/sass/pages/coming-soon.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\dashboard-analytics.scss */"./resources/assets/sass/pages/dashboard-analytics.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\dashboard-ecommerce.scss */"./resources/assets/sass/pages/dashboard-ecommerce.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\data-list-view.scss */"./resources/assets/sass/pages/data-list-view.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\error.scss */"./resources/assets/sass/pages/error.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\faq.scss */"./resources/assets/sass/pages/faq.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\invoice.scss */"./resources/assets/sass/pages/invoice.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\knowledge-base.scss */"./resources/assets/sass/pages/knowledge-base.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\register.scss */"./resources/assets/sass/pages/register.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\search.scss */"./resources/assets/sass/pages/search.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\timeline.scss */"./resources/assets/sass/pages/timeline.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\users.scss */"./resources/assets/sass/pages/users.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\colors\palette-gradient.scss */"./resources/assets/sass/core/colors/palette-gradient.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\colors\palette-noui.scss */"./resources/assets/sass/core/colors/palette-noui.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\colors\palette-variables.scss */"./resources/assets/sass/core/colors/palette-variables.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\menu\menu-types\horizontal-menu.scss */"./resources/assets/sass/core/menu/menu-types/horizontal-menu.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\menu\menu-types\vertical-menu.scss */"./resources/assets/sass/core/menu/menu-types/vertical-menu.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\menu\menu-types\vertical-overlay-menu.scss */"./resources/assets/sass/core/menu/menu-types/vertical-overlay-menu.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\mixins\alert.scss */"./resources/assets/sass/core/mixins/alert.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\mixins\hex2rgb.scss */"./resources/assets/sass/core/mixins/hex2rgb.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\mixins\main-menu-mixin.scss */"./resources/assets/sass/core/mixins/main-menu-mixin.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\mixins\transitions.scss */"./resources/assets/sass/core/mixins/transitions.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\sass\dcat-app.scss */"./resources/assets/dcat/sass/dcat-app.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\extra\markdown.scss */"./resources/assets/dcat/extra/markdown.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\bootstrap.scss */"./resources/assets/sass/bootstrap.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\bootstrap-extended.scss */"./resources/assets/sass/bootstrap-extended.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\colors.scss */"./resources/assets/sass/colors.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\components.scss */"./resources/assets/sass/components.scss");
+__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\custom-rtl.scss */"./resources/assets/sass/custom-rtl.scss");
+module.exports = __webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\custom-laravel.scss */"./resources/assets/sass/custom-laravel.scss");
 
 
 /***/ })

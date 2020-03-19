@@ -74,6 +74,9 @@ class Assets
             'js'  => 'dcat-admin/dcat/plugins/nestable/jquery.nestable.min.js',
             'css' => 'dcat-admin/dcat/plugins/nestable/nestable.css',
         ],
+        '@validator' => [
+            'js' => 'dcat-admin/dcat/plugins/bootstrap-validator/validator.min.js',
+        ],
         '@select2' => [
             'js'  => 'dcat-admin/vendors/js/forms/select/select2.full.min.js',
             'css' => 'dcat-admin/vendors/css/forms/select/select2.min.css',
@@ -97,7 +100,7 @@ class Assets
         '@webuploader' => [
             'js' => [
                 'dcat-admin/dcat/plugins/webuploader/webuploader.min.js',
-                'dcat-admin/dcat/plugins/dcat-admin/upload.min.js',
+                'dcat-admin/dcat/extra/upload.js',
             ],
             'css' => 'dcat-admin/dcat/plugins/webuploader/webuploader.min.css',
         ],
@@ -208,11 +211,12 @@ class Assets
      * @var array
      */
     protected $baseJs = [
-        'menu'   => '@menu',
-        'app'    => '@app',
-        'toastr' => '@toastr',
-        'pjax'   => '@pjax',
-        'layer'  => '@layer',
+        'menu'      => '@menu',
+        'app'       => '@app',
+        'toastr'    => '@toastr',
+        'pjax'      => '@pjax',
+        'validator' => '@validator',
+        'layer'     => '@layer',
     ];
 
     /**

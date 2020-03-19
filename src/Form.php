@@ -81,10 +81,6 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Timezone               timezone($column, $label = '')
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
- * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
- * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
- * @method Field\BootstrapMultipleImage bootstrapMultipleImage($column, $label = '')
- * @method Field\BootstrapMultipleFile  bootstrapMultipleFile($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -159,11 +155,6 @@ class Form implements Renderable
         'timezone'       => Field\Timezone::class,
         'keyValue'       => Field\KeyValue::class,
         'tel'            => Field\Tel::class,
-
-        'bootstrapFile'          => Field\BootstrapFile::class,
-        'bootstrapImage'         => Field\BootstrapImage::class,
-        'bootstrapMultipleFile'  => Field\BootstrapMultipleFile::class,
-        'bootstrapMultipleImage' => Field\BootstrapMultipleImage::class,
     ];
 
     /**

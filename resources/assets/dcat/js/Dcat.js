@@ -1,4 +1,7 @@
 
+import Helpers from './extensions/Helpers'
+import Translator from './extensions/Translator'
+
 let $ = jQuery,
     pjaxResponded = false,
     bootingCallbacks = [],
@@ -8,6 +11,12 @@ let $ = jQuery,
 
 export default class Dcat {
     constructor(config) {
+        this.token = null;
+        this.lang = null;
+
+        // 工具函数
+        new Helpers(this);
+
         this.withConfig(config);
     }
 
@@ -175,8 +184,15 @@ export default class Dcat {
     }
 
     withLang(lang) {
-        lang && (this.lang = lang);
+        if (lang && typeof lang === 'object') {
+            this.lang = this.Translator(lang);
+        }
 
         return this
+    }
+
+    // 语言包
+    Translator(lang) {
+        return new Translator(this, lang);
     }
 }

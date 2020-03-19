@@ -11,7 +11,6 @@
 import Dcat from './Dcat'
 
 import NProgress from './nprogress/NProgress.min'
-import Helpers from './extensions/Helpers'
 import Ajax from './extensions/Ajax'
 import Toastr from './extensions/Toastr'
 import SweetAlert2 from './extensions/SweetAlert2'
@@ -20,10 +19,10 @@ import Grid from './extensions/Grid'
 import Form from './extensions/Form'
 import DialogForm from './extensions/DialogForm'
 import Loading from './extensions/Loading'
-import PreviewImage from './extensions/PreviewImage'
 import AssetsLoader from './extensions/AssetsLoader'
 import Slider from './extensions/Slider'
 import Color from './extensions/Color'
+import Validator from './extensions/Validator'
 
 import Menu from './bootstrappers/Menu'
 import Footer from './bootstrappers/Footer'
@@ -35,8 +34,6 @@ let win = window,
 
 // 扩展Dcat对象
 function extend (Dcat) {
-    // 工具函数
-    new Helpers(Dcat);
     // ajax处理相关扩展函数
     new Ajax(Dcat);
     // Toastr简化使用函数
@@ -47,12 +44,12 @@ function extend (Dcat) {
     new Grid(Dcat);
     // loading效果
     new Loading(Dcat);
-    // 图片预览功能
-    new PreviewImage(Dcat);
     // 静态资源加载器
     new AssetsLoader(Dcat);
     // 颜色管理
     new Color(Dcat);
+    // 表单验证器
+    new Validator(Dcat);
 
     // 加载进度条
     Dcat.NP = NProgress;
