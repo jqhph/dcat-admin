@@ -1,6 +1,8 @@
 <div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <div for="{{ $id }}" class="{{$viewClass['label']}} control-label">
+        <span>{!! $label !!}</span>
+    </div>
 
     <div class="{{$viewClass['field']}}">
 
@@ -9,15 +11,13 @@
         <div class="input-group">
 
             @if ($prepend)
-            <span class="input-group-addon">{!! $prepend !!}</span>
+                <span class="input-group-prepend"><span class="input-group-text bg-white">{!! $prepend !!}</span></span>
             @endif
-
             <input {!! $attributes !!} />
 
             @if ($append)
-                <span class="input-group-addon clearfix">{!! $append !!}</span>
+                <span class="input-group-append">{!! $append !!}</span>
             @endif
-
         </div>
 
         @include('admin::form.help-block')

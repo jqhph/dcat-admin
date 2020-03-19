@@ -297,7 +297,8 @@
 	-moz-transition: 200ms ease-out;
 	-o-transition: 200ms ease-out;
 	-ms-transition: 200ms ease-out;
-	transition: 200ms ease-out
+	transition: 200ms ease-out;
+	margin-bottom: 0;
 }
 
 .web-uploader .filelist li img {
@@ -433,7 +434,7 @@
 .web-uploader .statusBar .info {
 	display: inline-block;
 	font-size: 14px;
-	color: #666
+	color: #666!important;
 }
 
 .web-uploader .statusBar .btns {
@@ -453,9 +454,7 @@
 }
 
 .web-uploader .placeholder:before {
-	/*font-family: FontAwesome;*/
-	/*content: "\f0ee";*/
 	font-size: 80px;
-	font-family: themify;
-	content: "\e6b2";
+	font-family: feather;
+	content: "\e8e1";
 }

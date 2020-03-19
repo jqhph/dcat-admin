@@ -33,10 +33,13 @@ class Form {
 
         _this.originalValues = {};
         _this.$form = $(_this.options.form).first();
+
+        _this.submit();
     }
 
-    _execute() {
-        let _this = this,
+    submit() {
+        let Dcat = window.Dcat,
+            _this = this,
             $form = _this.$form,
             options = _this.options;
 
@@ -44,12 +47,12 @@ class Form {
         removeFieldError(_this);
 
         $form.ajaxSubmit({
-            beforeSubmit: function (fields, $form, options) {
-                if (options.before(fields, $form, options, _this) === false) {
+            beforeSubmit: function (fields, $form, _opt) {
+                if (options.before(fields, $form, _opt, _this) === false) {
                     return false;
                 }
 
-                if (fire(formCallbacks.before, fields, $form, options, _this) === false) {
+                if (fire(formCallbacks.before, fields, $form, _opt, _this) === false) {
                     return false;
                 }
 

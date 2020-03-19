@@ -1750,9 +1750,9 @@ html body .content .content-wrapper {
 }
 
 .btn {
-  padding: 0.75rem 1.35rem !important;
+  padding: 0.8rem 1.35rem !important;
   font-size: 0.95rem;
-  height: 36px;
+  height: 37.6px;
   line-height: 1.2;
   border-radius: 0.2rem;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
@@ -1778,7 +1778,7 @@ html body .content .content-wrapper {
 .btn-group-sm > .btn {
   padding: 0.6rem 1rem !important;
   font-size: 0.6rem;
-  line-height: 1.2;
+  line-height: 1.1;
   height: 30px;
 }
 
@@ -1871,6 +1871,29 @@ select.form-control:not([multiple=multiple]) {
 .form-control-sm {
   height: 30px;
   line-height: 13px;
+}
+
+.input-group-text {
+  padding: 0.7rem 0.9rem;
+}
+
+.help-block {
+  display: block;
+  margin-top: 7px;
+  margin-bottom: 10px;
+  color: #737373;
+}
+
+.control-label {
+  padding-top: 7px;
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .form-group .control-label {
+    text-align: right;
+  }
 }
 
 .input-group-addon {
@@ -2417,6 +2440,69 @@ table.dataTable.complex-headers tfoot td {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   border-radius: 0.4rem;
   margin: 7px 0;
+}
+
+.box {
+  position: relative;
+  border-radius: 0.35rem;
+  background: #ffffff;
+  border-top: 2px solid #d9d9d9;
+  margin-bottom: 10px;
+  width: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  display: flex;
+}
+
+.box-header {
+  padding: 13px;
+  display: inherit;
+  justify-content: space-between;
+}
+
+.box-header h3,
+.box-header .h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.box-header.with-border {
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.box,
+.panel {
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+
+.box-shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.box.box-solid {
+  border-top: 0;
+}
+
+.box.box-solid.box-default {
+  border: 1px solid #d9d9d9;
+}
+
+.box-body {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding: 10px;
+}
+
+.box-footer {
+  display: inherit;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-top: 1px solid #f4f4f4;
+  padding: 10px;
+  background-color: #fff;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {

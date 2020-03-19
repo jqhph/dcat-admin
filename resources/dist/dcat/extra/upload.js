@@ -257,11 +257,11 @@
           $btns;
 
       if (showImg) {
-        $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '" style="margin:7px">' + '<p class="file-type">' + (file.ext.toUpperCase() || 'FILE') + '</p>' + '<p class="imgWrap "></p>' + '<p class="title" style="">' + file.name + '</p>' + '<p class="title" style=\'margin-bottom:12px;\'>(<b>' + size + '</b>)</p>' + '</li>');
-        $btns = $('<div class="file-panel">' + '<a class=\'btn btn-xs btn-default\' data-file-act="cancel"><i class="fa fa-close red-dark" style=\'font-size:13px\'></i></a>' + '<a class=\'btn btn-xs btn-default\' data-file-act="delete" style="display: none"><i class="ti-trash red-dark" style=\'font-size:13px\'></i></a>' + '<a class=\'btn btn-xs btn-default\' data-file-act="preview" ><i class="glyphicon glyphicon-zoom-in"></i></a>' + '</div>').appendTo($li);
+        $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '" style="margin:7px">' + '<p class="file-type">' + (file.ext.toUpperCase() || 'FILE') + '</p>' + '<p class="imgWrap "></p>' + '<p class="title" style="">' + file.name + '</p>' + '<p class="title" style=\'margin-bottom:20px;\'>(<b>' + size + '</b>)</p>' + '</li>');
+        $btns = $('<div class="file-panel">' + '<a class=\'btn btn-sm btn-white\' data-file-act="cancel"><i class="fa fa-close red-dark" style=\'font-size:13px\'></i></a>' + '<a class=\'btn btn-sm btn-white\' data-file-act="delete" style="display: none"><i class="feather icon-trash red-dark" style=\'font-size:13px\'></i></a>' + '<a class=\'btn btn-sm btn-white\' data-file-act="preview" ><i class="feather icon-zoom-in"></i></a>' + '</div>').appendTo($li);
       } else {
-        $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '">' + '<p class="title" style="display:block"><i class=\'ti-check green _success\' style=\'font-weight:bold;font-size:17px;display:none\'></i>' + file.name + ' (' + size + ')</p>' + '</li>');
-        $btns = $('<span data-file-act="cancel" class="_act" style="font-size:13px"><i class=\'ti-close red-dark\'></i></span>' + '<span data-file-act="delete" class="_act" style="display:none"><i class=\'ti-trash red-dark\'></i></span>').appendTo($li);
+        $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '">' + '<p class="title" style="display:block"><i class=\'feather icon-check green _success\' style=\'font-weight:bold;font-size:17px;display:none\'></i>' + file.name + ' (' + size + ')</p>' + '</li>');
+        $btns = $('<span data-file-act="cancel" class="_act" style="font-size:13px"><i class=\'feather icon-x red-dark\'></i></span>' + '<span data-file-act="delete" class="_act" style="display:none"><i class=\'feather icon-trash red-dark\'></i></span>').appendTo($li);
       }
 
       var $wrap = $li.find('p.imgWrap'),
@@ -357,7 +357,7 @@
           $info.remove(); // $prgress.css('display', 'block');
         } else if (cur === 'complete') {
           if (showImg) {
-            $li.append('<span class="success"><em></em><i class="ti-check"></i></span>');
+            $li.append('<span class="success"><em></em><i class="feather icon-check"></i></span>');
           } else {
             $li.find('._success').show();
           }
@@ -743,19 +743,19 @@
         html += '<p class="_act" data-file-act=\'delete\' data-id="' + file.serverId + '"><i class=\'ti-trash red-dark\'></i></p>';
       }
 
-      html += "<p class='title' style=''><i class='ti-check green _success' style='font-weight:bold;font-size:17px;display:none'></i>";
+      html += "<p class='title' style=''><i class='feather icon-check' style='color:white;font-weight:bold;font-size:17px;display:none'></i>";
       html += file.serverPath;
       html += "</p>";
 
       if (showImg) {
-        html += "<p class='title' style='margin-bottom:12px;'>&nbsp;</p>";
+        html += "<p class='title' style='margin-bottom:20px;'>&nbsp;</p>";
         html += "<div class='file-panel' >";
 
         if (!opts.disabled) {
-          html += "<a class='btn btn-xs btn-default' data-file-act='deleteurl' data-id='" + file.serverId + "'><i class='ti-trash red-dark' style='font-size:13px'></i></a>";
+          html += "<a class='btn btn-sm btn-white' data-file-act='deleteurl' data-id='" + file.serverId + "'><i class='feather icon-trash red-dark' style='font-size:13px'></i></a>";
         }
 
-        html += "<a class='btn btn-xs btn-default' data-file-act='preview' data-url='" + file.serverUrl + "' ><i class='glyphicon glyphicon-zoom-in'></i></a>";
+        html += "<a class='btn btn-sm btn-white' data-file-act='preview' data-url='" + file.serverUrl + "' ><i class='feather icon-zoom-in'></i></a>";
         html += "</div>";
       }
 

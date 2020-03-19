@@ -6,7 +6,7 @@ class Password extends Text
 {
     public function render()
     {
-        $this->prepend('<i class="ti-eye"></i>')
+        $this->prepend('<i class="feather icon-eye"></i>')
             ->defaultAttribute('type', 'password');
 
         return parent::render();
