@@ -1284,8 +1284,11 @@ var DialogForm = /*#__PURE__*/function () {
       success: nullFun,
       // 保存失败回调
       error: nullFun
-    }, options);
-    _this.$form = null;
+    }, options); // 表单
+
+    _this.$form = null; // 目标按钮
+
+    _this.$target = null;
     _this._dialog = w.layer;
     _this._counter = 1;
     _this._idx = {};
@@ -1300,21 +1303,23 @@ var DialogForm = /*#__PURE__*/function () {
     key: "_execute",
     value: function _execute(options) {
       var _this = this,
-          defUrl = options.defaultUrl,
-          $btn;
+          defUrl = options.defaultUrl;
 
       !options.buttonSelector || $(options.buttonSelector).off('click').click(function () {
-        $btn = $(this);
-        var counter = $btn.attr('counter'),
+        _this.$target = $(this);
+
+        var counter = _this.$target.attr('counter'),
             url;
 
         if (!counter) {
           counter = _this._counter;
-          $btn.attr('counter', counter);
+
+          _this.$target.attr('counter', counter);
+
           _this._counter++;
         }
 
-        url = $btn.data('url') || defUrl; // 给弹窗页面链接追加参数
+        url = _this.$target.data('url') || defUrl; // 给弹窗页面链接追加参数
 
         if (url.indexOf('?') === -1) {
           url += '?' + options.query + '=1';
@@ -1322,16 +1327,18 @@ var DialogForm = /*#__PURE__*/function () {
           url += '&' + options.query + '=1';
         }
 
-        _this._build($btn, url, counter);
+        _this._build(url, counter);
       });
       options.buttonSelector || setTimeout(function () {
-        _this._build($btn, defUrl, _this._counter);
+        _this._build(defUrl, _this._counter);
       }, 400);
-    }
+    } // 构建表单
+
   }, {
     key: "_build",
-    value: function _build($btn, url, counter) {
-      var _this = this;
+    value: function _build(url, counter) {
+      var _this = this,
+          $btn = _this.$target;
 
       if (!url || _this.isLoading) {
         return;
@@ -1353,8 +1360,9 @@ var DialogForm = /*#__PURE__*/function () {
         _this._destroy(counter);
       });
       _this.isLoading = 1;
-      $btn && $btn.button('loading');
-      $.get(url, function (tpl) {
+      $btn && $btn.button('loading'); // 请求表单内容
+
+      $.get(url, function (template) {
         _this.isLoading = 0;
 
         if ($btn) {
@@ -1364,31 +1372,33 @@ var DialogForm = /*#__PURE__*/function () {
           }, 50);
         }
 
-        _this._popup($btn, tpl, counter);
+        _this._popup(template, counter);
       });
-    }
+    } // 弹出弹窗
+
   }, {
     key: "_popup",
-    value: function _popup($btn, tpl, counter) {
+    value: function _popup(template, counter) {
       var _this = this,
-          options = _this.options;
+          options = _this.options; // 加载js代码
 
-      tpl = Dcat.assets.filterScriptsAndLoad(tpl).render();
-      var $template = $(tpl),
-          btns = [options.lang.submit],
+
+      template = Dcat.assets.filterScriptsAndLoad(template).render();
+      var btns = [options.lang.submit],
           dialogOpts = {
         type: 1,
         area: function (v) {
+          // 屏幕小于800则最大化展示
           if (w.screen.width <= 800) {
             return ['100%', '100%'];
           }
 
           return v;
         }(options.area),
-        content: tpl,
+        content: template,
         title: options.title,
         yes: function yes() {
-          _this._submit($btn, $template);
+          _this._submit();
         },
         cancel: function cancel() {
           if (options.forceRefresh) {
@@ -1417,7 +1427,8 @@ var DialogForm = /*#__PURE__*/function () {
       _this._idx[counter] = _this._dialog.open(dialogOpts);
       _this._dialogs[counter] = w.$('#layui-layer' + _this._idx[counter]);
       _this.$form = _this._dialogs[counter].find('form').first();
-    }
+    } // 销毁弹窗
+
   }, {
     key: "_destroy",
     value: function _destroy(counter) {
@@ -1427,13 +1438,14 @@ var DialogForm = /*#__PURE__*/function () {
 
       dialogs[counter] && dialogs[counter].remove();
       dialogs[counter] = null;
-    }
+    } // 提交表单
+
   }, {
     key: "_submit",
-    value: function _submit($btn) {
+    value: function _submit() {
       var _this = this,
           options = _this.options,
-          counter = $btn.attr('counter');
+          counter = _this.$target.attr('counter');
 
       if (_this.isSubmitting) {
         return;
@@ -1443,6 +1455,7 @@ var DialogForm = /*#__PURE__*/function () {
         form: _this.$form,
         disableRedirect: true,
         before: function before() {
+          // 验证表单
           _this.$form.validator('validate');
 
           if (_this.$form.find('.has-error').length > 0) {

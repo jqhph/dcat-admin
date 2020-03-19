@@ -32,7 +32,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .control-label {
-  padding-top: 7px;
+  padding: 7px 5px;
   margin-bottom: 0;
   font-size: 1rem;
 }
@@ -41,6 +41,17 @@ select.form-control:not([multiple=multiple]) {
     text-align: right;
   }
 }
+
+.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
+  color: $red-darker;
+}
+
+.control-label.asterisk:before {
+  content: "*";
+  font-weight: bold;
+  color: $red-darker;
+}
+
 // --------------------- input-group-addon ---------------------
 .input-group-addon {
   width: 1%;

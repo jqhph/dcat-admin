@@ -35,7 +35,10 @@ export default class DialogForm {
             error: nullFun,
         }, options);
 
+        // 表单
         _this.$form = null;
+        // 目标按钮
+        _this.$target = null;
         _this._dialog = w.layer;
         _this._counter = 1;
         _this._idx = {};
@@ -48,23 +51,22 @@ export default class DialogForm {
 
     _execute(options) {
         let _this = this,
-            defUrl = options.defaultUrl,
-            $btn;
+            defUrl = options.defaultUrl;
 
         (! options.buttonSelector) || $(options.buttonSelector).off('click').click(function () {
-            $btn = $(this);
+            _this.$target = $(this);
 
-            let counter = $btn.attr('counter'), url;
+            let counter = _this.$target.attr('counter'), url;
 
             if (! counter) {
                 counter = _this._counter;
 
-                $btn.attr('counter', counter);
+                _this.$target.attr('counter', counter);
 
                 _this._counter++;
             }
 
-            url = $btn.data('url') || defUrl;  // 给弹窗页面链接追加参数
+            url = _this.$target.data('url') || defUrl;  // 给弹窗页面链接追加参数
 
             if (url.indexOf('?') === -1) {
                 url += '?' + options.query + '=1'
@@ -72,16 +74,18 @@ export default class DialogForm {
                 url += '&' + options.query + '=1'
             }
 
-            _this._build($btn, url, counter);
+            _this._build(url, counter);
         });
 
         options.buttonSelector || setTimeout(function () {
-            _this._build($btn, defUrl, _this._counter)
+            _this._build(defUrl, _this._counter)
         }, 400);
     }
 
-    _build($btn, url, counter) {
-        let _this = this;
+    // 构建表单
+    _build(url, counter) {
+        let _this = this,
+            $btn = _this.$target;
 
         if (! url || _this.isLoading) {
             return;
@@ -107,7 +111,8 @@ export default class DialogForm {
 
         $btn && $btn.button('loading');
 
-        $.get(url, function (tpl) {
+        // 请求表单内容
+        $.get(url, function (template) {
             _this.isLoading = 0;
 
             if ($btn) {
@@ -118,31 +123,33 @@ export default class DialogForm {
                 }, 50);
             }
 
-            _this._popup($btn, tpl, counter);
+            _this._popup(template, counter);
         });
     }
 
-    _popup($btn, tpl, counter) {
+    // 弹出弹窗
+    _popup(template, counter) {
         let _this = this,
             options = _this.options;
 
-        tpl = Dcat.assets.filterScriptsAndLoad(tpl).render();
+        // 加载js代码
+        template = Dcat.assets.filterScriptsAndLoad(template).render();
         
-        let $template = $(tpl),
-            btns = [options.lang.submit],
+        let btns = [options.lang.submit],
             dialogOpts = {
                 type: 1,
                 area: (function (v) {
+                        // 屏幕小于800则最大化展示
                         if (w.screen.width <= 800) {
                             return ['100%', '100%',];
                         }
     
                         return v;
                     })(options.area),
-                content: tpl,
+                content: template,
                 title: options.title,
                 yes: function () {
-                    _this._submit($btn, $template)
+                    _this._submit()
                 },
                 cancel: function () {
                     if (options.forceRefresh) { // 是否强制刷新
@@ -171,6 +178,7 @@ export default class DialogForm {
         _this.$form = _this._dialogs[counter].find('form').first();
     }
 
+    // 销毁弹窗
     _destroy(counter) {
         let dialogs = this._dialogs;
 
@@ -181,10 +189,11 @@ export default class DialogForm {
         dialogs[counter] = null;
     }
 
-    _submit($btn) {
+    // 提交表单
+    _submit() {
         let _this = this, 
             options = _this.options,
-            counter = $btn.attr('counter');
+            counter = _this.$target.attr('counter');
 
         if (_this.isSubmitting) {
             return;
@@ -194,6 +203,7 @@ export default class DialogForm {
             form: _this.$form,
             disableRedirect: true,
             before: function () {
+                // 验证表单
                 _this.$form.validator('validate');
 
                 if (_this.$form.find('.has-error').length > 0) {

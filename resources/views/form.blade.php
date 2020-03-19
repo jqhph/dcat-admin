@@ -4,7 +4,7 @@
     <div class="pull-right">{!! $form->renderTools() !!}</div>
 </div>
 @endif
-<div class="box-body" style="padding:{{ $tabObj->isEmpty() ? '18px 10px 12px' : '0'}}">
+<div class="box-body" style="padding:{{ $tabObj->isEmpty() ? '18px 0 12px' : '0'}}">
     @if(!$tabObj->isEmpty())
         @include('admin::form.tab', compact('tabObj', 'form'))
     @else

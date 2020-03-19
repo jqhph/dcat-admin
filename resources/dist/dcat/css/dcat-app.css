@@ -1885,7 +1885,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .control-label {
-  padding-top: 7px;
+  padding: 7px 5px;
   margin-bottom: 0;
   font-size: 1rem;
 }
@@ -1894,6 +1894,25 @@ select.form-control:not([multiple=multiple]) {
   .form-group .control-label {
     text-align: right;
   }
+}
+
+.has-error .checkbox,
+.has-error .checkbox-inline,
+.has-error .control-label,
+.has-error .help-block,
+.has-error .radio,
+.has-error .radio-inline,
+.has-error.checkbox label,
+.has-error.checkbox-inline label,
+.has-error.radio label,
+.has-error.radio-inline label {
+  color: #bd4147;
+}
+
+.control-label.asterisk:before {
+  content: "*";
+  font-weight: bold;
+  color: #bd4147;
 }
 
 .input-group-addon {
