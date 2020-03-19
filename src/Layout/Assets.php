@@ -102,7 +102,7 @@ class Assets
                 'dcat-admin/dcat/plugins/webuploader/webuploader.min.js',
                 'dcat-admin/dcat/extra/upload.js',
             ],
-            'css' => 'dcat-admin/dcat/plugins/webuploader/webuploader.min.css',
+            'css' => 'dcat-admin/dcat/extra/upload.css',
         ],
         '@chartjs' => [
             'js' => 'dcat-admin/dcat/plugins/chart.js/chart.bundle.min.js',

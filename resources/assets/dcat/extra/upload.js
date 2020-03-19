@@ -792,7 +792,7 @@
                 // 添加“添加文件”的按钮，
                 uploader.addButton({
                     id: addFileButtonSelector,
-                    label: '<i class="glyphicon glyphicon-folder-open"></i> &nbsp;' + __('go_on_add')
+                    label: '<i class="feather icon-folder"></i> &nbsp;' + __('go_on_add')
                 });
             }
 

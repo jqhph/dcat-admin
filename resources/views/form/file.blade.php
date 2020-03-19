@@ -45,7 +45,7 @@ Dcat.ready(function () {
         opts.upload = $.extend({
             pick: {
                 id: '#{{$_id}} .file-picker',
-                label: '<i class="glyphicon glyphicon-folder-open"></i>&nbsp; {{trans('admin.uploader.add_new_media')}}'
+                label: '<i class="feather icon-folder"></i>&nbsp; {{trans('admin.uploader.add_new_media')}}'
             },
             dnd: '#{{$_id}} .dnd-area',
             paste: '#{{$_id}} .web-uploader'
@@ -71,8 +71,6 @@ Dcat.ready(function () {
             }, 250);
         }
         resize();
-
-
     }
 });
 </script>

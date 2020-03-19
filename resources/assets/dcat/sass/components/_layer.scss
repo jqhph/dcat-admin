@@ -54,3 +54,17 @@
   font-size: 13px!important;
   box-shadow: none!important;
 }
+
+.layui-layer-btn a {
+  height: 30px!important;
+  line-height: 20px!important;
+  padding: 4px 15px!important;
+  font-size: .95rem;
+  box-shadow: $shadow;
+}
+
+.layui-layer-btn .layui-layer-btn0 {
+  border-color: $primary!important;
+  background-color: $primary!important;
+  color: $white!important;
+}

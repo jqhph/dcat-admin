@@ -29,6 +29,10 @@ html body .content .content-wrapper {
   padding: calc(2.2rem - 0.4rem) 2.45rem 0;
 }
 
+ol, ul, dl {
+  margin-bottom: 0;
+}
+
 // 布局
 @import "./components/layout";
 // 按钮

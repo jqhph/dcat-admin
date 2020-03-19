@@ -1738,6 +1738,12 @@ html body .content .content-wrapper {
   padding: calc(2.2rem - 0.4rem) 2.45rem 0;
 }
 
+ol,
+ul,
+dl {
+  margin-bottom: 0;
+}
+
 .pin,
 .pin-y {
   top: 0;
@@ -1896,6 +1902,10 @@ select.form-control:not([multiple=multiple]) {
   }
 }
 
+.with-errors.help-block {
+  margin-bottom: 4px;
+}
+
 .has-error .checkbox,
 .has-error .checkbox-inline,
 .has-error .control-label,
@@ -1913,6 +1923,10 @@ select.form-control:not([multiple=multiple]) {
   content: "*";
   font-weight: bold;
   color: #bd4147;
+}
+
+.form-group.has-error .form-control {
+  border-color: #bd4147;
 }
 
 .input-group-addon {
@@ -2346,6 +2360,20 @@ table.dataTable.complex-headers tfoot td {
 .layui-layer-tips {
   font-size: 13px !important;
   box-shadow: none !important;
+}
+
+.layui-layer-btn a {
+  height: 30px !important;
+  line-height: 20px !important;
+  padding: 4px 15px !important;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.layui-layer-btn .layui-layer-btn0 {
+  border-color: #5c6bc6 !important;
+  background-color: #5c6bc6 !important;
+  color: #fff !important;
 }
 
 .customizer {
