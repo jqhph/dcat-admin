@@ -257,7 +257,7 @@
           $btns;
 
       if (showImg) {
-        $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '" style="margin:7px">' + '<p class="file-type">' + (file.ext.toUpperCase() || 'FILE') + '</p>' + '<p class="imgWrap "></p>' + '<p class="title" style="">' + file.name + '</p>' + '<p class="title" style=\'margin-bottom:20px;\'>(<b>' + size + '</b>)</p>' + '</li>');
+        $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '" >' + '<p class="file-type">' + (file.ext.toUpperCase() || 'FILE') + '</p>' + '<p class="imgWrap "></p>' + '<p class="title" style="">' + file.name + '</p>' + '<p class="title" style=\'margin-bottom:20px;\'>(<b>' + size + '</b>)</p>' + '</li>');
         $btns = $('<div class="file-panel">' + '<a class=\'btn btn-sm btn-white\' data-file-act="cancel"><i class="fa fa-close red-dark" style=\'font-size:13px\'></i></a>' + '<a class=\'btn btn-sm btn-white\' data-file-act="delete" style="display: none"><i class="feather icon-trash red-dark" style=\'font-size:13px\'></i></a>' + '<a class=\'btn btn-sm btn-white\' data-file-act="preview" ><i class="feather icon-zoom-in"></i></a>' + '</div>').appendTo($li);
       } else {
         $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '">' + '<p class="title" style="display:block"><i class=\'feather icon-check green _success\' style=\'font-weight:bold;font-size:17px;display:none\'></i>' + file.name + ' (' + size + ')</p>' + '</li>');
@@ -288,6 +288,11 @@
       };
 
       $li.appendTo($queue);
+      setTimeout(function () {
+        $li.css({
+          margin: '7px'
+        });
+      }, 50);
 
       if (file.getStatus() === 'invalid') {
         showError(file.statusText, file);
@@ -740,7 +745,7 @@
         html += "	<img src='" + file.serverUrl + "'>";
         html += "</p>";
       } else if (!opts.disabled) {
-        html += '<p class="_act" data-file-act=\'delete\' data-id="' + file.serverId + '"><i class=\'ti-trash red-dark\'></i></p>';
+        html += '<p class="_act" data-file-act=\'delete\' data-id="' + file.serverId + '"><i class=\'feather icon-trash red-dark\'></i></p>';
       }
 
       html += "<p class='title' style=''><i class='feather icon-check' style='color:white;font-weight:bold;font-size:17px;display:none'></i>";

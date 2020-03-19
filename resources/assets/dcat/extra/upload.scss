@@ -12,12 +12,12 @@
 }
 
 .webuploader-pick {
-  border-radius: 1px;
   will-change: box-shadow !important;
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .15), 0 2px 2px 0 rgba(0, 0, 0, .15), 0 1px 5px 0 rgba(0, 0, 0, .15);
+  box-shadow: $btn-shadow;
   border: 1px solid transparent;
   display: inline-block;
-  padding: 6px 12px;
+  padding: .55rem 12px;
+  border-radius: .2rem;
   margin-bottom: 0;
   font-size: 14px;
   font-weight: 400;
@@ -153,8 +153,7 @@
   overflow: hidden;
   border-radius: 2px;
   font-size: 12px;
-  box-shadow: 1px 1px 5px 0 #a2958a;
-  -webkit-box-shadow: 1px 1px 5px 0 #a2958a;
+  box-shadow: $shadow-200;
   color: #333;
   background: #fff;
   display: table;
@@ -167,7 +166,8 @@
 .web-uploader._files .filelist li {
   width: 100%;
   height: 40px;
-  background: var(--primary-light);
+  background: lighten($primary, 40%);
+
   margin: 0 8px 10px 0;
   box-shadow: none;
   -webkit-box-shadow: none;
@@ -242,7 +242,8 @@
   overflow: hidden;
   width: 0;
   height: 100%;
-  background: lighten($primary, 2%) url(./progress.png) repeat-x;
+  background: lighten($primary, 2%);
+  //background: lighten($primary, 2%) url(./progress.png) repeat-x;
   -webit-transition: width 200ms linear;
   -moz-transition: width 200ms linear;
   -o-transition: width 200ms linear;
@@ -338,7 +339,7 @@
   bottom: 0;
   height: 40px;
   width: 100%;
-  z-index: 200
+  z-index: 2;
 }
 
 .web-uploader .filelist li .success em {
@@ -461,7 +462,10 @@
   font-family: feather;
   content: "\e8e3";
 }
-.file-panel .red-dark {
+.red-dark {
   color: $red-darker
+}
+.green {
+  color: $success;
 }
 

@@ -22,7 +22,7 @@
                 <div class="info"></div>
                 <div class="btns">
                     <div class="add-file-button"></div> &nbsp;
-                    <div class="uploadBtn btn btn-primary"><i class="fa fa-upload"></i> &nbsp;{{trans('admin.upload')}}</div>
+                    <div class="uploadBtn btn btn-primary"><i class="feather icon-upload"></i> &nbsp;{{trans('admin.upload')}}</div>
                 </div>
             </div>
         </div>

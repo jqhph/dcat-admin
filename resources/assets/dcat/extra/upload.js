@@ -177,7 +177,7 @@
             var size = WebUploader.formatSize(file.size), $li, $btns;
 
             if (showImg) {
-                $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '" style="margin:7px">' +
+                $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '" >' +
                     '<p class="file-type">' + (file.ext.toUpperCase() || 'FILE') + '</p>' +
                     '<p class="imgWrap "></p>' +
                     '<p class="title" style="">' + file.name + '</p>' +
@@ -225,6 +225,10 @@
                 };
 
             $li.appendTo($queue);
+
+            setTimeout(function () {
+                $li.css({margin: '7px'});
+            }, 50);
 
             if (file.getStatus() === 'invalid') {
                 showError(file.statusText, file);
@@ -662,7 +666,7 @@
                 html += "	<img src='" + file.serverUrl + "'>";
                 html += "</p>";
             } else if (!opts.disabled) {
-                html += '<p class="_act" data-file-act=\'delete\' data-id="' + file.serverId + '"><i class=\'ti-trash red-dark\'></i></p>';
+                html += '<p class="_act" data-file-act=\'delete\' data-id="' + file.serverId + '"><i class=\'feather icon-trash red-dark\'></i></p>';
             }
 
             html += "<p class='title' style=''><i class='feather icon-check' style='color:white;font-weight:bold;font-size:17px;display:none'></i>";

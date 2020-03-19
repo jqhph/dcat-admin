@@ -176,7 +176,7 @@ class UserController extends AdminController
                 ->creationRules(['required', "unique:{$connection}.{$userTable}"])
                 ->updateRules(['required', "unique:{$connection}.{$userTable},username,$id"]);
             $form->text('name', trans('admin.name'))->required();
-            $form->image('avatar', trans('admin.avatar'));
+            $form->multipleImage('avatar', trans('admin.avatar'));
 
             if ($id) {
                 $form->password('password', trans('admin.password'))

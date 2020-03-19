@@ -4,7 +4,7 @@
   height: 37.6px;
   line-height: 1.2;
   border-radius: 0.2rem;
-  box-shadow: $shadow-100;
+  box-shadow: $btn-shadow;
 }
 
 .btn-group {
@@ -18,7 +18,7 @@
     box-shadow: $btn-group-btn-shadow;
   }
 
-  box-shadow: $shadow-100;
+  box-shadow: $btn-shadow;
 }
 
 .btn-sm, .btn-group-sm > .btn {
