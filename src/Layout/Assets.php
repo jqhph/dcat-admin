@@ -87,7 +87,7 @@ class Assets
         ],
         '@moment' => [
             'js' => [
-                'dcat-admin/dcat/plugins/moment/moment-with-locales.min.js',
+                'dcat-admin/dcat/plugins/moment/moment.min.js',
             ],
         ],
         '@moment-timezone' => [
