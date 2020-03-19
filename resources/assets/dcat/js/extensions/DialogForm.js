@@ -54,12 +54,12 @@ export default class DialogForm {
         (! options.buttonSelector) || $(options.buttonSelector).off('click').click(function () {
             $btn = $(this);
 
-            let num = $btn.attr('counter'), url;
+            let counter = $btn.attr('counter'), url;
 
-            if (! num) {
-                num = _this._counter;
+            if (! counter) {
+                counter = _this._counter;
 
-                $btn.attr('counter', num);
+                $btn.attr('counter', counter);
 
                 _this._counter++;
             }
@@ -72,7 +72,7 @@ export default class DialogForm {
                 url += '&' + options.query + '=1'
             }
 
-            _this._build($btn, url, num);
+            _this._build($btn, url, counter);
         });
 
         options.buttonSelector || setTimeout(function () {
@@ -100,7 +100,7 @@ export default class DialogForm {
 
         // 刷新或跳转页面时移除弹窗
         Dcat.onPjaxComplete(() => {
-            _this._destory(counter);
+            _this._destroy(counter);
         });
 
         _this.isLoading = 1;
@@ -118,11 +118,11 @@ export default class DialogForm {
                 }, 50);
             }
 
-            _this._popup(tpl, counter);
+            _this._popup($btn, tpl, counter);
         });
     }
 
-    _popup(tpl, counter) {
+    _popup($btn, tpl, counter) {
         let _this = this,
             options = _this.options;
 
@@ -142,7 +142,7 @@ export default class DialogForm {
                 content: tpl,
                 title: options.title,
                 yes: function () {
-                    _this._submit($template)
+                    _this._submit($btn, $template)
                 },
                 cancel: function () {
                     if (options.forceRefresh) { // 是否强制刷新
@@ -158,8 +158,6 @@ export default class DialogForm {
             btns.push(options.lang.reset);
 
             dialogOpts.btn2 = function () { // 重置按钮
-                _this.$form = _this.$form || $template.find('form').first();
-
                 _this.$form.trigger('reset');
                 
                 return false;
@@ -170,9 +168,10 @@ export default class DialogForm {
 
         _this._idx[counter] = _this._dialog.open(dialogOpts);
         _this._dialogs[counter] = w.$('#layui-layer' + _this._idx[counter]);
+        _this.$form = _this._dialogs[counter].find('form').first();
     }
 
-    _destory(counter) {
+    _destroy(counter) {
         let dialogs = this._dialogs;
 
         this._dialog.close(this._idx[counter]);
@@ -182,14 +181,14 @@ export default class DialogForm {
         dialogs[counter] = null;
     }
 
-    _submit($template) {
-        let _this = this, options = _this.options;
+    _submit($btn) {
+        let _this = this, 
+            options = _this.options,
+            counter = $btn.attr('counter');
 
         if (_this.isSubmitting) {
             return;
         }
-
-        _this.$form = _this.$form || $template.find('form').first();  // 此处必须重新创建jq对象，否则无法操作页面元素
 
         Dcat.Form({
             form: _this.$form,
@@ -203,10 +202,10 @@ export default class DialogForm {
 
                 _this.isSubmitting = 1;
 
-                _this._dialogs[num].find('.layui-layer-btn0').button('loading');
+                Dcat.NP.start();
             },
             after: function (success, res) {
-                _this._dialogs[num].find('.layui-layer-btn0').button('reset');
+                Dcat.NP.done();
 
                 _this.isSubmitting = 0;
 
@@ -218,7 +217,7 @@ export default class DialogForm {
                 if (res.status) {
                     options.success(success, res);
 
-                    _this._destory(num);
+                    _this._destroy(counter);
 
                     return;
                 }

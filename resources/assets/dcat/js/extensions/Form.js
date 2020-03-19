@@ -48,6 +48,8 @@ class Form {
 
         $form.ajaxSubmit({
             beforeSubmit: function (fields, $form, _opt) {
+                console.log(6666, fields);
+
                 if (options.before(fields, $form, _opt, _this) === false) {
                     return false;
                 }

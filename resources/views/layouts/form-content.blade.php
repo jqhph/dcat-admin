@@ -1,8 +1,15 @@
 <script>Dcat.pjaxResponded();</script>
 
+<style>
+    .form-content .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+</style>
+
 {{--必须在静态资源加载前，用section先渲染 content--}}
 @section('content')
-    <section class="content">{!! $content !!}</section>
+    <section class="form-content">{!! $content !!}</section>
 @endsection
 
 {!! Dcat\Admin\Admin::assets()->renderCss() !!}

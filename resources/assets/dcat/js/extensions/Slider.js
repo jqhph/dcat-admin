@@ -31,7 +31,7 @@ export default class Slider {
         if (_this.options.autoDestory) {
             // 刷新或跳转页面时移除面板
             Dcat.onPjaxComplete(() => {
-                _this.destory();
+                _this.destroy();
             });
         }
     }
@@ -48,7 +48,7 @@ export default class Slider {
         this.$container.toggleClass('open');
     }
 
-    destory() {
+    destroy() {
         this.$container.remove()
     }
 }

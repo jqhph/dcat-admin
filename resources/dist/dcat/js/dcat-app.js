@@ -1305,12 +1305,12 @@ var DialogForm = /*#__PURE__*/function () {
 
       !options.buttonSelector || $(options.buttonSelector).off('click').click(function () {
         $btn = $(this);
-        var num = $btn.attr('counter'),
+        var counter = $btn.attr('counter'),
             url;
 
-        if (!num) {
-          num = _this._counter;
-          $btn.attr('counter', num);
+        if (!counter) {
+          counter = _this._counter;
+          $btn.attr('counter', counter);
           _this._counter++;
         }
 
@@ -1322,7 +1322,7 @@ var DialogForm = /*#__PURE__*/function () {
           url += '&' + options.query + '=1';
         }
 
-        _this._build($btn, url, num);
+        _this._build($btn, url, counter);
       });
       options.buttonSelector || setTimeout(function () {
         _this._build($btn, defUrl, _this._counter);
@@ -1350,7 +1350,7 @@ var DialogForm = /*#__PURE__*/function () {
 
 
       Dcat.onPjaxComplete(function () {
-        _this._destory(counter);
+        _this._destroy(counter);
       });
       _this.isLoading = 1;
       $btn && $btn.button('loading');
@@ -1364,12 +1364,12 @@ var DialogForm = /*#__PURE__*/function () {
           }, 50);
         }
 
-        _this._popup(tpl, counter);
+        _this._popup($btn, tpl, counter);
       });
     }
   }, {
     key: "_popup",
-    value: function _popup(tpl, counter) {
+    value: function _popup($btn, tpl, counter) {
       var _this = this,
           options = _this.options;
 
@@ -1388,7 +1388,7 @@ var DialogForm = /*#__PURE__*/function () {
         content: tpl,
         title: options.title,
         yes: function yes() {
-          _this._submit($template);
+          _this._submit($btn, $template);
         },
         cancel: function cancel() {
           if (options.forceRefresh) {
@@ -1407,8 +1407,6 @@ var DialogForm = /*#__PURE__*/function () {
 
         dialogOpts.btn2 = function () {
           // 重置按钮
-          _this.$form = _this.$form || $template.find('form').first();
-
           _this.$form.trigger('reset');
 
           return false;
@@ -1418,10 +1416,11 @@ var DialogForm = /*#__PURE__*/function () {
       dialogOpts.btn = btns;
       _this._idx[counter] = _this._dialog.open(dialogOpts);
       _this._dialogs[counter] = w.$('#layui-layer' + _this._idx[counter]);
+      _this.$form = _this._dialogs[counter].find('form').first();
     }
   }, {
-    key: "_destory",
-    value: function _destory(counter) {
+    key: "_destroy",
+    value: function _destroy(counter) {
       var dialogs = this._dialogs;
 
       this._dialog.close(this._idx[counter]);
@@ -1431,15 +1430,14 @@ var DialogForm = /*#__PURE__*/function () {
     }
   }, {
     key: "_submit",
-    value: function _submit($template) {
+    value: function _submit($btn) {
       var _this = this,
-          options = _this.options;
+          options = _this.options,
+          counter = $btn.attr('counter');
 
       if (_this.isSubmitting) {
         return;
       }
-
-      _this.$form = _this.$form || $template.find('form').first(); // 此处必须重新创建jq对象，否则无法操作页面元素
 
       Dcat.Form({
         form: _this.$form,
@@ -1452,12 +1450,10 @@ var DialogForm = /*#__PURE__*/function () {
           }
 
           _this.isSubmitting = 1;
-
-          _this._dialogs[num].find('.layui-layer-btn0').button('loading');
+          Dcat.NP.start();
         },
         after: function after(success, res) {
-          _this._dialogs[num].find('.layui-layer-btn0').button('reset');
-
+          Dcat.NP.done();
           _this.isSubmitting = 0;
           options.saved(success, res);
 
@@ -1468,7 +1464,7 @@ var DialogForm = /*#__PURE__*/function () {
           if (res.status) {
             options.success(success, res);
 
-            _this._destory(num);
+            _this._destroy(counter);
 
             return;
           }
@@ -1557,6 +1553,8 @@ var Form = /*#__PURE__*/function () {
       removeFieldError(_this);
       $form.ajaxSubmit({
         beforeSubmit: function beforeSubmit(fields, $form, _opt) {
+          console.log(6666, fields);
+
           if (options.before(fields, $form, _opt, _this) === false) {
             return false;
           }
@@ -2242,8 +2240,8 @@ var Loading = /*#__PURE__*/function () {
   }
 
   _createClass(Loading, [{
-    key: "destory",
-    value: function destory() {
+    key: "destroy",
+    value: function destroy() {
       this.$container.find(loading).remove();
     }
   }]);
@@ -2496,7 +2494,7 @@ var Slider = /*#__PURE__*/function () {
     if (_this.options.autoDestory) {
       // 刷新或跳转页面时移除面板
       Dcat.onPjaxComplete(function () {
-        _this.destory();
+        _this.destroy();
       });
     }
   }
@@ -2517,8 +2515,8 @@ var Slider = /*#__PURE__*/function () {
       this.$container.toggleClass('open');
     }
   }, {
-    key: "destory",
-    value: function destory() {
+    key: "destroy",
+    value: function destroy() {
       this.$container.remove();
     }
   }]);
