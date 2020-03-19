@@ -1930,6 +1930,10 @@ select.form-control:not([multiple=multiple]) {
   border-color: #bd4147;
 }
 
+.input-group-prepend .input-group-text {
+  margin-right: -1px;
+}
+
 .input-group-addon {
   width: 1%;
   white-space: nowrap;

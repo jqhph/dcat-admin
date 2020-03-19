@@ -61,6 +61,10 @@ select.form-control:not([multiple=multiple]) {
   border-color: $red-darker;
 }
 
+.input-group-prepend .input-group-text {
+  margin-right: -1px;
+}
+
 // --------------------- input-group-addon ---------------------
 .input-group-addon {
   width: 1%;
