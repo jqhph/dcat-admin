@@ -53,7 +53,7 @@ class PermissionController extends AdminController
     {
         $grid = new SimpleGrid(new Permission());
 
-        $grid->id->bold()->sortable();
+        $grid->id->sortable();
         $grid->slug;
         $grid->name;
 
@@ -135,7 +135,7 @@ class PermissionController extends AdminController
     {
         $grid = new Grid(new Permission());
 
-        $grid->id('ID')->bold()->sortable();
+        $grid->id('ID')->sortable();
         $grid->name->tree();
         $grid->order->orderable();
         $grid->slug->label('primary');

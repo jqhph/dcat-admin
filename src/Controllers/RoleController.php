@@ -36,7 +36,7 @@ class RoleController extends AdminController
             $grid = new Grid(new Role());
         }
 
-        $grid->id('ID')->bold()->sortable();
+        $grid->id('ID')->sortable();
         $grid->slug->label('primary');
         $grid->name;
 

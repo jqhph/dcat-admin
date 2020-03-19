@@ -33,7 +33,7 @@ class LogController extends Controller
     {
         $grid = new Grid(new OperationLog());
 
-        $grid->id('ID')->bold()->sortable();
+        $grid->id('ID')->sortable();
         $grid->user(trans('admin.user'))
             ->get('name')
             ->link(function () {

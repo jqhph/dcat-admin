@@ -265,7 +265,7 @@ class Grid
      */
     public function number(?string $label = null)
     {
-        return $this->addColumn('#', $label ?: '#')->bold();
+        return $this->addColumn('#', $label ?: '#');
     }
 
     /**

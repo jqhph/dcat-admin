@@ -45,7 +45,7 @@ class RouteController extends Controller
                 return "<code>$v</code>";
             });
 
-            $grid->name(trans('admin.alias'))->bold();
+            $grid->name(trans('admin.alias'));
 
             $grid->action(trans('admin.route_action'))->display(function ($uri) {
                 if ($uri === 'Closure') {

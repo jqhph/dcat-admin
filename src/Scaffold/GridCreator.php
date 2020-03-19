@@ -17,7 +17,7 @@ trait GridCreator
         $timestamps = $timestamps === null ? request('timestamps') : $timestamps;
 
         $rows = [
-            "\$grid->{$primaryKey}->bold()->sortable();",
+            "\$grid->{$primaryKey}->sortable();",
         ];
 
         foreach ($fields as $field) {

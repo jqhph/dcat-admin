@@ -32,7 +32,7 @@ class UserController extends AdminController
     protected function grid()
     {
         return Grid::make(new Administrator('roles'), function (Grid $grid) {
-            $grid->id('ID')->bold()->sortable();
+            $grid->id('ID')->sortable();
             $grid->username;
             $grid->name;
             $grid->roles->pluck('name')->label('primary');
@@ -82,7 +82,7 @@ class UserController extends AdminController
 
         $grid->quickSearch(['id', 'name', 'username']);
 
-        $grid->id->bold()->sortable();
+        $grid->id->sortable();
         $grid->username;
         $grid->name;
         $grid->created_at;
