@@ -7,6 +7,10 @@
   width: 100%;
   box-shadow: $shadow;
   display: flex;
+
+  .box-footer {
+    border-top: 1px solid $divider-color;
+  }
 }
 .box-header {
   padding: 13px;
@@ -53,7 +57,5 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
-  border-top: 1px solid $divider-color;
   padding: 10px;
-  background-color: $white;
 }

@@ -168,9 +168,9 @@ class File extends Field implements UploadFieldInterface
         $this->formatValue();
 
         $this->addVariables([
-            'options' => json_encode($this->options),
-            '_files'  => $this->options['isImage'] ? '' : '_files',
-            '_id'     => $this->generateId(),
+            'options'     => json_encode($this->options),
+            'fileType'    => $this->options['isImage'] ? '' : 'file',
+            'containerId' => $this->generateId(),
         ]);
 
         return parent::render();

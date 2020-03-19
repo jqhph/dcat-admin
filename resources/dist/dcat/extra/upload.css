@@ -58,7 +58,7 @@
   cursor: not-allowed;
 }
 
-.web-uploader._files {
+.web-uploader.file {
   border: 0;
 }
 
@@ -157,19 +157,18 @@
   vertical-align: middle;
 }
 
-.web-uploader._files .filelist li {
+.web-uploader.file .filelist li {
   width: 100%;
   height: 40px;
-  background: #f3f4fb;
+  background: #fff;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
   margin: 0 8px 10px 0;
-  box-shadow: none;
-  -webkit-box-shadow: none;
   border-radius: 5px;
   border: 0;
   padding: 0;
 }
 
-.web-uploader._files .filelist li ._act {
+.web-uploader.file .filelist li .file-action {
   float: right;
   margin: 16px 10px 0;
   cursor: pointer;
@@ -198,7 +197,7 @@
   margin: 3px auto;
 }
 
-.web-uploader._files .filelist li p.title {
+.web-uploader.file .filelist li p.title {
   font-weight: 600;
   font-size: 15px;
   vertical-align: middle;
@@ -208,7 +207,7 @@
   float: left;
   text-align: left;
   color: #333;
-  width: 450px;
+  width: 100%;
 }
 
 .web-uploader .filelist .file-type {
@@ -294,7 +293,7 @@
   z-index: 100;
 }
 
-.web-uploader._files .filelist li p.error {
+.web-uploader.file .filelist li p.error {
   background: #bd4147;
   color: #fff;
   font-weight: 500;
@@ -374,7 +373,7 @@
   position: relative;
 }
 
-.web-uploader._files .statusBar {
+.web-uploader.file .statusBar {
   border-top: 0;
   padding: 0;
 }
@@ -420,7 +419,7 @@
   float: right;
 }
 
-.web-uploader._files .statusBar .btns {
+.web-uploader.file .statusBar .btns {
   right: 0;
 }
 
@@ -430,8 +429,8 @@
 }
 
 .web-uploader .placeholder:before {
-  font-size: 80px;
   font-family: feather;
+  font-size: 70px;
   content: "\E8E3";
 }
 
@@ -441,5 +440,11 @@
 
 .green {
   color: #21b978;
+}
+
+.icon-success {
+  font-weight: bold;
+  font-size: 17px;
+  display: none;
 }
 

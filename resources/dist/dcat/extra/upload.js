@@ -257,11 +257,11 @@
           $btns;
 
       if (showImg) {
-        $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '" >' + '<p class="file-type">' + (file.ext.toUpperCase() || 'FILE') + '</p>' + '<p class="imgWrap "></p>' + '<p class="title" style="">' + file.name + '</p>' + '<p class="title" style=\'margin-bottom:20px;\'>(<b>' + size + '</b>)</p>' + '</li>');
-        $btns = $('<div class="file-panel">' + '<a class=\'btn btn-sm btn-white\' data-file-act="cancel"><i class="fa fa-close red-dark" style=\'font-size:13px\'></i></a>' + '<a class=\'btn btn-sm btn-white\' data-file-act="delete" style="display: none"><i class="feather icon-trash red-dark" style=\'font-size:13px\'></i></a>' + '<a class=\'btn btn-sm btn-white\' data-file-act="preview" ><i class="feather icon-zoom-in"></i></a>' + '</div>').appendTo($li);
+        $li = $("<li id=\"".concat(getFileViewSelector(file.id), "\" title=\"").concat(file.name, "\" >\n                    <p class=\"file-type\">").concat(file.ext.toUpperCase() || 'FILE', "</p>\n                    <p class=\"imgWrap \"></p>\n                    <p class=\"title\" style=\"\">").concat(file.name, "</p>\n                    <p class=\"title\" style=\"margin-bottom:20px;\">(<b>").concat(size, "</b>)</p>\n                    </li>"));
+        $btns = $("<div class=\"file-panel\">\n                    <a class=\"btn btn-sm btn-white\" data-file-act=\"cancel\"><i class=\"fa fa-close red-dark\" style=\"font-size:13px\"></i></a>\n                    <a class=\"btn btn-sm btn-white\" data-file-act=\"delete\" style=\"display: none\">\n                    <i class=\"feather icon-trash red-dark\" style=\"font-size:13px\"></i></a>\n                    <a class=\"btn btn-sm btn-white\" data-file-act=\"preview\" ><i class=\"feather icon-zoom-in\"></i></a>\n                    </div>").appendTo($li);
       } else {
-        $li = $('<li id="' + getFileViewSelector(file.id) + '" title="' + file.name + '">' + '<p class="title" style="display:block"><i class=\'feather icon-check green _success\' style=\'font-weight:bold;font-size:17px;display:none\'></i>' + file.name + ' (' + size + ')</p>' + '</li>');
-        $btns = $('<span data-file-act="cancel" class="_act" style="font-size:13px"><i class=\'feather icon-x red-dark\'></i></span>' + '<span data-file-act="delete" class="_act" style="display:none"><i class=\'feather icon-trash red-dark\'></i></span>').appendTo($li);
+        $li = $("\n                    <li id=\"".concat(getFileViewSelector(file.id), "\" title=\"").concat(file.nam, "\">\n                    <p class=\"title\" style=\"display:block\">\n                        <i class=\"feather icon-check green _success icon-success\"></i>\n                        ").concat(file.name, " (").concat(size, ")\n                    </p>\n                    </li>\n                "));
+        $btns = $("\n<span data-file-act=\"cancel\" class=\"file-action\" style=\"font-size:13px\">\n    <i class=\"feather icon-x red-dark\"></i>\n</span>\n<span data-file-act=\"delete\" class=\"file-action\" style=\"display:none\">\n    <i class=\"feather icon-trash red-dark\"></i>\n</span>\n").appendTo($li);
       }
 
       var $wrap = $li.find('p.imgWrap'),
@@ -290,7 +290,7 @@
       $li.appendTo($queue);
       setTimeout(function () {
         $li.css({
-          margin: '7px'
+          margin: '5px'
         });
       }, 50);
 
@@ -741,14 +741,12 @@
       html += "<li title='" + file.serverPath + "'>";
 
       if (showImg) {
-        html += "<p class='imgWrap'>";
-        html += "	<img src='" + file.serverUrl + "'>";
-        html += "</p>";
+        html += "<p class='imgWrap'><img src='".concat(file.serverUrl, "'></p>");
       } else if (!opts.disabled) {
-        html += '<p class="_act" data-file-act=\'delete\' data-id="' + file.serverId + '"><i class=\'feather icon-trash red-dark\'></i></p>';
+        html += "<p class=\"file-action\" data-file-act=\"delete\" data-id=\"".concat(file.serverId, "\"><i class=\"feather icon-trash red-dark\"></i></p>");
       }
 
-      html += "<p class='title' style=''><i class='feather icon-check' style='color:white;font-weight:bold;font-size:17px;display:none'></i>";
+      html += "<p class='title' style=''><i class='feather icon-check text-white icon-success' style='color: #fff;'></i>";
       html += file.serverPath;
       html += "</p>";
 
@@ -757,10 +755,10 @@
         html += "<div class='file-panel' >";
 
         if (!opts.disabled) {
-          html += "<a class='btn btn-sm btn-white' data-file-act='deleteurl' data-id='" + file.serverId + "'><i class='feather icon-trash red-dark' style='font-size:13px'></i></a>";
+          html += "<a class='btn btn-sm btn-white' data-file-act='deleteurl' data-id='".concat(file.serverId, "'><i class='feather icon-trash red-dark' style='font-size:13px'></i></a>");
         }
 
-        html += "<a class='btn btn-sm btn-white' data-file-act='preview' data-url='" + file.serverUrl + "' ><i class='feather icon-zoom-in'></i></a>";
+        html += "<a class='btn btn-sm btn-white' data-file-act='preview' data-url='".concat(file.serverUrl, "' ><i class='feather icon-zoom-in'></i></a>");
         html += "</div>";
       }
 
@@ -815,7 +813,7 @@
 
       if (showImg) {
         setTimeout(function () {
-          html.css('margin', '7px');
+          html.css('margin', '5px');
         }, 80);
       }
     } // 初始化web-uploader
@@ -935,7 +933,7 @@
 
             if (!showImg) {
               var $li = getFileView(obj.file.id);
-              $li.find('._act').hide();
+              $li.find('.file-action').hide();
               $li.find('[data-file-act="delete"]').show();
             }
 
@@ -1057,23 +1055,22 @@
 
             var swf = './expressInstall.swf'; // insert flash object
 
-            var html = '<object type="application/' + 'x-shockwave-flash" data="' + swf + '" ';
+            var html = "<object type=\"application/x-shockwave-flash\" data=\"".concat(swf, "\" ");
 
             if (WebUploader.browser.ie) {
               html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
             }
 
-            html += 'width="100%" height="100%" style="outline:0">' + '<param name="movie" value="' + swf + '" />' + '<param name="wmode" value="transparent" />' + '<param name="allowscriptaccess" value="always" />' + '</object>';
+            html += "width=\"100%\" height=\"100%\" style=\"outline:0\">\n                            <param name=\"movie\" value=\"".concat(swf, "\" />\n                            <param name=\"wmode\" value=\"transparent\" />\n                            <param name=\"allowscriptaccess\" value=\"always\" />\n                            </object>");
             container.html(html);
-          })($wrap); // 压根就没有安转。
-
+          })($wrap);
         } else {
           $wrap.html('<a href="http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
         }
 
         return;
       } else if (!WebUploader.Uploader.support()) {
-        Dcat.error('Web Uploader 不支持您的浏览器！');
+        Dcat.error('您的浏览器不支持Web Uploader！');
         return;
       }
     }
@@ -1093,7 +1090,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\extra\upload.js */"./resources/assets/dcat/extra/upload.js");
+module.exports = __webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\extra\upload.js */"./resources/assets/dcat/extra/upload.js");
 
 
 /***/ })

@@ -2501,6 +2501,10 @@ table.dataTable.complex-headers tfoot td {
   display: flex;
 }
 
+.box .box-footer {
+  border-top: 1px solid #f4f4f4;
+}
+
 .box-header {
   padding: 13px;
   display: inherit;
@@ -2548,9 +2552,7 @@ table.dataTable.complex-headers tfoot td {
   border-top-right-radius: 0;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
-  border-top: 1px solid #f4f4f4;
   padding: 10px;
-  background-color: #fff;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {

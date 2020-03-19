@@ -1,4 +1,4 @@
-<div id="{{$_id}}" class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<div id="{{ $containerId }}" class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
 
     <label for="{{$column}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
@@ -6,9 +6,9 @@
 
         @include('admin::form.error')
 
-        <input name="{{$name}}" id="{{$id}}" type="hidden" />
+        <input name="{{$name}}" id="{{ $id }}" type="hidden" />
 
-        <div class="web-uploader {{$_files}}"  style="">
+        <div class="web-uploader {{ $fileType }}">
             <div class="queueList">
                 <div class="placeholder dnd-area">
                     <div class="file-picker"></div>
@@ -39,16 +39,17 @@ Dcat.ready(function () {
 
     function init() {
         var opts = $.extend({
-            selector: '#{{$_id}}',
+            selector: '#{{ $containerId }}',
+            addFileButton: '#{{ $containerId }} .add-file-button',
         }, options);
 
         opts.upload = $.extend({
             pick: {
-                id: '#{{$_id}} .file-picker',
+                id: '#{{ $containerId }} .file-picker',
                 label: '<i class="feather icon-folder"></i>&nbsp; {{trans('admin.uploader.add_new_media')}}'
             },
-            dnd: '#{{$_id}} .dnd-area',
-            paste: '#{{$_id}} .web-uploader'
+            dnd: '#{{ $containerId }} .dnd-area',
+            paste: '#{{ $containerId }} .web-uploader'
         }, opts);
 
         upload = Dcat.Uploader(opts);

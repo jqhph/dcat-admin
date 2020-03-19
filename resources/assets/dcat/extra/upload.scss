@@ -60,14 +60,8 @@
   cursor: not-allowed
 }
 
-.web-uploader._files {
+.web-uploader.file {
   border: 0
-}
-
-.web-uploader .queueList {
-}
-
-.web-uploader._files .queueList {
 }
 
 .element-invisible {
@@ -163,20 +157,18 @@
   vertical-align: middle
 }
 
-.web-uploader._files .filelist li {
+.web-uploader.file .filelist li {
   width: 100%;
   height: 40px;
-  background: lighten($primary, 40%);
-
+  background: $white;
+  box-shadow: $shadow-100;
   margin: 0 8px 10px 0;
-  box-shadow: none;
-  -webkit-box-shadow: none;
   border-radius: 5px;
   border: 0;
   padding: 0
 }
 
-.web-uploader._files .filelist li ._act {
+.web-uploader.file .filelist li .file-action {
   float: right;
   margin: 16px 10px 0;
   cursor: pointer;
@@ -205,7 +197,7 @@
   margin: 3px auto
 }
 
-.web-uploader._files .filelist li p.title {
+.web-uploader.file .filelist li p.title {
   font-weight: 600;
   font-size: 15px;
   vertical-align: middle;
@@ -215,7 +207,7 @@
   float: left;
   text-align: left;
   color: #333;
-  width: 450px
+  width: 100%
 }
 
 .web-uploader .filelist .file-type {
@@ -322,7 +314,7 @@
   z-index: 100
 }
 
-.web-uploader._files .filelist li p.error {
+.web-uploader.file .filelist li p.error {
   background: $red-darker;
   color: #fff;
   font-weight: 500;
@@ -402,7 +394,7 @@
   position: relative
 }
 
-.web-uploader._files .statusBar {
+.web-uploader.file .statusBar {
   border-top: 0;
   padding: 0
 }
@@ -448,7 +440,7 @@
   float: right
 }
 
-.web-uploader._files .statusBar .btns {
+.web-uploader.file .statusBar .btns {
   right: 0
 }
 
@@ -458,8 +450,8 @@
 }
 
 .web-uploader .placeholder:before {
-  font-size: 80px;
   font-family: feather;
+  font-size: 70px;
   content: "\e8e3";
 }
 .red-dark {
@@ -469,3 +461,8 @@
   color: $success;
 }
 
+.icon-success {
+  font-weight:bold;
+  font-size:17px;
+  display:none;
+}
