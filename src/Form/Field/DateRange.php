@@ -2,15 +2,17 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 
 class DateRange extends Field
 {
-    public static $js = '@bootstrap-datetimepicker';
+    public static $js = [
+        '@moment',
+        '@bootstrap-datetimepicker',
+    ];
     public static $css = '@bootstrap-datetimepicker';
 
-    protected $format = 'yyyy-mm-dd';
+    protected $format = 'YYYY-MM-DD';
 
     /**
      * Column name.
@@ -52,11 +54,11 @@ class DateRange extends Field
         $this->script = <<<JS
             $('{$class['start']}').datetimepicker($startOptions);
             $('{$class['end']}').datetimepicker($endOptions);
-            $("{$class['start']}").on("changeDate", function (e) {
-                $('{$class['end']}').datetimepicker('setStartDate', e.date);
+            $("{$class['start']}").on("dp.change", function (e) {
+                $('{$class['end']}').data("DateTimePicker").minDate(e.date);
             });
-            $("{$class['end']}").on("changeDate", function (e) {
-                $('{$class['start']}').datetimepicker('setEndDate', e.date);
+            $("{$class['end']}").on("dp.change", function (e) {
+                $('{$class['start']}').data("DateTimePicker").maxDate(e.date);
             });
 JS;
 

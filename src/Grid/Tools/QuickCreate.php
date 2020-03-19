@@ -198,7 +198,7 @@ class QuickCreate implements Renderable
      */
     public function datetime($column, $placeholder = '')
     {
-        return $this->date($column, $placeholder)->format('yyyy-mm-dd HH:mm:ss');
+        return $this->date($column, $placeholder)->format('YYYY-MM-DD HH:mm:ss');
     }
 
     /**

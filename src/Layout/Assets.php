@@ -85,6 +85,16 @@ class Assets
             'js'  => 'dcat-admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
             'css' => 'dcat-admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css',
         ],
+        '@moment' => [
+            'js' => [
+                'dcat-admin/dcat/plugins/moment/moment-with-locales.min.js',
+            ],
+        ],
+        '@moment-timezone' => [
+            'js' => [
+                'dcat-admin/dcat/plugins/moment/moment-timezone-with-data.min.js',
+            ],
+        ],
         '@rwd-table' => [
             'js'  => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js',
             'css' => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css',

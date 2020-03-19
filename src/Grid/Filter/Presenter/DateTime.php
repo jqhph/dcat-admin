@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 class DateTime extends Presenter
 {
     public static $js = [
+        '@moment',
         '@bootstrap-datetimepicker',
     ];
 
@@ -23,7 +24,7 @@ class DateTime extends Presenter
     /**
      * @var string
      */
-    protected $format = 'yyyy-mm-dd HH:mm:ss';
+    protected $format = 'YYYY-MM-DD HH:mm:ss';
 
     /**
      * DateTime constructor.

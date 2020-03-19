@@ -6,9 +6,8 @@ class Rate extends Text
 {
     public function render()
     {
-        $this->prepend('')
-            ->append('%')
-            ->defaultAttribute('style', 'text-align:right;')
+        $this->prepend('%')
+            ->type('number')
             ->defaultAttribute('placeholder', 0);
 
         return parent::render();

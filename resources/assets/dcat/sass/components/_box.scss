@@ -7,11 +7,11 @@
   width: 100%;
   box-shadow: $shadow;
   display: flex;
-
-  .box-footer {
-    border-top: 1px solid $divider-color;
-  }
 }
+.box .box-footer, .card .box-footer {
+  border-top: 1px solid $divider-color;
+}
+
 .box-header {
   padding: 13px;
   display: inherit;

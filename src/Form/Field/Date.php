@@ -4,10 +4,13 @@ namespace Dcat\Admin\Form\Field;
 
 class Date extends Text
 {
-    public static $js = '@bootstrap-datetimepicker';
+    public static $js = [
+        '@moment',
+        '@bootstrap-datetimepicker',
+    ];
     public static $css = '@bootstrap-datetimepicker';
 
-    protected $format = 'yyyy-mm-dd';
+    protected $format = 'YYYY-MM-DD';
 
     public function format($format)
     {
@@ -31,7 +34,7 @@ class Date extends Text
         $this->options['locale'] = config('app.locale');
         $this->options['allowInputToggle'] = true;
 
-        $this->script = "$('{$this->getElementClassSelector()}').datetimepicker(".json_encode($this->options).');';
+        $this->script = "$('{$this->getElementClassSelector()}').parent().datetimepicker(".json_encode($this->options).');';
 
         $this->prepend('<i class="fa fa-calendar fa-fw"></i>')
             ->defaultAttribute('style', 'width: 200px');

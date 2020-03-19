@@ -2391,28 +2391,6 @@ table.dataTable.complex-headers tfoot td {
   }
 }
 
-.datetimepicker table tr td.active,
-.datetimepicker table tr td.active:hover,
-.datetimepicker table tr td.active.disabled,
-.datetimepicker table tr td.active.disabled:hover,
-.datetimepicker table tr td span.active,
-.datetimepicker table tr td span.active:hover,
-.datetimepicker table tr td span.active.disabled,
-.datetimepicker table tr td span.active.disabled:hover {
-  background-image: linear-gradient(to bottom, #5c6bc6, #5c6bc6) !important;
-}
-
-.datetimepicker td,
-.datetimepicker th {
-  padding: 4px;
-}
-
-.datetimepicker {
-  padding: 10px 14px !important;
-  border: 1px solid #f4f4f4 !important;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-}
-
 .grid-selector {
   width: 100%;
 }
@@ -2501,7 +2479,8 @@ table.dataTable.complex-headers tfoot td {
   display: flex;
 }
 
-.box .box-footer {
+.box .box-footer,
+.card .box-footer {
   border-top: 1px solid #f4f4f4;
 }
 

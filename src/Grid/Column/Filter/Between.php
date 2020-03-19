@@ -42,7 +42,7 @@ class Between extends Filter
      */
     public function date()
     {
-        return $this->setDateFormat('yyyy-mm-dd');
+        return $this->setDateFormat('YYYY-MM-DD');
     }
 
     /**
@@ -62,7 +62,7 @@ class Between extends Filter
      */
     public function datetime()
     {
-        return $this->setDateFormat('yyyy-mm-dd HH:mm:ss');
+        return $this->setDateFormat('YYYY-MM-DD HH:mm:ss');
     }
 
     /**
@@ -126,7 +126,16 @@ class Between extends Filter
 
         $options = json_encode($options);
 
-        Admin::script("$('.{$this->class['start']},.{$this->class['end']}').datetimepicker($options);");
+        Admin::script(<<<JS
+        $('.{$this->class['start']},.{$this->class['end']}').datetimepicker({$options});
+        $(".{$this->class['start']}").on("dp.change", function (e) {
+            $('.{$this->class['end']}').data("DateTimePicker").minDate(e.date);
+        });
+        $(".{$this->class['end']}").on("dp.change", function (e) {
+            $('.{$this->class['start']}').data("DateTimePicker").maxDate(e.date);
+        });
+JS
+        );
     }
 
     /**

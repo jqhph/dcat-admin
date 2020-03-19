@@ -14,15 +14,14 @@ class Decimal extends Text
      */
     protected $options = [
         'alias'      => 'decimal',
-        'rightAlign' => true,
+        'rightAlign' => false,
     ];
 
     public function render()
     {
         $this->inputmask($this->options);
 
-        $this->prepend('<i class="fa fa-terminal fa-fw"></i>')
-            ->defaultAttribute('style', 'width: 200px');
+        $this->prepend('<i class="fa fa-terminal fa-fw"></i>');
 
         return parent::render();
     }

@@ -141,7 +141,7 @@ class Between extends AbstractFilter
      */
     protected function setupDatetime($options = [])
     {
-        $options['format'] = Arr::get($options, 'format', 'yyyy-mm-dd HH:mm:ss');
+        $options['format'] = Arr::get($options, 'format', 'YYYY-MM-DD HH:mm:ss');
         $options['locale'] = Arr::get($options, 'locale', config('app.locale'));
 
         $startOptions = json_encode($options);
@@ -150,11 +150,11 @@ class Between extends AbstractFilter
         $script = <<<JS
             $('#{$this->id['start']}').datetimepicker($startOptions);
             $('#{$this->id['end']}').datetimepicker($endOptions);
-            $("#{$this->id['start']}").on("changeDate", function (e) {
-                $('#{$this->id['end']}').datetimepicker('setStartDate', e.date);
+            $("#{$this->id['start']}").on("dp.change", function (e) {
+                $('#{$this->id['end']}').data("DateTimePicker").minDate(e.date);
             });
-            $("#{$this->id['end']}").on("changeDate", function (e) {
-                $('#{$this->id['start']}').datetimepicker('setEndDate', e.date);
+            $("#{$this->id['end']}").on("dp.change", function (e) {
+                $('#{$this->id['start']}').data("DateTimePicker").maxDate(e.date);
             });
 JS;
 
