@@ -5,6 +5,7 @@ namespace Dcat\Admin\Support;
 use Dcat\Admin\Grid;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
@@ -52,10 +53,19 @@ class Helper
         }
 
         if (is_array($value)) {
+        } elseif ($value instanceof Jsonable) {
+            $value = json_decode($value->toJson(), true);
         } elseif ($value instanceof Arrayable) {
             $value = $value->toArray();
         } elseif (is_string($value)) {
-            $value = explode(',', $value);
+            $array = null;
+
+            try {
+                $array = json_decode($value, true);
+            } catch (\Throwable $e) {
+            }
+
+            $value = is_array($array) ? $array : explode(',', $value);
         } else {
             $value = (array) $value;
         }
