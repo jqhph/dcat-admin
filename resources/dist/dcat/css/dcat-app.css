@@ -2016,6 +2016,20 @@ select.form-control:not([multiple=multiple]) {
   padding: 6px;
 }
 
+.glyphicon-arrow-right:before {
+  font-family: feather;
+  content: "\E829";
+}
+
+.glyphicon-arrow-left:before {
+  font-family: feather;
+  content: "\E828";
+}
+
+.bootstrap-duallistbox-container .info {
+  color: #414750 !important;
+}
+
 .pagination .page-item .page-link {
   font-weight: 600;
 }

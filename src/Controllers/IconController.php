@@ -29,9 +29,8 @@ class IconController extends Controller
             $tab = Tab::make()
                 ->withCard()
                 ->padding('20px')
-                ->add(('Themify'), view('admin::helpers.themify'))
-                ->add(('Font Awesome'), view('admin::helpers.font-awesome'))
-                ->add(('Glyphicons'), view('admin::helpers.glyphicons'));
+                ->add(('Feather'), view('admin::helpers.feather'))
+                ->add(('Font Awesome'), view('admin::helpers.font-awesome'));
 
             $row->column(12, $tab);
         });

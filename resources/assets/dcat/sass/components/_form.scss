@@ -151,3 +151,15 @@ select.form-control:not([multiple=multiple]) {
   padding: 6px;
 }
 
+// listbox图标
+.glyphicon-arrow-right:before {
+  font-family: feather;
+  content: "\e829";
+}
+.glyphicon-arrow-left:before {
+  font-family: feather;
+  content: "\e828";
+}
+.bootstrap-duallistbox-container .info {
+  color: $font-color!important;
+}
