@@ -13,7 +13,7 @@
         </div>
 
         @if($checkboxes)
-            <label class="pull-right" style="margin:0 15px 0 0;">{!! $checkboxes !!}</label>
+            <div class="d-flex pull-right" style="margin:10px 15px 0 0;">{!! $checkboxes !!}</div>
         @endif
 
         @endif

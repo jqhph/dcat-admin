@@ -10,7 +10,9 @@
             <input {{$disabled}} {!! $attributes !!} name="{{$name}}" />
 
             <div class="jstree-wrapper {{$class}}-tree-wrapper">
-                {!! $checkboxes !!}
+                <div class="d-flex">
+                    {!! $checkboxes !!}
+                </div>
                 <div class="da-tree" style="margin-top:10px"></div>
             </div>
         </div>

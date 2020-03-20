@@ -49,7 +49,7 @@ class UserController extends AdminController
 
                     foreach (array_column($this->roles, 'slug') as $slug) {
                         if ($roleModel::isAdministrator($slug)) {
-                            $tree->checkedAll();
+                            $tree->checkAll();
                         }
                     }
                 })
@@ -134,14 +134,14 @@ class UserController extends AdminController
                 $isAdministrator = false;
                 foreach (array_column($roles, 'slug') as $slug) {
                     if ($roleModel::isAdministrator($slug)) {
-                        $tree->checkedAll();
+                        $tree->checkAll();
                         $isAdministrator = true;
                     }
                 }
 
                 if (! $isAdministrator) {
                     $keyName = $permissionModel->getKeyName();
-                    $tree->checked(
+                    $tree->check(
                         $roleModel::getPermissionId(array_column($roles, $keyName))->flatten()
                     );
                 }

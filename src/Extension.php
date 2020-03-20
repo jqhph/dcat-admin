@@ -166,7 +166,7 @@ abstract class Extension
      *
      * @return bool
      */
-    final public static function disabled()
+    final public static function disable()
     {
         return ! static::enabled();
     }

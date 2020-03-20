@@ -2264,12 +2264,12 @@ table.dataTable.complex-headers tfoot td {
   z-index: 10;
 }
 
-.vs-checkbox-con .vs-checkbox.vs-checkbox-sm {
+.vs-checkbox-con .vs-checkbox {
   width: 17px;
   height: 17px;
 }
 
-.vs-checkbox-con input:checked ~ .vs-checkbox.vs-checkbox-sm .vs-checkbox--check .vs-icon {
+.vs-checkbox-con input:checked ~ .vs-checkbox .vs-checkbox--check .vs-icon {
   font-size: 1rem;
   margin-top: -1px;
 }

@@ -48,7 +48,7 @@ class DialogTree extends AbstractDisplayer
 
     protected $nodes = [];
 
-    protected $checkedAll;
+    protected $checkAll;
 
     /**
      * @param array $data exp:
@@ -80,9 +80,9 @@ class DialogTree extends AbstractDisplayer
         return $this;
     }
 
-    public function checkedAll()
+    public function checkAll()
     {
-        $this->checkedAll = true;
+        $this->checkAll = true;
 
         return $this;
     }
@@ -154,7 +154,7 @@ class DialogTree extends AbstractDisplayer
         $val = $this->format($this->value);
 
         return <<<EOF
-<a href="javascript:void(0)" class="{$this->getSelectorPrefix()}-open-tree" data-checked="{$this->checkedAll}" data-val="{$val}">
+<a href="javascript:void(0)" class="{$this->getSelectorPrefix()}-open-tree" data-checked="{$this->checkAll}" data-val="{$val}">
     <i class='feather icon-align-right'></i> $btn
 </a>
 EOF;

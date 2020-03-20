@@ -70,7 +70,7 @@ class Tree extends Widget
     /**
      * @var bool
      */
-    protected $checkedAll = false;
+    protected $checkAll = false;
 
     public function __construct($nodes = [])
     {
@@ -79,9 +79,9 @@ class Tree extends Widget
         $this->id = 'widget-tree-'.Str::random(8);
     }
 
-    public function checkedAll()
+    public function checkAll()
     {
-        $this->checkedAll = true;
+        $this->checkAll = true;
 
         return $this;
     }
@@ -180,7 +180,7 @@ class Tree extends Widget
 
             $v['state'] = [];
 
-            if ($this->checkedAll || ($value && in_array($v[$idColumn], $value))) {
+            if ($this->checkAll || ($value && in_array($v[$idColumn], $value))) {
                 $v['state']['selected'] = true;
             }
 

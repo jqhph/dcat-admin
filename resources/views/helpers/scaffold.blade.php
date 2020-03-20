@@ -1,7 +1,7 @@
 @php
     $timestamps = new \Dcat\Admin\Widgets\Checkbox('timestamps');
     $timestamps->inline();
-    $timestamps->options([1 => 'Created_at & Updated_at'])->checked(1);
+    $timestamps->options([1 => 'Created_at & Updated_at'])->check(1);
 
     $soft = new \Dcat\Admin\Widgets\Checkbox('soft_deletes');
     $soft->inline();
@@ -16,7 +16,7 @@
         'controller' => ucfirst(trans('admin.scaffold.create_controller')),
         'migrate' => ucfirst(trans('admin.scaffold.run_migrate')),
         'lang' => ucfirst(trans('admin.scaffold.create_lang')),
-    ])->checkedAll(['migrate', 'migration']);
+    ])->checkAll(['migrate', 'migration']);
 @endphp
 <style>
     /*.table>thead>tr>th {*/

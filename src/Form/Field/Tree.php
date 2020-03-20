@@ -261,10 +261,10 @@ class Tree extends Field
             2 => trans('admin.expand'),
         ]);
         if ($this->readOnly) {
-            $checkboxes->disabled(1);
+            $checkboxes->disable(1);
         }
 
-        $this->expand && $checkboxes->checked(2);
+        $this->expand && $checkboxes->check(2);
 
         $this->formatNodes();
 
