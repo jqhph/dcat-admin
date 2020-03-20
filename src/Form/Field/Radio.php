@@ -53,13 +53,13 @@ class Radio extends Field
             );
         }
 
-        $radio = new WidgetRadio($this->getElementName(), $this->options, $this->style);
+        $radio = WidgetRadio::make($this->getElementName(), $this->options, $this->style);
 
         if ($this->attributes['disabled'] ?? false) {
             $radio->disable();
         }
 
-        $radio->check(old($this->column, $this->value()));
+        $radio->inline()->check(old($this->column, $this->value()));
 
         $this->addVariables([
             'radio' => $radio,

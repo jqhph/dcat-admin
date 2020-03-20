@@ -81,7 +81,7 @@ class Checkbox extends MultipleSelect
             );
         }
 
-        $checkbox = new WidgetCheckbox(
+        $checkbox = WidgetCheckbox::make(
             $this->getElementName().'[]',
             $this->options,
             $this->style
@@ -91,7 +91,7 @@ class Checkbox extends MultipleSelect
             $checkbox->disable();
         }
 
-        $checkbox->check(old($this->column, $this->value()));
+        $checkbox->inline()->check(old($this->column, $this->value()));
 
         $this->addVariables([
             'checkbox' => $checkbox,

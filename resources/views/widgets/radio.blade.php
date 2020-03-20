@@ -1,3 +1,7 @@
+@if($inline)
+<div class="d-flex">
+@endif
+
 @foreach($options as $k => $label)
     <div class="vs-radio-con vs-radio-success{{ $style }}" style="margin-right: {{ $right }}">
         <input {!! in_array($k, $disabled) ? 'disabled' : '' !!} value="{{$k}}" {!! $attributes !!} {!! ($checked == $k && $checked !== null) ? 'checked' : '' !!}>
@@ -10,3 +14,7 @@
         @endif
     </div>
 @endforeach
+
+@if($inline)
+</div>
+@endif

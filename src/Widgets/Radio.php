@@ -20,6 +20,8 @@ class Radio extends Widget
 
     protected $size;
 
+    protected $inline = false;
+
     public function __construct(
         ?string $name = null,
         array $options = [],
@@ -74,6 +76,20 @@ class Radio extends Widget
     public function size(string $size)
     {
         $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * 是否排成一行.
+     *
+     * @param bool $inine
+     *
+     * @return $this
+     */
+    public function inline(bool $inine = true)
+    {
+        $this->inline = $inine;
 
         return $this;
     }
@@ -176,6 +192,7 @@ class Radio extends Widget
             'disabled'   => $this->disabledValues,
             'right'      => $this->right,
             'size'       => $this->size,
+            'inline'     => $this->inline,
         ];
     }
 

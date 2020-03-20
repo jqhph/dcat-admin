@@ -1,14 +1,11 @@
 @php
     $timestamps = new \Dcat\Admin\Widgets\Checkbox('timestamps');
-    $timestamps->inline();
     $timestamps->options([1 => 'Created_at & Updated_at'])->check(1);
 
     $soft = new \Dcat\Admin\Widgets\Checkbox('soft_deletes');
-    $soft->inline();
     $soft->options([1 => ucfirst(trans('admin.scaffold.soft_delete'))]);
 
     $actionCreators = new \Dcat\Admin\Widgets\Checkbox('create[]');
-    $actionCreators->inline();
     $actionCreators->options([
         'migration' => ucfirst(trans('admin.scaffold.create_migration')),
         'model' => ucfirst(trans('admin.scaffold.create_model')),
@@ -94,7 +91,9 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-1 col-sm-11">
-                        {!! $actionCreators->render(); !!}
+                        <div class="d-flex">
+                            {!! $actionCreators->render(); !!}
+                        </div>
                     </div>
                 </div>
 
@@ -196,8 +195,10 @@
                 </div>
 
                 <div class='form-group pull-right' style="margin-right: 20px; margin-top: 5px;">
+                    <div class="d-flex">
                     {!! $timestamps->render() !!}
                     {!! $soft->render() !!}
+                    </div>
                 </div>
 
                 <div class="form-group pull-right" style="margin-right: 20px;">

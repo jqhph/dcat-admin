@@ -6,9 +6,7 @@
 
         @include('admin::form.error')
 
-        <div class="d-flex">
-            {!! $checkbox !!}
-        </div>
+        {!! $checkbox !!}
 
         <input type="hidden" name="{{$name}}[]">
 

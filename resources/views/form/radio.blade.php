@@ -6,9 +6,7 @@
 
         @include('admin::form.error')
 
-        <div class="d-flex">
-            {!! $radio !!}
-        </div>
+        {!! $radio !!}
 
         @include('admin::form.help-block')
 
