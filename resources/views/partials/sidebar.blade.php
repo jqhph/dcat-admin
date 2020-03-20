@@ -4,11 +4,10 @@
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto">
                 <a href="{{ admin_url('/') }}" class="navbar-brand waves-effect waves-light">
-                    <div class="brand-logo"></div>
-                    <h2 class="brand-text mb-0">{!! config('admin.logo', config('admin.name')) !!}</h2>
+                    <span class="logo-mini">{!! config('admin.logo-mini') !!}</span>
+                    <span class="logo-lg">{!! config('admin.logo') !!}</span>
                 </a>
-            </li>
-            <li class="nav-item nav-toggle">
+
                 <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
                     <i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i>
                     <i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block primary collapse-toggle-icon"

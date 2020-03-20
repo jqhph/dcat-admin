@@ -2712,6 +2712,62 @@ table.dataTable.complex-headers tfoot td {
   background: #ea5455;
 }
 
+.main-menu .navbar-header {
+  padding: 0.35rem 1rem 4.5rem;
+}
+
+.main-menu .navbar-header .navbar-brand {
+  margin-top: 1.2rem;
+}
+
+.main-menu .navbar-header .navbar-brand .logo-mini {
+  display: none;
+}
+
+.main-menu .navbar-header .navbar-brand .logo-lg {
+  color: #5c6bc6;
+  font-weight: 600;
+  letter-spacing: 0.01rem;
+  font-size: 1.57rem;
+  -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+  animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+}
+
+.main-menu .navbar-header .navbar-brand img {
+  display: inline-block;
+  max-width: 45px;
+  max-height: 40px;
+}
+
+.main-menu .navbar-header .modern-nav-toggle {
+  display: block;
+  float: right;
+  margin-top: 1px;
+}
+
+.main-menu .navbar-header .nav-item {
+  width: 100%;
+  text-align: center;
+}
+
+.main-menu .navbar-header .navbar-brand {
+  display: inline-block;
+  margin: 10px 0;
+}
+
+body.vertical-layout.vertical-menu-modern.menu-collapsed .main-menu:not(.expanded) .navbar-header {
+  width: 80px;
+  padding: 0.35rem 15px;
+}
+
+body.vertical-layout.vertical-menu-modern.menu-collapsed .main-menu:not(.expanded) .navbar-header .logo-lg {
+  display: none;
+}
+
+body.vertical-layout.vertical-menu-modern.menu-collapsed .main-menu:not(.expanded) .navbar-header .logo-mini {
+  display: inline-block;
+}
+
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
   font-size: 1.3rem;
 }

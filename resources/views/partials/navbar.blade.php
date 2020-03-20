@@ -4,8 +4,8 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item">
                     <a href="{{ admin_url('/') }}" class="navbar-brand waves-effect waves-light">
-                        <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">{!! config('admin.logo', config('admin.name')) !!}</h2>
+                        <span class="logo-mini">{!! config('admin.logo-mini') !!}</span>
+                        <span class="logo-lg">{!! config('admin.logo') !!}</span>
                     </a>
                 </li>
             </ul>
