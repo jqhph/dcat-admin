@@ -2280,6 +2280,7 @@ table.dataTable.complex-headers tfoot td {
 
 .card {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 0.4rem;
 }
 
 .card.dcat-box .card-header {
@@ -2605,6 +2606,96 @@ table.dataTable.complex-headers tfoot td {
   vertical-align: baseline;
   border-radius: 0.25em;
   cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.badge {
+  margin-bottom: 4px;
+}
+
+.nav.nav-tabs .nav-item .nav-link.active:after {
+  box-shadow: 0 0 2px 0 rgba(92, 107, 198, 0.5) !important;
+}
+
+.nav.nav-tabs .nav-item .nav-link {
+  font-size: 1rem;
+  padding: 17px;
+  text-transform: uppercase;
+  letter-spacing: 0.045rem;
+}
+
+.nav-vertical .nav.nav-tabs .nav-item .nav-link {
+  padding: 10px 25px;
+}
+
+.nav-vertical .nav.nav-tabs .nav-item .nav-link.active:after {
+  top: 1.3rem;
+  width: 2.6rem;
+  left: -17px;
+  right: auto;
+}
+
+.nav-vertical .nav.nav-tabs.nav-left {
+  top: 12px;
+}
+
+.nav-vertical .nav.nav-tabs.nav-left ~ .tab-content .tab-pane {
+  background-color: transparent;
+}
+
+.nav-theme-primary .nav.nav-tabs,
+.nav-theme-success .nav.nav-tabs,
+.nav-theme-info .nav.nav-tabs,
+.nav-theme-danger .nav.nav-tabs,
+.nav-theme-default .nav.nav-tabs {
+  background: #5c6bc6;
+  padding-left: 10px;
+  border-radius: 0.4rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.nav-theme-primary .nav.nav-tabs .nav-item .nav-link,
+.nav-theme-success .nav.nav-tabs .nav-item .nav-link,
+.nav-theme-info .nav.nav-tabs .nav-item .nav-link,
+.nav-theme-danger .nav.nav-tabs .nav-item .nav-link,
+.nav-theme-default .nav.nav-tabs .nav-item .nav-link {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-theme-primary .nav.nav-tabs .nav-item .nav-link.active,
+.nav-theme-success .nav.nav-tabs .nav-item .nav-link.active,
+.nav-theme-info .nav.nav-tabs .nav-item .nav-link.active,
+.nav-theme-danger .nav.nav-tabs .nav-item .nav-link.active,
+.nav-theme-default .nav.nav-tabs .nav-item .nav-link.active {
+  color: #fff;
+}
+
+.nav-theme-primary .nav.nav-tabs .nav-item .nav-link.active:after,
+.nav-theme-success .nav.nav-tabs .nav-item .nav-link.active:after,
+.nav-theme-info .nav.nav-tabs .nav-item .nav-link.active:after,
+.nav-theme-danger .nav.nav-tabs .nav-item .nav-link.active:after,
+.nav-theme-default .nav.nav-tabs .nav-item .nav-link.active:after {
+  background: #fff !important;
+}
+
+.nav-theme-primary .nav-tabs .nav-item,
+.nav-theme-success .nav-tabs .nav-item,
+.nav-theme-info .nav-tabs .nav-item,
+.nav-theme-danger .nav-tabs .nav-item,
+.nav-theme-default .nav-tabs .nav-item {
+  margin-bottom: 2px;
+}
+
+.nav-theme-success .nav.nav-tabs {
+  background: #21b978;
+}
+
+.nav-theme-info .nav.nav-tabs {
+  background: #3085d6;
+}
+
+.nav-theme-danger .nav.nav-tabs {
+  background: #ea5455;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
@@ -2654,5 +2745,17 @@ pre {
 
 .shadow-0 {
   box-shadow: none !important;
+}
+
+.shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08) !important;
+}
+
+.shadow-100 {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05) !important;
+}
+
+.shadow-200 {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 1px rgba(0, 0, 0, 0.1) !important;
 }
 

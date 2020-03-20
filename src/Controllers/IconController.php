@@ -26,11 +26,12 @@ class IconController extends Controller
         }');
 
         return $content->title('Icon')->body(function (Row $row) {
-            $tab = Tab::make()->padding('20px')->custom();
-
-            $tab->add(('Themify'), view('admin::helpers.themify'));
-            $tab->add(('Font Awesome'), view('admin::helpers.font-awesome'));
-            $tab->add(('Glyphicons'), view('admin::helpers.glyphicons'));
+            $tab = Tab::make()
+                ->withCard()
+                ->padding('20px')
+                ->add(('Themify'), view('admin::helpers.themify'))
+                ->add(('Font Awesome'), view('admin::helpers.font-awesome'))
+                ->add(('Glyphicons'), view('admin::helpers.glyphicons'));
 
             $row->column(12, $tab);
         });

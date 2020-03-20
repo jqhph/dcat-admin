@@ -65,6 +65,8 @@ ol, ul, dl {
 @import "./components/box";
 // label
 @import "./components/label";
+// tab
+@import "./components/tab";
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
    font-size: 1.3rem;
@@ -115,6 +117,17 @@ pre {
   font-family: Montserrat,Nunito,sans-serif;
 }
 
+// 阴影
 .shadow-0 {
   box-shadow: none!important;
 }
+.shadow {
+  box-shadow: $shadow!important;
+}
+.shadow-100 {
+  box-shadow: $shadow-100!important;
+}
+.shadow-200 {
+  box-shadow: $shadow-200!important;
+}
+

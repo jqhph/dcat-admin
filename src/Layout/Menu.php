@@ -34,13 +34,6 @@ class Menu
         ],
         [
             'id'        => 4,
-            'title'     => 'Routes',
-            'icon'      => '',
-            'uri'       => 'helpers/routes',
-            'parent_id' => 1,
-        ],
-        [
-            'id'        => 5,
             'title'     => 'Icons',
             'icon'      => '',
             'uri'       => 'helpers/icons',

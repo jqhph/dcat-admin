@@ -15,11 +15,6 @@ class Tab extends Widget
     protected $view = 'admin::widgets.tab';
 
     /**
-     * @var string
-     */
-    protected $padding = null;
-
-    /**
      * @var array
      */
     protected $data = [
@@ -28,32 +23,9 @@ class Tab extends Widget
         'tabs'     => [],
         'dropDown' => [],
         'active'   => 0,
+        'padding'  => null,
+        'tabStyle' => ''
     ];
-
-    public function __construct()
-    {
-        $this->class('nav-tabs-default');
-    }
-
-    /**
-     * @return $this
-     */
-    public function custom()
-    {
-        return $this->style('custom');
-    }
-
-    /**
-     * Set style.
-     *
-     * @param string $style
-     *
-     * @return $this
-     */
-    public function style($style)
-    {
-        return $this->class('nav-tabs-'.$style);
-    }
 
     /**
      * Add a tab and its contents.
@@ -112,7 +84,7 @@ class Tab extends Widget
      */
     public function padding(string $padding)
     {
-        $this->padding = 'padding:'.$padding;
+        $this->data['padding'] = 'padding:'.$padding;
 
         return $this;
     }
@@ -159,6 +131,35 @@ class Tab extends Widget
         return $this;
     }
 
+    public function withCard()
+    {
+        return $this
+            ->class('card', true)
+            ->style('padding:.25rem .4rem .4rem');
+    }
+
+    public function vertical()
+    {
+        return $this
+            ->class('nav-vertical d-block', true)
+            ->style('padding:0!important;')
+            ->tabStyle('nav-left flex-column');
+    }
+
+    public function theme(string $style = 'primary')
+    {
+        return $this
+            ->class('nav-theme-'.$style, true)
+            ->style('padding:0!important;');
+    }
+
+    public function tabStyle($type)
+    {
+        $this->data['tabStyle'] = $type;
+
+        return $this;
+    }
+
     /**
      * Render Tab.
      *
@@ -168,7 +169,7 @@ class Tab extends Widget
     {
         $data = array_merge(
             $this->data,
-            ['attributes' => $this->formatHtmlAttributes(), 'padding' => $this->padding]
+            ['attributes' => $this->formatHtmlAttributes()]
         );
 
         return view($this->view, $data)->render();
