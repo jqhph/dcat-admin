@@ -112,18 +112,23 @@ class Tree extends Field
         return $this;
     }
 
-    /**
-     * @param string $idColumn
-     * @param string $textColumn
-     * @param string $parentColumn
-     *
-     * @return $this
-     */
-    public function name(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
+    public function setIdColumn(string $name)
     {
-        $this->columnNames['id'] = $idColumn;
-        $this->columnNames['text'] = $textColumn;
-        $this->columnNames['parent'] = $parentColumn;
+        $this->columnNames['id'] = $name;
+
+        return $this;
+    }
+
+    public function setTitleColumn(string $name)
+    {
+        $this->columnNames['text'] = $name;
+
+        return $this;
+    }
+
+    public function setParentColumn(string $name)
+    {
+        $this->columnNames['parent'] = $name;
 
         return $this;
     }
@@ -217,13 +222,13 @@ class Tree extends Field
     }
 
     /**
-     * Disable expand.
+     * @param bool $value
      *
      * @return $this
      */
-    public function disableExpand()
+    public function expand(bool $value = true)
     {
-        $this->expand = false;
+        $this->expand = $value;
 
         return $this;
     }
@@ -255,7 +260,6 @@ class Tree extends Field
 
         $checkboxes->style('primary');
         $checkboxes->inline();
-        $checkboxes->circle(false);
         $checkboxes->options([
             1 => trans('admin.selectall'),
             2 => trans('admin.expand'),

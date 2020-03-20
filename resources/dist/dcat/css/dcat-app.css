@@ -2362,6 +2362,7 @@ table.dataTable.complex-headers tfoot td {
   font-size: 1.1rem !important;
   text-transform: capitalize;
   overflow: hidden;
+  background-color: #fff !important;
 }
 
 .layui-layer-setwin .layui-layer-min cite {
@@ -2416,7 +2417,8 @@ table.dataTable.complex-headers tfoot td {
   line-height: 20px !important;
   padding: 4px 15px !important;
   font-size: 0.95rem;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
+  border-color: #fff !important;
 }
 
 .layui-layer-btn .layui-layer-btn0 {
@@ -2737,6 +2739,7 @@ table.dataTable.complex-headers tfoot td {
   display: inline-block;
   max-width: 45px;
   max-height: 40px;
+  margin-top: -1px;
 }
 
 .main-menu .navbar-header .modern-nav-toggle {

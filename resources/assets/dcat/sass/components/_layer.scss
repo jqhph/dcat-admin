@@ -10,6 +10,7 @@
   font-size: 1.1rem!important;
   text-transform: capitalize;
   overflow: hidden;
+  background-color: #fff!important;
 }
 .layui-layer-setwin .layui-layer-min cite {
   background: transparent!important;
@@ -60,7 +61,8 @@
   line-height: 20px!important;
   padding: 4px 15px!important;
   font-size: .95rem;
-  box-shadow: $shadow;
+  box-shadow: $shadow-100;
+  border-color: $white!important;
 }
 
 .layui-layer-btn .layui-layer-btn0 {

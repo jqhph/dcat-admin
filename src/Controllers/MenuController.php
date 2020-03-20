@@ -52,7 +52,9 @@ class MenuController extends AdminController
                     $form->multipleSelect('roles', trans('admin.roles'))
                         ->options($roleModel::all()->pluck('name', 'id'));
                     if ($menuModel::withPermission()) {
-                        $form->tree('permissions', trans('admin.permission'))->nodes((new $permissionModel())->allNodes());
+                        $form->tree('permissions', trans('admin.permission'))
+                            ->expand(false)
+                            ->nodes((new $permissionModel())->allNodes());
                     }
                     $form->hidden('_token')->default(csrf_token());
 

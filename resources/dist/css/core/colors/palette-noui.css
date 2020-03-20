@@ -135,20 +135,20 @@
 }
 
 .slider-warning .noUi-connect {
-  background: #ff9f43 !important;
+  background: #dda451 !important;
 }
 
 .slider-warning.noUi-connect {
-  background: #ff9f43 !important;
+  background: #dda451 !important;
 }
 
 .slider-warning .noUi-handle {
-  border-color: #ff9f43 !important;
+  border-color: #dda451 !important;
 }
 
 .slider-warning.circle-filled .noUi-handle,
 .slider-warning.square .noUi-handle {
-  background: #ff9f43 !important;
+  background: #dda451 !important;
 }
 
 .slider-danger .noUi-connect {

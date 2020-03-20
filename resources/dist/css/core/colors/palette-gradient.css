@@ -175,7 +175,7 @@
 .bg-gradient-warning {
   background: #fafafa;
   color: #fff;
-  background-image: linear-gradient(30deg, #ff9f43, rgba(255, 159, 67, 0.5));
+  background-image: linear-gradient(30deg, #dda451, rgba(221, 164, 81, 0.5));
   background-repeat: repeat-x;
 }
 
@@ -185,7 +185,7 @@
 }
 
 .gradient-light-warning {
-  background: linear-gradient(30deg, #ff9f43 0%, #fff487 100%);
+  background: linear-gradient(30deg, #dda451 0%, #eff082 100%);
   color: #fff;
 }
 

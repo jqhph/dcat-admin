@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
@@ -86,28 +87,30 @@ class Tree extends Widget
         return $this;
     }
 
-    public function checked($value = [])
+    public function check($value)
     {
-        if ($value instanceof Arrayable) {
-            $value = $value->toArray();
-        }
-        $this->value = (array) $value;
+        $this->value = Helper::array($value);
 
         return $this;
     }
 
-    /**
-     * @param string $idColumn
-     * @param string $textColumn
-     * @param string $parentColumn
-     *
-     * @return $this
-     */
-    public function name(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
+    public function setIdColumn(string $name)
     {
-        $this->columnNames['id'] = $idColumn;
-        $this->columnNames['text'] = $textColumn;
-        $this->columnNames['parent'] = $parentColumn;
+        $this->columnNames['id'] = $name;
+
+        return $this;
+    }
+
+    public function setTitleColumn(string $name)
+    {
+        $this->columnNames['text'] = $name;
+
+        return $this;
+    }
+
+    public function setParentColumn(string $name)
+    {
+        $this->columnNames['parent'] = $name;
 
         return $this;
     }

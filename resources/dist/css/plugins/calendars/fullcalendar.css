@@ -213,40 +213,40 @@ fieldset:disabled .fc a.fc-button,
 
 .btn-warning {
   color: #2a2e30;
-  background-color: #ff9f43;
-  border-color: #ff9f43;
+  background-color: #dda451;
+  border-color: #dda451;
 }
 
 .btn-warning:hover {
   color: #2a2e30;
-  background-color: #ff8b1d;
-  border-color: #ff8510;
+  background-color: #d79331;
+  border-color: #d28d29;
 }
 
 .btn-warning:focus,
 .btn-warning.focus {
-  box-shadow: 0 0 0 0.2rem rgba(223, 142, 64, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(194, 146, 76, 0.5);
 }
 
 .btn-warning.disabled,
 .btn-warning:disabled {
   color: #2a2e30;
-  background-color: #ff9f43;
-  border-color: #ff9f43;
+  background-color: #dda451;
+  border-color: #dda451;
 }
 
 .btn-warning:not(:disabled):not(.disabled):active,
 .btn-warning:not(:disabled):not(.disabled).active,
 .show > .btn-warning.dropdown-toggle {
   color: #2a2e30;
-  background-color: #ff8510;
-  border-color: #ff7e03;
+  background-color: #d28d29;
+  border-color: #c78627;
 }
 
 .btn-warning:not(:disabled):not(.disabled):active:focus,
 .btn-warning:not(:disabled):not(.disabled).active:focus,
 .show > .btn-warning.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(223, 142, 64, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(194, 146, 76, 0.5);
 }
 
 .btn-danger {
@@ -520,24 +520,24 @@ fieldset:disabled .fc a.fc-button,
 }
 
 .btn-outline-warning {
-  color: #ff9f43;
-  border-color: #ff9f43;
+  color: #dda451;
+  border-color: #dda451;
 }
 
 .btn-outline-warning:hover {
   color: #2a2e30;
-  background-color: #ff9f43;
-  border-color: #ff9f43;
+  background-color: #dda451;
+  border-color: #dda451;
 }
 
 .btn-outline-warning:focus,
 .btn-outline-warning.focus {
-  box-shadow: 0 0 0 0.2rem rgba(255, 159, 67, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(221, 164, 81, 0.5);
 }
 
 .btn-outline-warning.disabled,
 .btn-outline-warning:disabled {
-  color: #ff9f43;
+  color: #dda451;
   background-color: transparent;
 }
 
@@ -545,14 +545,14 @@ fieldset:disabled .fc a.fc-button,
 .btn-outline-warning:not(:disabled):not(.disabled).active,
 .show > .btn-outline-warning.dropdown-toggle {
   color: #2a2e30;
-  background-color: #ff9f43;
-  border-color: #ff9f43;
+  background-color: #dda451;
+  border-color: #dda451;
 }
 
 .btn-outline-warning:not(:disabled):not(.disabled):active:focus,
 .btn-outline-warning:not(:disabled):not(.disabled).active:focus,
 .show > .btn-outline-warning.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(255, 159, 67, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(221, 164, 81, 0.5);
 }
 
 .btn-outline-danger {

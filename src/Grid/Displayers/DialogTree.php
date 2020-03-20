@@ -123,18 +123,23 @@ class DialogTree extends AbstractDisplayer
         return $this;
     }
 
-    /**
-     * @param string $idColumn
-     * @param string $textColumn
-     * @param string $parentColumn
-     *
-     * @return $this
-     */
-    public function name(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
+    public function setIdColumn(string $name)
     {
-        $this->columnNames['id'] = $idColumn;
-        $this->columnNames['text'] = $textColumn;
-        $this->columnNames['parent'] = $parentColumn;
+        $this->columnNames['id'] = $name;
+
+        return $this;
+    }
+
+    public function setTitleColumn(string $name)
+    {
+        $this->columnNames['text'] = $name;
+
+        return $this;
+    }
+
+    public function setParentColumn(string $name)
+    {
+        $this->columnNames['parent'] = $name;
 
         return $this;
     }
