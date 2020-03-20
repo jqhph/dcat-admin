@@ -1983,8 +1983,8 @@ select.form-control:not([multiple=multiple]) {
   border-color: #d9d9d9 !important;
 }
 
-.form-group .select2-container {
-  width: 1% !important;
+.input-group .select2-container {
+  width: 50% !important;
   flex: 1 1 auto;
 }
 

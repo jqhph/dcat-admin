@@ -118,12 +118,13 @@ select.form-control:not([multiple=multiple]) {
   border-color: $input-border-color!important;
 }
 
-.form-group {
+.input-group {
   .select2-container {
-    width: 1%!important;
+    width: 50%!important;
     flex: 1 1 auto;
   }
 }
+
 .select2-dropdown {
   border: 1px solid rgba(0, 0, 0, 0.03)!important;
   box-shadow: $shadow;
@@ -149,3 +150,4 @@ select.form-control:not([multiple=multiple]) {
   display: inline-block;
   padding: 6px;
 }
+

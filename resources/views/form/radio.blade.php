@@ -2,11 +2,13 @@
 
     <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
-    <div class="{{$viewClass['field']}} d-flex" id="{{ $id }}">
+    <div class="{{$viewClass['field']}}" id="{{ $id }}">
 
         @include('admin::form.error')
 
-        {!! $radio !!}
+        <div class="d-flex">
+            {!! $radio !!}
+        </div>
 
         @include('admin::form.help-block')
 

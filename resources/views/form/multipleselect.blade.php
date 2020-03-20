@@ -4,7 +4,7 @@
         <span>{!! $label !!}</span>
     </div>
 
-    <div class="{{$viewClass['field']}} d-flex">
+    <div class="{{$viewClass['field']}}">
 
         @include('admin::form.error')
 
