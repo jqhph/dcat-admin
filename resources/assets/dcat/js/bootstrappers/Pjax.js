@@ -7,9 +7,9 @@ export default class Pjax {
     }
 
     boot(Dcat) {
-        let container = Dcat.config.pjax_container_selector;
-
-        let _this = this;
+        let container = Dcat.config.pjax_container_selector,
+            formContainer = 'form[pjax-container]',
+            scriptContainer = 'script[data-exec-on-popstate]';
 
         $.pjax.defaults.timeout = 5000;
         $.pjax.defaults.maxCacheLength = 0;
@@ -22,13 +22,13 @@ export default class Pjax {
             event.preventDefault();
         });
 
-        $d.off('submit', 'form[pjax-container]').on('submit', 'form[pjax-container]', function (event) {
+        $d.off('submit', formContainer).on('submit', formContainer, function (event) {
             $.pjax.submit(event, container)
         });
 
         $d.on("pjax:popstate", function () {
             $d.one("pjax:end", function (event) {
-                $(event.target).find("script[data-exec-on-popstate]").each(function () {
+                $(event.target).find(scriptContainer).each(function () {
                     $.globalEval(this.text || this.textContent || this.innerHTML || '');
                 });
             });
@@ -36,21 +36,18 @@ export default class Pjax {
 
         $d.on('pjax:send', function (xhr) {
             if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-                var $submit_btn = $('form[pjax-container] :submit');
-                if ($submit_btn) {
-                    $submit_btn.button('loading')
-                }
+                $(formContainer + ' :submit').button('loading');
             }
             Dcat.NP.start();
         });
 
         $d.on('pjax:complete', function (xhr) {
             if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-                var $submit_btn = $('form[pjax-container] :submit');
-                if ($submit_btn) {
-                    $submit_btn.button('reset')
-                }
+                $(formContainer + ' :submit').button('reset')
             }
+        });
+
+        $d.on('pjax:loaded', () => {
             Dcat.NP.done();
         });
     }

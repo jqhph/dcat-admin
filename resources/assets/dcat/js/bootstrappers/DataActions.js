@@ -1,16 +1,16 @@
 
-let actions = {
+let defaultActions = {
     // 刷新按钮
-    refreshAction: function (Dcat) {
-        $('[data-action="refresh"]').off('click').click(function () {
+    refresh: function ($action, Dcat) {
+        return function () {
             Dcat.reload($(this).data('url'));
-        });
+        };
     },
     // 删除按钮初始化
-    deleteAction: function (Dcat) {
+    delete: function ($action, Dcat) {
         let lang = Dcat.lang;
 
-        $('[data-action="delete"]').off('click').click(function() {
+        return function() {
             let url = $(this).data('url'),
                 redirect = $(this).data('redirect');
 
@@ -34,11 +34,11 @@ let actions = {
                     }
                 });
             });
-        });
+        };
     },
     // 批量删除按钮初始化
-    batchDeleteAction: function (Dcat) {
-        $('[data-action="batch-delete"]').off('click').on('click', function() {
+    'batch-delete': function ($action, Dcat) {
+        return function() {
             let url = $(this).data('url'),
                 name = $(this).data('name'),
                 keys = Dcat.grid.selected(name),
@@ -67,24 +67,25 @@ let actions = {
                     }
                 });
             });
-        });
+        };
     },
 
     // 图片预览
-    imagePreview: function (Dcat) {
-        $('[data-action="preview"]').off('click').click(function () {
+    'preview-img': function ($action, Dcat) {
+        return function () {
             return Dcat.previewImage($(this).attr('src'));
-        });
+        };
     },
 
-    popover: function () {
+    'popover': function ($action) {
         $('.popover').remove();
 
-        $('[data-action="popover"]').popover();
+        return function () {
+            $action.popover()
+        };
     },
 
-    // box-collapse
-    boxActions: function () {
+    'box-actions': function () {
         $('.box [data-action="collapse"]').click(function (e) {
             e.preventDefault();
 
@@ -98,13 +99,24 @@ let actions = {
             $(this).closest(".box").removeClass().slideUp("fast");
         });
     }
-
 };
 
 export default class DataActions {
     constructor(Dcat) {
-        for (let name in actions) {
-            actions[name](Dcat)
+        let actions = $.extend(defaultActions, Dcat.actions()),
+            $action,
+            name,
+            func;
+
+        for (name in actions) {
+            $action = $(`[data-action="${name}"]`);
+
+            func = actions[name]($action, Dcat);
+
+            if (typeof func === 'function') {
+                // 必须先取消再绑定，否则可能造成重复绑定的效果
+                $action.off('click').click(func);
+            }
         }
     }
 }

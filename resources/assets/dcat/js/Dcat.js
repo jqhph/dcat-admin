@@ -5,6 +5,7 @@ import Translator from './extensions/Translator'
 let $ = jQuery,
     pjaxResponded = false,
     bootingCallbacks = [],
+    actions = {},
     defaultOptions = {
         pjax_container_selector: '#pjax-container',
     };
@@ -194,5 +195,17 @@ export default class Dcat {
     // 语言包
     Translator(lang) {
         return new Translator(this, lang);
+    }
+
+    // 注册动作
+    addAction(name, callback) {
+        if (typeof callback === 'function') {
+            actions[name] = callback;
+        }
+    }
+
+    // 获取动作
+    actions() {
+        return actions
     }
 }
