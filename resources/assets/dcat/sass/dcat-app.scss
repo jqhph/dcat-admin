@@ -63,6 +63,8 @@ ol, ul, dl {
 @import "./components/grid-selector";
 // box
 @import "./components/box";
+// label
+@import "./components/label";
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
    font-size: 1.3rem;

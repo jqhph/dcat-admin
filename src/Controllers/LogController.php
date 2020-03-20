@@ -44,7 +44,7 @@ class LogController extends Controller
         $grid->method(trans('admin.method'))->responsive()->display(function ($method) {
             $color = Arr::get(OperationLogModel::$methodColors, $method, 'default');
 
-            return "<span class=\"label label-$color\">$method</span>";
+            return "<span class=\"label bg-$color\">$method</span>";
         })->filterByValue();
 
         $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {

@@ -2593,6 +2593,20 @@ table.dataTable.complex-headers tfoot td {
   border: 1px solid #d9d9d9;
 }
 
+.label {
+  display: inline;
+  padding: 0.24em 0.6em 0.34em;
+  font-size: 87%;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
   font-size: 1.3rem;
 }

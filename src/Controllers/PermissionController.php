@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Controllers;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
@@ -109,13 +110,15 @@ class PermissionController extends AdminController
                     $path = trim(admin_base_path($path), '/');
                 }
 
-                return "<code>$path</code>";
+                $color = Admin::color()->primaryDarker();
+
+                return "<code style='color:{$color}'>$path</code>";
             })->implode('&nbsp;&nbsp;');
 
             $method = collect($method ?: ['ANY'])->unique()->map(function ($name) {
                 return strtoupper($name);
             })->map(function ($name) {
-                return "<span class='label label-primary'>{$name}</span>";
+                return "<span class='label bg-primary'>{$name}</span>";
             })->implode('&nbsp;').'&nbsp;';
 
             $payload .= "</div>&nbsp; $method<a class=\"dd-nodrag\">$path</a>";
@@ -149,7 +152,7 @@ class PermissionController extends AdminController
             $method = collect($method)->map(function ($name) {
                 return strtoupper($name);
             })->map(function ($name) {
-                return "<span class='label label-primary'>{$name}</span>";
+                return "<span class='label bg-primary'>{$name}</span>";
             })->implode('&nbsp;').'&nbsp;';
 
             return collect($path)->filter()->map(function ($path) use ($method) {
@@ -158,7 +161,7 @@ class PermissionController extends AdminController
                     $method = collect(explode(',', $method))->map(function ($name) {
                         return strtoupper($name);
                     })->map(function ($name) {
-                        return "<span class='label label-primary'>{$name}</span>";
+                        return "<span class='label bg-primary'>{$name}</span>";
                     })->implode('&nbsp;').'&nbsp;';
                 }
 
@@ -223,7 +226,7 @@ class PermissionController extends AdminController
                 $method = collect($method)->map(function ($name) {
                     return strtoupper($name);
                 })->map(function ($name) {
-                    return "<span class='label label-primary'>{$name}</span>";
+                    return "<span class='label bg-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
                 if (! empty(config('admin.route.prefix'))) {

@@ -133,6 +133,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var $ = jQuery,
     _pjaxResponded = false,
     bootingCallbacks = [],
+    _actions = {},
     defaultOptions = {
   pjax_container_selector: '#pjax-container'
 };
@@ -340,6 +341,20 @@ var Dcat = /*#__PURE__*/function () {
     key: "Translator",
     value: function Translator(lang) {
       return new _extensions_Translator__WEBPACK_IMPORTED_MODULE_1__["default"](this, lang);
+    } // 注册动作
+
+  }, {
+    key: "addAction",
+    value: function addAction(name, callback) {
+      if (typeof callback === 'function') {
+        _actions[name] = callback;
+      }
+    } // 获取动作
+
+  }, {
+    key: "actions",
+    value: function actions() {
+      return _actions;
     }
   }]);
 
@@ -362,17 +377,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DataActions; });
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var actions = {
+var defaultActions = {
   // 刷新按钮
-  refreshAction: function refreshAction(Dcat) {
-    $('[data-action="refresh"]').off('click').click(function () {
+  refresh: function refresh($action, Dcat) {
+    return function () {
       Dcat.reload($(this).data('url'));
-    });
+    };
   },
   // 删除按钮初始化
-  deleteAction: function deleteAction(Dcat) {
+  "delete": function _delete($action, Dcat) {
     var lang = Dcat.lang;
-    $('[data-action="delete"]').off('click').click(function () {
+    return function () {
       var url = $(this).data('url'),
           redirect = $(this).data('redirect');
       Dcat.confirm(lang.delete_confirm, url, function () {
@@ -396,11 +411,11 @@ var actions = {
           }
         });
       });
-    });
+    };
   },
   // 批量删除按钮初始化
-  batchDeleteAction: function batchDeleteAction(Dcat) {
-    $('[data-action="batch-delete"]').off('click').on('click', function () {
+  'batch-delete': function batchDelete($action, Dcat) {
+    return function () {
       var url = $(this).data('url'),
           name = $(this).data('name'),
           keys = Dcat.grid.selected(name),
@@ -431,20 +446,21 @@ var actions = {
           }
         });
       });
-    });
+    };
   },
   // 图片预览
-  imagePreview: function imagePreview(Dcat) {
-    $('[data-action="preview"]').off('click').click(function () {
+  'preview-img': function previewImg($action, Dcat) {
+    return function () {
       return Dcat.previewImage($(this).attr('src'));
-    });
+    };
   },
-  popover: function popover() {
+  'popover': function popover($action) {
     $('.popover').remove();
-    $('[data-action="popover"]').popover();
+    return function () {
+      $action.popover();
+    };
   },
-  // box-collapse
-  boxActions: function boxActions() {
+  'box-actions': function boxActions() {
     $('.box [data-action="collapse"]').click(function (e) {
       e.preventDefault();
       $(this).find('i').toggleClass('icon-minus icon-plus');
@@ -460,8 +476,19 @@ var actions = {
 var DataActions = function DataActions(Dcat) {
   _classCallCheck(this, DataActions);
 
-  for (var name in actions) {
-    actions[name](Dcat);
+  var actions = $.extend(defaultActions, Dcat.actions()),
+      $action,
+      name,
+      func;
+
+  for (name in actions) {
+    $action = $("[data-action=\"".concat(name, "\"]"));
+    func = actions[name]($action, Dcat);
+
+    if (typeof func === 'function') {
+      // 必须先取消再绑定，否则可能造成重复绑定的效果
+      $action.off('click').click(func);
+    }
   }
 };
 
@@ -597,10 +624,9 @@ var Pjax = /*#__PURE__*/function () {
   _createClass(Pjax, [{
     key: "boot",
     value: function boot(Dcat) {
-      var container = Dcat.config.pjax_container_selector;
-
-      var _this = this;
-
+      var container = Dcat.config.pjax_container_selector,
+          formContainer = 'form[pjax-container]',
+          scriptContainer = 'script[data-exec-on-popstate]';
       $.pjax.defaults.timeout = 5000;
       $.pjax.defaults.maxCacheLength = 0;
       $('a:not(a[target="_blank"])').click(function (event) {
@@ -611,36 +637,29 @@ var Pjax = /*#__PURE__*/function () {
       $d.on('pjax:timeout', function (event) {
         event.preventDefault();
       });
-      $d.off('submit', 'form[pjax-container]').on('submit', 'form[pjax-container]', function (event) {
+      $d.off('submit', formContainer).on('submit', formContainer, function (event) {
         $.pjax.submit(event, container);
       });
       $d.on("pjax:popstate", function () {
         $d.one("pjax:end", function (event) {
-          $(event.target).find("script[data-exec-on-popstate]").each(function () {
+          $(event.target).find(scriptContainer).each(function () {
             $.globalEval(this.text || this.textContent || this.innerHTML || '');
           });
         });
       });
       $d.on('pjax:send', function (xhr) {
         if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-          var $submit_btn = $('form[pjax-container] :submit');
-
-          if ($submit_btn) {
-            $submit_btn.button('loading');
-          }
+          $(formContainer + ' :submit').button('loading');
         }
 
         Dcat.NP.start();
       });
       $d.on('pjax:complete', function (xhr) {
         if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-          var $submit_btn = $('form[pjax-container] :submit');
-
-          if ($submit_btn) {
-            $submit_btn.button('reset');
-          }
+          $(formContainer + ' :submit').button('reset');
         }
-
+      });
+      $d.on('pjax:loaded', function () {
         Dcat.NP.done();
       });
     }
