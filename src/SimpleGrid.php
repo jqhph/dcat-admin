@@ -27,11 +27,4 @@ class SimpleGrid extends Grid
             $content->full();
         }, true);
     }
-
-    protected function setupFilter()
-    {
-        parent::setupFilter();
-
-        $this->filter()->panel();
-    }
 }
