@@ -1756,7 +1756,7 @@ dl {
 }
 
 .btn {
-  padding: 0.8rem 1.2rem !important;
+  padding: 0.83rem 1.2rem !important;
   font-size: 0.95rem;
   height: 37.6px;
   line-height: 1.2;
@@ -2284,7 +2284,36 @@ table.dataTable.complex-headers tfoot td {
 
 .card.dcat-box .card-header {
   border-bottom: 1px solid #f4f4f4;
-  padding: 1.2rem;
+  padding: 1.1rem;
+}
+
+.card .card-header {
+  padding: 1.1rem 1.1rem 0;
+  align-items: center;
+}
+
+.card-header.with-border {
+  border-bottom: 1px solid #f4f4f4;
+  padding: 1.1rem;
+}
+
+.card-box-title {
+  font-size: 1.1rem;
+}
+
+.card-footer {
+  padding: 1.1rem;
+  background: transparent;
+  border-color: #f4f4f4 !important;
+}
+
+.card-body {
+  padding: 1.1rem;
+}
+
+.card-body .card-footer {
+  padding: 0.8rem;
+  margin: -1.1rem;
 }
 
 .dd {
@@ -2474,13 +2503,14 @@ table.dataTable.complex-headers tfoot td {
 
 .box {
   position: relative;
-  border-radius: 0.35rem;
+  border-radius: 0.4rem;
   background: #ffffff;
-  border-top: 2px solid #d9d9d9;
+  border-top: 2px solid transparent;
   margin-bottom: 10px;
   width: 100%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
   display: flex;
+  flex-direction: column;
 }
 
 .box .box-footer,
@@ -2489,14 +2519,15 @@ table.dataTable.complex-headers tfoot td {
 }
 
 .box-header {
-  padding: 13px;
+  padding: 14px;
   display: inherit;
   justify-content: space-between;
+  align-items: center;
 }
 
 .box-header h3,
 .box-header .h3 {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   margin-bottom: 0;
 }
 
@@ -2517,8 +2548,13 @@ table.dataTable.complex-headers tfoot td {
   border-top: 0;
 }
 
-.box.box-solid.box-default {
-  border: 1px solid #d9d9d9;
+.box-footer {
+  display: inherit;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding: 10px;
 }
 
 .box-body {
@@ -2529,13 +2565,32 @@ table.dataTable.complex-headers tfoot td {
   padding: 10px;
 }
 
-.box-footer {
-  display: inherit;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  padding: 10px;
+.box-body .box-footer {
+  margin: -10px;
+}
+
+.box-default {
+  border-color: #d9d9d9;
+}
+
+.box-primary {
+  border-color: #5c6bc6;
+}
+
+.box-info {
+  border-color: #3085d6;
+}
+
+.box-success {
+  border-color: #21b978;
+}
+
+.box-danger {
+  border-color: #ea5455;
+}
+
+.box.box-solid.box-default {
+  border: 1px solid #d9d9d9;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
@@ -2581,5 +2636,9 @@ pre {
   white-space: pre-wrap;
   margin-bottom: 0;
   font-family: Montserrat, Nunito, sans-serif;
+}
+
+.shadow-0 {
+  box-shadow: none !important;
 }
 

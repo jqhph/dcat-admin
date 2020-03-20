@@ -11,6 +11,12 @@ class Card extends Widget
      */
     protected $view = 'admin::widgets.card';
 
+    protected $title;
+
+    protected $content;
+
+    protected $footer;
+
     /**
      * @var array
      */
@@ -19,10 +25,17 @@ class Card extends Widget
     /**
      * @var bool
      */
-    protected $divider = true;
+    protected $divider = false;
 
-    public function __construct($title = '', $content = '')
+
+
+    public function __construct($title = '', $content = null)
     {
+        if ($content === null) {
+            $content = $title;
+            $title = '';
+        }
+
         if ($title) {
             $this->title($title);
         }
@@ -35,7 +48,17 @@ class Card extends Widget
     }
 
     /**
-     * Set content padding.
+     * @return $this
+     */
+    public function withHeaderBorder()
+    {
+        $this->divider = true;
+
+        return $this;
+    }
+
+    /**
+     * 设置卡片间距.
      *
      * @param string $padding
      */
@@ -47,22 +70,30 @@ class Card extends Widget
     }
 
     /**
-     * Set box content.
-     *
      * @param string $content
      *
      * @return $this
      */
     public function content($content)
     {
-        $this->content = $this->toString($content);
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * Set box title.
+     * @param string $content
      *
+     * @return $this
+     */
+    public function footer($content)
+    {
+        $this->footer = $content;
+
+        return $this;
+    }
+
+    /**
      * @param string $title
      *
      * @return $this
@@ -95,11 +126,12 @@ class Card extends Widget
     {
         return [
             'title'      => $this->title,
-            'content'    => $this->content,
+            'content'    => $this->toString($this->content),
+            'footer'     => $this->toString($this->footer),
             'tools'      => $this->tools,
             'attributes' => $this->formatHtmlAttributes(),
-            'style'      => $this->style,
             'padding'    => $this->padding,
+            'divider'    => $this->divider,
         ];
     }
 }

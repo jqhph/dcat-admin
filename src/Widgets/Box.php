@@ -71,7 +71,7 @@ class Box extends Widget
      */
     public function content($content)
     {
-        $this->content = $this->toString($content);
+        $this->content = $content;
 
         return $this;
     }
@@ -98,7 +98,7 @@ class Box extends Widget
     public function collapsable()
     {
         $this->tools[] =
-            '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>';
+            '<button class="border-0 bg-white" data-action="collapse"><i class="feather icon-minus"></i></button>';
 
         return $this;
     }
@@ -111,7 +111,7 @@ class Box extends Widget
     public function removable()
     {
         $this->tools[] =
-            '<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>';
+            '<button class="border-0 bg-white" data-action="remove"><i class="feather icon-x"></i></button>';
 
         return $this;
     }
@@ -125,13 +125,9 @@ class Box extends Widget
      */
     public function style($styles)
     {
-        if (is_string($styles)) {
-            return $this->style([$styles]);
-        }
-
         $styles = array_map(function ($style) {
             return 'box-'.$style;
-        }, $styles);
+        }, (array) $styles);
 
         $this->class = $this->class.' '.implode(' ', $styles);
 
@@ -169,7 +165,7 @@ class Box extends Widget
     {
         return [
             'title'      => $this->title,
-            'content'    => $this->content,
+            'content'    => $this->toString($this->content),
             'tools'      => $this->tools,
             'attributes' => $this->formatHtmlAttributes(),
             'padding'    => $this->padding,

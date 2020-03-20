@@ -82,6 +82,23 @@ let actions = {
 
         $('[data-action="popover"]').popover();
     },
+
+    // box-collapse
+    boxActions: function () {
+        $('.box [data-action="collapse"]').click(function (e) {
+            e.preventDefault();
+
+            $(this).find('i').toggleClass('icon-minus icon-plus');
+
+            $(this).closest('.box').find('.box-body').first().collapse("toggle");
+        });
+
+        // Close box
+        $('.box [data-action="remove"]').click(function () {
+            $(this).closest(".box").removeClass().slideUp("fast");
+        });
+    }
+
 };
 
 export default class DataActions {
