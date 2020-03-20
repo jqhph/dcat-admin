@@ -16,13 +16,13 @@ trait HasFormResponse
      *
      * @return bool|\Illuminate\Http\JsonResponse
      */
-    public function ajaxResponse($message, $redirect = null, bool $status = true)
+    public function ajaxResponse(?string $message, ?string $redirect = null, bool $status = true)
     {
         if ($this->isAjaxRequest()) {
             return response()->json([
                 'status'   => $status,
                 'message'  => $message,
-                'redirect' => admin_url($redirect),
+                'redirect' => $redirect ? admin_url($redirect) : '',
             ]);
         }
 

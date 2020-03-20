@@ -567,6 +567,10 @@ class Form implements Renderable
      */
     public function store(?array $data = null, $redirectTo = null)
     {
+        if ($data) {
+            $this->request->replace($data);
+        }
+
         $data = $data ?: $this->request->all();
 
         if ($response = $this->beforeStore($data)) {
@@ -728,6 +732,10 @@ class Form implements Renderable
         ?array $data = null,
         $redirectTo = null
     ) {
+        if ($data) {
+            $this->request->replace($data);
+        }
+
         $data = $data ?: $this->request->all();
 
         if ($response = $this->beforeUpdate($id, $data)) {
@@ -800,7 +808,7 @@ class Form implements Renderable
      * @param $key
      * @param $redirectTo
      *
-     * @return string|false
+     * @return string|null
      */
     public function redirectUrl($key, $redirectTo = null)
     {
@@ -814,7 +822,7 @@ class Form implements Renderable
         if ($this->request->get('after-save') == 1) {
             // continue editing
             if ($this->builder->isEditing() && $this->isAjaxRequest()) {
-                return false;
+                return null;
             }
 
             return rtrim($resourcesPath, '/')."/{$key}/edit";

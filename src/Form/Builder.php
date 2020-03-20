@@ -847,12 +847,12 @@ EOF;
 
     f.find('button.submit').click(function () {
         var t = $(this);
-    console.log(12312321, f);
+
         Dcat.Form({
             form: f,
             before: function () {
                 f.validator('validate');
-        console.log(567777, f);
+
                 if (f.find('.has-error').length > 0) {
                     return false;
                 }

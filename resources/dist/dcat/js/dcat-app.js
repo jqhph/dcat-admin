@@ -1550,8 +1550,8 @@ var Form = /*#__PURE__*/function () {
       tabSelector: '.tab-pane',
       // 错误信息模板
       errorTemplate: '<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {message}</label><br/>',
-      // 保存成功后不允许跳转
-      disableRedirect: false,
+      // 保存成功后自动跳转
+      autoRedirect: false,
       // 不允许自动移除表单错误信息
       disableAutoRemoveError: false,
       // 表单提交之前事件监听，返回false可以中止表单继续提交
@@ -1607,7 +1607,7 @@ var Form = /*#__PURE__*/function () {
 
           Dcat.success(response.message || 'Save succeeded!');
 
-          if (options.disableRedirect || response.redirect === false) {
+          if (response.redirect === false) {
             return;
           }
 
@@ -1615,7 +1615,9 @@ var Form = /*#__PURE__*/function () {
             return Dcat.reload(response.redirect);
           }
 
-          history.back(-1);
+          if (options.autoRedirect) {
+            history.back(-1);
+          }
         },
         error: function error(response) {
           Dcat.NP.done();
