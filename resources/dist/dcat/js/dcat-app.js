@@ -404,9 +404,9 @@ var defaultActions = {
 
             if (data.status) {
               Dcat.reload(redirect);
-              Dcat.swal.success(data.message);
+              Dcat.swal.success(data.message, url);
             } else {
-              Dcat.swal.error(data.message);
+              Dcat.swal.error(data.message, url);
             }
           }
         });
@@ -439,9 +439,9 @@ var defaultActions = {
 
             if (data.status) {
               Dcat.reload();
-              Dcat.swal.success(data.message);
+              Dcat.swal.success(data.message, keys.join(', '));
             } else {
-              Dcat.swal.error(data.message);
+              Dcat.swal.error(data.message, keys.join(', '));
             }
           }
         });

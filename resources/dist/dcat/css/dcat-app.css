@@ -2233,8 +2233,9 @@ table.dataTable.complex-headers tfoot td {
 }
 
 .dropdown .dropdown-menu {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
+  border: 0;
+  min-width: 10rem;
 }
 
 .dropdown .dropdown-menu .dropdown-item:hover {
@@ -2261,7 +2262,7 @@ table.dataTable.complex-headers tfoot td {
 
 .dropdown-item a,
 .dropdown-menu label {
-  font-size: 1rem;
+  font-size: 1.03rem;
   color: #333;
 }
 
@@ -2774,6 +2775,18 @@ body.vertical-layout.vertical-menu-modern.menu-collapsed .main-menu:not(.expande
 
 body.vertical-layout.vertical-menu-modern.menu-collapsed .main-menu:not(.expanded) .navbar-header .logo-mini {
   display: inline-block;
+}
+
+.alert {
+  padding: 0.85rem;
+}
+
+.alert h4 {
+  color: inherit;
+}
+
+.alert-light {
+  color: #666 !important;
 }
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {

@@ -69,6 +69,8 @@ ol, ul, dl {
 @import "./components/tab";
 // menu
 @import "./components/menu";
+// alert
+@import "./components/alert";
 
 body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
    font-size: 1.3rem;

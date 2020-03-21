@@ -1,7 +1,8 @@
 .dropdown {
   .dropdown-menu {
-    box-shadow: $shadow;
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: $shadow-100;
+    border: 0;
+    min-width: 10rem;
 
     .dropdown-item:hover {
       background-color: $dark30;
@@ -23,7 +24,7 @@
   color: #333;
 }
 .dropdown-item a, .dropdown-menu label {
-  font-size: 1rem;
+  font-size: 1.03rem;
   color: #333;
 }
 .dropdown-item a {

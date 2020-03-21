@@ -14,22 +14,22 @@ class Alert extends Widget
     /**
      * @var string|\Symfony\Component\Translation\TranslatorInterface
      */
-    protected $title = '';
+    protected $title;
 
     /**
      * @var string
      */
-    protected $content = '';
+    protected $content;
 
     /**
      * @var string
      */
-    protected $style = 'danger';
+    protected $style = 'light';
 
     /**
      * @var string
      */
-    protected $icon = 'ban';
+    protected $icon;
 
     /**
      * @var bool
@@ -108,6 +108,26 @@ class Alert extends Widget
     public function warning()
     {
         return $this->style('warning')->icon('fa fa-warning');
+    }
+
+    /**
+     * Set warning style.
+     *
+     * @return $this
+     */
+    public function danger()
+    {
+        return $this->style('danger')->icon('fa fa-ban');
+    }
+
+    /**
+     * Set light style.
+     *
+     * @return $this
+     */
+    public function light()
+    {
+        return $this->style('light');
     }
 
     /**
