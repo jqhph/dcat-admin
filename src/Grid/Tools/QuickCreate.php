@@ -294,20 +294,22 @@ class QuickCreate implements Renderable
 
     ctr.find('.create-form').submit(function (e) {
         e.preventDefault();
-        if (ctr.attr('working')) {
+        
+        if (ctr.attr('submitting')) {
             return;
         }
         
-        ctr.attr('working', 1);
-        Dcat.NP.start();
+        var btn = $(this).find(':submit').buttonLoading();
+        
+        ctr.attr('submitting', 1);
     
         $.ajax({
             url: '{$url}',
             type: 'POST',
             data: $(this).serialize(),
             success: function(data) {
-                Dcat.NP.done();
-                ctr.attr('working', '');
+                ctr.attr('submitting', '');
+                btn.buttonLoading(false);
                 console.info(data);
                 
                 if (data.status == true) {
@@ -321,8 +323,8 @@ class QuickCreate implements Renderable
                 }
             },
             error:function(xhq){
-                Dcat.NP.done();
-                ctr.attr('working', '');
+                btn.buttonLoading(false);
+                ctr.attr('submitting', '');
                 var json = xhq.responseJSON;
                 if (typeof json === 'object') {
                     if (json.message) {

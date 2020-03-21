@@ -19,7 +19,7 @@ CSS
 
         $label = trans('admin.new');
 
-        return "<button id='create-extension' class='btn btn-outline-success'><i class=\"feather icon-plus\"></i> &nbsp;$label</button>";
+        return "<button id='create-extension' class='btn btn-outline-primary'><i class=\"feather icon-plus\"></i> &nbsp;$label</button>";
     }
 
     protected function setupScript()
@@ -30,15 +30,18 @@ CSS
 
         Admin::script(
             <<<JS
+var content = '<div class="form-group row" style="margin-top:5px;width: 200px"><error></error>'
+    + '<div class="input-group input-group-sm"><span class="input-group-addon"><i class="ti-pencil"></i></span>'
+    + '<input type="text" class="form-control " placeholder="Package Name" name="name" ></div></div>'
+    + '<div class="form-group row"><error></error>'
+    + '<div class="input-group input-group-sm"><span class="input-group-addon"><i class="ti-pencil"></i></span>'
+    + '<input type="text" class="form-control " placeholder="Namespace" name="namespace" value="Dcat\\\\Admin\\\\Extension\\\\Your name" ></div></div>'
+    + '<button id="submit-create" class="btn btn-primary btn-sm waves-effect waves-light">{$submit}</button>';            
+            
 $('#create-extension').popover({
     html: true,
-    title: false,
-    content: function () {
-        return '<div class="form-group " style="margin-top:5px"><error></error><div class="input-group input-group-sm"><span class="input-group-addon"><i class="ti-pencil"></i></span><input type="text" class="form-control " placeholder="Package Name" name="name" ></div></div>'
-        + '<div class="form-group"><error></error><div class="input-group input-group-sm"><span class="input-group-addon"><i class="ti-pencil"></i></span><input type="text" class="form-control " placeholder="Namespace" name="namespace" value="Dcat\\\\Admin\\\\Extension\\\\Your name" ></div></div>'
-        + '<button id="submit-create" class="btn btn-primary btn-sm waves-effect waves-light">{$submit}</button>'
-        
-    }
+    title: '',
+    content: content,
 });
 
 $('#create-extension').on('shown.bs.popover', function () {

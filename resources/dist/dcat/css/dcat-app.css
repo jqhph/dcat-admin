@@ -2058,6 +2058,13 @@ table.dataTable thead tr {
   font-size: 0.95rem !important;
 }
 
+table.dataTable thead th,
+table.dataTable thead td,
+table.dataTable tfoot th,
+table.dataTable tfoot td {
+  font-size: 0.95rem !important;
+}
+
 table.data-list-view.dataTable tbody tr,
 table.data-thumb-view.dataTable tbody tr {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
@@ -2240,6 +2247,8 @@ table.dataTable.complex-headers tfoot td {
   background-color: #f1f1f1;
   vertical-align: middle;
   border-radius: 0.5rem;
+  height: 42px;
+  color: #777;
 }
 
 .dropdown .dropdown-menu {

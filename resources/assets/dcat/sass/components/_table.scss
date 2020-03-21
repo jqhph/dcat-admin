@@ -13,6 +13,10 @@ table.dataTable thead tr {
   font-size: .95rem!important;
 }
 
+table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+  font-size: .95rem!important;
+}
+
 // data-list-view 表格
 table.data-list-view.dataTable tbody tr, table.data-thumb-view.dataTable tbody tr {
   box-shadow: $shadow;

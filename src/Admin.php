@@ -242,7 +242,7 @@ class Admin
      *
      * @return void
      */
-    protected static function registerHelperRoutes()
+    public static function registerHelperRoutes()
     {
         if (! config('admin.helpers.enable', true) || ! config('app.debug')) {
             return;
@@ -259,7 +259,7 @@ class Admin
             $router->post('helpers/scaffold', 'Dcat\Admin\Controllers\ScaffoldController@store');
             $router->post('helpers/scaffold/table', 'Dcat\Admin\Controllers\ScaffoldController@table');
             $router->get('helpers/icons', 'Dcat\Admin\Controllers\IconController@index');
-            $router->resource('helpers/extensions', 'Dcat\Admin\Controllers\ExtensionController', ['only' => ['index', 'update']]);
+            $router->resource('helpers/extensions', 'Dcat\Admin\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
             $router->post('helpers/extensions/import', 'Dcat\Admin\Controllers\ExtensionController@import');
             $router->post('helpers/extensions/create', 'Dcat\Admin\Controllers\ExtensionController@create');
         });

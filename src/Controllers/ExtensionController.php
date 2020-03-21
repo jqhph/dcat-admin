@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Extension\Grid\CreateExtensionButton;
 use Dcat\Admin\Extension\Grid\ImportButton;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -137,7 +136,14 @@ class ExtensionController extends Controller
         $grid->disableViewButton();
 
         $grid->actions(new ImportButton());
-        $grid->tools(new CreateExtensionButton());
+
+        $grid->quickCreate(function (Grid\Tools\QuickCreate $create) {
+            $create->text('package_name')->required();
+            $create->text('namespace')
+                ->attribute('style', 'width:240px')
+                ->required()
+                ->default('Dcat\\\\Admin\\\\Extension\\\\Your name');
+        });
 
         return $grid;
     }
@@ -151,7 +157,13 @@ class ExtensionController extends Controller
     {
         $form = new Form(new Extension());
 
+        $form->text('package_name')->required();
+        $form->text('namespace')->required();
         $form->hidden('enable');
+
+        $form->submitted(function () {
+
+        });
 
         return $form;
     }
