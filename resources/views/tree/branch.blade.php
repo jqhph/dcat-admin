@@ -7,7 +7,7 @@
             @endif
 
             @if($useQuickEdit)
-                <a href="javascript:void(0);" data-url="{{ $path }}/{{ $branch[$keyName] }}/edit" class="tree-quick-edit"><i class=" fa fa-clone"></i></a>
+                <a href="javascript:void(0);" data-url="{{ $path }}/{{ $branch[$keyName] }}/edit" class="tree-quick-edit"><i class="feather icon-edit"></i></a>
             @endif
 
             @if($useDelete)

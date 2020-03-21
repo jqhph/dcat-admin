@@ -14,7 +14,7 @@ class QuickEdit extends RowAction
      */
     public function title()
     {
-        return __('admin.quick_edit');
+        return '<i class="feather icon-edit"></i> '.__('admin.quick_edit');
     }
 
     public function render()

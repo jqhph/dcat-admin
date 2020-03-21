@@ -71,6 +71,7 @@ class LogController extends Controller
         $grid->disableQuickEditButton();
         $grid->disableEditButton();
         $grid->disableViewButton();
+        $grid->setActionClass(Grid\Displayers\Actions::class);
 
         $grid->filter(function (Grid\Filter $filter) {
             $filter->equal('user_id', trans('admin.user'))
