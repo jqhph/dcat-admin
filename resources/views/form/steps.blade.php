@@ -86,12 +86,12 @@ Dcat.ready(function () {
 
             allStepInput.val("1");
             stepInput.val("");
-            $t.button('loading').removeClass('waves-effect');
+            $t.buttonLoading().removeClass('waves-effect');
             isSubmitting = 1;
 
             // 提交完整表单
             submit(function (state, data) {
-                $t.button('reset');
+                $t.buttonLoading(false);
                 isSubmitting = 0;
 
                 if (state) {
@@ -217,13 +217,13 @@ Dcat.ready(function () {
         }
 
         var self = this;
-        $(self).button('loading').removeClass('waves-effect');
+        $(self).buttonLoading().removeClass('waves-effect');
         isSubmitting = 1;
 
         // 发送表单到服务器进行验证
         stepInput.val(smartWizard.current_index);
         submit(function (state) {
-            $(self).button('reset');
+            $(self).buttonLoading(false);
             isSubmitting = 0;
 
             if (state) {

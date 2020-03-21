@@ -11,6 +11,7 @@ export default class Ajax {
 
         Dcat.NP.done();
         Dcat.loading(false);// 关闭所有loading效果
+        $('.btn-loading').buttonLoading(false);
 
         var json = xhr.responseJSON || {}, _msg = json.message;
         switch (xhr.status) {

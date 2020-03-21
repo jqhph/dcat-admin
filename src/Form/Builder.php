@@ -856,10 +856,10 @@ EOF;
                 if (f.find('.has-error').length > 0) {
                     return false;
                 }
-                t.button('loading').removeClass('waves-effect');
+                t.buttonLoading().removeClass('waves-effect');
             },
             after: function () {
-                t.button('reset');
+                t.buttonLoading(false);
             }
         });
     

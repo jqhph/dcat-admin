@@ -62,7 +62,7 @@ EOT;
         if (f) return;
         f = 1;
         
-        btn.button('loading');
+        btn.buttonLoading();
     
         $.ajax({
             url: "{$this->resource()}/" + $(this).data('key'),
@@ -73,12 +73,12 @@ EOT;
                 _method: 'PUT'
             },
             success: function (data) {
-                btn.button('reset');
+                btn.buttonLoading(false);
                 f = 0;
                 Dcat.success(data.message);
             },
             error: function (a, b, c) {
-                btn.button('reset');
+                btn.buttonLoading(false);
                 f = 0;
                 Dcat.ajaxError(a, b, c);
             },

@@ -85,3 +85,9 @@
 .input-group-sm > .form-control, .input-group-sm > .custom-select, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
   padding: 0.5rem .7rem;
 }
+
+// loading
+.btn:not(.btn-sm) .spinner-grow, a:not(.btn) .spinner-grow {
+  margin-bottom: .15rem;
+}
+

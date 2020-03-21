@@ -1864,6 +1864,11 @@ dl {
   padding: 0.5rem 0.7rem;
 }
 
+.btn:not(.btn-sm) .spinner-grow,
+a:not(.btn) .spinner-grow {
+  margin-bottom: 0.15rem;
+}
+
 .form-control-sm {
   padding: 0.5rem 1.5rem;
 }
@@ -2526,7 +2531,7 @@ table.dataTable.complex-headers tfoot td {
 
 .box {
   position: relative;
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
   background: #ffffff;
   border-top: 2px solid transparent;
   margin-bottom: 10px;
@@ -2848,5 +2853,9 @@ pre {
 
 .shadow-200 {
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 1px rgba(0, 0, 0, 0.1) !important;
+}
+
+a.disabled {
+  opacity: 0.65;
 }
 

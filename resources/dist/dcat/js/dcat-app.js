@@ -649,14 +649,14 @@ var Pjax = /*#__PURE__*/function () {
       });
       $d.on('pjax:send', function (xhr) {
         if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-          $(formContainer + ' :submit').button('loading');
+          $(formContainer + ' :submit').buttonLoading();
         }
 
         Dcat.NP.start();
       });
       $d.on('pjax:complete', function (xhr) {
         if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-          $(formContainer + ' :submit').button('reset');
+          $(formContainer + ' :submit').buttonLoading(false);
         }
       });
       $d.on('pjax:loaded', function () {
@@ -853,6 +853,7 @@ var Ajax = /*#__PURE__*/function () {
       Dcat.NP.done();
       Dcat.loading(false); // 关闭所有loading效果
 
+      $('.btn-loading').buttonLoading(false);
       var json = xhr.responseJSON || {},
           _msg = json.message;
 
@@ -1402,13 +1403,15 @@ var DialogForm = /*#__PURE__*/function () {
         _this._destroy(counter);
       });
       _this.isLoading = 1;
-      $btn && $btn.button('loading'); // 请求表单内容
+      $btn && $btn.buttonLoading();
+      Dcat.NP.start(); // 请求表单内容
 
       $.get(url, function (template) {
         _this.isLoading = 0;
+        Dcat.NP.done();
 
         if ($btn) {
-          $btn.button('reset');
+          $btn.buttonLoading(false);
           setTimeout(function () {
             $btn.find('.waves-ripple').remove();
           }, 50);
@@ -1487,7 +1490,8 @@ var DialogForm = /*#__PURE__*/function () {
     value: function _submit() {
       var _this = this,
           options = _this.options,
-          counter = _this.$target.attr('counter');
+          counter = _this.$target.attr('counter'),
+          $submitBtn = _this._dialogs[counter].find('.layui-layer-btn0');
 
       if (_this.isSubmitting) {
         return;
@@ -1505,10 +1509,10 @@ var DialogForm = /*#__PURE__*/function () {
           }
 
           _this.isSubmitting = 1;
-          Dcat.NP.start();
+          $submitBtn.buttonLoading();
         },
         after: function after(success, res) {
-          Dcat.NP.done();
+          $submitBtn.buttonLoading(false);
           _this.isSubmitting = 0;
           options.saved(success, res);
 
@@ -1608,8 +1612,6 @@ var Form = /*#__PURE__*/function () {
       removeFieldError(_this);
       $form.ajaxSubmit({
         beforeSubmit: function beforeSubmit(fields, $form, _opt) {
-          console.log(6666, fields);
-
           if (options.before(fields, $form, _opt, _this) === false) {
             return false;
           }
@@ -1617,12 +1619,8 @@ var Form = /*#__PURE__*/function () {
           if (fire(formCallbacks.before, fields, $form, _opt, _this) === false) {
             return false;
           }
-
-          Dcat.NP.start();
         },
         success: function success(response) {
-          Dcat.NP.done();
-
           if (options.after(true, response, _this) === false) {
             return;
           }
@@ -1651,8 +1649,6 @@ var Form = /*#__PURE__*/function () {
           }
         },
         error: function error(response) {
-          Dcat.NP.done();
-
           if (options.after(false, response, _this) === false) {
             return;
           }
@@ -2361,6 +2357,28 @@ function extend(Dcat) {
     opt = opt || {};
     opt.container = $(this);
     return new Loading(Dcat, opt);
+  };
+
+  $.fn.buttonLoading = function (start) {
+    var $this = $(this),
+        loadingId = $this.data('loading'),
+        content;
+
+    if (start === false) {
+      if (!loadingId) {
+        return $this;
+      }
+
+      return $this.removeClass('disabled btn-loading').removeAttr('disabled').removeAttr('data-loading').html($this.find('.' + loadingId).html());
+    }
+
+    if (loadingId) {
+      return $this;
+    }
+
+    content = $this.html();
+    loadingId = 'ld-' + Dcat.helpers.random();
+    return $this.addClass('disabled btn-loading').attr('disabled', true).attr('data-loading', loadingId).html("\n<div class=\"".concat(loadingId, "\" style=\"display:none\">").concat(content, "</div>\n<span class=\"spinner-grow spinner-grow-sm\" role=\"status\" aria-hidden=\"true\"></span>\n LOADING ...\n"));
   };
 }
 

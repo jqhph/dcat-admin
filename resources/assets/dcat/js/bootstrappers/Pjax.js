@@ -36,14 +36,14 @@ export default class Pjax {
 
         $d.on('pjax:send', function (xhr) {
             if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-                $(formContainer + ' :submit').button('loading');
+                $(formContainer + ' :submit').buttonLoading();
             }
             Dcat.NP.start();
         });
 
         $d.on('pjax:complete', function (xhr) {
             if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-                $(formContainer + ' :submit').button('reset')
+                $(formContainer + ' :submit').buttonLoading(false)
             }
         });
 

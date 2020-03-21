@@ -109,14 +109,17 @@ export default class DialogForm {
 
         _this.isLoading = 1;
 
-        $btn && $btn.button('loading');
+        $btn && $btn.buttonLoading();
+
+        Dcat.NP.start();
 
         // 请求表单内容
         $.get(url, function (template) {
             _this.isLoading = 0;
+            Dcat.NP.done();
 
             if ($btn) {
-                $btn.button('reset');
+                $btn.buttonLoading(false);
 
                 setTimeout(function () {
                     $btn.find('.waves-ripple').remove();
@@ -193,7 +196,8 @@ export default class DialogForm {
     _submit() {
         let _this = this, 
             options = _this.options,
-            counter = _this.$target.attr('counter');
+            counter = _this.$target.attr('counter'),
+            $submitBtn = _this._dialogs[counter].find('.layui-layer-btn0');
 
         if (_this.isSubmitting) {
             return;
@@ -212,10 +216,10 @@ export default class DialogForm {
 
                 _this.isSubmitting = 1;
 
-                Dcat.NP.start();
+                $submitBtn.buttonLoading();
             },
             after: function (success, res) {
-                Dcat.NP.done();
+                $submitBtn.buttonLoading(false);
 
                 _this.isSubmitting = 0;
 

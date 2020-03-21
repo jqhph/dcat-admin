@@ -98,6 +98,44 @@ function extend(Dcat) {
 
         return new Loading(Dcat, opt);
     };
+
+    $.fn.buttonLoading = function (start) {
+        let $this = $(this),
+            loadingId = $this.data('loading'),
+            content;
+
+        if (start === false) {
+            if (! loadingId) {
+                return $this;
+            }
+            return $this
+                .removeClass('disabled btn-loading')
+                .removeAttr('disabled')
+                .removeAttr('data-loading')
+                .html(
+                    $this.find('.' + loadingId).html()
+                );
+        }
+
+        if (loadingId) {
+            return $this;
+        }
+
+        content = $this.html();
+
+        loadingId = 'ld-'+Dcat.helpers.random();
+
+        return $this
+            .addClass('disabled btn-loading')
+            .attr('disabled', true)
+            .attr('data-loading', loadingId)
+            .html(`
+<div class="${loadingId}" style="display:none">${content}</div>
+<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+ LOADING ...
+`);
+    }
+
 }
 
 export default extend

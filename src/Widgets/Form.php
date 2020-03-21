@@ -605,10 +605,10 @@ HTML;
                     return false;
                 }
                 
-                t.button('loading');
+                t.buttonLoading();
             },
             after: function () {
-                t.button('reset');
+                t.buttonLoading(false);
             }
         });
     

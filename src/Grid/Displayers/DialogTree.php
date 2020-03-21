@@ -201,10 +201,10 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
         if (requesting) return;
         requesting = 1;
         
-        t.button('loading');
+        t.buttonLoading();
         $.getJSON(url, {_token: Dcat.token, value: val}, function (resp) {
              requesting = 0;
-             t.button('reset');
+             t.buttonLoading(false);
              
              if (!resp.status) {
                 return Dcat.error(resp.message || '系统繁忙，请稍后再试');

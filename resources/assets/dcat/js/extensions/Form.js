@@ -48,8 +48,6 @@ class Form {
 
         $form.ajaxSubmit({
             beforeSubmit: function (fields, $form, _opt) {
-                console.log(6666, fields);
-
                 if (options.before(fields, $form, _opt, _this) === false) {
                     return false;
                 }
@@ -57,12 +55,8 @@ class Form {
                 if (fire(formCallbacks.before, fields, $form, _opt, _this) === false) {
                     return false;
                 }
-
-                Dcat.NP.start();
             },
             success: function (response) {
-                Dcat.NP.done();
-
                 if (options.after(true, response, _this) === false) {
                     return;
                 }
@@ -91,8 +85,6 @@ class Form {
                 }
             },
             error: function (response) {
-                Dcat.NP.done();
-
                 if (options.after(false, response, _this) === false) {
                     return;
                 }
