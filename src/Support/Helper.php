@@ -9,10 +9,27 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class Helper
 {
+    /**
+     * @var array
+     */
+    public static $fileTypes = [
+        'image'      => 'png|jpg|jpeg|tmp|gif',
+        'word'       => 'doc|docx',
+        'excel'      => 'xls|xlsx|csv',
+        'powerpoint' => 'ppt|pptx',
+        'pdf'        => 'pdf',
+        'code'       => 'php|js|java|python|ruby|go|c|cpp|sql|m|h|json|html|aspx',
+        'archive'    => 'zip|tar\.gz|rar|rpm',
+        'txt'        => 'txt|pac|log|md',
+        'audio'      => 'mp3|wav|flac|3pg|aa|aac|ape|au|m4a|mpc|ogg',
+        'video'      => 'mkv|rmvb|flv|mp4|avi|wmv|rm|asf|mpeg',
+    ];
+
     /**
      * Update extension config.
      *
@@ -480,5 +497,25 @@ class Helper
     public static function validateExtensionName($name)
     {
         return preg_match('/^[\w\-_]+\/[\w\-_]+$/', $name);
+    }
+
+    /**
+     * Get file icon.
+     *
+     * @param string $file
+     *
+     * @return string
+     */
+    public static function getFileIcon($file = '')
+    {
+        $extension = File::extension($file);
+
+        foreach (static::$fileTypes as $type => $regex) {
+            if (preg_match("/^($regex)$/i", $extension) !== 0) {
+                return "fa fa-file-{$type}-o";
+            }
+        }
+
+        return 'fa fa-file-o';
     }
 }

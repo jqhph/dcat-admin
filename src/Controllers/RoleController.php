@@ -10,6 +10,7 @@ use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
 use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Widgets\Tree;
 
 class RoleController extends AdminController
 {
@@ -76,9 +77,20 @@ class RoleController extends AdminController
             $show->slug;
             $show->name;
 
-            $show->permissions->as(function ($permission) {
-                return collect($permission)->pluck('name');
-            })->label('primary');
+            $show->permissions->unescape()->as(function ($permission) {
+                $permissionModel = config('admin.database.permissions_model');
+                $permissionModel = new $permissionModel();
+                $nodes = $permissionModel->allNodes();
+
+                $tree = Tree::make($nodes);
+
+                $keyName = $permissionModel->getKeyName();
+                $tree->check(
+                    array_column(Helper::array($permission), $keyName)
+                );
+
+                return $tree->render();
+            });
 
             $show->created_at;
             $show->updated_at;

@@ -112,7 +112,7 @@ class UserController extends AdminController
                 }
 
                 return collect($roles)->pluck('name');
-            })->label('primary');
+            })->chip();
 
             $show->permissions->unescape()->as(function () {
                 $roles = (array) $this->roles;
