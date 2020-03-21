@@ -86,6 +86,10 @@
   padding: 0.5rem .7rem;
 }
 
+a.btn:not(.btn-white) {
+  color: $white;
+}
+
 // loading
 .btn:not(.btn-sm) .spinner-grow, a:not(.btn) .spinner-grow {
   margin-bottom: .15rem;

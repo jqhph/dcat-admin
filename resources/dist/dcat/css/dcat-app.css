@@ -1864,6 +1864,10 @@ dl {
   padding: 0.5rem 0.7rem;
 }
 
+a.btn:not(.btn-white) {
+  color: #fff;
+}
+
 .btn:not(.btn-sm) .spinner-grow,
 a:not(.btn) .spinner-grow {
   margin-bottom: 0.15rem;
@@ -2084,9 +2088,10 @@ table.data-thumb-view.dataTable {
 }
 
 table.data-list-view.dataTable tbody tr:hover,
-table.data-thumb-view.dataTable tbody tr:hover {
+table.data-thumb-view.dataTable tbody tr:hover,
+.table-hover tbody tr:hover {
   transform: none;
-  background: #f6fbff;
+  background: #f8fafc;
 }
 
 .table td {

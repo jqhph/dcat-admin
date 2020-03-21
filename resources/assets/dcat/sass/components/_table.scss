@@ -37,9 +37,9 @@ table.data-list-view.dataTable, table.data-thumb-view.dataTable {
   border-spacing: 0 .9rem;
   padding: 0;
 }
-table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover {
+table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover, .table-hover tbody tr:hover {
   transform: none;
-  background: $dark20;
+  background: lighten($dark30, 1%);
 }
 
 .table td {
