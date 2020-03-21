@@ -261,7 +261,6 @@ class Admin
             $router->get('helpers/icons', 'Dcat\Admin\Controllers\IconController@index');
             $router->resource('helpers/extensions', 'Dcat\Admin\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
             $router->post('helpers/extensions/import', 'Dcat\Admin\Controllers\ExtensionController@import');
-            $router->post('helpers/extensions/create', 'Dcat\Admin\Controllers\ExtensionController@create');
         });
     }
 

@@ -680,7 +680,7 @@ class Form implements Renderable
     }
 
     /**
-     * Get or Set data for insert or update.
+     * Get or set data for insert or update.
      *
      * @param array $updates
      *

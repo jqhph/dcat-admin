@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Console;
 
+use Dcat\Admin\Models\AdminTablesSeeder;
 use Illuminate\Console\Command;
 
 class InstallCommand extends Command
@@ -53,7 +54,7 @@ class InstallCommand extends Command
         $userModel = config('admin.database.users_model');
 
         if ($userModel::count() == 0) {
-            $this->call('db:seed', ['--class' => \Dcat\Admin\Models\AdminTablesSeeder::class]);
+            $this->call('db:seed', ['--class' => AdminTablesSeeder::class]);
         }
     }
 

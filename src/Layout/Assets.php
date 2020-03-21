@@ -11,7 +11,7 @@ class Assets
      */
     protected $pathAlias = [
         // Dcat Admin静态资源路径别名
-        '@admin' => 'dcat-admin',
+        '@admin' => 'vendors/dcat-admin',
 
         // Dcat Acmin扩展静态资源路径别名
         '@extension' => '@admin/extensions',

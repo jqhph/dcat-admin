@@ -15,9 +15,6 @@
         "php": ">=7.1.0",
         "dcat/laravel-admin": "*"
     },
-    "require-dev": {
-        "phpunit/phpunit": "~6.0"
-    },
     "autoload": {
         "psr-4": {
             ":namespace": "src/"

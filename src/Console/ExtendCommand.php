@@ -74,13 +74,7 @@ class ExtendCommand extends Command
     {
         $this->filesystem = $filesystem;
 
-        $this->extensionDir = config('admin.extension_dir');
-
-        InputExtensionDir:
-        if (empty($this->extensionDir)) {
-            $this->extensionDir = $this->ask('Please input a directory to store your extension:');
-//            goto InputExtensionDir;
-        }
+        $this->extensionDir = config('admin.extension_dir') ?: app_path('Admin/Extensions');
 
         if (! file_exists($this->extensionDir)) {
             $this->makeDir();

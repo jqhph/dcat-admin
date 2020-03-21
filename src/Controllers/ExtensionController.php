@@ -7,10 +7,12 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Repositories\Extension;
+use Dcat\Admin\Support\StringOutput;
 use Dcat\Admin\Widgets\Box;
 use Dcat\Admin\Widgets\Table;
 use Dcat\Admin\Widgets\Terminal;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Artisan;
 
 class ExtensionController extends Controller
 {
@@ -46,28 +48,6 @@ class ExtensionController extends Controller
 
         $box = Box::make("<span>admin:import <small>$extension</small></span>")
             ->content(Terminal::call('admin:import', ['extension' => $extension, '--force' => '1']))
-            ->style('default')
-            ->collapsable()
-            ->removable();
-
-        return response()->json(['status' => true, 'content' => $box->render()]);
-    }
-
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function create()
-    {
-        $name = request('name');
-        $namespace = trim(request('namespace'), '\\');
-        $contents = "<span>admin:extend <small>$name --namespace=$namespace</small></span>";
-        $terminal = Terminal::call('admin:extend', [
-            'extension' => $name,
-            '--namespace' => $namespace,
-        ]);
-
-        $box = Box::make($contents)
-            ->content($terminal)
             ->style('default')
             ->collapsable()
             ->removable();
@@ -142,7 +122,7 @@ class ExtensionController extends Controller
             $create->text('namespace')
                 ->attribute('style', 'width:240px')
                 ->required()
-                ->default('Dcat\\\\Admin\\\\Extension\\\\Your name');
+                ->default('Dcat\\Admin\\Extension\\:Name');
         });
 
         return $grid;
@@ -157,15 +137,64 @@ class ExtensionController extends Controller
     {
         $form = new Form(new Extension());
 
-        $form->text('package_name')->required();
+        $self = $this;
+
+        $form->text('package_name')->rules(function () use ($self) {
+            return [
+                'required',
+                function ($attribute, $value, $fail) use ($self) {
+                    if (! $self->validateExtensionName($value)) {
+                        return $fail(
+                            "[$value] is not a valid package name, please input a name like \"vendor/name\""
+                        );
+                    }
+                },
+            ];
+        });
         $form->text('namespace')->required();
         $form->hidden('enable');
 
-        $form->submitted(function () {
+        $form->saving(function (Form $form) {
+            $package = $form->package_name;
+            $namespace = $form->namespace;
 
+            $results = $this->createExtension($package, $namespace);
+
+            return $form->success($results);
         });
 
         return $form;
+    }
+
+    /**
+     * 创建扩展
+     *
+     * @return string
+     */
+    public function createExtension($package, $namespace)
+    {
+        $namespace = trim($namespace, '\\');
+
+        $output = new StringOutput();
+
+        Artisan::call('admin:extend', [
+            'extension'   => $package,
+            '--namespace' => $namespace,
+        ], $output);
+
+        return $output->getContent();
+    }
+
+    /**
+     * Validate extension name.
+     *
+     * @param string $name
+     *
+     * @return int
+     */
+    public function validateExtensionName($name)
+    {
+        return preg_match('/^[\w\-_]+\/[\w\-_]+$/', $name);
     }
 
     /**
@@ -194,7 +223,7 @@ class ExtensionController extends Controller
     }
 
     /**
-     * Make definitions.
+     * 字段显示定义.
      */
     protected function define()
     {
@@ -217,7 +246,7 @@ class ExtensionController extends Controller
             }
 
             foreach ($v as &$item) {
-                $item = "<span class='text-80 bold'>{$item['name']}</span> <<code>{$item['email']}</code>>";
+                $item = "<span class='text-80'>{$item['name']}</span> <<code>{$item['email']}</code>>";
             }
 
             return implode('<br/>', $v);

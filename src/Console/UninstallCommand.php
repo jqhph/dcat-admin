@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Console;
 
+use Dcat\Admin\Admin;
 use Illuminate\Console\Command;
 
 class UninstallCommand extends Command
@@ -44,7 +45,8 @@ class UninstallCommand extends Command
     protected function removeFilesAndDirectories()
     {
         $this->laravel['files']->deleteDirectory(config('admin.directory'));
-        $this->laravel['files']->deleteDirectory(public_path('vendor/dcat-admin/'));
+        $this->laravel['files']->deleteDirectory(public_path(Admin::assets()->getRealPath('@extension')));
+        $this->laravel['files']->deleteDirectory(public_path(Admin::assets()->getRealPath('@admin')));
         $this->laravel['files']->delete(config_path('admin.php'));
     }
 }
