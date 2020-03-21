@@ -1,5 +1,6 @@
 .layui-layer {
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.2)!important;
+  border-radius: .5rem!important;
 }
 
 .layui-layer-title {
@@ -11,6 +12,7 @@
   text-transform: capitalize;
   overflow: hidden;
   background-color: #fff!important;
+  border-radius: .5rem .5rem 0 0!important;
 }
 .layui-layer-setwin .layui-layer-min cite {
   background: transparent!important;
@@ -69,4 +71,8 @@
   border-color: $primary!important;
   background-color: $primary!important;
   color: $white!important;
+}
+
+.layui-layer-border {
+  border: 0!important;
 }

@@ -280,7 +280,7 @@ EOF;
     {
         return <<<EOT
 <a href="javascript:void(0);" data-url="{$this->resource()}/{$this->getKey()}" data-action="delete">
-    <i class="feather icon-trash-2 grid-action-icon"></i>
+    <i class="feather icon-trash grid-action-icon"></i>
 </a>&nbsp;
 EOT;
     }

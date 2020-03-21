@@ -39,7 +39,7 @@ table.data-list-view.dataTable, table.data-thumb-view.dataTable {
 }
 table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover {
   transform: none;
-  background: #fafafa;
+  background: $dark20;
 }
 
 .table td {
