@@ -34,7 +34,7 @@ class Alert extends Widget
     /**
      * @var bool
      */
-    protected $showCloseBtn = true;
+    protected $showCloseBtn = false;
 
     /**
      * Alert constructor.
@@ -131,15 +131,15 @@ class Alert extends Widget
     }
 
     /**
-     * Disable close button.
+     * Show close button.
      *
      * @param bool $value
      *
      * @return $this
      */
-    public function disableCloseButton(bool $value = true)
+    public function removable(bool $value = true)
     {
-        $this->showCloseBtn = ! $value;
+        $this->showCloseBtn = $value;
 
         return $this;
     }

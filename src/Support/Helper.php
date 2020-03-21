@@ -469,4 +469,16 @@ class Helper
 
         return [$red, $blue, $green];
     }
+
+    /**
+     * Validate extension name.
+     *
+     * @param string $name
+     *
+     * @return int
+     */
+    public static function validateExtensionName($name)
+    {
+        return preg_match('/^[\w\-_]+\/[\w\-_]+$/', $name);
+    }
 }

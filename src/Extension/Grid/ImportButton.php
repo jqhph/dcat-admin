@@ -35,7 +35,7 @@ $('.import-extension').click(function () {
     var id = $(this).data('id'), req;
     if (req) return;
     
-    Dcat.confirm("{$text}", function () {
+    Dcat.confirm("{$text}", '', function () {
         var url = '$url';
         req = 1;
         
@@ -50,7 +50,7 @@ $('.import-extension').click(function () {
                Dcat.error(response.message);
            }
            
-           $('.content').prepend('<div class="row"><div class="col-md-12">'+response.content+'</div></div>');
+           $('#app').prepend('<div class="row"><div class="col-md-12">'+response.content+'</div></div>');
         });
         
     }, "$confirm", "$cancel");

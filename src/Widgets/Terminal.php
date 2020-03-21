@@ -16,7 +16,6 @@ class Terminal extends Widget
         $this->content($content);
 
         $this->class('dump');
-        $this->style('background:#333;color:#fff;');
     }
 
     /**
@@ -31,6 +30,16 @@ class Terminal extends Widget
         Artisan::call($command, $parameters, $output);
 
         return static::make($output);
+    }
+
+    public function dark()
+    {
+        return $this->style('background:#333;color:#fff;');
+    }
+
+    public function transparent()
+    {
+        return $this->style('background:transparent!important;color:#fff;');
     }
 
     public function content($content)

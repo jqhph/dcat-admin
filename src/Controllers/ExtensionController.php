@@ -7,7 +7,9 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Repositories\Extension;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\StringOutput;
+use Dcat\Admin\Widgets\Alert;
 use Dcat\Admin\Widgets\Box;
 use Dcat\Admin\Widgets\Table;
 use Dcat\Admin\Widgets\Terminal;
@@ -46,10 +48,10 @@ class ExtensionController extends Controller
             return response()->json(['status' => false, 'messages' => 'Invalid extension hash.']);
         }
 
-        $box = Box::make("<span>admin:import <small>$extension</small></span>")
-            ->content(Terminal::call('admin:import', ['extension' => $extension, '--force' => '1']))
-            ->style('default')
-            ->collapsable()
+        $box = Alert::make()
+            ->title("<span>php artisan admin:import $extension</span>")
+            ->content(Terminal::call('admin:import', ['extension' => $extension, '--force' => '1'])->transparent())
+            ->success()
             ->removable();
 
         return response()->json(['status' => true, 'content' => $box->render()]);
@@ -97,12 +99,22 @@ class ExtensionController extends Controller
             ->emptyString();
 
         $grid->require
+            ->if(function () {
+                return $this->require ? true : false;
+            })
             ->display($view)
-            ->expand($this->getExpandHandler());
+            ->expand($this->getExpandHandler())
+            ->else()
+            ->emptyString();
 
         $grid->require_dev
+            ->if(function () {
+                return $this->require_dev ? true : false;
+            })
             ->display($view)
-            ->expand($this->getExpandHandler('require_dev'));
+            ->expand($this->getExpandHandler('require_dev'))
+            ->else()
+            ->emptyString();
 
         $grid->disablePagination();
         $grid->disableCreateButton();
@@ -137,13 +149,11 @@ class ExtensionController extends Controller
     {
         $form = new Form(new Extension());
 
-        $self = $this;
-
-        $form->text('package_name')->rules(function () use ($self) {
+        $form->text('package_name')->rules(function () {
             return [
                 'required',
-                function ($attribute, $value, $fail) use ($self) {
-                    if (! $self->validateExtensionName($value)) {
+                function ($attribute, $value, $fail) {
+                    if (! Helper::validateExtensionName($value)) {
                         return $fail(
                             "[$value] is not a valid package name, please input a name like \"vendor/name\""
                         );
@@ -158,9 +168,11 @@ class ExtensionController extends Controller
             $package = $form->package_name;
             $namespace = $form->namespace;
 
-            $results = $this->createExtension($package, $namespace);
+            if ($package && $namespace) {
+                $results = $this->createExtension($package, $namespace);
 
-            return $form->success($results);
+                return $form->success($results);
+            }
         });
 
         return $form;
@@ -186,18 +198,6 @@ class ExtensionController extends Controller
     }
 
     /**
-     * Validate extension name.
-     *
-     * @param string $name
-     *
-     * @return int
-     */
-    public function validateExtensionName($name)
-    {
-        return preg_match('/^[\w\-_]+\/[\w\-_]+$/', $name);
-    }
-
-    /**
      * @param string $key
      *
      * @return \Closure
@@ -213,12 +213,10 @@ class ExtensionController extends Controller
             foreach ((array) $this->{$key} as $k => $v) {
                 $k = "<b class='text-80'>$k</b>";
 
-                $rows[$k] = $v;
+                $rows[$k] = is_array($v) ? "<pre>{$v}</pre>" : $v;
             }
 
-            $table = new Table([], $rows);
-
-            return $table;
+            return new Table($rows);
         };
     }
 
@@ -237,7 +235,7 @@ class ExtensionController extends Controller
             $this->version = $this->version ?: 'unknown';
             $style = in_array($this->version, ['dev-master', 'unknown']) ? 'default' : 'primary';
 
-            return $this->version ? "<span class='label label-$style'>{$this->version}</span>" : '';
+            return $this->version ? "<span class='label bg-$style'>{$this->version}</span>" : '';
         };
 
         $authors = function ($v) {

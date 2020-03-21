@@ -14,7 +14,7 @@ class Assets
         '@admin' => 'vendors/dcat-admin',
 
         // Dcat Acmin扩展静态资源路径别名
-        '@extension' => '@admin/extensions',
+        '@extension' => 'vendors/dcat-admin-extensions',
     ];
 
     /**

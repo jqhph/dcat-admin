@@ -2247,7 +2247,7 @@ table.dataTable.complex-headers tfoot td {
   background-color: #f1f1f1;
   vertical-align: middle;
   border-radius: 0.5rem;
-  height: 42px;
+  height: 35px;
   color: #777;
 }
 
@@ -2650,6 +2650,11 @@ table.dataTable.complex-headers tfoot td {
   margin-bottom: 4px;
 }
 
+.label.bg-default {
+  color: #414750;
+  font-weight: 700;
+}
+
 .badge {
   margin-bottom: 4px;
 }
@@ -2871,5 +2876,9 @@ pre {
 
 a.disabled {
   opacity: 0.65;
+}
+
+.bg-default {
+  background-color: #d2d6de;
 }
 

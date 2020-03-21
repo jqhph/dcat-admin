@@ -83,7 +83,7 @@ class ExtendCommand extends Command
         $this->package = $this->argument('extension');
 
         InputExtensionName:
-        if (! $this->validateExtensionName($this->package)) {
+        if (! Helper::validateExtensionName($this->package)) {
             $this->package = $this->ask("[$this->package] is not a valid package name, please input a name like (<vendor>/<name>)");
             goto InputExtensionName;
         }
@@ -229,18 +229,6 @@ TREE;
         $this->basePath = rtrim($this->extensionDir, '/').'/'.ltrim($this->package, '/');
 
         $this->makeDir($this->dirs);
-    }
-
-    /**
-     * Validate extension name.
-     *
-     * @param string $name
-     *
-     * @return int
-     */
-    protected function validateExtensionName($name)
-    {
-        return preg_match('/^[\w\-_]+\/[\w\-_]+$/', $name);
     }
 
     /**
