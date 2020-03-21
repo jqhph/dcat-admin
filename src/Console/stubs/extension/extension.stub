@@ -21,6 +21,6 @@ class :class_name extends Extension
     protected $menu = [
         'title' => ':title',
         'path'  => ':path',
-        'icon'  => 'fa-gears',
+        'icon'  => '',
     ];
 }
