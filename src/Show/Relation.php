@@ -78,41 +78,24 @@ class Relation extends Field
         $view = call_user_func($this->builder, $this->model);
 
         if ($view instanceof Show) {
-            return $this->renderTitle().$view->render();
+            $view->panel()->title($this->title);
+
+            return $view->render();
         }
 
         if (! $view instanceof Grid) {
-            return $this->renderTitle().$view;
+            return $view;
         }
 
         $view->setName($this->name)
-            ->disableFilterButton()
+            ->title($this->title)
             ->disableBatchDelete()
             ->disableFilter();
 
-        $filter = $view->filter()
-            ->expand()
-            ->withoutInputBorder()
-            ->hiddenResetButtonText()
-            ->expand()
-            ->style('padding:0 0 5px;left:-5px;');
-
-        $filter = "<div class='row'><div class='col-md-12'>{$filter->render()}</div></div>";
-
-        return $this->renderTitle().$filter.$view->render();
-    }
-
-    /**
-     * @return string
-     */
-    protected function renderTitle()
-    {
-        return <<<EOF
-<div class="row">
-     <div class="col-md-12" style="margin-bottom:.75rem;font-size:18px;text-transform:uppercase">
-        <span class="show-relation-grid-title">{$this->title}</span>
-     </div>
+        return <<<HTML
+<div class="mb-2">
+    {$view->render()}
 </div>
-EOF;
+HTML;
     }
 }

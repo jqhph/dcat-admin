@@ -28,6 +28,9 @@
   height: 30px;
 }
 
+a.btn-sm, .btn-group-sm > a.btn {
+  padding: 0.6rem 1rem !important;
+}
 
 .btn-custom {
   background: $custom;
@@ -84,10 +87,6 @@
 
 .input-group-sm > .form-control, .input-group-sm > .custom-select, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
   padding: 0.5rem .7rem;
-}
-
-a.btn:not(.btn-white) {
-  color: $white;
 }
 
 // loading

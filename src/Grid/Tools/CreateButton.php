@@ -51,7 +51,7 @@ class CreateButton implements Renderable
         $new = trans('admin.new');
         $url = $this->grid->getCreateUrl();
 
-        return "<a href='{$url}' class='btn btn-outline-success btn-mini'>
+        return "<a href='{$url}' class='btn btn-outline-primary'>
     <i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp;&nbsp;{$new}</span>
 </a>";
     }

@@ -73,7 +73,7 @@ let defaultActions = {
     // 图片预览
     'preview-img': function ($action, Dcat) {
         return function () {
-            return Dcat.previewImage($(this).attr('src'));
+            return Dcat.helpers.previewImage($(this).attr('src'));
         };
     },
 

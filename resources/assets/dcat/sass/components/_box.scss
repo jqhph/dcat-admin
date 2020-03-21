@@ -84,5 +84,10 @@
 
 .box.box-solid.box-default {
   border: 1px solid $input-border-color;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+}
+
+.form-group .box {
+  margin-bottom: 0;
 }
 

@@ -76,11 +76,9 @@ class RoleController extends AdminController
             $show->slug;
             $show->name;
 
-            $show->permissions->width(12)->as(function ($permission) {
+            $show->permissions->as(function ($permission) {
                 return collect($permission)->pluck('name');
             })->label('primary');
-
-            $show->divider();
 
             $show->created_at;
             $show->updated_at;

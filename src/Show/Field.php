@@ -86,12 +86,12 @@ class Field implements Renderable
      *
      * @var bool
      */
-    protected $border = false;
+    protected $border = true;
 
     /**
      * @var int
      */
-    protected $width = 3;
+    protected $width = 8;
 
     /**
      * @var array
@@ -251,7 +251,7 @@ class Field implements Renderable
                 }
             }
 
-            return "<img data-init='preview' src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
+            return "<img data-action='preview-img' src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
         });
     }
 
@@ -341,7 +341,7 @@ HTML;
             }
 
             return collect((array) $value)->map(function ($name) use ($style) {
-                return "<span class='label label-{$style}'>$name</span>";
+                return "<span class='label bg-{$style}'>$name</span>";
             })->implode('&nbsp;');
         });
     }

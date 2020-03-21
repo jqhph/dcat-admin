@@ -104,16 +104,9 @@ class UserController extends AdminController
             $show->username;
             $show->name;
 
-            $show->avatar->image();
+            $show->avatar(__('admin.avatar'))->image();
 
-            $show->newline();
-
-            $show->created_at;
-            $show->updated_at;
-
-            $show->divider();
-
-            $show->roles->width(6)->as(function ($roles) {
+            $show->roles->as(function ($roles) {
                 if (! $roles) {
                     return;
                 }
@@ -121,7 +114,7 @@ class UserController extends AdminController
                 return collect($roles)->pluck('name');
             })->label('primary');
 
-            $show->permissions->width(6)->unescape()->as(function () {
+            $show->permissions->unescape()->as(function () {
                 $roles = (array) $this->roles;
 
                 $permissionModel = config('admin.database.permissions_model');
@@ -149,9 +142,8 @@ class UserController extends AdminController
                 return $tree->render();
             });
 
-            if ($show->getKey() == AdministratorModel::DEFAULT_ID) {
-                $show->disableDeleteButton();
-            }
+            $show->created_at;
+            $show->updated_at;
         });
     }
 

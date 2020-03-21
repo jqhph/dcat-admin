@@ -1788,6 +1788,11 @@ dl {
   height: 30px;
 }
 
+a.btn-sm,
+.btn-group-sm > a.btn {
+  padding: 0.6rem 1rem !important;
+}
+
 .btn-custom {
   background: #59a9f8;
   border-color: #59a9f8;
@@ -1862,10 +1867,6 @@ dl {
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
   padding: 0.5rem 0.7rem;
-}
-
-a.btn:not(.btn-white) {
-  color: #fff;
 }
 
 .btn:not(.btn-sm) .spinner-grow,
@@ -2633,6 +2634,11 @@ table.dataTable.complex-headers tfoot td {
 
 .box.box-solid.box-default {
   border: 1px solid #d9d9d9;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.form-group .box {
+  margin-bottom: 0;
 }
 
 .label {
@@ -2880,5 +2886,9 @@ a.disabled {
 
 .bg-default {
   background-color: #d2d6de;
+}
+
+.img {
+  cursor: pointer;
 }
 

@@ -13,11 +13,11 @@
                             @endif
                         </h4>
                         <div data-responsive-table-toolbar="{{$tableId}}">
-                            {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
+                            {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!} {!! $grid->renderQuickSearch() !!}
                         </div>
                     @else
                         <div>
-                            {!! $grid->renderTools() !!}
+                            {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
                         </div>
 
                         <div data-responsive-table-toolbar="{{$tableId}}">

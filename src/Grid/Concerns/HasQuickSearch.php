@@ -47,8 +47,6 @@ trait HasQuickSearch
             $search->setGrid($this);
 
             $this->quickSearch = $search;
-
-            $this->tools($search);
         });
     }
 
