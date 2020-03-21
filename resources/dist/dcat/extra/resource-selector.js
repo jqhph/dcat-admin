@@ -112,6 +112,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       maxItem: 1,
       // 最大选项数量，0为不限制
       area: ['80%', '90%'],
+      queryName: '_resource_',
       items: {},
       // 默认选中项，key => value 键值对
       placeholder: '',
@@ -174,7 +175,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         scrollbar: false,
         skin: 'select-resource',
         area: formatArea(options.area),
-        content: options.source + '?_mini=1',
+        content: "".concat(options.source, "?").concat(options.queryName, "=1"),
         btn: options.showCloseButton ? [options.closeButtonText] : null,
         success: function success(layero) {
           iframeWin = options.window[layero.find('iframe')[0]['name']]; // 绑定勾选默认选项事件

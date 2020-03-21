@@ -6,7 +6,7 @@ use Dcat\Admin\Layout\Content;
 
 class SimpleGrid extends Grid
 {
-    const QUERY_NAME = '_mini';
+    const QUERY_NAME = '_resource_';
 
     public function __construct($repository, $builder = null)
     {

@@ -11,6 +11,7 @@
             source: '', // 资源地址
             maxItem: 1, // 最大选项数量，0为不限制
             area: ['80%', '90%'],
+            queryName: '_resource_',
             items: {}, // 默认选中项，key => value 键值对
             placeholder: '', // input placeholder
             showCloseButton: false,
@@ -70,7 +71,7 @@
                 scrollbar: false,
                 skin: 'select-resource',
                 area: formatArea(options.area),
-                content: options.source + '?_mini=1',
+                content: `${options.source}?${options.queryName}=1`,
                 btn: options.showCloseButton ? [options.closeButtonText] : null,
                 success: function (layero) {
                     iframeWin = options.window[layero.find('iframe')[0]['name']];
