@@ -402,7 +402,9 @@ class Assets
     public function url($path, string $type = 'js')
     {
         if (empty($this->alias[$path])) {
-            return admin_asset($path);
+            return admin_asset(
+                $this->getRealPath($path)
+            );
         }
 
         $paths = isset($this->alias[$path][$type]) ? (array) $this->alias[$path][$type] : null;
