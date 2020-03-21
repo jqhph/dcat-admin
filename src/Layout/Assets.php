@@ -5,6 +5,19 @@ namespace Dcat\Admin\Layout;
 class Assets
 {
     /**
+     * 路径别名
+     *
+     * @var array
+     */
+    protected $pathAlias = [
+        // Dcat Admin静态资源路径别名
+        '@admin' => 'dcat-admin',
+
+        // Dcat Acmin扩展静态资源路径别名
+        '@extension' => '@admin/extensions',
+    ];
+
+    /**
      * 别名.
      *
      * @var array
@@ -17,143 +30,143 @@ class Assets
             'css' => ['https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600'],
         ],
         '@dcat' => [
-            'js'  => 'dcat-admin/dcat/js/dcat-app.js',
-            'css' => 'dcat-admin/dcat/css/dcat-app.css',
+            'js'  => '@admin/dcat/js/dcat-app.js',
+            'css' => '@admin/dcat/css/dcat-app.css',
         ],
         '@vendors' => [
-            'js'  => 'dcat-admin/vendors/js/vendors.min.js',
-            'css' => 'dcat-admin/vendors/css/vendors.min.css',
+            'js'  => '@admin/vendors/js/vendors.min.js',
+            'css' => '@admin/vendors/css/vendors.min.css',
         ],
         '@bootstrap' => [
-            'css' => 'dcat-admin/css/bootstrap.css',
+            'css' => '@admin/css/bootstrap.css',
         ],
         '@bootstrap-extended' => [
-            'css' => 'dcat-admin/css/bootstrap-extended.css',
+            'css' => '@admin/css/bootstrap-extended.css',
         ],
         '@default-colors' => [
-            'css' => 'dcat-admin/css/colors.css',
+            'css' => '@admin/css/colors.css',
         ],
         '@menu' => [
-            'js' => 'dcat-admin/js/core/app-menu.js',
+            'js' => '@admin/js/core/app-menu.js',
         ],
         '@app' => [
-            'js' => 'dcat-admin/js/core/app.js',
+            'js' => '@admin/js/core/app.js',
         ],
         '@components' => [
-            'css' => 'dcat-admin/css/components.css',
+            'css' => '@admin/css/components.css',
         ],
         '@palette-gradient' => [
-            'css' => 'dcat-admin/css/core/colors/palette-gradient.css',
+            'css' => '@admin/css/core/colors/palette-gradient.css',
         ],
         '@datatables' => [
-            'css' => 'dcat-admin/vendors/css/tables/datatable/datatables.min.css',
+            'css' => '@admin/vendors/css/tables/datatable/datatables.min.css',
         ],
         '@data-list-view' => [
-            'css' => 'dcat-admin/css/pages/data-list-view.css',
+            'css' => '@admin/css/pages/data-list-view.css',
         ],
         '@custom' => [
-            'css' => 'dcat-admin/css/custom-laravel.css',
+            'css' => '@admin/css/custom-laravel.css',
         ],
         '@grid-extension' => [
-            'js' => 'dcat-admin/dcat/extra/grid-extend.js',
+            'js' => '@admin/dcat/extra/grid-extend.js',
         ],
         '@resource-selector' => [
-            'js' => 'dcat-admin/dcat/extra/resource-selector.js',
+            'js' => '@admin/dcat/extra/resource-selector.js',
         ],
         '@layer' => [
-            'js' => 'dcat-admin/dcat/plugins/layer/layer.js',
+            'js' => '@admin/dcat/plugins/layer/layer.js',
         ],
         '@pjax' => [
-            'js' => 'dcat-admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
+            'js' => '@admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
         ],
         '@toastr' => [
-            'js'  => 'dcat-admin/vendors/js/extensions/toastr.min.js',
-            'css' => 'dcat-admin/vendors/css/extensions/toastr.css',
+            'js'  => '@admin/vendors/js/extensions/toastr.min.js',
+            'css' => '@admin/vendors/css/extensions/toastr.css',
         ],
         '@jquery.nestable' => [
-            'js'  => 'dcat-admin/dcat/plugins/nestable/jquery.nestable.min.js',
-            'css' => 'dcat-admin/dcat/plugins/nestable/nestable.css',
+            'js'  => '@admin/dcat/plugins/nestable/jquery.nestable.min.js',
+            'css' => '@admin/dcat/plugins/nestable/nestable.css',
         ],
         '@validator' => [
-            'js' => 'dcat-admin/dcat/plugins/bootstrap-validator/validator.min.js',
+            'js' => '@admin/dcat/plugins/bootstrap-validator/validator.min.js',
         ],
         '@select2' => [
-            'js'  => 'dcat-admin/vendors/js/forms/select/select2.full.min.js',
-            'css' => 'dcat-admin/vendors/css/forms/select/select2.min.css',
+            'js'  => '@admin/vendors/js/forms/select/select2.full.min.js',
+            'css' => '@admin/vendors/css/forms/select/select2.min.css',
         ],
         '@bootstrap-datetimepicker' => [
-            'js'  => 'dcat-admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
-            'css' => 'dcat-admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css',
+            'js'  => '@admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
+            'css' => '@admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css',
         ],
         '@moment' => [
             'js' => [
-                'dcat-admin/dcat/plugins/moment/moment.min.js',
+                '@admin/dcat/plugins/moment/moment.min.js',
             ],
         ],
         '@moment-timezone' => [
             'js' => [
-                'dcat-admin/dcat/plugins/moment/moment-timezone-with-data.min.js',
+                '@admin/dcat/plugins/moment/moment-timezone-with-data.min.js',
             ],
         ],
         '@rwd-table' => [
-            'js'  => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js',
-            'css' => 'dcat-admin/dcat/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css',
+            'js'  => '@admin/dcat/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js',
+            'css' => '@admin/dcat/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css',
         ],
         '@jstree' => [
-            'js'  => 'dcat-admin/dcat/plugins/jstree-theme/jstree.min.js',
-            'css' => 'dcat-admin/dcat/plugins/jstree-theme/themes/proton/style.min.css',
+            'js'  => '@admin/dcat/plugins/jstree-theme/jstree.min.js',
+            'css' => '@admin/dcat/plugins/jstree-theme/themes/proton/style.min.css',
         ],
         '@switchery' => [
-            'js'  => 'dcat-admin/dcat/plugins/switchery/switchery.min.js',
-            'css' => 'dcat-admin/dcat/plugins/switchery/switchery.min.css',
+            'js'  => '@admin/dcat/plugins/switchery/switchery.min.js',
+            'css' => '@admin/dcat/plugins/switchery/switchery.min.css',
         ],
         '@webuploader' => [
             'js' => [
-                'dcat-admin/dcat/plugins/webuploader/webuploader.min.js',
-                'dcat-admin/dcat/extra/upload.js',
+                '@admin/dcat/plugins/webuploader/webuploader.min.js',
+                '@admin/dcat/extra/upload.js',
             ],
-            'css' => 'dcat-admin/dcat/extra/upload.css',
+            'css' => '@admin/dcat/extra/upload.css',
         ],
         '@chartjs' => [
-            'js' => 'dcat-admin/dcat/plugins/chart.js/chart.bundle.min.js',
+            'js' => '@admin/dcat/plugins/chart.js/chart.bundle.min.js',
         ],
         '@jquery.sparkline' => [
-            'js' => 'dcat-admin/dcat/plugins/jquery.sparkline/jquery.sparkline.min.js',
+            'js' => '@admin/dcat/plugins/jquery.sparkline/jquery.sparkline.min.js',
         ],
         '@jquery.bootstrap-duallistbox' => [
-            'js'  => 'dcat-admin/dcat/plugins/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js',
-            'css' => 'dcat-admin/dcat/plugins/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css',
+            'js'  => '@admin/dcat/plugins/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js',
+            'css' => '@admin/dcat/plugins/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css',
         ],
         '@number-input' => [
-            'js' => 'dcat-admin/dcat/plugins/number-input/bootstrap-number-input.js',
+            'js' => '@admin/dcat/plugins/number-input/bootstrap-number-input.js',
         ],
         '@ionslider' => [
             'js' => [
-                'dcat-admin/dcat/plugins/ionslider/ion.rangeSlider.min.js',
+                '@admin/dcat/plugins/ionslider/ion.rangeSlider.min.js',
             ],
             'css' => [
-                'dcat-admin/dcat/plugins/ionslider/ion.rangeSlider.css',
-                'dcat-admin/dcat/plugins/ionslider/ion.rangeSlider.skinNice.css',
+                '@admin/dcat/plugins/ionslider/ion.rangeSlider.css',
+                '@admin/dcat/plugins/ionslider/ion.rangeSlider.skinNice.css',
             ],
         ],
         '@editor-md' => [
             'js' => [
-                'dcat-admin/dcat/plugins/editor-md/lib/raphael.min.js',
-                'dcat-admin/dcat/plugins/editor-md/lib/marked.min.js',
-                'dcat-admin/dcat/plugins/editor-md/lib/prettify.min.js',
-                'dcat-admin/dcat/plugins/editor-md/lib/underscore.min.js',
-                'dcat-admin/dcat/plugins/editor-md/lib/sequence-diagram.min.js',
-                'dcat-admin/dcat/plugins/editor-md/lib/flowchart.min.js',
-                'dcat-admin/dcat/plugins/editor-md/lib/jquery.flowchart.min.js',
-                'dcat-admin/dcat/plugins/editor-md/editormd.min.js',
+                '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
+                '@admin/dcat/plugins/editor-md/lib/marked.min.js',
+                '@admin/dcat/plugins/editor-md/lib/prettify.min.js',
+                '@admin/dcat/plugins/editor-md/lib/underscore.min.js',
+                '@admin/dcat/plugins/editor-md/lib/sequence-diagram.min.js',
+                '@admin/dcat/plugins/editor-md/lib/flowchart.min.js',
+                '@admin/dcat/plugins/editor-md/lib/jquery.flowchart.min.js',
+                '@admin/dcat/plugins/editor-md/editormd.min.js',
             ],
             'css' => [
-                'dcat-admin/dcat/plugins/editor-md/css/editormd.preview.min.css',
-                'dcat-admin/dcat/extra/markdown.css',
+                '@admin/dcat/plugins/editor-md/css/editormd.preview.min.css',
+                '@admin/dcat/extra/markdown.css',
             ],
         ],
         '@jquery.inputmask' => [
-            'js' => 'dcat-admin/dcat/plugins/input-mask/jquery.inputmask.bundle.min.js',
+            'js' => '@admin/dcat/plugins/input-mask/jquery.inputmask.bundle.min.js',
         ],
     ];
 
@@ -386,7 +399,7 @@ class Assets
      *
      * @return string|array|null
      */
-    public function getRealPath($path, string $type = 'js')
+    public function url($path, string $type = 'js')
     {
         if (empty($this->alias[$path])) {
             return admin_asset($path);
@@ -399,10 +412,52 @@ class Assets
         }
 
         foreach ($paths as &$value) {
-            $value = admin_asset($value);
+            $value = admin_asset($this->getRealPath($value));
         }
 
         return $paths;
+    }
+
+    /**
+     * 获取真实路径.
+     *
+     * @param string|null $path
+     *
+     * @return string|null
+     */
+    public function getRealPath(?string $path)
+    {
+        if (! $this->hasAlias($path)) {
+            return $path;
+        }
+
+        return implode(
+            '/',
+            array_map(
+                function ($v) {
+                    $v = $this->pathAlias[$v] ?? $v;
+
+                    if (! $this->hasAlias($v)) {
+                        return $v;
+                    }
+
+                    return $this->getRealPath($v);
+                },
+                explode('/', $path)
+            )
+        );
+    }
+
+    /**
+     * 判断是否含有别名
+     *
+     * @param string $value
+     *
+     * @return bool
+     */
+    protected function hasAlias($value)
+    {
+        return $value && mb_strpos($value, '@') !== false;
     }
 
     /**
@@ -464,10 +519,10 @@ class Assets
         }
 
         if (config('admin.layout.main_layout_type') === 'horizontal') {
-            $this->baseCss[] = 'dcat-admin/css/core/menu/menu-types/horizontal-menu.css';
+            $this->baseCss[] = '@admin/css/core/menu/menu-types/horizontal-menu.css';
         }
 
-        $this->baseCss[] = 'dcat-admin/css/core/menu/menu-types/vertical-menu.css';
+        $this->baseCss[] = '@admin/css/core/menu/menu-types/vertical-menu.css';
     }
 
     /**
@@ -485,7 +540,7 @@ class Assets
             return;
         }
 
-        $this->baseCss[] = "dcat-admin/css/themes/{$css}.css";
+        $this->baseCss[] = "@admin/css/themes/{$css}.css";
     }
 
     /**
@@ -527,7 +582,7 @@ class Assets
         $html = '';
 
         foreach (array_unique($this->css) as &$v) {
-            if (! $paths = $this->getRealPath($v, 'css')) {
+            if (! $paths = $this->url($v, 'css')) {
                 continue;
             }
 
@@ -565,7 +620,7 @@ class Assets
         $html = '';
 
         foreach (array_unique($this->js) as &$v) {
-            if (! $paths = $this->getRealPath($v, 'js')) {
+            if (! $paths = $this->url($v, 'js')) {
                 continue;
             }
 
@@ -585,7 +640,7 @@ class Assets
         $html = '';
 
         foreach (array_unique($this->headerJs) as &$v) {
-            if (! $paths = $this->getRealPath($v, 'js')) {
+            if (! $paths = $this->url($v, 'js')) {
                 continue;
             }
 
