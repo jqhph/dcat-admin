@@ -71,10 +71,7 @@ class Responsive
 
         $opt = json_encode($this->options);
 
-        if (request()->pjax()) {
-            Admin::script("$('#{$this->grid->getTableId()}').parent().responsiveTable($opt);");
-        } else {
-            Admin::script("setTimeout(function(){ $('#{$this->grid->getTableId()}').parent().responsiveTable($opt); },10);");
-        }
+        // 这里需要延迟执行，否则可能会造成页面元素跳跃闪动
+        Admin::script("setTimeout(function(){ $('#{$this->grid->getTableId()}').parent().responsiveTable($opt); },350);");
     }
 }

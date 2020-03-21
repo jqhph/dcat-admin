@@ -1782,7 +1782,7 @@ dl {
 
 .btn-sm,
 .btn-group-sm > .btn {
-  padding: 0.6rem 1rem !important;
+  padding: 0.65rem 1rem !important;
   font-size: 0.6rem;
   line-height: 1.1;
   height: 30px;
@@ -2244,7 +2244,7 @@ table.dataTable.complex-headers tfoot td {
 
 .quick-create td {
   padding-left: 45px;
-  background-color: #f1f1f1;
+  background-color: #f3f3f3;
   vertical-align: middle;
   border-radius: 0.5rem;
   height: 35px;
