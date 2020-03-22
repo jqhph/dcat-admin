@@ -221,7 +221,7 @@ var options = {$options}, extend = function (options) {
 };
 
 var chart = new ApexCharts(
-    document.querySelector("{$this->containerSelector}"), 
+    $("{$this->containerSelector}")[0], 
     $.extend(options, extend(options))
 );
 chart.render();
