@@ -143,6 +143,10 @@ a.disabled {
   background-color: #d2d6de;
 }
 
+.bg-primary-gradient {
+  background: linear-gradient(118deg, $primary, rgba($primary, .7));
+}
+
 .img {
   cursor: pointer;
 }

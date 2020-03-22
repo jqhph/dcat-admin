@@ -168,6 +168,9 @@ class Assets
         '@jquery.inputmask' => [
             'js' => '@admin/dcat/plugins/input-mask/jquery.inputmask.bundle.min.js',
         ],
+        '@apex-charts' => [
+            'js' => '@admin/vendors/js/charts/apexcharts.min.js',
+        ],
     ];
 
     /**

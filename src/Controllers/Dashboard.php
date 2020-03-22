@@ -20,7 +20,6 @@ class Dashboard
     {
         return Tab::make()
             ->padding(0)
-            ->custom()
             ->add('Environment', static::environment())
             ->add('Extensions', static::extensions())
             ->add('Dependencies', static::dependencies());

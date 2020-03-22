@@ -26,6 +26,9 @@ abstract class Chart extends Widget
     public static $globalSettings = [
         'defaultFontColor'  => '#555',
         'defaultFontFamily' => 'Nunito,system-ui,sans-serif',
+
+        'scaleShowGridLines' => false,
+        'scaleShowHorizontalLines' => false,
     ];
 
     public $colors = [];
@@ -364,32 +367,14 @@ abstract class Chart extends Widget
     }
 
     /**
-     * Make element id.
-     *
-     * @return void
-     */
-    protected function makeId()
-    {
-        if ($this->id) {
-            return;
-        }
-        $this->id = 'chart_'.$this->type.Str::random(8);
-    }
-
-    public function getId()
-    {
-        $this->makeId();
-
-        return $this->id;
-    }
-
-    /**
      * Setup script.
      *
      * @return string
      */
     protected function script()
     {
+        $this->setupGlobalSettingScripts();
+
         $config = [
             'type'    => $this->type,
             'data'    => &$this->data,
@@ -397,34 +382,45 @@ abstract class Chart extends Widget
         ];
         $options = json_encode($config);
 
-        // Global configure.
-        $globalSettings = '';
-        foreach (self::$globalSettings as $k => $v) {
-            $globalSettings .= sprintf('Chart.defaults.global.%s="%s";', $k, $v);
-        }
-
         if (! $this->allowBuildRequestScript()) {
             return <<<JS
-{$globalSettings}
-setTimeout(function(){ new Chart($("#{$this->id}").get(0).getContext("2d"), $options) },60)
+setTimeout(function () { 
+    new Chart($("#{$this->getId()}").get(0).getContext("2d"), $options) 
+}, 60)
 JS;
         }
 
         $this->fetched(
             <<<JS
-if (!response.status) {
+if (! response.status) {
     return Dcat.error(response.message || 'Server internal error.');
 }        
-var id = '{$this->id}', opt = $options, prev = window['obj'+id];
+var id = '{$this->getId()}', opt = $options, prev = window['chart'+id];
+
 opt.options = $.extend(opt.options, response.options || {});
 opt.data.datasets = response.datasets || opt.data.datasets;
-if (prev) prev.destroy();
 
-window['obj'+id] = new Chart($("#"+id).get(0).getContext("2d"), opt);
+if (prev) {
+    prev.destroy();
+}
+
+window['chart'+id] = new Chart($("#"+id).get(0).getContext("2d"), opt);
 JS
         );
 
-        return $globalSettings.$this->buildRequestScript();
+        return $this->buildRequestScript();
+    }
+
+    protected function setupGlobalSettingScripts()
+    {
+        // Global configure.
+        $globalSettings = '';
+
+        foreach (self::$globalSettings as $k => $v) {
+            $globalSettings .= sprintf('Chart.defaults.global.%s="%s";', $k, $v);
+        }
+
+        Admin::script($globalSettings);
     }
 
     /**
@@ -448,13 +444,12 @@ JS
      */
     public function render()
     {
-        $this->makeId();
         $this->fillColor();
 
         $this->script = $this->script();
 
         $this->setHtmlAttribute([
-            'id' => $this->id,
+            'id' => $this->getId(),
         ]);
 
         $this->collectAssets();
@@ -513,5 +508,15 @@ HTML;
         if (! $this->colors) {
             $this->colors = Color::$chartTheme['blue'];
         }
+    }
+
+    protected function generateId()
+    {
+       return 'chart-'.$this->type.Str::random(8);
+    }
+
+    public function getId()
+    {
+        return $this->id ?: ($this->id = $this->generateId());
     }
 }

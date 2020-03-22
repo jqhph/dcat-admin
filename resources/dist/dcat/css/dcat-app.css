@@ -2888,6 +2888,10 @@ a.disabled {
   background-color: #d2d6de;
 }
 
+.bg-primary-gradient {
+  background: linear-gradient(118deg, #5c6bc6, rgba(92, 107, 198, 0.7));
+}
+
 .img {
   cursor: pointer;
 }
