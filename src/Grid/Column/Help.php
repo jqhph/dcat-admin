@@ -55,7 +55,7 @@ class Help implements Renderable
         }
 
         return <<<HELP
-&nbsp;<a href="javascript:void(0);" class="{$class} feather icon-alert-circle" data-title="{$this->message}"></a>
+&nbsp;<a href="javascript:void(0);" class="{$class} feather icon-help-circle" data-title="{$this->message}"></a>
 HELP;
     }
 }

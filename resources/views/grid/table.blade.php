@@ -67,7 +67,7 @@
             @if ($grid->rows()->isEmpty())
                 <tr>
                     <td colspan="{!! count($grid->getColumnNames()) !!}">
-                        <div style="margin:5px 0 0 10px;"><span class="help-block" style="margin-bottom:0"><i class="fa fa-info-circle"></i>&nbsp;{{ trans('admin.no_data') }}</span></div>
+                        <div style="margin:5px 0 0 10px;"><span class="help-block" style="margin-bottom:0"><i class="feather icon-alert-circle"></i>&nbsp;{{ trans('admin.no_data') }}</span></div>
                     </td>
                 </tr>
             @endif
