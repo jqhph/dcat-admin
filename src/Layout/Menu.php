@@ -157,7 +157,7 @@ class Menu
      *
      * @return bool
      */
-    public function isVisible(array $item)
+    public function visible(array $item)
     {
         $permissionIds = $item['permission_id'] ?? null;
         $roles = array_column($item['roles'] ?? [], 'slug');

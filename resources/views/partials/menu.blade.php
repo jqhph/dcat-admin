@@ -1,4 +1,4 @@
-@if($builder->isVisible($item))
+@if($builder->visible($item))
     @if(isset($item['is_header']))
         <li class="navigation-header">
             <span>{{ $item['title'] }}</span>

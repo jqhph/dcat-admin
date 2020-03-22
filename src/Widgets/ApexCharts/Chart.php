@@ -211,7 +211,7 @@ class Chart extends Widget
     /**
      * @return string
      */
-    protected function script()
+    public function script()
     {
         $options = json_encode($this->options);
 
@@ -219,7 +219,7 @@ class Chart extends Widget
 var options = {$options}, extend = function (options) {
     {$this->scripts['extend']}
 };
-
+‘’‘’
 var chart = new ApexCharts(
     $("{$this->containerSelector}")[0], 
     $.extend(options, extend(options))
