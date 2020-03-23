@@ -2,8 +2,7 @@
 
     {{ csrf_field() }}
 
-    <div class="col-md-{{$width['label']}}">
-    </div>
+    <div class="col-md-{{$width['label']}} d-md-block" style="display: none"></div>
 
     <div class="col-md-{{$width['field']}}">
 
@@ -13,7 +12,7 @@
         </div>
 
         @if($checkboxes)
-            <div class="d-flex pull-right" style="margin:10px 15px 0 0;">{!! $checkboxes !!}</div>
+            <div class="pull-right d-md-flex" style="margin:10px 15px 0 0;display: none">{!! $checkboxes !!}</div>
         @endif
 
         @endif
