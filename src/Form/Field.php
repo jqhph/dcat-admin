@@ -679,6 +679,16 @@ class Field implements Renderable
     }
 
     /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasAttribute(string $key)
+    {
+        return array_key_exists($key, $this->attributes);
+    }
+
+    /**
      * Specifies a regular expression against which to validate the value of the input.
      *
      * @param string $error

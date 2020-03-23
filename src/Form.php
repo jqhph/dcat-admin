@@ -1598,12 +1598,18 @@ class Form implements Renderable
     /**
      * @param int     $width
      * @param Closure $callback
+     *
+     * @return $this
      */
     public function block(int $width, \Closure $callback)
     {
         $layout = $this->builder->layout();
 
-        $layout->column($width, $callback($layout->form()));
+        $callback($form = $layout->form());
+
+        $layout->column($width, $form);
+
+        return $this;
     }
 
     /**
@@ -1633,7 +1639,7 @@ class Form implements Renderable
      *
      * @return bool|void
      */
-    public function inModal(\Closure $callback = null)
+    public function inDialog(\Closure $callback = null)
     {
         if (! $callback) {
             return DialogForm::is();

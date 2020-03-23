@@ -12,7 +12,7 @@
     @endif
     
     <!-- /.box-body -->
-    @if(count($buttons) > 0)
+    @if($buttons['submit'] || $buttons['reset'])
     <div class="box-footer row" style="display: flex">
         <div class="col-md-2"> &nbsp;</div>
 

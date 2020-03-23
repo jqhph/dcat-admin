@@ -7,41 +7,41 @@
 
 <div class="box-body">
     @if($steps->count())
-        <div class="fields-group la-step-box" style="padding: {{ $steps->getOption('padding') }};max-width: {{ $steps->getOption('width') }}">
+        <div class="fields-group dcat-step-box" style="padding: {{ $steps->getOption('padding') }};max-width: {{ $steps->getOption('width') }}">
 
-            <ul class="la-step-horizontal la-step-label-horizontal la-step ">
+            <ul class="dcat-step-horizontal dcat-step-label-horizontal dcat-step ">
                 @foreach($steps->all() as $step)
-                <li class="la-step-item">
-                    <a href="#{{ $step->getElementId() }}" class="la-step-item-container">
-                        <div class="la-step-line"></div>
-                        <div class="la-step-icons">
-                            <span class="la-step-icon" data-index="{{ $step->index() }}">{{ $step->index() + 1 }}</span>
+                <li class="dcat-step-item">
+                    <a href="#{{ $step->getElementId() }}" class="dcat-step-item-container">
+                        <div class="dcat-step-line"></div>
+                        <div class="dcat-step-icons">
+                            <span class="dcat-step-icon" data-index="{{ $step->index() }}">{{ $step->index() + 1 }}</span>
                         </div>
-                        <div class="la-step-content">
-                            <div class="la-step-title">{!! $step->title() !!}</div>
-                            <div class="la-step-desc"> {{ $step->description() }} </div>
+                        <div class="dcat-step-content">
+                            <div class="dcat-step-title">{!! $step->title() !!}</div>
+                            <div class="dcat-step-desc"> {{ $step->description() }} </div>
                         </div>
                     </a>
                 </li>
                 @endforeach
 
-                <li class="la-step-item">
-                    <a href="#{{ $steps->done()->getElementId() }}" class="la-step-item-container">
-                        <div class="la-step-line"></div>
-                        <div class="la-step-icons">
-                            <span class="la-step-icon" data-index="{{ $steps->count() }}"> {{ $steps->count() + 1 }} </span>
+                <li class="dcat-step-item">
+                    <a href="#{{ $steps->done()->getElementId() }}" class="dcat-step-item-container">
+                        <div class="dcat-step-line"></div>
+                        <div class="dcat-step-icons">
+                            <span class="dcat-step-icon" data-index="{{ $steps->count() }}"> {{ $steps->count() + 1 }} </span>
                         </div>
-                        <div class="la-step-content">
-                            <div class="la-step-title">{{ $steps->done()->title() }}</div>
-                            <div class="la-step-desc"></div>
+                        <div class="dcat-step-content">
+                            <div class="dcat-step-title">{{ $steps->done()->title() }}</div>
+                            <div class="dcat-step-desc"></div>
                         </div>
                     </a>
                 </li>
             </ul>
-            <div class="la-step-form">
+            <div class="dcat-step-form">
                 {!! $steps->build() !!}
 
-                <div id="{{ $steps->done()->getElementId() }}" class="la-done-step" style="display: none;">
+                <div id="{{ $steps->done()->getElementId() }}" class="dcat-done-step" style="display: none;">
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ $lastStep = $step;
 <script>
 Dcat.ready(function () {
     var form = $('#{{ $form->getElementId() }}'),
-        box = form.find('.la-step-box'),
+        box = form.find('.dcat-step-box'),
         stepInput = form.find('.current-step-input'),
         allStepInput = form.find('.all-steps-input'),
         smartWizard,
@@ -71,7 +71,7 @@ Dcat.ready(function () {
 
     var submitBtn = $('<button style="margin-left: 10px"></button>')
         .text('{{ trans('admin.submit') }}')
-        .addClass('btn btn-primary step-submit-btn disabled hide')
+        .addClass('btn btn-primary step-submit-btn disabled d-none')
         .on('click', function(){
             var $t = $(this);
 
@@ -96,7 +96,7 @@ Dcat.ready(function () {
 
                 if (state) {
                     if (data) {
-                        form.find('.la-done-step').html(data);
+                        form.find('.dcat-done-step').html(data);
                     }
 
                     smartWizard.next();
@@ -167,7 +167,7 @@ Dcat.ready(function () {
 
     // 获取步骤表单
     function getForm(idx) {
-        return box.find('.la-step-form [data-toggle="validator"]').eq(idx);
+        return box.find('.dcat-step-form [data-toggle="validator"]').eq(idx);
     }
 
     // 构建参数
@@ -258,11 +258,11 @@ Dcat.ready(function () {
             sbm = box.find('.step-submit-btn');
 
         if (smartWizard.current_index == last) {
-            sbm.removeClass('disabled hide');
+            sbm.removeClass('disabled d-none');
             next.hide();
             prev.show();
         } else {
-            sbm.addClass('disabled hide');
+            sbm.addClass('disabled d-none');
             if (smartWizard.current_index !== 0) {
                 prev.show();
             } else {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Dcat\Admin\Form\Step;
+namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Form as ParentForm;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 
-class Form extends WidgetForm
+class StepForm extends WidgetForm
 {
     /**
      * @var string

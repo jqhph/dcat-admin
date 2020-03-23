@@ -46,7 +46,7 @@ class Tree implements Renderable
      * @var string
      */
     protected $view = [
-        'tree'   => 'admin::tree',
+        'tree'   => 'admin::tree.container',
         'branch' => 'admin::tree.branch',
     ];
 

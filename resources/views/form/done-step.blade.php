@@ -1,26 +1,26 @@
 <style>
-    .la-done-step {
+    .dcat-done-step {
         max-width: 560px;
         margin: 0 auto;
         padding: 24px 0 8px;
     }
-    .la-done-step .st-icon {
+    .dcat-done-step .st-icon {
         color: {{ Dcat\Admin\Admin::color()->success() }};
         font-size: 72px;
         text-align:center;
     }
-    .la-done-step .st-content {
+    .dcat-done-step .st-content {
         text-align:center;
     }
-    .la-done-step .st-title {
+    .dcat-done-step .st-title {
         font-size: 24px;
     }
-    .la-done-step .st-desc {
+    .dcat-done-step .st-desc {
         color: rgba(0,0,0,.5);
         font-size: 14px;
         line-height: 1.6;
     }
-    .la-done-step .st-btn {
+    .dcat-done-step .st-btn {
         margin: 30px 0 10px;
     }
 </style>

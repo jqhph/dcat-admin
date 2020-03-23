@@ -171,6 +171,10 @@ class Asset
         '@apex-charts' => [
             'js' => '@admin/vendors/js/charts/apexcharts.min.js',
         ],
+        '@smart-wizard' => [
+            'js' => '@admin/dcat/plugins/SmartWizard/dist/js/jquery.smartWizard.min.js',
+            'css' => '@admin/dcat/extra/step.css',
+        ],
     ];
 
     /**

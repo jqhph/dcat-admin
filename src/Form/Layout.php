@@ -51,11 +51,11 @@ class Layout
     /**
      * @param \Closure|null $callback
      *
-     * @return MultipleForm
+     * @return BlockForm
      */
     public function form(\Closure $callback = null)
     {
-        $form = new Form\MultipleForm($this->form);
+        $form = new Form\BlockForm($this->form);
 
         $this->form->builder()->addForm($form);
 

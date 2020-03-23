@@ -93,7 +93,7 @@ class Builder
      *
      * @var string
      */
-    protected $view = 'admin::form';
+    protected $view = 'admin::form.container';
 
     /**
      * Form title.
@@ -103,7 +103,7 @@ class Builder
     protected $title;
 
     /**
-     * @var MultipleForm[]
+     * @var BlockForm[]
      */
     protected $multipleForms = [];
 
@@ -203,9 +203,9 @@ class Builder
     }
 
     /**
-     * @param MultipleForm $form
+     * @param BlockForm $form
      */
-    public function addForm(MultipleForm $form)
+    public function addForm(BlockForm $form)
     {
         $this->multipleForms[] = $form;
 

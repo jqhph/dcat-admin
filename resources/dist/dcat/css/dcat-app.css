@@ -1902,6 +1902,7 @@ select.form-control:not([multiple=multiple]) {
 
 .control-label {
   padding-top: 7px;
+  padding-right: 5px;
   margin-bottom: 0;
   font-size: 1rem;
   text-transform: capitalize;

@@ -31,7 +31,7 @@ class Show implements Renderable
     /**
      * @var string
      */
-    protected $view = 'admin::show';
+    protected $view = 'admin::show.container';
 
     /**
      * @var Repository
