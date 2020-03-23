@@ -2,10 +2,12 @@
     html body {background: #fff;}
 </style>
 
+<link rel="stylesheet" href="{{ admin_asset('@admin/css/pages/authentication.css') }}">
+
 <section class="row flexbox-container">
-    <div class="col-xl-8 col-11 d-flex justify-content-center">
+    <div class="col-xl-8 col-11 d-flex justify-content-center" style="top: -35px;">
         <div class="card bg-authentication rounded-0 mb-0">
-            <div class="row m-0">
+            <div class="row m-0 shadow-100">
                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0" style="min-width: 240px">
                     <img src="{{ admin_asset('@admin/images/pages/login.png') }}" alt="branding logo">
                 </div>
@@ -50,6 +52,8 @@
 
                                     <fieldset class="form-label-group form-group position-relative has-icon-left">
                                         <input
+                                                minlength="5"
+                                                maxlength="20"
                                                 id="password"
                                                 type="password"
                                                 class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"

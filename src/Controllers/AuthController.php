@@ -24,13 +24,6 @@ class AuthController extends Controller
     protected $view = 'admin::pages.login';
 
     /**
-     * @var array
-     */
-    protected $css = [
-        '@admin/css/pages/authentication.css',
-    ];
-
-    /**
      * @var string
      */
     protected $redirectTo;
@@ -45,8 +38,6 @@ class AuthController extends Controller
         if ($this->guard()->check()) {
             return redirect($this->redirectPath());
         }
-
-        Admin::css($this->css);
 
         return $content->full()->body(view($this->view));
     }
