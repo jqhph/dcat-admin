@@ -1,8 +1,7 @@
 
 import '../jquery-form/jquery.form.min';
 
-let $eColumns = {},
-    formCallbacks = {
+let formCallbacks = {
         before: [], success: [], error: []
     };
 
@@ -13,10 +12,14 @@ class Form {
         _this.options = $.extend({
             // 表单的 jquery 对象或者css选择器
             form: null,
+            // 开启表单验证
+            validate: false,
             // 表单错误信息class
             errorClass: 'has-error',
+            // 表单错误信息容器选择器
+            errorContainerSelector: '.with-errors',
             // 表单组css选择器
-            groupSelector: '.form-group',
+            groupSelector: '.form-group,.form-label-group',
             // tab表单css选择器
             tabSelector: '.tab-pane',
             // 错误信息模板
@@ -29,10 +32,15 @@ class Form {
             before: function () {},
             // 表单提交之后事件监听，返回false可以中止后续逻辑
             after: function () {},
+            // 成功事件，返回false可以中止后续逻辑
+            success: function () {},
+            // 失败事件，返回false可以中止后续逻辑
+            error: function () {},
         }, options);
 
         _this.originalValues = {};
         _this.$form = $(_this.options.form).first();
+        _this._errColumns = {};
 
         _this.submit();
     }
@@ -41,29 +49,49 @@ class Form {
         let Dcat = window.Dcat,
             _this = this,
             $form = _this.$form,
-            options = _this.options;
+            options = _this.options,
+            $submitButton = $form.find(':submit');
 
-        // 移除错误信息
-        removeFieldError(_this);
+        // 移除所有错误信息
+        _this.removeErrors();
 
         $form.ajaxSubmit({
-            beforeSubmit: function (fields, $form, _opt) {
-                if (options.before(fields, $form, _opt, _this) === false) {
+            beforeSubmit: function (fields, form, _opt) {
+                if (options.before(fields, form, _opt, _this) === false) {
                     return false;
                 }
 
-                if (fire(formCallbacks.before, fields, $form, _opt, _this) === false) {
+                // 触发全局事件
+                if (fire(formCallbacks.before, fields, form, _opt, _this) === false) {
                     return false;
                 }
+
+                // 开启表单验证
+                if (options.validate) {
+                    $form.validator('validate');
+
+                    if ($form.find('.' + options.errorClass).length > 0) {
+                        return false;
+                    }
+                }
+
+                $submitButton.buttonLoading();
             },
             success: function (response) {
+                $submitButton.buttonLoading(false);
+
                 if (options.after(true, response, _this) === false) {
+                    return;
+                }
+
+                if (options.success(response, _this) === false) {
                     return;
                 }
 
                 if (fire(formCallbacks.success, response, _this) === false) {
                     return;
                 }
+
 
                 if (! response.status) {
                     Dcat.error(response.message || 'Save failed!');
@@ -85,7 +113,13 @@ class Form {
                 }
             },
             error: function (response) {
+                $submitButton.buttonLoading(false);
+
                 if (options.after(false, response, _this) === false) {
+                    return;
+                }
+
+                if (options.error(response, _this) === false) {
                     return;
                 }
 
@@ -94,16 +128,17 @@ class Form {
                 }
 
                 try {
-                    var error = JSON.parse(response.responseText), i;
+                    var error = JSON.parse(response.responseText),
+                        key;
 
                     if (response.status != 422 || ! error || ! Dcat.helpers.isset(error, 'errors')) {
                         return Dcat.error(response.status + ' ' + response.statusText);
                     }
                     error = error.errors;
 
-                    for (i in error) {
+                    for (key in error) {
                         // 显示错误信息
-                        $eColumns[i] = _this.showFieldError($form, i, error[i]);
+                        _this._errColumns[key] = _this.showError($form, key, error[key]);
                     }
 
                 } catch (e) {
@@ -114,11 +149,16 @@ class Form {
     }
 
     // 显示错误信息
-    showFieldError($form, column, errors) {
+    showError($form, column, errors) {
         let _this = this,
-            $field = _this.queryFieldByName($form, column);
+            $field = _this.queryFieldByName($form, column),
+            render = function (msg) {
+                $group.find(_this.options.errorContainerSelector).first().append(
+                    _this.options.errorTemplate.replace('{message}', msg)
+                );
+            };
 
-        queryTabTitleError(_this, $field).removeClass('hide');
+        queryTabTitleError(_this, $field).removeClass('d-none');
 
         // 保存字段原始数据
         _this.originalValues[column] = _this.getFieldValue($field);
@@ -134,10 +174,12 @@ class Form {
 
         $group.addClass(_this.options.errorClass);
 
-        for (j in errors) {
-            $group.find('error').eq(0).append(
-                _this.options.errorTemplate.replace('{message}', errors[j])
-            );
+        if (typeof errors === 'string') {
+            render(errors)
+        } else {
+            for (j in errors) {
+                render(errors[j])
+            }
         }
 
         if (! _this.options.disableAutoRemoveError) {
@@ -175,7 +217,7 @@ class Form {
     queryFieldByName($form, column) {
         if (column.indexOf('.') !== -1) {
             column = column.split('.');
-            
+
             let first = column.shift(),
                 i,
                 sub = '';
@@ -207,7 +249,8 @@ class Form {
         return $c;
     }
 
-    removeError($field) {
+    // 移除给定字段的错误信息
+    removeError($field, column) {
         let parent = $field.parents(this.options.groupSelector),
             errorClass = this.options.errorClass;
 
@@ -216,15 +259,39 @@ class Form {
 
         // tab页下没有错误信息了，隐藏title的错误图标
         let tab;
-        
+
         if (! queryTabByField(this, $field).find('.'+errorClass).length) {
             tab = queryTabTitleError(this, $field);
-            if (! tab.hasClass('hide')) {
-                tab.addClass('hide');
+            if (! tab.hasClass('d-none')) {
+                tab.addClass('d-none');
             }
         }
 
-        delete $eColumns[column];
+        delete this._errColumns[column];
+    }
+
+    // 删除所有错误信息
+    removeErrors() {
+        let _this = this,
+            column,
+            tab;
+
+        // 移除所有字段的错误信息
+        _this.$form.find(_this.options.errorContainerSelector).each(function (_, $err) {
+            $($err).parents(_this.options.groupSelector).removeClass(_this.options.errorClass);
+            $($err).html('');
+        });
+
+        // 移除tab表单tab标题错误信息
+        for (column in _this._errColumns) {
+            tab = queryTabTitleError(_this._errColumns[column]);
+            if (! tab.hasClass('d-none')) {
+                tab.addClass('d-none');
+            }
+        }
+
+        // 重置
+        _this._errColumns = {};
     }
 }
 
@@ -247,7 +314,7 @@ Form.submitted = function (success, error) {
 function removeErrorWhenValChanged(form, $field, column) {
     let _this = form,
         removeError = function () {
-            _this.removeError($field)
+            _this.removeError($field, column)
         };
 
     $field.one('change', removeError);
@@ -274,24 +341,6 @@ function removeErrorWhenValChanged(form, $field, column) {
     handle();
 }
 
-// 删除错误有字段的错误信息
-function removeFieldError(form) {
-    let i, parent, tab;
-
-    for (i in $eColumns) {
-        parent = $eColumns[i].parents(form.options.groupSelector);
-        parent.removeClass(form.options.errorClass);
-        parent.find('error').html('');
-
-        tab = queryTabTitleError($eColumns[i]);
-        if (! tab.hasClass('hide')) {
-            tab.addClass('hide');
-        }
-
-    }
-    // 重置
-    $eColumns = {};
-}
 
 function getTabId(form, $field) {
     return $field.parents(form.options.tabSelector).attr('id');
@@ -309,7 +358,7 @@ function queryTabByField(form, $field)
 }
 
 function queryTabTitleError(form, $field) {
-    return queryTabByField(form, $field).find('.text-red');
+    return queryTabByField(form, $field).find('.text-danger');
 }
 
 // 触发钩子事件
@@ -335,5 +384,21 @@ function fire(callbacks) {
         }
     }
 }
+
+
+// 开启form表单模式
+$.fn.form = function (options) {
+    let $this = $(this);
+
+    options = $.extend(options, {
+        form: $this,
+    });
+
+    $this.find(':submit').click(function (event) {
+        Dcat.Form(options);
+
+        return false;
+    });
+};
 
 export default Form

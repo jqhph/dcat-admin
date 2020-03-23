@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Layout;
 
-class Assets
+class Asset
 {
     /**
      * 路径别名
@@ -395,19 +395,17 @@ class Assets
     }
 
     /**
-     * 获取脚本的真实路径
+     * 根据别名获取资源路径.
      *
      * @param string $path
      * @param string $type
      *
      * @return string|array|null
      */
-    public function url($path, string $type = 'js')
+    public function get($path, string $type = 'js')
     {
         if (empty($this->alias[$path])) {
-            return admin_asset(
-                $this->getRealPath($path)
-            );
+            return $this->url($path);
         }
 
         $paths = isset($this->alias[$path][$type]) ? (array) $this->alias[$path][$type] : null;
@@ -417,10 +415,32 @@ class Assets
         }
 
         foreach ($paths as &$value) {
-            $value = admin_asset($this->getRealPath($value));
+            $value = $this->url($value);
         }
 
         return $paths;
+    }
+
+    /**
+     * 获取静态资源完整URL.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function url($path)
+    {
+        if (! $path) {
+            return $path;
+        }
+
+        $path = $this->getRealPath($path);
+
+        if (strpos($path, '//') === false) {
+            $path = config('admin.assets_server').'/'.trim($path, '/');
+        }
+
+        return (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
     }
 
     /**
@@ -587,7 +607,7 @@ class Assets
         $html = '';
 
         foreach (array_unique($this->css) as &$v) {
-            if (! $paths = $this->url($v, 'css')) {
+            if (! $paths = $this->get($v, 'css')) {
                 continue;
             }
 
@@ -625,7 +645,7 @@ class Assets
         $html = '';
 
         foreach (array_unique($this->js) as &$v) {
-            if (! $paths = $this->url($v, 'js')) {
+            if (! $paths = $this->get($v, 'js')) {
                 continue;
             }
 
@@ -645,7 +665,7 @@ class Assets
         $html = '';
 
         foreach (array_unique($this->headerJs) as &$v) {
-            if (! $paths = $this->url($v, 'js')) {
+            if (! $paths = $this->get($v, 'js')) {
                 continue;
             }
 

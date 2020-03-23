@@ -40,7 +40,15 @@ select.form-control:not([multiple=multiple]) {
   margin-bottom: 4px;
 }
 
-.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
+.has-error .checkbox,
+.has-error .checkbox-inline,
+.has-error .control-label, .has-error .help-block,
+.has-error .radio,
+.has-error .radio-inline,
+.has-error.checkbox label,
+.has-error.radio label,
+.has-error .form-control-position i,
+.has-error .form-control:focus ~ .form-control-position i {
   color: $red-darker;
 }
 

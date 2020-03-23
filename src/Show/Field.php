@@ -319,7 +319,7 @@ HTML;
      *
      * @return Field
      */
-    public function label($style = 'success')
+    public function label($style = 'primary')
     {
         return $this->unescape()->as(function ($value) use ($style) {
             $class = $style;

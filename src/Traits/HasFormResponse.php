@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 
@@ -30,18 +31,13 @@ trait HasFormResponse
     }
 
     /**
-     * Ajax but not pjax.
-     *
      * @param Request $request
      *
      * @return bool
      */
     public function isAjaxRequest(Request $request = null)
     {
-        /* @var Request $request */
-        $request = $request ?: (empty($this->request) ? request() : $this->request);
-
-        return $request->ajax() && ! $request->pjax();
+        return Helper::isAjaxRequest($request);
     }
 
     /**
@@ -137,18 +133,12 @@ trait HasFormResponse
     }
 
     /**
-     * @param array|MessageBag $validationMessages
+     * @param array|MessageBag|\Illuminate\Validation\Validator $validationMessages
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function validationErrorsResponse($validationMessages)
     {
-        if (! $this->isAjaxRequest()) {
-            return back()->withInput()->withErrors($validationMessages);
-        }
-
-        return response()->json([
-            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages(),
-        ], 422);
+        return Helper::makeValidationErrorsResponse($validationMessages);
     }
 }

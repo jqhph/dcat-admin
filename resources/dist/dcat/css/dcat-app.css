@@ -1924,9 +1924,9 @@ select.form-control:not([multiple=multiple]) {
 .has-error .radio,
 .has-error .radio-inline,
 .has-error.checkbox label,
-.has-error.checkbox-inline label,
 .has-error.radio label,
-.has-error.radio-inline label {
+.has-error .form-control-position i,
+.has-error .form-control:focus ~ .form-control-position i {
   color: #bd4147;
 }
 

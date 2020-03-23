@@ -1,4 +1,3 @@
-<error></error>
 <div class="help-block  with-errors"></div>
 @if(is_array($errorKey))
     @foreach($errorKey as $key => $col)

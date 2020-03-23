@@ -124,12 +124,22 @@ export default class Dcat {
      * @param url
      */
     reload(url) {
-        let container = this.config.pjax_container_selector;
-        let opt = {container: container};
+        let container = this.config.pjax_container_selector,
+            opt = {container: container};
 
-        url && (opt.url = url);
+        if ($(container).length) {
+            url && (opt.url = url);
 
-        $.pjax.reload(opt);
+            $.pjax.reload(opt);
+
+            return;
+        }
+
+        if (url) {
+            location.href = url;
+        } else {
+            location.reload();
+        }
     }
 
     /**

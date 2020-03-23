@@ -1,24 +1,24 @@
 
-<link rel="stylesheet" href="{{ admin_asset('dcat-admin/css/pages/authentication.css') }}">
+<link rel="stylesheet" href="{{ admin_asset('@admin/css/pages/authentication.css') }}">
 
 <section class="row flexbox-container">
     <div class="col-xl-8 col-11 d-flex justify-content-center">
         <div class="card bg-authentication rounded-0 mb-0">
             <div class="row m-0">
                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
-                    <img src="{{ admin_asset('dcat-admin/images/pages/login.png') }}" alt="branding logo">
+                    <img src="{{ admin_asset('@admin/images/pages/login.png') }}" alt="branding logo">
                 </div>
                 <div class="col-lg-6 col-12 p-0">
                     <div class="card rounded-0 mb-0 px-2">
                         <div class="card-header pb-1">
                             <div class="card-title">
-                                <h4 class="mb-0">Login</h4>
+                                <h4 class="mb-0">{{ __('admin.login') }}</h4>
                             </div>
                         </div>
                         <p class="px-2">Welcome back, please login to your account.</p>
                         <div class="card-content">
                             <div class="card-body pt-1">
-                                <form method="POST" action="{{ admin_url('auth/login') }}">
+                                <form id="login-form" method="POST" action="{{ admin_url('auth/login') }}">
                                     @csrf
                                     <fieldset class="form-label-group form-group position-relative has-icon-left">
                                         <input
@@ -36,6 +36,8 @@
                                         </div>
 
                                         <label for="email">{{ trans('admin.username') }}</label>
+
+                                        <div class="help-block with-errors"></div>
                                         @if($errors->has('username'))
                                         <span class="invalid-feedback text-danger" role="alert">
                                             @foreach($errors->get('username') as $message)
@@ -45,7 +47,7 @@
                                         @endif
                                     </fieldset>
 
-                                    <fieldset class="form-label-group position-relative has-icon-left">
+                                    <fieldset class="form-label-group form-group position-relative has-icon-left">
                                         <input
                                                 id="password"
                                                 type="password"
@@ -61,6 +63,7 @@
                                         </div>
                                         <label for="password">{{ trans('admin.password') }}</label>
 
+                                        <div class="help-block with-errors"></div>
                                         @if($errors->has('password'))
                                             <span class="invalid-feedback text-danger" role="alert">
                                             @foreach($errors->get('password') as $message)
@@ -68,6 +71,7 @@
                                             @endforeach
                                             </span>
                                         @endif
+
                                     </fieldset>
                                     <div class="form-group d-flex justify-content-between align-items-center">
                                         <div class="text-left">
@@ -100,3 +104,23 @@
         </div>
     </div>
 </section>
+
+<script>
+Dcat.ready(function () {
+    // ajax表单提交
+    $('#login-form').form({
+        validate: true,
+        success: function (response) {
+            if (! response.status) {
+                Dcat.error(response.message);
+
+                return false;
+            }
+
+            location.href = response.redirect;
+
+            return false;
+        }
+    });
+});
+</script>

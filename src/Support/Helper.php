@@ -7,10 +7,13 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Validator;
 
 class Helper
 {
@@ -31,7 +34,7 @@ class Helper
     ];
 
     /**
-     * Update extension config.
+     * 更新扩展配置.
      *
      * @param array $config
      *
@@ -52,7 +55,7 @@ class Helper
     }
 
     /**
-     * Converts the given value to an array.
+     * 把给定的值转化为数组.
      *
      * @param $value
      * @param bool $filter
@@ -93,7 +96,7 @@ class Helper
     }
 
     /**
-     * Converts the given value to string.
+     * 把给定的值转化为字符串.
      *
      * @param mixed  $value
      * @param array  $params
@@ -129,8 +132,6 @@ class Helper
     }
 
     /**
-     * Build an HTML attribute string from an array.
-     *
      * @param array $attributes
      *
      * @return string
@@ -157,8 +158,6 @@ class Helper
     }
 
     /**
-     * Get url with the added query string parameters.
-     *
      * @param string $url
      * @param array  $query
      *
@@ -225,7 +224,7 @@ class Helper
     }
 
     /**
-     * If a request match the specific path.
+     * 匹配请求路径.
      *
      * @example
      *      Helper::matchRequestPath('auth/user')
@@ -263,7 +262,7 @@ class Helper
     }
 
     /**
-     * Build nested array.
+     * 生成层级数据.
      *
      * @param array       $nodes
      * @param int         $parentId
@@ -311,8 +310,6 @@ class Helper
     }
 
     /**
-     * Generate a URL friendly "slug" from a given string.
-     *
      * @param string $name
      * @param string $symbol
      *
@@ -380,7 +377,7 @@ class Helper
     }
 
     /**
-     * Delete from array by value.
+     * 删除数组中的元素.
      *
      * @param array $array
      * @param mixed $value
@@ -488,7 +485,7 @@ class Helper
     }
 
     /**
-     * Validate extension name.
+     * 验证扩展包名称.
      *
      * @param string $name
      *
@@ -517,5 +514,42 @@ class Helper
         }
 
         return 'fa fa-file-o';
+    }
+
+    /**
+     * 判断是否是ajax请求.
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public static function isAjaxRequest(?Request $request = null)
+    {
+        /* @var Request $request */
+        $request = $request ?: request();
+
+        return $request->ajax() && ! $request->pjax();
+    }
+
+    /**
+     * 响应请求验证错误.
+     *
+     * @param array|MessageBag|Validator $validationMessages
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public static function makeValidationErrorsResponse($validationMessages)
+    {
+        if ($validationMessages instanceof Validator) {
+            $validationMessages = $validationMessages->getMessageBag();
+        }
+
+        if (! static::isAjaxRequest()) {
+            return back()->withInput()->withErrors($validationMessages);
+        }
+
+        return response()->json([
+            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages(),
+        ], 422);
     }
 }

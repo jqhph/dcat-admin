@@ -87,7 +87,7 @@ function extend(Dcat) {
         $container.loading(options);
     };
 
-    //
+    // 给元素附加加载状态
     $.fn.loading = function (opt) {
         if (opt === false) {
             return $(this).find(loading).remove();
@@ -99,17 +99,21 @@ function extend(Dcat) {
         return new Loading(Dcat, opt);
     };
 
+    // 按钮加载状态
     $.fn.buttonLoading = function (start) {
         let $this = $(this),
-            loadingId = $this.data('loading'),
+            loadingId = $this.attr('data-loading'),
             content;
 
         if (start === false) {
             if (! loadingId) {
                 return $this;
             }
+
+            $this.find('.waves-ripple').remove();
+
             return $this
-                .removeClass('disabled btn-loading')
+                .removeClass('disabled btn-loading waves-effect')
                 .removeAttr('disabled')
                 .removeAttr('data-loading')
                 .html(

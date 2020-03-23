@@ -590,31 +590,9 @@ HTML;
     {
         Admin::script(
             <<<JS
-(function () {
-    var f = $('#{$this->getElementId()}');
-
-    f.find('[type="submit"]').click(function () {
-        var t = $(this);
-        
-        Dcat.Form({
-            form: f,
-            before: function () {
-                f.validator('validate');
-        
-                if (f.find('.has-error').length > 0) {
-                    return false;
-                }
-                
-                t.buttonLoading();
-            },
-            after: function () {
-                t.buttonLoading(false);
-            }
-        });
-    
-        return false;
-    });
-})()
+$('#{$this->getElementId()}').form({
+    validate: true,
+});
 JS
         );
     }

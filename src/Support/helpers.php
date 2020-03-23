@@ -378,10 +378,6 @@ if (! function_exists('admin_asset')) {
      */
     function admin_asset($path)
     {
-        if (strpos($path, '//') === false) {
-            $path = config('admin.assets_server').'/'.trim($path, '/');
-        }
-
-        return (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
+        return Dcat\Admin\Admin::asset()->url($path);
     }
 }

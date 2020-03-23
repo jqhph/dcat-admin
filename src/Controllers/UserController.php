@@ -35,7 +35,7 @@ class UserController extends AdminController
             $grid->id('ID')->sortable();
             $grid->username;
             $grid->name;
-            $grid->roles->pluck('name')->chip('primary', 3);
+            $grid->roles->pluck('name')->label('primary', 3);
 
             $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');
@@ -112,7 +112,7 @@ class UserController extends AdminController
                 }
 
                 return collect($roles)->pluck('name');
-            })->chip();
+            })->label();
 
             $show->permissions->unescape()->as(function () {
                 $roles = (array) $this->roles;
