@@ -1597,11 +1597,11 @@ var Form = /*#__PURE__*/function () {
       // tab表单css选择器
       tabSelector: '.tab-pane',
       // 错误信息模板
-      errorTemplate: '<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {message}</label><br/>',
+      errorTemplate: '<label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {message}</label><br/>',
       // 保存成功后自动跳转
       autoRedirect: false,
-      // 不允许自动移除表单错误信息
-      disableAutoRemoveError: false,
+      // 自动移除表单错误信息
+      autoRemoveError: true,
       // 表单提交之前事件监听，返回false可以中止表单继续提交
       before: function before() {},
       // 表单提交之后事件监听，返回false可以中止后续逻辑
@@ -1727,8 +1727,17 @@ var Form = /*#__PURE__*/function () {
     value: function showError($form, column, errors) {
       var _this = this,
           $field = _this.queryFieldByName($form, column),
+          $group = $field.closest(_this.options.groupSelector),
           render = function render(msg) {
-        $group.find(_this.options.errorContainerSelector).first().append(_this.options.errorTemplate.replace('{message}', msg));
+        $group.addClass(_this.options.errorClass);
+
+        if (typeof msg === 'string') {
+          msg = [msg];
+        }
+
+        for (var j in msg) {
+          $group.find(_this.options.errorContainerSelector).first().append(_this.options.errorTemplate.replace('{message}', msg[j]));
+        }
       };
 
       queryTabTitleError(_this, $field).removeClass('d-none'); // 保存字段原始数据
@@ -1743,19 +1752,9 @@ var Form = /*#__PURE__*/function () {
         return;
       }
 
-      var $group = $field.closest(_this.options.groupSelector),
-          j;
-      $group.addClass(_this.options.errorClass);
+      render(errors);
 
-      if (typeof errors === 'string') {
-        render(errors);
-      } else {
-        for (j in errors) {
-          render(errors[j]);
-        }
-      }
-
-      if (!_this.options.disableAutoRemoveError) {
+      if (_this.options.autoRemoveError) {
         removeErrorWhenValChanged(_this, $field, column);
       }
 
@@ -1829,10 +1828,11 @@ var Form = /*#__PURE__*/function () {
   }, {
     key: "removeError",
     value: function removeError($field, column) {
-      var parent = $field.parents(this.options.groupSelector),
-          errorClass = this.options.errorClass;
+      var options = this.options,
+          parent = $field.parents(options.groupSelector),
+          errorClass = this.errorClass;
       parent.removeClass(errorClass);
-      parent.find('error').html(''); // tab页下没有错误信息了，隐藏title的错误图标
+      parent.find(options.errorContainerSelector).html(''); // tab页下没有错误信息了，隐藏title的错误图标
 
       var tab;
 
@@ -1892,33 +1892,32 @@ Form.submitted = function (success, error) {
 
 
 function removeErrorWhenValChanged(form, $field, column) {
-  var _this = form,
-      removeError = function removeError() {
-    _this.removeError($field, column);
+  var remove = function remove() {
+    form.removeError($field, column);
   };
 
-  $field.one('change', removeError);
-  $field.off('blur', removeError).on('blur', function () {
-    if (_this.isValueChanged($field, column)) {
-      removeError();
+  $field.one('change', remove);
+  $field.off('blur', remove).on('blur', function () {
+    if (form.isValueChanged($field, column)) {
+      remove();
     }
   }); // 表单值发生变化就移除错误信息
 
-  function handle() {
+  var interval = function interval() {
     setTimeout(function () {
       if (!$field.length) {
         return;
       }
 
-      if (_this.isValueChanged($field, column)) {
-        return removeError();
+      if (form.isValueChanged($field, column)) {
+        return remove();
       }
 
-      handle();
+      interval();
     }, 500);
-  }
+  };
 
-  handle();
+  interval();
 }
 
 function getTabId(form, $field) {
@@ -1926,17 +1925,17 @@ function getTabId(form, $field) {
 }
 
 function queryTabByField(form, $field) {
-  var id = getTabId(form, $field);
+  var tabId = getTabId(form, $field);
 
-  if (!id) {
+  if (!tabId) {
     return $('<none></none>');
   }
 
-  return $('#' + id);
+  return $("a[href=\"#".concat(tabId, "\"]"));
 }
 
 function queryTabTitleError(form, $field) {
-  return queryTabByField(form, $field).find('.text-danger');
+  return queryTabByField(form, $field).find('.has-tab-error');
 } // 触发钩子事件
 
 

@@ -44,7 +44,7 @@
                                         @if($errors->has('username'))
                                         <span class="invalid-feedback text-danger" role="alert">
                                             @foreach($errors->get('username') as $message)
-                                                <span class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</span><br>
+                                                <span class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</span><br>
                                             @endforeach
                                         </span>
                                         @endif
@@ -72,7 +72,7 @@
                                         @if($errors->has('password'))
                                             <span class="invalid-feedback text-danger" role="alert">
                                             @foreach($errors->get('password') as $message)
-                                                    <span class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</span><br>
+                                                    <span class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</span><br>
                                             @endforeach
                                             </span>
                                         @endif

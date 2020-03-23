@@ -2698,8 +2698,7 @@ table.dataTable.complex-headers tfoot td {
 .nav-theme-primary .nav.nav-tabs,
 .nav-theme-success .nav.nav-tabs,
 .nav-theme-info .nav.nav-tabs,
-.nav-theme-danger .nav.nav-tabs,
-.nav-theme-default .nav.nav-tabs {
+.nav-theme-danger .nav.nav-tabs {
   background: #5c6bc6;
   padding-left: 10px;
   border-radius: 0.4rem;
@@ -2709,32 +2708,28 @@ table.dataTable.complex-headers tfoot td {
 .nav-theme-primary .nav.nav-tabs .nav-item .nav-link,
 .nav-theme-success .nav.nav-tabs .nav-item .nav-link,
 .nav-theme-info .nav.nav-tabs .nav-item .nav-link,
-.nav-theme-danger .nav.nav-tabs .nav-item .nav-link,
-.nav-theme-default .nav.nav-tabs .nav-item .nav-link {
+.nav-theme-danger .nav.nav-tabs .nav-item .nav-link {
   color: rgba(255, 255, 255, 0.5);
 }
 
 .nav-theme-primary .nav.nav-tabs .nav-item .nav-link.active,
 .nav-theme-success .nav.nav-tabs .nav-item .nav-link.active,
 .nav-theme-info .nav.nav-tabs .nav-item .nav-link.active,
-.nav-theme-danger .nav.nav-tabs .nav-item .nav-link.active,
-.nav-theme-default .nav.nav-tabs .nav-item .nav-link.active {
+.nav-theme-danger .nav.nav-tabs .nav-item .nav-link.active {
   color: #fff;
 }
 
 .nav-theme-primary .nav.nav-tabs .nav-item .nav-link.active:after,
 .nav-theme-success .nav.nav-tabs .nav-item .nav-link.active:after,
 .nav-theme-info .nav.nav-tabs .nav-item .nav-link.active:after,
-.nav-theme-danger .nav.nav-tabs .nav-item .nav-link.active:after,
-.nav-theme-default .nav.nav-tabs .nav-item .nav-link.active:after {
+.nav-theme-danger .nav.nav-tabs .nav-item .nav-link.active:after {
   background: #fff !important;
 }
 
 .nav-theme-primary .nav-tabs .nav-item,
 .nav-theme-success .nav-tabs .nav-item,
 .nav-theme-info .nav-tabs .nav-item,
-.nav-theme-danger .nav-tabs .nav-item,
-.nav-theme-default .nav-tabs .nav-item {
+.nav-theme-danger .nav-tabs .nav-item {
   margin-bottom: 2px;
 }
 
