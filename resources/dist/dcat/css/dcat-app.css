@@ -1818,15 +1818,10 @@ dl {
 
 .btn-sm,
 .btn-group-sm > .btn {
-  padding: 0.65rem 1rem !important;
-  font-size: 0.6rem;
-  line-height: 1.1;
-  height: 30px;
-}
-
-a.btn-sm,
-.btn-group-sm > a.btn {
   padding: 0.6rem 1rem !important;
+  font-size: 0.6rem;
+  line-height: 1;
+  height: 30px;
 }
 
 .btn-custom {
@@ -1937,7 +1932,7 @@ a:not(.btn) .spinner-grow {
 }
 
 select.form-control:not([multiple=multiple]) {
-  background-image: url(/dcat-admin/images/arrow-down.png?8338497…);
+  background-image: none;
 }
 
 .input-group-sm > .form-control:not(textarea),

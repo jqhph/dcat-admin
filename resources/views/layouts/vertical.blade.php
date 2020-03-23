@@ -4,13 +4,6 @@
 
     <script>
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
-
-        console.log(123, Dcat)
-        Dcat.ready(function () {
-
-            setTimeout(function () {
-            }, 1000)
-        })
     </script>
 
     {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
