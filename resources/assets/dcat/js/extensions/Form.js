@@ -393,7 +393,11 @@ $.fn.form = function (options) {
         form: $this,
     });
 
-    $this.find(':submit').click(function (e) {
+    $this.on('submit', function () {
+        return false;
+    });
+
+    $this.find('[type="submit"],.submit').click(function (e) {
         Dcat.Form(options);
 
         return false;
