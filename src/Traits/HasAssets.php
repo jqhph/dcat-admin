@@ -26,11 +26,11 @@ trait HasAssets
     }
 
     /**
-     * @return \Dcat\Admin\Layout\Assets
+     * @return \Dcat\Admin\Layout\Asset
      */
-    public static function assets()
+    public static function asset()
     {
-        return app('admin.assets');
+        return app('admin.asset');
     }
 
     /**
@@ -41,7 +41,7 @@ trait HasAssets
      */
     public static function collectAssets(string $name, string $type = '')
     {
-        static::assets()->collect($name, $type);
+        static::asset()->collect($name, $type);
     }
 
     /**
@@ -53,7 +53,7 @@ trait HasAssets
      */
     public static function css($css)
     {
-        static::assets()->css($css);
+        static::asset()->css($css);
     }
 
     /**
@@ -65,7 +65,7 @@ trait HasAssets
      */
     public static function baseCss(array $css)
     {
-        static::assets()->baseCss($css);
+        static::asset()->baseCss($css);
     }
 
     /**
@@ -77,7 +77,7 @@ trait HasAssets
      */
     public static function js($js)
     {
-        static::assets()->js($js);
+        static::asset()->js($js);
     }
 
     /**
@@ -89,7 +89,7 @@ trait HasAssets
      */
     public static function headerJs($js)
     {
-        static::assets()->headerJs($js);
+        static::asset()->headerJs($js);
     }
 
     /**
@@ -101,7 +101,7 @@ trait HasAssets
      */
     public static function baseJs(array $js)
     {
-        static::assets()->baseJs($js);
+        static::asset()->baseJs($js);
     }
 
     /**
@@ -111,7 +111,7 @@ trait HasAssets
      */
     public static function script($script)
     {
-        static::assets()->script($script);
+        static::asset()->script($script);
     }
 
     /**
@@ -121,7 +121,7 @@ trait HasAssets
      */
     public static function style($style)
     {
-        static::assets()->style($style);
+        static::asset()->style($style);
     }
 
     /**
@@ -131,6 +131,6 @@ trait HasAssets
      */
     public static function fonts($font)
     {
-        static::assets()->fonts = $font;
+        static::asset()->fonts = $font;
     }
 }

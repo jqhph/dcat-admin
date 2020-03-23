@@ -72,7 +72,7 @@ class ImportCommand extends VendorPublishCommand
             $this->publishItem(
                 $assets,
                 public_path(
-                    Admin::assets()->getRealPath('@extension').'/'.$extension::NAME
+                    Admin::asset()->getRealPath('@extension').'/'.$extension::NAME
                 )
             );
         }

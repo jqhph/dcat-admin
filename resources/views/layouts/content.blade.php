@@ -24,7 +24,7 @@
 @endsection
 
 @section('app')
-    {!! Dcat\Admin\Admin::assets()->renderStyle() !!}
+    {!! Dcat\Admin\Admin::asset()->renderStyle() !!}
 
     <div class="content-header">
         @yield('content-header')
@@ -40,7 +40,7 @@
         {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
     </div>
 
-    {!! Dcat\Admin\Admin::assets()->renderScript() !!}
+    {!! Dcat\Admin\Admin::asset()->renderScript() !!}
     {!! Dcat\Admin\Admin::html() !!}
 @endsection
 
@@ -51,8 +51,8 @@
 
     <script>Dcat.pjaxResponded()</script>
 
-    {!! Dcat\Admin\Admin::assets()->renderCss() !!}
-    {!! Dcat\Admin\Admin::assets()->renderJs() !!}
+    {!! Dcat\Admin\Admin::asset()->renderCss() !!}
+    {!! Dcat\Admin\Admin::asset()->renderJs() !!}
 
     @yield('app')
 @endif

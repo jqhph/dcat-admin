@@ -12,14 +12,14 @@
     <section class="form-content">{!! $content !!}</section>
 @endsection
 
-{!! Dcat\Admin\Admin::assets()->renderCss() !!}
-{!! Dcat\Admin\Admin::assets()->renderJs() !!}
+{!! Dcat\Admin\Admin::asset()->renderCss() !!}
+{!! Dcat\Admin\Admin::asset()->renderJs() !!}
 
-{!! Dcat\Admin\Admin::assets()->renderStyle() !!}
+{!! Dcat\Admin\Admin::asset()->renderStyle() !!}
 
 @yield('content')
 
-{!! Dcat\Admin\Admin::assets()->renderScript() !!}
+{!! Dcat\Admin\Admin::asset()->renderScript() !!}
 {!! Dcat\Admin\Admin::html() !!}
 
 {{--select2下拉选框z-index必须大于弹窗的值--}}

@@ -20,9 +20,9 @@
 
     {!! admin_section(\AdminSection::HEAD) !!}
 
-    {!! Dcat\Admin\Admin::assets()->renderCss() !!}
+    {!! Dcat\Admin\Admin::asset()->renderCss() !!}
 
-    {!! Dcat\Admin\Admin::assets()->renderHeaderJs() !!}
+    {!! Dcat\Admin\Admin::asset()->renderHeaderJs() !!}
 
     @yield('head')
 </head>
@@ -46,7 +46,7 @@
 
 {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
 
-{!! Dcat\Admin\Admin::assets()->renderJs() !!}
+{!! Dcat\Admin\Admin::asset()->renderJs() !!}
 
 </body>
 </html>

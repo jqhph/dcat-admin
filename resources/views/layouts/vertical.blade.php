@@ -70,7 +70,7 @@
     {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
 
         <!-- REQUIRED JS SCRIPTS -->
-    {!! Dcat\Admin\Admin::assets()->renderJs() !!}
+    {!! Dcat\Admin\Admin::asset()->renderJs() !!}
 
 </body>
 

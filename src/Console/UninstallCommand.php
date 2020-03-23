@@ -45,8 +45,8 @@ class UninstallCommand extends Command
     protected function removeFilesAndDirectories()
     {
         $this->laravel['files']->deleteDirectory(config('admin.directory'));
-        $this->laravel['files']->deleteDirectory(public_path(Admin::assets()->getRealPath('@extension')));
-        $this->laravel['files']->deleteDirectory(public_path(Admin::assets()->getRealPath('@admin')));
+        $this->laravel['files']->deleteDirectory(public_path(Admin::asset()->getRealPath('@extension')));
+        $this->laravel['files']->deleteDirectory(public_path(Admin::asset()->getRealPath('@admin')));
         $this->laravel['files']->delete(config_path('admin.php'));
     }
 }

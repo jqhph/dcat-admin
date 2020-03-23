@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin;
 
-use Dcat\Admin\Layout\Assets;
+use Dcat\Admin\Layout\Asset;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
@@ -146,7 +146,7 @@ class AdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__.'/../config' => config_path()], 'dcat-admin-config');
             $this->publishes([__DIR__.'/../resources/lang' => resource_path('lang')], 'dcat-admin-lang');
             $this->publishes([__DIR__.'/../database/migrations' => database_path('migrations')], 'dcat-admin-migrations');
-            $this->publishes([__DIR__.'/../resources/assets/dist' => public_path(Admin::assets()->getRealPath('@admin'))], 'dcat-admin-assets');
+            $this->publishes([__DIR__.'/../resources/assets/dist' => public_path(Admin::asset()->getRealPath('@admin'))], 'dcat-admin-assets');
         }
     }
 
@@ -197,7 +197,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerServices()
     {
-        $this->app->singleton('admin.assets', Assets::class);
+        $this->app->singleton('admin.asset', Asset::class);
         $this->app->singleton('admin.color', Color::class);
         $this->app->singleton('admin.sections', SectionManager::class);
         $this->app->singleton('admin.navbar', Navbar::class);

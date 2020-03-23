@@ -31,7 +31,7 @@ class LinkCommand extends Command
 
     protected function linkAssets()
     {
-        $basePath = Admin::assets()->getRealPath('@admin');
+        $basePath = Admin::asset()->getRealPath('@admin');
         $publicPath = public_path($basePath);
 
         if (! is_dir($publicPath.'/..')) {
@@ -42,7 +42,7 @@ class LinkCommand extends Command
             return $this->error("The \"{$basePath}\" directory already exists.");
         }
 
-        $distPath = realpath(__DIR__ . '/../../resources/dist');
+        $distPath = realpath(__DIR__ . '/../../../resources/dist');
 
         $this->laravel->make('files')->link(
             $distPath, $publicPath
