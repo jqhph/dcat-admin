@@ -113,7 +113,7 @@ class Grid
      *
      * @var string
      */
-    protected $view = 'admin::grid.table2';
+    protected $view = 'admin::grid.data-list-view-table';
 
     /**
      * @var Closure
