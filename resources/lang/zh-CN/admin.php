@@ -191,6 +191,7 @@ return [
     'quick_create'             => '快速创建',
     'grid_items_selected'      => '已选择 {n} 项',
     'nothing_updated'          => '没有任何数据被更改',
+    'welcome_back'             => '欢迎回来，请登录您的账号。',
     'validation'               => [
         'match'     => '与 :attribute 不匹配。',
         'minlength' => ':attribute 字符长度不能少于 :min。',

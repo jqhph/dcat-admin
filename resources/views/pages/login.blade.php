@@ -2,23 +2,21 @@
     html body {background: #fff;}
 </style>
 
-<link rel="stylesheet" href="{{ admin_asset('@admin/css/pages/authentication.css') }}">
-
 <section class="row flexbox-container">
     <div class="col-xl-8 col-11 d-flex justify-content-center">
         <div class="card bg-authentication rounded-0 mb-0">
             <div class="row m-0">
-                <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
+                <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0" style="min-width: 240px">
                     <img src="{{ admin_asset('@admin/images/pages/login.png') }}" alt="branding logo">
                 </div>
                 <div class="col-lg-6 col-12 p-0">
-                    <div class="card rounded-0 mb-0 px-2">
-                        <div class="card-header pb-1">
+                    <div class="card rounded-0 mb-0 px-2" style="min-width: 400px">
+                        <div class="card-header pb-1 justify-content-center">
                             <div class="card-title">
-                                <h4 class="mb-0">{{ __('admin.login') }}</h4>
+                                <h4 class="m-auto">{{ config('admin.name') }}</h4>
                             </div>
                         </div>
-                        <p class="px-2">Welcome back, please login to your account.</p>
+                        <p class="px-2 text-center">{{ __('admin.welcome_back') }}</p>
                         <div class="card-content">
                             <div class="card-body pt-1">
                                 <form id="login-form" method="POST" action="{{ admin_url('auth/login') }}">

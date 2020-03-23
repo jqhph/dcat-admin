@@ -190,6 +190,7 @@ return [
     'quick_create'             => 'Quick create',
     'grid_items_selected'      => '{n} items selected',
     'nothing_updated'          => 'Nothing has been updated.',
+    'welcome_back'             => 'Welcome back, please login to your account.',
     'validation'               => [
         'match'     => 'The :attribute and :other must match.',
         'minlength' => 'The :attribute must be at least :min characters.',
