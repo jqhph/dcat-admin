@@ -7,7 +7,7 @@
         <li class="nav-item {!! $builder->isActive($item) ? 'active' : '' !!}">
             <a href="{{ $builder->getUrl($item['uri']) }}">
 
-                <i class="{{ $item['icon'] ?: 'feather icon-circle' }}"></i>
+                <i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 @if (Lang::has($titleTranslation = 'admin.menu_titles.' . trim(str_replace(' ', '_', strtolower($item['title'])))))
                     <span class="menu-title">{{ __($titleTranslation) }}</span>
                 @else
@@ -18,7 +18,7 @@
     @else
         <li class="nav-item has-sub">
             <a href="#">
-                <i class="{{ $item['icon'] ?: 'feather icon-circle' }}"></i>
+                <i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 @if (Lang::has($titleTranslation = 'admin.menu_titles.' . trim(str_replace(' ', '_', strtolower($item['title'])))))
                     <span class="menu-title">{{ __($titleTranslation) }}</span>
                 @else

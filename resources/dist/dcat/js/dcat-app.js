@@ -1604,7 +1604,7 @@ var Form = /*#__PURE__*/function () {
       // 表单错误信息容器选择器
       errorContainerSelector: '.with-errors',
       // 表单组css选择器
-      groupSelector: '.form-group,.form-label-group',
+      groupSelector: '.form-group,.form-label-group,.form-field',
       // tab表单css选择器
       tabSelector: '.tab-pane',
       // 错误信息模板

@@ -2360,7 +2360,7 @@ table.dataTable.complex-headers tfoot td {
 }
 
 .vs-checkbox-con input {
-  z-index: 10;
+  z-index: 5;
 }
 
 .vs-checkbox-con .vs-checkbox {
@@ -2610,9 +2610,8 @@ table.dataTable.complex-headers tfoot td {
 
 .box {
   position: relative;
-  border-radius: 0.4rem;
+  border-radius: 0.5rem;
   background: #ffffff;
-  border-top: 2px solid transparent;
   margin-bottom: 10px;
   width: 100%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
@@ -2674,26 +2673,6 @@ table.dataTable.complex-headers tfoot td {
 
 .box-body .box-footer {
   margin: -10px;
-}
-
-.box-default {
-  border-color: #d9d9d9;
-}
-
-.box-primary {
-  border-color: #5c6bc6;
-}
-
-.box-info {
-  border-color: #3085d6;
-}
-
-.box-success {
-  border-color: #21b978;
-}
-
-.box-danger {
-  border-color: #ea5455;
 }
 
 .box.box-solid.box-default {

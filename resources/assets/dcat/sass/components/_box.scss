@@ -1,8 +1,7 @@
 .box {
   position: relative;
-  border-radius: .4rem;
+  border-radius: .5rem;
   background: #ffffff;
-  border-top: 2px solid transparent;
   margin-bottom: 10px;
   width: 100%;
   box-shadow: $shadow;
@@ -60,26 +59,6 @@
   .box-footer {
     margin: -10px;
   }
-}
-
-.box-default {
-  border-color: $input-border-color;
-}
-
-.box-primary {
-  border-color: $primary;
-}
-
-.box-info {
-  border-color: $info;
-}
-
-.box-success {
-  border-color: $success;
-}
-
-.box-danger {
-  border-color: $danger;
 }
 
 .box.box-solid.box-default {
