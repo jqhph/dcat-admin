@@ -11,9 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Validator;
 
 class Helper
 {
@@ -529,27 +527,5 @@ class Helper
         $request = $request ?: request();
 
         return $request->ajax() && ! $request->pjax();
-    }
-
-    /**
-     * 响应请求验证错误.
-     *
-     * @param array|MessageBag|Validator $validationMessages
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public static function makeValidationErrorsResponse($validationMessages)
-    {
-        if ($validationMessages instanceof Validator) {
-            $validationMessages = $validationMessages->getMessageBag();
-        }
-
-        if (! static::isAjaxRequest()) {
-            return back()->withInput()->withErrors($validationMessages);
-        }
-
-        return response()->json([
-            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages(),
-        ], 422);
     }
 }

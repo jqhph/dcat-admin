@@ -1968,7 +1968,7 @@ $.fn.form = function (options) {
   options = $.extend(options, {
     form: $this
   });
-  $this.find(':submit').click(function (event) {
+  $this.find(':submit').click(function (e) {
     Dcat.Form(options);
     return false;
   });

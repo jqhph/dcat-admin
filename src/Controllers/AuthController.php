@@ -39,17 +39,7 @@ class AuthController extends Controller
             return redirect($this->redirectPath());
         }
 
-        Admin::style(
-            <<<'CSS'
-html body {background: #fff;}
-CSS
-        );
-
-        return $content
-            ->full()
-            ->body(
-                view(config('admin.auth.login_view') ?: $this->view)
-            );
+        return $content->full()->body(view($this->view));
     }
 
     /**
@@ -251,13 +241,12 @@ CSS
      */
     protected function sendLoginResponse(Request $request)
     {
-        admin_toastr(trans('admin.login_successful'));
-
         $request->session()->regenerate();
 
-        $path = $request->session()->get('url.intended');
-
-        return $this->redirect($path ?: $this->redirectPath());
+        return $this->redirectToIntended(
+            $this->redirectPath(),
+            trans('admin.login_successful')
+        );
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Dcat\Admin\Traits;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
+use Illuminate\Validation\Validator;
 
 trait HasFormResponse
 {
@@ -133,12 +134,35 @@ trait HasFormResponse
     }
 
     /**
+     * @param string|null  $url
+     * @param array|string $options
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function redirectToIntended(?string $url, $options = null)
+    {
+        $path = session()->pull('url.intended');
+
+        return $this->redirect($path ?: $url, $options);
+    }
+
+    /**
      * @param array|MessageBag|\Illuminate\Validation\Validator $validationMessages
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function validationErrorsResponse($validationMessages)
     {
-        return Helper::makeValidationErrorsResponse($validationMessages);
+        if ($validationMessages instanceof Validator) {
+            $validationMessages = $validationMessages->getMessageBag();
+        }
+
+        if (! static::isAjaxRequest()) {
+            return back()->withInput()->withErrors($validationMessages);
+        }
+
+        return response()->json([
+            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages(),
+        ], 422);
     }
 }

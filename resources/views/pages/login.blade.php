@@ -1,3 +1,6 @@
+<style>
+    html body {background: #fff;}
+</style>
 
 <link rel="stylesheet" href="{{ admin_asset('@admin/css/pages/authentication.css') }}">
 
@@ -110,14 +113,16 @@ Dcat.ready(function () {
     // ajax表单提交
     $('#login-form').form({
         validate: true,
-        success: function (response) {
-            if (! response.status) {
-                Dcat.error(response.message);
+        success: function (data) {
+            if (! data.status) {
+                Dcat.error(data.message);
 
                 return false;
             }
 
-            location.href = response.redirect;
+            Dcat.success(data.message);
+
+            location.href = data.redirect;
 
             return false;
         }
