@@ -45,6 +45,10 @@
   }
 }
 
+// 菜单
+.main-menu.menu-shadow {
+  box-shadow: $menu-shadow;
+}
 
 body.vertical-layout.vertical-menu-modern.menu-collapsed {
   .main-menu:not(.expanded) .navbar-header {
@@ -59,4 +63,8 @@ body.vertical-layout.vertical-menu-modern.menu-collapsed {
       display: inline-block;
     }
   }
+}
+
+body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
+  font-size: 1.3rem;
 }

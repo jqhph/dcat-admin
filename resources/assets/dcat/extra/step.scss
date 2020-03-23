@@ -114,15 +114,15 @@
 
 .active .dcat-step-icons {
   background-color: #fff;
-  border-color: var(--primary)
+  border-color: $primary
 }
 
 .active .dcat-step-icons > .dcat-step-icon {
-  color: var(--primary)
+  color: $primary
 }
 
 .active .dcat-step-icons > .dcat-step-icon .dcat-step-icon-dot {
-  background: var(--primary)
+  background: $primary
 }
 
 .active > .dcat-step-item-container > .dcat-step-content > .dcat-step-title {
@@ -142,7 +142,7 @@
 }
 
 .active .dcat-step-icons {
-  background: var(--primary)
+  background: $primary
 }
 
 .active .dcat-step-icons > .dcat-step-icon {
@@ -155,15 +155,15 @@
 
 .done .dcat-step-icons {
   background-color: #fff;
-  border-color: var(--primary)
+  border-color: $primary
 }
 
 .done .dcat-step-icons > .dcat-step-icon {
-  color: var(--primary)
+  color: $primary
 }
 
 .done .dcat-step-icons > .dcat-step-icon .dcat-step-icon-dot {
-  background: var(--primary)
+  background: $primary
 }
 
 .done > .dcat-step-item-container > .dcat-step-content > .dcat-step-title {
@@ -171,7 +171,7 @@
 }
 
 .done > .dcat-step-item-container > .dcat-step-content > .dcat-step-title:after {
-  background-color: var(--primary)
+  background-color: $primary
 }
 
 .done > .dcat-step-item-container > .dcat-step-content > .dcat-step-desc {
@@ -179,24 +179,24 @@
 }
 
 .done > .dcat-step-item-container > .dcat-step-line:after {
-  background-color: var(--primary)
+  background-color: $primary
 }
 
 .danger .dcat-step-icons {
   background-color: #fff;
-  border-color: var(--danger-dark)
+  border-color: $red-darker
 }
 
 .danger .dcat-step-icons > .dcat-step-icon {
-  color: var(--danger-dark)
+  color: $red-darker
 }
 
 .danger .dcat-step-icons > .dcat-step-icon .dcat-step-icon-dot {
-  background: var(--danger-dark)
+  background: $red-darker
 }
 
 .danger > .dcat-step-item-container > .dcat-step-content > .dcat-step-title {
-  color: var(--danger-dark)
+  color: $red-darker
 }
 
 .danger > .dcat-step-item-container > .dcat-step-content > .dcat-step-title:after {
@@ -204,7 +204,7 @@
 }
 
 .danger > .dcat-step-item-container > .dcat-step-content > .dcat-step-desc {
-  color: var(--danger-dark)
+  color: $red-darker
 }
 
 .danger > .dcat-step-item-container > .dcat-step-line:after {
@@ -212,7 +212,7 @@
 }
 
 .dcat-step-item.dcat-step-next-error .dcat-step-title:after {
-  background: var(--danger-dark)
+  background: $red-darker
 }
 
 .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button] {
@@ -224,15 +224,15 @@
 }
 
 .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-desc .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-title {
-  color: var(--primary)
+  color: $primary
 }
 
 .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-icons {
-  border-color: var(--primary)
+  border-color: $primary
 }
 
 .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-icons .dcat-step-icon {
-  color: var(--primary)
+  color: $primary
 }
 
 .dcat-step-horizontal:not(.dcat-step-label-vertical) .dcat-step-item {

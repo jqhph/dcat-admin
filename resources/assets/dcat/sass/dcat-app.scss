@@ -33,10 +33,49 @@ ol, ul, dl {
   margin-bottom: 0;
 }
 
+// 阴影
+.shadow-0 {
+  box-shadow: none!important;
+}
+.shadow {
+  box-shadow: $shadow!important;
+}
+.shadow-100 {
+  box-shadow: $shadow-100!important;
+}
+.shadow-200 {
+  box-shadow: $shadow-200!important;
+}
+
+// 颜色
+.bg-default {
+  background-color: #d2d6de;
+}
+
+.bg-custom {
+  background: $custom;
+}
+
+.text-danger-darker {
+  color: $red-darker;
+}
+
+.text-primary-darker {
+  color: $primary-darker;
+}
+
+.bg-primary-gradient {
+  background: linear-gradient(118deg, $primary, rgba($primary, .7));
+}
+
 // 布局
 @import "./components/layout";
 // 按钮
 @import "./components/button";
+// 顶部导航栏
+@import "./components/header-navbar";
+// 页面头
+@import "./components/content-header";
 // 表单
 @import "./components/form";
 // 分页
@@ -71,83 +110,9 @@ ol, ul, dl {
 @import "./components/menu";
 // alert
 @import "./components/alert";
-
-body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
-   font-size: 1.3rem;
-}
-
-// 顶部导航栏
-.header-navbar.navbar-shadow {
-  box-shadow: $shadow;
-}
-
-// 菜单
-.main-menu.menu-shadow {
-  box-shadow: $menu-shadow;
-}
-
-// 面包屑导航
-.breadcrumb {
-  border-left: 0;
-}
-
-// 页面标题
-.content-header h1 {
-  font-weight: 400;
-  font-size: 24px;
-  display: inline-block;
-  font-family: Montserrat,Nunito,sans-serif;
-
-  small {
-    font-size: 15px;
-    display: inline-block;
-    padding-left: 5px;
-    font-weight: 300;
-  }
-}
-
 // code
-code {
-  box-shadow: 0 1px 1px rgba(0,0,0,0.125);
-  padding: 3px 5px;
-  background: #f7f7f9;
-  color: darken($primary, 8%);
-  font-family: Montserrat,Nunito,sans-serif;
-}
-pre {
-  padding: 7px;
-  white-space: pre-wrap;
-  margin-bottom: 0;
-  font-family: Montserrat,Nunito,sans-serif;
-}
-
-// 阴影
-.shadow-0 {
-  box-shadow: none!important;
-}
-.shadow {
-  box-shadow: $shadow!important;
-}
-.shadow-100 {
-  box-shadow: $shadow-100!important;
-}
-.shadow-200 {
-  box-shadow: $shadow-200!important;
-}
-
-a.disabled {
-  opacity: 0.65;
-}
-
-.bg-default {
-  background-color: #d2d6de;
-}
-
-.bg-primary-gradient {
-  background: linear-gradient(118deg, $primary, rgba($primary, .7));
-}
-
-.img {
-  cursor: pointer;
-}
-
+@import "./components/code";
+// link
+@import "./components/link";
+// img
+@import "./components/img";
