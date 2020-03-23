@@ -124,6 +124,14 @@ abstract class Widget implements Renderable
     {
         $this->collectAssets();
 
+        return $this->html();
+    }
+
+    /**
+     * @return string
+     */
+    public function html()
+    {
         return view($this->view, $this->variables())->render();
     }
 

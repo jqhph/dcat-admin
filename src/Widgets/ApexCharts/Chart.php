@@ -3,11 +3,14 @@
 namespace Dcat\Admin\Widgets\ApexCharts;
 
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Widgets\HasAjaxRequest;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
 class Chart extends Widget
 {
+    use HasAjaxRequest;
+
     public static $js = '@apex-charts';
 
     protected $containerSelector;
@@ -215,17 +218,43 @@ class Chart extends Widget
     {
         $options = json_encode($this->options);
 
-        return <<<JS
-var options = {$options}, extend = function (options) {
-    {$this->scripts['extend']}
-};
-‘’‘’
-var chart = new ApexCharts(
-    $("{$this->containerSelector}")[0], 
-    $.extend(options, extend(options))
-);
-chart.render();
+        if (! $this->allowBuildRequestScript()) {
+            return <<<JS
+(function () {
+    var options = {$options}, extend = function (options) {
+        {$this->scripts['extend']}
+    };
+
+    var chart = new ApexCharts(
+        $("{$this->containerSelector}")[0], 
+        $.extend(options, extend(options))
+    );
+    chart.render();
+})();
 JS;
+        }
+
+        $id = 'chart_'.Str::random();
+
+        $this->fetched(
+            <<<JS
+if (! response.status) {
+    return Dcat.error(response.message || 'Server internal error.');
+}
+
+var id = '{$id}', chart = window[id];
+
+if (chart) {
+chart = new ApexCharts($("{$this->containerSelector}")[0], {$options});
+
+chart.render();
+}
+
+chart.updateOptions(response.options);
+JS
+        );
+
+        return $this->buildRequestScript();
     }
 
     /**

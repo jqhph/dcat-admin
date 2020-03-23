@@ -171,9 +171,7 @@ class Helper
 
         $url = $array[0];
 
-        $originalQuery = $array[1] ?? '';
-
-        parse_str($originalQuery, $originalQuery);
+        parse_str($array[1] ?? '', $originalQuery);
 
         return $url.'?'.http_build_query(array_merge($originalQuery, $query));
     }

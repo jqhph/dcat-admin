@@ -2,42 +2,44 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Illuminate\Support\Str;
+use Dcat\Admin\Support\Helper;
 
 trait HasAjaxRequest
 {
     /**
      * @var string
      */
-    protected $__url;
+    protected $_url;
 
     /**
      * @var array
      */
-    protected $__selectors = [];
+    protected $_selectors = [];
 
     /**
      * @var array
      */
-    protected $__scripts = [
+    protected $_scripts = [
         'fetching' => [],
         'fetched'  => [],
     ];
 
     /**
-     * Set request url.
+     * 设置请求地址.
      *
      * @param string $url
      *
      * @return $this
      */
-    public function request(string $url)
+    public function request(string $url, array $query = [])
     {
-        return $this->setUrl($url);
+        $this->_url = admin_url(Helper::urlWithQuery($url, $query));
+
+        return $this;
     }
 
     /**
-     * Set current url to request.
+     * 请求当前地址.
      *
      * @param string $url
      *
@@ -45,39 +47,27 @@ trait HasAjaxRequest
      */
     public function requestCurrent(array $query = [])
     {
-        $this->__url = url(request()->getPathInfo()).'?'.http_build_query($query);
-
-        return $this;
+        return $this->request(request()->fullUrlWithQuery($query));
     }
 
     /**
-     * Set request url.
-     *
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl(string $url)
-    {
-        $this->__url = admin_url($url);
-
-        return $this;
-    }
-
-    /**
+     * 获取请求地址
+     * 
      * @return string
      */
     public function getUrl()
     {
-        return $this->__url;
+        return $this->_url;
     }
 
     /**
+     * 获取js代码.
+     * 
      * @return array
      */
-    public function getScripts()
+    public function getRequestScripts()
     {
-        return $this->__scripts;
+        return $this->_scripts;
     }
 
     /**
@@ -87,8 +77,8 @@ trait HasAjaxRequest
      */
     public function refetch($selector)
     {
-        $this->__selectors =
-            array_merge($this->__selectors, (array) $selector);
+        $this->_selectors =
+            array_merge($this->_selectors, (array) $selector);
 
         return $this;
     }
@@ -98,7 +88,7 @@ trait HasAjaxRequest
      */
     public function getButtonSelectors()
     {
-        return $this->__selectors;
+        return $this->_selectors;
     }
 
     /**
@@ -110,7 +100,7 @@ trait HasAjaxRequest
      */
     public function fetching(string $script)
     {
-        $this->__scripts['fetching'][] = $script;
+        $this->_scripts['fetching'][] = $script;
 
         return $this;
     }
@@ -124,7 +114,7 @@ trait HasAjaxRequest
      */
     public function fetched(string $script)
     {
-        $this->__scripts['fetched'][] = $script;
+        $this->_scripts['fetched'][] = $script;
 
         return $this;
     }
@@ -134,15 +124,7 @@ trait HasAjaxRequest
      */
     public function allowBuildRequestScript()
     {
-        return $this->__url === null ? false : true;
-    }
-
-    /**
-     * @return string
-     */
-    public function generateScriptFunctionName()
-    {
-        return 'ajax_request_'.Str::random(8);
+        return $this->_url === null ? false : true;
     }
 
     /**
@@ -154,11 +136,11 @@ trait HasAjaxRequest
             return false;
         }
 
-        $fetching = implode(';', $this->__scripts['fetching']);
-        $fetched = implode(';', $this->__scripts['fetched']);
+        $fetching = implode(';', $this->_scripts['fetching']);
+        $fetched = implode(';', $this->_scripts['fetched']);
 
         $binding = '';
-        foreach ($this->__selectors as $v) {
+        foreach ($this->_selectors as $v) {
             $binding .= "$('{$v}').click(function () { request($(this).data()) });";
         }
 
@@ -169,9 +151,9 @@ trait HasAjaxRequest
         if (f) return;
         f = 1;
         
-        $fetching;     
+        {$fetching};     
         $.ajax({
-          url: '{$this->__url}',
+          url: '{$this->_url}',
           dataType: 'json',
           data: $.extend({_token:Dcat.token}, p || {}),
           success: function (response) {
@@ -191,22 +173,20 @@ JS;
     }
 
     /**
-     * Copy the given AjaxRequestBuilder.
-     *
      * @param HasAjaxRequest $fetcher
      *
      * @return $this
      */
     public function copy($fetcher)
     {
-        $this->__url = $fetcher->getUrl();
+        $this->_url = $fetcher->getUrl();
 
-        $this->__selectors = $fetcher->getButtonSelectors();
+        $this->_selectors = $fetcher->getButtonSelectors();
 
-        $scripts = $fetcher->getScripts();
+        $scripts = $fetcher->getRequestScripts();
 
-        $this->__scripts['fetching'] = array_merge($this->__scripts['fetching'], $scripts['fetching']);
-        $this->__scripts['fetched'] = array_merge($this->__scripts['fetched'], $scripts['fetched']);
+        $this->_scripts['fetching'] = array_merge($this->_scripts['fetching'], $scripts['fetching']);
+        $this->_scripts['fetched'] = array_merge($this->_scripts['fetched'], $scripts['fetched']);
 
         return $this;
     }
