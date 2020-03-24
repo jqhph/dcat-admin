@@ -11,7 +11,7 @@ class ProgressBar extends AbstractDisplayer
         })->implode(' ');
 
         return <<<EOT
-<div class="progress $style">
+<div class="shadow-100 progress $style">
   <div class="progress-bar" role="progressbar" aria-valuenow="{$this->value}" aria-valuemin="0" aria-valuemax="100" style="width:{$this->value}%"></div>
 </div>
 EOT;
