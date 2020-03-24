@@ -80,7 +80,7 @@ EOT;
             error: function (a, b, c) {
                 btn.buttonLoading(false);
                 f = 0;
-                Dcat.ajaxError(a, b, c);
+                Dcat.handleAjaxError(a, b, c);
             },
         });
     
