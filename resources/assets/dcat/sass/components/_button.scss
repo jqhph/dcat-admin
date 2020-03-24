@@ -66,12 +66,12 @@
 }
 
 .btn-light {
-  border-color: #f0f0f0!important;
-  background-color: #f0f0f0!important;
+  border-color: #f7f7f9!important;
+  background-color: #f7f7f9!important;
   color: #444;
 }
 
-.btn-light:hover {
+.btn-light:hover, .btn-light:focus {
   box-shadow: $btn-shadow-hover!important;
   color: #444!important;
 }
