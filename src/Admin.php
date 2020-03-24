@@ -234,7 +234,7 @@ class Admin
     public static function registerApiRoutes()
     {
         $attributes = [
-            'prefix' => 'dcat-api',
+            'prefix' => admin_base_path('dcat-api'),
             'middleware' => config('admin.route.middleware'),
             'as' => 'dcat.api.',
         ];
