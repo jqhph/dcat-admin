@@ -51,9 +51,10 @@ export default class DialogForm {
 
     _execute(options) {
         let _this = this,
-            defUrl = options.defaultUrl;
+            defUrl = options.defaultUrl,
+            selector = options.buttonSelector;
 
-        (! options.buttonSelector) || $(options.buttonSelector).off('click').click(function () {
+        selector && $(selector).off('click').click(function () {
             _this.$target = $(this);
 
             let counter = _this.$target.attr('counter'), url;
@@ -77,7 +78,7 @@ export default class DialogForm {
             _this._build(url, counter);
         });
 
-        options.buttonSelector || setTimeout(function () {
+        selector || setTimeout(function () {
             _this._build(defUrl, _this._counter)
         }, 400);
     }
@@ -114,19 +115,22 @@ export default class DialogForm {
         Dcat.NP.start();
 
         // 请求表单内容
-        $.get(url, function (template) {
-            _this.isLoading = 0;
-            Dcat.NP.done();
+        $.ajax({
+            url: url,
+            success: function (template) {
+                _this.isLoading = 0;
+                Dcat.NP.done();
 
-            if ($btn) {
-                $btn.buttonLoading(false);
+                if ($btn) {
+                    $btn.buttonLoading(false);
 
-                setTimeout(function () {
-                    $btn.find('.waves-ripple').remove();
-                }, 50);
+                    setTimeout(function () {
+                        $btn.find('.waves-ripple').remove();
+                    }, 50);
+                }
+
+                _this._popup(template, counter);
             }
-
-            _this._popup(template, counter);
         });
     }
 

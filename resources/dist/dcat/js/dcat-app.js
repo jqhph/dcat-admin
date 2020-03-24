@@ -1381,9 +1381,10 @@ var DialogForm = /*#__PURE__*/function () {
     key: "_execute",
     value: function _execute(options) {
       var _this = this,
-          defUrl = options.defaultUrl;
+          defUrl = options.defaultUrl,
+          selector = options.buttonSelector;
 
-      !options.buttonSelector || $(options.buttonSelector).off('click').click(function () {
+      selector && $(selector).off('click').click(function () {
         _this.$target = $(this);
 
         var counter = _this.$target.attr('counter'),
@@ -1407,7 +1408,7 @@ var DialogForm = /*#__PURE__*/function () {
 
         _this._build(url, counter);
       });
-      options.buttonSelector || setTimeout(function () {
+      selector || setTimeout(function () {
         _this._build(defUrl, _this._counter);
       }, 400);
     } // 构建表单
@@ -1441,18 +1442,21 @@ var DialogForm = /*#__PURE__*/function () {
       $btn && $btn.buttonLoading();
       Dcat.NP.start(); // 请求表单内容
 
-      $.get(url, function (template) {
-        _this.isLoading = 0;
-        Dcat.NP.done();
+      $.ajax({
+        url: url,
+        success: function success(template) {
+          _this.isLoading = 0;
+          Dcat.NP.done();
 
-        if ($btn) {
-          $btn.buttonLoading(false);
-          setTimeout(function () {
-            $btn.find('.waves-ripple').remove();
-          }, 50);
+          if ($btn) {
+            $btn.buttonLoading(false);
+            setTimeout(function () {
+              $btn.find('.waves-ripple').remove();
+            }, 50);
+          }
+
+          _this._popup(template, counter);
         }
-
-        _this._popup(template, counter);
       });
     } // 弹出弹窗
 
@@ -2477,7 +2481,8 @@ function extend(Dcat) {
 
     content = $this.html();
     loadingId = 'ld-' + Dcat.helpers.random();
-    return $this.addClass('disabled btn-loading').attr('disabled', true).attr('data-loading', loadingId).html("\n<div class=\"".concat(loadingId, "\" style=\"display:none\">").concat(content, "</div>\n<span class=\"spinner-grow spinner-grow-sm\" role=\"status\" aria-hidden=\"true\"></span>\n LOADING ...\n"));
+    var svg = LOADING_SVG[0].replace('{color}', 'currentColor').replace('{width}', '50px;height:11px;');
+    return $this.addClass('disabled btn-loading').attr('disabled', true).attr('data-loading', loadingId).html("\n<div class=\"".concat(loadingId, "\" style=\"display:none\">").concat(content, "</div>\n").concat(svg, "\n"));
   };
 }
 
@@ -4085,99 +4090,99 @@ eval(function (p, a, c, k, _e, r) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\js\dcat-app.js */"./resources/assets/dcat/js/dcat-app.js");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\animate\animate.scss */"./resources/assets/sass/plugins/animate/animate.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\calendars\fullcalendar.scss */"./resources/assets/sass/plugins/calendars/fullcalendar.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\context-menu.scss */"./resources/assets/sass/plugins/extensions/context-menu.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\drag-and-drop.scss */"./resources/assets/sass/plugins/extensions/drag-and-drop.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\media-plyr.scss */"./resources/assets/sass/plugins/extensions/media-plyr.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\noui-slider.scss */"./resources/assets/sass/plugins/extensions/noui-slider.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\swiper.scss */"./resources/assets/sass/plugins/extensions/swiper.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\extensions\toastr.scss */"./resources/assets/sass/plugins/extensions/toastr.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\file-uploaders\dropzone.scss */"./resources/assets/sass/plugins/file-uploaders/dropzone.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\forms\extended\typeahed.scss */"./resources/assets/sass/plugins/forms/extended/typeahed.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\forms\form-inputs-groups.scss */"./resources/assets/sass/plugins/forms/form-inputs-groups.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\forms\validation\form-validation.scss */"./resources/assets/sass/plugins/forms/validation/form-validation.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\forms\wizard.scss */"./resources/assets/sass/plugins/forms/wizard.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-beat.scss */"./resources/assets/sass/plugins/loaders/animations/ball-beat.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate-multiple.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate-pulse.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-grid-beat.scss */"./resources/assets/sass/plugins/loaders/animations/ball-grid-beat.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-grid-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-grid-pulse.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-rise.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-rise.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-round.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-round.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-sync.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-sync.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-rotate.scss */"./resources/assets/sass/plugins/loaders/animations/ball-rotate.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-multiple.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-random.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-random.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-ripple-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-ripple-multiple.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-ripple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-ripple.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-spin-fade-loader.scss */"./resources/assets/sass/plugins/loaders/animations/ball-spin-fade-loader.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-spin-loader.scss */"./resources/assets/sass/plugins/loaders/animations/ball-spin-loader.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-triangle-trace.scss */"./resources/assets/sass/plugins/loaders/animations/ball-triangle-trace.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-zig-zag-deflect.scss */"./resources/assets/sass/plugins/loaders/animations/ball-zig-zag-deflect.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-zig-zag.scss */"./resources/assets/sass/plugins/loaders/animations/ball-zig-zag.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\cube-transition.scss */"./resources/assets/sass/plugins/loaders/animations/cube-transition.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-pulse-out-rapid.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-pulse-out-rapid.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-pulse-out.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-pulse-out.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-random.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-random.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-spin-fade-loader.scss */"./resources/assets/sass/plugins/loaders/animations/line-spin-fade-loader.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\pacman.scss */"./resources/assets/sass/plugins/loaders/animations/pacman.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\semi-circle-spin.scss */"./resources/assets/sass/plugins/loaders/animations/semi-circle-spin.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\square-spin.scss */"./resources/assets/sass/plugins/loaders/animations/square-spin.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\animations\triangle-skew-spin.scss */"./resources/assets/sass/plugins/loaders/animations/triangle-skew-spin.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\loaders\loaders.scss */"./resources/assets/sass/plugins/loaders/loaders.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\pickers\bootstrap-datetimepicker-build.scss */"./resources/assets/sass/plugins/pickers/bootstrap-datetimepicker-build.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\tour\tour.scss */"./resources/assets/sass/plugins/tour/tour.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\plugins\ui\coming-soon.scss */"./resources/assets/sass/plugins/ui/coming-soon.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\themes\dark-layout.scss */"./resources/assets/sass/themes/dark-layout.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\themes\semi-dark-layout.scss */"./resources/assets/sass/themes/semi-dark-layout.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\aggrid.scss */"./resources/assets/sass/pages/aggrid.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-chat.scss */"./resources/assets/sass/pages/app-chat.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-ecommerce-details.scss */"./resources/assets/sass/pages/app-ecommerce-details.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-ecommerce-shop.scss */"./resources/assets/sass/pages/app-ecommerce-shop.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-email.scss */"./resources/assets/sass/pages/app-email.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-todo.scss */"./resources/assets/sass/pages/app-todo.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\app-user.scss */"./resources/assets/sass/pages/app-user.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\authentication.scss */"./resources/assets/sass/pages/authentication.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\card-analytics.scss */"./resources/assets/sass/pages/card-analytics.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\colors.scss */"./resources/assets/sass/pages/colors.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\coming-soon.scss */"./resources/assets/sass/pages/coming-soon.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\dashboard-analytics.scss */"./resources/assets/sass/pages/dashboard-analytics.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\dashboard-ecommerce.scss */"./resources/assets/sass/pages/dashboard-ecommerce.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\data-list-view.scss */"./resources/assets/sass/pages/data-list-view.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\error.scss */"./resources/assets/sass/pages/error.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\faq.scss */"./resources/assets/sass/pages/faq.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\invoice.scss */"./resources/assets/sass/pages/invoice.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\knowledge-base.scss */"./resources/assets/sass/pages/knowledge-base.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\register.scss */"./resources/assets/sass/pages/register.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\search.scss */"./resources/assets/sass/pages/search.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\timeline.scss */"./resources/assets/sass/pages/timeline.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\pages\users.scss */"./resources/assets/sass/pages/users.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\colors\palette-gradient.scss */"./resources/assets/sass/core/colors/palette-gradient.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\colors\palette-noui.scss */"./resources/assets/sass/core/colors/palette-noui.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\colors\palette-variables.scss */"./resources/assets/sass/core/colors/palette-variables.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\menu\menu-types\horizontal-menu.scss */"./resources/assets/sass/core/menu/menu-types/horizontal-menu.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\menu\menu-types\vertical-menu.scss */"./resources/assets/sass/core/menu/menu-types/vertical-menu.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\menu\menu-types\vertical-overlay-menu.scss */"./resources/assets/sass/core/menu/menu-types/vertical-overlay-menu.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\mixins\alert.scss */"./resources/assets/sass/core/mixins/alert.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\mixins\hex2rgb.scss */"./resources/assets/sass/core/mixins/hex2rgb.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\mixins\main-menu-mixin.scss */"./resources/assets/sass/core/mixins/main-menu-mixin.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\core\mixins\transitions.scss */"./resources/assets/sass/core/mixins/transitions.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\sass\dcat-app.scss */"./resources/assets/dcat/sass/dcat-app.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\extra\markdown.scss */"./resources/assets/dcat/extra/markdown.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\extra\step.scss */"./resources/assets/dcat/extra/step.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\extra\upload.scss */"./resources/assets/dcat/extra/upload.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\bootstrap.scss */"./resources/assets/sass/bootstrap.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\bootstrap-extended.scss */"./resources/assets/sass/bootstrap-extended.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\colors.scss */"./resources/assets/sass/colors.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\components.scss */"./resources/assets/sass/components.scss");
-__webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\custom-rtl.scss */"./resources/assets/sass/custom-rtl.scss");
-module.exports = __webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\sass\custom-laravel.scss */"./resources/assets/sass/custom-laravel.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\js\dcat-app.js */"./resources/assets/dcat/js/dcat-app.js");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\animate\animate.scss */"./resources/assets/sass/plugins/animate/animate.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\calendars\fullcalendar.scss */"./resources/assets/sass/plugins/calendars/fullcalendar.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\context-menu.scss */"./resources/assets/sass/plugins/extensions/context-menu.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\drag-and-drop.scss */"./resources/assets/sass/plugins/extensions/drag-and-drop.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\media-plyr.scss */"./resources/assets/sass/plugins/extensions/media-plyr.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\noui-slider.scss */"./resources/assets/sass/plugins/extensions/noui-slider.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\swiper.scss */"./resources/assets/sass/plugins/extensions/swiper.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\extensions\toastr.scss */"./resources/assets/sass/plugins/extensions/toastr.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\file-uploaders\dropzone.scss */"./resources/assets/sass/plugins/file-uploaders/dropzone.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\forms\extended\typeahed.scss */"./resources/assets/sass/plugins/forms/extended/typeahed.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\forms\form-inputs-groups.scss */"./resources/assets/sass/plugins/forms/form-inputs-groups.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\forms\validation\form-validation.scss */"./resources/assets/sass/plugins/forms/validation/form-validation.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\forms\wizard.scss */"./resources/assets/sass/plugins/forms/wizard.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-beat.scss */"./resources/assets/sass/plugins/loaders/animations/ball-beat.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate-multiple.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate-pulse.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-clip-rotate.scss */"./resources/assets/sass/plugins/loaders/animations/ball-clip-rotate.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-grid-beat.scss */"./resources/assets/sass/plugins/loaders/animations/ball-grid-beat.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-grid-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-grid-pulse.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-rise.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-rise.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-round.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-round.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse-sync.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse-sync.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-pulse.scss */"./resources/assets/sass/plugins/loaders/animations/ball-pulse.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-rotate.scss */"./resources/assets/sass/plugins/loaders/animations/ball-rotate.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-multiple.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-random.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-random.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-ripple-multiple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-ripple-multiple.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale-ripple.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale-ripple.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-scale.scss */"./resources/assets/sass/plugins/loaders/animations/ball-scale.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-spin-fade-loader.scss */"./resources/assets/sass/plugins/loaders/animations/ball-spin-fade-loader.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-spin-loader.scss */"./resources/assets/sass/plugins/loaders/animations/ball-spin-loader.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-triangle-trace.scss */"./resources/assets/sass/plugins/loaders/animations/ball-triangle-trace.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-zig-zag-deflect.scss */"./resources/assets/sass/plugins/loaders/animations/ball-zig-zag-deflect.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\ball-zig-zag.scss */"./resources/assets/sass/plugins/loaders/animations/ball-zig-zag.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\cube-transition.scss */"./resources/assets/sass/plugins/loaders/animations/cube-transition.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-pulse-out-rapid.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-pulse-out-rapid.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-pulse-out.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-pulse-out.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale-random.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale-random.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-scale.scss */"./resources/assets/sass/plugins/loaders/animations/line-scale.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\line-spin-fade-loader.scss */"./resources/assets/sass/plugins/loaders/animations/line-spin-fade-loader.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\pacman.scss */"./resources/assets/sass/plugins/loaders/animations/pacman.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\semi-circle-spin.scss */"./resources/assets/sass/plugins/loaders/animations/semi-circle-spin.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\square-spin.scss */"./resources/assets/sass/plugins/loaders/animations/square-spin.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\animations\triangle-skew-spin.scss */"./resources/assets/sass/plugins/loaders/animations/triangle-skew-spin.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\loaders\loaders.scss */"./resources/assets/sass/plugins/loaders/loaders.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\pickers\bootstrap-datetimepicker-build.scss */"./resources/assets/sass/plugins/pickers/bootstrap-datetimepicker-build.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\tour\tour.scss */"./resources/assets/sass/plugins/tour/tour.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\plugins\ui\coming-soon.scss */"./resources/assets/sass/plugins/ui/coming-soon.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\themes\dark-layout.scss */"./resources/assets/sass/themes/dark-layout.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\themes\semi-dark-layout.scss */"./resources/assets/sass/themes/semi-dark-layout.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\aggrid.scss */"./resources/assets/sass/pages/aggrid.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-chat.scss */"./resources/assets/sass/pages/app-chat.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-ecommerce-details.scss */"./resources/assets/sass/pages/app-ecommerce-details.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-ecommerce-shop.scss */"./resources/assets/sass/pages/app-ecommerce-shop.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-email.scss */"./resources/assets/sass/pages/app-email.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-todo.scss */"./resources/assets/sass/pages/app-todo.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\app-user.scss */"./resources/assets/sass/pages/app-user.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\authentication.scss */"./resources/assets/sass/pages/authentication.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\card-analytics.scss */"./resources/assets/sass/pages/card-analytics.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\colors.scss */"./resources/assets/sass/pages/colors.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\coming-soon.scss */"./resources/assets/sass/pages/coming-soon.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\dashboard-analytics.scss */"./resources/assets/sass/pages/dashboard-analytics.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\dashboard-ecommerce.scss */"./resources/assets/sass/pages/dashboard-ecommerce.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\data-list-view.scss */"./resources/assets/sass/pages/data-list-view.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\error.scss */"./resources/assets/sass/pages/error.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\faq.scss */"./resources/assets/sass/pages/faq.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\invoice.scss */"./resources/assets/sass/pages/invoice.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\knowledge-base.scss */"./resources/assets/sass/pages/knowledge-base.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\register.scss */"./resources/assets/sass/pages/register.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\search.scss */"./resources/assets/sass/pages/search.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\timeline.scss */"./resources/assets/sass/pages/timeline.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\pages\users.scss */"./resources/assets/sass/pages/users.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\colors\palette-gradient.scss */"./resources/assets/sass/core/colors/palette-gradient.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\colors\palette-noui.scss */"./resources/assets/sass/core/colors/palette-noui.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\colors\palette-variables.scss */"./resources/assets/sass/core/colors/palette-variables.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\menu\menu-types\horizontal-menu.scss */"./resources/assets/sass/core/menu/menu-types/horizontal-menu.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\menu\menu-types\vertical-menu.scss */"./resources/assets/sass/core/menu/menu-types/vertical-menu.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\menu\menu-types\vertical-overlay-menu.scss */"./resources/assets/sass/core/menu/menu-types/vertical-overlay-menu.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\mixins\alert.scss */"./resources/assets/sass/core/mixins/alert.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\mixins\hex2rgb.scss */"./resources/assets/sass/core/mixins/hex2rgb.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\mixins\main-menu-mixin.scss */"./resources/assets/sass/core/mixins/main-menu-mixin.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\core\mixins\transitions.scss */"./resources/assets/sass/core/mixins/transitions.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\sass\dcat-app.scss */"./resources/assets/dcat/sass/dcat-app.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\extra\markdown.scss */"./resources/assets/dcat/extra/markdown.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\extra\step.scss */"./resources/assets/dcat/extra/step.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\extra\upload.scss */"./resources/assets/dcat/extra/upload.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\bootstrap.scss */"./resources/assets/sass/bootstrap.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\bootstrap-extended.scss */"./resources/assets/sass/bootstrap-extended.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\colors.scss */"./resources/assets/sass/colors.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\components.scss */"./resources/assets/sass/components.scss");
+__webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\custom-rtl.scss */"./resources/assets/sass/custom-rtl.scss");
+module.exports = __webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\sass\custom-laravel.scss */"./resources/assets/sass/custom-laravel.scss");
 
 
 /***/ })

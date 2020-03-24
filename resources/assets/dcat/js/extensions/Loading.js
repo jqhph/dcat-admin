@@ -127,14 +127,16 @@ function extend(Dcat) {
 
         loadingId = 'ld-'+Dcat.helpers.random();
 
+    let svg = LOADING_SVG[0].replace('{color}', 'currentColor')
+            .replace('{width}', '50px;height:11px;');
+
         return $this
             .addClass('disabled btn-loading')
             .attr('disabled', true)
             .attr('data-loading', loadingId)
             .html(`
 <div class="${loadingId}" style="display:none">${content}</div>
-<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
- LOADING ...
+${svg}
 `);
     }
 
