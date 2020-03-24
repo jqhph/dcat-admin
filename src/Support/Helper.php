@@ -212,8 +212,6 @@ class Helper
     }
 
     /**
-     * Get full url without query strings.
-     *
      * @param Arrayable|array|string $keys
      *
      * @return string
@@ -221,6 +219,31 @@ class Helper
     public static function fullUrlWithoutQuery($keys)
     {
         return static::urlWithoutQuery(request()->fullUrl(), $keys);
+    }
+
+    /**
+     * @param string       $url
+     * @param string|array $keys
+     *
+     * @return bool
+     */
+    public static function urlHasQuery(string $url, $keys)
+    {
+        $value = explode('?', $url);
+
+        if (empty($value[1])) {
+            return false;
+        }
+
+        parse_str($value[1], $query);
+
+        foreach ((array) $keys as $key) {
+            if (Arr::has($query, $key)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

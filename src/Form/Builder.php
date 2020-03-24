@@ -10,6 +10,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
 use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -682,11 +683,12 @@ class Builder
             return;
         }
 
-        if (Str::contains($previous, url($this->getResource()))) {
+        if (
+            Str::contains($previous, url($this->getResource()))
+            && ! Helper::urlHasQuery($previous, [SimpleGrid::QUERY_NAME, DialogForm::QUERY_NAME])
+        ) {
             $this->addHiddenField(
-                (new Hidden(static::PREVIOUS_URL_KEY))->value(
-                    Helper::urlWithoutQuery($previous, SimpleGrid::QUERY_NAME)
-                )
+                (new Hidden(static::PREVIOUS_URL_KEY))->value($previous)
             );
         }
     }
