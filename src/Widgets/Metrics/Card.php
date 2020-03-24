@@ -5,12 +5,12 @@ namespace Dcat\Admin\Widgets\Metrics;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\ApexCharts\Chart;
-use Dcat\Admin\Widgets\HasAjaxRequest;
+use Dcat\Admin\Traits\HasRemoteData;
 use Dcat\Admin\Widgets\Widget;
 
 class Card extends Widget
 {
-    use HasAjaxRequest;
+    use HasRemoteData;
 
     protected $view = 'admin::widgets.metrics.card';
 

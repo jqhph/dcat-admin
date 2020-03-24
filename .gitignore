@@ -1,8 +1,8 @@
-vendor/
+./vendor/
 composer.lock
 .idea
 .php_cs.cache
 /node_modules
 package-lock.json
 mix-manifest.json
-images/
+./images/

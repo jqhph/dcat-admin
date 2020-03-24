@@ -17,9 +17,10 @@
         "lodash": "^4.17.15",
         "popper.js": "^1.12",
         "resolve-url-loader": "^2.3.1",
+        "rtlcss": "^2.4.0",
         "sass": "^1.22.12",
         "sass-loader": "^7.3.1",
-        "webpack-cli": "^3.3.5",
-        "rtlcss": "^2.4.0"
+        "vue-template-compiler": "^2.6.11",
+        "webpack-cli": "^3.3.5"
     }
 }

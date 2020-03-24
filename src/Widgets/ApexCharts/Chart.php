@@ -3,13 +3,13 @@
 namespace Dcat\Admin\Widgets\ApexCharts;
 
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Widgets\HasAjaxRequest;
+use Dcat\Admin\Traits\HasRemoteData;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
 class Chart extends Widget
 {
-    use HasAjaxRequest;
+    use HasRemoteData;
 
     public static $js = '@apex-charts';
 

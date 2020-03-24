@@ -1,10 +1,10 @@
 <?php
 
-namespace Dcat\Admin\Widgets;
+namespace Dcat\Admin\Traits;
 
 use Dcat\Admin\Support\Helper;
 
-trait HasAjaxRequest
+trait HasRemoteData
 {
     /**
      * @var string
@@ -71,6 +71,8 @@ trait HasAjaxRequest
     }
 
     /**
+     * 设置点击抓取数据的按钮的css选择器.
+     *
      * @param string|array $selector
      *
      * @return $this
@@ -92,7 +94,7 @@ trait HasAjaxRequest
     }
 
     /**
-     * Set the script before fetch data.
+     * 设置抓取数据时执行的js代码.
      *
      * @param string $script
      *
@@ -106,7 +108,7 @@ trait HasAjaxRequest
     }
 
     /**
-     * Set the script after fetch data.
+     * 设置抓取完数据后执行的js代码.
      *
      * @param string $script
      *
@@ -173,11 +175,13 @@ JS;
     }
 
     /**
-     * @param HasAjaxRequest $fetcher
+     * 合并.
+     *
+     * @param static $fetcher
      *
      * @return $this
      */
-    public function copy($fetcher)
+    public function merge($fetcher)
     {
         $this->_url = $fetcher->getUrl();
 
