@@ -98,6 +98,10 @@ class LogOperation
      */
     protected function inExceptArray($request)
     {
+        if ($request->routeIs('dcat.api.value')) {
+            return true;
+        }
+
         foreach (config('admin.operation_log.except') as $except) {
             $except = admin_base_path($except);
 
