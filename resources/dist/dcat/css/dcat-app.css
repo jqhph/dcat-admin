@@ -2183,7 +2183,7 @@ table.data-thumb-view.dataTable tbody td {
 .data-list-view-header .table-responsive .top .dataTables_filter .form-control,
 .data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
   padding: 1.23rem 2.8rem !important;
-  border-radius: 1.4rem;
+  border-radius: 0.5rem;
   border: 0;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
@@ -2501,6 +2501,10 @@ table.dataTable.complex-headers tfoot td {
   font-size: 0.95rem;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 5px 1px rgba(0, 0, 0, 0.05);
   border-color: #fff !important;
+}
+
+.layui-layer-btn a.btn-loading {
+  padding-top: 8px !important;
 }
 
 .layui-layer-btn .layui-layer-btn0 {
