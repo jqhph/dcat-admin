@@ -26,7 +26,7 @@ class Bootstrap
     protected function setupScript()
     {
         $token = csrf_token();
-        Admin::script("Dcat.token = \"$token\";console.log(56565656)");
+        Admin::script("Dcat.token = \"$token\";");
     }
 
     protected function fireEvents()

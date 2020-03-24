@@ -24,51 +24,69 @@ class Card extends Widget
     protected $options = [
         'icon' => null,
         'content' => '',
-        'style' => 'primary',
-        'ranges' => [],
-        'chartHeight' => 70,
+        'dropdown' => [],
+    ];
+
+    /**
+     * @var string 
+     */
+    protected $style = 'primary';
+
+    /**
+     * @var int 
+     */
+    protected $chartHeight = 70;
+
+    /**
+     * @var array 
+     */
+    protected $chartOptions = [
         'chart' => [
-            'chart' => [
-                'toolbar' => [
-                    'show' => false,
-                ],
-                'sparkline' => [
-                    'enabled' => true,
-                ],
-                'grid' => [
-                    'show' => false,
-                    'padding' => [
-                        'left' => 0,
-                        'right' => 0,
-                    ]
-                ],
+            'type' => 'area',
+            'toolbar' => [
+                'show' => false,
             ],
-            'tooltip' => [
-                'x' => [
-                    'show' => false,
-                ],
+            'sparkline' => [
+                'enabled' => true,
             ],
-            'xaxis' => [
-                'labels' => [
-                    'show' => false,
-                ],
-                'axisBorder' => [
-                    'show' => false,
-                ],
+            'grid' => [
+                'show' => false,
+                'padding' => [
+                    'left' => 0,
+                    'right' => 0,
+                ]
             ],
-            'yaxis' => [
-                'y' => 0,
-                'offsetX' => 0,
-                'offsetY' => 0,
-                'padding' => ['left' => 0, 'right' => 0],
+        ],
+        'tooltip' => [
+            'x' => [
+                'show' => false,
             ],
-            'dataLabels' => [
-                'enabled' => false,
+        ],
+        'xaxis' => [
+            'labels' => [
+                'show' => false,
             ],
-            'stroke' => [
-                'width' => 2.5,
+            'axisBorder' => [
+                'show' => false,
             ],
-        ]
+        ],
+        'yaxis' => [
+            'y' => 0,
+            'offsetX' => 0,
+            'offsetY' => 0,
+            'padding' => ['left' => 0, 'right' => 0],
+        ],
+        'dataLabels' => [
+            'enabled' => false,
+        ],
+        'stroke' => [
+            'width' => 2.5,
+            'curve' => 'straight'
+        ],
+        'fill' => [
+            'opacity' => 0.1,
+            'type' => 'solid',
+        ],
     ];
 
     /**
@@ -106,12 +124,12 @@ class Card extends Widget
         $chart = $this->chart ?: ($this->chart = Chart::make());
 
         // 设置图表高度
-        $this->options['chart']['chart']['height'] = $this->options['chartHeight'];
+        $this->chartOptions['chart']['height'] = $this->chartHeight;
 
         // 图表配置选项
-        $chart->options($this->options['chart']);
+        $chart->options($this->chartOptions);
         // 颜色
-        $chart->colors(Admin::color()->get($this->options['style']));
+        $chart->colors(Admin::color()->get($this->style));
 
         if ($callback = $this->chartCallback) {
             $callback($chart);
@@ -157,7 +175,7 @@ class Card extends Widget
      */
     public function style(string $style)
     {
-        $this->options['style'] = $style;
+        $this->style = $style;
 
         return $this;
     }
@@ -201,7 +219,7 @@ class Card extends Widget
      */
     public function chartHeight(int $number)
     {
-        $this->options['chartHeight'] = $number;
+        $this->chartHeight = $number;
 
         $this->setUpChart();
 
@@ -220,8 +238,8 @@ class Card extends Widget
         if ($options instanceof \Closure) {
             $this->chartCallback = $options;
         } else {
-            $this->options['chart'] = array_merge(
-                $this->options['chart'],
+            $this->chartOptions = array_merge(
+                $this->chartOptions,
                 Helper::array($options)
             );
         }
@@ -285,6 +303,8 @@ JS;
     public function render()
     {
         $this->script = $this->script();
+
+        $this->variables['style'] = $this->style;
 
         return parent::render();
     }

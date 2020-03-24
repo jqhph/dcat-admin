@@ -2,9 +2,9 @@
     <div class="card-header d-flex justify-content-between align-items-start pb-0">
         <div>
             @if($options['icon'])
-            <div class="avatar bg-rgba-{{ $options['style'] }} p-50 m-0">
+            <div class="avatar bg-rgba-{{ $style }} p-50 m-0">
                 <div class="avatar-content">
-                    <i class="{{ $options['icon'] }} text-{{ $options['style'] }} font-medium-5"></i>
+                    <i class="{{ $options['icon'] }} text-{{ $style }} font-medium-5"></i>
                 </div>
             </div>
             @endif
