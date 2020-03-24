@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Widgets\Sparkline;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Traits\HasRemoteData;
+use Dcat\Admin\Traits\FromApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
  */
 class Sparkline extends Widget
 {
-    use HasRemoteData;
+    use FromApi;
 
     public static $js = '@jquery.sparkline';
     public static $css = '@jquery.sparkline';
@@ -78,7 +78,7 @@ class Sparkline extends Widget
 
     protected $values = [];
 
-    protected $combos = [];
+    protected $combinations = [];
 
     public function __construct($values = [])
     {
@@ -148,13 +148,9 @@ class Sparkline extends Widget
      *
      * @return $this
      */
-    public function composite(self $chart)
+    public function combine(self $chart)
     {
-        $options = $chart->getOptions();
-
-        $options['composite'] = true;
-
-        $this->combos[] = [$chart->values(), $chart->getOptions()];
+        $this->combinations[] = [$chart->values(), $chart->getOptions()];
 
         return $this;
     }
@@ -171,19 +167,10 @@ class Sparkline extends Widget
         $values = json_encode($this->values);
         $options = json_encode($this->options);
 
-        $combos = '';
-        foreach ($this->combos as $combo) {
-            $v = json_encode($combo[0]);
-            $o = json_encode($combo[1]);
-            $combos .= <<<JS
-$('#{$this->id}').sparkline($v, $o);
-JS;
-        }
-
-        if (! $this->allowBuildRequestScript()) {
+        if (! $this->allowBuildRequest()) {
             return <<<JS
 $('#{$this->id}').sparkline($values, $options);
-{$combos};
+{$this->buildCombinationScript()};
 JS;
         }
 
@@ -199,6 +186,25 @@ JS
         );
 
         return $this->buildRequestScript();
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildCombinationScript()
+    {
+        $script = '';
+
+        foreach ($this->combinations as $value) {
+            $value = json_encode($value[0]);
+            $options = json_encode($value[1]);
+
+            $script .= <<<JS
+$('#{$this->id}').sparkline($value, $options);
+JS;
+        }
+
+        return $script;
     }
 
     /**

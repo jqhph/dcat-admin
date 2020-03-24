@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets\Chart;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Widgets\Color;
-use Dcat\Admin\Traits\HasRemoteData;
+use Dcat\Admin\Traits\FromApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
@@ -18,9 +18,10 @@ use Illuminate\Support\Str;
  */
 abstract class Chart extends Widget
 {
-    use HasRemoteData;
+    use FromApi;
 
     public static $js = '@chartjs';
+
     public static $css = '@chartjs';
 
     public static $globalSettings = [
@@ -45,15 +46,11 @@ abstract class Chart extends Widget
     protected $options = [];
 
     protected $width;
+
     protected $height;
 
     protected $containerStyle = '';
 
-    /**
-     * Chart constructor.
-     *
-     * @param mixed ...$params
-     */
     public function __construct(...$params)
     {
         if (count($params) == 2) {
@@ -73,13 +70,11 @@ abstract class Chart extends Widget
     }
 
     /**
-     * Composite the chart.
-     *
      * @param Chart $chart
      *
      * @return $this
      */
-    public function composite(self $chart)
+    public function combine(self $chart)
     {
         $this->data['datasets']
             = array_merge($this->data['datasets'], $chart->datasets());
@@ -382,7 +377,7 @@ abstract class Chart extends Widget
         ];
         $options = json_encode($config);
 
-        if (! $this->allowBuildRequestScript()) {
+        if (! $this->allowBuildRequest()) {
             return <<<JS
 setTimeout(function () { 
     new Chart($("#{$this->getId()}").get(0).getContext("2d"), $options) 
