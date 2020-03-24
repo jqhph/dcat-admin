@@ -8,6 +8,8 @@ use Dcat\Admin\Form\Step\Form as StepForm;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
+use Dcat\Admin\SimpleGrid;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -681,7 +683,11 @@ class Builder
         }
 
         if (Str::contains($previous, url($this->getResource()))) {
-            $this->addHiddenField((new Hidden(static::PREVIOUS_URL_KEY))->value($previous));
+            $this->addHiddenField(
+                (new Hidden(static::PREVIOUS_URL_KEY))->value(
+                    Helper::urlWithoutQuery($previous, SimpleGrid::QUERY_NAME)
+                )
+            );
         }
     }
 
