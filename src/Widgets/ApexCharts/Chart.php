@@ -220,9 +220,7 @@ class Chart extends Widget
     {
         return <<<JS
 (function () {
-    var options = {$options}, extend = function (options) {
-        {$this->scripts['extend']}
-    };
+    var options = {$options}, extend = {$this->buildExtendOptionsScript()};
 
     var chart = new ApexCharts(
         $("{$this->containerSelector}")[0], 
@@ -250,12 +248,12 @@ if (! response.status) {
     return Dcat.error(response.message || 'Server internal error.');
 }
 
-var container = $('{$this->containerSelector}');
+var container = $('{$this->containerSelector}'), extend = {$this->buildExtendOptionsScript()};
 
 container.html('');
 
 setTimeout(function () {
-    var chart = new ApexCharts(container[0], response.options);
+    var chart = new ApexCharts(container[0], $.extend(response.options, extend(response.options)));
     
     chart.render();
 }, 50);
@@ -263,6 +261,18 @@ JS
         );
 
         return $this->buildRequestScript();
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildExtendOptionsScript()
+    {
+        return <<<JS
+function (options) {
+    {$this->scripts['extend']}
+}
+JS;
     }
 
     /**
