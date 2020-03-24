@@ -40,8 +40,8 @@ class ValueController
      */
     protected function resolve(Request $request)
     {
-        if (! $key = $request->has('_key')) {
-            throw new Exception('Invalid action request.');
+        if (! $key = $request->get('_key')) {
+            throw new Exception('Invalid request.');
         }
 
         if (! class_exists($key)) {
@@ -51,7 +51,7 @@ class ValueController
         $instance = app($key);
 
         if (! method_exists($instance, 'handle')) {
-            throw new Exception("The method '{$instance}::handle()' does not exist.");
+            throw new Exception("The method '{$key}::handle()' does not exist.");
         }
 
         return $instance;

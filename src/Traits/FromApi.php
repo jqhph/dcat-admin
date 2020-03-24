@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
  *
  * @package Dcat\Admin\Traits
  *
+ * @method mixed handle(Request $request)
  * @method mixed result()
  */
 trait FromApi
@@ -27,6 +28,11 @@ trait FromApi
     protected $fromMethod = 'POST';
 
     /**
+     * @var string
+     */
+    protected $fromUriKey;
+
+    /**
      * @var array
      */
     protected $fromSelectors = [];
@@ -40,22 +46,11 @@ trait FromApi
     ];
 
     /**
-     * 处理请求
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return mixed
-     */
-    public function handle(Request $request)
-    {
-    }
-
-    /**
      * 获取请求附带参数.
      *
      * @return array
      */
-    public function parameters()
+    public function parameters(): array
     {
         return [];
     }
@@ -115,9 +110,9 @@ trait FromApi
      *
      * @return string
      */
-    public function requestUriKey()
+    public function getFromUriKey()
     {
-        return static::class;
+        return $this->fromUriKey ?: static::class;
     }
 
     /**
@@ -182,13 +177,16 @@ trait FromApi
     }
 
     /**
-     * 判断是否允许构建js代码
+     * 判断是否使用请求接口功能.
      *
      * @return bool
      */
-    public function allowBuildRequestScript()
+    public function allowBuildRequest()
     {
-        return $this->fromUrl === null ? false : true;
+        return (
+            $this->fromUrl
+            || method_exists($this, 'handle')
+        ) ? true : false;
     }
 
     /**
@@ -198,7 +196,7 @@ trait FromApi
      */
     public function buildRequestScript()
     {
-        if (! $this->allowBuildRequestScript()) {
+        if (! $this->allowBuildRequest()) {
             return null;
         }
 
@@ -247,7 +245,7 @@ JS;
     private function formatRequestData()
     {
         $data = [
-            '_key' => $this->requestUriKey(),
+            '_key' => $this->getFromUriKey(),
         ];
 
         return json_encode(
@@ -276,18 +274,18 @@ JS;
     /**
      * 合并.
      *
-     * @param static $fetcher
+     * @param static $self
      *
      * @return $this
      */
-    public function merge($fetcher)
+    public function merge($self)
     {
-        $this->fromUrl = $fetcher->getRequestUrl();
-        $this->fromMethod = $fetcher->getRequestMethod();
+        $this->fromUrl = $self->getRequestUrl();
+        $this->fromMethod = $self->getRequestMethod();
+        $this->fromUriKey = $self->getFromUriKey();
+        $this->fromSelectors = $self->getFromSelectors();
 
-        $this->fromSelectors = $fetcher->getFromSelectors();
-
-        $scripts = $fetcher->getRequestScripts();
+        $scripts = $self->getRequestScripts();
 
         $this->fromScripts['fetching'] = array_merge($this->fromScripts['fetching'], $scripts['fetching']);
         $this->fromScripts['fetched'] = array_merge($this->fromScripts['fetched'], $scripts['fetched']);
