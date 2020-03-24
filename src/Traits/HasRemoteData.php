@@ -3,9 +3,21 @@
 namespace Dcat\Admin\Traits;
 
 use Dcat\Admin\Support\Helper;
+use Illuminate\Http\Request;
 
+/**
+ * Trait HasRemoteData
+ *
+ * @package Dcat\Admin\Traits
+ *
+ * @method mixed handle(Request $request)
+ * @method array requestData()
+ * @method mixed result()
+ */
 trait HasRemoteData
 {
+    use HasAuthorization;
+
     /**
      * @var string
      */
@@ -15,6 +27,11 @@ trait HasRemoteData
      * @var array
      */
     protected $_selectors = [];
+
+    /**
+     * @var string 
+     */
+    protected $_method = 'POST';
 
     /**
      * @var array
@@ -31,9 +48,11 @@ trait HasRemoteData
      *
      * @return $this
      */
-    public function request(string $url, array $query = [])
+    public function request(string $url, array $query = [], string $method = 'GET')
     {
         $this->_url = admin_url(Helper::urlWithQuery($url, $query));
+
+        $this->_method = $method;
 
         return $this;
     }
@@ -45,24 +64,44 @@ trait HasRemoteData
      *
      * @return $this
      */
-    public function requestCurrent(array $query = [])
+    public function requestCurrent(array $query = [], string $method = 'GET')
     {
-        return $this->request(request()->fullUrlWithQuery($query));
+        return $this->request(request()->fullUrlWithQuery($query), [], $method);
     }
 
     /**
      * 获取请求地址
-     * 
+     *
      * @return string
      */
-    public function getUrl()
+    public function getRequestUrl()
     {
-        return $this->_url;
+        return $this->_url ?: route('dcat.api.value');
+    }
+
+    /**
+     * 获取请求方法
+     *
+     * @return string
+     */
+    public function getRequestMethod()
+    {
+        return $this->_method;
+    }
+
+    /**
+     * 设置URI标识.
+     *
+     * @return string
+     */
+    public function requestUriKey()
+    {
+        return static::class;
     }
 
     /**
      * 获取js代码.
-     * 
+     *
      * @return array
      */
     public function getRequestScripts()
@@ -96,13 +135,13 @@ trait HasRemoteData
     /**
      * 设置抓取数据时执行的js代码.
      *
-     * @param string $script
+     * @param string|\Closure $script
      *
      * @return $this
      */
-    public function fetching(string $script)
+    public function fetching($script)
     {
-        $this->_scripts['fetching'][] = $script;
+        $this->_scripts['fetching'][] = value($script);
 
         return $this;
     }
@@ -110,18 +149,20 @@ trait HasRemoteData
     /**
      * 设置抓取完数据后执行的js代码.
      *
-     * @param string $script
+     * @param string|\Closure $script
      *
      * @return $this
      */
-    public function fetched(string $script)
+    public function fetched($script)
     {
-        $this->_scripts['fetched'][] = $script;
+        $this->_scripts['fetched'][] = value($script);
 
         return $this;
     }
 
     /**
+     * 判断是否允许构建js代码
+     *
      * @return bool
      */
     public function allowBuildRequestScript()
@@ -130,48 +171,87 @@ trait HasRemoteData
     }
 
     /**
-     * @return bool|string
+     * 构建请求数据js代码.
+     *
+     * @return null|string
      */
     public function buildRequestScript()
     {
         if (! $this->allowBuildRequestScript()) {
-            return false;
+            return null;
         }
 
         $fetching = implode(';', $this->_scripts['fetching']);
         $fetched = implode(';', $this->_scripts['fetched']);
 
-        $binding = '';
-        foreach ($this->_selectors as $v) {
-            $binding .= "$('{$v}').click(function () { request($(this).data()) });";
-        }
-
         return <<<JS
 (function () {
-    var f;
-    function request(p) {
-        if (f) return;
-        f = 1;
+    var requesting;
+    function request(data) {
+        if (requesting) {
+            return;
+        }
+        requesting = 1;
         
-        {$fetching};     
+        data = $.extend({$this->formatRequestData()}, data || {});
+        
+        {$fetching};   
+        
         $.ajax({
-          url: '{$this->_url}',
+          url: '{$this->getRequestUrl()}',
           dataType: 'json',
-          data: $.extend({_token:Dcat.token}, p || {}),
+          method: '{$this->_method}',
+          data: $.extend({_token: Dcat.token}, data),
           success: function (response) {
-            f = 0;
+            requesting = 0;
             {$fetched};
           },
           error: function (a, b, c) {
-              f = 0;
-              Dcat.ajaxError(a, b, c)
+              requesting = 0;
+              Dcat.handleAjaxError(a, b, c)
           },
         });
     }
+
     request();
-    $binding
+
+    {$this->buildBindingScript()}
 })();
 JS;
+    }
+
+    /**
+     * @return string
+     */
+    private function formatRequestData()
+    {
+        $data = [
+            '_key' => $this->requestUriKey(),
+        ];
+
+        if (method_exists($this, 'requestData')) {
+            $data = array_merge($data, $this->requestData());
+        }
+
+        return json_encode($data);
+    }
+
+    /**
+     * @return string
+     */
+    private function buildBindingScript()
+    {
+        $script = '';
+
+        foreach ($this->_selectors as $v) {
+            $script .= <<<JS
+$('{$v}').click(function () { 
+    request($(this).data()) 
+});
+JS;
+        }
+
+        return $script;
     }
 
     /**
@@ -183,7 +263,8 @@ JS;
      */
     public function merge($fetcher)
     {
-        $this->_url = $fetcher->getUrl();
+        $this->_url = $fetcher->getRequestUrl();
+        $this->_method = $fetcher->getRequestMethod();
 
         $this->_selectors = $fetcher->getButtonSelectors();
 

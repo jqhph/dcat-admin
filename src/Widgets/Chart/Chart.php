@@ -481,23 +481,26 @@ HTML;
     }
 
     /**
-     * Return JsonResponse instance.
-     *
      * @param bool  $returnOptions
      * @param array $data
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function toJsonResponse(bool $returnOptions = true, array $data = [])
+    public function toJsonResponse()
     {
-        return response()->json(array_merge(
-            [
-                'status'   => 1,
-                'datasets' => $this->datasets(),
-                'options'  => $returnOptions ? $this->getOptions() : [],
-            ],
-            $data
-        ));
+        return response()->json([
+            'status'   => 1,
+            'datasets' => $this->datasets(),
+            'options'  => $this->getOptions(),
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function result()
+    {
+        return $this->toJsonResponse();
     }
 
     /**
