@@ -9,23 +9,23 @@
             </div>
             @endif
 
-            {!! Dcat\Admin\Support\Helper::render($options['contents']) !!}
+            <div class="metric-content">{!! Dcat\Admin\Support\Helper::render($options['content']) !!}</div>
         </div>
 
-        @if(! empty($options['ranges']))
+        @if(! empty($options['dropdown']))
         <div class="dropdown chart-dropdown">
-            <button class="btn btn-sm shadow-0 dropdown-toggle p-0 waves-effect" type="button" id="dropdownItem5" data-toggle="dropdown">
-                {{ current($options['ranges']) }}
+            <button class="btn btn-sm btn-light shadow-0 dropdown-toggle p-0 waves-effect" data-toggle="dropdown">
+                {{ current($options['dropdown']) }}
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-                @foreach($options['ranges'] as $key => $range)
-                <li class="dropdown-item"><a href="#" data-key="{{ $key }}">{{ $range }}</a></li>
+                @foreach($options['dropdown'] as $key => $value)
+                <li class="dropdown-item"><a href="javascript:void(0)" class="select-option" data-option="{{ $key }}">{{ $value }}</a></li>
                 @endforeach
             </div>
         </div>
         @endif
     </div>
     <div class="card-content" style="position: relative;width: 100%">
-        {!! $chart !!}
+        {!! ! empty($chart) ? $chart : '' !!}
     </div>
 </div>

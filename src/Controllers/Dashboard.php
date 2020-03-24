@@ -3,17 +3,18 @@
 namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Widgets\Card;
 use Dcat\Admin\Widgets\Tab;
 use Illuminate\Support\Arr;
 
 class Dashboard
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return mixed
      */
     public static function title()
     {
-        return view('admin::dashboard.title');
+        return Card::make(view('admin::dashboard.title'))->class('bg-primary-gradient', true);
     }
 
     public static function tab()

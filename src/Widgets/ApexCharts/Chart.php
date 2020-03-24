@@ -3,13 +3,13 @@
 namespace Dcat\Admin\Widgets\ApexCharts;
 
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Traits\HasRemoteData;
+use Dcat\Admin\Traits\FromApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
 class Chart extends Widget
 {
-    use HasRemoteData;
+    use FromApi;
 
     public static $js = '@apex-charts';
 
@@ -212,14 +212,13 @@ class Chart extends Widget
     }
 
     /**
+     * @param string $options
+     *
      * @return string
      */
-    public function script()
+    protected function buildDefaultScript($options)
     {
-        $options = json_encode($this->options);
-
-        if (! $this->allowBuildRequestScript()) {
-            return <<<JS
+        return <<<JS
 (function () {
     var options = {$options}, extend = function (options) {
         {$this->scripts['extend']}
@@ -232,9 +231,18 @@ class Chart extends Widget
     chart.render();
 })();
 JS;
-        }
+    }
 
-        $id = 'chart_'.Str::random();
+    /**
+     * @return string
+     */
+    public function script()
+    {
+        $options = json_encode($this->options);
+
+        if (! $this->allowBuildRequest()) {
+            return $this->buildDefaultScript($options);
+        }
 
         $this->fetched(
             <<<JS
@@ -242,15 +250,15 @@ if (! response.status) {
     return Dcat.error(response.message || 'Server internal error.');
 }
 
-var id = '{$id}', chart = window[id];
+var container = $('{$this->containerSelector}');
 
-if (chart) {
-chart = new ApexCharts($("{$this->containerSelector}")[0], {$options});
+container.html('');
 
-chart.render();
-}
-
-chart.updateOptions(response.options);
+setTimeout(function () {
+    var chart = new ApexCharts(container[0], response.options);
+    
+    chart.render();
+}, 50);
 JS
         );
 
@@ -293,8 +301,21 @@ JS
 HTML;
     }
 
+    /**
+     * 返回请求结果.
+     *
+     * @return array
+     */
+    public function result()
+    {
+        return [
+            'status' => 1,
+            'options' => $this->options,
+        ];
+    }
+
     protected function generateId()
     {
-        return 'apex-chart-'.$this->type.Str::random(8);
+        return 'apex-chart-'.Str::random(8);
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Contracts\Support\Renderable;
 /**
  * @method $this class(string $class, bool $append = false)
  * @method $this style(string $style, bool $append = true)
- * @method $this id(string $id)
+ * @method $this id(string $id = null)
  */
 abstract class Widget implements Renderable
 {
@@ -190,7 +190,13 @@ abstract class Widget implements Renderable
             return $this->setHtmlAttribute($method, $value);
         }
 
-        $this->htmlAttributes[$method] = count($parameters) > 0 ? $parameters[0] : true;
+        // 获取属性
+        if (count($parameters) === 0) {
+            return $this->getHtmlAttribute($method);
+        }
+
+        // 设置属性
+        $this->setHtmlAttribute($method, $parameters[0]);
 
         return $this;
     }
