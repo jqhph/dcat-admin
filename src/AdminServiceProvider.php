@@ -82,6 +82,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         require_once __DIR__.'/Support/AdminSection.php';
 
+        $this->aliasAdmin();
         $this->registerExtensionProviders();
         $this->loadAdminAuthConfig();
         $this->registerRouteMiddleware();
@@ -91,6 +92,13 @@ class AdminServiceProvider extends ServiceProvider
 
         if (config('app.debug') && config('app.env') === 'local') {
             $this->commands($this->devCommands);
+        }
+    }
+
+    protected function aliasAdmin()
+    {
+        if (! class_exists(\Admin::class)) {
+            class_alias(Admin::class, \Admin::class);
         }
     }
 
