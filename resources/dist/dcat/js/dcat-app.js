@@ -2382,7 +2382,7 @@ var Loading = /*#__PURE__*/function () {
     }, options);
 
     var _this = this,
-        defStyle = 'position:absolute;left:10px;right:10px;',
+        defStyle = 'position:absolute;',
         content;
 
     _this.$container = $(options.container);
