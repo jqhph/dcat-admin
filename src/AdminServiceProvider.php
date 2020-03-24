@@ -125,6 +125,8 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerRoutes()
     {
+        Admin::registerApiRoutes();
+
         if (is_file($routes = admin_path('routes.php'))) {
             $this->loadRoutesFrom($routes);
         }
