@@ -139,6 +139,10 @@ class Helper
         $html = '';
 
         foreach ((array) $attributes as $key => &$value) {
+            if (is_array($value)) {
+                $value = implode(' ', $value);
+            }
+
             if (is_numeric($key)) {
                 $key = $value;
             }
@@ -223,9 +227,9 @@ class Helper
      * 匹配请求路径.
      *
      * @example
-     *      Helper::matchRequestPath('auth/user')
-     *      Helper::matchRequestPath('auth/user*')
-     *      Helper::matchRequestPath('auth/user/* /edit')
+     *      Helper::matchRequestPath(admin_base_path('auth/user'))
+     *      Helper::matchRequestPath(admin_base_path('auth/user*'))
+     *      Helper::matchRequestPath(admin_base_path('auth/user/* /edit'))
      *      Helper::matchRequestPath('GET,POST:auth/user')
      *
      * @param string      $path
@@ -246,6 +250,11 @@ class Helper
             if (! empty($methods) && ! in_array($request->method(), $methods)) {
                 return false;
             }
+        }
+
+        // 判断路由名称
+        if ($request->routeIs($path)) {
+            return true;
         }
 
         if (! Str::contains($path, '*')) {
