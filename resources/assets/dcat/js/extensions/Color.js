@@ -2,39 +2,52 @@
 export default class Color {
     constructor(Dcat) {
         let colors = Dcat.config.colors || {},
+            newInstance = $.extend(colors),
             _this = this;
 
+        // 获取颜色
+        newInstance.get = function (color) {
+            return colors[color] || color;
+        };
+
         // 颜色转亮
-        colors.lighten = _this.lighten.bind(_this);
+        newInstance.lighten = function (color, amt) {
+            return _this.lighten(newInstance.get(color), amt)
+        };
 
         // 颜色转暗
-        colors.darken = (color, amt) => {
-            return _this.lighten(color, -amt)
+        newInstance.darken = (color, amt) => {
+            return newInstance.lighten(color, -amt)
         };
 
         // 颜色透明度设置
-        colors.alpha = (color, alpha) => {
-            let results = colors.toRBG(color);
+        newInstance.alpha = (color, alpha) => {
+            let results = newInstance.toRBG(color);
 
             return `rgba(${results[0]}, ${results[1]}, ${results[2]}, ${alpha})`;
         };
 
         // 16进制颜色转化成10进制
-        colors.toRBG = (color, amt) => {
-            if (color[0] === '#') {
+        newInstance.toRBG = (color, amt) => {
+            if (color.indexOf('#') === 0) {
                 color = color.slice(1);
             }
 
-            return _this.toRBG(color, amt);
+            return _this.toRBG(newInstance.get(color), amt);
         };
 
-        Dcat.color = colors;
+        // 获取所有颜色
+        newInstance.all = function () {
+            return colors;
+        };
+
+        Dcat.color = newInstance;
     }
 
     lighten(color, amt) {
         let hasPrefix = false;
 
-        if (color[0] === '#') {
+        if (color.indexOf('#') === 0) {
             color = color.slice(1);
 
             hasPrefix = true;

@@ -441,6 +441,7 @@ class Admin
         static::$jsVariables['pjax_container_selector'] = '#'.static::$pjaxContainerId;
         static::$jsVariables['token'] = csrf_token();
         static::$jsVariables['lang'] = __('admin.client') ?: [];
+        static::$jsVariables['colors'] = static::color()->all();
 
         return json_encode(static::$jsVariables);
     }

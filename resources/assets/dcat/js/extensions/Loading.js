@@ -2,7 +2,6 @@
 let tpl = '<div class="dcat-loading d-flex items-center align-items-center justify-content-center pin" style="{style}">{svg}</div>',
     loading = '.dcat-loading',
     LOADING_SVG = [
-        '<svg width="{width}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-disk" style="background: none;"><g transform="translate(50,50)"><g ng-attr-transform="scale({{config.scale}})" transform="scale(0.5)"><circle cx="0" cy="0" r="50" ng-attr-fill="{{config.c1}}" fill="{color}"></circle><circle cx="0" ng-attr-cy="{{config.cy}}" ng-attr-r="{{config.r}}" ng-attr-fill="{{config.c2}}" cy="-35" r="15" fill="#ffffff" transform="rotate(101.708)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 0 0;360 0 0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>',
         '<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto block" style="width:{width};{svg_style}" viewBox="0 0 120 30" fill="{color}"><circle cx="15" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="60" cy="15" r="9" fill-opacity="0.3"><animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="105" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle></svg>',
     ];
 
@@ -12,7 +11,7 @@ class Loading {
             container: Dcat.config.pjax_container_selector,
             zIndex: 100,
             width: '52px',
-            color: '#7985d0',
+            color: Dcat.color.dark60,
             background: '#fff',
             style: '',
             svg: LOADING_SVG[0]
@@ -53,13 +52,12 @@ function extend(Dcat) {
         }
         // 配置参数
         options = $.extend({
-            color: '#5c6bc6',
             zIndex: 999991014,
             width: '58px',
             shade: 'rgba(255, 255, 255, 0.1)',
             background: 'transparent',
             top: 200,
-            svg: LOADING_SVG[1],
+            svg: LOADING_SVG[0],
         }, options);
 
         var win = $(window),

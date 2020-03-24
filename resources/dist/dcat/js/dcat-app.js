@@ -1069,31 +1069,45 @@ var Color = /*#__PURE__*/function () {
     _classCallCheck(this, Color);
 
     var colors = Dcat.config.colors || {},
-        _this = this; // 颜色转亮
+        newInstance = $.extend(colors),
+        _this = this; // 获取颜色
 
 
-    colors.lighten = _this.lighten.bind(_this); // 颜色转暗
+    newInstance.get = function (color) {
+      return colors[color] || color;
+    }; // 颜色转亮
 
-    colors.darken = function (color, amt) {
-      return _this.lighten(color, -amt);
+
+    newInstance.lighten = function (color, amt) {
+      return _this.lighten(newInstance.get(color), amt);
+    }; // 颜色转暗
+
+
+    newInstance.darken = function (color, amt) {
+      return newInstance.lighten(color, -amt);
     }; // 颜色透明度设置
 
 
-    colors.alpha = function (color, alpha) {
-      var results = colors.toRBG(color);
+    newInstance.alpha = function (color, alpha) {
+      var results = newInstance.toRBG(color);
       return "rgba(".concat(results[0], ", ").concat(results[1], ", ").concat(results[2], ", ").concat(alpha, ")");
     }; // 16进制颜色转化成10进制
 
 
-    colors.toRBG = function (color, amt) {
-      if (color[0] === '#') {
+    newInstance.toRBG = function (color, amt) {
+      if (color.indexOf('#') === 0) {
         color = color.slice(1);
       }
 
-      return _this.toRBG(color, amt);
+      return _this.toRBG(newInstance.get(color), amt);
+    }; // 获取所有颜色
+
+
+    newInstance.all = function () {
+      return colors;
     };
 
-    Dcat.color = colors;
+    Dcat.color = newInstance;
   }
 
   _createClass(Color, [{
@@ -1101,7 +1115,7 @@ var Color = /*#__PURE__*/function () {
     value: function lighten(color, amt) {
       var hasPrefix = false;
 
-      if (color[0] === '#') {
+      if (color.indexOf('#') === 0) {
         color = color.slice(1);
         hasPrefix = true;
       }
@@ -2351,7 +2365,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var tpl = '<div class="dcat-loading d-flex items-center align-items-center justify-content-center pin" style="{style}">{svg}</div>',
     loading = '.dcat-loading',
-    LOADING_SVG = ['<svg width="{width}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-disk" style="background: none;"><g transform="translate(50,50)"><g ng-attr-transform="scale({{config.scale}})" transform="scale(0.5)"><circle cx="0" cy="0" r="50" ng-attr-fill="{{config.c1}}" fill="{color}"></circle><circle cx="0" ng-attr-cy="{{config.cy}}" ng-attr-r="{{config.r}}" ng-attr-fill="{{config.c2}}" cy="-35" r="15" fill="#ffffff" transform="rotate(101.708)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 0 0;360 0 0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></g></g></svg>', '<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto block" style="width:{width};{svg_style}" viewBox="0 0 120 30" fill="{color}"><circle cx="15" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="60" cy="15" r="9" fill-opacity="0.3"><animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="105" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle></svg>'];
+    LOADING_SVG = ['<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto block" style="width:{width};{svg_style}" viewBox="0 0 120 30" fill="{color}"><circle cx="15" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite"/><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="60" cy="15" r="9" fill-opacity="0.3"><animate attributeName="r" from="9" to="9" begin="0s" dur="0.8s" values="9;15;9" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="0.5" to="0.5" begin="0s" dur="0.8s" values=".5;1;.5" calcMode="linear" repeatCount="indefinite" /></circle><circle cx="105" cy="15" r="15"><animate attributeName="r" from="15" to="15" begin="0s" dur="0.8s" values="15;9;15" calcMode="linear" repeatCount="indefinite" /><animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="0.8s" values="1;.5;1" calcMode="linear" repeatCount="indefinite" /></circle></svg>'];
 
 var Loading = /*#__PURE__*/function () {
   function Loading(Dcat, options) {
@@ -2361,7 +2375,7 @@ var Loading = /*#__PURE__*/function () {
       container: Dcat.config.pjax_container_selector,
       zIndex: 100,
       width: '52px',
-      color: '#7985d0',
+      color: Dcat.color.dark60,
       background: '#fff',
       style: '',
       svg: LOADING_SVG[0]
@@ -2400,13 +2414,12 @@ function extend(Dcat) {
 
 
     options = $.extend({
-      color: '#5c6bc6',
       zIndex: 999991014,
       width: '58px',
       shade: 'rgba(255, 255, 255, 0.1)',
       background: 'transparent',
       top: 200,
-      svg: LOADING_SVG[1]
+      svg: LOADING_SVG[0]
     }, options);
     var win = $(window),
         // 容器

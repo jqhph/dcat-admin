@@ -151,6 +151,11 @@ class Color
     protected $currentColors = [];
 
     /**
+     * @var array
+     */
+    protected $realColors;
+
+    /**
      * Color constructor.
      *
      * @param string $name
@@ -193,6 +198,10 @@ class Color
      */
     public function get(string $colorName, string $default = null)
     {
+        if ($this->realColors) {
+            return $this->realColors[$colorName] ?? $default;
+        }
+
         $result = $this->currentColors[$colorName] ?? $default;
 
         if ($result && ! empty($this->currentColors[$result])) {
@@ -209,7 +218,15 @@ class Color
      */
     public function all()
     {
-        return $this->currentColors;
+        if ($this->realColors === null) {
+            foreach ($this->currentColors as $key => &$color) {
+                $color = $this->get($key);
+            }
+
+            $this->realColors = &$this->currentColors;
+        }
+
+        return $this->realColors;
     }
 
     /**
