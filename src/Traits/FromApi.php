@@ -6,53 +6,73 @@ use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 
 /**
- * Trait HasRemoteData
+ * Trait FromApi
  *
  * @package Dcat\Admin\Traits
  *
- * @method mixed handle(Request $request)
- * @method array requestData()
  * @method mixed result()
  */
-trait HasRemoteData
+trait FromApi
 {
     use HasAuthorization;
 
     /**
      * @var string
      */
-    protected $_url;
+    protected $fromUrl;
+
+    /**
+     * @var string
+     */
+    protected $fromMethod = 'POST';
 
     /**
      * @var array
      */
-    protected $_selectors = [];
-
-    /**
-     * @var string 
-     */
-    protected $_method = 'POST';
+    protected $fromSelectors = [];
 
     /**
      * @var array
      */
-    protected $_scripts = [
+    protected $fromScripts = [
         'fetching' => [],
         'fetched'  => [],
     ];
 
     /**
+     * 处理请求
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function handle(Request $request)
+    {
+    }
+
+    /**
+     * 获取请求附带参数.
+     *
+     * @return array
+     */
+    public function parameters()
+    {
+        return [];
+    }
+
+    /**
      * 设置请求地址.
      *
+     * @param string $method
      * @param string $url
+     * @param array $query
      *
      * @return $this
      */
-    public function request(string $url, array $query = [], string $method = 'GET')
+    public function from(string $method, string $url, array $query = [])
     {
-        $this->_url = admin_url(Helper::urlWithQuery($url, $query));
-
-        $this->_method = $method;
+        $this->fromMethod = $method;
+        $this->fromUrl = admin_url(Helper::urlWithQuery($url, $query));
 
         return $this;
     }
@@ -60,13 +80,14 @@ trait HasRemoteData
     /**
      * 请求当前地址.
      *
-     * @param string $url
+     * @param array $query
+     * @param string $method
      *
      * @return $this
      */
-    public function requestCurrent(array $query = [], string $method = 'GET')
+    public function fromCurrent(array $query = [], string $method = 'GET')
     {
-        return $this->request(request()->fullUrlWithQuery($query), [], $method);
+        return $this->from($method, request()->fullUrlWithQuery($query));
     }
 
     /**
@@ -76,7 +97,7 @@ trait HasRemoteData
      */
     public function getRequestUrl()
     {
-        return $this->_url ?: route('dcat.api.value');
+        return $this->fromUrl ?: route('dcat.api.value');
     }
 
     /**
@@ -86,7 +107,7 @@ trait HasRemoteData
      */
     public function getRequestMethod()
     {
-        return $this->_method;
+        return $this->fromMethod;
     }
 
     /**
@@ -106,7 +127,7 @@ trait HasRemoteData
      */
     public function getRequestScripts()
     {
-        return $this->_scripts;
+        return $this->fromScripts;
     }
 
     /**
@@ -116,10 +137,10 @@ trait HasRemoteData
      *
      * @return $this
      */
-    public function refetch($selector)
+    public function click($selector)
     {
-        $this->_selectors =
-            array_merge($this->_selectors, (array) $selector);
+        $this->fromSelectors =
+            array_merge($this->fromSelectors, (array) $selector);
 
         return $this;
     }
@@ -127,9 +148,9 @@ trait HasRemoteData
     /**
      * @return array
      */
-    public function getButtonSelectors()
+    public function getFromSelectors()
     {
-        return $this->_selectors;
+        return $this->fromSelectors;
     }
 
     /**
@@ -141,7 +162,7 @@ trait HasRemoteData
      */
     public function fetching($script)
     {
-        $this->_scripts['fetching'][] = value($script);
+        $this->fromScripts['fetching'][] = value($script);
 
         return $this;
     }
@@ -155,7 +176,7 @@ trait HasRemoteData
      */
     public function fetched($script)
     {
-        $this->_scripts['fetched'][] = value($script);
+        $this->fromScripts['fetched'][] = value($script);
 
         return $this;
     }
@@ -167,7 +188,7 @@ trait HasRemoteData
      */
     public function allowBuildRequestScript()
     {
-        return $this->_url === null ? false : true;
+        return $this->fromUrl === null ? false : true;
     }
 
     /**
@@ -181,8 +202,8 @@ trait HasRemoteData
             return null;
         }
 
-        $fetching = implode(';', $this->_scripts['fetching']);
-        $fetched = implode(';', $this->_scripts['fetched']);
+        $fetching = implode(';', $this->fromScripts['fetching']);
+        $fetched = implode(';', $this->fromScripts['fetched']);
 
         return <<<JS
 (function () {
@@ -200,7 +221,7 @@ trait HasRemoteData
         $.ajax({
           url: '{$this->getRequestUrl()}',
           dataType: 'json',
-          method: '{$this->_method}',
+          method: '{$this->fromMethod}',
           data: $.extend({_token: Dcat.token}, data),
           success: function (response) {
             requesting = 0;
@@ -229,11 +250,9 @@ JS;
             '_key' => $this->requestUriKey(),
         ];
 
-        if (method_exists($this, 'requestData')) {
-            $data = array_merge($data, $this->requestData());
-        }
-
-        return json_encode($data);
+        return json_encode(
+            array_merge($this->parameters(), $data)
+        );
     }
 
     /**
@@ -243,7 +262,7 @@ JS;
     {
         $script = '';
 
-        foreach ($this->_selectors as $v) {
+        foreach ($this->fromSelectors as $v) {
             $script .= <<<JS
 $('{$v}').click(function () { 
     request($(this).data()) 
@@ -263,15 +282,15 @@ JS;
      */
     public function merge($fetcher)
     {
-        $this->_url = $fetcher->getRequestUrl();
-        $this->_method = $fetcher->getRequestMethod();
+        $this->fromUrl = $fetcher->getRequestUrl();
+        $this->fromMethod = $fetcher->getRequestMethod();
 
-        $this->_selectors = $fetcher->getButtonSelectors();
+        $this->fromSelectors = $fetcher->getFromSelectors();
 
         $scripts = $fetcher->getRequestScripts();
 
-        $this->_scripts['fetching'] = array_merge($this->_scripts['fetching'], $scripts['fetching']);
-        $this->_scripts['fetched'] = array_merge($this->_scripts['fetched'], $scripts['fetched']);
+        $this->fromScripts['fetching'] = array_merge($this->fromScripts['fetching'], $scripts['fetching']);
+        $this->fromScripts['fetched'] = array_merge($this->fromScripts['fetched'], $scripts['fetched']);
 
         return $this;
     }

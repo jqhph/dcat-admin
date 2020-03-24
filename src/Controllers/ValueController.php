@@ -36,7 +36,7 @@ class ValueController
      *
      * @throws Exception
      *
-     * @return \Dcat\Admin\Traits\HasRemoteData
+     * @return \Dcat\Admin\Traits\FromApi
      */
     protected function resolve(Request $request)
     {
