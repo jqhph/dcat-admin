@@ -16,19 +16,15 @@ class HandleActionController
      */
     public function handle(Request $request)
     {
-        try {
-            $action = $this->resolveActionInstance($request);
+        $action = $this->resolveActionInstance($request);
 
-            $action->setKey($request->get('_key'));
+        $action->setKey($request->get('_key'));
 
-            if (! $action->passesAuthorization()) {
-                return $action->failedAuthorization();
-            }
-
-            $response = $action->handle($request);
-        } catch (\Throwable $exception) {
-            return Response::withException($exception)->send();
+        if (! $action->passesAuthorization()) {
+            return $action->failedAuthorization();
         }
+
+        $response = $action->handle($request);
 
         return $response instanceof Response ? $response->send() : $response;
     }

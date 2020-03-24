@@ -4,11 +4,16 @@ namespace Dcat\Admin\Actions;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Models\HasPermissions;
+use Dcat\Admin\Traits\HasAuthorization;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
 trait HasActionHandler
 {
+    use HasAuthorization {
+        failedAuthorization as parentFailedAuthorization;
+    }
+
     /**
      * @var Response
      */
@@ -64,7 +69,7 @@ trait HasActionHandler
      */
     public function handlerRoute()
     {
-        return admin_url('_handle_action_');
+        return route('dcat.api.action');
     }
 
     /**
@@ -236,24 +241,6 @@ JS;
         return <<<JS
 process.then({$this->resolverScript()}).catch({$this->rejectScript()});
 JS;
-    }
-
-    /**
-     * @return bool
-     */
-    public function passesAuthorization()
-    {
-        return $this->authorize(Admin::user());
-    }
-
-    /**
-     * @param Model|Authenticatable|HasPermissions|null $user
-     *
-     * @return bool
-     */
-    protected function authorize($user): bool
-    {
-        return true;
     }
 
     /**

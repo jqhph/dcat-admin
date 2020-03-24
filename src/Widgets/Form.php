@@ -6,6 +6,7 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\HasAuthorization;
 use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
@@ -76,6 +77,7 @@ class Form implements Renderable
 {
     use HasHtmlAttributes,
         HasFormResponse,
+        HasAuthorization,
         Macroable {
             __call as macroCall;
         }
@@ -624,11 +626,11 @@ JS
         }
     }
 
-    protected function prepareHandle()
+    protected function prepareHandler()
     {
         if (method_exists($this, 'handle')) {
             $this->method('POST');
-            $this->action(admin_url('_handle_form_'));
+            $this->action(route('dcat.api.form'));
             $this->hidden('_form_')->default(get_called_class());
             $this->hidden('_current_')->default($this->getCurrentUrl());
         }
@@ -643,7 +645,7 @@ JS
     {
         $this->prepareForm();
 
-        $this->prepareHandle();
+        $this->prepareHandler();
 
         if ($this->allowAjaxSubmit()) {
             $this->setupSubmitScript();
