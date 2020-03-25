@@ -111,12 +111,9 @@ function listen(Dcat) {
     });
 }
 
-// 开始初始化
-function boot(Dcat) {
+function prepare(Dcat) {
     extend(Dcat);
     listen(Dcat);
-
-    $(Dcat.boot.bind(Dcat));
 
     return Dcat;
 }
@@ -125,6 +122,6 @@ function boot(Dcat) {
  * @returns {Dcat}
  */
 win.CreateDcat = function(config) {
-    return boot(new Dcat(config));
+    return prepare(new Dcat(config));
 };
 

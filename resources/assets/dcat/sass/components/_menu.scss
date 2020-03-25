@@ -45,6 +45,10 @@
   }
 }
 
+.main-menu.menu-light .navigation > li.active > a {
+  box-shadow: 0 0 5px 1px rgba($primary, 0.7);
+}
+
 // 菜单
 .main-menu.menu-shadow {
   box-shadow: $menu-shadow;
