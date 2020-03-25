@@ -2769,7 +2769,7 @@ var SweetAlert2 = /*#__PURE__*/function () {
         showLoaderOnConfirm: true,
         confirmButtonText: lang['confirm'],
         cancelButtonText: lang['cancel'],
-        confirmButtonClass: 'btn btn-info',
+        confirmButtonClass: 'btn btn-primary',
         cancelButtonClass: 'btn btn-white ml-1',
         buttonsStyling: false
       }, options);
