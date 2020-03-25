@@ -4,7 +4,6 @@ namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Traits\InteractsWithApi;
 use Illuminate\Contracts\Support\Renderable;
 
 class RadialBarCard extends Card
@@ -25,6 +24,30 @@ class RadialBarCard extends Card
      * @var int
      */
     protected $chartHeight = 150;
+
+    /**
+     * 内容宽度.
+     *
+     * @var array
+     */
+    protected $contentWidth = [2, 10];
+
+    /**
+     * @var int
+     */
+    protected $chartMarginBottom = -10;
+
+    /**
+     * 初始化
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->useChart();
+
+        $this->chart->style("margin-bottom: {$this->chartMarginBottom}px;");
+    }
 
     /**
      * 图表默认配置.
@@ -96,6 +119,21 @@ class RadialBarCard extends Card
     }
 
     /**
+     * 设置内容宽度.
+     *
+     * @param int $left
+     * @param int $right
+     *
+     * @return $this
+     */
+    public function contentWidth(int $left, int $right)
+    {
+        $this->contentWidth = [$left, $right];
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function renderFooter()
@@ -114,10 +152,10 @@ class RadialBarCard extends Card
 <div class="card-content">
     <div class="card-body pt-0">
         <div class="row">
-            <div class="metric-content col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
+            <div class="metric-content col-sm-{$this->contentWidth[0]} col-12 d-flex flex-column flex-wrap text-center">
                 {$content}
             </div>
-            <div class="col-sm-10 col-12 d-flex justify-content-center">
+            <div class="col-sm-{$this->contentWidth[1]} col-12 d-flex justify-content-center">
                 {$this->renderChart()}
             </div>
         </div>

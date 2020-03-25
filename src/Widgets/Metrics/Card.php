@@ -7,6 +7,7 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\ApexCharts\Chart;
 use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class Card extends Widget
@@ -22,10 +23,10 @@ class Card extends Widget
      * @var array
      */
     protected $options = [
-        'icon' => null,
-        'title' => null,
-        'header' => null,
-        'content' => null,
+        'icon'     => null,
+        'title'    => null,
+        'header'   => null,
+        'content'  => null,
         'dropdown' => [],
     ];
 
@@ -67,7 +68,7 @@ class Card extends Widget
     }
 
     /**
-     * 初始化
+     * 初始化.
      */
     protected function init()
     {
@@ -76,7 +77,7 @@ class Card extends Widget
     }
 
     /**
-     * 图表默认配置
+     * 图表默认配置.
      *
      * @return array
      */
@@ -193,6 +194,23 @@ class Card extends Widget
         }
 
         return $this->appendHtmlAttribute('style', "min-height:{$value};");
+    }
+
+    /**
+     * 设置图表配置.
+     *
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function chartOption($key, $value)
+    {
+        Arr::set($this->chartOptions, $key, $value);
+
+        $this->useChart();
+
+        return $this;
     }
 
     /**

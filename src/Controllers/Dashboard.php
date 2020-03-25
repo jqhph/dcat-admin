@@ -14,7 +14,7 @@ class Dashboard
      */
     public static function title()
     {
-        return Card::make(view('admin::dashboard.title'))->class('bg-primary-gradient', true);
+        return view('admin::dashboard.title');
     }
 
     public static function tab()

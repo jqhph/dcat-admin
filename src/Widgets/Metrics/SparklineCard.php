@@ -2,11 +2,6 @@
 
 namespace Dcat\Admin\Widgets\Metrics;
 
-/**
- * 趋势图卡片
- *
- * @package Dcat\Admin\Widgets\Metrics
- */
 class SparklineCard extends Card
 {
     /**
@@ -55,7 +50,7 @@ class SparklineCard extends Card
         ],
         'stroke' => [
             'width' => 2.5,
-            'curve' => 'straight'
+            'curve' => 'smooth'
         ],
         'fill' => [
             'opacity' => 0.1,
@@ -70,8 +65,18 @@ class SparklineCard extends Card
     {
         parent::init();
 
-        // 初始化图表
-        $this->setUpChart();
+        // 使用图表s
+        $this->useChart();
+    }
+
+    /**
+     * 设置线条为直线.
+     *
+     * @return $this
+     */
+    public function chartStraight()
+    {
+        return $this->chartOption('stroke.curve', 'straight');
     }
 
     /**
