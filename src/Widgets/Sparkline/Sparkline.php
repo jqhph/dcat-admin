@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Widgets\Sparkline;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Traits\FromApi;
+use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
  */
 class Sparkline extends Widget
 {
-    use FromApi;
+    use InteractsWithApi;
 
     public static $js = '@jquery.sparkline';
     public static $css = '@jquery.sparkline';

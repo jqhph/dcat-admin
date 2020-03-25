@@ -3,13 +3,13 @@
 namespace Dcat\Admin\Widgets\ApexCharts;
 
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Traits\FromApi;
+use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
 class Chart extends Widget
 {
-    use FromApi;
+    use InteractsWithApi;
 
     public static $js = '@apex-charts';
 
@@ -248,15 +248,15 @@ if (! response.status) {
     return Dcat.error(response.message || 'Server internal error.');
 }
 
-var container = $(response.selector || '{$this->containerSelector}'), extend = {$this->buildExtendOptionsScript()};
+var chartBox = $(response.selector || '{$this->containerSelector}'), extend = {$this->buildExtendOptionsScript()};
 
-container.html('');
-
-setTimeout(function () {
-    var chart = new ApexCharts(container[0], $.extend(response.options, extend(response.options)));
+if (chartBox.length) {
+    chartBox.html('');
     
-    chart.render();
-}, 50);
+    setTimeout(function () {
+        new ApexCharts(chartBox[0], $.extend(response.options, extend(response.options))).render();
+    }, 50);
+}
 JS
         );
 
@@ -313,11 +313,11 @@ HTML;
     }
 
     /**
-     * 返回请求结果.
+     * 返回API请求结果.
      *
      * @return array
      */
-    public function result()
+    public function valueResult()
     {
         return [
             'status'   => 1,

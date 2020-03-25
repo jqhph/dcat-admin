@@ -4,13 +4,11 @@ namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Traits\FromApi;
+use Dcat\Admin\Traits\InteractsWithApi;
 use Illuminate\Contracts\Support\Renderable;
 
 class RadialBarCard extends Card
 {
-    use FromApi;
-
     /**
      * @var array
      */
@@ -26,7 +24,7 @@ class RadialBarCard extends Card
     /**
      * @var int
      */
-    protected $chartHeight = 200;
+    protected $chartHeight = 150;
 
     /**
      * 图表默认配置.

@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets\Chart;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Widgets\Color;
-use Dcat\Admin\Traits\FromApi;
+use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
  */
 abstract class Chart extends Widget
 {
-    use FromApi;
+    use InteractsWithApi;
 
     public static $js = '@chartjs';
 
@@ -493,7 +493,7 @@ HTML;
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function result()
+    public function valueResult()
     {
         return $this->toJsonResponse();
     }

@@ -5,13 +5,13 @@ namespace Dcat\Admin\Widgets\Metrics;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\ApexCharts\Chart;
-use Dcat\Admin\Traits\FromApi;
+use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
 class Card extends Widget
 {
-    use FromApi;
+    use InteractsWithApi;
 
     /**
      * @var string
@@ -93,31 +93,6 @@ class Card extends Widget
     public function useChart()
     {
         return $this->chart ?: ($this->chart = Chart::make());
-    }
-
-    /**
-     * 设置图表.
-     */
-    protected function setUpChart()
-    {
-        if (! $chart = $this->chart) {
-            return;
-        }
-
-        // 设置图表高度
-        $this->chartOptions['chart']['height'] = $this->chartHeight;
-
-        // 颜色
-        if (empty($this->chartOptions['colors'])) {
-            $this->chartOptions['colors'] = (array) Admin::color()->get($this->style);
-        }
-
-        // 图表配置选项
-        $chart->options($this->chartOptions);
-
-        if ($callback = $this->chartCallback) {
-            $callback($chart);
-        }
     }
 
     /**
@@ -292,6 +267,31 @@ class Card extends Widget
     }
 
     /**
+     * 设置图表.
+     */
+    protected function setUpChart()
+    {
+        if (! $chart = $this->chart) {
+            return;
+        }
+
+        // 设置图表高度
+        $this->chartOptions['chart']['height'] = $this->chartHeight;
+
+        // 颜色
+        if (empty($this->chartOptions['colors'])) {
+            $this->chartOptions['colors'] = (array) Admin::color()->get($this->style);
+        }
+
+        // 图表配置选项
+        $chart->options($this->chartOptions);
+
+        if ($callback = $this->chartCallback) {
+            $callback($chart);
+        }
+    }
+
+    /**
      * @return mixed
      */
     public function script()
@@ -341,6 +341,8 @@ JS;
     }
 
     /**
+     * 渲染卡片头部内容.
+     *
      * @return string
      */
     public function renderHeader()
@@ -349,6 +351,8 @@ JS;
     }
 
     /**
+     * 渲染卡片主体内容.
+     *
      * @return string
      */
     public function renderContent()
@@ -383,11 +387,11 @@ JS;
     }
 
     /**
-     * 返回卡片数据结果.
+     * 返回API请求结果.
      *
      * @return array
      */
-    public function result()
+    public function valueResult()
     {
         $this->setUpChart();
 
@@ -397,7 +401,7 @@ JS;
                 'header'  => $this->renderHeader(),
                 'content' => $this->renderContent(),
             ],
-            (array) optional($this->chart)->result()
+            (array) optional($this->chart)->valueResult()
         );
     }
 }
