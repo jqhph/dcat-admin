@@ -9,7 +9,11 @@
             </div>
             @endif
 
-            <div class="metric-content">{!! Dcat\Admin\Support\Helper::render($options['content']) !!}</div>
+            @if($options['title'])
+                <h4 class="card-title mb-1">{!! $options['title'] !!}</h4>
+            @endif
+
+            <div class="metric-header">{!! $header !!}</div>
         </div>
 
         @if(! empty($options['dropdown']))
@@ -25,7 +29,6 @@
         </div>
         @endif
     </div>
-    <div class="card-content" style="position: relative;width: 100%">
-        {!! ! empty($chart) ? $chart : '' !!}
-    </div>
+
+    <div class="metric-content">{!! $content !!}</div>
 </div>

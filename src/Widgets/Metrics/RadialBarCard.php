@@ -12,17 +12,14 @@ class RadialBarCard extends Card
     use FromApi;
 
     /**
-     * @var string
-     */
-    protected $view = 'admin::widgets.metrics.radial-bar-card';
-
-    /**
      * @var array
      */
     protected $options = [
-        'title' => '',
-        'content' => '',
-        'footer' => '',
+        'icon'     => null,
+        'title'    => null,
+        'header'   => null,
+        'content'  => null,
+        'footer'   => null,
         'dropdown' => [],
     ];
 
@@ -32,28 +29,16 @@ class RadialBarCard extends Card
     protected $chartHeight = 200;
 
     /**
-     * @var array
-     */
-    protected $chartOptions = [];
-
-    public function __construct(?string $title = null, $contents = null)
-    {
-        $this->title($title);
-        $this->content($contents);
-
-        $this->defaultChartOptions();
-
-        $this->init();
-    }
-
-    /**
-     * 图表默认配置
+     * 图表默认配置.
+     *
+     * @return array
      */
     protected function defaultChartOptions()
     {
         $gradientColor = Admin::color()->success();
+        $labelColor = '#99a2ac';
 
-        $this->chartOptions = [
+        return [
             'chart' => [
                 'type' => 'radialBar',
             ],
@@ -73,7 +58,7 @@ class RadialBarCard extends Card
                     'dataLabels' => [
                         'value' => [
                             'offsetY' => 30,
-                            'color' => '#99a2ac',
+                            'color' => $labelColor,
                             'fontSize' => '2rem'
                         ]
                     ]
@@ -99,20 +84,6 @@ class RadialBarCard extends Card
     }
 
     /**
-     * 设置卡片标题.
-     *
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function title(?string $value)
-    {
-        $this->options['title'] = $value;
-
-        return $this;
-    }
-
-    /**
      * 设置卡片底部内容.
      *
      * @param string|\Closure|Renderable $value
@@ -127,51 +98,36 @@ class RadialBarCard extends Card
     }
 
     /**
-     * 设置图表label.
-     *
-     * @param string|array $label
-     *
-     * @return $this
+     * @return string
      */
-    public function chartLabels($label)
+    public function renderFooter()
     {
-        $this->chartOptions['labels'] = (array) $label;
-
-        $this->setUpChart();
-
-        return $this;
+        return Helper::render($this->options['footer']);
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function script()
+    public function renderContent()
     {
-        if (! $this->allowBuildRequest()) {
-            return;
-        }
+        $content = parent::renderContent();
 
-        $this->fetched(
-            <<<'JS'
-$card.find('.metric-footer').html(response.footer);
-JS
-        );
-
-        return parent::script();
-    }
-
-        /**
-     * 返回卡片数据结果.
-     *
-     * @return array
-     */
-    public function result()
-    {
-        return array_merge(
-            parent::result(),
-            [
-                'footer' => Helper::render($this->options['footer']),
-            ]
-        );
+        return <<<HTML
+<div class="card-content">
+    <div class="card-body pt-0">
+        <div class="row">
+            <div class="metric-content col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
+                {$content}
+            </div>
+            <div class="col-sm-10 col-12 d-flex justify-content-center">
+                {$this->renderChart()}
+            </div>
+        </div>
+        <div class="chart-info metric-footer d-flex justify-content-between">
+            {$this->renderFooter()}
+        </div>
+    </div>
+</div>
+HTML;
     }
 }

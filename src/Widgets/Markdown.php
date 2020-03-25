@@ -35,19 +35,6 @@ class Markdown extends Widget
     }
 
     /**
-     * @param mixed $k
-     * @param mixed $v
-     *
-     * @return $this
-     */
-    public function option($k, $v)
-    {
-        $this->options[$k] = $v;
-
-        return $this;
-    }
-
-    /**
      * @param string|Renderable $markdown
      *
      * @return $this

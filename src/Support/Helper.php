@@ -96,9 +96,9 @@ class Helper
     /**
      * 把给定的值转化为字符串.
      *
-     * @param mixed  $value
-     * @param array  $params
-     * @param object $newThis
+     * @param string|Grid|\Closure|Renderable|Htmlable  $value
+     * @param array                                     $params
+     * @param object                                    $newThis
      *
      * @return string
      */

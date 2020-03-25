@@ -23,7 +23,9 @@ class Card extends Widget
      */
     protected $options = [
         'icon' => null,
-        'content' => '',
+        'title' => null,
+        'header' => null,
+        'content' => null,
         'dropdown' => [],
     ];
 
@@ -40,54 +42,7 @@ class Card extends Widget
     /**
      * @var array 
      */
-    protected $chartOptions = [
-        'chart' => [
-            'type' => 'area',
-            'toolbar' => [
-                'show' => false,
-            ],
-            'sparkline' => [
-                'enabled' => true,
-            ],
-            'grid' => [
-                'show' => false,
-                'padding' => [
-                    'left' => 0,
-                    'right' => 0,
-                ]
-            ],
-        ],
-        'tooltip' => [
-            'x' => [
-                'show' => false,
-            ],
-        ],
-        'xaxis' => [
-            'labels' => [
-                'show' => false,
-            ],
-            'axisBorder' => [
-                'show' => false,
-            ],
-        ],
-        'yaxis' => [
-            'y' => 0,
-            'offsetX' => 0,
-            'offsetY' => 0,
-            'padding' => ['left' => 0, 'right' => 0],
-        ],
-        'dataLabels' => [
-            'enabled' => false,
-        ],
-        'stroke' => [
-            'width' => 2.5,
-            'curve' => 'straight'
-        ],
-        'fill' => [
-            'opacity' => 0.1,
-            'type' => 'solid',
-        ],
-    ];
+    protected $chartOptions = [];
 
     /**
      * @var Chart
@@ -99,10 +54,14 @@ class Card extends Widget
      */
     protected $chartCallback;
 
-    public function __construct($icon = null, $contents = null)
+    public function __construct($title = null, $icon = null)
     {
+        $this->title($title);
         $this->icon($icon);
-        $this->content($contents);
+
+        if ($options = $this->defaultChartOptions()) {
+            $this->chartOptions = $options;
+        }
 
         $this->init();
     }
@@ -110,46 +69,55 @@ class Card extends Widget
     /**
      * 初始化
      */
-    public function init()
+    protected function init()
     {
         $this->id('metric-card-'.Str::random(8));
         $this->class('card');
     }
 
     /**
-     * 设置图表
+     * 图表默认配置
+     *
+     * @return array
      */
-    public function setUpChart()
+    protected function defaultChartOptions()
     {
-        $chart = $this->chart ?: ($this->chart = Chart::make());
+        return [];
+    }
+
+    /**
+     * 启用图表.
+     *
+     * @return Chart
+     */
+    public function useChart()
+    {
+        return $this->chart ?: ($this->chart = Chart::make());
+    }
+
+    /**
+     * 设置图表.
+     */
+    protected function setUpChart()
+    {
+        if (! $chart = $this->chart) {
+            return;
+        }
 
         // 设置图表高度
         $this->chartOptions['chart']['height'] = $this->chartHeight;
 
+        // 颜色
+        if (empty($this->chartOptions['colors'])) {
+            $this->chartOptions['colors'] = (array) Admin::color()->get($this->style);
+        }
+
         // 图表配置选项
         $chart->options($this->chartOptions);
-        // 颜色
-        $chart->colors(Admin::color()->get($this->style));
 
         if ($callback = $this->chartCallback) {
             $callback($chart);
         }
-
-        $this->variables['chart'] = $chart;
-    }
-
-    /**
-     * 设置卡片内容.
-     *
-     * @param string $contents
-     *
-     * @return $this
-     */
-    public function content($contents)
-    {
-        $this->options['content'] = $contents;
-
-        return $this;
     }
 
     /**
@@ -162,6 +130,48 @@ class Card extends Widget
     public function icon(?string $icon)
     {
         $this->options['icon'] = $icon;
+
+        return $this;
+    }
+
+    /**
+     * 设置卡片标题.
+     *
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function title(?string $title)
+    {
+        $this->options['title'] = $title;
+
+        return $this;
+    }
+
+    /**
+     * 设置卡片头内容.
+     *
+     * @param string $contents
+     *
+     * @return $this
+     */
+    public function header($contents)
+    {
+        $this->options['header'] = $contents;
+
+        return $this;
+    }
+
+    /**
+     * 设置卡片内容.
+     *
+     * @param string $contents
+     *
+     * @return $this
+     */
+    public function content($contents)
+    {
+        $this->options['content'] = $contents;
 
         return $this;
     }
@@ -221,7 +231,39 @@ class Card extends Widget
     {
         $this->chartHeight = $number;
 
-        $this->setUpChart();
+        $this->useChart();
+
+        return $this;
+    }
+
+    /**
+     * 设置图表label.
+     *
+     * @param string|array $label
+     *
+     * @return $this
+     */
+    public function chartLabels($label)
+    {
+        $this->chartOptions['labels'] = (array) $label;
+
+        $this->useChart();
+
+        return $this;
+    }
+
+    /**
+     * 设置图表颜色
+     *
+     * @param string|array $colors
+     *
+     * @return $this
+     */
+    public function chartColors($colors)
+    {
+        $this->chartOptions['colors'] = (array) $colors;
+
+        $this->useChart();
 
         return $this;
     }
@@ -244,7 +286,7 @@ class Card extends Widget
             );
         }
 
-        $this->setUpChart();
+        $this->useChart();
 
         return $this;
     }
@@ -270,8 +312,9 @@ JS
 
         $this->fetched(
             <<<'JS'
-$card.loading(false);            
-$card.find('.metric-content').html(response.content)
+$card.loading(false);   
+$card.find('.metric-header').html(response.header);
+$card.find('.metric-content').html(response.content);
 JS
         );
 
@@ -300,11 +343,41 @@ JS;
     /**
      * @return string
      */
+    public function renderHeader()
+    {
+        return Helper::render($this->options['header']);
+    }
+
+    /**
+     * @return string
+     */
+    public function renderContent()
+    {
+        return Helper::render($this->options['content']);
+    }
+
+    /**
+     * 渲染图表.
+     *
+     * @return string
+     */
+    public function renderChart()
+    {
+        return $this->chart ? $this->chart->render() : '';
+    }
+
+    /**
+     * @return string
+     */
     public function render()
     {
+        $this->setUpChart();
+
         $this->script = $this->script();
 
         $this->variables['style'] = $this->style;
+        $this->variables['header'] = $this->renderHeader();
+        $this->variables['content'] = $this->renderContent();
 
         return parent::render();
     }
@@ -316,10 +389,15 @@ JS;
      */
     public function result()
     {
-        return [
-            'status'  => 1,
-            'content' => Helper::render($this->options['content']),
-            'options' => optional($this->chart)->getOptions(),
-        ];
+        $this->setUpChart();
+
+        return array_merge(
+            [
+                'status'  => 1,
+                'header'  => $this->renderHeader(),
+                'content' => $this->renderContent(),
+            ],
+            (array) optional($this->chart)->result()
+        );
     }
 }

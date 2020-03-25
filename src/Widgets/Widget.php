@@ -8,6 +8,7 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Arr;
 
 /**
  * @method $this class(string $class, bool $append = false)
@@ -49,8 +50,6 @@ abstract class Widget implements Renderable
     protected $options = [];
 
     /**
-     * Create a widget instance.
-     *
      * @param mixed ...$params
      *
      * @return static
@@ -61,6 +60,8 @@ abstract class Widget implements Renderable
     }
 
     /**
+     * 批量设置选项.
+     *
      * @param array $options
      *
      * @return $this
@@ -76,13 +77,37 @@ abstract class Widget implements Renderable
         return $this;
     }
 
+    /**
+     * 设置或获取配置选项.
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function option($key, $value = null)
+    {
+        if ($value === null) {
+            return Arr::get($this->options, $key);
+        } else {
+            Arr::set($this->options, $key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * 获取所有选项.
+     *
+     * @return array
+     */
     public function getOptions()
     {
         return $this->options;
     }
 
     /**
-     * Variables in view.
+     * 获取视图变量.
      *
      * @return array
      */
@@ -95,7 +120,7 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * Collect assets.
+     * 收集静态资源.
      */
     protected function collectAssets()
     {
@@ -106,8 +131,6 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * To string.
-     *
      * @param $value
      *
      * @return string
@@ -136,7 +159,7 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * Automatically render to the body element.
+     * 自动调用render方法.
      *
      * @return void
      */
@@ -150,7 +173,7 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * Set view of widget.
+     * 设置模板.
      *
      * @param string $view
      */

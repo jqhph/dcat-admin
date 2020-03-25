@@ -248,7 +248,7 @@ if (! response.status) {
     return Dcat.error(response.message || 'Server internal error.');
 }
 
-var container = $('{$this->containerSelector}'), extend = {$this->buildExtendOptionsScript()};
+var container = $(response.selector || '{$this->containerSelector}'), extend = {$this->buildExtendOptionsScript()};
 
 container.html('');
 
@@ -288,6 +288,7 @@ JS;
         $hasSelector = $this->containerSelector ? true : false;
 
         if (! $hasSelector) {
+            // 没有指定ID，需要自动生成
             $id = $this->generateId();
 
             $this->selector('#'.$id);
@@ -319,8 +320,9 @@ HTML;
     public function result()
     {
         return [
-            'status' => 1,
-            'options' => $this->options,
+            'status'   => 1,
+            'selector' => $this->containerSelector,
+            'options'  => $this->options,
         ];
     }
 
