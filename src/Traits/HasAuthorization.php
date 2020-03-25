@@ -32,9 +32,11 @@ trait HasAuthorization
     }
 
     /**
+     * 返回无权限信息.
+     *
      * @return mixed
      */
-    protected function failedAuthorization()
+    public function failedAuthorization()
     {
         abort(403, __('admin.deny'));
     }
