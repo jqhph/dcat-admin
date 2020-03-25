@@ -31,6 +31,7 @@ use Dcat\Admin\Support\Helper;
  * @method string blue1(int $amt = 0)
  * @method string blue2(int $amt = 0)
  * @method string orange1(int $amt = 0)
+ * @method string orange2(int $amt = 0)
  * @method string indigoDarker(int $amt = 0)
  * @method string redDarker(int $amt = 0)
  * @method string blueDarker(int $amt = 0)
@@ -106,8 +107,9 @@ class Color
         'blue1' => '#007ee5',
         'blue2' => '#4199de',
 
-        // 淡黄色
+        // 淡橘色
         'orange1' => '#ffcc80',
+        'orange2' => '#F99037',
 
         'indigo-darker' => '#495abf',
         'red-darker'    => '#bd4147',
