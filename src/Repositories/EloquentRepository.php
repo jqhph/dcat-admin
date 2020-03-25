@@ -49,7 +49,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Init model.
+     * 初始化模型
      *
      * @param EloquentModel|Builder|array|string $modelOrRelations
      */
@@ -92,7 +92,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get columns of the grid.
+     * 获取列表页面查询的字段.
      *
      * @return array
      */
@@ -102,7 +102,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get columns of the form.
+     * 获取表单页面查询的字段.
      *
      * @return array
      */
@@ -112,7 +112,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get columns of the detail view.
+     * 获取详情页面查询的字段.
      *
      * @return array
      */
@@ -122,7 +122,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Set the relationships that should be eager loaded.
+     * 设置关联关系.
      *
      * @param mixed $relations
      *
@@ -136,7 +136,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get the grid data.
+     * 查询Grid表格数据.
      *
      * @param Grid\Model $model
      *
@@ -167,7 +167,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Set the grid sort.
+     * 设置表格数据排序.
      *
      * @param Grid\Model $model
      *
@@ -191,7 +191,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Set relation sort.
+     * 设置关联数据排序.
      *
      * @param Grid\Model $model
      * @param string     $column
@@ -218,7 +218,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Set the grid paginate.
+     * 设置分页参数.
      *
      * @param Grid\Model $model
      *
@@ -238,7 +238,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Resolve perPage for pagination.
+     * 获取分页参数.
      *
      * @param Grid\Model $model
      * @param array|null $paginate
@@ -264,7 +264,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get data to build edit form.
+     * 查询编辑页面数据.
      *
      * @param Form $form
      *
@@ -286,7 +286,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get detail data.
+     * 查询详情页面数据.
      *
      * @param Show $show
      *
@@ -308,7 +308,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Store a new record.
+     * 新增记录.
      *
      * @param Form $form
      *
@@ -342,7 +342,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get data before update.
+     * 查询更新前的行数据.
      *
      * @param Form $form
      *
@@ -354,7 +354,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Update form data.
+     * 更新数据.
      *
      * @param Form $form
      *
@@ -396,7 +396,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Swaps the order of this model with the model 'above' this model.
+     * 数据行排序上移一个单位.
      *
      * @return bool
      */
@@ -418,7 +418,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Swaps the order of this model with the model 'below' this model.
+     * 数据行排序下移一个单位.
      *
      * @return bool
      */
@@ -440,7 +440,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Destroy data.
+     * 删除数据.
      *
      * @param Form $form
      *
@@ -477,6 +477,8 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
+     * 查询删除前的行数据.
+     *
      * @param Form $form
      *
      * @return array
@@ -501,6 +503,8 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
+     * 获取父级ID字段名称
+     *
      * @return string
      */
     public function getParentColumn()
@@ -513,7 +517,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get title column.
+     * 获取标题字段名称.
      *
      * @return string
      */
@@ -527,7 +531,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get order column name.
+     * 获取排序字段名称.
      *
      * @return string
      */
@@ -541,7 +545,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Save tree order from a tree like array.
+     * 保存层级数据排序.
      *
      * @param array $tree
      * @param int   $parentId
@@ -552,7 +556,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Set query callback to model.
+     * 设置数据查询回调.
      *
      * @param \Closure|null $query
      *
@@ -566,7 +570,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Format data to tree like array.
+     * 获取层级数据.
      *
      * @return array
      */
@@ -594,7 +598,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get the eloquent model.
+     * 获取model对象.
      *
      * @return EloquentModel
      */
@@ -620,7 +624,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get all relations of model from callable.
+     * 获取模型的所有关联关系.
      *
      * @return array
      */
@@ -662,7 +666,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Get inputs for relations.
+     * 获取模型关联关系的表单数据.
      *
      * @param EloquentModel $model
      * @param array         $inputs
@@ -700,7 +704,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * Update relation data.
+     * 更新关联关系数据.
      *
      * @param Form          $form
      * @param EloquentModel $model

@@ -18,33 +18,35 @@ use Illuminate\Support\Collection;
 interface Repository
 {
     /**
-     * Get primary key name of model.
+     * 获取主键名称.
      *
      * @return string
      */
     public function getKeyName();
 
     /**
-     * Get the name of the "created at" column.
+     * 获取创建时间字段.
      *
      * @return string
      */
     public function getCreatedAtColumn();
 
     /**
-     * Get the name of the "updated at" column.
+     * 获取更新时间字段.
      *
      * @return string
      */
     public function getUpdatedAtColumn();
 
     /**
+     * 是否使用软删除.
+     *
      * @return bool
      */
     public function isSoftDeletes();
 
     /**
-     * Get the grid data.
+     * 获取Grid表格数据.
      *
      * @param Grid\Model $model
      *
@@ -53,7 +55,7 @@ interface Repository
     public function get(Grid\Model $model);
 
     /**
-     * Get data to build edit form.
+     * 获取编辑页面数据.
      *
      * @param Form $form
      *
@@ -62,7 +64,7 @@ interface Repository
     public function edit(Form $form): array;
 
     /**
-     * Get detail data.
+     * 获取详情页面数据.
      *
      * @param Show $show
      *
@@ -71,7 +73,7 @@ interface Repository
     public function detail(Show $show): array;
 
     /**
-     * Store a new record.
+     * 新增记录.
      *
      * @param Form $form
      *
@@ -80,7 +82,7 @@ interface Repository
     public function store(Form $form);
 
     /**
-     * Get data before update.
+     * 查询更新前的行数据.
      *
      * @param Form $form
      *
@@ -89,7 +91,7 @@ interface Repository
     public function getDataWhenUpdating(Form $form): array;
 
     /**
-     * Update form data.
+     * 更新数据.
      *
      * @param Form $form
      *
@@ -98,7 +100,7 @@ interface Repository
     public function update(Form $form);
 
     /**
-     * Destroy data.
+     * 删除数据.
      *
      * @param Form  $form
      * @param array $deletingData
@@ -108,7 +110,7 @@ interface Repository
     public function destroy(Form $form, array $deletingData);
 
     /**
-     * Get data before destroy.
+     * 查询删除前的行数据.
      *
      * @param Form $form
      *

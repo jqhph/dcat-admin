@@ -13,31 +13,35 @@ namespace Dcat\Admin\Contracts;
 interface TreeRepository
 {
     /**
+     * 获取主键字段名称.
+     *
      * @return string
      */
     public function getPrimaryKeyColumn();
 
     /**
+     * 获取父级ID字段名称
+     *
      * @return string
      */
     public function getParentColumn();
 
     /**
-     * Get title column.
+     * 获取标题字段名称.
      *
      * @return string
      */
     public function getTitleColumn();
 
     /**
-     * Get order column name.
+     * 获取排序字段名称.
      *
      * @return string
      */
     public function getOrderColumn();
 
     /**
-     * Save tree order from a tree like array.
+     * 保存层级数据排序.
      *
      * @param array $tree
      * @param int   $parentId
@@ -45,7 +49,7 @@ interface TreeRepository
     public function saveOrder($tree = [], $parentId = 0);
 
     /**
-     * Set query callback to model.
+     * 设置数据查询回调.
      *
      * @param \Closure|null $query
      *
@@ -54,7 +58,7 @@ interface TreeRepository
     public function withQuery($queryCallback);
 
     /**
-     * Format data to tree like array.
+     * 获取层级数据.
      *
      * @return array
      */
