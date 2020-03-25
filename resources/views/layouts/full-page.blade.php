@@ -47,5 +47,7 @@
 
 {!! Dcat\Admin\Admin::asset()->renderJs() !!}
 
+<script>Dcat.boot();</script>
+
 </body>
 </html>

@@ -62,8 +62,9 @@
 
     {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
 
-        <!-- REQUIRED JS SCRIPTS -->
     {!! Dcat\Admin\Admin::asset()->renderJs() !!}
+
+    <script>Dcat.boot();</script>
 
 </body>
 

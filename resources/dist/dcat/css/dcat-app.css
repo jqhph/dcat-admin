@@ -2183,7 +2183,7 @@ table.data-thumb-view.dataTable tbody td {
 .data-list-view-header .table-responsive .top .dataTables_filter .form-control,
 .data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
   padding: 1.23rem 2.8rem !important;
-  border-radius: 0.5rem;
+  border-radius: 1.4rem;
   border: 0;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
@@ -2830,6 +2830,10 @@ table.dataTable.complex-headers tfoot td {
 .main-menu .navbar-header .navbar-brand {
   display: inline-block;
   margin: 10px 0;
+}
+
+.main-menu.menu-light .navigation > li.active > a {
+  box-shadow: 0 0 5px 1px rgba(92, 107, 198, 0.7);
 }
 
 .main-menu.menu-shadow {

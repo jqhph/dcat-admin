@@ -823,13 +823,11 @@ function listen(Dcat) {
 
     new _bootstrappers_DataActions__WEBPACK_IMPORTED_MODULE_17__["default"](Dcat);
   });
-} // 开始初始化
+}
 
-
-function boot(Dcat) {
+function prepare(Dcat) {
   extend(Dcat);
   listen(Dcat);
-  $(Dcat.boot.bind(Dcat));
   return Dcat;
 }
 /**
@@ -838,7 +836,7 @@ function boot(Dcat) {
 
 
 win.CreateDcat = function (config) {
-  return boot(new _Dcat__WEBPACK_IMPORTED_MODULE_0__["default"](config));
+  return prepare(new _Dcat__WEBPACK_IMPORTED_MODULE_0__["default"](config));
 };
 
 /***/ }),
