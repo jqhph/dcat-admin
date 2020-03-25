@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
 
-class DonutCard extends Card
+class DonutChartCard extends Card
 {
     /**
      * @var int

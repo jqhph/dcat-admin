@@ -1,0 +1,86 @@
+<?php
+
+namespace Dcat\Admin\Widgets\Metrics;
+
+use Dcat\Admin\Admin;
+
+class SingleRoundChartCard extends RoundChartCard
+{
+
+    /**
+     * @var int
+     */
+    protected $chartMarginBottom = 0;
+
+    /**
+     * 图表默认配置.
+     *
+     * @return array
+     */
+    protected function defaultChartOptions()
+    {
+        $color = Admin::color();
+
+        $colors = [$color->success()];
+        $gradientToColors = ['#00b5b5'];
+        $strokColor = '#b9c3cd';
+
+        return [
+            'chart' => [
+                'type' => 'radialBar',
+                'sparkline' => [
+                    'enabled' => true,
+                ],
+                'dropShadow' => [
+                    'enabled' => true,
+                    'blur' => 3,
+                    'left' => 1,
+                    'top' => 1,
+                    'opacity' => 0.1
+                ],
+            ],
+            'colors' => $colors,
+            'plotOptions' => [
+                'radialBar' => [
+                    'size' => 70,
+                    'startAngle' => -150,
+                    'endAngle' => 150,
+                    'hollow' => [
+                        'size' => '74%',
+                    ],
+                    'track' => [
+                        'background' => $strokColor,
+                        'strokeWidth' => '50%',
+                    ],
+                    'dataLabels' => [
+                        'name' => [
+                            'show' => false
+                        ],
+                        'value' => [
+                            'offsetY' => 14,
+                            'color' => $strokColor,
+                            'fontSize' => '2.8rem'
+                        ]
+                    ]
+                ]
+            ],
+            'fill' => [
+                'type' => 'gradient',
+                'gradient' => [
+                    'shade' => 'dark',
+                    'type' => 'horizontal',
+                    'shadeIntensity' => 0.5,
+                    'gradientToColors' => $gradientToColors,
+                    'inverseColors' => true,
+                    'opacityFrom' => 1,
+                    'opacityTo' => 1,
+                    'stops' => [0, 100]
+                ],
+            ],
+            'series' => [100],
+            'stroke' => [
+                'lineCap' => 'round'
+            ],
+        ];
+    }
+}

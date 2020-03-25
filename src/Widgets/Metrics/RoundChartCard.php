@@ -7,7 +7,7 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\JavaScript;
 use Illuminate\Contracts\Support\Renderable;
 
-class RoundRadialBarCard extends RadialBarCard
+class RoundChartCard extends RadialBarChartCard
 {
     /**
      * @var array
@@ -90,7 +90,7 @@ class RoundRadialBarCard extends RadialBarCard
      *
      * @return $this
      */
-    public function radialBarSize(int $size)
+    public function chartRadialBarSize(int $size)
     {
         return $this->chartOption('plotOptions.radialBar.size', $size);
     }
@@ -102,7 +102,7 @@ class RoundRadialBarCard extends RadialBarCard
      *
      * @return $this
      */
-    public function radialBarMargin(int $margin)
+    public function chartRadialBarMargin(int $margin)
     {
         return $this->chartOption('plotOptions.radialBar.track.margin', $margin);
     }
@@ -122,5 +122,53 @@ class RoundRadialBarCard extends RadialBarCard
             'label'     => $label,
             'formatter' => JavaScript::make("function () { return {$number}; }"),
         ]);
+    }
+
+    /**
+     * 设置图标 dataLabel name 的字体尺寸.
+     *
+     * @param mixed $size
+     *
+     * @return $this
+     */
+    public function chartLabelNameFontSize($size)
+    {
+        return $this->chartOption('plotOptions.radialBar.dataLabels.name.fontSize', $size);
+    }
+
+    /**
+     * 设置图标 dataLabel name 的Y轴偏移量.
+     *
+     * @param mixed $size
+     *
+     * @return $this
+     */
+    public function chartLabelNameOffsetY(int $offset)
+    {
+        return $this->chartOption('plotOptions.radialBar.dataLabels.name.offsetY', $offset);
+    }
+
+    /**
+     * 设置图标 dataLabel value 的字体尺寸.
+     *
+     * @param mixed $size
+     *
+     * @return $this
+     */
+    public function chartLabelValueFontSize($size)
+    {
+        return $this->chartOption('plotOptions.radialBar.dataLabels.value.fontSize', $size);
+    }
+
+    /**
+     * 设置图标 dataLabel value 的Y轴偏移量.
+     *
+     * @param mixed $size
+     *
+     * @return $this
+     */
+    public function chartLabelValueOffsetY(int $offset)
+    {
+        return $this->chartOption('plotOptions.radialBar.dataLabels.value.offsetY', $offset);
     }
 }

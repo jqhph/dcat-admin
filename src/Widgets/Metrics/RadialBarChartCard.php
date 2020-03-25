@@ -6,7 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
 
-class RadialBarCard extends Card
+class RadialBarChartCard extends Card
 {
     /**
      * @var array
@@ -146,20 +146,30 @@ class RadialBarCard extends Card
      */
     public function renderContent()
     {
-        $content = parent::renderContent();
+        $content = null;
+
+        if ($this->contentWidth[0]) {
+            $content = parent::renderContent();
+
+            $content = <<<HTML
+<div class="metric-content col-sm-{$this->contentWidth[0]} d-flex flex-column flex-wrap text-center">
+    {$content}
+</div>
+HTML;
+        }
+
 
         return <<<HTML
 <div class="card-content">
     <div class="card-body pt-0">
         <div class="row">
-            <div class="metric-content col-sm-{$this->contentWidth[0]} col-12 d-flex flex-column flex-wrap text-center">
-                {$content}
-            </div>
-            <div class="col-sm-{$this->contentWidth[1]} col-12 d-flex justify-content-center">
+            {$content}
+            
+            <div class="col-sm-{$this->contentWidth[1]} d-flex justify-content-center">
                 {$this->renderChart()}
             </div>
         </div>
-        <div class="chart-info metric-footer d-flex justify-content-between">
+        <div class="metric-footer d-flex justify-content-between">
             {$this->renderFooter()}
         </div>
     </div>
