@@ -26,8 +26,8 @@ class ValueController
             return $response;
         }
 
-        if (method_exists($instance, 'result')) {
-            return $instance->result();
+        if (method_exists($instance, 'valueResult')) {
+            return $instance->valueResult();
         }
     }
 
@@ -36,7 +36,7 @@ class ValueController
      *
      * @throws Exception
      *
-     * @return \Dcat\Admin\Traits\FromApi
+     * @return \Dcat\Admin\Traits\InteractsWithApi
      */
     protected function resolve(Request $request)
     {

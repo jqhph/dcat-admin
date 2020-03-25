@@ -6,41 +6,41 @@ use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 
 /**
- * Trait FromApi
+ * Trait InteractsWithApi
  *
  * @package Dcat\Admin\Traits
  *
  * @method mixed handle(Request $request)
- * @method mixed result()
+ * @method mixed valueResult()
  */
-trait FromApi
+trait InteractsWithApi
 {
     use HasAuthorization;
 
     /**
      * @var string
      */
-    protected $fromUrl;
+    protected $url;
 
     /**
      * @var string
      */
-    protected $fromMethod = 'POST';
+    protected $method = 'POST';
 
     /**
      * @var string
      */
-    protected $fromUriKey;
+    protected $uriKey;
 
     /**
      * @var array
      */
-    protected $fromSelectors = [];
+    protected $requestSelectors = [];
 
     /**
      * @var array
      */
-    protected $fromScripts = [
+    protected $requestScripts = [
         'fetching' => [],
         'fetched'  => [],
     ];
@@ -66,8 +66,8 @@ trait FromApi
      */
     public function from(string $method, string $url, array $query = [])
     {
-        $this->fromMethod = $method;
-        $this->fromUrl = admin_url(Helper::urlWithQuery($url, $query));
+        $this->method = $method;
+        $this->url = admin_url(Helper::urlWithQuery($url, $query));
 
         return $this;
     }
@@ -92,7 +92,7 @@ trait FromApi
      */
     public function getRequestUrl()
     {
-        return $this->fromUrl ?: route('dcat.api.value');
+        return $this->url ?: route('dcat.api.value');
     }
 
     /**
@@ -102,7 +102,7 @@ trait FromApi
      */
     public function getRequestMethod()
     {
-        return $this->fromMethod;
+        return $this->method;
     }
 
     /**
@@ -110,9 +110,9 @@ trait FromApi
      *
      * @return string
      */
-    public function getFromUriKey()
+    public function getUriKey()
     {
-        return $this->fromUriKey ?: static::class;
+        return $this->uriKey ?: static::class;
     }
 
     /**
@@ -122,7 +122,7 @@ trait FromApi
      */
     public function getRequestScripts()
     {
-        return $this->fromScripts;
+        return $this->requestScripts;
     }
 
     /**
@@ -134,8 +134,8 @@ trait FromApi
      */
     public function click($selector)
     {
-        $this->fromSelectors =
-            array_merge($this->fromSelectors, (array) $selector);
+        $this->requestSelectors =
+            array_merge($this->requestSelectors, (array) $selector);
 
         return $this;
     }
@@ -143,9 +143,9 @@ trait FromApi
     /**
      * @return array
      */
-    public function getFromSelectors()
+    public function getRequestSelectors()
     {
-        return $this->fromSelectors;
+        return $this->requestSelectors;
     }
 
     /**
@@ -157,7 +157,7 @@ trait FromApi
      */
     public function fetching($script)
     {
-        $this->fromScripts['fetching'][] = value($script);
+        $this->requestScripts['fetching'][] = value($script);
 
         return $this;
     }
@@ -171,7 +171,7 @@ trait FromApi
      */
     public function fetched($script)
     {
-        $this->fromScripts['fetched'][] = value($script);
+        $this->requestScripts['fetched'][] = value($script);
 
         return $this;
     }
@@ -184,7 +184,7 @@ trait FromApi
     public function allowBuildRequest()
     {
         return (
-            $this->fromUrl
+            $this->url
             || method_exists($this, 'handle')
         ) ? true : false;
     }
@@ -200,8 +200,8 @@ trait FromApi
             return null;
         }
 
-        $fetching = implode(';', $this->fromScripts['fetching']);
-        $fetched = implode(';', $this->fromScripts['fetched']);
+        $fetching = implode(';', $this->requestScripts['fetching']);
+        $fetched = implode(';', $this->requestScripts['fetched']);
 
         return <<<JS
 (function () {
@@ -219,7 +219,7 @@ trait FromApi
         $.ajax({
           url: '{$this->getRequestUrl()}',
           dataType: 'json',
-          method: '{$this->fromMethod}',
+          method: '{$this->method}',
           data: $.extend({_token: Dcat.token}, data),
           success: function (response) {
             requesting = 0;
@@ -245,7 +245,7 @@ JS;
     private function formatRequestData()
     {
         $data = [
-            '_key' => $this->getFromUriKey(),
+            '_key' => $this->getUriKey(),
         ];
 
         return json_encode(
@@ -260,7 +260,7 @@ JS;
     {
         $script = '';
 
-        foreach ($this->fromSelectors as $v) {
+        foreach ($this->requestSelectors as $v) {
             $script .= <<<JS
 $('{$v}').click(function () { 
     request($(this).data()) 
@@ -280,15 +280,15 @@ JS;
      */
     public function merge($self)
     {
-        $this->fromUrl = $self->getRequestUrl();
-        $this->fromMethod = $self->getRequestMethod();
-        $this->fromUriKey = $self->getFromUriKey();
-        $this->fromSelectors = $self->getFromSelectors();
+        $this->url = $self->getRequestUrl();
+        $this->method = $self->getRequestMethod();
+        $this->uriKey = $self->getUriKey();
+        $this->requestSelectors = $self->getRequestSelectors();
 
         $scripts = $self->getRequestScripts();
 
-        $this->fromScripts['fetching'] = array_merge($this->fromScripts['fetching'], $scripts['fetching']);
-        $this->fromScripts['fetched'] = array_merge($this->fromScripts['fetched'], $scripts['fetched']);
+        $this->requestScripts['fetching'] = array_merge($this->requestScripts['fetching'], $scripts['fetching']);
+        $this->requestScripts['fetched'] = array_merge($this->requestScripts['fetched'], $scripts['fetched']);
 
         return $this;
     }
