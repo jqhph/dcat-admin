@@ -32,6 +32,10 @@ html body .content .content-wrapper {
 ol, ul, dl {
   margin-bottom: 0;
 }
+.testcolor {
+  color: #00b5b5;
+  color: #01847f;
+}
 
 // 阴影
 .shadow-0 {
@@ -47,26 +51,8 @@ ol, ul, dl {
   box-shadow: $shadow-200!important;
 }
 
-// 颜色
-.bg-default {
-  background-color: #d2d6de;
-}
-
-.bg-custom {
-  background: $custom;
-}
-
-.text-danger-darker {
-  color: $red-darker;
-}
-
-.text-primary-darker {
-  color: $primary-darker;
-}
-
-.bg-primary-gradient {
-  background: linear-gradient(118deg, $primary, rgba($primary, .7));
-}
+// 颜色class定义
+@import "./colors";
 
 // 布局
 @import "./components/layout";

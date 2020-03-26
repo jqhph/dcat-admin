@@ -5,10 +5,15 @@ $dark: #22292f;
 $white: #fff;
 $white50: hsla(0,0%,100%,.5);
 
-// 淡黄色
-$orange-1: #ffcc80;
+// 灰色
+$gray: #b9c3cd;
 
+// 橘色
+$orange-1: #ffcc80;
 $orange-2: #F99037;
+
+// 黄色
+$yellow: #edc30e;
 
 // 深红
 $red-darker: #bd4147;
@@ -20,6 +25,10 @@ $primary-darker: darken($primary, 5%);
 $blue: #3085d6;
 $blue-darker: #236bb0;
 
+// 水鸭色
+$tear: #01847f;
+$tear-1: #00b5b5;
+
 // 其他蓝色
 $blue-1: #007ee5;
 $blue-2: #4199de;
@@ -29,6 +38,7 @@ $pink: #ff8acc;
 // cyan
 $cyan-darker: #6355ee;
 
+$light: #F7F7F9;
 
 // 深色
 $dark20: #f6fbff;

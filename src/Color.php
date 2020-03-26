@@ -32,10 +32,15 @@ use Dcat\Admin\Support\Helper;
  * @method string blue2(int $amt = 0)
  * @method string orange1(int $amt = 0)
  * @method string orange2(int $amt = 0)
+ * @method string yellow(int $amt = 0)
  * @method string indigoDarker(int $amt = 0)
  * @method string redDarker(int $amt = 0)
  * @method string blueDarker(int $amt = 0)
  * @method string cyanDarker(int $amt = 0)
+ * @method string gray(int $amt = 0)
+ * @method string light(int $amt = 0)
+ * @method string tear(int $amt = 0)
+ * @method string tear1(int $amt = 0)
  * @method string dark20(int $amt = 0)
  * @method string dark30(int $amt = 0)
  * @method string dark40(int $amt = 0)
@@ -107,14 +112,26 @@ class Color
         'blue1' => '#007ee5',
         'blue2' => '#4199de',
 
-        // 淡橘色
+        // 橘色
         'orange1' => '#ffcc80',
         'orange2' => '#F99037',
+
+        // 黄色
+        'yellow' => '#edc30e',
 
         'indigo-darker' => '#495abf',
         'red-darker'    => '#bd4147',
         'blue-darker'   => '#236bb0',
         'cyan-darker'   => '#6355ee',
+
+        // 灰色
+        'gray' => '#b9c3cd',
+        // 轻灰
+        'light' => '#f7f7f9',
+
+        // 水鸭色
+        'tear'  => '#01847f',
+        'tear1' => '#00b5b5',
 
         // 深色
         'dark20' => '#f6fbff',
