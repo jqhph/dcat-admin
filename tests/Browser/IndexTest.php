@@ -14,15 +14,16 @@ class IndexTest extends TestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(test_admin_path('/'))
+                ->assertSee('Administrator')
                 ->assertSee('Dashboard')
                 ->assertSee('Description...')
-                ->assertSee('Environment')
-                ->assertSee('PHP version')
-                ->assertSee('Laravel version')
-                ->assertSee('Extensions')
-                ->assertSee('Dependencies')
-                ->assertSee('php')
-                ->assertSee('laravel/framework');
+                ->assertSee('New Users')
+                ->assertSee('New Devices')
+                ->assertSee('Tickets')
+                ->assertSee(__('admin.documentation'))
+                ->assertSee(__('admin.extensions'))
+                ->assertSee(__('admin.demo'))
+                ->assertSee('GITHUB');
         });
     }
 
@@ -30,7 +31,7 @@ class IndexTest extends TestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(test_admin_path('/'))
-                ->within('.main-menu', function (Browser $browser) {
+                ->within('.main-menu-content', function (Browser $browser) {
                     $browser
                         ->clickLink('Admin')
                         ->whenTextAvailable('Users', 2)
@@ -50,8 +51,6 @@ class IndexTest extends TestCase
                         ->assertPathIs(test_admin_path('helpers/extensions'))
                         ->clickLink('Scaffold')
                         ->assertPathIs(test_admin_path('helpers/scaffold'))
-                        ->clickLink('Routes')
-                        ->assertPathIs(test_admin_path('helpers/routes'))
                         ->clickLink('Icons')
                         ->assertPathIs(test_admin_path('helpers/icons'));
                 });

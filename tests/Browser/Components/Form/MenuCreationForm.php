@@ -108,6 +108,8 @@ class MenuCreationForm extends Component
 
             if ($key === 'permissions') {
                 $browser->within(new Tree($key), function ($browser) use ($value) {
+                    $browser->expand();
+
                     $browser->choose($value);
                 });
             }

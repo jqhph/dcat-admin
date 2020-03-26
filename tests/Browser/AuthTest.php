@@ -36,11 +36,12 @@ class AuthTest extends TestCase
 
             $browser->visit(test_admin_path('auth/login'))
                 ->assertPathIs(test_admin_path('auth/login'))
-                ->assertSee('Login')
+                ->assertSee(__('admin.login'))
                 ->type('username', $credentials['username'])
                 ->type('password', $credentials['password'])
-                ->press('Login')
-                ->waitForText(__('admin.login_successful'), 3)
+                ->press(__('admin.login'))
+//                ->waitForText(__('admin.login_successful'), 2)
+                ->waitForLocation(test_admin_path('/'), 3)
                 ->assertPathIs(test_admin_path('/'))
                 ->assertSee('Administrator')
                 ->assertSee('Dashboard')
@@ -53,7 +54,7 @@ class AuthTest extends TestCase
                 ->assertSee(__('admin.demo'))
                 ->assertSee('GITHUB');
 
-            $browser->within('.main-menu', function (Browser $browser) {
+            $browser->within('.main-menu-content', function (Browser $browser) {
                 $browser->assertSee('Admin')
                     ->clickLink('Admin')
                     ->waitForText('Users', 1)

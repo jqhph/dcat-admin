@@ -38,14 +38,14 @@ class LinkCommand extends Command
         $target = base_path('tests');
         $testsPath = realpath(__DIR__.'/../../../tests');
 
-        if (is_dir($testsPath)) {
-            $result = $this->ask("The [{$testsPath}] directory already exists, are you sure to delete it? [yes/no]");
+        if (is_dir($target)) {
+            $result = $this->ask("The [{$target}] directory already exists, are you sure to delete it? [yes/no]");
 
             if (strtolower($result) !== 'yes') {
                 return;
             }
 
-            $files->deleteDirectory($testsPath);
+            $files->deleteDirectory($target);
         }
 
         $files->link(

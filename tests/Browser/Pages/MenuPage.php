@@ -25,10 +25,10 @@ class MenuPage extends Page
      */
     public function assert(Browser $browser)
     {
-        $browser->assertSee('Expand')
-            ->assertSee('Collapse')
-            ->assertSee('Save')
-            ->assertSee('New')
+        $browser->assertSee(__('admin.expand'))
+            ->assertSee(__('admin.collapse'))
+            ->assertSee(__('admin.save'))
+            ->assertSee(__('admin.new'))
             ->whenAvailable('@tree', function (Browser $browser) {
                 $browser->assertSee('Menu')
                     ->assertSee('Index')
@@ -52,8 +52,8 @@ class MenuPage extends Page
                     ->hasInput('title')
                     ->hasInput('icon')
                     ->hasInput('uri')
-                    ->assertButtonEnabled('Submit')
-                    ->assertButtonEnabled('Reset');
+                    ->assertButtonEnabled(__('admin.submit'))
+                    ->assertButtonEnabled(__('admin.reset'));
             });
     }
 

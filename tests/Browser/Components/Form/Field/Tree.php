@@ -75,6 +75,19 @@ JS
     }
 
     /**
+     * 展开所有选项
+     *
+     * @param Browser $browser
+     */
+    public function expand(Browser $browser)
+    {
+        $browser->script(<<<JS
+$('{$this->getTreeSelector($browser)}').jstree("open_all");        
+JS
+        );
+    }
+
+    /**
      * 选中所有
      *
      * @param Browser $browser

@@ -57,12 +57,16 @@ class MenuTest extends TestCase
     public function testEditMenu()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(new MenuEditPage(1))
-                ->type('title', 'blablabla')
-                ->press(__('admin.submit'))
+            $newTitle = 'blablabla';
+
+            $browser->visit(new MenuEditPage(1));
+
+            $browser->script("$(\"input[name='title']\").val(\"{$newTitle}\")");
+
+            $browser->press(__('admin.submit'))
                 ->waitForLocation(test_admin_path('auth/menu'), 2);
 
-            $this->seeInDatabase(config('admin.database.menu_table'), ['title' => 'blablabla'])
+            $this->seeInDatabase(config('admin.database.menu_table'), ['title' => $newTitle])
                 ->assertEquals(7, Menu::count());
         });
     }
@@ -127,15 +131,19 @@ class MenuTest extends TestCase
         unset($updates['roles'], $updates['permissions']);
 
         // 检测是否写入数据库
-        return $this
-            ->seeInDatabase(config('admin.database.menu_table'), $updates)
-            ->seeInDatabase(
+        $this->seeInDatabase(config('admin.database.menu_table'), $updates);
+
+        foreach ((array) $roles as $role) {
+            $this->seeInDatabase(
                 config('admin.database.role_menu_table'),
-                ['role_id' => $roles, 'menu_id' => $id]
-            )
-            ->seeInDatabase(
-                config('admin.database.permission_menu_table'),
-                ['permission_id' => $permissions, 'menu_id' => $id]
+                ['role_id' => $role, 'menu_id' => $id]
             );
+        }
+        foreach ((array) $permissions as $permission) {
+            $this->seeInDatabase(
+                config('admin.database.permission_menu_table'),
+                ['permission_id' => $permission, 'menu_id' => $id]
+            );
+        }
     }
 }

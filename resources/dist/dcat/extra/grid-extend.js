@@ -419,7 +419,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\p\dcat-admin-laravel7\l7-dcat-admin-1\dcat-admin\resources\assets\dcat\extra\grid-extend.js */"./resources/assets/dcat/extra/grid-extend.js");
+module.exports = __webpack_require__(/*! D:\php-project\laravel\laraveladmin\github-test\pck-dcat-admin\dcat-admin\resources\assets\dcat\extra\grid-extend.js */"./resources/assets/dcat/extra/grid-extend.js");
 
 
 /***/ })

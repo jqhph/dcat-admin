@@ -64,6 +64,8 @@ abstract class DuskTestCase extends BaseTestCase
     {
         $browser = parent::newBrowser($driver)->resize(1566, 1080);
 
+        $browser->resolver->prefix = 'html';
+
         if ($this->login) {
             $this->login($browser);
         }
