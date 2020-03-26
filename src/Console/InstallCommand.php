@@ -99,7 +99,11 @@ class InstallCommand extends Command
 
         $this->laravel['files']->put(
             $homeController,
-            str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
+            str_replace(
+                ['DummyNamespace', 'MetricsNamespace'],
+                [$this->namespace('Controllers'), $this->namespace('Metrics\\Examples')],
+                $contents
+            )
         );
         $this->line('<info>HomeController file was created:</info> '.str_replace(base_path(), '', $homeController));
     }
@@ -117,8 +121,8 @@ class InstallCommand extends Command
         $this->laravel['files']->put(
             $authController,
             str_replace(
-                ['DummyNamespace', 'MetricsNamespace'],
-                [$this->namespace('Controllers'), $this->namespace('Metrics\\Examples')],
+                ['DummyNamespace'],
+                [$this->namespace('Controllers')],
                 $contents
             )
         );
@@ -159,7 +163,9 @@ class InstallCommand extends Command
      */
     protected function namespace($name = null)
     {
-        return trim(str_replace('/', '\\', $this->directory), '\\').($name ? "\\{$name}" : '');
+        $base = str_replace('\\Controllers', '\\', config('admin.route.namespace'));
+
+        return trim($base, '\\').($name ? "\\{$name}" : '');
     }
 
     /**
@@ -186,7 +192,7 @@ class InstallCommand extends Command
         $file = $this->directory.'/routes.php';
 
         $contents = $this->getStub('routes');
-        $this->laravel['files']->put($file, str_replace('DummyNamespace', config('admin.route.namespace'), $contents));
+        $this->laravel['files']->put($file, str_replace('DummyNamespace', $this->namespace('Controllers'), $contents));
         $this->line('<info>Routes file was created:</info> '.str_replace(base_path(), '', $file));
     }
 

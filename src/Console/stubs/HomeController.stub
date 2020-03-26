@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use MetricsNamespace\Examples;
+use MetricsNamespace;
 use App\Http\Controllers\Controller;
 use Dcat\Admin\Controllers\Dashboard;
 use Dcat\Admin\Layout\Column;
