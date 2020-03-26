@@ -68,6 +68,8 @@ class DonutChartCard extends Card
 
         // 使用图表
         $this->useChart();
+
+        $this->chart->style('margin-top: 10px;');
     }
 
     /**

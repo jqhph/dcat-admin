@@ -8,6 +8,13 @@ use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
+/**
+ * Class Chart
+ *
+ * @package Dcat\Admin\Widgets\ApexCharts
+ *
+ * @see https://apexcharts.com/
+ */
 class Chart extends Widget
 {
     use InteractsWithApi;

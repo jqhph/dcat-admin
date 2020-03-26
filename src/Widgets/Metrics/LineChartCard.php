@@ -9,10 +9,10 @@ class LineChartCard extends Card
      *
      * @var int
      */
-    protected $chartHeight = 51;
+    protected $chartHeight = 57;
 
     /**
-     * 趋势图图表默认配置
+     * 图表默认配置
      *
      * @var array
      */
