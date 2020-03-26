@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Tests\Controllers;
+namespace Tests\Controllers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Layout\Content;

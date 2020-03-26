@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Console\Development;
 
 use Dcat\Admin\Admin;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\Command;
 
 class LinkCommand extends Command
@@ -21,30 +22,62 @@ class LinkCommand extends Command
      */
     public function handle()
     {
-        $this->linkAssets();
-        $this->linkTests();
+        $files = $this->laravel->make('files');
+
+        $this->linkAssets($files);
+        $this->linkTests($files);
     }
 
-    protected function linkTests()
+    /**
+     * @param Filesystem $files
+     *
+     * @return void
+     */
+    protected function linkTests($files)
     {
+        $target = base_path('tests');
+        $testsPath = realpath(__DIR__.'/../../../tests');
+
+        if (is_dir($testsPath)) {
+            $result = $this->ask("The [{$testsPath}] directory already exists, are you sure to delete it? [yes/no]");
+
+            if (strtolower($testsPath) !== 'yes') {
+                return;
+            }
+
+            $files->deleteDirectory($testsPath);
+        }
+
+        $files->link(
+            $testsPath, $target
+        );
+
+        $this->info("The [$testsPath] directory has been linked.");
     }
 
-    protected function linkAssets()
+    /**
+     * @param Filesystem $files
+     *
+     * @return void
+     */
+    protected function linkAssets($files)
     {
         $basePath = Admin::asset()->getRealPath('@admin');
         $publicPath = public_path($basePath);
 
         if (! is_dir($publicPath.'/..')) {
-            app('files')->makeDirectory($publicPath.'/..', 0755, true, true);
+            $files->makeDirectory($publicPath.'/..', 0755, true, true);
         }
 
-        if (file_exists(public_path($publicPath))) {
-            return $this->error("The \"{$basePath}\" directory already exists.");
+        if (file_exists($publicPath)) {
+            $this->warn("The [public/{$basePath}] directory already exists.");
+
+            return;
         }
 
         $distPath = realpath(__DIR__ . '/../../../resources/dist');
 
-        $this->laravel->make('files')->link(
+        $files->link(
             $distPath, $publicPath
         );
 

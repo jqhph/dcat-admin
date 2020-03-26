@@ -1,11 +1,11 @@
 <?php
 
-namespace Dcat\Admin\Tests\Controllers;
+namespace Tests\Controllers;
 
 use App\Http\Controllers\Controller;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Tests\Repositories\Report;
+use Tests\Repositories\Report;
 
 class ReportController extends Controller
 {

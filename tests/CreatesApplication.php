@@ -1,11 +1,12 @@
 <?php
 
-namespace Dcat\Admin\Tests;
+namespace Tests;
 
 use Dcat\Admin\Models\Administrator;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -18,16 +19,13 @@ trait CreatesApplication
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../vendor/laravel/laravel/bootstrap/app.php';
+        $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Kernel::class)->bootstrap();
 
-        $app->register('Dcat\Admin\AdminServiceProvider');
-
-        $app->make('config')->set('app.locale', 'en');
-
         return $app;
     }
+
 
     protected function boot()
     {
@@ -45,15 +43,13 @@ trait CreatesApplication
             require $routes;
         }
 
+        require __DIR__.'/helpers.php';
+
         require __DIR__.'/routes.php';
 
         require __DIR__.'/resources/seeds/factory.php';
 
         view()->addNamespace('admin-tests', __DIR__.'/resources/views');
-
-        if ($this->login) {
-            $this->be($this->getUser(), 'admin');
-        }
     }
 
     protected function destory()
@@ -64,6 +60,8 @@ trait CreatesApplication
 
         DB::select("delete from `migrations` where `migration` = '2016_01_04_173148_create_admin_tables'");
         DB::select("delete from `migrations` where `migration` = '2016_11_22_093148_create_test_tables'");
+
+        Artisan::call('migrate:rollback');
     }
 
     /**
