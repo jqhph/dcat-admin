@@ -1,9 +1,8 @@
 <style>
-    .links {
+    .dashboard-title .links {
         text-align: center;
     }
-
-    .links > a {
+    .dashboard-title .links > a {
         padding: 0 25px;
         font-size: 12px;
         font-weight: 600;
@@ -12,21 +11,24 @@
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.7);
     }
-
-    .dashborard h1 {
+    .dashboard-title h1 {
         font-weight: 200;
         font-size: 2.5rem;
     }
+    .dashboard-title.card {
+        background: {{ Admin::color()->alpha('primary', 0.95) }}
+    }
+    .dashboard-title .avatar {
+        background: transparent;
+    }
 </style>
 
-<div class="card" style="background: {{ Admin::color()->alpha('primary', 0.95) }}">
+<div class="dashboard-title card">
     <div class="card-body">
-        <div class="text-center dashborard">
+        <div class="text-center ">
 
-            <div class="avatar avatar-xl bg-white shadow mt-1">
-                <div class="avatar-content">
-                    <i class="feather icon-award text-primary font-large-1"></i>
-                </div>
+            <div class="avatar avatar-xl shadow mt-1">
+                <img class="avatar-content" src="{{ admin_asset('@admin/images/logo.png') }}">
             </div>
 
             <div class="text-center mb-1">
