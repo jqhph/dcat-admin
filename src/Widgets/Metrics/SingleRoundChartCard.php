@@ -22,8 +22,8 @@ class SingleRoundChartCard extends RoundChartCard
         $color = Admin::color();
 
         $colors = [$color->success()];
-        $gradientToColors = ['#00b5b5'];
-        $strokColor = '#b9c3cd';
+        $gradientToColors = [$color->tear1()];
+        $strokColor = $color->gray();
 
         return [
             'chart' => [

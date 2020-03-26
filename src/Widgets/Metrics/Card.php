@@ -25,6 +25,7 @@ class Card extends Widget
     protected $options = [
         'icon'     => null,
         'title'    => null,
+        'subTitle' => null,
         'header'   => null,
         'content'  => null,
         'dropdown' => [],
@@ -120,6 +121,20 @@ class Card extends Widget
     public function title(?string $title)
     {
         $this->options['title'] = $title;
+
+        return $this;
+    }
+
+    /**
+     * 设置卡片子标题.
+     *
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function subTitle(?string $title)
+    {
+        $this->options['subTitle'] = $title;
 
         return $this;
     }

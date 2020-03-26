@@ -64,25 +64,12 @@ trait InteractsWithApi
      *
      * @return $this
      */
-    public function from(string $method, string $url, array $query = [])
+    public function request(string $method, string $url, array $query = [])
     {
         $this->method = $method;
         $this->url = admin_url(Helper::urlWithQuery($url, $query));
 
         return $this;
-    }
-
-    /**
-     * 请求当前地址.
-     *
-     * @param array $query
-     * @param string $method
-     *
-     * @return $this
-     */
-    public function fromCurrent(array $query = [], string $method = 'GET')
-    {
-        return $this->from($method, request()->fullUrlWithQuery($query));
     }
 
     /**

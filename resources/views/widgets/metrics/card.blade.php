@@ -16,6 +16,12 @@
             <div class="metric-header">{!! $header !!}</div>
         </div>
 
+        @if (! empty($options['subTitle']))
+            <span class="btn btn-sm bg-light shadow-0 p-0">
+                {{ $options['subTitle'] }}
+            </span>
+        @endif
+
         @if(! empty($options['dropdown']))
         <div class="dropdown chart-dropdown">
             <button class="btn btn-sm btn-light shadow-0 dropdown-toggle p-0 waves-effect" data-toggle="dropdown">

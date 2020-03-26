@@ -9,7 +9,7 @@ class DonutChartCard extends Card
     /**
      * @var int
      */
-    protected $chartHeight = 140;
+    protected $chartHeight = 135;
 
     /**
      * 内容宽度.
