@@ -30,7 +30,7 @@ class IndexTest extends TestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(test_admin_path('/'))
-                ->within('.main-sidebar', function (Browser $browser) {
+                ->within('.main-menu', function (Browser $browser) {
                     $browser
                         ->clickLink('Admin')
                         ->whenTextAvailable('Users', 2)

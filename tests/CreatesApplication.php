@@ -12,20 +12,14 @@ use Illuminate\Support\Facades\Schema;
 
 trait CreatesApplication
 {
-    /**
-     * Creates the application.
-     *
-     * @return \Illuminate\Foundation\Application
-     */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require $this->getAppPath();
 
         $app->make(Kernel::class)->bootstrap();
 
         return $app;
     }
-
 
     protected function boot()
     {
@@ -52,32 +46,6 @@ trait CreatesApplication
         view()->addNamespace('admin-tests', __DIR__.'/resources/views');
     }
 
-    protected function destory()
-    {
-        (new \CreateAdminTables())->down();
-
-        (new \CreateTestTables())->down();
-
-        DB::select("delete from `migrations` where `migration` = '2016_01_04_173148_create_admin_tables'");
-        DB::select("delete from `migrations` where `migration` = '2016_11_22_093148_create_test_tables'");
-
-        Artisan::call('migrate:rollback');
-    }
-
-    /**
-     * run package database migrations.
-     *
-     * @return void
-     */
-    public function migrateTestTables()
-    {
-        $fileSystem = new Filesystem();
-
-        $fileSystem->requireOnce(__DIR__.'/resources/migrations/2016_11_22_093148_create_test_tables.php');
-
-        (new \CreateTestTables())->up();
-    }
-
     protected function config()
     {
         $adminConfig = require __DIR__.'/resources/config/admin.php';
@@ -97,6 +65,38 @@ trait CreatesApplication
         foreach (Arr::dot(Arr::get($adminConfig, 'auth'), 'auth.') as $key => $value) {
             $this->app['config']->set($key, $value);
         }
+    }
+
+    protected function getAppPath()
+    {
+        $path = __DIR__.'/../bootstrap/app.php';
+
+        if (! is_file($path)) {
+            $path = __DIR__.'/../../bootstrap/app.php';
+        }
+
+        return $path;
+    }
+
+    protected function destory()
+    {
+        (new \CreateAdminTables())->down();
+
+        (new \CreateTestTables())->down();
+
+        DB::select("delete from `migrations` where `migration` = '2016_01_04_173148_create_admin_tables'");
+        DB::select("delete from `migrations` where `migration` = '2016_11_22_093148_create_test_tables'");
+
+        Artisan::call('migrate:rollback');
+    }
+
+    public function migrateTestTables()
+    {
+        $fileSystem = new Filesystem();
+
+        $fileSystem->requireOnce(__DIR__.'/resources/migrations/2016_11_22_093148_create_test_tables.php');
+
+        (new \CreateTestTables())->up();
     }
 
     /**

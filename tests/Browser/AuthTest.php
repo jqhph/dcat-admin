@@ -40,21 +40,20 @@ class AuthTest extends TestCase
                 ->type('username', $credentials['username'])
                 ->type('password', $credentials['password'])
                 ->press('Login')
+                ->waitForText(__('admin.login_successful'), 3)
                 ->assertPathIs(test_admin_path('/'))
                 ->assertSee('Administrator')
                 ->assertSee('Dashboard')
                 ->assertSee('Description...')
-                ->assertSee('Environment')
-                ->assertSee('PHP version')
-                ->assertSee('Laravel version')
-                ->assertSee('Extensions')
-                ->assertSee('Dependencies')
-                ->assertSee('php')
-                ->assertSee('laravel/framework');
+                ->assertSee('New Users')
+                ->assertSee('New Devices')
+                ->assertSee('Tickets')
+                ->assertSee(__('admin.documentation'))
+                ->assertSee(__('admin.extensions'))
+                ->assertSee(__('admin.demo'))
+                ->assertSee('GITHUB');
 
-                //->assertAuthenticated('admin');
-
-            $browser->within('.main-sidebar', function (Browser $browser) {
+            $browser->within('.main-menu', function (Browser $browser) {
                 $browser->assertSee('Admin')
                     ->clickLink('Admin')
                     ->waitForText('Users', 1)

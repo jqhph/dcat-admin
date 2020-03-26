@@ -90,7 +90,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->commands($this->commands);
 
-        if (config('app.debug') && config('app.env') === 'local') {
+        if (config('app.debug')) {
             $this->commands($this->devCommands);
         }
     }

@@ -41,7 +41,7 @@ class LinkCommand extends Command
         if (is_dir($testsPath)) {
             $result = $this->ask("The [{$testsPath}] directory already exists, are you sure to delete it? [yes/no]");
 
-            if (strtolower($testsPath) !== 'yes') {
+            if (strtolower($result) !== 'yes') {
                 return;
             }
 
