@@ -5,6 +5,7 @@ namespace Tests\Browser;
 use Dcat\Admin\Models\OperationLog;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Grid\BatchActions;
+use Tests\Browser\Components\Grid\Actions\Delete;
 use Tests\Browser\Components\Grid\RowSelector;
 use Tests\TestCase;
 
@@ -77,10 +78,9 @@ class OperationLogTest extends TestCase
                 ->assertPathIs(test_admin_path('auth/logs'))
                 ->pause(500);
 
-            $browser->script("$('a[data-action=delete]').first().click()");
-            $browser->waitForText(__('admin.delete_confirm'), 3);
-            $browser->script("$('.swal2-confirm').first().click()");
-            $browser->waitForText(__('admin.delete_succeeded'), 3);
+            $browser->with(new Delete(), function (Browser $browser) {
+                $browser->delete(0);
+            });
 
             $this->assertEquals(0, OperationLog::count());
         });

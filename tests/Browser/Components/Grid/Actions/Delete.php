@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Browser\Components\Grid;
+namespace Tests\Browser\Components\Grid\Actions;
 
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Component;
 
 /**
- * 行选择器.
+ * 删除动作.
  */
 class Delete extends Component
 {
@@ -17,7 +17,7 @@ class Delete extends Component
      */
     public function selector()
     {
-        return '@item';
+        return '';
     }
 
     /**
@@ -28,7 +28,6 @@ class Delete extends Component
      */
     public function assert(Browser $browser)
     {
-        $browser->assertVisible('table thead th .checkbox-grid');
     }
 
     /**
@@ -39,8 +38,9 @@ class Delete extends Component
     public function elements()
     {
         return [
-            '@all' => 'input.select-all',
-            '@item' => 'input.grid-row-checkbox',
+            '@item' => 'a[data-action="delete"]:visible',
+            '@confirm' => '.swal2-confirm',
+            '@cancel' => '.swal2-cancel',
         ];
     }
 
@@ -52,35 +52,30 @@ class Delete extends Component
      *
      * @return Browser
      */
-    public function choose(Browser $browser, $value)
+    public function delete(Browser $browser, $value)
     {
-        foreach ((array) $value as $v) {
-            $browser->script(
-                <<<JS
-setTimeout(function () {
-    $('{$this->formatSelector($browser)}[data-id="{$v}"]').prop('checked', true);
-}, 10)
-JS
-            );
+        $parent = $this->formatSelector($browser, '@item');
+
+        if (is_numeric($value)) {
+            $selector = "$('{$parent}').eq($value)";
+        } else {
+            $value = admin_url($value);
+
+            $selector = "$('{$parent}[data-url=\"{$value}\"]')";
         }
 
-        return $browser;
-    }
+        $browser->script(
+            <<<JS
+// 如果开启了 responsive 插件，需要隐藏复制的 table，否则会选中副本的删除按钮
+$('.sticky-table-header').hide();
+{$selector}.click();
+JS
 
-    /**
-     * 选中所有
-     *
-     * @param Browser $browser
-     *
-     * @return Browser
-     */
-    public function selectAll(Browser $browser)
-    {
-        $browser->script("Dcat.ready(
-            setTimeout(function () {
-                $('.grid-select-all').first().click()
-            }, 10)
-        );");
+        );
+
+        $browser->waitForText(__('admin.delete_confirm'), 1);
+        $browser->script("$('{$this->formatSelector($browser, '@confirm')}').first().click()");
+        $browser->waitForText(__('admin.delete_succeeded'), 2);
 
         return $browser;
     }
