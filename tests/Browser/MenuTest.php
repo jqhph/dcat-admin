@@ -12,6 +12,8 @@ use Tests\Browser\Pages\MenuPage;
 use Tests\TestCase;
 
 /**
+ * 菜单管理功能测试.
+ *
  * @group menu
  */
 class MenuTest extends TestCase

@@ -242,6 +242,7 @@ class Admin
         app('router')->group($attributes, function ($router) {
             /* @var \Illuminate\Routing\Router $router */
             $router->namespace('Dcat\Admin\Controllers')->group(function ($router) {
+                /* @var \Illuminate\Routing\Router $router */
                 $router->post('action', 'HandleActionController@handle')->name('action');
                 $router->post('form', 'HandleFormController@handle')->name('form');
                 $router->post('value', 'ValueController@handle')->name('value');

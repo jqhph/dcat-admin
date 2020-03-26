@@ -19,7 +19,7 @@ trait BrowserExtension
 
                 if (is_callable($callbackOrSeconds)) {
                     $callback = $callbackOrSeconds;
-                } elseif (is_int($callbackOrSeconds)) {
+                } elseif (is_numeric($callbackOrSeconds)) {
                     $seconds = $callbackOrSeconds;
                 }
 
@@ -41,7 +41,7 @@ trait BrowserExtension
                 $callback = null;
                 if (is_callable($callbackOrSeconds)) {
                     $callback = $callbackOrSeconds;
-                } elseif (is_int($callbackOrSeconds)) {
+                } elseif (is_numeric($callbackOrSeconds)) {
                     $seconds = $callbackOrSeconds;
                 }
 

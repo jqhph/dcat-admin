@@ -14,7 +14,7 @@ trait HasNames
      *
      * @var string
      */
-    protected $__name;
+    protected $_name;
 
     /**
      * HTML element names.
@@ -37,7 +37,7 @@ trait HasNames
      */
     public function setName($name)
     {
-        $this->__name = $name;
+        $this->_name = $name;
         $this->tableId = $this->tableId.'-'.$name;
 
         $model = $this->model();
@@ -60,7 +60,7 @@ trait HasNames
      */
     public function getName()
     {
-        return $this->__name;
+        return $this->_name;
     }
 
     /**
@@ -102,8 +102,8 @@ trait HasNames
     {
         $elementName = $this->elementNames[$name];
 
-        if ($this->__name) {
-            return sprintf('%s-%s', $this->__name, $elementName);
+        if ($this->_name) {
+            return sprintf('%s-%s', $this->_name, $elementName);
         }
 
         return $elementName;

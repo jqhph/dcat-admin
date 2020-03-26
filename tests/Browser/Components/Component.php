@@ -14,7 +14,7 @@ abstract class Component extends BaseComponent
      */
     public function parentSelector(Browser $browser)
     {
-        return str_replace($this->selector(), '', $browser->resolver->prefix);
+        return $browser->resolver->prefix;
     }
 
     /**
@@ -25,8 +25,8 @@ abstract class Component extends BaseComponent
      *
      * @return string
      */
-    public function formatSelector(Browser $browser, $selector = null)
+    public function formatSelector(Browser $browser, $selector = '')
     {
-        return $this->parentSelector($browser).' '.($selector ?: $this->selector());
+        return $browser->resolver->format($selector);
     }
 }

@@ -6,6 +6,8 @@ use Laravel\Dusk\Browser;
 use Tests\TestCase;
 
 /**
+ * 鉴权登陆功能测试.
+ *
  * @group auth
  */
 class AuthTest extends TestCase

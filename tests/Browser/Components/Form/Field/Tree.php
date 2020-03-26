@@ -21,7 +21,7 @@ class Tree extends Component
      */
     public function selector()
     {
-        return ".{$this->name}-tree-wrapper";
+        return '@container';
     }
 
     /**
@@ -45,8 +45,8 @@ class Tree extends Component
     public function elements()
     {
         return [
-            '@container' => $this->selector(),
-            '@tree'      => "{$this->selector()} .da-tree",
+            '@container' => ".{$this->name}-tree-wrapper",
+            '@tree'      => '.da-tree',
             '@input'     => sprintf('input[name="%s"][type="hidden"]', $this->name),
         ];
     }

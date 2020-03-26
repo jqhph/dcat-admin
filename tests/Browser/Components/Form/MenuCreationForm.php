@@ -24,7 +24,7 @@ class MenuCreationForm extends Component
      */
     public function selector()
     {
-        return $this->selector;
+        return '@form';
     }
 
     /**

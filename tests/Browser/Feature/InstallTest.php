@@ -1,11 +1,13 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Feature;
 
 use Dcat\Admin\Admin;
 use Tests\TestCase;
 
 /**
+ * 安装功能测试.
+ *
  * @group install
  */
 class InstallTest extends TestCase

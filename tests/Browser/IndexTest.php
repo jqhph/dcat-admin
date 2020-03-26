@@ -6,6 +6,8 @@ use Laravel\Dusk\Browser;
 use Tests\TestCase;
 
 /**
+ * 首页功能测试.
+ *
  * @group index
  */
 class IndexTest extends TestCase
