@@ -472,7 +472,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\p\dcat-admin-github\dcat-admin\resources\assets\dcat\extra\resource-selector.js */"./resources/assets/dcat/extra/resource-selector.js");
+module.exports = __webpack_require__(/*! F:\p\dcat-admin-laravel7\l7-dcat-admin-1\dcat-admin\resources\assets\dcat\extra\resource-selector.js */"./resources/assets/dcat/extra/resource-selector.js");
 
 
 /***/ })

@@ -8,13 +8,14 @@
 
       .logo-mini {
         display: none;
+        font-size: 1.8rem;
       }
 
       .logo-lg {
         color: $primary;
-        font-weight: 600;
+        font-weight: 400;
         letter-spacing: 0.01rem;
-        font-size: 1.57rem;
+        font-size: 1.55rem;
         -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
         animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
       }
@@ -46,7 +47,7 @@
 }
 
 .main-menu.menu-light .navigation > li.active > a {
-  box-shadow: 0 0 5px 1px rgba($primary, 0.7);
+  box-shadow: 0 0 4px 1px rgba($primary, 0.7);
 }
 
 // 菜单
