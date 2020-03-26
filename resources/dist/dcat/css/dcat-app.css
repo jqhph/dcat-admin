@@ -109,11 +109,6 @@ dl {
   margin-bottom: 0;
 }
 
-.testcolor {
-  color: #00b5b5;
-  color: #01847f;
-}
-
 .shadow-0 {
   box-shadow: none !important;
 }
@@ -200,6 +195,10 @@ dl {
 
 .text-30 {
   color: #f4f7fa !important;
+}
+
+.text-35 {
+  color: #e7eef7 !important;
 }
 
 .text-40 {
@@ -292,6 +291,10 @@ dl {
 
 .bg-30 {
   background: #f4f7fa !important;
+}
+
+.bg-35 {
+  background: #e7eef7 !important;
 }
 
 .bg-40 {

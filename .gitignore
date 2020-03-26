@@ -5,4 +5,4 @@ composer.lock
 /node_modules
 package-lock.json
 mix-manifest.json
-images/
+/images/

@@ -9,7 +9,7 @@ class DonutChartCard extends Card
     /**
      * @var int
      */
-    protected $chartHeight = 135;
+    protected $chartHeight = 128;
 
     /**
      * 内容宽度.
@@ -63,7 +63,10 @@ class DonutChartCard extends Card
     {
         parent::init();
 
-        // 使用图表s
+        // 卡片默认高度
+        $this->height(165);
+
+        // 使用图表
         $this->useChart();
     }
 

@@ -43,6 +43,7 @@ use Dcat\Admin\Support\Helper;
  * @method string tear1(int $amt = 0)
  * @method string dark20(int $amt = 0)
  * @method string dark30(int $amt = 0)
+ * @method string dark35(int $amt = 0)
  * @method string dark40(int $amt = 0)
  * @method string dark50(int $amt = 0)
  * @method string dark60(int $amt = 0)
@@ -136,6 +137,7 @@ class Color
         // 深色
         'dark20' => '#f6fbff',
         'dark30' => '#f4f7fa',
+        'dark35' => '#e7eef7',
         'dark40' => '#ebf0f3',
         'dark50' => '#d3dde5',
         'dark60' => '#bacad6',

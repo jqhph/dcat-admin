@@ -191,6 +191,9 @@ return [
     'grid_items_selected'      => '{n} items selected',
     'nothing_updated'          => 'Nothing has been updated.',
     'welcome_back'             => 'Welcome back, please login to your account.',
+    'documentation'            => 'Documentation',
+    'demo'                     => 'Demo',
+    'extensions'               => 'Extensions',
     'validation'               => [
         'match'     => 'The :attribute and :other must match.',
         'minlength' => 'The :attribute must be at least :min characters.',

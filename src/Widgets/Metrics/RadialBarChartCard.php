@@ -38,6 +38,13 @@ class RadialBarChartCard extends Card
     protected $chartMarginBottom = -10;
 
     /**
+     * 图表位置靠右.
+     *
+     * @var bool
+     */
+    protected $chartPullRight = false;
+
+    /**
      * 初始化
      */
     public function init()
@@ -134,6 +141,20 @@ class RadialBarChartCard extends Card
     }
 
     /**
+     * 图表位置靠右.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function chartPullRight(bool $value = true)
+    {
+        $this->chartPullRight = $value;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function renderFooter()
@@ -152,12 +173,13 @@ class RadialBarChartCard extends Card
             $content = parent::renderContent();
 
             $content = <<<HTML
-<div class="metric-content col-sm-{$this->contentWidth[0]} d-flex flex-column flex-wrap text-center">
+<div class="metric-content col-sm-{$this->contentWidth[0]}">
     {$content}
 </div>
 HTML;
         }
 
+        $justifyClass = $this->chartPullRight ? 'justify-content-between' : 'justify-content-center';
 
         return <<<HTML
 <div class="card-content">
@@ -165,8 +187,9 @@ HTML;
         <div class="row">
             {$content}
             
-            <div class="col-sm-{$this->contentWidth[1]} d-flex justify-content-center">
-                {$this->renderChart()}
+            <div class="col-sm-{$this->contentWidth[1]} d-flex {$justifyClass}">
+                <div></div>
+                <div>{$this->renderChart()}</div>
             </div>
         </div>
         <div class="metric-footer d-flex justify-content-between">

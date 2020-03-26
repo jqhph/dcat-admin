@@ -2,8 +2,15 @@
 
 namespace Dcat\Admin\Widgets\Metrics;
 
-class SparklineChartCard extends Card
+class LineChartCard extends Card
 {
+    /**
+     * 图表默认高度
+     *
+     * @var int
+     */
+    protected $chartHeight = 51;
+
     /**
      * 趋势图图表默认配置
      *
@@ -65,6 +72,8 @@ class SparklineChartCard extends Card
     {
         parent::init();
 
+        $this->height(165);
+
         // 使用图表s
         $this->useChart();
     }
@@ -77,6 +86,16 @@ class SparklineChartCard extends Card
     public function chartStraight()
     {
         return $this->chartOption('stroke.curve', 'straight');
+    }
+
+    /**
+     * 设置线条为曲线.
+     *
+     * @return $this
+     */
+    public function chartSmooth()
+    {
+        return $this->chartOption('stroke.curve', 'smooth');
     }
 
     /**
