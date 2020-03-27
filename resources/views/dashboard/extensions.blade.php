@@ -32,21 +32,21 @@
     <a href="https://github.com/jqhph/dcat-admin#%E6%89%A9%E5%B1%95" target="_blank" class="uppercase">View All Extensions</a>
 </div>
 
-<script>LA.ready(function () {
-    var $box = $('#extension-box');
-    $box.loading();
-
-    $.ajax({
-        url: 'https://jqhph.github.io/dcat-admin/extra/extensions.html',
-        success: function (response) {
-            $box.loading(false);
-
-            $box.html(response);
-        },
-        error: function () {
-            $box.loading(false);
-
-            $box.find('.item').removeClass('hidden');
-        }
-    });
+<script>Dcat.ready(function () {
+    // var $box = $('#extension-box');
+    // $box.loading();
+    //
+    // $.ajax({
+    //     url: 'https://jqhph.github.io/dcat-admin/extra/extensions.html',
+    //     success: function (response) {
+    //         $box.loading(false);
+    //
+    //         $box.html(response);
+    //     },
+    //     error: function () {
+    //         $box.loading(false);
+    //
+    //         $box.find('.item').removeClass('hidden');
+    //     }
+    // });
 })</script>

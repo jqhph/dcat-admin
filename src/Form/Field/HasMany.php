@@ -304,7 +304,7 @@ class HasMany extends Field
      *
      * @return array
      */
-    protected function prepareToSave($input)
+    protected function prepareInputValue($input)
     {
         $form = $this->buildNestedForm($this->column, $this->builder);
 
@@ -532,7 +532,7 @@ JS;
     }
     if(\$navTab.closest('li').hasClass('active')){
         \$navTab.closest('li').remove();
-        $('#has-many-{$this->column} > .nav > li:nth-child(1) > a').tab('show');
+        $('#has-many-{$this->column} > .nav > li:nth-child(1) > a').click();
     }else{
         \$navTab.closest('li').remove();
     }
@@ -545,14 +545,14 @@ $('#has-many-{$this->column} > .header').off('click', '.add').on('click', '.add'
     var paneHtml = $('#has-many-{$this->column} > template.pane-tpl').html().replace(/{$defaultKey}/g, index);
     $('#has-many-{$this->column} > .nav').append(navTabHtml);
     $('#has-many-{$this->column} > .tab-content').append(paneHtml);
-    $('#has-many-{$this->column} > .nav > li:last-child a').tab('show');
+    $('#has-many-{$this->column} > .nav > li:last-child a').click();
     {$templateScript}
 });
 
 if ($('.has-error').length) {
     $('.has-error').parent('.tab-pane').each(function () {
         var tabId = '#'+$(this).attr('id');
-        $('li a[href="'+tabId+'"] i').removeClass('hide');
+        $('li a[href="'+tabId+'"] i').removeClass('d-none');
     });
     
     var first = $('.has-error:first').parent().attr('id');

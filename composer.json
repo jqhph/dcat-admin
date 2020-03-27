@@ -14,12 +14,12 @@
     "require": {
         "php": ">=7.1.0",
         "symfony/dom-crawler": "~3.1|~4.0",
-        "laravel/framework": "~5.5|~6.0",
+        "laravel/framework": "~5.5|~6.0|~7.0",
         "doctrine/dbal": "2.*",
         "spatie/eloquent-sortable": "3.*"
     },
     "require-dev": {
-        "laravel/browser-kit-testing": "~5.1",
+        "laravel/dusk": "~5.9",
         "friendsofphp/php-cs-fixer": "^2.15",
         "laravel/laravel": "~5.5|~6",
         "phpstan/phpstan": "^0.12.0",

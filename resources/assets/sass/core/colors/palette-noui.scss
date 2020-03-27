@@ -1,0 +1,46 @@
+// ================================================================================================
+//   File Name: pallette-noui.scss
+//   Description: noui color system styles
+//   ----------------------------------------------------------------------------------------------
+//   Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//   Author: PIXINVENT
+//   Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+
+@function color-function($color, $type) {
+  @if map-has-key($colors, $color) {
+    $curr_color: map-get($colors, $color);
+    @if map-has-key($curr_color, $type) {
+      @return map-get($curr_color, $type);
+    }
+  }
+  // @warn "Unknown `#{name}` in $colors.";
+  @return null;
+}
+
+// Color palettes
+@import "palette-variables";
+
+@each $color_name, $color in $colors {
+  @each $color_type, $color_value in $color {
+    @if $color_type == "base" {
+      .slider-#{$color_name}{
+        .noUi-connect{
+          background: $color_value !important;
+        }
+        &.noUi-connect{
+          background: $color_value !important;
+        }
+        .noUi-handle{
+          border-color: $color_value !important;
+        }
+        &.circle-filled, &.square{
+          .noUi-handle{
+            background: $color_value !important;
+          }
+        }
+      }
+    }
+  }
+}

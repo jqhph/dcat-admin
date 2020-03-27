@@ -1,0 +1,39 @@
+.card {
+  box-shadow: $shadow;
+}
+
+.card.dcat-box {
+  .card-header {
+    border-bottom: 1px solid $divider-color;
+    padding: 1.1rem;
+  }
+}
+
+.card .card-header {
+  padding: 1.1rem 1.1rem 0;
+  align-items: center;
+}
+
+.card-header.with-border {
+  border-bottom: 1px solid $divider-color;
+  padding: 1.1rem;
+}
+
+.card-box-title {
+  font-size: 1.1rem;
+}
+
+.card-footer {
+  padding: 1.1rem;
+  background: transparent;
+  border-color: $divider-color!important;
+}
+
+.card-body {
+  padding: 1.1rem;
+
+  .card-footer {
+    padding: .8rem;
+    margin: -1.1rem;
+  }
+}

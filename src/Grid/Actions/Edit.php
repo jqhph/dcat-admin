@@ -11,7 +11,7 @@ class Edit extends RowAction
      */
     public function title()
     {
-        return __('admin.edit');
+        return '<i class="feather icon-edit-1"></i> '.__('admin.edit');
     }
 
     /**

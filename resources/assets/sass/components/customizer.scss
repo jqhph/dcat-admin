@@ -1,0 +1,106 @@
+/*=========================================================================================
+	File Name: customizer.scss
+	Description: CSS used for demo purpose only. Remove this css from your project.
+	----------------------------------------------------------------------------------------
+	Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+.customizer{
+	width: 400px;
+  right: -400px;
+	padding: 0;
+  background-color: $white;
+	z-index: 1051;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  transition: right 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
+  backface-visibility: hidden;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow:0 15px 30px 0 rgba(0,0,0,.11), 0 5px 15px 0 rgba(0,0,0,.08);
+
+	&.open{
+    right: 0;
+	}
+
+  // customizer content height
+	.customizer-content{
+		position: relative;
+    	height: 100%;
+	}
+
+
+  //customizer close button
+	.customizer-close{
+		position: absolute;
+	    right: 30px;
+	    top: 20px;
+	    padding: 7px;
+	    width: auto;
+      z-index: 10;
+      color: #626262;
+      i{
+        font-size: 1.71rem;
+      }
+  }
+
+  // customizer toggle icon
+	.customizer-toggle{
+    background: $primary;
+		color: $white;
+		display: block;
+    box-shadow: -3px 0px 8px rgba(0, 0, 0, 0.1);
+		border-top-left-radius: 6px;
+		border-bottom-left-radius: 6px;
+		position: absolute;
+		top: 50%;
+		width: 38px;
+		height: 38px;
+		left: -39px;
+		text-align: center;
+		line-height: 40px;
+		cursor: pointer;
+	}
+
+  // theme color box styles
+  .color-box{
+    height: 35px;
+    width: 35px;
+    margin: .5rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    &.selected{
+      box-shadow: 0 0 0 3px rgba(52,144,220,.5);
+    }
+  }
+}
+
+body.dark-layout{
+    .hide-scroll-top-switch,
+    .collapse-sidebar {
+      .custom-switch{
+        .custom-control-label{
+          &:before{
+            background-color: #10163a;
+          }
+        }
+      }
+    }
+}
+
+.buy-now {
+  position: fixed;
+  bottom: 5%;
+  right: 79px;
+  z-index: 1031;
+  .btn{
+    box-shadow: 0 1px 20px 1px $danger !important;
+    &:hover{
+      box-shadow: none !important;
+    }
+  }
+}

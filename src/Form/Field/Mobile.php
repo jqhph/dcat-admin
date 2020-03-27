@@ -2,10 +2,11 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 class Mobile extends Text
 {
+    public static $js = '@jquery.inputmask';
+    public static $css = '@jquery.inputmask';
+
     /**
      * @see https://github.com/RobinHerbots/Inputmask#options
      *
@@ -19,14 +20,8 @@ class Mobile extends Text
     {
         $this->inputmask($this->options);
 
-        $this->prepend('<i class="ti-mobile"></i>')
-            ->defaultAttribute('style', 'width: 200px');
+        $this->prepend('<i class="feather icon-smartphone"></i>');
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectComponentAssets('jquery.inputmask');
     }
 }

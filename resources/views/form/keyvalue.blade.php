@@ -30,7 +30,7 @@
                                 <error></error>
                                 @if($errors->has($keysErrorKey))
                                     @foreach($errors->get($keysErrorKey) as $message)
-                                        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</label><br/>
+                                        <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
                                     @endforeach
                                 @endif
                                 <input name="{{ $name }}[keys][{{ (int) $k }}]" value="{{ old("{$column}.keys.{$k}", $k) }}" class="form-control" required/>
@@ -44,7 +44,7 @@
                                 <error></error>
                                 @if($errors->has($valsErrorKey))
                                     @foreach($errors->get($valsErrorKey) as $message)
-                                        <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {{$message}}</label><br/>
+                                        <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
                                     @endforeach
                                 @endif
                                 <input name="{{ $name }}[values][{{ (int) $k }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
@@ -68,7 +68,7 @@
                 <td></td>
                 <td>
                     <div class="{{ $class }}-add btn btn-success btn-sm pull-right">
-                        <i class="fa fa-save"></i>&nbsp;{{ __('admin.new') }}
+                        <i class="feather icon-save"></i>&nbsp;{{ __('admin.new') }}
                     </div>
                 </td>
             </tr>

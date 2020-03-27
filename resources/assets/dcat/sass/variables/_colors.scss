@@ -1,0 +1,73 @@
+// 自定义颜色
+$custom: #59a9f8;
+
+$dark: #22292f;
+$white: #fff;
+$white50: hsla(0,0%,100%,.5);
+
+// 灰色
+$gray: #b9c3cd;
+
+// 橘色
+$orange-1: #ffcc80;
+$orange-2: #F99037;
+
+// 黄色
+$yellow: #edc30e;
+
+// 深红
+$red-darker: #bd4147;
+
+// 深主题色
+$primary-darker: darken($primary, 5%);
+
+// 蓝色
+$blue: #3085d6;
+$blue-darker: #236bb0;
+
+// 水鸭色
+$tear: #01847f;
+$tear-1: #00b5b5;
+
+// 其他蓝色
+$blue-1: #007ee5;
+$blue-2: #4199de;
+
+$pink: #ff8acc;
+
+// cyan
+$cyan-darker: #6355ee;
+
+$light: #F7F7F9;
+
+// 深色
+$dark20: #f6fbff;
+$dark30: #f4f7fa;
+$dark35: #e7eef7;
+$dark40: #ebf0f3;
+$dark50: #d3dde5;
+$dark60: #bacad6;
+$dark65: #8aa5b9;
+$dark70: #b3b9bf;
+$dark80: #7c858e;
+$dark85: #5c7089;
+$dark90: #252d37;
+
+// 字体颜色
+$font-color: #414750;
+
+// body背景颜色
+//$body-bg: #f9fafc;
+$body-bg: $dark30;
+
+// 灰背景色
+$gray-bg: #f1f1f1;
+
+// 常用边框颜色
+$border-color: #ebeff2;
+
+// 表单边框颜色
+$input-border-color: #d9d9d9;
+
+// 常用分割线颜色
+$divider-color: #f4f4f4;

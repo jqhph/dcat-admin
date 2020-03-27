@@ -1,0 +1,173 @@
+
+.form-control-sm {
+  padding: 0.5rem 1.5rem;
+}
+
+select.form-control:not([multiple=multiple]) {
+  background-image: none;
+}
+
+.input-group-sm > .form-control:not(textarea), .input-group-sm > .custom-select, .form-control-sm {
+  height: 30px;
+  line-height: 13px;
+}
+
+
+.input-group-text {
+  padding: 0.7rem 0.9rem;
+}
+
+.help-block {
+  display: block;
+  margin-top: 7px;
+  margin-bottom: 10px;
+  color: #737373;
+}
+
+.control-label {
+  padding-top: 7px;
+  padding-right: 5px;
+  margin-bottom: 0;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.fields-group .row.form-group {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .form-group .control-label {
+    text-align: right;
+  }
+}
+
+.with-errors.help-block {
+  margin-bottom: 4px;
+}
+
+.has-error .checkbox,
+.has-error .checkbox-inline,
+.has-error .control-label, .has-error .help-block,
+.has-error .radio,
+.has-error .radio-inline,
+.has-error.checkbox label,
+.has-error.radio label,
+.has-error .form-control-position i,
+.has-error .form-control:focus ~ .form-control-position i {
+  color: $red-darker;
+}
+
+.control-label.asterisk:before {
+  content: "*";
+  font-weight: bold;
+  color: $red-darker;
+}
+
+.form-group.has-error .form-control {
+  border-color: $red-darker;
+}
+
+.input-group-prepend .input-group-text {
+  margin-right: -1px;
+}
+
+// --------------------- input-group-addon ---------------------
+.input-group-addon {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  background-color: $white;
+  border: 1px solid $input-border-color;
+  min-width: 30px;
+}
+.input-group-sm>.input-group-addon {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: .7rem;
+  line-height: 1.5;
+}
+// --------------------- input-group-addon ---------------------
+
+
+
+// --------------------- select2 ---------------------
+.input-group-sm {
+  .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
+    min-height: 31px;
+    padding: 1px 2px;
+    font-size: 0.7rem;
+  }
+
+  .select2-container--default .select2-selection--multiple {
+    min-height: 30px !important;
+    padding: 0 2px;
+    font-size: 0.7rem;
+    line-height: 14px;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: -3px;
+  }
+
+  .select2-container--classic .select2-selection--multiple .select2-selection__rendered li .select2-search__field, .select2-container--default .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
+    margin-top: 6px;
+  }
+}
+
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  border-color: $input-border-color!important;
+}
+
+.input-group {
+  .select2-container {
+    width: 50%!important;
+    flex: 1 1 auto;
+  }
+}
+
+.select2-dropdown {
+  border: 1px solid rgba(0, 0, 0, 0.03)!important;
+  box-shadow: $shadow;
+}
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: $gray-bg!important;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: $dark40!important;
+  color: $font-color!important;
+}
+.select2-results__option {
+  padding: 6px 10px!important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  padding: 2px 5px!important;
+  border: 0!important;
+}
+// --------------------- select2 ---------------------
+
+
+.select2-selection .default-text {
+  display: inline-block;
+  padding: 6px;
+}
+
+// listbox图标
+.glyphicon-arrow-right:before {
+  font-family: feather;
+  content: "\e829";
+}
+.glyphicon-arrow-left:before {
+  font-family: feather;
+  content: "\e828";
+}
+.bootstrap-duallistbox-container .info {
+  color: $font-color!important;
+}

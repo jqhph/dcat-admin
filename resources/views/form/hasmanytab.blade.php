@@ -16,7 +16,7 @@
     <div class="row header">
         <div class="col-md-{{$viewClass['label']}}"><h4 class="pull-right">{!! $label !!}</h4></div>
         <div class="col-md-{{$viewClass['field']}}">
-            <button type="button" class="btn btn-default btn-sm add"><i class="fa fa-plus-circle" style="font-size: large;"></i></button>
+            <button type="button" class="btn btn-white btn-sm add"><i class="fa fa-plus-circle" style="font-size: large;"></i></button>
         </div>
     </div>
 

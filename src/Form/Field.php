@@ -205,7 +205,7 @@ class Field implements Renderable
     /**
      * @var \Closure
      */
-    protected $prepareCallback;
+    protected $savingCallback;
 
     /**
      * Field constructor.
@@ -587,7 +587,7 @@ class Field implements Renderable
      *
      * @return $this
      */
-    public function help($text = '', $icon = 'fa-info-circle')
+    public function help($text = '', $icon = 'feather icon-help-circle')
     {
         $this->help = compact('text', 'icon');
 
@@ -679,6 +679,16 @@ class Field implements Renderable
     }
 
     /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasAttribute(string $key)
+    {
+        return array_key_exists($key, $this->attributes);
+    }
+
+    /**
      * Specifies a regular expression against which to validate the value of the input.
      *
      * @param string $error
@@ -762,13 +772,11 @@ class Field implements Renderable
     }
 
     /**
-     * Prepare for a field value before update or insert.
-     *
      * @param mixed $value
      *
      * @return mixed
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return $value;
     }
@@ -780,7 +788,7 @@ class Field implements Renderable
      */
     public function saving(\Closure $closure)
     {
-        $this->prepareCallback = $closure;
+        $this->savingCallback = $closure;
 
         return $this;
     }
@@ -794,9 +802,9 @@ class Field implements Renderable
      */
     final public function prepare($value)
     {
-        $value = $this->prepareToSave($value);
+        $value = $this->prepareInputValue($value);
 
-        if ($handler = $this->prepareCallback) {
+        if ($handler = $this->savingCallback) {
             $handler->bindTo($this->data());
 
             return $handler($value);
@@ -838,13 +846,13 @@ class Field implements Renderable
     {
         if ($this->horizontal) {
             return [
-                'label'      => "col-sm-{$this->width['label']} {$this->getLabelClass()}",
-                'field'      => "col-sm-{$this->width['field']}",
-                'form-group' => 'form-group ',
+                'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()}",
+                'field'      => "col-md-{$this->width['field']}",
+                'form-group' => 'form-group row form-field',
             ];
         }
 
-        return ['label' => $this->getLabelClass(), 'field' => '', 'form-group' => ''];
+        return ['label' => $this->getLabelClass(), 'field' => '', 'form-group' => 'form-field'];
     }
 
     /**

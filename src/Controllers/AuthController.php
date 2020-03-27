@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Repositories\Administrator;
+use Dcat\Admin\Traits\HasFormResponse;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -15,10 +16,12 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    use HasFormResponse;
+
     /**
      * @var string
      */
-    protected $view = 'admin::login';
+    protected $view = 'admin::pages.login';
 
     /**
      * @var string
@@ -28,15 +31,15 @@ class AuthController extends Controller
     /**
      * Show the login page.
      *
-     * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
+     * @return Content
      */
-    public function getLogin()
+    public function getLogin(Content $content)
     {
         if ($this->guard()->check()) {
             return redirect($this->redirectPath());
         }
 
-        return view(config('admin.auth.login_view') ?: $this->view);
+        return $content->full()->body(view($this->view));
     }
 
     /**
@@ -58,14 +61,14 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->withInput()->withErrors($validator);
+            return $this->validationErrorsResponse($validator);
         }
 
         if ($this->guard()->attempt($credentials, $remember)) {
             return $this->sendLoginResponse($request);
         }
 
-        return back()->withInput()->withErrors([
+        return $this->validationErrorsResponse([
             $this->username() => $this->getFailedLoginMessage(),
         ]);
     }
@@ -234,15 +237,16 @@ class AuthController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function sendLoginResponse(Request $request)
     {
-        admin_alert(trans('admin.login_successful'));
-
         $request->session()->regenerate();
 
-        return redirect()->intended($this->redirectPath());
+        return $this->redirectToIntended(
+            $this->redirectPath(),
+            trans('admin.login_successful')
+        );
     }
 
     /**

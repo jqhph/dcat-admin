@@ -1,0 +1,468 @@
+/*=========================================================================================
+    File Name: vertical-menu.scss
+    Description: A calssic vertical modern style menu with expand and collops support. It support
+    light & dark version, filpped layout, right side icons, native scroll and borders menu
+    item seperation.
+    ----------------------------------------------------------------------------------------
+    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+    Author: PIXINVENT
+    Author URL: http://www.themeforest.net/user/pixinvent
+==========================================================================================*/
+
+// Core variables and mixins
+@import "../../../bootstrap/functions";
+@import "../../../bootstrap/mixins";
+@import "../../../bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "../../variables/variables";
+@import "../../../bootstrap/variables";
+
+// Overrides user variable
+@import "../../variables/components-variables";
+
+// Import first main menu mixin
+@import "../../mixins/main-menu-mixin";
+
+//  Vertical menu
+//=========================
+body.vertical-layout {
+   &.vertical-menu-modern {
+      .main-menu {
+         .navigation {
+            > li > a > i {
+              font-size: 1.2rem;
+              margin-right: 1rem;
+              float: left;
+            }
+            // Sub-menu icon size
+            .menu-content{
+               >li > a > i{
+                  margin-right: 1.38rem;
+                  font-size: 0.8rem;
+               }
+            }
+         }
+      }
+      .toggle-icon {
+         margin-right: 0.425rem;
+         &:focus{
+            outline: none;
+         }
+      }
+      // Flipped menu expanded
+      &.menu-flipped {
+         @include media-breakpoint-up(sm) {
+            .main-menu {
+               right: 0;
+            }
+         }
+      }
+      .navbar {
+         .navbar-brand {
+            white-space: nowrap;
+         }
+         .navbar-header {
+            .nav-toggle {
+               position: absolute;
+               right: 0;
+            }
+         }
+      }
+      .main-menu {
+         transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+         transform: translate3d(0, 0, 0);
+         backface-visibility: hidden;
+      }
+      //Vertical menu [Expanded]
+      &.menu-expanded {
+         //Navbar expanded
+         .navbar {
+            .navbar-header {
+               @include menu-navbar-width($menu-expanded-width);
+            }
+            .navbar-brand {
+               .brand-text {
+                  animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+               }
+            }
+         }
+         // Main menu expanded
+         .main-menu {
+            width: $menu-expanded-width;
+            .navigation {
+               .navigation-header {
+                  .icon-minus {
+                     display: none;
+                  }
+               }
+               > li {
+                  > a {
+                     > i {
+                        margin-right: $spacer;
+                        float: left;
+                        &:before {
+                           font-size: 1.429rem;
+                        }
+                     }
+                     > span {
+                        animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+                        &.badge {
+                           position: absolute;
+                           right: 20px;
+                        }
+                     }
+                  }
+               }
+               li {
+                  @include vertical-menu-has-sub-arrow($font-size-base+0.1);
+               }
+            }
+            .main-menu-footer {
+               width: $menu-expanded-width;
+            }
+         }
+         //Content expanded
+         // .content,
+         .footer {
+            @include main-menu-width($menu-expanded-width);
+         }
+      }
+      //Vertical menu [Collapsed]
+      &.menu-collapsed {
+         //Navbar collapsed
+         .navbar {
+            .navbar-header {
+               @include menu-navbar-width($menu-collapsed-width);
+               .modern-nav-toggle {
+                  display: none;
+               }
+               &.expanded {
+                  width: $menu-expanded-width;
+                  z-index: 1000;
+                  .modern-nav-toggle {
+                     display: block;
+                  }
+                  .navbar-brand {
+                     .brand-text {
+                        animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+                     }
+                  }
+               }
+               .navbar-brand {
+                  .brand-text {
+                     animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadeout;
+                  }
+               }
+            }
+            .navbar-brand {
+               padding: 15px 0px;
+            }
+            // fixed-top navbar when menu-collapsed
+            &.fixed-top{
+               left: $menu-collapsed-width;
+            }
+         }
+         // Main menu collapsed
+         .main-menu {
+            width: $menu-collapsed-width;
+            transition: 300ms ease all;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0);
+            .main-menu-footer {
+               width: $menu-collapsed-width;
+            }
+            .main-menu-footer,
+            .main-menu-header .media-body .media-heading,
+            .main-menu-header .media-body .text-muted,
+            .main-menu-header .media-right {
+               display: none;
+            }
+            .main-menu-header .media-body {
+               opacity: 0;
+            }
+            .navbar-header .brand-text,
+            .modern-nav-toggle{
+               display: none;
+            }
+            .user-content {
+               padding: 20px 10px;
+            }
+
+            &:not(.expanded){
+              .navigation-header{
+                margin: 0;
+              }
+              .navigation li{
+                a{
+                  line-height: 1;
+                }
+                &:last-child{
+                  margin-bottom: 1.25rem !important;
+                }
+                &.active{
+                  a{
+                    background: whitesmoke;
+                    box-shadow: none;
+                    color: #565656;
+                  }
+                }
+              }
+            }
+
+            //Navigation collapsed
+            .navigation {
+               overflow: visible;
+               > li.navigation-header {
+                  .icon-minus {
+                     display: block;
+                     font-size: 1.2rem;
+                  }
+                  span {
+                     display: none;
+                  }
+               }
+               > li {
+                  > a {
+                     text-overflow: inherit;
+                     > span {
+                        animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadeout;
+                        &.badge {
+                           float: none !important;
+                        }
+                     }
+                     i {
+                        margin-right: 1rem;
+                        float: left;
+                        &:before {
+                           font-size: 1.429rem;
+                           // font-size: 1.2rem;
+                        }
+                     }
+                  }
+               }
+            }
+            .mTSWrapper {
+               overflow: visible;
+            }
+            &.expanded {
+               width: $menu-expanded-width;
+               .navigation {
+                  > li.navigation-header {
+                     .icon-minus {
+                        display: none;
+                     }
+                     span {
+                        display: block;
+                     }
+                  }
+                  > li {
+                     > a {
+                        > span {
+                           animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+                           &.badge {
+                              position: absolute;
+                              right: 20px;
+                           }
+                        }
+                     }
+                  }
+                  li {
+                     @include vertical-menu-has-sub-arrow(1rem);
+                  }
+               }
+               .navbar-header .brand-text{
+                  display: inline;
+               }
+               .modern-nav-toggle{
+                  display: block;
+               }
+            }
+         }
+         //Brand center content collapsed
+         .app-content,
+         .footer {
+            @include main-menu-width($menu-collapsed-width);
+         }
+         //  .app-content{
+          .header-navbar{
+            // margin-left: $menu-collapsed-width;
+              // Floating-navbar
+               &.floating-nav{
+                  width: calc(100vw - (100vw - 100%) - 4.4rem - 80px);
+               }
+               // Navbar-static-top
+               &.navbar-static-top{
+                width: calc(100vw - (100vw - 100%) - 80px);
+                left: 80px;
+               }
+            }
+
+        //  }
+         // Flipped menu collapsed
+         &.menu-flipped {
+            //Content collapsed flipped
+            .content {
+               @include vertical-flipped-menu($menu-collapsed-width);
+            }
+            @include media-breakpoint-up(sm) {
+               .main-menu {
+                  right: 0;
+                  span.menu-title {
+                     right: $menu-collapsed-width;
+                  }
+                  ul.menu-content {
+                     right: $menu-collapsed-width;
+                     left: inherit;
+                  }
+               }
+            }
+            //Navbar collapsed flipped
+            .navbar {
+               .navbar-header {
+                  float: right;
+               }
+               .navbar-container {
+                  @include vertical-flipped-menu($menu-collapsed-width);
+               }
+            }
+            .footer {
+               @include vertical-flipped-menu($menu-collapsed-width);
+            }
+         }
+      }
+   }
+}
+
+// Initially menu & content width for lg and up screen
+@include media-breakpoint-up(lg) {
+   body.vertical-layout {
+      &.vertical-menu-modern {
+         .main-menu {
+            width: $menu-expanded-width;
+            .navigation {
+                li.navigation-header .icon-minus {
+                   display: none;
+                }
+             }
+         }
+         .navbar {
+            .navbar-header {
+               width: $menu-expanded-width;
+            }
+         }
+         // .content,
+         .footer {
+            @include main-menu-width($menu-expanded-width);
+         }
+         &.menu-flipped {
+            //Content expanded flipped
+            .content {
+               @include vertical-flipped-menu($menu-expanded-width);
+            }
+            //Navbar expanded flipped
+            .navbar {
+               .navbar-header {
+                  float: right;
+               }
+               .navbar-container {
+                  @include vertical-flipped-menu($menu-expanded-width);
+               }
+            }
+            .footer {
+               @include vertical-flipped-menu($menu-expanded-width);
+            }
+         }
+      }
+   }
+}
+
+// Initially menu & content width for md and down screen
+@include media-breakpoint-down(lg) {
+   body.vertical-layout {
+      &.vertical-menu-modern {
+         .main-menu {
+            width: 0;
+            opacity: 0;
+            left: -260px;
+            .navigation {
+               > li > a > span {
+                  animation: 0.1s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadeout;
+               }
+               li.navigation-header span {
+                  display: none;
+               }
+            }
+         }
+         .navbar {
+            .navbar-header {
+               width: 0;
+            }
+         }
+         .content,
+         .footer {
+            @include main-menu-width(0);
+         }
+         &.menu-collapsed {
+            .app-content, .footer{
+               margin-left: 0;
+            }
+            .main-menu{
+               width: 0;
+            }
+         }
+      }
+      // &:not(.horizontal-layout){
+      //    &.navbar-floating{
+      //       .header-navbar{
+      //          width: calc(100% - 4.4rem) !important;
+      //       }
+      //    }
+      // }
+   }
+}
+
+// Initially menu & content width for sm and down screen
+@include media-breakpoint-down(sm) {
+   body.vertical-layout {
+      &.vertical-menu-modern {
+         .main-menu {
+            width: 0;
+         }
+         .navbar {
+            .navbar-header {
+               width: 0;
+            }
+         }
+         .content,
+         .footer {
+            @include main-menu-width(0);
+         }
+      }
+   }
+}
+
+@keyframes fadein {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+}
+@keyframes fadeout {
+   from {
+      opacity: 1;
+   }
+   to {
+      opacity: 0;
+   }
+}
+// IE Specific CSS
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+   body.vertical-menu-modern.vertical-layout .main-menu .navigation > li > a > span{
+      animation: none;
+   }
+}
+// Import vertical-overlay-menu.scss for small screen support
+@import "vertical-overlay-menu.scss";

@@ -2,8 +2,10 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
+use Illuminate\Validation\Validator;
 
 trait HasFormResponse
 {
@@ -16,13 +18,13 @@ trait HasFormResponse
      *
      * @return bool|\Illuminate\Http\JsonResponse
      */
-    public function ajaxResponse($message, $redirect = null, bool $status = true)
+    public function ajaxResponse(?string $message, ?string $redirect = null, bool $status = true)
     {
         if ($this->isAjaxRequest()) {
             return response()->json([
                 'status'   => $status,
                 'message'  => $message,
-                'redirect' => admin_url($redirect),
+                'redirect' => $redirect ? admin_url($redirect) : '',
             ]);
         }
 
@@ -30,18 +32,13 @@ trait HasFormResponse
     }
 
     /**
-     * Ajax but not pjax.
-     *
      * @param Request $request
      *
      * @return bool
      */
     public function isAjaxRequest(Request $request = null)
     {
-        /* @var Request $request */
-        $request = $request ?: (empty($this->request) ? request() : $this->request);
-
-        return $request->ajax() && ! $request->pjax();
+        return Helper::isAjaxRequest($request);
     }
 
     /**
@@ -130,20 +127,37 @@ trait HasFormResponse
         $status = (int) ($options['status_code'] ?? 302);
 
         if ($message) {
-            admin_alert($message);
+            admin_toastr($message);
         }
 
         return redirect(admin_url($url), $status);
     }
 
     /**
-     * @param array|MessageBag $validationMessages
+     * @param string|null  $url
+     * @param array|string $options
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function redirectToIntended(?string $url, $options = null)
+    {
+        $path = session()->pull('url.intended');
+
+        return $this->redirect($path ?: $url, $options);
+    }
+
+    /**
+     * @param array|MessageBag|\Illuminate\Validation\Validator $validationMessages
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function validationErrorsResponse($validationMessages)
     {
-        if (! $this->isAjaxRequest()) {
+        if ($validationMessages instanceof Validator) {
+            $validationMessages = $validationMessages->getMessageBag();
+        }
+
+        if (! static::isAjaxRequest()) {
             return back()->withInput()->withErrors($validationMessages);
         }
 

@@ -32,7 +32,7 @@ class MultipleFile extends File
      *
      * @return array
      */
-    protected function prepareToSave($file)
+    protected function prepareInputValue($file)
     {
         if ($path = request(static::FILE_DELETE_FLAG)) {
             $this->deleteFile($path);

@@ -1,0 +1,14 @@
+// code
+code {
+  box-shadow: 0 1px 1px rgba(0,0,0,0.125);
+  padding: 3px 5px;
+  background: #f7f7f9;
+  color: darken($primary, 8%);
+  font-family: Montserrat,Nunito,sans-serif;
+}
+pre {
+  padding: 7px;
+  white-space: pre-wrap;
+  margin-bottom: 0;
+  font-family: Montserrat,Nunito,sans-serif;
+}

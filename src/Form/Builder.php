@@ -8,6 +8,9 @@ use Dcat\Admin\Form\Step\Form as StepForm;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
+use Dcat\Admin\SimpleGrid;
+use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -93,7 +96,7 @@ class Builder
      *
      * @var string
      */
-    protected $view = 'admin::form';
+    protected $view = 'admin::form.container';
 
     /**
      * Form title.
@@ -103,7 +106,7 @@ class Builder
     protected $title;
 
     /**
-     * @var MultipleForm[]
+     * @var BlockForm[]
      */
     protected $multipleForms = [];
 
@@ -203,9 +206,9 @@ class Builder
     }
 
     /**
-     * @param MultipleForm $form
+     * @param BlockForm $form
      */
-    public function addForm(MultipleForm $form)
+    public function addForm(BlockForm $form)
     {
         $this->multipleForms[] = $form;
 
@@ -680,8 +683,13 @@ class Builder
             return;
         }
 
-        if (Str::contains($previous, url($this->getResource()))) {
-            $this->addHiddenField((new Hidden(static::PREVIOUS_URL_KEY))->value($previous));
+        if (
+            Str::contains($previous, url($this->getResource()))
+            && ! Helper::urlHasQuery($previous, [SimpleGrid::QUERY_NAME, DialogForm::QUERY_NAME])
+        ) {
+            $this->addHiddenField(
+                (new Hidden(static::PREVIOUS_URL_KEY))->value($previous)
+            );
         }
     }
 
@@ -832,7 +840,7 @@ EOF;
             return $wrapper($view);
         }
 
-        return "<div class='card da-box'>{$view->render()}</div>";
+        return "<div class='card dcat-box'>{$view->render()}</div>";
     }
 
     /**
@@ -842,30 +850,9 @@ EOF;
     {
         Admin::script(
             <<<JS
-(function () {
-    var f = $('#{$this->getElementId()}');
-
-    f.find('button.submit').click(function () {
-        var t = $(this);
-    
-        LA.Form({
-            \$form: f,
-            before: function () {
-                f.validator('validate');
-        
-                if (f.find('.has-error').length > 0) {
-                    return false;
-                }
-                t.button('loading').removeClass('waves-effect');
-            },
-            after: function () {
-                t.button('reset');
-            }
-        });
-    
-        return false;
-    });
-})()
+$('#{$this->getElementId()}').form({
+    validate: true,
+});
 JS
         );
     }

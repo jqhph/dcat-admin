@@ -1,0 +1,96 @@
+.btn {
+  padding: 0.83rem 1.2rem !important;
+  font-size: .95rem;
+  height: 37.6px;
+  line-height: 1.2;
+  border-radius: 0.2rem;
+  box-shadow: $btn-shadow;
+}
+
+.btn-group {
+  .btn {
+    box-shadow: none;
+  }
+  .btn:not(.btn-white):hover {
+    box-shadow: $shadow-200;
+  }
+  .btn.btn-white {
+    box-shadow: $btn-group-btn-shadow;
+  }
+
+  box-shadow: $btn-shadow;
+}
+
+.btn-sm, .btn-group-sm > .btn {
+  padding: 0.6rem 1rem !important;
+  font-size: 0.6rem;
+  line-height: 1;
+  height: 30px;
+}
+
+//a.btn-sm, .btn-group-sm > a.btn {
+//  padding: 0.6rem 1rem !important;
+//}
+
+.btn-custom {
+  background: $custom;
+  border-color: $custom;
+  color: $white;
+}
+
+.btn-custom:hover {
+  color: $white;
+  box-shadow: 0 8px 25px -8px $custom;
+}
+
+.btn-outline-custom {
+  background: $white;
+  border: 1px solid $custom;
+  color: $custom;
+  box-shadow: none;
+}
+
+.btn-outline-custom:hover {
+  background: rgba($custom, .15);
+  color: $custom;
+}
+
+.btn.btn-white {
+  color: $font-color;
+}
+.btn.btn-white.btn-primary, .btn.btn-white.btn-primary:hover, .btn.btn-white.btn-primary:focus {
+  color: $white !important;
+}
+.btn-white:hover {
+  box-shadow: $btn-shadow-hover !important;
+}
+
+.btn-light {
+  border-color: #f7f7f9!important;
+  background-color: #f7f7f9!important;
+  color: #444;
+}
+
+.btn-light:hover, .btn-light:focus {
+  box-shadow: $btn-shadow-hover!important;
+  color: #444!important;
+}
+
+.btn-no-shadow {
+  box-shadow: none;
+}
+
+.btn-outline-primary, .btn-outline-success, .btn-outline-danger, .btn-outline-info, .btn-outline-warning, .btn-outline-dark,
+.btn-flat-primary, .btn-flat-success, .btn-flat-danger, .btn-flat-info, .btn-flat-warning, .btn-flat-dark {
+  box-shadow: none;
+}
+
+.input-group-sm > .form-control, .input-group-sm > .custom-select, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
+  padding: 0.5rem .7rem;
+}
+
+// loading
+.btn:not(.btn-sm) .spinner-grow, a:not(.btn) .spinner-grow {
+  margin-bottom: .15rem;
+}
+

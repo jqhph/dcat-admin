@@ -7,41 +7,41 @@
 
 <div class="box-body">
     @if($steps->count())
-        <div class="fields-group la-step-box" style="padding: {{ $steps->getOption('padding') }};max-width: {{ $steps->getOption('width') }}">
+        <div class="fields-group dcat-step-box" style="padding: {{ $steps->getOption('padding') }};max-width: {{ $steps->getOption('width') }}">
 
-            <ul class="la-step-horizontal la-step-label-horizontal la-step ">
+            <ul class="dcat-step-horizontal dcat-step-label-horizontal dcat-step ">
                 @foreach($steps->all() as $step)
-                <li class="la-step-item">
-                    <a href="#{{ $step->getElementId() }}" class="la-step-item-container">
-                        <div class="la-step-line"></div>
-                        <div class="la-step-icons">
-                            <span class="la-step-icon" data-index="{{ $step->index() }}">{{ $step->index() + 1 }}</span>
+                <li class="dcat-step-item">
+                    <a href="#{{ $step->getElementId() }}" class="dcat-step-item-container">
+                        <div class="dcat-step-line"></div>
+                        <div class="dcat-step-icons">
+                            <span class="dcat-step-icon" data-index="{{ $step->index() }}">{{ $step->index() + 1 }}</span>
                         </div>
-                        <div class="la-step-content">
-                            <div class="la-step-title">{!! $step->title() !!}</div>
-                            <div class="la-step-desc"> {{ $step->description() }} </div>
+                        <div class="dcat-step-content">
+                            <div class="dcat-step-title">{!! $step->title() !!}</div>
+                            <div class="dcat-step-desc"> {{ $step->description() }} </div>
                         </div>
                     </a>
                 </li>
                 @endforeach
 
-                <li class="la-step-item">
-                    <a href="#{{ $steps->done()->getElementId() }}" class="la-step-item-container">
-                        <div class="la-step-line"></div>
-                        <div class="la-step-icons">
-                            <span class="la-step-icon" data-index="{{ $steps->count() }}"> {{ $steps->count() + 1 }} </span>
+                <li class="dcat-step-item">
+                    <a href="#{{ $steps->done()->getElementId() }}" class="dcat-step-item-container">
+                        <div class="dcat-step-line"></div>
+                        <div class="dcat-step-icons">
+                            <span class="dcat-step-icon" data-index="{{ $steps->count() }}"> {{ $steps->count() + 1 }} </span>
                         </div>
-                        <div class="la-step-content">
-                            <div class="la-step-title">{{ $steps->done()->title() }}</div>
-                            <div class="la-step-desc"></div>
+                        <div class="dcat-step-content">
+                            <div class="dcat-step-title">{{ $steps->done()->title() }}</div>
+                            <div class="dcat-step-desc"></div>
                         </div>
                     </a>
                 </li>
             </ul>
-            <div class="la-step-form">
+            <div class="dcat-step-form">
                 {!! $steps->build() !!}
 
-                <div id="{{ $steps->done()->getElementId() }}" class="la-done-step" style="display: none;">
+                <div id="{{ $steps->done()->getElementId() }}" class="dcat-done-step" style="display: none;">
                 </div>
             </div>
         </div>
@@ -61,9 +61,9 @@ $lastStep = $step;
 @endphp
 
 <script>
-LA.ready(function () {
+Dcat.ready(function () {
     var form = $('#{{ $form->getElementId() }}'),
-        box = form.find('.la-step-box'),
+        box = form.find('.dcat-step-box'),
         stepInput = form.find('.current-step-input'),
         allStepInput = form.find('.all-steps-input'),
         smartWizard,
@@ -71,7 +71,7 @@ LA.ready(function () {
 
     var submitBtn = $('<button style="margin-left: 10px"></button>')
         .text('{{ trans('admin.submit') }}')
-        .addClass('btn btn-primary step-submit-btn disabled hide')
+        .addClass('btn btn-primary step-submit-btn disabled d-none')
         .on('click', function(){
             var $t = $(this);
 
@@ -86,22 +86,22 @@ LA.ready(function () {
 
             allStepInput.val("1");
             stepInput.val("");
-            $t.button('loading').removeClass('waves-effect');
+            $t.buttonLoading().removeClass('waves-effect');
             isSubmitting = 1;
 
             // 提交完整表单
             submit(function (state, data) {
-                $t.button('reset');
+                $t.buttonLoading(false);
                 isSubmitting = 0;
 
                 if (state) {
                     if (data) {
-                        form.find('.la-done-step').html(data);
+                        form.find('.dcat-done-step').html(data);
                     }
 
                     smartWizard.next();
 
-                    toggle_btn();
+                    toggleBtn();
                 }
             });
 
@@ -138,7 +138,7 @@ LA.ready(function () {
             callbacks.push({!! $fun !!});
         @endforeach
 
-        return call_listeners(callbacks, build_args(e, tab, idx, direction));
+        return callListeners(callbacks, buildArgs(e, tab, idx, direction));
         @endif
 
     }).on('showStep', function (e, tab, idx, direction) {
@@ -150,14 +150,14 @@ LA.ready(function () {
         callbacks.push({!! $fun !!});
         @endforeach
 
-        return call_listeners(callbacks, build_args(e, tab, idx, direction));
+        return callListeners(callbacks, buildArgs(e, tab, idx, direction));
         @endif
     });
 
     @if ($steps->getOption('leaving') || $steps->getOption('shown'))
 
     // 执行回调函数
-    function call_listeners(func, args) {
+    function callListeners(func, args) {
         for (var i in func) {
             if (func[i](args) === false) {
                 return false;
@@ -166,24 +166,24 @@ LA.ready(function () {
     }
 
     // 获取步骤表单
-    function get_form(idx) {
-        return box.find('.la-step-form [data-toggle="validator"]').eq(idx);
+    function getForm(idx) {
+        return box.find('.dcat-step-form [data-toggle="validator"]').eq(idx);
     }
 
     // 构建参数
-    function build_args(e, tab, idx, direction) {
+    function buildArgs(e, tab, idx, direction) {
         return {
             event: e,
             tab: tab,
             index: idx,
             direction: direction,
-            form: get_form(idx),
+            form: getForm(idx),
             getFrom: function (idx) {
-                return get_form(idx)
+                return getForm(idx)
             },
-            formArray: get_form(idx).formToArray(),
+            formArray: getForm(idx).formToArray(),
             getFormArray: function (idx) {
-                return get_form(idx).formToArray();
+                return getForm(idx).formToArray();
             }
         };
     }
@@ -198,7 +198,7 @@ LA.ready(function () {
             smartWizard.prev();
         }
 
-        toggle_btn();
+        toggleBtn();
     });
 
     // 下一步
@@ -217,13 +217,13 @@ LA.ready(function () {
         }
 
         var self = this;
-        $(self).button('loading').removeClass('waves-effect');
+        $(self).buttonLoading().removeClass('waves-effect');
         isSubmitting = 1;
 
         // 发送表单到服务器进行验证
         stepInput.val(smartWizard.current_index);
         submit(function (state) {
-            $(self).button('reset');
+            $(self).buttonLoading(false);
             isSubmitting = 0;
 
             if (state) {
@@ -232,7 +232,7 @@ LA.ready(function () {
                     smartWizard.next();
                 }
 
-                toggle_btn();
+                toggleBtn();
             }
 
         });
@@ -240,8 +240,8 @@ LA.ready(function () {
 
     // 提交表单
     function submit(after) {
-        LA.Form({
-            $form: form,
+        Dcat.Form({
+            form: form,
             after: function (state, b, c, d) {
                 after(state, b, c, d);
 
@@ -253,16 +253,16 @@ LA.ready(function () {
     }
 
     // 按钮显示隐藏切换
-    function toggle_btn() {
+    function toggleBtn() {
         var last = {{ $lastStep->index() }},
             sbm = box.find('.step-submit-btn');
 
         if (smartWizard.current_index == last) {
-            sbm.removeClass('disabled hide');
+            sbm.removeClass('disabled d-none');
             next.hide();
             prev.show();
         } else {
-            sbm.addClass('disabled hide');
+            sbm.addClass('disabled d-none');
             if (smartWizard.current_index !== 0) {
                 prev.show();
             } else {
@@ -279,7 +279,7 @@ LA.ready(function () {
         }
     }
 
-    toggle_btn();
+    toggleBtn();
 });
 </script>
 

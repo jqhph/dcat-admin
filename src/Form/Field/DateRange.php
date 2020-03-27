@@ -2,11 +2,16 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 
 class DateRange extends Field
 {
+    public static $js = [
+        '@moment',
+        '@bootstrap-datetimepicker',
+    ];
+    public static $css = '@bootstrap-datetimepicker';
+
     protected $format = 'YYYY-MM-DD';
 
     /**
@@ -28,7 +33,7 @@ class DateRange extends Field
         $this->options(['format' => $this->format]);
     }
 
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         if ($value === '') {
             $value = null;
@@ -84,11 +89,5 @@ JS;
         }
 
         return $result;
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectComponentAssets('moment');
-        Admin::collectComponentAssets('bootstrap-datetimepicker');
     }
 }

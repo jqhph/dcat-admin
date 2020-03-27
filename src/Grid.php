@@ -27,7 +27,7 @@ class Grid
         Concerns\HasActions,
         Concerns\HasPaginator,
         Concerns\HasExporter,
-        Concerns\HasMultipleHeaders,
+        Concerns\HasComplexHeaders,
         Concerns\HasSelector,
         Concerns\HasQuickCreate,
         Concerns\HasQuickSearch,
@@ -113,7 +113,7 @@ class Grid
      *
      * @var string
      */
-    protected $view = 'admin::grid.table';
+    protected $view = 'admin::grid.data-list-view-table';
 
     /**
      * @var Closure
@@ -169,7 +169,7 @@ class Grid
         'show_toolbar'           => true,
         'create_mode'            => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'       => ['700px', '670px'],
-        'table_header_style'     => 'table-header-gray',
+        'table_class'            => null,
     ];
 
     /**
@@ -265,7 +265,7 @@ class Grid
      */
     public function number(?string $label = null)
     {
-        return $this->addColumn('#', $label ?: '#')->bold();
+        return $this->addColumn('#', $label ?: '#');
     }
 
     /**
@@ -342,7 +342,7 @@ class Grid
     /**
      * @return array
      */
-    public function columnNames()
+    public function getColumnNames()
     {
         return $this->columnNames;
     }
@@ -568,7 +568,7 @@ class Grid
         }
 
         return <<<HTML
-<div class="box-header clearfix" style="border-top:1px solid #ebeff2">{$content}</div>
+<div class="card-header clearfix" style="border-bottom: 0;background: transparent;padding: 0">{$content}</div>
 HTML;
     }
 

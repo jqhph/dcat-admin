@@ -57,9 +57,19 @@ class Admin
     protected static $favicon;
 
     /**
-     * Returns the long version of dcat-admin.
+     * @var array
+     */
+    public static $jsVariables = [];
+
+    /**
+     * @var string
+     */
+    public static $pjaxContainerId = 'pjax-container';
+
+    /**
+     * 版本.
      *
-     * @return string The long application version
+     * @return string
      */
     public static function longVersion()
     {
@@ -67,7 +77,15 @@ class Admin
     }
 
     /**
-     * Left sider-bar menu.
+     * @return Color
+     */
+    public static function color()
+    {
+        return app('admin.color');
+    }
+
+    /**
+     * 菜单管理.
      *
      * @param Closure|null $builder
      *
@@ -83,7 +101,7 @@ class Admin
     }
 
     /**
-     * Get or set admin title.
+     * 设置 title.
      *
      * @return string|void
      */
@@ -121,7 +139,7 @@ class Admin
     }
 
     /**
-     * Get current login user.
+     * 获取登录用户模型.
      *
      * @return Model|Authenticatable|HasPermissions
      */
@@ -131,8 +149,6 @@ class Admin
     }
 
     /**
-     * Attempt to get the guard from the local cache.
-     *
      * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard|GuardHelpers
      */
     public static function guard()
@@ -141,8 +157,6 @@ class Admin
     }
 
     /**
-     * Navbar.
-     *
      * @param Closure|null $builder
      *
      * @return Navbar
@@ -157,7 +171,7 @@ class Admin
     }
 
     /**
-     * Get section manager.
+     * section.
      *
      * @param Closure|null $builder
      *
@@ -173,7 +187,7 @@ class Admin
     }
 
     /**
-     * Register the admin routes.
+     * 注册路由.
      *
      * @return void
      */
@@ -184,12 +198,10 @@ class Admin
             'middleware' => config('admin.route.middleware'),
         ];
 
-        app('router')->group($attributes, function ($router) {
-            $enableAuth = config('admin.auth.enable', true);
-
-            /* @var \Illuminate\Routing\Router $router */
-            $router->namespace('Dcat\Admin\Controllers')->group(function ($router) use ($enableAuth) {
-                if ($enableAuth) {
+        if (config('admin.auth.enable', true)) {
+            app('router')->group($attributes, function ($router) {
+                /* @var \Illuminate\Routing\Router $router */
+                $router->namespace('Dcat\Admin\Controllers')->group(function ($router) {
                     /* @var \Illuminate\Routing\Router $router */
                     $router->resource('auth/users', 'UserController');
                     $router->resource('auth/menu', 'MenuController', ['except' => ['create', 'show']]);
@@ -199,13 +211,8 @@ class Admin
                         $router->resource('auth/roles', 'RoleController');
                         $router->resource('auth/permissions', 'PermissionController');
                     }
-                }
+                });
 
-                $router->post('_handle_action_', 'HandleActionController@handle')->name('admin.handle-action');
-                $router->post('_handle_form_', 'HandleFormController@handle')->name('admin.handle-form');
-            });
-
-            if ($enableAuth) {
                 $authController = config('admin.auth.controller', AuthController::class);
 
                 $router->get('auth/login', $authController.'@getLogin');
@@ -213,18 +220,42 @@ class Admin
                 $router->get('auth/logout', $authController.'@getLogout');
                 $router->get('auth/setting', $authController.'@getSetting');
                 $router->put('auth/setting', $authController.'@putSetting');
-            }
-        });
+            });
+        }
 
         static::registerHelperRoutes();
     }
 
     /**
-     * Register the helpers routes.
+     * 注册api路由
      *
      * @return void
      */
-    protected static function registerHelperRoutes()
+    public static function registerApiRoutes()
+    {
+        $attributes = [
+            'prefix' => admin_base_path('dcat-api'),
+            'middleware' => config('admin.route.middleware'),
+            'as' => 'dcat.api.',
+        ];
+
+        app('router')->group($attributes, function ($router) {
+            /* @var \Illuminate\Routing\Router $router */
+            $router->namespace('Dcat\Admin\Controllers')->group(function ($router) {
+                /* @var \Illuminate\Routing\Router $router */
+                $router->post('action', 'HandleActionController@handle')->name('action');
+                $router->post('form', 'HandleFormController@handle')->name('form');
+                $router->post('value', 'ValueController@handle')->name('value');
+            });
+        });
+    }
+
+    /**
+     * 注册开发工具路由.
+     *
+     * @return void
+     */
+    public static function registerHelperRoutes()
     {
         if (! config('admin.helpers.enable', true) || ! config('app.debug')) {
             return;
@@ -240,16 +271,14 @@ class Admin
             $router->get('helpers/scaffold', 'Dcat\Admin\Controllers\ScaffoldController@index');
             $router->post('helpers/scaffold', 'Dcat\Admin\Controllers\ScaffoldController@store');
             $router->post('helpers/scaffold/table', 'Dcat\Admin\Controllers\ScaffoldController@table');
-            $router->get('helpers/routes', 'Dcat\Admin\Controllers\RouteController@index');
             $router->get('helpers/icons', 'Dcat\Admin\Controllers\IconController@index');
-            $router->resource('helpers/extensions', 'Dcat\Admin\Controllers\ExtensionController', ['only' => ['index', 'update']]);
+            $router->resource('helpers/extensions', 'Dcat\Admin\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
             $router->post('helpers/extensions/import', 'Dcat\Admin\Controllers\ExtensionController@import');
-            $router->post('helpers/extensions/create', 'Dcat\Admin\Controllers\ExtensionController@create');
         });
     }
 
     /**
-     * Create a repository instance.
+     * 创建数据仓库实例.
      *
      * @param string|Repository|Model|Builder $value
      * @param array                   $args
@@ -280,7 +309,7 @@ class Admin
     }
 
     /**
-     * Get all registered extensions.
+     * 获取所有已注册的扩展.
      *
      * @return array
      */
@@ -290,7 +319,7 @@ class Admin
     }
 
     /**
-     * Get available extensions.
+     * 获取所有可用扩展.
      *
      * @return Extension[]
      */
@@ -313,7 +342,7 @@ class Admin
     }
 
     /**
-     * Extend a extension.
+     * 注册扩展.
      *
      * @param string $class
      *
@@ -325,7 +354,7 @@ class Admin
     }
 
     /**
-     * Enable the extension.
+     * 启用扩展.
      *
      * @param string $class
      * @param bool   $enable
@@ -350,7 +379,7 @@ class Admin
     }
 
     /**
-     * Disable the extension.
+     * 禁用扩展.
      *
      * @param string $class
      *
@@ -388,7 +417,7 @@ class Admin
     }
 
     /**
-     * Call booting callbacks.
+     * @return void
      */
     public static function callBooting()
     {
@@ -396,10 +425,25 @@ class Admin
     }
 
     /**
-     * Call booted callbacks.
+     * @return void
      */
     public static function callBooted()
     {
         Event::dispatch('admin.booted');
+    }
+
+    /**
+     * 获取js配置.
+     *
+     * @return string
+     */
+    public static function jsVariables()
+    {
+        static::$jsVariables['pjax_container_selector'] = '#'.static::$pjaxContainerId;
+        static::$jsVariables['token'] = csrf_token();
+        static::$jsVariables['lang'] = __('admin.client') ?: [];
+        static::$jsVariables['colors'] = static::color()->all();
+
+        return json_encode(static::$jsVariables);
     }
 }

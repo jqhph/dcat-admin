@@ -1,0 +1,16 @@
+.vs-checkbox-con {
+  margin: 0;
+
+  input {
+    z-index: 5;
+  }
+
+  .vs-checkbox {
+    width: 17px;
+    height: 17px;
+  }
+}
+.vs-checkbox-con input:checked ~ .vs-checkbox .vs-checkbox--check .vs-icon {
+  font-size: 1rem;
+  margin-top: -1px;
+}

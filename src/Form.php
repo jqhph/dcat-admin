@@ -14,7 +14,7 @@ use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
-use Dcat\Admin\Widgets\ModalForm;
+use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\MessageProvider;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -41,7 +41,6 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Id                     id($column, $label = '')
  * @method Field\Ip                     ip($column, $label = '')
  * @method Field\Url                    url($column, $label = '')
- * @method Field\Color                  color($column, $label = '')
  * @method Field\Email                  email($column, $label = '')
  * @method Field\Mobile                 mobile($column, $label = '')
  * @method Field\Slider                 slider($column, $label = '')
@@ -81,10 +80,6 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Timezone               timezone($column, $label = '')
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
- * @method Field\BootstrapFile          bootstrapFile($column, $label = '')
- * @method Field\BootstrapImage         bootstrapImage($column, $label = '')
- * @method Field\BootstrapMultipleImage bootstrapMultipleImage($column, $label = '')
- * @method Field\BootstrapMultipleFile  bootstrapMultipleFile($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -110,7 +105,6 @@ class Form implements Renderable
     protected static $availableFields = [
         'button'         => Field\Button::class,
         'checkbox'       => Field\Checkbox::class,
-        'color'          => Field\Color::class,
         'currency'       => Field\Currency::class,
         'date'           => Field\Date::class,
         'dateRange'      => Field\DateRange::class,
@@ -159,11 +153,6 @@ class Form implements Renderable
         'timezone'       => Field\Timezone::class,
         'keyValue'       => Field\KeyValue::class,
         'tel'            => Field\Tel::class,
-
-        'bootstrapFile'          => Field\BootstrapFile::class,
-        'bootstrapImage'         => Field\BootstrapImage::class,
-        'bootstrapMultipleFile'  => Field\BootstrapMultipleFile::class,
-        'bootstrapMultipleImage' => Field\BootstrapMultipleImage::class,
     ];
 
     /**
@@ -288,7 +277,7 @@ class Form implements Renderable
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
         $this->model(new Fluent());
-        $this->prepareModalForm();
+        $this->prepareDialogForm();
         $this->callResolving();
     }
 
@@ -466,7 +455,7 @@ class Form implements Renderable
         $this->builder->mode(Builder::MODE_EDIT);
         $this->builder->setResourceId($id);
 
-        $this->setFieldValue();
+        $this->model(new Fluent($this->repository->edit($this)));
 
         return $this;
     }
@@ -538,6 +527,8 @@ class Form implements Renderable
 
             $this->model(new Fluent($data));
 
+            $this->setFieldOriginalValue();
+
             $this->build();
 
             if (($response = $this->callDeleting()) instanceof Response) {
@@ -576,6 +567,10 @@ class Form implements Renderable
      */
     public function store(?array $data = null, $redirectTo = null)
     {
+        if ($data) {
+            $this->request->replace($data);
+        }
+
         $data = $data ?: $this->request->all();
 
         if ($response = $this->beforeStore($data)) {
@@ -685,7 +680,7 @@ class Form implements Renderable
     }
 
     /**
-     * Get or Set data for insert or update.
+     * Get or set data for insert or update.
      *
      * @param array $updates
      *
@@ -737,6 +732,10 @@ class Form implements Renderable
         ?array $data = null,
         $redirectTo = null
     ) {
+        if ($data) {
+            $this->request->replace($data);
+        }
+
         $data = $data ?: $this->request->all();
 
         if ($response = $this->beforeUpdate($id, $data)) {
@@ -769,7 +768,11 @@ class Form implements Renderable
         $this->builder->setResourceId($id);
         $this->builder->mode(Builder::MODE_EDIT);
 
+        $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
+
         $this->build();
+
+        $this->setFieldOriginalValue();
 
         if ($response = $this->callSubmitted()) {
             return $response;
@@ -784,9 +787,6 @@ class Form implements Renderable
         $data = $this->handleEditable($data);
 
         $data = $this->handleFileDelete($data);
-
-        $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
-        $this->setFieldOriginalValue();
 
         if ($response = $this->handleOrderable($data)) {
             return $response;
@@ -808,7 +808,7 @@ class Form implements Renderable
      * @param $key
      * @param $redirectTo
      *
-     * @return string|false
+     * @return string|null
      */
     public function redirectUrl($key, $redirectTo = null)
     {
@@ -822,7 +822,7 @@ class Form implements Renderable
         if ($this->request->get('after-save') == 1) {
             // continue editing
             if ($this->builder->isEditing() && $this->isAjaxRequest()) {
-                return false;
+                return null;
             }
 
             return rtrim($resourcesPath, '/')."/{$key}/edit";
@@ -1100,28 +1100,10 @@ class Form implements Renderable
      */
     protected function setFieldOriginalValue()
     {
-        $values = $this->model->toArray();
-
-        $this->builder->fields()->each(function (Field $field) use ($values) {
-            $field->setOriginal($values);
-        });
-    }
-
-    /**
-     * Set all fields value in form.
-     *
-     * @return void
-     */
-    protected function setFieldValue()
-    {
-        $this->callEditing();
-
-        $data = $this->model->toArray();
+        $data = $this->model()->toArray();
 
         $this->builder->fields()->each(function (Field $field) use ($data) {
-            if (! in_array($field->column(), $this->ignored)) {
-                $field->fill($data);
-            }
+            $field->setOriginal($data);
         });
     }
 
@@ -1159,17 +1141,30 @@ class Form implements Renderable
      */
     protected function rendering()
     {
-        if ($isEditing = $this->isEditing()) {
-            $this->model(new Fluent($this->repository->edit($this)));
-        }
-
         $this->build();
 
-        if ($isEditing) {
-            $this->setFieldValue();
-        } else {
+        if ($this->isCreating()) {
             $this->callCreating();
+
+            return;
         }
+
+        $this->fillFields($this->model()->toArray());
+        $this->callEditing();
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function fillFields(array $data)
+    {
+        $this->builder->fields()->each(function (Field $field) use ($data) {
+            if (! in_array($field->column(), $this->ignored, true)) {
+                $field->fill($data);
+            }
+        });
     }
 
     /**
@@ -1603,12 +1598,18 @@ class Form implements Renderable
     /**
      * @param int     $width
      * @param Closure $callback
+     *
+     * @return $this
      */
     public function block(int $width, \Closure $callback)
     {
         $layout = $this->builder->layout();
 
-        $layout->column($width, $callback($layout->form()));
+        $callback($form = $layout->form());
+
+        $layout->column($width, $form);
+
+        return $this;
     }
 
     /**
@@ -1626,9 +1627,9 @@ class Form implements Renderable
     /**
      * @return $this
      */
-    protected function prepareModalForm()
+    protected function prepareDialogForm()
     {
-        ModalForm::prepare($this);
+        DialogForm::prepare($this);
 
         return $this;
     }
@@ -1638,27 +1639,27 @@ class Form implements Renderable
      *
      * @return bool|void
      */
-    public function inModal(\Closure $callback = null)
+    public function inDialog(\Closure $callback = null)
     {
         if (! $callback) {
-            return ModalForm::is();
+            return DialogForm::is();
         }
 
-        if (ModalForm::is()) {
+        if (DialogForm::is()) {
             $callback($this);
         }
     }
 
     /**
-     * Create a modal form.
+     * Create a dialog form.
      *
      * @param string|null $title
      *
-     * @return ModalForm
+     * @return DialogForm
      */
-    public static function modal(?string $title = null)
+    public static function dialog(?string $title = null)
     {
-        return new ModalForm($title);
+        return new DialogForm($title);
     }
 
     /**

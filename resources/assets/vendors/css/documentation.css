@@ -1,0 +1,64 @@
+/*================================================================================================
+  File Name: documentation.scss
+  Description: This is only documentation related css file, this is theme related css.
+  ----------------------------------------------------------------------------------------------
+  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+  Author: PIXINVENT
+  Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================================*/
+
+body {
+  position: relative;
+}
+/* Right Sidebar */
+.affix {
+    position: fixed;
+    margin: 0 1.5rem 0 0;
+    width: 240px;
+}
+/* navbar buttons */
+.btn-doc-header{
+    margin-right: 1rem;
+}
+
+ul#page-navigation-list{
+  display: block !important;
+}
+ul#page-navigation-list li ul.nav{
+  display:none;
+}
+ul#page-navigation-list li ul.nav{
+  display:none;
+}
+ul#page-navigation-list li a.active + ul.nav{
+  display:block;
+}
+ul#page-navigation-list li a.nav-link{
+  padding:0;
+  padding-left:10px;
+  line-height: 1.8;
+  color: #626262;
+}
+ul#page-navigation-list li a{
+  border-left:2px solid #fff;
+}
+ul#page-navigation-list li a.active{
+  border-left:2px solid black;
+}
+ul#page-navigation-list li ul li a{
+  border-left:1px solid #fff;
+  padding-left:30px;
+  font-size: 85%;
+}
+ul#page-navigation-list li ul li a.active{
+  border-left:1px solid black;
+}
+
+.token.footer, .token.content{
+  margin:0 !important;
+}
+.sidebar-right .component-sidebar .card-content{
+  position: relative;
+  height: calc(100vh - 230px);
+  overflow-y: auto;
+}

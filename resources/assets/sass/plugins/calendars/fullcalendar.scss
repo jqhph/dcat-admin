@@ -1,0 +1,233 @@
+// // Core variables and mixins
+// Core variables and mixins
+@import "../../bootstrap/functions";
+@import "../../bootstrap/mixins";
+@import "../../bootstrap-extended/mixins";
+
+
+// Core variables and mixins overrides
+@import "../../core/variables/variables";
+@import "../../bootstrap/variables";
+
+// Overrides user variable
+@import "../../core/variables/components-variables";
+
+@import '../../bootstrap/buttons';
+
+$pastMonthBgColor: #f1f1f1;
+$calendarBorderColor: #e0e0e0;
+
+// Full calendar styles
+.fc{
+  // header buttons and bullets styles
+  .fc-header-toolbar{
+    margin-bottom: 2rem;
+    .bullets-group-1,
+    .bullets-group-2{
+      display: flex;
+      align-items: center;
+      margin-left: 0;
+      margin: .5rem auto;
+    }
+    .bullets-group-2{
+      margin-bottom: 0;
+    }
+    .fc-right{
+      div:first-child{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        h2{
+          font-weight: 400;
+          font-size: 1.3rem;
+          margin: 0 0.5rem;
+        }
+      }
+      .fc-button{
+        border-radius: 50%;
+        padding: .4rem .4rem;
+        height: 24px;
+        width: 24px;
+        &.fc-prev-button{
+          margin-right: 0.5rem;
+          .fc-icon{
+            position: relative;
+            top: -6px;
+            left: -4px;
+          }
+        }
+        &.fc-next-button{
+          margin-left: 0.5rem;
+          .fc-icon{
+            position: relative;
+            top: -6px;
+            right: 3px;
+          }
+        }
+      }
+    }
+    .fc-addNew-button{
+      padding: .65rem 2rem;
+      &:before{
+        font-family: "feather";
+        content: "\e8b1";
+      }
+    }
+  }
+
+  // calendar body styles
+  .fc-view-container{
+    .fc-head{
+      .fc-head-container{
+        thead{
+          .fc-day-header {
+            padding: 1px 0;
+            &.fc-today{
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+    .fc-body{
+      .fc-week{
+          table{
+            tbody{
+              .fc-day{
+                cursor: pointer;
+                &.fc-today{
+                  background  : transparent;
+                }
+              }
+              .fc-other-month{
+                background-color: $pastMonthBgColor;
+              }
+            }
+          }
+      }
+
+      // date rounded bg
+      .fc-day-top.fc-today{
+        a{
+          background-color: $primary;
+          color: $white;
+          padding: 5px 10px;
+          margin-top: 2px;
+          margin-right: 2px;
+          border-radius: 50%;
+        }
+      }
+
+
+      // opacity of add new event
+      .fc-not-end,
+      .fc-not-start{
+        padding: 1px 8px !important;
+        opacity: 1 !important;
+        .fc-title{
+          padding-left: 1rem;
+        }
+      }
+      .fc-not-start{
+        margin-left: -6px !important;
+      }
+      .fc-not-end{
+        margin-right: -6px !important;
+      }
+    }
+    td,
+    th{
+      border-color: $calendarBorderColor;
+      font-size: 1rem;
+    }
+  }
+
+  // button styles
+  .fc-button{
+    @extend .btn;
+    @extend .btn-outline-primary;
+    padding: 0.6rem 1rem;
+    height: auto;
+    outline: none;
+    text-shadow: none;
+    background-color: $primary;
+    color: $white;
+      &:not(:disabled).fc-button-active{
+        background-color: darken($color: $primary, $amount: 10%)
+      }
+      &:focus{
+        outline: none;
+        box-shadow: none;
+      }
+  }
+
+  // calendar event styles
+  .fc-event{
+    background:$primary;
+    border: 1px solid darken($primary,5%);
+    padding: 1px 8px;
+    border-radius: 1rem;
+    border: none;
+    padding-left: 1rem;
+    .fc-title{
+      font-size: .85rem;
+      color: $white;
+    }
+  }
+}
+
+// add event modal dropdown toggle styles
+.modal-calendar{
+.calendar-dropdown{
+  .dropdown-toggle{
+    font-size: 1.2rem;
+    &:after{
+      display: none;
+    }
+  }
+}
+#cal-start-date{
+  &:disabled{
+    opacity: .5;
+  }
+}
+}
+
+// calendar header responsive styles
+@media(max-width: 900px){
+.fc{
+  .fc-header-toolbar{
+    margin-bottom: 2rem;
+    .bullets-group-1{
+      [class*="category-"]{
+        margin: .3rem 0;
+      }
+    }
+  }
+}
+}
+
+@include media-breakpoint-down(sm) {
+.fc{
+  .fc-header-toolbar{
+    flex-direction: column;
+    margin-bottom: 2rem;
+    .bullets-group-1{
+      display: none;
+    }
+    .fc-left{
+      margin-bottom: 1rem;
+    }
+    .fc-center{
+      margin: 1 auto;
+      margin-bottom: 0;
+    }
+    .fc-right{
+      margin: 1rem auto;
+      div:first-child{
+        justify-content: center;
+      }
+    }
+  }
+}
+}

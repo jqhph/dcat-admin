@@ -28,8 +28,11 @@ return [
     'client' => [
         'delete_confirm'    => 'Are you sure to delete this item ?',
         'confirm'           => 'Confirm',
-        'cancel'            => 'cancel',
+        'cancel'            => 'Cancel',
         'refresh_succeeded' => 'Refresh succeeded !',
+        'close'             => 'Close',
+        'selected_options'  => ':num options selected',
+        'exceed_max_item'   => 'Maximum items exceeded.',
 
         '500' => 'Internal server error !',
         '403' => 'Permission deny !',
@@ -156,8 +159,8 @@ return [
         'filter_placeholder' => 'Filter',
     ],
     'responsive' => [
-        'display'     => '<i class="fa fa-th-list"></i>',
-        'display_all' => '<i class="fa fa-th"></i>',
+        'display_all' => 'Display all',
+        'display'     => 'Display',
         'focus'       => 'Focus',
     ],
     'uploader' => [
@@ -184,10 +187,13 @@ return [
         'F_DUPLICATE'            => 'Duplicate file.',
     ],
     'import_extension_confirm' => 'Are you sure import the extension?',
-    'selected_must_less_then'  => 'Only supports maximum :num options.',
     'quick_create'             => 'Quick create',
     'grid_items_selected'      => '{n} items selected',
     'nothing_updated'          => 'Nothing has been updated.',
+    'welcome_back'             => 'Welcome back, please login to your account.',
+    'documentation'            => 'Documentation',
+    'demo'                     => 'Demo',
+    'extensions'               => 'Extensions',
     'validation'               => [
         'match'     => 'The :attribute and :other must match.',
         'minlength' => 'The :attribute must be at least :min characters.',

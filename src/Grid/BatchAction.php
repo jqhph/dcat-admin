@@ -20,7 +20,7 @@ abstract class BatchAction extends GridAction
     var key = {$this->getSelectedKeysScript()}
     
     if (key.length === 0) {
-        LA.warning('{$warning}');
+        Dcat.warning('{$warning}');
         return ;
     }
     Object.assign(data, {_key:key});
@@ -32,6 +32,6 @@ JS;
      */
     public function getSelectedKeysScript()
     {
-        return "LA.grid.selected('{$this->parent->getName()}');";
+        return "Dcat.grid.selected('{$this->parent->getName()}');";
     }
 }

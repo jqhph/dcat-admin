@@ -1,0 +1,67 @@
+.grid-selector {
+  //margin: -1rem;
+  width: 100%;
+}
+.grid-selector .wrap {
+  position: relative;
+  line-height: 40px;
+  border-bottom: 1px dashed #eee;
+  padding: 0 30px;
+  font-size: 13px;
+  overflow:auto;
+}
+.grid-selector .wrap:last-child {
+  border-bottom: none;
+}
+.grid-selector .select-label {
+  float: left;
+  width: 100px;
+  padding-left: 10px;
+  color: #888;
+}
+.grid-selector .select-options {
+  margin-left: 100px;
+}
+.grid-selector ul {
+  height: 25px;
+  list-style: none;
+}
+.grid-selector ul > li {
+  margin-right: 30px;
+  float: left;
+}
+.grid-selector ul > li a {
+  color: #666;
+  text-decoration: none;
+}
+.grid-selector .select-options a.active {
+  color: $primary-darker;
+  font-weight: bold;
+}
+.grid-selector li .add {
+  visibility: hidden;
+}
+.grid-selector li:hover .add {
+  visibility: visible;
+}
+.grid-selector ul .clear {
+  visibility: hidden;
+}
+.grid-selector ul:hover .clear {
+  color: $red-darker;
+  visibility: visible;
+}
+
+.data-list-view {
+  .grid-selector {
+    padding: 2px;
+
+    .wrap {
+      border-bottom: 0;
+      background: $white;
+      box-shadow: $shadow;
+      border-radius: .4rem;
+      margin: 7px 0;
+    }
+  }
+}

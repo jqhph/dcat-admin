@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Console;
 
+use Dcat\Admin\Models\AdminTablesSeeder;
 use Illuminate\Console\Command;
 
 class InstallCommand extends Command
@@ -53,7 +54,7 @@ class InstallCommand extends Command
         $userModel = config('admin.database.users_model');
 
         if ($userModel::count() == 0) {
-            $this->call('db:seed', ['--class' => \Dcat\Admin\Models\AdminTablesSeeder::class]);
+            $this->call('db:seed', ['--class' => AdminTablesSeeder::class]);
         }
     }
 
@@ -76,9 +77,11 @@ class InstallCommand extends Command
         $this->line('<info>Admin directory was created:</info> '.str_replace(base_path(), '', $this->directory));
 
         $this->makeDir('Controllers');
+        $this->makeDir('Metrics/Examples');
 
         $this->createHomeController();
         $this->createAuthController();
+        $this->createMetricCards();
 
         $this->createBootstrapFile();
         $this->createRoutesFile();
@@ -96,7 +99,11 @@ class InstallCommand extends Command
 
         $this->laravel['files']->put(
             $homeController,
-            str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
+            str_replace(
+                ['DummyNamespace', 'MetricsNamespace'],
+                [$this->namespace('Controllers'), $this->namespace('Metrics\\Examples')],
+                $contents
+            )
         );
         $this->line('<info>HomeController file was created:</info> '.str_replace(base_path(), '', $homeController));
     }
@@ -113,9 +120,52 @@ class InstallCommand extends Command
 
         $this->laravel['files']->put(
             $authController,
-            str_replace('DummyNamespace', config('admin.route.namespace'), $contents)
+            str_replace(
+                ['DummyNamespace'],
+                [$this->namespace('Controllers')],
+                $contents
+            )
         );
         $this->line('<info>AuthController file was created:</info> '.str_replace(base_path(), '', $authController));
+    }
+
+    /**
+     * @return void
+     */
+    public function createMetricCards()
+    {
+        $map = [
+            '/Metrics/Examples/NewUsers.php'      => 'metrics/NewUsers',
+            '/Metrics/Examples/NewDevices.php'    => 'metrics/NewDevices',
+            '/Metrics/Examples/ProductOrders.php' => 'metrics/ProductOrders',
+            '/Metrics/Examples/Sessions.php'      => 'metrics/Sessions',
+            '/Metrics/Examples/Tickets.php'       => 'metrics/Tickets',
+        ];
+
+        $namespace = $this->namespace('Metrics\\Examples');
+
+        foreach ($map as $path => $stub) {
+            $this->laravel['files']->put(
+                $this->directory.$path,
+                str_replace(
+                    'DummyNamespace',
+                    $namespace,
+                    $this->getStub($stub)
+                )
+            );
+        }
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function namespace($name = null)
+    {
+        $base = str_replace('\\Controllers', '\\', config('admin.route.namespace'));
+
+        return trim($base, '\\').($name ? "\\{$name}" : '');
     }
 
     /**
@@ -142,7 +192,7 @@ class InstallCommand extends Command
         $file = $this->directory.'/routes.php';
 
         $contents = $this->getStub('routes');
-        $this->laravel['files']->put($file, str_replace('DummyNamespace', config('admin.route.namespace'), $contents));
+        $this->laravel['files']->put($file, str_replace('DummyNamespace', $this->namespace('Controllers'), $contents));
         $this->line('<info>Routes file was created:</info> '.str_replace(base_path(), '', $file));
     }
 

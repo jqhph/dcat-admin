@@ -12,7 +12,7 @@ class MultipleSelect extends Select
         return Helper::array(Arr::get($data, $this->column));
     }
 
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return Helper::array($value, true);
     }

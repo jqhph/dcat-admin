@@ -2,10 +2,11 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 class Ip extends Text
 {
+    public static $js = '@jquery.inputmask';
+    public static $css = '@jquery.inputmask';
+
     protected $rules = ['nullable', 'ip'];
 
     /**
@@ -16,11 +17,6 @@ class Ip extends Text
     protected $options = [
         'alias' => 'ip',
     ];
-
-    public static function collectAssets()
-    {
-        Admin::collectComponentAssets('jquery.inputmask');
-    }
 
     public function render()
     {

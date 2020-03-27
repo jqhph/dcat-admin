@@ -2,9 +2,9 @@
 
 namespace Tests\Seeds;
 
-use Dcat\Admin\Tests\Models\Profile;
-use Dcat\Admin\Tests\Models\Tag;
-use Dcat\Admin\Tests\Models\User;
+use Tests\Models\Profile;
+use Tests\Models\Tag;
+use Tests\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder

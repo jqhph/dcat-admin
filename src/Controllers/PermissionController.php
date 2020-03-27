@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Controllers;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
@@ -53,7 +54,7 @@ class PermissionController extends AdminController
     {
         $grid = new SimpleGrid(new Permission());
 
-        $grid->id->bold()->sortable();
+        $grid->id->sortable();
         $grid->slug;
         $grid->name;
 
@@ -79,7 +80,7 @@ class PermissionController extends AdminController
         $tree->tools(function (Tree\Tools $tools) {
             $label = trans('admin.table');
             $url = url(request()->getPathInfo()).'?_layout=1';
-            $tools->add("<a class='btn btn-sm btn-default' href='{$url}'>$label</a>");
+            $tools->add("<a class='btn btn-sm btn-white ' href='{$url}'>$label</a>");
         });
 
         $tree->branch(function ($branch) {
@@ -106,16 +107,18 @@ class PermissionController extends AdminController
                     $method = array_merge($method, explode(',', $me));
                 }
                 if ($path !== '...' && ! empty(config('admin.route.prefix'))) {
-                    $path = admin_base_path($path);
+                    $path = trim(admin_base_path($path), '/');
                 }
 
-                return "<code>$path</code>";
+                $color = Admin::color()->primaryDarker();
+
+                return "<code style='color:{$color}'>$path</code>";
             })->implode('&nbsp;&nbsp;');
 
             $method = collect($method ?: ['ANY'])->unique()->map(function ($name) {
                 return strtoupper($name);
             })->map(function ($name) {
-                return "<span class='label label-primary'>{$name}</span>";
+                return "<span class='label bg-primary'>{$name}</span>";
             })->implode('&nbsp;').'&nbsp;';
 
             $payload .= "</div>&nbsp; $method<a class=\"dd-nodrag\">$path</a>";
@@ -135,7 +138,7 @@ class PermissionController extends AdminController
     {
         $grid = new Grid(new Permission());
 
-        $grid->id('ID')->bold()->sortable();
+        $grid->id('ID')->sortable();
         $grid->name->tree();
         $grid->order->orderable();
         $grid->slug->label('primary');
@@ -149,7 +152,7 @@ class PermissionController extends AdminController
             $method = collect($method)->map(function ($name) {
                 return strtoupper($name);
             })->map(function ($name) {
-                return "<span class='label label-primary'>{$name}</span>";
+                return "<span class='label bg-primary'>{$name}</span>";
             })->implode('&nbsp;').'&nbsp;';
 
             return collect($path)->filter()->map(function ($path) use ($method) {
@@ -158,12 +161,12 @@ class PermissionController extends AdminController
                     $method = collect(explode(',', $method))->map(function ($name) {
                         return strtoupper($name);
                     })->map(function ($name) {
-                        return "<span class='label label-primary'>{$name}</span>";
+                        return "<span class='label bg-primary'>{$name}</span>";
                     })->implode('&nbsp;').'&nbsp;';
                 }
 
                 if (! empty(config('admin.route.prefix'))) {
-                    $path = admin_base_path($path);
+                    $path = trim(admin_base_path($path), '/');
                 }
 
                 return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
@@ -184,7 +187,7 @@ class PermissionController extends AdminController
 
             $label = trans('admin.default');
             $url = url(request()->getPathInfo());
-            $tools->append("<a class='btn btn-sm btn-default' href='{$url}'>$label</a>");
+            $tools->append("<a class='btn btn-white ' href='{$url}'>$label</a>");
         });
 
         $grid->filter(function (Grid\Filter $filter) {
@@ -223,7 +226,7 @@ class PermissionController extends AdminController
                 $method = collect($method)->map(function ($name) {
                     return strtoupper($name);
                 })->map(function ($name) {
-                    return "<span class='label label-primary'>{$name}</span>";
+                    return "<span class='label bg-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
                 if (! empty(config('admin.route.prefix'))) {

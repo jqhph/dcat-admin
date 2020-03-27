@@ -77,6 +77,16 @@ class Permission
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return bool
+     */
+    protected function isApiRoute($request)
+    {
+        return $request->routeIs('dcat.api.*');
+    }
+
+    /**
      * Determine if the request has a URI that should pass through verification.
      *
      * @param \Illuminate\Http\Request $request
@@ -85,6 +95,10 @@ class Permission
      */
     protected function shouldPassThrough($request)
     {
+        if ($this->isApiRoute($request)) {
+            return true;
+        }
+
         foreach (config('admin.permission.except', []) as $except) {
             $except = admin_base_path($except);
 

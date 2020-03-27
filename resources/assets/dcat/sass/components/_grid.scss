@@ -1,0 +1,53 @@
+.grid-column-header {
+  a {
+    color: darken($dark70, 5%);
+    font-size: 1rem;
+  }
+  a:hover, a.active {
+    color: $primary-darker;
+  }
+}
+// 排序图标
+.grid-sort {
+  display: inline-block;
+  margin: -2px -4px 0 3px;
+  height: 15px;
+
+  .up:before {
+    font-family: "feather";
+    padding-right: 0.3rem;
+    font-size: 0.7rem;
+    content: "\E845";
+  }
+
+  .down {
+    margin: 6px 0 0 -1.17rem;
+  }
+  .down:after {
+    font-family: "feather";
+    content: "\E842";
+    font-size: 0.7rem;
+  }
+}
+
+// 过滤器滑动面板
+.right-side-filter-container .header {
+  border-bottom: 1px solid $divider-color;
+  width: 100%;
+  background: #fff;
+  z-index: 10;
+  top: 0;
+  margin-left: -1rem;
+}
+
+// 快捷新增
+.quick-create {
+  td {
+    padding-left: 45px;
+    background-color: #f3f3f3;
+    vertical-align: middle;
+    border-radius: .5rem;
+    height: 35px;
+    color: #777;
+  }
+}

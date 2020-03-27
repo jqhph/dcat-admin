@@ -32,7 +32,7 @@ class ExportButton implements Renderable
 $('.{$this->grid->getExportSelectedName()}').click(function (e) {
     e.preventDefault();
     
-    var rows = LA.grid.selected('{$this->grid->getName()}').join(',');
+    var rows = Dcat.grid.selected('{$this->grid->getName()}').join(',');
     if (! rows) {
         return false;
     }
@@ -105,7 +105,7 @@ JS;
 <div class="btn-group " style="margin-right:3px">
     <button type="button" class="btn btn-sm btn-custom dropdown-toggle" data-toggle="dropdown">
         <i class="fa fa-download"></i>
-        <span class="hidden-xs">&nbsp;{$export}&nbsp;</span>
+        <span class="d-none d-sm-inline">&nbsp;{$export}&nbsp;</span>
         <span class="caret"></span>
         <span class="sr-only"></span>
     </button>

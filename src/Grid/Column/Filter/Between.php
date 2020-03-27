@@ -126,7 +126,16 @@ class Between extends Filter
 
         $options = json_encode($options);
 
-        Admin::script("$('.{$this->class['start']},.{$this->class['end']}').datetimepicker($options);");
+        Admin::script(<<<JS
+        $('.{$this->class['start']},.{$this->class['end']}').datetimepicker({$options});
+        $(".{$this->class['start']}").on("dp.change", function (e) {
+            $('.{$this->class['end']}').data("DateTimePicker").minDate(e.date);
+        });
+        $(".{$this->class['end']}").on("dp.change", function (e) {
+            $('.{$this->class['start']}').data("DateTimePicker").maxDate(e.date);
+        });
+JS
+        );
     }
 
     /**
@@ -157,9 +166,9 @@ JS;
 &nbsp;<span class="dropdown" style="position:absolute">
 <form action="{$this->formAction()}" pjax-container style="display: inline-block;">
     <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-toggle="dropdown">
-        <i class="fa fa-filter"></i>
+        <i class="feather icon-filter"></i>
     </a>
-    <ul class="dropdown-menu" role="menu" style="padding: 10px;box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);left: -70px;border-radius: 0;font-weight:normal;background:#fff">
+    <ul class="dropdown-menu" role="menu" style="padding: 10px;left: -70px;border-radius: 0;font-weight:normal;background:#fff">
         <li>
             <input type="text" 
                 class="form-control input-sm {$this->class['start']}" 
@@ -179,7 +188,7 @@ JS;
         </li>
         <li class="divider"></li>
         <li class="">
-            <button class="btn btn-sm btn-primary column-filter-submit "><i class="fa fa-search"></i></button>
+            <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>
         </li>
     </ul>
     </form>
@@ -189,7 +198,6 @@ EOT;
 
     protected function collectAssets()
     {
-        Admin::collectComponentAssets('moment');
-        Admin::collectComponentAssets('bootstrap-datetimepicker');
+        Admin::collectAssets('bootstrap-datetimepicker');
     }
 }

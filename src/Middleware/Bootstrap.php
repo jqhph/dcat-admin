@@ -26,16 +26,12 @@ class Bootstrap
     protected function setupScript()
     {
         $token = csrf_token();
-        Admin::script("LA.token = \"$token\";");
+        Admin::script("Dcat.token = \"$token\";");
     }
 
     protected function fireEvents()
     {
         Admin::callBooting();
-
-        if (config('admin.cdn')) {
-            Admin::cdn();
-        }
 
         Admin::callBooted();
     }

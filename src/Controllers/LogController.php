@@ -33,7 +33,7 @@ class LogController extends Controller
     {
         $grid = new Grid(new OperationLog());
 
-        $grid->id('ID')->bold()->sortable();
+        $grid->id('ID')->sortable();
         $grid->user(trans('admin.user'))
             ->get('name')
             ->link(function () {
@@ -44,7 +44,7 @@ class LogController extends Controller
         $grid->method(trans('admin.method'))->responsive()->display(function ($method) {
             $color = Arr::get(OperationLogModel::$methodColors, $method, 'default');
 
-            return "<span class=\"label label-$color\">$method</span>";
+            return "<span class=\"label bg-$color\">$method</span>";
         })->filterByValue();
 
         $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {
@@ -71,6 +71,7 @@ class LogController extends Controller
         $grid->disableQuickEditButton();
         $grid->disableEditButton();
         $grid->disableViewButton();
+        $grid->setActionClass(Grid\Displayers\Actions::class);
 
         $grid->filter(function (Grid\Filter $filter) {
             $filter->equal('user_id', trans('admin.user'))

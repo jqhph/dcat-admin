@@ -147,7 +147,7 @@ abstract class AbstractFilter
             $this->width = $width;
         } else {
             $this->style = "width:$width;padding-left:10px;padding-right:10px";
-            $this->width = ' pull-left';
+            $this->width = ' ';
         }
 
         return $this;

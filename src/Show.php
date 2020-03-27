@@ -31,7 +31,7 @@ class Show implements Renderable
     /**
      * @var string
      */
-    protected $view = 'admin::show';
+    protected $view = 'admin::show.container';
 
     /**
      * @var Repository
@@ -41,7 +41,7 @@ class Show implements Renderable
     /**
      * @var mixed
      */
-    protected $__id;
+    protected $_id;
 
     /**
      * @var string
@@ -185,7 +185,7 @@ class Show implements Renderable
      */
     public function setKey($id)
     {
-        $this->__id = $id;
+        $this->_id = $id;
 
         return $this;
     }
@@ -195,7 +195,7 @@ class Show implements Renderable
      */
     public function getKey()
     {
-        return $this->__id;
+        return $this->_id;
     }
 
     /**

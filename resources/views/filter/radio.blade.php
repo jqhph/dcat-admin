@@ -3,7 +3,7 @@
         $radio = new \Dcat\Admin\Widgets\Radio($name, $options);
         if ($inline) $radio->inline();
 
-        $radio->checked(request($name, is_null($value) ? [] : $value));
+        $radio->check(request($name, is_null($value) ? [] : $value));
 
     @endphp
     @if($showLabel)

@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin;
 
+use Dcat\Admin\Layout\Asset;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
@@ -30,12 +31,18 @@ class AdminServiceProvider extends ServiceProvider
         Console\FormCommand::class,
         Console\ActionCommand::class,
         Console\MenuCacheCommand::class,
-        Console\Tests\InstallCommand::class,
     ];
 
     /**
-     * The application's route middleware.
+     * 开发环境命令.
      *
+     * @var array
+     */
+    protected $devCommands = [
+        Console\Development\LinkCommand::class,
+    ];
+
+    /**
      * @var array
      */
     protected $routeMiddleware = [
@@ -48,8 +55,6 @@ class AdminServiceProvider extends ServiceProvider
     ];
 
     /**
-     * The application's route middleware groups.
-     *
      * @var array
      */
     protected $middlewareGroups = [
@@ -63,11 +68,6 @@ class AdminServiceProvider extends ServiceProvider
         ],
     ];
 
-    /**
-     * Boot the service provider.
-     *
-     * @return void
-     */
     public function boot()
     {
         $this->registerDefaultSections();
@@ -78,33 +78,37 @@ class AdminServiceProvider extends ServiceProvider
         $this->compatibleBlade();
     }
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
     public function register()
     {
         require_once __DIR__.'/Support/AdminSection.php';
 
+        $this->aliasAdmin();
         $this->registerExtensionProviders();
         $this->loadAdminAuthConfig();
         $this->registerRouteMiddleware();
         $this->registerServices();
 
         $this->commands($this->commands);
+
+        if (config('app.debug')) {
+            $this->commands($this->devCommands);
+        }
     }
 
-    /**
-     * Register the view file namespace.
-     */
+    protected function aliasAdmin()
+    {
+        if (! class_exists(\Admin::class)) {
+            class_alias(Admin::class, \Admin::class);
+        }
+    }
+
     protected function registerViews()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
     }
 
     /**
-     * Force to set https scheme if https enabled.
+     * 是否强制使用https
      *
      * @return void
      */
@@ -117,17 +121,19 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register routes.
+     * 路由注册.
      */
     protected function registerRoutes()
     {
+        Admin::registerApiRoutes();
+
         if (is_file($routes = admin_path('routes.php'))) {
             $this->loadRoutesFrom($routes);
         }
     }
 
     /**
-     * Remove default feature of double encoding enable in laravel 5.6 or later.
+     * 禁止laravel 5.6或更高版本中启用双编码的默认特性.
      *
      * @return void
      */
@@ -140,7 +146,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the package's publishable resources.
+     * 资源发布注册.
      *
      * @return void
      */
@@ -150,12 +156,12 @@ class AdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__.'/../config' => config_path()], 'dcat-admin-config');
             $this->publishes([__DIR__.'/../resources/lang' => resource_path('lang')], 'dcat-admin-lang');
             $this->publishes([__DIR__.'/../database/migrations' => database_path('migrations')], 'dcat-admin-migrations');
-            $this->publishes([__DIR__.'/../resources/assets' => public_path('vendor/dcat-admin')], 'dcat-admin-assets');
+            $this->publishes([__DIR__.'/../resources/dist' => public_path(Admin::asset()->getRealPath('@admin'))], 'dcat-admin-assets');
         }
     }
 
     /**
-     * Register the service provider of extensions.
+     * 扩展注册.
      */
     public function registerExtensionProviders()
     {
@@ -167,7 +173,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Setup auth configuration.
+     * 设置 auth 配置.
      *
      * @return void
      */
@@ -177,7 +183,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register default sections.
+     * 默认 section 注册.
      */
     protected function registerDefaultSections()
     {
@@ -199,11 +205,10 @@ class AdminServiceProvider extends ServiceProvider
         }, true);
     }
 
-    /**
-     * Register admin services.
-     */
     protected function registerServices()
     {
+        $this->app->singleton('admin.asset', Asset::class);
+        $this->app->singleton('admin.color', Color::class);
         $this->app->singleton('admin.sections', SectionManager::class);
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.menu', Menu::class);
@@ -211,7 +216,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the route middleware.
+     * 路由中间件注册.
      *
      * @return void
      */

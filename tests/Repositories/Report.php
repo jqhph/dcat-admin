@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Tests\Repositories;
+namespace Tests\Repositories;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Repositories\Repository;

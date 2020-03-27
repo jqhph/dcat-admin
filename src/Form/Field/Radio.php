@@ -4,16 +4,13 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Widgets\Radio as WidgetRadio;
 
 class Radio extends Field
 {
-    protected $inline = true;
-
     protected $style = 'primary';
 
     /**
-     * Set options.
-     *
      * @param array|\Closure|string $options
      *
      * @return $this
@@ -32,39 +29,15 @@ class Radio extends Field
     }
 
     /**
-     * Draw inline radios.
-     *
-     * @return $this
-     */
-    public function inline()
-    {
-        $this->inline = true;
-
-        return $this;
-    }
-
-    /**
-     * Draw stacked radios.
-     *
-     * @return $this
-     */
-    public function stacked()
-    {
-        $this->inline = false;
-
-        return $this;
-    }
-
-    /**
      * "info", "primary", "inverse", "danger", "success", "purple".
      *
-     * @param string $v
+     * @param string $style
      *
      * @return $this
      */
-    public function style($v)
+    public function style(string $style)
     {
-        $this->style = $v;
+        $this->style = $style;
 
         return $this;
     }
@@ -80,10 +53,16 @@ class Radio extends Field
             );
         }
 
+        $radio = WidgetRadio::make($this->getElementName(), $this->options, $this->style);
+
+        if ($this->attributes['disabled'] ?? false) {
+            $radio->disable();
+        }
+
+        $radio->inline()->check(old($this->column, $this->value()));
+
         $this->addVariables([
-            'options'    => $this->options,
-            'inline'     => $this->inline,
-            'radioStyle' => $this->style,
+            'radio' => $radio,
         ]);
 
         return parent::render();

@@ -1,0 +1,26 @@
+<script>Dcat.pjaxResponded();</script>
+
+<style>
+    .form-content .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+</style>
+
+{{--必须在静态资源加载前，用section先渲染 content--}}
+@section('content')
+    <section class="form-content">{!! $content !!}</section>
+@endsection
+
+{!! Dcat\Admin\Admin::asset()->renderCss() !!}
+{!! Dcat\Admin\Admin::asset()->renderJs() !!}
+
+{!! Dcat\Admin\Admin::asset()->renderStyle() !!}
+
+@yield('content')
+
+{!! Dcat\Admin\Admin::asset()->renderScript() !!}
+{!! Dcat\Admin\Admin::html() !!}
+
+{{--select2下拉选框z-index必须大于弹窗的值--}}
+<style>.select2-dropdown {z-index: 99999999999}</style>

@@ -14,35 +14,28 @@ class Menu
         [
             'id'        => 1,
             'title'     => 'Helpers',
-            'icon'      => 'fa-wrench',
+            'icon'      => 'fa fa-keyboard-o',
             'uri'       => '',
             'parent_id' => 0,
         ],
         [
             'id'        => 2,
             'title'     => 'Extensions',
-            'icon'      => 'fa-plug',
+            'icon'      => '',
             'uri'       => 'helpers/extensions',
             'parent_id' => 1,
         ],
         [
             'id'        => 3,
             'title'     => 'Scaffold',
-            'icon'      => 'fa-keyboard-o',
+            'icon'      => '',
             'uri'       => 'helpers/scaffold',
             'parent_id' => 1,
         ],
         [
             'id'        => 4,
-            'title'     => 'Routes',
-            'icon'      => 'fa-internet-explorer',
-            'uri'       => 'helpers/routes',
-            'parent_id' => 1,
-        ],
-        [
-            'id'        => 5,
             'title'     => 'Icons',
-            'icon'      => 'fa-fonticons',
+            'icon'      => '',
             'uri'       => 'helpers/icons',
             'parent_id' => 1,
         ],
@@ -164,7 +157,7 @@ class Menu
      *
      * @return bool
      */
-    public function isVisible(array $item)
+    public function visible(array $item)
     {
         $permissionIds = $item['permission_id'] ?? null;
         $roles = array_column($item['roles'] ?? [], 'slug');

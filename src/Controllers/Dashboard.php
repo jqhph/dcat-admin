@@ -3,13 +3,14 @@
 namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Widgets\Card;
 use Dcat\Admin\Widgets\Tab;
 use Illuminate\Support\Arr;
 
 class Dashboard
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return mixed
      */
     public static function title()
     {
@@ -20,7 +21,6 @@ class Dashboard
     {
         return Tab::make()
             ->padding(0)
-            ->custom()
             ->add('Environment', static::environment())
             ->add('Extensions', static::extensions())
             ->add('Dependencies', static::dependencies());

@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets\Chart;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Widgets\Color;
-use Dcat\Admin\Widgets\HasAjaxRequest;
+use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
@@ -18,11 +18,18 @@ use Illuminate\Support\Str;
  */
 abstract class Chart extends Widget
 {
-    use HasAjaxRequest;
+    use InteractsWithApi;
+
+    public static $js = '@chartjs';
+
+    public static $css = '@chartjs';
 
     public static $globalSettings = [
         'defaultFontColor'  => '#555',
         'defaultFontFamily' => 'Nunito,system-ui,sans-serif',
+
+        'scaleShowGridLines' => false,
+        'scaleShowHorizontalLines' => false,
     ];
 
     public $colors = [];
@@ -39,15 +46,11 @@ abstract class Chart extends Widget
     protected $options = [];
 
     protected $width;
+
     protected $height;
 
     protected $containerStyle = '';
 
-    /**
-     * Chart constructor.
-     *
-     * @param mixed ...$params
-     */
     public function __construct(...$params)
     {
         if (count($params) == 2) {
@@ -67,13 +70,11 @@ abstract class Chart extends Widget
     }
 
     /**
-     * Composite the chart.
-     *
      * @param Chart $chart
      *
      * @return $this
      */
-    public function composite(self $chart)
+    public function combine(self $chart)
     {
         $this->data['datasets']
             = array_merge($this->data['datasets'], $chart->datasets());
@@ -361,32 +362,14 @@ abstract class Chart extends Widget
     }
 
     /**
-     * Make element id.
-     *
-     * @return void
-     */
-    protected function makeId()
-    {
-        if ($this->id) {
-            return;
-        }
-        $this->id = 'chart_'.$this->type.Str::random(8);
-    }
-
-    public function getId()
-    {
-        $this->makeId();
-
-        return $this->id;
-    }
-
-    /**
      * Setup script.
      *
      * @return string
      */
     protected function script()
     {
+        $this->setupGlobalSettingScripts();
+
         $config = [
             'type'    => $this->type,
             'data'    => &$this->data,
@@ -394,34 +377,45 @@ abstract class Chart extends Widget
         ];
         $options = json_encode($config);
 
-        // Global configure.
-        $globalSettings = '';
-        foreach (self::$globalSettings as $k => $v) {
-            $globalSettings .= sprintf('Chart.defaults.global.%s="%s";', $k, $v);
-        }
-
-        if (! $this->allowBuildRequestScript()) {
+        if (! $this->allowBuildRequest()) {
             return <<<JS
-{$globalSettings}
-setTimeout(function(){ new Chart($("#{$this->id}").get(0).getContext("2d"), $options) },60)
+setTimeout(function () { 
+    new Chart($("#{$this->getId()}").get(0).getContext("2d"), $options) 
+}, 60)
 JS;
         }
 
         $this->fetched(
             <<<JS
-if (!response.status) {
-    return LA.error(response.message || 'Server internal error.');
+if (! response.status) {
+    return Dcat.error(response.message || 'Server internal error.');
 }        
-var id = '{$this->id}', opt = $options, prev = window['obj'+id];
+var id = '{$this->getId()}', opt = $options, prev = window['chart'+id];
+
 opt.options = $.extend(opt.options, response.options || {});
 opt.data.datasets = response.datasets || opt.data.datasets;
-if (prev) prev.destroy();
 
-window['obj'+id] = new Chart($("#"+id).get(0).getContext("2d"), opt);
+if (prev) {
+    prev.destroy();
+}
+
+window['chart'+id] = new Chart($("#"+id).get(0).getContext("2d"), opt);
 JS
         );
 
-        return $globalSettings.$this->buildRequestScript();
+        return $this->buildRequestScript();
+    }
+
+    protected function setupGlobalSettingScripts()
+    {
+        // Global configure.
+        $globalSettings = '';
+
+        foreach (self::$globalSettings as $k => $v) {
+            $globalSettings .= sprintf('Chart.defaults.global.%s="%s";', $k, $v);
+        }
+
+        Admin::script($globalSettings);
     }
 
     /**
@@ -445,13 +439,12 @@ JS
      */
     public function render()
     {
-        $this->makeId();
         $this->fillColor();
 
         $this->script = $this->script();
 
         $this->setHtmlAttribute([
-            'id' => $this->id,
+            'id' => $this->getId(),
         ]);
 
         $this->collectAssets();
@@ -483,23 +476,26 @@ HTML;
     }
 
     /**
-     * Return JsonResponse instance.
-     *
      * @param bool  $returnOptions
      * @param array $data
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function toJsonResponse(bool $returnOptions = true, array $data = [])
+    public function toJsonResponse()
     {
-        return response()->json(array_merge(
-            [
-                'status'   => 1,
-                'datasets' => $this->datasets(),
-                'options'  => $returnOptions ? $this->getOptions() : [],
-            ],
-            $data
-        ));
+        return response()->json([
+            'status'   => 1,
+            'datasets' => $this->datasets(),
+            'options'  => $this->getOptions(),
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function valueResult()
+    {
+        return $this->toJsonResponse();
     }
 
     /**
@@ -512,15 +508,13 @@ HTML;
         }
     }
 
-    /**
-     * Collect assets.
-     *
-     * @return void
-     */
-    public function collectAssets()
+    protected function generateId()
     {
-        $this->script && Admin::script($this->script);
+       return 'chart-'.$this->type.Str::random(8);
+    }
 
-        Admin::collectComponentAssets('chartjs');
+    public function getId()
+    {
+        return $this->id ?: ($this->id = $this->generateId());
     }
 }

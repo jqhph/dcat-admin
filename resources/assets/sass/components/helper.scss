@@ -1,0 +1,617 @@
+// ================================================================================================
+// 	File Name: helper.scss
+// 	Description: Helper classes provides color, width, position & background etc..
+// 				 related customiztion.
+// 	----------------------------------------------------------------------------------------------
+// 	Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+// 	Author: PIXINVENT
+// 	Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Content helpers
+// -------------------------
+// Display
+
+.display-inline{
+	display: inline !important;
+}
+.display-block{
+	display: block !important;
+}
+.display-inline-block{
+	display: inline-block !important;
+}
+.display-hidden{
+	display: none !important;
+}
+.display-table-cell{
+    display: table-cell !important;
+}
+
+// Position
+
+
+.position-top-0{
+    top: 0;
+}
+.position-right-0{
+    right: 0;
+}
+.position-bottom-0{
+    bottom: 0;
+}
+.position-left-0{
+    left: 0;
+}
+
+// Z-index
+
+.zindex-1{
+	z-index: 1 !important;
+}
+.zindex-2{
+	z-index: 2 !important;
+}
+.zindex-3{
+	z-index: 3 !important;
+}
+.zindex-4{
+	z-index: 4 !important;
+}
+.zindex-0{
+	z-index: 0 !important;
+}
+.zindex-minus-1{
+	z-index: -1 !important;
+}
+.zindex-minus-2{
+	z-index: -2 !important;
+}
+.zindex-minus-3{
+	z-index: -3 !important;
+}
+.zindex-minus-4{
+	z-index: -4 !important;
+}
+
+// Edges
+.no-edge-top {
+    top: 0 !important;
+}
+.no-edge-bottom {
+    bottom: 0 !important;
+}
+.no-edge-left {
+    left: 0 !important;
+}
+.no-edge-right {
+    right: 0 !important;
+}
+
+// Cursors
+.cursor-pointer {
+    cursor: pointer;
+}
+.cursor-move {
+    cursor: move;
+}
+.cursor-default {
+    cursor: default;
+}
+.cursor-progress {
+    cursor: progress;
+}
+.cursor-not-allowed{
+    cursor: not-allowed;
+}
+
+
+// Overflow
+.overflow-hidden {
+    overflow: hidden;
+}
+.overflow-visible {
+    overflow: visible;
+}
+.overflow-auto {
+    overflow: auto;
+}
+.overflow-scroll {
+    overflow: scroll;
+}
+.overflow-x-scroll {
+    overflow: scroll;
+}
+.overflow-y-scroll {
+    overflow: scroll;
+}
+
+// Lists
+.bullets-inside{
+	list-style: inside;
+}
+.list-style-circle{
+	list-style: circle;
+}
+.list-style-square{
+	list-style: square;
+}
+.list-style-icons {
+    padding-left: 10px;
+    margin-left: 0;
+    list-style: none;
+    >li i {
+        float: left;
+        width: 1em;
+        margin: 0 6px 0 0;
+    }
+}
+
+// Borders
+// -------------------------
+
+// Add borders
+.border {
+    border: 1px solid;
+}
+.border-top {
+    border-top: 1px solid;
+}
+.border-bottom {
+    border-bottom: 1px solid;
+}
+.border-left {
+    border-left: 1px solid;
+}
+.border-right {
+    border-right: 1px solid;
+}
+
+// Border widths
+
+// Med - 2px
+.border-2 {
+    border-width: 2px !important;
+}
+.border-top-2 {
+    border-top-width: 2px !important;
+}
+.border-bottom-2 {
+    border-bottom-width: 2px !important;
+}
+.border-left-2 {
+    border-left-width: 2px !important;
+}
+.border-right-2 {
+    border-right-width: 2px !important;
+}
+
+// Large - 3px
+.border-3 {
+    border-width: 3px !important;
+}
+.border-top-3 {
+    border-top-width: 3px !important;
+}
+.border-bottom-3 {
+    border-bottom-width: 3px !important;
+}
+.border-left-3 {
+    border-left-width: 3px !important;
+}
+.border-right-3 {
+    border-right-width: 3px !important;
+}
+
+// No border radious
+.no-border-top-radius{
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+.no-border-bottom-radius{
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+.no-border-top-left-radius{
+    border-top-left-radius: 0 !important;
+}
+.no-border-top-right-radius{
+    border-top-right-radius: 0 !important;
+}
+.no-border-bottom-left-radius{
+    border-bottom-left-radius: 0 !important;
+}
+.no-border-bottom-right-radius{
+    border-bottom-right-radius: 0 !important;
+}
+
+
+// Box Shadow
+
+.box-shadow-0 {
+    box-shadow: none !important
+}
+
+.box-shadow-1{
+    box-shadow: 0 2px 5px 0 rgba($pure-black,0.16),0 2px 10px 0 rgba($pure-black,0.12)
+}
+
+.box-shadow-2 {
+    box-shadow: 0 8px 17px 0 rgba($pure-black,0.2),0 6px 20px 0 rgba($pure-black,0.19)
+}
+
+.box-shadow-3 {
+    box-shadow: 0 12px 15px 0 rgba($pure-black,0.24),0 17px 50px 0 rgba($pure-black,0.19)
+}
+
+.box-shadow-4{
+    box-shadow: 0 16px 28px 0 rgba($pure-black,0.22),0 25px 55px 0 rgba($pure-black,0.21)
+}
+
+.box-shadow-5 {
+    box-shadow: 0 27px 24px 0 rgba($pure-black,0.2),0 40px 77px 0 rgba($pure-black,0.22)
+}
+
+.box-shadow-6{
+  box-shadow: 0 4px 8px 0 rgba($pure-black,.12),0 2px 4px 0 rgba($pure-black,.08);
+}
+
+// Sizing
+// -------------------------
+
+//
+// Width && Height
+//
+
+.fit{
+	max-width: 100% !important;
+}
+.half-width {
+	width: 50% !important;
+}
+.full-width{
+	width: 100% !important;
+}
+.full-height{
+	height: 100% !important;
+}
+
+// Fixed widths
+.width-50 {
+    width: 50px !important;
+}
+.width-100 {
+    width: 100px !important;
+}
+.width-150 {
+    width: 150px !important;
+}
+.width-200 {
+    width: 200px !important;
+}
+.width-250 {
+    width: 250px !important;
+}
+.width-300 {
+    width: 300px !important;
+}
+.width-350 {
+    width: 350px !important;
+}
+.width-400 {
+    width: 400px !important;
+}
+.width-450 {
+    width: 450px !important;
+}
+.width-500 {
+    width: 500px !important;
+}
+.width-550 {
+    width: 550px !important;
+}
+.width-600 {
+    width: 600px !important;
+}
+.width-650 {
+    width: 650px !important;
+}
+.width-700 {
+    width: 700px !important;
+}
+.width-750 {
+    width: 750px !important;
+}
+.width-800 {
+    width: 800px !important;
+}
+// Width in %
+.width-5-per{
+    width: 5% !important;
+}
+.width-10-per {
+    width: 10% !important;
+}
+.width-15-per {
+    width: 15% !important;
+}
+.width-20-per {
+    width: 20% !important;
+}
+.width-25-per {
+    width: 25% !important;
+}
+.width-30-per {
+    width: 30% !important;
+}
+.width-35-per {
+    width: 35% !important;
+}
+.width-40-per {
+    width: 40% !important;
+}
+.width-45-per {
+    width: 45% !important;
+}
+.width-50-per {
+    width: 50% !important;
+}
+.width-55-per {
+    width: 55% !important;
+}
+.width-60-per {
+    width: 60% !important;
+}
+.width-65-per {
+    width: 65% !important;
+}
+.width-70-per {
+    width: 70% !important;
+}
+.width-75-per {
+    width: 75% !important;
+}
+.width-80-per {
+    width: 80% !important;
+}
+.width-90-per {
+    width: 90% !important;
+}
+.width-95-per {
+    width: 95% !important;
+}
+
+//Fixed Height in px
+
+.height-50 {
+    height: 50px !important;
+}
+.height-75 {
+    height: 75px !important;
+}
+.height-100 {
+    height: 100px !important;
+}
+.height-150 {
+    height: 150px !important;
+}
+.height-200 {
+    height: 200px !important;
+}
+.height-250 {
+    height: 250px !important;
+}
+.height-300 {
+    height: 300px !important;
+}
+.height-350 {
+    height: 350px !important;
+}
+.height-400 {
+    height: 400px !important;
+}
+.height-450 {
+    height: 450px !important;
+}
+.height-500 {
+    height: 500px !important;
+}
+.height-550 {
+    height: 550px !important;
+}
+.height-600 {
+    height: 600px !important;
+}
+.height-650 {
+    height: 650px !important;
+}
+.height-700 {
+    height: 700px !important;
+}
+.height-750 {
+    height: 750px !important;
+}
+.height-800 {
+    height: 800px !important;
+}
+
+//Fixed Height in %
+
+.height-5-per{
+    height: 5% !important;
+}
+.height-10-per {
+    height: 10% !important;
+}
+.height-15-per {
+    height: 15% !important;
+}
+.height-20-per {
+    height: 20% !important;
+}
+.height-25-per {
+    height: 25% !important;
+}
+.height-30-per {
+    height: 30% !important;
+}
+.height-35-per {
+    height: 35% !important;
+}
+.height-40-per {
+    height: 40% !important;
+}
+.height-45-per {
+    height: 45% !important;
+}
+.height-50-per {
+    height: 50% !important;
+}
+.height-55-per {
+    height: 55% !important;
+}
+.height-60-per {
+    height: 60% !important;
+}
+.height-65-per {
+    height: 65% !important;
+}
+.height-70-per {
+    height: 70% !important;
+}
+.height-75-per {
+    height: 75% !important;
+}
+.height-80-per {
+    height: 80% !important;
+}
+
+//vh height
+.full-height-vh-with-nav{
+    height: calc(100vh - #{$navbar-height} - 4rem);
+    height: calc(var(--vh, 1vh) * 100 - #{$navbar-height} - 4rem);
+}
+.full-height-vh{
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+}
+
+// Line height
+.line-height-1{
+    line-height: 1 !important;
+}
+.line-height-2{
+    line-height: 2 !important;
+}
+
+//Transformations
+
+.rotate-45 {
+    transform: rotate(45deg);
+}
+.rotate-45-inverse {
+    transform: rotate(-45deg);
+}
+.rotate-90 {
+    transform: rotate(45deg);
+}
+.rotate-90-inverse {
+    transform: rotate(-45deg);
+}
+.rotate-180 {
+    transform: rotate(45deg);
+}
+.rotate-180-inverse {
+    transform: rotate(-45deg);
+}
+
+//Pull the element
+.pull-up {
+    transition: all 0.25s ease;
+
+    &:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0px 14px 24px rgba(62, 57, 107, 0.2);
+        z-index: 30;
+    }
+}
+
+// Spinner classes
+.spinner {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner-reverse {
+    display: inline-block;
+    animation: spin-reverse 1s linear infinite;
+}
+@keyframes spin-reverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+
+//
+// Image
+//
+
+//Background Image
+.bg-cover{
+    background-size:cover !important;
+}
+.background-repeat {
+     background-repeat:repeat !important;
+}
+.background-no-repeat {
+     background-repeat:no-repeat !important;
+}
+
+// Extra large
+.img-xl {
+    width: 64px !important;
+    height: 64px !important;
+}
+
+// Large
+.img-lg {
+    width: 44px !important;
+    height: 44px !important;
+}
+
+// Small
+.img-sm {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+// Mini
+.img-xs {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+
+// Bullets used in application pages
+.bullet{
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+  &.bullet-xs{
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+  &.bullet-sm{
+    width: 0.714rem;
+    height: 0.714rem;
+  }
+  &.bullet-lg{
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}

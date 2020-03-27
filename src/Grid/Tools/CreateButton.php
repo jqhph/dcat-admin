@@ -34,12 +34,12 @@ class CreateButton implements Renderable
 
         [$width, $height] = $this->grid->option('dialog_form_area');
 
-        Form::modal($new)
+        Form::dialog($new)
             ->click(".{$class}")
-            ->success('LA.reload()')
+            ->success('Dcat.reload()')
             ->dimensions($width, $height);
 
-        return "<a data-url='$url' class='btn btn-sm btn-success {$class}'><i class='ti-plus'></i><span class='hidden-xs'>&nbsp; $new</span></a>";
+        return "<button data-url='$url' class='btn btn-outline-primary {$class}'><i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp; $new</span></button>";
     }
 
     protected function renderCreateButton()
@@ -51,13 +51,13 @@ class CreateButton implements Renderable
         $new = trans('admin.new');
         $url = $this->grid->getCreateUrl();
 
-        return "<a href='{$url}' class='btn btn-sm btn-success btn-mini'>
-    <i class='ti-plus'></i><span class='hidden-xs'>&nbsp;&nbsp;{$new}</span>
+        return "<a href='{$url}' class='btn btn-outline-primary'>
+    <i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp;&nbsp;{$new}</span>
 </a>";
     }
 
     public function render()
     {
-        return "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderDialogCreateButton()}</div>";
+        return "<div class='btn-group btn-no-shadow' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderDialogCreateButton()}</div>";
     }
 }

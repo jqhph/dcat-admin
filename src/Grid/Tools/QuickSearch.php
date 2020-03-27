@@ -26,7 +26,7 @@ class QuickSearch extends AbstractTool
     /**
      * @var int rem
      */
-    protected $width = 28;
+    protected $width = 18;
 
     public function __construct($key = null, $title = null)
     {
@@ -130,18 +130,18 @@ class QuickSearch extends AbstractTool
         val = $ipt.val(),
         ignoreKeys = [16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144];
     
-    var submit = LA.debounce(function (input) {
+    var submit = Dcat.helpers.debounce(function (input) {
         inputting || $(input).parents('form').submit()
     }, 600);
     
     function toggleBtn() {
         var t = $(this),
-            btn = t.parent().find('.quick-search-clear');
+            btn = t.parent().parent().find('.quick-search-clear');
     
         if (t.val()) {
-            btn.css({color: '#333'});
+            btn.css({color: '#333', cursor: 'pointer'});
         } else {
-            btn.css({color: '#fff'});
+            btn.css({color: '#fff', cursor: 'none'});
         }
         return false;
     }

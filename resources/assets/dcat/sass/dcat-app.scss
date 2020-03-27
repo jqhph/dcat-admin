@@ -1,0 +1,100 @@
+// ================================================================================================
+//  File Name: dcat-bootstrap.scss
+//  Description: Dcat Admin应用样式
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Dcat Admin
+//  Author: Jqh
+//  Author URL: https://github.com/jqhph
+// ================================================================================================
+
+@import "variables/variables";
+
+// 进度条
+@import "./nprogress/NProgress";
+
+// sweetalert弹窗
+@import "./sweetalert/sweetalert2";
+
+html body {
+  background-color: $body-bg;
+  color: $font-color;
+}
+
+// 字体
+body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
+  font-family: Nunito, Montserrat,system-ui,BlinkMacSystemFont,-apple-system,sans-serif;
+}
+
+html body .content .content-wrapper {
+  padding: calc(2.2rem - 0.4rem) 2.45rem 0;
+}
+
+ol, ul, dl {
+  margin-bottom: 0;
+}
+
+// 阴影
+.shadow-0 {
+  box-shadow: none!important;
+}
+.shadow {
+  box-shadow: $shadow!important;
+}
+.shadow-100 {
+  box-shadow: $shadow-100!important;
+}
+.shadow-200 {
+  box-shadow: $shadow-200!important;
+}
+
+// 颜色class定义
+@import "./colors";
+
+// 布局
+@import "./components/layout";
+// 按钮
+@import "./components/button";
+// 顶部导航栏
+@import "./components/header-navbar";
+// 页面头
+@import "./components/content-header";
+// 表单
+@import "./components/form";
+// 分页
+@import "./components/pagination";
+// data-list-view 表格
+@import "./components/table";
+// grid
+@import "./components/grid";
+// 下拉菜单
+@import "./components/dropdown";
+// checkbox
+@import "./components/checkbox";
+// radio
+@import "./components/radio";
+// card
+@import "./components/card";
+// tree jquery.nestable
+@import "./components/nestable";
+// layer弹窗
+@import "./components/layer";
+// 滑动面板
+@import "./components/slider";
+// grid selector
+@import "./components/grid-selector";
+// box
+@import "./components/box";
+// label
+@import "./components/label";
+// tab
+@import "./components/tab";
+// menu
+@import "./components/menu";
+// alert
+@import "./components/alert";
+// code
+@import "./components/code";
+// link
+@import "./components/link";
+// img
+@import "./components/img";

@@ -15,7 +15,7 @@ class Dropdown extends Widget
     /**
      * @var string
      */
-    protected static $dividerHtml = '<li class="divider"></li>';
+    protected static $dividerHtml = '<li class="dropdown-divider"></li>';
 
     /**
      * @var string
@@ -27,7 +27,7 @@ class Dropdown extends Widget
      */
     protected $button = [
         'text'  => null,
-        'class' => 'btn btn-sm btn-default',
+        'class' => 'btn btn-sm btn-white ',
         'style' => null,
     ];
 
@@ -293,7 +293,7 @@ HTML
         }
 
         $v = strpos($v, '</a>') ? $v : "<a href='javascript:void(0)'>$v</a>";
-        $v = "<li>$v</li>";
+        $v = "<li class='dropdown-item'>$v</li>";
 
         if ($this->divider) {
             $v .= static::$dividerHtml;

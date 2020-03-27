@@ -42,7 +42,7 @@ class Embeds extends Field
      *
      * @return array
      */
-    protected function prepareToSave($input)
+    protected function prepareInputValue($input)
     {
         $form = $this->buildEmbeddedForm();
 

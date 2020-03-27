@@ -60,22 +60,22 @@ class SwitchGroup extends SwitchDisplay
     init();
     swt.off('change').change(function(e) {
         var t = $(this), id=t.data('key'),checked = t.is(':checked'), name = t.attr('name'), data = {
-            _token: LA.token,
+            _token: Dcat.token,
             _method: 'PUT'
         };
         data[name] = checked ? 1 : 0;
-        LA.NP.start();
+        Dcat.NP.start();
     
          $.ajax({
             url: "{$this->resource()}/" + id,
             type: "POST",
             data: data,
             success: function (d) {
-                LA.NP.done();
+                Dcat.NP.done();
                  if (d.status) {
-                    LA.success(d.message);
+                    Dcat.success(d.message);
                 } else {
-                    LA.error(d.message);
+                    Dcat.error(d.message);
                 }
             }
         });
@@ -88,9 +88,9 @@ JS;
         $checked = $this->row->$name ? 'checked' : '';
 
         return <<<EOT
-<tr style="height:28px;color:#555">
-    <td><strong><small>$label:</small></strong>&nbsp;&nbsp;&nbsp;</td>
-    <td><input name="{$elementName}" data-key="$key" $checked type="checkbox" class="$class" data-size="small" data-color="{$this->color}"/></td>
+<tr style="box-shadow: none;background: transparent">
+    <td style="padding: 3px 0;height:23px;">{$label}:&nbsp;&nbsp;&nbsp;</td>
+    <td style="padding: 3px 0;height:23px;"><input name="{$elementName}" data-key="$key" $checked type="checkbox" class="$class" data-size="small" data-color="{$this->color}"/></td>
 </tr>
 EOT;
     }

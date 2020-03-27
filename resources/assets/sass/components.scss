@@ -1,0 +1,55 @@
+// ================================================================================================
+//  File Name: components.scss
+//  Description: Common components file to includ all theme specific custom components.
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Variables
+// ------------------------------
+
+// Core variables and mixins
+@import "bootstrap/functions";
+@import "bootstrap/mixins";
+@import "bootstrap-extended/mixins";
+
+// Core variables and mixins overrides
+@import "core/variables/variables";
+@import "bootstrap/variables";
+
+// Overrides user variable
+@import "core/variables/components-variables";
+
+@import "core/mixins/transitions";
+// For alert box shadow
+// Perfect Scrollbar
+// Core
+// ------------------------------
+// layouts
+@import "core/layouts/content";
+@import "core/layouts/sidebar";
+@import "core/layouts/footer";
+// menu
+@import "core/menu/navigation";
+
+// Components
+// ------------------------------
+@import "components/helper";
+@import "components/avatar";
+@import "components/search";
+@import "components/chart";
+@import "components/bootstrap-social";
+@import "components/demo"; // Plugins demo, remove in real project
+@import "components/customizer"; // Customizer demo, remove in real project
+@import "components/chips";
+@import "components/divider";
+
+// Plugins
+// ------------------------------
+@import "plugins/ui/breakpoints";
+// TODO:A: Set this scss page specific
+@import "plugins/forms/tags/basic-input";
+@import "plugins/forms/select2/select2";
+@import "plugins/tables/datatables";

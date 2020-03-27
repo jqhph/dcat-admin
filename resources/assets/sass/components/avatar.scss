@@ -1,0 +1,118 @@
+// =========================================================================================
+//   File Name: avatar.scss
+//   Description: Avatar images.
+//   ----------------------------------------------------------------------------------------
+//   Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//   Author: PIXINVENT
+//   Author URL: http://www.themeforest.net/user/pixinvent
+// ==========================================================================================
+
+// Component: Avatar
+// ========================================================================
+
+// avatar
+
+  .avatar {
+    white-space: nowrap;
+    background-color: $avatar-bg;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    color: $white;
+    display: inline-flex;
+    font-size: .75rem;
+    text-align: center;
+    vertical-align: middle;
+    margin: 5px;
+
+    // avatar content
+    .avatar-content{
+      width: $avatar-size;
+      height: $avatar-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .avatar-icon{
+        font-size: 1.2rem;
+      }
+    }
+    [class*="avatar-status-"]{
+        border-radius: 50%;
+        width: $avatar-status-size;
+        height: $avatar-status-size;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        border: 1px solid $white;
+        &.avatar-status-lg{
+          width: $avatar-status-size-lg;
+          height: $avatar-status-size-lg;
+          border-width: 2px;
+        }
+    }
+    .avatar-status-online{
+        background-color: $success;
+    }
+    .avatar-status-busy{
+        background-color: $danger;
+    }
+    .avatar-status-away{
+        background-color: $warning;
+    }
+    .avatar-status-offline{
+        background-color: $secondary;
+    }
+
+    // avatar img
+    img {
+      // max-width: 100%; // removed as not affecting in avatar images
+      border-radius: 50%;
+    }
+
+// Size Modifier
+// ========================================================================
+
+    &.avatar-xl {
+      font-size: 1.5rem;
+      img{
+        width: $avatar-size-xl;
+        height: $avatar-size-xl;
+      }
+      .avatar-content{
+        height: $avatar-size-xl;
+        width: $avatar-size-xl;
+        .avatar-icon{
+          font-size: 3rem;
+        }
+      }
+    }
+    &.avatar-lg {
+      font-size: 1.2rem;
+      img{
+        width: $avatar-size-lg;
+        height: $avatar-size-lg;
+      }
+      .avatar-content{
+        width: $avatar-size-lg;
+        height: $avatar-size-lg;
+        .avatar-icon{
+          font-size: 2rem;
+        }
+      }
+    }
+
+    &.avatar-sm {
+      .avatar-content{
+        width: $avatar-size-sm;
+        height: $avatar-size-sm;
+        .avatar-icon{
+          font-size: 1rem;
+        }
+      }
+      img{
+        width: $avatar-size-sm;
+        height: $avatar-size-sm;
+      }
+    }
+  }
+// For component avatar

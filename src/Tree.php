@@ -46,7 +46,7 @@ class Tree implements Renderable
      * @var string
      */
     protected $view = [
-        'tree'   => 'admin::tree',
+        'tree'   => 'admin::tree.container',
         'branch' => 'admin::tree.branch',
     ];
 
@@ -187,7 +187,7 @@ class Tree implements Renderable
      */
     protected function collectAssets()
     {
-        Admin::collectComponentAssets('jquery.nestable');
+        Admin::collectAssets('jquery.nestable');
     }
 
     /**
@@ -368,15 +368,15 @@ class Tree implements Renderable
 
     $('.{$this->elementId}-save').click(function () {
         var serialize = tree.nestable('serialize');
-        LA.NP.start();
+        Dcat.NP.start();
         $.post('{$this->url}', {
-            _token: LA.token,
+            _token: Dcat.token,
             _order: JSON.stringify(serialize)
         },
         function () {
-            LA.NP.done();
-            LA.reload();
-            LA.success('{$saveSucceeded}');
+            Dcat.NP.done();
+            Dcat.reload();
+            Dcat.success('{$saveSucceeded}');
         });
     });
     
@@ -479,15 +479,15 @@ JS;
 
         $quickBtn = $btn = '';
         if ($this->useCreate) {
-            $btn = "<a href='{$url}' class='btn btn-sm btn-success'><i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp;{$new}</span></a>";
+            $btn = "<button href='{$url}' class='btn btn-sm btn-success'><i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp;{$new}</span></button>";
         }
 
         if ($this->useQuickCreate) {
-            $text = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='fa fa-plus'></i><span class='hidden-xs'>&nbsp; $new</span>";
-            $quickBtn = "<a data-url='$url' class='btn btn-sm btn-success tree-quick-create'>$text</a>";
+            $text = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp; $new</span>";
+            $quickBtn = "<button data-url='$url' class='btn btn-sm btn-success tree-quick-create'>$text</button>";
         }
 
-        return "<div class='btn-group pull-right' style='margin-right:3px'>{$btn}{$quickBtn}</div>";
+        return "&nbsp;<div class='btn-group pull-right' style='margin-right:3px'>{$btn}{$quickBtn}</div>";
     }
 
     /**
@@ -498,9 +498,9 @@ JS;
         if ($this->useQuickEdit) {
             [$width, $height] = $this->dialogFormDimensions;
 
-            Form::modal(trans('admin.edit'))
+            Form::dialog(trans('admin.edit'))
                 ->click('.tree-quick-edit')
-                ->success('LA.reload()')
+                ->success('Dcat.reload()')
                 ->dimensions($width, $height);
         }
     }
@@ -513,9 +513,9 @@ JS;
         if ($this->useQuickCreate) {
             [$width, $height] = $this->dialogFormDimensions;
 
-            Form::modal(trans('admin.new'))
+            Form::dialog(trans('admin.new'))
                 ->click('.tree-quick-create')
-                ->success('LA.reload()')
+                ->success('Dcat.reload()')
                 ->dimensions($width, $height);
         }
     }
@@ -558,7 +558,7 @@ JS;
         $view = view($this->view['tree'], $this->variables());
 
         if (! $wrapper = $this->wrapper) {
-            return "<div class='card da-box'>{$view->render()}</div>";
+            return "<div class='card dcat-box'>{$view->render()}</div>";
         }
 
         return $wrapper($view);

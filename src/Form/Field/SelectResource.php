@@ -4,8 +4,8 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Widgets\Color;
 use Illuminate\Contracts\Support\Arrayable;
 
 class SelectResource extends Field
@@ -13,7 +13,7 @@ class SelectResource extends Field
     use PlainInput;
 
     protected static $js = [
-        'vendor/dcat-admin/dcat-admin/select-resource.min.js',
+        '@resource-selector',
     ];
 
     protected $area = ['51%', '65%'];
@@ -150,7 +150,7 @@ class SelectResource extends Field
         }
     }
 
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         if ($this->maxItem == 1) {
             if ($value === null || $value === '') {
@@ -167,31 +167,27 @@ class SelectResource extends Field
     {
         $label = ucfirst(trans('admin.choose')).' '.$this->label;
         $area = json_encode($this->area);
-        $closeLabel = ucfirst(trans('admin.close'));
-        $lessThenLabel = trans('admin.selected_must_less_then', ['num' => $this->maxItem]);
-        $selectedOptionsLabel = trans('admin.selected_options');
         $disabled = empty($this->attributes['disabled']) ? '' : 'disabled';
         $containerId = $this->id.$this->getFormElementId();
         $maxItem = (int) $this->maxItem;
+        $queryName = SimpleGrid::QUERY_NAME;
 
         Admin::script(
             <<<JS
-LA.ResourceSelector({
+Dcat.ResourceSelector({
     title: '{$label}',
     column: "{$this->getElementName()}",
     source: '{$this->source}',
     selector: '#{$this->btnId}',
     maxItem: {$maxItem}, 
     area: {$area},
+    queryName: '{$queryName}',
     items: {$this->value()},
     placeholder: '{$this->placeholder()}',
     showCloseButton: false,
-    closeButtonText: '{$closeLabel}',
-    exceedMaxItemTip: '{$lessThenLabel}',
-    selectedOptionsTip: '{$selectedOptionsLabel}',
     disabled: '{$disabled}',
     displayer: 'navList',
-    \$displayerContainer: $('#{$containerId}'),
+    displayerContainer: $('#{$containerId}'),
 });
 JS
         );
@@ -200,10 +196,10 @@ JS
     protected function setupStyle()
     {
         if (! $this->maxItem || $this->maxItem > 1) {
-            $primayDark = Color::primarydark();
+            $primayDarker = Admin::color()->primaryDarker();
 
             Admin::style(
-                ".select-resource .nav li a{padding:8px 10px;font-size:13px;font-weight:bold;color:{$primayDark}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}"
+                ".select-resource .nav li{width:100%}.select-resource .nav li a{padding:8px 10px;font-size:13px;color:{$primayDarker}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}"
             );
         }
     }
@@ -223,7 +219,7 @@ JS
 
         $name = $this->elementName ?: $this->formatName($this->column);
 
-        $this->prepend('<i class="fa fa-long-arrow-up"></i>')
+        $this->prepend('<i class="feather icon-arrow-up"></i>')
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id.$this->getFormElementId())

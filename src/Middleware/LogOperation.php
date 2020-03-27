@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Models\OperationLog as OperationLogModel;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LogOperation
 {
@@ -27,7 +28,7 @@ class LogOperation
                 'path'    => substr($request->path(), 0, 255),
                 'method'  => $request->method(),
                 'ip'      => $request->getClientIp(),
-                'input'   => json_encode($request->input()),
+                'input'   => $this->formatInput($request->input()),
             ];
 
             try {
@@ -38,6 +39,22 @@ class LogOperation
         }
 
         return $next($request);
+    }
+
+    /**
+     * @param array $input
+     *
+     * @return string
+     */
+    protected function formatInput(array $input)
+    {
+        foreach ((array) config('admin.operation_log.secret_fields') as $field) {
+            if ($field && ! empty($input[$field])) {
+                $input[$field] = Str::limit($input[$field], 3, '******');
+            }
+        }
+
+       return json_encode($input);
     }
 
     /**
@@ -81,6 +98,10 @@ class LogOperation
      */
     protected function inExceptArray($request)
     {
+        if ($request->routeIs('dcat.api.value')) {
+            return true;
+        }
+
         foreach (config('admin.operation_log.except') as $except) {
             $except = admin_base_path($except);
 

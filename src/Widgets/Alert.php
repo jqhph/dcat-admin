@@ -14,27 +14,27 @@ class Alert extends Widget
     /**
      * @var string|\Symfony\Component\Translation\TranslatorInterface
      */
-    protected $title = '';
+    protected $title;
 
     /**
      * @var string
      */
-    protected $content = '';
+    protected $content;
 
     /**
      * @var string
      */
-    protected $style = 'danger';
+    protected $style = 'light';
 
     /**
      * @var string
      */
-    protected $icon = 'ban';
+    protected $icon;
 
     /**
      * @var bool
      */
-    protected $showCloseBtn = true;
+    protected $showCloseBtn = false;
 
     /**
      * Alert constructor.
@@ -111,15 +111,35 @@ class Alert extends Widget
     }
 
     /**
-     * Disable close button.
+     * Set warning style.
+     *
+     * @return $this
+     */
+    public function danger()
+    {
+        return $this->style('danger')->icon('fa fa-ban');
+    }
+
+    /**
+     * Set light style.
+     *
+     * @return $this
+     */
+    public function light()
+    {
+        return $this->style('light');
+    }
+
+    /**
+     * Show close button.
      *
      * @param bool $value
      *
      * @return $this
      */
-    public function disableCloseButton(bool $value = true)
+    public function removable(bool $value = true)
     {
-        $this->showCloseBtn = ! $value;
+        $this->showCloseBtn = $value;
 
         return $this;
     }

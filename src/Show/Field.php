@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Show;
 
 use Dcat\Admin\Show;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasDefinitions;
 use Dcat\Admin\Widgets\Dump;
@@ -10,7 +11,6 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
@@ -86,28 +86,12 @@ class Field implements Renderable
      *
      * @var bool
      */
-    protected $border = false;
+    protected $border = true;
 
     /**
      * @var int
      */
-    protected $width = 3;
-
-    /**
-     * @var array
-     */
-    protected $fileTypes = [
-        'image'      => 'png|jpg|jpeg|tmp|gif',
-        'word'       => 'doc|docx',
-        'excel'      => 'xls|xlsx|csv',
-        'powerpoint' => 'ppt|pptx',
-        'pdf'        => 'pdf',
-        'code'       => 'php|js|java|python|ruby|go|c|cpp|sql|m|h|json|html|aspx',
-        'archive'    => 'zip|tar\.gz|rar|rpm',
-        'txt'        => 'txt|pac|log|md',
-        'audio'      => 'mp3|wav|flac|3pg|aa|aac|ape|au|m4a|mpc|ogg',
-        'video'      => 'mkv|rmvb|flv|mp4|avi|wmv|rm|asf|mpeg',
-    ];
+    protected $width = 8;
 
     /**
      * Field constructor.
@@ -251,7 +235,7 @@ class Field implements Renderable
                 }
             }
 
-            return "<img data-init='preview' src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
+            return "<img data-action='preview-img' src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
         });
     }
 
@@ -290,17 +274,19 @@ class Field implements Renderable
                 return '';
             }
 
+            $icon = Helper::getFileIcon($name);
+
             return <<<HTML
 <ul class="mailbox-attachments clearfix">
     <li style="margin-bottom: 0;">
-      <span class="mailbox-attachment-icon"><i class="fa {$field->getFileIcon($name)}"></i></span>
+      <span class="mailbox-attachment-icon"><i class="{$icon}"></i></span>
       <div class="mailbox-attachment-info">
         <div class="mailbox-attachment-name">
             <i class="fa fa-paperclip"></i> {$name}
             </div>
             <span class="mailbox-attachment-size">
               {$size}&nbsp;
-              <a href="{$url}" class="btn btn-default btn-xs pull-right" target="_blank"><i class="fa fa-cloud-download"></i></a>
+              <a href="{$url}" class="btn btn-white  btn-xs pull-right" target="_blank"><i class="fa fa-cloud-download"></i></a>
             </span>
       </div>
     </li>
@@ -333,15 +319,19 @@ HTML;
      *
      * @return Field
      */
-    public function label($style = 'success')
+    public function label($style = 'primary')
     {
         return $this->unescape()->as(function ($value) use ($style) {
-            if ($value instanceof Arrayable) {
-                $value = $value->toArray();
+            $class = $style;
+            $background = '';
+
+            if (strpos($style, '#') === 0 || strpos($style, '(') !== false) {
+                $class = '';
+                $background = "style='background:{$style}'";
             }
 
-            return collect((array) $value)->map(function ($name) use ($style) {
-                return "<span class='label label-{$style}'>$name</span>";
+            return collect($value)->map(function ($name) use ($class, $background) {
+                return "<span class='label bg-{$class}' $background>$name</span>";
             })->implode('&nbsp;');
         });
     }
@@ -356,12 +346,46 @@ HTML;
     public function badge($style = 'blue')
     {
         return $this->unescape()->as(function ($value) use ($style) {
-            if ($value instanceof Arrayable) {
-                $value = $value->toArray();
+            $class = $style;
+            $background = '';
+
+            if (strpos($style, '#') === 0 || strpos($style, '(') !== false) {
+                $class = '';
+                $background = "style='background:{$style}'";
             }
 
-            return collect((array) $value)->map(function ($name) use ($style) {
-                return "<span class='badge bg-{$style}'>$name</span>";
+            return collect($value)->map(function ($name) use ($class, $background) {
+                return "<span class='badge bg-{$class}' $background>$name</span>";
+            })->implode('&nbsp;');
+        });
+    }
+
+    /**
+     * @param string $style
+     *
+     * @return $this
+     */
+    public function chip($style = 'primary')
+    {
+        return $this->unescape()->as(function ($value) use ($style) {
+            $class = $style;
+            $background = '';
+            $textColor = '';
+
+            if (strpos($style, '#') === 0 || strpos($style, '(') !== false) {
+                $class = '';
+                $background = "style='background:{$style}'";
+                $textColor = 'text-white';
+            }
+
+            return collect($value)->map(function ($name) use ($class, $background, $textColor) {
+                return <<<HTML
+<div class="chip chip-{$class}" {$background}>
+  <div class="chip-body">
+    <div class="chip-text {$textColor}">{$name}</div>
+  </div>
+</div>
+HTML;
             })->implode('&nbsp;');
         });
     }
@@ -458,26 +482,6 @@ HTML;
 
             return view($view, compact('model', 'value', 'name'))->render();
         });
-    }
-
-    /**
-     * Get file icon.
-     *
-     * @param string $file
-     *
-     * @return string
-     */
-    public function getFileIcon($file = '')
-    {
-        $extension = File::extension($file);
-
-        foreach ($this->fileTypes as $type => $regex) {
-            if (preg_match("/^($regex)$/i", $extension) !== 0) {
-                return "fa-file-{$type}-o";
-            }
-        }
-
-        return 'fa-file-o';
     }
 
     /**

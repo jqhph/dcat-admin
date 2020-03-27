@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Grid\Tools;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Widgets\Color;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -52,7 +52,7 @@ class Paginator implements Renderable
      */
     protected function paginationLinks()
     {
-        return $this->paginator->render('admin::pagination');
+        return $this->paginator->render('admin::grid.pagination');
     }
 
     /**
@@ -86,9 +86,9 @@ class Paginator implements Renderable
             return [$key => "<b>$parameter</b>"];
         });
 
-        $color = Color::dark80();
+        $color = Admin::color()->dark80();
 
-        return "<span style=\"line-height:33px;color:{$color}\">".trans('admin.pagination.range', $parameters->all()).'</span>';
+        return "<span class='d-none d-sm-inline' style=\"line-height:33px;color:{$color}\">".trans('admin.pagination.range', $parameters->all()).'</span>';
     }
 
     /**

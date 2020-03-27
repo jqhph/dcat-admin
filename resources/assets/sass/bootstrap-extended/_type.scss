@@ -1,0 +1,88 @@
+// ================================================================================================
+//     File Name: type.scss
+//     Description: Type pages custom scss
+//     ----------------------------------------------------------------------------------------------
+//     Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//     Author: PIXINVENT
+//     Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+
+//small
+.font-small-1{
+  font-size: 0.7rem !important;
+}
+.font-small-2{
+  font-size: 0.8rem !important;
+}
+.font-small-3{
+  font-size: 0.9rem !important;
+}
+//medium
+.font-medium-1{
+  font-size: 1.1rem !important;
+}
+.font-medium-2{
+  font-size: 1.2rem !important;
+}
+.font-medium-3{
+  font-size: 1.3rem !important;
+}
+.font-medium-4{
+  font-size: 1.4rem !important;
+}
+.font-medium-5{
+  font-size: 1.5rem !important;
+}
+//large
+.font-large-1{
+  font-size: 2rem !important;
+}
+.font-large-2{
+  font-size: 3rem !important;
+}
+.font-large-3{
+  font-size: 4rem !important;
+}
+.font-large-4{
+  font-size: 5rem !important;
+}
+.font-large-5{
+  font-size: 6rem !important;
+}
+
+// Text styling
+// -------------------------
+
+// Font weights
+
+.text-bold-300 {
+  @include font-weight(light);
+}
+.text-bold-400 {
+  @include font-weight(book);
+}
+.text-bold-500 {
+  @include font-weight(medium);
+}
+.text-bold-600 {
+  @include font-weight(semi-bold);
+}
+.text-bold-700 {
+  @include font-weight(bold);
+}
+
+// Font style
+.text-italic {
+    font-style: italic;
+}
+.text-highlight {
+    padding: 4px 6px;
+}
+
+// //list Item
+// ol, ul, dl{
+//   li{
+//     line-height: 12;
+//   }
+// }

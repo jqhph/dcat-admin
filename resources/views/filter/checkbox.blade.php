@@ -3,7 +3,7 @@
         $checkbox = new \Dcat\Admin\Widgets\Checkbox($name, $options);
         if ($inline) $checkbox->inline();
 
-        $checkbox->checked(request($name, is_null($value) ? [] : $value))->circle(false);
+        $checkbox->check(request($name, is_null($value) ? [] : $value))->circle(false);
 
     @endphp
     @if($showLabel)

@@ -294,46 +294,48 @@ class QuickCreate implements Renderable
 
     ctr.find('.create-form').submit(function (e) {
         e.preventDefault();
-        if (ctr.attr('working')) {
+        
+        if (ctr.attr('submitting')) {
             return;
         }
         
-        ctr.attr('working', 1);
-        LA.NP.start();
+        var btn = $(this).find(':submit').buttonLoading();
+        
+        ctr.attr('submitting', 1);
     
         $.ajax({
             url: '{$url}',
             type: 'POST',
             data: $(this).serialize(),
             success: function(data) {
-                LA.NP.done();
-                ctr.attr('working', '');
+                ctr.attr('submitting', '');
+                btn.buttonLoading(false);
                 console.info(data);
                 
                 if (data.status == true) {
-                    LA.success(data.message);
-                    LA.reload();
+                    Dcat.success(data.message);
+                    Dcat.reload();
                     return;
                 }
                 
                 if (typeof data.validation !== 'undefined') {
-                    LA.warning(data.message)
+                    Dcat.warning(data.message)
                 }
             },
             error:function(xhq){
-                LA.NP.done();
-                ctr.attr('working', '');
+                btn.buttonLoading(false);
+                ctr.attr('submitting', '');
                 var json = xhq.responseJSON;
                 if (typeof json === 'object') {
                     if (json.message) {
-                        LA.error(json.message);
+                        Dcat.error(json.message);
                     } else if (json.errors) {
                         var i, errors = [];
                         for (i in json.errors) {
                             errors.push(json.errors[i].join("<br>"));
                         } 
                         
-                        LA.error(errors.join("<br>"));
+                        Dcat.error(errors.join("<br>"));
                     }
                 }
             }

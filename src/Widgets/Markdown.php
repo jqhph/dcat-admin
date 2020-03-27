@@ -31,34 +31,7 @@ class Markdown extends Widget
     {
         $markdown && $this->content($markdown);
 
-        Admin::css([
-            'vendor/dcat-admin/editor-md/css/editormd.preview.min.css',
-            'vendor/dcat-admin/dcat-admin/markdown.css',
-        ]);
-
-        Admin::js([
-            'vendor/dcat-admin/editor-md/lib/raphael.min.js',
-            'vendor/dcat-admin/editor-md/lib/marked.min.js',
-            'vendor/dcat-admin/editor-md/lib/prettify.min.js',
-            'vendor/dcat-admin/editor-md/lib/underscore.min.js',
-            'vendor/dcat-admin/editor-md/lib/sequence-diagram.min.js',
-            'vendor/dcat-admin/editor-md/lib/flowchart.min.js',
-            'vendor/dcat-admin/editor-md/lib/jquery.flowchart.min.js',
-            'vendor/dcat-admin/editor-md/editormd.min.js',
-        ]);
-    }
-
-    /**
-     * @param mixed $k
-     * @param mixed $v
-     *
-     * @return $this
-     */
-    public function option($k, $v)
-    {
-        $this->options[$k] = $v;
-
-        return $this;
+        Admin::collectAssets('@editor-md');
     }
 
     /**

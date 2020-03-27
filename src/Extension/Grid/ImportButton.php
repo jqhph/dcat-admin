@@ -35,22 +35,22 @@ $('.import-extension').click(function () {
     var id = $(this).data('id'), req;
     if (req) return;
     
-    LA.confirm("{$text}", function () {
+    Dcat.confirm("{$text}", '', function () {
         var url = '$url';
         req = 1;
         
-        LA.loading();
+        Dcat.loading();
         $.post('$url?id='+id, {
-            _token: LA.token,
+            _token: Dcat.token,
         }, function (response) {
-           LA.loading(false);
+           Dcat.loading(false);
            req = 0;
         
            if (!response.status) {
-               LA.error(response.message);
+               Dcat.error(response.message);
            }
            
-           $('.content').prepend('<div class="row"><div class="col-md-12">'+response.content+'</div></div>');
+           $('#app').prepend('<div class="row"><div class="col-md-12">'+response.content+'</div></div>');
         });
         
     }, "$confirm", "$cancel");

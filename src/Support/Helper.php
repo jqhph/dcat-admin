@@ -5,15 +5,34 @@ namespace Dcat\Admin\Support;
 use Dcat\Admin\Grid;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class Helper
 {
     /**
-     * Update extension config.
+     * @var array
+     */
+    public static $fileTypes = [
+        'image'      => 'png|jpg|jpeg|tmp|gif',
+        'word'       => 'doc|docx',
+        'excel'      => 'xls|xlsx|csv',
+        'powerpoint' => 'ppt|pptx',
+        'pdf'        => 'pdf',
+        'code'       => 'php|js|java|python|ruby|go|c|cpp|sql|m|h|json|html|aspx',
+        'archive'    => 'zip|tar\.gz|rar|rpm',
+        'txt'        => 'txt|pac|log|md',
+        'audio'      => 'mp3|wav|flac|3pg|aa|aac|ape|au|m4a|mpc|ogg',
+        'video'      => 'mkv|rmvb|flv|mp4|avi|wmv|rm|asf|mpeg',
+    ];
+
+    /**
+     * 更新扩展配置.
      *
      * @param array $config
      *
@@ -34,7 +53,7 @@ class Helper
     }
 
     /**
-     * Converts the given value to an array.
+     * 把给定的值转化为数组.
      *
      * @param $value
      * @param bool $filter
@@ -52,10 +71,19 @@ class Helper
         }
 
         if (is_array($value)) {
+        } elseif ($value instanceof Jsonable) {
+            $value = json_decode($value->toJson(), true);
         } elseif ($value instanceof Arrayable) {
             $value = $value->toArray();
         } elseif (is_string($value)) {
-            $value = explode(',', $value);
+            $array = null;
+
+            try {
+                $array = json_decode($value, true);
+            } catch (\Throwable $e) {
+            }
+
+            $value = is_array($array) ? $array : explode(',', $value);
         } else {
             $value = (array) $value;
         }
@@ -66,11 +94,11 @@ class Helper
     }
 
     /**
-     * Converts the given value to string.
+     * 把给定的值转化为字符串.
      *
-     * @param mixed  $value
-     * @param array  $params
-     * @param object $newThis
+     * @param string|Grid|\Closure|Renderable|Htmlable  $value
+     * @param array                                     $params
+     * @param object                                    $newThis
      *
      * @return string
      */
@@ -102,8 +130,6 @@ class Helper
     }
 
     /**
-     * Build an HTML attribute string from an array.
-     *
      * @param array $attributes
      *
      * @return string
@@ -113,6 +139,10 @@ class Helper
         $html = '';
 
         foreach ((array) $attributes as $key => &$value) {
+            if (is_array($value)) {
+                $value = implode(' ', $value);
+            }
+
             if (is_numeric($key)) {
                 $key = $value;
             }
@@ -130,8 +160,6 @@ class Helper
     }
 
     /**
-     * Get url with the added query string parameters.
-     *
      * @param string $url
      * @param array  $query
      *
@@ -147,9 +175,7 @@ class Helper
 
         $url = $array[0];
 
-        $originalQuery = $array[1] ?? '';
-
-        parse_str($originalQuery, $originalQuery);
+        parse_str($array[1] ?? '', $originalQuery);
 
         return $url.'?'.http_build_query(array_merge($originalQuery, $query));
     }
@@ -186,8 +212,6 @@ class Helper
     }
 
     /**
-     * Get full url without query strings.
-     *
      * @param Arrayable|array|string $keys
      *
      * @return string
@@ -198,12 +222,37 @@ class Helper
     }
 
     /**
-     * If a request match the specific path.
+     * @param string       $url
+     * @param string|array $keys
+     *
+     * @return bool
+     */
+    public static function urlHasQuery(string $url, $keys)
+    {
+        $value = explode('?', $url);
+
+        if (empty($value[1])) {
+            return false;
+        }
+
+        parse_str($value[1], $query);
+
+        foreach ((array) $keys as $key) {
+            if (Arr::has($query, $key)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 匹配请求路径.
      *
      * @example
-     *      Helper::matchRequestPath('auth/user')
-     *      Helper::matchRequestPath('auth/user*')
-     *      Helper::matchRequestPath('auth/user/* /edit')
+     *      Helper::matchRequestPath(admin_base_path('auth/user'))
+     *      Helper::matchRequestPath(admin_base_path('auth/user*'))
+     *      Helper::matchRequestPath(admin_base_path('auth/user/* /edit'))
      *      Helper::matchRequestPath('GET,POST:auth/user')
      *
      * @param string      $path
@@ -226,6 +275,11 @@ class Helper
             }
         }
 
+        // 判断路由名称
+        if ($request->routeIs($path)) {
+            return true;
+        }
+
         if (! Str::contains($path, '*')) {
             return $path === $current;
         }
@@ -236,7 +290,7 @@ class Helper
     }
 
     /**
-     * Build nested array.
+     * 生成层级数据.
      *
      * @param array       $nodes
      * @param int         $parentId
@@ -284,8 +338,6 @@ class Helper
     }
 
     /**
-     * Generate a URL friendly "slug" from a given string.
-     *
      * @param string $name
      * @param string $symbol
      *
@@ -353,7 +405,7 @@ class Helper
     }
 
     /**
-     * Delete from array by value.
+     * 删除数组中的元素.
      *
      * @param array $array
      * @param mixed $value
@@ -367,5 +419,143 @@ class Helper
                 unset($array[$index]);
             }
         }
+    }
+
+    /**
+     * 颜色转亮.
+     *
+     * @param string $color
+     * @param int    $amt
+     *
+     * @return string
+     */
+    public static function colorLighten(string $color, int $amt)
+    {
+        if (! $amt) {
+            return $color;
+        }
+
+        $hasPrefix = false;
+
+        if (strpos($color, '#') === 0) {
+            $color = mb_substr($color, 1);
+
+            $hasPrefix = true;
+        }
+
+        [$red, $blue, $green] = static::colorToRBG($color, $amt);
+
+        return ($hasPrefix ? '#' : '').dechex($green + ($blue << 8) + ($red << 16));
+    }
+
+    /**
+     * 颜色转暗.
+     *
+     * @param string $color
+     * @param int    $amt
+     *
+     * @return string
+     */
+    public static function colorDarken(string $color, int $amt)
+    {
+        return static::colorLighten($color, -$amt);
+    }
+
+    /**
+     * 颜色透明度.
+     *
+     * @param string       $color
+     * @param float|string $alpha
+     *
+     * @return string
+     */
+    public static function colorAlpha(string $color, $alpha)
+    {
+        if ($alpha >= 1) {
+            return $color;
+        }
+
+        if (strpos($color, '#') === 0) {
+            $color = mb_substr($color, 1);
+        }
+
+        [$red, $blue, $green] = static::colorToRBG($color);
+
+        return "rgba($red, $blue, $green, $alpha)";
+    }
+
+    /**
+     * @param string $color
+     * @param int    $amt
+     *
+     * @return array
+     */
+    public static function colorToRBG(string $color, int $amt = 0)
+    {
+        $format = function ($value) {
+            if ($value > 255) {
+                return 255;
+            }
+            if ($value < 0) {
+                return 0;
+            }
+
+            return $value;
+        };
+
+        $num = hexdec($color);
+
+        $red = $format(($num >> 16) + $amt);
+        $blue = $format((($num >> 8) & 0x00FF) + $amt);
+        $green = $format(($num & 0x0000FF) + $amt);
+
+        return [$red, $blue, $green];
+    }
+
+    /**
+     * 验证扩展包名称.
+     *
+     * @param string $name
+     *
+     * @return int
+     */
+    public static function validateExtensionName($name)
+    {
+        return preg_match('/^[\w\-_]+\/[\w\-_]+$/', $name);
+    }
+
+    /**
+     * Get file icon.
+     *
+     * @param string $file
+     *
+     * @return string
+     */
+    public static function getFileIcon($file = '')
+    {
+        $extension = File::extension($file);
+
+        foreach (static::$fileTypes as $type => $regex) {
+            if (preg_match("/^($regex)$/i", $extension) !== 0) {
+                return "fa fa-file-{$type}-o";
+            }
+        }
+
+        return 'fa fa-file-o';
+    }
+
+    /**
+     * 判断是否是ajax请求.
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public static function isAjaxRequest(?Request $request = null)
+    {
+        /* @var Request $request */
+        $request = $request ?: request();
+
+        return $request->ajax() && ! $request->pjax();
     }
 }

@@ -29,9 +29,9 @@ trait ShowCreator
 
             $rows[] = "            \$show->{$field['name']};";
 
-            if ($k === 1 && (count($fields) > 2 || $timestamps)) {
-                $rows[] = '            $show->divider();';
-            }
+//            if ($k === 1 && (count($fields) > 2 || $timestamps)) {
+//                $rows[] = '            $show->divider();';
+//            }
         }
 
         if ($timestamps) {

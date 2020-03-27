@@ -8,7 +8,7 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Models\Repositories\Menu;
 use Dcat\Admin\Tree;
-use Dcat\Admin\Widgets\Card;
+use Dcat\Admin\Widgets\Box;
 
 class MenuController extends AdminController
 {
@@ -34,7 +34,7 @@ class MenuController extends AdminController
         return $content
             ->title($this->title())
             ->description(trans('admin.list'))
-            ->row(function (Row $row) {
+            ->body(function (Row $row) {
                 $row->column(7, $this->treeView()->render());
 
                 $row->column(5, function (Column $column) {
@@ -52,13 +52,15 @@ class MenuController extends AdminController
                     $form->multipleSelect('roles', trans('admin.roles'))
                         ->options($roleModel::all()->pluck('name', 'id'));
                     if ($menuModel::withPermission()) {
-                        $form->tree('permissions', trans('admin.permission'))->nodes((new $permissionModel())->allNodes());
+                        $form->tree('permissions', trans('admin.permission'))
+                            ->expand(false)
+                            ->nodes((new $permissionModel())->allNodes());
                     }
                     $form->hidden('_token')->default(csrf_token());
 
                     $form->width(9, 2);
 
-                    $column->append(Card::make(trans('admin.new'), $form)->class('card da-box'));
+                    $column->append(Box::make(trans('admin.new'), $form));
                 });
             });
     }

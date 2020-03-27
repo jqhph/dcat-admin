@@ -14,7 +14,7 @@ class QuickEdit extends RowAction
      */
     public function title()
     {
-        return __('admin.quick_edit');
+        return '<i class="feather icon-edit"></i> '.__('admin.quick_edit');
     }
 
     public function render()
@@ -26,11 +26,11 @@ class QuickEdit extends RowAction
 
             $title = trans('admin.edit').' - '.$this->getKey();
 
-            Form::modal($title)
+            Form::dialog($title)
                 ->click(".{$this->getElementClass()}")
                 ->dimensions($width, $height)
                 ->forceRefresh()
-                ->success('LA.reload()');
+                ->success('Dcat.reload()');
         }
 
         $this->setHtmlAttribute([

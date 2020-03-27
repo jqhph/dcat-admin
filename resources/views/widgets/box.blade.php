@@ -4,10 +4,10 @@
         <div class="box-tools pull-right">
             @foreach($tools as $tool)
                 {!! $tool !!}
-                @endforeach
-        </div><!-- /.box-tools -->
-    </div><!-- /.box-header -->
-    <div class="box-body" style="display: block;{!! $padding !!}">
+            @endforeach
+        </div>
+    </div>
+    <div class="box-body collapse show" style="{!! $padding !!}">
         {!! $content !!}
-    </div><!-- /.box-body -->
+    </div>
 </div>

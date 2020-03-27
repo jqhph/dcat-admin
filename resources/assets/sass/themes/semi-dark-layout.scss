@@ -1,0 +1,110 @@
+// ================================================================================================
+// 	File Name: semi-dark-layout.scss
+// 	Description: SCSS file for semi dark layout.
+// 	----------------------------------------------------------------------------------------------
+// 	Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+// 	Author: PIXINVENT
+// 	Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Core variables and mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+body{
+  &.semi-dark-layout{
+    /************ Main Menu **************/
+
+    // main menu
+    .main-menu{
+      background-color: $dark-card-color;
+      .shadow-bottom{
+        background: linear-gradient(180deg,#0f1642 44%,rgba(15,22,66,.51) 73%,rgba(44,48,60,0))
+      }
+      &:not(.expanded){
+        .navigation {
+          .sidebar-group-active {
+            a{
+              background-color: $content-dark-bg;
+            }
+          }
+        }
+      }
+    }
+
+    // main menu content
+    .main-menu-content{
+      .navigation-main{
+        background-color: $dark-card-color;
+        .nav-item{
+          i{
+            color: $theme-dark-text-color;
+          }
+          &.open{
+            a{
+              background-color: $content-dark-bg;
+            }
+          }
+          a:after,a{
+            color: $theme-dark-text-color;
+          }
+          .menu-content{
+            background-color: $dark-card-color;
+            .active{
+              .menu-item{
+                color: $white;
+              }
+            }
+            li:not(.active){
+              a{
+                background-color: $dark-card-color;
+              }
+            }
+          }
+        }
+        .active{
+          .menu-title,
+          i{
+            color: $white;
+          }
+        }
+        .sidebar-group-active{
+          a{
+            background: $dark-card-color;
+            border-radius: 4px;
+          }
+          .menu-content{
+            background-color: $dark-card-color;
+            .active{
+              z-index: 1;
+              a{
+                background-color: transparent;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // menu collapsed active item color
+    &.menu-collapsed{
+      .main-menu:not(.expanded){
+        .navigation-main{
+          li.active{
+            a{
+              background: $content-dark-bg !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

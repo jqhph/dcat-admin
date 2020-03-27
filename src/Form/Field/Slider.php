@@ -7,12 +7,11 @@ use Dcat\Admin\Form\Field;
 class Slider extends Field
 {
     protected static $css = [
-        '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.css',
-        '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.skinNice.css',
+        '@ionslider',
     ];
 
     protected static $js = [
-        '/vendor/dcat-admin/AdminLTE/plugins/ionslider/ion.rangeSlider.min.js',
+        '@ionslider',
     ];
 
     protected $options = [

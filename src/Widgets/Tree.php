@@ -3,13 +3,27 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
 class Tree extends Widget
 {
+    public static $js = [
+        '@jstree',
+    ];
+    public static $css = [
+        '@jstree',
+    ];
+
+    /**
+     * @var string
+     */
     protected $view = 'admin::widgets.tree';
 
+    /**
+     * @var array
+     */
     protected $options = [
         'plugins' => ['checkbox', 'types'],
         'core'    => [
@@ -30,10 +44,10 @@ class Tree extends Widget
         ],
     ];
 
-    public function __construct($nodes = [])
-    {
-        $this->nodes($nodes);
-    }
+    /**
+     * @var string
+     */
+    protected $id;
 
     /**
      * @var array
@@ -44,41 +58,59 @@ class Tree extends Widget
         'parent' => 'parent_id',
     ];
 
+    /**
+     * @var array
+     */
     protected $nodes = [];
 
+    /**
+     * @var array
+     */
     protected $value = [];
 
-    protected $checkedAll;
-
-    public function checkedAll()
-    {
-        $this->checkedAll = true;
-
-        return $this;
-    }
-
-    public function checked($value = [])
-    {
-        if ($value instanceof Arrayable) {
-            $value = $value->toArray();
-        }
-        $this->value = (array) $value;
-
-        return $this;
-    }
-
     /**
-     * @param string $idColumn
-     * @param string $textColumn
-     * @param string $parentColumn
-     *
-     * @return $this
+     * @var bool
      */
-    public function name(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
+    protected $checkAll = false;
+
+    public function __construct($nodes = [])
     {
-        $this->columnNames['id'] = $idColumn;
-        $this->columnNames['text'] = $textColumn;
-        $this->columnNames['parent'] = $parentColumn;
+        $this->nodes($nodes);
+
+        $this->id = 'widget-tree-'.Str::random(8);
+    }
+
+    public function checkAll()
+    {
+        $this->checkAll = true;
+
+        return $this;
+    }
+
+    public function check($value)
+    {
+        $this->value = Helper::array($value);
+
+        return $this;
+    }
+
+    public function setIdColumn(string $name)
+    {
+        $this->columnNames['id'] = $name;
+
+        return $this;
+    }
+
+    public function setTitleColumn(string $name)
+    {
+        $this->columnNames['text'] = $name;
+
+        return $this;
+    }
+
+    public function setParentColumn(string $name)
+    {
+        $this->columnNames['parent'] = $name;
 
         return $this;
     }
@@ -107,16 +139,14 @@ class Tree extends Widget
 
     public function render()
     {
-        $id = 'widget-tree-'.Str::random(8);
-
-        $this->id($id);
+        $this->id($this->id);
         $this->class('jstree-wrapper');
         $this->defaultHtmlAttribute('style', 'border:0;padding:5px 0');
 
         $this->formatNodes();
 
         $this->variables = [
-            'id'    => $id,
+            'id'    => $this->id,
             'nodes' => &$this->nodes,
         ];
 
@@ -153,7 +183,7 @@ class Tree extends Widget
 
             $v['state'] = [];
 
-            if ($this->checkedAll || ($value && in_array($v[$idColumn], $value))) {
+            if ($this->checkAll || ($value && in_array($v[$idColumn], $value))) {
                 $v['state']['selected'] = true;
             }
 
@@ -168,11 +198,5 @@ class Tree extends Widget
         }
 
         $this->nodes = &$nodes;
-    }
-
-    protected function collectAssets()
-    {
-        Admin::css('vendor/dcat-admin/jstree-theme/themes/proton/style.min.css');
-        Admin::collectComponentAssets('jstree');
     }
 }

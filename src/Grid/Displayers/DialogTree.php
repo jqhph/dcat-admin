@@ -8,6 +8,9 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class DialogTree extends AbstractDisplayer
 {
+    public static $js = '@jstree';
+    public static $css = '@jstree';
+
     protected $url;
 
     protected $title;
@@ -45,7 +48,7 @@ class DialogTree extends AbstractDisplayer
 
     protected $nodes = [];
 
-    protected $checkedAll;
+    protected $checkAll;
 
     /**
      * @param array $data exp:
@@ -77,9 +80,9 @@ class DialogTree extends AbstractDisplayer
         return $this;
     }
 
-    public function checkedAll()
+    public function checkAll()
     {
-        $this->checkedAll = true;
+        $this->checkAll = true;
 
         return $this;
     }
@@ -120,18 +123,23 @@ class DialogTree extends AbstractDisplayer
         return $this;
     }
 
-    /**
-     * @param string $idColumn
-     * @param string $textColumn
-     * @param string $parentColumn
-     *
-     * @return $this
-     */
-    public function name(string $idColumn = 'id', string $textColumn = 'name', string $parentColumn = 'parent_id')
+    public function setIdColumn(string $name)
     {
-        $this->columnNames['id'] = $idColumn;
-        $this->columnNames['text'] = $textColumn;
-        $this->columnNames['parent'] = $parentColumn;
+        $this->columnNames['id'] = $name;
+
+        return $this;
+    }
+
+    public function setTitleColumn(string $name)
+    {
+        $this->columnNames['text'] = $name;
+
+        return $this;
+    }
+
+    public function setParentColumn(string $name)
+    {
+        $this->columnNames['parent'] = $name;
 
         return $this;
     }
@@ -151,7 +159,9 @@ class DialogTree extends AbstractDisplayer
         $val = $this->format($this->value);
 
         return <<<EOF
-<a href="javascript:void(0)" class="{$this->getSelectorPrefix()}-open-tree" data-checked="{$this->checkedAll}" data-val="{$val}"><i class='ti-layout-list-post'></i> $btn</a>
+<a href="javascript:void(0)" class="{$this->getSelectorPrefix()}-open-tree" data-checked="{$this->checkAll}" data-val="{$val}">
+    <i class='feather icon-align-right'></i> $btn
+</a>
 EOF;
     }
 
@@ -176,7 +186,7 @@ EOF;
         Admin::script(
             <<<JS
 $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
-    var tpl = '<div class="jstree-wrapper" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>', 
+    var tpl = '<div class="jstree-wrapper p-1" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>', 
         opts = $opts,
         url = '{$this->url}',
         t = $(this),
@@ -191,13 +201,13 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
         if (requesting) return;
         requesting = 1;
         
-        t.button('loading');
-        $.getJSON(url, {_token: LA.token, value: val}, function (resp) {
+        t.buttonLoading();
+        $.getJSON(url, {_token: Dcat.token, value: val}, function (resp) {
              requesting = 0;
-             t.button('reset');
+             t.buttonLoading(false);
              
              if (!resp.status) {
-                return LA.error(resp.message || '系统繁忙，请稍后再试');
+                return Dcat.error(resp.message || '系统繁忙，请稍后再试');
              }
              
              build(resp.value);
@@ -247,7 +257,7 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
 
             v['state'] = {'disabled': true};
 
-            if (ckall || (value && LA.arr.in(value, v[idColumn]))) {
+            if (ckall || (value && Dcat.helpers.inObject(value, v[idColumn]))) {
                 v['state']['selected'] = true;
             }
 
@@ -261,15 +271,8 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
        
         return nodes;
     }
-    
 });
 JS
         );
-    }
-
-    protected function collectAssets()
-    {
-        Admin::css('vendor/dcat-admin/jstree-theme/themes/proton/style.min.css');
-        Admin::collectComponentAssets('jstree');
     }
 }

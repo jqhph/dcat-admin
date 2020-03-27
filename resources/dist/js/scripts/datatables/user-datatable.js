@@ -1,0 +1,1 @@
+$(document).ready(function(){$("#check-slct").DataTable({columnDefs:[{orderable:!1,className:"select-checkbox",targets:0}],select:{style:"os",selector:"td:first-child"},order:[[1,"asc"]],lengthMenu:[[5,25,50,-1],[5,25,50,"All"]],language:{search:"_INPUT_",search:'<i class="fa fa-search"></i>',searchPlaceholder:"search"}})});

@@ -1,0 +1,523 @@
+// ================================================================================================
+// 	File Name: data-list-view.scss
+// 	Description: SCSS file for data list view.
+// 	----------------------------------------------------------------------------------------------
+// 	Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+// 	Author: PIXINVENT
+// 	Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Core variables and mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+$checkbox-border-color: #b4b4b4;
+
+// For checkbox alignment
+
+
+// for header section
+.data-list-view-header,.data-thumb-view-header{
+  .table-responsive{
+    .top{
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+      margin-bottom: 1rem;
+      .action-btns{
+        margin-top: 1.5rem;
+        display: flex;
+      .actions-dropodown{
+            box-shadow: 0 2px 8px 0 rgba($pure-black,.14);
+            border-radius: .5rem;
+            margin-right: .75rem;
+            .dropdown-toggle{
+              font-size: 1.125rem;
+              font-weight: 500;
+              &:after{
+                left: 0;
+              }
+            }
+        }
+
+        .dt-buttons{
+          .btn{
+            padding: 0.9rem .938rem;
+          }
+        }
+      }
+      .dataTables_length{
+        display: inline-block;
+        .custom-select{
+          width: 8.714rem;
+          height: 3rem;
+          border-radius: 1.428rem;
+          border: 1px solid $gray-300;
+          font-size: 1rem;
+          background-position:calc(100% - 12px) 13px, calc(100% - 20px) 13px, 100% 0;
+          &:focus{
+            box-shadow: none;
+          }
+        }
+      }
+      .dataTables_filter{
+        display: inline-block;
+          .form-control{
+            padding: 1.45rem 2.8rem !important;
+            border-radius: 1.428rem;
+            border: 1px solid $gray-300;
+          }
+          label{
+            position: relative;
+            &:after{
+              content: "\e8bd";
+              font-family: "feather";
+              position: absolute;
+              left: 1.428rem;
+              top: .928rem;
+
+            }
+          }
+        }
+    }
+    // to align pagination to center
+    .dataTables_wrapper{
+      .dataTables_paginate{
+        ul.pagination{
+          justify-content: center;
+        }
+      }
+    }
+  }
+    // add new data sidebar customization
+    .add-new-data-sidebar{
+      .overlay-bg{
+        background: rgba($pure-black,.2);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        transition: all .3s ease;
+        opacity: 0;
+        z-index: 1032;
+        &.show{
+          opacity: 1;
+          display: block;
+        }
+      }
+
+      .add-new-data{
+        width: 28.57rem;
+        max-width: 90vw;
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+        background: $white;
+        position: fixed;
+        left: auto;
+        right: 0;
+        top: 0;
+        z-index: 1033;
+        box-shadow: 0 0 15px 0 rgba($pure-black,.05);
+        transform: translateX(100%);
+        transition: all .25s ease;
+        overflow: hidden;
+        &.show{
+          transform: translateX(0%);
+        }
+        .new-data-title{
+          padding-bottom: .714rem;
+          border-bottom: 1px solid rgba($pure-black,.1);
+          .hide-data-sidebar{
+            position: relative;
+            i{
+              position: absolute;
+              font-size: 1.71rem;
+              right: 0;
+              top: -.1428rem;
+              cursor: pointer;
+            }
+          }
+        }
+        .data-items{
+          border-bottom: 1px solid rgba($pure-black,.1);;
+          height: calc(100vh - 10rem);
+          position: relative;
+          .data-field-col{
+            margin-top: 1.25rem;
+
+            &.data-list-upload{
+              margin-top: 2rem;
+            }
+
+            .dropzone{
+              min-height: 14.285rem;
+              .dz-message{
+                height: auto;
+                &:before{
+                  font-size: 2.857rem;
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+// datatable customization
+table.data-list-view.dataTable,table.data-thumb-view.dataTable{
+  border-spacing: 0 1.3rem;
+  padding: 0 0.7rem;
+  thead{
+    // th customization
+    th{
+      padding: .714rem 1.785rem;
+      font-weight: 600;
+      input:focus{
+        outline: 0;
+      }
+    }
+    th:first-child{
+      padding-left: 0;
+    }
+    // for sorting icons
+    .sorting_asc,.sorting_desc,.sorting{
+      padding-right: inherit;
+      &:before{
+        font-size: .7rem;
+        left: .857rem;
+        top: .642rem;
+      }
+      &:after{
+        font-size: .7rem;
+        left: .857rem;
+        top: 1.071rem;
+      }
+    }
+
+    // checkbox customization starts
+    .dt-checkboxes-select-all{
+      input{
+        width: 0;
+        position: relative;
+        &:before{
+          border: 2px solid $checkbox-border-color;
+          content: "";
+          width: 1.071rem;
+          height: 1.071rem;
+          padding: 0;
+          border-radius: 2px;
+          transition: all .2s ease;
+          transform: rotate(-90deg);
+          overflow: hidden;
+          transition: all .2s ease;
+          position: absolute;
+          }
+          &:after{
+            background-color: $primary;
+            border: 2px solid $primary;
+            font-family: "feather";
+            content: "\e83f";
+            font-size: 0.75rem;
+            line-height: 1.2;
+            color: $white;
+            opacity: 0;
+            position: absolute;
+            width: .928rem;
+            height: 1rem;
+            transform: translate(100%);
+            transform-origin: right;
+            transition: all .2s ease;
+            overflow: hidden;
+          }
+
+          &:active:checked{
+           &:after{
+            transform: translate(3px);
+           }
+          }
+
+          &:checked{
+            &:before{
+              border: 2px solid $primary;
+              transform: rotate(0deg);
+            }
+            &:after{
+              transition: all .2s ease;
+              opacity: 1;
+              transform: translate(0)
+            }
+          }
+        }
+    }
+
+    // checkbox customization ends
+  }
+  tbody{
+    // for table row effects
+    tr{
+      background-color: $white;
+      box-shadow: rgba($pure-black, 0.05) 0px 4px 20px 0px;
+      cursor: pointer;
+      transition: all .3s ease;
+      border-radius: .5rem;
+      &:hover{
+        transform: translateY(-4px);
+        transition: all .3s ease;
+      }
+      td:first-child{
+        padding-left: 1rem;
+        border-top-left-radius: .5rem;
+        border-bottom-left-radius: .5rem;
+      }
+      td:last-child{
+        border-top-right-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+      }
+
+      &.selected{
+        td{
+          border-radius: 0;
+        }
+      }
+    }
+
+    // for td effects
+
+    td{
+      padding: 1.357rem;
+      border: none;
+      vertical-align: middle;
+      input:focus{
+        outline: 0;
+      }
+      &.product-name{
+        font-weight: 500;
+      }
+      &:focus{
+        outline: 0;
+      }
+
+      // Check customization starts
+
+    &.dt-checkboxes-cell{
+      input{
+        width: 0;
+        position: relative;
+        &:before{
+          border: 2px solid $checkbox-border-color;
+          position: absolute;
+          left: -8px;
+          content: "";
+          width: 1.071rem;
+          height: 1.071rem;
+          padding: 0;
+          border-radius: 2px;
+          transform: rotate(-90deg);
+          overflow: hidden;
+          transition: all .2s ease;
+          }
+          &:after{
+            background-color: $primary;
+            font-family: "feather";
+            content: "\e83f";
+            font-size: 0.75rem;
+            color: $white;
+            opacity: 0;
+            position: absolute;
+            left: -.4285rem;
+            width: .857rem;
+            height: 1rem;
+            overflow: hidden;
+            transform: rotate(-90deg) translate(100%);
+            transform-origin: right;
+            transition: all .2s ease;
+          }
+          &:active:checked{
+            &:after{
+              transform: translate(3px);                }
+            }
+          &:checked{
+            &:before{
+              transform: rotate(0deg);
+              border: 2px solid $primary;
+              transition: all .2s ease;
+            }
+            &:after{
+              opacity: 1;
+              transition: all .2s ease;
+              transform: rotate(0deg) translate(0);
+            }
+          }
+        }
+      }
+
+      // Check customization ends
+    .progress{
+      margin-bottom: 0;
+      box-shadow: 0 4px 8px 0 rgba($pure-black,.12),0 2px 4px 0 rgba($pure-black,.08);
+    }
+    }
+  }
+}
+
+// for thumb view images and padding
+table.data-thumb-view.dataTable{
+  tbody{
+    tr{
+      td{
+        padding-top: .714rem;
+        padding-bottom: .714rem;
+        &.product-img{
+          img{
+            height: 7.857rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// to stack buttons
+@media(max-width:  768px){
+  #data-list-view,#data-thumb-view {
+    .table-responsive {
+      .top{
+        flex-direction: column;
+      }
+      .dt-buttons{
+        width: auto;
+        text-align: left;
+      }
+      .dataTables_length,
+      .dataTables_filter{
+        text-align: right;
+      }
+    }
+  }
+}
+
+// to position upload text properly in small devices
+@media(max-width: 576px){
+  .add-new-data-sidebar{
+    .data-items{
+      .data-list-upload{
+        .dropzone{
+          .dz-message{
+            &:before{
+              top: 3.428rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+ // IE Specific CSS
+  _:-ms-lang(x),
+  .data-list-view.dataTable,
+  .data-thumb-view.dataTable{
+  tbody,thead{
+        tr{
+          td,th{
+            &.dt-checkboxes-cell {
+              input{
+                width: auto;
+              }
+            }
+          }
+        }
+      }
+    .table-responsive{
+      .top{
+        .dataTables_filter {
+          .form-control{
+          height: 1.4rem !important;
+          padding: 0rem .5rem !important;
+          &:after{
+            display: none;
+          }
+          }
+        }
+      }
+    }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  #data-list-view,
+  #data-thumb-view{
+    .table-responsive{
+      .top{
+        .dataTables_filter {
+          .form-control{
+          height: 3rem !important;
+          padding: 0rem 1rem !important;
+          }
+          label{
+            &:after{
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
+
+// Macos Firefox Specific
+@supports (-moz-osx-font-smoothing: auto) {
+  .data-list-view,
+  .data-thumb-view {
+    input{
+      width: auto !important;
+    }
+  }
+}
+
+// Safari specific
+@media not all and (min-resolution:.001dpcm){
+  @supports (-webkit-appearance:none) {
+    table{
+      &.data-list-view,
+      &.data-thumb-view{
+        tbody{
+          td.dt-checkboxes-cell{
+            input:after{
+              left: -.485rem;
+            }
+          }
+        }
+      }
+    }
+    .data-list-view,
+    .data-thumb-view {
+      .dt-checkboxes-cell{
+        input{
+          -webkit-appearance: none;
+          top: -10px;
+        }
+      }
+    }
+  }
+}
+
+// macbook chrome specific
+.data-list-view,
+.data-thumb-view {
+  .mac-checkbox{
+    -webkit-appearance: none;
+    top: -10px;
+  }
+}

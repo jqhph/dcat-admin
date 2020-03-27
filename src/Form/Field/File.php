@@ -19,7 +19,7 @@ class File extends Field implements UploadFieldInterface
      * @var array
      */
     protected static $css = [
-        'vendor/dcat-admin/webuploader/webuploader.min.css',
+        '@webuploader',
     ];
 
     /**
@@ -28,8 +28,7 @@ class File extends Field implements UploadFieldInterface
      * @var array
      */
     protected static $js = [
-        'vendor/dcat-admin/webuploader/webuploader.min.js',
-        'vendor/dcat-admin/dcat-admin/upload.min.js',
+        '@webuploader',
     ];
 
     /**
@@ -100,7 +99,7 @@ class File extends Field implements UploadFieldInterface
      *
      * @return mixed|string
      */
-    protected function prepareToSave($file)
+    protected function prepareInputValue($file)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
             return $this->destroy();
@@ -169,9 +168,9 @@ class File extends Field implements UploadFieldInterface
         $this->formatValue();
 
         $this->addVariables([
-            'options' => json_encode($this->options),
-            '_files'  => $this->options['isImage'] ? '' : '_files',
-            '_id'     => $this->generateId(),
+            'options'     => json_encode($this->options),
+            'fileType'    => $this->options['isImage'] ? '' : 'file',
+            'containerId' => $this->generateId(),
         ]);
 
         return parent::render();

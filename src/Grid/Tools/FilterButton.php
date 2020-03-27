@@ -57,19 +57,16 @@ class FilterButton extends AbstractTool
         expand = {$expand};
     
      function initSlider() {
-        slider = new LA.Slider({
-            direction: 'r',
-            dom: '#{$id}',
-            background: '#FFF',
-            shade: false,
-            width: '480px',
+        slider = new Dcat.Slider({
+            target: '#{$id}',
         });
         
-        $(document).one('pjax:complete', function () {// 跳转新页面时移除弹窗
-            slider.destroy();
-        });
+        slider
+            .\$container
+            .find('.right-side-filter-container .header')
+            .width(slider.\$container.width() - 20);
         
-        expand && slider.open();
+        expand && setTimeout(slider.open.bind(slider), 10);
     }
     
     expand && setTimeout(initSlider, 10);

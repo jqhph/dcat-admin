@@ -2,8 +2,6 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 /**
  * Class ListBox.
  *
@@ -11,6 +9,9 @@ use Dcat\Admin\Admin;
  */
 class Listbox extends MultipleSelect
 {
+    public static $js = '@jquery.bootstrap-duallistbox';
+    public static $css = '@jquery.bootstrap-duallistbox';
+
     protected $settings = [];
 
     public function settings(array $settings)
@@ -37,10 +38,5 @@ $("{$this->getElementClassSelector()}").bootstrapDualListbox($settings);
 JS;
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectComponentAssets('jquery.bootstrap-duallistbox');
     }
 }

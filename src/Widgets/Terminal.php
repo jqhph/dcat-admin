@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class Terminal extends Widget
 {
-    protected static $style = '<style>info{color: #21b978;}warning{color: #ffcc80}comment{color: rgba(255, 189, 74, .8);}error{color: #ff5b5b}</style>';
+    protected static $style = '.dump info{color: #21b978;}.dump warning{color: #ffcc80}.dump comment{color: rgba(255, 189, 74, .8);}.dump error{color: #ff5b5b}';
 
     protected $content;
 
@@ -16,7 +16,6 @@ class Terminal extends Widget
         $this->content($content);
 
         $this->class('dump');
-        $this->style('background:#333;color:#fff;');
     }
 
     /**
@@ -31,6 +30,16 @@ class Terminal extends Widget
         Artisan::call($command, $parameters, $output);
 
         return static::make($output);
+    }
+
+    public function dark()
+    {
+        return $this->style('background:#333;color:#fff;');
+    }
+
+    public function transparent()
+    {
+        return $this->style('background:transparent!important;color:#fff;');
     }
 
     public function content($content)
@@ -51,7 +60,7 @@ class Terminal extends Widget
         static::$style = null;
 
         return <<<EOF
-{$style}<pre {$this->formatHtmlAttributes()}>{$this->content}</pre>
+<style>{$style}</style><pre {$this->formatHtmlAttributes()}>{$this->content}</pre>
 EOF;
     }
 }

@@ -1,0 +1,13 @@
+// tags
+
+@mixin badge-variant($color) {
+  background-color: $color;
+  &.badge-glow{
+    box-shadow: 0px 0px 10px $color;
+  }
+  &[href] {
+    @include hover-focus {
+      background-color: darken($color, 10%);
+    }
+  }
+}

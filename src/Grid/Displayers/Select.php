@@ -6,6 +6,9 @@ use Dcat\Admin\Admin;
 
 class Select extends AbstractDisplayer
 {
+    public static $js = '@select2';
+    public static $css = '@select2';
+
     public function display($options = [])
     {
         if ($options instanceof \Closure) {
@@ -21,18 +24,18 @@ class Select extends AbstractDisplayer
 $('.$class').off('change').select2().on('change', function(){
     var pk = $(this).data('key');
     var value = $(this).val();
-    LA.NP.start();
+    Dcat.NP.start();
     $.ajax({
         url: "{$this->resource()}/" + pk,
         type: "POST",
         data: {
             $name: value,
-            _token: LA.token,
+            _token: Dcat.token,
             _method: 'PUT'
         },
         success: function (data) {
-            LA.NP.done();
-            LA.success(data.message);
+            Dcat.NP.done();
+            Dcat.success(data.message);
         }
     });
 });

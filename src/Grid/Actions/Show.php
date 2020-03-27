@@ -11,7 +11,7 @@ class Show extends RowAction
      */
     public function title()
     {
-        return __('admin.show');
+        return '<i class="feather icon-eye"></i> '.__('admin.show');
     }
 
     /**

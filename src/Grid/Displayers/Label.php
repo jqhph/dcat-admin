@@ -2,24 +2,37 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Illuminate\Contracts\Support\Arrayable;
+use Dcat\Admin\Support\Helper;
 
 class Label extends AbstractDisplayer
 {
-    public function display($style = 'success', $max = null)
+    protected $baseClass = 'label';
+    protected $stylePrefix = 'bg';
+
+    public function display($style = 'primary', $max = null)
     {
-        if ($this->value instanceof Arrayable) {
-            $this->value = $this->value->toArray();
+        $class = $style;
+        $background = '';
+
+        if (strpos($style, '#') === 0 || strpos($style, '(') !== false) {
+            $class = '';
+            $background = "style='background:{$style}'";
         }
 
-        $values = (array) $this->value;
+        return collect($this->value($max))->map(function ($name) use ($class, $background) {
+            return "<span class='{$this->baseClass} {$this->stylePrefix}-{$class}' {$background}>$name</span>";
+        })->implode('&nbsp;');
+    }
+
+    protected function value($max)
+    {
+        $values = Helper::array($this->value);
+
         if ($max && count($values) > $max) {
             $values = array_slice($values, 0, $max);
             $values[] = '...';
         }
 
-        return collect($values)->map(function ($name) use ($style) {
-            return "<span class='label label-{$style}'>$name</span>";
-        })->implode('&nbsp;');
+        return $values;
     }
 }

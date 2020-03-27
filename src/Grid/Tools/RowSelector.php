@@ -4,15 +4,12 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Widgets\Color;
 
 class RowSelector
 {
     protected $grid;
 
     protected $style = 'primary';
-
-    protected $circle = true;
 
     protected $background;
 
@@ -28,13 +25,6 @@ class RowSelector
     public function style(string $style)
     {
         $this->style = $style;
-
-        return $this;
-    }
-
-    public function circle(bool $value = true)
-    {
-        $this->circle = $value;
 
         return $this;
     }
@@ -62,11 +52,10 @@ class RowSelector
 
     public function renderHeader()
     {
-        $circle = $this->circle ? 'checkbox-circle' : '';
-
         return <<<HTML
-<div class="checkbox checkbox-{$this->style} {$circle} checkbox-grid">
-    <input type="checkbox" class="select-all {$this->grid->getSelectAllName()}"><label></label>
+<div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid">
+    <input type="checkbox" class="select-all {$this->grid->getSelectAllName()}">
+    <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
 </div>
 HTML;
     }
@@ -75,30 +64,28 @@ HTML;
     {
         $this->setupScript();
 
-        $circle = $this->circle ? 'checkbox-circle' : '';
-
         return <<<EOT
-<div class="checkbox {$circle} checkbox-{$this->style} checkbox-grid">
+<div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid">
     <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" data-label="{$this->title($row, $id)}">
-    <label></label>
-</div>
+    <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
+</div>        
 EOT;
     }
 
     protected function setupScript()
     {
         $clickable = $this->rowClickable ? 'true' : 'false';
-        $background = $this->background ?: Color::dark20();
+        $background = $this->background ?: Admin::color()->dark20();
 
         Admin::script(
             <<<JS
-var selector = LA.RowSelector({
-    checkbox: '.{$this->grid->getRowName()}-checkbox',
-    selectAll: '.{$this->grid->getSelectAllName()}', 
-    clickTr: {$clickable},
-    bg: '{$background}',
+var selector = Dcat.RowSelector({
+    checkboxSelector: '.{$this->grid->getRowName()}-checkbox',
+    selectAllSelector: '.{$this->grid->getSelectAllName()}', 
+    clickRow: {$clickable},
+    background: '{$background}',
 });
-LA.grid.addSelector(selector, '{$this->grid->getName()}');
+Dcat.grid.addSelector(selector, '{$this->grid->getName()}');
 JS
         );
     }

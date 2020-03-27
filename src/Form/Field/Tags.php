@@ -11,6 +11,9 @@ use Illuminate\Support\Collection;
 
 class Tags extends Field
 {
+    public static $js = '@select2';
+    public static $css = '@select2';
+
     /**
      * @var array
      */
@@ -121,7 +124,7 @@ class Tags extends Field
     /**
      * {@inheritdoc}
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         if (! is_array($value)) {
             return $value;
@@ -221,10 +224,5 @@ $(document).off('keyup', '.select2-selection--multiple .select2-search__field').
 });
 JS
         );
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectComponentAssets('select2');
     }
 }

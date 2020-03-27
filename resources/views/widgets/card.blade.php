@@ -1,6 +1,6 @@
 <div {!! $attributes !!}>
     @if ($title || $tools)
-        <div class="card-header with-border {{$style}}">
+        <div class="card-header {{ $divider ? 'with-border' : '' }}">
             <span class="card-box-title">{!! $title !!}</span>
             <div class="box-tools pull-right">
                 @foreach($tools as $tool)
@@ -9,7 +9,12 @@
             </div>
         </div>
     @endif
-    <div class="card-body card-padding panel-collapse collapse" style="{!! $padding !!}">
+    <div class="card-body" style="{!! $padding !!}">
         {!! $content !!}
     </div>
+    @if($footer)
+    <div class="card-footer">
+        {!! $footer !!}
+    </div>
+    @endif
 </div>

@@ -79,7 +79,7 @@ class Scope implements Renderable
             [$this->filter->getScopeQueryName() => $this->key]
         );
 
-        return "<li><a href=\"{$url}\">{$this->label}</a></li>";
+        return "<li class='dropdown-item'><a href=\"{$url}\">{$this->label}</a></li>";
     }
 
     /**

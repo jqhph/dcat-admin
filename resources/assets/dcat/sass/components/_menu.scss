@@ -1,0 +1,75 @@
+
+.main-menu {
+  .navbar-header {
+    padding: 0.35rem 1rem 4.5rem;
+
+    .navbar-brand {
+      margin-top: 1.2rem;
+
+      .logo-mini {
+        display: none;
+        font-size: 1.8rem;
+      }
+
+      .logo-lg {
+        color: $primary;
+        font-weight: 400;
+        letter-spacing: 0.01rem;
+        font-size: 1.55rem;
+        -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+        animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+      }
+
+      img {
+        display: inline-block;
+        max-width: 45px;
+        max-height: 40px;
+        margin-top: -1px;
+      }
+    }
+
+    .modern-nav-toggle {
+      display: block;
+      float: right;
+      margin-top: 1px;
+    }
+
+    .nav-item {
+      width: 100%;
+      text-align: center;
+    }
+
+    .navbar-brand {
+      display: inline-block;
+      margin: 10px 0;
+    }
+  }
+}
+
+.main-menu.menu-light .navigation > li.active > a {
+  box-shadow: 0 0 4px 1px rgba($primary, 0.7);
+}
+
+// 菜单
+.main-menu.menu-shadow {
+  box-shadow: $menu-shadow;
+}
+
+body.vertical-layout.vertical-menu-modern.menu-collapsed {
+  .main-menu:not(.expanded) .navbar-header {
+    width: 80px;
+    padding: 0.35rem 15px;
+
+    .logo-lg {
+      display: none;
+    }
+
+    .logo-mini {
+      display: inline-block;
+    }
+  }
+}
+
+body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
+  font-size: 1.3rem;
+}

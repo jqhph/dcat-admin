@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory = app(Factory::class);
 
-$factory->define(\Dcat\Admin\Tests\Models\User::class, function (Faker $faker) {
+$factory->define(\Tests\Models\User::class, function (Faker $faker) {
     return [
         'username' => $faker->userName,
         'email'    => $faker->email,
@@ -15,7 +15,7 @@ $factory->define(\Dcat\Admin\Tests\Models\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\Dcat\Admin\Tests\Models\Profile::class, function (Faker $faker) {
+$factory->define(\Tests\Models\Profile::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name'  => $faker->lastName,
@@ -29,7 +29,7 @@ $factory->define(\Dcat\Admin\Tests\Models\Profile::class, function (Faker $faker
     ];
 });
 
-$factory->define(\Dcat\Admin\Tests\Models\Tag::class, function (Faker $faker) {
+$factory->define(\Tests\Models\Tag::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
     ];

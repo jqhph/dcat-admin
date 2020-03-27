@@ -1,0 +1,92 @@
+// ================================================================================================
+//  File Name: invoice.scss
+//  Description: Invoice Layout page layouts SCSS.
+//  ----------------------------------------------------------------------------------------------
+//  Item name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+//  Author: PIXINVENT
+//  Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+// Core variables and mixins
+@import "../bootstrap/functions";
+@import "../bootstrap/mixins";
+@import "../bootstrap-extended/mixins";
+
+// Load variable overrides
+@import "../core/variables/variables";
+@import "../bootstrap/variables";
+
+// Overrides user variable
+@import "../core/variables/components-variables";
+
+.invoice-page{
+  padding: 2.2rem;
+
+  .recipient-contact, .company-contact{
+    i{
+      padding-right: 0.2rem;
+      position: relative;
+      top: 2px;
+    }
+  }
+  .recipient-info, .company-info, .company-contact, .recipient-contact{
+    p{
+      line-height: 2;
+      margin-bottom: 0;
+    }
+  }
+
+  .invoice-items-table, .invoice-total-table{
+    table{
+      border: 2px solid $body-bg;
+    }
+  }
+}
+
+// media query for print
+@media print {
+
+  //  Hide a Unnecessary text in invoice print
+  .content-header,
+  .buy-now,
+  .btn-print,
+  .footer,
+  .open,
+  .main-menu,
+  .invoice-print {
+    display: none;
+
+  }
+
+  .app-content,
+  #invoice-template,
+  .navbar-container,
+  .navbar-wrapper,
+  .header-navbar,
+  .invoice-print,
+  .content-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #invoice-footer {
+    position: relative;
+    top: -80px !important;
+  }
+
+  #invoice-company-details,
+  #invoice-footer {
+    margin-top: 5rem !important;
+  }
+
+  // edge spacific scss
+  .table-responsive {
+    -ms-overflow-style: none;
+  }
+}
+
+// omitted header and footer while print
+@page {
+  //  margin for print page
+  margin: 10px;
+}

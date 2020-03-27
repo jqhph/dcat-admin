@@ -67,7 +67,7 @@ class ScaffoldController extends Controller
             Permission::error();
         }
 
-        Admin::collectComponentAssets('select2');
+        Admin::collectAssets('select2');
 
         $dbTypes = static::$dbTypes;
         $dataTypeMap = static::$dataTypeMap;

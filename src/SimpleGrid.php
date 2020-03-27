@@ -6,7 +6,7 @@ use Dcat\Admin\Layout\Content;
 
 class SimpleGrid extends Grid
 {
-    const QUERY_NAME = '_mini';
+    const QUERY_NAME = '_resource_';
 
     public function __construct($repository, $builder = null)
     {
@@ -22,14 +22,9 @@ class SimpleGrid extends Grid
         $this->rowSelector()->click();
 
         Content::composing(function (Content $content) {
-            $content->simple();
+            Admin::style('#app{padding: 1.4rem 1rem 1rem}');
+
+            $content->full();
         }, true);
-    }
-
-    protected function setupFilter()
-    {
-        parent::setupFilter();
-
-        $this->filter()->panel();
     }
 }

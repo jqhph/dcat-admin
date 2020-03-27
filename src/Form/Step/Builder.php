@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Form\Step;
 
 use Closure;
-use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Form\StepForm as Form;
 use Dcat\Admin\Form as ParentForm;
 use Illuminate\Support\Arr;
 
@@ -334,8 +334,7 @@ class Builder
      */
     protected function collectAssets()
     {
-        Admin::js('vendor/dcat-admin/SmartWizard/dist/js/jquery.smartWizard.min.js');
-        Admin::css('vendor/dcat-admin/SmartWizard/dist/css/step.min.css');
+        Admin::collectAssets('@smart-wizard');
     }
 
     /**

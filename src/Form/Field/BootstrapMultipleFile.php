@@ -109,7 +109,7 @@ class BootstrapMultipleFile extends Field
      *
      * @return mixed|string
      */
-    protected function prepareToSave($files)
+    protected function prepareInputValue($files)
     {
         if (request()->has(static::FILE_DELETE_FLAG)) {
             return $this->destroy(request(static::FILE_DELETE_FLAG));

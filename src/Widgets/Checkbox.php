@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class Checkbox extends Radio
@@ -10,50 +11,33 @@ class Checkbox extends Radio
 
     protected $type = 'checkbox';
 
-    protected $circle = true;
-
     protected $checked = [];
 
     /**
-     * @param string $id
+     * 设置选中的的选项.
+     *
+     * @param string|array $options
      *
      * @return $this
      */
-    public function checked($id)
+    public function check($options)
     {
-        $this->checked = (array) $id;
+        $this->checked = Helper::array($options);
 
         return $this;
     }
 
     /**
+     * 选中所有选项.
+     *
      * @param string|array $excepts
      *
      * @return $this
      */
-    public function checkedAll($excepts = [])
+    public function checkAll($excepts = [])
     {
-        return $this->checked(array_keys(Arr::except($this->options, $excepts)));
-    }
-
-    public function circle(bool $value = true)
-    {
-        $this->circle = $value;
-
-        return $this;
-    }
-
-    public function square()
-    {
-        return $this->circle(false);
-    }
-
-    public function variables()
-    {
-        $v = parent::variables();
-
-        $v['circle'] = $this->circle ? 'checkbox-circle' : '';
-
-        return $v;
+        return $this->check(
+            array_keys(Arr::except($this->options, $excepts))
+        );
     }
 }

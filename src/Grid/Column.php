@@ -18,12 +18,12 @@ use Illuminate\Support\Traits\Macroable;
 /**
  * @method $this switch(string $color = '')
  * @method $this switchGroup($columns = [], string $color = '')
- * @method $this editable($method = null, array $options = []);
- * @method $this image($server = '', int $width = 200, int $height = 200);
- * @method $this label($style = 'success', int $max = null);
+ * @method $this image($server = '', int $width = 200, int $height = 200)
+ * @method $this label($style = 'success', int $max = null)
+ * @method $this chip($style = 'success', int $max = null)
  * @method $this button($style = 'success');
  * @method $this link($href = '', $target = '_blank');
- * @method $this badge($style = 'red');
+ * @method $this badge($style = 'success', int $max = null);
  * @method $this progressBar($style = 'primary', $size = 'sm', $max = 100)
  * @method $this checkbox($options = [])
  * @method $this radio($options = [])
@@ -69,7 +69,6 @@ class Column
      * @var array
      */
     protected static $displayers = [
-        'editable'         => Displayers\Editable::class,
         'switch'           => Displayers\SwitchDisplay::class,
         'switchGroup'      => Displayers\SwitchGroup::class,
         'select'           => Displayers\Select::class,
@@ -89,6 +88,7 @@ class Column
         'downloadable'     => Displayers\Downloadable::class,
         'copyable'         => Displayers\Copyable::class,
         'orderable'        => Displayers\Orderable::class,
+        'chip'             => Displayers\Chip::class,
     ];
 
     /**

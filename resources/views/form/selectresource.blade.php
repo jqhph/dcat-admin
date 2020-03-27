@@ -6,14 +6,13 @@
         <app></app>
 
         <div class="input-group">
-            @if(!$disabled)
+            <div {!! $attributes !!}></div>
+            @if(! $disabled)
                 <input name="{{$name}}" type="hidden" />
             @endif
-            <div {!! $attributes !!}>
-            </div>
-            <div class="input-group-btn">
+            <div class="input-group-append">
                 <div class="btn btn-{{$style}} " id="{{ $btnId }}">
-                    &nbsp;<i class="fa fa-long-arrow-up"></i>&nbsp;
+                    &nbsp;<i class="feather icon-arrow-up"></i>&nbsp;
                 </div>
             </div>
         </div>

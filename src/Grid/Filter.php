@@ -63,7 +63,6 @@ class Filter implements Renderable
 {
     use HasBuilderEvents;
 
-    const MODE_PANEL = 'panel';
     const MODE_RIGHT_SIDE = 'right-side';
 
     /**
@@ -155,7 +154,7 @@ class Filter implements Renderable
     /**
      * @var string
      */
-    protected $style = 'padding:18px 15px 8px';
+    protected $style = 'padding:0';
 
     /**
      * @var bool
@@ -340,22 +339,6 @@ class Filter implements Renderable
         $this->mode = $mode;
 
         return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function panel()
-    {
-        return $this->mode(self::MODE_PANEL);
-    }
-
-    /**
-     * @return $this
-     */
-    public function rightSide()
-    {
-        return $this->mode(self::MODE_RIGHT_SIDE);
     }
 
     /**
@@ -676,7 +659,7 @@ class Filter implements Renderable
      */
     public function hiddenResetButtonText()
     {
-        Admin::style(".{$this->containerClass} a.reset .hidden-xs{display:none}");
+        Admin::style(".{$this->containerClass} a.reset .d-none d-sm-inline{display:none}");
 
         return $this;
     }
@@ -694,7 +677,7 @@ class Filter implements Renderable
 
         $this->callComposing();
 
-        $this->view = $this->mode === self::MODE_RIGHT_SIDE ? 'admin::filter.right-side-container' : 'admin::filter.container';
+        $this->view = 'admin::filter.right-side-container';
 
         return view($this->view)->with([
             'action'             => $this->action ?: $this->urlWithoutFilters(),

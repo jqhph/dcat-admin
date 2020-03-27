@@ -2,10 +2,11 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 class Currency extends Text
 {
+    public static $js = '@jquery.inputmask';
+    public static $css = '@jquery.inputmask';
+
     /**
      * @var string
      */
@@ -52,7 +53,7 @@ class Currency extends Text
     /**
      * {@inheritdoc}
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return (float) $value;
     }
@@ -68,10 +69,5 @@ class Currency extends Text
             ->defaultAttribute('style', 'width: 200px');
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectComponentAssets('jquery.inputmask');
     }
 }

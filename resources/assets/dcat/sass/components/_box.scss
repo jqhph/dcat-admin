@@ -1,0 +1,72 @@
+.box {
+  position: relative;
+  border-radius: .5rem;
+  background: #ffffff;
+  margin-bottom: 10px;
+  width: 100%;
+  box-shadow: $shadow;
+  display: flex;
+  flex-direction: column;
+}
+.box .box-footer, .card .box-footer {
+  border-top: 1px solid $divider-color;
+}
+
+.box-header {
+  padding: 14px;
+  display: inherit;
+  justify-content: space-between;
+  align-items: center;
+
+  h3, .h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0;
+  }
+}
+
+.box-header.with-border {
+  border-bottom: 1px solid $divider-color;
+}
+
+.box, .panel {
+  transition: .3s cubic-bezier(.25,.8,.5,1);
+}
+
+.box-shadow {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
+}
+
+.box.box-solid {
+  border-top: 0;
+}
+
+.box-footer {
+  display: inherit;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding: 10px;
+}
+
+.box-body {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding: 10px;
+
+  .box-footer {
+    margin: -10px;
+  }
+}
+
+.box.box-solid.box-default {
+  border: 1px solid $input-border-color;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
+}
+
+.form-group .box {
+  margin-bottom: 0;
+}
+

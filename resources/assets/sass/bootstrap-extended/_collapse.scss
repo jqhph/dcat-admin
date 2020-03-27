@@ -1,0 +1,112 @@
+// For Collaspe And Accordion
+
+// For collapse-title
+.accordion,
+.collapse-bordered {
+  .collapse-title {
+    font-weight: 400;
+    font-size: 1.2rem;
+  }
+  .card-header{
+    cursor: pointer;
+  }
+}
+
+// For collapse title
+.collapse-title{
+  color: inherit;
+  &:hover{
+    color: inherit;
+  }
+}
+
+// To add a border below collapse/accordion heading
+.collapse-bordered {
+  .card:first-child {
+    border-top: 0;
+  }
+  .card:last-child {
+    border-bottom: 0;
+  }
+  .card {
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba($pure-black, .04);
+    border-radius: 0;
+    .card-header {
+      padding: 1rem;
+    }
+    .card-body {
+      padding: 1rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+.accordion {
+  .collapse-border-item {
+    &.card {
+      border: 1px solid rgba($pure-black, .1);
+      margin-bottom: 0;
+      &:first-child {
+        border-bottom: 0;
+      }
+      .card-header {
+        padding: 1rem;
+      }
+      .card-body {
+        padding: 1rem;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+
+// For Collapse with shadow
+.accordion-shadow {
+  box-shadow: 0 0px 4px 0 rgba(0, 0, 0, 0.1) ;
+  padding: .15rem .75rem;
+  border-radius: $border-radius;
+  .card {
+    &.open{
+      border-radius: 0.571rem;
+      margin: 10px 0;
+      border: 0;
+      box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+  .card:first-child {
+    border-top-left-radius: 0.571rem;
+    border-top-right-radius: 0.571rem;
+  }
+  .card:last-child {
+    border-bottom-left-radius: 0.571rem;
+    border-bottom-right-radius: 0.571rem;
+  }
+}
+
+// For Collapse with border
+.collapse-border {
+  border: 1px solid rgba($pure-black, .1);
+  border-radius: 0.5rem;
+  &+.collapse.show {
+    border: 1px solid rgba($pure-black, .1)
+  }
+}
+
+// For Collapse with margin
+.collapse-margin {
+  margin-top: .71rem;
+  margin-bottom: .71rem !important;
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, .05);
+  border-radius: 5px;
+  border-bottom: 0 solid transparent !important;
+  .card-header {
+    padding: 1rem;
+    border-radius: 5px;
+  }
+  .card-body {
+    padding: 1rem;
+    line-height: 1.5rem;
+  }
+}

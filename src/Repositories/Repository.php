@@ -26,7 +26,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     protected $isSoftDeletes = false;
 
     /**
-     * Get primary key name of model.
+     * 获取主键名称.
      *
      * @return string
      */
@@ -36,6 +36,8 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
+     * 设置主键名称.
+     *
      * @param string $keyName
      */
     public function setKeyName(?string $keyName)
@@ -44,7 +46,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get the name of the "created at" column.
+     * 获取创建时间字段.
      *
      * @return string
      */
@@ -54,7 +56,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get the name of the "updated at" column.
+     * 获取更新时间字段.
      *
      * @return string
      */
@@ -64,6 +66,8 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
+     * 是否使用软删除.
+     *
      * @return bool
      */
     public function isSoftDeletes()
@@ -80,7 +84,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get the grid data.
+     * 获取Grid表格数据.
      *
      * @param Grid\Model $model
      *
@@ -92,7 +96,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get data to build edit form.
+     * 获取编辑页面数据.
      *
      * @param Form $form
      *
@@ -104,7 +108,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get detail data.
+     * 获取详情页面数据.
      *
      * @param Show $show
      *
@@ -116,7 +120,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Store a new record.
+     * 新增记录.
      *
      * @param Form $form
      *
@@ -128,7 +132,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get data before update.
+     * 查询更新前的行数据.
      *
      * @param Form $form
      *
@@ -140,7 +144,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Update form data.
+     * 更新数据.
      *
      * @param Form $form
      *
@@ -152,7 +156,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Destroy data.
+     * 删除数据.
      *
      * @param Form  $form
      * @param array $deletingData
@@ -165,7 +169,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get data before destroy.
+     * 查询删除前的行数据.
      *
      * @param Form $form
      *
@@ -177,6 +181,8 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
+     * 获取主键字段名称.
+     *
      * @return string
      */
     public function getPrimaryKeyColumn()
@@ -185,6 +191,8 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
+     *  获取父级ID字段名称
+     *
      * @return string
      */
     public function getParentColumn()
@@ -193,7 +201,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get title column.
+     * 获取标题字段名称.
      *
      * @return string
      */
@@ -203,7 +211,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get order column name.
+     * 获取排序字段名称.
      *
      * @return string
      */
@@ -213,7 +221,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Save tree order from a tree like array.
+     * 保存层级数据排序.
      *
      * @param array $tree
      * @param int   $parentId
@@ -224,7 +232,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Set query callback to model.
+     * 设置数据查询回调.
      *
      * @param \Closure|null $query
      *
@@ -236,7 +244,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Format data to tree like array.
+     * 获取层级数据.
      *
      * @return array
      */
@@ -256,8 +264,6 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Register listeners.
-     *
      * @param array|string $repositories
      * @param array|string $listeners
      */
@@ -279,8 +285,6 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * Get the repository listeners.
-     *
      * @param null|string $repository
      *
      * @return RepositoryListener[]

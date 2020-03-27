@@ -3,10 +3,12 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Color;
 
 class SwitchDisplay extends AbstractDisplayer
 {
+    public static $js = '@switchery';
+    public static $css = '@switchery';
+
     /**
      * @var string
      */
@@ -14,32 +16,32 @@ class SwitchDisplay extends AbstractDisplayer
 
     public function green()
     {
-        $this->color = Color::success();
+        $this->color = Admin::color()->success();
     }
 
     public function custom()
     {
-        $this->color = Color::custom();
+        $this->color = Admin::color()->custom();
     }
 
     public function yellow()
     {
-        $this->color = Color::warning();
+        $this->color = Admin::color()->warning();
     }
 
     public function red()
     {
-        $this->color = Color::danger();
+        $this->color = Admin::color()->danger();
     }
 
     public function purple()
     {
-        $this->color = Color::purple();
+        $this->color = Admin::color()->purple();
     }
 
     public function blue()
     {
-        $this->color = Color::blue();
+        $this->color = Admin::color()->blue();
     }
 
     /**
@@ -73,7 +75,7 @@ class SwitchDisplay extends AbstractDisplayer
         $name = $this->getElementName();
         $key = $this->row->{$this->grid->getKeyName()};
         $checked = $this->value ? 'checked' : '';
-        $color = $this->color ?: Color::primary();
+        $color = $this->color ?: Admin::color()->primary();
 
         return <<<EOF
 <input class="grid-switch-{$this->grid->getName()}" data-size="small" name="{$name}" data-key="$key" {$checked} type="checkbox" data-color="{$color}"/>
@@ -95,22 +97,22 @@ EOF;
     init();
     swt.off('change').change(function(e) {
         var t = $(this), id = t.data('key'), checked = t.is(':checked'), name = t.attr('name'), data = {
-            _token: LA.token,
+            _token: Dcat.token,
             _method: 'PUT'
         };
         data[name] = checked ? 1 : 0;
-        LA.NP.start();
+        Dcat.NP.start();
     
         $.ajax({
             url: "{$this->resource()}/" + id,
             type: "POST",
             data: data,
             success: function (d) {
-                LA.NP.done();
+                Dcat.NP.done();
                 if (d.status) {
-                    LA.success(d.message);
+                    Dcat.success(d.message);
                 } else {
-                    LA.error(d.message);
+                    Dcat.error(d.message);
                 }
             }
         });
@@ -118,10 +120,5 @@ EOF;
 })();
 JS
         );
-    }
-
-    protected function collectAssets()
-    {
-        Admin::collectComponentAssets('switchery');
     }
 }

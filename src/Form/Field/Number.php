@@ -5,7 +5,7 @@ namespace Dcat\Admin\Form\Field;
 class Number extends Text
 {
     protected static $js = [
-        '/vendor/dcat-admin/number-input/bootstrap-number-input.js',
+        '@number-input',
     ];
 
     public function render()
@@ -28,7 +28,7 @@ JS;
         return parent::render();
     }
 
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return (int) $value;
     }

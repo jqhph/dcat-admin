@@ -182,7 +182,7 @@ class Tools implements Renderable
 
         return <<<EOT
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="{$this->getListPath()}" class="btn btn-sm btn-default"><i class=" ti-view-list-alt"></i><span class="hidden-xs">&nbsp;$text</span></a>
+    <a href="{$this->getListPath()}" class="btn btn-sm btn-white "><i class="feather icon-list"></i><span class="d-none d-sm-inline">&nbsp;$text</span></a>
 </div>
 EOT;
     }
@@ -199,7 +199,7 @@ EOT;
         return <<<HTML
 <div class="btn-group pull-right" style="margin-right: 5px">
     <a href="{$this->getViewPath()}" class="btn btn-sm btn-primary">
-        <i class="ti-eye"></i><span class="hidden-xs"> {$view}</span>
+        <i class="feather icon-eye"></i><span class="d-none d-sm-inline"> {$view}</span>
     </a>
 </div>
 HTML;
@@ -216,9 +216,9 @@ HTML;
 
         return <<<HTML
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a class="btn btn-sm btn-danger " data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
-        <i class="ti-trash"></i><span class="hidden-xs"> {$delete}</span>
-    </a>
+    <button class="btn btn-sm btn-danger " data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
+        <i class="feather icon-trash"></i><span class="d-none d-sm-inline"> {$delete}</span>
+    </button>
 </div>
 HTML;
     }

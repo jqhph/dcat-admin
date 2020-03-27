@@ -69,7 +69,12 @@ class ImportCommand extends VendorPublishCommand
             ($assets = $extension->assets())
             && file_exists($assets)
         ) {
-            $this->publishItem($assets, public_path('vendor/dcat-admin-extensions/'.$extension::NAME));
+            $this->publishItem(
+                $assets,
+                public_path(
+                    Admin::asset()->getRealPath('@extension').'/'.$extension::NAME
+                )
+            );
         }
     }
 

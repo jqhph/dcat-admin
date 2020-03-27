@@ -3,7 +3,8 @@
 namespace Dcat\Admin\Widgets\Sparkline;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\HasAjaxRequest;
+use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
@@ -22,7 +23,14 @@ use Illuminate\Support\Str;
  */
 class Sparkline extends Widget
 {
-    use HasAjaxRequest;
+    use InteractsWithApi;
+
+    public static $js = [
+        '@jquery.sparkline',
+    ];
+    public static $css = [
+        '@jquery.sparkline',
+    ];
 
     protected static $optionMethods = [
         'highlightSpotColor',
@@ -66,16 +74,15 @@ class Sparkline extends Widget
         'disableHiddenCheck',
     ];
 
+    protected $id;
+
     protected $type = 'line';
 
-    /**
-     * @var array
-     */
     protected $options = ['width' => '100%'];
 
     protected $values = [];
 
-    protected $combos = [];
+    protected $combinations = [];
 
     public function __construct($values = [])
     {
@@ -85,7 +92,7 @@ class Sparkline extends Widget
     }
 
     /**
-     * Get or set the sparkline values.
+     * 设置图表值.
      *
      * @param mixed|null $values
      *
@@ -97,19 +104,13 @@ class Sparkline extends Widget
             return $this->values;
         }
 
-        if (is_string($values)) {
-            $values = explode(',', $values);
-        } elseif ($values instanceof Arrayable) {
-            $values = $values->toArray();
-        }
-
-        $this->values = $values;
+        $this->values = Helper::array($values);
 
         return $this;
     }
 
     /**
-     * Set width of sparkline.
+     * 设置图表宽度.
      *
      * @param int $width
      *
@@ -123,7 +124,7 @@ class Sparkline extends Widget
     }
 
     /**
-     * Set height of sparkline.
+     * 设置图表高度.
      *
      * @param int $width
      *
@@ -139,28 +140,20 @@ class Sparkline extends Widget
     }
 
     /**
-     * Composite the given sparkline.
+     * 组合图表.
      *
      * @param int $width
      *
      * @return $this
      */
-    public function composite(self $chart)
+    public function combine(self $chart)
     {
-        $options = $chart->getOptions();
-
-        $options['composite'] = true;
-
-        $this->combos[] = [$chart->values(), $chart->getOptions()];
+        $this->combinations[] = [$chart->values(), $chart->getOptions()];
 
         return $this;
     }
 
     /**
-     * Setup scripts.
-     *
-     * @param int $width
-     *
      * @return string
      */
     protected function script()
@@ -168,28 +161,19 @@ class Sparkline extends Widget
         $values = json_encode($this->values);
         $options = json_encode($this->options);
 
-        $combos = '';
-        foreach ($this->combos as $combo) {
-            $v = json_encode($combo[0]);
-            $o = json_encode($combo[1]);
-            $combos .= <<<JS
-$('#{$this->id}').sparkline($v, $o);
-JS;
-        }
-
-        if (! $this->allowBuildRequestScript()) {
+        if (! $this->allowBuildRequest()) {
             return <<<JS
-$('#{$this->id}').sparkline($values, $options);
-{$combos};
+$('#{$this->getId()}').sparkline($values, $options);
+{$this->buildCombinationScript()};
 JS;
         }
 
         $this->fetched(
             <<<JS
 if (!response.status) {
-    return LA.error(response.message || 'Server internal error.');
+    return Dcat.error(response.message || 'Server internal error.');
 }        
-var id = '{$this->id}', opt = $options;
+var id = '{$this->getId()}', opt = $options;
 opt = $.extend(opt, response.options || {});
 $('#'+id).sparkline(response.values || $values, opt);
 JS
@@ -201,14 +185,31 @@ JS
     /**
      * @return string
      */
+    protected function buildCombinationScript()
+    {
+        $script = '';
+
+        foreach ($this->combinations as $value) {
+            $value = json_encode($value[0]);
+            $options = json_encode($value[1]);
+
+            $script .= <<<JS
+$('#{$this->getId()}').sparkline($value, $options);
+JS;
+        }
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
     public function render()
     {
-        $this->makeId();
-
         Admin::script($this->script());
 
         $this->setHtmlAttribute([
-            'id' => $this->id,
+            'id' => $this->getId(),
         ]);
 
         $this->collectAssets();
@@ -219,15 +220,13 @@ HTML;
     }
 
     /**
-     * Get element id.
+     * 获取容器元素ID.
      *
      * @return string
      */
     public function getId()
     {
-        $this->makeId();
-
-        return $this->id;
+        return $this->id ?: ($this->id = $this->generateId());
     }
 
     /**
@@ -246,46 +245,22 @@ HTML;
     }
 
     /**
-     * Make element id.
-     *
-     * @return void
+     * @return string
      */
-    protected function makeId()
+    protected function generateId()
     {
-        if ($this->id) {
-            return;
-        }
-        $this->id = 'sparkline_'.$this->type.Str::random(8);
+        return 'sparkline-'.$this->type.Str::random(8);
     }
 
     /**
-     * Return JsonResponse instance.
-     *
-     * @param bool  $returnOptions
-     * @param array $data
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @return array
      */
-    public function toJsonResponse(bool $returnOptions = true, array $data = [])
+    public function valueResult()
     {
-        return response()->json(array_merge(
-            [
-                'status'  => 1,
-                'values'  => $this->values(),
-                'options' => $returnOptions ? $this->getOptions() : [],
-            ],
-            $data
-        ));
-    }
-
-    /**
-     * Collect assets.
-     *
-     * @return void
-     */
-    protected function collectAssets()
-    {
-        $this->script && Admin::script($this->script);
-        Admin::collectComponentAssets('jquery.sparkline');
+        return [
+            'status'  => 1,
+            'values'  => $this->values(),
+            'options' => $this->getOptions(),
+        ];
     }
 }

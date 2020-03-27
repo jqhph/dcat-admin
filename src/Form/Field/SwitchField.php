@@ -4,43 +4,45 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
-use Dcat\Admin\Widgets\Color;
 
 class SwitchField extends Field
 {
+    public static $js = '@switchery';
+    public static $css = '@switchery';
+
     public function primary()
     {
-        return $this->color(Color::primary());
+        return $this->color(Admin::color()->primary());
     }
 
     public function green()
     {
-        return $this->color(Color::success());
+        return $this->color(Admin::color()->success());
     }
 
     public function custom()
     {
-        return $this->color(Color::custom());
+        return $this->color(Admin::color()->custom());
     }
 
     public function yellow()
     {
-        return $this->color(Color::warning());
+        return $this->color(Admin::color()->warning());
     }
 
     public function red()
     {
-        return $this->color(Color::danger());
+        return $this->color(Admin::color()->danger());
     }
 
     public function purple()
     {
-        return $this->color(Color::purple());
+        return $this->color(Admin::color()->purple());
     }
 
     public function blue()
     {
-        return $this->color(Color::blue());
+        return $this->color(Admin::color()->blue());
     }
 
     /**
@@ -86,7 +88,7 @@ class SwitchField extends Field
      *
      * @return int
      */
-    protected function prepareToSave($value)
+    protected function prepareInputValue($value)
     {
         return $value ? 1 : 0;
     }
@@ -112,10 +114,5 @@ JS
         );
 
         return parent::render();
-    }
-
-    public static function collectAssets()
-    {
-        Admin::collectComponentAssets('switchery');
     }
 }

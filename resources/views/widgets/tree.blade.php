@@ -1,7 +1,7 @@
 <div  {!! $attributes !!}><div class="da-tree"></div></div>
 
 <script>
-LA.ready(function () {
+Dcat.ready(function () {
     var opts = {!! json_encode($options) !!}, tree = $('#{{$id}}').find('.da-tree');
 
     opts.core.data = {!! json_encode($nodes) !!};

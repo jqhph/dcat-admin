@@ -18,7 +18,7 @@ class Text extends Field
     {
         $this->initPlainInput();
 
-        $this->prepend('<i class="ti-pencil"></i>')
+        $this->prepend('<i class="feather icon-edit-2"></i>')
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id)
             ->defaultAttribute('name', $this->getElementName())
@@ -105,7 +105,7 @@ class Text extends Field
     {
         Admin::script(
             <<<'JS'
-LA.extendValidator('maxlength', function ($el) {
+Dcat.validator.extend('maxlength', function ($el) {
     return $el.val().length > $el.attr('data-maxlength');
 });
 JS
