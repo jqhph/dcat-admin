@@ -42,7 +42,7 @@
                         @if($options['allowDelete'])
                             <td class="form-group">
                                 <div>
-                                    <div class="remove btn btn-warning btn-sm pull-right"><i class="fa fa-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                                    <div class="remove btn btn-warning btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
                                 </div>
                             </td>
                         @endif
@@ -58,14 +58,14 @@
 
                     <td class="form-group">
                         <div>
-                            <div class="remove btn btn-warning btn-sm pull-right"><i class="fa fa-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                            <div class="remove btn btn-warning btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
                         </div>
                     </td>
                 </tr>
             </template>
 
             @if($options['allowCreate'])
-                <div class="form-group m-t-10">
+                <div class="form-group row m-t-10">
                     <div class="{{$viewClass['field']}}">
                         <div class="add btn btn-success btn-sm"><i class="feather icon-save"></i>&nbsp;{{ trans('admin.new') }}</div>
                     </div>
