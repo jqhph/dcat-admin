@@ -35,6 +35,10 @@ class LinkCommand extends Command
      */
     protected function linkTests($files)
     {
+        if (! is_file(base_path('phpunit.dusk.xml'))) {
+            $files->copy(realpath(__DIR__.'/../../../phpunit.dusk.xml'), base_path('phpunit.dusk.xml'));
+        }
+
         $target = base_path('tests');
         $testsPath = realpath(__DIR__.'/../../../tests');
 

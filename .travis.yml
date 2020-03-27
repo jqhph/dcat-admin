@@ -32,6 +32,7 @@ install:
   - cp -rf ./composer.json ./laravel-tests/dcat-admin
   - rm -rf ./laravel-tests/tests
   - cp -rf ./tests ./laravel-tests/tests
+  - cp -f ./phpunit.dusk.xml ./laravel-tests
   - cd ./laravel-tests
   - php artisan admin:composer-config
   - travis_retry composer require dcat/laravel-admin:*@dev
@@ -43,7 +44,7 @@ install:
 
 before_script:
   - chmod 777 ./vendor/laravel/dusk/bin/chromedriver-linux
-  - ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu &
+  - ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - php artisan serve &
 
 script:
