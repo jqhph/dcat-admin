@@ -56,7 +56,7 @@ trait HasFiles
         if ($field = $this->builder->field($column)) {
             return $field;
         }
-        
+
         if (mb_strpos($column, '.')) {
             [$relation, $column] = explode('.', $column);
 

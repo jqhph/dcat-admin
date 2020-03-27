@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -78,6 +79,22 @@ class CreateTestTables extends Migration
             $table->index(['user_id', 'tag_id']);
             $table->timestamps();
         });
+
+        Schema::create('test_painters', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('username')->default('');
+            $table->string('bio')->default('');
+            $table->timestamps();
+        });
+
+        Schema::create('test_paintings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('painter_id')->default('');
+            $table->string('title')->default('');
+            $table->string('body')->nullable();
+            $table->timestamp('completed_at');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -94,5 +111,7 @@ class CreateTestTables extends Migration
         Schema::dropIfExists('test_user_profiles');
         Schema::dropIfExists('test_tags');
         Schema::dropIfExists('test_user_tags');
+        Schema::dropIfExists('test_painters');
+        Schema::dropIfExists('test_paintings');
     }
 }

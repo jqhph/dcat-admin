@@ -31,8 +31,7 @@ install:
   - rm -rf ./laravel-tests/tests
   - cp -rf ./tests ./laravel-tests/tests
   - cp -f ./phpunit.dusk.xml ./laravel-tests
-  - rm -f ./laravel-tests/.env
-  - mv -f ./.env.testing ./laravel-tests/.env
+  - cp -f ./.env.testing ./laravel-tests/.env
   - cd ./laravel-tests
   - php artisan admin:composer-config
   - travis_retry composer require dcat/laravel-admin:*@dev
@@ -41,6 +40,7 @@ install:
   - php artisan admin:install
   - php artisan migrate:rollback
   - php artisan dusk:chrome-driver
+  - cp -f ./tests/routes ./app/Admin/
 
 before_script:
   - export DISPLAY=:99.0

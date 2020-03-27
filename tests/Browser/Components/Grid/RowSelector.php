@@ -17,7 +17,7 @@ class RowSelector extends Component
      */
     public function selector()
     {
-        return '@item';
+        return '@container';
     }
 
     /**
@@ -28,7 +28,7 @@ class RowSelector extends Component
      */
     public function assert(Browser $browser)
     {
-        $browser->assertVisible('table thead th .checkbox-grid');
+//        $browser->assertVisible('table:visible thead th .checkbox-grid');
     }
 
     /**
@@ -39,6 +39,7 @@ class RowSelector extends Component
     public function elements()
     {
         return [
+            '@container' => '#grid-table',
             '@all' => 'input.select-all',
             '@item' => 'input.grid-row-checkbox',
         ];
@@ -58,7 +59,7 @@ class RowSelector extends Component
             $browser->script(
                 <<<JS
 setTimeout(function () {
-    $('{$this->formatSelector($browser)}[data-id="{$v}"]').prop('checked', true);
+    $('{$this->formatSelector($browser, '@item')}[data-id="{$v}"]').prop('checked', true);
 }, 10)
 JS
             );
@@ -78,7 +79,7 @@ JS
     {
         $browser->script("Dcat.ready(
             setTimeout(function () {
-                $('.grid-select-all').first().click()
+                $('{$this->formatSelector($browser)} .select-all').first().click()
             }, 10)
         );");
 

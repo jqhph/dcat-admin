@@ -33,13 +33,7 @@ trait CreatesApplication
 
         $this->migrateTestTables();
 
-        if (file_exists($routes = admin_path('routes.php'))) {
-            require $routes;
-        }
-
         require __DIR__.'/helpers.php';
-
-        require __DIR__.'/routes.php';
 
         require __DIR__.'/resources/seeds/factory.php';
 
