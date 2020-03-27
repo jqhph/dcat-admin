@@ -34,9 +34,10 @@ install:
   - travis_retry composer require laravel/dusk --dev
   - php artisan admin:publish --force
   - php artisan admin:install
+  - php artisan migrate:rollback
 
 before_script:
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
   - php artisan serve &
 
 script:
