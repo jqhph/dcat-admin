@@ -315,9 +315,6 @@ return [
         // vertical, horizontal
         'mainLayout_type' => 'vertical',
 
-        // light, dark, semi-dark
-        'theme' => 'light',
-
         'body_class' => '',
 
         'sidebar_collapsed' => false,
@@ -327,20 +324,11 @@ return [
         // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
         'navbar_color' => '',
 
-        // floating, static, sticky
-        'horizontal_menu_type' => 'floating',
-
         // floating, static, sticky, hidden
         'vertical_menu_navbar_type' => 'floating',
 
         // static, sticky, hidden
         'footer_type' => 'static',
-
-        // default, content-left-sidebar, content-right-sidebar, content-detached-left-sidebar, content-detached-right-sidebar
-        'content_layout' => 'default',
-
-        // ltr, rtl
-        'direction' => env('MIX_CONTENT_DIRECTION', 'ltr'),
     ],
 
     /*
