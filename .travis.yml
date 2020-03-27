@@ -35,12 +35,12 @@ install:
   - php artisan admin:publish --force
   - php artisan admin:install
   - php artisan migrate:rollback
-  # - php artisan dusk:chrome-driver
+  - php artisan dusk:chrome-driver
 
 before_script:
-#  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9515 http://127.0.0.1 &
+  - google-chrome-stable --headless --disable-gpu –-no-sandbox --remote-debugging-port=9515 http://127.0.0.1 &
 #  - chmod 777 ./dcat-admin/tests/resources/drivers/chromedriver-linux
-  - google-chrome --headless –-no-sandbox --disable-gpu --remote-debugging-port=9515 http://127.0.0.1 &
+#  - google-chrome --headless –-no-sandbox --disable-gpu --remote-debugging-port=9515 http://127.0.0.1 &
   - php artisan serve &
 
 script:
