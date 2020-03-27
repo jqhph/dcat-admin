@@ -45,8 +45,8 @@ before_script:
 #  - chmod 777 ./vendor/laravel/dusk/bin/chromedriver-linux
 #  - ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
 #  - google-chrome --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
-#  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+#  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
   - php artisan serve &
 
 script:
