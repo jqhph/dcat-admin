@@ -42,7 +42,6 @@ class AuthTest extends TestCase
                 ->type('username', $credentials['username'])
                 ->type('password', $credentials['password'])
                 ->press(__('admin.login'))
-//                ->waitForText(__('admin.login_successful'), 2)
                 ->waitForLocation(test_admin_path('/'), 3)
                 ->assertPathIs(test_admin_path('/'))
                 ->assertSee('Administrator')

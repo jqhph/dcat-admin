@@ -45,7 +45,7 @@ class MenuPage extends Page
                     ->assertSee(__('admin.icon'))
                     ->assertSee(__('admin.uri'))
                     ->assertSee(__('admin.roles'))
-                    ->assertSee(__('admin.permissions'))
+                    ->assertSee(__('admin.permission'))
                     ->assertSee(__('admin.selectall'))
                     ->assertSee(__('admin.expand'))
                     ->assertSelected('parent_id', 0)
