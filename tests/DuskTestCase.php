@@ -101,8 +101,8 @@ abstract class DuskTestCase extends BaseTestCase
      *
      * @throws \RuntimeException
      */
-    //protected static function buildChromeProcess(array $arguments = [])
-    //{
-    //    return (new ChromeProcess(static::$chromeDriver))->toProcess($arguments);
-    //}
+    protected static function buildChromeProcess(array $arguments = [])
+    {
+        return (new ChromeProcess(static::$chromeDriver))->toProcess($arguments);
+    }
 }
