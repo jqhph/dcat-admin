@@ -39,7 +39,7 @@ install:
 
 before_script:
 #  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9515 http://127.0.0.1 &
-  - ./dcat-admin/tests/resources/drivers/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://127.0.0.1 &
+  - sudo ./dcat-admin/tests/resources/drivers/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://127.0.0.1 &
   - php artisan serve &
 
 script:
