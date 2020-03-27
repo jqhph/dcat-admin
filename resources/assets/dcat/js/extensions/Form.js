@@ -50,7 +50,7 @@ class Form {
             _this = this,
             $form = _this.$form,
             options = _this.options,
-            $submitButton = $form.find(':submit');
+            $submitButton = $form.find('[type="submit"],.submit');
 
         // 移除所有错误信息
         _this.removeErrors();
