@@ -66,7 +66,6 @@ class Image extends File
             $this->options['accept'] = [];
         }
 
-        $this->options['fileNumLimit'] = 1;
         $this->options['accept']['mimeTypes'] = 'image/*';
         $this->options['isImage'] = true;
     }

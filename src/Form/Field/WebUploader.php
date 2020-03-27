@@ -85,7 +85,7 @@ trait WebUploader
     }
 
     /**
-     * Set upload server.
+     * 设置上传接口.
      *
      * @param string $server
      *
@@ -99,7 +99,7 @@ trait WebUploader
     }
 
     /**
-     * Disable auto save the path of uploaded file.
+     * 禁止上传文件后自动更新字段值.
      *
      * @return $this
      */
@@ -195,7 +195,7 @@ trait WebUploader
     }
 
     /**
-     * Get create url.
+     * 获取创建链接.
      *
      * @return string
      */
@@ -205,7 +205,7 @@ trait WebUploader
     }
 
     /**
-     * Set preview options form image field.
+     * 图片预览设置.
      *
      * @return void
      */
@@ -215,8 +215,6 @@ trait WebUploader
     }
 
     /**
-     * Set options for file-upload plugin.
-     *
      * @param array $options
      *
      * @return $this

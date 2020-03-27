@@ -23,7 +23,7 @@ class StepForm extends WidgetForm
     protected $form;
 
     /**
-     * @var Builder
+     * @var ParentForm\Step\Builder
      */
     protected $parent;
 
@@ -59,7 +59,7 @@ class StepForm extends WidgetForm
     }
 
     /**
-     * @param Form $form
+     * @param ParentForm $form
      *
      * @return $this
      */

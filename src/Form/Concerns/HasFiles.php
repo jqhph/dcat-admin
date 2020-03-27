@@ -27,7 +27,7 @@ trait HasFiles
             return;
         }
 
-        $field = $this->builder->field($column) ?: $this->builder->stepField($column);
+        $field = $this->findFieldByName($column);
 
         if ($field && $field instanceof UploadFieldInterface) {
             if (($results = $this->callUploading($field, $file)) && $results instanceof Response) {
@@ -42,6 +42,32 @@ trait HasFiles
 
             return $response;
         }
+    }
+
+    /**
+     * 根据字段名称查找字段.
+     *
+     * @param string|null $column
+     *
+     * @return Field|null
+     */
+    public function findFieldByName(?string $column)
+    {
+        if (mb_strpos($column, '.')) {
+            [$relation, $column] = explode('.', $column);
+
+            $relation = $this->findFieldByName($relation);
+
+            if ($relation instanceof Field\HasMany) {
+                return $relation->buildNestedForm()->fields()->first(function ($field) use ($column) {
+                    return $field->column() === $column;
+                });
+            }
+
+            return null;
+        }
+
+        return $this->builder->field($column) ?: $this->builder->stepField($column);
     }
 
     /**

@@ -4,10 +4,10 @@ namespace Dcat\Admin\Form;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\UploadField;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
 use Dcat\Admin\Form\Step\Builder as StepBuilder;
-use Dcat\Admin\Form\Step\Form as StepForm;
 use Dcat\Admin\SimpleGrid;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\DialogForm;
@@ -23,9 +23,14 @@ use Illuminate\Support\Str;
 class Builder
 {
     /**
-     *  Previous url key.
+     *  上个页面URL保存的key.
      */
     const PREVIOUS_URL_KEY = '_previous_';
+
+    /**
+     * 构建时需要忽略的字段.
+     */
+    const BUILD_IGNORE = 'build-ignore';
 
     /**
      * Modes constants.
@@ -660,7 +665,7 @@ class Builder
     {
         foreach ($this->fields() as $field) {
             if (
-                $field instanceof Field\File
+                $field instanceof UploadField
                 || $field instanceof Form\Field\BootstrapFile
             ) {
                 return true;
@@ -743,6 +748,18 @@ class Builder
     }
 
     /**
+     * 移除需要忽略的字段.
+     *
+     * @return void
+     */
+    protected function removeIgnoreFields()
+    {
+        $this->fields = $this->fields()->reject(function (Field $field) {
+            return $field->hasAttribute(static::BUILD_IGNORE);
+        });
+    }
+
+    /**
      * Remove reserved fields like `id` `created_at` `updated_at` in form fields.
      *
      * @return void
@@ -796,6 +813,7 @@ class Builder
      */
     public function render()
     {
+        $this->removeIgnoreFields();
         $this->removeReservedFields();
 
         $tabObj = $this->form->getTab();

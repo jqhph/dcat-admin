@@ -15,9 +15,7 @@
                 @endforeach
             @else
                 @foreach($form->fields() as $field)
-                    @if(! $field->hasAttribute('block-field'))
                     {!! $field->render() !!}
-                    @endif
                 @endforeach
             @endif
         </div>

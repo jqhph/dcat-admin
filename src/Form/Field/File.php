@@ -14,29 +14,19 @@ class File extends Field implements UploadFieldInterface
 {
     use WebUploader, UploadField;
 
-    /**
-     * Css.
-     *
-     * @var array
-     */
     protected static $css = [
         '@webuploader',
     ];
 
-    /**
-     * Js.
-     *
-     * @var array
-     */
     protected static $js = [
         '@webuploader',
     ];
 
     protected $containerId;
 
+    protected $relationName;
+
     /**
-     * Create a new File instance.
-     *
      * @param string $column
      * @param array  $arguments
      */
@@ -50,8 +40,6 @@ class File extends Field implements UploadFieldInterface
     }
 
     /**
-     * Default directory for file to upload.
-     *
      * @return mixed
      */
     public function defaultDirectory()
@@ -98,8 +86,6 @@ class File extends Field implements UploadFieldInterface
     }
 
     /**
-     * Prepare for saving.
-     *
      * @param string $file
      *
      * @return mixed|string
@@ -113,6 +99,30 @@ class File extends Field implements UploadFieldInterface
         $this->destroyIfChanged($file);
 
         return $file;
+    }
+
+    /**
+     * 设置字段的关联关系（在一/多对多表单中使用）.
+     *
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function setRelation(?string $name)
+    {
+        $this->relationName = $name;
+
+        $this->options['formData']['upload_column'] = $name.'.'.$this->column();
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRelation()
+    {
+        return $this->relationName;
     }
 
     /**
@@ -156,9 +166,7 @@ class File extends Field implements UploadFieldInterface
     }
 
     /**
-     * Render file upload field.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return string
      */
     public function render()
     {
@@ -168,9 +176,9 @@ class File extends Field implements UploadFieldInterface
             $this->setupPreviewOptions();
         }
 
-        $this->setupScript();
         $this->forceOptions();
         $this->formatValue();
+        $this->setupScript();
 
         $this->addVariables([
             'fileType'    => $this->options['isImage'] ? '' : 'file',

@@ -110,7 +110,7 @@ class HasMany extends Field
 
         $input = Arr::only($input, $this->column);
 
-        $form = $this->buildNestedForm($this->column, $this->builder);
+        $form = $this->buildNestedForm();
 
         $rules = $attributes = $messages = [];
 
@@ -306,7 +306,7 @@ class HasMany extends Field
      */
     protected function prepareInputValue($input)
     {
-        $form = $this->buildNestedForm($this->column, $this->builder);
+        $form = $this->buildNestedForm();
 
         return array_values(
             $form->setOriginal($this->original, $this->getKeyName())->prepare($input)
@@ -316,19 +316,17 @@ class HasMany extends Field
     /**
      * Build a Nested form.
      *
-     * @param string   $column
-     * @param \Closure $builder
      * @param null     $key
      *
      * @return NestedForm
      */
-    protected function buildNestedForm($column, \Closure $builder, $key = null)
+    public function buildNestedForm($key = null)
     {
-        $form = new Form\NestedForm($column, $key);
+        $form = new Form\NestedForm($this->column, $key);
 
         $form->setForm($this->form);
 
-        call_user_func($builder, $form);
+        call_user_func($this->builder, $form);
 
         $form->hidden($this->getKeyName());
 
@@ -425,7 +423,7 @@ class HasMany extends Field
                     continue;
                 }
 
-                $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)
+                $forms[$key] = $this->buildNestedForm($key)
                     ->fill($data);
             }
         } else {
@@ -433,7 +431,7 @@ class HasMany extends Field
                 foreach ($this->value as $idx => $data) {
                     $key = Arr::get($data, $this->getKeyName(), $idx);
 
-                    $forms[$key] = $this->buildNestedForm($this->column, $this->builder, $key)
+                    $forms[$key] = $this->buildNestedForm($key)
                         ->fill($data);
                 }
             }
@@ -641,7 +639,7 @@ JS;
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
-        [$template, $script] = $this->buildNestedForm($this->column, $this->builder)
+        [$template, $script] = $this->buildNestedForm()
             ->getTemplateHtmlAndScript();
 
         $this->setupScript($script);
@@ -669,7 +667,7 @@ JS;
         $scripts = [];
 
         /* @var Field $field */
-        foreach ($this->buildNestedForm($this->column, $this->builder)->fields() as $field) {
+        foreach ($this->buildNestedForm()->fields() as $field) {
             if (is_a($field, Hidden::class)) {
                 $hidden[] = $field->render();
             } else {

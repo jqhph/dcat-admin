@@ -52,7 +52,7 @@ class BlockForm extends WidgetForm
         $this->form->builder()->fields()->push($field);
         $this->fields->push($field);
 
-        $field->attribute('block-field', true);
+        $field->attribute(Builder::BUILD_IGNORE, true);
 
         $field->setForm($this->form);
         $field->width($this->width['field'], $this->width['label']);
