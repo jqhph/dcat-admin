@@ -1,12 +1,13 @@
 sudo: required
-
 language: php
 
-# dist: trusty
 
 php:
   - 7.2
   - 7.3
+
+addons:
+  chrome: stable
 
 matrix:
   fast_finish: true
@@ -43,8 +44,9 @@ install:
   - php artisan dusk:chrome-driver
 
 before_script:
-  - chmod 777 ./vendor/laravel/dusk/bin/chromedriver-linux
-  - ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
+#  - chmod 777 ./vendor/laravel/dusk/bin/chromedriver-linux
+#  - ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - php artisan serve &
 
 script:
