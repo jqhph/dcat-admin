@@ -42,10 +42,8 @@ install:
   - php artisan dusk:chrome-driver
 
 before_script:
- # - chmod 777 ./tests/resources/drivers/chromedriver-linux
-#  - chmod 777 ./vendor/laravel/dusk/bin/chromedriver-linux
-  - google-chrome-stable --whitelisted-ips --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-  #- ./vendor/laravel/dusk/bin/chromedriver-linux & --whitelisted-ips --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
+  - chmod 777 ./vendor/laravel/dusk/bin/chromedriver-linux
+  - ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu &
   - php artisan serve &
 
 script:
