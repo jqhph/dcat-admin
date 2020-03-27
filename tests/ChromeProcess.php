@@ -15,7 +15,11 @@ class ChromeProcess extends BaseChromeProcess
         } elseif ($this->onMac()) {
             $this->driver = realpath(__DIR__.'/resources/drivers/chromedriver-mac');
         } else {
-            $this->driver = realpath(__DIR__.'/resources/drivers/chromedriver-linux');
+            if (is_file('/usr/bin/google-chrome')) {
+                $this->driver = '/usr/bin/google-chrome';
+            } else {
+                $this->driver = realpath(__DIR__.'/resources/drivers/chromedriver-linux');
+            }
         }
     }
 }
