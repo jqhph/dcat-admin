@@ -16,7 +16,7 @@ services:
 
 install:
   - mysql -e 'create database if not exists laravel;'
-  - travis_retry composer create-project --prefer-dist --no-suggest --no-interaction laravel/laravel laravel-tests
+  - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
   - cp -f ./tests/resources/stubs/ComposerConfigCommand.php ./laravel-tests/app/
   - cd ./laravel-tests
