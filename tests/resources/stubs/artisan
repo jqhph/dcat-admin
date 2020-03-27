@@ -38,6 +38,10 @@ Artisan::starting(function ($artisan) {
     ]);
 });
 
+$app->booting(function () {
+    \Schema::defaultStringLength(191);
+});
+
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 
 $status = $kernel->handle(
