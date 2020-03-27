@@ -186,35 +186,35 @@ class Asset
      *
      * @var array
      */
-    protected $script = [];
+    public $script = [];
 
     /**
      * css代码.
      *
      * @var array
      */
-    protected $style = [];
+    public $style = [];
 
     /**
      * css脚本路径.
      *
      * @var array
      */
-    protected $css = [];
+    public $css = [];
 
     /**
      * js脚本路径.
      *
      * @var array
      */
-    protected $js = [];
+    public $js = [];
 
     /**
      * 在head标签内加载的js脚本.
      *
      * @var array
      */
-    protected $headerJs = [
+    public $headerJs = [
         'vendors' => '@vendors',
         'dcat'    => '@dcat',
     ];
@@ -224,7 +224,7 @@ class Asset
      *
      * @var array
      */
-    protected $baseCss = [
+    public $baseCss = [
         'vendors'            => '@vendors',
         'bootstrap'          => '@bootstrap',
         'bootstrap-extended' => '@bootstrap-extended',
@@ -244,7 +244,7 @@ class Asset
      *
      * @var array
      */
-    protected $baseJs = [
+    public $baseJs = [
         'menu'      => '@menu',
         'app'       => '@app',
         'toastr'    => '@toastr',

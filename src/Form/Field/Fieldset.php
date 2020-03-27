@@ -15,11 +15,11 @@ class Fieldset
 
     public function start($title)
     {
-        $script = <<<SCRIPT
+        $script = <<<JS
 $('.{$this->name}-title').click(function () {
     $("i", this).toggleClass("fa-angle-double-down fa-angle-double-up");
 });
-SCRIPT;
+JS;
 
         Admin::script($script);
 
@@ -43,10 +43,10 @@ HTML;
 
     public function collapsed()
     {
-        $script = <<<SCRIPT
+        $script = <<<JS
 $("#{$this->name}").removeClass("in");
 $(".{$this->name}-title i").toggleClass("fa-angle-double-down fa-angle-double-up");
-SCRIPT;
+JS;
 
         Admin::script($script);
 

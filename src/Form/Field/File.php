@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Field;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Support\JavaScript;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -31,6 +32,8 @@ class File extends Field implements UploadFieldInterface
         '@webuploader',
     ];
 
+    protected $containerId;
+
     /**
      * Create a new File instance.
      *
@@ -42,6 +45,8 @@ class File extends Field implements UploadFieldInterface
         parent::__construct($column, $arguments);
 
         $this->setupDefaultOptions();
+
+        $this->containerId = $this->generateId();
     }
 
     /**
@@ -163,17 +168,67 @@ class File extends Field implements UploadFieldInterface
             $this->setupPreviewOptions();
         }
 
+        $this->setupScript();
         $this->forceOptions();
-
         $this->formatValue();
 
         $this->addVariables([
-            'options'     => json_encode($this->options),
             'fileType'    => $this->options['isImage'] ? '' : 'file',
-            'containerId' => $this->generateId(),
+            'containerId' => $this->containerId,
         ]);
 
         return parent::render();
+    }
+
+    protected function setupScript()
+    {
+        $newButton = trans('admin.uploader.add_new_media');
+        $options = JavaScript::format($this->options);
+
+        $this->script = <<<JS
+(function () {
+    var upload, options = {$options}, listenComplete;
+
+    build();
+
+    function build() {
+        var opts = $.extend({
+            selector: '#{$this->containerId}',
+            addFileButton: '#{$this->containerId} .add-file-button',
+        }, options);
+
+        opts.upload = $.extend({
+            pick: {
+                id: '#{$this->containerId} .file-picker',
+                label: '<i class="feather icon-folder"></i>&nbsp; {$newButton}'
+            },
+            dnd: '#{$this->containerId} .dnd-area',
+            paste: '#{$this->containerId} .web-uploader'
+        }, opts);
+
+        upload = Dcat.Uploader(opts);
+        upload.build();
+        upload.preview();
+
+        function resize() {
+            setTimeout(function () {
+                if (! upload) return;
+
+                upload.refreshButton();
+                resize();
+
+                if (! listenComplete) {
+                    listenComplete = 1;
+                    $(document).one('pjax:complete', function () {
+                        upload = null;
+                    });
+                }
+            }, 250);
+        }
+        resize();
+    }
+})();
+JS;
     }
 
     /**

@@ -49,7 +49,7 @@ class Image extends File
 {
     use ImageField;
 
-    protected $rules = ['image'];
+    protected $rules = ['nullable', 'image'];
 
     protected $view = 'admin::form.file';
 

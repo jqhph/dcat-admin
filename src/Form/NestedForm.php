@@ -179,7 +179,12 @@ class NestedForm
     public function prepare($input)
     {
         foreach ($input as $key => $record) {
+            if (! array_key_exists(static::REMOVE_FLAG_NAME, $record)) {
+                continue;
+            }
+
             $this->setFieldOriginalValue($key);
+
             $input[$key] = $this->prepareRecord($record);
         }
 
@@ -257,7 +262,7 @@ class NestedForm
                 $value = $field->prepare($value);
             }
 
-            if (($field instanceof \Dcat\Admin\Form\Field\Hidden) || $value != $field->original()) {
+            if (($field instanceof Form\Field\Hidden) || $value != $field->original()) {
                 if (is_array($columns)) {
                     foreach ($columns as $name => $column) {
                         Arr::set($prepared, $column, $value[$name]);
@@ -361,7 +366,7 @@ class NestedForm
              * Get and remove the last script of Admin::$script stack.
              */
             if ($field->getScript()) {
-                $scripts[] = array_pop(Admin::$script);
+                $scripts[] = array_pop(Admin::asset()->script);
             }
         }
 

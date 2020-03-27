@@ -172,8 +172,7 @@ class SelectResource extends Field
         $maxItem = (int) $this->maxItem;
         $queryName = SimpleGrid::QUERY_NAME;
 
-        Admin::script(
-            <<<JS
+        $this->script = <<<JS
 Dcat.ResourceSelector({
     title: '{$label}',
     column: "{$this->getElementName()}",
@@ -189,8 +188,7 @@ Dcat.ResourceSelector({
     displayer: 'navList',
     displayerContainer: $('#{$containerId}'),
 });
-JS
-        );
+JS;
     }
 
     protected function setupStyle()

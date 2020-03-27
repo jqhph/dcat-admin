@@ -3,11 +3,19 @@
   right: -450px;
   box-shadow: $menu-shadow;
   z-index: 48;
+
+  .customizer-content {
+    width: 450px;
+  }
 }
 
 @media (max-width: 576px) {
   .customizer {
     width: 410px;
     right: -410px;
+
+    .customizer-content {
+      width: 410px;
+    }
   }
 }

@@ -187,7 +187,7 @@ class Tags extends Field
     protected function setupScript()
     {
         // 解决部分浏览器开启 tags: true 后无法输入中文的BUG
-        // 支持【逗号】【分号】【空格】结尾生成tags
+        // 支持"逗号" "分号" "空格"结尾生成tags
         $this->script = <<<JS
 $("{$this->getElementClassSelector()}").select2({
     tags: true,

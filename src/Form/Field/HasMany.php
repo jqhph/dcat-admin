@@ -309,16 +309,7 @@ class HasMany extends Field
         $form = $this->buildNestedForm($this->column, $this->builder);
 
         return array_values(
-            collect($form->setOriginal($this->original, $this->getKeyName())->prepare($input))
-                ->reject(function ($item) {
-                    return $item[NestedForm::REMOVE_FLAG_NAME] == 1;
-                })
-                ->map(function ($item) {
-                    unset($item[NestedForm::REMOVE_FLAG_NAME]);
-
-                    return $item;
-                })
-                ->toArray()
+            $form->setOriginal($this->original, $this->getKeyName())->prepare($input)
         );
     }
 
@@ -693,7 +684,7 @@ JS;
              * Get and remove the last script of Admin::$script stack.
              */
             if ($field->getScript()) {
-                $scripts[] = array_pop(Admin::$script);
+                $scripts[] = array_pop(Admin::asset()->script);
             }
         }
 
