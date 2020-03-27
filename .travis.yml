@@ -1,4 +1,8 @@
+sudo: required
+
 language: php
+
+dist: trusty
 
 php:
   - 7.2
@@ -9,7 +13,7 @@ matrix:
   allow_failures:
     - php: hhvm
 
-sudo: false
+#sudo: false
 
 services:
   - mysql
@@ -40,7 +44,7 @@ install:
 before_script:
  # - chmod 777 ./tests/resources/drivers/chromedriver-linux
 #  - chmod 777 ./vendor/laravel/dusk/bin/chromedriver-linux
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
+  - google-chrome-stable --whitelisted-ips --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
   #- ./vendor/laravel/dusk/bin/chromedriver-linux & --whitelisted-ips --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
   - php artisan serve &
 
