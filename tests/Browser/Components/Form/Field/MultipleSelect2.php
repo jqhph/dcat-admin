@@ -14,11 +14,9 @@ class MultipleSelect2 extends Select2
      *
      * @return Browser
      */
-    public function choose($browser, $values)
+    public function choose(Browser $browser, $values)
     {
         $values = implode(',', (array) $values);
-
-//dump($browser->resolver->prefix.' || '.$this->formatSelector($browser));
 
         $browser->script(
             <<<JS

@@ -13,9 +13,10 @@ class ChromeProcess extends BaseChromeProcess
         if ($this->onWindows()) {
             $this->driver = realpath(__DIR__.'/resources/drivers/chromedriver-win.exe');
         }
-        //elseif ($this->onMac()) {
-        //    $this->driver = realpath(__DIR__.'/resources/drivers/chromedriver-mac');
-        //} else {
+        elseif ($this->onMac()) {
+            $this->driver = realpath(__DIR__.'/resources/drivers/chromedriver-mac');
+        }
+        //else {
         //    $this->driver = realpath(__DIR__.'/resources/drivers/chromedriver-linux');
         //}
     }
