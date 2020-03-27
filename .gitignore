@@ -7,3 +7,4 @@ package-lock.json
 mix-manifest.json
 /images/
 pre-dist
+/laravel-tests

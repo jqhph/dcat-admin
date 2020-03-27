@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 7.1
   - 7.2
   - 7.3
 
@@ -15,10 +14,18 @@ sudo: false
 services:
   - mysql
 
+install:
+  - mysql -e 'create database if not exists laravel;'
+  - travis_retry composer create-project --prefer-dist --no-suggest --no-interaction laravel/laravel laravel-tests
+  - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
+  - cp -f ./tests/resources/stubs/ComposerConfigCommand.php ./laravel-tests/app/
+  - cd ./laravel-tests
+  - php artisan admin:composer-config
+  - travis_retry composer require dcat/laravel-admin:*@dev --no-interaction --prefer-dist --dev
+
 before_script:
-  - mysql -e 'create database if not exists laravel_dcat_admin_test;'
-  - travis_retry composer self-update
-  - travis_retry composer install --no-interaction
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - php artisan serve &
 
 script:
-  - composer test
+  - php artisan dusk
