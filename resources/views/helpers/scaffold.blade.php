@@ -146,7 +146,7 @@
                             </td>
                             <td><input type="text" class="form-control" placeholder="{{trans('admin.scaffold.default')}}" name="fields[{{$index}}][default]" value="{{$field['default']}}"/></td>
                             <td><input type="text" class="form-control" placeholder="{{trans('admin.scaffold.comment')}}" name="fields[{{$index}}][comment]" value="{{$field['comment']}}" /></td>
-                            <td><a class="btn btn-sm btn-danger table-field-remove"><i class="feather icon-trash"></i></a></td>
+                            <td><button class="btn btn-sm btn-danger table-field-remove"><i class="feather icon-trash"></i></button></td>
                         </tr>
                     @endforeach
                 @else
@@ -183,7 +183,7 @@
                         </td>
                         <td><input type="text" class="form-control" placeholder="{{trans('admin.scaffold.default')}}" name="fields[0][default]"></td>
                         <td><input type="text" class="form-control" placeholder="{{trans('admin.scaffold.comment')}}" name="fields[0][comment]"></td>
-                        <td><a class="btn btn-sm btn-danger table-field-remove"><i class="feather icon-trash"></i></a></td>
+                        <td><button class="btn btn-sm btn-danger table-field-remove"><i class="feather icon-trash"></i></button></td>
                     </tr>
                 @endif
                 </tbody>
@@ -258,7 +258,7 @@
         </td>
         <td><input value="{default}" type="text" class="form-control" placeholder="{{trans('admin.scaffold.default')}}" name="fields[__index__][default]"></td>
         <td><input value="{comment}" type="text" class="form-control" placeholder="{{trans('admin.scaffold.comment')}}" name="fields[__index__][comment]"></td>
-        <td><a class="btn btn-sm btn-danger table-field-remove"><i class="feather icon-trash"></i></a></td>
+        <td><button class="btn btn-sm btn-danger table-field-remove"><i class="feather icon-trash"></i></button></td>
     </tr>
 </template>
 
