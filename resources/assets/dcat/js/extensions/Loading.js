@@ -127,8 +127,11 @@ function extend(Dcat) {
 
         loadingId = 'ld-'+Dcat.helpers.random();
 
-    let svg = LOADING_SVG[0].replace('{color}', 'currentColor')
-            .replace('{width}', '50px;height:11px;');
+        let loading = LOADING_SVG[0].replace('{color}', 'currentColor').replace('{width}', '50px;height:11px;');
+
+        if(! $this.hasClass('btn')) {
+            loading = `<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...`;
+        }
 
         return $this
             .addClass('disabled btn-loading')
@@ -136,7 +139,7 @@ function extend(Dcat) {
             .attr('data-loading', loadingId)
             .html(`
 <div class="${loadingId}" style="display:none">${content}</div>
-${svg}
+${loading}
 `);
     }
 
