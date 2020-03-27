@@ -39,7 +39,7 @@ install:
 
 before_script:
   - chmod 777 ./tests/resources/drivers/chromedriver-linux
-  - google-chrome-stable --disable-web-security --ignore-certificate-errors --whitelisted-ips --disable-dev-shm-usage --disable-gpu --remote-debugging-port=9515 http://127.0.0.1 &
+  - google-chrome-stable --user-data-dir --disable-web-security --allow-insecure-localhost --allow-running-insecure-content --ignore-certificate-errors --whitelisted-ips --disable-dev-shm-usage --disable-gpu --remote-debugging-port=9515 http://127.0.0.1 &
   - php artisan serve &
 
 script:
