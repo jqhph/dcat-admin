@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Feature;
+namespace Tests\Feature;
 
 use Dcat\Admin\Admin;
 use Tests\TestCase;
