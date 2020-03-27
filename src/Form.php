@@ -822,7 +822,7 @@ class Form implements Renderable
         if ($this->request->get('after-save') == 1) {
             // continue editing
             if ($this->builder->isEditing() && $this->isAjaxRequest()) {
-                return null;
+                return;
             }
 
             return rtrim($resourcesPath, '/')."/{$key}/edit";

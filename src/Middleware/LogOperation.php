@@ -54,7 +54,7 @@ class LogOperation
             }
         }
 
-       return json_encode($input);
+        return json_encode($input);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace Dcat\Admin\Layout;
 class Asset
 {
     /**
-     * 路径别名
+     * 路径别名.
      *
      * @var array
      */
@@ -482,7 +482,7 @@ class Asset
     }
 
     /**
-     * 判断是否含有别名
+     * 判断是否含有别名.
      *
      * @param string $value
      *

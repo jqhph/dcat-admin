@@ -20,7 +20,7 @@ interface TreeRepository
     public function getPrimaryKeyColumn();
 
     /**
-     * 获取父级ID字段名称
+     * 获取父级ID字段名称.
      *
      * @return string
      */

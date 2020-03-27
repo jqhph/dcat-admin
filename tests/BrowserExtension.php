@@ -26,7 +26,7 @@ trait BrowserExtension
                 $text = Arr::wrap($text);
                 $message = $this->formatTimeOutMessage('Waited %s seconds for text', implode("', '", $text));
 
-                return $this->waitUsing($seconds, 100, function () use ($text, $callback)  {
+                return $this->waitUsing($seconds, 100, function () use ($text, $callback) {
                     $results = Str::contains($this->resolver->findOrFail('')->getText(), $text);
 
                     if ($results) {
@@ -59,7 +59,8 @@ trait BrowserExtension
 
             'wait' => function ($seconds, \Closure $callback = null) {
                 try {
-                    $this->waitUsing($seconds, 200, function () {});
+                    $this->waitUsing($seconds, 200, function () {
+                    });
                 } catch (TimeoutException $e) {
                     $callback && $callback();
                 }
@@ -78,7 +79,8 @@ trait BrowserExtension
                 return $this;
             },
             'assert' => function (Component $component) {
-                return $this->with($component, function () {});
+                return $this->with($component, function () {
+                });
             },
         ];
 

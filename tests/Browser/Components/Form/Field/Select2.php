@@ -15,7 +15,7 @@ class Select2 extends Component
     }
 
     /**
-     * 获取组件的 root selector
+     * 获取组件的 root selector.
      *
      * @return string
      */
@@ -37,19 +37,19 @@ class Select2 extends Component
     }
 
     /**
-     * 读取组件的元素快捷方式
+     * 读取组件的元素快捷方式.
      *
      * @return array
      */
     public function elements()
     {
         return [
-            '@container' => '.select2'
+            '@container' => '.select2',
         ];
     }
 
     /**
-     * 选中下拉选框
+     * 选中下拉选框.
      *
      * @param  Browser  $browser
      * @param  mixed    $value

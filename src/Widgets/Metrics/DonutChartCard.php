@@ -19,7 +19,7 @@ class DonutChartCard extends Card
     protected $contentWidth = [6, 6];
 
     /**
-     * 趋势图图表默认配置
+     * 趋势图图表默认配置.
      *
      * @return  array
      */
@@ -49,15 +49,15 @@ class DonutChartCard extends Card
             'plotOptions' => [
                 'pie' => [
                     'donut' => [
-                        'size' => '75%'
-                    ]
-                ]
-            ]
+                        'size' => '75%',
+                    ],
+                ],
+            ],
         ];
     }
 
     /**
-     * 初始化
+     * 初始化.
      */
     protected function init()
     {

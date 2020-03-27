@@ -163,7 +163,7 @@ trait WebUploader
             'formData' => [
                 '_id'           => Str::random(),
                 '_token'        => csrf_token(),
-                'upload_column' => $this->column()
+                'upload_column' => $this->column(),
             ],
         ];
 

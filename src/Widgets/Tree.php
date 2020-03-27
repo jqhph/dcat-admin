@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;

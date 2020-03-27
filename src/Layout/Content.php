@@ -6,7 +6,6 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Arr;
 use Illuminate\Support\ViewErrorBag;
 
 class Content implements Renderable
@@ -422,7 +421,7 @@ class Content implements Renderable
             'blank_page' => false,
             'direction' => env('MIX_CONTENT_DIRECTION', 'ltr'),
         ];
-        
+
         $data = array_merge(
             config('admin.layout') ?: [],
             $this->config

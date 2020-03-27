@@ -191,7 +191,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     *  获取父级ID字段名称
+     *  获取父级ID字段名称.
      *
      * @return string
      */

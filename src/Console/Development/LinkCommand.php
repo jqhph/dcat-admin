@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Console\Development;
 
 use Dcat\Admin\Admin;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 
 class LinkCommand extends Command
 {
@@ -79,7 +79,7 @@ class LinkCommand extends Command
             return;
         }
 
-        $distPath = realpath(__DIR__ . '/../../../resources/pre-dist');
+        $distPath = realpath(__DIR__.'/../../../resources/pre-dist');
 
         $files->link(
             $distPath, $publicPath

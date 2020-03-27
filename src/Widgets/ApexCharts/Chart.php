@@ -9,9 +9,8 @@ use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
 /**
- * Class Chart
+ * Class Chart.
  *
- * @package Dcat\Admin\Widgets\ApexCharts
  *
  * @see https://apexcharts.com/
  */
@@ -20,7 +19,7 @@ class Chart extends Widget
     use InteractsWithApi;
 
     public static $js = [
-        '@apex-charts'
+        '@apex-charts',
     ];
 
     protected $containerSelector;
@@ -46,7 +45,7 @@ class Chart extends Widget
     }
 
     /**
-     * 设置或获取图表容器选择器
+     * 设置或获取图表容器选择器.
      *
      * @param string|null $selector
      *
@@ -181,7 +180,7 @@ class Chart extends Widget
         return $this;
     }
 
-   /**
+    /**
      * @param array $value
      *
      * @return $this

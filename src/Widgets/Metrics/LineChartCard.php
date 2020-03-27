@@ -5,14 +5,14 @@ namespace Dcat\Admin\Widgets\Metrics;
 class LineChartCard extends Card
 {
     /**
-     * 图表默认高度
+     * 图表默认高度.
      *
      * @var int
      */
     protected $chartHeight = 57;
 
     /**
-     * 图表默认配置
+     * 图表默认配置.
      *
      * @var array
      */
@@ -30,7 +30,7 @@ class LineChartCard extends Card
                 'padding' => [
                     'left' => 0,
                     'right' => 0,
-                ]
+                ],
             ],
         ],
         'tooltip' => [
@@ -57,7 +57,7 @@ class LineChartCard extends Card
         ],
         'stroke' => [
             'width' => 2.5,
-            'curve' => 'smooth'
+            'curve' => 'smooth',
         ],
         'fill' => [
             'opacity' => 0.1,
@@ -66,7 +66,7 @@ class LineChartCard extends Card
     ];
 
     /**
-     * 初始化
+     * 初始化.
      */
     protected function init()
     {

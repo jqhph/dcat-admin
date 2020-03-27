@@ -4,9 +4,9 @@ namespace Tests\Browser;
 
 use Dcat\Admin\Models\Menu;
 use Laravel\Dusk\Browser;
-use Tests\Browser\Components\Form\MenuEditForm;
 use Tests\Browser\Components\Form\Field\MultipleSelect2;
 use Tests\Browser\Components\Form\Field\Select2;
+use Tests\Browser\Components\Form\MenuEditForm;
 use Tests\Browser\Pages\MenuEditPage;
 use Tests\Browser\Pages\MenuPage;
 use Tests\TestCase;

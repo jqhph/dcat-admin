@@ -6,7 +6,6 @@ use Dcat\Admin\Admin;
 
 class SingleRoundChartCard extends RoundChartCard
 {
-
     /**
      * @var int
      */
@@ -36,7 +35,7 @@ class SingleRoundChartCard extends RoundChartCard
                     'blur' => 3,
                     'left' => 1,
                     'top' => 1,
-                    'opacity' => 0.1
+                    'opacity' => 0.1,
                 ],
             ],
             'colors' => $colors,
@@ -54,15 +53,15 @@ class SingleRoundChartCard extends RoundChartCard
                     ],
                     'dataLabels' => [
                         'name' => [
-                            'show' => false
+                            'show' => false,
                         ],
                         'value' => [
                             'offsetY' => 14,
                             'color' => $strokColor,
-                            'fontSize' => '2.8rem'
-                        ]
-                    ]
-                ]
+                            'fontSize' => '2.8rem',
+                        ],
+                    ],
+                ],
             ],
             'fill' => [
                 'type' => 'gradient',
@@ -74,12 +73,12 @@ class SingleRoundChartCard extends RoundChartCard
                     'inverseColors' => true,
                     'opacityFrom' => 1,
                     'opacityTo' => 1,
-                    'stops' => [0, 100]
+                    'stops' => [0, 100],
                 ],
             ],
             'series' => [100],
             'stroke' => [
-                'lineCap' => 'round'
+                'lineCap' => 'round',
             ],
         ];
     }

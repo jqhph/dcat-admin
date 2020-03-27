@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Str;
 
 class Checkbox extends AbstractDisplayer
 {

@@ -11,7 +11,7 @@ use Tests\Browser\Components\Component;
 class RowSelector extends Component
 {
     /**
-     * 获取组件的 root selector
+     * 获取组件的 root selector.
      *
      * @return string
      */
@@ -32,7 +32,7 @@ class RowSelector extends Component
     }
 
     /**
-     * 读取组件的元素快捷方式
+     * 读取组件的元素快捷方式.
      *
      * @return array
      */
@@ -68,7 +68,7 @@ JS
     }
 
     /**
-     * 选中所有
+     * 选中所有.
      *
      * @param Browser $browser
      *

@@ -21,7 +21,7 @@ class BatchActions extends Component
     }
 
     /**
-     * 获取组件的 root selector
+     * 获取组件的 root selector.
      *
      * @return string
      */
@@ -41,7 +41,7 @@ class BatchActions extends Component
     }
 
     /**
-     * 读取组件的元素快捷方式
+     * 读取组件的元素快捷方式.
      *
      * @return array
      */

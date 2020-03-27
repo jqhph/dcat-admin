@@ -7,7 +7,7 @@ use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
 
 /**
- * Class Action
+ * Class Action.
  *
  * @method string href
  */

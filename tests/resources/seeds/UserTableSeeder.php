@@ -2,10 +2,10 @@
 
 namespace Tests\Seeds;
 
+use Illuminate\Database\Seeder;
 use Tests\Models\Profile;
 use Tests\Models\Tag;
 use Tests\Models\User;
-use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
 {

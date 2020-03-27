@@ -2,9 +2,6 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Arr;
-
 class Color
 {
     public static $chartTheme = [

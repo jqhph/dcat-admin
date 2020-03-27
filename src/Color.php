@@ -5,9 +5,8 @@ namespace Dcat\Admin;
 use Dcat\Admin\Support\Helper;
 
 /**
- * Class Color
+ * Class Color.
  *
- * @package Dcat\Admin
  *
  * @method string primary(int $amt = 0)
  * @method string primaryDarker(int $amt = 0)
@@ -59,7 +58,7 @@ use Dcat\Admin\Support\Helper;
 class Color
 {
     /**
-     * 颜色
+     * 颜色.
      *
      * @var array
      */
@@ -87,7 +86,7 @@ class Color
     ];
 
     /**
-     * 默认颜色
+     * 默认颜色.
      *
      * @var array
      */
@@ -109,7 +108,7 @@ class Color
         'white'   => '#fff',
         'white50' => 'hsla(0,0%,100%,.5)',
 
-         // 其他蓝色
+        // 其他蓝色
         'blue1' => '#007ee5',
         'blue2' => '#4199de',
 

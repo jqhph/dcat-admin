@@ -3,8 +3,6 @@
 namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Support\Helper;
-use Illuminate\Contracts\Support\Renderable;
 
 class BarChartCard extends RadialBarChartCard
 {
@@ -38,9 +36,9 @@ class BarChartCard extends RadialBarChartCard
     protected function defaultChartOptions()
     {
         $color = Admin::color();
-        
+
         $colors = [
-            $color->primary()
+            $color->primary(),
         ];
 
         return [
