@@ -19,6 +19,13 @@ install:
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
   - cp -f ./tests/resources/stubs/ComposerConfigCommand.php ./laravel-tests/app/
+  - mkdir ./laravel-tests/dcat-admin
+  - cp -rf ./config ./laravel-tests/dcat-admin
+  - cp -rf ./database ./laravel-tests/dcat-admin
+  - cp -rf ./resources ./laravel-tests/dcat-admin
+  - cp -rf ./src ./laravel-tests/dcat-admin
+  - cp -rf ./tests ./laravel-tests/dcat-admin
+  - cp -rf ./composer.json ./laravel-tests/dcat-admin
   - cd ./laravel-tests
   - php artisan admin:composer-config
   - travis_retry composer require dcat/laravel-admin:*@dev --no-interaction --prefer-dist --dev
