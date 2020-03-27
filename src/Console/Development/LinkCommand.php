@@ -75,7 +75,7 @@ class LinkCommand extends Command
             return;
         }
 
-        $distPath = realpath(__DIR__ . '/../../../resources/dist');
+        $distPath = realpath(__DIR__ . '/../../../resources/pre-dist');
 
         $files->link(
             $distPath, $publicPath

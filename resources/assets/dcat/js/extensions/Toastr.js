@@ -7,7 +7,6 @@ export default class Toastr {
         Dcat.error = _this.error;
         Dcat.info = _this.info;
         Dcat.warning = _this.warning;
-        Dcat.confirm = _this.confirm;
     }
 
     success(message, title, options) {
