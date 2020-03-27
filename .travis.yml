@@ -28,7 +28,8 @@ install:
   - cp -rf ./composer.json ./laravel-tests/dcat-admin
   - cd ./laravel-tests
   - php artisan admin:composer-config
-  - travis_retry composer require dcat/laravel-admin:*@dev --no-interaction --prefer-dist --dev
+  - travis_retry composer require dcat/laravel-admin:*@dev --no-interaction --prefer-dist
+  - travis_retry composer require laravel/dusk --dev
 
 before_script:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
