@@ -49,7 +49,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * 初始化模型
+     * 初始化模型.
      *
      * @param EloquentModel|Builder|array|string $modelOrRelations
      */
@@ -503,7 +503,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * 获取父级ID字段名称
+     * 获取父级ID字段名称.
      *
      * @return string
      */

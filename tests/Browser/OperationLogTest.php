@@ -5,8 +5,8 @@ namespace Tests\Browser;
 use Dcat\Admin\Models\OperationLog;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Grid\Actions\BatchDelete;
-use Tests\Browser\Components\Grid\BatchActions;
 use Tests\Browser\Components\Grid\Actions\Delete;
+use Tests\Browser\Components\Grid\BatchActions;
 use Tests\Browser\Components\Grid\RowSelector;
 use Tests\TestCase;
 

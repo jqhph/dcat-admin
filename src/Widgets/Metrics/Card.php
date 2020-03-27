@@ -4,8 +4,8 @@ namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Widgets\ApexCharts\Chart;
 use Dcat\Admin\Traits\InteractsWithApi;
+use Dcat\Admin\Widgets\ApexCharts\Chart;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -32,17 +32,17 @@ class Card extends Widget
     ];
 
     /**
-     * @var string 
+     * @var string
      */
     protected $style = 'primary';
 
     /**
-     * @var int 
+     * @var int
      */
     protected $chartHeight = 70;
 
     /**
-     * @var array 
+     * @var array
      */
     protected $chartOptions = [];
 
@@ -196,7 +196,7 @@ class Card extends Widget
     }
 
     /**
-     * 设置最小高度
+     * 设置最小高度.
      *
      * @param string|int $value
      *
@@ -229,7 +229,7 @@ class Card extends Widget
     }
 
     /**
-     * 设置图表高度
+     * 设置图表高度.
      *
      * @param int $number
      *
@@ -261,7 +261,7 @@ class Card extends Widget
     }
 
     /**
-     * 设置图表颜色
+     * 设置图表颜色.
      *
      * @param string|array $colors
      *

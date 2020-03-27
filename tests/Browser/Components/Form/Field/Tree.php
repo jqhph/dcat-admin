@@ -15,7 +15,7 @@ class Tree extends Component
     }
 
     /**
-     * 获取组件的 root selector
+     * 获取组件的 root selector.
      *
      * @return string
      */
@@ -38,7 +38,7 @@ class Tree extends Component
     }
 
     /**
-     * 读取组件的元素快捷方式
+     * 读取组件的元素快捷方式.
      *
      * @return array
      */
@@ -52,7 +52,7 @@ class Tree extends Component
     }
 
     /**
-     * 选中下拉选框
+     * 选中下拉选框.
      *
      * @param Browser $browser
      * @param mixed   $values
@@ -75,7 +75,7 @@ JS
     }
 
     /**
-     * 展开所有选项
+     * 展开所有选项.
      *
      * @param Browser $browser
      */
@@ -88,7 +88,7 @@ JS
     }
 
     /**
-     * 选中所有
+     * 选中所有.
      *
      * @param Browser $browser
      *
@@ -105,7 +105,7 @@ JS
     }
 
     /**
-     * 取消选中所有
+     * 取消选中所有.
      *
      * @param Browser $browser
      *

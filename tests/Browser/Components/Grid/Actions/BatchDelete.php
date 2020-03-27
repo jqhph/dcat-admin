@@ -5,7 +5,7 @@ namespace Tests\Browser\Components\Grid\Actions;
 class BatchDelete extends Delete
 {
     /**
-     * 读取组件的元素快捷方式
+     * 读取组件的元素快捷方式.
      *
      * @return array
      */

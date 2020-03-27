@@ -6,7 +6,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
 /**

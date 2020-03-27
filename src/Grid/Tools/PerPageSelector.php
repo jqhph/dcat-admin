@@ -80,7 +80,7 @@ class PerPageSelector implements Renderable
             return "<a href=\"$url\">$option</a>";
         })->toArray();
 
-        $dropdown =  Dropdown::make($options)->button($this->perPage)->render();
+        $dropdown = Dropdown::make($options)->button($this->perPage)->render();
 
         return <<<EOT
 <label class="pull-right d-none d-sm-inline" style="margin-right: 10px">

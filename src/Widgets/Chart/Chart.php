@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Widgets\Chart;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Color;
 use Dcat\Admin\Traits\InteractsWithApi;
+use Dcat\Admin\Widgets\Color;
 use Dcat\Admin\Widgets\Widget;
 use Illuminate\Support\Str;
 
@@ -510,7 +510,7 @@ HTML;
 
     protected function generateId()
     {
-       return 'chart-'.$this->type.Str::random(8);
+        return 'chart-'.$this->type.Str::random(8);
     }
 
     public function getId()

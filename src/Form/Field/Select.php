@@ -14,7 +14,6 @@ class Select extends Field
     public static $js = '@select2';
     public static $css = '@select2';
 
-
     /**
      * @var array
      */

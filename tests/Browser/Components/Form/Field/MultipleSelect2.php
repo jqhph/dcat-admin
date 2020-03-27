@@ -7,7 +7,7 @@ use Laravel\Dusk\Browser;
 class MultipleSelect2 extends Select2
 {
     /**
-     * 选中下拉选框
+     * 选中下拉选框.
      *
      * @param  Browser $browser
      * @param  array   $values

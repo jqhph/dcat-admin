@@ -10,7 +10,6 @@ use Dcat\Admin\Models\Repositories\Extension;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\StringOutput;
 use Dcat\Admin\Widgets\Alert;
-use Dcat\Admin\Widgets\Box;
 use Dcat\Admin\Widgets\Table;
 use Dcat\Admin\Widgets\Terminal;
 use Illuminate\Routing\Controller;
@@ -179,7 +178,7 @@ class ExtensionController extends Controller
     }
 
     /**
-     * 创建扩展
+     * 创建扩展.
      *
      * @return string
      */

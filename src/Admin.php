@@ -227,7 +227,7 @@ class Admin
     }
 
     /**
-     * 注册api路由
+     * 注册api路由.
      *
      * @return void
      */

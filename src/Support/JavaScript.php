@@ -22,7 +22,7 @@ class JavaScript
     }
 
     /**
-     * 设置或获取代码内容
+     * 设置或获取代码内容.
      *
      * @param mixed $script
      *
@@ -39,7 +39,7 @@ class JavaScript
 
     /**
      * @param string|\Closure $script
-     * 
+     *
      * @return string
      */
     public static function make($script)
@@ -49,7 +49,7 @@ class JavaScript
 
     /**
      * 获取所有代码
-     * 
+     *
      * @return array
      */
     public static function all()
@@ -66,7 +66,7 @@ class JavaScript
     {
         unset(static::$scripts[$id]);
     }
-    
+
     /**
      * 格式化为js代码.
      *
@@ -86,7 +86,7 @@ class JavaScript
 
         foreach (static::all() as $id => $script) {
             $id = "\"$id\"";
-            
+
             if (mb_strpos($value, $id) !== false) {
                 $value = str_replace($id, $script, $value);
 

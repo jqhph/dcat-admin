@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Card;
 use Dcat\Admin\Widgets\Tab;
 use Illuminate\Support\Arr;
 

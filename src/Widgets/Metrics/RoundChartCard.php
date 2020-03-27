@@ -3,9 +3,7 @@
 namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\JavaScript;
-use Illuminate\Contracts\Support\Renderable;
 
 class RoundChartCard extends RadialBarChartCard
 {
@@ -108,7 +106,7 @@ class RoundChartCard extends RadialBarChartCard
     }
 
     /**
-     * 设置图表统计总数信息
+     * 设置图表统计总数信息.
      *
      * @param string $label
      * @param int $number

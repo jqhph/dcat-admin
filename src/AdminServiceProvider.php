@@ -108,7 +108,7 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * 是否强制使用https
+     * 是否强制使用https.
      *
      * @return void
      */

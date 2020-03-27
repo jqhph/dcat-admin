@@ -6,9 +6,8 @@ use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 
 /**
- * Trait InteractsWithApi
+ * Trait InteractsWithApi.
  *
- * @package Dcat\Admin\Traits
  *
  * @method mixed handle(Request $request)
  * @method mixed valueResult()
@@ -83,7 +82,7 @@ trait InteractsWithApi
     }
 
     /**
-     * 获取请求方法
+     * 获取请求方法.
      *
      * @return string
      */
@@ -184,7 +183,7 @@ trait InteractsWithApi
     public function buildRequestScript()
     {
         if (! $this->allowBuildRequest()) {
-            return null;
+            return;
         }
 
         $fetching = implode(';', $this->requestScripts['fetching']);

@@ -4,8 +4,8 @@ namespace Dcat\Admin\Form\Step;
 
 use Closure;
 use Dcat\Admin\Admin;
-use Dcat\Admin\Form\StepForm as Form;
 use Dcat\Admin\Form as ParentForm;
+use Dcat\Admin\Form\StepForm as Form;
 use Illuminate\Support\Arr;
 
 class Builder

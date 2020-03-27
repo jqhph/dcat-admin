@@ -2,9 +2,9 @@
 
 namespace Dcat\Admin\Form\Concerns;
 
+use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
-use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 

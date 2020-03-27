@@ -27,8 +27,6 @@ class Card extends Widget
      */
     protected $divider = false;
 
-
-
     public function __construct($title = '', $content = null)
     {
         if ($content === null) {

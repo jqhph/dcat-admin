@@ -18,7 +18,7 @@ class MenuCreationForm extends Component
     }
 
     /**
-     * 获取组件的 css selector
+     * 获取组件的 css selector.
      *
      * @return string
      */
@@ -58,7 +58,7 @@ class MenuCreationForm extends Component
     }
 
     /**
-     * 注入表单
+     * 注入表单.
      *
      * @param Browser $browser
      * @param array $input
@@ -74,7 +74,7 @@ class MenuCreationForm extends Component
         ];
 
         $selectKeys = [
-            'parent_id'
+            'parent_id',
         ];
 
         $multipleSelectKeys = [
@@ -119,7 +119,7 @@ class MenuCreationForm extends Component
     }
 
     /**
-     * 读取组件的元素快捷方式
+     * 读取组件的元素快捷方式.
      *
      * @return array
      */

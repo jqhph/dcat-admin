@@ -3,10 +3,7 @@
 namespace Dcat\Admin\Actions;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Models\HasPermissions;
 use Dcat\Admin\Traits\HasAuthorization;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 
 trait HasActionHandler
 {

@@ -24,7 +24,7 @@ class Tab extends Widget
         'dropDown' => [],
         'active'   => 0,
         'padding'  => null,
-        'tabStyle' => ''
+        'tabStyle' => '',
     ];
 
     /**

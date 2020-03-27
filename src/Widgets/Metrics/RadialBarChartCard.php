@@ -45,7 +45,7 @@ class RadialBarChartCard extends Card
     protected $chartPullRight = false;
 
     /**
-     * 初始化
+     * 初始化.
      */
     public function init()
     {
@@ -87,9 +87,9 @@ class RadialBarChartCard extends Card
                         'value' => [
                             'offsetY' => 30,
                             'color' => $labelColor,
-                            'fontSize' => '2rem'
-                        ]
-                    ]
+                            'fontSize' => '2rem',
+                        ],
+                    ],
                 ],
             ],
             'fill' => [
@@ -102,11 +102,11 @@ class RadialBarChartCard extends Card
                     'inverseColors' => true,
                     'opacityFrom' => 1,
                     'opacityTo' => 1,
-                    'stops' => [0, 100]
+                    'stops' => [0, 100],
                 ],
             ],
             'stroke' => [
-                'dashArray' => 8
+                'dashArray' => 8,
             ],
         ];
     }

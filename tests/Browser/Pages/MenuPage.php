@@ -58,7 +58,7 @@ class MenuPage extends Page
     }
 
     /**
-     * 创建
+     * 创建.
      *
      * @param Browser $browser
      * @param array $input
