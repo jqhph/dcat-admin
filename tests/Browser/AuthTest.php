@@ -16,8 +16,6 @@ class AuthTest extends TestCase
 
     public function testLoginPage()
     {
-        dump(admin_url('auth/login'));
-
         $this->browse(function (Browser $browser) {
             $browser->visit(test_admin_path('auth/login'))
                 ->assertSee(__('admin.login'));
