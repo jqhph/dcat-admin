@@ -85,6 +85,7 @@ abstract class DuskTestCase extends BaseTestCase
             '--headless',
             '--window-size=1920,1080',
             '--whitelisted-ips',
+            '--disable-dev-shm-usage',
         ]);
 
         return RemoteWebDriver::create(
