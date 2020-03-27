@@ -51,9 +51,9 @@ class AuthTest extends TestCase
                 ->assertSee('New Users')
                 ->assertSee('New Devices')
                 ->assertSee('Tickets')
-                ->assertSee(__('admin.documentation'))
-                ->assertSee(__('admin.extensions'))
-                ->assertSee(__('admin.demo'))
+                ->assertSee(strtoupper(__('admin.documentation')))
+                ->assertSee(strtoupper(__('admin.extensions')))
+                ->assertSee(strtoupper(__('admin.demo')))
                 ->assertSee('GITHUB');
 
             $browser->within('.main-menu-content', function (Browser $browser) {
