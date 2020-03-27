@@ -6,3 +6,4 @@ composer.lock
 package-lock.json
 mix-manifest.json
 /images/
+pre-dist

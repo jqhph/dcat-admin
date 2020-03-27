@@ -16,6 +16,9 @@ require('dotenv').config();
 const glob = require('glob')
 const path = require('path')
 
+let distPath = mix.inProduction() ? 'resources/dist' : 'resources/pre-dist';
+
+
 /*
  |--------------------------------------------------------------------------
  | Vendor assets
@@ -25,7 +28,7 @@ const path = require('path')
 function mixAssetsDir(query, cb) {
   (glob.sync('resources/assets/' + query) || []).forEach(f => {
     f = f.replace(/[\\\/]+/g, '/');
-    cb(f, f.replace('resources/assets', 'resources/dist'));
+    cb(f, f.replace('resources/assets', distPath));
   });
 }
 
@@ -57,9 +60,9 @@ mixAssetsDir('js/scripts/**/*.js', (src, dest) => mix.scripts(src, dest));
 mixAssetsDir('assets/vendors/js/**/*.js', (src, dest) => mix.scripts(src, dest));
 mixAssetsDir('assets/vendors/css/**/*.css', (src, dest) => mix.copy(src, dest));
 mixAssetsDir('assets/vendors/css/editors/quill/fonts/', (src, dest) => mix.copy(src, dest));
-mix.copyDirectory('resources/assets/images', 'resources/dist/images');
-mix.copyDirectory('resources/assets/fonts', 'resources/dist/fonts');
-mix.copyDirectory('resources/assets/vendors', 'resources/dist/vendors');
+mix.copyDirectory('resources/assets/images', distPath + '/images');
+mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
+mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
 
 
 
@@ -69,7 +72,7 @@ function dcatPath(path) {
 }
 
 function dcatDistPath(path) {
-  return 'resources/dist/dcat/' + path;
+  return distPath + '/dcat/' + path;
 }
 
 // 复制第三方插件文件夹
@@ -85,34 +88,23 @@ mixAssetsDir('dcat/extra/*.scss', (src, dest) => mix.sass(src, dest.replace('scs
 
 // ------------------------------------ Dcat Admin -------------------------------------------
 
-mix.js('resources/assets/js/core/app-menu.js', 'resources/dist/js/core')
-    .js('resources/assets/js/core/app.js', 'resources/dist/js/core')
-    .sass('resources/assets/sass/bootstrap.scss', 'resources/dist/css')
-    .sass('resources/assets/sass/bootstrap-extended.scss', 'resources/dist/css')
-    .sass('resources/assets/sass/colors.scss', 'resources/dist/css')
-    .sass('resources/assets/sass/components.scss', 'resources/dist/css')
-    .sass('resources/assets/sass/custom-rtl.scss', 'resources/dist/css')
-    .sass('resources/assets/sass/custom-laravel.scss', 'resources/dist/css');
+mix.js('resources/assets/js/core/app-menu.js', distPath + '/js/core')
+    .js('resources/assets/js/core/app.js', distPath + '/js/core')
+    .sass('resources/assets/sass/bootstrap.scss', distPath + '/css')
+    .sass('resources/assets/sass/bootstrap-extended.scss', distPath + '/css')
+    .sass('resources/assets/sass/colors.scss', distPath + '/css')
+    .sass('resources/assets/sass/components.scss', distPath + '/css')
+    .sass('resources/assets/sass/custom-rtl.scss', distPath + '/css')
+    .sass('resources/assets/sass/custom-laravel.scss', distPath + '/css');
 
 mix.then(() => {
   if (process.env.MIX_CONTENT_DIRECTION === "rtl") {
-    let command = `node ${path.resolve('node_modules/rtlcss/bin/rtlcss.js')} -d -e ".css" ./resources/dist/css/ ./resources/dist/css/`;
+    let command = `node ${path.resolve('node_modules/rtlcss/bin/rtlcss.js')} -d -e ".css" ./${distPath}/css/ ./${distPath}/css/`;
     exec(command, function (err, stdout, stderr) {
       if (err !== null) {
         console.log(err);
       }
     });
-    // exec('./node_modules/rtlcss/bin/rtlcss.js -d -e ".css" ./resources/dist/css/ ./resources/dist/css/');
+    // exec(`./node_modules/rtlcss/bin/rtlcss.js -d -e ".css" ./${distPath}/css/ ./${distPath}/css/`);
   }
 });
-
-
-// if (mix.inProduction()) {
-//   mix.version();
-//   mix.webpackConfig({
-//     output: {
-//       resources/distPath: '/demo/vuexy-bootstrap-laravel-admin-template/demo-1/'
-//     }
-//   });
-//   mix.setResourceRoot("/demo/vuexy-bootstrap-laravel-admin-template/demo-1/");
-// }
