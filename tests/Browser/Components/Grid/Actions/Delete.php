@@ -70,12 +70,51 @@ class Delete extends Component
 $('.sticky-table-header').hide();
 {$selector}.click();
 JS
-
         );
 
-        $browser->waitForText(__('admin.delete_confirm'), 1);
-        $browser->script("$('{$this->formatSelector($browser, '@confirm')}').first().click()");
+        $this->waitForConfirmDialog($browser);
+        $this->clickConfirmButton($browser);
+        $this->waitForSucceeded($browser);
+
+        return $browser;
+    }
+
+    /**
+     * 等待确认弹窗.
+     *
+     * @param \Laravel\Dusk\Browser $browser
+     *
+     * @return \Laravel\Dusk\Browser
+     */
+    public function waitForConfirmDialog(Browser $browser)
+    {
+        return $browser->waitForText(__('admin.delete_confirm'), 1);
+    }
+
+    /**
+     * 等待成功信息.
+     *
+     * @param \Laravel\Dusk\Browser $browser
+     *
+     * @return \Laravel\Dusk\Browser
+     */
+    public function waitForSucceeded(Browser $browser)
+    {
         $browser->waitForText(__('admin.delete_succeeded'), 2);
+
+        return $browser;
+    }
+
+    /**
+     * 点击确认删除按钮.
+     *
+     * @param \Laravel\Dusk\Browser $browser
+     *
+     * @return \Laravel\Dusk\Browser
+     */
+    public function clickConfirmButton(Browser $browser)
+    {
+        $browser->script("$('{$this->formatSelector($browser, '@confirm')}').first().click()");
 
         return $browser;
     }

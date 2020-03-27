@@ -4,6 +4,7 @@ namespace Tests\Browser;
 
 use Dcat\Admin\Models\OperationLog;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Components\Grid\Actions\BatchDelete;
 use Tests\Browser\Components\Grid\BatchActions;
 use Tests\Browser\Components\Grid\Actions\Delete;
 use Tests\Browser\Components\Grid\RowSelector;
@@ -16,7 +17,7 @@ use Tests\TestCase;
  */
 class OperationLogTest extends TestCase
 {
-    public function testOperationLogIndex()
+    public function testIndex()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(test_admin_path('auth/menu'))
@@ -27,13 +28,13 @@ class OperationLogTest extends TestCase
                 ->assertSee(__('admin.refresh'))
                 ->assertSee(__('admin.filter'))
                 ->assertSee('ID')
-                ->assertSee(__('admin.user'))
-                ->assertSee(__('admin.method'))
-                ->assertSee(__('admin.uri'))
+                ->assertSee(strtoupper(__('admin.user')))
+                ->assertSee(strtoupper(__('admin.method')))
+                ->assertSee(strtoupper(__('admin.uri')))
                 ->assertSee('IP')
-                ->assertSee(__('admin.input'))
-                ->assertSee(__('admin.created_at'))
-                ->assertSee(__('admin.action'))
+                ->assertSee(strtoupper(__('admin.input')))
+                ->assertSee(strtoupper(__('admin.created_at')))
+                ->assertSee(strtoupper(__('admin.action')))
                 ->waitForText(__('admin.responsive.display'), 2)
                 ->assertSee(__('admin.responsive.display_all'));
         });
@@ -117,15 +118,13 @@ class OperationLogTest extends TestCase
                 $browser->choose(__('admin.delete'));
             });
 
-//            $browser->waitForText(__('admin.delete_confirm'), 3);
-//            $browser->script("$('.swal2-confirm').first().click()");
-//            $browser->waitForText(__('admin.delete_succeeded'), 3);
-//
-//            $this->notSeeInDatabase($table, ['path' => trim(test_admin_path('auth/menu'), '/'), 'method' => 'GET'])
-//                ->notSeeInDatabase($table, ['path' => trim(test_admin_path('auth/users'), '/'), 'method' => 'GET'])
-//                ->notSeeInDatabase($table, ['path' => trim(test_admin_path('auth/permissions'), '/'), 'method' => 'GET'])
-//                ->notSeeInDatabase($table, ['path' => trim(test_admin_path('auth/roles'), '/'), 'method' => 'GET'])
-//                ->assertEquals(0, OperationLog::count());
+            $browser->with(new BatchDelete(), function (Browser $browser) {
+                $browser->waitForConfirmDialog();
+                $browser->clickConfirmButton();
+                $browser->waitForSucceeded();
+            });
+
+            $this->assertEquals(0, OperationLog::count());
         });
     }
 }

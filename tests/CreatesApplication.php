@@ -53,10 +53,10 @@ trait CreatesApplication
         $config = $this->app['config'];
 
         $config->set('database.default', 'mysql');
-        $config->set('database.connections.mysql.host', env('MYSQL_HOST', 'localhost'));
-        $config->set('database.connections.mysql.database', 'laravel_dcat_admin_test');
-        $config->set('database.connections.mysql.username', env('MYSQL_USER', 'root'));
-        $config->set('database.connections.mysql.password', env('MYSQL_PASSWORD', ''));
+        $config->set('database.connections.mysql.host', env('DB_HOST', 'localhost'));
+        $config->set('database.connections.mysql.database', env('DB_DATABASE', 'laravel_dcat_admin_test'));
+        $config->set('database.connections.mysql.username', env('DB_USERNAME', 'root'));
+        $config->set('database.connections.mysql.password', env('DB_PASSWORD', ''));
         $config->set('app.key', 'AckfSECXIvnK5r28GVIWUAxmbBSjTsmF');
         $config->set('filesystems', require __DIR__.'/resources/config/filesystems.php');
         $config->set('admin', $adminConfig);
