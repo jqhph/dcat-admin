@@ -36,4 +36,6 @@ before_script:
   - php artisan serve &
 
 script:
+  - rm -rf ./laravel-tests/tests
+  - php artisan admin:dev:link
   - php artisan dusk
