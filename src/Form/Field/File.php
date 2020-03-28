@@ -195,7 +195,7 @@ class File extends Field implements UploadFieldInterface
 
         $this->script = <<<JS
 (function () {
-    var upload, options = {$options}, listenComplete;
+    var uploader, newPage, options = {$options};
 
     build();
 
@@ -214,26 +214,30 @@ class File extends Field implements UploadFieldInterface
             paste: '#{$this->containerId} .web-uploader'
         }, opts);
 
-        upload = Dcat.Uploader(opts);
-        upload.build();
-        upload.preview();
+        uploader = Dcat.Uploader(opts);
+        uploader.build();
+        uploader.preview();
 
         function resize() {
             setTimeout(function () {
-                if (! upload) return;
+                if (! uploader) return;
 
-                upload.refreshButton();
+                uploader.refreshButton();
                 resize();
 
-                if (! listenComplete) {
-                    listenComplete = 1;
+                if (! newPage) {
+                    newPage = 1;
                     $(document).one('pjax:complete', function () {
-                        upload = null;
+                        uploader = null;
                     });
                 }
             }, 250);
         }
         resize();
+        
+        $('[name="file-{$this->getElementName()}"]').change(function () {
+            uploader.uploader.addFiles(this.files);
+        });
     }
 })();
 JS;

@@ -557,12 +557,12 @@
                     if (!uploader) {
                         return;
                     }
-                    var ofl = uploader.option('fileNumLimit'),
+                    var fileLimit = uploader.option('fileNumLimit'),
                         num = args.num || 1;
 
-                    if (ofl == '-1') ofl = 0;
+                    if (fileLimit == '-1') fileLimit = 0;
 
-                    num = ofl >= num ? ofl - num : 0;
+                    num = fileLimit >= num ? fileLimit - num : 0;
 
                     if (num == 0) num = '-1';
 
@@ -573,12 +573,12 @@
                     if (!uploader) {
                         return;
                     }
-                    var ofl = uploader.option('fileNumLimit'),
+                    var fileLimit = uploader.option('fileNumLimit'),
                         num = args.num || 1;
 
-                    if (ofl == '-1') ofl = 0;
+                    if (fileLimit == '-1') fileLimit = 0;
 
-                    num = ofl + num;
+                    num = fileLimit + num;
 
                     uploader.option('fileNumLimit', num);
                     break;
@@ -779,7 +779,7 @@
             supportIe();
 
             // 实例化
-            uploader = WebUploader.create(opts.upload);
+            this.uploader = uploader = WebUploader.create(opts.upload);
 
             // 拖拽时不接受 js, txt 文件。
             uploader.on('dndAccept', function (items) {
@@ -1031,6 +1031,8 @@
         return this;
     }
 
-    Dcat.Uploader = Uploader;
+    Dcat.Uploader = function (options) {
+        return new Uploader(options)
+    };
 
 })(window, jQuery);

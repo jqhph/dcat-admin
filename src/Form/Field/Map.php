@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 
 class Map extends Field
@@ -16,9 +17,9 @@ class Map extends Field
     /**
      * Get assets required by this field.
      *
-     * @return array
+     * @return void
      */
-    public static function getAssets()
+    public static function collectAssets()
     {
         switch (config('admin.map_provider')) {
             case 'tencent':
@@ -34,7 +35,7 @@ class Map extends Field
                 $js = '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key='.env('GOOGLE_API_KEY');
         }
 
-        return compact('js');
+        Admin::js($js);
     }
 
     public function __construct($column, $arguments)
