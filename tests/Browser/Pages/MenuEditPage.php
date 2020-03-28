@@ -38,7 +38,7 @@ class MenuEditPage extends Page
             ->assertSeeText(__('admin.delete'))
             ->assertSeeText(__('admin.submit'))
             ->assertSeeText(__('admin.reset'))
-            ->assert(new MenuEditForm($this->id));
+            ->is(new MenuEditForm($this->id));
     }
 
     /**

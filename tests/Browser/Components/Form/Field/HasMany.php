@@ -3,8 +3,8 @@
 namespace Tests\Browser\Components\Form\Field;
 
 use Laravel\Dusk\Browser;
-use PHPUnit\Framework\Assert as PHPUnit;
 use Tests\Browser\Components\Component;
+use Tests\PHPUnit;
 
 class HasMany extends Component
 {
@@ -124,7 +124,7 @@ JS
         $browser->assertVisible($groupSelector);
         $browser->assertVisible("{$groupSelector} {$this->formatSelectorWithoutPrefix($browser, '@remove')}");
 
-        return $callback ? $browser->with($groupSelector, $callback) : $browser;
+        return $callback ? $browser->extend($groupSelector, $callback) : $browser;
     }
 
     /**
@@ -169,5 +169,25 @@ JS
     public function removeLast(Browser $browser)
     {
         return $this->remove($browser, $this->getLastFormGroupIndex($browser));
+    }
+
+    /**
+     * 获取hasMany内表单字段值.
+     *
+     * @param Browser $browser
+     * @param string $field
+     * @param string $value
+     *
+     * @return string|null
+     */
+    public function assertFormGroupInputValue(Browser $browser, $field, $value)
+    {
+        $input = $browser->script(
+                <<<JS
+return $('{$browser->resolver->format('.'.$field)}').val();
+JS
+        )[0] ?? null;
+
+        PHPUnit::assertEquals($input, $value);
     }
 }

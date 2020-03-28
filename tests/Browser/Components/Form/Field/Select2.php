@@ -32,7 +32,8 @@ class Select2 extends Component
      */
     public function assert(Browser $browser)
     {
-        $browser->assertHidden($this->selector())
+        $browser
+            ->assertVisible($this->selector())
             ->assertVisible('@container');
     }
 

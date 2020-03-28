@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Cases;
 
 use Dcat\Admin\Models\Menu;
 use Laravel\Dusk\Browser;
@@ -108,16 +108,16 @@ class MenuTest extends TestCase
                     $browser->whenElementAvailable(new MenuEditForm($id), function (Browser $browser) use ($updates) {
                         // 检测表单
                         $browser->fill($updates);
-                    }, 3)
+                    }, 2)
                         ->assertSeeText(__('admin.edit'))
                         ->click('div')
                         ->whenElementAvailable(new MultipleSelect2('select[name="roles[]"]'), function (Browser $browser) {
                             $browser->choose(1);
                         }, 2)
                         ->clickLink(__('admin.submit'));
-                }, 3)
-                ->waitForText(__('admin.update_succeeded'), 3)
-                ->waitForLocation(test_admin_path('auth/menu'), 2)
+                }, 2)
+                ->waitForText(__('admin.update_succeeded'), 2)
+                ->waitForLocation(test_admin_path('auth/menu'), 1)
                 ->waitForText('balabala', 2);
 
             // 检测是否写入数据库

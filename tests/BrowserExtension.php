@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Facebook\WebDriver\Exception\TimeoutException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Dusk\Browser;
@@ -97,6 +96,33 @@ JS
             // 判断文本是否存在，忽略大小写
             'assertSeeText' => function (?string $text) {
                 return $this->assertSeeTextIn('', $text);
+            },
+            // 判断全页面中是否存在文本
+            'assertSeeInBody' => function (?string $text) {
+                $resolver = clone $this->resolver;
+                $resolver->prefix = 'html';
+
+                $element = $resolver->findOrFail('');
+
+                PHPUnit::assertTrue(
+                    Str::contains(strtolower($element->getText()), strtolower($text)),
+                    "Did not see expected text [{$text}] within element [html]."
+                );
+
+                return $this;
+            },
+            // 等待全页面出现文本
+            'waitForTextInBody' => function ($text, $seconds = null) {
+                $text = Arr::wrap($text);
+
+                $message = $this->formatTimeOutMessage('Waited %s seconds for text', implode("', '", $text));
+
+                $resolver = clone $this->resolver;
+                $resolver->prefix = 'html';
+
+                return $this->waitUsing($seconds, 100, function () use ($resolver, $text) {
+                    return Str::contains($resolver->findOrFail('')->getText(), $text);
+                }, $message);
             },
         ];
 

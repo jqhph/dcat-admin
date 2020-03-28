@@ -6,7 +6,6 @@ use Dcat\Admin\Models\Administrator;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Laravel\Dusk\Browser;
 use Laravel\Dusk\TestCase as BaseTestCase;
 
 abstract class DuskTestCase extends BaseTestCase
@@ -62,7 +61,7 @@ abstract class DuskTestCase extends BaseTestCase
      */
     protected function newBrowser($driver)
     {
-        $browser = parent::newBrowser($driver)->resize(1566, 1080);
+        $browser = (new Browser($driver))->resize(1566, 1080);
 
         $browser->resolver->prefix = 'html';
 

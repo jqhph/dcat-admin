@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Cases;
 
 use Dcat\Admin\Models\OperationLog;
 use Laravel\Dusk\Browser;
