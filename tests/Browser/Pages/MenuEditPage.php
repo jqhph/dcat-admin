@@ -32,12 +32,12 @@ class MenuEditPage extends Page
      */
     public function assert(Browser $browser)
     {
-        $browser->assertSee(__('admin.menu'))
-            ->assertSee(__('admin.edit'))
-            ->assertSee(__('admin.list'))
-            ->assertSee(__('admin.delete'))
-            ->assertSee(__('admin.submit'))
-            ->assertSee(__('admin.reset'))
+        $browser->assertSeeText(__('admin.menu'))
+            ->assertSeeText(__('admin.edit'))
+            ->assertSeeText(__('admin.list'))
+            ->assertSeeText(__('admin.delete'))
+            ->assertSeeText(__('admin.submit'))
+            ->assertSeeText(__('admin.reset'))
             ->assert(new MenuEditForm($this->id));
     }
 

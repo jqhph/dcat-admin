@@ -23,20 +23,20 @@ class OperationLogTest extends TestCase
             $browser->visit(test_admin_path('auth/menu'))
                 ->assertPathIs(test_admin_path('auth/menu'))
                 ->visit(test_admin_path('auth/logs'))
-                ->assertSee(__('admin.operation_log'))
-                ->assertSee(__('admin.list'))
-                ->assertSee(__('admin.refresh'))
-                ->assertSee(__('admin.filter'))
-                ->assertSee('ID')
-                ->assertSee(strtoupper(__('admin.user')))
-                ->assertSee(strtoupper(__('admin.method')))
-                ->assertSee(strtoupper(__('admin.uri')))
-                ->assertSee('IP')
-                ->assertSee(strtoupper(__('admin.input')))
-                ->assertSee(strtoupper(__('admin.created_at')))
-                ->assertSee(strtoupper(__('admin.action')))
+                ->assertSeeText(__('admin.operation_log'))
+                ->assertSeeText(__('admin.list'))
+                ->assertSeeText(__('admin.refresh'))
+                ->assertSeeText(__('admin.filter'))
+                ->assertSeeText('ID')
+                ->assertSeeText((__('admin.user')))
+                ->assertSeeText((__('admin.method')))
+                ->assertSeeText((__('admin.uri')))
+                ->assertSeeText('IP')
+                ->assertSeeText((__('admin.input')))
+                ->assertSeeText((__('admin.created_at')))
+                ->assertSeeText((__('admin.action')))
                 ->waitForText(__('admin.responsive.display'), 2)
-                ->assertSee(__('admin.responsive.display_all'));
+                ->assertSeeText(__('admin.responsive.display_all'));
         });
     }
 

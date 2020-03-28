@@ -16,16 +16,16 @@ class IndexTest extends TestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(test_admin_path('/'))
-                ->assertSee('Administrator')
-                ->assertSee('Dashboard')
-                ->assertSee('Description...')
-                ->assertSee('New Users')
-                ->assertSee('New Devices')
-                ->assertSee('Tickets')
-                ->assertSee(strtoupper(__('admin.documentation')))
-                ->assertSee(strtoupper(__('admin.extensions')))
-                ->assertSee(strtoupper(__('admin.demo')))
-                ->assertSee('GITHUB');
+                ->assertSeeText('Administrator')
+                ->assertSeeText('Dashboard')
+                ->assertSeeText('Description...')
+                ->assertSeeText('New Users')
+                ->assertSeeText('New Devices')
+                ->assertSeeText('Tickets')
+                ->assertSeeText(__('admin.documentation'))
+                ->assertSeeText(__('admin.extensions'))
+                ->assertSeeText(__('admin.demo'))
+                ->assertSeeText('GITHUB');
         });
     }
 

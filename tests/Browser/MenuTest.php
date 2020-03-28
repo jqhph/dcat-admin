@@ -109,7 +109,7 @@ class MenuTest extends TestCase
                         // 检测表单
                         $browser->fill($updates);
                     }, 3)
-                        ->assertSee(__('admin.edit'))
+                        ->assertSeeText(__('admin.edit'))
                         ->click('div')
                         ->whenElementAvailable(new MultipleSelect2('select[name="roles[]"]'), function (Browser $browser) {
                             $browser->choose(1);

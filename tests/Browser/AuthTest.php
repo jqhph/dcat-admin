@@ -18,7 +18,7 @@ class AuthTest extends TestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(test_admin_path('auth/login'))
-                ->assertSee(__('admin.login'));
+                ->assertSeeText(__('admin.login'));
         });
     }
 
@@ -38,25 +38,25 @@ class AuthTest extends TestCase
 
             $browser->visit(test_admin_path('auth/login'))
                 ->assertPathIs(test_admin_path('auth/login'))
-                ->assertSee(__('admin.login'))
+                ->assertSeeText(__('admin.login'))
                 ->type('username', $credentials['username'])
                 ->type('password', $credentials['password'])
                 ->press(__('admin.login'))
                 ->waitForLocation(test_admin_path('/'), 3)
                 ->assertPathIs(test_admin_path('/'))
-                ->assertSee('Administrator')
-                ->assertSee('Dashboard')
-                ->assertSee('Description...')
-                ->assertSee('New Users')
-                ->assertSee('New Devices')
-                ->assertSee('Tickets')
-                ->assertSee(strtoupper(__('admin.documentation')))
-                ->assertSee(strtoupper(__('admin.extensions')))
-                ->assertSee(strtoupper(__('admin.demo')))
-                ->assertSee('GITHUB');
+                ->assertSeeText('Administrator')
+                ->assertSeeText('Dashboard')
+                ->assertSeeText('Description...')
+                ->assertSeeText('New Users')
+                ->assertSeeText('New Devices')
+                ->assertSeeText('Tickets')
+                ->assertSeeText((__('admin.documentation')))
+                ->assertSeeText((__('admin.extensions')))
+                ->assertSeeText((__('admin.demo')))
+                ->assertSeeText('GITHUB');
 
             $browser->within('.main-menu-content', function (Browser $browser) {
-                $browser->assertSee('Admin')
+                $browser->assertSeeText('Admin')
                     ->clickLink('Admin')
                     ->waitForText('Users', 1)
                     ->waitForText('Roles', 1)

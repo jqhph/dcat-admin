@@ -35,18 +35,18 @@ class MenuCreationForm extends Component
      */
     public function assert(Browser $browser)
     {
-        $browser->assertSee(__('admin.submit'))
-            ->assertSee(__('admin.reset'))
+        $browser->assertSeeText(__('admin.submit'))
+            ->assertSeeText(__('admin.reset'))
             ->within('@form', function (Browser $browser) {
                 $browser
-                    ->assertSee(__('admin.parent_id'))
-                    ->assertSee(__('admin.title'))
-                    ->assertSee(__('admin.icon'))
-                    ->assertSee(__('admin.uri'))
-                    ->assertSee(__('admin.roles'))
-                    ->assertSee(__('admin.permission'))
-                    ->assertSee(__('admin.selectall'))
-                    ->assertSee(__('admin.expand'))
+                    ->assertSeeText(__('admin.parent_id'))
+                    ->assertSeeText(__('admin.title'))
+                    ->assertSeeText(__('admin.icon'))
+                    ->assertSeeText(__('admin.uri'))
+                    ->assertSeeText(__('admin.roles'))
+                    ->assertSeeText(__('admin.permission'))
+                    ->assertSeeText(__('admin.selectall'))
+                    ->assertSeeText(__('admin.expand'))
                     ->hasInput('title')
                     ->hasInput('icon')
                     ->hasInput('uri')

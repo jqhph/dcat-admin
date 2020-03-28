@@ -14,6 +14,7 @@ trait BrowserExtension
     public function extendBrowser()
     {
         $functions = [
+            // 等待文本可见
             'whenTextAvailable' => function ($text, $callbackOrSeconds = null, $seconds = null) {
                 $callback = null;
 
@@ -36,7 +37,7 @@ trait BrowserExtension
                     return $results;
                 }, $message);
             },
-
+            // 等待元素可见
             'whenElementAvailable' => function ($selector, $callbackOrSeconds = null, $seconds = null) {
                 $callback = null;
                 if (is_callable($callbackOrSeconds)) {
@@ -49,38 +50,53 @@ trait BrowserExtension
                     $callback && $callback($value);
                 }, $seconds);
             },
-
+            // 判断input框是否存在
             'hasInput' => function ($field) {
                 /* @var \Facebook\WebDriver\Remote\RemoteWebElement $element */
                 $this->resolver->resolveForTyping($field);
 
                 return $this;
             },
-
-            'wait' => function ($seconds, \Closure $callback = null) {
-                try {
-                    $this->waitUsing($seconds, 200, function () {
-                    });
-                } catch (TimeoutException $e) {
-                    $callback && $callback();
-                }
-
-                return $this;
-            },
-
+            // 判断元素是否不可见
             'assertHidden' => function ($selector) {
                 $fullSelector = $this->resolver->format($selector);
 
+                $isHidden = $this->script(
+                    <<<JS
+var display = $('{$fullSelector}').css('display');                    
+                    
+return display === 'none' || $('{$fullSelector}').is(':hidden');
+JS
+                );
+
                 PHPUnit::assertTrue(
-                    $this->resolver->findOrFail($selector)->isDisplayed(),
-                    "Element [{$fullSelector}] is visible."
+                    (bool) ($isHidden[0] ?? false),
+                    "Element [{$fullSelector}] is displayed."
                 );
 
                 return $this;
             },
-            'assert' => function (Component $component) {
+            // 判断是否是给定组件
+            'is' => function (Component $component) {
                 return $this->with($component, function () {
                 });
+            },
+            // 判断文本是否存在，忽略大小写
+            'assertSeeTextIn' => function (?string $selector, ?string $text) {
+                $fullSelector = $this->resolver->format($selector);
+
+                $element = $this->resolver->findOrFail($selector);
+
+                PHPUnit::assertTrue(
+                    Str::contains(strtolower($element->getText()), strtolower($text)),
+                    "Did not see expected text [{$text}] within element [{$fullSelector}]."
+                );
+
+                return $this;
+            },
+            // 判断文本是否存在，忽略大小写
+            'assertSeeText' => function (?string $text) {
+                return $this->assertSeeTextIn('', $text);
             },
         ];
 
