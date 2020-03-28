@@ -30,7 +30,7 @@ table.data-list-view.dataTable thead th, table.data-thumb-view.dataTable thead t
 }
 
 table.dataTable:not(.table-bordered) thead tr th {
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 table.dataTable {
