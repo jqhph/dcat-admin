@@ -55,7 +55,7 @@ class Administrator extends Model implements AuthenticatableContract
             return $avatar;
         }
 
-        return 'https://secure.gravatar.com/avatar/f56f9658bf505a13514a9d20cf577e8a?size=512';
+        return admin_asset('@admin/images/default-avatar.jpg');
     }
 
     /**

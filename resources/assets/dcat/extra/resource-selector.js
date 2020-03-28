@@ -17,7 +17,7 @@
             showCloseButton: false,
             lang: {
                 close: Dcat.lang.close || '关闭',
-                exceed_max_item: Dcat.lang.exceed_max_item || '您已超出最大可选择的数量',
+                exceed_max_item: Dcat.lang.exceed_max_item || '已超出最大可选择的数量',
                 selected_options: Dcat.lang.selected_options || '已选中:num个选项',
             },
             displayerContainer: null, // 选项展示容器dom对象
@@ -122,7 +122,7 @@
                 unchecked($this);
                 delete originalItems[id];
                 // 多选项判断最大长度
-                return Dcat.warning(options.exceedMaxItemTip);
+                return Dcat.warning(options.lang.exceed_max_item);
             }
 
             renderTags(originalItems);

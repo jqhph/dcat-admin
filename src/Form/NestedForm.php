@@ -315,8 +315,10 @@ class NestedForm
     {
         $this->fields->push($field);
 
-        $this->form->builder()->fields()->push($field);
-        $field->attribute(Builder::BUILD_IGNORE, true);
+        if (method_exists($this->form, 'builder')) {
+            $this->form->builder()->fields()->push($field);
+            $field->attribute(Builder::BUILD_IGNORE, true);
+        }
 
         if ($field instanceof UploadField) {
             $field->setRelation($this->relationName);

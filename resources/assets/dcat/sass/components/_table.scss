@@ -135,6 +135,12 @@ table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead 
 table.table-bordered.dataTable.complex-headers {
   border-spacing: 0;
 
+  thead th {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1rem!important;
+  }
+
   tbody tr {
     box-shadow: none;
     border-radius: 0;
