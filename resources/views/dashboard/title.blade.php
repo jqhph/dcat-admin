@@ -1,6 +1,7 @@
 <style>
     .dashboard-title .links {
         text-align: center;
+        margin-bottom: 2.5rem;
     }
     .dashboard-title .links > a {
         padding: 0 25px;
@@ -36,7 +37,7 @@
 
             <div class="text-center mb-1">
                 <h1 class="mb-3 mt-2 white">Dcat Admin</h1>
-                <div class="links mb-3">
+                <div class="links">
                     <a href="https://github.com/jqhph/dcat-admin" target="_blank">Github</a>
                     <a href="https://jqhph.github.io/dcat-admin/docs.html" id="doc-link" target="_blank">{{ __('admin.documentation') }}</a>
                     <a href="https://jqhph.github.io/dcat-admin/docs/master/extensions.html" id="demo-link" target="_blank">{{ __('admin.extensions') }}</a>
