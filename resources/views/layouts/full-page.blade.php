@@ -19,9 +19,9 @@
 
     {!! admin_section(\AdminSection::HEAD) !!}
 
-    {!! Dcat\Admin\Admin::asset()->renderCss() !!}
+    {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
 
-    {!! Dcat\Admin\Admin::asset()->renderHeaderJs() !!}
+    {!! Dcat\Admin\Admin::asset()->headerJsToHtml() !!}
 
     @yield('head')
 </head>
@@ -45,7 +45,7 @@
 
 {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
 
-{!! Dcat\Admin\Admin::asset()->renderJs() !!}
+{!! Dcat\Admin\Admin::asset()->jsToHtml() !!}
 
 <script>Dcat.boot();</script>
 

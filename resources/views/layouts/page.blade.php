@@ -19,9 +19,9 @@
 
     {!! admin_section(\AdminSection::HEAD) !!}
 
-    {!! Dcat\Admin\Admin::asset()->renderCss() !!}
+    {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
 
-    {!! Dcat\Admin\Admin::asset()->renderHeaderJs() !!}
+    {!! Dcat\Admin\Admin::asset()->headerJsToHtml() !!}
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>

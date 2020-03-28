@@ -608,7 +608,7 @@ class Asset
     /**
      * @return string
      */
-    public function renderCss()
+    public function cssToHtml()
     {
         $this->mergeBaseCss();
 
@@ -646,7 +646,7 @@ class Asset
     /**
      * @return string
      */
-    public function renderJs()
+    public function jsToHtml()
     {
         $this->mergeBaseJs();
 
@@ -668,7 +668,7 @@ class Asset
     /**
      * @return string
      */
-    public function renderHeaderJs()
+    public function headerJsToHtml()
     {
         $html = '';
 
@@ -688,7 +688,7 @@ class Asset
     /**
      * @return string
      */
-    public function renderScript()
+    public function scriptToHtml()
     {
         $script = implode(';', array_unique($this->script));
 
@@ -708,7 +708,7 @@ HTML;
     /**
      * @return string
      */
-    public function renderStyle()
+    public function styleToHtml()
     {
         $style = implode('', array_unique($this->style));
 

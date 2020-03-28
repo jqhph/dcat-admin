@@ -8,7 +8,9 @@ class Date extends Text
         '@moment',
         '@bootstrap-datetimepicker',
     ];
-    public static $css = '@bootstrap-datetimepicker';
+    public static $css = [
+        '@bootstrap-datetimepicker',
+    ];
 
     protected $format = 'YYYY-MM-DD';
 

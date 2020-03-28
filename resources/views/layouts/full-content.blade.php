@@ -10,7 +10,7 @@
 @endsection
 
 @section('app')
-    {!! Dcat\Admin\Admin::asset()->renderStyle() !!}
+    {!! Dcat\Admin\Admin::asset()->styleToHtml() !!}
 
     <div class="content-body" id="app">
         {{-- 页面埋点--}}
@@ -22,7 +22,7 @@
         {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
     </div>
 
-    {!! Dcat\Admin\Admin::asset()->renderScript() !!}
+    {!! Dcat\Admin\Admin::asset()->scriptToHtml() !!}
     {!! Dcat\Admin\Admin::html() !!}
 @endsection
 
@@ -34,8 +34,8 @@
 
     <script>Dcat.pjaxResponded();</script>
 
-    {!! Dcat\Admin\Admin::asset()->renderCss() !!}
-    {!! Dcat\Admin\Admin::asset()->renderJs() !!}
+    {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
+    {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}
 
     @yield('app')
 @endif

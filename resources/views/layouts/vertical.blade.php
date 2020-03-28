@@ -62,7 +62,7 @@
 
     {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
 
-    {!! Dcat\Admin\Admin::asset()->renderJs() !!}
+    {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}
 
     <script>Dcat.boot();</script>
 
