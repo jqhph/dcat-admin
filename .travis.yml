@@ -6,7 +6,6 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4
 
 addons:
   chrome: stable
@@ -16,10 +15,6 @@ matrix:
 
 services:
   - mysql
-
-before_install:
-  - pecl install zip
-#  - echo "extension = libzip.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 install:
   - mysql -e 'create database if not exists laravel;'
