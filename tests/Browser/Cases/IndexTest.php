@@ -15,7 +15,7 @@ class IndexTest extends TestCase
     public function testIndex()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(test_admin_path('/'))
+            $browser->visit(admin_base_path('/'))
                 ->assertSeeText('Administrator')
                 ->assertSeeText('Dashboard')
                 ->assertSeeText('Description...')
@@ -32,29 +32,29 @@ class IndexTest extends TestCase
     public function testClickMenu()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(test_admin_path('/'))
+            $browser->visit(admin_base_path('/'))
                 ->within('.main-menu-content', function (Browser $browser) {
                     $browser
                         ->clickLink('Admin')
                         ->whenTextAvailable('Users', 2)
                         ->clickLink('Users')
-                        ->assertPathIs(test_admin_path('auth/users'))
+                        ->assertPathIs(admin_base_path('auth/users'))
                         ->clickLink('Roles')
-                        ->assertPathIs(test_admin_path('auth/roles'))
+                        ->assertPathIs(admin_base_path('auth/roles'))
                         ->clickLink('Permission')
-                        ->assertPathIs(test_admin_path('auth/permissions'))
+                        ->assertPathIs(admin_base_path('auth/permissions'))
                         ->clickLink('Menu')
-                        ->assertPathIs(test_admin_path('auth/menu'))
+                        ->assertPathIs(admin_base_path('auth/menu'))
                         ->clickLink('Operation log')
-                        ->assertPathIs(test_admin_path('auth/logs'))
+                        ->assertPathIs(admin_base_path('auth/logs'))
                         ->clickLink('Helpers')
                         ->whenTextAvailable('Extensions', 2)
                         ->clickLink('Extensions')
-                        ->assertPathIs(test_admin_path('helpers/extensions'))
+                        ->assertPathIs(admin_base_path('helpers/extensions'))
                         ->clickLink('Scaffold')
-                        ->assertPathIs(test_admin_path('helpers/scaffold'))
+                        ->assertPathIs(admin_base_path('helpers/scaffold'))
                         ->clickLink('Icons')
-                        ->assertPathIs(test_admin_path('helpers/icons'));
+                        ->assertPathIs(admin_base_path('helpers/icons'));
                 });
         });
     }

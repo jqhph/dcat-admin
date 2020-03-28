@@ -119,8 +119,6 @@ return [
 
         'controller' => Dcat\Admin\Controllers\AuthController::class,
 
-        'login_view' => 'admin::login',
-
         'guard' => 'admin',
 
         'guards' => [
@@ -200,7 +198,7 @@ return [
     'menu' => [
         'cache' => [
             // enable cache or not
-            'enable' => true,
+            'enable' => false,
             'store'  => 'file',
         ],
 
@@ -283,6 +281,11 @@ return [
         // Only logging allowed methods in the list
         'allowed_methods' => ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH'],
 
+        'secret_fields' => [
+            'password',
+            'password_confirmation',
+        ],
+
         // Routes that will not log to database.
         // All method to path like: auth/logs/*/edit
         // or specific method to path like: get:auth/logs.
@@ -303,31 +306,30 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Skin
-    |--------------------------------------------------------------------------
-    |
-    | This value is the skin of admin pages.
-    | @see https://adminlte.io/docs/2.4/layout
-    |
-    | Supported:
-    |    "skin-blue-light", "skin-black", "skin-black-light".
-    |
-    */
-    'skin' => 'skin-black',
-
-    /*
-    |--------------------------------------------------------------------------
     | Application layout
     |--------------------------------------------------------------------------
     |
     | This value is the layout of admin pages.
-    | @see https://adminlte.io/docs/2.4/layout
-    |
-    | Supported: "fixed", "layout-boxed", "layout-top-nav", "sidebar-collapse",
-    | "sidebar-mini".
-    |
     */
-    'layout' => ['sidebar-mini', 'fixed'],
+    'layout' => [
+        // vertical, horizontal
+        'mainLayout_type' => 'vertical',
+
+        'body_class' => '',
+
+        'sidebar_collapsed' => false,
+
+        'blank_page' => false,
+
+        // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
+        'navbar_color' => '',
+
+        // floating, static, sticky, hidden
+        'vertical_menu_navbar_type' => 'floating',
+
+        // static, sticky, hidden
+        'footer_type' => 'static',
+    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -1,12 +1,25 @@
 <?php
 
-if (! function_exists('test_admin_path')) {
-    function test_admin_path($path)
+if (! function_exists('test_path')) {
+    /**
+     * @param string $file
+     *
+     * @return string
+     */
+    function test_path($file = '')
     {
-        if (is_object($path)) {
-            return $path;
-        }
+        return __DIR__.($file ? '/'.trim($file, '/') : '');
+    }
+}
 
-        return admin_base_path($path);
+if (! function_exists('test_resource_path')) {
+    /**
+     * @param string $file
+     *
+     * @return string
+     */
+    function test_resource_path($file = '')
+    {
+        return test_path('resources'.($file ? '/'.trim($file, '/') : ''));
     }
 }

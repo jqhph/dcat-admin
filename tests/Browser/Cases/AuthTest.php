@@ -17,7 +17,7 @@ class AuthTest extends TestCase
     public function testLoginPage()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(test_admin_path('auth/login'))
+            $browser->visit(admin_base_path('auth/login'))
                 ->assertSeeText(__('admin.login'));
         });
     }
@@ -25,8 +25,8 @@ class AuthTest extends TestCase
     public function testVisitWithoutLogin()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(test_admin_path('/'))
-                ->assertPathIs(test_admin_path('auth/login'))
+            $browser->visit(admin_base_path('/'))
+                ->assertPathIs(admin_base_path('auth/login'))
                 ->assertGuest('admin');
         });
     }
@@ -36,14 +36,14 @@ class AuthTest extends TestCase
         $this->browse(function (Browser $browser) {
             $credentials = ['username' => 'admin', 'password' => 'admin'];
 
-            $browser->visit(test_admin_path('auth/login'))
-                ->assertPathIs(test_admin_path('auth/login'))
+            $browser->visit(admin_base_path('auth/login'))
+                ->assertPathIs(admin_base_path('auth/login'))
                 ->assertSeeText(__('admin.login'))
                 ->type('username', $credentials['username'])
                 ->type('password', $credentials['password'])
                 ->press(__('admin.login'))
-                ->waitForLocation(test_admin_path('/'), 3)
-                ->assertPathIs(test_admin_path('/'))
+                ->waitForLocation(admin_base_path('/'), 3)
+                ->assertPathIs(admin_base_path('/'))
                 ->assertSeeText('Administrator')
                 ->assertSeeText('Dashboard')
                 ->assertSeeText('Description...')
@@ -70,8 +70,8 @@ class AuthTest extends TestCase
     public function testLogout()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(test_admin_path('auth/logout'))
-                ->assertPathIs(test_admin_path('auth/login'))
+            $browser->visit(admin_base_path('auth/logout'))
+                ->assertPathIs(admin_base_path('auth/login'))
                 ->assertGuest('admin');
         });
     }

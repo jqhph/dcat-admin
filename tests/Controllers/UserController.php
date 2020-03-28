@@ -188,8 +188,8 @@ class UserController extends Controller
         $form->text('profile.last_name');
         $form->text('profile.postcode')->help('Please input your postcode');
         $form->textarea('profile.address')->rows(15);
-        $form->map('profile.latitude', 'profile.longitude', 'Position');
-        $form->color('profile.color');
+        //$form->map('profile.latitude', 'profile.longitude', 'Position');
+        $form->text('profile.color');
         $form->datetime('profile.start_at');
         $form->datetime('profile.end_at');
 

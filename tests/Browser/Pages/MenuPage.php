@@ -14,7 +14,7 @@ class MenuPage extends Page
      */
     public function url()
     {
-        return test_admin_path('auth/menu');
+        return admin_base_path('auth/menu');
     }
 
     /**

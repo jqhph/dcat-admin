@@ -5,7 +5,6 @@ namespace Tests;
 use Dcat\Admin\Models\Administrator;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -23,8 +22,6 @@ trait CreatesApplication
 
     protected function boot()
     {
-        $this->config();
-
         $this->artisan('admin:publish');
 
         Schema::defaultStringLength(191);
@@ -40,33 +37,15 @@ trait CreatesApplication
         view()->addNamespace('admin-tests', __DIR__.'/resources/views');
     }
 
-    protected function config()
-    {
-        $adminConfig = require __DIR__.'/resources/config/admin.php';
-
-        $config = $this->app['config'];
-
-        $config->set('database.default', 'mysql');
-        $config->set('database.connections.mysql.host', env('DB_HOST', 'localhost'));
-        $config->set('database.connections.mysql.database', env('DB_DATABASE', 'laravel_dcat_admin_test'));
-        $config->set('database.connections.mysql.username', env('DB_USERNAME', 'root'));
-        $config->set('database.connections.mysql.password', env('DB_PASSWORD', ''));
-        $config->set('app.key', 'AckfSECXIvnK5r28GVIWUAxmbBSjTsmF');
-        $config->set('filesystems', require __DIR__.'/resources/config/filesystems.php');
-        $config->set('admin', $adminConfig);
-        $config->set('app.debug', true);
-
-        foreach (Arr::dot(Arr::get($adminConfig, 'auth'), 'auth.') as $key => $value) {
-            $this->app['config']->set($key, $value);
-        }
-    }
-
     protected function getAppPath()
     {
         $path = __DIR__.'/../bootstrap/app.php';
 
         if (! is_file($path)) {
             $path = __DIR__.'/../../bootstrap/app.php';
+        }
+        if (! is_file($path)) {
+            $path = __DIR__.'/../../../bootstrap/app.php';
         }
 
         return $path;

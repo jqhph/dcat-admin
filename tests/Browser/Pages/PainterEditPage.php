@@ -29,7 +29,7 @@ class PainterEditPage extends PainterCreatePage
      */
     public function url()
     {
-        return test_admin_path("tests/painters/{$this->painter->getKey()}/edit");
+        return admin_base_path("tests/painters/{$this->painter->getKey()}/edit");
     }
 
     public function assert(Browser $browser)

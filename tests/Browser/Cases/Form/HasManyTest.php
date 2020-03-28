@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Cases;
+namespace Tests\Browser\Cases\Form;
 
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\PainterCreatePage;
@@ -12,9 +12,9 @@ use Tests\TestCase;
 /**
  * 一对多表单功能测试.
  *
- * @group form-has-many
+ * @group form:has-many
  */
-class FormHasManyTest extends TestCase
+class HasManyTest extends TestCase
 {
     /**
      * 测试新增页面.

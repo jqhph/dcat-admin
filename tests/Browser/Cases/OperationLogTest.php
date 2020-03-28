@@ -20,9 +20,9 @@ class OperationLogTest extends TestCase
     public function testIndex()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit(test_admin_path('auth/menu'))
-                ->assertPathIs(test_admin_path('auth/menu'))
-                ->visit(test_admin_path('auth/logs'))
+            $browser->visit(admin_base_path('auth/menu'))
+                ->assertPathIs(admin_base_path('auth/menu'))
+                ->visit(admin_base_path('auth/logs'))
                 ->assertSeeText(__('admin.operation_log'))
                 ->assertSeeText(__('admin.list'))
                 ->assertSeeText(__('admin.refresh'))
@@ -45,21 +45,21 @@ class OperationLogTest extends TestCase
         $this->browse(function (Browser $browser) {
             $table = config('admin.database.operation_log_table');
 
-            $browser->visit(test_admin_path('auth/menu'))
-                ->assertPathIs(test_admin_path('auth/menu'))
-                ->visit(test_admin_path('auth/users'))
-                ->assertPathIs(test_admin_path('auth/users'))
-                ->visit(test_admin_path('auth/permissions'))
-                ->assertPathIs(test_admin_path('auth/permissions'))
-                ->visit(test_admin_path('auth/roles'))
-                ->assertPathIs(test_admin_path('auth/roles'))
-                ->visit(test_admin_path('auth/logs'))
-                ->assertPathIs(test_admin_path('auth/logs'));
+            $browser->visit(admin_base_path('auth/menu'))
+                ->assertPathIs(admin_base_path('auth/menu'))
+                ->visit(admin_base_path('auth/users'))
+                ->assertPathIs(admin_base_path('auth/users'))
+                ->visit(admin_base_path('auth/permissions'))
+                ->assertPathIs(admin_base_path('auth/permissions'))
+                ->visit(admin_base_path('auth/roles'))
+                ->assertPathIs(admin_base_path('auth/roles'))
+                ->visit(admin_base_path('auth/logs'))
+                ->assertPathIs(admin_base_path('auth/logs'));
 
-            $this->seeInDatabase($table, ['path' => trim(test_admin_path('auth/menu'), '/'), 'method' => 'GET'])
-                ->seeInDatabase($table, ['path' => trim(test_admin_path('auth/users'), '/'), 'method' => 'GET'])
-                ->seeInDatabase($table, ['path' => trim(test_admin_path('auth/permissions'), '/'), 'method' => 'GET'])
-                ->seeInDatabase($table, ['path' => trim(test_admin_path('auth/roles'), '/'), 'method' => 'GET']);
+            $this->seeInDatabase($table, ['path' => trim(admin_base_path('auth/menu'), '/'), 'method' => 'GET'])
+                ->seeInDatabase($table, ['path' => trim(admin_base_path('auth/users'), '/'), 'method' => 'GET'])
+                ->seeInDatabase($table, ['path' => trim(admin_base_path('auth/permissions'), '/'), 'method' => 'GET'])
+                ->seeInDatabase($table, ['path' => trim(admin_base_path('auth/roles'), '/'), 'method' => 'GET']);
         });
 
         $this->assertSame(4, OperationLog::count());
@@ -72,11 +72,11 @@ class OperationLogTest extends TestCase
 
             $this->assertEquals(0, OperationLog::count());
 
-            $browser->visit(test_admin_path('auth/users'));
-            $this->seeInDatabase($table, ['path' => trim(test_admin_path('auth/users'), '/'), 'method' => 'GET']);
+            $browser->visit(admin_base_path('auth/users'));
+            $this->seeInDatabase($table, ['path' => trim(admin_base_path('auth/users'), '/'), 'method' => 'GET']);
 
-            $browser->visit(test_admin_path('auth/logs'))
-                ->assertPathIs(test_admin_path('auth/logs'))
+            $browser->visit(admin_base_path('auth/logs'))
+                ->assertPathIs(admin_base_path('auth/logs'))
                 ->pause(500);
 
             $browser->with(new Delete(), function (Browser $browser) {
@@ -92,21 +92,21 @@ class OperationLogTest extends TestCase
         $this->browse(function (Browser $browser) {
             $table = config('admin.database.operation_log_table');
 
-            $browser->visit(test_admin_path('auth/menu'))
-                ->visit(test_admin_path('auth/users'))
-                ->visit(test_admin_path('auth/permissions'))
-                ->visit(test_admin_path('auth/roles'));
+            $browser->visit(admin_base_path('auth/menu'))
+                ->visit(admin_base_path('auth/users'))
+                ->visit(admin_base_path('auth/permissions'))
+                ->visit(admin_base_path('auth/roles'));
 
             $number = 4;
 
-            $this->seeInDatabase($table, ['path' => trim(test_admin_path('auth/menu'), '/'), 'method' => 'GET'])
-                ->seeInDatabase($table, ['path' => trim(test_admin_path('auth/users'), '/'), 'method' => 'GET'])
-                ->seeInDatabase($table, ['path' => trim(test_admin_path('auth/permissions'), '/'), 'method' => 'GET'])
-                ->seeInDatabase($table, ['path' => trim(test_admin_path('auth/roles'), '/'), 'method' => 'GET'])
+            $this->seeInDatabase($table, ['path' => trim(admin_base_path('auth/menu'), '/'), 'method' => 'GET'])
+                ->seeInDatabase($table, ['path' => trim(admin_base_path('auth/users'), '/'), 'method' => 'GET'])
+                ->seeInDatabase($table, ['path' => trim(admin_base_path('auth/permissions'), '/'), 'method' => 'GET'])
+                ->seeInDatabase($table, ['path' => trim(admin_base_path('auth/roles'), '/'), 'method' => 'GET'])
                 ->assertEquals($number, OperationLog::count());
 
-            $browser->visit(test_admin_path('auth/logs'))
-                ->assertPathIs(test_admin_path('auth/logs'));
+            $browser->visit(admin_base_path('auth/logs'))
+                ->assertPathIs(admin_base_path('auth/logs'));
 
             $browser->with(new RowSelector(), function (Browser $browser) {
                 $browser->selectAll();

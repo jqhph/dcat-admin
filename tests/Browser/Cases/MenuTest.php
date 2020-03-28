@@ -66,7 +66,7 @@ class MenuTest extends TestCase
             $browser->script("$(\"input[name='title']\").val(\"{$newTitle}\")");
 
             $browser->press(__('admin.submit'))
-                ->waitForLocation(test_admin_path('auth/menu'), 2);
+                ->waitForLocation(admin_base_path('auth/menu'), 2);
 
             $this->seeInDatabase(config('admin.database.menu_table'), ['title' => $newTitle])
                 ->assertEquals(7, Menu::count());
@@ -117,7 +117,7 @@ class MenuTest extends TestCase
                         ->clickLink(__('admin.submit'));
                 }, 2)
                 ->waitForText(__('admin.update_succeeded'), 2)
-                ->waitForLocation(test_admin_path('auth/menu'), 1)
+                ->waitForLocation(admin_base_path('auth/menu'), 1)
                 ->waitForText('balabala', 2);
 
             // 检测是否写入数据库

@@ -14,7 +14,7 @@ class PainterCreatePage extends Page
      */
     public function url()
     {
-        return test_admin_path('tests/painters/create');
+        return admin_base_path('tests/painters/create');
     }
 
     /**
@@ -105,7 +105,7 @@ JS
         return $browser->with('@form', function (Browser $browser) {
             $browser->press(__('admin.submit'));
             $browser->waitForTextInBody(__('admin.save_succeeded'), 2);
-            $browser->waitForLocation(test_admin_path('tests/painters'), 1);
+            $browser->waitForLocation(admin_base_path('tests/painters'), 1);
         });
     }
 }

@@ -41,6 +41,7 @@ install:
   - php artisan migrate:rollback
   - php artisan dusk:chrome-driver
   - cp -f ./tests/routes.php ./app/Admin/
+  - cp -rf ./tests/resources/config ./config/
 
 before_script:
   - export DISPLAY=:99.0
