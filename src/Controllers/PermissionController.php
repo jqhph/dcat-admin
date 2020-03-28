@@ -41,13 +41,7 @@ class PermissionController extends AdminController
         return $content
             ->title($this->title())
             ->description(trans('admin.list'))
-            ->body(function (Row $row) {
-                if (request('_layout')) {
-                    $row->column(12, $this->grid());
-                } else {
-                    $row->column(12, $this->treeView());
-                }
-            });
+            ->body($this->treeView());
     }
 
     protected function simpleGrid()
@@ -76,12 +70,6 @@ class PermissionController extends AdminController
         $tree = new Tree(new $model());
 
         $tree->disableCreateButton();
-
-        $tree->tools(function (Tree\Tools $tools) {
-            $label = trans('admin.table');
-            $url = url(request()->getPathInfo()).'?_layout=1';
-            $tools->add("<a class='btn btn-sm btn-white ' href='{$url}'>$label</a>");
-        });
 
         $tree->branch(function ($branch) {
             $payload = "<div class='pull-left' style='min-width:310px'><b>{$branch['name']}</b>&nbsp;&nbsp;[<span class='text-blue'>{$branch['slug']}</span>]";
@@ -127,76 +115,6 @@ class PermissionController extends AdminController
         });
 
         return $tree;
-    }
-
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
-    protected function grid()
-    {
-        $grid = new Grid(new Permission());
-
-        $grid->id('ID')->sortable();
-        $grid->name->tree();
-        $grid->order->orderable();
-        $grid->slug->label('primary');
-
-        $grid->http_path->display(function ($path) {
-            if (! $path) {
-                return;
-            }
-
-            $method = $this->http_method ?: ['ANY'];
-            $method = collect($method)->map(function ($name) {
-                return strtoupper($name);
-            })->map(function ($name) {
-                return "<span class='label bg-primary'>{$name}</span>";
-            })->implode('&nbsp;').'&nbsp;';
-
-            return collect($path)->filter()->map(function ($path) use ($method) {
-                if (Str::contains($path, ':')) {
-                    [$method, $path] = explode(':', $path);
-                    $method = collect(explode(',', $method))->map(function ($name) {
-                        return strtoupper($name);
-                    })->map(function ($name) {
-                        return "<span class='label bg-primary'>{$name}</span>";
-                    })->implode('&nbsp;').'&nbsp;';
-                }
-
-                if (! empty(config('admin.route.prefix'))) {
-                    $path = trim(admin_base_path($path), '/');
-                }
-
-                return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
-            })->implode('');
-        });
-
-        $grid->created_at;
-        $grid->updated_at->sortable();
-
-        $grid->disableEditButton();
-        $grid->showQuickEditButton();
-        $grid->enableDialogCreate();
-
-        $grid->tools(function (Grid\Tools $tools) {
-            $tools->batch(function (Grid\Tools\BatchActions $actions) {
-                $actions->disableDelete();
-            });
-
-            $label = trans('admin.default');
-            $url = url(request()->getPathInfo());
-            $tools->append("<a class='btn btn-white ' href='{$url}'>$label</a>");
-        });
-
-        $grid->filter(function (Grid\Filter $filter) {
-            $filter->like('slug');
-            $filter->like('name');
-            $filter->like('http_path');
-        });
-
-        return $grid;
     }
 
     /**
