@@ -38,8 +38,8 @@
 
     <nav class="main">
         <a href="../../index.html" class="brand nav-block" >
-
-            <span>Dcat Admin</span>
+            <img width="30px" src="../../assets/img/logo.png" />
+            &nbsp;<span>Dcat Admin</span>
         </a>
 
         <ul class="main-nav">
@@ -145,11 +145,14 @@
 <li>
 <h2>入门</h2>
 <ul>
+<li><a href="../../docs/master/introduction.html">简介</a></li>
 <li><a href="../../docs/master/installation.html">安装</a></li>
 <li><a href="../../docs/master/notice.html">开发前必读</a></li>
 <li><a href="../../docs/master/quick-start.html">快速开始</a></li>
 <li><a href="../../docs/master/content-layout.html">页面内容和布局</a></li>
-<li><a href="../../docs/master/new.html">与Laravel Admin的异同</a></li>
+<li><a href="../../docs/master/theme.html">主题与颜色</a></li>
+<li><a href="../../docs/master/js.html">JS组件</a></li>
+<li><a href="../../docs/master/css.html">Css Class</a></li>
 </ul>
 </li>
 <li>
@@ -168,6 +171,7 @@
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
 <li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
+<li><a href="../../docs/master/model-grid-quick-create.html">快捷创建</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
 </ul>
@@ -238,7 +242,6 @@
 <li><a href="../../docs/master/widgets-box.html">卡片</a></li>
 <li><a href="../../docs/master/widgets-accordion.html">折叠卡</a></li>
 <li><a href="../../docs/master/widgets-table.html">表格</a></li>
-<li><a href="../../docs/master/widgets-js.html">JS组件</a></li>
 </ul>
 </li>
 <li>
@@ -285,11 +288,14 @@
 <li>
 <h2>入门</h2>
 <ul>
+<li><a href="../../docs/master/introduction.html">简介</a></li>
 <li><a href="../../docs/master/installation.html">安装</a></li>
 <li><a href="../../docs/master/notice.html">开发前必读</a></li>
 <li><a href="../../docs/master/quick-start.html">快速开始</a></li>
 <li><a href="../../docs/master/content-layout.html">页面内容和布局</a></li>
-<li><a href="../../docs/master/new.html">与Laravel Admin的异同</a></li>
+<li><a href="../../docs/master/theme.html">主题与颜色</a></li>
+<li><a href="../../docs/master/js.html">JS组件</a></li>
+<li><a href="../../docs/master/css.html">Css Class</a></li>
 </ul>
 </li>
 <li>
@@ -308,6 +314,7 @@
 <li><a href="../../docs/master/model-grid-quick-search.html">快捷搜索</a></li>
 <li><a href="../../docs/master/model-grid-selector.html">筛选器</a></li>
 <li><a href="../../docs/master/model-grid-export.html">数据导出</a></li>
+<li><a href="../../docs/master/model-grid-quick-create.html">快捷创建</a></li>
 <li><a href="../../docs/master/model-grid-events.html">事件</a></li>
 <li><a href="../../docs/master/model-grid-trans.html">字段翻译</a></li>
 </ul>
@@ -378,7 +385,6 @@
 <li><a href="../../docs/master/widgets-box.html">卡片</a></li>
 <li><a href="../../docs/master/widgets-accordion.html">折叠卡</a></li>
 <li><a href="../../docs/master/widgets-table.html">表格</a></li>
-<li><a href="../../docs/master/widgets-js.html">JS组件</a></li>
 </ul>
 </li>
 <li>
@@ -419,10 +425,9 @@
 <h3>开发环境请打开debug模式</h3>
 <p><code  >Dcat Admin</code>提供一些开发工具（如代码生成器）需要在 <code  >debug</code> 模式下才能使用。
 建议开发者在开发环境打开<code  >debug</code>模式，把<code  >.env</code>配置文件中的参数<code  >APP_DEBUG</code>值设置为<code  >true</code>即可。</p>
-<h3>PJAX按需加载</h3>
+<h3>按需引入JS脚本</h3>
 <p><code  >Dcat Admin</code> 使用 <code  >jquery-pjax</code> 构建无刷新页面（单页应用），并且支持<b>按需加载</b> <code  >js</code> 脚本，每个页面只需加载当前页面所需要使用到的 <code  >js</code> 脚本。
 代码层面无需任何修改，只需把 <code  >JS</code> 代码放在  <code  >LA.ready(function () { ... })</code> 内执行即可（底层已经做好了这一步）。</p>
-<h3>按需引入JS脚本</h3>
 <p><code  >Dcat Admin</code>支持在任意的页面方法（模板文件除外）中引入<code  >JS</code>脚本</p>
 <pre><code   class="language-php">&lt;?php
 
@@ -466,9 +471,9 @@ JS
 }</code></pre>
 <h3>在模板文件中添加JS代码</h3>
 <pre><code   class="language-html">&lt;script&gt;
-// 用 LA.ready() 代替 $()
+// 用 Dcat.ready() 代替 $()
 // 此方法会在所有 js 脚本加载完成后执行
-LA.ready(function () {
+Dcat.ready(function () {
     // 写入你的 js 代码
     console.log(&#039;所有 js 脚本加载完成了。&#039;);
 });
