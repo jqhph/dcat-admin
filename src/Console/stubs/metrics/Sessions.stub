@@ -37,10 +37,6 @@ class Sessions extends BarChartCard
         $dark35 = $color->dark35();
 
         $this->title('Avg Sessions');
-        // 设置卡片高度，可以不设置
-        $this->height(280);
-        // 设置图表高度
-        $this->chartHeight(200);
         // 设置下拉选项
         $this->dropdown($this->dropdownItems);
         // 设置图表颜色
@@ -109,7 +105,7 @@ class Sessions extends BarChartCard
             $this->dropdownItems[request()->option] ?? 'last 7 days'
         );
 
-        $minHeight = '200px';
+        $minHeight = '188px';
 
         return $this->content(
             <<<HTML

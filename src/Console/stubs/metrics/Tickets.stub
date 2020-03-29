@@ -15,8 +15,8 @@ class Tickets extends RadialBarChartCard
         parent::init();
 
         $this->title('Tickets');
-        $this->height(380);
-        $this->chartHeight(270);
+        $this->height(400);
+        $this->chartHeight(275);
         $this->chartLabels('Completed Tickets');
         $this->dropdown([
             '7' => 'Last 7 Days',

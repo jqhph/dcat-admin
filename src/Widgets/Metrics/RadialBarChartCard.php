@@ -42,13 +42,6 @@ class RadialBarChartCard extends Card
     protected $contentWidth = [2, 10];
 
     /**
-     * 图表下间距.
-     *
-     * @var int
-     */
-    protected $chartMarginBottom = -10;
-
-    /**
      * 图表位置是否靠右.
      *
      * @var bool
@@ -63,8 +56,6 @@ class RadialBarChartCard extends Card
         parent::init();
 
         $this->useChart();
-
-        $this->chart->style("margin-bottom: {$this->chartMarginBottom}px;");
     }
 
     /**
@@ -83,10 +74,10 @@ class RadialBarChartCard extends Card
             ],
             'plotOptions' => [
                 'radialBar' => [
-                    'size' => 150,
-                    'startAngle' => -150,
-                    'endAngle' => 150,
-                    'offsetY' => 20,
+                    'size' => 200,
+                    'startAngle' => -180,
+                    'endAngle' => 175,
+                    'offsetY' => 0,
                     'hollow' => [
                         'size' => '65%',
                     ],

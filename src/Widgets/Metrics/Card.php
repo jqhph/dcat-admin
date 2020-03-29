@@ -53,6 +53,20 @@ class Card extends Widget
     protected $chartHeight = 70;
 
     /**
+     * 图表上间距.
+     *
+     * @var int
+     */
+    protected $chartMarginTop;
+
+    /**
+     * 图表下间距.
+     *
+     * @var int
+     */
+    protected $chartMarginBottom;
+
+    /**
      * 图表配置.
      *
      * @var array
@@ -256,6 +270,38 @@ class Card extends Widget
     }
 
     /**
+     * 设置图表上间距.
+     *
+     * @param int $number
+     *
+     * @return $this
+     */
+    public function chartMarginTop(int $number)
+    {
+        $this->chartMarginBottom = $number;
+
+        $this->useChart();
+
+        return $this;
+    }
+
+    /**
+     * 设置图表下间距.
+     *
+     * @param int $number
+     *
+     * @return $this
+     */
+    public function chartMarginBottom(int $number)
+    {
+        $this->chartMarginBottom = $number;
+
+        $this->useChart();
+
+        return $this;
+    }
+
+    /**
      * 设置图表label.
      *
      * @param string|array $label
@@ -319,6 +365,8 @@ class Card extends Widget
             return;
         }
 
+        $this->setUpChartMargin();
+
         // 设置图表高度
         $this->chartOptions['chart']['height'] = $this->chartHeight;
 
@@ -332,6 +380,22 @@ class Card extends Widget
 
         if ($callback = $this->chartCallback) {
             $callback($chart);
+        }
+    }
+
+    /**
+     * 设置图表间距.
+     *
+     * @return void
+     */
+    protected function setUpChartMargin()
+    {
+        if ($this->chartMarginTop !== null) {
+            $this->chart->style("margin-top: {$this->chartMarginTop}px;");
+        }
+
+        if ($this->chartMarginBottom !== null) {
+            $this->chart->style("margin-bottom: {$this->chartMarginBottom}px;");
         }
     }
 

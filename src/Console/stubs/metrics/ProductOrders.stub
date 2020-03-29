@@ -15,7 +15,6 @@ class ProductOrders extends RoundChartCard
         parent::init();
 
         $this->title('Product Orders');
-        $this->height(180);
         $this->chartLabels(['Finished', 'Pending', 'Rejected']);
         $this->dropdown([
             '7' => 'Last 7 Days',
