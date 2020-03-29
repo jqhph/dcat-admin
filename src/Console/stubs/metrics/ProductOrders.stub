@@ -2,10 +2,10 @@
 
 namespace DummyNamespace;
 
-use Dcat\Admin\Widgets\Metrics\RoundChartCard;
+use Dcat\Admin\Widgets\Metrics\Round;
 use Illuminate\Http\Request;
 
-class ProductOrders extends RoundChartCard
+class ProductOrders extends Round
 {
     /**
      * 初始化卡片内容

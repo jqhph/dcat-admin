@@ -2,10 +2,10 @@
 
 namespace DummyNamespace;
 
-use Dcat\Admin\Widgets\Metrics\RadialBarChartCard;
+use Dcat\Admin\Widgets\Metrics\RadialBar;
 use Illuminate\Http\Request;
 
-class Tickets extends RadialBarChartCard
+class Tickets extends RadialBar
 {
     /**
      * 初始化卡片内容

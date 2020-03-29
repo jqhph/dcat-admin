@@ -3,9 +3,9 @@
 namespace DummyNamespace;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Metrics\DonutChartCard;
+use Dcat\Admin\Widgets\Metrics\Donut;
 
-class NewDevices extends DonutChartCard
+class NewDevices extends Donut
 {
     protected $labels = ['Desktop', 'Mobile'];
 

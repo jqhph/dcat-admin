@@ -4,7 +4,13 @@ namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
 
-class BarChartCard extends RadialBarChartCard
+/**
+ * 柱状图卡片.
+ *
+ * Class Bar
+ * @package Dcat\Admin\Widgets\Metrics
+ */
+class Bar extends RadialBar
 {
     /**
      * 内容宽度.

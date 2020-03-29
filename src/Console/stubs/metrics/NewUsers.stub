@@ -2,10 +2,10 @@
 
 namespace DummyNamespace;
 
-use Dcat\Admin\Widgets\Metrics\LineChartCard;
+use Dcat\Admin\Widgets\Metrics\Line;
 use Illuminate\Http\Request;
 
-class NewUsers extends LineChartCard
+class NewUsers extends Line
 {
     /**
      * @var string

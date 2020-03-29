@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
 
-class DonutChartCard extends Card
+class Donut extends Card
 {
     /**
      * 图表高度.

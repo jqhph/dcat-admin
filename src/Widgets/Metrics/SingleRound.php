@@ -4,7 +4,13 @@ namespace Dcat\Admin\Widgets\Metrics;
 
 use Dcat\Admin\Admin;
 
-class SingleRoundChartCard extends RoundChartCard
+/**
+ * 单环形图卡片.
+ *
+ * Class SingleRound
+ * @package Dcat\Admin\Widgets\Metrics
+ */
+class SingleRound extends Round
 {
     /**
      * 图表下间距.
@@ -44,8 +50,8 @@ class SingleRoundChartCard extends RoundChartCard
             'plotOptions' => [
                 'radialBar' => [
                     'size' => 70,
-                    'startAngle' => -150,
-                    'endAngle' => 150,
+                    'startAngle' => -180,
+                    'endAngle' => 179,
                     'hollow' => [
                         'size' => '74%',
                     ],

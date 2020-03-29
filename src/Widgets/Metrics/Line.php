@@ -2,7 +2,13 @@
 
 namespace Dcat\Admin\Widgets\Metrics;
 
-class LineChartCard extends Card
+/**
+ * 折/曲线图卡片.
+ *
+ * Class Line
+ * @package Dcat\Admin\Widgets\Metrics
+ */
+class Line extends Card
 {
     /**
      * 图表默认高度.

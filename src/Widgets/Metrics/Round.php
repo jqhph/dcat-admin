@@ -5,7 +5,13 @@ namespace Dcat\Admin\Widgets\Metrics;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\JavaScript;
 
-class RoundChartCard extends RadialBarChartCard
+/**
+ * 环形图卡片.
+ *
+ * Class Round
+ * @package Dcat\Admin\Widgets\Metrics
+ */
+class Round extends RadialBar
 {
     /**
      * @var array

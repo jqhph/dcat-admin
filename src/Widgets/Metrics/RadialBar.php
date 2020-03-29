@@ -6,7 +6,13 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
 
-class RadialBarChartCard extends Card
+/**
+ * 圆形图卡片.
+ *
+ * Class RadialBar
+ * @package Dcat\Admin\Widgets\Metrics
+ */
+class RadialBar extends Card
 {
     /**
      * @var array

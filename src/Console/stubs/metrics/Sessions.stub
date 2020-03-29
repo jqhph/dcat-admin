@@ -3,10 +3,10 @@
 namespace DummyNamespace;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Metrics\BarChartCard;
+use Dcat\Admin\Widgets\Metrics\Bar;
 use Illuminate\Http\Request;
 
-class Sessions extends BarChartCard
+class Sessions extends Bar
 {
     /**
      * @var array
