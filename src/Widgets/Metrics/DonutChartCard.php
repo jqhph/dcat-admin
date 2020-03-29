@@ -7,9 +7,18 @@ use Dcat\Admin\Admin;
 class DonutChartCard extends Card
 {
     /**
+     * 图表高度.
+     *
      * @var int
      */
     protected $chartHeight = 100;
+
+    /**
+     * 图表上间距.
+     *
+     * @var int
+     */
+    protected $chartMarginTop = 5;
 
     /**
      * 内容宽度.
