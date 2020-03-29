@@ -34,52 +34,29 @@
     </a>
 </div>
 
-## 前言
-
-我写这个项目的初衷只是为了补充和完善`Laravel Admin`，`Laravel Admin`是我使用过的最好用的后台构建工具，API简洁易用，上手简单，让开发者告别了冗杂的HTML代码，只需极少的代码就可以构建出一个完善的管理后台。
-
-但是`Laravel Admin`也有许多让我不太满意的细节（例如：比较“陈旧”的UI界面、过度依赖`Eloquent model`、无法按需加载静态资源等等），正是对这些细节的不满意让我产生了重写`Laravel Admin`的想法。而我不在原项目提交`PR`是因为改动太大，并且改动后与原有的代码并不完全兼容，所以只好再开一坑，在此也非常感谢`Lavarel Admin`的开发者们免费为大家开发维护一个这么优秀的项目。
-
-<details>
-<summary>为什么不改造成前后端分离项目？</summary>
-
-
-近几年，前后端分离方案已经发展成前端技术的主流，也是未来的发展趋势。那么我为什么不把Laravel Admin改造成前后端分离的模式呢？原因如下：
-
-+ 这个项目的设计理念是简单、高效，方便后端开发者快速搭建后台系统。而改成前后端分离无疑会增加项目复杂度，提高了使用门槛
-+ 保持`Laravel Admin`架构的前后端分离（类似`Laravel nova`）只是“技术角度”的前后端分离，从团队合作的角度而言并不能做到前后端分离，实际上不论是前端还是后端的工作都需要后端去做，所以这么做可能不但无法减轻开发者的工作量，反而可能会增加工作量
-+ 前后端分离技术固然已经是行业的主流和趋势，但是基于`jQuery`的非前后端分离项目也有自己的优势，比如门槛低、类库非常丰富等等
-+ 不是什么项目都适合采用前后端分离方案，显然对于希望控制人力成本的小公司和个人开发者而言，基于`jQuery`的非前后端分离项目显然更加的简单高效。
-
-</details>
-
-
 ## 功能
 
 - [x] 用户管理（可拆卸）
 - [x] RBAC权限管理（可拆卸），支持无限极权限节点
 - [x] 菜单管理（可拆卸）
-- [x] 扩展管理
-- [x] 按需加载静态资源，无需担心安装组件过多
-- [x] 简单清晰的数据操作接口，可随意切换数据源
-- [x] 基于`Bootstrap3`的栅格布局系统
-- [x] 数据表格构建工具，内置 20+ 种字段类型，10+ 种表格常用功能（如组合表头、数据导出、快捷搜索、快捷创建、批量操作等）
+- [x] 使用PJAX构建无刷新页面，并且支持按需加载静态资源
+- [x] 松耦合的页面构建与数据操作设计，可轻松切换数据源
+- [x] 插件功能
+- [x] 可视化代码生成器，可根据数据表一键生成增删改查页面
+- [x] 数据表格构建工具，内置丰富的表格常用功能（如组合表头、数据导出、搜索、快捷创建、批量操作等）
 - [x] 树状表格功能构建工具，支持分页和点击加载
-- [x] 数据表格搜索工具，内置 20+ 种过滤器，近 10 种表单类型
 - [x] 数据表单构建工具，内置 50+ 种表单类型，支持异步提交
 - [x] 分步表单构建工具
 - [x] 弹窗表单构建工具
 - [x] 数据详情页构建工具
 - [x] 无限层级树状页面构建工具，支持用拖拽的方式实现数据的层级、排序等操作
-- [x] 可视化代码生成器，支持生成增删改查代码、语言包、数据表等，可根据数据表生成增删改查页面
 - [x] 内置 40+ 种常用页面组件（如图表、下拉菜单、Tab卡片、提示工具、提示卡片等）
 - [x] Section功能（类似`Wordpress`的过滤器Filter）
 - [x] 异步文件上传表单，支持分块上传
-- [x] ide-helper文件生成工具
 
 ## 环境
  - PHP >= 7.1.0
- - Laravel >= 5.5.0
+ - Laravel 5.5.0 ~ 7.*
  - Fileinfo PHP Extension
 
 ## 安装
@@ -133,8 +110,10 @@ php artisan admin:install
 
 + [Laravel](https://laravel.com/)
 + [Laravel Admin](https://www.laravel-admin.org/)
-+ [AdminLTE](https://almsaeedstudio.com/)
-+ [Datetimepicker](http://eonasdan.github.io/bootstrap-datetimepicker/)
++ [vuexy](https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/landing/)(此项目为商业收费项目，已购买正式版取得授权)
++ [bootstrap4](https://getbootstrap.com/)
++ [jQuery3](https://jquery.com/)
++ [Eonasdan Datetimepicker](https://github.com/Eonasdan/bootstrap-datetimepicker/)
 + [font-awesome](http://fontawesome.io)
 + [jquery-form](https://github.com/jquery-form/form)
 + [moment](http://momentjs.com/)
@@ -144,8 +123,6 @@ php artisan admin:install
 + [Nestable](http://dbushell.github.io/Nestable/)
 + [toastr](http://codeseven.github.io/toastr/)
 + [editor-md](https://github.com/pandao/editor.md)
-+ [X-editable](http://github.com/vitalets/x-editable)
-+ [bootstrap-number-input](https://github.com/wpic/bootstrap-number-input)
 + [fontawesome-iconpicker](https://github.com/itsjavi/fontawesome-iconpicker)
 + [layer弹出层](http://layer.layui.com/)
 + [waves](https://github.com/fians/Waves)
