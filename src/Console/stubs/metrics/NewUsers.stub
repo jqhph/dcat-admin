@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 class NewUsers extends Line
 {
     /**
-     * @var string
-     */
-    protected $label = 'New Users';
-
-    /**
      * 初始化卡片内容
      *
      * @return void
@@ -21,7 +16,7 @@ class NewUsers extends Line
     {
         parent::init();
 
-        $this->title($this->label);
+        $this->title('New Users');
         $this->dropdown([
             '7' => 'Last 7 Days',
             '28' => 'Last 28 Days',
@@ -85,7 +80,7 @@ class NewUsers extends Line
         return $this->chart([
             'series' => [
                 [
-                    'name' => $this->label,
+                    'name' => $this->title,
                     'data' => $data,
                 ],
             ],
@@ -105,7 +100,7 @@ class NewUsers extends Line
             <<<HTML
 <div class="d-flex justify-content-between align-items-center mt-1" style="margin-bottom: 2px">
     <h2 class="ml-1 font-large-1">{$content}</h2>
-    <span class="mb-0 mr-1 text-80">{$this->label}</span>
+    <span class="mb-0 mr-1 text-80">{$this->title}</span>
 </div>
 HTML
         );
