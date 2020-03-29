@@ -9,16 +9,6 @@ use Illuminate\Http\Request;
 class Sessions extends Bar
 {
     /**
-     * @var array
-     */
-    protected $dropdownItems = [
-        '7' => 'Last 7 Days',
-        '28' => 'Last 28 Days',
-        '30' => 'Last Month',
-        '365' => 'Last Year',
-    ];
-
-    /**
      * 初始化卡片内容
      */
     public function init()
@@ -34,7 +24,12 @@ class Sessions extends Bar
         // 标题
         $this->title('Avg Sessions');
         // 设置下拉选项
-        $this->dropdown($this->dropdownItems);
+        $this->dropdown([
+            '7' => 'Last 7 Days',
+            '28' => 'Last 28 Days',
+            '30' => 'Last Month',
+            '365' => 'Last Year',
+        ]);
         // 设置图表颜色
         $this->chartColors([
             $dark35,
@@ -98,7 +93,7 @@ class Sessions extends Bar
     {
         // 根据选项显示
         $label = strtolower(
-            $this->dropdownItems[request()->option] ?? 'last 7 days'
+            $this->dropdown[request()->option] ?? 'last 7 days'
         );
 
         $minHeight = '183px';

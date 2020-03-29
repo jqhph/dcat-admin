@@ -7,6 +7,7 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\ApexCharts\Chart;
 use Dcat\Admin\Widgets\Widget;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -20,16 +21,46 @@ class Card extends Widget
     protected $view = 'admin::widgets.metrics.card';
 
     /**
+     * 图标.
+     *
+     * @var string
+     */
+    protected $icon;
+
+    /**
+     * 卡片标题
+     *
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * 卡片子标题
+     *
+     * @var string
+     */
+    protected $subTitle;
+
+    /**
+     * 卡片头部内容
+     *
+     * @var string|Renderable|\Closure
+     */
+    protected $header;
+
+    /**
+     * 卡片内容.
+     *
+     * @var string|Renderable|\Closure
+     */
+    protected $content;
+
+    /**
+     * 下拉菜单.
+     *
      * @var array
      */
-    protected $options = [
-        'icon'     => null,
-        'title'    => null,
-        'subTitle' => null,
-        'header'   => null,
-        'content'  => null,
-        'dropdown' => [],
-    ];
+    protected $dropdown = [];
 
     /**
      * 图标主题色.
@@ -43,14 +74,14 @@ class Card extends Widget
      *
      * @var int|string
      */
-    protected $height = null;
+    protected $height = 165;
 
     /**
      * 图表高度.
      *
      * @var int
      */
-    protected $chartHeight = 70;
+    protected $chartHeight;
 
     /**
      * 图表上间距.
@@ -133,7 +164,7 @@ class Card extends Widget
      */
     public function icon(?string $icon)
     {
-        $this->options['icon'] = $icon;
+        $this->icon = $icon;
 
         return $this;
     }
@@ -147,7 +178,7 @@ class Card extends Widget
      */
     public function title(?string $title)
     {
-        $this->options['title'] = $title;
+        $this->title = $title;
 
         return $this;
     }
@@ -161,7 +192,7 @@ class Card extends Widget
      */
     public function subTitle(?string $title)
     {
-        $this->options['subTitle'] = $title;
+        $this->subTitle = $title;
 
         return $this;
     }
@@ -175,7 +206,7 @@ class Card extends Widget
      */
     public function header($contents)
     {
-        $this->options['header'] = $contents;
+        $this->header = $contents;
 
         return $this;
     }
@@ -189,7 +220,7 @@ class Card extends Widget
      */
     public function content($contents)
     {
-        $this->options['content'] = $contents;
+        $this->content = $contents;
 
         return $this;
     }
@@ -217,7 +248,7 @@ class Card extends Widget
      */
     public function dropdown(array $items)
     {
-        $this->options['dropdown'] = $items;
+        $this->dropdown = $items;
 
         return $this;
     }
@@ -455,7 +486,7 @@ JS;
      */
     public function renderHeader()
     {
-        return Helper::render($this->options['header']);
+        return Helper::render($this->header);
     }
 
     /**
@@ -465,7 +496,7 @@ JS;
      */
     public function renderContent()
     {
-        return Helper::render($this->options['content']);
+        return Helper::render($this->content);
     }
 
     /**
@@ -504,11 +535,13 @@ JS;
 
         $this->script = $this->script();
 
+        $this->variables['icon'] = $this->icon;
+        $this->variables['title'] = $this->title;
+        $this->variables['subTitle'] = $this->subTitle;
         $this->variables['style'] = $this->style;
         $this->variables['header'] = $this->renderHeader();
         $this->variables['content'] = $this->renderContent();
-
-
+        $this->variables['dropdown'] = $this->dropdown;
 
         return parent::render();
     }

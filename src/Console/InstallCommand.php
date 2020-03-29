@@ -140,6 +140,7 @@ class InstallCommand extends Command
             '/Metrics/Examples/ProductOrders.php' => 'metrics/ProductOrders',
             '/Metrics/Examples/Sessions.php'      => 'metrics/Sessions',
             '/Metrics/Examples/Tickets.php'       => 'metrics/Tickets',
+            '/Metrics/Examples/TotalUsers.php'    => 'metrics/TotalUsers',
         ];
 
         $namespace = $this->namespace('Metrics\\Examples');

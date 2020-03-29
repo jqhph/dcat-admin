@@ -72,13 +72,11 @@ class Donut extends Card
     {
         parent::init();
 
-        // 卡片默认高度
-        $this->height(165);
-
         // 使用图表
         $this->useChart();
 
-        $this->chart->style('margin-top: 10px;');
+        // 默认样式
+        $this->chart->style('margin: 10px 5px 0 0;width: 150px;float:right;');
     }
 
     /**

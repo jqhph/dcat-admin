@@ -78,10 +78,11 @@ class Line extends Card
     {
         parent::init();
 
-        $this->height(165);
-
-        // 使用图表s
+        // 使用图表
         $this->useChart();
+
+        // 兼容图表显示不全问题
+        $this->chart->style('margin-right:-6px;');
     }
 
     /**
@@ -115,7 +116,7 @@ class Line extends Card
 
         return <<<HTML
 {$content}
-<div class="card-content">
+<div class="card-content" style="overflow-x:hidden;overflow-y:hidden">
     {$this->renderChart()}
 </div>
 HTML;

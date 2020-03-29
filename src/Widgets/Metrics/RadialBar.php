@@ -15,16 +15,9 @@ use Illuminate\Contracts\Support\Renderable;
 class RadialBar extends Card
 {
     /**
-     * @var array
+     * @var string|Renderable|\Closure
      */
-    protected $options = [
-        'icon'     => null,
-        'title'    => null,
-        'header'   => null,
-        'content'  => null,
-        'footer'   => null,
-        'dropdown' => [],
-    ];
+    protected $footer;
 
     /**
      * 卡片高度.
@@ -128,7 +121,7 @@ class RadialBar extends Card
      */
     public function footer($value)
     {
-        $this->options['footer'] = $value;
+        $this->footer = $value;
 
         return $this;
     }
@@ -167,7 +160,7 @@ class RadialBar extends Card
      */
     public function renderFooter()
     {
-        return Helper::render($this->options['footer']);
+        return Helper::render($this->footer);
     }
 
     /**
