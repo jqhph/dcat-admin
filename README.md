@@ -29,8 +29,8 @@
 ## 截图
 
 <div>
-    <a href="http://103.39.211.179:8080/img/users.png" target="_blank">
-        <img style="width:50%" src="http://103.39.211.179:8080/img/users.png" style="box-shadow: 0 3px 1px -2px rgba(0,0,0,.05), 0 2px 2px 0 rgba(0,0,0,.05), 0 1px 5px 1px rgba(0,0,0,.05)">
+    <a href="http://103.39.211.179:8080/img/users1.png" target="_blank">
+        <img style="width:50%" src="http://103.39.211.179:8080/img/users1.png" style="box-shadow: 0 3px 1px -2px rgba(0,0,0,.05), 0 2px 2px 0 rgba(0,0,0,.05), 0 1px 5px 1px rgba(0,0,0,.05)">
     </a>
 </div>
 
