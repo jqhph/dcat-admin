@@ -32,16 +32,29 @@ class Card extends Widget
     ];
 
     /**
+     * 图标主题色.
+     *
      * @var string
      */
     protected $style = 'primary';
 
     /**
+     * 卡片高度.
+     *
+     * @var int|string
+     */
+    protected $height = null;
+
+    /**
+     * 图表高度.
+     *
      * @var int
      */
     protected $chartHeight = 70;
 
     /**
+     * 图表配置.
+     *
      * @var array
      */
     protected $chartOptions = [];
@@ -204,11 +217,9 @@ class Card extends Widget
      */
     public function height($value)
     {
-        if (is_numeric($value)) {
-            $value .= 'px';
-        }
+        $this->height = $value;
 
-        return $this->appendHtmlAttribute('style', "min-height:{$value};");
+        return $this;
     }
 
     /**
@@ -404,17 +415,36 @@ JS;
     }
 
     /**
+     * 设置卡片高度.
+     */
+    protected function setUpCardHeight()
+    {
+        if (! $height = $this->height) {
+            return;
+        }
+
+        if (is_numeric($height)) {
+            $height .= 'px';
+        }
+
+        $this->appendHtmlAttribute('style', "min-height:{$height};");
+    }
+
+    /**
      * @return string
      */
     public function render()
     {
         $this->setUpChart();
+        $this->setUpCardHeight();
 
         $this->script = $this->script();
 
         $this->variables['style'] = $this->style;
         $this->variables['header'] = $this->renderHeader();
         $this->variables['content'] = $this->renderContent();
+
+
 
         return parent::render();
     }

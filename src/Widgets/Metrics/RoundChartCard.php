@@ -20,6 +20,15 @@ class RoundChartCard extends RadialBarChartCard
     ];
 
     /**
+     * 卡片高度.
+     *
+     * @var int
+     */
+    protected $height = 250;
+
+    /**
+     * 图表高度.
+     *
      * @var int
      */
     protected $chartHeight = 230;
@@ -32,6 +41,8 @@ class RoundChartCard extends RadialBarChartCard
     protected $contentWidth = [5, 7];
 
     /**
+     * 图表下间距.
+     *
      * @var int
      */
     protected $chartMarginBottom = -40;
@@ -57,20 +68,22 @@ class RoundChartCard extends RadialBarChartCard
             ],
             'plotOptions' => [
                 'radialBar' => [
-                    'size' => 115,
+                    'size' => 100,
                     'hollow' => [
                         'size' => '20%',
                     ],
                     'track' => [
                         'strokeWidth' => '100%',
-                        'margin' => 14,
+                        'margin' => 13,
                     ],
                     'dataLabels' => [
                         'name' => [
                             'fontSize' => '14px',
+                            'offsetY' => -2,
                         ],
                         'value' => [
                             'fontSize' => '12px',
+                            'offsetY' => 4,
                         ],
                         'total' => [
                             'show' => true,

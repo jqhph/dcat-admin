@@ -21,6 +21,15 @@ class RadialBarChartCard extends Card
     ];
 
     /**
+     * 卡片高度.
+     *
+     * @var int
+     */
+    protected $height = 250;
+
+    /**
+     * 图表高度.
+     *
      * @var int
      */
     protected $chartHeight = 150;
@@ -33,12 +42,14 @@ class RadialBarChartCard extends Card
     protected $contentWidth = [2, 10];
 
     /**
+     * 图表下间距.
+     *
      * @var int
      */
     protected $chartMarginBottom = -10;
 
     /**
-     * 图表位置靠右.
+     * 图表位置是否靠右.
      *
      * @var bool
      */

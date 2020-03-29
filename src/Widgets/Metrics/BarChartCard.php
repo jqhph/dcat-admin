@@ -14,16 +14,22 @@ class BarChartCard extends RadialBarChartCard
     protected $contentWidth = [4, 8];
 
     /**
+     * 图表高度.
+     *
      * @var int
      */
-    protected $chartHeight = 200;
+    protected $chartHeight = 180;
 
     /**
+     * 图表下间距.
+     *
      * @var int
      */
     protected $chartMarginBottom = 0;
 
     /**
+     * 图表位置是否靠右.
+     *
      * @var bool
      */
     protected $chartPullRight = true;

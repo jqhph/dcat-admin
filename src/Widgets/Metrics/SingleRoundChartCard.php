@@ -7,6 +7,8 @@ use Dcat\Admin\Admin;
 class SingleRoundChartCard extends RoundChartCard
 {
     /**
+     * 图表下间距.
+     *
      * @var int
      */
     protected $chartMarginBottom = 0;
