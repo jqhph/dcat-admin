@@ -51,21 +51,18 @@ class NewUsers extends Line
                 $this->withContent(mt_rand(1000, 5000).'k');
                 // 图表数据
                 $this->withChart(collect($generator(30))->toArray());
-                // 直线
                 break;
             case '30':
                 // 卡片内容
                 $this->withContent(mt_rand(400, 1000).'k');
                 // 图表数据
                 $this->withChart(collect($generator(30))->toArray());
-                // 直线
                 break;
             case '28':
                 // 卡片内容
                 $this->withContent(mt_rand(400, 1000).'k');
                 // 图表数据
                 $this->withChart(collect($generator(28))->toArray());
-                // 直线
                 break;
             case '7':
             default:

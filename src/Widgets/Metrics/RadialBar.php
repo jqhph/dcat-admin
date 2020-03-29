@@ -50,7 +50,7 @@ class RadialBar extends Card
     /**
      * 初始化.
      */
-    public function init()
+    protected function init()
     {
         parent::init();
 
