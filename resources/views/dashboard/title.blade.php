@@ -23,7 +23,8 @@
         background: {{ Admin::color()->alpha('primary', 0.95) }}
     }
     .dashboard-title .avatar {
-        background: transparent;
+        background: #fff;
+        border: 2px solid #fff;
     }
 </style>
 

@@ -1,8 +1,7 @@
 
 <div align="center">
 
-<img src="http://103.39.211.179:8080/img/logo.png" width="40" height="40"> 
-<span style="font-size: 2em;font-weight: 600">DCAT ADMIN</span>
+<img src="http://103.39.211.179:8080/img/logo-text.png" width="40" height="40"> 
 
 </div>
 
