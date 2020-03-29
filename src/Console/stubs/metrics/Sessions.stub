@@ -9,13 +9,6 @@ use Illuminate\Http\Request;
 class Sessions extends BarChartCard
 {
     /**
-     * 卡片内容宽度.
-     *
-     * @var array
-     */
-    protected $contentWidth = [5, 7];
-
-    /**
      * @var array
      */
     protected $dropdownItems = [
@@ -36,6 +29,9 @@ class Sessions extends BarChartCard
 
         $dark35 = $color->dark35();
 
+        // 卡片内容宽度
+        $this->contentWidth(5, 7);
+        // 标题
         $this->title('Avg Sessions');
         // 设置下拉选项
         $this->dropdown($this->dropdownItems);
@@ -105,7 +101,7 @@ class Sessions extends BarChartCard
             $this->dropdownItems[request()->option] ?? 'last 7 days'
         );
 
-        $minHeight = '188px';
+        $minHeight = '183px';
 
         return $this->content(
             <<<HTML

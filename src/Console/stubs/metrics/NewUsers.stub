@@ -39,15 +39,38 @@ class NewUsers extends LineChartCard
      */
     public function handle(Request $request)
     {
+        $generator = function ($len, $min = 10, $max = 300) {
+            for ($i = 0; $i <= $len; $i++) {
+                yield mt_rand($min, $max);
+            }
+        };
+
         switch ($request->get('option')) {
             case '365':
+                // 卡片内容
+                $this->withContent(mt_rand(1000, 5000).'k');
+                // 图表数据
+                $this->withChart(collect($generator(30))->toArray());
+                // 直线
+                break;
             case '30':
+                // 卡片内容
+                $this->withContent(mt_rand(400, 1000).'k');
+                // 图表数据
+                $this->withChart(collect($generator(30))->toArray());
+                // 直线
+                break;
             case '28':
+                // 卡片内容
+                $this->withContent(mt_rand(400, 1000).'k');
+                // 图表数据
+                $this->withChart(collect($generator(28))->toArray());
+                // 直线
+                break;
             case '7':
             default:
                 // 卡片内容
                 $this->withContent('89.2k');
-
                 // 图表数据
                 $this->withChart([28, 40, 36, 52, 38, 60, 55,]);
         }

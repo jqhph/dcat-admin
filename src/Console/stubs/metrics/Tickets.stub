@@ -16,7 +16,7 @@ class Tickets extends RadialBarChartCard
 
         $this->title('Tickets');
         $this->height(400);
-        $this->chartHeight(275);
+        $this->chartHeight(300);
         $this->chartLabels('Completed Tickets');
         $this->dropdown([
             '7' => 'Last 7 Days',
@@ -43,10 +43,8 @@ class Tickets extends RadialBarChartCard
             default:
                 // 卡片内容
                 $this->withContent(162);
-
                 // 卡片底部
                 $this->withFooter(29, 63, '1d');
-
                 // 图表数据
                 $this->withChart(83);
         }
