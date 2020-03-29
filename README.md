@@ -1,10 +1,8 @@
 
 <div align="center">
-
-<img src="http://103.39.211.179:8080/img/logo-text.png" width="40" height="40"> 
-
+    <img src="http://103.39.211.179:8080/img/logo-text.png" height="80"> 
 </div>
-
+<br>
 <p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需使用很少的代码即可快速构建出一个功能完善的漂亮的管理后台。</p>
 
 <p align="center">
