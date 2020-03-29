@@ -1,7 +1,8 @@
 
 <div align="center">
 
-<h1><img src="http://103.39.211.179:8080/img/logo.png" width="40" height="40"> DCAT ADMIN<h1>
+<img src="http://103.39.211.179:8080/img/logo.png" width="40" height="40"> 
+<span style="font-size: 2em;font-weight: 600">DCAT ADMIN</span>
 
 </div>
 
@@ -31,12 +32,9 @@
 ## 截图
 
 <div>
-    <a href="http://103.39.211.179:8080/img/dashboard.png" target="_blank">
-        <img style="width:50%" src="http://103.39.211.179:8080/img/dashboard.png">
-    </a>
     <a href="http://103.39.211.179:8080/img/users.png" target="_blank">
-            <img style="width:50%" src="http://103.39.211.179:8080/img/users.png">
-        </a>
+        <img style="width:50%" src="http://103.39.211.179:8080/img/users.png">
+    </a>
 </div>
 
 ## 前言
