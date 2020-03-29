@@ -1,7 +1,8 @@
 <?php
 
-namespace Dcat\Admin\Models;
+namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Models\Role;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;

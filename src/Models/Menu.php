@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Models;
 
+use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Dcat\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,7 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Menu extends Model
 {
-    use MenuCache,
+    use HasDateTimeFormatter,
+        MenuCache,
         ModelTree {
             allNodes as treeAllNodes;
             ModelTree::boot as treeBoot;

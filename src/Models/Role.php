@@ -2,12 +2,15 @@
 
 namespace Dcat\Admin\Models;
 
+use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
+    use HasDateTimeFormatter;
+
     const ADMINISTRATOR = 'administrator';
 
     const ADMINISTRATOR_ID = 1;

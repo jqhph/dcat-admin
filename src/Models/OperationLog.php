@@ -2,11 +2,14 @@
 
 namespace Dcat\Admin\Models;
 
+use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OperationLog extends Model
 {
+    use HasDateTimeFormatter;
+
     protected $fillable = ['user_id', 'path', 'method', 'ip', 'input'];
 
     public static $methodColors = [

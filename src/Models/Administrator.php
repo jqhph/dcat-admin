@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Models;
 
+use Dcat\Admin\Traits\HasDateTimeFormatter;
+use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +18,9 @@ use Illuminate\Support\Facades\URL;
  */
 class Administrator extends Model implements AuthenticatableContract
 {
-    use Authenticatable, HasPermissions;
+    use Authenticatable,
+        HasPermissions,
+        HasDateTimeFormatter;
 
     const DEFAULT_ID = 1;
 
