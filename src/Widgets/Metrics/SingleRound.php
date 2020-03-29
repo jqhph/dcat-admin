@@ -17,7 +17,7 @@ class SingleRound extends Round
      *
      * @var int
      */
-    protected $chartMarginBottom = 0;
+    protected $chartMarginBottom = 5;
 
     /**
      * 图表默认配置.

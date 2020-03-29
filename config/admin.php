@@ -117,7 +117,7 @@ return [
     'auth' => [
         'enable' => true,
 
-        'controller' => Dcat\Admin\Controllers\AuthController::class,
+        'controller' => App\Admin\Controllers\AuthController::class,
 
         'guard' => 'admin',
 

@@ -184,18 +184,16 @@ HTML;
 
         return <<<HTML
 <div class="card-content">
-    <div class="card-body pt-0">
-        <div class="row">
-            {$content}
-            
-            <div class="col-sm-{$this->contentWidth[1]} d-flex {$justifyClass}">
-                <div></div>
-                <div>{$this->renderChart()}</div>
-            </div>
+    <div class="row">
+        {$content}
+        
+        <div class="col-sm-{$this->contentWidth[1]} d-flex {$justifyClass}">
+            <div></div>
+            <div>{$this->renderChart()}</div>
         </div>
-        <div class="metric-footer d-flex justify-content-between">
-            {$this->renderFooter()}
-        </div>
+    </div>
+    <div class="metric-footer">
+        {$this->renderFooter()}
     </div>
 </div>
 HTML;
