@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Layout\Content;
 use Dcat\Admin\IFrameGrid;
+use Dcat\Admin\Layout\Content;
 use Illuminate\Routing\Controller;
 
 class AdminController extends Controller

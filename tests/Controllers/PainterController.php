@@ -2,11 +2,11 @@
 
 namespace Tests\Controllers;
 
-use Tests\Models\Painter;
+use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Controllers\AdminController;
+use Tests\Models\Painter;
 
 class PainterController extends AdminController
 {
@@ -26,7 +26,6 @@ class PainterController extends AdminController
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-
             });
         });
     }

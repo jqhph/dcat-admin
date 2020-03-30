@@ -8,7 +8,6 @@ use Dcat\Admin\Admin;
  * 单环形图卡片.
  *
  * Class SingleRound
- * @package Dcat\Admin\Widgets\Metrics
  */
 class SingleRound extends Round
 {

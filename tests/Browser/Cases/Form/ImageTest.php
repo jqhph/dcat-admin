@@ -6,7 +6,7 @@ use Laravel\Dusk\Browser;
 use Tests\TestCase;
 
 /**
- * 图片上传测试
+ * 图片上传测试.
  *
  * @group form:image
  */
