@@ -76,6 +76,9 @@
                 success: function (layero) {
                     iframeWin = options.window[layero.find('iframe')[0]['name']];
 
+                    // 解决页面无法滚动问题
+                    $('html').css({'overflow': 'auto'});
+
                     // 绑定勾选默认选项事件
                     bindCheckedDefaultEvent(iframeWin);
                 },
