@@ -422,6 +422,11 @@
 
 	<article>
 		<h1>数据仓库</h1>
+<p><code  >Dcat Admin</code> 构建页面不再直接依赖于<code  >Model</code>，页面的构建与数据的读写是分开的。
+换句话说，构建页面是不需要关心数据的读写的，我把对数据的读写操作抽象成清晰易懂的接口，只需实现这些简单、清晰的接口就能轻松切换数据源。</p>
+<blockquote>
+<p>{tip} 当然为了方便系统也保留了直接使用 <code  >Model</code> 的功能，毕竟大多数时候直接使用 <code  >Model</code> 也能满足我们的需求。</p>
+</blockquote>
 <p>数据仓库是对数据的<code  >CURD</code>操作抽象而成的接口，开发者通过实现<code  >Repository</code>接口即可对数据进行<code  >CURD</code>操作。
 这样做的好处是可以把数据和界面的构建完全解耦分离，数据源的改变完全不影响界面的构建，开发者只需实现不同的<code  >Repository</code>接口即可实现对多数据源的支持。</p>
 <p>数据表格<code  >Grid</code>、数据表单<code  >Form</code>、数据详情<code  >Show</code>、<code  >Tree</code> 等组件不再直接依赖于<code  >Model</code>，而是依赖于提供更简单清晰的接口的数据仓库，下面是<code  >Repository</code>的所有接口：</p>
@@ -436,30 +441,108 @@ use Illuminate\Support\Collection;
 
 interface Repository
 {
+    /**
+     * 获取主键名称.
+     *
+     * @return string
+     */
     public function getKeyName();
 
+    /**
+     * 获取创建时间字段.
+     *
+     * @return string
+     */
     public function getCreatedAtColumn();
 
+    /**
+     * 获取更新时间字段.
+     *
+     * @return string
+     */
     public function getUpdatedAtColumn();
 
+    /**
+     * 是否使用软删除.
+     *
+     * @return bool
+     */
     public function isSoftDeletes();
 
+    /**
+     * 获取Grid表格数据.
+     *
+     * @param Grid\Model $model
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|array
+     */
     public function get(Grid\Model $model);
 
+    /**
+     * 获取编辑页面数据.
+     *
+     * @param Form $form
+     *
+     * @return array
+     */
     public function edit(Form $form): array;
 
+    /**
+     * 获取详情页面数据.
+     *
+     * @param Show $show
+     *
+     * @return array
+     */
     public function detail(Show $show): array;
 
+    /**
+     * 新增记录.
+     *
+     * @param Form $form
+     *
+     * @return mixed
+     */
     public function store(Form $form);
 
+    /**
+     * 查询更新前的行数据.
+     *
+     * @param Form $form
+     *
+     * @return array
+     */
     public function getDataWhenUpdating(Form $form): array;
 
+    /**
+     * 更新数据.
+     *
+     * @param Form $form
+     *
+     * @return bool
+     */
     public function update(Form $form);
 
-    public function getDataWhenDeleting(Form $form): array;
-
+    /**
+     * 删除数据.
+     *
+     * @param Form  $form
+     * @param array $deletingData
+     *
+     * @return mixed
+     */
     public function destroy(Form $form, array $deletingData);
-}</code></pre>
+
+    /**
+     * 查询删除前的行数据.
+     *
+     * @param Form $form
+     *
+     * @return array
+     */
+    public function getDataWhenDeleting(Form $form): array;
+}
+</code></pre>
 <p>如果你的数据是多层级结构，则还需要实现以下接口</p>
 <pre><code   class="language-php">&lt;?php
 
@@ -468,31 +551,35 @@ namespace Dcat\Admin\Contracts;
 interface TreeRepository
 {
     /**
+     * 获取主键字段名称.
+     *
      * @return string
      */
     public function getPrimaryKeyColumn();
 
     /**
+     * 获取父级ID字段名称.
+     *
      * @return string
      */
     public function getParentColumn();
 
     /**
-     * Get title column.
+     * 获取标题字段名称.
      *
      * @return string
      */
     public function getTitleColumn();
 
     /**
-     * Get order column name.
+     * 获取排序字段名称.
      *
      * @return string
      */
     public function getOrderColumn();
 
     /**
-     * Save tree order from a tree like array.
+     * 保存层级数据排序.
      *
      * @param array $tree
      * @param int   $parentId
@@ -500,7 +587,7 @@ interface TreeRepository
     public function saveOrder($tree = [], $parentId = 0);
 
     /**
-     * Set query callback to model.
+     * 设置数据查询回调.
      *
      * @param \Closure|null $query
      *
@@ -509,7 +596,7 @@ interface TreeRepository
     public function withQuery($queryCallback);
 
     /**
-     * Format data to tree like array.
+     * 获取层级数据.
      *
      * @return array
      */

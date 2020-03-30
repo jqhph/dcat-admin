@@ -437,6 +437,37 @@
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci</code></pre>
 <p>对应的数据模型为文件 <code  >App\User.php</code></p>
 <p><code  >dcat-admin</code>可以通过使用以下几步来快速生成<code  >users</code>表的<code  >CURD</code>操作页面：</p>
+<h2>创建数据仓库</h2>
+<p>创建文件<code  >app/Admin/Repositories/User.php</code>并添加如下内容</p>
+<blockquote>
+<p>{tip} 如果你的数据来自<code  >MySQL</code>，则<code  >数据仓库</code>不是必须的，你也可以直接使用<code  >Model</code>。</p>
+<pre><code   class="language-php">
+&lt;?php</code></pre>
+</blockquote>
+<p>namespace App\Admin\Repositories;</p>
+<p>use Dcat\Admin\Repositories\EloquentRepository;
+use App\User as UserModel;</p>
+<p>class User extends EloquentRepository
+{
+/**</p>
+<ul>
+<li>
+<p>@var string
+*/
+protected $eloquentClass = UserModel::class;</p>
+<p>/**</p>
+</li>
+<li>设置表格查询的字段，默认查询所有字段</li>
+<li>
+</li>
+<li>@return array
+*/
+public function getGridColumns(){
+return ['id', 'name', 'email', 'created_at', 'updated_at'];
+}
+}
+<pre><code  ></code></pre></li>
+</ul>
 <h2>创建控制器</h2>
 <p>创建控制器文件<code  >app/Admin/Controllers/UserController.php</code>，并写入如下内容：</p>
 <pre><code   class="language-php">&lt;?php
@@ -508,24 +539,6 @@ class UsersController extends AdminController
             $form-&gt;display(&#039;updated_at&#039;);
         });
     }
-}</code></pre>
-<h2>创建数据仓库</h2>
-<p>创建文件<code  >app/Admin/Repositories/User.php</code>并添加如下内容：</p>
-<pre><code   class="language-php">&lt;?php
-
-namespace App\Admin\Repositories;
-
-use Dcat\Admin\Repositories\EloquentRepository;
-use App\User as UserModel;
-
-class User extends EloquentRepository
-{
-    /**
-     * Model.
-     *
-     * @var string
-     */
-    protected $eloquentClass = UserModel::class;
 }</code></pre>
 <h2>添加路由配置</h2>
 <p>在<code  >dcat-admin</code>的路由配置文件<code  >app/Admin/routes.php</code>里添加一行：</p>

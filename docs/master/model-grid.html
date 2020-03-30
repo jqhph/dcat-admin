@@ -438,6 +438,9 @@
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 </code></pre>
 <p>对应的数据模型为<code  >App\Models\Movie</code>，对应的数据仓库为<code  >App\Admin\Repositories\Movie</code>，数据仓库代码如下：</p>
+<blockquote>
+<p>{tip} 如果你的数据来自<code  >MySQL</code>，则<code  >数据仓库</code>不是必须的，你也可以直接使用<code  >Model</code>。</p>
+</blockquote>
 <pre><code   class="language-php">&lt;?php
 
 namespace App\Admin\Repositories;
@@ -448,6 +451,15 @@ use App\Models\Movie as MovieModel;
 class Movie extends EloquentRepository
 {
     protected $eloquentClass = MovieModel::class;
+
+    /**
+     * 设置表格查询的字段，默认查询所有字段
+     * 
+     * @return array
+     */
+    public function getGridColumns(){
+        return [&#039;id&#039;, &#039;title&#039;, &#039;director&#039;, &#039;rate&#039;, ...];
+    }
 }</code></pre>
 <p>下面的代码可以生成表<code  >movies</code>的数据表格：</p>
 <pre><code   class="language-php">use App\Admin\Repositories\Movie;
