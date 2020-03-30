@@ -471,7 +471,7 @@ JS
 
         // 按钮显示选中文本
         return <<<JS
-$('{$clickable}').click(function () {
+$('{$clickable}').on('click', function () {
     $(this).parents('.dropdown').find('.btn').html($(this).text());
 });
 

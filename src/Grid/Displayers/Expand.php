@@ -65,7 +65,7 @@ EOT;
     protected function setupScript()
     {
         $script = <<<'JS'
-$('.grid-expand').off('click').click(function () {
+$('.grid-expand').off('click').on('click', function () {
     
     if ($(this).data('inserted') == '0') {
     

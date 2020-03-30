@@ -64,7 +64,7 @@ class NavList extends Widget
         if ($this->click) {
             Admin::script(
                 <<<JS
-$('#{$this->id} li').click(function () {
+$('#{$this->id} li').on('click', function () {
     $('#{$this->id} li').removeClass('active');
     $(this).addClass('active');
 });

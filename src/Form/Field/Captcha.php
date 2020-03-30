@@ -32,7 +32,7 @@ class Captcha extends Text
     public function render()
     {
         $this->script = <<<'JS'
-$('.field-refresh-captcha').off('click').click(function () {
+$('.field-refresh-captcha').off('click').on('click', function () {
     $(this).attr('src', $(this).attr('data-url')+'?'+Math.random());
 });
 JS;

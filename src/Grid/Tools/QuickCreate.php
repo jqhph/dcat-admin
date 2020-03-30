@@ -272,16 +272,16 @@ class QuickCreate implements Renderable
     var ctr = $('.{$this->getElementClass()}'),
         btn = $('.quick-create-button-{$uniqueName}');
     
-    btn.click(function () {
+    btn.on('click', function () {
         ctr.toggle().click();
     });
     
-    ctr.click(function () {
+    ctr.on('click', function () {
         ctr.find('.create-form').show();
         ctr.find('.create').hide();
     });
     
-    ctr.find('.cancel').click(function () {
+    ctr.find('.cancel').on('click', function () {
         if (btn.length) {
             ctr.hide();
             return;

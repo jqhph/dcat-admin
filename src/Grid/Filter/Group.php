@@ -285,7 +285,7 @@ class Group extends AbstractFilter
     protected function injectScript()
     {
         $script = <<<JS
-$(".{$this->name} li a").click(function(){
+$(".{$this->name} li a").on('click', function(){
     $(".{$this->name}-label").text($(this).text());
     $(".{$this->name}-operation").val($(this).data('index'));
 });

@@ -31,7 +31,7 @@ HTML;
 
         Admin::script(
             <<<JS
-$('.import-extension').click(function () {
+$('.import-extension').on('click', function () {
     var id = $(this).data('id'), req;
     if (req) return;
     

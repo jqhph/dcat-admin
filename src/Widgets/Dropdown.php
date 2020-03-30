@@ -331,7 +331,7 @@ HTML
                 <<<JS
 (function () {
     var btn = $('#{$this->buttonId}'), _a = btn.parent().find('ul li a'), text = '$label';                
-    _a.click(function () {
+    _a.on('click', function () {
         btn.find('stub').html($(this).html() + ' &nbsp;');
     });
     if (text) {

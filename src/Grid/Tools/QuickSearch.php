@@ -162,7 +162,7 @@ class QuickSearch extends AbstractTool
         });
     val !== '' && $ipt.val('').focus().val(val);
     
-    $('.quick-search-clear').click(function () {
+    $('.quick-search-clear').on('click', function () {
         $(this).parent().find('.quick-search-input').val('');
     
         $(this).closest('form').submit();

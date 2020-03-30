@@ -29,7 +29,7 @@ class ExportButton implements Renderable
     protected function setUpScripts()
     {
         $script = <<<JS
-$('.{$this->grid->getExportSelectedName()}').click(function (e) {
+$('.{$this->grid->getExportSelectedName()}').on('click', function (e) {
     e.preventDefault();
     
     var rows = Dcat.grid.selected('{$this->grid->getName()}').join(',');

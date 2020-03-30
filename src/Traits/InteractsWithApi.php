@@ -248,7 +248,7 @@ JS;
 
         foreach ($this->requestSelectors as $v) {
             $script .= <<<JS
-$('{$v}').click(function () { 
+$('{$v}').on('click', function () { 
     request($(this).data()) 
 });
 JS;

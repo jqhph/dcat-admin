@@ -366,7 +366,7 @@ class Tree implements Renderable
     
     tree.nestable($nestableOptions);
 
-    $('.{$this->elementId}-save').click(function () {
+    $('.{$this->elementId}-save').on('click', function () {
         var serialize = tree.nestable('serialize'), _this = $(this);
         _this.buttonLoading();
         $.post('{$this->url}', {

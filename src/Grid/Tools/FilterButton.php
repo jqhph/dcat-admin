@@ -71,7 +71,7 @@ class FilterButton extends AbstractTool
     
     expand && setTimeout(initSlider, 10);
     
-    $('.{$this->getElementClassName()}').click(function () {
+    $('.{$this->getElementClassName()}').on('click', function () {
         if (! slider) {
             initSlider()
         }
@@ -80,14 +80,14 @@ class FilterButton extends AbstractTool
         return false
     });
     
-    $('#{$id} .close-slider').click(function () {
+    $('#{$id} .close-slider').on('click', function () {
         slider.close()
     })
 })();
 JS;
         } else {
             $script = <<<JS
-$('.{$this->getElementClassName()}').click(function(){
+$('.{$this->getElementClassName()}').on('click', function(){
     $('#{$id}').parent().collapse('toggle');
 }); 
 JS;

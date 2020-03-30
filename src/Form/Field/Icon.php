@@ -31,7 +31,7 @@ setTimeout(function () {
     
     field.iconpicker({placement:'bottomLeft', animation: false});
     
-    parent.find('.iconpicker-item').click(function (e) {
+    parent.find('.iconpicker-item').on('click', function (e) {
        showIcon($(this).find('i').attr('class'));
     });
     

@@ -150,7 +150,7 @@ JS
         }
 
         $script = <<<'JS'
-$('.dropdown-menu input').click(function(e) {
+$('.dropdown-menu input').on('click', function(e) {
     e.stopPropagation();
 });
 JS;

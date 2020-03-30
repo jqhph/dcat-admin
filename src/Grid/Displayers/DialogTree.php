@@ -185,7 +185,7 @@ EOF;
 
         Admin::script(
             <<<JS
-$('.{$this->getSelectorPrefix()}-open-tree').off('click').click(function () {
+$('.{$this->getSelectorPrefix()}-open-tree').off('click').on('click', function () {
     var tpl = '<div class="jstree-wrapper p-1" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>', 
         opts = $opts,
         url = '{$this->url}',

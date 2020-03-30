@@ -138,7 +138,7 @@ class Navbar extends Widget
         if ($this->click) {
             Admin::script(
                 <<<JS
-$('#{$this->id} li.nav-li').click(function () {
+$('#{$this->id} li.nav-li').on('click', function () {
     $('#{$this->id} li.nav-li').removeClass('active');
     $(this).addClass('active');
 });

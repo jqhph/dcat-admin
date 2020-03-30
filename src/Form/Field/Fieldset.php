@@ -16,7 +16,7 @@ class Fieldset
     public function start($title)
     {
         $script = <<<JS
-$('.{$this->name}-title').click(function () {
+$('.{$this->name}-title').on('click', function () {
     $("i", this).toggleClass("fa-angle-double-down fa-angle-double-up");
 });
 JS;
