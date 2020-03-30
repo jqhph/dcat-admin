@@ -39,7 +39,7 @@
     <nav class="main">
         <a href="../../index.html" class="brand nav-block" >
             <img width="30px" src="../../assets/img/logo.png" />
-            &nbsp;<span>Dcat Admin</span>
+            &nbsp;<span class="text-primary">&nbsp;Dcat Admin</span>
         </a>
 
         <ul class="main-nav">
@@ -490,7 +490,7 @@ $grid = Grid::make(new Movie(), function (Grid $grid) {
 <h2>基本使用方法</h2>
 <h3>添加列</h3>
 <blockquote>
-<p>通过<code  >$grid-&gt;username(&#039;用户名&#039;);</code>的方式添加列时IDE默认是没有自动补全的，这时候可以通过<code  >php artisan admin::ide-helper</code>生成IDE提示文件，具体请参考<a href="../../docs/master/helpers-ide.html">IDE自动补全</a>。</p>
+<p>{tip} 通过<code  >$grid-&gt;username(&#039;用户名&#039;);</code>的方式添加列时IDE默认是没有自动补全的，这时候可以通过<code  >php artisan admin::ide-helper</code>生成IDE提示文件，具体请参考<a href="../../docs/master/helpers-ide.html">IDE自动补全</a>。</p>
 </blockquote>
 <pre><code   class="language-php">// 直接通过字段名`username`添加列
 $grid-&gt;username(&#039;用户名&#039;);

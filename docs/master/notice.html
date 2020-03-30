@@ -39,7 +39,7 @@
     <nav class="main">
         <a href="../../index.html" class="brand nav-block" >
             <img width="30px" src="../../assets/img/logo.png" />
-            &nbsp;<span>Dcat Admin</span>
+            &nbsp;<span class="text-primary">&nbsp;Dcat Admin</span>
         </a>
 
         <ul class="main-nav">
@@ -426,26 +426,61 @@
 <p><code  >Dcat Admin</code>提供一些开发工具（如代码生成器）需要在 <code  >debug</code> 模式下才能使用。
 建议开发者在开发环境打开<code  >debug</code>模式，把<code  >.env</code>配置文件中的参数<code  >APP_DEBUG</code>值设置为<code  >true</code>即可。</p>
 <h3>按需引入JS脚本</h3>
-<p><code  >Dcat Admin</code> 使用 <code  >jquery-pjax</code> 构建无刷新页面（单页应用），并且支持<b>按需加载</b> <code  >js</code> 脚本，每个页面只需加载当前页面所需要使用到的 <code  >js</code> 脚本。
-代码层面无需任何修改，只需把 <code  >JS</code> 代码放在  <code  >LA.ready(function () { ... })</code> 内执行即可（底层已经做好了这一步）。</p>
-<p><code  >Dcat Admin</code>支持在任意的页面方法（模板文件除外）中引入<code  >JS</code>脚本</p>
+<p><code  >Dcat Admin</code> 使用 <code  >jquery-pjax</code> 构建无刷新页面（单页应用），并且支持<b>按需加载</b> <code  >JS</code> 脚本，支持在任意的页面方法（模板文件除外）中引入<code  >JS</code>脚本，每个页面只需加载当前页面所需要使用到的 <code  >js</code> 脚本。</p>
+<p>示例：</p>
+<p>定义一个卡片组件，这个组件需要引入一些前端静态资源文件</p>
 <pre><code   class="language-php">&lt;?php
 
-use Dcat\Admin\Admin;
-use Dcat\Admin\Layout\Content;
+use Illuminate\Contracts\Support\Renderable;
+use Admin;
 
-class UserController
+class Card implements Renderable
 {
-   public function index(Content $content)
-   {
-       // 按需引入JS
-       Admin::script(&#039;js/xxx.min.js&#039;);
+    public static $js = [
+        &#039;xxx/js/card.min.js&#039;,
+    ];
+    public static $css = [
+        &#039;xxx/css/card.min.css&#039;,
+    ];
 
-       return $content-&gt;header(...)-&gt;body(...);
-   }
+    public function script()
+    {
+        return &lt;&lt;&lt;JS
+        console.log(&#039;所有JS脚本都加载完了&#039;);
+        $(&#039;xxx&#039;).card();
+JS;     
+    }
+
+    public function render()
+    {
+        // 在这里可以引入你的js或css文件
+        Admin::js(static::$js);
+        Admin::css(static::$css);
+
+        // 需要在页面执行的JS代码
+        // 通过 Admin::script 设置的JS代码会自动在所有JS脚本都加载完毕后执行
+        Admin::script($this-&gt;script());
+
+        return view(&#039;...&#039;)-&gt;render();
+    }
 }</code></pre>
-<h3>在PHP代码中添加JS代码</h3>
-<p>使用 <code  >Dcat\Admin\Admin::script</code> 方法添加的代码会自动放在<code  >LA.ready</code>方法内执行。</p>
+<p>在控制器中使用这个组件</p>
+<pre><code   class="language-php">use Dcat\Admin\Layout\Content;
+use Card;
+
+class HomeController
+{
+    public function index(Content $content)
+    {
+        // 使用上面的Card组件
+        // Card组件需要用到的静态文件只会在当前请求加载
+        // 其他请求不会加载 
+        return $content-&gt;body(new Card());
+    }
+}</code></pre>
+<h3>在页面中添加JS代码</h3>
+<p>由于加入了页面按需加载<code  >JS</code>脚本的功能，所以在本项目内添加的<code  >JS</code>代码都必须使用<code  >Dcat.ready</code>方法监听<code  >JS</code>脚本加载完毕事件，在此事件内的<code  >JS</code>代码会在所有<code  >JS</code>脚本都加载完毕后才执行。</p>
+<p>使用 <code  >Dcat\Admin\Admin::script</code> 方法添加的代码会自动放在<code  >Dcat.ready</code>方法内执行。</p>
 <pre><code   class="language-php">&lt;?php
 
 use Dcat\Admin\Admin;
@@ -461,7 +496,7 @@ class UserController
     // 如果有定义局部变量的需求，最好放在匿名函数内，防止变量污染
     var name = &#039;test&#039;;
 
-    console.log(&#039;在这里写入你的js代码&#039;, name)
+    console.log(&#039;所有JS脚本都加载完毕啦~~&#039;, name)
 })()    
 JS
        );
@@ -469,15 +504,28 @@ JS
        return $content-&gt;header(...)-&gt;body(...);
    }
 }</code></pre>
-<h3>在模板文件中添加JS代码</h3>
+<p>如果是在模板文件中添加<code  >JS</code>代码，则需要把代码放在<code  >Dcat.ready</code>内执行</p>
 <pre><code   class="language-html">&lt;script&gt;
 // 用 Dcat.ready() 代替 $()
 // 此方法会在所有 js 脚本加载完成后执行
 Dcat.ready(function () {
     // 写入你的 js 代码
-    console.log(&#039;所有 js 脚本加载完成了。&#039;);
+    console.log(&#039;所有 js 脚本加载完毕啦~~&#039;);
 });
 &lt;/script&gt;</code></pre>
+<h3>Bootstrap4公共样式</h3>
+<p><code  >Dcat Admin</code>采用<code  >bootstrap4</code>的栅格系统对页面进行布局，即简单又强大。开始开发前需要对此有所了解，<a href="https://getbootstrap.net/docs/layout/grid/">点此查看文档</a>。</p>
+<p>另外<code  >bootsrap4</code>提供了非常多非常有用的<a href="https://getbootstrap.net/docs/utilities/borders/">公共样式</a>，对编写页面组件非常有帮助，能显著提高开发效率，建议编写组件前先查阅一遍文档，以下是推荐学习的样式列表：</p>
+<ul>
+<li><a href="https://getbootstrap.net/docs/utilities/display/">Display显示属性</a> 通过我们的显示实用程序，可以快速、有效地切换组件的显示值和更多，包括对一些更常见的值的支持，此样式列表对响应式布局非常有帮助。</li>
+<li><a href="https://getbootstrap.net/docs/utilities/flex/">flex弹性布局</a> 引入新的Flex弹性布局，可以实现通过一整套响应灵活的实用程序，快速管理栅格的列、导航、组件等的布局、对齐和大小。通过进一度的定义CSS，还可以实现更复杂的展示样式。</li>
+<li><a href="https://getbootstrap.net/docs/utilities/colors/">颜色(Color)</a> 通过颜色传达意义、表达不同的模块，这有一系列的定义方法，包括支持链接、悬停、选中等状态相关的的样式集。</li>
+<li><a href="https://getbootstrap.net/docs/utilities/float/">Float浮动属性</a> 使用我们的响应式float浮动通用样式，能在任何设备断点（浏览器尺寸）上切换浮动。                             </li>
+<li><a href="https://getbootstrap.net/docs/utilities/sizing/">规格(sizi)</a> 使用系统宽度和高度样式，轻松地定义任何元素的宽或高（相对于其父级）</li>
+<li><a href="https://getbootstrap.net/docs/utilities/spacing/">间隔(spacing)</a> 内置了各种的快速缩进、隔离、填充等间距处理工具，响应余量和填充实用程序类来修改元素的外观。</li>
+<li><a href="https://getbootstrap.net/docs/utilities/text/">文本处理</a> 用于控制文本的对齐、组合、字重等示例以及使用文档。</li>
+<li><a href="https://getbootstrap.net/docs/utilities/vertical-align/">垂直对齐(vertical align)</a> 轻松更改内联、内嵌块、内联表和表格单元格元素的垂直对齐方式。</li>
+</ul>
 
 		<div id="comment-container" style="margin-top: 90px"></div>
 	</article>

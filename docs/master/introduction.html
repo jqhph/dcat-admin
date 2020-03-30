@@ -39,7 +39,7 @@
     <nav class="main">
         <a href="../../index.html" class="brand nav-block" >
             <img width="30px" src="../../assets/img/logo.png" />
-            &nbsp;<span>Dcat Admin</span>
+            &nbsp;<span class="text-primary">&nbsp;Dcat Admin</span>
         </a>
 
         <ul class="main-nav">
@@ -422,7 +422,7 @@
 
 	<article>
 		<h1>Dcat Admin</h1>
-<p><code  >Dcat Admin</code> 是一个基于<a href="https://www.laravel-admin.org/">laravel-admin</a>二次开发而成的后台构建工具，只需使用很少的代码即可快速构建出一个功能完善的漂亮的管理后台。</p>
+<p><code  >Dcat Admin</code> 是一个基于<a href="https://www.laravel-admin.org/">laravel-admin</a>二次开发而成的后台构建工具，只需极少的代码即可构建出一个功能完善且颜值极高的后台系统。</p>
 <p align="center">
     <a href="https://github.com/jqhph/dcat-admin/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-7389D8.svg?style=flat"></a>
     <a href="https://travis-ci.org/jqhph/dcat-admin">
@@ -436,32 +436,34 @@
     <a><img src="https://img.shields.io/badge/php-7.1+-59a9f8.svg?style=flat"></a> 
     <a><img src="https://img.shields.io/badge/laravel-5.5+-59a9f8.svg?style=flat"></a>
 </p>
+<h2>技术栈</h2>
+<ul>
+<li><a href="https://laravel.com/">Laravel</a></li>
+<li><a href="https://getbootstrap.net/">Bootstrap4</a></li>
+<li>jQuery3</li>
+</ul>
 <h2>特性</h2>
 <ul>
 <li>用户管理（可拆卸）</li>
 <li>RBAC权限管理（可拆卸），支持无限极权限节点</li>
 <li>菜单管理（可拆卸）</li>
-<li>扩展管理</li>
-<li>按需加载静态资源，无需担心安装组件过多</li>
-<li>简单清晰的数据操作接口，可随意切换数据源</li>
-<li>基于<code  >Bootstrap3</code>的栅格布局系统</li>
-<li>数据表格构建工具，内置 20+ 种字段类型，10+ 种表格常用功能（如组合表头、数据导出、快捷搜索、快捷创建、批量操作等）</li>
+<li>使用PJAX构建无刷新页面，并且支持按需加载静态资源</li>
+<li>松耦合的页面构建与数据操作设计，可轻松切换数据源</li>
+<li>插件功能</li>
+<li>可视化代码生成器，可根据数据表一键生成增删改查页面</li>
+<li>数据表格构建工具，内置丰富的表格常用功能（如组合表头、数据导出、搜索、快捷创建、批量操作等）</li>
 <li>树状表格功能构建工具，支持分页和点击加载</li>
-<li>数据表格搜索工具，内置 20+ 种过滤器，近 10 种表单类型</li>
 <li>数据表单构建工具，内置 50+ 种表单类型，支持异步提交</li>
 <li>分步表单构建工具</li>
 <li>弹窗表单构建工具</li>
 <li>数据详情页构建工具</li>
 <li>无限层级树状页面构建工具，支持用拖拽的方式实现数据的层级、排序等操作</li>
-<li>可视化代码生成器，支持生成增删改查代码、语言包、数据表等，可根据数据表生成增删改查页面</li>
 <li>内置 40+ 种常用页面组件（如图表、下拉菜单、Tab卡片、提示工具、提示卡片等）</li>
 <li>Section功能（类似<code  >Wordpress</code>的过滤器Filter）</li>
 <li>异步文件上传表单，支持分块上传</li>
-<li>ide-helper文件生成工具</li>
 </ul>
 <h2>与Laravel Admin的异同</h2>
-<p><code  >Dcat Admin</code>是基于<code  >Laravel Admin</code>二次开发而成的后台构建工具，框架的API风格、架构与<code  >Laravel Admin</code>仍然一致，只是在功能细节上做了大量的调整。</p>
-<p>大家可把<code  >Dcat Admin</code>视为<code  >Laravel Admin 2.0</code>，下面列一下主要的改动：</p>
+<p><code  >Dcat Admin</code>是基于<code  >Laravel Admin</code>二次开发而成的后台构建工具，整体风格与<code  >Laravel Admin</code>一脉相承，只是在功能细节上做了大量的调整。</p>
 <p>调整：</p>
 <ul>
 <li>采用<a href="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/landing/">vuexy</a>(<code  >bootstrap4</code>+<code  >jQuery3</code>)构建前端页面</li>
@@ -477,19 +479,21 @@
 <p>新增：</p>
 <ul>
 <li>新增表单弹窗功能，仅需增加数行代码就可以构建一个非Iframe表单弹窗</li>
+<li>新增快速构建无菜单栏页面功能</li>
 <li>新增<code  >SelectResource</code>表单，可以在弹窗中选择表格数据</li>
-<li>新增了分步表单</li>
+<li>新增AJAX提价表单以及表单前端验证功能</li>
 <li>新增文件异步上传组件，支持分块上传、批量上传、上传进度条等</li>
 <li>新增了表格过滤器右侧滑动面板布局</li>
 <li>新增了表格字段值过滤功能</li>
+<li>新增了分步表单</li>
 <li>新增<code  >section</code>功能（与<code  >wordpress</code>的<code  >add_filter</code>功能类似）</li>
+<li>新增树形表格功能，可分页显示大批量的层级结构数据</li>
 <li>新增双表头表格功能，仅需增加数行代码即可构建出双表头表格</li>
+<li>新增了多种实用的页面组件，如图表、下拉菜单、markdown、checkbox等等</li>
+<li>新增<code  >Tree</code>表单</li>
 <li>新增通过数组添加菜单的功能，支持绑定权限和角色</li>
 <li>新增通过数组添加菜单功能</li>
 <li>新增菜单缓存功能</li>
-<li>新增了多种实用的页面组件，如图表、下拉菜单、markdown、checkbox等等</li>
-<li>新增<code  >Tree</code>表单</li>
-<li>新增表单前端验证功能</li>
 <li>...</li>
 </ul>
 
