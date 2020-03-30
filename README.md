@@ -3,7 +3,7 @@
     <img src="https://jqhph.github.io/dcat-admin/assets/img/logo-text.png" height="80"> 
 </div>
 <br>
-<p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需使用很少的代码即可快速构建出一个功能完善的漂亮的管理后台。</p>
+<p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需极少的代码即可构建出一个功能完善且颜值极高的后台系统。</p>
 
 <p align="center">
 <a href="https://jqhph.github.io/dcat-admin">文档</a> |
@@ -96,8 +96,6 @@ php artisan admin:install
 | [grid-sortable](https://github.com/jqhph/dcat-admin-grid-sortable) | 表格拖曳排序工具      | * |
 | [gank](https://github.com/jqhph/dcat-admin-gank) | 干货集中营      |* |
 
-
-## 贡献
 
 
 
