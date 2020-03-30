@@ -3,3 +3,4 @@ composer.lock
 package-lock.json
 mix-manifest.json
 tests/
+resources/pre-dist/
