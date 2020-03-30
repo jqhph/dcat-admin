@@ -1,6 +1,6 @@
 
 <div align="center">
-    <img src="http://103.39.211.179:8080/img/logo-text.png" height="80"> 
+    <img src="https://jqhph.github.io/dcat-admin/assets/img/logo-text.png" height="80"> 
 </div>
 <br>
 <p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需使用很少的代码即可快速构建出一个功能完善的漂亮的管理后台。</p>
@@ -28,11 +28,7 @@
 
 ## 截图
 
-<div>
-    <a href="http://103.39.211.179:8080/img/users1.png" target="_blank">
-        <img style="width:50%" src="http://103.39.211.179:8080/img/users1.png" style="box-shadow: 0 3px 1px -2px rgba(0,0,0,.05), 0 2px 2px 0 rgba(0,0,0,.05), 0 1px 5px 1px rgba(0,0,0,.05)">
-    </a>
-</div>
+![](https://jqhph.github.io/dcat-admin/assets/img/users1.png)
 
 ## 功能
 
