@@ -80,9 +80,9 @@ JS
 
     /**
      * 获取最后一组新增的表单索引.
-     * 
+     *
      * @param Browser $browser
-     * 
+     *
      * @return int|null
      */
     public function getLastFormGroupIndex(Browser $browser)
@@ -113,7 +113,7 @@ JS
      *
      * @param Browser $browser
      * @param \Closure $callback
-     * 
+     *
      * @return Browser
      */
     public function withFormGroup(Browser $browser, $index, ?\Closure $callback = null)

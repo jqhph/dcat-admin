@@ -8,7 +8,6 @@ use Dcat\Admin\Admin;
  * 柱状图卡片.
  *
  * Class Bar
- * @package Dcat\Admin\Widgets\Metrics
  */
 class Bar extends RadialBar
 {

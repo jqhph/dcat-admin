@@ -6,7 +6,6 @@ namespace Dcat\Admin\Widgets\Metrics;
  * 折/曲线图卡片.
  *
  * Class Line
- * @package Dcat\Admin\Widgets\Metrics
  */
 class Line extends Card
 {

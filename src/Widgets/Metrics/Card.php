@@ -28,21 +28,21 @@ class Card extends Widget
     protected $icon;
 
     /**
-     * 卡片标题
+     * 卡片标题.
      *
      * @var string
      */
     protected $title;
 
     /**
-     * 卡片子标题
+     * 卡片子标题.
      *
      * @var string
      */
     protected $subTitle;
 
     /**
-     * 卡片头部内容
+     * 卡片头部内容.
      *
      * @var string|Renderable|\Closure
      */

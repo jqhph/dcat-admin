@@ -1,8 +1,8 @@
 <?php
 
+use Dcat\Admin\Admin;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
-use Dcat\Admin\Admin;
 
 Admin::routes();
 
@@ -13,7 +13,6 @@ Route::group([
 ], function (Router $router) {
     $router->get('/', 'HomeController@index');
 });
-
 
 Route::group([
     'prefix'     => config('admin.route.prefix'),

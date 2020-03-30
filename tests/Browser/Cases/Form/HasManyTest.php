@@ -63,7 +63,7 @@ class HasManyTest extends TestCase
     }
 
     /**
-     * 测试编辑页面
+     * 测试编辑页面.
      *
      * @throws \Throwable
      */

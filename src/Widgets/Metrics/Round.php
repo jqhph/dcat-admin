@@ -9,7 +9,6 @@ use Dcat\Admin\Support\JavaScript;
  * 环形图卡片.
  *
  * Class Round
- * @package Dcat\Admin\Widgets\Metrics
  */
 class Round extends RadialBar
 {

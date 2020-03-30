@@ -10,7 +10,6 @@ use Illuminate\Contracts\Support\Renderable;
  * 圆形图卡片.
  *
  * Class RadialBar
- * @package Dcat\Admin\Widgets\Metrics
  */
 class RadialBar extends Card
 {
