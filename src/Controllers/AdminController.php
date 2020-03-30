@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\SimpleGrid;
+use Dcat\Admin\IFrameGrid;
 use Illuminate\Routing\Controller;
 
 class AdminController extends Controller
@@ -56,8 +56,8 @@ class AdminController extends Controller
      */
     public function index(Content $content)
     {
-        if (request(SimpleGrid::QUERY_NAME)) {
-            return $content->body($this->simpleGrid());
+        if (request(IFrameGrid::QUERY_NAME)) {
+            return $content->body($this->iFrameGrid());
         }
 
         return $content

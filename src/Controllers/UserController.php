@@ -8,7 +8,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Models\Administrator as AdministratorModel;
 use Dcat\Admin\Models\Repositories\Administrator;
 use Dcat\Admin\Show;
-use Dcat\Admin\SimpleGrid;
+use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Tree;
 
@@ -74,11 +74,11 @@ class UserController extends AdminController
     }
 
     /**
-     * @return SimpleGrid
+     * @return IFrameGrid
      */
-    protected function simpleGrid()
+    protected function iFrameGrid()
     {
-        $grid = new SimpleGrid(new Administrator());
+        $grid = new IFrameGrid(new Administrator());
 
         $grid->quickSearch(['id', 'name', 'username']);
 

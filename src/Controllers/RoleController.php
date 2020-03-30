@@ -8,7 +8,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Models\Repositories\Role;
 use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
-use Dcat\Admin\SimpleGrid;
+use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Tree;
 
@@ -31,8 +31,8 @@ class RoleController extends AdminController
      */
     protected function grid()
     {
-        if ($mini = request(SimpleGrid::QUERY_NAME)) {
-            $grid = new SimpleGrid(new Role());
+        if ($mini = request(IFrameGrid::QUERY_NAME)) {
+            $grid = new IFrameGrid(new Role());
         } else {
             $grid = new Grid(new Role());
         }

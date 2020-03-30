@@ -29,7 +29,7 @@ Dcat.ready(function () {
         source: '{!! $source !!}',
         maxItem: {!! (int)$maxItem !!},
         area: {!! $area !!},
-        queryName: '{{ Dcat\Admin\SimpleGrid::QUERY_NAME }}',
+        queryName: '{{ Dcat\Admin\IFrameGrid::QUERY_NAME }}',
         items: {!! $value !!},
         placeholder: '{{$placeholder ?: $label}}',
         showCloseButton: false,

@@ -4,7 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
-use Dcat\Admin\SimpleGrid;
+use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -170,7 +170,7 @@ class SelectResource extends Field
         $disabled = empty($this->attributes['disabled']) ? '' : 'disabled';
         $containerId = $this->id.$this->getFormElementId();
         $maxItem = (int) $this->maxItem;
-        $queryName = SimpleGrid::QUERY_NAME;
+        $queryName = IFrameGrid::QUERY_NAME;
 
         $this->script = <<<JS
 Dcat.ResourceSelector({

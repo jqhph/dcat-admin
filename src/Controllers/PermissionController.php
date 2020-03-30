@@ -9,7 +9,7 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Models\Repositories\Permission;
 use Dcat\Admin\Show;
-use Dcat\Admin\SimpleGrid;
+use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Tree;
 use Illuminate\Support\Str;
 
@@ -34,8 +34,8 @@ class PermissionController extends AdminController
      */
     public function index(Content $content)
     {
-        if (request(SimpleGrid::QUERY_NAME)) {
-            return $content->body($this->simpleGrid());
+        if (request(IFrameGrid::QUERY_NAME)) {
+            return $content->body($this->iFrameGrid());
         }
 
         return $content
@@ -44,9 +44,9 @@ class PermissionController extends AdminController
             ->body($this->treeView());
     }
 
-    protected function simpleGrid()
+    protected function iFrameGrid()
     {
-        $grid = new SimpleGrid(new Permission());
+        $grid = new IFrameGrid(new Permission());
 
         $grid->id->sortable();
         $grid->slug;

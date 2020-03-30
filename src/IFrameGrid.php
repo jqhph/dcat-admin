@@ -4,7 +4,7 @@ namespace Dcat\Admin;
 
 use Dcat\Admin\Layout\Content;
 
-class SimpleGrid extends Grid
+class IFrameGrid extends Grid
 {
     const QUERY_NAME = '_resource_';
 
