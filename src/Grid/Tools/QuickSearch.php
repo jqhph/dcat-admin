@@ -26,7 +26,7 @@ class QuickSearch extends AbstractTool
     /**
      * @var int rem
      */
-    protected $width = 20;
+    protected $width = 19;
 
     public function __construct($key = null, $title = null)
     {

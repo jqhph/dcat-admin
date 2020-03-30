@@ -1,0 +1,10 @@
+.popover {
+  font-family: $font-family-sans-serif;
+  border: 0;
+  box-shadow: $shadow-100;
+  max-width: 320px;
+}
+
+.bs-popover-right > .arrow::before, .bs-popover-auto[x-placement^=right] > .arrow::before {
+  border-right-color: #eee;
+}
