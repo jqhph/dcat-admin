@@ -98,7 +98,7 @@ class Color
         'indigo'  => '#5c6bc6',
         'blue'    => '#3085d6',
         'red'     => '#ea5455',
-        'orange'  => '#ff9f43',
+        'orange'  => '#dda451',
         'green'   => '#21b978',
         'cyan'    => '#7367f0',
         'purple'  => '#5b69bc',
