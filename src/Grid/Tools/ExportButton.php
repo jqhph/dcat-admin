@@ -55,7 +55,7 @@ JS;
         }
         $all = trans('admin.all');
 
-        return "<li><a href=\"{$this->grid->exportUrl('all')}\" target=\"_blank\">{$all}</a></li>";
+        return "<li class='dropdown-item'><a href=\"{$this->grid->exportUrl('all')}\" target=\"_blank\">{$all}</a></li>";
     }
 
     /**
@@ -70,7 +70,7 @@ JS;
         $page = $this->grid->model()->getCurrentPage() ?: 1;
         $currentPage = trans('admin.current_page');
 
-        return "<li><a href=\"{$this->grid->exportUrl('page', $page)}\" target=\"_blank\">{$currentPage}</a></li>";
+        return "<li class='dropdown-item'><a href=\"{$this->grid->exportUrl('page', $page)}\" target=\"_blank\">{$currentPage}</a></li>";
     }
 
     /**
@@ -87,7 +87,7 @@ JS;
 
         $selectedRows = trans('admin.selected_rows');
 
-        return "<li><a href=\"{$this->grid->exportUrl('selected', '__rows__')}\" target=\"_blank\" class='{$this->grid->getExportSelectedName()}'>{$selectedRows}</a></li>";
+        return "<li class='dropdown-item'><a href=\"{$this->grid->exportUrl('selected', '__rows__')}\" target=\"_blank\" class='{$this->grid->getExportSelectedName()}'>{$selectedRows}</a></li>";
     }
 
     /**
@@ -102,9 +102,9 @@ JS;
         $export = trans('admin.export');
 
         return <<<EOT
-<div class="btn-group " style="margin-right:3px">
-    <button type="button" class="btn btn-sm btn-custom dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-download"></i>
+<div class="btn-group dropdown shadow-none" style="margin-right:3px">
+    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+        <i class="feather icon-download"></i>
         <span class="d-none d-sm-inline">&nbsp;{$export}&nbsp;</span>
         <span class="caret"></span>
         <span class="sr-only"></span>
