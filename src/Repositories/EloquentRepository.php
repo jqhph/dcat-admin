@@ -157,7 +157,7 @@ class EloquentRepository extends Repository implements TreeRepository
             if ($value['method'] == 'paginate') {
                 $value['arguments'][1] = $this->getGridColumns();
             } elseif ($value['method'] == 'get') {
-                $value['arguments'] = $this->getGridColumns();
+                $value['arguments'] = [$this->getGridColumns()];
             }
 
             $query = call_user_func_array([$query, $value['method']], $value['arguments'] ?? []);
