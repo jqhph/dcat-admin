@@ -104,7 +104,7 @@ php artisan admin:install
 
 + [Laravel](https://laravel.com/)
 + [Laravel Admin](https://www.laravel-admin.org/)
-+ [vuexy](https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/landing/)(此项目为商业收费项目，已购买正式版取得授权)
++ [vuexy](https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/landing/)(此项目为商业收费项目，已购买正式版取得授权，且由于协议中未声明是否允许开源代码，所以本项目不包含[vuexy](https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/landing/)打包前的代码，只包含打包之后的)
 + [bootstrap4](https://getbootstrap.com/)
 + [jQuery3](https://jquery.com/)
 + [Eonasdan Datetimepicker](https://github.com/Eonasdan/bootstrap-datetimepicker/)
