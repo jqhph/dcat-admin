@@ -54,7 +54,7 @@
                 v{{ Dcat\Admin\Admin::VERSION }}
             </span>
 
-            <button class="btn btn-primary btn-icon scroll-top" type="button">
+            <button class="btn btn-primary btn-icon scroll-top" type="button" style="bottom: 2%">
                 <i class="feather icon-arrow-up"></i>
             </button>
         </p>
