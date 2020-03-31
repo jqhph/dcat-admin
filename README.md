@@ -6,7 +6,7 @@
 <p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需极少的代码即可构建出一个功能完善且颜值极高的后台系统。</p>
 
 <p align="center">
-<a href="https://jqhph.github.io/dcat-admin">文档</a> |
+<a href="http://www.dcatadmin.com/">文档</a> |
 <a href="https://jqhph.github.io/dcat-admin/demo.html">Demo</a> |
 <a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
 <a href="#extensions">扩展</a>
