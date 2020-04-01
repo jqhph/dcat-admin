@@ -22,7 +22,9 @@
                         <div class="card-content">
                             <div class="card-body pt-1">
                                 <form id="login-form" method="POST" action="{{ admin_url('auth/login') }}">
+
                                     @csrf
+
                                     <fieldset class="form-label-group form-group position-relative has-icon-left">
                                         <input
                                                 type="text"
@@ -92,8 +94,6 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     </div>
                                     <button type="submit" class="btn btn-primary float-right btn-inline">{{ __('admin.login') }}</button>
                                 </form>
