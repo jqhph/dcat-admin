@@ -195,6 +195,8 @@ abstract class Action implements Renderable
      */
     protected function html()
     {
+        $this->defaultHtmlAttribute('href', 'javascript:void(0)');
+
         return <<<HTML
 <a {$this->formatHtmlAttributes()}>{$this->title()}</a>
 HTML;

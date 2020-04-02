@@ -193,7 +193,7 @@ function (data) {
     }
 
     if (typeof response.data.message === 'string' && response.data.type) {
-        LA[response.data.type](response.data.message);
+        Dcat[response.data.type](response.data.message);
     }
     
     if (response.data.then) {
