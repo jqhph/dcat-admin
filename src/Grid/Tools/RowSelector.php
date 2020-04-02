@@ -15,7 +15,7 @@ class RowSelector
 
     protected $rowClickable = false;
 
-    protected $titleKey;
+    protected $titleColumn;
 
     public function __construct(Grid $grid)
     {
@@ -43,9 +43,9 @@ class RowSelector
         return $this;
     }
 
-    public function titleKey(string $value)
+    public function titleColumn(string $value)
     {
-        $this->titleKey = $value;
+        $this->titleColumn = $value;
 
         return $this;
     }
@@ -66,7 +66,7 @@ HTML;
 
         return <<<EOT
 <div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid">
-    <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" data-label="{$this->title($row, $id)}">
+    <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" data-label="{$this->getTitle($row, $id)}">
     <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
 </div>        
 EOT;
@@ -90,9 +90,9 @@ JS
         );
     }
 
-    protected function title($row, $id)
+    protected function getTitle($row, $id)
     {
-        if ($key = $this->titleKey) {
+        if ($key = $this->titleColumn) {
             $label = $row->{$key};
             if ($label !== null && $label !== '') {
                 return $label;
