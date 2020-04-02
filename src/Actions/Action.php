@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Actions;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
@@ -78,7 +79,7 @@ abstract class Action implements Renderable
     }
 
     /**
-     * Toggle this action.
+     * 是否禁用动作.
      *
      * @param bool $disable
      *
@@ -92,8 +93,6 @@ abstract class Action implements Renderable
     }
 
     /**
-     * If the action is allowed.
-     *
      * @return bool
      */
     public function allowed()
@@ -112,7 +111,7 @@ abstract class Action implements Renderable
     }
 
     /**
-     * Set primary key value of action.
+     * 设置主键.
      *
      * @param mixed $key
      *
@@ -132,7 +131,7 @@ abstract class Action implements Renderable
     }
 
     /**
-     * Get action title.
+     * 获取动作标题.
      *
      * @return string
      */
@@ -183,9 +182,11 @@ abstract class Action implements Renderable
     }
 
     /**
-     * @return void
+     * 需要执行的JS代码.
+     *
+     * @return string|void
      */
-    protected function addScript()
+    protected function script()
     {
     }
 
@@ -228,8 +229,10 @@ HTML;
         }
 
         $this->setupHandler();
-        $this->addScript();
         $this->setupHtmlAttributes();
+        if ($script = $this->script()) {
+            Admin::script($script);
+        }
 
         return $this->html();
     }
@@ -272,8 +275,6 @@ HTML;
     }
 
     /**
-     * Create a action instance.
-     *
      * @param mixed ...$params
      *
      * @return $this
