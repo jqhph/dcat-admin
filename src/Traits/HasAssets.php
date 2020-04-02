@@ -35,13 +35,12 @@ trait HasAssets
 
     /**
      * @param string $name
-     * @param string|null $type
      *
      * @return void
      */
-    public static function collectAssets(string $name, string $type = '')
+    public static function collectAssets(string $name)
     {
-        static::asset()->collect($name, $type);
+        static::asset()->collect($name);
     }
 
     /**

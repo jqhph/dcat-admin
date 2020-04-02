@@ -186,7 +186,7 @@ class SelectResource extends Presenter
 
         if (! $this->maxItem || $this->maxItem > 2) {
             // 选项大于两个时使用select2样式布局
-            Admin::collectAssets('select2', 'css');
+            Admin::css('@select2');
 
             $containerClass = 'select2 select2-container select2-container--default select2-container--below ';
         }

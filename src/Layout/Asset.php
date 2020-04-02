@@ -338,22 +338,11 @@ class Asset
      * 根据别名设置需要载入的js和css脚本.
      *
      * @param string $alias
-     * @param string $type
      */
-    public function collect(string $alias, string $type = '')
+    public function collect(string $alias)
     {
         if (strpos($alias, '@') !== 0) {
             $alias = '@'.$alias;
-        }
-
-        if ($type === 'js') {
-            $this->js($this->alias[$alias]['js'] ?? null);
-
-            return;
-        } elseif ($type === 'css') {
-            $this->css($this->alias[$alias]['css'] ?? null);
-
-            return;
         }
 
         $this->js($this->alias[$alias]['js'] ?? null);
