@@ -6,7 +6,14 @@
         <app></app>
 
         <div class="input-group">
-            <div {!! $attributes !!}></div>
+            <div {!! $attributes !!}>
+                @if($maxItem > 2 || ! $maxItem)
+                    <span class="select2-selection select2-selection--multiple" role="combobox" >
+                        <ul class="select2-selection__rendered"></ul>
+                    </span>
+                @endif
+            </div>
+
             @if(! $disabled)
                 <input name="{{$name}}" type="hidden" />
             @endif

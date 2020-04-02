@@ -172,6 +172,8 @@ class SelectResource extends Field
         $maxItem = (int) $this->maxItem;
         $queryName = IFrameGrid::QUERY_NAME;
 
+        $displayerContainer = $this->isMultiple() ? "#{$containerId} .select2-selection" : "#{$containerId}";
+
         $this->script = <<<JS
 Dcat.ResourceSelector({
     title: '{$label}',
@@ -185,21 +187,28 @@ Dcat.ResourceSelector({
     placeholder: '{$this->placeholder()}',
     showCloseButton: false,
     disabled: '{$disabled}',
-    displayer: 'navList',
-    displayerContainer: $('#{$containerId}'),
+    displayer: 'default',
+    displayerContainer: $('$displayerContainer'),
 });
 JS;
     }
 
     protected function setupStyle()
     {
-        if (! $this->maxItem || $this->maxItem > 1) {
-            $primayDarker = Admin::color()->primaryDarker();
+        $containerClass = 'form-control';
+        if ($this->isMultiple()) {
+            // 选项大于两个时使用select2样式布局
+            Admin::css('@select2');
 
-            Admin::style(
-                ".select-resource .nav li{width:100%}.select-resource .nav li a{padding:8px 10px;font-size:13px;color:{$primayDarker}}.select-resource .nav li a.red{cursor:pointer}.select-resource .nav-stacked>li{border-bottom:1px solid #eee;background: #fff;}.select-resource .nav {border: 1px solid #eee;margin-bottom:5px;}"
-            );
+            $containerClass = 'select2 select2-container select2-container--default select2-container--below ';
         }
+
+        $this->attribute('class', "{$containerClass} {$this->getElementClassString()}");
+    }
+
+    public function isMultiple()
+    {
+        return ! $this->maxItem || $this->maxItem > 2;
     }
 
     /**
@@ -218,7 +227,6 @@ JS;
         $name = $this->elementName ?: $this->formatName($this->column);
 
         $this->prepend('<i class="feather icon-arrow-up"></i>')
-            ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id.$this->getFormElementId())
             ->defaultAttribute('name', $name);
@@ -227,6 +235,7 @@ JS;
             'className'   => str_replace(['[', ']'], '_', $name),
             'prepend'     => $this->prepend,
             'append'      => $this->append,
+            'maxItem'     => $this->maxItem,
             'placeholder' => $this->placeholder(),
             'style'       => $this->style,
             'btnId'       => $this->btnId,
