@@ -40,31 +40,31 @@ JS;
 
         $allCheck = (count($value) == count($this->options)) ? 'checked' : '';
         $active = empty($value) ? '' : 'active';
-
-        $allId = 'filter-all-'.Str::random(5);
+        $pjaxContainer = Admin::$pjaxContainerId;
 
         return <<<HTML
 &nbsp;<span class="dropdown" style="position:absolute;">
-<form action="{$this->formAction()}" pjax-container style="display: inline-block;">
-    <a href="javascript:void(0);" class="dropdown-toggle {$active}" data-toggle="dropdown">
+<form action="{$this->formAction()}" {$pjaxContainer} style="display: inline-block;">
+    <a href="javascript:void(0);" class="{$active}" data-toggle="dropdown">
         <i class="feather icon-filter"></i>
     </a>
     <ul class="dropdown-menu" role="menu" style="padding: 10px;left: -70px;border-radius: 0;font-weight:normal;background:#fff">
         
         <li>
             <ul style='padding: 0;'>
-            <li style="margin: 0;padding-left:5px">
-                <div class="checkbox checkbox-primary checkbox-inline ">
-                    <input class="{$this->class['all']}" id="{$allId}" type="checkbox" {$allCheck} />
-                    <label for="{$allId}">&nbsp;{$this->trans('all')}</label>
-                </div>
-            </li>
-                <li class="divider"></li>
+                <li class="dropdown-item" style="margin: 0;padding-left:5px">
+                    <div class="vs-checkbox-con vs-checkbox-primary checkbox-grid">
+                        <input type="checkbox" class="{$this->class['all']}" {$allCheck}>
+                        <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
+                         <span>{$this->trans('all')}</span>
+                    </div>
+                </li>
+                <li class="dropdown-divider"></li>
                 {$this->renderOptions($value)}
             </ul>
         </li>
-        <li class="divider"></li>
-       <li class="">
+        <li class="dropdown-divider"></li>
+       <li class="dropdown-item">
             <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>
         </li>
     </ul>
@@ -78,13 +78,12 @@ HTML;
         return collect($this->options)->map(function ($label, $key) use ($value) {
             $checked = in_array($key, $value) ? 'checked' : '';
 
-            $id = 'filter-ckb-'.Str::random(5);
-
             return <<<HTML
-<li style="margin: 0;padding-left:5px">
-    <div class="checkbox checkbox-primary checkbox-inline ">
-        <input id="$id" type="checkbox" class="{$this->class['item']}" name="{$this->queryName()}[]" value="{$key}" {$checked}/>
-        <label for="$id">&nbsp;{$label}</label>
+<li style="margin: 0;padding:4px 0 4px 5px">
+    <div class="vs-checkbox-con vs-checkbox-primary checkbox-grid">
+        <input type="checkbox" class="{$this->class['item']}" {$checked} name="{$this->queryName()}[]" value="{$key}">
+        <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
+         <span>{$label}</span>
     </div>
 </li>
 HTML;
