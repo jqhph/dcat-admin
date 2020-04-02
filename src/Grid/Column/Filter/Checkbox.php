@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid\Column\Filter;
 
 use Dcat\Admin\Admin;
-use Illuminate\Support\Str;
 
 trait Checkbox
 {
