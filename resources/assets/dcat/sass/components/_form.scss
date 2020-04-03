@@ -98,32 +98,13 @@ select.form-control:not([multiple=multiple]) {
 
 
 // --------------------- select2 ---------------------
-.input-group-sm {
-  .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
-    min-height: 31px;
-    padding: 1px 2px;
-    font-size: 0.7rem;
-  }
-
-  .select2-container--default .select2-selection--multiple {
-    min-height: 30px !important;
-    padding: 0 2px;
-    font-size: 0.7rem;
-    line-height: 14px;
-  }
-
-  .select2-container--default .select2-selection--single .select2-selection__arrow {
-    top: -3px;
-  }
-
-  .select2-container--classic .select2-selection--multiple .select2-selection__rendered li .select2-search__field, .select2-container--default .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
-    margin-top: 6px;
-  }
-}
-
 .select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple {
   border-color: $input-border-color!important;
+}
+
+.select2-container--classic .select2-selection--multiple .select2-selection__rendered li .select2-search__field, .select2-container--default .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
+  margin-top: 8px;
 }
 
 .input-group {
@@ -150,14 +131,50 @@ select.form-control:not([multiple=multiple]) {
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   padding: 2px 5px!important;
   border: 0!important;
+  font-size: 90%;
 }
-// --------------------- select2 ---------------------
-
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  padding: 2px .7rem!important;
+}
 
 .select2-selection .default-text {
   display: inline-block;
-  padding: 6px;
+  padding: .5rem .7rem 0;
 }
+
+.input-group-sm {
+  .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
+    min-height: 31px;
+    padding: 1px 2px;
+    font-size: 0.7rem;
+  }
+
+  .select2-selection .default-text {
+    padding: .3rem .5rem 0;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    padding: 0 0.4rem !important;
+  }
+
+  .select2-container--default .select2-selection--multiple {
+    min-height: 30px !important;
+    padding: 0 2px;
+    font-size: 0.7rem;
+    line-height: 14px;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: -3px;
+  }
+
+  .select2-container--classic .select2-selection--multiple .select2-selection__rendered li .select2-search__field, .select2-container--default .select2-selection--multiple .select2-selection__rendered li .select2-search__field {
+    margin-top: 6px;
+  }
+}
+
+// --------------------- select2 ---------------------
+
 
 // listbox图标
 .glyphicon-arrow-right:before {

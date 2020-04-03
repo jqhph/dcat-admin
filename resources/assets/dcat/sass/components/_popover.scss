@@ -8,3 +8,15 @@
 .bs-popover-right > .arrow::before, .bs-popover-auto[x-placement^=right] > .arrow::before {
   border-right-color: #eee;
 }
+
+.popover.bs-popover-bottom .arrow:after {
+  border-bottom-color: #fff;
+}
+
+.bs-popover-bottom > .arrow::before, .bs-popover-auto[x-placement^=bottom] > .arrow::before {
+  border-bottom-color: #eee;
+}
+
+.bs-popover-top > .arrow::before, .bs-popover-auto[x-placement^=top] > .arrow::before {
+  border-top-color: #eee;
+}
