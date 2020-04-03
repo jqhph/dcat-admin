@@ -292,7 +292,7 @@ HTML
             $v = $builder->call($this, $v, $k);
         }
 
-        $v = strpos($v, '</a>') ? $v : "<a href='javascript:void(0)'>$v</a>";
+        $v = mb_strpos($v, '</a>') ? $v : "<a href='javascript:void(0)'>$v</a>";
         $v = "<li class='dropdown-item'>$v</li>";
 
         if ($this->divider) {

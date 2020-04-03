@@ -80,7 +80,7 @@ JS
 
             $active = $this->active === $k ? 'active' : '';
 
-            $item = strpos($item, '</a>') ? $item : "<a href='javascript:void(0)'>$item</a>";
+            $item = mb_strpos($item, '</a>') ? $item : "<a href='javascript:void(0)'>$item</a>";
 
             $html .= "<li class='$active bg-white'>$item</li>";
         }

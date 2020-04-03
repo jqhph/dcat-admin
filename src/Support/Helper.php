@@ -437,7 +437,7 @@ class Helper
 
         $hasPrefix = false;
 
-        if (strpos($color, '#') === 0) {
+        if (mb_strpos($color, '#') === 0) {
             $color = mb_substr($color, 1);
 
             $hasPrefix = true;
@@ -475,7 +475,7 @@ class Helper
             return $color;
         }
 
-        if (strpos($color, '#') === 0) {
+        if (mb_strpos($color, '#') === 0) {
             $color = mb_substr($color, 1);
         }
 

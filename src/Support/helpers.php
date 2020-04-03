@@ -173,7 +173,7 @@ if (! function_exists('admin_trans')) {
             return $translator->$method($key, $replace, $locale);
         }
         if (
-            strpos($key, 'global.') !== 0
+            mb_strpos($key, 'global.') !== 0
             && count($arr = explode('.', $key)) > 1
         ) {
             unset($arr[0]);

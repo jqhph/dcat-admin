@@ -243,7 +243,7 @@ class Grid
      */
     public function column($name, $label = '')
     {
-        if (strpos($name, '.') !== false) {
+        if (mb_strpos($name, '.') !== false) {
             [$relationName, $relationColumn] = explode('.', $name);
 
             $label = empty($label) ? admin_trans_field($relationColumn) : $label;

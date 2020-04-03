@@ -165,13 +165,13 @@ JS
             $item = $builder($item, $k);
         }
 
-        if (strpos($item, '</li>')) {
+        if (mb_strpos($item, '</li>')) {
             return $item;
         }
 
         $active = $this->active === $k ? 'active' : '';
 
-        $item = strpos($item, '</a>') ? $item : "<a href='javascript:void(0)'>$item</a>";
+        $item = mb_strpos($item, '</a>') ? $item : "<a href='javascript:void(0)'>$item</a>";
 
         return "<li class='nav-li $active'>$item</li>";
     }

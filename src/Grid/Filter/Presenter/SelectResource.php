@@ -160,7 +160,7 @@ class SelectResource extends Presenter
     {
         if (! $this->source) {
             $column = $this->filter->column();
-            if (strpos($column, '.')) {
+            if (mb_strpos($column, '.')) {
                 $this->path(str_replace('_id', '', last(explode('.', $column))));
             } else {
                 $this->path(str_replace('_id', '', $column));

@@ -310,7 +310,7 @@ class Asset
             return $this->alias[$name] ?? [];
         }
 
-        if (strpos($name, '@') !== 0) {
+        if (mb_strpos($name, '@') !== 0) {
             $name = '@'.$name;
         }
 
@@ -341,7 +341,7 @@ class Asset
      */
     public function collect(string $alias)
     {
-        if (strpos($alias, '@') !== 0) {
+        if (mb_strpos($alias, '@') !== 0) {
             $alias = '@'.$alias;
         }
 
@@ -433,7 +433,7 @@ class Asset
 
         $path = $this->getRealPath($path);
 
-        if (strpos($path, '//') === false) {
+        if (mb_strpos($path, '//') === false) {
             $path = config('admin.assets_server').'/'.trim($path, '/');
         }
 

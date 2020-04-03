@@ -142,7 +142,7 @@ class SelectResource extends Field
     protected function setDefaultSource()
     {
         if (! $this->source) {
-            if (strpos($this->column, '.')) {
+            if (mb_strpos($this->column, '.')) {
                 $this->path(str_replace('_id', '', last(explode('.', $this->column))));
             } else {
                 $this->path(str_replace('_id', '', $this->column));

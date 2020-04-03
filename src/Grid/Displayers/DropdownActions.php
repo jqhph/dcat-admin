@@ -103,7 +103,7 @@ JS;
     {
         $action = Helper::render($action);
 
-        if (strpos($action, '</a>') === false) {
+        if (mb_strpos($action, '</a>') === false) {
             return "<a>$action</a>";
         }
 
