@@ -14,15 +14,17 @@ abstract class AbstractTool extends Grid\GridAction
     /**
      * @var string
      */
-    protected $style = 'btn btn-outline-primary';
+    protected $style = 'btn btn-white waves-effect';
 
     /**
-     * @return void
+     * @return string
      */
-    public function setupHtmlAttributes()
+    protected function html()
     {
-        $this->addHtmlClass($this->style);
+        $this->appendHtmlAttribute('class', $this->style);
 
-        parent::setupHtmlAttributes();
+        return <<<HTML
+<button {$this->formatHtmlAttributes()}>{$this->title()}</button>
+HTML;
     }
 }
