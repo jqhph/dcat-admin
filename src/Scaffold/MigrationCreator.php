@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Scaffold;
 
 use Illuminate\Database\Migrations\MigrationCreator as BaseMigrationCreator;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 
 class MigrationCreator extends BaseMigrationCreator
@@ -11,6 +12,18 @@ class MigrationCreator extends BaseMigrationCreator
      * @var string
      */
     protected $bluePrint = '';
+
+    /**
+     * Create a new migration creator instance.
+     *
+     * @param  \Illuminate\Filesystem\Filesystem  $files
+     *
+     * @return void
+     */
+    public function __construct(Filesystem $files)
+    {
+        $this->files = $files;
+    }
 
     /**
      * Create a new model.
