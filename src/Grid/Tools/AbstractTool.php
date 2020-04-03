@@ -14,7 +14,7 @@ abstract class AbstractTool extends Grid\GridAction
     /**
      * @var string
      */
-    protected $style = 'btn btn-sm btn-primary';
+    protected $style = 'btn btn-outline-primary';
 
     /**
      * @return void
