@@ -39,12 +39,12 @@ class DummyClass extends AbstractTool
     }
 
     /**
-     * @return string|void
-     */
-    public function confirm()
-    {
-        // return 'Confirm?';
-    }
+	 * @return string|array|void
+	 */
+	public function confirm()
+	{
+		// return ['Confirm?', 'contents'];
+	}
 
     /**
      * @param Model|Authenticatable|HasPermissions|null $user

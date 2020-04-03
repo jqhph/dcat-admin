@@ -26,17 +26,17 @@ class DummyClass extends BatchAction
     public function handle(Request $request)
     {
         return $this->response()
-            ->success('Processed successfully: '.json_encode($this->key()))
+            ->success('Processed successfully: '.json_encode($this->getKey()))
             ->redirect('/');
     }
 
     /**
-     * @return string|void
-     */
-    public function confirm()
-    {
-        // return 'Confirm?';
-    }
+	 * @return string|array|void
+	 */
+	public function confirm()
+	{
+		// return ['Confirm?', 'contents'];
+	}
 
     /**
      * @param Model|Authenticatable|HasPermissions|null $user

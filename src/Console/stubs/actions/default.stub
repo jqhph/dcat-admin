@@ -25,17 +25,17 @@ class DummyClass extends Action
      */
     public function handle(Request $request)
     {
-        // dump($this->key());
+        // dump($this->getKey());
 
         return $this->response()->success('Processed successfully.')->redirect('/');
     }
 
     /**
-     * @return string|void
+     * @return string|array|void
      */
     public function confirm()
     {
-        // return 'Confirm?';
+        // return ['Confirm?', 'contents'];
     }
 
     /**
