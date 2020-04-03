@@ -37,7 +37,9 @@ class LogController extends Controller
         $grid->user(trans('admin.user'))
             ->get('name')
             ->link(function () {
-                return admin_url('auth/users/'.$this->user['id']);
+                if ($this->user) {
+                    return admin_url('auth/users/'.$this->user['id']);
+                }
             })
             ->responsive();
 
