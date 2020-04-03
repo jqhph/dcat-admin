@@ -6,6 +6,7 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Dcat\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\EloquentSortable\Sortable;
 
 /**
  * Class Menu.
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @method where($parent_id, $id)
  */
-class Menu extends Model
+class Menu extends Model implements Sortable
 {
     use HasDateTimeFormatter,
         MenuCache,
@@ -22,6 +23,13 @@ class Menu extends Model
             allNodes as treeAllNodes;
             ModelTree::boot as treeBoot;
         }
+
+    /**
+     * @var array
+     */
+    protected $sortable = [
+        'sort_when_creating' => true,
+    ];
 
     /**
      * The attributes that are mass assignable.
