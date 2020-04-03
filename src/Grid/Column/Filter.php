@@ -7,6 +7,7 @@ use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\URL;
 
 abstract class Filter implements Renderable
 {
@@ -23,7 +24,7 @@ abstract class Filter implements Renderable
     /**
      * @var string
      */
-    protected $columnName;
+    protected $getColumnName;
 
     /**
      * @var \Closure[]
@@ -46,7 +47,7 @@ abstract class Filter implements Renderable
             $this->addResetButton();
 
             $this->parent->grid()->model()->treeUrlWithoutQuery(
-                $this->queryName()
+                $this->getQueryName()
             );
         });
 
@@ -82,7 +83,7 @@ abstract class Filter implements Renderable
      */
     public function setColumnName(string $name)
     {
-        $this->columnName = $name;
+        $this->getColumnName = $name;
 
         return $this;
     }
@@ -92,19 +93,19 @@ abstract class Filter implements Renderable
      *
      * @return string
      */
-    public function columnName()
+    public function getColumnName()
     {
-        return $this->columnName ?: $this->parent->getName();
+        return $this->getColumnName ?: $this->parent->getName();
     }
 
     /**
      * @return string
      */
-    public function queryName()
+    public function getQueryName()
     {
         return $this->parent->grid()->getName().
             '_filter_'.
-            $this->columnName();
+            $this->getColumnName();
     }
 
     /**
@@ -116,7 +117,7 @@ abstract class Filter implements Renderable
      */
     public function value($default = '')
     {
-        return request($this->queryName(), $default);
+        return request($this->getQueryName(), $default);
     }
 
     /**
@@ -129,7 +130,7 @@ abstract class Filter implements Renderable
             return;
         }
 
-        $style = $this->shouldDisplay() ? 'style=\'margin:3px 12px\'' : '';
+        $style = $this->shouldDisplay() ? 'style=\'margin:3px 14px\'' : '';
 
         return $this->parent->addHeader(
             "&nbsp;<a class='feather icon-rotate-ccw' href='{$this->urlWithoutFilter()}' {$style}></a>"
@@ -143,20 +144,15 @@ abstract class Filter implements Renderable
      */
     public function formAction()
     {
-        $request = request();
-
-        $query = $request->query();
-        Arr::forget($query, [
-            $this->columnName(),
-            $this->parent->grid()->model()->getPageName(),
-            '_pjax',
-        ]);
-
-        $question = $request->getBaseUrl().$request->getPathInfo() == '/' ? '/?' : '?';
-
-        return count($request->query()) > 0
-            ? $request->url().$question.http_build_query($query)
-            : $request->fullUrl();
+        return Helper::urlWithoutQuery(
+            URL::full(),
+            [
+                $this->getQueryName(),
+                $this->getColumnName(),
+                $this->parent->grid()->model()->getPageName(),
+                '_pjax',
+            ]
+        );
     }
 
     /**
@@ -165,7 +161,7 @@ abstract class Filter implements Renderable
     protected function urlWithoutFilter()
     {
         $query = request()->query();
-        unset($query[$this->queryName()]);
+        unset($query[$this->getQueryName()]);
 
         return Helper::urlWithQuery(url()->current(), $query);
     }

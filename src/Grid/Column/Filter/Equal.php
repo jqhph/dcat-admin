@@ -98,7 +98,7 @@ class Equal extends Filter
             return;
         }
 
-        $model->where($this->columnName(), $value);
+        $model->where($this->getColumnName(), $value);
     }
 
     /**

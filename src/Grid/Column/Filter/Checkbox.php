@@ -80,7 +80,7 @@ HTML;
             return <<<HTML
 <li style="margin: 0;padding:4px 0 4px 5px">
     <div class="vs-checkbox-con vs-checkbox-primary checkbox-grid">
-        <input type="checkbox" class="{$this->class['item']}" {$checked} name="{$this->queryName()}[]" value="{$key}">
+        <input type="checkbox" class="{$this->class['item']}" {$checked} name="{$this->getQueryName()}[]" value="{$key}">
         <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
          <span>{$label}</span>
     </div>

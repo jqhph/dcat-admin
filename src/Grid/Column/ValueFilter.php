@@ -35,9 +35,9 @@ class ValueFilter
         return $this->filter->parent();
     }
 
-    public function queryName()
+    public function getQueryName()
     {
-        return $this->filter->queryName();
+        return $this->filter->getQueryName();
     }
 
     public function value()
@@ -81,7 +81,7 @@ class ValueFilter
         $pageName = $this->column()->grid()->model()->getPageName();
 
         $url = request()->fullUrlWithQuery([
-            $this->queryName() => $this->originalValue(),
+            $this->getQueryName() => $this->originalValue(),
             $pageName          => null,
         ]);
 

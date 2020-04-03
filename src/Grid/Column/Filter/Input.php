@@ -57,7 +57,7 @@ JS;
     </a>
     <ul class="dropdown-menu" role="menu" style="width: 250px;padding: 10px;left: -70px;border-radius: 0;font-weight:normal;background:#fff;">
         <li>
-            <input placeholder="{$this->placeholder}" type="text" name="{$this->queryName()}" value="{$value}" class="form-control input-sm {$this->class}" autocomplete="off"/>
+            <input placeholder="{$this->placeholder}" type="text" name="{$this->getQueryName()}" value="{$value}" class="form-control input-sm {$this->class}" autocomplete="off"/>
         </li>
         <li class="divider"></li>
         <li class="">

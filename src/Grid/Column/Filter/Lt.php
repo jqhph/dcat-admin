@@ -19,6 +19,6 @@ class Lt extends Equal
             return;
         }
 
-        $model->where($this->columnName(), '<', $value);
+        $model->where($this->getColumnName(), '<', $value);
     }
 }

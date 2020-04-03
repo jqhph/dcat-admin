@@ -102,14 +102,14 @@ class Between extends Filter
         }
 
         if (! isset($value['start'])) {
-            return $model->where($this->columnName(), '<=', $value['end']);
+            return $model->where($this->getColumnName(), '<=', $value['end']);
         }
 
         if (! isset($value['end'])) {
-            return $model->where($this->columnName(), '=>', $value['start']);
+            return $model->where($this->getColumnName(), '=>', $value['start']);
         }
 
-        return $model->whereBetween($this->columnName(), array_values($value));
+        return $model->whereBetween($this->getColumnName(), array_values($value));
     }
 
     protected function addScript()
@@ -172,7 +172,7 @@ JS;
         <li>
             <input type="text" 
                 class="form-control input-sm {$this->class['start']}" 
-                name="{$this->queryName()}[start]" 
+                name="{$this->getQueryName()}[start]" 
                 placeholder="{$this->trans('between_start')}" 
                 value="{$value['start']}" 
                 autocomplete="off" />
@@ -181,7 +181,7 @@ JS;
         <li>
             <input type="text" 
                 class="form-control input-sm {$this->class['start']}" 
-                name="{$this->queryName()}[end]"  
+                name="{$this->getQueryName()}[end]"  
                 placeholder="{$this->trans('between_end')}" 
                 value="{$value['end']}" 
                 autocomplete="off"/>
