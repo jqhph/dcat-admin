@@ -19,11 +19,11 @@ use Illuminate\Support\Traits\Macroable;
  * @method $this switch(string $color = '')
  * @method $this switchGroup($columns = [], string $color = '')
  * @method $this image($server = '', int $width = 200, int $height = 200)
- * @method $this label($style = 'success', int $max = null)
- * @method $this chip($style = 'success', int $max = null)
+ * @method $this label($style = 'primary', int $max = null)
+ * @method $this chip($style = 'primary', int $max = null)
  * @method $this button($style = 'success');
  * @method $this link($href = '', $target = '_blank');
- * @method $this badge($style = 'success', int $max = null);
+ * @method $this badge($style = 'primary', int $max = null);
  * @method $this progressBar($style = 'primary', $size = 'sm', $max = 100)
  * @method $this checkbox($options = [])
  * @method $this radio($options = [])

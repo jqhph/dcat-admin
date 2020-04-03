@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Show;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
@@ -321,14 +322,10 @@ HTML;
      */
     public function label($style = 'primary')
     {
-        return $this->unescape()->as(function ($value) use ($style) {
-            $class = $style;
-            $background = '';
+        $self = $this;
 
-            if (strpos($style, '#') === 0 || strpos($style, '(') !== false) {
-                $class = '';
-                $background = "style='background:{$style}'";
-            }
+        return $this->unescape()->as(function ($value) use ($self, $style) {
+            [$class, $background] = $self->formatStyle($style);
 
             return collect($value)->map(function ($name) use ($class, $background) {
                 return "<span class='label bg-{$class}' $background>$name</span>";
@@ -345,14 +342,10 @@ HTML;
      */
     public function badge($style = 'blue')
     {
-        return $this->unescape()->as(function ($value) use ($style) {
-            $class = $style;
-            $background = '';
+        $self = $this;
 
-            if (strpos($style, '#') === 0 || strpos($style, '(') !== false) {
-                $class = '';
-                $background = "style='background:{$style}'";
-            }
+        return $this->unescape()->as(function ($value) use ($self, $style) {
+            [$class, $background] = $self->formatStyle($style);
 
             return collect($value)->map(function ($name) use ($class, $background) {
                 return "<span class='badge bg-{$class}' $background>$name</span>";
@@ -368,19 +361,18 @@ HTML;
     public function chip($style = 'primary')
     {
         return $this->unescape()->as(function ($value) use ($style) {
-            $class = $style;
             $background = '';
             $textColor = '';
 
-            if (strpos($style, '#') === 0 || strpos($style, '(') !== false) {
-                $class = '';
+            if ($style !== 'default') {
+                $style = Admin::color()->get($style);
                 $background = "style='background:{$style}'";
                 $textColor = 'text-white';
             }
 
-            return collect($value)->map(function ($name) use ($class, $background, $textColor) {
+            return collect($value)->map(function ($name) use ($background, $textColor) {
                 return <<<HTML
-<div class="chip chip-{$class}" {$background}>
+<div class="chip" {$background}>
   <div class="chip-body">
     <div class="chip-text {$textColor}">{$name}</div>
   </div>
@@ -388,6 +380,26 @@ HTML;
 HTML;
             })->implode('&nbsp;');
         });
+    }
+
+    /**
+     * @param $style
+     *
+     * @return array
+     */
+    public function formatStyle($style)
+    {
+        $class = 'default';
+        $background = '';
+
+        if ($style !== 'default') {
+            $class = '';
+
+            $style = Admin::color()->get($style);
+            $background = "style='background:{$style}'";
+        }
+
+        return [$class, $background];
     }
 
     /**
