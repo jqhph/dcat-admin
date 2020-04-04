@@ -29,9 +29,10 @@
                     <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                         {!! Dcat\Admin\Admin::navbar()->render('left') !!}
                     </div>
-                    <ul class="nav navbar-nav float-right">
+                    <div class="float-right d-flex align-items-center">
                         {!! Dcat\Admin\Admin::navbar()->render() !!}
-
+                    </div>
+                    <ul class="nav navbar-nav float-right">
                         {{--User Account Menu--}}
                         {!! admin_section(AdminSection::NAVBAR_USER_PANEL) !!}
 
