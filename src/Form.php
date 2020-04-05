@@ -877,11 +877,10 @@ class Form implements Renderable
      * Prepare input data for update.
      *
      * @param array $updates
-     * @param bool  $oneToOneRelation If column is one-to-one relation.
      *
      * @return array
      */
-    public function prepareUpdate(array $updates, $oneToOneRelation = false)
+    public function prepareUpdate(array $updates)
     {
         $prepared = [];
 
@@ -891,10 +890,6 @@ class Form implements Renderable
 
             // If column not in input array data, then continue.
             if (! Arr::has($updates, $columns)) {
-                continue;
-            }
-
-            if ($this->invalidColumn($columns, $oneToOneRelation)) {
                 continue;
             }
 
@@ -912,24 +907,6 @@ class Form implements Renderable
         }
 
         return $prepared;
-    }
-
-    /**
-     * @param string|array $columns
-     * @param bool         $oneToOneRelation
-     *
-     * @return bool
-     */
-    protected function invalidColumn($columns, $oneToOneRelation = false)
-    {
-        foreach ((array) $columns as $column) {
-            if ((! $oneToOneRelation && Str::contains($column, '.')) ||
-                ($oneToOneRelation && ! Str::contains($column, '.'))) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
