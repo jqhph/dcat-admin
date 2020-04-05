@@ -94,7 +94,6 @@ class ScaffoldController extends Controller
         $creates = (array) $request->get('create');
 
         try {
-
             // 1. Create model.
             if (in_array('model', $creates)) {
                 $modelCreator = new ModelCreator($request->get('table_name'), $request->get('model_name'));

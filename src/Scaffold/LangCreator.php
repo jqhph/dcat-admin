@@ -4,7 +4,6 @@ namespace Dcat\Admin\Scaffold;
 
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 
 class LangCreator
 {
@@ -62,6 +61,6 @@ class LangCreator
     {
         $path = resource_path('lang/'.App::getLocale());
 
-        return $path.'/'.Str::slug($controller).'.php';
+        return $path.'/'.Helper::slug($controller).'.php';
     }
 }
