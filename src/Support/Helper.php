@@ -566,7 +566,6 @@ class Helper
      */
     public static function isIEBrowser()
     {
-        dump($_SERVER['HTTP_USER_AGENT'] ?? '');
         return (bool) preg_match('/Mozilla\/5\.0 \(Windows NT 10\.0; WOW64; Trident\/7\.0; rv:[0-9\.]*\) like Gecko/i', $_SERVER['HTTP_USER_AGENT'] ?? '');
     }
 
