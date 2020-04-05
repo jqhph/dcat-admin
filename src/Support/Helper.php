@@ -558,4 +558,25 @@ class Helper
 
         return $request->ajax() && ! $request->pjax();
     }
+
+    /**
+     * 判断是否是IE浏览器.
+     *
+     * @return false|int
+     */
+    public static function isIEBrowser()
+    {
+        dump($_SERVER['HTTP_USER_AGENT'] ?? '');
+        return (bool) preg_match('/Mozilla\/5\.0 \(Windows NT 10\.0; WOW64; Trident\/7\.0; rv:[0-9\.]*\) like Gecko/i', $_SERVER['HTTP_USER_AGENT'] ?? '');
+    }
+
+    /**
+     * 判断是否QQ浏览器.
+     *
+     * @return bool
+     */
+    public static function isQQBrowser()
+    {
+        return mb_strpos(mb_strtolower($_SERVER['HTTP_USER_AGENT'] ?? ''), 'qqbrowser') !== false;
+    }
 }
