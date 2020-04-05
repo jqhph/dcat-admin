@@ -166,7 +166,7 @@ class Radio extends Widget
     /**
      * 设置样式.
      *
-     * "info", "primary", "inverse", "danger", "success", "purple".
+     * 支持 "info", "primary", "danger", "success".
      *
      * @param string $style
      *
