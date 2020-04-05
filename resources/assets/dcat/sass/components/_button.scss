@@ -100,7 +100,7 @@
 .btn.btn-white.btn-primary, .btn.btn-white.btn-primary:hover, .btn.btn-white.btn-primary:focus {
   color: $white !important;
 }
-.btn-white:hover {
+.btn-white:hover,.btn-white:focus,.btn-white.active {
   box-shadow: $btn-shadow-hover !important;
 }
 
