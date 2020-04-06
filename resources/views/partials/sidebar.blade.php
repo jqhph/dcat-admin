@@ -1,4 +1,4 @@
-<div class="main-menu menu-fixed {{($configData['theme'] === 'light') ? 'menu-light' : 'menu-dark'}} menu-accordion menu-shadow"
+<div class="main-menu {{($configData['theme'] === 'light') ? 'menu-light' : 'menu-dark'}} menu-shadow"
         data-scroll-to-active="true">
 {{--    <div class="navbar-header">--}}
 {{--        <ul class="nav navbar-nav flex-row">--}}
@@ -17,9 +17,9 @@
 {{--            </li>--}}
 {{--        </ul>--}}
 {{--    </div>--}}
-    <div class="shadow-bottom"></div>
+{{--    <div class="shadow-bottom"></div>--}}
     <div class="main-menu-content">
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-light-primary shadow">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
                 <img class="brand-image img-circle elevation-3" >

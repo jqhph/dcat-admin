@@ -6,9 +6,12 @@ export default class Menu {
 
     // 菜单点击选中效果
     bindClick() {
+        // 滚动条优化
+        new PerfectScrollbar('.main-sidebar .sidebar');
+
         let $content = $('.main-menu-content'),
-            $items = $content.find('li.nav-item'),
-            $hasSubItems = $content.find('li.has-sub');
+            $items = $content.find('li'),
+            $hasSubItems = $content.find('li.has-treeview');
 
         $items.find('a').click(function () {
             let href = $(this).attr('href');
@@ -16,10 +19,10 @@ export default class Menu {
                 return;
             }
 
-            $items.removeClass('active');
-            $hasSubItems.removeClass('sidebar-group-active');
+            $items.find('.nav-link').removeClass('active');
+            // $hasSubItems.removeClass('menu-open');
 
-            $(this).parent().addClass('active')
+            $(this).addClass('active')
         });
     }
 }

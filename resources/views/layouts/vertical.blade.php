@@ -1,5 +1,5 @@
 <body
-        class="dcat-admin-body sidebar-mini {{ $configData['blank_page_class'] }} {{ $configData['body_class']}} {{ $configData['sidebar_class'] }}" >
+    class="dcat-admin-body sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed {{ $configData['blank_page_class'] }} {{ $configData['body_class']}} {{ $configData['sidebar_class'] }}" >
 
     <script>
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
@@ -7,23 +7,19 @@
 
     {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
-    @include('admin::partials.sidebar')
-
-    <div class="app-content content">
-        <div class="content-overlay"></div>
-{{--        <div class="header-navbar-shadow"></div>--}}
+    <div class="wrapper">
+        @include('admin::partials.sidebar')
 
         @include('admin::partials.navbar')
 
-        <div class="content-wrapper" id="{{ $pjaxContainerId }}">
-            @yield('app')
+        <div class="app-content content">
+            <div class="content-wrapper" id="{{ $pjaxContainerId }}" style="top: 0;">
+                @yield('app')
+            </div>
         </div>
     </div>
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
-
-    <footer class="footer {{ $configData['footer_type'] }} {{($configData['footer_type']=== 'footer-hidden') ? 'd-none':''}} footer-light">
+    <footer class="main-footer {{($configData['footer_type'] === 'footer-hidden') ? 'd-none':''}}">
         <p class="clearfix blue-grey lighten-2 mb-0">
             <span class="text-center d-block d-md-inline-block mt-25">
                 Powered by
@@ -32,7 +28,7 @@
                 v{{ Dcat\Admin\Admin::VERSION }}
             </span>
 
-            <button class="btn btn-primary btn-icon scroll-top" type="button" style="bottom: 2%">
+            <button class="btn btn-primary btn-icon scroll-top pull-right" style="bottom: 2%">
                 <i class="feather icon-arrow-up"></i>
             </button>
         </p>

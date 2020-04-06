@@ -69,9 +69,6 @@ class Asset
         '@datatables' => [
             'css' => '@admin/vendors/css/tables/datatable/datatables.min.css',
         ],
-        '@data-list-view' => [
-            'css' => '@admin/css/pages/data-list-view.css',
-        ],
         '@custom' => [
             'css' => '@admin/css/custom-laravel.css',
         ],
@@ -235,16 +232,13 @@ class Asset
     public $baseCss = [
         'AdminLTE'           => '@AdminLTE',
         'vendors'            => '@vendors',
-        //'bootstrap'          => '@bootstrap',
         'bootstrap-extended' => '@bootstrap-extended',
         'toastr'             => '@toastr',
         //'components'         => '@components',
         //'palette-gradient'   => '@palette-gradient',
         //'colors'             => '@default-colors',
-        //'custom'             => 'custom',
 
         'datatables'     => '@datatables',
-        'data-list-view' => '@data-list-view',
         'dcat'           => '@dcat',
     ];
 
@@ -255,8 +249,6 @@ class Asset
      */
     public $baseJs = [
         'AdminLTE'  => '@AdminLTE',
-        //'menu'      => '@menu',
-        //'app'       => '@app',
         'toastr'    => '@toastr',
         'pjax'      => '@pjax',
         'validator' => '@validator',
@@ -542,40 +534,6 @@ class Asset
     }
 
     /**
-     * 增加布局css文件.
-     */
-    protected function addLayoutCss()
-    {
-        if ($this->usingFullPage) {
-            return;
-        }
-
-        if (config('admin.layout.main_layout_type') === 'horizontal') {
-            $this->baseCss[] = '@admin/css/core/menu/menu-types/horizontal-menu.css';
-        }
-
-        $this->baseCss[] = '@admin/css/core/menu/menu-types/vertical-menu.css';
-    }
-
-    /**
-     * 主题css文件.
-     */
-    protected function addThemeCss()
-    {
-        if (! $theme = config('admin.layout.theme')) {
-            return;
-        }
-
-        $css = $this->themeCssMap[$theme] ?? $theme;
-
-        if ($css === 'light') {
-            return;
-        }
-
-        $this->baseCss[] = "@admin/css/themes/{$css}.css";
-    }
-
-    /**
      * 字体css脚本路径.
      */
     protected function addFontCss()
@@ -597,8 +555,6 @@ class Asset
             return;
         }
 
-        $this->addLayoutCss();
-        $this->addThemeCss();
         $this->addFontCss();
 
         $this->css = array_merge($this->baseCss, $this->css);

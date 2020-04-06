@@ -40,7 +40,11 @@ const sassOptions = {
 mix.copyDirectory('resources/assets/images', distPath + '/images');
 mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
 
+mix.sass('resources/assets/sass/bootstrap-extended.scss', distPath + '/css/bootstrap-extended.css');
 
+// adminlte
+mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', distPath + '/AdminLTE/dist/css/adminlte.min.css');
+mix.js('resources/assets/adminlte/js/AdminLTE.js', distPath + '/AdminLTE/dist/js/adminlte.min.js');
 
 // ------------------------------------ Dcat Admin -------------------------------------------
 function dcatPath(path) {

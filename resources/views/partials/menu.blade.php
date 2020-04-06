@@ -13,7 +13,11 @@
             </a>
         </li>
     @else
-        <li class="nav-item has-treeview">
+        @php
+            $active = $builder->isActive($item);
+        @endphp
+
+        <li class="nav-item has-treeview {{ $active ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
                 <i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>

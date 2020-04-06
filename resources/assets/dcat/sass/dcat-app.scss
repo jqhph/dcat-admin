@@ -18,6 +18,7 @@
 html body {
   background-color: $body-bg;
   color: $font-color;
+  font-size: .95rem;
 }
 
 // 字体
@@ -27,6 +28,11 @@ body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
 
 html body .content .content-wrapper {
   padding: calc(2.2rem - 0.4rem) 2.45rem 0;
+  //margin-top: 3.5rem;
+}
+
+.content-header {
+  padding: 15px 0 2px;
 }
 
 ol, ul, dl {
@@ -58,6 +64,8 @@ ol, ul, dl {
 @import "./components/header-navbar";
 // 页面头
 @import "./components/content-header";
+// data-list-view
+@import "./components/data-list-view";
 // 表单
 @import "./components/form";
 // 分页
@@ -102,3 +110,4 @@ ol, ul, dl {
 @import "./components/popover";
 // datetime picker
 @import "./components/datetime-picker";
+
