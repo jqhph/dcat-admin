@@ -199,16 +199,16 @@ html.maximized-card {
 }
 
 // Add clearfix to header, body and footer
-.card-header,
-.card-body,
-.card-footer {
-  @include clearfix;
-}
+//.card-header,
+//.card-body,
+//.card-footer {
+//  @include clearfix;
+//}
 
 // Box header
 .card-header {
   background-color: transparent;
-  border-bottom: 1px solid $card-border-color;
+  border-bottom: 0;
   padding: (($card-spacer-y / 2) * 2) $card-spacer-x;
   position: relative;
 
