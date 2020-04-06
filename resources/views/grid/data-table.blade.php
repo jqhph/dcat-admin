@@ -1,8 +1,8 @@
 
-<div class="dcat-box data-list-view dt-bootstrap4">
+<div class="dcat-box custom-data-table dt-bootstrap4">
 
     @if ($grid->allowToolbar())
-        <div class="data-list-view-header">
+        <div class="custom-data-table-header">
             <div class="table-responsive">
                 <div class="top" style="padding: 0">
                 @if(!empty($title))
@@ -35,7 +35,7 @@
 
     <div class="table-responsive" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 0;margin-bottom:10px!important' : '' !!}">
         <table
-                class="table data-list-view dataTable dt-checkboxes-select
+                class="table custom-data-table dataTable dt-checkboxes-select
                  {{ $grid->getComplexHeaders() ? 'complex-headers' : ''}}
                 {{ $grid->option('table_class') }}
                 {{ $grid->option('show_bordered') ? 'table-bordered' : '' }} "
