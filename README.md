@@ -26,6 +26,9 @@
     <a><img src="https://img.shields.io/badge/laravel-5.5+-59a9f8.svg?style=flat" ></a>
 </p>
 
+## 公告
+大家好，我是 Dcat Admin 的开发者 Jiangqh，非常感谢大家对这个项目的关注和支持，我会用心把这个项目做好，并且会一直维护下去！
+现经过一些朋友的提醒，以及我自己的深思熟虑之后，决定对这个项目的前端框架再次进行重构，新的前端框架不再采用商业版的 vuexy，而是使用完全开源的 AdminLTE3.0 版本，当然也会保持高颜值的特点。预计重构时间将在一周左右，对大家带来的不便深感抱歉，如果喜欢这个项目，不妨继续关注，谢谢大家。
 
 ## 截图
 
@@ -110,7 +113,6 @@ php artisan admin:install
 
 + [Laravel](https://laravel.com/)
 + [Laravel Admin](https://www.laravel-admin.org/)
-+ [vuexy](https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/landing/)(此项目为商业收费项目，已购买正式版取得授权，且由于协议中未声明是否允许开源代码，所以本项目不包含[vuexy](https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/landing/)打包前的代码，只包含打包之后的)
 + [bootstrap4](https://getbootstrap.com/)
 + [jQuery3](https://jquery.com/)
 + [Eonasdan Datetimepicker](https://github.com/Eonasdan/bootstrap-datetimepicker/)
