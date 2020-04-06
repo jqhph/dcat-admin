@@ -23,6 +23,14 @@ class Asset
      * @var array
      */
     protected $alias = [
+        '@AdminLTE' => [
+            'js' => [
+                '@admin/AdminLTE/dist/js/adminlte.min.js',
+            ],
+            'css' => [
+                '@admin/AdminLTE/dist/css/adminlte.min.css',
+            ],
+        ],
         '@nunito' => [
             'css' => ['https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i'],
         ],
@@ -225,13 +233,14 @@ class Asset
      * @var array
      */
     public $baseCss = [
+        'AdminLTE'           => '@AdminLTE',
         'vendors'            => '@vendors',
-        'bootstrap'          => '@bootstrap',
+        //'bootstrap'          => '@bootstrap',
         'bootstrap-extended' => '@bootstrap-extended',
         'toastr'             => '@toastr',
-        'components'         => '@components',
-        'palette-gradient'   => '@palette-gradient',
-        'colors'             => '@default-colors',
+        //'components'         => '@components',
+        //'palette-gradient'   => '@palette-gradient',
+        //'colors'             => '@default-colors',
         //'custom'             => 'custom',
 
         'datatables'     => '@datatables',
@@ -245,8 +254,9 @@ class Asset
      * @var array
      */
     public $baseJs = [
-        'menu'      => '@menu',
-        'app'       => '@app',
+        'AdminLTE'  => '@AdminLTE',
+        //'menu'      => '@menu',
+        //'app'       => '@app',
         'toastr'    => '@toastr',
         'pjax'      => '@pjax',
         'validator' => '@validator',
