@@ -36,13 +36,6 @@ table.dataTable {
   padding-left: 1.4rem;
 }
 
-// 快捷搜索
-.custom-data-table-header .table-responsive .top .dataTables_filter .form-control, .data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
-  padding: 1.23rem 2.8rem !important;
-  border-radius: 1.4rem;
-  border: 0;
-  box-shadow: $shadow;
-}
 
 .card-header.custom-data-table-header .table-responsive .top .dataTables_filter .form-control {
   box-shadow: $shadow-100;

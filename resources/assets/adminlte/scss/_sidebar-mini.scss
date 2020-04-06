@@ -67,6 +67,25 @@
     .nav-header {
       display: inline-block;
     }
+
+    .nav .nav-treeview {
+      display: block;
+    }
+  }
+
+  .main-sidebar {
+    .nav .nav-item .nav-link {
+      padding: 10px 25px !important;
+    }
+
+    .nav .nav-treeview {
+      display: none;
+    }
+  }
+
+  // navbar
+  .header-navbar.floating-nav {
+    width: calc(100vw - (100vw - 100%) - 70px - #{$sidebar-mini-width});
   }
 
   .sidebar-no-expand.main-sidebar.sidebar-focused,

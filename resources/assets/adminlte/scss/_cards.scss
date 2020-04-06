@@ -14,7 +14,7 @@
 .card {
   @include box-shadow($card-shadow);
   margin-bottom: map-get($spacers, 3);
-
+  border: 0;
   &.bg-dark {
     .card-header {
       border-color: $card-dark-border-color;

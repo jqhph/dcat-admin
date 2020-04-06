@@ -1,5 +1,4 @@
-<div class="main-menu {{($configData['theme'] === 'light') ? 'menu-light' : 'menu-dark'}} menu-shadow"
-        data-scroll-to-active="true">
+<div class="main-menu">
 {{--    <div class="navbar-header">--}}
 {{--        <ul class="nav navbar-nav flex-row">--}}
 {{--            <li class="nav-item mr-auto">--}}
@@ -27,7 +26,6 @@
             </a>
 
             <div class="sidebar">
-                <div class="mb-3"></div>
 
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">

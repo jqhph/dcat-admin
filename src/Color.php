@@ -63,16 +63,6 @@ class Color
      * @var array
      */
     protected static $colors = [
-        'cyan' => [
-            'css' => [
-
-            ],
-            'colors' => [
-                'primary'        => 'cyan',
-                'primary-darker' => 'cyan-darker',
-                'link'           => 'cyan-darker',
-            ],
-        ],
         'indigo' => [
             'css' => [
 

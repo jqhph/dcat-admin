@@ -32,7 +32,7 @@ $colors: map-merge((
 $font-size-root: 1rem !default;
 
 // Sidebar
-$sidebar-width: 250px !default;
+$sidebar-width: 260px !default;
 $sidebar-padding-x: 0.5rem !default;
 $sidebar-padding-y: 0 !default;
 
@@ -134,9 +134,9 @@ $sidebar-light-header-color: $gray-800 !default;
 
 // SIDEBAR MINI
 // --------------------------------------------------------
-$sidebar-mini-width: ($nav-link-padding-x + $sidebar-padding-x + .8rem) * 2 !default;
-$sidebar-nav-icon-width: $sidebar-mini-width - (($sidebar-padding-x + $nav-link-padding-x) * 2) !default;
-$sidebar-user-image-width: $sidebar-nav-icon-width + ($nav-link-padding-x / 2) !default;
+$sidebar-mini-width: ($nav-link-padding-x + $sidebar-padding-x + .8rem) * 3 !default;
+$sidebar-nav-icon-width: $sidebar-mini-width - (($sidebar-padding-x + $nav-link-padding-x) * 3) !default;
+$sidebar-user-image-width: $sidebar-nav-icon-width + ($nav-link-padding-x / 3) !default;
 
 // CONTROL SIDEBAR
 // --------------------------------------------------------

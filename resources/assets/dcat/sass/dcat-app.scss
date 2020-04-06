@@ -27,12 +27,16 @@ body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
 }
 
 html body .content .content-wrapper {
-  padding: calc(2.2rem - 0.4rem) 2.45rem 0;
+  padding: calc(2.2rem - 0.4rem) 2.1rem 0;
   //margin-top: 3.5rem;
 }
 
 .content-header {
-  padding: 15px 0 2px;
+  padding: 20px 0 2px;
+}
+
+.navbar-fixed .content-header {
+  padding: 10px 0 2px;
 }
 
 ol, ul, dl {

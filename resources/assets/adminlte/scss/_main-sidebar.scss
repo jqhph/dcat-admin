@@ -250,6 +250,11 @@
       &:focus {
         color: $sidebar-light-color;
       }
+
+      i {
+        margin-right: .8rem;
+        font-size: 1.2rem;
+      }
     }
 
     // Hover and active states
