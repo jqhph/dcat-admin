@@ -96,9 +96,9 @@
   }
 }
 
-label:not(.form-check-label):not(.custom-file-label) {
-  font-weight: $font-weight-bold;
-}
+//label:not(.form-check-label):not(.custom-file-label) {
+//  font-weight: $font-weight-bold;
+//}
 
 .warning-feedback {
   @include font-size($form-feedback-font-size);

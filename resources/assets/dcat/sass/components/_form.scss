@@ -28,7 +28,7 @@ select.form-control:not([multiple=multiple]) {
   padding-top: 7px;
   padding-right: 5px;
   margin-bottom: 0;
-  font-size: 1rem;
+  //font-size: 1rem;
   text-transform: capitalize;
 }
 
@@ -132,7 +132,13 @@ select.form-control:not([multiple=multiple]) {
   padding: 2px 5px!important;
   border: 0!important;
   font-size: 90%;
+  background-color: $primary!important;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: #fff!important;
+}
+
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
   padding: 2px .7rem!important;
 }

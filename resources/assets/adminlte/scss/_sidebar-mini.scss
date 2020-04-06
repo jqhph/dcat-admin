@@ -71,6 +71,10 @@
     .nav .nav-treeview {
       display: block;
     }
+
+    .nav-sidebar > .nav-item > .nav-link i {
+      font-size: 1.2rem;
+    }
   }
 
   .main-sidebar {
@@ -86,6 +90,10 @@
   // navbar
   .header-navbar.floating-nav {
     width: calc(100vw - (100vw - 100%) - 70px - #{$sidebar-mini-width});
+  }
+
+  .nav-sidebar > .nav-item > .nav-link i {
+    font-size: 1.3rem;
   }
 
   .sidebar-no-expand.main-sidebar.sidebar-focused,
