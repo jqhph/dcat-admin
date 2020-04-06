@@ -27,4 +27,4 @@
             @endforeach
         </form>
     </div>
-</div><?php
+</div>
