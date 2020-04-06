@@ -26,6 +26,11 @@
     <a><img src="https://img.shields.io/badge/laravel-5.5+-59a9f8.svg?style=flat" ></a>
 </p>
 
+## 声明
+大家好，我是 Dcat Admin 的开发者 Jiangqh，非常感谢大家对这个项目的关注和支持，我会用心把这个项目做好，并且会一直维护下去！
+
+现经过一些朋友的提醒，以及我自己的深思熟虑之后，决定对这个项目的前端框架再次进行重构，新的前端框架不再采用商业版的 vuexy，而是使用完全开源的 AdminLTE3.0 版本，当然也会保持高颜值的特点。预计重构时间将在一周左右，对大家带来的不便深感抱歉，如果喜欢这个项目，不妨继续关注，谢谢大家。
+
 ## 截图
 
 ![](https://jqhph.github.io/dcat-admin/assets/img/users1.png)
