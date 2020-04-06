@@ -354,35 +354,6 @@ HTML;
     }
 
     /**
-     * @param string $style
-     *
-     * @return $this
-     */
-    public function chip($style = 'primary')
-    {
-        return $this->unescape()->as(function ($value) use ($style) {
-            $background = '';
-            $textColor = '';
-
-            if ($style !== 'default') {
-                $style = Admin::color()->get($style);
-                $background = "style='background:{$style}'";
-                $textColor = 'text-white';
-            }
-
-            return collect($value)->map(function ($name) use ($background, $textColor) {
-                return <<<HTML
-<div class="chip" {$background}>
-  <div class="chip-body">
-    <div class="chip-text {$textColor}">{$name}</div>
-  </div>
-</div>
-HTML;
-            })->implode('&nbsp;');
-        });
-    }
-
-    /**
      * @param $style
      *
      * @return array
