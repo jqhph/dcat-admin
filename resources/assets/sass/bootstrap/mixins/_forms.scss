@@ -57,7 +57,7 @@
 
       @if $enable-validation-icons {
         padding-right: $input-height-inner;
-        background-image: $icon;
+        //background-image: $icon;
         background-repeat: no-repeat;
         background-position: center right $input-height-inner-quarter;
         background-size: $input-height-inner-half $input-height-inner-half;

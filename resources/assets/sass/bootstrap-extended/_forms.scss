@@ -139,8 +139,8 @@ textarea.form-control{
 // Select Inputs Specific SCSS
 select.form-control {
   &:not([multiple="multiple"]){
-    background-image:
-      url("../images/pages/arrow-down.png");
+    //background-image:
+    //  url("../images/pages/arrow-down.png");
     background-position:
       calc(100% - 12px) 13px,
       calc(100% - 20px) 13px,
