@@ -1,6 +1,3 @@
-@mixin button-square-variant($border) {
-    @include border-radius($border);
-}
 @mixin button-round-variant($border) {
     @include border-radius($border);
 }

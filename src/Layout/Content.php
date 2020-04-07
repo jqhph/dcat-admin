@@ -409,6 +409,7 @@ class Content implements Renderable
     {
         // default data array
         $defaultData = [
+            'theme' => '',
             'sidebar_collapsed' => false,
             'navbar_color' => '',
             'navbar_class' => 'floating',
@@ -422,6 +423,9 @@ class Content implements Renderable
         );
 
         $allOptions = [
+            'theme' => '',
+            'footer_type' => '',
+            'body_class' => '',
             'sidebar_collapsed' => [true, false],
             'navbar_color' => ['bg-primary', 'bg-info', 'bg-warning', 'bg-success', 'bg-danger', 'bg-dark'],
             'navbar_class' => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
