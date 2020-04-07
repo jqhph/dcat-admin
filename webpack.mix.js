@@ -39,6 +39,7 @@ const sassOptions = {
 
 mix.copyDirectory('resources/assets/images', distPath + '/images');
 mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
+mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
 
 // adminlte
 mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', distPath + '/AdminLTE/css/adminlte.css');
