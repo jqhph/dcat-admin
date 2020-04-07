@@ -28,11 +28,6 @@ class QuickSearch extends AbstractTool
      */
     protected $width = 18;
 
-    public function __construct($key = null, $title = null)
-    {
-        parent::__construct($key, $title);
-    }
-
     /**
      * @param string|null $name
      *
