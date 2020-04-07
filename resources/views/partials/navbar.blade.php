@@ -1,8 +1,8 @@
 
 <nav class="header-navbar navbar-expand-lg navbar
-    navbar-with-menu
-{{ $configData['navbar_class'] }}
-        navbar-light navbar-shadow {{ $configData['navbar_color'] }}" style="top: 0;">
+    navbar-with-menu {{ $configData['navbar_class'] }}
+{{ $configData['navbar_color'] }}
+        navbar-light navbar-shadow " style="top: 0;">
 
     <div class="navbar-wrapper">
         <div class="navbar-container content">

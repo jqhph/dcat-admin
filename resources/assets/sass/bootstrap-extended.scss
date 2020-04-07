@@ -4,13 +4,8 @@
 
 // mixins
 @import "bootstrap-extended/mixins/_buttons";
-@import "bootstrap-extended/mixins/_buttons";
 @import "bootstrap-extended/mixins/_navs";
 @import "bootstrap-extended/mixins/_forms";
-
-// Load variable overrides
-@import "variables/variables";
-@import "bootstrap/variables";
 
 // Bootstrap  variables
 @import "bootstrap/variables";

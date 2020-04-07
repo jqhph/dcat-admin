@@ -7,6 +7,7 @@
   }
   // for white button
   &.btn-white{
+    background: white;
     color: $body-color;
     &:hover,&:focus,&:active{
       color: $body-color !important;

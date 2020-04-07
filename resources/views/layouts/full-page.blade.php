@@ -27,8 +27,8 @@
 </head>
 
 <body
-      class="dcat-admin-body vertical-layout vertical-menu-modern 1-column {{ $configData['blank_page_class'] }} {{ $configData['body_class'] }} {{($configData['theme'] === 'light') ? '' : $configData['theme'] }}"
-        data-menu="vertical-menu-modern" data-col="1-column" data-layout="{{ $configData['theme'] }}">
+      class="dcat-admin-body 1-column  {{ $configData['body_class'] }}"
+         data-col="1-column">
 
 <script>
     var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});

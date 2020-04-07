@@ -1,5 +1,5 @@
 <body
-    class="dcat-admin-body sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed {{ $configData['blank_page_class'] }} {{ $configData['body_class']}} {{ $configData['sidebar_class'] }}" >
+    class="dcat-admin-body sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed {{ $configData['body_class']}} {{ $configData['sidebar_class'] }}" >
 
     <script>
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <footer class="main-footer {{($configData['footer_type'] === 'footer-hidden') ? 'd-none':''}}">
+    <footer class="main-footer">
         <p class="clearfix blue-grey lighten-2 mb-0">
             <span class="text-center d-block d-md-inline-block mt-25">
                 Powered by

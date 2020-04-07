@@ -45,7 +45,7 @@
 // Button color variations
 .btn-default {
   background-color: $button-default-background-color;
-  border-color: $button-default-border-color;
+  border-color: $button-default-background-color;
   color: $button-default-color;
 
   &:hover,
