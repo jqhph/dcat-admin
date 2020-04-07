@@ -240,11 +240,6 @@ class Asset
     protected $isPjax = false;
 
     /**
-     * @var bool
-     */
-    protected $usingFullPage = false;
-
-    /**
      * @var array
      */
     protected $themeCssMap = [
@@ -291,20 +286,6 @@ class Asset
             'js'  => $js,
             'css' => $css,
         ];
-    }
-
-    /**
-     * 使用全页面(无菜单和导航栏).
-     *
-     * @param bool $value
-     *
-     * @return $this
-     */
-    public function full(bool $value = true)
-    {
-        $this->usingFullPage = $value;
-
-        return $this;
     }
 
     /**
@@ -560,10 +541,6 @@ class Asset
     {
         if ($this->isPjax) {
             return;
-        }
-
-        if ($this->usingFullPage) {
-            unset($this->baseJs['menu']);
         }
 
         $this->js = array_merge($this->baseJs, $this->js);

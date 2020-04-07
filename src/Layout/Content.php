@@ -118,13 +118,13 @@ class Content implements Renderable
     }
 
     /**
+     * Build full page.
+     *
      * @return $this
      */
     public function full()
     {
         $this->view = 'admin::layouts.full-content';
-
-        Admin::asset()->full();
 
         return $this->withConfig('blank_page', true);
     }
