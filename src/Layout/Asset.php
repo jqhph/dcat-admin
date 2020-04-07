@@ -45,26 +45,8 @@ class Asset
             'js'  => '@admin/vendors/js/vendors.min.js',
             'css' => '@admin/vendors/css/vendors.min.css',
         ],
-        '@default-colors' => [
-            'css' => '@admin/css/colors.css',
-        ],
-        '@menu' => [
-            'js' => '@admin/js/core/app-menu.js',
-        ],
-        '@app' => [
-            'js' => '@admin/js/core/app.js',
-        ],
-        '@components' => [
-            'css' => '@admin/css/components.css',
-        ],
-        '@palette-gradient' => [
-            'css' => '@admin/css/core/colors/palette-gradient.css',
-        ],
         '@datatables' => [
             'css' => '@admin/vendors/css/tables/datatable/datatables.min.css',
-        ],
-        '@custom' => [
-            'css' => '@admin/css/custom-laravel.css',
         ],
         '@grid-extension' => [
             'js' => '@admin/dcat/extra/grid-extend.js',

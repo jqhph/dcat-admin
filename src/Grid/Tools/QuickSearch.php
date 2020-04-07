@@ -21,12 +21,12 @@ class QuickSearch extends AbstractTool
     /**
      * @var string
      */
-    protected $queryName = '__search__';
+    protected $queryName = '_search_';
 
     /**
      * @var int rem
      */
-    protected $width = 19;
+    protected $width = 18;
 
     public function __construct($key = null, $title = null)
     {
