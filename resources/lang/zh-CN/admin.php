@@ -149,6 +149,8 @@ return [
     'size'                  => '大小',
     'between_start'         => '起始',
     'between_end'           => '结束',
+    'next_page'             => '下一页',
+    'prev_page'             => '上一页',
     'next_step'             => '下一步',
     'prev_step'             => '上一步',
     'done'                  => '完成',

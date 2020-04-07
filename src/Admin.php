@@ -10,7 +10,7 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
-use Dcat\Admin\Models\HasPermissions;
+use Dcat\Admin\Traits\HasPermissions;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Repositories\Proxy;
 use Dcat\Admin\Support\Helper;
@@ -30,11 +30,11 @@ class Admin
     use HasAssets;
 
     /**
-     * The version.
+     * 版本号.
      *
      * @var string
      */
-    const VERSION = '0.1.0';
+    const VERSION = '1.0.0';
 
     /**
      * @var array
