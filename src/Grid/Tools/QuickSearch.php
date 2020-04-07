@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class QuickSearch extends AbstractTool
@@ -90,30 +91,33 @@ class QuickSearch extends AbstractTool
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return string
      */
-    public function render()
+    public function formAction()
     {
-        $request = request();
-        $query = $request->query();
-
-        $this->setupScript();
-
-        Arr::forget($query, [
+        return Helper::fullUrlWithoutQuery([
             $this->queryName,
             $this->parent->model()->getPageName(),
             '_pjax',
         ]);
+    }
 
-        $vars = [
-            'action'      => $request->url().'?'.http_build_query($query),
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function render()
+    {
+        $this->setupScript();
+
+        $data = [
+            'action'      => $this->formAction(),
             'key'         => $this->queryName,
             'value'       => $this->value(),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
             'width'       => $this->width,
         ];
 
-        return view($this->view, $vars);
+        return view($this->view, $data);
     }
 
     protected function setupScript()
