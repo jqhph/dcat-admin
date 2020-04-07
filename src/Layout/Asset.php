@@ -23,12 +23,12 @@ class Asset
      * @var array
      */
     protected $alias = [
-        '@AdminLTE' => [
+        '@adminlte' => [
             'js' => [
-                '@admin/AdminLTE/js/adminlte.js',
+                '@admin/adminlte/adminlte.js',
             ],
             'css' => [
-                '@admin/AdminLTE/css/adminlte.css',
+                '@admin/adminlte/adminlte.css',
             ],
         ],
         '@nunito' => [
@@ -206,7 +206,7 @@ class Asset
      * @var array
      */
     public $baseCss = [
-        'AdminLTE'    => '@AdminLTE',
+        'adminlte'    => '@adminlte',
         'vendors'     => '@vendors',
         'toastr'      => '@toastr',
         'datatables'  => '@datatables',
@@ -219,7 +219,7 @@ class Asset
      * @var array
      */
     public $baseJs = [
-        'AdminLTE'  => '@AdminLTE',
+        'adminlte'  => '@adminlte',
         'toastr'    => '@toastr',
         'pjax'      => '@pjax',
         'validator' => '@validator',

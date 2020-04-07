@@ -41,9 +41,9 @@ mix.copyDirectory('resources/assets/images', distPath + '/images');
 mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
 mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
 
-// adminlte
-mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', distPath + '/AdminLTE/css/adminlte.css');
-mix.js('resources/assets/adminlte/js/AdminLTE.js', distPath + '/AdminLTE/js/adminlte.js');
+// AdminLTE3.0
+mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', distPath + '/adminlte/adminlte.css');
+mix.js('resources/assets/adminlte/js/AdminLTE.js', distPath + '/adminlte/adminlte.js');
 
 // ------------------------------------ Dcat Admin -------------------------------------------
 function dcatPath(path) {
