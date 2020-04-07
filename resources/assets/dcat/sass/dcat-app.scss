@@ -57,6 +57,75 @@ ol, ul, dl {
   box-shadow: $shadow-200!important;
 }
 
+//small
+.font-sm-1{
+  font-size: 0.7rem !important;
+}
+.font-sm-2{
+  font-size: 0.8rem !important;
+}
+.font-sm-3{
+  font-size: 0.9rem !important;
+}
+//medium
+.font-md-1{
+  font-size: 1.1rem !important;
+}
+.font-md-2{
+  font-size: 1.2rem !important;
+}
+.font-md-3{
+  font-size: 1.3rem !important;
+}
+.font-md-4{
+  font-size: 1.4rem !important;
+}
+.font-md-5{
+  font-size: 1.5rem !important;
+}
+//large
+.font-lg-1{
+  font-size: 2rem !important;
+}
+.font-lg-2{
+  font-size: 3rem !important;
+}
+.font-lg-3{
+  font-size: 4rem !important;
+}
+.font-lg-4{
+  font-size: 5rem !important;
+}
+.font-lg-5{
+  font-size: 6rem !important;
+}
+
+// Font weights
+
+.bold-300 {
+  font-weight: 300;
+}
+.bold-400 {
+  font-weight: 400;
+}
+.bold-500 {
+  font-weight: 500;
+}
+.bold-600 {
+  font-weight: 600;
+}
+.bold-700 {
+  font-weight: 700;
+}
+
+// Font style
+.text-italic {
+  font-style: italic;
+}
+.text-highlight {
+  padding: 4px 6px;
+}
+
 // 颜色class定义
 @import "./colors";
 

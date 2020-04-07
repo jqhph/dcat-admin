@@ -1,3 +1,33 @@
+// 主题颜色
+
+$white: #fff;
+$body-bg: #f8f8f8;
+$gray-100: #babfc7; // $gray-lightest
+$gray-200: #ededed; // $gray-lighter
+$gray-300: #dae1e7; // $gray-light
+$gray-400: #636363;
+$gray-500: #adb5bd;
+$gray-600: #b8c2cc; // $gray
+$gray-700: #4e5154;
+$gray-800: #1e1e1e; // $gray-dark
+$gray-900: #2a2e30;
+$black: #22292f;
+
+//$indigo: #4d5ec1;
+$indigo: #5c6bc6;
+
+$blue: #3085d6; //$info
+$red: #ea5455; //$danger
+$orange: #dda451; //$warning
+$green: #21b978; //$success
+$cyan: #7367f0; //$primary
+
+
+$primary: $indigo;
+$info: $blue;
+$warning: $orange;
+
+
 // 自定义颜色
 $custom: #59a9f8;
 

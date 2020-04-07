@@ -34,7 +34,7 @@
 
   &.alert-dark {
     .alert-heading {
-      @include alert-heading-bs($dark);
+      box-shadow: rgba($dark, 0.4) 0px 6px 15px -7px;
     }
   }
 
@@ -42,7 +42,7 @@
 
   &.alert-light {
     .alert-heading {
-      @include alert-heading-bs($light);
+      box-shadow: rgba($light, 0.4) 0px 6px 15px -7px;
     }
   }
 }

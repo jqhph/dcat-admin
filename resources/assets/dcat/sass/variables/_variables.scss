@@ -2,11 +2,11 @@
 // 继承
 @import "../../../sass/bootstrap/functions";
 
-@import "../../../sass/core/variables/variables";
+@import "../../../sass/variables/variables";
 @import "../../../sass/bootstrap/variables";
 
 
-@import "./colors";
+@import "../theme/colors";
 
 $font-family-sans-serif: Nunito, Montserrat,system-ui,BlinkMacSystemFont,-apple-system,sans-serif;
 

@@ -25,10 +25,10 @@ class Asset
     protected $alias = [
         '@AdminLTE' => [
             'js' => [
-                '@admin/AdminLTE/dist/js/adminlte.min.js',
+                '@admin/AdminLTE/js/adminlte.js',
             ],
             'css' => [
-                '@admin/AdminLTE/dist/css/adminlte.min.css',
+                '@admin/AdminLTE/css/adminlte.css',
             ],
         ],
         '@nunito' => [
@@ -44,12 +44,6 @@ class Asset
         '@vendors' => [
             'js'  => '@admin/vendors/js/vendors.min.js',
             'css' => '@admin/vendors/css/vendors.min.css',
-        ],
-        '@bootstrap' => [
-            'css' => '@admin/css/bootstrap.css',
-        ],
-        '@bootstrap-extended' => [
-            'css' => '@admin/css/bootstrap-extended.css',
         ],
         '@default-colors' => [
             'css' => '@admin/css/colors.css',
@@ -230,16 +224,11 @@ class Asset
      * @var array
      */
     public $baseCss = [
-        'AdminLTE'           => '@AdminLTE',
-        'vendors'            => '@vendors',
-        'bootstrap-extended' => '@bootstrap-extended',
-        'toastr'             => '@toastr',
-        //'components'         => '@components',
-        //'palette-gradient'   => '@palette-gradient',
-        //'colors'             => '@default-colors',
-
-        'datatables'     => '@datatables',
-        'dcat'           => '@dcat',
+        'AdminLTE'    => '@AdminLTE',
+        'vendors'     => '@vendors',
+        'toastr'      => '@toastr',
+        'datatables'  => '@datatables',
+        'dcat'        => '@dcat',
     ];
 
     /**
