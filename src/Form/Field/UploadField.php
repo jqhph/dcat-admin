@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
+use Dcat\Admin\Traits\HasUploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait UploadField
 {
+    use HasUploadedFile {
+        disk as _disk;
+    }
+
     /**
      * Upload directory.
      *
@@ -165,50 +169,39 @@ trait UploadField
      */
     public function upload(UploadedFile $file)
     {
-        try {
-            $request = request();
+        $request = request();
 
-            $id = $request->get('_id');
+        $id = $request->get('_id');
 
-            /* @var \Dcat\Admin\Support\WebUploader $webUploader */
-            $webUploader = Admin::context()->webUploader;
-
-            if (! $id) {
-                return $webUploader->responseErrorMessage(403, 'Missing id');
-            }
-
-            if ($errors = $this->getErrorMessages($file)) {
-                $webUploader->deleteTempFile();
-
-                return $webUploader->responseValidationMessage($errors);
-            }
-
-            $this->name = $this->getStoreName($file);
-
-            $this->renameIfExists($file);
-
-            $this->prepareFile($file);
-
-            if (! is_null($this->storagePermission)) {
-                $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name, $this->storagePermission);
-            } else {
-                $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name);
-            }
-
-            $webUploader->deleteTempFile();
-
-            if ($result) {
-                $path = $this->getUploadPath();
-
-                return $webUploader->responseUploaded($path, $this->objectUrl($path));
-            }
-
-            return $webUploader->responseFailedMessage();
-        } catch (\Throwable $e) {
-            $webUploader->deleteTempFile();
-
-            throw $e;
+        if (! $id) {
+            return $this->responseErrorMessage(403, 'Missing id');
         }
+
+        if ($errors = $this->getErrorMessages($file)) {
+            return $this->responseValidationMessage($errors);
+        }
+
+        $this->name = $this->getStoreName($file);
+
+        $this->renameIfExists($file);
+
+        $this->prepareFile($file);
+
+        if (! is_null($this->storagePermission)) {
+            $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name, $this->storagePermission);
+        } else {
+            $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name);
+        }
+
+        if ($result) {
+            $path = $this->getUploadPath();
+
+            // 上传成功
+            return $this->responseUploaded($path, $this->objectUrl($path));
+        }
+
+        // 上传失败
+        return $this->responseErrorMessage(trans('admin.upload.upload_failed'));
     }
 
     /**

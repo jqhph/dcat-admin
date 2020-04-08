@@ -5,7 +5,6 @@ namespace Dcat\Admin\Middleware;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\WebUploader as Uploader;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * 文件分块上传合并处理中间件.
@@ -26,14 +25,20 @@ class WebUploader
         try {
             if (! $file = $webUploader->getCompleteUploadedFile()) {
                 // 分块未上传完毕，返回已合并成功信息
-                return $webUploader->responseMerged();
+                return response()->json(['merge' => 1]);
             }
-        } catch (FileException $e) {
+
+            $response = $next($request);
+
+            // 移除临时文件
+            $webUploader->deleteTempFile();
+
+            return $response;
+        } catch (\Throwable $e) {
+            // 移除临时文件
             $webUploader->deleteTempFile();
 
             throw $e;
         }
-
-        return $next($request);
     }
 }

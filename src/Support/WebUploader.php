@@ -66,83 +66,6 @@ class WebUploader
     }
 
     /**
-     * 响应上传成功信息.
-     *
-     * @param string $path 文件完整路径
-     * @param string $url
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function responseUploaded(string $path, string $url)
-    {
-        return $this->response([
-            'status' => true,
-            'id'     => $path,
-            'name'   => basename($path),
-            'path'   => basename($path),
-            'url'    => $url,
-        ]);
-    }
-
-    /**
-     * 返回分块文件已合并信息.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function responseMerged()
-    {
-        return $this->response(['merge' => 1]);
-    }
-
-    /**
-     * 响应失败信息.
-     *
-     * @param string $message
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function responseFailedMessage(string $message = null)
-    {
-        return $this->responseErrorMessage(107, $message ?: trans('admin.upload.upload_failed'));
-    }
-
-    /**
-     * @param FileException $e
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function responseFileException(FileException $e)
-    {
-        return $this->responseValidationMessage($e->getMessage());
-    }
-
-    /**
-     * 响应验证失败信息.
-     *
-     * @param mixed $message
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function responseValidationMessage($message)
-    {
-        return $this->responseErrorMessage(103, $message);
-    }
-
-    /**
-     * 响应失败信息.
-     *
-     * @param $code
-     * @param $error
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function responseErrorMessage($code, $error)
-    {
-        return $this->response([
-            'error' => ['code' => $code, 'message' => $error], 'status' => false,
-        ]);
-    }
-
-    /**
      * 获取完整的上传文件.
      *
      * @return UploadedFile|void
@@ -318,15 +241,5 @@ class WebUploader
         }
 
         return trim($dir, '/');
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function response($data)
-    {
-        return response()->json($data);
     }
 }
