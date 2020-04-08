@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,8 +37,13 @@ trait HasFiles
 
             $response = $field->upload($file);
 
-            if (($results = $this->callUploaded($field, $file, $response)) && $results instanceof Response) {
-                return $results;
+            // 判断是否是分块上传
+            $isChunking = $response instanceof JsonResponse && ($response->getData(true)['merge'] ?? false);
+
+            if (! $isChunking) {
+                if (($results = $this->callUploaded($field, $file, $response)) && $results instanceof Response) {
+                    return $results;
+                }
             }
 
             return $response;
