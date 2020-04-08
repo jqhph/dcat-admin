@@ -33,7 +33,7 @@ abstract class AbstractField implements Renderable
      *
      * @var bool
      */
-    public $escape = true;
+    public $escape = false;
 
     /**
      * @param mixed $value
