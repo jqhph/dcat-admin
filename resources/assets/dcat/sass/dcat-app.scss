@@ -26,17 +26,19 @@ body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
   font-family: $font-family-sans-serif;
 }
 
-html body .content .content-wrapper {
+.content .content-wrapper {
   padding: calc(2.2rem - 0.4rem) 2.1rem 0;
-  //margin-top: 3.5rem;
+  margin-top: 5rem;
+}
+
+.navbar-fixed-top {
+  .content-wrapper {
+    margin-top: 6.5rem;
+  }
 }
 
 .content-header {
-  padding: 20px 0 2px;
-}
-
-.navbar-fixed .content-header {
-  padding: 10px 0 2px;
+  padding: 3px 0 2px;
 }
 
 ol, ul, dl {

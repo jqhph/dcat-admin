@@ -412,7 +412,7 @@ class Content implements Renderable
             'theme' => '',
             'sidebar_collapsed' => false,
             'navbar_color' => '',
-            'navbar_class' => 'floating',
+            'navbar_class' => 'sticky',
             'footer_type' => '',
             'body_class' => '',
         ];

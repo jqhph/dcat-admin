@@ -1,5 +1,6 @@
 <body
-    class="dcat-admin-body sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed {{ $configData['body_class']}} {{ $configData['sidebar_class'] }}" >
+    class="dcat-admin-body sidebar-mini layout-fixed {{ $configData['body_class']}} {{ $configData['sidebar_class'] }}
+    {{ $configData['navbar_class'] === 'fixed-top' ? 'navbar-fixed-top' : '' }} " >
 
     <script>
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});

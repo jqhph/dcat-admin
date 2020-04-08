@@ -1,7 +1,7 @@
 
 <nav class="header-navbar navbar-expand-lg navbar
     navbar-with-menu {{ $configData['navbar_class'] }}
-{{ $configData['navbar_color'] }}
+    {{ $configData['navbar_color'] }}
         navbar-light navbar-shadow " style="top: 0;">
 
     <div class="navbar-wrapper">

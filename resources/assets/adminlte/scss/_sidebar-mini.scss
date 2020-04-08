@@ -92,6 +92,10 @@
     width: calc(100vw - (100vw - 100%) - 70px - #{$sidebar-mini-width});
   }
 
+  .header-navbar.fixed-top {
+    left: #{$sidebar-mini-width};
+  }
+
   .nav-sidebar > .nav-item > .nav-link i {
     font-size: 1.3rem;
   }
