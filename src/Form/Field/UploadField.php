@@ -2,11 +2,11 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Admin;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -166,19 +166,21 @@ trait UploadField
     public function upload(UploadedFile $file)
     {
         try {
-            $id = request('_id');
-            if (! $id) {
-                return $this->responseError(403, 'Missing id');
-            }
+            $request = request();
 
-            if (! ($file = $this->mergeChunks($id, $file))) {
-                return $this->response(['merge' => 1]);
+            $id = $request->get('_id');
+
+            /* @var \Dcat\Admin\Support\WebUploader $webUploader */
+            $webUploader = Admin::context()->webUploader;
+
+            if (! $id) {
+                return $webUploader->responseErrorMessage(403, 'Missing id');
             }
 
             if ($errors = $this->getErrorMessages($file)) {
-                $this->deleteTempFile();
+                $webUploader->deleteTempFile();
 
-                return $this->responseError(101, $errors);
+                return $webUploader->responseValidationMessage($errors);
             }
 
             $this->name = $this->getStoreName($file);
@@ -193,23 +195,17 @@ trait UploadField
                 $result = $this->getStorage()->putFileAs($this->getDirectory(), $file, $this->name);
             }
 
-            $this->deleteTempFile();
+            $webUploader->deleteTempFile();
 
             if ($result) {
                 $path = $this->getUploadPath();
 
-                return $this->response([
-                    'status' => true,
-                    'id'     => $path,
-                    'name'   => $this->name,
-                    'path'   => basename($path),
-                    'url'    => $this->objectUrl($path),
-                ]);
+                return $webUploader->responseUploaded($path, $this->objectUrl($path));
             }
 
-            return $this->responseError(107, trans('admin.upload.upload_failed'));
+            return $webUploader->responseFailedMessage();
         } catch (\Throwable $e) {
-            $this->deleteTempFile();
+            $webUploader->deleteTempFile();
 
             throw $e;
         }
@@ -222,140 +218,6 @@ trait UploadField
     {
     }
 
-    /**
-     * @param string       $id
-     * @param UploadedFile $file
-     *
-     * @return UploadedFile|null
-     */
-    protected function mergeChunks($id, UploadedFile $file)
-    {
-        $chunk = request('chunk', 0);
-        $chunks = request('chunks', 1);
-
-        if ($chunks <= 1) {
-            return $file;
-        }
-
-        $tmpDir = $this->getTempDir($id);
-        $newFilename = md5($file->getClientOriginalName());
-
-        $file->move($tmpDir, "{$newFilename}.{$chunk}.part");
-
-        $done = true;
-        for ($index = 0; $index < $chunks; $index++) {
-            if (! is_file("{$tmpDir}/{$newFilename}.{$index}.part")) {
-                $done = false;
-                break;
-            }
-        }
-
-        if (! $done) {
-            return;
-        }
-
-        $this->tempFilePath = $tmpDir.'/'.$newFilename.'.tmp';
-        $this->putTempFileContent($chunks, $tmpDir, $newFilename);
-
-        return new UploadedFile(
-            $this->tempFilePath,
-            $file->getClientOriginalName(),
-            'application/octet-stream',
-            UPLOAD_ERR_OK,
-            true
-        );
-    }
-
-    /**
-     * Deletes the temporary file.
-     */
-    public function deleteTempFile()
-    {
-        if (! $this->tempFilePath) {
-            return;
-        }
-        @unlink($this->tempFilePath);
-
-        if (
-            ! Finder::create()
-            ->in($dir = dirname($this->tempFilePath))
-            ->files()
-            ->count()
-        ) {
-            @rmdir($dir);
-        }
-    }
-
-    /**
-     * @param int    $chunks
-     * @param string $tmpDir
-     * @param string $newFilename
-     */
-    protected function putTempFileContent($chunks, $tmpDir, $newFileame)
-    {
-        $out = fopen($this->tempFilePath, 'wb');
-
-        if (flock($out, LOCK_EX)) {
-            for ($index = 0; $index < $chunks; $index++) {
-                $partPath = "{$tmpDir}/{$newFileame}.{$index}.part";
-                if (! $in = @fopen($partPath, 'rb')) {
-                    break;
-                }
-
-                while ($buff = fread($in, 4096)) {
-                    fwrite($out, $buff);
-                }
-
-                @fclose($in);
-                @unlink($partPath);
-            }
-
-            flock($out, LOCK_UN);
-        }
-
-        fclose($out);
-    }
-
-    /**
-     * @param mixed $id
-     *
-     * @return string
-     */
-    protected function getTempDir($id)
-    {
-        $tmpDir = storage_path('tmp/'.$id);
-
-        if (! is_dir($tmpDir)) {
-            app('files')->makeDirectory($tmpDir, 0755, true);
-        }
-
-        return $tmpDir;
-    }
-
-    /**
-     * Response the error messages.
-     *
-     * @param $code
-     * @param $error
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function responseError($code, $error)
-    {
-        return $this->response([
-            'error' => ['code' => $code, 'message' => $error], 'status' => false,
-        ]);
-    }
-
-    /**
-     * @param array $message
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function response(array $message)
-    {
-        return response()->json($message);
-    }
 
     /**
      * Specify the directory and name for upload file.

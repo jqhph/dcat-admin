@@ -52,6 +52,7 @@ class AdminServiceProvider extends ServiceProvider
         'admin.permission' => Middleware\Permission::class,
         'admin.bootstrap'  => Middleware\Bootstrap::class,
         'admin.session'    => Middleware\Session::class,
+        'admin.upload'     => Middleware\WebUploader::class,
     ];
 
     /**
@@ -65,6 +66,7 @@ class AdminServiceProvider extends ServiceProvider
             'admin.bootstrap',
             'admin.permission',
             'admin.session',
+            'admin.upload',
         ],
     ];
 

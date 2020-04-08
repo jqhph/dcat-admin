@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Fluent;
 
 /**
  * Class Admin.
@@ -430,6 +431,14 @@ class Admin
     public static function callBooted()
     {
         Event::dispatch('admin.booted');
+    }
+
+    /**
+     * @return Fluent
+     */
+    public static function context()
+    {
+        return app('admin.context');
     }
 
     /**

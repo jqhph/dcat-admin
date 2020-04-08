@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Concerns;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
@@ -22,9 +23,9 @@ trait HasFiles
     protected function handleUploadFile($data)
     {
         $column = $data['upload_column'] ?? null;
-        $file = $data['file'] ?? null;
+        $file = Admin::context()->webUploader->getCompleteUploadedFile() ?: ($data['file'] ?? null);
 
-        if (! $column && ! $file instanceof UploadedFile) {
+        if (! $column || ! $file instanceof UploadedFile) {
             return;
         }
 
@@ -37,13 +38,8 @@ trait HasFiles
 
             $response = $field->upload($file);
 
-            // 判断是否是分块上传
-            $isChunking = $response instanceof JsonResponse && ($response->getData(true)['merge'] ?? false);
-
-            if (! $isChunking) {
-                if (($results = $this->callUploaded($field, $file, $response)) && $results instanceof Response) {
-                    return $results;
-                }
+            if (($results = $this->callUploaded($field, $file, $response)) && $results instanceof Response) {
+                return $results;
             }
 
             return $response;
