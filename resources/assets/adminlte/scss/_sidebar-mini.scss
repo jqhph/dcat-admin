@@ -55,11 +55,7 @@
     @include sidebar-mini-breakpoint;
   }
 }
-@include media-breakpoint-down(sm) {
-  .sidebar-mini-md.sidebar-collapse .main-sidebar {
-    box-shadow: none !important;
-  }
-}
+
 
 .sidebar-collapse {
   .main-sidebar.sidebar-focused,
@@ -87,7 +83,7 @@
     }
   }
 
-  // navbar
+  // 导航栏
   .header-navbar.floating-nav {
     width: calc(100vw - (100vw - 100%) - 70px - #{$sidebar-mini-width});
   }
@@ -167,6 +163,22 @@
     position: absolute;
     right: 10px;
     top: 50%;
+  }
+}
+
+// 导航栏兼容
+@include media-breakpoint-down(sm) {
+  .sidebar-mini-md.sidebar-collapse .main-sidebar {
+    box-shadow: none !important;
+  }
+
+  .sidebar-collapse .header-navbar.fixed-top {
+    left: 0;
+  }
+}
+@media (max-width: 1201px) {
+  .sidebar-collapse .header-navbar.fixed-top {
+    left: 0;
   }
 }
 
