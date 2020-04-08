@@ -25,6 +25,8 @@
     .dashboard-title .avatar {
         background: #fff;
         border: 2px solid #fff;
+        width: 70px;
+        height: 70px;
     }
 </style>
 
@@ -32,12 +34,10 @@
     <div class="card-body">
         <div class="text-center ">
 
-            <div class="avatar avatar-xl shadow mt-1">
-                <img class="avatar-content" src="{{ admin_asset('@admin/images/logo.png') }}">
-            </div>
+                <img class="avatar img-circle shadow mt-1" src="{{ admin_asset('@admin/images/logo.png') }}">
 
             <div class="text-center mb-1">
-                <h1 class="mb-3 mt-2 white">Dcat Admin</h1>
+                <h1 class="mb-3 mt-2 text-white">Dcat Admin</h1>
                 <div class="links">
                     <a href="https://github.com/jqhph/dcat-admin" target="_blank">Github</a>
                     <a href="https://jqhph.github.io/dcat-admin/docs.html" id="doc-link" target="_blank">{{ __('admin.documentation') }}</a>

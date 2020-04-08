@@ -770,7 +770,7 @@
             $info = $statusBar.find('.info');
 
             // 上传按钮
-            $upload = $wrap.find('.uploadBtn');
+            $upload = $wrap.find('.upload-btn');
 
             // 没选择文件之前的内容。
             $placeHolder = $wrap.find('.placeholder');

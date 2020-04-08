@@ -23,7 +23,7 @@ $('{$this->getElementClassSelector()}:not(.initialized)')
     });
 JS;
 
-        $this->prepend('')->defaultAttribute('style', 'width: 200px');
+        $this->prepend('')->defaultAttribute('style', 'width: 200px')->default(0);
 
         return parent::render();
     }
