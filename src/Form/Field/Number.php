@@ -8,6 +8,8 @@ class Number extends Text
         '@number-input',
     ];
 
+    protected $default = 0;
+
     public function render()
     {
         $this->default($this->default);
@@ -23,7 +25,7 @@ $('{$this->getElementClassSelector()}:not(.initialized)')
     });
 JS;
 
-        $this->prepend('')->defaultAttribute('style', 'width: 200px')->default(0);
+        $this->prepend('')->defaultAttribute('style', 'width: 200px');
 
         return parent::render();
     }
