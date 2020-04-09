@@ -52,6 +52,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .full-page {
   .content .content-wrapper {
     padding: 0;
+    margin-left: 0!important;
   }
 }
 
@@ -118,19 +119,19 @@ ol, ul, dl {
 
 // Font weights
 
-.bold-300 {
+.font-w-300 {
   font-weight: 300;
 }
-.bold-400 {
+.font-w-400 {
   font-weight: 400;
 }
-.bold-500 {
+.font-w-500 {
   font-weight: 500;
 }
-.bold-600 {
+.font-w-600 {
   font-weight: 600;
 }
-.bold-700 {
+.font-w-700 {
   font-weight: 700;
 }
 

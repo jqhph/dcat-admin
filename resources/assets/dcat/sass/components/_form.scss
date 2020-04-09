@@ -209,3 +209,24 @@ select.form-control:not([multiple=multiple]) {
 .bootstrap-duallistbox-container .info {
   color: $font-color!important;
 }
+
+//
+.has-icon-left .form-control-position {
+  right: auto;
+  left: inherit;
+}
+.form-control-position {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+}
+.has-icon-left .form-control {
+  padding-right: 2rem;
+  padding-left: 3rem;
+}

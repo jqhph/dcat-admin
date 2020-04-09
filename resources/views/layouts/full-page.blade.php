@@ -25,8 +25,7 @@
     @yield('head')
 </head>
 
-<body
-      class="dcat-admin-body full-page {{ $configData['body_class'] }}">
+<body class="dcat-admin-body full-page {{ $configData['body_class'] }}">
 
 <script>
     var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
@@ -36,7 +35,7 @@
 {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
 <div class="app-content content">
-    <div class="content-wrapper" id="{{ $pjaxContainerId }}">
+    <div class="wrapper" id="{{ $pjaxContainerId }}">
         @yield('app')
     </div>
 </div>
@@ -45,7 +44,14 @@
 
 {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}
 
-<script>Dcat.boot();</script>
+<script>
+    if ($('.full-page .wrapper').length) {
+        // 滚动条优化
+        new PerfectScrollbar('.full-page .wrapper');
+    }
+
+    Dcat.boot();
+</script>
 
 </body>
 </html>
