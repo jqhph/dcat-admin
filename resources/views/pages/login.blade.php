@@ -4,6 +4,11 @@
     .login-box {
         margin-top: -5rem;
     }
+
+    .login-btn {
+        padding-left: 2rem!important;;
+        padding-right: 1.5rem!important;
+    }
 </style>
 
 <div class="login-page">
@@ -89,7 +94,12 @@
                             </fieldset>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary float-right btn-inline">{{ __('admin.login') }}</button>
+                    <button type="submit" class="btn btn-primary float-right login-btn">
+
+                        {{ __('admin.login') }}
+                        &nbsp;
+                        <i class="feather icon-arrow-right"></i>
+                    </button>
                 </form>
 
             </div>
