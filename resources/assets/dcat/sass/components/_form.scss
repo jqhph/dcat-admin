@@ -34,7 +34,7 @@ select.form-control:not([multiple=multiple]) {
   padding-top: 7px;
   padding-right: 5px;
   margin-bottom: 0;
-  //font-size: 1rem;
+  font-size: 1rem;
   text-transform: capitalize;
 }
 
@@ -118,6 +118,15 @@ select.form-control:not([multiple=multiple]) {
     width: 50%!important;
     flex: 1 1 auto;
   }
+}
+
+.select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
+  min-height: 35px;
+  padding: 5px;
+  border: 1px solid rgba(0,0,0,.2);
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 32px!important;
 }
 
 .select2-dropdown {

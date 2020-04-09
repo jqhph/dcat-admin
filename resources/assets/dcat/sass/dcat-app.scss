@@ -15,10 +15,15 @@
 // sweetalert弹窗
 @import "./sweetalert/sweetalert2";
 
+html {
+  font-size: 14px;
+  height: 100%;
+  letter-spacing: .01rem;
+}
+
 html body {
   background-color: $body-bg;
   color: $font-color;
-  font-size: .95rem;
 }
 
 // 字体
@@ -194,4 +199,8 @@ ol, ul, dl {
 @import "./components/popover";
 // datetime picker
 @import "./components/datetime-picker";
+// 菜单
+@import "./components/sidebar";
+// 模态窗
+@import "./components/modal";
 

@@ -13,7 +13,7 @@
 }
 
 .box-header {
-  padding: 14px;
+  padding: 1rem;
   display: inherit;
   justify-content: space-between;
   align-items: center;
@@ -21,6 +21,7 @@
   h3, .h3 {
     font-size: 1.15rem;
     margin-bottom: 0;
+    padding: .1rem;
   }
 }
 
