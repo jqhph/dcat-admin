@@ -32,7 +32,7 @@ body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5, h6, .h1, .h2
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  line-height: 1.1
+  line-height: 1.3
 }
 
 .content .content-wrapper {
@@ -204,4 +204,5 @@ ol, ul, dl {
 @import "./components/sidebar";
 // 模态窗
 @import "./components/modal";
-
+// 滚动条
+@import "./components/scroll-bar";

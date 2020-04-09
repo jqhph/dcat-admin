@@ -44,14 +44,7 @@
 
 {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}
 
-<script>
-    if ($('.full-page .wrapper').length) {
-        // 滚动条优化
-        new PerfectScrollbar('.full-page .wrapper');
-    }
-
-    Dcat.boot();
-</script>
+<script>Dcat.boot();</script>
 
 </body>
 </html>

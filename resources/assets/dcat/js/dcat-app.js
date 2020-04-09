@@ -90,6 +90,12 @@ function listen(Dcat) {
         // layer弹窗设置
         layer.config({maxmin: true, moveOut: true, shade: false});
 
+        // 滚动条优化
+        if ($('.full-page .wrapper').length) {
+            new PerfectScrollbar('.full-page .wrapper');
+        }
+        new PerfectScrollbar('html');
+
         //////////////////////////////////////////////////////////
 
         // 菜单点击选中效果
