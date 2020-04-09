@@ -6,6 +6,10 @@ export default class Menu {
 
     // 菜单点击选中效果
     bindClick() {
+        if (! $('.main-sidebar .sidebar').length) {
+            return;
+        }
+
         // 滚动条优化
         new PerfectScrollbar('.main-sidebar .sidebar');
 

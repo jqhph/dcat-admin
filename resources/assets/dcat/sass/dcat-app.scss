@@ -31,18 +31,23 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .content .content-wrapper {
-  padding: calc(2.2rem - 0.4rem) 2.1rem 0;
-  margin-top: 5rem;
+  padding: 7rem 2rem 0;
 }
 
 .navbar-fixed-top {
   .content-wrapper {
-    margin-top: 4rem;
+    padding-top: 6rem;
   }
 }
 
 .content-header {
   padding: 0 0 2px;
+}
+
+.full-page {
+  .content .content-wrapper {
+    padding: 0;
+  }
 }
 
 ol, ul, dl {

@@ -26,8 +26,7 @@
 </head>
 
 <body
-      class="dcat-admin-body 1-column  {{ $configData['body_class'] }}"
-         data-col="1-column">
+      class="dcat-admin-body full-page {{ $configData['body_class'] }}">
 
 <script>
     var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});

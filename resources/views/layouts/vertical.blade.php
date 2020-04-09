@@ -14,14 +14,14 @@
         @include('admin::partials.navbar')
 
         <div class="app-content content">
-            <div class="content-wrapper" id="{{ $pjaxContainerId }}" style="top: 0;">
+            <div class="content-wrapper" id="{{ $pjaxContainerId }}" style="top: 0;min-height: 900px;">
                 @yield('app')
             </div>
         </div>
     </div>
 
     <footer class="main-footer">
-        <p class="clearfix blue-grey lighten-2 mb-0">
+        <p class="clearfix blue-grey lighten-2 mb-0 text-center">
             <span class="text-center d-block d-md-inline-block mt-25">
                 Powered by
                 <a target="_blank" href="https://github.com/jqhph/dcat-admin">Dcat Admin</a>
@@ -29,7 +29,7 @@
                 v{{ Dcat\Admin\Admin::VERSION }}
             </span>
 
-            <button class="btn btn-primary btn-icon scroll-top pull-right" style="bottom: 2%">
+            <button class="btn btn-primary btn-icon scroll-top pull-right" style="bottom: 2%;display: none">
                 <i class="feather icon-arrow-up"></i>
             </button>
         </p>
