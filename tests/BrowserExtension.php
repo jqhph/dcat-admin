@@ -131,6 +131,7 @@ JS
             $(document).scrollTop($(document).height() - $(window).height()); 
 JS
                 );
+
                 return $this;
             },
         ];
