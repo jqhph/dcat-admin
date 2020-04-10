@@ -6,13 +6,11 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * 文件上传辅助功能.
  *
  * Trait HasUploadedFile
- * @package Dcat\Admin\Traits
  */
 trait HasUploadedFile
 {
