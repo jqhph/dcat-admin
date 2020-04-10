@@ -127,7 +127,7 @@ JS
             // 滚动到页面底部
             'scrollToBottom' => function () {
                 $this->script(
-                    <<<JS
+                    <<<'JS'
             $(document).scrollTop($(document).height() - $(window).height()); 
 JS
                 );
