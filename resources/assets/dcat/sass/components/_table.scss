@@ -79,7 +79,7 @@ table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable th:
 }
 
 table.dataTable.complex-headers {
-  border-color: #eee;
+  border: 1px solid #eee;
 }
 table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead td, table.dataTable.complex-headers tfoot th, table.dataTable.complex-headers tfoot td {
   border-bottom: 1px solid #eee;

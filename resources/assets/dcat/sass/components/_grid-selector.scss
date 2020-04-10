@@ -52,7 +52,7 @@
   visibility: visible;
 }
 
-.data-list-view {
+.custom-data-table {
   .grid-selector {
     padding: 2px;
 
@@ -60,7 +60,7 @@
       border-bottom: 0;
       background: $white;
       box-shadow: $shadow;
-      border-radius: .4rem;
+      border-radius: .35rem;
       margin: 7px 0;
     }
   }

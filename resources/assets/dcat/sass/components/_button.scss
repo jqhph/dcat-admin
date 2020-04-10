@@ -1,24 +1,21 @@
 .btn {
   padding: 0.54rem 1.2rem !important;
-  height: 38px;
+  height: 36px;
   line-height: 1.2;
   border-radius: 0.2rem;
   box-shadow: $btn-shadow;
   cursor: pointer;
 }
-a.btn {
+a.btn, div.btn, span.btn {
   line-height: 1.4;
 }
-div.btn {
-  line-height: 1.5;
-}
 
-div.btn.btn-sm, .btn-group-sm > div.btn {
+div.btn.btn-sm, .btn-group-sm > div.btn, span.btn.btn-sm, .btn-group-sm > span.btn {
   line-height: 1.2;
 }
 
 a.btn-sm, .btn-group-sm > a.btn {
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .btn-warning {
@@ -46,6 +43,11 @@ a.btn-sm, .btn-group-sm > a.btn {
   height: 30px;
 }
 
+.btn-default {
+  background: white;
+  border-color: white;
+}
+
 //a.btn-sm, .btn-group-sm > a.btn {
 //  line-height: 1.4;
 //}
@@ -53,6 +55,7 @@ a.btn-sm, .btn-group-sm > a.btn {
 // --------------------- btn-custom -----------------------
 .btn-custom {
   @include button-variant($custom, $custom);
+  color: #fff;
 }
 .btn-outline-custom {
   @include button-outline-variant($custom, $custom);
