@@ -13,7 +13,7 @@
             </div>
 
             <div class="sidebar mt-1">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
                     {!! admin_section(AdminSection::LEFT_SIDEBAR_MENU_TOP) !!}
 
                     {!! admin_section(AdminSection::LEFT_SIDEBAR_MENU) !!}

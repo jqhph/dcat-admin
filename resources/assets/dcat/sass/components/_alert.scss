@@ -33,27 +33,45 @@
     padding-bottom: 8px;
   }
 
-  // For dark alert
-
   &.alert-dark {
     .alert-heading {
       box-shadow: rgba($dark, 0.4) 0px 6px 15px -7px;
     }
   }
-
-  // For light alert
-
-  &.alert-light {
-    .alert-heading {
-      box-shadow: rgba($light, 0.4) 0px 6px 15px -7px;
-    }
-  }
 }
-
+.alert-danger {
+  background: rgba($danger,.2);
+  color: $danger;
+}
+.alert-success {
+  background: rgba($success,.2);
+  color: $success;
+}
+.alert-info {
+  background: rgba($info,.2);
+  color: $info;
+}
+.alert-primary {
+  background: rgba($primary,.2);
+  color: $primary-darker;
+}
 .alert-warning {
-  color: $white
+  background: rgba($warning,.35);
+  color: darken($warning, 5%);
 }
 
-.alert-light {
-  color: #666!important;
+.callout {
+  border-radius: .1rem;
+  border: 0;
+  border-left: 3.5px solid lighten(#8e9aac, 5%);
+  background-color: #fff;
+  margin-bottom: 1rem;
+  box-shadow: $shadow;
+}
+.callout.callout-primary {
+  border-left: 3.5px solid lighten($primary, 2%);
+}
+.callout.callout-light {
+  background-color: #f7f7f9;
+  box-shadow: none;
 }

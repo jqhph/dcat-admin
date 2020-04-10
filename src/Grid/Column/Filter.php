@@ -155,10 +155,9 @@ abstract class Filter implements Renderable
      */
     protected function urlWithoutFilter()
     {
-        $query = request()->query();
-        unset($query[$this->getQueryName()]);
-
-        return Helper::urlWithQuery(url()->current(), $query);
+        return Helper::fullUrlWithoutQuery([
+            $this->getQueryName()
+        ]);
     }
 
     /**

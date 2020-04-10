@@ -1,3 +1,25 @@
+<style>
+    .fonticon-container>.fonticon-wrap {
+        float: left;
+        width: 60px;
+        height: 60px;
+        line-height: 4.8rem;
+        text-align: center;
+        border-radius: .1875rem;
+        margin-right: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .fonticon-container>.fonticon-wrap>i {
+        font-size: 2.28rem;
+        transition: all .2s ease-in-out;
+    }
+    .fonticon-container>.fonticon-classname, .fonticon-container>.fonticon-unit {
+        display: block;
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+</style>
+
 <div>
     <div class="feather-icons overflow-hidden row">
         <div class="col-md-4 col-sm-6 col-12 fonticon-container">

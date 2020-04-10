@@ -4,7 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Illuminate\Contracts\Support\Renderable;
 
-class Alert extends Widget
+class Callout extends Widget
 {
     /**
      * @var string
@@ -24,12 +24,7 @@ class Alert extends Widget
     /**
      * @var string
      */
-    protected $style;
-
-    /**
-     * @var string
-     */
-    protected $icon;
+    protected $style = 'default';
 
     /**
      * @var bool
@@ -43,7 +38,7 @@ class Alert extends Widget
      * @param string $title
      * @param string $style
      */
-    public function __construct($content = '', $title = null, $style = 'danger')
+    public function __construct($content = '', ?string $title = null, ?string $style = null)
     {
         $this->content($content);
 
@@ -59,7 +54,7 @@ class Alert extends Widget
      *
      * @return $this
      */
-    public function title($title)
+    public function title(?string $title)
     {
         $this->title = $title;
 
@@ -81,13 +76,33 @@ class Alert extends Widget
     }
 
     /**
+     * Set light style.
+     *
+     * @return $this
+     */
+    public function light()
+    {
+        return $this->style('light');
+    }
+
+    /**
+     * Set primary style.
+     *
+     * @return $this
+     */
+    public function primary()
+    {
+        return $this->style('primary');
+    }
+
+    /**
      * Set info style.
      *
      * @return $this
      */
     public function info()
     {
-        return $this->style('info')->icon('fa fa-info');
+        return $this->style('info');
     }
 
     /**
@@ -97,7 +112,7 @@ class Alert extends Widget
      */
     public function success()
     {
-        return $this->style('success')->icon('fa fa-check');
+        return $this->style('success');
     }
 
     /**
@@ -107,7 +122,7 @@ class Alert extends Widget
      */
     public function warning()
     {
-        return $this->style('warning')->icon('fa fa-warning');
+        return $this->style('warning');
     }
 
     /**
@@ -117,7 +132,7 @@ class Alert extends Widget
      */
     public function danger()
     {
-        return $this->style('danger')->icon('fa fa-ban');
+        return $this->style('danger');
     }
 
     /**
@@ -141,23 +156,9 @@ class Alert extends Widget
      *
      * @return $this
      */
-    public function style($style = 'info')
+    public function style(?string $style = 'info')
     {
         $this->style = $style;
-
-        return $this;
-    }
-
-    /**
-     * Add icon.
-     *
-     * @param string $icon
-     *
-     * @return $this
-     */
-    public function icon($icon)
-    {
-        $this->icon = $icon;
 
         return $this;
     }
@@ -167,12 +168,11 @@ class Alert extends Widget
      */
     public function variables()
     {
-        $this->class("alert alert-{$this->style} alert-dismissable");
+        $this->class("callout callout-{$this->style} alert alert-dismissable");
 
         return [
             'title'        => $this->title,
             'content'      => $this->content,
-            'icon'         => $this->icon,
             'attributes'   => $this->formatHtmlAttributes(),
             'showCloseBtn' => $this->showCloseBtn,
         ];
