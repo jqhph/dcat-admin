@@ -21,7 +21,7 @@
     /*    text-transform:uppercase;*/
     /*}*/
     .select2-container .select2-selection--single {
-        height: 34px !important;
+        height: 30px !important;
     }
     /*#inputTableName {*/
     /*    width:300px;*/

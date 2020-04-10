@@ -3,6 +3,8 @@
   color: $font-color;
   padding: .5rem .7rem;
   font-size: .9rem;
+  max-height: 36px;
+  min-height: 36px;
 }
 
 .form-control-sm {
@@ -14,8 +16,13 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .input-group-sm > .form-control:not(textarea), .input-group-sm > .custom-select, .form-control-sm {
-  height: 30px;
+  max-height: 30px;
+  min-height: 30px;
   line-height: 13px;
+}
+
+.input-group .form-control {
+  height: 100%;
 }
 
 
@@ -121,7 +128,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
-  min-height: 35px;
+  min-height: 36px;
   padding: 5px;
   border: 1px solid rgba(0,0,0,.2);
 }

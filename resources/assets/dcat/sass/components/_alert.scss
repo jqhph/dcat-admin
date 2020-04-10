@@ -1,10 +1,57 @@
 .alert {
-  padding: 0.85rem;
+  font-weight: 500;
+  border: none;
+  padding: 0.85rem 1.2rem;
+  border-radius: .25rem;
 
+  // close
   h4 {
     color: inherit;
   }
 
+  .close:focus{
+    outline: 0;
+  }
+
+  // For Alert Content
+  p {
+    font-weight: 500;
+    padding: 2px 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+
+  span{
+    vertical-align: middle;
+  }
+
+  // For alert heading
+  .alert-heading {
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0;
+    padding-bottom: 8px;
+  }
+
+  // For dark alert
+
+  &.alert-dark {
+    .alert-heading {
+      box-shadow: rgba($dark, 0.4) 0px 6px 15px -7px;
+    }
+  }
+
+  // For light alert
+
+  &.alert-light {
+    .alert-heading {
+      box-shadow: rgba($light, 0.4) 0px 6px 15px -7px;
+    }
+  }
+}
+
+.alert-warning {
+  color: $white
 }
 
 .alert-light {

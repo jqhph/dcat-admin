@@ -7,6 +7,13 @@
   cursor: pointer;
 }
 a.btn {
+  line-height: 1.4;
+}
+div.btn {
+  line-height: 1.5;
+}
+
+a.btn-sm, .btn-group-sm > a.btn {
   line-height: 1.3;
 }
 
