@@ -34,7 +34,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '0.1.0';
+    const VERSION = '上古版本';
 
     /**
      * @var array
