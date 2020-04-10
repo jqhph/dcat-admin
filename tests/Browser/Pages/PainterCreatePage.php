@@ -28,6 +28,7 @@ class PainterCreatePage extends Page
         $browser->assertPathIs($this->url())
             ->with('@form', function (Browser $browser) {
                 $browser->assertSeeText('Paintings')
+                    ->scrollToBottom()
                     ->with(new HasMany('paintings'), function (Browser $browser) {
                         // 点击新增
                         $browser->add();

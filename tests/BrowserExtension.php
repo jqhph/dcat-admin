@@ -124,6 +124,15 @@ JS
                     return Str::contains($resolver->findOrFail('')->getText(), $text);
                 }, $message);
             },
+            // 滚动到页面底部
+            'scrollToBottom' => function () {
+                $this->script(
+                    <<<JS
+            $(document).scrollTop($(document).height() - $(window).height()); 
+JS
+                );
+                return $this;
+            },
         ];
 
         foreach ($functions as $method => $callback) {

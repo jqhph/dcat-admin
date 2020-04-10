@@ -15,6 +15,7 @@ namespace Laravel\Dusk
      * @method $this assertSeeText(string $text)
      * @method $this assertSeeInBody(string $text)
      * @method $this waitForTextInBody(string $text, int $seconds = null)
+     * @method $this scrollToBottom()
      */
     class Browser
     {
