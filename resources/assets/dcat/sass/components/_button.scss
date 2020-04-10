@@ -6,6 +6,9 @@
   box-shadow: $btn-shadow;
   cursor: pointer;
 }
+a.btn {
+  line-height: 1.3;
+}
 
 .btn-warning {
   color: white;
@@ -26,14 +29,14 @@
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.45rem 1rem !important;
-  font-size: 0.65rem;
-  line-height: 1.4;
+  //padding: 0.45rem 1rem !important;
+  font-size: 12px;
+  line-height: 1.1;
   height: 30px;
 }
 
 //a.btn-sm, .btn-group-sm > a.btn {
-//  padding: 0.6rem 1rem !important;
+//  line-height: 1.4;
 //}
 
 // --------------------- btn-custom -----------------------

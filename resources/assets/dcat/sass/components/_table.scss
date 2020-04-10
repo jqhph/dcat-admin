@@ -3,6 +3,12 @@
   margin-bottom: 0;
 }
 
+.table-middle {
+  td {
+    vertical-align: middle;
+  }
+}
+
 table.dataTable thead tr {
   background: transparent;
 }

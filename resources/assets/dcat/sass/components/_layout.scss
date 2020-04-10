@@ -1,8 +1,24 @@
-.pin, .pin-y {
-  top: 0;
-  bottom: 0;
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  line-height: 1.3
 }
-.pin {
-  right: 0;
-  left: 0;
+
+.content .content-wrapper {
+  padding: 7rem 2rem 0;
+}
+
+.navbar-fixed-top {
+  .content-wrapper {
+    padding-top: 6rem;
+  }
+}
+
+.full-page {
+  .content .content-wrapper {
+    padding: 0;
+    margin-left: 0!important;
+  }
+}
+
+ol, ul, dl {
+  margin-bottom: 0;
 }

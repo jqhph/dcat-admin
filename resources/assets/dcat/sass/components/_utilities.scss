@@ -1,0 +1,167 @@
+// 阴影
+.shadow-0 {
+  box-shadow: none!important;
+}
+.shadow {
+  box-shadow: $shadow!important;
+}
+.shadow-100 {
+  box-shadow: $shadow-100!important;
+}
+.shadow-200 {
+  box-shadow: $shadow-200!important;
+}
+
+// 文本大小
+// small
+.font-sm-1{
+  font-size: 0.7rem !important;
+}
+.font-sm-2{
+  font-size: 0.8rem !important;
+}
+.font-sm-3{
+  font-size: 0.9rem !important;
+}
+// medium
+.font-md-1{
+  font-size: 1.1rem !important;
+}
+.font-md-2{
+  font-size: 1.2rem !important;
+}
+.font-md-3{
+  font-size: 1.3rem !important;
+}
+.font-md-4{
+  font-size: 1.4rem !important;
+}
+.font-md-5{
+  font-size: 1.5rem !important;
+}
+//large
+.font-lg-1{
+  font-size: 2rem !important;
+}
+.font-lg-2{
+  font-size: 3rem !important;
+}
+.font-lg-3{
+  font-size: 4rem !important;
+}
+.font-lg-4{
+  font-size: 5rem !important;
+}
+.font-lg-5{
+  font-size: 6rem !important;
+}
+
+// Font weights
+
+.font-w-300 {
+  font-weight: 300;
+}
+.font-w-400 {
+  font-weight: 400;
+}
+.font-w-500 {
+  font-weight: 500;
+}
+.font-w-600 {
+  font-weight: 600;
+}
+.font-w-700 {
+  font-weight: 700;
+}
+
+// Font style
+.text-italic {
+  font-style: italic;
+}
+.text-highlight {
+  padding: 4px 6px;
+}
+
+//
+.pin, .pin-y {
+  top: 0;
+  bottom: 0;
+}
+.pin {
+  right: 0;
+  left: 0;
+}
+
+// icon
+.icon-bg-circle{
+  color: $white;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+.icon-left{
+  margin-right:0.5rem;
+}
+.icon-right{
+  margin-right:0.5rem;
+}
+.icon-spin {
+  display: inline-block;
+  animation: spin 1s infinite linear;
+}
+
+// spin
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.round{@include border-radius(1.5rem);}
+.square{@include border-radius($btn-border-radius-square);}
+
+.icon-line-height{
+  line-height : 1.5rem !important;
+}
+
+// Spinner classes
+.spinner {
+  display: inline-block;
+  -webkit-animation: spin 1s linear infinite;
+  -o-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Button focus outline
+button:focus{
+  outline: none;
+}
