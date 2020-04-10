@@ -13,6 +13,10 @@ div.btn {
   line-height: 1.5;
 }
 
+div.btn.btn-sm, .btn-group-sm > div.btn {
+  line-height: 1.2;
+}
+
 a.btn-sm, .btn-group-sm > a.btn {
   line-height: 1.3;
 }
