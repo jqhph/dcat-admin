@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
  * 文件分块上传合并处理中间件.
  *
  * Class WebUploader
- * @package Dcat\Admin\Middleware
  */
 class WebUploader
 {

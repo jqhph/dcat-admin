@@ -5,7 +5,6 @@ namespace Dcat\Admin\Grid\Tools;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Arr;
 
 class QuickSearch extends AbstractTool
 {

@@ -4,7 +4,6 @@ namespace Dcat\Admin\Support;
 
 use Illuminate\Http\Request;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
