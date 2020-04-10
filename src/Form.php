@@ -606,9 +606,11 @@ class Form implements Renderable
      */
     protected function beforeStore(array $data)
     {
+        $this->inputs = $data;
+
         $this->build();
 
-        $this->prepareStepFormFields($data);
+        $this->prepareStepFormFields($this->inputs);
 
         if (($response = $this->callSubmitted())) {
             return $response;
@@ -616,32 +618,32 @@ class Form implements Renderable
 
         // Validate step form.
         if ($this->isStepFormValidationRequest()) {
-            return $this->validateStepForm($data);
+            return $this->validateStepForm($this->inputs);
         }
 
-        if ($response = $this->handleUploadFile($data)) {
+        if ($response = $this->handleUploadFile($this->inputs)) {
             return $response;
         }
 
-        if ($response = $this->handleFileDeleteBeforeCreate($data)) {
-            $this->deleteFileInStepFormStashData($data);
+        if ($response = $this->handleFileDeleteBeforeCreate($this->inputs)) {
+            $this->deleteFileInStepFormStashData($this->inputs);
 
             return $response;
         }
 
-        if ($response = $this->handleFileDeleteWhenCreating($data)) {
-            $this->deleteFileInStepFormStashData($data);
+        if ($response = $this->handleFileDeleteWhenCreating($this->inputs)) {
+            $this->deleteFileInStepFormStashData($this->inputs);
 
             return $response;
         }
 
         // Handle validation errors.
-        if ($validationMessages = $this->validationMessages($data)) {
+        if ($validationMessages = $this->validationMessages($this->inputs)) {
             return $this->validationErrorsResponse($validationMessages);
         }
 
-        if (($response = $this->prepare($data))) {
-            $this->deleteFilesWhenCreating($data);
+        if (($response = $this->prepare($this->inputs))) {
+            $this->deleteFilesWhenCreating($this->inputs);
 
             return $response;
         }
@@ -656,7 +658,7 @@ class Form implements Renderable
      */
     protected function prepare($data = [])
     {
-        $this->inputs = array_merge($this->removeIgnoredFields($data), $this->inputs);
+        $this->inputs = $this->removeIgnoredFields($data);
 
         if (($response = $this->callSaving()) instanceof Response) {
             return $response;
@@ -774,32 +776,34 @@ class Form implements Renderable
 
         $this->setFieldOriginalValue();
 
+        $this->inputs = $data;
+
         if ($response = $this->callSubmitted()) {
             return $response;
         }
 
-        if ($uploadFileResponse = $this->handleUploadFile($data)) {
+        if ($uploadFileResponse = $this->handleUploadFile($this->inputs)) {
             return $uploadFileResponse;
         }
 
-        $isEditable = $this->isEditable($data);
+        $isEditable = $this->isEditable($this->inputs);
 
-        $data = $this->handleEditable($data);
+        $this->inputs = $this->handleEditable($this->inputs);
 
-        $data = $this->handleFileDelete($data);
+        $this->inputs = $this->handleFileDelete($this->inputs);
 
-        if ($response = $this->handleOrderable($data)) {
+        if ($response = $this->handleOrderable($this->inputs)) {
             return $response;
         }
 
         // Handle validation errors.
-        if ($validationMessages = $this->validationMessages($data)) {
+        if ($validationMessages = $this->validationMessages($this->inputs)) {
             return $this->validationErrorsResponse(
                 $isEditable ? Arr::dot($validationMessages->toArray()) : $validationMessages
             );
         }
 
-        if ($response = $this->prepare($data)) {
+        if ($response = $this->prepare($this->inputs)) {
             return $response;
         }
     }

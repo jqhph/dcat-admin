@@ -298,7 +298,7 @@ EOF;
 
             $text = $this->showEdit ? '' : "<span class='d-none d-sm-inline'> &nbsp; $edit</span>";
 
-            $quickBtn = "<a data-url='$url' class='btn btn-sm btn-primary {$id}'><i class=' fa fa-clone'></i>$text</a>";
+            $quickBtn = "<button data-url='$url' class='btn btn-sm btn-primary {$id}'><i class=' fa fa-clone'></i>$text</button>";
         }
 
         return <<<HTML

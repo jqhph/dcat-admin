@@ -13,7 +13,7 @@ class Icon extends Text
 
         $value = old($this->column, $this->value());
 
-        $this->prepend("<i class='fa {$value}'></i>")
+        $this->prepend("<i class='fa {$value}'>&nbsp;</i>")
             ->defaultAttribute('autocomplete', 'off');
 
         return parent::render();

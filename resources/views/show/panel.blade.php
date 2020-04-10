@@ -5,7 +5,7 @@
 </div>
 @endif
 <div class="box-body">
-    <div class="form-horizontal">
+    <div class="form-horizontal mt-1">
         @foreach($fields as $field)
             {!! $field->render() !!}
         @endforeach

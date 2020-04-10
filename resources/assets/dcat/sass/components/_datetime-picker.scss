@@ -8,3 +8,15 @@
   color: $primary-darker!important;
   font-weight: bold;
 }
+
+.bootstrap-datetimepicker-widget table td {
+  width: 0 !important;
+
+  .btn {
+    padding: 0.5rem .5rem !important;
+  }
+}
+
+.bootstrap-datetimepicker-widget table td, .bootstrap-datetimepicker-widget table th {
+  padding: .5em .1em!important;
+}

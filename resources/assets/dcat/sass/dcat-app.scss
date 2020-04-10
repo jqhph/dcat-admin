@@ -15,41 +15,26 @@
 // sweetalert弹窗
 @import "./sweetalert/sweetalert2";
 
+html {
+  font-size: 14px;
+  height: 100%;
+  letter-spacing: .01rem;
+}
+
 html body {
   background-color: $body-bg;
   color: $font-color;
 }
 
 // 字体
-body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5 {
+body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: $font-family-sans-serif;
-}
-
-html body .content .content-wrapper {
-  padding: calc(2.2rem - 0.4rem) 2.45rem 0;
-}
-
-ol, ul, dl {
-  margin-bottom: 0;
-}
-
-// 阴影
-.shadow-0 {
-  box-shadow: none!important;
-}
-.shadow {
-  box-shadow: $shadow!important;
-}
-.shadow-100 {
-  box-shadow: $shadow-100!important;
-}
-.shadow-200 {
-  box-shadow: $shadow-200!important;
 }
 
 // 颜色class定义
 @import "./colors";
-
+// 常用class定义
+@import "./components/utilities";
 // 布局
 @import "./components/layout";
 // 按钮
@@ -58,6 +43,8 @@ ol, ul, dl {
 @import "./components/header-navbar";
 // 页面头
 @import "./components/content-header";
+// 表格自定义样式
+@import "./components/custom-data-table";
 // 表单
 @import "./components/form";
 // 分页
@@ -79,7 +66,7 @@ ol, ul, dl {
 // layer弹窗
 @import "./components/layer";
 // 滑动面板
-@import "./components/slider";
+@import "./components/slider-panel";
 // grid selector
 @import "./components/grid-selector";
 // box
@@ -102,3 +89,9 @@ ol, ul, dl {
 @import "./components/popover";
 // datetime picker
 @import "./components/datetime-picker";
+// 菜单
+@import "./components/sidebar";
+// 模态窗
+@import "./components/modal";
+// icon picker
+@import "./components/icon-picker";

@@ -4,8 +4,8 @@
 
 .nav.nav-tabs .nav-item .nav-link {
   font-size: 1rem;
-  padding: 17px;
-  text-transform: uppercase;
+  padding: 17px 14px;
+  text-transform: capitalize;
   letter-spacing: 0.045rem;
 }
 
@@ -27,6 +27,27 @@
 
   .nav.nav-tabs.nav-left ~ .tab-content .tab-pane {
     background-color: transparent;
+  }
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: 0;
+}
+.nav.nav-tabs {
+  border-bottom: 1px solid #eee;
+}
+
+.nav-vertical {
+  .nav.nav-tabs {
+    border-bottom: 0;
+  }
+
+  .nav-tabs.flex-column {
+    border-right: 0;
+
+    > li {
+      border-bottom: 0;
+    }
   }
 }
 

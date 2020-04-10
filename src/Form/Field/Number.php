@@ -8,6 +8,8 @@ class Number extends Text
         '@number-input',
     ];
 
+    protected $default = 0;
+
     public function render()
     {
         $this->default($this->default);

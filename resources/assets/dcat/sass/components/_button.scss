@@ -1,11 +1,24 @@
 .btn {
-  padding: 0.83rem 1.2rem !important;
-  font-size: .95rem;
-  height: 37.6px;
+  padding: 0.54rem 1.2rem !important;
+  height: 38px;
   line-height: 1.2;
   border-radius: 0.2rem;
   box-shadow: $btn-shadow;
   cursor: pointer;
+}
+a.btn {
+  line-height: 1.4;
+}
+div.btn {
+  line-height: 1.5;
+}
+
+a.btn-sm, .btn-group-sm > a.btn {
+  line-height: 1.3;
+}
+
+.btn-warning {
+  color: white;
 }
 
 .btn-group {
@@ -23,75 +36,29 @@
 }
 
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.6rem 1rem !important;
-  font-size: 0.6rem;
-  line-height: 1;
+  //padding: 0.45rem 1rem !important;
+  font-size: 12px;
+  line-height: 1.1;
   height: 30px;
 }
 
 //a.btn-sm, .btn-group-sm > a.btn {
-//  padding: 0.6rem 1rem !important;
+//  line-height: 1.4;
 //}
 
 // --------------------- btn-custom -----------------------
 .btn-custom {
-  background: $custom;
-  border-color: $custom;
-  color: $white;
+  @include button-variant($custom, $custom);
 }
-
-.btn-custom:hover {
-  color: $white;
-  box-shadow: 0 8px 25px -8px $custom;
-}
-
 .btn-outline-custom {
-  border: 1px solid $custom;
-  color: $custom;
-  box-shadow: none;
+  @include button-outline-variant($custom, $custom);
 }
-
-.btn-outline-custom:hover {
-  background: rgba($custom, .15);
-  color: $custom;
-}
-
-.btn-outline-custom:not(:disabled):not(.disabled):active, .btn-outline-custom:not(:disabled):not(.disabled).active, .show > .btn-outline-custom.dropdown-toggle {
-  color: #fff;
-  background-color: $custom;
-  border-color: $custom;
-}
-.btn-outline-custom:not(:disabled):not(.disabled):active:focus, .btn-outline-custom:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-custom.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba($custom, 0.5);
-}
-
 // --------------------- btn-cyan -----------------------
 .btn-cyan {
-  background: $cyan;
-  border-color: $cyan;
-  color: $white;
+  @include button-variant($cyan, $cyan);
 }
-.btn-cyan:hover {
-  color: $white;
-  box-shadow: 0 8px 25px -8px $cyan;
-}
-
 .btn-outline-cyan {
-  border: 1px solid $cyan;
-  color: $cyan;
-  box-shadow: none;
-}
-.btn-outline-cyan:hover {
-  background: rgba($cyan, .15);
-  color: $cyan;
-}
-.btn-outline-cyan:not(:disabled):not(.disabled):active, .btn-outline-cyan:not(:disabled):not(.disabled).active, .show > .btn-outline-cyan.dropdown-toggle {
-  color: #fff;
-  background-color: $cyan;
-  border-color: $cyan;
-}
-.btn-outline-cyan:not(:disabled):not(.disabled):active:focus, .btn-outline-cyan:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-cyan.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba($cyan, 0.5);
+  @include button-outline-variant($cyan, $cyan);
 }
 
 .btn.btn-white {

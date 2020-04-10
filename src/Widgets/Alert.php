@@ -12,7 +12,7 @@ class Alert extends Widget
     protected $view = 'admin::widgets.alert';
 
     /**
-     * @var string|\Symfony\Component\Translation\TranslatorInterface
+     * @var string
      */
     protected $title;
 
@@ -24,7 +24,7 @@ class Alert extends Widget
     /**
      * @var string
      */
-    protected $style = 'light';
+    protected $style;
 
     /**
      * @var string
@@ -118,16 +118,6 @@ class Alert extends Widget
     public function danger()
     {
         return $this->style('danger')->icon('fa fa-ban');
-    }
-
-    /**
-     * Set light style.
-     *
-     * @return $this
-     */
-    public function light()
-    {
-        return $this->style('light');
     }
 
     /**

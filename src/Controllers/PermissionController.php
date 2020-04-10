@@ -71,7 +71,7 @@ class PermissionController extends AdminController
         $tree->disableCreateButton();
 
         $tree->branch(function ($branch) {
-            $payload = "<div class='pull-left' style='min-width:310px'><b>{$branch['name']}</b>&nbsp;&nbsp;[<span class='text-blue'>{$branch['slug']}</span>]";
+            $payload = "<div class='pull-left' style='min-width:310px'><b>{$branch['name']}</b>&nbsp;&nbsp;[<span class='text-primary'>{$branch['slug']}</span>]";
 
             $path = array_filter($branch['http_path']);
 

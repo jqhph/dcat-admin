@@ -179,6 +179,9 @@ trait WebUploader
         if (empty($this->options['server'])) {
             $this->options['server'] = $this->form->action();
         }
+        if (empty($this->options['updateServer'])) {
+            $this->options['updateServer'] = $this->form->action();
+        }
         if (empty($this->options['deleteUrl'])) {
             $this->options['deleteUrl'] = $this->form->action();
         }

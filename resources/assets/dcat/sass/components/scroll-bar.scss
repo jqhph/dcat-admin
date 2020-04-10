@@ -1,0 +1,17 @@
+
+.ps__thumb-y {
+  background-color: lighten($primary, 5%);
+  background-image: linear-gradient(45deg,
+          rgba(255,255,255,.15) 25%,
+          transparent 25%,
+          rgba(255,255,255,.15) 25%,
+          transparent 25%,
+          rgba(255,255,255,.15) 25%,
+          transparent 25%,
+          rgba(255,255,255,.15) 25%,
+          transparent 25%,
+          rgba(255,255,255,.15) 25%,
+          transparent 25%,
+          transparent
+  );
+}

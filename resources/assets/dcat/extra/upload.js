@@ -5,6 +5,8 @@
             addFileButton: '.add-file-button', // 继续添加按钮选择器
             isImage: false,
             preview: [], // 数据预览
+            server: '',
+            updateServer: '',
             deleteUrl: '',
             deleteData: {},
             thumbHeight: 160,
@@ -464,7 +466,7 @@
             form[updateColumn] = values.join(',');
             delete form['upload_column'];
 
-            $.post(opts.server, form);
+            $.post(opts.updateServer, form);
         }
 
         function setState(val, args) {
@@ -768,7 +770,7 @@
             $info = $statusBar.find('.info');
 
             // 上传按钮
-            $upload = $wrap.find('.uploadBtn');
+            $upload = $wrap.find('.upload-btn');
 
             // 没选择文件之前的内容。
             $placeHolder = $wrap.find('.placeholder');

@@ -80,7 +80,7 @@ class FilterButton extends AbstractTool
         return false
     });
     
-    $('#{$id} .close-slider').on('click', function () {
+    $('#{$id} .slider-close').on('click', function () {
         slider.close()
     })
 })();

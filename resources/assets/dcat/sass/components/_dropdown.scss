@@ -6,7 +6,7 @@
 
     .dropdown-item:hover {
       background-color: $dark30;
-      color: #333;
+      color: $font-color;
     }
   }
 
@@ -21,11 +21,11 @@
 }
 .dropdown .dropdown-menu .dropdown-item, .dropup .dropdown-menu .dropdown-item, .dropright .dropdown-menu .dropdown-item, .dropleft .dropdown-menu .dropdown-item {
   padding: 0;
-  color: #333;
+  color: $font-color;
 }
 .dropdown-item a, .dropdown-menu label {
-  font-size: 1.03rem;
-  color: #333;
+  //font-size: .95rem;
+  color: $font-color;
 }
 .dropdown-item a {
   padding: 0.35rem 1.38rem;

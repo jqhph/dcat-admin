@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-      data-textdirection="{{ $configData['direction'] === 'rtl' ? 'rtl' : 'ltr' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -26,9 +25,7 @@
     @yield('head')
 </head>
 
-<body
-      class="dcat-admin-body vertical-layout vertical-menu-modern 1-column {{ $configData['blank_page_class'] }} {{ $configData['body_class'] }} {{($configData['theme'] === 'light') ? '' : $configData['theme'] }}"
-        data-menu="vertical-menu-modern" data-col="1-column" data-layout="{{ $configData['theme'] }}">
+<body class="dcat-admin-body full-page {{ $configData['body_class'] }}">
 
 <script>
     var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
@@ -38,7 +35,7 @@
 {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
 <div class="app-content content">
-    <div class="content-wrapper" id="{{ $pjaxContainerId }}">
+    <div class="wrapper" id="{{ $pjaxContainerId }}">
         @yield('app')
     </div>
 </div>

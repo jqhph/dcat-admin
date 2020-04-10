@@ -428,6 +428,8 @@ class Model
             $this->data = collect();
         }
 
+        $this->stdObjToArray($this->data);
+
         return $this;
     }
 
@@ -487,6 +489,22 @@ class Model
         $this->paginator = $paginator;
 
         $paginator->setPageName($this->pageName);
+    }
+
+    /**
+     * @param Collection $collection
+     *
+     * @return Collection
+     */
+    protected function stdObjToArray(Collection $collection)
+    {
+        return $collection->transform(function ($item) {
+            if ($item instanceof \stdClass) {
+                return (array) $item;
+            }
+
+            return $item;
+        });
     }
 
     /**

@@ -1,24 +1,10 @@
 
 .main-menu {
   .navbar-header {
-    padding: 0.35rem 1rem 4.5rem;
+    padding: 0.35rem 1rem 0;
 
     .navbar-brand {
       margin-top: 1.2rem;
-
-      .logo-mini {
-        display: none;
-        font-size: 1.8rem;
-      }
-
-      .logo-lg {
-        color: $primary;
-        font-weight: 400;
-        letter-spacing: 0.01rem;
-        font-size: 1.55rem;
-        -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
-        animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
-      }
 
       img {
         display: inline-block;
@@ -28,11 +14,20 @@
       }
     }
 
-    .modern-nav-toggle {
-      display: block;
-      float: right;
-      margin-top: 1px;
+    .logo-mini {
+      display: none;
+      font-size: 1.8rem;
     }
+
+    .logo-lg {
+      color: $primary;
+      font-weight: 400;
+      letter-spacing: 0.01rem;
+      font-size: 1.55rem;
+      -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+      animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+    }
+
 
     .nav-item {
       width: 100%;
@@ -55,21 +50,19 @@
   box-shadow: $menu-shadow;
 }
 
-body.vertical-layout.vertical-menu-modern.menu-collapsed {
-  .main-menu:not(.expanded) .navbar-header {
-    width: 80px;
-    padding: 0.35rem 15px;
+body.sidebar-collapse {
+  .main-sidebar:not(:hover) {
+    .navbar-header {
+      width: 80px;
+      padding: 0.35rem 15px;
 
-    .logo-lg {
-      display: none;
-    }
+      .logo-lg {
+        display: none;
+      }
 
-    .logo-mini {
-      display: inline-block;
+      .logo-mini {
+        display: inline-block;
+      }
     }
   }
-}
-
-body.vertical-layout.vertical-menu-modern.menu-expanded .main-menu .navigation > li > a > i:before {
-  font-size: 1.3rem;
 }

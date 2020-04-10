@@ -1,3 +1,11 @@
+.form-control {
+  border-color: $input-border-color;
+  color: $font-color;
+  padding: .5rem .7rem;
+  font-size: .9rem;
+  max-height: 36px;
+  min-height: 36px;
+}
 
 .form-control-sm {
   padding: 0.5rem 1.5rem;
@@ -8,8 +16,13 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .input-group-sm > .form-control:not(textarea), .input-group-sm > .custom-select, .form-control-sm {
-  height: 30px;
+  max-height: 30px;
+  min-height: 30px;
   line-height: 13px;
+}
+
+.input-group .form-control {
+  height: 100%;
 }
 
 
@@ -114,6 +127,15 @@ select.form-control:not([multiple=multiple]) {
   }
 }
 
+.select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
+  min-height: 36px;
+  padding: 5px;
+  border: 1px solid rgba(0,0,0,.2);
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 32px!important;
+}
+
 .select2-dropdown {
   border: 1px solid rgba(0, 0, 0, 0.03)!important;
   box-shadow: $shadow;
@@ -132,7 +154,13 @@ select.form-control:not([multiple=multiple]) {
   padding: 2px 5px!important;
   border: 0!important;
   font-size: 90%;
+  background-color: $primary!important;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: #fff!important;
+}
+
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
   padding: 2px .7rem!important;
 }
@@ -187,4 +215,25 @@ select.form-control:not([multiple=multiple]) {
 }
 .bootstrap-duallistbox-container .info {
   color: $font-color!important;
+}
+
+//
+.has-icon-left .form-control-position {
+  right: auto;
+  left: inherit;
+}
+.form-control-position {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+}
+.has-icon-left .form-control {
+  padding-right: 2rem;
+  padding-left: 3rem;
 }

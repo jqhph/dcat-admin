@@ -39,8 +39,11 @@ const sassOptions = {
 
 mix.copyDirectory('resources/assets/images', distPath + '/images');
 mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
+mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
 
-
+// AdminLTE3.0
+mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', distPath + '/adminlte/adminlte.css').sourceMaps();
+mix.js('resources/assets/adminlte/js/AdminLTE.js', distPath + '/adminlte/adminlte.js').sourceMaps();
 
 // ------------------------------------ Dcat Admin -------------------------------------------
 function dcatPath(path) {
@@ -54,9 +57,9 @@ function dcatDistPath(path) {
 // 复制第三方插件文件夹
 mix.copyDirectory(dcatPath('plugins'), dcatDistPath('plugins'));
 // 打包app.js
-mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js'));
+mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js')).sourceMaps();
 // 打包app.scss
-mix.sass(dcatPath('sass/dcat-app.scss'), dcatDistPath('css/dcat-app.css'));
+mix.sass(dcatPath('sass/dcat-app.scss'), dcatDistPath('css/dcat-app.css')).sourceMaps();
 
 // 打包所有 extra 里面的所有js和css
 mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.js(src, dest));

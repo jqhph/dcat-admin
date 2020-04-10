@@ -1,7 +1,7 @@
 
 let idPrefix = 'dcat-slider-',
-    template = `<div id="{id}" class="customizer {class}">
-    <div class="customizer-content position-fixed p-1 ps ps--active-y"></div>
+    template = `<div id="{id}" class="slider-panel {class}">
+    <div class="slider-content position-fixed p-1 ps ps--active-y"></div>
 </div>`;
 
 export default class Slider {
@@ -23,10 +23,10 @@ export default class Slider {
         );
 
         _this.$container.appendTo('body');
-        _this.$container.find('.customizer-content').append(_this.$target);
+        _this.$container.find('.slider-content').append(_this.$target);
 
         // 滚动条
-        new PerfectScrollbar(`#${_this.id} .customizer-content`);
+        new PerfectScrollbar(`#${_this.id} .slider-content`);
 
         if (_this.options.autoDestory) {
             // 刷新或跳转页面时移除面板
