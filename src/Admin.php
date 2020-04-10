@@ -35,7 +35,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '1.0.0';
+    const VERSION = '0.8.0';
 
     /**
      * @var array
