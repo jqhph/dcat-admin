@@ -1,5 +1,5 @@
 <thead>
-<tr class="{{ $elementClass }} quick-create">
+<tr class="{{ $elementClass }} quick-create" style="cursor: pointer">
     <td colspan="{{ $columnCount }}">
         <span class="create cursor-pointer" style="display: block;">
              <i class="feather icon-plus"></i>&nbsp;{{ __('admin.quick_create') }}
