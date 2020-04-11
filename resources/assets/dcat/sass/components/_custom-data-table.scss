@@ -69,11 +69,11 @@
   content: "\E8BD";
   font-family: feather;
   position: absolute;
-  top: 0.5rem;
-  font-size: 1rem;
-  left: 1.2rem;
+  top: 0.45rem;
+  font-size: 1.1rem;
+  left: 1.1rem;
   font-weight: 300;
-  color: #777;
+  color: $dark70;
 }
 
 .custom-data-table-header .table-responsive .dataTables_wrapper .dataTables_paginate ul.pagination {

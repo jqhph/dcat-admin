@@ -11,9 +11,6 @@
         text-decoration: none;
         text-transform: uppercase;
     }
-    .dashboard-title .links > a:hover {
-        color: #fff;
-    }
     .dashboard-title h1 {
         font-weight: 200;
         font-size: 2.5rem;
