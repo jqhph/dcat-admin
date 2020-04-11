@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Layout\Content;
 
 /**
  * @see http://gergeo.se/RWD-Table-Patterns/#demo
@@ -65,9 +66,18 @@ class Responsive
         return $this;
     }
 
+    protected function disablePerfectScrollbar()
+    {
+        Content::composed(function (Content $content) {
+            $content->disablePerfectScrollbar();
+        });
+    }
+
     public function build()
     {
         Admin::collectAssets('rwd-table');
+
+        $this->disablePerfectScrollbar();
 
         $opt = json_encode($this->options);
 

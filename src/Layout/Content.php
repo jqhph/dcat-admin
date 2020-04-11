@@ -54,6 +54,11 @@ class Content implements Renderable
     protected $config = [];
 
     /**
+     * @var bool
+     */
+    protected $usingPerfectScrollbar = true;
+
+    /**
      * Content constructor.
      *
      * @param Closure|null $callback
@@ -147,6 +152,18 @@ class Content implements Renderable
         $this->formatBreadcrumb($breadcrumb);
 
         $this->breadcrumb = array_merge($this->breadcrumb, $breadcrumb);
+
+        return $this;
+    }
+
+    /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function disablePerfectScrollbar(bool $value = true)
+    {
+        $this->usingPerfectScrollbar = ! $value;
 
         return $this;
     }
@@ -388,6 +405,35 @@ class Content implements Renderable
     }
 
     /**
+     * 页面滚动条优化
+     */
+    protected function makePerfectScrollbar()
+    {
+        if (! $this->usingPerfectScrollbar) {
+            return;
+        }
+
+        Admin::script(
+            <<<'JS'
+(function () {
+    var ps, wps;            
+   if ($('.full-page .wrapper').length) {
+        wps = new PerfectScrollbar('.full-page .wrapper');
+    }
+    ps = new PerfectScrollbar('html');
+    $(document).one('pjax:send',function () {
+        ps && ps.destroy();
+        ps = null; 
+          
+        wps && wps.destroy();
+        wps = null; 
+    });
+})()
+JS
+        );
+    }
+
+    /**
      * @return array
      */
     protected function variables()
@@ -477,6 +523,8 @@ class Content implements Renderable
         $variables = $this->variables();
 
         $this->callComposed();
+
+        $this->makePerfectScrollbar();
 
         return view($this->view, $variables)->render();
     }
