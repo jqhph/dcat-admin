@@ -405,7 +405,7 @@ class Content implements Renderable
     }
 
     /**
-     * 页面滚动条优化
+     * 页面滚动条优化.
      */
     protected function makePerfectScrollbar()
     {
