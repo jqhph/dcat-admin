@@ -54,6 +54,8 @@ class SwitchGroup extends SwitchDisplay
     function init(){
         swt.each(function(){
              t = $(this);
+             t.parent().find('.switchery').remove();
+             
              new Switchery(t[0], t.data())
         })
     } 

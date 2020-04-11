@@ -108,7 +108,18 @@ class SwitchField extends Field
         $this->attribute('data-plugin', $this->getFormElementId().'switchery');
 
         $this->script = <<<JS
-function swty(){\$('[data-plugin="{$this->getFormElementId()}switchery"]').each(function(){new Switchery($(this)[0],$(this).data())})} swty();
+(function () {
+    function swty(){
+        var ipt = \$('[data-plugin="{$this->getFormElementId()}switchery"]');
+        
+        ipt.parent().find('.switchery').remove();
+        
+        ipt.each(function() {
+            new Switchery($(this)[0],$(this).data())
+        })
+    } 
+    swty();
+})()
 JS;
 
         return parent::render();

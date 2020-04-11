@@ -89,6 +89,7 @@ EOF;
 (function(){
     var swt = $('.grid-switch-{$this->grid->getName()}'), t;
     function init(){
+        swt.parent().find('.switchery').remove();
         swt.each(function(k){
             t = $(this);
             new Switchery(t[0], t.data())
