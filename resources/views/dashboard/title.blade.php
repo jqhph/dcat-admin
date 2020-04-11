@@ -20,7 +20,7 @@
         font-size: 2.5rem;
     }
     .dashboard-title.card {
-        background: {{ Admin::color()->alpha('primary', 0.95) }}
+        background: {{ Admin::color()->alpha('primary', 0.98) }}
     }
     .dashboard-title .avatar {
         background: #fff;
