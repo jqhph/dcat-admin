@@ -47,7 +47,10 @@ a.btn-sm, .btn-group-sm > a.btn {
   background: white;
   border-color: white;
 }
-
+.btn-default:hover, .btn-default:focus, .btn-default.active {
+  background: white;
+  box-shadow: $shadow-100;
+}
 //a.btn-sm, .btn-group-sm > a.btn {
 //  line-height: 1.4;
 //}
