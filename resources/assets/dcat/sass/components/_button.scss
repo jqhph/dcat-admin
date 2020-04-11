@@ -6,6 +6,11 @@
   box-shadow: $btn-shadow;
   cursor: pointer;
 }
+
+.btn-sm, .btn-xs {
+  padding: .54rem .9rem!important
+}
+
 a.btn, div.btn, span.btn {
   line-height: 1.4;
 }
