@@ -67,6 +67,10 @@ class ScaffoldController extends Controller
             Permission::error();
         }
 
+        if ($tableName = request('singular')) {
+            return $this->singular($tableName);
+        }
+
         Admin::collectAssets('select2');
 
         $dbTypes = static::$dbTypes;
@@ -79,7 +83,18 @@ class ScaffoldController extends Controller
         return $content
             ->title(ucfirst(trans('admin.scaffold.header')))
             ->description(' ')
-            ->body(view('admin::helpers.scaffold', compact('dbTypes', 'action', 'tables', 'dataTypeMap')));
+            ->body(view(
+                'admin::helpers.scaffold',
+                compact('dbTypes', 'action', 'tables', 'dataTypeMap')
+            ));
+    }
+
+    protected function singular($tableName)
+    {
+        return [
+            'status' => 1,
+            'value'  => Str::singular($tableName),
+        ];
     }
 
     public function store(Request $request)

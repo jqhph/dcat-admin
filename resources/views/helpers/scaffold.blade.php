@@ -16,16 +16,9 @@
     ])->checkAll(['migrate', 'migration']);
 @endphp
 <style>
-    /*.table>thead>tr>th {*/
-    /*    font-size:12px;*/
-    /*    text-transform:uppercase;*/
-    /*}*/
     .select2-container .select2-selection--single {
         height: 30px !important;
     }
-    /*#inputTableName {*/
-    /*    width:300px;*/
-    /*}*/
     .choose-exist-table {
         width: 100%;
     }
@@ -194,7 +187,7 @@
             <div class='form-inline d-flex justify-content-between' style="width: 100%; padding: 0 20px 12px;">
 
                 <div class='form-group'>
-                    <button type="button" class="btn btn-sm btn-success" id="add-table-field"><i class="feather icon-plus"></i>&nbsp;&nbsp;{{ucfirst(trans('admin.scaffold.add_field'))}}</button>
+                    <button type="button" class="btn btn-sm btn-success" id="add-table-field"><i class="feather icon-plus"></i>&nbsp;&nbsp;{{ucfirst(trans('admin.scaffold.addField'))}}</button>
                 </div>
 
                 <div class="row">
@@ -264,20 +257,29 @@
 
 <script>
     Dcat.ready(function () {
-        var typing = 0,
-            $model = $('#inputModelName'),
+        var $model = $('#inputModelName'),
             $controller = $('#inputControllerName'),
             $table = $('#inputTableName'),
             $fieldsBody = $('#table-fields tbody'),
             tpl = $('#table-field-tpl').html(),
             modelNamespace = 'App\\Models\\',
             controllerNamespace = 'App\\Admin\\Controllers\\',
-            dataTypeMap = {!! json_encode($dataTypeMap) !!};
+            dataTypeMap = {!! json_encode($dataTypeMap) !!},
+            helpers = Dcat.helpers;
+
+        var withSingularName = helpers.debounce(function (table) {
+            $.ajax('{{ url(request()->path()) }}?singular=' + table, {
+                success: function (data) {
+                    writeController(data.value);
+                    writeModel(data.value);
+                }
+            });
+        }, 500);
 
         $('select').select2();
 
         $('#add-table-field').click(function (event) {
-            add_field();
+            addField();
         });
 
         $('#table-fields').on('click', '.table-field-remove', function(event) {
@@ -302,7 +304,7 @@
             var val = $(this).val(), tb, db;
             if (val == '0') {
                 $table.val('');
-                get_tr().remove();
+                getTR().remove();
                 return;
             }
             val = val.split('|');
@@ -312,16 +314,15 @@
             Dcat.loading();
             $table.val(tb);
 
-            write_controller(tb);
-            write_model(tb);
+            withSingularName(tb);
 
-            $.post('{{admin_url('helpers/scaffold/table')}}', {db: db, tb: tb, _token: Dcat.token}, function (res) {
+            $.post('{{ admin_url('helpers/scaffold/table') }}', {db: db, tb: tb, _token: Dcat.token}, function (res) {
                 Dcat.loading(false);
 
                 if (!res.list) return;
                 var i, list = res.list, $id = $('#inputPrimaryKey'), updated, created, soft;
 
-                get_tr().remove();
+                getTR().remove();
                 for (i in list) {
                     if (list[i].id) {
                         $id.val(i);
@@ -340,43 +341,28 @@
                         continue;
                     }
 
-                    var c = Dcat.helpers.replace(list[i].comment, '"', '');
-                    add_field({
+                    var c = helpers.replace(list[i].comment, '"', '');
+                    addField({
                         name: i,
                         lang: c,
                         type: list[i].type,
-                        default: Dcat.helpers.replace(list[i].default, '"', ''),
+                        default: helpers.replace(list[i].default, '"', ''),
                         comment: c,
                         nullable: list[i].nullable != 'NO',
                     });
                 }
 
-                add_timestamps(updated, created);
-                add_softdelete(soft);
+                addTimestamps(updated, created);
+                addSoftdelete(soft);
             });
 
         });
 
-
         $table.on('keyup', function (e) {
-            var $this = $(this);
-            $this.val($this.val());
-
-            if (typing == 1) {
-                return;
-            }
-            typing = 1;
-
-            setTimeout(function () {
-                typing = 0;
-
-                write_controller($this.val());
-                write_model($this.val());
-            }, 100);
-
+            withSingularName($(this).val());
         });
 
-        function add_timestamps(updated, created) {
+        function addTimestamps(updated, created) {
             if (updated && created) {
                 return;
             }
@@ -384,39 +370,39 @@
 
             var c;
             if (updated) {
-                c = Dcat.helpers.replace(updated.comment, '"', '');
-                add_field({
+                c = helpers.replace(updated.comment, '"', '');
+                addField({
                     name: 'updated_at',
                     lang: c,
                     type: updated.type,
-                    default: Dcat.helpers.replace(updated.default, '"', ''),
+                    default: helpers.replace(updated.default, '"', ''),
                     comment: c,
                     nullable: updated.nullable != 'NO',
                 });
             }
             if (created) {
-                c = Dcat.helpers.replace(created.comment, '"', '');
-                add_field({
+                c = helpers.replace(created.comment, '"', '');
+                addField({
                     name: 'created_at',
                     lang: c,
                     type: created.type,
-                    default: Dcat.helpers.replace(created.default, '"', ''),
+                    default: helpers.replace(created.default, '"', ''),
                     comment: c,
                     nullable: created.nullable != 'NO',
                 });
             }
         }
 
-        function add_softdelete(soft) {
+        function addSoftdelete(soft) {
             if (soft) {
                 $('[name="soft_deletes"]').prop('checked', true);
             }
         }
 
-        function add_field(val) {
+        function addField(val) {
             val = val || {};
 
-            var idx = get_tr().length,
+            var idx = getTR().length,
                 $field = $(
                     tpl
                         .replace(/__index__/g, idx)
@@ -442,27 +428,27 @@
 
         }
 
-        function write_controller(val) {
-            val = ucfirst(to_hump(to_line(val)));
+        function writeController(val) {
+            val = ucfirst(toHump(toLine(val)));
             $controller.val(val ? (controllerNamespace + val + 'Controller') : controllerNamespace);
         }
-        function write_model(val) {
-            $model.val(modelNamespace + ucfirst(ucfirst(to_hump(to_line(val)))));
+        function writeModel(val) {
+            $model.val(modelNamespace + ucfirst(ucfirst(toHump(toLine(val)))));
         }
 
-        function get_tr() {
+        function getTR() {
             return $('#table-fields tbody tr');
         }
 
         // 下划线转换驼峰
-        function to_hump(name) {
+        function toHump(name) {
             return name.replace(/\_(\w)/g, function (all, letter) {
                 return letter.toUpperCase();
             });
         }
 
         // 驼峰转换下划线
-        function to_line(name) {
+        function toLine(name) {
             return name.replace(/([A-Z])/g,"_$1").toLowerCase();
         }
 
