@@ -527,7 +527,15 @@ class Field implements Renderable
     public function value($value = null)
     {
         if (is_null($value)) {
-            return is_null($this->value) ? $this->default() : $this->value;
+            if (
+                (is_null($this->value) || (is_array($this->value) && empty($this->value)))
+                && (method_exists($this->form, 'isCreating') && $this->form->isCreating())
+            ) {
+                // 只有creating页面才允许使用default
+                return $this->default();
+            }
+
+            return $this->value;
         }
 
         $this->value = $value;

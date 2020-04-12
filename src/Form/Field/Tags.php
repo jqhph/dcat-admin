@@ -149,7 +149,7 @@ class Tags extends Field
     public function value($value = null)
     {
         if (is_null($value)) {
-            return empty($this->value) ? Helper::array($this->default()) : $this->value;
+            return Helper::array(parent::value());
         }
 
         $this->value = Helper::array($value);
