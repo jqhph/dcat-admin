@@ -416,18 +416,20 @@ class Content implements Renderable
         Admin::script(
             <<<'JS'
 (function () {
-    var ps, wps;            
-   if ($('.full-page .wrapper').length) {
-        wps = new PerfectScrollbar('.full-page .wrapper');
+    if ($(window).width() > 768) {
+        var ps, wps;
+        if ($('.full-page .wrapper').length) {
+            wps = new PerfectScrollbar('.full-page .wrapper');
+        }
+        ps = new PerfectScrollbar('html');
+        $(document).one('pjax:send',function () {
+            ps && ps.destroy();
+            ps = null; 
+              
+            wps && wps.destroy();
+            wps = null; 
+        });
     }
-    ps = new PerfectScrollbar('html');
-    $(document).one('pjax:send',function () {
-        ps && ps.destroy();
-        ps = null; 
-          
-        wps && wps.destroy();
-        wps = null; 
-    });
 })()
 JS
         );
