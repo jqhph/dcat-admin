@@ -307,7 +307,10 @@
 
         i {
           margin-right: .75rem;
-          font-size: .9rem;
+          margin-left: 3px;
+        }
+        p i {
+          margin-right: 0;
         }
       }
 
