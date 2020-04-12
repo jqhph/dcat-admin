@@ -1,5 +1,5 @@
 @if($inline)
-<div class="d-flex">
+<div class="d-flex flex-wrap">
 @endif
 
 @foreach($options as $k => $label)

@@ -45,32 +45,6 @@ class Checkbox extends MultipleSelect
     }
 
     /**
-     * Set or get value of the field.
-     *
-     * @param null $value
-     *
-     * @return mixed
-     */
-    public function value($value = null)
-    {
-        if (is_null($value)) {
-            if ($this->value === null) {
-                return $this->default();
-            }
-
-            if (count($this->value) === 0) {
-                return $this->default();
-            }
-
-            return $this->value;
-        }
-
-        $this->value = $value;
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function render()
