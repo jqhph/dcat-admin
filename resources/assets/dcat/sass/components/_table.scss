@@ -132,3 +132,8 @@ table.table-bordered.dataTable.complex-headers {
     border-bottom: 0;
   }
 }
+
+.table-hover tbody tr:hover {
+  color: $font-color;
+  background-color: lighten($dark30, 1%);
+}
