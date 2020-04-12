@@ -569,7 +569,7 @@ class Field implements Renderable
      *
      * @param $default
      *
-     * @return $this
+     * @return $this|mixed
      */
     public function default($default = null)
     {
@@ -579,7 +579,7 @@ class Field implements Renderable
                 && method_exists($this->form, 'isCreating')
                 && ! $this->form->isCreating()
             ) {
-                return null;
+                return;
             }
 
             if ($this->default instanceof \Closure) {
