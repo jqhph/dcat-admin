@@ -528,10 +528,9 @@ class Field implements Renderable
     {
         if (is_null($value)) {
             if (
-                (is_null($this->value) || (is_array($this->value) && empty($this->value)))
-                && (method_exists($this->form, 'isCreating') && $this->form->isCreating())
+                $this->value === null
+                || (is_array($this->value) && empty($this->value))
             ) {
-                // 只有creating页面才允许使用default
                 return $this->default();
             }
 
@@ -575,6 +574,14 @@ class Field implements Renderable
     public function default($default = null)
     {
         if ($default === null) {
+            if (
+                $this->form
+                && method_exists($this->form, 'isCreating')
+                && ! $this->form->isCreating()
+            ) {
+                return null;
+            }
+
             if ($this->default instanceof \Closure) {
                 return call_user_func($this->default, $this->form);
             }
@@ -634,6 +641,9 @@ class Field implements Renderable
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function old()
     {
         return old($this->column, $this->value());
