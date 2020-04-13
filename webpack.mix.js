@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-const exec = require('child_process').exec;
 require('dotenv').config();
 
 /*
@@ -12,7 +11,6 @@ require('dotenv').config();
  | file for the application as well as bundling up all the JS files.
  |
  */
-
 const glob = require('glob')
 
 let distPath = mix.inProduction() ? 'resources/dist' : 'resources/pre-dist';
