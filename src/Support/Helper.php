@@ -578,4 +578,22 @@ class Helper
     {
         return mb_strpos(mb_strtolower($_SERVER['HTTP_USER_AGENT'] ?? ''), 'qqbrowser') !== false;
     }
+
+    /**
+     * @param string $url
+     *
+     * @return void
+     */
+    public static function setPreviousUrl($url)
+    {
+        session()->flash('admin.prev.url', static::urlWithoutQuery((string) $url, '_pjax'));
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPreviousUrl()
+    {
+        return url(session()->get('admin.prev.url')) ?: url()->previous();
+    }
 }

@@ -3,7 +3,9 @@
 namespace Dcat\Admin\Middleware;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 
 class Bootstrap
 {
@@ -13,7 +15,11 @@ class Bootstrap
         $this->setupScript();
         $this->fireEvents();
 
-        return $next($request);
+        $response = $next($request);
+
+        $this->storeCurrentUrl($request);
+
+        return $response;
     }
 
     protected function includeBootstrapFile()
@@ -34,5 +40,22 @@ class Bootstrap
         Admin::callBooting();
 
         Admin::callBooted();
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request
+     *
+     * @return void
+     */
+    protected function storeCurrentUrl(Request $request)
+    {
+        if (
+            $request->method() === 'GET'
+            && $request->route()
+            && ! Helper::isAjaxRequest()
+            && ! $request->prefetch()
+        ) {
+           Helper::setPreviousUrl($request->fullUrl());
+        }
     }
 }
