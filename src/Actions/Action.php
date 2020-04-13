@@ -146,7 +146,7 @@ abstract class Action implements Renderable
     public function selector()
     {
         if (is_null($this->selector)) {
-            return static::makeSelector($this->selectorPrefix);
+            return $this->makeSelector($this->selectorPrefix);
         }
 
         return $this->selector;
@@ -158,7 +158,7 @@ abstract class Action implements Renderable
      *
      * @return string
      */
-    public static function makeSelector($prefix, $class = null)
+    public function makeSelector($prefix, $class = null)
     {
         $class = $class ?: static::class;
 
@@ -231,7 +231,9 @@ HTML;
         }
 
         $this->setupHandler();
+
         $this->setupHtmlAttributes();
+
         if ($script = $this->script()) {
             Admin::script($script);
         }
