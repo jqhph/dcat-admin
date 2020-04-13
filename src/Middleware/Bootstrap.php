@@ -5,7 +5,6 @@ namespace Dcat\Admin\Middleware;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Session\Store;
 
 class Bootstrap
 {
@@ -55,7 +54,7 @@ class Bootstrap
             && ! Helper::isAjaxRequest()
             && ! $request->prefetch()
         ) {
-           Helper::setPreviousUrl($request->fullUrl());
+            Helper::setPreviousUrl($request->fullUrl());
         }
     }
 }
