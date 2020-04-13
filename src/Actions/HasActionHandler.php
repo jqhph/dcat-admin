@@ -78,7 +78,7 @@ trait HasActionHandler
 $('{$this->selector()}').off('{$this->event}').on('{$this->event}', function() {
     var data = $(this).data(),
         target = $(this);
-    if (target.attr('working') > 0) {
+    if (target.attr('loading') > 0) {
         return;
     }
     {$this->actionScript()}
@@ -98,14 +98,14 @@ JS;
 
         return <<<JS
 function request() {
-    target.attr('working', 1);
+    target.attr('loading', 1);
     Object.assign(data, {$parameters});
     {$this->buildActionPromise()}
     {$this->handleActionPromise()}
 }
 
 if (data['confirm']) {
-    Dcat.confirm(data['confirm'], request);
+     Dcat.confirm(data['confirm'][0], data['confirm'][1], request);
 } else {
     request()
 }
@@ -138,12 +138,12 @@ var process = new Promise(function (resolve,reject) {
         url: '{$this->handlerRoute()}',
         data: data,
         success: function (data) {
-            target.attr('working', 0);
+            target.attr('loading', 0);
             Dcat.NP.done();
             resolve([data, target]);
         },
         error:function(request){
-            target.attr('working', 0);
+            target.attr('loading', 0);
             Dcat.NP.done();
             reject([request, target]);
         }

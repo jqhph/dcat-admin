@@ -215,7 +215,7 @@ HTML;
         }
 
         if ($confirm = $this->confirm()) {
-            $this->setHtmlAttribute('data-confirm', $confirm);
+            $this->setHtmlAttribute('data-confirm', json_encode((array) $confirm));
         }
 
         $this->addHandlerScript();
