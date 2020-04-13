@@ -97,17 +97,21 @@ JS;
     }
 
     /**
+     * 设置动作发起请求前的回调函数，返回false可以中断请求.
+     *
      * @return string
      */
     protected function actionScript()
     {
         // 发起请求之前回调，返回false可以中断请求
         return <<<'JS'
-function (data, target) { }
+function (data, target, action) { }
 JS;
     }
 
     /**
+     * 设置请求成功回调，返回false可以中断默认的成功处理逻辑.
+     *
      * @return string
      */
     protected function resolverScript()
@@ -119,11 +123,12 @@ JS;
     }
 
     /**
+     * 处理接口返回的HTML代码.
+     *
      * @return string
      */
     protected function handleHtmlResponse()
     {
-        // 处理返回的HTML代码
         return <<<'JS'
 function (target, html, data) {
     target.html(html);
@@ -132,11 +137,12 @@ JS;
     }
 
     /**
+     * 设置请求出错回调，返回false可以中断默认的错误处理逻辑.
+     *
      * @return string
      */
     protected function rejectScript()
     {
-        // // 请求出错回调，返回false可以中断默认的错误处理逻辑
         return <<<'JS'
 function (target, results) {}
 JS;

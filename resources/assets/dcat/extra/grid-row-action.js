@@ -31,7 +31,7 @@
                     return;
                 }
 
-                if (options.before(data, target) === false) {
+                if (options.before(data, target, _this) === false) {
                     return;
                 }
 
@@ -57,7 +57,7 @@
         }
 
         _resolver() {
-            let options = this.options;
+            let _this = this, options = _this.options;
 
             return function (result) {
                 var response = result[0],
@@ -109,6 +109,8 @@
         }
 
         _reject() {
+            let options = this.options;
+
             return function (result) {
                 var request = result[0], target = result[1];
 
