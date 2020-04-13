@@ -123,8 +123,9 @@ JS;
      */
     protected function handleHtmlResponse()
     {
+        // 处理返回的HTML代码
         return <<<'JS'
-function (target, html, data) { // 处理返回的HTML代码
+function (target, html, data) {
     target.html(html);
 }
 JS;
