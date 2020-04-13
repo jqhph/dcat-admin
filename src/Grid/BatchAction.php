@@ -22,7 +22,7 @@ function (data, target, action) {
     
     if (key.length === 0) {
         Dcat.warning('{$warning}');
-        return ;
+        return false;
     }
     
     // 设置主键为复选框选中的行ID数组
