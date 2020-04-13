@@ -674,7 +674,7 @@ class Form implements Renderable
      *
      * @return array
      */
-    protected function removeIgnoredFields($input)
+    public function removeIgnoredFields($input)
     {
         Arr::forget($input, $this->ignored);
 
