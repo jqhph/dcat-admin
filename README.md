@@ -3,7 +3,7 @@
     <img src="https://jqhph.github.io/dcat-admin/assets/img/logo-text.png" height="80"> 
 </div>
 <br>
-<p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需极少的代码即可构建出一个功能完善且颜值极高的后台系统。支持页面一键生成CURD页面，内置丰富的web常用组件，开箱即用，让开发者告别冗杂的HTML代码。</p>
+<p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台构建工具，只需极少的代码即可构建出一个功能完善且颜值极高的后台系统。支持页面一键生成CURD页面，内置丰富的后台常用组件，开箱即用，让开发者告别冗杂的HTML代码。</p>
 
 <p align="center">
 <a href="http://www.dcatadmin.com/">文档</a> |
