@@ -187,7 +187,7 @@
             <div class='form-inline d-flex justify-content-between' style="width: 100%; padding: 0 20px 12px;">
 
                 <div class='form-group'>
-                    <button type="button" class="btn btn-sm btn-success" id="add-table-field"><i class="feather icon-plus"></i>&nbsp;&nbsp;{{ucfirst(trans('admin.scaffold.addField'))}}</button>
+                    <button type="button" class="btn btn-sm btn-success" id="add-table-field"><i class="feather icon-plus"></i>&nbsp;&nbsp;{{ucfirst(trans('admin.scaffold.add_field'))}}</button>
                 </div>
 
                 <div class="row">
