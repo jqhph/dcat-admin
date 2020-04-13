@@ -14,7 +14,7 @@ class BatchDelete extends BatchAction
     public function render()
     {
         return <<<HTML
-<li class="dropdown-item"><a href="#" data-name="{$this->parent->getName()}" data-action="batch-delete" data-url="{$this->resource()}">{$this->title}</a></li>
+<a href="#" data-name="{$this->parent->getName()}" data-action="batch-delete" data-url="{$this->resource()}">{$this->title}</a>
 HTML;
     }
 }
