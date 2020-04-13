@@ -77,7 +77,7 @@ trait HasActionHandler
         $data = json_encode($this->parameters());
 
         $script = <<<JS
-Dcat.grid.RowAction({
+Dcat.Action({
     selector: '{$this->selector()}',
     event: '{$this->event}',
     method: '{$this->method()}',
@@ -93,7 +93,7 @@ Dcat.grid.RowAction({
 JS;
 
         Admin::script($script);
-        Admin::js('@admin/dcat/extra/grid-row-action.js');
+        Admin::js('@admin/dcat/extra/action.js');
     }
 
     /**

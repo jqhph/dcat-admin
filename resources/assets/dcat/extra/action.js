@@ -1,6 +1,6 @@
 (function (Dcat) {
 
-    class RowAction {
+    class Action {
         constructor(options) {
             this.options = $.extend({
                 selector: null, // 按钮选择器
@@ -156,8 +156,8 @@
         }
     }
 
-    Dcat.grid.RowAction = function (opts) {
-        return new RowAction(opts);
+    Dcat.Action = function (opts) {
+        return new Action(opts);
     };
 })(Dcat);
 
