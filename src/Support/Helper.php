@@ -594,6 +594,6 @@ class Helper
      */
     public static function getPreviousUrl()
     {
-        return url(session()->get('admin.prev.url')) ?: url()->previous();
+        return (string) (session()->get('admin.prev.url') ? url(session()->get('admin.prev.url')) : url()->previous());
     }
 }
