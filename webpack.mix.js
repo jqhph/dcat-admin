@@ -14,10 +14,8 @@ require('dotenv').config();
  */
 
 const glob = require('glob')
-const path = require('path')
 
 let distPath = mix.inProduction() ? 'resources/dist' : 'resources/pre-dist';
-
 
 function mixAssetsDir(query, cb) {
   (glob.sync('resources/assets/' + query) || []).forEach(f => {
@@ -26,14 +24,18 @@ function mixAssetsDir(query, cb) {
   });
 }
 
-const sassOptions = {
-  precision: 5
-};
+function dcatPath(path) {
+  return 'resources/assets/dcat/' + path;
+}
+
+function dcatDistPath(path) {
+  return distPath + '/dcat/' + path;
+}
 
 
 /*
  |--------------------------------------------------------------------------
- | Application assets
+ | Dcat Admin assets
  |--------------------------------------------------------------------------
  */
 
@@ -45,15 +47,6 @@ mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
 mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', distPath + '/adminlte/adminlte.css').sourceMaps();
 mix.js('resources/assets/adminlte/js/AdminLTE.js', distPath + '/adminlte/adminlte.js').sourceMaps();
 
-// ------------------------------------ Dcat Admin -------------------------------------------
-function dcatPath(path) {
-  return 'resources/assets/dcat/' + path;
-}
-
-function dcatDistPath(path) {
-  return distPath + '/dcat/' + path;
-}
-
 // 复制第三方插件文件夹
 mix.copyDirectory(dcatPath('plugins'), dcatDistPath('plugins'));
 // 打包app.js
@@ -64,5 +57,3 @@ mix.sass(dcatPath('sass/dcat-app.scss'), dcatDistPath('css/dcat-app.css')).sourc
 // 打包所有 extra 里面的所有js和css
 mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.js(src, dest));
 mixAssetsDir('dcat/extra/*.scss', (src, dest) => mix.sass(src, dest.replace('scss', 'css')));
-
-

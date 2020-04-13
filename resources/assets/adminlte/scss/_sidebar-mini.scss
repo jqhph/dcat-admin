@@ -64,8 +64,8 @@
       display: inline-block;
     }
 
-    .nav .nav-treeview {
-      display: block;
+    .nav .menu-open .nav-treeview {
+      display: block!important;
     }
 
     .nav-sidebar > .nav-item > .nav-link i {
@@ -78,8 +78,8 @@
       padding: 10px 23px !important;
     }
 
-    .nav .nav-treeview {
-      display: none;
+    .nav .menu-open .nav-treeview {
+      display: none!important;
     }
   }
 
