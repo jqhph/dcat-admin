@@ -75,6 +75,8 @@ trait HasActionHandler
     protected function addHandlerScript()
     {
         $data = json_encode($this->parameters());
+        $confirm = $this->confirm();
+        $confirm = $confirm ? json_encode($confirm) : null;
 
         $script = <<<JS
 Dcat.Action({
@@ -84,6 +86,7 @@ Dcat.Action({
     key: '{$this->getKey()}',
     url: '{$this->handlerRoute()}',
     data: {$data},
+    confirm: {$confirm},
     calledClass: '{$this->makeCalledClass()}',
     before: {$this->actionScript()},
     html: {$this->handleHtmlResponse()},

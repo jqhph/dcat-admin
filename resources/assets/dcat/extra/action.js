@@ -9,6 +9,7 @@
                 key: null, // 行主键
                 url: null,
                 data: {}, // 发送到接口的附加参数
+                confirm: null,
                 calledClass: null,
                 before: function (data, target) {}, // 发起请求之前回调，返回false可以中断请求
                 html: function (target, html, data) { // 处理返回的HTML代码
@@ -44,9 +45,7 @@
                     _this._buildActionPromise(target, data).then(_this._resolver()).catch(_this._reject());
                 }
 
-                var conform = data['confirm'];
-
-                delete data['confirm'];
+                var conform = options.confirm;
 
                 if (conform) {
                     Dcat.confirm(conform[0], conform[1], request);
