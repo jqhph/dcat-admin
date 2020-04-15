@@ -14,7 +14,7 @@ $gray-900: #2a2e30;
 $black: #22292f;
 
 //$indigo: #4d5ec1;
-$indigo: #3d97dd;
+$indigo: #5c6bc6;
 
 $blue: #4277cf; //$info
 $red: #ea5455; //$danger
@@ -23,7 +23,10 @@ $green: #21b978; //$success
 $cyan: #7367f0; //$primary
 
 
-$primary: #4199de;
+$primary: $indigo;
+//$primary: #5686d4; // blue
+//$primary: #4199de; //blue-light
+
 $info: $blue;
 $warning: $orange;
 
