@@ -4,7 +4,7 @@
     padding: 0.35rem 1rem 0;
 
     .navbar-brand {
-      margin-top: 1.2rem;
+      margin-top: 1.1rem;
 
       img {
         display: inline-block;
@@ -17,18 +17,17 @@
     .logo-mini {
       display: none;
       font-size: 1.8rem;
-      color: $primary;
+      color: $primary-darker;
     }
 
     .logo-lg {
-      color: $primary;
+      color: $primary-darker;
       font-weight: 400;
       letter-spacing: 0.01rem;
       font-size: 1.55rem;
       -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
       animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
     }
-
 
     .nav-item {
       width: 100%;
