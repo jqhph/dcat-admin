@@ -102,11 +102,13 @@ class Select extends Field
             $class = $field;
         }
 
+        $sourceUrl = admin_url($sourceUrl);
+
         $script = <<<JS
 $(document).off('change', "{$this->getElementClassSelector()}");
 $(document).on('change', "{$this->getElementClassSelector()}", function () {
     var target = $(this).closest('.fields-group').find(".$class");
-    $.get("$sourceUrl?q="+this.value, function (data) {
+    $.ajax("$sourceUrl?q="+this.value).then(function (data) {
         target.find("option").remove();
         $(target).select2({
             data: $.map(data, function (d) {
@@ -143,7 +145,7 @@ var fields = '$fieldsStr'.split('.');
 var urls = '$urlsStr'.split('^');
 
 var refreshOptions = function(url, target) {
-    $.get(url).then(function(data) {
+    $.ajax(url).then(function(data) {
         target.find("option").remove();
         $(target).select2({
             data: $.map(data, function (d) {
@@ -228,7 +230,7 @@ JS;
     protected function loadRemoteOptions($url, $parameters = [], $options = [])
     {
         $ajaxOptions = [
-            'url' => $url.'?'.http_build_query($parameters),
+            'url' => admin_url($url.'?'.http_build_query($parameters)),
         ];
         $configs = array_merge([
             'allowClear'  => true,
@@ -244,8 +246,7 @@ JS;
         $ajaxOptions = json_encode(array_merge($ajaxOptions, $options));
 
         $this->script = <<<JS
-
-$.ajax($ajaxOptions).done(function(data) {
+$.ajax({$ajaxOptions}).done(function(data) {
 
   var select = $("{$this->getElementClassSelector()}");
 
@@ -286,6 +287,8 @@ JS;
 
         $configs = json_encode($configs);
         $configs = substr($configs, 1, strlen($configs) - 2);
+
+        $url = admin_url($url);
 
         $this->script = <<<JS
 

@@ -305,7 +305,7 @@ JS;
 $(document).off('change', ".{$class}");
 $(document).on('change', ".{$class}", function () {
     var target = $(this).closest('form').find(".{$this->getClass($target)}");
-    $.get("$resourceUrl?q="+this.value, function (data) {
+    $.ajax("$resourceUrl?q="+this.value).then(function (data) {
         target.find("option").remove();
         $.each(data, function (i, item) {
             $(target).append($('<option>', {

@@ -21,13 +21,13 @@ class MultipleSelect extends Select
         $column = $this->filter->column();
 
         $script = <<<JS
-
 $(document).on('change', ".{$this->getClass($column)}", function () {
     var target = $(this).closest('form').find(".{$this->getClass($target)}");
-     var ids = $(this).find("option:selected").map(function(index,elem) {
+    var ids = $(this).find("option:selected").map(function(index,elem) {
             return $(elem).val();
         }).get().join(',');
-    $.get("$resourceUrl?q="+ids, function (data) {
+     
+    $.ajax("$resourceUrl?q="+ids).then(function (data) {
         target.find("option").remove();
         $.each(data, function (i, item) {
             $(target).append($('<option>', {
