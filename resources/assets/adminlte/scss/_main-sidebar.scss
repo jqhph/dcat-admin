@@ -389,7 +389,7 @@
     > .nav-link {
       // border-left: 3px solid transparent;
       &:active {
-        color: $sidebar-dark-color;
+        color: $sidebar-dark-active-color;
       }
     }
 
@@ -402,7 +402,7 @@
     }
 
     > .nav-link.active {
-      color: $sidebar-dark-hover-color;
+      color: $sidebar-dark-active-color;
 
       @if $enable-shadows {
         box-shadow: map-get($elevations, 1);

@@ -17,6 +17,7 @@
     .logo-mini {
       display: none;
       font-size: 1.8rem;
+      color: $primary;
     }
 
     .logo-lg {
@@ -37,6 +38,14 @@
     .navbar-brand {
       display: inline-block;
       margin: 10px 0;
+    }
+  }
+
+  [class*='sidebar-dark-'] {
+    .navbar-header {
+      .logo-lg,.logo-mini {
+        color: #f7f7f7;
+      }
     }
   }
 }

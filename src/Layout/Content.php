@@ -459,6 +459,7 @@ JS
         $defaultData = [
             'theme' => '',
             'sidebar_collapsed' => false,
+            'sidebar_dark' => false,
             'navbar_color' => '',
             'navbar_class' => 'sticky',
             'footer_type' => '',
@@ -474,6 +475,7 @@ JS
             'theme' => '',
             'footer_type' => '',
             'body_class' => '',
+            'sidebar_dark' => '',
             'sidebar_collapsed' => [true, false],
             'navbar_color' => ['bg-primary', 'bg-info', 'bg-warning', 'bg-success', 'bg-danger', 'bg-dark'],
             'navbar_class' => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
@@ -509,6 +511,7 @@ JS
             'navbar_class' => $allOptions['navbar_class'][$data['navbar_class']],
             'sidebar_class' => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
             'body_class' => $data['body_class'],
+            'sidebar_dark' => $data['sidebar_dark'],
         ];
     }
 

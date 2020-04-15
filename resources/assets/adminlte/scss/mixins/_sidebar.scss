@@ -4,17 +4,17 @@
 
 // Sidebar Color
 @mixin sidebar-color($color) {
-  .nav-sidebar > .nav-item {
+  .nav-item {
     & > .nav-link.active {
       //background-color: $color;
-      background-color: transparent;
+      background-color: transparent!important;
       background-image: linear-gradient(118deg, $color, rgba($color,.7));
       color: color-yiq($color);
       box-shadow: 0 0 8px 1px rgba($color,.7);
     }
   }
 
-  .nav-sidebar.nav-legacy > .nav-item {
+  .nav-legacy > .nav-item {
     & > .nav-link.active {
       border-color: $color;
     }
