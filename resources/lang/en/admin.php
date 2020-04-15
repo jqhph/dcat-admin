@@ -98,6 +98,7 @@ return [
     'delete_succeeded'      => 'Delete succeeded !',
     'delete_failed'         => 'Delete failed !',
     'update_succeeded'      => 'Update succeeded !',
+    'update_failed'         => 'Update failed !',
     'save_succeeded'        => 'Save succeeded !',
     'refresh_succeeded'     => 'Refresh succeeded !',
     'login_successful'      => 'Login successful',

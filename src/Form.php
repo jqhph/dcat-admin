@@ -535,15 +535,15 @@ class Form implements Renderable
                 return $response;
             }
 
-            $this->repository->destroy($this, $data);
+            $result = $this->repository->destroy($this, $data);
 
-            if (($response = $this->callDeleted()) instanceof Response) {
+            if (($response = $this->callDeleted($result)) instanceof Response) {
                 return $response;
             }
 
             $response = [
-                'status'  => true,
-                'message' => trans('admin.delete_succeeded'),
+                'status'  => $result ? true : false,
+                'message' => $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed'),
             ];
         } catch (\Throwable $exception) {
             $response = Admin::makeExceptionHandler()->handleDestroyException($exception);
@@ -583,12 +583,16 @@ class Form implements Renderable
 
         $this->builder->setResourceId($id);
 
-        if (($response = $this->callSaved())) {
+        if (($response = $this->callSaved($id))) {
             return $response;
         }
 
         if ($response = $this->responseMultipleStepsDonePage()) {
             return $response;
+        }
+
+        if (! $id) {
+            return $this->error(trans('admin.save_failed'));
         }
 
         return $this->redirect(
@@ -746,10 +750,14 @@ class Form implements Renderable
 
         $this->updates = $this->prepareUpdate($this->updates);
 
-        $this->repository->update($this);
+        $updated = $this->repository->update($this);
 
-        if (($result = $this->callSaved())) {
-            return $result;
+        if (($response = $this->callSaved($updated))) {
+            return $response;
+        }
+
+        if (! $updated) {
+            return $this->error(trans('admin.update_succeeded'));
         }
 
         return $this->redirect(
