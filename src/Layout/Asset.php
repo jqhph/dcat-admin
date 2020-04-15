@@ -2,6 +2,9 @@
 
 namespace Dcat\Admin\Layout;
 
+use Dcat\Admin\Admin;
+use Dcat\Admin\Color;
+
 class Asset
 {
     /**
@@ -253,6 +256,37 @@ class Asset
     public function __construct()
     {
         $this->isPjax = request()->pjax();
+
+        $this->initTheme();
+    }
+
+    /**
+     * 初始化主题样式.
+     */
+    protected function initTheme()
+    {
+        $color = Admin::color()->name();
+
+        if ($color === Color::DEFAULT_COLOR) {
+            return;
+        }
+
+        $alias = [
+            '@adminlte',
+            '@dcat',
+            '@webuploader',
+            '@smart-wizard',
+        ];
+
+        foreach ($alias as $n) {
+            $before = (array) $this->alias[$n]['css'];
+
+            $this->alias[$n]['css'] = [];
+
+            foreach ($before as $css) {
+                $this->alias[$n]['css'][] = str_replace('.css', "-{$color}.css", $css);
+            }
+        }
     }
 
     /**
