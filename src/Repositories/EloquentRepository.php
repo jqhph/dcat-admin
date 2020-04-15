@@ -467,9 +467,10 @@ class EloquentRepository extends Repository implements TreeRepository
                 $model->forceDelete();
 
                 return;
+            } elseif (! $this->isSoftDeletes) {
+                $form->deleteFiles($data);
             }
 
-            $form->deleteFiles($data);
             $model->delete();
         });
 
