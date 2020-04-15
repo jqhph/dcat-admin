@@ -23,7 +23,7 @@
 <script data-exec-on-popstate>
 Dcat.ready(function () {
     Dcat.ResourceSelector({
-        title: '{!! ucfirst(trans('admin.choose')) !!} {!! $label !!}',
+        title: '{!! trans('admin.choose') !!} {!! $label !!}',
         selector: '#{{$name}}-filter-select-source',
         column: "{!! $name !!}",
         source: '{!! $source !!}',

@@ -158,7 +158,7 @@ class Field implements Renderable
      */
     protected function formatLabel($label)
     {
-        $label = $label ?: ucfirst(admin_trans_field($this->name));
+        $label = $label ?: admin_trans_field($this->name);
 
         return str_replace(['.', '_'], ' ', $label);
     }

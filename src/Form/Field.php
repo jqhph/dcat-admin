@@ -265,7 +265,7 @@ class Field implements Renderable
     {
         $column = is_array($this->column) ? current($this->column) : $this->column;
 
-        $label = isset($arguments[0]) ? $arguments[0] : ucfirst(admin_trans_field($column));
+        $label = isset($arguments[0]) ? $arguments[0] : admin_trans_field($column);
 
         return str_replace(['.', '_'], ' ', $label);
     }
@@ -864,13 +864,13 @@ class Field implements Renderable
     {
         if ($this->horizontal) {
             return [
-                'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()}",
+                'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()} text-capitalize",
                 'field'      => "col-md-{$this->width['field']}",
                 'form-group' => 'form-group row form-field',
             ];
         }
 
-        return ['label' => $this->getLabelClass(), 'field' => '', 'form-group' => 'form-field'];
+        return ['label' => $this->getLabelClass().' text-capitalize', 'field' => '', 'form-group' => 'form-field'];
     }
 
     /**

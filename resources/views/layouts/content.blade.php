@@ -2,7 +2,7 @@
     <section class="content-header breadcrumbs-top mb-2">
         @if($header || $description)
             <h1 class=" float-left">
-                {!! $header !!}
+                <span class="text-capitalize">{!! $header !!}</span>
                 <small>{!! $description !!}</small>
             </h1>
         @elseif($breadcrumb || config('admin.enable_default_breadcrumb'))

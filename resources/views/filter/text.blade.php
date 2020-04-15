@@ -13,7 +13,7 @@
         </div>
     @endif
     <div class="input-group-prepend">
-        <span class="input-group-text bg-white"><b>{!! $label !!}</b></span>
+        <span class="input-group-text bg-white text-capitalize"><b>{!! $label !!}</b></span>
     </div>
     <input type="{{ $type }}" class="form-control {{ $id }}" placeholder="{{$placeholder}}" name="{{$name}}" value="{{ request($name, $value) }}">
 </div>

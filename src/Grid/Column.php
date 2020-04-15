@@ -413,7 +413,7 @@ class Column
             $label = admin_trans_field($this->name);
         }
 
-        $label = $label ?: ucfirst($this->name);
+        $label = $label ?: $this->name;
 
         return str_replace(['.', '_'], ' ', $label);
     }

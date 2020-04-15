@@ -87,7 +87,7 @@ class ExtensionController extends Controller
         $grid->enable->switch();
         $grid->imported;
 
-        $view = ucfirst(trans('admin.view'));
+        $view = trans('admin.view');
         $grid->config
             ->if(function () {
                 return $this->config ? true : false;

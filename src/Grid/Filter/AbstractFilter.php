@@ -129,7 +129,7 @@ abstract class AbstractFilter
      */
     protected function formatLabel($label)
     {
-        $label = $label ?: ucfirst(admin_trans_field($this->column));
+        $label = $label ?: admin_trans_field($this->column);
 
         return str_replace(['.', '_'], ' ', $label);
     }

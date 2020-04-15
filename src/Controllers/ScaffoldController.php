@@ -81,7 +81,7 @@ class ScaffoldController extends Controller
         })->toArray();
 
         return $content
-            ->title(ucfirst(trans('admin.scaffold.header')))
+            ->title(trans('admin.scaffold.header'))
             ->description(' ')
             ->body(view(
                 'admin::helpers.scaffold',
