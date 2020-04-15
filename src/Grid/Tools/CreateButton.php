@@ -39,7 +39,7 @@ class CreateButton implements Renderable
             ->success('Dcat.reload()')
             ->dimensions($width, $height);
 
-        return "<button data-url='$url' class='btn btn-outline-primary {$class}'><i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp; $new</span></button>";
+        return "<button data-url='$url' class='btn btn-primary {$class}'><i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp; $new</span></button>";
     }
 
     protected function renderCreateButton()
@@ -51,13 +51,13 @@ class CreateButton implements Renderable
         $new = trans('admin.new');
         $url = $this->grid->getCreateUrl();
 
-        return "<a href='{$url}' class='btn btn-outline-primary'>
+        return "<a href='{$url}' class='btn btn-primary'>
     <i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp;&nbsp;{$new}</span>
 </a>";
     }
 
     public function render()
     {
-        return "<div class='btn-group btn-no-shadow' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderDialogCreateButton()}</div>";
+        return "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderDialogCreateButton()}</div>";
     }
 }

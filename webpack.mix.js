@@ -13,6 +13,8 @@ require('dotenv').config();
  */
 const glob = require('glob')
 
+let theme = null;
+
 let distPath = mix.inProduction() ? 'resources/dist' : 'resources/pre-dist';
 
 function mixAssetsDir(query, cb) {
@@ -20,6 +22,12 @@ function mixAssetsDir(query, cb) {
     f = f.replace(/[\\\/]+/g, '/');
     cb(f, f.replace('resources/assets', distPath));
   });
+}
+
+function themeCss(path) {
+  let sf = theme ? '-'+theme : '';
+
+  return `${distPath}/${path}${sf}.css`
 }
 
 function dcatPath(path) {
@@ -42,7 +50,7 @@ mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
 mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
 
 // AdminLTE3.0
-mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', distPath + '/adminlte/adminlte.css').sourceMaps();
+mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', themeCss('adminlte/adminlte')).sourceMaps();
 mix.js('resources/assets/adminlte/js/AdminLTE.js', distPath + '/adminlte/adminlte.js').sourceMaps();
 
 // 复制第三方插件文件夹
@@ -50,8 +58,14 @@ mix.copyDirectory(dcatPath('plugins'), dcatDistPath('plugins'));
 // 打包app.js
 mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js')).sourceMaps();
 // 打包app.scss
-mix.sass(dcatPath('sass/dcat-app.scss'), dcatDistPath('css/dcat-app.css')).sourceMaps();
+mix.sass(dcatPath('sass/dcat-app.scss'), themeCss('css/dcat-app')).sourceMaps();
 
 // 打包所有 extra 里面的所有js和css
 mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.js(src, dest));
-mixAssetsDir('dcat/extra/*.scss', (src, dest) => mix.sass(src, dest.replace('scss', 'css')));
+mixAssetsDir('dcat/extra/*.scss', (src, dest) => {
+  if (theme) {
+    return mix.sass(src, dest.replace('\.scss', '-'+theme+'.css'))
+  }
+
+  return mix.sass(src, dest.replace('scss', 'css'))
+});

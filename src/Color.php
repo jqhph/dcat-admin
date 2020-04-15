@@ -64,13 +64,19 @@ class Color
      */
     protected static $colors = [
         'indigo' => [
-            'css' => [
-
-            ],
+            'css' => [],
             'colors' => [
                 'primary'        => 'indigo',
                 'primary-darker' => 'indigo-darker',
                 'link'           => 'indigo-darker',
+            ],
+        ],
+        'blue' => [
+            'css' => [],
+            'colors' => [
+                'primary'        => '#3d97dd',
+                'primary-darker' => '#278bd9',
+                'link'           => '#278bd9',
             ],
         ],
     ];
@@ -100,7 +106,7 @@ class Color
 
         // 其他蓝色
         'blue1' => '#007ee5',
-        'blue2' => '#4199de',
+        'blue2' => '#3d97dd',
 
         // 橘色
         'orange1' => '#ffcc80',
