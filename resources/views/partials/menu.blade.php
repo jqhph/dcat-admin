@@ -1,3 +1,9 @@
+@php
+    $active = $builder->isActive($item);
+
+    $layer = $item['layer'] ?? 0;
+@endphp
+
 @if($builder->visible($item))
     @if(isset($item['is_header']))
         <li class="nav-header">
@@ -6,7 +12,7 @@
     @elseif(! isset($item['children']))
         <li class="nav-item">
             <a href="{{ $builder->getUrl($item['uri']) }}" class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
-                <i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
+                {!! str_repeat('&nbsp;', $layer) !!}<i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
                 </p>
@@ -19,7 +25,7 @@
 
         <li class="nav-item has-treeview {{ $active ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
-                <i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
+                {!! str_repeat('&nbsp;', $layer) !!}<i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
                     <i class="right fa fa-angle-left"></i>
@@ -27,6 +33,10 @@
             </a>
             <ul class="nav nav-treeview">
                 @foreach($item['children'] as $item)
+                    @php
+                        $item['layer'] = $layer + 1;
+                    @endphp
+
                     @include('admin::partials.menu', $item)
                 @endforeach
             </ul>
