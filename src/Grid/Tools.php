@@ -130,7 +130,7 @@ class Tools implements Renderable
     {
         $this->tools = $this->tools->map(function ($tool) use ($disable) {
             if ($tool instanceof RefreshButton) {
-                return $tool->disable($disable);
+                return $tool->display(! $disable);
             }
 
             return $tool;

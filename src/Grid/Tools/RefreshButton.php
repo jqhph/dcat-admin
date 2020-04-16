@@ -6,6 +6,15 @@ use Illuminate\Contracts\Support\Renderable;
 
 class RefreshButton implements Renderable
 {
+    protected $display = true;
+
+    public function display($value)
+    {
+        $this->display = $value;
+
+        return $this;
+    }
+
     /**
      * Render refresh button of grid.
      *
@@ -13,6 +22,10 @@ class RefreshButton implements Renderable
      */
     public function render()
     {
+        if (! $this->display) {
+            return;
+        }
+
         $refresh = trans('admin.refresh');
 
         return <<<EOT
