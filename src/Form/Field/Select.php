@@ -144,36 +144,38 @@ JS;
         }, (array) $sourceUrls));
 
         $script = <<<JS
-var fields = '$fieldsStr'.split('.');
-var urls = '$urlsStr'.split('^');
-
-var refreshOptions = function(url, target) {
-    $.ajax(url).then(function(data) {
-        target.find("option").remove();
-        $(target).select2({
-            data: $.map(data, function (d) {
-                d.id = d.$idField;
-                d.text = d.$textField;
-                return d;
-            })
-        }).trigger('change');
+(function () {
+    var fields = '$fieldsStr'.split('.');
+    var urls = '$urlsStr'.split('^');
+    
+    var refreshOptions = function(url, target) {
+        $.ajax(url).then(function(data) {
+            target.find("option").remove();
+            $(target).select2({
+                data: $.map(data, function (d) {
+                    d.id = d.$idField;
+                    d.text = d.$textField;
+                    return d;
+                })
+            }).trigger('change');
+        });
+    };
+    
+    $(document).off('change', "{$this->getElementClassSelector()}");
+    $(document).on('change', "{$this->getElementClassSelector()}", function () {
+        var _this = this;
+        var promises = [];
+    
+        fields.forEach(function(field, index){
+            var target = $(_this).closest('.fields-group').find('.' + fields[index]);
+            promises.push(refreshOptions(urls[index] + "?q="+ _this.value, target));
+        });
+    
+        $.when(promises).then(function() {
+            console.log('开始更新其它select的选择options');
+        });
     });
-};
-
-$(document).off('change', "{$this->getElementClassSelector()}");
-$(document).on('change', "{$this->getElementClassSelector()}", function () {
-    var _this = this;
-    var promises = [];
-
-    fields.forEach(function(field, index){
-        var target = $(_this).closest('.fields-group').find('.' + fields[index]);
-        promises.push(refreshOptions(urls[index] + "?q="+ _this.value, target));
-    });
-
-    $.when(promises).then(function() {
-        console.log('开始更新其它select的选择options');
-    });
-});
+})()
 JS;
 
         Admin::script($script);
