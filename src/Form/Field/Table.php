@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Support\Helper;
 
 class Table extends HasMany
 {
@@ -76,6 +77,15 @@ class Table extends HasMany
                 return $item;
             })->toArray()
         );
+    }
+
+    public function value($value = null)
+    {
+        if ($value === null) {
+            return Helper::array(parent::value($value));
+        }
+
+        return parent::value($value);
     }
 
     protected function getKeyName()

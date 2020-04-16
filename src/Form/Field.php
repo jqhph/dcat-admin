@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -341,6 +342,8 @@ class Field implements Renderable
      */
     final public function fill($data)
     {
+        $data = Helper::array($data);
+
         $this->data($data);
 
         $this->value = $this->formatFieldData($data);
@@ -393,6 +396,8 @@ class Field implements Renderable
      */
     final public function setOriginal($data)
     {
+        $data = Helper::array($data);
+
         $this->original = $this->formatFieldData($data);
 
         $this->callCustomFormatter('original', new Fluent($data));
