@@ -139,7 +139,10 @@ JS;
     public function loads($fields = [], $sourceUrls = [], $idField = 'id', $textField = 'text')
     {
         $fieldsStr = implode('.', $fields);
-        $urlsStr = implode('^', $sourceUrls);
+        $urlsStr = implode('^', array_map(function ($url) {
+            return admin_url($url);
+        }, (array) $sourceUrls));
+
         $script = <<<JS
 var fields = '$fieldsStr'.split('.');
 var urls = '$urlsStr'.split('^');
