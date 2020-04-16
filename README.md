@@ -26,12 +26,6 @@
     <a><img src="https://img.shields.io/badge/laravel-5.5+-59a9f8.svg?style=flat" ></a>
 </p>
 
-## 公告
-大家好，我是 Dcat Admin 的开发者 Jiangqh，非常感谢大家对这个项目的关注和支持，我会用心把这个项目做好，并且会一直维护下去！
-预计在周六(4月11日)发布一个先行版本，正式版本即将在下周三(4月15日)左右与大家见面，敬请期待！
-
-> 大家好，新版本v0.9.0已发布，已支持多主题切换功能，并增加了三种主题色和深色菜单主题。正式版（v1.0.0）将推迟到明天发布（4 月 16 号）对大家造成的不便深感抱歉，感谢大家对这个项目的关注和支持！
-
 ## 截图
 
 ![](https://jqhph.github.io/dcat-admin/assets/img/users1.png)
@@ -111,9 +105,6 @@ php artisan admin:install
 | [dcat-page](https://github.com/jqhph/dcat-page)    | 简洁的静态站点构建工具 | * |
 | [ueditor](https://github.com/jqhph/dcat-admin-ueditor) | 百度在线编辑器     | * |
 | [grid-sortable](https://github.com/jqhph/dcat-admin-grid-sortable) | 表格拖曳排序工具      | * |
-| [gank](https://github.com/jqhph/dcat-admin-gank) | 干货集中营      |* |
-
-
 
 
 ## 鸣谢
