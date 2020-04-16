@@ -178,7 +178,7 @@ SCRIPT;
     protected function loadRemoteOptions($url, $parameters = [], $options = [])
     {
         $ajaxOptions = [
-            'url' => $url.'?'.http_build_query($parameters),
+            'url' => admin_url($url.'?'.http_build_query($parameters)),
         ];
         $configs = array_merge([
             'allowClear'  => true,
@@ -224,6 +224,8 @@ JS;
             'placeholder'        => trans('admin.choose'),
             'minimumInputLength' => 1,
         ], $this->config);
+
+        $resourceUrl = admin_url($resourceUrl);
 
         $configs = json_encode($configs);
         $configs = substr($configs, 1, strlen($configs) - 2);
@@ -300,6 +302,8 @@ JS;
     public function load($target, $resourceUrl, $idField = 'id', $textField = 'text'): self
     {
         $class = $this->getElementClass();
+
+        $resourceUrl = admin_url($resourceUrl);
 
         $script = <<<JS
 $(document).off('change', ".{$class}");
