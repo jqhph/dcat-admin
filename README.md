@@ -35,6 +35,7 @@
 ## 截图
 
 ![](https://jqhph.github.io/dcat-admin/assets/img/users1.png)
+![](https://cdn.learnku.com/uploads/images/202004/15/38389/xdn6zh8cjM.png!large)
 
 ## 功能
 
