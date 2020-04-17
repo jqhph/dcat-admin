@@ -679,7 +679,7 @@
                 html += `<p class="file-action" data-file-act="delete" data-id="${file.serverId}"><i class="feather icon-trash red-dark"></i></p>`;
             }
 
-            html += "<p class='title' style=''><i class='feather icon-check text-white icon-success' style='color: #fff;'></i>";
+            html += "<p class='title' style=''><i class='feather icon-check text-white icon-success text-white'></i>";
             html += file.serverPath;
             html += "</p>";
 
@@ -752,7 +752,7 @@
             $queue.append(html);
 
             if (showImg) {
-                setTimeout(function () { html.css('margin', '5px');}, 80);
+                setTimeout(function () { html.css('margin', '5px');}, 400);
             }
         }
 

@@ -382,9 +382,15 @@
   font-size: 14px
 }
 
+.web-uploader .filelist div.file-panel a:first-child {
+  margin-left: 6px;
+}
+
 .web-uploader .filelist div.file-panel a {
   float: left;
-  margin-left: 3px
+  box-shadow: none;
+  padding-left: 8px!important;
+  padding-right: 8px!important;
 }
 
 .web-uploader .statusBar {
