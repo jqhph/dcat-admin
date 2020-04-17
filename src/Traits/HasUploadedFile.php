@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Traits;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Form\Field\File;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
@@ -44,6 +45,46 @@ trait HasUploadedFile
     public function disk(string $disk = null)
     {
         return Storage::disk($disk ?: config('admin.upload.disk'));
+    }
+
+    /**
+     * 判断是否是删除请求.
+     *
+     * @return bool
+     */
+    public function isDeleteRequest()
+    {
+        return request()->has(File::FILE_DELETE_FLAG);
+    }
+
+    /**
+     * 删除文件.
+     *
+     * @param \Illuminate\Contracts\Filesystem\Filesystem|FilesystemAdapter $disk
+     * @param string|null                                                   $path
+     *
+     * @return bool
+     */
+    public function deleteFile($disk = null, $path = null)
+    {
+        $disk = $disk ?: $this->disk();
+
+        return $disk->delete($path ?: request()->key);
+    }
+
+    /**
+     * 删除文件并响应返回值.
+     *
+     * @param \Illuminate\Contracts\Filesystem\Filesystem|FilesystemAdapter $disk
+     * @param string|null
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteFileAndResponse($disk = null, $path = null)
+    {
+        $this->deleteFile($disk, $path);
+
+        return $this->responseDeleted();
     }
 
     /**
@@ -89,5 +130,27 @@ trait HasUploadedFile
         return response()->json([
             'error' => ['code' => $code, 'message' => $error], 'status' => false,
         ]);
+    }
+
+    /**
+     * 文件删除成功.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function responseDeleted()
+    {
+        return response()->json(['status' => true]);
+    }
+
+    /**
+     * 文件删除失败.
+     *
+     * @param string $message
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function responseDeleteFail($message = '')
+    {
+        return response()->json(['status' => false, 'message' => $message]);
     }
 }

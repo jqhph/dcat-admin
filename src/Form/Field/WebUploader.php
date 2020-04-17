@@ -95,6 +95,8 @@ trait WebUploader
     {
         $this->options['server'] = admin_url($server);
 
+        $this->deleteUrl($server);
+
         return $this;
     }
 
