@@ -9,6 +9,9 @@
         padding-left: 2rem!important;;
         padding-right: 1.5rem!important;
     }
+    *, :after, :before {
+     overflow-x: hidden;
+    }
 </style>
 
 <div class="login-page">
