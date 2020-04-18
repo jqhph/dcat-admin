@@ -460,7 +460,7 @@ HTML;
     {
         $name = $this->name;
 
-        return $this->as(function ($value) use ($view, $name) {
+        return $this->unescape()->as(function ($value) use ($view, $name) {
             $model = $this;
 
             return view($view, compact('model', 'value', 'name'))->render();
