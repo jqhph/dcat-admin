@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Controllers;
 
-use App\Admin\Actions\Copy;
 use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -60,10 +59,11 @@ class UserController extends AdminController
             $grid->created_at;
             $grid->updated_at->sortable();
 
+            $grid->quickSearch(['id', 'name', 'username']);
+
             $grid->disableBatchDelete();
             $grid->showQuickEditButton();
             $grid->disableFilterButton();
-            $grid->quickSearch(['id', 'name', 'username']);
             $grid->enableDialogCreate();
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {

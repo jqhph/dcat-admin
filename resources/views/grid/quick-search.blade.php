@@ -9,7 +9,7 @@
                     placeholder="{{ $placeholder }}"
                     name="{{ $key }}"
                     value="{{ $value }}"
-                    aria-controls="DataTables_Table_0"
+                    auto="{{ $auto ? '1' : '0' }}"
             >
 
         </label>

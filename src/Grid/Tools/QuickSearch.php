@@ -29,6 +29,11 @@ class QuickSearch extends AbstractTool
     protected $width = 19;
 
     /**
+     * @var bool
+     */
+    protected $autoSubmit = true;
+
+    /**
      * @param string|null $name
      *
      * @return $this
@@ -102,6 +107,18 @@ class QuickSearch extends AbstractTool
     }
 
     /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function auto(bool $value = true)
+    {
+        $this->autoSubmit = $value;
+
+        return $this;
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
@@ -114,6 +131,7 @@ class QuickSearch extends AbstractTool
             'value'       => $this->value(),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
             'width'       => $this->width,
+            'auto'        => $this->autoSubmit,
         ];
 
         return view($this->view, $data);
@@ -126,7 +144,8 @@ class QuickSearch extends AbstractTool
     var inputting = false,
         $ipt = $('input.quick-search-input'), 
         val = $ipt.val(),
-        ignoreKeys = [16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144];
+        ignoreKeys = [16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144],
+        auto = $ipt.attr('auto');
     
     var submit = Dcat.helpers.debounce(function (input) {
         inputting || $(input).parents('form').submit()
@@ -145,11 +164,6 @@ class QuickSearch extends AbstractTool
     }
     
     $ipt.on('focus', toggleBtn)
-        .on('keyup', function (e) {
-            toggleBtn.apply(this);
-            
-            ignoreKeys.indexOf(e.keyCode) == -1 && submit(this)
-        })
         .on('mousemove', toggleBtn)
         .on('mouseout', toggleBtn)
         .on('compositionstart', function(){
@@ -158,6 +172,15 @@ class QuickSearch extends AbstractTool
         .on('compositionend', function() {
             inputting = false
         });
+
+    if (auto > 0) {
+        $ipt.on('keyup', function (e) {
+            toggleBtn.apply(this);
+            
+            ignoreKeys.indexOf(e.keyCode) == -1 && submit(this)
+        })
+    }
+    
     val !== '' && $ipt.val('').focus().val(val);
     
     $('.quick-search-clear').on('click', function () {
