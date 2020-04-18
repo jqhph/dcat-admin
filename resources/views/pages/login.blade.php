@@ -2,7 +2,8 @@
     .login-page {background: #f7f7f9;}
 
     .login-box {
-        margin-top: -5rem;
+        margin-top: -10rem;
+        padding: 5px;
     }
 
     .login-btn {
