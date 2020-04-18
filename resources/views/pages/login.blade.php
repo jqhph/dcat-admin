@@ -5,7 +5,9 @@
         margin-top: -10rem;
         padding: 5px;
     }
-
+    .login-card-body {
+        padding: 1.5rem 1.8rem 1.6rem;
+    }
     .login-btn {
         padding-left: 2rem!important;;
         padding-right: 1.5rem!important;
@@ -21,7 +23,7 @@
             {{ config('admin.name') }}
         </div>
         <div class="card">
-            <div class="card-body login-card-body p-2 shadow-100">
+            <div class="card-body login-card-body shadow-100">
                 <p class="login-box-msg mt-1 mb-1">{{ __('admin.welcome_back') }}</p>
 
                 <form id="login-form" method="POST" action="{{ admin_url('auth/login') }}">
