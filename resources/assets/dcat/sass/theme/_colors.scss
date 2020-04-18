@@ -92,7 +92,7 @@ $font-color: #414750;
 
 // body背景颜色
 //$body-bg: #f9fafc;
-$body-bg: $dark30;
+$body-bg: lighten($dark40, 2%);
 
 // 灰背景色
 $gray-bg: #f1f1f1;

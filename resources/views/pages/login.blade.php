@@ -1,6 +1,4 @@
 <style>
-    .login-page {background: #f7f7f9;}
-
     .login-box {
         margin-top: -10rem;
         padding: 5px;
@@ -17,7 +15,7 @@
     }
 </style>
 
-<div class="login-page">
+<div class="login-page bg-40">
     <div class="login-box">
         <div class="login-logo mb-2">
             {{ config('admin.name') }}
