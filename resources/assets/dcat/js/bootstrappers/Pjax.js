@@ -45,6 +45,9 @@ export default class Pjax {
             if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
                 $(formContainer).find('[type="submit"],.submit').buttonLoading(false)
             }
+
+            // 移除遮罩层
+            $(".modal-backdrop").remove();
         });
 
         $d.on('pjax:loaded', () => {
