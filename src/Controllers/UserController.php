@@ -38,8 +38,6 @@ class UserController extends AdminController
             $grid->name;
             $grid->roles->pluck('name')->label('primary', 3);
 
-            $grid->actions(new Copy());
-
             $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');
             $nodes = (new $permissionModel())->allNodes();
