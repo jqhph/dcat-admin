@@ -4,7 +4,7 @@ namespace DummyNamespace;
 
 use Dcat\Admin\Show\AbstractTool;
 use Dcat\Admin\Actions\Response;
-use Dcat\Admin\Models\HasPermissions;
+use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
