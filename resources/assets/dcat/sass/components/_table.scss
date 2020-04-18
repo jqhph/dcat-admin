@@ -79,11 +79,11 @@ table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable th:
 }
 
 table.dataTable.complex-headers {
-  border: 1px solid #eee;
+  border: 1px solid $table-border-color;
 }
 table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead td, table.dataTable.complex-headers tfoot th, table.dataTable.complex-headers tfoot td {
-  border-bottom: 1px solid #eee;
-  border-right: 1px solid #eee;
+  border-bottom: 1px solid $table-border-color;
+  border-right: 1px solid $table-border-color;
 }
 
 .dataTable.table-bordered:not(.complex-headers) thead th {
@@ -112,8 +112,8 @@ table.table-bordered.dataTable.complex-headers {
     border-radius: 0;
 
     td {
-      border-bottom: 1px solid #f1f1f1;
-      border-right: 1px solid #f1f1f1;
+      border-bottom: 1px solid lighten($table-border-color, 4%);
+      border-right: 1px solid lighten($table-border-color, 4%);
     }
 
     td:first-child {

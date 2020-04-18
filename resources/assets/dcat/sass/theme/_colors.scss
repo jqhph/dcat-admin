@@ -92,7 +92,7 @@ $font-color: #414750;
 
 // body背景颜色
 //$body-bg: #f9fafc;
-$body-bg: lighten($dark40, 2%);
+$body-bg: lighten($dark40, 1.5%);
 
 // 灰背景色
 $gray-bg: #f1f1f1;
@@ -105,3 +105,5 @@ $input-border-color: #d9d9d9;
 
 // 常用分割线颜色
 $divider-color: #f4f4f4;
+
+$table-border-color: darken(#f1f1f1, 5%);
