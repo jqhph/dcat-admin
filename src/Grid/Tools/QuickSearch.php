@@ -130,7 +130,7 @@ class QuickSearch extends AbstractTool
     
     var submit = Dcat.helpers.debounce(function (input) {
         inputting || $(input).parents('form').submit()
-    }, 1000);
+    }, 1200);
     
     function toggleBtn() {
         var t = $(this),

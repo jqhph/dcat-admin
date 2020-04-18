@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Controllers;
 
+use App\Admin\Actions\Copy;
 use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -36,6 +37,8 @@ class UserController extends AdminController
             $grid->username;
             $grid->name;
             $grid->roles->pluck('name')->label('primary', 3);
+
+            $grid->actions(new Copy());
 
             $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');

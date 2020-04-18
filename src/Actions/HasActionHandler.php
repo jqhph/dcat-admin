@@ -76,7 +76,7 @@ trait HasActionHandler
     {
         $data = json_encode($this->parameters());
         $confirm = $this->confirm();
-        $confirm = $confirm ? json_encode($confirm) : null;
+        $confirm = $confirm ? json_encode((array) $confirm) : 'false';
 
         $script = <<<JS
 Dcat.Action({
