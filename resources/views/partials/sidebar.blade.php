@@ -13,7 +13,7 @@
             </div>
 
             <div class="sidebar pb-3">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" style="padding-top: 15px">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" style="padding-top: 10px">
                     {!! admin_section(AdminSection::LEFT_SIDEBAR_MENU_TOP) !!}
 
                     {!! admin_section(AdminSection::LEFT_SIDEBAR_MENU) !!}
