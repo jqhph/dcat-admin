@@ -102,7 +102,7 @@ class Editor extends Field
      */
     protected function formatOptions()
     {
-        $this->options['selector'] = '#' . $this->id;
+        $this->options['selector'] = '#'.$this->id;
         $this->options['language'] = config('app.locale');
         $this->options['readonly'] = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
 
