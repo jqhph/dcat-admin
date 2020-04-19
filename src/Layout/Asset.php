@@ -60,6 +60,9 @@ class Asset
         '@layer' => [
             'js' => '@admin/dcat/plugins/layer/layer.js',
         ],
+        '@tinymce' => [
+            'js' => '@admin/dcat/plugins/tinymce/tinymce.min.js',
+        ],
         '@pjax' => [
             'js' => '@admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
         ],

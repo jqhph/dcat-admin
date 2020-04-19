@@ -247,6 +247,7 @@ class Admin
                 $router->post('action', 'HandleActionController@handle')->name('action');
                 $router->post('form', 'HandleFormController@handle')->name('form');
                 $router->post('value', 'ValueController@handle')->name('value');
+                $router->post('tinymce/upload', 'TinymceController@upload')->name('tinymce.upload');
             });
         });
     }
