@@ -52,9 +52,24 @@ class Bootstrap
             $request->method() === 'GET'
             && $request->route()
             && ! Helper::isAjaxRequest()
-            && ! $request->prefetch()
+            && ! $this->prefetch($request)
         ) {
             Helper::setPreviousUrl($request->fullUrl());
         }
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return bool
+     */
+    public function prefetch($request)
+    {
+        if (method_exists($request, 'prefetch')) {
+            return $request->prefetch();
+        }
+
+        return strcasecmp($request->server->get('HTTP_X_MOZ'), 'prefetch') === 0 ||
+            strcasecmp($request->headers->get('Purpose'), 'prefetch') === 0;
     }
 }
