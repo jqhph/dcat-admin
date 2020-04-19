@@ -69,7 +69,7 @@ class Responsive
     protected function disablePerfectScrollbar()
     {
         Content::composed(function (Content $content) {
-            $content->disablePerfectScrollbar();
+            $content->perfectScrollbar(false);
         });
     }
 

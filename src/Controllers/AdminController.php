@@ -95,6 +95,7 @@ class AdminController extends Controller
         return $content
             ->title($this->title())
             ->description($this->description()['edit'] ?? trans('admin.edit'))
+            ->perfectScrollbar(false)
             ->body($this->form()->edit($id));
     }
 
@@ -110,6 +111,7 @@ class AdminController extends Controller
         return $content
             ->title($this->title())
             ->description($this->description()['create'] ?? trans('admin.create'))
+            ->perfectScrollbar(false)
             ->body($this->form());
     }
 

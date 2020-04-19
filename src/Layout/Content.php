@@ -161,9 +161,9 @@ class Content implements Renderable
      *
      * @return $this
      */
-    public function disablePerfectScrollbar(bool $value = true)
+    public function perfectScrollbar(bool $value = true)
     {
-        $this->usingPerfectScrollbar = ! $value;
+        $this->usingPerfectScrollbar = $value;
 
         return $this;
     }
