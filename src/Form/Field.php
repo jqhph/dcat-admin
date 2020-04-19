@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -18,7 +19,9 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Field implements Renderable
 {
-    use Macroable, Form\Concerns\HasFieldValidator;
+    use Macroable,
+        Form\Concerns\HasFieldValidator,
+        HasBuilderEvents;
 
     const FILE_DELETE_FLAG = '_file_del_';
 
@@ -219,6 +222,8 @@ class Field implements Renderable
         $this->column = $column;
         $this->label = $this->formatLabel($arguments);
         $this->id = $this->formatId($column);
+
+        $this->callResolving();
     }
 
     /**
@@ -1164,6 +1169,8 @@ class Field implements Renderable
         if (! $this->shouldRender()) {
             return '';
         }
+
+        $this->callComposing();
 
         Admin::script($this->script);
 
