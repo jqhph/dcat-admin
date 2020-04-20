@@ -312,7 +312,7 @@ return [
     | This value is the layout of admin pages.
     */
     'layout' => [
-        // Support indigo, blue, blue-light
+        // Support indigo, blue, blue-light, green
         'color' => 'indigo',
 
         'body_class' => '',
