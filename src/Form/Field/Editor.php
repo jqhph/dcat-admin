@@ -82,7 +82,7 @@ class Editor extends Field
      */
     public function imageUrl(string $url)
     {
-        return $this->options(['images_upload_url' => $url]);
+        return $this->options(['images_upload_url' => admin_url($url)]);
     }
 
     /**
