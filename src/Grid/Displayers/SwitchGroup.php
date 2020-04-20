@@ -14,11 +14,7 @@ class SwitchGroup extends SwitchDisplay
         }
 
         if ($color) {
-            if (method_exists($this, $color)) {
-                $this->$color();
-            } else {
-                $this->color($color);
-            }
+            $this->color($color);
         }
 
         if (! Arr::isAssoc($columns)) {
@@ -61,10 +57,14 @@ class SwitchGroup extends SwitchDisplay
     } 
     init();
     swt.off('change').change(function(e) {
-        var t = $(this), id=t.data('key'),checked = t.is(':checked'), name = t.attr('name'), data = {
-            _token: Dcat.token,
-            _method: 'PUT'
-        };
+        var t = $(this), 
+            id = t.data('key'),
+            checked = t.is(':checked'), 
+            name = t.attr('name'), 
+            data = {
+                _token: Dcat.token,
+                _method: 'PUT'
+            };
         data[name] = checked ? 1 : 0;
         Dcat.NP.start();
     
@@ -86,13 +86,14 @@ class SwitchGroup extends SwitchDisplay
 JS;
         Admin::script($script);
 
-        $key = $this->row->{$this->grid->getKeyName()};
+        $key = $this->getKey();
         $checked = $this->row->$name ? 'checked' : '';
+        $color = $this->color ?: Admin::color()->primary();
 
         return <<<EOT
 <tr style="box-shadow: none;background: transparent">
     <td style="padding: 3px 0;height:23px;">{$label}:&nbsp;&nbsp;&nbsp;</td>
-    <td style="padding: 3px 0;height:23px;"><input name="{$elementName}" data-key="$key" $checked type="checkbox" class="$class" data-size="small" data-color="{$this->color}"/></td>
+    <td style="padding: 3px 0;height:23px;"><input name="{$elementName}" data-key="$key" $checked type="checkbox" class="$class" data-size="small" data-color="{$color}"/></td>
 </tr>
 EOT;
     }
