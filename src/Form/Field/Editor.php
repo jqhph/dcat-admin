@@ -38,6 +38,7 @@ class Editor extends Field
             'undo redo | preview fullscreen | styleselect | fontsizeselect bold italic underline strikethrough forecolor backcolor | link image media blockquote removeformat codesample',
             'alignleft aligncenter alignright  alignjustify| indent outdent bullist numlist table subscript superscript | code',
         ],
+        'min_height' => 400,
         'save_enablewhendirty' => true,
     ];
 
@@ -95,6 +96,18 @@ class Editor extends Field
     public function languageUrl(string $url)
     {
         return $this->options(['language_url' => $url]);
+    }
+
+    /**
+     * 设置编辑器高度.
+     *
+     * @param int $height
+     *
+     * @return $this
+     */
+    public function height(int $height)
+    {
+        return $this->options(['min_height' => $height]);
     }
 
     /**
