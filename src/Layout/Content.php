@@ -56,7 +56,7 @@ class Content implements Renderable
     /**
      * @var bool
      */
-    protected $usingPerfectScrollbar = true;
+    protected $usingPerfectScrollbar = false;
 
     /**
      * Content constructor.

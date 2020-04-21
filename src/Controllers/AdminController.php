@@ -63,6 +63,7 @@ class AdminController extends Controller
         return $content
             ->title($this->title())
             ->description($this->description()['index'] ?? trans('admin.list'))
+            ->perfectScrollbar()
             ->body($this->grid());
     }
 
@@ -79,6 +80,7 @@ class AdminController extends Controller
         return $content
             ->title($this->title())
             ->description($this->description()['show'] ?? trans('admin.show'))
+            ->perfectScrollbar()
             ->body($this->detail($id));
     }
 
@@ -95,7 +97,6 @@ class AdminController extends Controller
         return $content
             ->title($this->title())
             ->description($this->description()['edit'] ?? trans('admin.edit'))
-            ->perfectScrollbar(false)
             ->body($this->form()->edit($id));
     }
 
@@ -111,7 +112,6 @@ class AdminController extends Controller
         return $content
             ->title($this->title())
             ->description($this->description()['create'] ?? trans('admin.create'))
-            ->perfectScrollbar(false)
             ->body($this->form());
     }
 
