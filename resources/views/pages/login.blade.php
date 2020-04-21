@@ -29,7 +29,7 @@
 
                 <form id="login-form" method="POST" action="{{ admin_url('auth/login') }}">
 
-                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 
                     <fieldset class="form-label-group form-group position-relative has-icon-left">
                         <input
