@@ -88,7 +88,7 @@ JS;
         } else {
             $script = <<<JS
 $('.{$this->getElementClassName()}').on('click', function(){
-    $('#{$id}').parent().collapse('toggle');
+    $('#{$id}').parent().toggleClass('d-none');
 }); 
 JS;
         }
