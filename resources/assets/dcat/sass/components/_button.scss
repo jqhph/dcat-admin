@@ -7,6 +7,10 @@
   cursor: pointer;
 }
 
+.btn-group-sm>.btn, .btn-sm, .btn-lg {
+  border-radius: 0.2rem;
+}
+
 .btn-sm, .btn-xs {
   padding: .54rem .9rem!important
 }
