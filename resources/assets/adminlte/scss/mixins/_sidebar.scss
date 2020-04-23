@@ -4,11 +4,17 @@
 
 // Sidebar Color
 @mixin sidebar-color($color) {
-    background-color: rgba($color, .15)!important;
-    //background-image: linear-gradient(118deg, rgba($color, .95), rgba($color,.65));
-    color: $color!important;
-    font-weight: 700;
-    box-shadow: 0 0 8px 1px rgba($color, .15);
+    background-color: transparent!important;
+    background-image: linear-gradient(118deg, rgba($color, .95), rgba($color,.7));
+    color: color-yiq($color);
+    box-shadow: 0 0 8px 1px rgba($color, .7);
+}
+
+@mixin sidebar-color-snd($color) {
+  background-color: rgba($color, .15)!important;
+  color: $color!important;
+  font-weight: 700;
+  box-shadow: 0 0 8px 1px rgba($color, .15);
 }
 
 // Sidebar Mini Breakpoints

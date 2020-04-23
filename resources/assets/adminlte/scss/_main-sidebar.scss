@@ -257,7 +257,7 @@
       }
       p i {
         margin-right: 0;
-        margin-top: 4px;
+        margin-top: 2px;
       }
     }
 
@@ -490,7 +490,17 @@
       @include sidebar-color($primary)
     }
   }
+
+  .active-bg-light {
+    .nav-item {
+      & > .nav-link.active {
+        @include sidebar-color-snd($primary)
+      }
+    }
+  }
 }
+
+
 .sidebar-mini .main-sidebar:not(.sidebar-no-expand),
 .sidebar-mini-md .main-sidebar:not(.sidebar-no-expand),
 .sidebar-mini .main-sidebar:not(.sidebar-no-expand):hover,
