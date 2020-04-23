@@ -17,12 +17,11 @@
     .logo-mini {
       display: none;
       font-size: 1.8rem;
-      color: $primary-darker;
+      color: darken($primary-darker, 1%);
     }
 
     .logo-lg {
-      color: $primary-darker;
-      font-weight: 400;
+      color: darken($primary-darker, 1%);
       letter-spacing: 0.01rem;
       font-size: 1.55rem;
       -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
@@ -73,4 +72,18 @@ body.sidebar-collapse {
       }
     }
   }
+}
+
+.main-sidebar {
+  .nav-sidebar .nav-item > .nav-link {
+    font-size: 1.1rem;
+  }
+}
+
+.nav.nav-pills .nav-item .nav-link {
+  border-radius: 0.1rem;
+}
+
+.nav-pills .nav-link:not(.active):hover {
+  color: $font-color;
 }

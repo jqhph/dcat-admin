@@ -161,12 +161,12 @@
     }
 
     &.nav-legacy {
-      .nav-treeview {      
+      .nav-treeview {
         .nav-treeview {
           padding-left: 2rem;
           margin-left: -1rem;
 
-          .text-sm & {          
+          .text-sm & {
             padding-left: 1rem;
             margin-left: -.5rem;
           }
@@ -317,10 +317,7 @@
       > .nav-link.active {
         &,
         &:hover {
-          background-color: transparent!important;
-          background-image: $sidebar-light-submenu-active-bg;
-          //color: $sidebar-light-submenu-active-color;
-          box-shadow: 0 0 10px 1px rgba($primary,.7);
+          @include sidebar-color($primary)
         }
       }
 
@@ -478,21 +475,22 @@
   }
 }
 
-// Sidebar variants
-@each $name, $color in $theme-colors {
-  .sidebar-dark-#{$name},
-  .sidebar-light-#{$name} {
-    @include sidebar-color($color)
+// colors
+.sidebar-dark-white {
+  .nav-item {
+    & > .nav-link.active {
+      background: rgba($white, .8)!important;
+      box-shadow: none;
+    }
   }
 }
-
-@each $name, $color in $colors {
-  .sidebar-dark-#{$name},
-  .sidebar-light-#{$name} {
-    @include sidebar-color($color)
+.sidebar-light-primary {
+  .nav-item {
+    & > .nav-link.active {
+      @include sidebar-color($primary)
+    }
   }
 }
-
 .sidebar-mini .main-sidebar:not(.sidebar-no-expand),
 .sidebar-mini-md .main-sidebar:not(.sidebar-no-expand),
 .sidebar-mini .main-sidebar:not(.sidebar-no-expand):hover,
@@ -521,7 +519,7 @@
   }
 
   &:not(.nav-child-indent) {
-    .nav-treeview {  
+    .nav-treeview {
       .nav-item {
         > .nav-link {
           > .nav-icon {
@@ -696,7 +694,7 @@
 
         > .nav-icon {
           margin-left: calc(.55rem - 3px);
-          
+
           .text-sm & {
             margin-left: calc(.75rem - 3px);
           }
@@ -767,7 +765,7 @@
       }
     }
 
-    &.nav-child-indent {   
+    &.nav-child-indent {
       .nav-treeview {
         .nav-treeview {
           padding-left: 0;
