@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Form\Concerns;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;

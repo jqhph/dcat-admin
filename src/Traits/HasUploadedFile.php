@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Traits;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field\File;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Filesystem\FilesystemAdapter;
