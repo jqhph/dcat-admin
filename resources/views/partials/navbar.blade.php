@@ -9,8 +9,8 @@
             <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                 <ul class="nav navbar-nav">
                     <li class="nav-item mr-auto">
-                        <a class="nav-link nav-menu-main menu-toggle" data-widget="pushmenu" style="cursor: pointer">
-                            <i class="toggle-icon font-medium-4 text-primary collapse-toggle-icon feather icon-disc"></i>
+                        <a class="nav-link menu-toggle" data-widget="pushmenu" style="cursor: pointer">
+                            <i class="text-primary feather icon-disc"></i>
                         </a>
                     </li>
                 </ul>
