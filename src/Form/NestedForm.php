@@ -61,6 +61,7 @@ use Illuminate\Support\Collection;
  * @method Field\Timezone               timezone($column, $label = '')
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
+ * @method Field\Markdown               markdown($column, $label = '')
  */
 class NestedForm
 {

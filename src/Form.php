@@ -80,6 +80,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Timezone               timezone($column, $label = '')
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
+ * @method Field\Markdown               markdown($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -153,6 +154,7 @@ class Form implements Renderable
         'timezone'       => Field\Timezone::class,
         'keyValue'       => Field\KeyValue::class,
         'tel'            => Field\Tel::class,
+        'markdown'       => Field\Markdown::class,
     ];
 
     /**
