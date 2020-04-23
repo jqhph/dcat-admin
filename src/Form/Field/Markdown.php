@@ -113,7 +113,7 @@ class Markdown extends Field
      */
     public function imageUrl(string $url)
     {
-        return $this->options(['imageUploadURL' => admin_url($url)]);
+        return $this->options(['imageUploadURL' => $this->formatUrl(admin_url($url))]);
     }
 
     /**
@@ -166,8 +166,18 @@ JS
      */
     protected function defaultImageUploadUrl()
     {
+        return $this->formatUrl(route('dcat.api.editor-md.upload'));
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function formatUrl(string $url)
+    {
         return Helper::urlWithQuery(
-            route('dcat.api.editor-md.upload'),
+            $url,
             [
                 '_token' => csrf_token(),
                 'disk'   => $this->disk,

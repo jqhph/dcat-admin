@@ -83,7 +83,7 @@ class Editor extends Field
      */
     public function imageUrl(string $url)
     {
-        return $this->options(['images_upload_url' => admin_url($url)]);
+        return $this->options(['images_upload_url' => $this->formatUrl(admin_url($url))]);
     }
 
     /**
@@ -134,8 +134,18 @@ class Editor extends Field
      */
     protected function defaultImageUploadUrl()
     {
+        return $this->formatUrl(route('dcat.api.tinymce.upload'));
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function formatUrl(string $url)
+    {
         return Helper::urlWithQuery(
-            route('dcat.api.tinymce.upload'),
+            $url,
             [
                 '_token' => csrf_token(),
                 'disk'   => $this->disk,
