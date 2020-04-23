@@ -27,7 +27,7 @@ a.btn-sm, .btn-group-sm > a.btn {
   line-height: 1.1;
 }
 
-.btn-warning {
+.btn-warning, .btn.btn-warning:hover, .btn.btn-warning:focus, .btn.btn-warning.active {
   color: white;
 }
 
