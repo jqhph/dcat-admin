@@ -59,9 +59,10 @@ JS;
         <li>
             <input placeholder="{$this->placeholder}" type="text" name="{$this->getQueryName()}" value="{$value}" class="form-control input-sm {$this->class}" autocomplete="off"/>
         </li>
-        <li class="divider"></li>
-        <li class="">
+        <li class="dropdown-divider"></li>
+        <li>
             <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>
+            <span onclick="Dcat.reload('{$this->urlWithoutFilter()}')" class="btn btn-sm btn-default"><i class="feather icon-rotate-ccw"></i></span>
         </li>
     </ul>
     </form>
