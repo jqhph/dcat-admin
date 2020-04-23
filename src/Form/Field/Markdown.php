@@ -13,7 +13,7 @@ use Dcat\Admin\Support\JavaScript;
 class Markdown extends Field
 {
     protected static $css = [
-        '@admin/dcat/plugins/editor-md/css/editormd.min.css'
+        '@admin/dcat/plugins/editor-md/css/editormd.min.css',
     ];
 
     protected static $js = [
@@ -22,7 +22,7 @@ class Markdown extends Field
     ];
 
     /**
-     * 编辑器配置
+     * 编辑器配置.
      *
      * @var array
      */
@@ -49,7 +49,7 @@ class Markdown extends Field
 
     /**
      * 开启 HTML 标签解析.
-     * style,script,iframe|on*
+     * style,script,iframe|on*.
      *
      * @param string $decode
      *
@@ -75,7 +75,6 @@ class Markdown extends Field
 
         return $this;
     }
-
 
     /**
      * 设置文件上传存储配置.
