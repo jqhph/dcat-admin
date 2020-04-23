@@ -9,8 +9,8 @@
             <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                 <ul class="nav navbar-nav">
                     <li class="nav-item mr-auto">
-                        <a class="nav-link nav-menu-main menu-toggle " data-widget="pushmenu" href="#">
-                            <i class="ficon feather icon-menu"></i>
+                        <a class="nav-link nav-menu-main menu-toggle" data-widget="pushmenu" style="cursor: pointer">
+                            <i class="toggle-icon font-medium-4 text-primary collapse-toggle-icon feather icon-disc"></i>
                         </a>
                     </li>
                 </ul>
@@ -46,3 +46,8 @@ results found.</span></div>
         </a>
     </li>
 </ul>
+<script>
+    $('.menu-toggle').on('click', function () {
+        $(this).find('i').toggleClass('icon-circle icon-disc')
+    })
+</script>
