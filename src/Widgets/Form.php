@@ -186,7 +186,7 @@ class Form implements Renderable
             return $this->getHtmlAttribute('action');
         }
 
-        return $this->setHtmlAttribute('action', $action);
+        return $this->setHtmlAttribute('action', admin_url($action));
     }
 
     /**

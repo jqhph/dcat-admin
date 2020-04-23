@@ -403,7 +403,7 @@ class Builder
     public function action($action = null)
     {
         if ($action !== null) {
-            $this->action = $action;
+            $this->action = admin_url($action);
 
             return;
         }
