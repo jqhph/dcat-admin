@@ -7,6 +7,7 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
+use Dcat\Admin\Support\WebUploader;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Fluent;
@@ -215,6 +216,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.menu', Menu::class);
         $this->app->singleton('admin.context', Fluent::class);
+        $this->app->singleton('admin.web-uploader', WebUploader::class);
     }
 
     /**

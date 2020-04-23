@@ -22,7 +22,7 @@ trait HasFiles
     protected function handleUploadFile($data)
     {
         $column = $data['upload_column'] ?? null;
-        $file = Admin::context()->webUploader->getCompleteUploadedFile() ?: ($data['file'] ?? null);
+        $file = app('admin.web-uploader')->getCompleteUploadedFile() ?: ($data['file'] ?? null);
 
         if (! $column || ! $file instanceof UploadedFile) {
             return;

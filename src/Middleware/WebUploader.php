@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Middleware;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Support\WebUploader as Uploader;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,8 @@ class WebUploader
 {
     public function handle(Request $request, \Closure $next)
     {
-        Admin::context()->webUploader = $webUploader = new Uploader();
+        /* @var Uploader $webUploader */
+        $webUploader = app('admin.web-uploader');
 
         if (! $webUploader->isUploading()) {
             return $next($request);

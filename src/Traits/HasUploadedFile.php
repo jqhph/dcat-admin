@@ -22,7 +22,7 @@ trait HasUploadedFile
      */
     public function uploader()
     {
-        return Admin::context()->webUploader;
+        return app('admin.web-uploader');
     }
 
     /**
