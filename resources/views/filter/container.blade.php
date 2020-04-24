@@ -1,4 +1,4 @@
-<div class="card p-2 mb-0 {{ $expand ? '' : 'd-none' }} {{$containerClass}}" style="{{$border}};margin-top: 10px;">
+<div class="card p-2 {{ $expand ? '' : 'd-none' }} {{$containerClass}}" style="{{$border}};margin-top: 10px;margin-bottom: 8px">
     <div class="card-body" style="{!! $style !!}"  id="{{ $filterID }}">
         <form action="{!! $action !!}" class="form-horizontal" pjax-container method="get">
             <div class="row">
