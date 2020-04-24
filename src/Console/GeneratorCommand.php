@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Console;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Console\GeneratorCommand as BaseCommand;
 use Illuminate\Support\Str;
 
@@ -46,5 +47,17 @@ abstract class GeneratorCommand extends BaseCommand
         }
 
         return $this->laravel['path'];
+    }
+
+    /**
+     * @return void
+     */
+    protected function askBaseDirectory()
+    {
+        if (! Str::startsWith(config('admin.route.namespace'), 'App')) {
+            $dir = explode('\\', config('admin.route.namespace'))[0];
+
+            $this->baseDirectory = trim($this->ask('Please enter the destination class path', Helper::slug($dir)));
+        }
     }
 }

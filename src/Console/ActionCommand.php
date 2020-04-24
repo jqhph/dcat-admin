@@ -64,9 +64,7 @@ class ActionCommand extends GeneratorCommand
 
         $this->namespace = ucfirst(trim($this->ask('Please enter the namespace of action class', $this->getDefaultNamespace(null))));
 
-        if (! Str::startsWith(config('admin.route.namespace'), 'App')) {
-            $this->baseDirectory = trim($this->ask('Please enter the destination class path', 'app'));
-        }
+        $this->askBaseDirectory();
 
         return parent::handle();
     }
