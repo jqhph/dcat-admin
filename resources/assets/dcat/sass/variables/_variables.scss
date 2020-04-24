@@ -16,9 +16,11 @@ $font-family-sans-serif: Nunito, Montserrat,system-ui,BlinkMacSystemFont,-apple-
 // 常用阴影颜色
 $shadow: 0 2px 4px 0 rgba(0,0,0,.08);
 $shadow-100: 0 3px 1px -2px rgba(0,0,0,.05), 0 2px 2px 0 rgba(0,0,0,.05), 0 1px 5px 1px rgba(0,0,0,.05);
+$shadow-150: 0 3px 1px -2px rgba(0,0,0,.065), 0 2px 2px 0 rgba(0,0,0,.065), 0 1px 5px 1px rgba(0,0,0,.065);
 $shadow-200: 0 3px 1px -2px rgba(0,0,0,.1), 0 2px 2px 0 rgba(0,0,0,.1), 0 1px 5px 1px rgba(0,0,0,.1);
 
 // 按钮阴影颜色
+$btn-white-shadow: $shadow-150;
 $btn-shadow: $shadow-100;
 $btn-shadow-hover: $shadow-200;
 $btn-group-btn-shadow: 0 2px 0 0 rgba(0,0,0,.08);

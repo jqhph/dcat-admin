@@ -38,9 +38,9 @@ a.btn-sm, .btn-group-sm > a.btn {
   .btn:not(.btn-white):hover {
     box-shadow: $shadow-200;
   }
-  .btn.btn-white {
-    box-shadow: $btn-group-btn-shadow;
-  }
+  //.btn.btn-white {
+  //  box-shadow: $btn-group-btn-shadow;
+  //}
 
   box-shadow: $btn-shadow;
 }
@@ -80,8 +80,9 @@ a.btn-sm, .btn-group-sm > a.btn {
   @include button-outline-variant($cyan, $cyan);
 }
 
-.btn.btn-white {
+.btn.btn-white, .btn.btn-default {
   color: $font-color;
+  box-shadow: $btn-white-shadow;
 }
 .btn.btn-white.btn-primary, .btn.btn-white.btn-primary:hover, .btn.btn-white.btn-primary:focus {
   color: $white !important;
