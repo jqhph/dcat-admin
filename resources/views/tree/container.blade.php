@@ -1,4 +1,4 @@
-<div class="card-header pb-1">
+<div class="card-header pb-1" style="padding:.8rem 1rem">
 
     <div>
         <div class="btn-group" style="margin-right:3px">
