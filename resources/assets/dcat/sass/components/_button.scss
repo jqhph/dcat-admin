@@ -31,20 +31,6 @@ a.btn-sm, .btn-group-sm > a.btn {
   color: white;
 }
 
-.btn-group {
-  .btn {
-    box-shadow: none;
-  }
-  .btn:not(.btn-white):hover {
-    box-shadow: $shadow-200;
-  }
-  //.btn.btn-white {
-  //  box-shadow: $btn-group-btn-shadow;
-  //}
-
-  box-shadow: $btn-shadow;
-}
-
 .btn-sm, .btn-group-sm > .btn {
   //padding: 0.45rem 1rem !important;
   font-size: 12px;
@@ -60,9 +46,18 @@ a.btn-sm, .btn-group-sm > a.btn {
   background: white;
   box-shadow: $shadow-100;
 }
-//a.btn-sm, .btn-group-sm > a.btn {
-//  line-height: 1.4;
-//}
+
+.btn-group {
+
+  .btn:not(.btn-white):hover {
+    box-shadow: $shadow-200;
+  }
+  .btn {
+    box-shadow: none!important;
+  }
+
+  box-shadow: $btn-shadow;
+}
 
 // --------------------- btn-custom -----------------------
 .btn-custom {
