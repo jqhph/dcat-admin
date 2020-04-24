@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Console;
 
-use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Str;
 
 class ActionCommand extends GeneratorCommand
 {
@@ -63,6 +63,10 @@ class ActionCommand extends GeneratorCommand
         }
 
         $this->namespace = ucfirst(trim($this->ask('Please enter the namespace of action class', $this->getDefaultNamespace(null))));
+
+        if (! Str::startsWith(config('admin.route.namespace'), 'App')) {
+            $this->baseDirectory = trim($this->ask('Please enter the destination class path', 'app'));
+        }
 
         return parent::handle();
     }
