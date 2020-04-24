@@ -595,9 +595,29 @@ HTML;
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
+    success: function (data) {
+        {$this->buildSuccessScript()}
+    },
+    error: function (response) {
+        {$this->buildErrorScript()}
+    }
 });
 JS
         );
+    }
+
+    /**
+     * @return string|void
+     */
+    protected function buildSuccessScript()
+    {
+    }
+
+    /**
+     * @return string|void
+     */
+    protected function buildErrorScript()
+    {
     }
 
     /**
