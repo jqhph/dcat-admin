@@ -2,8 +2,6 @@
 
 namespace Dcat\Admin\Console;
 
-use Illuminate\Support\Str;
-
 class FormCommand extends GeneratorCommand
 {
     /**
