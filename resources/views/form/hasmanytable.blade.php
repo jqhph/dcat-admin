@@ -42,7 +42,7 @@
                         @if($options['allowDelete'])
                             <td class="form-group">
                                 <div>
-                                    <div class="remove btn btn-warning btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                                    <div class="remove btn btn-white btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
                                 </div>
                             </td>
                         @endif
@@ -58,7 +58,7 @@
 
                     <td class="form-group">
                         <div>
-                            <div class="remove btn btn-warning btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                            <div class="remove btn btn-white btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
                         </div>
                     </td>
                 </tr>
