@@ -11,10 +11,6 @@
                     value="{{ $value }}"
                     auto="{{ $auto ? '1' : '0' }}"
             >
-
         </label>
-        @if (! \Dcat\Admin\Support\Helper::isQQBrowser())
-        <span class="quick-search-clear" style="{{$value ? 'color:#333;cursor:pointer;' : ''}}">×</span>
-        @endif
     </div>
 </form>
