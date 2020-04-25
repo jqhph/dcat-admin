@@ -8,14 +8,19 @@ class Number extends Text
         '@number-input',
     ];
 
-    protected $default = 0;
+    /**
+     * Width for label and field.
+     *
+     * @var array
+     */
+    protected $width = [
+        'label' => 4,
+        'field' => 2,
+    ];
 
     public function render()
     {
-        $this->default($this->default);
-
         $this->script = <<<JS
-
 $('{$this->getElementClassSelector()}:not(.initialized)')
     .addClass('initialized')
     .bootstrapNumber({
@@ -28,11 +33,6 @@ JS;
         $this->prepend('')->defaultAttribute('style', 'width: 200px');
 
         return parent::render();
-    }
-
-    protected function prepareInputValue($value)
-    {
-        return (int) $value;
     }
 
     /**
@@ -61,5 +61,31 @@ JS;
         $this->attribute('max', $value);
 
         return $this;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return int
+     */
+    protected function prepareInputValue($value)
+    {
+        return (int) $value;
+    }
+
+    /**
+     * Set or get value of the field.
+     *
+     * @param null $value
+     *
+     * @return mixed
+     */
+    public function value($value = null)
+    {
+        if (is_null($value)) {
+            return (int) parent::value();
+        }
+
+        return parent::value($value);
     }
 }
