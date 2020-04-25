@@ -114,9 +114,13 @@ trait HasQuickSearch
         }
 
         if (is_array($this->search)) {
-            foreach ($this->search as $column) {
-                $this->addWhereLikeBinding($column, true, '%'.$query.'%');
-            }
+            $this->model()->where(function ($q) use ($query) {
+                $keyword = '%'.$query.'%';
+
+                foreach ($this->search as $column) {
+                    $this->addWhereLikeBinding($q, $column, true, $keyword);
+                }
+            });
         } elseif (is_null($this->search)) {
             $this->addWhereBindings($query);
         }
@@ -131,47 +135,49 @@ trait HasQuickSearch
     {
         $queries = preg_split('/\s(?=([^"]*"[^"]*")*[^"]*$)/', trim($query));
         if (! $queries = $this->parseQueryBindings($queries)) {
-            $this->addWhereBasicBinding($this->getKeyName(), false, '=', '___');
+            $this->addWhereBasicBinding($this->model(), $this->getKeyName(), false, '=', '___');
 
             return;
         }
 
-        foreach ($queries as [$column, $condition, $or]) {
-            if (preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match) !== 0) {
-                $this->addWhereInBinding($column, $or, (bool) $match['not'], $match['values']);
-                continue;
-            }
+        $this->model()->where(function ($q) use ($queries) {
+            foreach ($queries as [$column, $condition, $or]) {
+                if (preg_match('/(?<not>!?)\((?<values>.+)\)/', $condition, $match) !== 0) {
+                    $this->addWhereInBinding($q, $column, $or, (bool) $match['not'], $match['values']);
+                    continue;
+                }
 
-            if (preg_match('/\[(?<start>.*?),(?<end>.*?)]/', $condition, $match) !== 0) {
-                $this->addWhereBetweenBinding($column, $or, $match['start'], $match['end']);
-                continue;
-            }
+                if (preg_match('/\[(?<start>.*?),(?<end>.*?)]/', $condition, $match) !== 0) {
+                    $this->addWhereBetweenBinding($q, $column, $or, $match['start'], $match['end']);
+                    continue;
+                }
 
-            if (preg_match('/(?<function>date|time|day|month|year),(?<value>.*)/', $condition, $match) !== 0) {
-                $this->addWhereDatetimeBinding($column, $or, $match['function'], $match['value']);
-                continue;
-            }
+                if (preg_match('/(?<function>date|time|day|month|year),(?<value>.*)/', $condition, $match) !== 0) {
+                    $this->addWhereDatetimeBinding($q, $column, $or, $match['function'], $match['value']);
+                    continue;
+                }
 
-            if (preg_match('/(?<pattern>%[^%]+%)/', $condition, $match) !== 0) {
-                $this->addWhereLikeBinding($column, $or, $match['pattern']);
-                continue;
-            }
+                if (preg_match('/(?<pattern>%[^%]+%)/', $condition, $match) !== 0) {
+                    $this->addWhereLikeBinding($q, $column, $or, $match['pattern']);
+                    continue;
+                }
 
-            if (preg_match('/(?<pattern>[^%]+%)/', $condition, $match) !== 0) {
-                $this->addWhereLikeBinding($column, $or, $match['pattern']);
-                continue;
-            }
+                if (preg_match('/(?<pattern>[^%]+%)/', $condition, $match) !== 0) {
+                    $this->addWhereLikeBinding($q, $column, $or, $match['pattern']);
+                    continue;
+                }
 
-            if (preg_match('/\/(?<value>.*)\//', $condition, $match) !== 0) {
-                $this->addWhereBasicBinding($column, $or, 'REGEXP', $match['value']);
-                continue;
-            }
+                if (preg_match('/\/(?<value>.*)\//', $condition, $match) !== 0) {
+                    $this->addWhereBasicBinding($q, $column, $or, 'REGEXP', $match['value']);
+                    continue;
+                }
 
-            if (preg_match('/(?<operator>>=?|<=?|!=|%){0,1}(?<value>.*)/', $condition, $match) !== 0) {
-                $this->addWhereBasicBinding($column, $or, $match['operator'], $match['value']);
-                continue;
+                if (preg_match('/(?<operator>>=?|<=?|!=|%){0,1}(?<value>.*)/', $condition, $match) !== 0) {
+                    $this->addWhereBasicBinding($q, $column, $or, $match['operator'], $match['value']);
+                    continue;
+                }
             }
-        }
+        });
     }
 
     /**
@@ -217,42 +223,45 @@ trait HasQuickSearch
     /**
      * Add where like binding to model query.
      *
+     * @param mixed  $query
      * @param string $column
      * @param bool   $or
      * @param string $pattern
      */
-    protected function addWhereLikeBinding(?string $column, ?bool $or, ?string $pattern)
+    protected function addWhereLikeBinding($query, ?string $column, ?bool $or, ?string $pattern)
     {
         $likeOperator = 'like';
         $method = $or ? 'orWhere' : 'where';
 
-        $this->model()->{$method}($column, $likeOperator, $pattern);
+        $query->{$method}($column, $likeOperator, $pattern);
     }
 
     /**
      * Add where date time function binding to model query.
      *
+     * @param mixed  $query
      * @param string $column
      * @param bool   $or
      * @param string $function
      * @param string $value
      */
-    protected function addWhereDatetimeBinding(?string $column, ?bool $or, ?string $function, ?string $value)
+    protected function addWhereDatetimeBinding($query, ?string $column, ?bool $or, ?string $function, ?string $value)
     {
         $method = ($or ? 'orWhere' : 'where').ucfirst($function);
 
-        $this->model()->$method($column, $value);
+        $query->$method($column, $value);
     }
 
     /**
      * Add where in binding to the model query.
      *
+     * @param mixed  $query
      * @param string $column
      * @param bool   $or
      * @param bool   $not
      * @param string $values
      */
-    protected function addWhereInBinding(?string $column, ?bool $or, ?bool $not, ?string $values)
+    protected function addWhereInBinding($query, ?string $column, ?bool $or, ?bool $not, ?string $values)
     {
         $values = explode(',', $values);
 
@@ -265,33 +274,35 @@ trait HasQuickSearch
         $where = $or ? 'orWhere' : 'where';
         $method = $where.($not ? 'NotIn' : 'In');
 
-        $this->model()->$method($column, $values);
+        $query->$method($column, $values);
     }
 
     /**
      * Add where between binding to the model query.
      *
+     * @param mixed  $query
      * @param string $column
      * @param bool   $or
      * @param string $start
      * @param string $end
      */
-    protected function addWhereBetweenBinding(?string $column, ?bool $or, ?string $start, ?string $end)
+    protected function addWhereBetweenBinding($query, ?string $column, ?bool $or, ?string $start, ?string $end)
     {
         $method = $or ? 'orWhereBetween' : 'whereBetween';
 
-        $this->model()->$method($column, [$start, $end]);
+        $query->$method($column, [$start, $end]);
     }
 
     /**
      * Add where basic binding to the model query.
      *
+     * @param mixed  $query
      * @param string $column
      * @param bool   $or
      * @param string $operator
      * @param string $value
      */
-    protected function addWhereBasicBinding(?string $column, ?bool $or, ?string $operator, ?string $value)
+    protected function addWhereBasicBinding($query, ?string $column, ?bool $or, ?string $operator, ?string $value)
     {
         $method = $or ? 'orWhere' : 'where';
         $operator = $operator ?: '=';
@@ -308,6 +319,6 @@ trait HasQuickSearch
             $value = substr($value, 1, -1);
         }
 
-        $this->model()->{$method}($column, $operator, $value);
+        $query->{$method}($column, $operator, $value);
     }
 }
