@@ -8,16 +8,6 @@ class Number extends Text
         '@number-input',
     ];
 
-    /**
-     * Width for label and field.
-     *
-     * @var array
-     */
-    protected $width = [
-        'label' => 4,
-        'field' => 2,
-    ];
-
     public function render()
     {
         $this->script = <<<JS
