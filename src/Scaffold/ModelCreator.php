@@ -160,8 +160,8 @@ class ModelCreator
         $import = $use = '';
 
         if ($softDeletes) {
-            $import = "use Illuminate\\Database\\Eloquent\\SoftDeletes;";
-            $use = "use SoftDeletes;";
+            $import = 'use Illuminate\\Database\\Eloquent\\SoftDeletes;';
+            $use = 'use SoftDeletes;';
         }
 
         $stub = str_replace(['DummyImportSoftDeletesTrait', 'DummyUseSoftDeletesTrait'], [$import, $use], $stub);
@@ -182,8 +182,8 @@ class ModelCreator
         $import = $use = '';
 
         if (version_compare(app()->version(), '7.0.0') >= 0) {
-            $import = "use Dcat\\Admin\\Traits\\HasDateTimeFormatter;";
-            $use = "use HasDateTimeFormatter;";
+            $import = 'use Dcat\\Admin\\Traits\\HasDateTimeFormatter;';
+            $use = 'use HasDateTimeFormatter;';
         }
 
         $stub = str_replace(['DummyImportDateTimeFormatterTrait', 'DummyUseDateTimeFormatterTrait'], [$import, $use], $stub);
