@@ -459,8 +459,7 @@ class EloquentRepository extends Repository implements TreeRepository
                 return;
             }
 
-            $model = $this->createEloquent($data);
-            $model->exists = true;
+            $model = $this->createDeletingModel($id, $data);
 
             if ($this->isSoftDeletes && $model->trashed()) {
                 $form->deleteFiles($data, true);
@@ -475,6 +474,30 @@ class EloquentRepository extends Repository implements TreeRepository
         });
 
         return true;
+    }
+
+    /**
+     * @param mixed $id
+     * @param array $data
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    protected function createDeletingModel($id, $data)
+    {
+        $model = $this->createEloquent();
+        $keyName = $model->getKeyName();
+
+        $model->{$keyName} = $id;
+
+        if ($this->isSoftDeletes) {
+            $deletedColumn = $model->getDeletedAtColumn();
+
+            $model->{$deletedColumn} = $data[$deletedColumn] ?? null;
+        }
+
+        $model->exists = true;
+
+        return $model;
     }
 
     /**
