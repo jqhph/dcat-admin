@@ -253,19 +253,21 @@ JS;
         $this->script = <<<JS
 $.ajax({$ajaxOptions}).done(function(data) {
 
-  var select = $("{$this->getElementClassSelector()}");
+  $("{$this->getElementClassSelector()}").each(function (_, select) {
+      select = $(select);
 
-  select.select2({
-    data: data,
-    $configs
+      select.select2({
+        data: data,
+        $configs
+      });
+      
+      var value = select.data('value') + '';
+      
+      if (value) {
+        value = value.split(',');
+        select.select2('val', value);
+      }
   });
-  
-  var value = select.data('value') + '';
-  
-  if (value) {
-    value = value.split(',');
-    select.select2('val', value);
-  }
 });
 
 JS;

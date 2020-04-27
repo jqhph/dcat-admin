@@ -66,7 +66,7 @@
 
             @if($options['allowCreate'])
                 <div class="form-group row m-t-10">
-                    <div class="{{$viewClass['field']}}">
+                    <div class="{{$viewClass['field']}}" style="margin-top: 8px">
                         <div class="add btn btn-success btn-sm"><i class="feather icon-save"></i>&nbsp;{{ trans('admin.new') }}</div>
                     </div>
                 </div>

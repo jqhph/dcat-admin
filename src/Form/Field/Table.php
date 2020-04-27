@@ -122,6 +122,9 @@ class Table extends HasMany
 .table-has-many .fields-group .form-group {
     margin-bottom:0;
 }
+.table-has-many .fields-group .form-group .remove {
+    margin-top: 10px;
+}
 CSS
         );
 
