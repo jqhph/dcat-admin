@@ -42,7 +42,7 @@
 
                     <div class="col-sm-2 ">
                         <div class="input-group">
-                            <input type="text" name="table_name" class="form-control text-capitalize" id="inputTableName" placeholder="{{(trans('admin.scaffold.table'))}}" value="{{ old('table_name') }}">
+                            <input type="text" name="table_name" class="form-control" id="inputTableName" placeholder="{{(trans('admin.scaffold.table'))}}" value="{{ old('table_name') }}">
 
                         </div>
                     </div>

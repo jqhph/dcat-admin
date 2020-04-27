@@ -2,16 +2,17 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Database\Eloquent\Model;
+DummyImportDateTimeFormatterTrait
 DummyImportSoftDeletesTrait
+use Illuminate\Database\Eloquent\Model;
 
 class DummyClass extends Model
 {
+	DummyUseDateTimeFormatterTrait
     DummyUseSoftDeletesTrait
 
     DummyModelTable
-
     DummyModelKey
-
     DummyTimestamp
+
 }

@@ -72,6 +72,7 @@ class ModelCreator
         $stub = $this->replaceClass($stub, $this->name)
             ->replaceNamespace($stub, $this->name)
             ->replaceSoftDeletes($stub, $softDeletes)
+            ->replaceDatetimeFormatter($stub)
             ->replaceTable($stub, $this->name)
             ->replaceTimestamp($stub, $timestamps)
             ->replacePrimaryKey($stub, $keyName)
@@ -159,11 +160,33 @@ class ModelCreator
         $import = $use = '';
 
         if ($softDeletes) {
-            $import = "use Illuminate\\Database\\Eloquent\\SoftDeletes;\n";
-            $use = "use SoftDeletes;\n";
+            $import = "use Illuminate\\Database\\Eloquent\\SoftDeletes;";
+            $use = "use SoftDeletes;";
         }
 
         $stub = str_replace(['DummyImportSoftDeletesTrait', 'DummyUseSoftDeletesTrait'], [$import, $use], $stub);
+
+        return $this;
+    }
+
+    /**
+     * Replace datetimeFormatter dummy.
+     *
+     * @param string $stub
+     * @param bool   $softDeletes
+     *
+     * @return $this
+     */
+    protected function replaceDatetimeFormatter(&$stub)
+    {
+        $import = $use = '';
+
+        if (version_compare(app()->version(), '7.0.0') >= 0) {
+            $import = "use Dcat\\Admin\\Traits\\HasDateTimeFormatter;";
+            $use = "use HasDateTimeFormatter;";
+        }
+
+        $stub = str_replace(['DummyImportDateTimeFormatterTrait', 'DummyUseDateTimeFormatterTrait'], [$import, $use], $stub);
 
         return $this;
     }
