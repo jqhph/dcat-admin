@@ -38,7 +38,7 @@ class Card extends Widget
             $this->title($title);
         }
 
-        if ($content) {
+        if ($content !== null) {
             $this->content($content);
         }
 
