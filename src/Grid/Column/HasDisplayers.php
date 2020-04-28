@@ -118,7 +118,11 @@ trait HasDisplayers
      */
     public function prepend($val)
     {
-        return $this->display(function ($v) use (&$val) {
+        return $this->display(function ($v, $column) use (&$val) {
+            if ($val instanceof \Closure) {
+                $val = $val->call($this, $v, $column->getOriginal(), $column);
+            }
+
             if (is_array($v)) {
                 array_unshift($v, $val);
 
@@ -138,7 +142,11 @@ trait HasDisplayers
      */
     public function append($val)
     {
-        return $this->display(function ($v) use (&$val) {
+        return $this->display(function ($v, $column) use (&$val) {
+            if ($val instanceof \Closure) {
+                $val = $val->call($this, $v, $column->getOriginal(), $column);
+            }
+
             if (is_array($v)) {
                 array_push($v, $val);
 
@@ -186,6 +194,27 @@ trait HasDisplayers
             );
 
             return "<img src='$src' class='img img-circle'/>";
+        });
+    }
+
+    /**
+     * Add a `dot` before column text.
+     *
+     * @param array  $options
+     * @param string $default
+     *
+     * @return $this
+     */
+    public function dot($options = [], $default = 'default')
+    {
+        return $this->prepend(function ($_, $original) use ($options, $default) {
+            $style = is_null($original) ? $default : Arr::get((array) $options, $original, $default);
+
+            $style = $style === 'default' ? 'dark70' : $style;
+
+            $background = Admin::color()->get($style);
+
+            return "<i class='fa fa-circle' style='font-size: 13px;color: {$background}'></i>&nbsp;&nbsp;";
         });
     }
 
