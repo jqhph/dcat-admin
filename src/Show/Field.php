@@ -336,6 +336,27 @@ HTML;
     }
 
     /**
+     * Add a `dot` before column text.
+     *
+     * @param array  $options
+     * @param string $default
+     *
+     * @return $this
+     */
+    public function dot($options = [], $default = 'default')
+    {
+        return $this->unescape()->prepend(function ($_, $original) use ($options, $default) {
+            $style = is_null($original) ? $default : Arr::get((array) $options, $original, $default);
+
+            $style = $style === 'default' ? 'dark70' : $style;
+
+            $background = Admin::color()->get($style);
+
+            return "<i class='fa fa-circle' style='font-size: 13px;color: {$background}'></i>&nbsp;&nbsp;";
+        });
+    }
+
+    /**
      * Show field as badges.
      *
      * @param string $style
@@ -400,7 +421,13 @@ HTML;
      */
     public function prepend($val)
     {
-        return $this->as(function ($v) use (&$val) {
+        $name = $this->name;
+
+        return $this->as(function ($v) use (&$val, $name) {
+            if ($val instanceof \Closure) {
+                $val = $val->call($this, $v, $this->$name);
+            }
+
             if (is_array($v)) {
                 array_unshift($v, $val);
 
@@ -420,7 +447,13 @@ HTML;
      */
     public function append($val)
     {
-        return $this->as(function ($v) use (&$val) {
+        $name = $this->name;
+
+        return $this->as(function ($v) use (&$val, $name) {
+            if ($val instanceof \Closure) {
+                $val = $val->call($this, $v, $this->$name);
+            }
+
             if (is_array($v)) {
                 array_push($v, $val);
 
