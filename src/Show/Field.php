@@ -222,21 +222,23 @@ class Field implements Renderable
                 return '';
             }
 
-            if (url()->isValidUrl($path)) {
-                $src = $path;
-            } elseif ($server) {
-                $src = $server.$path;
-            } else {
-                $disk = config('admin.upload.disk');
-
-                if (config("filesystems.disks.{$disk}")) {
-                    $src = Storage::disk($disk)->url($path);
+            return collect((array) $path)->transform(function ($path) use ($server, $width, $height) {
+                if (url()->isValidUrl($path)) {
+                    $src = $path;
+                } elseif ($server) {
+                    $src = $server.$path;
                 } else {
-                    return '';
-                }
-            }
+                    $disk = config('admin.upload.disk');
 
-            return "<img data-action='preview-img' src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
+                    if (config("filesystems.disks.{$disk}")) {
+                        $src = Storage::disk($disk)->url($path);
+                    } else {
+                        return '';
+                    }
+                }
+
+                return "<img data-action='preview-img' src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
+            })->implode('&nbsp;');
         });
     }
 
