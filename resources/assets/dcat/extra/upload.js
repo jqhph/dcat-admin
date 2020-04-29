@@ -543,6 +543,14 @@
                         stats = uploader.getStats();
                         if (stats.successNum) {
                             Dcat.success(__('upload_success_message', {success: stats.successNum}));
+
+                            setTimeout(function () {
+                                if (opts.upload.fileNumLimit == 1) {
+                                    // 单文件上传，需要重置文件上传个数
+                                    uploader.request('get-stats').numOfSuccess = 0;
+                                }
+                            }, 10);
+
                         } else {
                             // 没有成功的图片，重设
                             state = 'done';
