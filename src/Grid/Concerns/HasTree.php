@@ -54,6 +54,8 @@ trait HasTree
                     $this->getChildrenPageName($this->getParentIdFromRequest())
                 );
             }
+
+            $this->addIgnoreQueries();
         });
 
         $this->collection(function (Collection $collection) {
@@ -69,6 +71,18 @@ trait HasTree
 
             return $collection;
         });
+    }
+
+    /**
+     * 设置保存为"前一个页面地址"时需要忽略的参数.
+     */
+    protected function addIgnoreQueries()
+    {
+        Admin::addIgnoreQueryName([
+            $this->getParentIdQueryName(),
+            $this->getTierQueryName(),
+            $this->getChildrenPageName($this->getParentIdFromRequest()),
+        ]);
     }
 
     /**

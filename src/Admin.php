@@ -444,6 +444,28 @@ class Admin
     }
 
     /**
+     * @param array|string $name
+     *
+     * @return void
+     */
+    public static function addIgnoreQueryName($name)
+    {
+        $context = static::context();
+
+        $ignoreQueries = $context->ignoreQueries ?? [];
+
+        $context->ignoreQueries = array_merge($ignoreQueries, (array) $name);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getIgnoreQueryNames()
+    {
+        return static::context()->ignoreQueries ?? [];
+    }
+
+    /**
      * 获取js配置.
      *
      * @return string

@@ -54,7 +54,11 @@ class Bootstrap
             && ! Helper::isAjaxRequest()
             && ! $this->prefetch($request)
         ) {
-            Helper::setPreviousUrl($request->fullUrl());
+            Admin::addIgnoreQueryName(['_token', '_pjax']);
+
+            Helper::setPreviousUrl(
+                Helper::fullUrlWithoutQuery(Admin::getIgnoreQueryNames())
+            );
         }
     }
 
