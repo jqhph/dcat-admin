@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Support\WebUploader as WebUploaderHelper;
 use Dcat\Admin\Form;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -146,6 +147,8 @@ trait WebUploader
     protected function setupDefaultOptions()
     {
         $defaultOptions = [
+            'name'                => WebUploaderHelper::FILE_NAME,
+            'fileVal'             => WebUploaderHelper::FILE_NAME,
             'isImage'             => false,
             'disableRemove'       => false,
             'chunked'             => true,

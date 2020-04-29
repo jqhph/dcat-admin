@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\WebUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +22,7 @@ trait HasFiles
     protected function handleUploadFile($data)
     {
         $column = $data['upload_column'] ?? null;
-        $file = app('admin.web-uploader')->getCompleteUploadedFile() ?: ($data['file'] ?? null);
+        $file = app('admin.web-uploader')->getCompleteUploadedFile() ?: ($data[WebUploader::FILE_NAME] ?? null);
 
         if (! $column || ! $file instanceof UploadedFile) {
             return;

@@ -212,6 +212,7 @@ class File extends Field implements UploadFieldInterface
         opts.upload = $.extend({
             pick: {
                 id: '#{$this->containerId} .file-picker',
+                name: '_file_',
                 label: '<i class="feather icon-folder"></i>&nbsp; {$newButton}'
             },
             dnd: '#{$this->containerId} .dnd-area',

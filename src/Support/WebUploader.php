@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class WebUploader
 {
+    const FILE_NAME = '_file_';
+
     public $tempDirectory = 'tmp';
 
     protected $tempFilePath;
@@ -31,7 +33,7 @@ class WebUploader
         $this->chunk = $request->get('chunk');
         $this->chunks = $request->get('chunks');
         $this->upload_column = $request->get('upload_column');
-        $this->file = $request->file('file');
+        $this->file = $request->file(static::FILE_NAME);
     }
 
     /**
