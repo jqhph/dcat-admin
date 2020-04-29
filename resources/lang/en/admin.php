@@ -188,6 +188,7 @@ return [
         'F_EXCEED_SIZE'          => 'Sorry，the maximum file-size has been exceeded!',
         'Q_EXCEED_SIZE_LIMIT'    => 'Sorry, the maximum file-size has been exceeded!',
         'F_DUPLICATE'            => 'Duplicate file.',
+        'confirm_delete_file'    => 'Are you sure delete this file from server?',
     ],
     'import_extension_confirm' => 'Are you sure import the extension?',
     'quick_create'             => 'Quick create',

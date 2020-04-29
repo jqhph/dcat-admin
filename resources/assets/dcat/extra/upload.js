@@ -41,7 +41,7 @@
                 F_EXCEED_SIZE: '对不起，当前选择的文件过大',
                 Q_EXCEED_SIZE_LIMIT: '对不起，已超出文件大小限制',
                 F_DUPLICATE: '文件重复',
-
+                confirm_delete_file: '您确定要删除这个文件吗？',
             },
             upload: { // web-uploader配置
                 formData: {
@@ -187,7 +187,7 @@
                     </li>`);
 
                 $btns = $(`<div class="file-panel">
-                    <a class="btn btn-sm btn-white" data-file-act="cancel"><i class="fa fa-close red-dark" style="font-size:13px"></i></a>
+                    <a class="btn btn-sm btn-white" data-file-act="cancel"><i class="feather icon-x red-dark" style="font-size:13px"></i></a>
                     <a class="btn btn-sm btn-white" data-file-act="delete" style="display: none">
                     <i class="feather icon-trash red-dark" style="font-size:13px"></i></a>
                     <a class="btn btn-sm btn-white" data-file-act="preview" ><i class="feather icon-zoom-in"></i></a>
@@ -336,24 +336,27 @@
                             return uploader.removeFile(file);
                         }
 
-                        var post = opts.deleteData;
+                        Dcat.confirm(__('confirm_delete_file'), file.serverId, function () {
+                            var post = opts.deleteData;
 
-                        post.key = file.serverId;
-                        if (!post.key) {
-                            return uploader.removeFile(file);
-                        }
-                        post._column = updateColumn;
-
-                        Dcat.loading();
-                        $.post(opts.deleteUrl, post, function (result) {
-                            Dcat.loading(false);
-                            if (result.status) {
-                                deleteInput(file.serverId);
-                                uploader.removeFile(file);
-                                return;
+                            post.key = file.serverId;
+                            if (!post.key) {
+                                return uploader.removeFile(file);
                             }
+                            post._column = updateColumn;
 
-                            Dcat.error(result.message || 'Remove file failed.');
+                            Dcat.loading();
+                            $.post(opts.deleteUrl, post, function (result) {
+                                Dcat.loading(false);
+                                if (result.status) {
+                                    deleteInput(file.serverId);
+                                    uploader.removeFile(file);
+                                    return;
+                                }
+
+                                Dcat.error(result.message || 'Remove file failed.');
+                            });
+
                         });
 
                         break;
@@ -713,21 +716,23 @@
                     return removeFormFile(fileId);
                 }
 
-                post.key = fileId;
-                post._column = updateColumn;
+                Dcat.confirm(__('confirm_delete_file'), file.serverId, function () {
+                    post.key = fileId;
+                    post._column = updateColumn;
 
-                Dcat.loading();
-                $.post(opts.deleteUrl, post, function (result) {
-                    Dcat.loading(false);
-                    if (result.status) {
-                        // 移除
-                        html.remove();
+                    Dcat.loading();
+                    $.post(opts.deleteUrl, post, function (result) {
+                        Dcat.loading(false);
+                        if (result.status) {
+                            // 移除
+                            html.remove();
 
-                        removeFormFile(fileId);
-                        return;
-                    }
+                            removeFormFile(fileId);
+                            return;
+                        }
 
-                    Dcat.error(result.message || 'Remove file failed.')
+                        Dcat.error(result.message || 'Remove file failed.')
+                    });
                 });
             };
 

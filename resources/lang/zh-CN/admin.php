@@ -189,6 +189,7 @@ return [
         'F_EXCEED_SIZE'          => '对不起，当前选择的文件过大',
         'Q_EXCEED_SIZE_LIMIT'    => '对不起，已超出文件大小限制',
         'F_DUPLICATE'            => '文件重复',
+        'confirm_delete_file'    => '您确定要删除这个文件吗?',
     ],
     'import_extension_confirm' => '确认导入拓展？',
     'quick_create'             => '快速创建',
