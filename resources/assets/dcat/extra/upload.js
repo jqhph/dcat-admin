@@ -333,6 +333,7 @@
                     case 'deleteurl':
                     case 'delete':
                         if (opts.disableRemove) {
+                            deleteInput(file.serverId);
                             return uploader.removeFile(file);
                         }
 
@@ -341,6 +342,7 @@
 
                             post.key = file.serverId;
                             if (!post.key) {
+                                deleteInput(file.serverId);
                                 return uploader.removeFile(file);
                             }
                             post._column = updateColumn;
