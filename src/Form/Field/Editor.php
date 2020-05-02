@@ -174,7 +174,6 @@ JS;
     public function render()
     {
         $this->script = <<<JS
-    tinymce.remove();
     tinymce.init({$this->formatOptions()})
 JS;
 
