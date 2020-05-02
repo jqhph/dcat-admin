@@ -220,7 +220,9 @@ class ScaffoldController extends Controller
                 $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_schema = "%s"', $value['database']);
 
                 if ($tb) {
-                    $sql .= " AND TABLE_NAME = '{$tb}'";
+                    $p = Arr::get($value, 'prefix');
+
+                    $sql .= " AND TABLE_NAME = '{$p}{$tb}'";
                 }
 
                 $tmp = DB::connection($connectName)->select($sql);
