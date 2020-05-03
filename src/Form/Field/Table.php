@@ -70,7 +70,7 @@ class Table extends HasMany
 
         return array_values(
             collect($prepare)->reject(function ($item) {
-                return $item[NestedForm::REMOVE_FLAG_NAME] == 1;
+                return ($item[NestedForm::REMOVE_FLAG_NAME] ?? null) == 1;
             })->map(function ($item) {
                 unset($item[NestedForm::REMOVE_FLAG_NAME]);
 
