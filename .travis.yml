@@ -18,7 +18,7 @@ services:
   - mysql
 
 install:
-  - pecl install -f zip
+  - phpenv config-add ./resources/zip.ini
   - mysql -e 'create database if not exists laravel;'
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
