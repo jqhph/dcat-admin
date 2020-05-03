@@ -18,6 +18,7 @@ services:
   - mysql
 
 install:
+  - pecl install -f zip
   - mysql -e 'create database if not exists laravel;'
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
