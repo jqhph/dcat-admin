@@ -21,8 +21,9 @@ install:
   - wget https://libzip.org/download/libzip-1.6.1.tar.gz
   - tar -zxvf libzip-1.6.1.tar.gz
   - cd libzip-1.6.1
-  - mkdir build && cd build && cmake ..
-  - make && make install
+  - mkdir build && cd build
+  - sudo cmake ..
+  - sudo make && sudo make install
   - cd ../..
   - wget https://pecl.php.net/get/zip-1.18.2.tgz
   - tar -zxvf zip-1.18.2.tgz
