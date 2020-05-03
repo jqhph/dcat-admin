@@ -18,7 +18,10 @@ services:
   - mysql
 
 install:
-  - phpenv config-add ./tests/resources/zip.ini
+  - wget https://pecl.php.net/get/zip-1.18.2.tgz
+  - tar -zxvf zip-1.18.2.tgz
+  - cd zip-1.18.2 && phpize clean && phpize && ./configure && make clean && make && make install
+  - cd ..
   - mysql -e 'create database if not exists laravel;'
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
