@@ -6,7 +6,6 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4
 
 addons:
   chrome: stable
@@ -18,17 +17,6 @@ services:
   - mysql
 
 install:
-  - wget https://libzip.org/download/libzip-1.6.1.tar.gz
-  - tar -zxvf libzip-1.6.1.tar.gz
-  - cd libzip-1.6.1
-  - mkdir build && cd build
-  - cmake ..
-  - sudo make && sudo make install
-  - cd ../..
-  - wget https://pecl.php.net/get/zip-1.18.2.tgz
-  - tar -zxvf zip-1.18.2.tgz
-  - cd zip-1.18.2 && phpize clean && phpize && ./configure && make clean && make && make install
-  - cd ..
   - mysql -e 'create database if not exists laravel;'
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
