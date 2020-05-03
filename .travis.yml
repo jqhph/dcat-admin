@@ -22,7 +22,7 @@ install:
   - tar -zxvf libzip-1.6.1.tar.gz
   - cd libzip-1.6.1
   - mkdir build && cd build
-  - sudo cmake ..
+  - cmake ..
   - sudo make && sudo make install
   - cd ../..
   - wget https://pecl.php.net/get/zip-1.18.2.tgz
