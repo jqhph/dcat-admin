@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Symfony\Component\Process\Process;
 
 class Helper
 {
@@ -595,5 +596,28 @@ class Helper
     public static function getPreviousUrl()
     {
         return (string) (session()->get('admin.prev.url') ? url(session()->get('admin.prev.url')) : url()->previous());
+    }
+
+    /**
+     * @param mixed $command
+     * @param int   $timeout
+     * @param null  $input
+     * @param null  $cwd
+     *
+     * @return Process
+     */
+    public static function process($command, $timeout = 100, $input = null, $cwd = null)
+    {
+        $parameters = [
+            $command,
+            $cwd,
+            [],
+            $input,
+            $timeout
+        ];
+
+        return is_string($command)
+            ? Process::fromShellCommandline(...$parameters)
+            : new Process(...$parameters);
     }
 }

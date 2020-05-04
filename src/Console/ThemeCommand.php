@@ -2,9 +2,10 @@
 
 namespace Dcat\Admin\Console;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use TitasGailius\Terminal\Terminal;
+use Symfony\Component\Process\Process;
 
 class ThemeCommand extends Command
 {
@@ -52,16 +53,13 @@ class ThemeCommand extends Command
      */
     public function handle()
     {
-        if (! class_exists(Terminal::class)) {
-            throw new \RuntimeException('Please install "titasgailius/terminal" first!');
-        }
-
         $this->packagePath = realpath(__DIR__.'/../..');
         $this->files = $this->laravel['files'];
 
         $name = $this->argument('name');
 
         if ($name === static::ALL) {
+            // 编译所有内置主题色
             return $this->compileAllDefaultThemes();
         }
 
@@ -77,11 +75,7 @@ class ThemeCommand extends Command
             $this->info("[$name][$color] npm run production...");
 
             // 编译
-            $response = Terminal::builder()
-                ->timeout(900)
-                ->run("cd {$this->packagePath} && npm run prod");
-
-            $this->info($response->output());
+            $this->runProcess("cd {$this->packagePath} && npm run prod", 1800);
 
             // 重置文件
             $this->resetFiles();
@@ -211,11 +205,7 @@ class ThemeCommand extends Command
 
         $this->info('npm install...');
 
-        $response = Terminal::builder()
-            ->timeout(1800)
-            ->run("cd {$this->packagePath} && npm install");
-
-        $this->line($response->output());
+        $this->runProcess("cd {$this->packagePath} && npm install");
     }
 
     /**
@@ -262,5 +252,24 @@ class ThemeCommand extends Command
         }
 
         return $color;
+    }
+
+    /**
+     * 执行命令.
+     *
+     * @param string $command
+     * @param int    $timeout
+     */
+    protected function runProcess($command, $timeout = 1800)
+    {
+        $process = Helper::process($command, $timeout);
+
+        $process->run(function ($type, $data) {
+            if ($type === Process::ERR) {
+                $this->warn($data);
+            } else {
+                $this->info($data);
+            }
+        });
     }
 }
