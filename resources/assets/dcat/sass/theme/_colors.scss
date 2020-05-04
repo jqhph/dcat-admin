@@ -22,11 +22,8 @@ $orange: #dda451; //$warning
 $green: #21b978; //$success
 $cyan: #7367f0; //$primary
 
-
-$primary: $indigo;
-//$primary: #4e9876; // green
-//$primary: #5686d4; // blue
-//$primary: #4199de; //blue-light
+// 设置主题颜色
+@import "./primary";
 
 $info: $blue;
 $warning: $orange;
