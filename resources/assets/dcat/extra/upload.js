@@ -7,6 +7,7 @@
             preview: [], // 数据预览
             server: '',
             updateServer: '',
+            sortable: false,
             deleteUrl: '',
             deleteData: {},
             thumbHeight: 160,
@@ -172,14 +173,19 @@
             __ = lang.trans.bind(lang),
 
             // WebUploader实例
-            uploader;
+            uploader,
+
+            // 已上传的文件
+            uploadedFiles = [],
+
+            initImg;
 
         // 当有文件添加进来时执行，负责view的创建
         function addFile(file) {
-            var size = WebUploader.formatSize(file.size), $li, $btns;
+            var size = WebUploader.formatSize(file.size), $li, $btns, fileName = file.name || null;
 
             if (showImg) {
-                $li = $(`<li id="${getFileViewSelector(file.id)}" title="${file.name}" >
+                $li = $(`<li id="${getFileViewSelector(file.id)}" title="${fileName}" >
                     <p class="file-type">${(file.ext.toUpperCase() || 'FILE')}</p>
                     <p class="imgWrap "></p>
                     <p class="title" style="">${file.name}</p>
@@ -191,6 +197,9 @@
                     <a class="btn btn-sm btn-white" data-file-act="delete" style="display: none">
                     <i class="feather icon-trash red-dark" style="font-size:13px"></i></a>
                     <a class="btn btn-sm btn-white" data-file-act="preview" ><i class="feather icon-zoom-in"></i></a>
+                    <a class='btn btn-sm btn-white' data-file-act='order' data-order="1" style="display: none"><i class='feather icon-arrow-up'></i></a>
+                    <a class='btn btn-sm btn-white' data-file-act='order' data-order="0" style="display: none"><i class='feather icon-arrow-down'></i></a>
+
                     </div>`).appendTo($li);
             } else {
                 $li = $(`
@@ -203,6 +212,8 @@
                 `);
 
                 $btns = $(`
+<span style="right: 45px;" class="file-action d-none" data-file-act='order' data-order="1"><i class='feather icon-arrow-up'></i></span>
+<span style="right: 25px;" class="file-action d-none" data-file-act='order' data-order="0"><i class='feather icon-arrow-down'></i></span>
 <span data-file-act="cancel" class="file-action" style="font-size:13px">
     <i class="feather icon-x red-dark"></i>
 </span>
@@ -364,6 +375,11 @@
                         break;
                     case 'preview':
                         Dcat.helpers.previewImage($wrap.find('img').attr('src'), null, file.name);
+                        break;
+                    case 'order':
+                        $(this).attr('data-id', file.serverId);
+
+                        orderFiles.apply(this);
                         break;
                 }
 
@@ -668,6 +684,8 @@
 
         // 删除表单值
         function deleteInput(id) {
+            deleteUploadedFile(id);
+
             if (!id) {
                 return $input.val('');
             }
@@ -676,15 +694,125 @@
             }));
         }
 
+        // 添加已上传文件
+        function appendUploadedFile(file) {
+            if (! file.serverId || searchUploadedFile(file.serverId) !== -1) {
+                return;
+            }
+
+            uploadedFiles.push(file)
+        }
+
+        function syncUploadedFiles() {
+            var files = [];
+            for (var i in uploadedFiles) {
+                if (uploadedFiles[i]) {
+                    files.push(uploadedFiles[i].serverId);
+                }
+            }
+
+            setInput(files);
+        }
+
+        function deleteUploadedFile(fileId) {
+            uploadedFiles = uploadedFiles.filter(function (v) {
+                return v.serverId != fileId;
+            });
+        }
+
+        // 查找文件位置
+        function searchUploadedFile(fileId) {
+            for (var i in uploadedFiles) {
+                if (uploadedFiles[i].serverId === fileId) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        // 交换文件排序
+        function swrapUploadedFile(fileId, order) {
+            var index = parseInt(searchUploadedFile(fileId)),
+                currentFile = uploadedFiles[index],
+                prevFile = uploadedFiles[index - 1],
+                nextFile = uploadedFiles[index + 1];
+
+            if (order) {
+                if (index === 0) {
+                    return;
+                }
+
+                uploadedFiles[index - 1] = currentFile;
+                uploadedFiles[index] = prevFile;
+            } else {
+                if (! nextFile) {
+                    return;
+                }
+
+                uploadedFiles[index + 1] = currentFile;
+                uploadedFiles[index] = nextFile;
+            }
+
+            syncUploadedFiles();
+        }
+
+        // 重新渲染已上传文件
+        function rerenderUploadedFiles() {
+            $queue.html('');
+
+            for (var i in uploadedFiles) {
+                if (uploadedFiles[i]) {
+                    appendUploadedFileForm(uploadedFiles[i])
+                }
+            }
+        }
+
         // 重新计算按钮定位
         function refreshButton() {
             uploader.refresh();
+        }
+
+        // 文件排序
+        function orderFiles() {
+            var $this = $(this),
+                $li = $this.parents('li').first(),
+                fileId = $this.data('id'),
+                order = $this.data('order'),
+                $prev = $li.prev(),
+                $next = $li.next();
+
+            if (order) {
+                // 升序
+                if (! $prev.length) {
+                    return;
+                }
+                swrapUploadedFile(fileId, order);
+                rerenderUploadedFiles();
+
+                return;
+            }
+
+            if (! $next.length) {
+                return;
+            }
+
+            swrapUploadedFile(fileId, order);
+            rerenderUploadedFiles();
         }
 
         // 添加上传成功文件到表单区域
         function appendUploadedFileForm(file) {
             var html = "";
             html += "<li title='" + file.serverPath + "'>";
+
+            if (! showImg && opts.sortable) {
+                // 文件排序
+                html += `
+<p style="right: 45px" class="file-action" data-file-act='order' data-order="1" data-id='${file.serverId}'><i class='feather icon-arrow-up'></i></p>
+<p style="right: 25px" class="file-action" data-file-act='order' data-order="0" data-id='${file.serverId}'><i class='feather icon-arrow-down'></i></p>
+`;
+            }
 
             if (showImg) {
                 html += `<p class='imgWrap'><img src='${file.serverUrl}'></p>`
@@ -705,7 +833,17 @@
                 }
                 html += `<a class='btn btn-sm btn-white' data-file-act='preview' data-url='${file.serverUrl}' ><i class='feather icon-zoom-in'></i></a>`;
 
+                if (opts.sortable) {
+                    // 文件排序
+                    html += `
+<a class='btn btn-sm btn-white' data-file-act='order' data-order="1" data-id='${file.serverId}'><i class='feather icon-arrow-up'></i></a>
+<a class='btn btn-sm btn-white' data-file-act='order' data-order="0" data-id='${file.serverId}'><i class='feather icon-arrow-down'></i></a>
+`;
+                }
+
                 html += "</div>";
+            } else {
+
             }
 
             html += "</li>";
@@ -750,6 +888,10 @@
             html.find('[data-file-act="deleteurl"]').click(deleteFile);
             html.find('[data-file-act="delete"]').click(deleteFile);
 
+            // 文件排序
+            if (opts.sortable) {
+                html.find('[data-file-act="order"').click(orderFiles);
+            }
 
             // 放大图片
             html.find('[data-file-act="preview"]').click(function () {
@@ -758,8 +900,6 @@
                 Dcat.helpers.previewImage(url);
             });
 
-            setState('incrOriginalFileNum');
-            setState('decrFileNumLimit');
             formFiles[file.serverId] = file;
 
             addInput(file.serverId);
@@ -767,7 +907,11 @@
             $queue.append(html);
 
             if (showImg) {
-                setTimeout(function () { html.css('margin', '5px');}, 400);
+                setTimeout(function () {
+                    html.css('margin', '5px');
+                }, initImg ? 0 : 400);
+
+                initImg = 1;
             }
         }
 
@@ -834,6 +978,7 @@
 
             };
 
+            // 添加文件
             uploader.onFileQueued = function (file) {
                 fileCount++;
                 fileSize += file.size;
@@ -895,12 +1040,19 @@
                         obj.file.serverPath = reason.path;
                         obj.file.serverUrl  = reason.url || null;
 
+                        appendUploadedFile(obj.file);
+
                         addInput(reason.id);
 
+                        var $li = getFileView(obj.file.id);
+
                         if (!showImg) {
-                            var $li = getFileView(obj.file.id);
                             $li.find('.file-action').hide();
                             $li.find('[data-file-act="delete"]').show();
+                        }
+
+                        if (opts.sortable) {
+                            $li.find('[data-file-act="order"]').removeClass('d-none').show();
                         }
 
                         break;
@@ -969,13 +1121,19 @@
                     ext = path.split('.').pop();
                 }
 
-                appendUploadedFileForm({
+                var file = {
                     serverId: opts.preview[i].id,
                     serverUrl: opts.preview[i].url,
                     serverPath: path,
                     ext: ext,
                     fake: 1,
-                })
+                };
+
+                setState('incrOriginalFileNum');
+                setState('decrFileNumLimit');
+
+                appendUploadedFileForm(file);
+                appendUploadedFile(file);
             }
         }
 
