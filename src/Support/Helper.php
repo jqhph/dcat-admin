@@ -613,7 +613,7 @@ class Helper
             $cwd,
             [],
             $input,
-            $timeout
+            $timeout,
         ];
 
         return is_string($command)
