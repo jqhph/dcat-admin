@@ -2,9 +2,7 @@
 
 namespace Dcat\Admin\Console;
 
-use Dcat\Admin\Admin;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use TitasGailius\Terminal\Terminal;
 
@@ -83,7 +81,6 @@ class ThemeCommand extends Command
             if ($publish) {
                 $this->publishAssets();
             }
-
         } catch (\Throwable $e) {
             $this->resetFiles();
 
@@ -195,7 +192,7 @@ class ThemeCommand extends Command
 
         $response = Terminal::builder()
             ->timeout(1800)
-            ->run("npm install");
+            ->run('npm install');
 
         $this->line($response);
     }
