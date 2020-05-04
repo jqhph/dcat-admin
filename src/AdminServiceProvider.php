@@ -32,6 +32,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\FormCommand::class,
         Console\ActionCommand::class,
         Console\MenuCacheCommand::class,
+        Console\ThemeCommand::class,
     ];
 
     /**
