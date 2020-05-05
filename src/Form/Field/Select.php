@@ -241,7 +241,7 @@ JS;
             'allowClear'  => true,
             'placeholder' => [
                 'id'   => '',
-                'text' => trans('admin.choose'),
+                'text' => $this->placeholder(),
             ],
         ], $this->config);
 
@@ -288,7 +288,7 @@ JS;
     {
         $configs = array_merge([
             'allowClear'         => true,
-            'placeholder'        => $this->label,
+            'placeholder'        => $this->placeholder(),
             'minimumInputLength' => 1,
         ], $this->config);
 
@@ -375,7 +375,7 @@ JS;
             'allowClear'  => true,
             'placeholder' => [
                 'id'   => '',
-                'text' => $this->label,
+                'text' => $this->placeholder(),
             ],
         ], $this->config);
 
@@ -401,6 +401,20 @@ JS;
         $this->attribute('data-value', implode(',', Helper::array($this->value())));
 
         return parent::render();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function placeholder($placeholder = null)
+    {
+        if ($placeholder === null) {
+            return $this->placeholder ?: $this->label;
+        }
+
+        $this->placeholder = $placeholder;
+
+        return $this;
     }
 
     /**
