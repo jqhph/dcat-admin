@@ -533,7 +533,7 @@ HTML;
      */
     public function fill(Fluent $model)
     {
-        $this->value($model->get($this->name));
+        $this->value(Arr::get($model->toArray(), $this->name));
     }
 
     /**
