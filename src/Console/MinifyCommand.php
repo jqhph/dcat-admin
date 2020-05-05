@@ -96,7 +96,7 @@ class MinifyCommand extends Command
     protected function compileAllDefaultThemes()
     {
         foreach ($this->themes as $name => $_) {
-            $this->call('admin:theme', ['name' => $name]);
+            $this->call('admin:minify', ['name' => $name]);
         }
     }
 
