@@ -13,10 +13,6 @@
                             </a>
                         @endif
                     </div>
-
-                    <a href="#" class="slider-close" style="top: 12px;right: 10px;">
-                        <i class="feather icon-x"></i>
-                    </a>
                 </div>
             </div>
 

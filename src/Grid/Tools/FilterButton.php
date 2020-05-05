@@ -80,9 +80,11 @@ class FilterButton extends AbstractTool
         return false
     });
     
-    $('#{$id} .slider-close').on('click', function () {
-        slider.close()
-    })
+    $('.wrapper').on('click', function () {
+        if (slider && slider.close) {
+            slider.close();
+        }
+    });
 })();
 JS;
         } else {
