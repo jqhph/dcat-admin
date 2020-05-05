@@ -193,6 +193,20 @@ Dcat.ResourceSelector({
 JS;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function placeholder($placeholder = null)
+    {
+        if ($placeholder === null) {
+            return $this->placeholder ?: __('admin.choose').' '.$this->label;
+        }
+
+        $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
     protected function setupStyle()
     {
         $containerClass = 'form-control';

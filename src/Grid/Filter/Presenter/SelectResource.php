@@ -149,7 +149,7 @@ class SelectResource extends Presenter
      *
      * @return $this
      */
-    public function placeholder($placeholder = '')
+    public function placeholder(string $placeholder)
     {
         $this->placeholder = $placeholder;
 
