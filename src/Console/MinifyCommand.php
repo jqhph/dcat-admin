@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
-class ThemeCommand extends Command
+class MinifyCommand extends Command
 {
     const ALL = 'all';
     const DEFAULT = 'default';
@@ -17,7 +17,7 @@ class ThemeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'admin:theme {name} 
+    protected $signature = 'admin:minify {name} 
         {--color= : Theme color code} 
         {--publish : Publish assets files}';
 
@@ -26,7 +26,7 @@ class ThemeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Compile theme files.';
+    protected $description = 'Minify the CSS and JS';
 
     /**
      * @var array
