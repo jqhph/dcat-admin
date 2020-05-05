@@ -48,6 +48,8 @@ class RepositoryCreator
             $model,
         ], $content));
 
+        $files->chmod($path, 0777);
+
         return $path;
     }
 

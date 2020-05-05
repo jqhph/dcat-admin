@@ -45,7 +45,10 @@ class LangCreator
             $content['fields'][$field['name']] = $field['translation'] ?: $field['name'];
         }
 
-        if (app('files')->put($filename, Helper::exportArrayPhp($content))) {
+        $files = app('files');
+        if ($files->put($filename, Helper::exportArrayPhp($content))) {
+            $files->chmod($filename, 0777);
+
             return $filename;
         }
     }

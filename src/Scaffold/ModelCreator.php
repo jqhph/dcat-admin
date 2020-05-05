@@ -79,6 +79,7 @@ class ModelCreator
             ->replaceSpace($stub);
 
         $this->files->put($path, $stub);
+        $this->files->chmod($path, 0777);
 
         return $path;
     }
