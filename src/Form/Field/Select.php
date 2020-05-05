@@ -369,6 +369,8 @@ JS;
      */
     public function render()
     {
+        static::defineLang();
+
         $configs = array_merge([
             'allowClear'  => true,
             'placeholder' => [
@@ -399,5 +401,49 @@ JS;
         $this->attribute('data-value', implode(',', Helper::array($this->value())));
 
         return parent::render();
+    }
+
+    /**
+     * @return void
+     */
+    public static function defineLang()
+    {
+        $lang = trans('select2');
+        if (! is_array($lang) || empty($lang)) {
+            return;
+        }
+
+        $locale = config('app.locale');
+
+        Admin::script(
+            <<<JS
+(function () {
+    if (! $.fn.select2) {
+        return;
+    }
+    var e = $.fn.select2.amd;
+
+    return e.define("select2/i18n/{$locale}", [], function () {
+        return {
+            errorLoading: function () {
+                return "{$lang['error_loading']}"
+            }, inputTooLong: function (e) {
+                return "{$lang['input_too_long']}".replace(':num', e.input.length - e.maximum)
+            }, inputTooShort: function (e) {
+                return "{$lang['input_too_short']}".replace(':num', e.minimum - e.input.length)
+            }, loadingMore: function () {
+                return "{$lang['loading_more']}"
+            }, maximumSelected: function (e) {
+                return "{$lang['maximum_selected']}".replace(':num', e.maximum)
+            }, noResults: function () {
+                return "{$lang['no_results']}"
+            }, searching: function () {
+                 return "{$lang['searching']}"
+            }
+        }
+    }), {define: e.define, require: e.require}
+})()
+JS
+        );
     }
 }

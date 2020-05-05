@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Filter\Presenter;
 
+use Dcat\Admin\Form\Field\Select as SelectForm;
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
@@ -51,6 +52,8 @@ class Select extends Presenter
     public function __construct($options)
     {
         $this->options = $options;
+
+        SelectForm::defineLang();
     }
 
     /**
