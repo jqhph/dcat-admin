@@ -42,6 +42,7 @@ JS;
     <i class="fa fa-copy"></i>
 </a>&nbsp;{$this->value}
 HTML;
-        return $this->value ? $html : '-';
+
+        return $this->value === '' || $this->value === null ? $this->value : $html;
     }
 }
