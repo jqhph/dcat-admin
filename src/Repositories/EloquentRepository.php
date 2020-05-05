@@ -279,7 +279,7 @@ class EloquentRepository extends Repository implements TreeRepository
         }
 
         $this->model = $query
-            ->with($this->getRelations($form))
+            ->with($this->getRelations())
             ->findOrFail($form->getKey(), $this->getFormColumns());
 
         return $this->model->toArray();
@@ -301,7 +301,7 @@ class EloquentRepository extends Repository implements TreeRepository
         }
 
         $this->model = $query
-            ->with($this->getRelations($show))
+            ->with($this->getRelations())
             ->findOrFail($show->getKey(), $this->getDetailColumns());
 
         return $this->model->toArray();
@@ -518,7 +518,7 @@ class EloquentRepository extends Repository implements TreeRepository
         $id = $form->getKey();
 
         return $query
-            ->with($this->getRelations($form))
+            ->with($this->getRelations())
             ->findOrFail(
                 collect(explode(',', $id))->filter()->toArray(),
                 $this->getFormColumns()
@@ -652,41 +652,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return array
      */
-    protected function getRelations($builder)
+    protected function getRelations()
     {
-        $relations = $columns = [];
-
-        if ($builder instanceof Form) {
-            /** @var Form\Field $field */
-            foreach ($builder->builder()->fields() as $field) {
-                $columns[] = $field->column();
-            }
-        } elseif ($builder instanceof Show) {
-            /** @var Show\Field $field */
-            foreach ($builder->fields() as $field) {
-                $columns[] = $field->getName();
-            }
-        }
-
-        $model = $this->eloquent();
-
-        foreach (Arr::flatten($columns) as $column) {
-            if (Str::contains($column, '.')) {
-                [$relation] = explode('.', $column);
-
-                if (method_exists($model, $relation) &&
-                    $model->$relation() instanceof Relations\Relation
-                ) {
-                    $relations[] = $relation;
-                }
-            } elseif (method_exists($model, $column) &&
-                ! method_exists(EloquentModel::class, $column)
-            ) {
-                $relations[] = $column;
-            }
-        }
-
-        return array_unique(array_merge($relations, $this->relations));
+        return $this->relations;
     }
 
     /**
