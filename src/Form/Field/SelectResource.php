@@ -194,7 +194,7 @@ JS;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function placeholder($placeholder = null)
     {
