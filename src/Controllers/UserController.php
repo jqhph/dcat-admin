@@ -175,12 +175,8 @@ class UserController extends AdminController
                 $form->password('password', trans('admin.password'))
                     ->minLength(5)
                     ->maxLength(20)
-                    ->customFormat(function ($v) {
-                        if ($v == $this->password) {
-                            return;
-                        }
-
-                        return $v;
+                    ->customFormat(function () {
+                        return;
                     });
             } else {
                 $form->password('password', trans('admin.password'))
