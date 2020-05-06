@@ -8,7 +8,7 @@ php:
   - 7.3
 
 addons:
-  chrome: stable
+  chrome: 81
 
 matrix:
   fast_finish: true
