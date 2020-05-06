@@ -17,6 +17,9 @@ services:
   - mysql
 
 install:
+  - wget - https://dl.google.com/dl/linux/direct/google-chrome-stable_current_amd64.deb
+  - apt-get -f install
+  - dpkg -i google-chrome-stable_current_amd64.deb
   - mysql -e 'create database if not exists laravel;'
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
