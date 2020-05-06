@@ -79,6 +79,13 @@ class Color
                 'link'           => '#278bd9',
             ],
         ],
+        'blue-dark' => [
+            'colors' => [
+                'primary'        => '#586cb1',
+                'primary-darker' => '#4c60a3',
+                'link'           => '#4c60a3',
+            ],
+        ],
         'blue' => [
             'colors' => [
                 'primary'        => '#5686d4',
