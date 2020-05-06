@@ -7,6 +7,8 @@
   padding: 17px 14px;
   text-transform: capitalize;
   letter-spacing: 0.045rem;
+  color: rgba(0,0,0,.4);
+  font-weight: bold;
 }
 
 .nav-vertical {
@@ -34,7 +36,7 @@
   margin-bottom: 0;
 }
 .nav.nav-tabs {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f4f4f4;
 }
 
 .nav-vertical {
@@ -51,12 +53,13 @@
   }
 }
 
-.nav-theme-primary, .nav-theme-success, .nav-theme-info, .nav-theme-danger {
+.nav-theme-primary, .nav-theme-white, .nav-theme-success, .nav-theme-info, .nav-theme-danger {
   .nav.nav-tabs {
     background: $primary;
     padding-left: 10px;
     border-radius: .4rem;
     box-shadow: $shadow;
+    border-bottom: 0;
   }
 
   .nav.nav-tabs .nav-item .nav-link {
@@ -90,4 +93,21 @@
 }
 .nav-theme-danger .nav.nav-tabs {
   background: $danger;
+}
+.nav-theme-white {
+  .nav.nav-tabs {
+    background: #fff;
+  }
+
+  .nav.nav-tabs .nav-item .nav-link {
+    color: rgba(0,0,0,.4);;
+  }
+
+  .nav.nav-tabs .nav-item .nav-link.active {
+    color: $primary;
+  }
+
+  .nav.nav-tabs .nav-item .nav-link.active:after {
+    background: $primary!important;
+  }
 }
