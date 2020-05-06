@@ -23,7 +23,7 @@ install:
   - sudo apt-get install dpkg -f
 #  - sudo apt-get -f install
 #  - sudo apt upgrade dpkg
-  - sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb --force --no-uniform-compression
+  - sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb
   - mysql -e 'create database if not exists laravel;'
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
