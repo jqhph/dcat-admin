@@ -36,12 +36,12 @@ install:
   - php artisan admin:composer-config
   - travis_retry composer require dcat/laravel-admin:*@dev
   - travis_retry composer require laravel/dusk --dev
-  - travis_retry composer require --dev staudenmeir/dusk-updater:"^1.1"
+#  - travis_retry composer require --dev staudenmeir/dusk-updater:"^1.1"
   - php artisan admin:publish --force
   - php artisan admin:install
   - php artisan migrate:rollback
   - php artisan dusk:chrome-driver
-  - php artisan dusk:update 79
+#  - php artisan dusk:update 79
   - cp -f ./tests/routes.php ./app/Admin/
   - cp -rf ./tests/resources/config ./config/
 
