@@ -93,7 +93,7 @@ class Select extends Field
      *
      * @return $this
      */
-    public function load($field, $sourceUrl, $idField = 'id', $textField = 'text')
+    public function load($field, $sourceUrl, string $idField = 'id', string $textField = 'text')
     {
         if (Str::contains($field, '.')) {
             $field = $this->formatName($field);
@@ -136,7 +136,7 @@ JS;
      *
      * @return $this
      */
-    public function loads($fields = [], $sourceUrls = [], $idField = 'id', $textField = 'text')
+    public function loads($fields = [], $sourceUrls = [], string $idField = 'id', string $textField = 'text')
     {
         $fieldsStr = implode('.', $fields);
         $urlsStr = implode('^', array_map(function ($url) {
@@ -192,7 +192,7 @@ JS;
      *
      * @return $this
      */
-    public function model($model, $idField = 'id', $textField = 'name')
+    public function model($model, string $idField = 'id', string $textField = 'name')
     {
         if (! class_exists($model)
             || ! in_array(Model::class, class_parents($model))
@@ -232,7 +232,7 @@ JS;
      *
      * @return $this
      */
-    protected function loadRemoteOptions($url, $parameters = [], $options = [])
+    protected function loadRemoteOptions(string $url, array $parameters = [], array $options = [])
     {
         $ajaxOptions = [
             'url' => admin_url($url.'?'.http_build_query($parameters)),
@@ -284,7 +284,7 @@ JS;
      *
      * @return $this
      */
-    public function ajax($url, $idField = 'id', $textField = 'text')
+    public function ajax(string $url, string $idField = 'id', string $textField = 'text')
     {
         $configs = array_merge([
             'allowClear'         => true,
@@ -347,7 +347,7 @@ JS;
      *
      * @return $this
      */
-    public function config($key, $val)
+    public function config(string $key, $val)
     {
         $this->config[$key] = $val;
 
