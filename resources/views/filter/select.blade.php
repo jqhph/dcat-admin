@@ -8,7 +8,7 @@
             <option value="">{{trans('admin.all')}}</option>
         @endif
         @foreach($options as $select => $option)
-            <option value="{{$select}}" {{ (string)$select === (string)request($name, $value) ?'selected':'' }}>{{$option}}</option>
+            <option value="{{$select}}" {{ Dcat\Admin\Support\Helper::equal($select, request($name, $value)) ?'selected':'' }}>{{$option}}</option>
         @endforeach
     </select>
 </div>

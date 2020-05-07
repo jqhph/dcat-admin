@@ -23,7 +23,7 @@
              @else
                 <option value=""></option>
                 @foreach($options as $select => $option)
-                    <option value="{{$select}}" {{ (string) $select === (string) old($column, $value) ?'selected':'' }}>{{$option}}</option>
+                    <option value="{{$select}}" {{ Dcat\Admin\Support\Helper::equal($select, old($column, $value)) ?'selected':'' }}>{{$option}}</option>
                 @endforeach
             @endif
         </select>

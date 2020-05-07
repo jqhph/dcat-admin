@@ -620,4 +620,25 @@ class Helper
             ? Process::fromShellCommandline(...$parameters)
             : new Process(...$parameters);
     }
+
+    /**
+     * 判断两个值是否相等.
+     *
+     * @param $value1
+     * @param $value2
+     *
+     * @return bool
+     */
+    public static function equal($value1, $value2)
+    {
+        if ($value1 === null || $value2 === null) {
+            return false;
+        }
+
+        if (! is_scalar($value1) || ! is_scalar($value2)) {
+            return $value1 === $value2;
+        }
+
+        return (string) $value1 === (string) $value2;
+    }
 }
