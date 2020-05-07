@@ -108,6 +108,9 @@ class Select extends Field
 $(document).off('change', "{$this->getElementClassSelector()}");
 $(document).on('change', "{$this->getElementClassSelector()}", function () {
     var target = $(this).closest('.fields-group').find(".$class");
+    if (this.value !== '0' && ! this.value) {
+        return;
+    }
     $.ajax("$sourceUrl?q="+this.value).then(function (data) {
         target.find("option").remove();
         $(target).select2({
@@ -119,6 +122,7 @@ $(document).on('change', "{$this->getElementClassSelector()}", function () {
         }).val(target.attr('data-value')).trigger('change');
     });
 });
+$("{$this->getElementClassSelector()}").trigger('change');
 JS;
 
         Admin::script($script);
@@ -138,7 +142,7 @@ JS;
      */
     public function loads($fields = [], $sourceUrls = [], string $idField = 'id', string $textField = 'text')
     {
-        $fieldsStr = implode('.', $fields);
+        $fieldsStr = implode('.', (array) $fields);
         $urlsStr = implode('^', array_map(function ($url) {
             return admin_url($url);
         }, (array) $sourceUrls));
@@ -165,16 +169,19 @@ JS;
     $(document).on('change', "{$this->getElementClassSelector()}", function () {
         var _this = this;
         var promises = [];
-    
+
         fields.forEach(function(field, index){
             var target = $(_this).closest('.fields-group').find('.' + fields[index]);
+            
+            if (_this.value !== '0' && ! _this.value) {
+                return;
+            }
             promises.push(refreshOptions(urls[index] + "?q="+ _this.value, target));
         });
     
-        $.when(promises).then(function() {
-            console.log('开始更新其它select的选择options');
-        });
+        $.when(promises).then(function() {});
     });
+    $("{$this->getElementClassSelector()}").trigger('change');
 })()
 JS;
 

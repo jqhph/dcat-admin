@@ -329,6 +329,9 @@ JS;
 $(document).off('change', ".{$class}");
 $(document).on('change', ".{$class}", function () {
     var target = $(this).closest('form').find(".{$this->getClass($target)}");
+    if (this.value !== '0' && ! this.value) {
+        return;
+    }
     $.ajax("$resourceUrl?q="+this.value).then(function (data) {
         target.find("option").remove();
         $.each(data, function (i, item) {
@@ -341,6 +344,7 @@ $(document).on('change', ".{$class}", function () {
         $(target).trigger('change');
     });
 });
+$(".{$class}").trigger('change')
 JS;
 
         Admin::script($script);
