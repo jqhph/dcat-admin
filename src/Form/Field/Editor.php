@@ -40,6 +40,7 @@ class Editor extends Field
         ],
         'min_height' => 400,
         'save_enablewhendirty' => true,
+        'convert_urls' => false,
     ];
 
     protected $disk;
