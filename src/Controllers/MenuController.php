@@ -76,6 +76,7 @@ class MenuController extends AdminController
 
         $tree->disableCreateButton();
         $tree->disableQuickCreateButton();
+        $tree->disableEditButton();
 
         $tree->branch(function ($branch) {
             $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
