@@ -105,9 +105,9 @@ class MenuController extends AdminController
     {
         $menuModel = config('admin.database.menu_model');
 
-        $repository = $menuModel::withPermission() ? new Menu('permissions') : new Menu();
+        $relations = $menuModel::withPermission() ? ['permissions', 'roles'] : 'roles';
 
-        return Form::make($repository, function (Form $form) use ($menuModel) {
+        return Form::make(new Menu($relations), function (Form $form) use ($menuModel) {
             $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');
 
@@ -119,6 +119,8 @@ class MenuController extends AdminController
 
             $form->select('parent_id', trans('admin.parent_id'))->options(function () use ($menuModel) {
                 return $menuModel::selectOptions();
+            })->saving(function ($v) {
+                return (int) $v;
             });
             $form->text('title', trans('admin.title'))->required();
             $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
