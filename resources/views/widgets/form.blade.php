@@ -18,7 +18,7 @@
 
         <div class="col-md-8">
             @if(! empty($buttons['reset']))
-                <button type="reset" class="btn btn-warning pull-left"><i class="feather icon-rotate-ccw"></i> {{ trans('admin.reset') }}</button>
+                <button type="reset" class="btn btn-white pull-left"><i class="feather icon-rotate-ccw"></i> {{ trans('admin.reset') }}</button>
             @endif
 
             @if(! empty($buttons['submit']))

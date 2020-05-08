@@ -2,7 +2,7 @@
     <div class="form-group" >
         <div class="input-group input-group-sm">
             <div class="input-group-prepend">
-                <span class="input-group-text bg-white"><b>{!! $label !!}</b></span>
+                <span class="input-group-text text-capitalize bg-white"><b>{!! $label !!}</b></span>
             </div>
 
             <input type="text" class="form-control" placeholder="{{$label}}" name="{{$name['start']}}" value="{{ request($name['start'], \Illuminate\Support\Arr::get($value, 'start')) }}">

@@ -74,169 +74,80 @@ trait HasActionHandler
      */
     protected function addHandlerScript()
     {
+        $data = json_encode($this->parameters());
+        $confirm = $this->confirm();
+        $confirm = $confirm ? json_encode((array) $confirm) : 'false';
+
         $script = <<<JS
-$('{$this->selector()}').off('{$this->event}').on('{$this->event}', function() {
-    var data = $(this).data(),
-        target = $(this);
-    if (target.attr('working') > 0) {
-        return;
-    }
-    {$this->actionScript()}
-    {$this->buildRequestScript()}
+Dcat.Action({
+    selector: '{$this->selector()}',
+    event: '{$this->event}',
+    method: '{$this->method()}',
+    key: '{$this->getKey()}',
+    url: '{$this->handlerRoute()}',
+    data: {$data},
+    confirm: {$confirm},
+    calledClass: '{$this->makeCalledClass()}',
+    before: {$this->actionScript()},
+    html: {$this->handleHtmlResponse()},
+    success: {$this->resolverScript()}, 
+    error: {$this->rejectScript()},
 });
 JS;
 
         Admin::script($script);
+        Admin::js('@admin/dcat/extra/action.js');
     }
 
     /**
-     * @return string
-     */
-    protected function buildRequestScript()
-    {
-        $parameters = json_encode($this->parameters());
-
-        return <<<JS
-function request() {
-    target.attr('working', 1);
-    Object.assign(data, {$parameters});
-    {$this->buildActionPromise()}
-    {$this->handleActionPromise()}
-}
-
-if (data['confirm']) {
-    Dcat.confirm(data['confirm'], request);
-} else {
-    request()
-}
-JS;
-    }
-
-    /**
+     * 设置动作发起请求前的回调函数，返回false可以中断请求.
+     *
      * @return string
      */
     protected function actionScript()
     {
-        return '';
-    }
-
-    /**
-     * @return string
-     */
-    protected function buildActionPromise()
-    {
-        return <<<JS
-var process = new Promise(function (resolve,reject) {
-    Object.assign(data, {
-        _token: Dcat.token,
-        _action: '{$this->makeCalledClass()}',
-        _key: '{$this->getKey()}',
-    });
-    Dcat.NP.start();
-    $.ajax({
-        method: '{$this->method()}',
-        url: '{$this->handlerRoute()}',
-        data: data,
-        success: function (data) {
-            target.attr('working', 0);
-            Dcat.NP.done();
-            resolve([data, target]);
-        },
-        error:function(request){
-            target.attr('working', 0);
-            Dcat.NP.done();
-            reject([request, target]);
-        }
-    });
-});
+        // 发起请求之前回调，返回false可以中断请求
+        return <<<'JS'
+function (data, target, action) { }
 JS;
     }
 
     /**
+     * 设置请求成功回调，返回false可以中断默认的成功处理逻辑.
+     *
      * @return string
      */
     protected function resolverScript()
     {
-        return <<<JS
-function (data) {
-    var response = data[0],
-        target   = data[1];
-        
-    if (typeof response !== 'object') {
-        return Dcat.error({type: 'error', title: 'Oops!'});
-    }
-    
-    var then = function (then) {
-        switch (then.action) {
-            case 'refresh':
-                Dcat.reload();
-                break;
-            case 'download':
-                window.open(then.value, '_blank');
-                break;
-            case 'redirect':
-                Dcat.reload(then.value);
-                break;
-            case 'location':
-                window.location = then.value;
-                break;
-            case 'script':
-                (function () {
-                    eval(then.value);
-                })();
-                break;
-        }
-    };
-
-    if (typeof response.html === 'string' && response.html) {
-        {$this->handleHtmlResponse()};
-    }
-
-    if (typeof response.data.message === 'string' && response.data.type) {
-        Dcat[response.data.type](response.data.message);
-    }
-    
-    if (response.data.then) {
-      then(response.data.then);
-    }
-}
+        // 请求成功回调，返回false可以中断默认的成功处理逻辑
+        return <<<'JS'
+function (target, results) {}
 JS;
     }
 
     /**
+     * 处理接口返回的HTML代码.
+     *
      * @return string
      */
     protected function handleHtmlResponse()
     {
         return <<<'JS'
-target.html(response.html);
-JS;
-    }
-
-    /**
-     * @return string
-     */
-    protected function rejectScript()
-    {
-        return <<<'JS'
-function (data) {
-    var request = data[0], target = data[1];
-    
-    if (request && typeof request.responseJSON === 'object') {
-        Dcat.error(request.responseJSON.message)
-    }
-    console.error(request);
+function (target, html, data) {
+    target.html(html);
 }
 JS;
     }
 
     /**
+     * 设置请求出错回调，返回false可以中断默认的错误处理逻辑.
+     *
      * @return string
      */
-    public function handleActionPromise()
+    protected function rejectScript()
     {
-        return <<<JS
-process.then({$this->resolverScript()}).catch({$this->rejectScript()});
+        return <<<'JS'
+function (target, results) {}
 JS;
     }
 

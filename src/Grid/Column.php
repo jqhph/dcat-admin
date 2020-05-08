@@ -20,7 +20,6 @@ use Illuminate\Support\Traits\Macroable;
  * @method $this switchGroup($columns = [], string $color = '')
  * @method $this image($server = '', int $width = 200, int $height = 200)
  * @method $this label($style = 'primary', int $max = null)
- * @method $this chip($style = 'primary', int $max = null)
  * @method $this button($style = 'success');
  * @method $this link($href = '', $target = '_blank');
  * @method $this badge($style = 'primary', int $max = null);
@@ -88,7 +87,6 @@ class Column
         'downloadable'     => Displayers\Downloadable::class,
         'copyable'         => Displayers\Copyable::class,
         'orderable'        => Displayers\Orderable::class,
-        'chip'             => Displayers\Chip::class,
     ];
 
     /**
@@ -415,7 +413,7 @@ class Column
             $label = admin_trans_field($this->name);
         }
 
-        $label = $label ?: ucfirst($this->name);
+        $label = $label ?: $this->name;
 
         return str_replace(['.', '_'], ' ', $label);
     }

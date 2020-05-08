@@ -1,0 +1,414 @@
+.custom-data-table-header .table-responsive .top {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: .5rem
+}
+
+.custom-data-table-header .table-responsive .top .action-btns {
+  margin-top: 1.5rem;
+  display: flex
+}
+
+.custom-data-table-header .table-responsive .top .action-btns .actions-dropodown {
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .14);
+  border-radius:.45rem;
+  margin-right: .75rem
+}
+
+.custom-data-table-header .table-responsive .top .action-btns .actions-dropodown .dropdown-toggle{
+  font-size: 1.125rem;
+  font-weight: 500
+}
+
+.custom-data-table-header .table-responsive .top .action-btns .actions-dropodown .dropdown-toggle:after {
+  left: 0
+}
+
+.custom-data-table-header .table-responsive .top .action-btns .dt-buttons .btn {
+  padding: .9rem .938rem
+}
+
+.custom-data-table-header .table-responsive .top .dataTables_length {
+  display: inline-block
+}
+
+.custom-data-table-header .table-responsive .top .dataTables_length .custom-select {
+  width: 8.714rem;
+  height: 3rem;
+  border-radius: 1.428rem;
+  border: 1px solid #dae1e7;
+  font-size: 1rem;
+  background-position: calc(100% - 12px) 13px, calc(100% - 20px) 13px, 100% 0
+}
+
+.custom-data-table-header .table-responsive .top .dataTables_length .custom-select:focus{
+  box-shadow: none
+}
+
+.custom-data-table-header .table-responsive .top .dataTables_filter{
+  display: inline-block
+}
+
+.custom-data-table-header .table-responsive .top .dataTables_filter .form-control{
+  //padding: 1.45rem 2.8rem !important;
+  //border-radius: 1.428rem;
+  //border: 1px solid #dae1e7;
+  padding: 1.2rem 2.8rem !important;
+  border-radius: 1.4rem;
+  border: 0;
+  box-shadow: $shadow;
+  font-size: .82rem;
+}
+
+.custom-data-table-header .table-responsive .top .dataTables_filter label{
+  position: relative
+}
+
+.custom-data-table-header .table-responsive .top .dataTables_filter label:after{
+  content: "\E8BD";
+  font-family: feather;
+  position: absolute;
+  top: 0.45rem;
+  font-size: 1.1rem;
+  left: 1.1rem;
+  font-weight: 300;
+  color: $dark70;
+}
+
+.custom-data-table-header .table-responsive .dataTables_wrapper .dataTables_paginate ul.pagination {
+  justify-content: center
+}
+
+.custom-data-table-header .add-new-data-sidebar .overlay-bg{
+  background: rgba(0, 0, 0, .2);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  transition: all .3s ease;
+  opacity: 0;
+  z-index: 1032
+}
+
+.custom-data-table-header .add-new-data-sidebar .overlay-bg.show{
+  opacity: 1;
+  display: block
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data {
+  width: 28.57rem;
+  max-width: 90vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  background: #fff;
+  position: fixed;
+  left: auto;
+  right: 0;
+  top: 0;
+  z-index: 1033;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, .05);
+  transform: translateX(100%);
+  transition: all .25s ease;
+  overflow: hidden
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data.show {
+  transform: translateX(0)
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .new-data-title {
+  padding-bottom: .714rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .1)
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .new-data-title .hide-data-sidebar {
+  position: relative
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .new-data-title .hide-data-sidebar i {
+  position: absolute;
+  font-size: 1.71rem;
+  right: 0;
+  top: -.1428rem;
+  cursor: pointer
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .data-items {
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  height: calc(100vh - 10rem);
+  position: relative
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .data-items .data-field-col {
+  margin-top: 1.25rem
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .data-items .data-field-col.data-list-upload {
+  margin-top: 2rem
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone {
+  min-height: 14.285rem
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone .dz-message {
+  height: auto
+}
+
+.custom-data-table-header .add-new-data-sidebar .add-new-data .data-items .data-field-col .dropzone .dz-message:before {
+  font-size: 2.857rem
+}
+
+table.custom-data-table.dataTable, table.data-thumb-view.dataTable {
+  border-spacing: 0 .8rem;
+  padding: 0;
+}
+
+table.custom-data-table.dataTable thead th, table.data-thumb-view.dataTable thead th {
+  //padding: .714rem 1.785rem;
+  padding: 0.714rem .51rem;
+  font-weight: 600;
+  border-bottom: 0;
+  border-top: 0;
+}
+
+table.custom-data-table.dataTable thead th input:focus, table.data-thumb-view.dataTable thead th input:focus {
+  outline: 0
+}
+
+table.custom-data-table.dataTable thead th:first-child, table.data-thumb-view.dataTable thead th:first-child {
+  //padding-left: 0;
+  padding-left: .9rem;
+}
+
+table.custom-data-table.dataTable thead .sorting, table.custom-data-table.dataTable thead .sorting_asc, table.custom-data-table.dataTable thead .sorting_desc, table.data-thumb-view.dataTable thead .sorting, table.data-thumb-view.dataTable thead .sorting_asc, table.data-thumb-view.dataTable thead .sorting_desc {
+  padding-right: inherit
+}
+
+table.custom-data-table.dataTable thead .sorting:before, table.custom-data-table.dataTable thead .sorting_asc:before, table.custom-data-table.dataTable thead .sorting_desc:before, table.data-thumb-view.dataTable thead .sorting:before, table.data-thumb-view.dataTable thead .sorting_asc:before, table.data-thumb-view.dataTable thead .sorting_desc:before {
+  font-size: .7rem;
+  left: .857rem;
+  top: .642rem
+}
+
+table.custom-data-table.dataTable thead .sorting:after, table.custom-data-table.dataTable thead .sorting_asc:after, table.custom-data-table.dataTable thead .sorting_desc:after, table.data-thumb-view.dataTable thead .sorting:after, table.data-thumb-view.dataTable thead .sorting_asc:after, table.data-thumb-view.dataTable thead .sorting_desc:after {
+  font-size: .7rem;
+  left: .857rem;
+  top: 1.071rem
+}
+
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input {
+  width: 0;
+  position: relative
+}
+
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:before, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:before {
+  border: 2px solid #b4b4b4;
+  content: "";
+  width: 1.071rem;
+  height: 1.071rem;
+  padding: 0;
+  border-radius: 2px;
+  transform: rotate(-90deg);
+  overflow: hidden;
+  transition: all .2s ease;
+  position: absolute
+}
+
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:after, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:after {
+  background-color: $primary;
+  border: 2px solid $primary;
+  font-family: feather;
+  content: "\E83F";
+  font-size: .75rem;
+  line-height: 1.2;
+  color: #fff;
+  opacity: 0;
+  position: absolute;
+  width: .928rem;
+  height: 1rem;
+  transform: translate(100%);
+  transform-origin: right;
+  transition: all .2s ease;
+  overflow: hidden
+}
+
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:active:checked:after, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:active:checked:after {
+  transform: translate(3px)
+}
+
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:checked:before, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:checked:before {
+  border: 2px solid $primary;
+  transform: rotate(0deg)
+}
+
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:checked:after, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:checked:after {
+  transition: all .2s ease;
+  opacity: 1;
+  transform: translate(0)
+}
+
+table.custom-data-table.dataTable tbody tr, table.data-thumb-view.dataTable tbody tr {
+  background-color: #fff;
+  //box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .05);
+  box-shadow: $shadow;
+  cursor: pointer;
+  transition: all .3s ease;
+  border-radius:.45rem
+}
+
+table.custom-data-table.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover {
+  //transform: translateY(-4px);
+  //transition: all .3s ease;
+  //transform: none;
+  background: lighten($dark30, 1%);
+}
+
+table.custom-data-table.dataTable tbody tr td:first-child, table.data-thumb-view.dataTable tbody tr td:first-child {
+  padding-left: 1rem;
+  border-top-left-radius:.45rem;
+  border-bottom-left-radius:.45rem
+}
+
+table.custom-data-table.dataTable tbody tr td:last-child, table.data-thumb-view.dataTable tbody tr td:last-child {
+  border-top-right-radius:.45rem;
+  border-bottom-right-radius:.45rem
+}
+
+table.custom-data-table.dataTable tbody tr.selected td, table.data-thumb-view.dataTable tbody tr.selected td {
+  border-radius: 0
+}
+
+table.custom-data-table.dataTable tbody td, table.data-thumb-view.dataTable tbody td {
+  //padding: 1.357rem;
+  border: none;
+  vertical-align: middle;
+  height: 46px;
+  padding: .55rem;
+  line-height: 1.42857;
+}
+
+table.custom-data-table.dataTable tbody td input:focus, table.data-thumb-view.dataTable tbody td input:focus {
+  outline: 0
+}
+
+table.custom-data-table.dataTable tbody td.product-name, table.data-thumb-view.dataTable tbody td.product-name {
+  font-weight: 500
+}
+
+table.custom-data-table.dataTable tbody td:focus, table.data-thumb-view.dataTable tbody td:focus {
+  outline: 0
+}
+
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input {
+  width: 0;
+  position: relative
+}
+
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:before, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:before {
+  border: 2px solid #b4b4b4;
+  position: absolute;
+  left: -8px;
+  content: "";
+  width: 1.071rem;
+  height: 1.071rem;
+  padding: 0;
+  border-radius: 2px;
+  transform: rotate(-90deg);
+  overflow: hidden;
+  transition: all .2s ease
+}
+
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:after, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:after {
+  background-color: $primary;
+  font-family: feather;
+  content: "\E83F";
+  font-size: .75rem;
+  color: #fff;
+  opacity: 0;
+  position: absolute;
+  left: -.4285rem;
+  width: .857rem;
+  height: 1rem;
+  overflow: hidden;
+  transform: rotate(-90deg) translate(100%);
+  transform-origin: right;
+  transition: all .2s ease
+}
+
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:active:checked:after, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:active:checked:after {
+  transform: translate(3px)
+}
+
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:checked:before, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:checked:before {
+  transform: rotate(0deg);
+  border: 2px solid $primary;
+  transition: all .2s ease
+}
+
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:checked:after, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:checked:after {
+  opacity: 1;
+  transition: all .2s ease;
+  transform: rotate(0deg) translate(0)
+}
+
+table.custom-data-table.dataTable tbody td .progress, table.data-thumb-view.dataTable tbody td .progress {
+  margin-bottom: 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .12), 0 2px 4px 0 rgba(0, 0, 0, .08)
+}
+
+table.data-thumb-view.dataTable tbody tr td {
+  padding-top: .714rem;
+  padding-bottom: .714rem
+}
+
+table.data-thumb-view.dataTable tbody tr td.product-img img {
+  height: 7.857rem
+}
+
+
+@media (max-width: 576px) {
+  .add-new-data-sidebar .data-items .data-list-upload .dropzone .dz-message:before {
+    top: 3.428rem
+  }
+}
+
+.custom-data-table.dataTable tbody tr td.dt-checkboxes-cell input, .custom-data-table.dataTable tbody tr th.dt-checkboxes-cell input, .custom-data-table.dataTable thead tr td.dt-checkboxes-cell input, .custom-data-table.dataTable thead tr th.dt-checkboxes-cell input, .data-thumb-view.dataTable tbody tr td.dt-checkboxes-cell input, .data-thumb-view.dataTable tbody tr th.dt-checkboxes-cell input, .data-thumb-view.dataTable thead tr td.dt-checkboxes-cell input, .data-thumb-view.dataTable thead tr th.dt-checkboxes-cell input, _:-ms-lang(x) tbody tr td.dt-checkboxes-cell input, _:-ms-lang(x) tbody tr th.dt-checkboxes-cell input, _:-ms-lang(x) thead tr td.dt-checkboxes-cell input, _:-ms-lang(x) thead tr th.dt-checkboxes-cell input {
+  width: auto
+}
+
+.custom-data-table.dataTable .table-responsive .top .dataTables_filter .form-control, .data-thumb-view.dataTable .table-responsive .top .dataTables_filter .form-control, _:-ms-lang(x) .table-responsive .top .dataTables_filter .form-control {
+  height: 1.4rem !important;
+  padding: 0 .5rem !important
+}
+
+.custom-data-table.dataTable .table-responsive .top .dataTables_filter .form-control:after, .data-thumb-view.dataTable .table-responsive .top .dataTables_filter .form-control:after, _:-ms-lang(x) .table-responsive .top .dataTables_filter .form-control:after {
+  display: none
+}
+
+
+@supports (-moz-osx-font-smoothing:auto) {
+  .custom-data-table input, .data-thumb-view input {
+    width: auto !important
+  }
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance:none) {
+    table.custom-data-table tbody td.dt-checkboxes-cell input:after, table.data-thumb-view tbody td.dt-checkboxes-cell input:after {
+      left: -.485rem
+    }
+    .custom-data-table .dt-checkboxes-cell input, .data-thumb-view .dt-checkboxes-cell input {
+      -webkit-appearance: none;
+      top: -10px
+    }
+  }
+}
+
+.custom-data-table .mac-checkbox, .data-thumb-view .mac-checkbox {
+  -webkit-appearance: none;
+  top: -10px
+}

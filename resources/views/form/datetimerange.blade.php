@@ -12,7 +12,7 @@
                     <span class="input-group-prepend">
                         <span class="input-group-text bg-white"><i class="feather icon-calendar"></i></span>
                     </span>
-                    <input autocomplete="off" type="text" name="{{$name['start']}}" value="{{ old($column['start'], $value['start']) }}" class="form-control {{$class['start']}}" style="width:180px" {!! $attributes !!} />
+                    <input autocomplete="off" type="text" name="{{$name['start']}}" value="{{ old($column['start'], $value['start'] ?? null) }}" class="form-control {{$class['start']}}" style="width:180px" {!! $attributes !!} />
                 </div>
             </div>
 
@@ -21,7 +21,7 @@
                     <span class="input-group-prepend">
                         <span class="input-group-text bg-white"><i class="feather icon-calendar"></i></span>
                     </span>
-                    <input autocomplete="off" type="text" name="{{$name['end']}}" value="{{ old($column['end'], $value['end']) }}" class="form-control {{$class['end']}}" style="width: 180px" {!! $attributes !!} />
+                    <input autocomplete="off" type="text" name="{{$name['end']}}" value="{{ old($column['end'], $value['end'] ?? null) }}" class="form-control {{$class['end']}}" style="width: 180px" {!! $attributes !!} />
                 </div>
             </div>
         </div>

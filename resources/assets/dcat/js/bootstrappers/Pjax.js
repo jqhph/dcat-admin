@@ -36,15 +36,18 @@ export default class Pjax {
 
         $d.on('pjax:send', function (xhr) {
             if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-                $(formContainer + ' :submit').buttonLoading();
+                $(formContainer).find('[type="submit"],.submit').buttonLoading();
             }
             Dcat.NP.start();
         });
 
         $d.on('pjax:complete', function (xhr) {
             if (xhr.relatedTarget && xhr.relatedTarget.tagName && xhr.relatedTarget.tagName.toLowerCase() === 'form') {
-                $(formContainer + ' :submit').buttonLoading(false)
+                $(formContainer).find('[type="submit"],.submit').buttonLoading(false)
             }
+
+            // 移除遮罩层
+            $(".modal-backdrop").remove();
         });
 
         $d.on('pjax:loaded', () => {

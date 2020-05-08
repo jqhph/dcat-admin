@@ -90,7 +90,15 @@ trait HasFormResponse
      */
     public function error($message = null, $redirectTo = null, int $statusCode = 200)
     {
-        $redirectTo = $redirectTo ?: $this->getCurrentUrl();
+        if (! $redirectTo) {
+            if (! $this->isAjaxRequest()) {
+                admin_toastr($message, 'error');
+
+                return back()->withInput();
+            }
+
+            return $this->ajaxResponse($message, null, false);
+        }
 
         return $this->redirect($redirectTo, [
             'message'     => $message,

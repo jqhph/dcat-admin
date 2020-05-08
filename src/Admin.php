@@ -10,17 +10,18 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
-use Dcat\Admin\Models\HasPermissions;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Repositories\Proxy;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAssets;
+use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Fluent;
 
 /**
  * Class Admin.
@@ -30,11 +31,11 @@ class Admin
     use HasAssets;
 
     /**
-     * The version.
+     * 版本号.
      *
      * @var string
      */
-    const VERSION = '0.1.0';
+    const VERSION = '1.3.0';
 
     /**
      * @var array
@@ -246,6 +247,8 @@ class Admin
                 $router->post('action', 'HandleActionController@handle')->name('action');
                 $router->post('form', 'HandleFormController@handle')->name('form');
                 $router->post('value', 'ValueController@handle')->name('value');
+                $router->post('tinymce/upload', 'TinymceController@upload')->name('tinymce.upload');
+                $router->post('editor-md/upload', 'EditorMDController@upload')->name('editor-md.upload');
             });
         });
     }
@@ -430,6 +433,36 @@ class Admin
     public static function callBooted()
     {
         Event::dispatch('admin.booted');
+    }
+
+    /**
+     * @return Fluent
+     */
+    public static function context()
+    {
+        return app('admin.context');
+    }
+
+    /**
+     * @param array|string $name
+     *
+     * @return void
+     */
+    public static function addIgnoreQueryName($name)
+    {
+        $context = static::context();
+
+        $ignoreQueries = $context->ignoreQueries ?? [];
+
+        $context->ignoreQueries = array_merge($ignoreQueries, (array) $name);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getIgnoreQueryNames()
+    {
+        return static::context()->ignoreQueries ?? [];
     }
 
     /**

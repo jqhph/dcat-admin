@@ -186,11 +186,13 @@ trait HasEvents
     /**
      * Callback after saving a Model.
      *
+     * @param mixed $result
+     *
      * @return mixed|null
      */
-    protected function callSaved()
+    protected function callSaved($result)
     {
-        return $this->callListeners('saved');
+        return $this->callListeners('saved', [$result]);
     }
 
     /**
@@ -202,11 +204,13 @@ trait HasEvents
     }
 
     /**
+     * @param mixed $result
+     *
      * @return mixed|null
      */
-    protected function callDeleted()
+    protected function callDeleted($result)
     {
-        return $this->callListeners('deleted');
+        return $this->callListeners('deleted', [$result]);
     }
 
     /**

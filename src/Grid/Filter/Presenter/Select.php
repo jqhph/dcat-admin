@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Filter\Presenter;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Form\Field\Select as SelectForm;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -36,7 +37,12 @@ class Select extends Presenter
     /**
      * @var string
      */
-    protected $script = '';
+    protected $script;
+
+    /**
+     * @var string
+     */
+    protected $placeholder;
 
     /**
      * @var bool
@@ -51,6 +57,8 @@ class Select extends Presenter
     public function __construct($options)
     {
         $this->options = $options;
+
+        SelectForm::defineLang();
     }
 
     /**
@@ -100,25 +108,19 @@ class Select extends Presenter
         }
 
         if (empty($this->script)) {
-            $placeholder = json_encode([
-                'id'   => '',
-                'text' => trans('admin.choose'),
-            ]);
-
             $configs = array_merge([
-                'allowClear'         => true,
+                'allowClear'  => true,
+                'placeholder' => [
+                    'id'   => '',
+                    'text' => $this->placeholder(),
+                ],
             ], $this->config);
 
             $configs = json_encode($configs);
-            $configs = substr($configs, 1, strlen($configs) - 2);
 
-            $this->script = <<<SCRIPT
-$(".{$this->getElementClass()}").select2({
-  placeholder: $placeholder,
-  $configs
-});
-
-SCRIPT;
+            $this->script = <<<JS
+$(".{$this->getElementClass()}").select2($configs);
+JS;
         }
 
         Admin::script($this->script);
@@ -135,7 +137,7 @@ SCRIPT;
      *
      * @return $this
      */
-    public function model($model, $idField = 'id', $textField = 'name')
+    public function model($model, string $idField = 'id', string $textField = 'name')
     {
         if (! class_exists($model)
             || ! in_array(Model::class, class_parents($model))
@@ -175,16 +177,16 @@ SCRIPT;
      *
      * @return $this
      */
-    protected function loadRemoteOptions($url, $parameters = [], $options = [])
+    protected function loadRemoteOptions(string $url, array $parameters = [], array $options = [])
     {
         $ajaxOptions = [
-            'url' => $url.'?'.http_build_query($parameters),
+            'url' => admin_url($url.'?'.http_build_query($parameters)),
         ];
         $configs = array_merge([
             'allowClear'  => true,
             'placeholder' => [
                 'id'   => '',
-                'text' => trans('admin.choose'),
+                'text' => $this->placeholder(),
             ],
         ], $this->config);
 
@@ -211,19 +213,39 @@ JS;
     }
 
     /**
+     * Set input placeholder.
+     *
+     * @param string $placeholder
+     *
+     * @return $this|string
+     */
+    public function placeholder(string $placeholder = null)
+    {
+        if ($placeholder === null) {
+            return $this->placeholder ?: __('admin.choose');
+        }
+
+        $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    /**
      * Load options from ajax.
      *
      * @param string $resourceUrl
      * @param $idField
      * @param $textField
      */
-    public function ajax($resourceUrl, $idField = 'id', $textField = 'text')
+    public function ajax(string $resourceUrl, string $idField = 'id', string $textField = 'text')
     {
         $configs = array_merge([
             'allowClear'         => true,
-            'placeholder'        => trans('admin.choose'),
+            'placeholder'        => $this->placeholder(),
             'minimumInputLength' => 1,
         ], $this->config);
+
+        $resourceUrl = admin_url($resourceUrl);
 
         $configs = json_encode($configs);
         $configs = substr($configs, 1, strlen($configs) - 2);
@@ -297,15 +319,20 @@ JS;
      *
      * @return $this
      */
-    public function load($target, $resourceUrl, $idField = 'id', $textField = 'text'): self
+    public function load($target, string $resourceUrl, string $idField = 'id', string $textField = 'text'): self
     {
         $class = $this->getElementClass();
+
+        $resourceUrl = admin_url($resourceUrl);
 
         $script = <<<JS
 $(document).off('change', ".{$class}");
 $(document).on('change', ".{$class}", function () {
     var target = $(this).closest('form').find(".{$this->getClass($target)}");
-    $.get("$resourceUrl?q="+this.value, function (data) {
+    if (this.value !== '0' && ! this.value) {
+        return;
+    }
+    $.ajax("$resourceUrl?q="+this.value).then(function (data) {
         target.find("option").remove();
         $.each(data, function (i, item) {
             $(target).append($('<option>', {
@@ -317,6 +344,7 @@ $(document).on('change', ".{$class}", function () {
         $(target).trigger('change');
     });
 });
+$(".{$class}").trigger('change')
 JS;
 
         Admin::script($script);

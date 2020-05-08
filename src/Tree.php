@@ -479,7 +479,7 @@ JS;
 
         $quickBtn = $btn = '';
         if ($this->useCreate) {
-            $btn = "<button href='{$url}' class='btn btn-sm btn-success'><i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp;{$new}</span></button>";
+            $btn = "<a href='{$url}' class='btn btn-sm btn-success'><i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp;{$new}</span></a>";
         }
 
         if ($this->useQuickCreate) {

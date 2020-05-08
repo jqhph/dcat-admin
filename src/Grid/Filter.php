@@ -64,6 +64,7 @@ class Filter implements Renderable
     use HasBuilderEvents;
 
     const MODE_RIGHT_SIDE = 'right-side';
+    const MODE_PANEL = 'panel';
 
     /**
      * @var array
@@ -323,6 +324,22 @@ class Filter implements Renderable
         $this->filterID = $filterID;
 
         return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function panel()
+    {
+        return $this->mode(static::MODE_PANEL);
+    }
+
+    /**
+     * @return $this
+     */
+    public function rightSide()
+    {
+        return $this->mode(static::MODE_RIGHT_SIDE);
     }
 
     /**
@@ -677,7 +694,7 @@ class Filter implements Renderable
 
         $this->callComposing();
 
-        $this->view = 'admin::filter.right-side-container';
+        $this->view = $this->mode === static::MODE_RIGHT_SIDE ? 'admin::filter.right-side-container' : 'admin::filter.container';
 
         return view($this->view)->with([
             'action'             => $this->action ?: $this->urlWithoutFilters(),

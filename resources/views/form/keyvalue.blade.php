@@ -54,7 +54,7 @@
 
                     <td class="form-group">
                         <div>
-                            <div class="{{ $class }}-remove btn btn-warning btn-sm pull-right">
+                            <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
                                 <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
                             </div>
                         </div>
@@ -98,7 +98,7 @@
 
         <td class="form-group">
             <div>
-                <div class="{{ $class }}-remove btn btn-warning btn-sm pull-right">
+                <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
                     <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
                 </div>
             </div>

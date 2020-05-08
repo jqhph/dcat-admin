@@ -5,9 +5,9 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
- @import "bootstrap/functions";
- 
- @import "core/variables/variables";
- @import "bootstrap/variables";
+@import "bootstrap/functions";
 
- @import "bootstrap/bootstrap";
+@import "variables/variables";
+@import "bootstrap/variables";
+
+@import "bootstrap/bootstrap";

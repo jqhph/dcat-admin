@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-      data-textdirection="{{ $configData['direction'] === 'rtl' ? 'rtl' : 'ltr' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+    {{-- 默认使用谷歌浏览器内核--}}
+    <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
     <title>{{ Dcat\Admin\Admin::title() }} @if(! empty($header)) | {{ $header }}@endif</title>

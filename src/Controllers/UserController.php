@@ -59,10 +59,11 @@ class UserController extends AdminController
             $grid->created_at;
             $grid->updated_at->sortable();
 
+            $grid->quickSearch(['id', 'name', 'username']);
+
             $grid->disableBatchDelete();
             $grid->showQuickEditButton();
             $grid->disableFilterButton();
-            $grid->quickSearch(['id', 'name', 'username']);
             $grid->enableDialogCreate();
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
@@ -174,12 +175,8 @@ class UserController extends AdminController
                 $form->password('password', trans('admin.password'))
                     ->minLength(5)
                     ->maxLength(20)
-                    ->customFormat(function ($v) {
-                        if ($v == $this->password) {
-                            return;
-                        }
-
-                        return $v;
+                    ->customFormat(function () {
+                        return '';
                     });
             } else {
                 $form->password('password', trans('admin.password'))

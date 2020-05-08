@@ -5,6 +5,9 @@
             addFileButton: '.add-file-button', // 继续添加按钮选择器
             isImage: false,
             preview: [], // 数据预览
+            server: '',
+            updateServer: '',
+            sortable: false,
             deleteUrl: '',
             deleteData: {},
             thumbHeight: 160,
@@ -39,7 +42,7 @@
                 F_EXCEED_SIZE: '对不起，当前选择的文件过大',
                 Q_EXCEED_SIZE_LIMIT: '对不起，已超出文件大小限制',
                 F_DUPLICATE: '文件重复',
-
+                confirm_delete_file: '您确定要删除这个文件吗？',
             },
             upload: { // web-uploader配置
                 formData: {
@@ -170,14 +173,19 @@
             __ = lang.trans.bind(lang),
 
             // WebUploader实例
-            uploader;
+            uploader,
+
+            // 已上传的文件
+            uploadedFiles = [],
+
+            initImg;
 
         // 当有文件添加进来时执行，负责view的创建
         function addFile(file) {
-            var size = WebUploader.formatSize(file.size), $li, $btns;
+            var size = WebUploader.formatSize(file.size), $li, $btns, fileName = file.name || null;
 
             if (showImg) {
-                $li = $(`<li id="${getFileViewSelector(file.id)}" title="${file.name}" >
+                $li = $(`<li id="${getFileViewSelector(file.id)}" title="${fileName}" >
                     <p class="file-type">${(file.ext.toUpperCase() || 'FILE')}</p>
                     <p class="imgWrap "></p>
                     <p class="title" style="">${file.name}</p>
@@ -185,10 +193,13 @@
                     </li>`);
 
                 $btns = $(`<div class="file-panel">
-                    <a class="btn btn-sm btn-white" data-file-act="cancel"><i class="fa fa-close red-dark" style="font-size:13px"></i></a>
+                    <a class="btn btn-sm btn-white" data-file-act="cancel"><i class="feather icon-x red-dark" style="font-size:13px"></i></a>
                     <a class="btn btn-sm btn-white" data-file-act="delete" style="display: none">
                     <i class="feather icon-trash red-dark" style="font-size:13px"></i></a>
                     <a class="btn btn-sm btn-white" data-file-act="preview" ><i class="feather icon-zoom-in"></i></a>
+                    <a class='btn btn-sm btn-white' data-file-act='order' data-order="1" style="display: none"><i class='feather icon-arrow-up'></i></a>
+                    <a class='btn btn-sm btn-white' data-file-act='order' data-order="0" style="display: none"><i class='feather icon-arrow-down'></i></a>
+
                     </div>`).appendTo($li);
             } else {
                 $li = $(`
@@ -201,6 +212,8 @@
                 `);
 
                 $btns = $(`
+<span style="right: 45px;" class="file-action d-none" data-file-act='order' data-order="1"><i class='feather icon-arrow-up'></i></span>
+<span style="right: 25px;" class="file-action d-none" data-file-act='order' data-order="0"><i class='feather icon-arrow-down'></i></span>
 <span data-file-act="cancel" class="file-action" style="font-size:13px">
     <i class="feather icon-x red-dark"></i>
 </span>
@@ -331,32 +344,42 @@
                     case 'deleteurl':
                     case 'delete':
                         if (opts.disableRemove) {
+                            deleteInput(file.serverId);
                             return uploader.removeFile(file);
                         }
 
-                        var post = opts.deleteData;
+                        Dcat.confirm(__('confirm_delete_file'), file.serverId, function () {
+                            var post = opts.deleteData;
 
-                        post.key = file.serverId;
-                        if (!post.key) {
-                            return uploader.removeFile(file);
-                        }
-                        post._column = updateColumn;
-
-                        Dcat.loading();
-                        $.post(opts.deleteUrl, post, function (result) {
-                            Dcat.loading(false);
-                            if (result.status) {
+                            post.key = file.serverId;
+                            if (!post.key) {
                                 deleteInput(file.serverId);
-                                uploader.removeFile(file);
-                                return;
+                                return uploader.removeFile(file);
                             }
+                            post._column = updateColumn;
 
-                            Dcat.error(result.message || 'Remove file failed.');
+                            Dcat.loading();
+                            $.post(opts.deleteUrl, post, function (result) {
+                                Dcat.loading(false);
+                                if (result.status) {
+                                    deleteInput(file.serverId);
+                                    uploader.removeFile(file);
+                                    return;
+                                }
+
+                                Dcat.error(result.message || 'Remove file failed.');
+                            });
+
                         });
 
                         break;
                     case 'preview':
                         Dcat.helpers.previewImage($wrap.find('img').attr('src'), null, file.name);
+                        break;
+                    case 'order':
+                        $(this).attr('data-id', file.serverId);
+
+                        orderFiles.apply(this);
                         break;
                 }
 
@@ -464,7 +487,7 @@
             form[updateColumn] = values.join(',');
             delete form['upload_column'];
 
-            $.post(opts.server, form);
+            $.post(opts.updateServer, form);
         }
 
         function setState(val, args) {
@@ -538,6 +561,14 @@
                         stats = uploader.getStats();
                         if (stats.successNum) {
                             Dcat.success(__('upload_success_message', {success: stats.successNum}));
+
+                            setTimeout(function () {
+                                if (opts.upload.fileNumLimit == 1) {
+                                    // 单文件上传，需要重置文件上传个数
+                                    uploader.request('get-stats').numOfSuccess = 0;
+                                }
+                            }, 10);
+
                         } else {
                             // 没有成功的图片，重设
                             state = 'done';
@@ -653,6 +684,8 @@
 
         // 删除表单值
         function deleteInput(id) {
+            deleteUploadedFile(id);
+
             if (!id) {
                 return $input.val('');
             }
@@ -661,9 +694,111 @@
             }));
         }
 
+        // 添加已上传文件
+        function appendUploadedFile(file) {
+            if (! file.serverId || searchUploadedFile(file.serverId) !== -1) {
+                return;
+            }
+
+            uploadedFiles.push(file)
+        }
+
+        function syncUploadedFiles() {
+            var files = [];
+            for (var i in uploadedFiles) {
+                if (uploadedFiles[i]) {
+                    files.push(uploadedFiles[i].serverId);
+                }
+            }
+
+            setInput(files);
+        }
+
+        function deleteUploadedFile(fileId) {
+            uploadedFiles = uploadedFiles.filter(function (v) {
+                return v.serverId != fileId;
+            });
+        }
+
+        // 查找文件位置
+        function searchUploadedFile(fileId) {
+            for (var i in uploadedFiles) {
+                if (uploadedFiles[i].serverId === fileId) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        // 交换文件排序
+        function swrapUploadedFile(fileId, order) {
+            var index = parseInt(searchUploadedFile(fileId)),
+                currentFile = uploadedFiles[index],
+                prevFile = uploadedFiles[index - 1],
+                nextFile = uploadedFiles[index + 1];
+
+            if (order) {
+                if (index === 0) {
+                    return;
+                }
+
+                uploadedFiles[index - 1] = currentFile;
+                uploadedFiles[index] = prevFile;
+            } else {
+                if (! nextFile) {
+                    return;
+                }
+
+                uploadedFiles[index + 1] = currentFile;
+                uploadedFiles[index] = nextFile;
+            }
+
+            syncUploadedFiles();
+        }
+
+        // 重新渲染已上传文件
+        function rerenderUploadedFiles() {
+            $queue.html('');
+
+            for (var i in uploadedFiles) {
+                if (uploadedFiles[i]) {
+                    appendUploadedFileForm(uploadedFiles[i])
+                }
+            }
+        }
+
         // 重新计算按钮定位
         function refreshButton() {
             uploader.refresh();
+        }
+
+        // 文件排序
+        function orderFiles() {
+            var $this = $(this),
+                $li = $this.parents('li').first(),
+                fileId = $this.data('id'),
+                order = $this.data('order'),
+                $prev = $li.prev(),
+                $next = $li.next();
+
+            if (order) {
+                // 升序
+                if (! $prev.length) {
+                    return;
+                }
+                swrapUploadedFile(fileId, order);
+                rerenderUploadedFiles();
+
+                return;
+            }
+
+            if (! $next.length) {
+                return;
+            }
+
+            swrapUploadedFile(fileId, order);
+            rerenderUploadedFiles();
         }
 
         // 添加上传成功文件到表单区域
@@ -671,13 +806,21 @@
             var html = "";
             html += "<li title='" + file.serverPath + "'>";
 
+            if (! showImg && opts.sortable) {
+                // 文件排序
+                html += `
+<p style="right: 45px" class="file-action" data-file-act='order' data-order="1" data-id='${file.serverId}'><i class='feather icon-arrow-up'></i></p>
+<p style="right: 25px" class="file-action" data-file-act='order' data-order="0" data-id='${file.serverId}'><i class='feather icon-arrow-down'></i></p>
+`;
+            }
+
             if (showImg) {
                 html += `<p class='imgWrap'><img src='${file.serverUrl}'></p>`
             } else if (! opts.disabled) {
                 html += `<p class="file-action" data-file-act="delete" data-id="${file.serverId}"><i class="feather icon-trash red-dark"></i></p>`;
             }
 
-            html += "<p class='title' style=''><i class='feather icon-check text-white icon-success' style='color: #fff;'></i>";
+            html += "<p class='title' style=''><i class='feather icon-check text-white icon-success text-white'></i>";
             html += file.serverPath;
             html += "</p>";
 
@@ -690,7 +833,17 @@
                 }
                 html += `<a class='btn btn-sm btn-white' data-file-act='preview' data-url='${file.serverUrl}' ><i class='feather icon-zoom-in'></i></a>`;
 
+                if (opts.sortable) {
+                    // 文件排序
+                    html += `
+<a class='btn btn-sm btn-white' data-file-act='order' data-order="1" data-id='${file.serverId}'><i class='feather icon-arrow-up'></i></a>
+<a class='btn btn-sm btn-white' data-file-act='order' data-order="0" data-id='${file.serverId}'><i class='feather icon-arrow-down'></i></a>
+`;
+                }
+
                 html += "</div>";
+            } else {
+
             }
 
             html += "</li>";
@@ -711,21 +864,23 @@
                     return removeFormFile(fileId);
                 }
 
-                post.key = fileId;
-                post._column = updateColumn;
+                Dcat.confirm(__('confirm_delete_file'), file.serverId, function () {
+                    post.key = fileId;
+                    post._column = updateColumn;
 
-                Dcat.loading();
-                $.post(opts.deleteUrl, post, function (result) {
-                    Dcat.loading(false);
-                    if (result.status) {
-                        // 移除
-                        html.remove();
+                    Dcat.loading();
+                    $.post(opts.deleteUrl, post, function (result) {
+                        Dcat.loading(false);
+                        if (result.status) {
+                            // 移除
+                            html.remove();
 
-                        removeFormFile(fileId);
-                        return;
-                    }
+                            removeFormFile(fileId);
+                            return;
+                        }
 
-                    Dcat.error(result.message || 'Remove file failed.')
+                        Dcat.error(result.message || 'Remove file failed.')
+                    });
                 });
             };
 
@@ -733,6 +888,10 @@
             html.find('[data-file-act="deleteurl"]').click(deleteFile);
             html.find('[data-file-act="delete"]').click(deleteFile);
 
+            // 文件排序
+            if (opts.sortable) {
+                html.find('[data-file-act="order"').click(orderFiles);
+            }
 
             // 放大图片
             html.find('[data-file-act="preview"]').click(function () {
@@ -741,8 +900,6 @@
                 Dcat.helpers.previewImage(url);
             });
 
-            setState('incrOriginalFileNum');
-            setState('decrFileNumLimit');
             formFiles[file.serverId] = file;
 
             addInput(file.serverId);
@@ -750,7 +907,11 @@
             $queue.append(html);
 
             if (showImg) {
-                setTimeout(function () { html.css('margin', '5px');}, 80);
+                setTimeout(function () {
+                    html.css('margin', '5px');
+                }, initImg ? 0 : 400);
+
+                initImg = 1;
             }
         }
 
@@ -768,7 +929,7 @@
             $info = $statusBar.find('.info');
 
             // 上传按钮
-            $upload = $wrap.find('.uploadBtn');
+            $upload = $wrap.find('.upload-btn');
 
             // 没选择文件之前的内容。
             $placeHolder = $wrap.find('.placeholder');
@@ -817,6 +978,7 @@
 
             };
 
+            // 添加文件
             uploader.onFileQueued = function (file) {
                 fileCount++;
                 fileSize += file.size;
@@ -878,12 +1040,19 @@
                         obj.file.serverPath = reason.path;
                         obj.file.serverUrl  = reason.url || null;
 
+                        appendUploadedFile(obj.file);
+
                         addInput(reason.id);
 
+                        var $li = getFileView(obj.file.id);
+
                         if (!showImg) {
-                            var $li = getFileView(obj.file.id);
                             $li.find('.file-action').hide();
                             $li.find('[data-file-act="delete"]').show();
+                        }
+
+                        if (opts.sortable) {
+                            $li.find('[data-file-act="order"]').removeClass('d-none').show();
                         }
 
                         break;
@@ -952,13 +1121,19 @@
                     ext = path.split('.').pop();
                 }
 
-                appendUploadedFileForm({
+                var file = {
                     serverId: opts.preview[i].id,
                     serverUrl: opts.preview[i].url,
                     serverPath: path,
                     ext: ext,
                     fake: 1,
-                })
+                };
+
+                setState('incrOriginalFileNum');
+                setState('decrFileNumLimit');
+
+                appendUploadedFileForm(file);
+                appendUploadedFile(file);
             }
         }
 

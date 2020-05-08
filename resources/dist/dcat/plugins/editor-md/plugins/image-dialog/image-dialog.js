@@ -158,6 +158,8 @@
                             var body = (uploadIframe.contentWindow ? uploadIframe.contentWindow : uploadIframe.contentDocument).document.body;
                             var json = (body.innerText) ? body.innerText : ( (body.textContent) ? body.textContent : null);
 
+                            json = json.substr(json.indexOf('{'));
+
                             json = (typeof JSON.parse !== "undefined") ? JSON.parse(json) : eval("(" + json + ")");
 
                             if (json.success === 1)

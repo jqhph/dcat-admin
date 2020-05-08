@@ -3,6 +3,14 @@
   border: 0;
   box-shadow: $shadow-100;
   max-width: 320px;
+
+  z-index: 10;
+  .popover-header {
+    color: $white;
+    border: none;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+  }
 }
 
 .bs-popover-right > .arrow::before, .bs-popover-auto[x-placement^=right] > .arrow::before {

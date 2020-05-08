@@ -165,7 +165,7 @@ class SelectResource extends Field
 
     protected function setupScript()
     {
-        $label = ucfirst(trans('admin.choose')).' '.$this->label;
+        $label = trans('admin.choose').' '.$this->label;
         $area = json_encode($this->area);
         $disabled = empty($this->attributes['disabled']) ? '' : 'disabled';
         $containerId = $this->id.$this->getFormElementId();
@@ -191,6 +191,20 @@ Dcat.ResourceSelector({
     displayerContainer: $('$displayerContainer'),
 });
 JS;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function placeholder($placeholder = null)
+    {
+        if ($placeholder === null) {
+            return $this->placeholder ?: __('admin.choose').' '.$this->label;
+        }
+
+        $this->placeholder = $placeholder;
+
+        return $this;
     }
 
     protected function setupStyle()

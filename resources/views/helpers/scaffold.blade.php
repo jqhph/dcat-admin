@@ -3,29 +3,22 @@
     $timestamps->options([1 => 'Created_at & Updated_at'])->check(1);
 
     $soft = Dcat\Admin\Widgets\Checkbox::make('soft_deletes')->inline();
-    $soft->options([1 => ucfirst(trans('admin.scaffold.soft_delete'))]);
+    $soft->options([1 => (trans('admin.scaffold.soft_delete'))]);
 
     $actionCreators = Dcat\Admin\Widgets\Checkbox::make('create[]')->inline();
     $actionCreators->options([
-        'migration' => ucfirst(trans('admin.scaffold.create_migration')),
-        'model' => ucfirst(trans('admin.scaffold.create_model')),
-        'repository' => ucfirst(trans('admin.scaffold.create_repository')),
-        'controller' => ucfirst(trans('admin.scaffold.create_controller')),
-        'migrate' => ucfirst(trans('admin.scaffold.run_migrate')),
-        'lang' => ucfirst(trans('admin.scaffold.create_lang')),
+        'migration' => (trans('admin.scaffold.create_migration')),
+        'model' => (trans('admin.scaffold.create_model')),
+        'repository' => (trans('admin.scaffold.create_repository')),
+        'controller' => (trans('admin.scaffold.create_controller')),
+        'migrate' => (trans('admin.scaffold.run_migrate')),
+        'lang' => (trans('admin.scaffold.create_lang')),
     ])->checkAll(['migrate', 'migration']);
 @endphp
 <style>
-    /*.table>thead>tr>th {*/
-    /*    font-size:12px;*/
-    /*    text-transform:uppercase;*/
-    /*}*/
     .select2-container .select2-selection--single {
-        height: 34px !important;
+        height: 30px !important;
     }
-    /*#inputTableName {*/
-    /*    width:300px;*/
-    /*}*/
     .choose-exist-table {
         width: 100%;
     }
@@ -41,15 +34,15 @@
 
                 <div class="form-group row">
 
-{{--                    <label for="inputTableName" class="col-sm-1 control-label">{{ucfirst(trans('admin.scaffold.table'))}}</label>--}}
+{{--                    <label for="inputTableName" class="col-sm-1 control-label text-capitalize">{{(trans('admin.scaffold.table'))}}</label>--}}
 
-                    <div for="inputTableName"  class="col-sm-1 control-label">
-                        <span>{{ucfirst(trans('admin.scaffold.table'))}}</span>
+                    <div for="inputTableName"  class="col-sm-1 control-label text-capitalize">
+                        <span>{{(trans('admin.scaffold.table'))}}</span>
                     </div>
 
                     <div class="col-sm-2 ">
                         <div class="input-group">
-                            <input type="text" name="table_name" class="form-control" id="inputTableName" placeholder="{{ucfirst(trans('admin.scaffold.table'))}}" value="{{ old('table_name') }}">
+                            <input type="text" name="table_name" class="form-control" id="inputTableName" placeholder="{{(trans('admin.scaffold.table'))}}" value="{{ old('table_name') }}">
 
                         </div>
                     </div>
@@ -73,23 +66,23 @@
 
                 </div>
                 <div class="form-group row">
-                    <span for="inputModelName" class="col-sm-1 control-label">{{ucfirst(trans('admin.scaffold.model'))}}</span>
+                    <span for="inputModelName" class="col-sm-1 control-label text-capitalize">{{(trans('admin.scaffold.model'))}}</span>
 
                     <div class="col-sm-4">
-                        <input type="text" name="model_name" class="form-control" id="inputModelName" placeholder="{{ucfirst(trans('admin.scaffold.model'))}}" value="{{ old('model_name', "App\\Models\\") }}">
+                        <input type="text" name="model_name" class="form-control text-capitalize" id="inputModelName" placeholder="{{(trans('admin.scaffold.model'))}}" value="{{ old('model_name', "App\\Models\\") }}">
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <span for="inputControllerName" class="col-sm-1 control-label">{{ucfirst(trans('admin.scaffold.controller'))}}</span>
+                    <span for="inputControllerName" class="col-sm-1 control-label text-capitalize">{{(trans('admin.scaffold.controller'))}}</span>
 
                     <div class="col-sm-4">
-                        <input type="text" name="controller_name" class="form-control" id="inputControllerName" placeholder="{{ucfirst(trans('admin.scaffold.controller'))}}" value="{{ old('controller_name', "App\\Admin\\Controllers\\") }}">
+                        <input type="text" name="controller_name" class="form-control text-capitalize" id="inputControllerName" placeholder="{{(trans('admin.scaffold.controller'))}}" value="{{ old('controller_name', "App\\Admin\\Controllers\\") }}">
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <div class="offset-sm-1 col-sm-11 mt-1">
+                    <div class="offset-sm-1 col-sm-11 mt-1 text-capitalize">
                         {!! $actionCreators->render(); !!}
                     </div>
                 </div>
@@ -194,16 +187,16 @@
             <div class='form-inline d-flex justify-content-between' style="width: 100%; padding: 0 20px 12px;">
 
                 <div class='form-group'>
-                    <button type="button" class="btn btn-sm btn-success" id="add-table-field"><i class="feather icon-plus"></i>&nbsp;&nbsp;{{ucfirst(trans('admin.scaffold.add_field'))}}</button>
+                    <button type="button" class="btn btn-sm btn-success text-capitalize" id="add-table-field"><i class="feather icon-plus"></i>&nbsp;&nbsp;{{(trans('admin.scaffold.add_field'))}}</button>
                 </div>
 
                 <div class="row">
-                    <div class="form-group" style="margin-right: 20px;">
-                        <span for="inputPrimaryKey">{{ucfirst(trans('admin.scaffold.pk'))}}&nbsp;&nbsp;</span>
-                        <input type="text" name="primary_key" class="form-control" id="inputPrimaryKey" placeholder="{{ucfirst(trans('admin.scaffold.pk'))}}" value="id" style="width: 100px;">
+                    <div class="form-group text-capitalize" style="margin-right: 20px;">
+                        <span for="inputPrimaryKey">{{(trans('admin.scaffold.pk'))}}&nbsp;&nbsp;</span>
+                        <input type="text" name="primary_key" class="form-control" id="inputPrimaryKey" placeholder="{{(trans('admin.scaffold.pk'))}}" value="id" style="width: 100px;">
                     </div>
 
-                    <div class='form-group'>
+                    <div class='form-group text-capitalize'>
                         {!! $timestamps->render() !!}
                         {!! $soft->render() !!}
                     </div>
@@ -214,7 +207,7 @@
             <!-- /.box-body -->
             <div class="box-footer d-flex justify-content-between">
                 <div></div>
-                <button type="submit" class="btn btn-primary"><i class="feather icon-save"></i> {{ucfirst(trans('admin.submit'))}}</button>
+                <button type="submit" class="btn btn-primary text-capitalize"><i class="feather icon-save"></i> {{(trans('admin.submit'))}}</button>
             </div>
 
         {{ csrf_field() }}
@@ -264,20 +257,29 @@
 
 <script>
     Dcat.ready(function () {
-        var typing = 0,
-            $model = $('#inputModelName'),
+        var $model = $('#inputModelName'),
             $controller = $('#inputControllerName'),
             $table = $('#inputTableName'),
             $fieldsBody = $('#table-fields tbody'),
             tpl = $('#table-field-tpl').html(),
             modelNamespace = 'App\\Models\\',
             controllerNamespace = 'App\\Admin\\Controllers\\',
-            dataTypeMap = {!! json_encode($dataTypeMap) !!};
+            dataTypeMap = {!! json_encode($dataTypeMap) !!},
+            helpers = Dcat.helpers;
+
+        var withSingularName = helpers.debounce(function (table) {
+            $.ajax('{{ url(request()->path()) }}?singular=' + table, {
+                success: function (data) {
+                    writeController(data.value);
+                    writeModel(data.value);
+                }
+            });
+        }, 500);
 
         $('select').select2();
 
         $('#add-table-field').click(function (event) {
-            add_field();
+            addField();
         });
 
         $('#table-fields').on('click', '.table-field-remove', function(event) {
@@ -302,7 +304,7 @@
             var val = $(this).val(), tb, db;
             if (val == '0') {
                 $table.val('');
-                get_tr().remove();
+                getTR().remove();
                 return;
             }
             val = val.split('|');
@@ -312,16 +314,15 @@
             Dcat.loading();
             $table.val(tb);
 
-            write_controller(tb);
-            write_model(tb);
+            withSingularName(tb);
 
-            $.post('{{admin_url('helpers/scaffold/table')}}', {db: db, tb: tb, _token: Dcat.token}, function (res) {
+            $.post('{{ admin_url('helpers/scaffold/table') }}', {db: db, tb: tb, _token: Dcat.token}, function (res) {
                 Dcat.loading(false);
 
                 if (!res.list) return;
                 var i, list = res.list, $id = $('#inputPrimaryKey'), updated, created, soft;
 
-                get_tr().remove();
+                getTR().remove();
                 for (i in list) {
                     if (list[i].id) {
                         $id.val(i);
@@ -340,43 +341,28 @@
                         continue;
                     }
 
-                    var c = Dcat.helpers.replace(list[i].comment, '"', '');
-                    add_field({
+                    var c = helpers.replace(list[i].comment, '"', '');
+                    addField({
                         name: i,
                         lang: c,
                         type: list[i].type,
-                        default: Dcat.helpers.replace(list[i].default, '"', ''),
+                        default: helpers.replace(list[i].default, '"', ''),
                         comment: c,
                         nullable: list[i].nullable != 'NO',
                     });
                 }
 
-                add_timestamps(updated, created);
-                add_softdelete(soft);
+                addTimestamps(updated, created);
+                addSoftdelete(soft);
             });
 
         });
 
-
         $table.on('keyup', function (e) {
-            var $this = $(this);
-            $this.val($this.val());
-
-            if (typing == 1) {
-                return;
-            }
-            typing = 1;
-
-            setTimeout(function () {
-                typing = 0;
-
-                write_controller($this.val());
-                write_model($this.val());
-            }, 100);
-
+            withSingularName($(this).val());
         });
 
-        function add_timestamps(updated, created) {
+        function addTimestamps(updated, created) {
             if (updated && created) {
                 return;
             }
@@ -384,39 +370,39 @@
 
             var c;
             if (updated) {
-                c = Dcat.helpers.replace(updated.comment, '"', '');
-                add_field({
+                c = helpers.replace(updated.comment, '"', '');
+                addField({
                     name: 'updated_at',
                     lang: c,
                     type: updated.type,
-                    default: Dcat.helpers.replace(updated.default, '"', ''),
+                    default: helpers.replace(updated.default, '"', ''),
                     comment: c,
                     nullable: updated.nullable != 'NO',
                 });
             }
             if (created) {
-                c = Dcat.helpers.replace(created.comment, '"', '');
-                add_field({
+                c = helpers.replace(created.comment, '"', '');
+                addField({
                     name: 'created_at',
                     lang: c,
                     type: created.type,
-                    default: Dcat.helpers.replace(created.default, '"', ''),
+                    default: helpers.replace(created.default, '"', ''),
                     comment: c,
                     nullable: created.nullable != 'NO',
                 });
             }
         }
 
-        function add_softdelete(soft) {
+        function addSoftdelete(soft) {
             if (soft) {
                 $('[name="soft_deletes"]').prop('checked', true);
             }
         }
 
-        function add_field(val) {
+        function addField(val) {
             val = val || {};
 
-            var idx = get_tr().length,
+            var idx = getTR().length,
                 $field = $(
                     tpl
                         .replace(/__index__/g, idx)
@@ -442,27 +428,27 @@
 
         }
 
-        function write_controller(val) {
-            val = ucfirst(to_hump(to_line(val)));
+        function writeController(val) {
+            val = ucfirst(toHump(toLine(val)));
             $controller.val(val ? (controllerNamespace + val + 'Controller') : controllerNamespace);
         }
-        function write_model(val) {
-            $model.val(modelNamespace + ucfirst(ucfirst(to_hump(to_line(val)))));
+        function writeModel(val) {
+            $model.val(modelNamespace + ucfirst(ucfirst(toHump(toLine(val)))));
         }
 
-        function get_tr() {
+        function getTR() {
             return $('#table-fields tbody tr');
         }
 
         // 下划线转换驼峰
-        function to_hump(name) {
+        function toHump(name) {
             return name.replace(/\_(\w)/g, function (all, letter) {
                 return letter.toUpperCase();
             });
         }
 
         // 驼峰转换下划线
-        function to_line(name) {
+        function toLine(name) {
             return name.replace(/([A-Z])/g,"_$1").toLowerCase();
         }
 

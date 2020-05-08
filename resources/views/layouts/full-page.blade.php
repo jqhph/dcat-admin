@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-      data-textdirection="{{ $configData['direction'] === 'rtl' ? 'rtl' : 'ltr' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+    {{-- 默认使用谷歌浏览器内核--}}
+    <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
     <title>@if(! empty($header)){{ $header }} | @endif {{ Dcat\Admin\Admin::title() }}</title>
@@ -26,9 +27,7 @@
     @yield('head')
 </head>
 
-<body
-      class="dcat-admin-body vertical-layout vertical-menu-modern 1-column {{ $configData['blank_page_class'] }} {{ $configData['body_class'] }} {{($configData['theme'] === 'light') ? '' : $configData['theme'] }}"
-        data-menu="vertical-menu-modern" data-col="1-column" data-layout="{{ $configData['theme'] }}">
+<body class="dcat-admin-body full-page {{ $configData['body_class'] }}">
 
 <script>
     var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
@@ -38,7 +37,7 @@
 {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
 <div class="app-content content">
-    <div class="content-wrapper" id="{{ $pjaxContainerId }}">
+    <div class="wrapper" id="{{ $pjaxContainerId }}">
         @yield('app')
     </div>
 </div>

@@ -4,7 +4,7 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
-use Illuminate\Support\Arr;
+use Dcat\Admin\Support\Helper;
 
 class QuickSearch extends AbstractTool
 {
@@ -21,17 +21,17 @@ class QuickSearch extends AbstractTool
     /**
      * @var string
      */
-    protected $queryName = '__search__';
+    protected $queryName = '_search_';
 
     /**
      * @var int rem
      */
     protected $width = 19;
 
-    public function __construct($key = null, $title = null)
-    {
-        parent::__construct($key, $title);
-    }
+    /**
+     * @var bool
+     */
+    protected $autoSubmit = true;
 
     /**
      * @param string|null $name
@@ -95,30 +95,46 @@ class QuickSearch extends AbstractTool
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return string
      */
-    public function render()
+    public function formAction()
     {
-        $request = request();
-        $query = $request->query();
-
-        $this->setupScript();
-
-        Arr::forget($query, [
+        return Helper::fullUrlWithoutQuery([
             $this->queryName,
             $this->parent->model()->getPageName(),
             '_pjax',
         ]);
+    }
 
-        $vars = [
-            'action'      => $request->url().'?'.http_build_query($query),
+    /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function auto(bool $value = true)
+    {
+        $this->autoSubmit = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function render()
+    {
+        $this->setupScript();
+
+        $data = [
+            'action'      => $this->formAction(),
             'key'         => $this->queryName,
             'value'       => $this->value(),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
             'width'       => $this->width,
+            'auto'        => $this->autoSubmit,
         ];
 
-        return view($this->view, $vars);
+        return view($this->view, $data);
     }
 
     protected function setupScript()
@@ -128,11 +144,12 @@ class QuickSearch extends AbstractTool
     var inputting = false,
         $ipt = $('input.quick-search-input'), 
         val = $ipt.val(),
-        ignoreKeys = [16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144];
+        ignoreKeys = [16, 17, 18, 20, 35, 36, 37, 38, 39, 40, 45, 144],
+        auto = $ipt.attr('auto');
     
     var submit = Dcat.helpers.debounce(function (input) {
         inputting || $(input).parents('form').submit()
-    }, 600);
+    }, 1200);
     
     function toggleBtn() {
         var t = $(this),
@@ -147,11 +164,6 @@ class QuickSearch extends AbstractTool
     }
     
     $ipt.on('focus', toggleBtn)
-        .on('keyup', function (e) {
-            toggleBtn.apply(this);
-            
-            ignoreKeys.indexOf(e.keyCode) == -1 && submit(this)
-        })
         .on('mousemove', toggleBtn)
         .on('mouseout', toggleBtn)
         .on('compositionstart', function(){
@@ -160,6 +172,15 @@ class QuickSearch extends AbstractTool
         .on('compositionend', function() {
             inputting = false
         });
+
+    if (auto > 0) {
+        $ipt.on('keyup', function (e) {
+            toggleBtn.apply(this);
+            
+            ignoreKeys.indexOf(e.keyCode) == -1 && submit(this)
+        })
+    }
+    
     val !== '' && $ipt.val('').focus().val(val);
     
     $('.quick-search-clear').on('click', function () {

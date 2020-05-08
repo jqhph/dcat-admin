@@ -57,30 +57,47 @@ use Dcat\Admin\Support\Helper;
  */
 class Color
 {
+    const DEFAULT_COLOR = 'indigo';
+
     /**
      * 颜色.
      *
      * @var array
      */
     protected static $colors = [
-        'cyan' => [
-            'css' => [
-
-            ],
-            'colors' => [
-                'primary'        => 'cyan',
-                'primary-darker' => 'cyan-darker',
-                'link'           => 'cyan-darker',
-            ],
-        ],
         'indigo' => [
-            'css' => [
-
-            ],
             'colors' => [
                 'primary'        => 'indigo',
                 'primary-darker' => 'indigo-darker',
                 'link'           => 'indigo-darker',
+            ],
+        ],
+        'blue-light' => [
+            'colors' => [
+                'primary'        => '#4199de',
+                'primary-darker' => '#278bd9',
+                'link'           => '#278bd9',
+            ],
+        ],
+        'blue-dark' => [
+            'colors' => [
+                'primary'        => '#586cb1',
+                'primary-darker' => '#4c60a3',
+                'link'           => '#4c60a3',
+            ],
+        ],
+        'blue' => [
+            'colors' => [
+                'primary'        => '#5686d4',
+                'primary-darker' => '#4277cf',
+                'link'           => '#4277cf',
+            ],
+        ],
+        'green' => [
+            'colors' => [
+                'primary'        => '#4e9876',
+                'primary-darker' => '#458769',
+                'link'           => '#458769',
             ],
         ],
     ];
@@ -110,7 +127,7 @@ class Color
 
         // 其他蓝色
         'blue1' => '#007ee5',
-        'blue2' => '#4199de',
+        'blue2' => '#3d97dd',
 
         // 橘色
         'orange1' => '#ffcc80',
@@ -182,7 +199,7 @@ class Color
      */
     public function __construct($name = null)
     {
-        $this->name = ($name ?: config('admin.layout.color')) ?: 'indigo';
+        $this->name = ($name ?: config('admin.layout.color')) ?: static::DEFAULT_COLOR;
 
         $this->currentColors = array_merge(
             static::$default,
@@ -196,16 +213,6 @@ class Color
     public function name()
     {
         return $this->name;
-    }
-
-    /**
-     * 获取css文件路径.
-     *
-     * @return array
-     */
-    public function css()
-    {
-        return static::$colors[$this->name]['css'];
     }
 
     /**
@@ -307,16 +314,14 @@ class Color
     /**
      * 扩展颜色.
      *
-     * @param string       $name
-     * @param string|array $skinPath
-     * @param array        $colors
+     * @param string $name
+     * @param array  $colors
      *
      * @return void
      */
-    public static function extend(string $name, $skinPath, array $colors)
+    public static function extend(string $name, array $colors)
     {
         static::$colors[$name] = [
-            'css'    => array_filter((array) $skinPath),
             'colors' => $colors,
         ];
     }

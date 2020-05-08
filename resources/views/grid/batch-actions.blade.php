@@ -7,7 +7,9 @@
     </button>
     <ul class="dropdown-menu" role="menu">
         @foreach($actions as $action)
-            {!! $action->render() !!}
+            <li class="dropdown-item">
+                {!! $action->render() !!}
+            </li>
         @endforeach
     </ul>
 </div>

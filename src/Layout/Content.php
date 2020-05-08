@@ -54,6 +54,11 @@ class Content implements Renderable
     protected $config = [];
 
     /**
+     * @var bool
+     */
+    protected $usingPerfectScrollbar = false;
+
+    /**
      * Content constructor.
      *
      * @param Closure|null $callback
@@ -118,13 +123,13 @@ class Content implements Renderable
     }
 
     /**
+     * Build full page.
+     *
      * @return $this
      */
     public function full()
     {
         $this->view = 'admin::layouts.full-content';
-
-        Admin::asset()->full();
 
         return $this->withConfig('blank_page', true);
     }
@@ -147,6 +152,18 @@ class Content implements Renderable
         $this->formatBreadcrumb($breadcrumb);
 
         $this->breadcrumb = array_merge($this->breadcrumb, $breadcrumb);
+
+        return $this;
+    }
+
+    /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function perfectScrollbar(bool $value = true)
+    {
+        $this->usingPerfectScrollbar = $value;
 
         return $this;
     }
@@ -388,6 +405,37 @@ class Content implements Renderable
     }
 
     /**
+     * 页面滚动条优化.
+     */
+    protected function makePerfectScrollbar()
+    {
+        if (! $this->usingPerfectScrollbar) {
+            return;
+        }
+
+        Admin::script(
+            <<<'JS'
+(function () {
+    if ($(window).width() > 768) {
+        var ps, wps;
+        if ($('.full-page .wrapper').length) {
+            wps = new PerfectScrollbar('.full-page .wrapper');
+        }
+        ps = new PerfectScrollbar('html');
+        $(document).one('pjax:send',function () {
+            ps && ps.destroy();
+            ps = null; 
+              
+            wps && wps.destroy();
+            wps = null; 
+        });
+    }
+})()
+JS
+        );
+    }
+
+    /**
      * @return array
      */
     protected function variables()
@@ -409,17 +457,13 @@ class Content implements Renderable
     {
         // default data array
         $defaultData = [
-            'main_layout_type' => 'vertical',
-            'theme' => 'light',
+            'theme' => '',
             'sidebar_collapsed' => false,
+            'sidebar_dark' => false,
             'navbar_color' => '',
-            'horizontal_menu_type' => 'floating',
-            'vertical_menu_navbar_type' => 'floating',
-            'footer_type' => 'static', //footer
+            'navbar_class' => 'sticky',
+            'footer_type' => '',
             'body_class' => '',
-            'content_layout' => 'default',
-            'blank_page' => false,
-            'direction' => env('MIX_CONTENT_DIRECTION', 'ltr'),
         ];
 
         $data = array_merge(
@@ -427,27 +471,17 @@ class Content implements Renderable
             $this->config
         );
 
-        // All options available in the template
         $allOptions = [
-            'main_layout_type' => ['vertical', 'horizontal'],
-            'theme' => ['light' => 'light', 'dark' => 'dark-layout', 'semi-dark' => 'semi-dark-layout'],
+            'theme' => '',
+            'footer_type' => '',
+            'body_class' => '',
+            'sidebar_dark' => '',
             'sidebar_collapsed' => [true, false],
             'navbar_color' => ['bg-primary', 'bg-info', 'bg-warning', 'bg-success', 'bg-danger', 'bg-dark'],
-            'content_layout' => ['default', 'content-left-sidebar', 'content-right-sidebar', 'content-detached-left-sidebar', 'content-detached-right-sidebar'],
-            'sidebar_position_class' => ['content-left-sidebar' => 'sidebar-left', 'content-right-sidebar' => 'sidebar-right', 'content-detached-left-sidebar' => 'sidebar-detached sidebar-left', 'content-detached-right-sidebar' => 'sidebar-detached sidebar-right', 'default' => 'default-sidebar-position'],
-            'content_sidebar_class' => ['content-left-sidebar' => 'content-right', 'content-right-sidebar' => 'content-left', 'content-detached-left-sidebar' => 'content-detached content-right', 'content-detached-right-sidebar' => 'content-detached content-left', 'default' => 'default-sidebar'],
-            'direction' => ['ltr', 'rtl'],
-            'horizontal_menu_type' => ['floating' => 'navbar-floating', 'static' => 'navbar-static', 'sticky' => 'navbar-sticky'],
-            'horizontal_menu_class' => ['static' => 'menu-static', 'sticky' => 'fixed-top', 'floating' => 'floating-nav'],
-            'vertical_menu_navbar_type' => ['floating' => 'navbar-floating', 'static' => 'navbar-static', 'sticky' => 'navbar-sticky', 'hidden' => 'navbar-hidden'],
-            'navbar_class' => ['floating' => 'floating-nav', 'static' => 'static-top', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
-            'footer_type' => ['static' => 'footer-static', 'sticky' => 'fixed-footer', 'hidden' => 'footer-hidden'],
+            'navbar_class' => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
         ];
 
         $maps = [
-            'content_layout' => 'sidebar_position_class',
-            'horizontal_menu_type' => 'horizontal_menu_type',
-            'vertical_menu_navbar_type' => 'vertical_menu_navbar_type',
             'footer_type' => 'footer_type',
         ];
 
@@ -470,26 +504,14 @@ class Content implements Renderable
             }
         }
 
-        // layout classes
         return [
             'theme' => $data['theme'],
-            'layout_theme' => $allOptions['theme'][$data['theme']] ?? $data['theme'],
             'sidebar_collapsed' => $data['sidebar_collapsed'],
-            'vertical_menu_navbar_type' => $allOptions['vertical_menu_navbar_type'][$data['vertical_menu_navbar_type']],
-            'navbar_class' => $allOptions['navbar_class'][$data['vertical_menu_navbar_type']],
             'navbar_color' => $data['navbar_color'],
-            'horizontal_menu_type' => $allOptions['horizontal_menu_type'][$data['horizontal_menu_type']],
-            'horizontal_menu_class' => $allOptions['horizontal_menu_class'][$data['horizontal_menu_type']],
-            'footer_type' => $allOptions['footer_type'][$data['footer_type']],
-            'sidebar_class' => $data['sidebar_collapsed'] ? 'menu-collapsed' : 'menu-expanded',
+            'navbar_class' => $allOptions['navbar_class'][$data['navbar_class']],
+            'sidebar_class' => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
             'body_class' => $data['body_class'],
-            'blank_page' => $data['blank_page'],
-            'blank_page_class' => $data['blank_page'] ? 'blank-page' : '',
-            'content_layout' => $data['content_layout'],
-            'sidebar_position_class' => $allOptions['sidebar_position_class'][$data['content_layout']],
-            'content_sidebar_class' => $allOptions['content_sidebar_class'][$data['content_layout']],
-            'main_layout_type' => $data['main_layout_type'],
-            'direction' => $data['direction'],
+            'sidebar_dark' => $data['sidebar_dark'],
         ];
     }
 
@@ -506,6 +528,8 @@ class Content implements Renderable
         $variables = $this->variables();
 
         $this->callComposed();
+
+        $this->makePerfectScrollbar();
 
         return view($this->view, $variables)->render();
     }

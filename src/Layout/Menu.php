@@ -4,6 +4,7 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
+use Lang;
 
 class Menu
 {
@@ -180,6 +181,22 @@ class Menu
         }
 
         return false;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return string
+     */
+    public function translate($text)
+    {
+        $titleTranslation = 'admin.menu_titles.'.trim(str_replace(' ', '_', strtolower($text)));
+
+        if (Lang::has($titleTranslation)) {
+            return __($titleTranslation);
+        }
+
+        return $text;
     }
 
     /**

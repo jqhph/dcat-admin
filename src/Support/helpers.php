@@ -300,9 +300,9 @@ if (! function_exists('admin_toastr')) {
      *
      * @param string $message
      * @param string $type
-     * @param string $offset
+     * @param array $options
      */
-    function admin_toastr($message = '', $type = 'success', $offset = '')
+    function admin_toastr($message = '', $type = 'success', $options = [])
     {
         $toastr = new MessageBag(get_defined_vars());
 

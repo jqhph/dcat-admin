@@ -187,13 +187,13 @@ EOF;
             <<<JS
 $('.{$this->getSelectorPrefix()}-open-tree').off('click').on('click', function () {
     var tpl = '<div class="jstree-wrapper p-1" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>', 
-        opts = $opts,
         url = '{$this->url}',
         t = $(this),
         val = t.data('val'),
         ckall = t.data('checked'),
         idx,
-        requesting;
+        requesting,
+        opts = $opts;
 
     val = val ? String(val).split(',') : [];
         
@@ -202,7 +202,7 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').on('click', function (
         requesting = 1;
         
         t.buttonLoading();
-        $.getJSON(url, {_token: Dcat.token, value: val}, function (resp) {
+        $.ajax(url, {data: {value: val}}).then(function (resp) {
              requesting = 0;
              t.buttonLoading(false);
              
@@ -221,7 +221,7 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').on('click', function (
     
         idx = layer.open({
             type: 1,
-            area: $area,
+            area: {$area},
             content: tpl,
             title: '{$title}',
             success: function (a, idx) {

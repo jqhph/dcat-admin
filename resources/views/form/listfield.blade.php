@@ -40,7 +40,7 @@
                     </td>
 
                     <td style="width: 75px;">
-                        <div class="{{$column}}-remove btn btn-warning btn-sm pull-right">
+                        <div class="{{$column}}-remove btn btn-white btn-sm pull-right">
                             <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
                         </div>
                     </td>
@@ -73,7 +73,7 @@
         </td>
 
         <td style="width: 75px;">
-            <div class="{{$column}}-remove btn btn-warning btn-sm pull-right">
+            <div class="{{$column}}-remove btn btn-white btn-sm pull-right">
                 <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
             </div>
         </td>

@@ -59,16 +59,6 @@ trait ModelTree
     }
 
     /**
-     * Set parent column.
-     *
-     * @param string $column
-     */
-    public function setParentColumn(string $column)
-    {
-        $this->parentColumn = $column;
-    }
-
-    /**
      * Get title column.
      *
      * @return string
@@ -79,16 +69,6 @@ trait ModelTree
     }
 
     /**
-     * Set title column.
-     *
-     * @param string $column
-     */
-    public function setTitleColumn(string $column)
-    {
-        $this->titleColumn = $column;
-    }
-
-    /**
      * Get order column name.
      *
      * @return string
@@ -96,16 +76,6 @@ trait ModelTree
     public function getOrderColumn()
     {
         return empty($this->orderColumn) ? 'order' : $this->orderColumn;
-    }
-
-    /**
-     * Set order column.
-     *
-     * @param string $column
-     */
-    public function setOrderColumn(string $column)
-    {
-        $this->orderColumn = $column;
     }
 
     /**

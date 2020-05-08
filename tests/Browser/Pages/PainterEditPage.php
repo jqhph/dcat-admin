@@ -39,6 +39,7 @@ class PainterEditPage extends PainterCreatePage
         $browser->with('@form', function (Browser $browser) {
             $browser->assertInputValue('username', $this->painter->username);
             $browser->assertInputValue('bio', $this->painter->bio);
+            $browser->scrollToBottom();
 
             $browser->within(new HasMany('paintings'), function (Browser $browser) {
                 $this->painter->paintings->each(function (Painting $painting, $key) use ($browser) {

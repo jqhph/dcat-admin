@@ -11,7 +11,7 @@
             @endif
 
             @if($useDelete)
-            <a href="javascript:void(0);" data-url="{{ $path }}/{{ $branch[$keyName] }}" data-action="delete"><i class="feather icon-trash"></i></a>
+            <a href="javascript:void(0);" data-message="ID - {{ $branch[$keyName] }}" data-url="{{ $path }}/{{ $branch[$keyName] }}" data-action="delete"><i class="feather icon-trash"></i></a>
             @endif
         </span>
     </div>

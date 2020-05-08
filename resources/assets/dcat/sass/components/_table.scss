@@ -3,6 +3,12 @@
   margin-bottom: 0;
 }
 
+.table-middle {
+  td {
+    vertical-align: middle;
+  }
+}
+
 table.dataTable thead tr {
   background: transparent;
 }
@@ -14,19 +20,7 @@ table.dataTable thead tr {
 }
 
 table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
-  font-size: .95rem!important;
-}
-
-// data-list-view 表格
-table.data-list-view.dataTable tbody tr, table.data-thumb-view.dataTable tbody tr {
-  box-shadow: $shadow;
-}
-table.data-list-view.dataTable thead th:first-child, table.data-thumb-view.dataTable thead th:first-child {
-  padding-left: 1rem;
-}
-
-table.data-list-view.dataTable thead th, table.data-thumb-view.dataTable thead th {
-  padding: 0.714rem .51rem;
+  font-size: .9rem!important;
 }
 
 table.dataTable:not(.table-bordered) thead tr th {
@@ -37,24 +31,9 @@ table.dataTable {
   border: 0;
 }
 
-table.data-list-view.dataTable, table.data-thumb-view.dataTable {
-  border-spacing: 0 .9rem;
-  padding: 0;
-}
-table.data-list-view.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover, .table-hover tbody tr:hover {
-  transform: none;
-  background: lighten($dark30, 1%);
-}
-
 .table td {
   padding: .55rem;
   height: 62px;
-  line-height: 1.42857;
-}
-
-table.data-list-view.dataTable tbody td, table.data-thumb-view.dataTable tbody td {
-  height: 46px;
-  padding: .55rem;
   line-height: 1.42857;
 }
 
@@ -62,22 +41,9 @@ table.data-list-view.dataTable tbody td, table.data-thumb-view.dataTable tbody t
   padding-left: 1.4rem;
 }
 
-// 快捷搜索
-.data-list-view-header .table-responsive .top .dataTables_filter .form-control, .data-thumb-view-header .table-responsive .top .dataTables_filter .form-control {
-  padding: 1.23rem 2.8rem !important;
-  border-radius: 1.4rem;
-  border: 0;
-  box-shadow: $shadow;
-}
 
-.card-header.data-list-view-header .table-responsive .top .dataTables_filter .form-control {
+.card-header.custom-data-table-header .table-responsive .top .dataTables_filter .form-control {
   box-shadow: $shadow-100;
-}
-
-.data-list-view-header .table-responsive .top .dataTables_filter label:after, .data-thumb-view-header .table-responsive .top .dataTables_filter label:after {
-  top: 0.58rem;
-  font-size: 1rem;
-  left: 1.2rem;
 }
 
 .quick-search-clear {
@@ -91,7 +57,7 @@ table.data-list-view.dataTable tbody td, table.data-thumb-view.dataTable tbody t
   border: 0!important;
   margin-bottom: 0!important;
 }
-.data-list-view-header .table-responsive {
+.custom-data-table-header .table-responsive {
   overflow: visible!important;
   padding-bottom: 0!important;
 }
@@ -113,11 +79,11 @@ table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable th:
 }
 
 table.dataTable.complex-headers {
-  border-color: #eee;
+  border: 1px solid $table-border-color;
 }
 table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead td, table.dataTable.complex-headers tfoot th, table.dataTable.complex-headers tfoot td {
-  border-bottom: 1px solid #eee;
-  border-right: 1px solid #eee;
+  border-bottom: 1px solid $table-border-color;
+  border-right: 1px solid $table-border-color;
 }
 
 .dataTable.table-bordered:not(.complex-headers) thead th {
@@ -146,8 +112,8 @@ table.table-bordered.dataTable.complex-headers {
     border-radius: 0;
 
     td {
-      border-bottom: 1px solid #f1f1f1;
-      border-right: 1px solid #f1f1f1;
+      border-bottom: 1px solid lighten($table-border-color, 4%);
+      border-right: 1px solid lighten($table-border-color, 4%);
     }
 
     td:first-child {
@@ -165,4 +131,9 @@ table.table-bordered.dataTable.complex-headers {
   tbody tr:last-child td {
     border-bottom: 0;
   }
+}
+
+.table-hover tbody tr:hover {
+  color: $font-color;
+  background-color: lighten($dark30, 1%);
 }

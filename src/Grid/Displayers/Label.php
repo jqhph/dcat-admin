@@ -8,7 +8,6 @@ use Dcat\Admin\Support\Helper;
 class Label extends AbstractDisplayer
 {
     protected $baseClass = 'label';
-    protected $stylePrefix = 'bg';
 
     public function display($style = 'primary', $max = null)
     {
@@ -19,30 +18,28 @@ class Label extends AbstractDisplayer
         $original = $this->column->getOriginal();
         $defaultStyle = is_array($style) ? ($style['default'] ?? 'default') : 'default';
 
-        [$class, $background] = $this->formatStyle(
+        $background = $this->formatStyle(
             is_array($style) ?
                 (is_scalar($original) ? ($style[$original] ?? $defaultStyle) : current($style))
                 : $style
         );
 
-        return collect($value)->map(function ($name) use ($class, $background) {
-            return "<span class='{$this->baseClass} {$this->stylePrefix}-{$class}' {$background}>$name</span>";
+        return collect($value)->map(function ($name) use ($background) {
+            return "<span class='{$this->baseClass}' {$background}>$name</span>";
         })->implode('&nbsp;');
     }
 
     protected function formatStyle($style)
     {
-        $class = 'default';
-        $background = '';
+        $background = '#d2d6de';
 
         if ($style !== 'default') {
-            $class = '';
-
             $style = Admin::color()->get($style);
+
             $background = "style='background:{$style}'";
         }
 
-        return [$class, $background];
+        return $background;
     }
 
     protected function value($max)

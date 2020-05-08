@@ -279,7 +279,7 @@ EOF;
     protected function renderDelete()
     {
         return <<<EOT
-<a href="javascript:void(0);" data-url="{$this->resource()}/{$this->getKey()}" data-action="delete">
+<a href="javascript:void(0);" data-message="ID - {$this->getKey()}" data-url="{$this->resource()}/{$this->getKey()}" data-action="delete">
     <i class="feather icon-trash grid-action-icon"></i>
 </a>&nbsp;
 EOT;

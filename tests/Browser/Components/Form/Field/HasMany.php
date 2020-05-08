@@ -72,6 +72,8 @@ JS
         // 获取最后一个添加的表单组
         $index = $this->getLastFormGroupIndex($browser);
 
+        $browser->scrollToBottom();
+
         // 验证表单组是否存在
         $this->withFormGroup($browser, $index);
 

@@ -2,6 +2,9 @@
 
 namespace Dcat\Admin\Layout;
 
+use Dcat\Admin\Admin;
+use Dcat\Admin\Color;
+
 class Asset
 {
     /**
@@ -23,6 +26,14 @@ class Asset
      * @var array
      */
     protected $alias = [
+        '@adminlte' => [
+            'js' => [
+                '@admin/adminlte/adminlte.js',
+            ],
+            'css' => [
+                '@admin/adminlte/adminlte.css',
+            ],
+        ],
         '@nunito' => [
             'css' => ['https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i'],
         ],
@@ -37,35 +48,8 @@ class Asset
             'js'  => '@admin/vendors/js/vendors.min.js',
             'css' => '@admin/vendors/css/vendors.min.css',
         ],
-        '@bootstrap' => [
-            'css' => '@admin/css/bootstrap.css',
-        ],
-        '@bootstrap-extended' => [
-            'css' => '@admin/css/bootstrap-extended.css',
-        ],
-        '@default-colors' => [
-            'css' => '@admin/css/colors.css',
-        ],
-        '@menu' => [
-            'js' => '@admin/js/core/app-menu.js',
-        ],
-        '@app' => [
-            'js' => '@admin/js/core/app.js',
-        ],
-        '@components' => [
-            'css' => '@admin/css/components.css',
-        ],
-        '@palette-gradient' => [
-            'css' => '@admin/css/core/colors/palette-gradient.css',
-        ],
         '@datatables' => [
             'css' => '@admin/vendors/css/tables/datatable/datatables.min.css',
-        ],
-        '@data-list-view' => [
-            'css' => '@admin/css/pages/data-list-view.css',
-        ],
-        '@custom' => [
-            'css' => '@admin/css/custom-laravel.css',
         ],
         '@grid-extension' => [
             'js' => '@admin/dcat/extra/grid-extend.js',
@@ -75,6 +59,9 @@ class Asset
         ],
         '@layer' => [
             'js' => '@admin/dcat/plugins/layer/layer.js',
+        ],
+        '@tinymce' => [
+            'js' => '@admin/dcat/plugins/tinymce/tinymce.min.js',
         ],
         '@pjax' => [
             'js' => '@admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
@@ -100,7 +87,7 @@ class Asset
         ],
         '@moment' => [
             'js' => [
-                '@admin/dcat/plugins/moment/moment.min.js',
+                '@admin/dcat/plugins/moment/moment-with-locales.min.js',
             ],
         ],
         '@moment-timezone' => [
@@ -225,18 +212,11 @@ class Asset
      * @var array
      */
     public $baseCss = [
-        'vendors'            => '@vendors',
-        'bootstrap'          => '@bootstrap',
-        'bootstrap-extended' => '@bootstrap-extended',
-        'toastr'             => '@toastr',
-        'components'         => '@components',
-        'palette-gradient'   => '@palette-gradient',
-        'colors'             => '@default-colors',
-        //'custom'             => 'custom',
-
-        'datatables'     => '@datatables',
-        'data-list-view' => '@data-list-view',
-        'dcat'           => '@dcat',
+        'adminlte'    => '@adminlte',
+        'vendors'     => '@vendors',
+        'toastr'      => '@toastr',
+        'datatables'  => '@datatables',
+        'dcat'        => '@dcat',
     ];
 
     /**
@@ -245,8 +225,7 @@ class Asset
      * @var array
      */
     public $baseJs = [
-        'menu'      => '@menu',
-        'app'       => '@app',
+        'adminlte'  => '@adminlte',
         'toastr'    => '@toastr',
         'pjax'      => '@pjax',
         'validator' => '@validator',
@@ -267,11 +246,6 @@ class Asset
     protected $isPjax = false;
 
     /**
-     * @var bool
-     */
-    protected $usingFullPage = false;
-
-    /**
      * @var array
      */
     protected $themeCssMap = [
@@ -285,6 +259,37 @@ class Asset
     public function __construct()
     {
         $this->isPjax = request()->pjax();
+
+        $this->initTheme();
+    }
+
+    /**
+     * 初始化主题样式.
+     */
+    protected function initTheme()
+    {
+        $color = Admin::color()->name();
+
+        if ($color === Color::DEFAULT_COLOR) {
+            return;
+        }
+
+        $alias = [
+            '@adminlte',
+            '@dcat',
+            '@webuploader',
+            '@smart-wizard',
+        ];
+
+        foreach ($alias as $n) {
+            $before = (array) $this->alias[$n]['css'];
+
+            $this->alias[$n]['css'] = [];
+
+            foreach ($before as $css) {
+                $this->alias[$n]['css'][] = str_replace('.css', "-{$color}.css", $css);
+            }
+        }
     }
 
     /**
@@ -318,20 +323,6 @@ class Asset
             'js'  => $js,
             'css' => $css,
         ];
-    }
-
-    /**
-     * 使用全页面(无菜单和导航栏).
-     *
-     * @param bool $value
-     *
-     * @return $this
-     */
-    public function full(bool $value = true)
-    {
-        $this->usingFullPage = $value;
-
-        return $this;
     }
 
     /**
@@ -532,40 +523,6 @@ class Asset
     }
 
     /**
-     * 增加布局css文件.
-     */
-    protected function addLayoutCss()
-    {
-        if ($this->usingFullPage) {
-            return;
-        }
-
-        if (config('admin.layout.main_layout_type') === 'horizontal') {
-            $this->baseCss[] = '@admin/css/core/menu/menu-types/horizontal-menu.css';
-        }
-
-        $this->baseCss[] = '@admin/css/core/menu/menu-types/vertical-menu.css';
-    }
-
-    /**
-     * 主题css文件.
-     */
-    protected function addThemeCss()
-    {
-        if (! $theme = config('admin.layout.theme')) {
-            return;
-        }
-
-        $css = $this->themeCssMap[$theme] ?? $theme;
-
-        if ($css === 'light') {
-            return;
-        }
-
-        $this->baseCss[] = "@admin/css/themes/{$css}.css";
-    }
-
-    /**
      * 字体css脚本路径.
      */
     protected function addFontCss()
@@ -587,8 +544,6 @@ class Asset
             return;
         }
 
-        $this->addLayoutCss();
-        $this->addThemeCss();
         $this->addFontCss();
 
         $this->css = array_merge($this->baseCss, $this->css);
@@ -623,10 +578,6 @@ class Asset
     {
         if ($this->isPjax) {
             return;
-        }
-
-        if ($this->usingFullPage) {
-            unset($this->baseJs['menu']);
         }
 
         $this->js = array_merge($this->baseJs, $this->js);

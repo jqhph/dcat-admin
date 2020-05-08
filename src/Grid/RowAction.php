@@ -81,4 +81,23 @@ abstract class RowAction extends GridAction
 
         return $this;
     }
+
+    /**
+     * @param string $prefix
+     * @param string $class
+     *
+     * @return string
+     */
+    public function makeSelector($prefix, $class = null)
+    {
+        $class = $class ?: static::class;
+
+        $key = $class.'-'.$this->getKey();
+
+        if (! isset(static::$selectors[$key])) {
+            static::$selectors[$key] = uniqid($prefix);
+        }
+
+        return static::$selectors[$key];
+    }
 }

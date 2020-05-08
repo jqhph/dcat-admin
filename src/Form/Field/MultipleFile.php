@@ -9,6 +9,20 @@ class MultipleFile extends File
     protected $view = 'admin::form.file';
 
     /**
+     * Allow to sort files.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function sortable(bool $value = true)
+    {
+        $this->options['sortable'] = $value;
+
+        return $this;
+    }
+
+    /**
      * Set a limit of files.
      *
      * @param int $limit

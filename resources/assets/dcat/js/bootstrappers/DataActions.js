@@ -12,9 +12,10 @@ let defaultActions = {
 
         return function() {
             let url = $(this).data('url'),
-                redirect = $(this).data('redirect');
+                redirect = $(this).data('redirect'),
+                msg = $(this).data('message');
 
-            Dcat.confirm(lang.delete_confirm, url, function () {
+            Dcat.confirm(lang.delete_confirm, msg, function () {
                 Dcat.NP.start();
                 $.ajax({
                     method: 'post',
@@ -27,9 +28,9 @@ let defaultActions = {
                         Dcat.NP.done();
                         if (data.status) {
                             Dcat.reload(redirect);
-                            Dcat.swal.success(data.message, url);
+                            Dcat.swal.success(data.message, msg);
                         } else {
-                            Dcat.swal.error(data.message, url);
+                            Dcat.swal.error(data.message, msg);
                         }
                     }
                 });

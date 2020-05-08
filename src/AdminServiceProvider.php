@@ -7,6 +7,7 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
+use Dcat\Admin\Support\WebUploader;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Fluent;
@@ -31,6 +32,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\FormCommand::class,
         Console\ActionCommand::class,
         Console\MenuCacheCommand::class,
+        Console\MinifyCommand::class,
     ];
 
     /**
@@ -52,6 +54,7 @@ class AdminServiceProvider extends ServiceProvider
         'admin.permission' => Middleware\Permission::class,
         'admin.bootstrap'  => Middleware\Bootstrap::class,
         'admin.session'    => Middleware\Session::class,
+        'admin.upload'     => Middleware\WebUploader::class,
     ];
 
     /**
@@ -65,6 +68,7 @@ class AdminServiceProvider extends ServiceProvider
             'admin.bootstrap',
             'admin.permission',
             'admin.session',
+            'admin.upload',
         ],
     ];
 
@@ -213,6 +217,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.menu', Menu::class);
         $this->app->singleton('admin.context', Fluent::class);
+        $this->app->singleton('admin.web-uploader', WebUploader::class);
     }
 
     /**

@@ -67,6 +67,10 @@ class ScaffoldController extends Controller
             Permission::error();
         }
 
+        if ($tableName = request('singular')) {
+            return $this->singular($tableName);
+        }
+
         Admin::collectAssets('select2');
 
         $dbTypes = static::$dbTypes;
@@ -77,9 +81,20 @@ class ScaffoldController extends Controller
         })->toArray();
 
         return $content
-            ->title(ucfirst(trans('admin.scaffold.header')))
+            ->title(trans('admin.scaffold.header'))
             ->description(' ')
-            ->body(view('admin::helpers.scaffold', compact('dbTypes', 'action', 'tables', 'dataTypeMap')));
+            ->body(view(
+                'admin::helpers.scaffold',
+                compact('dbTypes', 'action', 'tables', 'dataTypeMap')
+            ));
+    }
+
+    protected function singular($tableName)
+    {
+        return [
+            'status' => 1,
+            'value'  => Str::singular($tableName),
+        ];
     }
 
     public function store(Request $request)
@@ -94,7 +109,6 @@ class ScaffoldController extends Controller
         $creates = (array) $request->get('create');
 
         try {
-
             // 1. Create model.
             if (in_array('model', $creates)) {
                 $modelCreator = new ModelCreator($request->get('table_name'), $request->get('model_name'));
@@ -206,7 +220,9 @@ class ScaffoldController extends Controller
                 $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_schema = "%s"', $value['database']);
 
                 if ($tb) {
-                    $sql .= " AND TABLE_NAME = '{$tb}'";
+                    $p = Arr::get($value, 'prefix');
+
+                    $sql .= " AND TABLE_NAME = '{$p}{$tb}'";
                 }
 
                 $tmp = DB::connection($connectName)->select($sql);

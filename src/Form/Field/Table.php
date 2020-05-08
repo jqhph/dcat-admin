@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Support\Helper;
 
 class Table extends HasMany
 {
@@ -69,13 +70,22 @@ class Table extends HasMany
 
         return array_values(
             collect($prepare)->reject(function ($item) {
-                return $item[NestedForm::REMOVE_FLAG_NAME] == 1;
+                return ($item[NestedForm::REMOVE_FLAG_NAME] ?? null) == 1;
             })->map(function ($item) {
                 unset($item[NestedForm::REMOVE_FLAG_NAME]);
 
                 return $item;
             })->toArray()
         );
+    }
+
+    public function value($value = null)
+    {
+        if ($value === null) {
+            return Helper::array(parent::value($value));
+        }
+
+        return parent::value($value);
     }
 
     protected function getKeyName()
@@ -111,6 +121,9 @@ class Table extends HasMany
             <<<'CSS'
 .table-has-many .fields-group .form-group {
     margin-bottom:0;
+}
+.table-has-many .fields-group .form-group .remove {
+    margin-top: 10px;
 }
 CSS
         );

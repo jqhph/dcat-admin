@@ -13,11 +13,16 @@
   margin-bottom: 4px;
 }
 
-.label.bg-default {
-  color: $font-color;
-  font-weight: 700;
-}
-
 .badge {
   margin-bottom: 4px;
+  min-width: 10px;
+  padding: 5px 8px;
+  font-size: 87%;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 10px;
+}
+.bg-default.badge, .label.bg-default {
+  color: $font-color;
+  font-weight: 700;
 }

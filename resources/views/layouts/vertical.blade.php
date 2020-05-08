@@ -1,6 +1,6 @@
 <body
-        class="dcat-admin-body vertical-layout vertical-menu-modern 2-columns {{ $configData['blank_page_class'] }} {{ $configData['body_class']}} {{($configData['theme'] === 'light') ? '' : $configData['layout_theme'] }}  {{ $configData['vertical_menu_navbar_type'] }} {{ $configData['sidebar_class'] }} {{ $configData['footer_type'] }}"
-        data-menu="vertical-menu-modern" data-col="2-columns" data-layout="{{ $configData['theme'] }}">
+    class="dcat-admin-body sidebar-mini layout-fixed {{ $configData['body_class']}} {{ $configData['sidebar_class'] }}
+    {{ $configData['navbar_class'] === 'fixed-top' ? 'navbar-fixed-top' : '' }} " >
 
     <script>
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
@@ -8,45 +8,20 @@
 
     {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
-    @include('admin::partials.sidebar')
-
-    <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
+    <div class="wrapper">
+        @include('admin::partials.sidebar')
 
         @include('admin::partials.navbar')
 
-        @if(($configData['content_layout']!=='default') && isset($configData['content_layout']))
-            <div class="content-area-wrapper">
-                <div class="{{ $configData['sidebar_position_class'] }}">
-                    <div class="sidebar">
-                        @yield('content-sidebar')
-                    </div>
-                </div>
-                <div class="{{ $configData['content_sidebar_class'] }}">
-                    <div class="content-wrapper" id="{{ $pjaxContainerId }}">
-                        @yield('app')
-                    </div>
-                </div>
-            </div>
-        @else
-            <div class="content-wrapper" id="{{ $pjaxContainerId }}">
+        <div class="app-content content">
+            <div class="content-wrapper" id="{{ $pjaxContainerId }}" style="top: 0;min-height: 900px;">
                 @yield('app')
             </div>
-        @endif
+        </div>
     </div>
 
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
-
-    @if($configData['main_layout_type'] == 'horizontal' && isset($configData['main_layout_type']))
-    <footer
-            class="footer {{ $configData['footer_type'] }} {{($configData['footer_type'] === 'footer-hidden') ? 'd-none':''}} footer-light navbar-shadow">
-    @else
-    <footer
-            class="footer {{ $configData['footer_type'] }} {{($configData['footer_type']=== 'footer-hidden') ? 'd-none':''}} footer-light">
-    @endif
-        <p class="clearfix blue-grey lighten-2 mb-0">
+    <footer class="main-footer pt-1">
+        <p class="clearfix blue-grey lighten-2 mb-0 text-center">
             <span class="text-center d-block d-md-inline-block mt-25">
                 Powered by
                 <a target="_blank" href="https://github.com/jqhph/dcat-admin">Dcat Admin</a>
@@ -54,7 +29,7 @@
                 v{{ Dcat\Admin\Admin::VERSION }}
             </span>
 
-            <button class="btn btn-primary btn-icon scroll-top" type="button" style="bottom: 2%">
+            <button class="btn btn-primary btn-icon scroll-top pull-right" style="bottom: 2%;display: none">
                 <i class="feather icon-arrow-up"></i>
             </button>
         </p>

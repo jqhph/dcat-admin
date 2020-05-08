@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-const exec = require('child_process').exec;
 require('dotenv').config();
 
 /*
@@ -12,12 +11,11 @@ require('dotenv').config();
  | file for the application as well as bundling up all the JS files.
  |
  */
-
 const glob = require('glob')
-const path = require('path')
+
+let theme = null;
 
 let distPath = mix.inProduction() ? 'resources/dist' : 'resources/pre-dist';
-
 
 function mixAssetsDir(query, cb) {
   (glob.sync('resources/assets/' + query) || []).forEach(f => {
@@ -26,23 +24,12 @@ function mixAssetsDir(query, cb) {
   });
 }
 
-const sassOptions = {
-  precision: 5
-};
+function themeCss(path) {
+  let sf = theme ? '-'+theme : '';
 
+  return `${distPath}/${path}${sf}.css`
+}
 
-/*
- |--------------------------------------------------------------------------
- | Application assets
- |--------------------------------------------------------------------------
- */
-
-mix.copyDirectory('resources/assets/images', distPath + '/images');
-mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
-
-
-
-// ------------------------------------ Dcat Admin -------------------------------------------
 function dcatPath(path) {
   return 'resources/assets/dcat/' + path;
 }
@@ -51,15 +38,34 @@ function dcatDistPath(path) {
   return distPath + '/dcat/' + path;
 }
 
+
+/*
+ |--------------------------------------------------------------------------
+ | Dcat Admin assets
+ |--------------------------------------------------------------------------
+ */
+
+mix.copyDirectory('resources/assets/images', distPath + '/images');
+mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
+mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
+
+// AdminLTE3.0
+mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', themeCss('adminlte/adminlte')).sourceMaps();
+mix.js('resources/assets/adminlte/js/AdminLTE.js', distPath + '/adminlte/adminlte.js').sourceMaps();
+
 // 复制第三方插件文件夹
 mix.copyDirectory(dcatPath('plugins'), dcatDistPath('plugins'));
 // 打包app.js
-mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js'));
+mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js')).sourceMaps();
 // 打包app.scss
-mix.sass(dcatPath('sass/dcat-app.scss'), dcatDistPath('css/dcat-app.css'));
+mix.sass(dcatPath('sass/dcat-app.scss'), themeCss('dcat/css/dcat-app')).sourceMaps();
 
 // 打包所有 extra 里面的所有js和css
 mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.js(src, dest));
-mixAssetsDir('dcat/extra/*.scss', (src, dest) => mix.sass(src, dest.replace('scss', 'css')));
+mixAssetsDir('dcat/extra/*.scss', (src, dest) => {
+  if (theme) {
+    return mix.sass(src, dest.replace('\.scss', '-'+theme+'.css'))
+  }
 
-
+  return mix.sass(src, dest.replace('scss', 'css'))
+});

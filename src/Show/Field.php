@@ -158,7 +158,7 @@ class Field implements Renderable
      */
     protected function formatLabel($label)
     {
-        $label = $label ?: ucfirst(admin_trans_field($this->name));
+        $label = $label ?: admin_trans_field($this->name);
 
         return str_replace(['.', '_'], ' ', $label);
     }
@@ -222,21 +222,23 @@ class Field implements Renderable
                 return '';
             }
 
-            if (url()->isValidUrl($path)) {
-                $src = $path;
-            } elseif ($server) {
-                $src = $server.$path;
-            } else {
-                $disk = config('admin.upload.disk');
-
-                if (config("filesystems.disks.{$disk}")) {
-                    $src = Storage::disk($disk)->url($path);
+            return collect((array) $path)->transform(function ($path) use ($server, $width, $height) {
+                if (url()->isValidUrl($path)) {
+                    $src = $path;
+                } elseif ($server) {
+                    $src = $server.$path;
                 } else {
-                    return '';
-                }
-            }
+                    $disk = config('admin.upload.disk');
 
-            return "<img data-action='preview-img' src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
+                    if (config("filesystems.disks.{$disk}")) {
+                        $src = Storage::disk($disk)->url($path);
+                    } else {
+                        return '';
+                    }
+                }
+
+                return "<img data-action='preview-img' src='$src' style='max-width:{$width}px;max-height:{$height}px' class='img' />";
+            })->implode('&nbsp;');
         });
     }
 
@@ -334,6 +336,27 @@ HTML;
     }
 
     /**
+     * Add a `dot` before column text.
+     *
+     * @param array  $options
+     * @param string $default
+     *
+     * @return $this
+     */
+    public function dot($options = [], $default = 'default')
+    {
+        return $this->unescape()->prepend(function ($_, $original) use ($options, $default) {
+            $style = is_null($original) ? $default : Arr::get((array) $options, $original, $default);
+
+            $style = $style === 'default' ? 'dark70' : $style;
+
+            $background = Admin::color()->get($style);
+
+            return "<i class='fa fa-circle' style='font-size: 13px;color: {$background}'></i>&nbsp;&nbsp;";
+        });
+    }
+
+    /**
      * Show field as badges.
      *
      * @param string $style
@@ -349,35 +372,6 @@ HTML;
 
             return collect($value)->map(function ($name) use ($class, $background) {
                 return "<span class='badge bg-{$class}' $background>$name</span>";
-            })->implode('&nbsp;');
-        });
-    }
-
-    /**
-     * @param string $style
-     *
-     * @return $this
-     */
-    public function chip($style = 'primary')
-    {
-        return $this->unescape()->as(function ($value) use ($style) {
-            $background = '';
-            $textColor = '';
-
-            if ($style !== 'default') {
-                $style = Admin::color()->get($style);
-                $background = "style='background:{$style}'";
-                $textColor = 'text-white';
-            }
-
-            return collect($value)->map(function ($name) use ($background, $textColor) {
-                return <<<HTML
-<div class="chip" {$background}>
-  <div class="chip-body">
-    <div class="chip-text {$textColor}">{$name}</div>
-  </div>
-</div>
-HTML;
             })->implode('&nbsp;');
         });
     }
@@ -427,7 +421,13 @@ HTML;
      */
     public function prepend($val)
     {
-        return $this->as(function ($v) use (&$val) {
+        $name = $this->name;
+
+        return $this->as(function ($v) use (&$val, $name) {
+            if ($val instanceof \Closure) {
+                $val = $val->call($this, $v, $this->$name);
+            }
+
             if (is_array($v)) {
                 array_unshift($v, $val);
 
@@ -447,7 +447,13 @@ HTML;
      */
     public function append($val)
     {
-        return $this->as(function ($v) use (&$val) {
+        $name = $this->name;
+
+        return $this->as(function ($v) use (&$val, $name) {
+            if ($val instanceof \Closure) {
+                $val = $val->call($this, $v, $this->$name);
+            }
+
             if (is_array($v)) {
                 array_push($v, $val);
 
@@ -489,7 +495,7 @@ HTML;
     {
         $name = $this->name;
 
-        return $this->as(function ($value) use ($view, $name) {
+        return $this->unescape()->as(function ($value) use ($view, $name) {
             $model = $this;
 
             return view($view, compact('model', 'value', 'name'))->render();
@@ -527,7 +533,7 @@ HTML;
      */
     public function fill(Fluent $model)
     {
-        $this->value($model->get($this->name));
+        $this->value(Arr::get($model->toArray(), $this->name));
     }
 
     /**

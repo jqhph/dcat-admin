@@ -93,7 +93,7 @@ class Select extends Field
      *
      * @return $this
      */
-    public function load($field, $sourceUrl, $idField = 'id', $textField = 'text')
+    public function load($field, $sourceUrl, string $idField = 'id', string $textField = 'text')
     {
         if (Str::contains($field, '.')) {
             $field = $this->formatName($field);
@@ -102,11 +102,16 @@ class Select extends Field
             $class = $field;
         }
 
+        $sourceUrl = admin_url($sourceUrl);
+
         $script = <<<JS
 $(document).off('change', "{$this->getElementClassSelector()}");
 $(document).on('change', "{$this->getElementClassSelector()}", function () {
     var target = $(this).closest('.fields-group').find(".$class");
-    $.get("$sourceUrl?q="+this.value, function (data) {
+    if (this.value !== '0' && ! this.value) {
+        return;
+    }
+    $.ajax("$sourceUrl?q="+this.value).then(function (data) {
         target.find("option").remove();
         $(target).select2({
             data: $.map(data, function (d) {
@@ -117,6 +122,7 @@ $(document).on('change', "{$this->getElementClassSelector()}", function () {
         }).val(target.attr('data-value')).trigger('change');
     });
 });
+$("{$this->getElementClassSelector()}").trigger('change');
 JS;
 
         Admin::script($script);
@@ -134,41 +140,49 @@ JS;
      *
      * @return $this
      */
-    public function loads($fields = [], $sourceUrls = [], $idField = 'id', $textField = 'text')
+    public function loads($fields = [], $sourceUrls = [], string $idField = 'id', string $textField = 'text')
     {
-        $fieldsStr = implode('.', $fields);
-        $urlsStr = implode('^', $sourceUrls);
+        $fieldsStr = implode('.', (array) $fields);
+        $urlsStr = implode('^', array_map(function ($url) {
+            return admin_url($url);
+        }, (array) $sourceUrls));
+
         $script = <<<JS
-var fields = '$fieldsStr'.split('.');
-var urls = '$urlsStr'.split('^');
+(function () {
+    var fields = '$fieldsStr'.split('.');
+    var urls = '$urlsStr'.split('^');
+    
+    var refreshOptions = function(url, target) {
+        $.ajax(url).then(function(data) {
+            target.find("option").remove();
+            $(target).select2({
+                data: $.map(data, function (d) {
+                    d.id = d.$idField;
+                    d.text = d.$textField;
+                    return d;
+                })
+            }).trigger('change');
+        });
+    };
+    
+    $(document).off('change', "{$this->getElementClassSelector()}");
+    $(document).on('change', "{$this->getElementClassSelector()}", function () {
+        var _this = this;
+        var promises = [];
 
-var refreshOptions = function(url, target) {
-    $.get(url).then(function(data) {
-        target.find("option").remove();
-        $(target).select2({
-            data: $.map(data, function (d) {
-                d.id = d.$idField;
-                d.text = d.$textField;
-                return d;
-            })
-        }).trigger('change');
+        fields.forEach(function(field, index){
+            var target = $(_this).closest('.fields-group').find('.' + fields[index]);
+            
+            if (_this.value !== '0' && ! _this.value) {
+                return;
+            }
+            promises.push(refreshOptions(urls[index] + "?q="+ _this.value, target));
+        });
+    
+        $.when(promises).then(function() {});
     });
-};
-
-$(document).off('change', "{$this->getElementClassSelector()}");
-$(document).on('change', "{$this->getElementClassSelector()}", function () {
-    var _this = this;
-    var promises = [];
-
-    fields.forEach(function(field, index){
-        var target = $(_this).closest('.fields-group').find('.' + fields[index]);
-        promises.push(refreshOptions(urls[index] + "?q="+ _this.value, target));
-    });
-
-    $.when(promises).then(function() {
-        console.log('开始更新其它select的选择options');
-    });
-});
+    $("{$this->getElementClassSelector()}").trigger('change');
+})()
 JS;
 
         Admin::script($script);
@@ -185,7 +199,7 @@ JS;
      *
      * @return $this
      */
-    public function model($model, $idField = 'id', $textField = 'name')
+    public function model($model, string $idField = 'id', string $textField = 'name')
     {
         if (! class_exists($model)
             || ! in_array(Model::class, class_parents($model))
@@ -225,16 +239,16 @@ JS;
      *
      * @return $this
      */
-    protected function loadRemoteOptions($url, $parameters = [], $options = [])
+    protected function loadRemoteOptions(string $url, array $parameters = [], array $options = [])
     {
         $ajaxOptions = [
-            'url' => $url.'?'.http_build_query($parameters),
+            'url' => admin_url($url.'?'.http_build_query($parameters)),
         ];
         $configs = array_merge([
             'allowClear'  => true,
             'placeholder' => [
                 'id'   => '',
-                'text' => trans('admin.choose'),
+                'text' => $this->placeholder(),
             ],
         ], $this->config);
 
@@ -244,22 +258,23 @@ JS;
         $ajaxOptions = json_encode(array_merge($ajaxOptions, $options));
 
         $this->script = <<<JS
+$.ajax({$ajaxOptions}).done(function(data) {
 
-$.ajax($ajaxOptions).done(function(data) {
+  $("{$this->getElementClassSelector()}").each(function (_, select) {
+      select = $(select);
 
-  var select = $("{$this->getElementClassSelector()}");
-
-  select.select2({
-    data: data,
-    $configs
+      select.select2({
+        data: data,
+        $configs
+      });
+      
+      var value = select.data('value') + '';
+      
+      if (value) {
+        value = value.split(',');
+        select.select2('val', value);
+      }
   });
-  
-  var value = select.data('value') + '';
-  
-  if (value) {
-    value = value.split(',');
-    select.select2('val', value);
-  }
 });
 
 JS;
@@ -276,16 +291,18 @@ JS;
      *
      * @return $this
      */
-    public function ajax($url, $idField = 'id', $textField = 'text')
+    public function ajax(string $url, string $idField = 'id', string $textField = 'text')
     {
         $configs = array_merge([
             'allowClear'         => true,
-            'placeholder'        => $this->label,
+            'placeholder'        => $this->placeholder(),
             'minimumInputLength' => 1,
         ], $this->config);
 
         $configs = json_encode($configs);
         $configs = substr($configs, 1, strlen($configs) - 2);
+
+        $url = admin_url($url);
 
         $this->script = <<<JS
 
@@ -337,7 +354,7 @@ JS;
      *
      * @return $this
      */
-    public function config($key, $val)
+    public function config(string $key, $val)
     {
         $this->config[$key] = $val;
 
@@ -359,11 +376,13 @@ JS;
      */
     public function render()
     {
+        static::defineLang();
+
         $configs = array_merge([
             'allowClear'  => true,
             'placeholder' => [
                 'id'   => '',
-                'text' => $this->label,
+                'text' => $this->placeholder(),
             ],
         ], $this->config);
 
@@ -389,5 +408,63 @@ JS;
         $this->attribute('data-value', implode(',', Helper::array($this->value())));
 
         return parent::render();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function placeholder($placeholder = null)
+    {
+        if ($placeholder === null) {
+            return $this->placeholder ?: $this->label;
+        }
+
+        $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    /**
+     * @return void
+     */
+    public static function defineLang()
+    {
+        $lang = trans('select2');
+        if (! is_array($lang) || empty($lang)) {
+            return;
+        }
+
+        $locale = config('app.locale');
+
+        Admin::script(
+            <<<JS
+(function () {
+    if (! $.fn.select2) {
+        return;
+    }
+    var e = $.fn.select2.amd;
+
+    return e.define("select2/i18n/{$locale}", [], function () {
+        return {
+            errorLoading: function () {
+                return "{$lang['error_loading']}"
+            }, inputTooLong: function (e) {
+                return "{$lang['input_too_long']}".replace(':num', e.input.length - e.maximum)
+            }, inputTooShort: function (e) {
+                return "{$lang['input_too_short']}".replace(':num', e.minimum - e.input.length)
+            }, loadingMore: function () {
+                return "{$lang['loading_more']}"
+            }, maximumSelected: function (e) {
+                return "{$lang['maximum_selected']}".replace(':num', e.maximum)
+            }, noResults: function () {
+                return "{$lang['no_results']}"
+            }, searching: function () {
+                 return "{$lang['searching']}"
+            }
+        }
+    }), {define: e.define, require: e.require}
+})()
+JS
+        );
     }
 }

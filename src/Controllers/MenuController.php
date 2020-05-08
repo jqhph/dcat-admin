@@ -104,48 +104,49 @@ class MenuController extends AdminController
     public function form()
     {
         $menuModel = config('admin.database.menu_model');
-        $permissionModel = config('admin.database.permissions_model');
-        $roleModel = config('admin.database.roles_model');
 
-        $form = new Form(new Menu());
+        $repository = $menuModel::withPermission() ? new Menu('permissions') : new Menu();
 
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-        });
+        return Form::make($repository, function (Form $form) use ($menuModel) {
+            $permissionModel = config('admin.database.permissions_model');
+            $roleModel = config('admin.database.roles_model');
 
-        $form->display('id', 'ID');
-
-        $form->select('parent_id', trans('admin.parent_id'))->options(function () use ($menuModel) {
-            return $menuModel::selectOptions();
-        });
-        $form->text('title', trans('admin.title'))->required();
-        $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
-        $form->text('uri', trans('admin.uri'));
-        $form->multipleSelect('roles', trans('admin.roles'))
-            ->options(function () use ($roleModel) {
-                return $roleModel::all()->pluck('name', 'id');
-            })
-            ->customFormat(function ($v) {
-                return array_column($v, 'id');
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
             });
-        if ($menuModel::withPermission()) {
-            $form->tree('permissions', trans('admin.permission'))
-                ->nodes(function () use ($permissionModel) {
-                    return (new $permissionModel())->allNodes();
+
+            $form->display('id', 'ID');
+
+            $form->select('parent_id', trans('admin.parent_id'))->options(function () use ($menuModel) {
+                return $menuModel::selectOptions();
+            });
+            $form->text('title', trans('admin.title'))->required();
+            $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
+            $form->text('uri', trans('admin.uri'));
+            $form->multipleSelect('roles', trans('admin.roles'))
+                ->options(function () use ($roleModel) {
+                    return $roleModel::all()->pluck('name', 'id');
                 })
                 ->customFormat(function ($v) {
-                    if (! $v) {
-                        return [];
-                    }
-
                     return array_column($v, 'id');
                 });
-        }
+            if ($menuModel::withPermission()) {
+                $form->tree('permissions', trans('admin.permission'))
+                    ->nodes(function () use ($permissionModel) {
+                        return (new $permissionModel())->allNodes();
+                    })
+                    ->customFormat(function ($v) {
+                        if (! $v) {
+                            return [];
+                        }
 
-        $form->display('created_at', trans('admin.created_at'));
-        $form->display('updated_at', trans('admin.updated_at'));
+                        return array_column($v, 'id');
+                    });
+            }
 
-        return $form;
+            $form->display('created_at', trans('admin.created_at'));
+            $form->display('updated_at', trans('admin.updated_at'));
+        });
     }
 
     /**

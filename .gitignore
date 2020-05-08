@@ -8,3 +8,4 @@ mix-manifest.json
 /images/
 pre-dist
 /laravel-tests
+*.bak.*

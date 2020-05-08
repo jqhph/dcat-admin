@@ -306,8 +306,6 @@ JS
         Admin::baseJs([]);
         Admin::fonts(false);
 
-        Admin::asset()->full();
-
         $form->wrap(function ($v) {
             return $v;
         });

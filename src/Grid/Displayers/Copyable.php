@@ -37,10 +37,12 @@ JS;
 
         $content = $this->column->getOriginal();
 
-        return <<<HTML
+        $html = <<<HTML
 <a href="javascript:void(0);" class="grid-column-copyable text-muted" data-content="{$content}" title="Copied!" data-placement="bottom">
     <i class="fa fa-copy"></i>
 </a>&nbsp;{$this->value}
 HTML;
+
+        return $this->value === '' || $this->value === null ? $this->value : $html;
     }
 }

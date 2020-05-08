@@ -1,0 +1,272 @@
+
+@import "../../dcat/sass/theme/colors";
+
+
+// stylelint-disable
+$spacer: 1rem;
+$spacers: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge((0: 0,
+25: ($spacer * .25),
+50: ($spacer * .5),
+75: ($spacer * .75),
+1: ($spacer),
+2: ($spacer * 1.5),
+3: ($spacer * 3),
+4: ($spacer * 3.5),
+5: ($spacer * 4)),
+$spacers);
+
+// Body
+// $body-bg: $body-bg;
+$body-color: #626262;
+
+// Links
+//
+// Style anchor elements.
+
+$link-color: darken($primary, 5%);
+$link-hover-color: darken($link-color, 10%);
+$link-hover-decoration: none;
+
+// Grid columns
+$grid-gutter-width: 28px;
+
+// Components
+
+$line-height-lg: 1.25;
+$line-height-sm: 1;
+$border-width: 1px;
+$border-color: $gray-200;
+$border-radius: 0.5rem;
+$border-radius-lg: 0.6rem;
+$border-radius-sm: 0.25rem;
+
+// Typography
+
+//
+// Font, line-height, and color for body text, headings, and more.
+
+// stylelint-disable value-keyword-case
+$font-family-sans-serif: "Montserrat",
+Helvetica,
+Arial,
+serif;
+$font-family-monospace: "Montserrat",
+Helvetica,
+Arial,
+serif;
+
+// stylelint-enable value-keyword-case
+$font-size-base: 1rem;
+$font-size-sm: ceil($font-size-base * 0.85);
+$font-size-lg: ceil($font-size-base * 1.25);
+
+$line-height-base: 1.45;
+
+$h1-font-size: $font-size-base * 2;
+$h2-font-size: $font-size-base * 1.74;
+$h3-font-size: $font-size-base * 1.51;
+$h4-font-size: $font-size-base * 1.32;
+$h5-font-size: $font-size-base * 1.14;
+
+$headings-margin-bottom: ($spacer / 2);
+$headings-font-family: inherit;
+$headings-font-weight: 500;
+
+$headings-color: #2c2c2c;
+
+$small-font-size: smaller;
+
+// Tables
+
+$table-border-color: $body-bg;
+
+// Buttons + Forms
+$btn-padding-y: 0.9rem;
+$btn-padding-x: 2rem;
+$input-btn-padding-y: .75rem;
+$input-btn-padding-x: 2rem;
+
+$input-btn-padding-y-sm: 0.5rem;
+$input-btn-padding-x-sm: 1.5rem;
+$input-btn-font-size-sm: $font-size-base * 0.7;
+
+$input-btn-padding-y-lg: 1rem;
+$input-btn-padding-x-lg: 2.5rem;
+$input-btn-font-size-lg: $font-size-base * 1.25;
+$btn-line-height: 1;
+$input-btn-border-width: 0;
+$btn-border-radius: .4285rem;
+$btn-border-radius-lg: 0.4285rem;
+$btn-border-radius-sm: 0.4285rem;
+
+// Forms
+
+$input-padding-y: .7rem !default;
+$input-padding-x: .7rem !default;
+$input-font-size: .96rem;
+$input-line-height: $line-height-lg;
+
+$input-padding-y-sm: .5rem !default;
+$input-padding-x-sm: 1.5rem !default;
+
+$input-padding-y-lg: $input-btn-padding-y-lg !default;
+$input-padding-x-lg: 2.5rem !default;
+
+$input-disabled-bg: #f5f5f1;
+
+$input-color: $gray-700;
+$input-border-color: rgba(0,0,0,.2);
+$input-border-width: $border-width;
+
+$input-border-radius: 5px;
+$input-border-radius-lg: 6px;
+$input-border-radius-sm: 4px;
+
+$input-focus-border-color: $primary;
+$input-focus-box-shadow :0 3px 10px 0 rgba(0,0,0,.15);
+
+$input-placeholder-color: rgba(0,0,0,.5);
+$input-plaintext-color: $gray-500;
+
+$input-height: calc(#{$input-line-height * 1em} + #{$input-padding-y * 2} + 1px) !default;
+
+$custom-checkbox-indicator-border-radius: $border-radius-sm;
+
+$custom-select-border-radius:$input-border-radius;
+$custom-select-focus-box-shadow: $input-focus-box-shadow;
+
+$custom-file-line-height:1.5rem;
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+
+$dropdown-border-radius: 5px;
+$dropdown-link-hover-bg: $body-bg;
+$dropdown-divider-bg: rgba(0, 0, 0, 0.08);
+$dropdown-font-size: .9375rem;
+$dropdown-spacer: .5rem;
+$zindex-dropdown: 10;
+
+// Pagination
+
+$pagination-padding-y: 0.65rem;
+$pagination-padding-x: 0.911rem;
+$pagination-padding-y-lg: .5rem;
+$pagination-padding-x-lg: 1rem;
+$pagination-padding-y-sm: .5rem;
+$pagination-padding-x-sm: .75rem;
+
+// Nav tabs
+
+$nav-link-padding-y:0.357rem;
+$nav-link-padding-x: 0.5rem;
+
+// Code
+$code-font-size: 90% !default;
+$kbd-bg: #eee;
+
+
+$base-font-size: 14px;
+$content-padding: 2.2rem;
+
+//  ------------------------------
+//    Colors
+//  ------------------------------
+$pure-black : #565656;
+$nav-component-border-color: #ddd;
+$custom-border-color: #E4E7ED;
+$hover-color: #eee;
+
+//  ------------------------------
+//    Buttons
+//  ------------------------------
+$btn-border-radius-square: 0;
+$btn-border-radius: 0.42rem;
+$gradient-button-bs: 0 8px 25px -8px #aaa;
+//  ------------------------------
+//    Navbar
+//  ------------------------------
+$navbar-height: 4.3rem;
+
+
+//  ------------------------------
+//    Dropdown
+//  ------------------------------
+$dropdown-btn-padding-x: 1.5rem;
+$dropdown-btn-padding-y: .85rem;
+$dropdown-btn-split-padding-x: 1rem;
+
+
+
+//  ------------------------------
+//    Pagination
+//  ------------------------------
+$pagination-bg-color: #f0f0f0;
+$pagination-action-padding-y:0.572rem;
+$pagination-action-padding-x:0.651rem;
+$pagination-font-size-lg: 1.5rem;
+
+
+//  ------------------------------
+//    Main Menu
+//  ------------------------------
+// vertical menu
+$menu-expanded-width: 260px;
+$menu-collapsed-width: 80px;
+
+//  ------------------------------
+//    Sidebar
+//  -------------------------------
+$sidebar-width: 260px;
+
+
+//  -------------------------------
+//  Form
+//  -------------------------------
+
+// $input-height, $input-height-lg, $input-height-sm are in variables
+$font-size-xs: 0.75rem;
+$font-size-xl: ($font-size-base + 0.5);
+$line-height-xl: 1.7;
+$line-height-xs: 1.5;
+$input-padding-y-xl: 0.5rem !default;
+$input-padding-x-xl: 0.5rem !default;
+
+$input-padding-y-xs: 0.2rem !default;
+$input-padding-x-xs: 0.275rem !default;
+
+$border-radius-xl: 0.35rem !default;
+$border-radius-xs: 0.12rem !default;
+$input-border-radius-xl: $border-radius-xl;
+$input-border-radius-xs: $border-radius-xs;
+
+$input-height-xl: (($font-size-xl * $line-height-xl) + ($input-padding-y-xl * 2)) !default;
+$input-height-xs: (($font-size-xs * $line-height-xs) + ($input-padding-y-xs * 2)) !default;
+$input-height-sm: (($font-size-sm * $line-height-sm) + ($input-padding-y-sm * 2)) !default;
+
+
+$vs-checkbox-radio-border-width: 2px;
+$vs-checkbox-radio-border-color: $gray-600;
+$vs-checkbox-box: 20px;
+$vs-checkbox-box-sm: 15px;
+$vs-checkbox-box-lg: 24px;
+$vs-radio-box: 18px;
+$vs-radio-box-sm: 13px;
+$vs-radio-box-lg: 22px;
+
+
+//  -------------------------------
+//  Tables
+//  -------------------------------
+
+$table-th-font-size: .85rem;
+
+// DARK
+$grid-dark-color: #343661;
+$theme-dark-text-color: #c2c6dc;
+
+
+

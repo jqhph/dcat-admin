@@ -4,6 +4,8 @@ namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
+use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -17,7 +19,9 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Field implements Renderable
 {
-    use Macroable, Form\Concerns\HasFieldValidator;
+    use Macroable,
+        Form\Concerns\HasFieldValidator,
+        HasBuilderEvents;
 
     const FILE_DELETE_FLAG = '_file_del_';
 
@@ -218,6 +222,8 @@ class Field implements Renderable
         $this->column = $column;
         $this->label = $this->formatLabel($arguments);
         $this->id = $this->formatId($column);
+
+        $this->callResolving();
     }
 
     /**
@@ -265,7 +271,7 @@ class Field implements Renderable
     {
         $column = is_array($this->column) ? current($this->column) : $this->column;
 
-        $label = isset($arguments[0]) ? $arguments[0] : ucfirst(admin_trans_field($column));
+        $label = isset($arguments[0]) ? $arguments[0] : admin_trans_field($column);
 
         return str_replace(['.', '_'], ' ', $label);
     }
@@ -341,6 +347,8 @@ class Field implements Renderable
      */
     final public function fill($data)
     {
+        $data = Helper::array($data);
+
         $this->data($data);
 
         $this->value = $this->formatFieldData($data);
@@ -393,6 +401,8 @@ class Field implements Renderable
      */
     final public function setOriginal($data)
     {
+        $data = Helper::array($data);
+
         $this->original = $this->formatFieldData($data);
 
         $this->callCustomFormatter('original', new Fluent($data));
@@ -527,7 +537,14 @@ class Field implements Renderable
     public function value($value = null)
     {
         if (is_null($value)) {
-            return is_null($this->value) ? $this->default() : $this->value;
+            if (
+                $this->value === null
+                || (is_array($this->value) && empty($this->value))
+            ) {
+                return $this->default();
+            }
+
+            return $this->value;
         }
 
         $this->value = $value;
@@ -562,11 +579,19 @@ class Field implements Renderable
      *
      * @param $default
      *
-     * @return $this
+     * @return $this|mixed
      */
     public function default($default = null)
     {
         if ($default === null) {
+            if (
+                $this->form
+                && method_exists($this->form, 'isCreating')
+                && ! $this->form->isCreating()
+            ) {
+                return;
+            }
+
             if ($this->default instanceof \Closure) {
                 return call_user_func($this->default, $this->form);
             }
@@ -626,6 +651,9 @@ class Field implements Renderable
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function old()
     {
         return old($this->column, $this->value());
@@ -846,13 +874,13 @@ class Field implements Renderable
     {
         if ($this->horizontal) {
             return [
-                'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()}",
+                'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()} text-capitalize",
                 'field'      => "col-md-{$this->width['field']}",
                 'form-group' => 'form-group row form-field',
             ];
         }
 
-        return ['label' => $this->getLabelClass(), 'field' => '', 'form-group' => 'form-field'];
+        return ['label' => $this->getLabelClass().' text-capitalize', 'field' => '', 'form-group' => 'form-field'];
     }
 
     /**
@@ -890,7 +918,7 @@ class Field implements Renderable
      *
      * @return mixed
      */
-    protected function getElementClassString()
+    public function getElementClassString()
     {
         $elementClass = $this->getElementClass();
 
@@ -912,7 +940,7 @@ class Field implements Renderable
      *
      * @return string|array
      */
-    protected function getElementClassSelector()
+    public function getElementClassSelector()
     {
         $elementClass = $this->getElementClass();
 
@@ -933,15 +961,13 @@ class Field implements Renderable
     }
 
     /**
-     * Remove the field in modal.
-     *
      * @return $this
      */
-    public function hideInModal()
+    public function hideInDialog()
     {
         if (
             $this->form instanceof Form
-            && $this->form->inModal()
+            && $this->form->inDialog()
         ) {
             $this->display(false);
         }
@@ -1143,6 +1169,8 @@ class Field implements Renderable
         if (! $this->shouldRender()) {
             return '';
         }
+
+        $this->callComposing();
 
         Admin::script($this->script);
 

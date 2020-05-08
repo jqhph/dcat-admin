@@ -1,5 +1,7 @@
 .card {
   box-shadow: $shadow;
+  margin-bottom: 2rem;
+  border-radius: .45rem;
 }
 
 .card.dcat-box {
@@ -12,6 +14,8 @@
 .card .card-header {
   padding: 1.1rem 1.1rem 0;
   align-items: center;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card-header.with-border {
@@ -21,6 +25,10 @@
 
 .card-box-title {
   font-size: 1.1rem;
+}
+
+.card-title {
+  font-size: 1.2rem;
 }
 
 .card-footer {

@@ -44,6 +44,7 @@ class MigrationCreator extends BaseMigrationCreator
         $stub = $this->files->get(__DIR__.'/stubs/create.stub');
 
         $this->files->put($path, $this->populateStub($name, $stub, $table));
+        $this->files->chmod($path, 0777);
 
         $this->firePostCreateHooks($table);
 

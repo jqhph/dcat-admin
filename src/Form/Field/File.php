@@ -60,6 +60,10 @@ class File extends Field implements UploadFieldInterface
             return $this->validator->call($this, $input);
         }
 
+        if (! Arr::has($input, $this->column)) {
+            return false;
+        }
+
         $value = Arr::get($input, $this->column);
         $value = array_filter(is_array($value) ? $value : explode(',', $value));
 
@@ -208,6 +212,7 @@ class File extends Field implements UploadFieldInterface
         opts.upload = $.extend({
             pick: {
                 id: '#{$this->containerId} .file-picker',
+                name: '_file_',
                 label: '<i class="feather icon-folder"></i>&nbsp; {$newButton}'
             },
             dnd: '#{$this->containerId} .dnd-area',

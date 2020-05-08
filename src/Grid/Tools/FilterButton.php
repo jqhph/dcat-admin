@@ -80,15 +80,17 @@ class FilterButton extends AbstractTool
         return false
     });
     
-    $('#{$id} .close-slider').on('click', function () {
-        slider.close()
-    })
+    $('.wrapper').on('click', function () {
+        if (slider && slider.close) {
+            slider.close();
+        }
+    });
 })();
 JS;
         } else {
             $script = <<<JS
 $('.{$this->getElementClassName()}').on('click', function(){
-    $('#{$id}').parent().collapse('toggle');
+    $('#{$id}').parent().toggleClass('d-none');
 }); 
 JS;
         }

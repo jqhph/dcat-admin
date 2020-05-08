@@ -14,46 +14,9 @@ class SwitchDisplay extends AbstractDisplayer
      */
     protected $color;
 
-    public function green()
-    {
-        $this->color = Admin::color()->success();
-    }
-
-    public function custom()
-    {
-        $this->color = Admin::color()->custom();
-    }
-
-    public function yellow()
-    {
-        $this->color = Admin::color()->warning();
-    }
-
-    public function red()
-    {
-        $this->color = Admin::color()->danger();
-    }
-
-    public function purple()
-    {
-        $this->color = Admin::color()->purple();
-    }
-
-    public function blue()
-    {
-        $this->color = Admin::color()->blue();
-    }
-
-    /**
-     * Set color of the switcher.
-     *
-     * @param string $color
-     *
-     * @return $this
-     */
     public function color($color)
     {
-        $this->color = $color;
+        $this->color = Admin::color()->get($color);
     }
 
     public function display(string $color = '')
@@ -61,19 +24,13 @@ class SwitchDisplay extends AbstractDisplayer
         if ($color instanceof \Closure) {
             $color->call($this->row, $this);
         } else {
-            if ($color) {
-                if (method_exists($this, $color)) {
-                    $this->$color();
-                } else {
-                    $this->color($color);
-                }
-            }
+            $this->color($color);
         }
 
         $this->setupScript();
 
         $name = $this->getElementName();
-        $key = $this->row->{$this->grid->getKeyName()};
+        $key = $this->getKey();
         $checked = $this->value ? 'checked' : '';
         $color = $this->color ?: Admin::color()->primary();
 
@@ -89,6 +46,7 @@ EOF;
 (function(){
     var swt = $('.grid-switch-{$this->grid->getName()}'), t;
     function init(){
+        swt.parent().find('.switchery').remove();
         swt.each(function(k){
             t = $(this);
             new Switchery(t[0], t.data())

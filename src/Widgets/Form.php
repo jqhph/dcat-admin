@@ -72,6 +72,7 @@ use Illuminate\Validation\Validator;
  * @method Field\Timezone       timezone($column, $label = '')
  * @method Field\KeyValue       keyValue($column, $label = '')
  * @method Field\Tel            tel($column, $label = '')
+ * @method Field\Markdown       markdown($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -185,7 +186,7 @@ class Form implements Renderable
             return $this->getHtmlAttribute('action');
         }
 
-        return $this->setHtmlAttribute('action', $action);
+        return $this->setHtmlAttribute('action', admin_url($action));
     }
 
     /**
@@ -594,9 +595,29 @@ HTML;
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
+    success: function (data) {
+        {$this->buildSuccessScript()}
+    },
+    error: function (response) {
+        {$this->buildErrorScript()}
+    }
 });
 JS
         );
+    }
+
+    /**
+     * @return string|void
+     */
+    protected function buildSuccessScript()
+    {
+    }
+
+    /**
+     * @return string|void
+     */
+    protected function buildErrorScript()
+    {
     }
 
     /**

@@ -1,0 +1,22 @@
+
+@import "bootstrap/functions";
+@import "bootstrap/mixins";
+
+// mixins
+@import "bootstrap-extended/mixins/_buttons";
+@import "bootstrap-extended/mixins/_navs";
+@import "bootstrap-extended/mixins/_forms";
+
+// Bootstrap  variables
+@import "bootstrap/variables";
+@import "variables/variables";
+
+// Components
+@import "bootstrap-extended/code";
+@import "bootstrap-extended/forms";
+@import "bootstrap-extended/buttons";
+@import "bootstrap-extended/dropdown";
+@import "bootstrap-extended/navbar";
+@import "bootstrap-extended/nav";
+@import "bootstrap-extended/toast";
+@import 'bootstrap-extended/pagination';

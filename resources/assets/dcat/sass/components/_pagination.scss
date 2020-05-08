@@ -1,4 +1,9 @@
 
 .pagination .page-item .page-link {
   font-weight: 600;
+  font-size: .95rem;
+  padding: .5rem .75rem;
+}
+.pagination .page-item.disabled {
+  opacity: .82;
 }

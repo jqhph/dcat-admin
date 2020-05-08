@@ -36,7 +36,6 @@ $('.import-extension').on('click', function () {
     if (req) return;
     
     Dcat.confirm("{$text}", '', function () {
-        var url = '$url';
         req = 1;
         
         Dcat.loading();

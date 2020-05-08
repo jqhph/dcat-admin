@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<span>Dcat</span> Admin',
+    'logo' => '<img src="/vendors/dcat-admin/images/logo.png" width="35"> &nbsp;Dcat Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => 'Da',
+    'logo-mini' => '<img src="/vendors/dcat-admin/images/logo.png">',
 
     /*
     |--------------------------------------------------------------------------
@@ -84,14 +84,6 @@ return [
     |
    */
     'assets_server' => env('ADMIN_ASSETS_SERVER'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cdn setting
-    |--------------------------------------------------------------------------
-    |
-   */
-    'cdn' => env('ADMIN_CDN', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -312,23 +304,17 @@ return [
     | This value is the layout of admin pages.
     */
     'layout' => [
-        // vertical, horizontal
-        'mainLayout_type' => 'vertical',
+        // indigo, blue, blue-light, blue-dark, green
+        'color' => 'indigo',
 
         'body_class' => '',
 
         'sidebar_collapsed' => false,
 
-        'blank_page' => false,
+        'sidebar_dark' => false,
 
         // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
         'navbar_color' => '',
-
-        // floating, static, sticky, hidden
-        'vertical_menu_navbar_type' => 'floating',
-
-        // static, sticky, hidden
-        'footer_type' => 'static',
     ],
 
     /*

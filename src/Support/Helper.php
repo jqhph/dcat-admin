@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Symfony\Component\Process\Process;
 
 class Helper
 {
@@ -557,5 +558,87 @@ class Helper
         $request = $request ?: request();
 
         return $request->ajax() && ! $request->pjax();
+    }
+
+    /**
+     * 判断是否是IE浏览器.
+     *
+     * @return false|int
+     */
+    public static function isIEBrowser()
+    {
+        return (bool) preg_match('/Mozilla\/5\.0 \(Windows NT 10\.0; WOW64; Trident\/7\.0; rv:[0-9\.]*\) like Gecko/i', $_SERVER['HTTP_USER_AGENT'] ?? '');
+    }
+
+    /**
+     * 判断是否QQ浏览器.
+     *
+     * @return bool
+     */
+    public static function isQQBrowser()
+    {
+        return mb_strpos(mb_strtolower($_SERVER['HTTP_USER_AGENT'] ?? ''), 'qqbrowser') !== false;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return void
+     */
+    public static function setPreviousUrl($url)
+    {
+        session()->flash('admin.prev.url', static::urlWithoutQuery((string) $url, '_pjax'));
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPreviousUrl()
+    {
+        return (string) (session()->get('admin.prev.url') ? url(session()->get('admin.prev.url')) : url()->previous());
+    }
+
+    /**
+     * @param mixed $command
+     * @param int   $timeout
+     * @param null  $input
+     * @param null  $cwd
+     *
+     * @return Process
+     */
+    public static function process($command, $timeout = 100, $input = null, $cwd = null)
+    {
+        $parameters = [
+            $command,
+            $cwd,
+            [],
+            $input,
+            $timeout,
+        ];
+
+        return is_string($command)
+            ? Process::fromShellCommandline(...$parameters)
+            : new Process(...$parameters);
+    }
+
+    /**
+     * 判断两个值是否相等.
+     *
+     * @param $value1
+     * @param $value2
+     *
+     * @return bool
+     */
+    public static function equal($value1, $value2)
+    {
+        if ($value1 === null || $value2 === null) {
+            return false;
+        }
+
+        if (! is_scalar($value1) || ! is_scalar($value2)) {
+            return $value1 === $value2;
+        }
+
+        return (string) $value1 === (string) $value2;
     }
 }

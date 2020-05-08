@@ -227,22 +227,22 @@ export default class DialogForm {
 
                 _this.isSubmitting = 0;
 
-                options.saved(success, res);
+                if (options.saved(success, res) === false) {
+                    return false;
+                }
 
-                if (!success) {
+                if (! success) {
                     return options.error(success, res);
                 }
                 if (res.status) {
-                    options.success(success, res);
+                    let r = options.success(success, res);
 
                     _this._destroy(counter);
 
-                    return;
+                    return r;
                 }
 
-                options.error(success, res);
-
-                Dcat.error(res.message || 'Save failed.');
+                return options.error(success, res);
             }
         });
 

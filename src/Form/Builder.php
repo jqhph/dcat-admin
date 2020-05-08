@@ -403,7 +403,7 @@ class Builder
     public function action($action = null)
     {
         if ($action !== null) {
-            $this->action = $action;
+            $this->action = admin_url($action);
 
             return;
         }
@@ -682,7 +682,7 @@ class Builder
      */
     protected function addRedirectUrlField()
     {
-        $previous = URL::previous();
+        $previous = Helper::getPreviousUrl();
 
         if (! $previous || $previous == URL::current()) {
             return;

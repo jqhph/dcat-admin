@@ -2,8 +2,6 @@
 
 namespace Dcat\Admin\Console;
 
-use Illuminate\Console\GeneratorCommand;
-
 class ActionCommand extends GeneratorCommand
 {
     /**
@@ -63,6 +61,8 @@ class ActionCommand extends GeneratorCommand
         }
 
         $this->namespace = ucfirst(trim($this->ask('Please enter the namespace of action class', $this->getDefaultNamespace(null))));
+
+        $this->askBaseDirectory();
 
         return parent::handle();
     }

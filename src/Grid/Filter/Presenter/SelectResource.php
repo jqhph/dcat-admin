@@ -11,10 +11,7 @@ class SelectResource extends Presenter
         '@resource-selector',
     ];
 
-    /**
-     * @var string
-     */
-    protected $placeholder = '';
+    protected $placeholder;
 
     protected $area = ['51%', '65%'];
 
@@ -149,7 +146,7 @@ class SelectResource extends Presenter
      *
      * @return $this
      */
-    public function placeholder($placeholder = '')
+    public function placeholder(string $placeholder)
     {
         $this->placeholder = $placeholder;
 

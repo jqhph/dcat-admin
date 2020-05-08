@@ -89,8 +89,7 @@ class Relation extends Field
 
         $view->setName($this->name)
             ->title($this->title)
-            ->disableBatchDelete()
-            ->disableFilter();
+            ->disableBatchDelete();
 
         return <<<HTML
 <div class="mb-2">

@@ -6,7 +6,6 @@ use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Facades\URL;
 
 abstract class Filter implements Renderable
 {
@@ -143,15 +142,12 @@ abstract class Filter implements Renderable
      */
     public function formAction()
     {
-        return Helper::urlWithoutQuery(
-            URL::full(),
-            [
-                $this->getQueryName(),
-                $this->getColumnName(),
-                $this->parent->grid()->model()->getPageName(),
-                '_pjax',
-            ]
-        );
+        return Helper::fullUrlWithoutQuery([
+            $this->getQueryName(),
+            $this->getColumnName(),
+            $this->parent->grid()->model()->getPageName(),
+            '_pjax',
+        ]);
     }
 
     /**
@@ -159,10 +155,9 @@ abstract class Filter implements Renderable
      */
     protected function urlWithoutFilter()
     {
-        $query = request()->query();
-        unset($query[$this->getQueryName()]);
-
-        return Helper::urlWithQuery(url()->current(), $query);
+        return Helper::fullUrlWithoutQuery([
+            $this->getQueryName(),
+        ]);
     }
 
     /**

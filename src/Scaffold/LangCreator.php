@@ -4,7 +4,6 @@ namespace Dcat\Admin\Scaffold;
 
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 
 class LangCreator
 {
@@ -46,7 +45,10 @@ class LangCreator
             $content['fields'][$field['name']] = $field['translation'] ?: $field['name'];
         }
 
-        if (app('files')->put($filename, Helper::exportArrayPhp($content))) {
+        $files = app('files');
+        if ($files->put($filename, Helper::exportArrayPhp($content))) {
+            $files->chmod($filename, 0777);
+
             return $filename;
         }
     }
@@ -62,6 +64,6 @@ class LangCreator
     {
         $path = resource_path('lang/'.App::getLocale());
 
-        return $path.'/'.Str::slug($controller).'.php';
+        return $path.'/'.Helper::slug($controller).'.php';
     }
 }

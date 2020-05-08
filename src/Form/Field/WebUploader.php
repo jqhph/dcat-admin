@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Support\WebUploader as WebUploaderHelper;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -95,6 +96,8 @@ trait WebUploader
     {
         $this->options['server'] = admin_url($server);
 
+        $this->deleteUrl($server);
+
         return $this;
     }
 
@@ -144,6 +147,8 @@ trait WebUploader
     protected function setupDefaultOptions()
     {
         $defaultOptions = [
+            'name'                => WebUploaderHelper::FILE_NAME,
+            'fileVal'             => WebUploaderHelper::FILE_NAME,
             'isImage'             => false,
             'disableRemove'       => false,
             'chunked'             => true,
@@ -178,6 +183,9 @@ trait WebUploader
 
         if (empty($this->options['server'])) {
             $this->options['server'] = $this->form->action();
+        }
+        if (empty($this->options['updateServer'])) {
+            $this->options['updateServer'] = $this->form->action();
         }
         if (empty($this->options['deleteUrl'])) {
             $this->options['deleteUrl'] = $this->form->action();

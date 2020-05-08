@@ -1,6 +1,6 @@
 .layui-layer {
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.2)!important;
-  border-radius: .5rem!important;
+  border-radius: .4rem!important;
 }
 
 .layui-layer-title {
@@ -22,7 +22,7 @@
 .layui-layer-setwin .layui-layer-min cite:before {
   font-family: "feather";
   content: "\e897";
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: $font-color;
 }
 
@@ -43,7 +43,7 @@
 .layui-layer-setwin .layui-layer-close1:before {
   font-family: "feather";
   content: "\e8f6";
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 .layui-layer-setwin .layui-layer-close1 {
   margin-left: 7px!important;
@@ -62,7 +62,7 @@
   height: 30px!important;
   line-height: 20px!important;
   padding: 4px 15px!important;
-  font-size: .95rem;
+  font-size: .85rem;
   box-shadow: $shadow-100;
   border-color: $white!important;
 }

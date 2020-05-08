@@ -80,6 +80,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Timezone               timezone($column, $label = '')
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
+ * @method Field\Markdown               markdown($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -153,6 +154,7 @@ class Form implements Renderable
         'timezone'       => Field\Timezone::class,
         'keyValue'       => Field\KeyValue::class,
         'tel'            => Field\Tel::class,
+        'markdown'       => Field\Markdown::class,
     ];
 
     /**
@@ -535,15 +537,15 @@ class Form implements Renderable
                 return $response;
             }
 
-            $this->repository->destroy($this, $data);
+            $result = $this->repository->destroy($this, $data);
 
-            if (($response = $this->callDeleted()) instanceof Response) {
+            if (($response = $this->callDeleted($result)) instanceof Response) {
                 return $response;
             }
 
             $response = [
-                'status'  => true,
-                'message' => trans('admin.delete_succeeded'),
+                'status'  => $result ? true : false,
+                'message' => $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed'),
             ];
         } catch (\Throwable $exception) {
             $response = Admin::makeExceptionHandler()->handleDestroyException($exception);
@@ -583,12 +585,16 @@ class Form implements Renderable
 
         $this->builder->setResourceId($id);
 
-        if (($response = $this->callSaved())) {
+        if (($response = $this->callSaved($id))) {
             return $response;
         }
 
         if ($response = $this->responseMultipleStepsDonePage()) {
             return $response;
+        }
+
+        if (! $id) {
+            return $this->error(trans('admin.save_failed'));
         }
 
         return $this->redirect(
@@ -606,9 +612,11 @@ class Form implements Renderable
      */
     protected function beforeStore(array $data)
     {
+        $this->inputs = $data;
+
         $this->build();
 
-        $this->prepareStepFormFields($data);
+        $this->prepareStepFormFields($this->inputs);
 
         if (($response = $this->callSubmitted())) {
             return $response;
@@ -616,32 +624,32 @@ class Form implements Renderable
 
         // Validate step form.
         if ($this->isStepFormValidationRequest()) {
-            return $this->validateStepForm($data);
+            return $this->validateStepForm($this->inputs);
         }
 
-        if ($response = $this->handleUploadFile($data)) {
+        if ($response = $this->handleUploadFile($this->inputs)) {
             return $response;
         }
 
-        if ($response = $this->handleFileDeleteBeforeCreate($data)) {
-            $this->deleteFileInStepFormStashData($data);
+        if ($response = $this->handleFileDeleteBeforeCreate($this->inputs)) {
+            $this->deleteFileInStepFormStashData($this->inputs);
 
             return $response;
         }
 
-        if ($response = $this->handleFileDeleteWhenCreating($data)) {
-            $this->deleteFileInStepFormStashData($data);
+        if ($response = $this->handleFileDeleteWhenCreating($this->inputs)) {
+            $this->deleteFileInStepFormStashData($this->inputs);
 
             return $response;
         }
 
         // Handle validation errors.
-        if ($validationMessages = $this->validationMessages($data)) {
+        if ($validationMessages = $this->validationMessages($this->inputs)) {
             return $this->validationErrorsResponse($validationMessages);
         }
 
-        if (($response = $this->prepare($data))) {
-            $this->deleteFilesWhenCreating($data);
+        if (($response = $this->prepare($this->inputs))) {
+            $this->deleteFilesWhenCreating($this->inputs);
 
             return $response;
         }
@@ -656,7 +664,7 @@ class Form implements Renderable
      */
     protected function prepare($data = [])
     {
-        $this->inputs = array_merge($this->removeIgnoredFields($data), $this->inputs);
+        $this->inputs = $this->removeIgnoredFields($data);
 
         if (($response = $this->callSaving()) instanceof Response) {
             return $response;
@@ -672,7 +680,7 @@ class Form implements Renderable
      *
      * @return array
      */
-    protected function removeIgnoredFields($input)
+    public function removeIgnoredFields($input)
     {
         Arr::forget($input, $this->ignored);
 
@@ -744,10 +752,14 @@ class Form implements Renderable
 
         $this->updates = $this->prepareUpdate($this->updates);
 
-        $this->repository->update($this);
+        $updated = $this->repository->update($this);
 
-        if (($result = $this->callSaved())) {
-            return $result;
+        if (($response = $this->callSaved($updated))) {
+            return $response;
+        }
+
+        if (! $updated) {
+            return $this->error(trans('admin.update_succeeded'));
         }
 
         return $this->redirect(
@@ -774,32 +786,34 @@ class Form implements Renderable
 
         $this->setFieldOriginalValue();
 
+        $this->inputs = $data;
+
         if ($response = $this->callSubmitted()) {
             return $response;
         }
 
-        if ($uploadFileResponse = $this->handleUploadFile($data)) {
+        if ($uploadFileResponse = $this->handleUploadFile($this->inputs)) {
             return $uploadFileResponse;
         }
 
-        $isEditable = $this->isEditable($data);
+        $isEditable = $this->isEditable($this->inputs);
 
-        $data = $this->handleEditable($data);
+        $this->inputs = $this->handleEditable($this->inputs);
 
-        $data = $this->handleFileDelete($data);
+        $this->inputs = $this->handleFileDelete($this->inputs);
 
-        if ($response = $this->handleOrderable($data)) {
+        if ($response = $this->handleOrderable($this->inputs)) {
             return $response;
         }
 
         // Handle validation errors.
-        if ($validationMessages = $this->validationMessages($data)) {
+        if ($validationMessages = $this->validationMessages($this->inputs)) {
             return $this->validationErrorsResponse(
                 $isEditable ? Arr::dot($validationMessages->toArray()) : $validationMessages
             );
         }
 
-        if ($response = $this->prepare($data)) {
+        if ($response = $this->prepare($this->inputs)) {
             return $response;
         }
     }
@@ -877,11 +891,10 @@ class Form implements Renderable
      * Prepare input data for update.
      *
      * @param array $updates
-     * @param bool  $oneToOneRelation If column is one-to-one relation.
      *
      * @return array
      */
-    public function prepareUpdate(array $updates, $oneToOneRelation = false)
+    public function prepareUpdate(array $updates)
     {
         $prepared = [];
 
@@ -891,10 +904,6 @@ class Form implements Renderable
 
             // If column not in input array data, then continue.
             if (! Arr::has($updates, $columns)) {
-                continue;
-            }
-
-            if ($this->invalidColumn($columns, $oneToOneRelation)) {
                 continue;
             }
 
@@ -912,24 +921,6 @@ class Form implements Renderable
         }
 
         return $prepared;
-    }
-
-    /**
-     * @param string|array $columns
-     * @param bool         $oneToOneRelation
-     *
-     * @return bool
-     */
-    protected function invalidColumn($columns, $oneToOneRelation = false)
-    {
-        foreach ((array) $columns as $column) {
-            if ((! $oneToOneRelation && Str::contains($column, '.')) ||
-                ($oneToOneRelation && ! Str::contains($column, '.'))) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

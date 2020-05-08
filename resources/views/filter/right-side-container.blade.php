@@ -13,10 +13,6 @@
                             </a>
                         @endif
                     </div>
-
-                    <a href="#" class="close-slider customizer-close" style="top: 12px;right: 10px;">
-                        <i class="feather icon-x"></i>
-                    </a>
                 </div>
             </div>
 
@@ -27,4 +23,4 @@
             @endforeach
         </form>
     </div>
-</div><?php
+</div>

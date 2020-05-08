@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
-use Illuminate\Contracts\Support\Arrayable;
+use Dcat\Admin\Support\Helper;
 
 class Checkbox extends AbstractDisplayer
 {
@@ -20,12 +20,11 @@ class Checkbox extends AbstractDisplayer
             $this->value = explode(',', $this->value);
         }
 
-        if ($this->value instanceof Arrayable) {
-            $this->value = $this->value->toArray();
-        }
+        $this->value = Helper::array($this->value);
 
         foreach ($options as $value => $label) {
             $checked = in_array($value, $this->value) ? 'checked' : '';
+
             $checkboxes .= <<<EOT
 <div class="vs-checkbox-con vs-checkbox-primary" style="margin-bottom: 4px">
     <input type="checkbox" name="grid-checkbox-{$name}[]" value="{$value}" $checked >
