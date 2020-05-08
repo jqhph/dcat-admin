@@ -117,50 +117,6 @@ class PermissionController extends AdminController
     }
 
     /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     *
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show($id, new Permission());
-
-        $show->id;
-        $show->slug;
-        $show->name;
-
-        $show->http_path->unescape()->as(function ($path) {
-            return collect($path)->filter()->map(function ($path) {
-                $method = $this->http_method ?: ['ANY'];
-
-                if (Str::contains($path, ':')) {
-                    [$method, $path] = explode(':', $path);
-                    $method = explode(',', $method);
-                }
-
-                $method = collect($method)->map(function ($name) {
-                    return strtoupper($name);
-                })->map(function ($name) {
-                    return "<span class='label bg-primary'>{$name}</span>";
-                })->implode('&nbsp;');
-
-                if (! empty(config('admin.route.prefix'))) {
-                    $path = '/'.trim(config('admin.route.prefix'), '/').$path;
-                }
-
-                return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
-            })->implode('');
-        });
-
-        $show->created_at;
-        $show->updated_at;
-
-        return $show;
-    }
-
-    /**
      * Make a form builder.
      *
      * @return Form
