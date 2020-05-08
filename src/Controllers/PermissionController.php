@@ -8,7 +8,6 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Repositories\Permission;
-use Dcat\Admin\Show;
 use Dcat\Admin\Tree;
 use Illuminate\Support\Str;
 
