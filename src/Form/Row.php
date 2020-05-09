@@ -59,7 +59,8 @@ use Illuminate\Contracts\Support\Renderable;
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
  */
-class Row implements Renderable {
+class Row implements Renderable
+{
     /**
      * Callback for add field to current row.s.
      *
