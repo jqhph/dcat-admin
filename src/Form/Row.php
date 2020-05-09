@@ -94,7 +94,8 @@ class Row implements Renderable {
      * @param \Closure $callback
      * @param Form     $form
      */
-    public function __construct(\Closure $callback, Form $form) {
+    public function __construct(\Closure $callback, Form $form)
+    {
         $this->callback = $callback;
 
         $this->form = $form;
@@ -107,7 +108,8 @@ class Row implements Renderable {
      *
      * @return array
      */
-    public function getFields() {
+    public function getFields()
+    {
         return $this->fields;
     }
 
@@ -118,7 +120,8 @@ class Row implements Renderable {
      *
      * @return $this
      */
-    public function width($width = 12) {
+    public function width($width = 12)
+    {
         $this->defaultFieldWidth = $width;
 
         return $this;
@@ -129,7 +132,8 @@ class Row implements Renderable {
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function render() {
+    public function render()
+    {
         return view('admin::form.row', ['fields' => $this->fields]);
     }
 
@@ -141,7 +145,8 @@ class Row implements Renderable {
      *
      * @return Field|void
      */
-    public function __call($method, $arguments) {
+    public function __call($method, $arguments)
+    {
         $field = $this->form->__call($method, $arguments);
 
         $field->disableHorizontal();
