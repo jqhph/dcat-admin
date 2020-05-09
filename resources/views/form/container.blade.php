@@ -10,7 +10,7 @@
     @else
         <div class="fields-group">
             @if($form->hasRows())
-                <div style="margin-left: 2rem;margin-bottom: 2rem">
+                <div class="ml-2 mb-2">
                     @foreach($form->rows() as $row)
                         {!! $row->render() !!}
                     @endforeach
