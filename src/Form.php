@@ -10,6 +10,7 @@ use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Form\Row;
 use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Traits\HasBuilderEvents;
@@ -802,6 +803,8 @@ class Form implements Renderable
 
         $this->inputs = $this->handleFileDelete($this->inputs);
 
+        $this->inputs = $this->handleHasManyValues($this->inputs);
+
         if ($response = $this->handleOrderable($this->inputs)) {
             return $response;
         }
@@ -816,6 +819,34 @@ class Form implements Renderable
         if ($response = $this->prepare($this->inputs)) {
             return $response;
         }
+    }
+
+    /**
+     * @param array $inputs
+     *
+     * @return array
+     */
+    protected function handleHasManyValues(array $inputs)
+    {
+        foreach ($inputs as $column => &$input) {
+            $field = $this->builder()->field($column);
+
+            if (is_array($input) && $field instanceof Field\HasMany) {
+                $keyName = $field->getKeyName();
+
+                foreach ($input as $k => &$v) {
+                    if (empty($v[$keyName])) {
+                        $v[$keyName] = $k;
+                    }
+
+                    if (empty($v[NestedForm::REMOVE_FLAG_NAME])) {
+                        $v[NestedForm::REMOVE_FLAG_NAME] = null;
+                    }
+                }
+            }
+        }
+
+        return $inputs;
     }
 
     /**

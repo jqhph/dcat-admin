@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Support\WebUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 trait HasFiles
 {
     /**
+     * 文件上传操作.
+     *
      * @param array $data
      *
      * @return Response|void
@@ -28,7 +31,16 @@ trait HasFiles
             return;
         }
 
-        $field = $this->findFieldByName($column);
+        $relation = $data['_relation'] ?? null;
+
+        if (empty($relation)) {
+            $field = $this->findFieldByName($column);
+        } else {
+            // hasMany表单文件上传
+            $relation = explode(',', $relation)[0];
+
+            $field = $this->getFieldByRelationName($relation, $column);
+        }
 
         if ($field && $field instanceof UploadFieldInterface) {
             if (($results = $this->callUploading($field, $file)) && $results instanceof Response) {
@@ -58,24 +70,12 @@ trait HasFiles
             return $field;
         }
 
-        if (mb_strpos($column, '.')) {
-            [$relation, $column] = explode('.', $column);
-
-            $relation = $this->findFieldByName($relation);
-
-            if ($relation instanceof Field\HasMany) {
-                return $relation->buildNestedForm()->fields()->first(function ($field) use ($column) {
-                    return $field->column() === $column;
-                });
-            }
-
-            return null;
-        }
-
         return $this->builder->field($column) ?: $this->builder->stepField($column);
     }
 
     /**
+     * 新增之前删除文件操作.
+     *
      * @param array $data
      *
      * @return \Illuminate\Http\JsonResponse|void
@@ -88,17 +88,41 @@ trait HasFiles
 
         $column = $data['_column'] ?? null;
         $file = $data['key'] ?? null;
+        $relation = $data['_relation'] ?? null;
 
         if (! $column && ! $file) {
             return;
         }
 
-        $field = $this->builder->field($column) ?: $this->builder->stepField($column);
+        if (empty($relation)) {
+            $field = $this->builder->field($column) ?: $this->builder->stepField($column);
+        } else {
+            $field = $this->getFieldByRelationName($relation[0], $column);
+        }
 
         if ($field && $field instanceof UploadFieldInterface) {
             $field->deleteFile($file);
 
             return response()->json(['status' => true]);
+        }
+    }
+
+    /**
+     * 获取hasMany的子表单字段.
+     *
+     * @param string $relation
+     * @param string $column
+     *
+     * @return mixed
+     */
+    protected function getFieldByRelationName($relation, $column)
+    {
+        $relation = $this->findFieldByName($relation);
+
+        if ($relation && $relation instanceof Field\HasMany) {
+            return $relation->buildNestedForm()->fields()->first(function ($field) use ($column) {
+                return $field->column() === $column;
+            });
         }
     }
 
@@ -122,7 +146,7 @@ trait HasFiles
     }
 
     /**
-     * Remove files in record.
+     * 根据传入数据删除文件.
      *
      * @param array $data
      * @param bool  $forceDelete
@@ -145,6 +169,8 @@ trait HasFiles
     }
 
     /**
+     * 编辑页面删除上传文件操作.
+     *
      * @param array $input
      *
      * @return array
@@ -156,13 +182,25 @@ trait HasFiles
         }
 
         $input[Field::FILE_DELETE_FLAG] = $input['key'];
-        unset($input['key']);
 
         if (! empty($input['_column'])) {
-            $input[$input['_column']] = '';
+            if (empty($input['_relation'])) {
+                $input[$input['_column']] = '';
+            } else {
+                [$relation, $relationKey] = $input['_relation'];
+                $keyName = $this->builder()->field($relation)->getKeyName();
 
-            unset($input['_column']);
+                $input[$relation] = [
+                    $relationKey => [
+                        $keyName                     => $relationKey,
+                        $input['_column']            => '',
+                        NestedForm::REMOVE_FLAG_NAME => null,
+                    ],
+                ];
+            }
         }
+
+        unset($input['key'], $input['_column'], $input['_relation']);
 
         $this->request->replace($input);
 
