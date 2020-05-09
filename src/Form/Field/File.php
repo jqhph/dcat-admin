@@ -112,11 +112,10 @@ class File extends Field implements UploadFieldInterface
      *
      * @return $this
      */
-    public function setRelation(?string $name)
+    public function setRelation(?string $name, $key)
     {
         $this->relationName = $name;
-
-        $this->options['formData']['upload_column'] = $name.'.'.$this->column();
+        $this->options['formData']['_relation'] = [$name, $key];
 
         return $this;
     }
@@ -207,6 +206,7 @@ class File extends Field implements UploadFieldInterface
         var opts = $.extend({
             selector: '#{$this->containerId}',
             addFileButton: '#{$this->containerId} .add-file-button',
+            inputSelector: '#{$this->id}',
         }, options);
 
         opts.upload = $.extend({

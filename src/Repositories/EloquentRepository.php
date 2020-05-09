@@ -720,7 +720,7 @@ class EloquentRepository extends Repository implements TreeRepository
                 || $relation instanceof Relations\MorphOne
                 || $relation instanceof Relations\BelongsTo;
 
-            $prepared = $form->prepareUpdate([$name => $values], $oneToOneRelation);
+            $prepared = $oneToOneRelation ? $form->prepareUpdate([$name => $values]) : [$name => $values];
 
             if (empty($prepared)) {
                 continue;
