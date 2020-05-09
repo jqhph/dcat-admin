@@ -10,9 +10,11 @@
     @else
         <div class="fields-group">
             @if($form->hasRows())
-                @foreach($form->rows() as $row)
-                    {!! $row->render() !!}
-                @endforeach
+                <div style="margin-left: 2rem;margin-bottom: 2rem">
+                    @foreach($form->rows() as $row)
+                        {!! $row->render() !!}
+                    @endforeach
+                </div>
             @else
                 @foreach($form->fields() as $field)
                     {!! $field->render() !!}
