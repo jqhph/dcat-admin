@@ -340,7 +340,7 @@ class HasMany extends Field
      *
      * @return string
      */
-    protected function getKeyName()
+    public function getKeyName()
     {
         if (is_null($this->form)) {
             return;
