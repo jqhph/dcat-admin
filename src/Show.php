@@ -88,7 +88,7 @@ class Show implements Renderable
      */
     protected $panel;
     /**
-     * @var
+     * @var \Illuminate\Support\Collection
      */
     protected $rows;
 
@@ -114,7 +114,7 @@ class Show implements Renderable
             default:
                 $this->setKey($id);
         }
-
+        $this->rows = new Collection();
         $this->builder = $builder;
 
         $this->initModel($model);
@@ -364,7 +364,6 @@ class Show implements Renderable
         foreach ($fields as $field => $label) {
             $this->field($field, $label);
         }
-
         return $this;
     }
 
@@ -682,19 +681,17 @@ class Show implements Renderable
             if (is_array($this->builder)) {
                 $this->fields($this->builder);
             }
-
             $this->fields->each->fill($model);
             $this->relations->each->model($model);
+            $this->rows->each(function($row){
+                $row->getFields()->each(function($field){
+                    $field['element']->fill($this->model());
+                });
+            });
 
             $this->callComposing();
-
-            $panel = $this->panel->setData([
-                "rows"   => $this->rows,
-                "fields" => $this->fields,
-            ]);
-
             $data = [
-                'panel'     => $panel,
+                'panel'     => $this->panel->fill($this->fields),
                 'relations' => $this->relations,
             ];
             return view($this->view, $data)->render();
@@ -712,12 +709,12 @@ class Show implements Renderable
      */
     public function row(Closure $callback)
     {
-        $this->rows = collect($this->rows)->push(new Row($callback, $this));
+        $this->rows = $this->rows->push(new Row($callback, $this));
         return $this;
     }
 
     /**
-     * @return rows[]
+     * @return \Illuminate\Support\Collection
      */
     public function rows()
     {

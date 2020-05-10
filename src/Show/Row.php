@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Show;
 use Dcat\Admin\Show;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 
 class Row implements Renderable
 {
@@ -22,11 +23,9 @@ class Row implements Renderable
     protected $show;
 
     /**
-     * Fields in this row.
-     *
-     * @var array
+     * @var \Illuminate\Support\Collection
      */
-    protected $fields = [];
+    protected $fields;
 
     /**
      * Default field width for appended field.
@@ -47,6 +46,8 @@ class Row implements Renderable
 
         $this->show = $show;
 
+        $this->fields = new Collection();
+
         call_user_func($this->callback, $this);
     }
 
@@ -61,14 +62,13 @@ class Row implements Renderable
     }
 
     /**
-     * Get fields of this row.
-     *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public function getFields()
     {
         return $this->fields;
     }
+
 
     /**
      * Set width for a incomming field.
@@ -84,7 +84,18 @@ class Row implements Renderable
         return $this;
     }
 
-
+    /**
+     * @param        $name
+     * @param string $label
+     *
+     * @return \Dcat\Admin\Show\Field
+     */
+    public function field($name, $label = '')
+    {
+        $field = $this->show->field($name,$label);
+        $this->pushFields($field);
+        return $field;
+    }
     /**
      * Add field
      * @param $name
@@ -94,10 +105,7 @@ class Row implements Renderable
     public function __get($name)
     {
         $field = $this->show->__get($name);
-        $this->fields[] = [
-            'width'   => $this->defaultFieldWidth,
-            'element' => $field,
-        ];
+        $this->pushFields($field);
         return $field;
     }
 
@@ -109,16 +117,25 @@ class Row implements Renderable
      */
     public function __call($method, $arguments)
     {
-        $field = $this->show->__call($method, $arguments);
+        $field = $this->show->__call($method,$arguments);
 
-
-        $this->fields[] = [
-            'width'   => $this->defaultFieldWidth,
-            'element' => $field,
-        ];
+        $this->pushFields($field);
 
         return $field;
     }
+
+    /**
+     * @param $field
+     */
+    public function pushFields($field)
+    {
+        $this->fields->push([
+            'width'   => $this->defaultFieldWidth,
+            'element' => $field,
+        ]);
+    }
+
+
 
 
 }

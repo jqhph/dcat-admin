@@ -6,16 +6,16 @@
 @endif
 <div class="box-body">
     <div class="form-horizontal mt-1">
-        @if($rows)
+        @if($rows->isEmpty())
+            @foreach($fields as $field)
+                {!! $field->render() !!}
+            @endforeach
+        @else
             <div>
                 @foreach($rows as $row)
                     {!! $row->render() !!}
                 @endforeach
             </div>
-        @else
-            @foreach($fields as $field)
-                {!! $field->render() !!}
-            @endforeach
         @endif
         <div class="clearfix"></div>
     </div>
