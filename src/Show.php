@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin;
 
+use Closure;
+use Dcat\Admin\Show\Row;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Show\AbstractTool;
 use Dcat\Admin\Show\Divider;
@@ -85,6 +87,10 @@ class Show implements Renderable
      * @var Panel
      */
     protected $panel;
+    /**
+     * @var
+     */
+    protected $rows;
 
     /**
      * Show constructor.
@@ -682,15 +688,40 @@ class Show implements Renderable
 
             $this->callComposing();
 
+            $panel = $this->panel->setData([
+                "rows"   => $this->rows,
+                "fields" => $this->fields,
+            ]);
+
             $data = [
-                'panel'     => $this->panel->fill($this->fields),
+                'panel'     => $panel,
                 'relations' => $this->relations,
             ];
-
             return view($this->view, $data)->render();
         } catch (\Throwable $e) {
             return Admin::makeExceptionHandler()->renderException($e);
         }
+    }
+
+    /**
+     * Add a row in Show.
+     *
+     * @param Closure $callback
+     *
+     * @return $this
+     */
+    public function row(Closure $callback)
+    {
+        $this->rows = collect($this->rows)->push(new Row($callback, $this));
+        return $this;
+    }
+
+    /**
+     * @return rows[]
+     */
+    public function rows()
+    {
+        return $this->rows;
     }
 
     /**

@@ -6,9 +6,17 @@
 @endif
 <div class="box-body">
     <div class="form-horizontal mt-1">
-        @foreach($fields as $field)
-            {!! $field->render() !!}
-        @endforeach
+        @if($rows)
+            <div>
+                @foreach($rows as $row)
+                    {!! $row->render() !!}
+                @endforeach
+            </div>
+        @else
+            @foreach($fields as $field)
+                {!! $field->render() !!}
+            @endforeach
+        @endif
         <div class="clearfix"></div>
     </div>
 </div>

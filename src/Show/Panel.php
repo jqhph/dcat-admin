@@ -4,6 +4,7 @@ namespace Dcat\Admin\Show;
 
 use Dcat\Admin\Show;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class Panel implements Renderable
@@ -59,6 +60,7 @@ class Panel implements Renderable
         $this->data = [
             'fields' => new Collection(),
             'tools'  => new Tools($this),
+            'rows'   => new Collection(),
             'style'  => 'default',
             'title'  => trans('admin.detail'),
         ];
@@ -189,6 +191,21 @@ class Panel implements Renderable
     {
         $this->data['fields'] = $fields;
 
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function setData(array $data)
+    {
+        collect($data)->each(function($value,$key){
+            if (Arr::has($this->data, $key)) {
+                $this->data[$key] = $value;
+            }
+        });
         return $this;
     }
 
