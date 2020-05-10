@@ -53,14 +53,6 @@ class Currency extends Text
     /**
      * {@inheritdoc}
      */
-    protected function prepareInputValue($value)
-    {
-        return (float) $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $this->inputmask($this->options);
