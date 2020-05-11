@@ -685,11 +685,6 @@ class Show implements Renderable
 
             $this->fields->each->fill($model);
             $this->relations->each->model($model);
-            $this->rows->each(function ($row) {
-                $row->getFields()->each(function ($field) {
-                    $field['element']->fill($this->model());
-                });
-            });
 
             $this->callComposing();
 
@@ -714,6 +709,7 @@ class Show implements Renderable
     public function row(Closure $callback)
     {
         $this->rows->push(new Row($callback, $this));
+
         return $this;
     }
 

@@ -72,7 +72,7 @@ class Tab
         foreach ($this->form->rows() as $row) {
             $rowFields = array_map(function ($field) {
                 return $field['element'];
-            }, $row->getFields());
+            }, $row->fields());
 
             $match = false;
 

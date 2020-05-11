@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 class Row implements Renderable
 {
-
     /**
      * Callback for add field to current row.s.
      *
@@ -24,7 +23,7 @@ class Row implements Renderable
     protected $show;
 
     /**
-     * @var \Illuminate\Support\Collection
+     * @var Collection
      */
     protected $fields;
 
@@ -63,13 +62,12 @@ class Row implements Renderable
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection|\Dcat\Admin\Show\Field[]
      */
-    public function getFields()
+    public function fields()
     {
         return $this->fields;
     }
-
 
     /**
      * Set width for a incomming field.
@@ -86,7 +84,9 @@ class Row implements Renderable
     }
 
     /**
-     * @param        $name
+     * Add field.
+     *
+     * @param string $name
      * @param string $label
      *
      * @return \Dcat\Admin\Show\Field
@@ -94,20 +94,25 @@ class Row implements Renderable
     public function field($name, $label = '')
     {
         $field = $this->show->field($name, $label);
+
         $this->pushField($field);
+
         return $field;
     }
 
     /**
-     * Add field
+     * Add field.
+     *
      * @param $name
      *
-     * @return \Dcat\Admin\Show\Field|\Illuminate\Support\Collection
+     * @return \Dcat\Admin\Show\Field|Collection
      */
     public function __get($name)
     {
-        $field = $this->show->__get($name);
+        $field = $this->show->field($name);
+
         $this->pushField($field);
+
         return $field;
     }
 
@@ -127,15 +132,15 @@ class Row implements Renderable
     }
 
     /**
-     * @param $field
+     * @param \Dcat\Admin\Show\Field $field
+     *
+     * @return void
      */
-    public function pushField($field)
+    protected function pushField($field)
     {
         $this->fields->push([
-            'width' => $this->defaultFieldWidth,
+            'width'   => $this->defaultFieldWidth,
             'element' => $field,
         ]);
     }
-
-
 }
