@@ -714,6 +714,7 @@ class Show implements Renderable
     public function row(Closure $callback)
     {
         $this->rows->push(new Row($callback, $this));
+
         return $this;
     }
 
