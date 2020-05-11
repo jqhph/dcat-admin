@@ -256,7 +256,7 @@ class NestedForm
 
             $value = $this->fetchColumnValue($record, $columns);
 
-            if (is_null($value)) {
+            if ($value === false) {
                 continue;
             }
 
@@ -291,6 +291,10 @@ class NestedForm
     protected function fetchColumnValue($data, $columns)
     {
         if (is_string($columns)) {
+            if (! Arr::has($data, $columns)) {
+                return false;
+            }
+
             return Arr::get($data, $columns);
         }
 
@@ -305,6 +309,8 @@ class NestedForm
 
             return $value;
         }
+
+        return false;
     }
 
     /**
@@ -322,7 +328,7 @@ class NestedForm
         }
 
         if ($field instanceof UploadField) {
-            $field->setRelation($this->relationName);
+            $field->setRelation($this->relationName, $this->key);
         }
 
         $field::collectAssets();

@@ -27,9 +27,7 @@ JS;
         $content = $this->column->getOriginal();
 
         if ($formatter instanceof \Closure) {
-            $formatter->bindTo($this->row);
-
-            $content = call_user_func($formatter, $content);
+            $content = $formatter->call($this->row, $content);
         }
 
         $img = "<img src='https://api.qrserver.com/v1/create-qr-code/?size={$width}x{$height}&data={$content}' style='height: {$width}px;width: {$height}px;'/>";

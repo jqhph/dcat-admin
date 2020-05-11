@@ -8,7 +8,6 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Repositories\Permission;
-use Dcat\Admin\Show;
 use Dcat\Admin\Tree;
 use Illuminate\Support\Str;
 
@@ -69,6 +68,7 @@ class PermissionController extends AdminController
         $tree = new Tree(new $model());
 
         $tree->disableCreateButton();
+        $tree->disableEditButton();
 
         $tree->branch(function ($branch) {
             $payload = "<div class='pull-left' style='min-width:310px'><b>{$branch['name']}</b>&nbsp;&nbsp;[<span class='text-primary'>{$branch['slug']}</span>]";
@@ -114,50 +114,6 @@ class PermissionController extends AdminController
         });
 
         return $tree;
-    }
-
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     *
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show($id, new Permission());
-
-        $show->id;
-        $show->slug;
-        $show->name;
-
-        $show->http_path->unescape()->as(function ($path) {
-            return collect($path)->filter()->map(function ($path) {
-                $method = $this->http_method ?: ['ANY'];
-
-                if (Str::contains($path, ':')) {
-                    [$method, $path] = explode(':', $path);
-                    $method = explode(',', $method);
-                }
-
-                $method = collect($method)->map(function ($name) {
-                    return strtoupper($name);
-                })->map(function ($name) {
-                    return "<span class='label bg-primary'>{$name}</span>";
-                })->implode('&nbsp;');
-
-                if (! empty(config('admin.route.prefix'))) {
-                    $path = '/'.trim(config('admin.route.prefix'), '/').$path;
-                }
-
-                return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
-            })->implode('');
-        });
-
-        $show->created_at;
-        $show->updated_at;
-
-        return $show;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\JavaScript;
 use Illuminate\Support\Arr;
@@ -112,11 +113,13 @@ class File extends Field implements UploadFieldInterface
      *
      * @return $this
      */
-    public function setRelation(?string $name)
+    public function setRelation(?string $name, $key)
     {
         $this->relationName = $name;
+        $this->options['formData']['_relation'] = [$name, $key];
 
-        $this->options['formData']['upload_column'] = $name.'.'.$this->column();
+        $this->containerId .= NestedForm::DEFAULT_KEY_NAME;
+        $this->id .= NestedForm::DEFAULT_KEY_NAME;
 
         return $this;
     }
@@ -182,7 +185,7 @@ class File extends Field implements UploadFieldInterface
 
         $this->forceOptions();
         $this->formatValue();
-        $this->setupScript();
+        $this->setUpScript();
 
         $this->addVariables([
             'fileType'    => $this->options['isImage'] ? '' : 'file',
@@ -192,31 +195,43 @@ class File extends Field implements UploadFieldInterface
         return parent::render();
     }
 
-    protected function setupScript()
+    protected function setUpScript()
     {
         $newButton = trans('admin.uploader.add_new_media');
         $options = JavaScript::format($this->options);
+        $hasManyKey = NestedForm::DEFAULT_KEY_NAME;
 
         $this->script = <<<JS
 (function () {
-    var uploader, newPage, options = {$options};
+    var uploader, 
+    newPage, 
+    cID = '#{$this->containerId}',
+    ID = '#{$this->id}',
+    hasManyKey = '{$hasManyKey}',
+    options = {$options};
+
+    if (typeof nestedIndex !== "undefined") {
+        cID = cID.replace(hasManyKey, nestedIndex);
+        ID = ID.replace(hasManyKey, nestedIndex);
+    }
 
     build();
 
     function build() {
         var opts = $.extend({
-            selector: '#{$this->containerId}',
-            addFileButton: '#{$this->containerId} .add-file-button',
+            selector: cID,
+            addFileButton: cID+' .add-file-button',
+            inputSelector: ID,
         }, options);
 
         opts.upload = $.extend({
             pick: {
-                id: '#{$this->containerId} .file-picker',
+                id: cID+' .file-picker',
                 name: '_file_',
                 label: '<i class="feather icon-folder"></i>&nbsp; {$newButton}'
             },
-            dnd: '#{$this->containerId} .dnd-area',
-            paste: '#{$this->containerId} .web-uploader'
+            dnd: cID+' .dnd-area',
+            paste: cID+' .web-uploader'
         }, opts);
 
         uploader = Dcat.Uploader(opts);

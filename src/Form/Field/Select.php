@@ -142,14 +142,20 @@ JS;
      */
     public function loads($fields = [], $sourceUrls = [], string $idField = 'id', string $textField = 'text')
     {
-        $fieldsStr = implode('.', (array) $fields);
+        $fieldsStr = implode('^', array_map(function ($field) {
+            if (Str::contains($field, '.')) {
+                return str_replace('.', '_', $field).'_';
+            }
+
+            return $field;
+        }, (array) $fields));
         $urlsStr = implode('^', array_map(function ($url) {
             return admin_url($url);
         }, (array) $sourceUrls));
 
         $script = <<<JS
 (function () {
-    var fields = '$fieldsStr'.split('.');
+    var fields = '$fieldsStr'.split('^');
     var urls = '$urlsStr'.split('^');
     
     var refreshOptions = function(url, target) {
@@ -161,7 +167,7 @@ JS;
                     d.text = d.$textField;
                     return d;
                 })
-            }).trigger('change');
+            }).val(target.data('value')).trigger('change');
         });
     };
     
@@ -172,7 +178,7 @@ JS;
 
         fields.forEach(function(field, index){
             var target = $(_this).closest('.fields-group').find('.' + fields[index]);
-            
+
             if (_this.value !== '0' && ! _this.value) {
                 return;
             }
