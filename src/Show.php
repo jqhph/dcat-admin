@@ -3,7 +3,6 @@
 namespace Dcat\Admin;
 
 use Closure;
-use Dcat\Admin\Show\Row;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Show\AbstractTool;
 use Dcat\Admin\Show\Divider;
@@ -11,6 +10,7 @@ use Dcat\Admin\Show\Field;
 use Dcat\Admin\Show\Newline;
 use Dcat\Admin\Show\Panel;
 use Dcat\Admin\Show\Relation;
+use Dcat\Admin\Show\Row;
 use Dcat\Admin\Show\Tools;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Arrayable;
@@ -27,8 +27,8 @@ class Show implements Renderable
 {
     use HasBuilderEvents,
         Macroable {
-            __call as macroCall;
-        }
+        __call as macroCall;
+    }
 
     /**
      * @var string
@@ -95,9 +95,9 @@ class Show implements Renderable
     /**
      * Show constructor.
      *
-     * @param mixed $id                                $id
+     * @param mixed $id $id
      * @param Model|Builder|Repository|array|Arrayable $model
-     * @param \Closure                                 $builder
+     * @param \Closure $builder
      */
     public function __construct($id = null, $model = null, ?\Closure $builder = null)
     {
@@ -177,7 +177,7 @@ class Show implements Renderable
      */
     public function getKeyName()
     {
-        if (! $this->repository) {
+        if (!$this->repository) {
             return $this->keyName;
         }
 
@@ -212,7 +212,7 @@ class Show implements Renderable
     public function model(Fluent $model = null)
     {
         if ($model === null) {
-            if (! $this->model) {
+            if (!$this->model) {
                 $this->setupModel();
             }
 
@@ -237,13 +237,13 @@ class Show implements Renderable
      * Set a view to render.
      *
      * @param string $view
-     * @param array  $variables
+     * @param array $variables
      *
      * @return $this
      */
     public function view($view, $variables = [])
     {
-        if (! empty($variables)) {
+        if (!empty($variables)) {
             $this->with($variables);
         }
 
@@ -320,7 +320,7 @@ class Show implements Renderable
             return $this;
         }
 
-        if (! is_array($callback)) {
+        if (!is_array($callback)) {
             $callback = [$callback];
         }
 
@@ -357,7 +357,7 @@ class Show implements Renderable
             return $this->fields;
         }
 
-        if (! Arr::isAssoc($fields)) {
+        if (!Arr::isAssoc($fields)) {
             $fields = array_combine($fields, $fields);
         }
 
@@ -390,9 +390,9 @@ class Show implements Renderable
     /**
      * Add a relation to show.
      *
-     * @param string          $name
+     * @param string $name
      * @param string|\Closure $label
-     * @param null|\Closure   $builder
+     * @param null|\Closure $builder
      *
      * @return Relation
      */
@@ -430,9 +430,9 @@ class Show implements Renderable
     /**
      * Add a relation panel to show.
      *
-     * @param string   $name
+     * @param string $name
      * @param \Closure $builder
-     * @param string   $label
+     * @param string $label
      *
      * @return Relation
      */
@@ -611,7 +611,7 @@ class Show implements Renderable
      * Add field and relation dynamically.
      *
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return Field
      */
@@ -645,7 +645,7 @@ class Show implements Renderable
      * Handle relation field.
      *
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return $this|bool|Relation|Field
      */
@@ -683,15 +683,15 @@ class Show implements Renderable
             }
             $this->fields->each->fill($model);
             $this->relations->each->model($model);
-            $this->rows->each(function($row){
-                $row->getFields()->each(function($field){
+            $this->rows->each(function ($row) {
+                $row->getFields()->each(function ($field) {
                     $field['element']->fill($this->model());
                 });
             });
 
             $this->callComposing();
             $data = [
-                'panel'     => $this->panel->fill($this->fields),
+                'panel' => $this->panel->fill($this->fields),
                 'relations' => $this->relations,
             ];
             return view($this->view, $data)->render();

@@ -1,6 +1,7 @@
 <?php
 
 namespace Dcat\Admin\Show;
+
 use Dcat\Admin\Show;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
@@ -38,7 +39,7 @@ class Row implements Renderable
      * Row constructor.
      *
      * @param \Closure $callback
-     * @param Show     $show
+     * @param Show $show
      */
     public function __construct(\Closure $callback, Show $show)
     {
@@ -92,10 +93,11 @@ class Row implements Renderable
      */
     public function field($name, $label = '')
     {
-        $field = $this->show->field($name,$label);
-        $this->pushFields($field);
+        $field = $this->show->field($name, $label);
+        $this->pushField($field);
         return $field;
     }
+
     /**
      * Add field
      * @param $name
@@ -105,7 +107,7 @@ class Row implements Renderable
     public function __get($name)
     {
         $field = $this->show->__get($name);
-        $this->pushFields($field);
+        $this->pushField($field);
         return $field;
     }
 
@@ -117,9 +119,9 @@ class Row implements Renderable
      */
     public function __call($method, $arguments)
     {
-        $field = $this->show->__call($method,$arguments);
+        $field = $this->show->__call($method, $arguments);
 
-        $this->pushFields($field);
+        $this->pushField($field);
 
         return $field;
     }
@@ -127,15 +129,13 @@ class Row implements Renderable
     /**
      * @param $field
      */
-    public function pushFields($field)
+    public function pushField($field)
     {
         $this->fields->push([
-            'width'   => $this->defaultFieldWidth,
+            'width' => $this->defaultFieldWidth,
             'element' => $field,
         ]);
     }
-
-
 
 
 }

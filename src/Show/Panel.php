@@ -59,10 +59,10 @@ class Panel implements Renderable
     {
         $this->data = [
             'fields' => new Collection(),
-            'tools'  => new Tools($this),
-            'rows'   => $this->parent->rows(),
-            'style'  => 'default',
-            'title'  => trans('admin.detail'),
+            'tools' => new Tools($this),
+            'rows' => $this->parent->rows(),
+            'style' => 'default',
+            'title' => trans('admin.detail'),
         ];
     }
 
@@ -194,20 +194,6 @@ class Panel implements Renderable
         return $this;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return $this
-     */
-    public function setData(array $data)
-    {
-        collect($data)->each(function($value,$key){
-            if (Arr::has($this->data, $key)) {
-                $this->data[$key] = $value;
-            }
-        });
-        return $this;
-    }
 
     /**
      * Render this panel.
@@ -226,7 +212,7 @@ class Panel implements Renderable
     {
         $view = view($this->view, $this->data);
 
-        if (! $wrapper = $this->wrapper) {
+        if (!$wrapper = $this->wrapper) {
             return "<div class='card dcat-box'>{$view->render()}</div>";
         }
 
