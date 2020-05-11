@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Show;
 
-use Dcat\Admin\Show\Field;
 use Dcat\Admin\Show;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
@@ -63,7 +62,7 @@ class Row implements Renderable
     }
 
     /**
-     * @return Collection|Field[]
+     * @return Collection|\Dcat\Admin\Show\Field[]
      */
     public function fields()
     {
@@ -90,7 +89,7 @@ class Row implements Renderable
      * @param string $name
      * @param string $label
      *
-     * @return Field
+     * @return \Dcat\Admin\Show\Field
      */
     public function field($name, $label = '')
     {
@@ -106,7 +105,7 @@ class Row implements Renderable
      *
      * @param $name
      *
-     * @return Field|\Illuminate\Support\Collection
+     * @return \Dcat\Admin\Show\Field|Collection
      */
     public function __get($name)
     {
@@ -121,7 +120,7 @@ class Row implements Renderable
      * @param $method
      * @param $arguments
      *
-     * @return Field
+     * @return \Dcat\Admin\Show\Field
      */
     public function __call($method, $arguments)
     {
@@ -133,7 +132,7 @@ class Row implements Renderable
     }
 
     /**
-     * @param Field $field
+     * @param \Dcat\Admin\Show\Field $field
      *
      * @return void
      */
