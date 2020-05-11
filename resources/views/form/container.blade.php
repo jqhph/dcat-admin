@@ -11,6 +11,7 @@
         <div class="fields-group">
             @if($form->hasRows())
                 <div class="ml-2 mb-2">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @foreach($form->rows() as $row)
                         {!! $row->render() !!}
                     @endforeach
