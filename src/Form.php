@@ -781,13 +781,13 @@ class Form implements Renderable
         $this->builder->setResourceId($id);
         $this->builder->mode(Builder::MODE_EDIT);
 
+        $this->inputs = $data;
+
         $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
 
         $this->build();
 
         $this->setFieldOriginalValue();
-
-        $this->inputs = $data;
 
         if ($response = $this->callSubmitted()) {
             return $response;
