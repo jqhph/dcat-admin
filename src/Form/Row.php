@@ -109,7 +109,7 @@ class Row implements Renderable
      *
      * @return array
      */
-    public function getFields()
+    public function fields()
     {
         return $this->fields;
     }
