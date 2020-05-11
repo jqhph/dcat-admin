@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 class Row implements Renderable
 {
-
     /**
      * Callback for add field to current row.s.
      *
@@ -70,7 +69,6 @@ class Row implements Renderable
         return $this->fields;
     }
 
-
     /**
      * Set width for a incomming field.
      *
@@ -95,11 +93,12 @@ class Row implements Renderable
     {
         $field = $this->show->field($name, $label);
         $this->pushField($field);
+
         return $field;
     }
 
     /**
-     * Add field
+     * Add field.
      * @param $name
      *
      * @return \Dcat\Admin\Show\Field|\Illuminate\Support\Collection
@@ -108,6 +107,7 @@ class Row implements Renderable
     {
         $field = $this->show->__get($name);
         $this->pushField($field);
+
         return $field;
     }
 
@@ -136,6 +136,4 @@ class Row implements Renderable
             'element' => $field,
         ]);
     }
-
-
 }
