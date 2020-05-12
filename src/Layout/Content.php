@@ -15,7 +15,7 @@ class Content implements Renderable
     /**
      * @var string
      */
-    protected $view = 'admin::layouts.content';
+    public $view = 'admin::layouts.content';
 
     /**
      * @var array
