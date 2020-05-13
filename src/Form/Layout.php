@@ -69,11 +69,12 @@ class Layout
     /**
      * Build html of content.
      *
+     * @param  bool  $isAlignCenter
      * @return string
      */
-    public function build()
+    public function build($isAlignCenter = false)
     {
-        $html = '<div class="row">';
+        $html = $alignCenter ? '<div class="row justify-content-md-center">' : '<div class="row">';
 
         foreach ($this->columns as $column) {
             $html .= $column->render();

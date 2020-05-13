@@ -265,6 +265,11 @@ class Form implements Renderable
     protected $conditions = [];
 
     /**
+     * @var bool Whether the form is centered.
+     */
+    protected $alignCenter = false;
+
+    /**
      * Create a new form instance.
      *
      * @param Repository|Model|\Illuminate\Database\Eloquent\Builder|string $model
@@ -1739,6 +1744,22 @@ class Form implements Renderable
         }
 
         return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAlignCenter(): bool
+    {
+        return $this->alignCenter;
+    }
+
+    /**
+     * @param  bool  $alignCenter
+     */
+    public function setAlignCenter(bool $alignCenter): void
+    {
+        $this->alignCenter = $alignCenter;
     }
 
     /**

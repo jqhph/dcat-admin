@@ -843,7 +843,7 @@ class Builder
         );
 
         return <<<EOF
-{$open} {$this->layout->build()} {$this->close()}
+{$open} {$this->layout->build($this->form->isAlignCenter())} {$this->close()}
 EOF;
     }
 
