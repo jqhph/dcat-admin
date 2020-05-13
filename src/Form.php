@@ -835,7 +835,7 @@ class Form implements Renderable
                 $keyName = $field->getKeyName();
 
                 foreach ($input as $k => &$v) {
-                    if (empty($v[$keyName])) {
+                    if (! array_key_exists($keyName, $v)) {
                         $v[$keyName] = $k;
                     }
 
