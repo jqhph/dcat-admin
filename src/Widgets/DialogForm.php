@@ -305,7 +305,6 @@ JS
         Admin::baseCss([]);
         Admin::baseJs([]);
         Admin::fonts(false);
-        Admin::style('.form-content{ padding-top: 7px }');
 
         $form->wrap(function ($v) {
             return $v;

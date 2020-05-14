@@ -76,7 +76,7 @@ trait ImageField
     public function __call($method, $arguments)
     {
         if (static::hasMacro($method)) {
-            return parent::__call($method, $arguments);
+            return $this;
         }
 
         if (! class_exists(ImageManagerStatic::class)) {

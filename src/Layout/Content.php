@@ -6,12 +6,11 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\ViewErrorBag;
 
 class Content implements Renderable
 {
-    use HasBuilderEvents, Macroable;
+    use HasBuilderEvents;
 
     /**
      * @var string
