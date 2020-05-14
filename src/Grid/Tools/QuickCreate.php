@@ -22,14 +22,17 @@ class QuickCreate implements Renderable
      * @var Collection
      */
     protected $fields;
+
     /**
      * @var string
      */
     protected $action;
+
     /**
      * @var string
      */
-    protected $method;
+    protected $method = 'POST';
+
     /**
      * QuickCreate constructor.
      *
@@ -40,7 +43,6 @@ class QuickCreate implements Renderable
         $this->parent = $grid;
         $this->fields = Collection::make();
         $this->action = request()->url();
-        $this->method = "POST";
     }
 
     protected function formatPlaceholder($placeholder)
@@ -270,22 +272,26 @@ class QuickCreate implements Renderable
         return "admin::grid.quick-create.{$name}";
     }
     /**
-     * @param $action
+     * @param string $action
+     *
      * @return $this
      */
-    public function action($action)
+    public function action(?string $action)
     {
         $this->action = admin_url($action);
+
         return $this;
     }
 
     /**
      * @param string $method
+     *
      * @return $this
      */
-    public function method($method = "POST")
+    public function method(?string $method = 'POST')
     {
         $this->method = $method;
+
         return $this;
     }
 
