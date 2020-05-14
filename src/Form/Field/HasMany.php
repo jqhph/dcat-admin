@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -118,6 +119,12 @@ class HasMany extends Field
         foreach ($form->fields() as $field) {
             if (! $fieldRules = $field->getRules()) {
                 continue;
+            }
+
+            if ($field instanceof File) {
+                $fieldRules = is_string($fieldRules) ? explode('|', $fieldRules) : $fieldRules;
+
+                Helper::deleteByValue($fieldRules, ['image', 'file']);
             }
 
             $column = $field->column();

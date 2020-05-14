@@ -37,7 +37,7 @@
 {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
 
 <div class="app-content content">
-    <div class="wrapper">
+    <div class="wrapper" id="{{ $pjaxContainerId }}">
         @yield('app')
     </div>
 </div>
