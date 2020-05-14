@@ -3,6 +3,7 @@
 namespace Dcat\Admin;
 
 use Dcat\Admin\Support\Helper;
+use Illuminate\Support\Traits\Macroable;
 
 /**
  * Class Color.
@@ -57,6 +58,8 @@ use Dcat\Admin\Support\Helper;
  */
 class Color
 {
+    use Macroable;
+
     const DEFAULT_COLOR = 'indigo';
 
     /**

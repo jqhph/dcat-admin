@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin;
 
+use Closure;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Show\AbstractTool;
 use Dcat\Admin\Show\Divider;
@@ -9,6 +10,7 @@ use Dcat\Admin\Show\Field;
 use Dcat\Admin\Show\Newline;
 use Dcat\Admin\Show\Panel;
 use Dcat\Admin\Show\Relation;
+use Dcat\Admin\Show\Row;
 use Dcat\Admin\Show\Tools;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Arrayable;
@@ -85,6 +87,10 @@ class Show implements Renderable
      * @var Panel
      */
     protected $panel;
+    /**
+     * @var \Illuminate\Support\Collection
+     */
+    protected $rows;
 
     /**
      * Show constructor.
@@ -108,7 +114,7 @@ class Show implements Renderable
             default:
                 $this->setKey($id);
         }
-
+        $this->rows = new Collection();
         $this->builder = $builder;
 
         $this->initModel($model);
@@ -691,6 +697,28 @@ class Show implements Renderable
         } catch (\Throwable $e) {
             return Admin::makeExceptionHandler()->renderException($e);
         }
+    }
+
+    /**
+     * Add a row in Show.
+     *
+     * @param Closure $callback
+     *
+     * @return $this
+     */
+    public function row(Closure $callback)
+    {
+        $this->rows->push(new Row($callback, $this));
+
+        return $this;
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function rows()
+    {
+        return $this->rows;
     }
 
     /**
