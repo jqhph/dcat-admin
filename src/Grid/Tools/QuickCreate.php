@@ -271,6 +271,7 @@ class QuickCreate implements Renderable
 
         return "admin::grid.quick-create.{$name}";
     }
+
     /**
      * @param string $action
      *
