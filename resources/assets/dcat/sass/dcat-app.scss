@@ -35,6 +35,10 @@ body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5, h6, .h1, .h2
   font-family: $font-family-sans-serif;
 }
 
+li {
+  list-style-type: none;
+}
+
 // 颜色class定义
 @import "./colors";
 // 常用class定义
