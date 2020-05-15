@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Illuminate\Support\Arr;
 
 class RowSelector
 {
@@ -93,7 +94,7 @@ JS
     protected function getTitle($row, $id)
     {
         if ($key = $this->titleColumn) {
-            $label = $row->{$key};
+            $label = Arr::get($row->toArray(), $key);
             if ($label !== null && $label !== '') {
                 return $label;
             }
