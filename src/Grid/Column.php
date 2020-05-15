@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid;
 use Closure;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
+use Dcat\Admin\Grid\Displayers\Editable;
 use Dcat\Admin\Grid\Displayers\Orderable;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasDefinitions;
@@ -71,7 +72,6 @@ class Column
      * @var array
      */
     protected static $displayers = [
-        'editable'         => Displayers\Editable::class,
         'switch'           => Displayers\SwitchDisplay::class,
         'switchGroup'      => Displayers\SwitchGroup::class,
         'select'           => Displayers\Select::class,
@@ -92,6 +92,7 @@ class Column
         'copyable'         => Displayers\Copyable::class,
         'orderable'        => Displayers\Orderable::class,
         'limit'            => Displayers\Limit::class,
+        'editable'         => Displayers\Editable::class,
     ];
 
     /**
