@@ -5,30 +5,29 @@
     .close-tab {
         position: absolute;
         font-size: 10px;
-        top: 2px;
-        right: 5px;
-        color: #94A6B0;
+        top: 20px;
+        right: 0;
         cursor: pointer;
         display: none;
     }
 </style>
 <div id="has-many-{{$column}}" class="nav-tabs-custom has-many-{{$column}}">
     <div class="row header">
-        <div class="col-md-{{$viewClass['label']}}"><h4 class="pull-right">{!! $label !!}</h4></div>
-        <div class="col-md-{{$viewClass['field']}}">
-            <button type="button" class="btn btn-white btn-sm add"><i class="fa fa-plus-circle" style="font-size: large;"></i></button>
+        <div class="{{$viewClass['label']}}"><h4 class="pull-right">{!! $label !!}</h4></div>
+        <div class="{{$viewClass['field']}}">
+            <div class="add btn btn-white btn-sm"><i class="feather icon-plus"></i>&nbsp;{{ trans('admin.new') }}</div>
         </div>
     </div>
 
-    <hr style="margin-top: 0px;">
+    <hr class="mb-0 mt-0">
 
     <ul class="nav nav-tabs">
         @foreach($forms as $pk => $form)
-            <li class="@if ($form == reset($forms)) active @endif ">
-                <a href="#{{ $relationName . '_' . $pk }}" data-toggle="tab">
-                    {{ $pk }} <i class="fa fa-exclamation-circle text-red hide"></i>
+            <li class="nav-item ">
+                <a href="#{{ $relationName . '_' . $pk }}" class="nav-link @if ($form == reset($forms)) active @endif " data-toggle="tab">
+                    {{ $pk }} <i class="feather icon-alert-circle text-red d-none"></i>
                 </a>
-                <i class="close-tab fa fa-times" ></i>
+                <i class="close-tab feather icon-trash text-red"></i>
             </li>
         @endforeach
 
@@ -46,11 +45,11 @@
     </div>
 
     <template class="nav-tab-tpl">
-        <li class="new">
-            <a href="#{{ $relationName . '_new_' . \Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}" data-toggle="tab">
-                &nbsp;New {{ \Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }} <i class="fa fa-exclamation-circle text-red hide"></i>
+        <li class="new nav-item">
+            <a href="#{{ $relationName . '_new_' . \Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}" class="nav-link" data-toggle="tab">
+                &nbsp;New {{ \Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }} <i class="feather icon-alert-circle text-red d-none"></i>
             </a>
-            <i class="close-tab fa fa-times" ></i>
+            <i class="close-tab feather icon-trash text-red" ></i>
         </li>
     </template>
     <template class="pane-tpl">
