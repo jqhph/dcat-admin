@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
+ * @method $this editable()
  * @method $this switch(string $color = '')
  * @method $this switchGroup($columns = [], string $color = '')
  * @method $this image($server = '', int $width = 200, int $height = 200)
@@ -68,6 +69,7 @@ class Column
      * @var array
      */
     protected static $displayers = [
+        'editable'         => Displayers\Editable::class,
         'switch'           => Displayers\SwitchDisplay::class,
         'switchGroup'      => Displayers\SwitchGroup::class,
         'select'           => Displayers\Select::class,
