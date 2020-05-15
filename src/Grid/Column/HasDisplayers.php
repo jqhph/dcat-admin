@@ -6,7 +6,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
-use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -215,39 +214,6 @@ trait HasDisplayers
             $background = Admin::color()->get($style);
 
             return "<i class='fa fa-circle' style='font-size: 13px;color: {$background}'></i>&nbsp;&nbsp;";
-        });
-    }
-
-    /**
-     * Limit the number of characters in a string, or the number of element in a array.
-     *
-     * @param int    $limit
-     * @param string $end
-     *
-     * @return $this
-     */
-    public function limit($limit = 100, $end = '...')
-    {
-        return $this->display(function ($value) use ($limit, $end) {
-            if ($value !== null && ! is_scalar($value)) {
-                $value = Helper::array($value);
-
-                if (count($value) <= $limit) {
-                    return $value;
-                }
-
-                $value = array_slice($value, 0, $limit);
-
-                array_push($value, $end);
-
-                return $value;
-            }
-
-            if (mb_strlen($value, 'UTF-8') <= $limit) {
-                return $value;
-            }
-
-            return mb_substr($value, 0, $limit).$end;
         });
     }
 

@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid;
 use Closure;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
+use Dcat\Admin\Grid\Displayers\Orderable;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasDefinitions;
 use Illuminate\Contracts\Support\Arrayable;
@@ -36,6 +37,7 @@ use Illuminate\Support\Traits\Macroable;
  * @method $this downloadable($server = '', $disk = null)
  * @method $this copyable()
  * @method $this orderable()
+ * @method $this limit(int $limit = 100, string $end = '...')
  * @method $this ascii()
  * @method $this camel()
  * @method $this finish($cap)
@@ -89,6 +91,7 @@ class Column
         'downloadable'     => Displayers\Downloadable::class,
         'copyable'         => Displayers\Copyable::class,
         'orderable'        => Displayers\Orderable::class,
+        'limit'            => Displayers\Limit::class,
     ];
 
     /**
