@@ -10,15 +10,8 @@ class Application
     {
         if ($app) {
             Admin::app()->current($app);
-
-            $this->withSessionPath();
         }
 
         return $next($request);
-    }
-
-    protected function withSessionPath()
-    {
-        config(['session.path' => '/'.trim(config('admin.route.prefix'), '/')]);
     }
 }

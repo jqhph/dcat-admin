@@ -48,7 +48,7 @@ return [
     */
     'route' => [
 
-        'prefix' => env('ADMIN_ROUTE_PREFIX', 'DummyApp'),
+        'prefix' => 'DummyApp',
 
         'namespace' => 'App\\DummyNamespace\\Controllers',
 

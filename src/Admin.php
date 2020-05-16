@@ -239,7 +239,7 @@ class Admin
         $attributes = [
             'prefix'     => admin_base_path('dcat-api'),
             'middleware' => config('admin.route.middleware'),
-            'as'         => $as,
+            'as'         => $as ?: static::app()->getApiRoutePrefix(Application::DEFAULT),
         ];
 
         app('router')->group($attributes, function ($router) {
