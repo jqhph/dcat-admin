@@ -708,6 +708,8 @@ JS;
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
+        Admin::style('.table-has-many .input-group{flex-wrap: nowrap!important}');
+
         return parent::render()->with([
             'headers'      => $headers,
             'forms'        => $this->buildRelatedForms(),
