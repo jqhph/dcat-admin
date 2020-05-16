@@ -230,14 +230,16 @@ class Admin
     /**
      * 注册api路由.
      *
+     * @param string $as
+     *
      * @return void
      */
-    public static function registerApiRoutes()
+    public static function registerApiRoutes(string $as = null)
     {
         $attributes = [
-            'prefix' => admin_base_path('dcat-api'),
+            'prefix'     => admin_base_path('dcat-api'),
             'middleware' => config('admin.route.middleware'),
-            'as' => 'dcat.api.',
+            'as'         => $as,
         ];
 
         app('router')->group($attributes, function ($router) {
@@ -309,6 +311,14 @@ class Admin
         }
 
         return new Proxy($repository);
+    }
+
+    /**
+     * @return Application
+     */
+    public static function app()
+    {
+        return app('admin.app');
     }
 
     /**

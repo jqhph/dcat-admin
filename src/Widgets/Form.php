@@ -651,7 +651,7 @@ JS
     {
         if (method_exists($this, 'handle')) {
             $this->method('POST');
-            $this->action(route('dcat.api.form'));
+            $this->action(route(admin_api_route('form')));
             $this->hidden('_form_')->default(get_called_class());
             $this->hidden('_current_')->default($this->getCurrentUrl());
         }
