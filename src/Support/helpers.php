@@ -383,7 +383,6 @@ if (! function_exists('admin_asset')) {
     }
 }
 
-
 if (! function_exists('admin_api_route')) {
 
     /**

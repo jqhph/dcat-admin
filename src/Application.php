@@ -56,7 +56,7 @@ class Application
     }
 
     /**
-     * 获取当前应用名称
+     * 获取当前应用名称.
      *
      * @return string
      */
