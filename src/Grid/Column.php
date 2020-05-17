@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
- * @method $this editable()
+ * @method $this editable(bool $refresh = false)
  * @method $this switch(string $color = '')
  * @method $this switchGroup($columns = [], string $color = '')
  * @method $this image($server = '', int $width = 200, int $height = 200)

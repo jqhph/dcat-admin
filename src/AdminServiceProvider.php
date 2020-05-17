@@ -33,6 +33,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\ActionCommand::class,
         Console\MenuCacheCommand::class,
         Console\MinifyCommand::class,
+        Console\AppCommand::class,
     ];
 
     /**
@@ -55,6 +56,7 @@ class AdminServiceProvider extends ServiceProvider
         'admin.bootstrap'  => Middleware\Bootstrap::class,
         'admin.session'    => Middleware\Session::class,
         'admin.upload'     => Middleware\WebUploader::class,
+        'admin.app'        => Middleware\Application::class,
     ];
 
     /**
@@ -77,7 +79,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerDefaultSections();
         $this->registerViews();
         $this->ensureHttps();
-        $this->registerRoutes();
+        $this->bootApplication();
         $this->registerPublishing();
         $this->compatibleBlade();
     }
@@ -127,13 +129,9 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * 路由注册.
      */
-    protected function registerRoutes()
+    protected function bootApplication()
     {
-        Admin::registerApiRoutes();
-
-        if (is_file($routes = admin_path('routes.php'))) {
-            $this->loadRoutesFrom($routes);
-        }
+        Admin::app()->boot();
     }
 
     /**
@@ -211,6 +209,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerServices()
     {
+        $this->app->singleton('admin.app', Application::class);
         $this->app->singleton('admin.asset', Asset::class);
         $this->app->singleton('admin.color', Color::class);
         $this->app->singleton('admin.sections', SectionManager::class);

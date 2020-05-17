@@ -98,7 +98,7 @@ class LogOperation
      */
     protected function inExceptArray($request)
     {
-        if ($request->routeIs('dcat.api.value')) {
+        if ($request->routeIs(admin_api_route('value'))) {
             return true;
         }
 

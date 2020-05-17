@@ -8,18 +8,27 @@ class Editable extends AbstractDisplayer
 {
     protected $selector = 'grid-editable';
 
-    public function display()
+    public function display($refresh = false)
     {
         $this->addScript();
         $this->addStyle();
 
+        $label = __('admin.save');
+
         return <<<HTML
-            <div>
-                <span class="{$this->selector}" >
-                    {$this->value}
-                </span>
-                 <i class="feather icon-check btn-outline-primary hidden" data-value="{$this->value}" data-name="{$this->column->getName()}" data-id="{$this->getKey()}" data-url="{$this->getUrl()}"></i>
-            </div>
+<div>
+    <span class="{$this->selector}" contenteditable="true">
+        {$this->value}
+    </span>
+    <span class="save hidden" 
+        data-value="{$this->value}" 
+        data-name="{$this->column->getName()}" 
+        data-id="{$this->getKey()}" 
+        data-refresh="{$refresh}"
+        data-url="{$this->getUrl()}">
+        {$label}
+    </span>
+</div>
 HTML;
     }
 
@@ -35,7 +44,7 @@ HTML;
         Admin::style(
             <<<CSS
 .grid-editable{border-bottom:dashed 1px $color;color: $color;display: inline-block}
-.grid-editable,.icon-check{margin-left: 0.4rem}
+.grid-editable+.save{margin-left: 0.55rem;color: $color}
 CSS
         );
     }
@@ -43,55 +52,56 @@ CSS
     protected function addScript()
     {
         $script = <<<JS
-            $(".{$this->selector}").on("click",function() {
-                $(this).attr('contenteditable', true);
-                $(this).next().removeClass("hidden");
-            })
-            $(".icon-check").on("click",function() {
-                var obj = $(this);
-                var url = obj.attr('data-url');
-                var name = obj.attr('data-name');
-                var old_value = obj.attr('data-value').trim();
-                var rebr = new RegExp("<br>","g");
-                var renbsp = new RegExp("&nbsp;","g");
-                var value = obj.prev().html().replace(rebr,'').replace(renbsp,'').trim();
-                if (value == old_value) {
-                    obj.addClass("hidden").prev().attr('contenteditable', false);
-                    return;
-                }
+$(".{$this->selector}").on("click", function() {
+    $(this).next().removeClass("hidden");
+}).on('blur', function () {
+    var icon = $(this).next();
+    setTimeout(function () {
+        icon.addClass("hidden")
+    }, 200)
+});
+$('.{$this->selector}+.save').on("click",function() {
+    var obj = $(this),
+        url = obj.data('url'),
+        name = obj.data('name'),
+        refresh = obj.data('refresh'),
+        old_value = obj.data('value').trim(),
+        value = obj.prev().html().replace(new RegExp("<br>","g"), '').replace(new RegExp("&nbsp;","g"), '').trim();
+    
+    var data = {
+        _token: Dcat.token,
+        _method: 'PUT'
+    };
+    data[name] = value;
+    Dcat.NP.start();
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: data,
+        success: function (data) {
+            if (data.status) {
+                obj.attr('data-value',value).addClass("hidden").prev().html(value);
+                Dcat.success(data.message);
                 
-                var data = {
-                    _token: Dcat.token,
-                    _method: 'PUT'
-                };
-                data[name] = value;
-                Dcat.NP.start();
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: data,
-                    success: function (data) {
-                        if (data.status) {
-                            obj.attr('data-value',value).addClass("hidden").prev().html(value).attr('contenteditable', false);
-                            Dcat.success(data.message);
-                        } else {
-                            obj.prev().html(old_value);
-                            Dcat.error(data.message);
-                        }
-                    },
-                    error:function(a,b,c) {
-                        obj.prev().html(old_value);
-                        Dcat.handleAjaxError(a, b, c);
-                    },
-                    complete:function(a,b) {
-                        Dcat.NP.done();
-                    }
-                });
-            })
+                refresh && Dcat.reload()
+            } else {
+                obj.prev().html(old_value);
+                Dcat.error(data.message);
+            }
+        },
+        error:function(a,b,c) {
+            obj.prev().html(old_value);
+            Dcat.handleAjaxError(a, b, c);
+        },
+        complete:function(a,b) {
+            Dcat.NP.done();
+        }
+    });
+    
+    return false;
+})
 JS;
 
         Admin::script($script);
     }
-
-
 }
