@@ -20,7 +20,7 @@ class Editable extends AbstractDisplayer
     <span class="{$this->selector}" contenteditable="true">
         {$this->value}
     </span>
-    <span class="save btn-outline-primary hidden" 
+    <span class="save hidden" 
         data-value="{$this->value}" 
         data-name="{$this->column->getName()}" 
         data-id="{$this->getKey()}" 
@@ -44,7 +44,7 @@ HTML;
         Admin::style(
             <<<CSS
 .grid-editable{border-bottom:dashed 1px $color;color: $color;display: inline-block}
-.grid-editable+.save{margin-left: 0.55rem;}
+.grid-editable+.save{margin-left: 0.55rem;color: $color}
 CSS
         );
     }
