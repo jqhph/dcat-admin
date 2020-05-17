@@ -203,7 +203,8 @@ class InstallCommand extends Command
         $file = $this->directory.'/routes.php';
 
         $contents = $this->getStub('routes');
-        $this->laravel['files']->put($file, str_replace('DummyNamespace', $this->namespace('Controllers'), $contents));
+        $app = Helper::slug($namespace = $this->argument('name'));
+        $this->laravel['files']->put($file, str_replace(['DummyNamespace', 'DummyApp'], [$namespace, $app], $contents));
         $this->line('<info>Routes file was created:</info> '.str_replace(base_path(), '', $file));
     }
 

@@ -7,9 +7,9 @@ use Dcat\Admin\Admin;
 Admin::routes();
 
 Route::group([
-    'prefix'        => config('admin.route.prefix'),
-    'namespace'     => config('admin.route.namespace'),
-    'middleware'    => config('admin.route.middleware'),
+    'prefix'        => config('DummyApp.route.prefix'),
+    'namespace'     => config('DummyApp.route.namespace'),
+    'middleware'    => config('DummyApp.route.middleware'),
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
