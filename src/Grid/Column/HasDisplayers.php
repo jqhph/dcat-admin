@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
+use Dcat\Admin\Grid\RowAction;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -249,5 +250,31 @@ trait HasDisplayers
         });
 
         return $this->displayUsing(Grid\Displayers\Tree::class);
+    }
+
+    /**
+     * Display column using a grid row action.
+     *
+     * @param string $action
+     *
+     * @return $this
+     */
+    public function action($action)
+    {
+        if (! is_subclass_of($action, RowAction::class)) {
+            throw new \InvalidArgumentException("Action class [$action] must be sub-class of [Dcat\Admin\Grid\RowAction]");
+        }
+
+        $grid = $this->grid;
+
+        return $this->display(function ($_, $column) use ($action, $grid) {
+            /** @var RowAction $action */
+            $action = $action::make();
+
+            return $action
+                ->setGrid($grid)
+                ->setColumn($column)
+                ->setRow($this);
+        });
     }
 }
