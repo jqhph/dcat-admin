@@ -1,5 +1,6 @@
 <?php
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
@@ -379,5 +380,18 @@ if (! function_exists('admin_asset')) {
     function admin_asset($path)
     {
         return Dcat\Admin\Admin::asset()->url($path);
+    }
+}
+
+if (! function_exists('admin_api_route')) {
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    function admin_api_route(string $path = '')
+    {
+        return Dcat\Admin\Admin::app()->getCurrentApiRoutePrefix().$path;
     }
 }

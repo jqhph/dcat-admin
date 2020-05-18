@@ -10,7 +10,7 @@
 
 import Dcat from './Dcat'
 
-import NProgress from './nprogress/NProgress.min'
+import NProgress from './NProgress/NProgress.min'
 import Ajax from './extensions/Ajax'
 import Toastr from './extensions/Toastr'
 import SweetAlert2 from './extensions/SweetAlert2'

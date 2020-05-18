@@ -59,13 +59,23 @@ class InstallCommand extends Command
     }
 
     /**
-     * Initialize the admAin directory.
+     * Set admin directory.
+     *
+     * @return void
+     */
+    protected function setDirectory()
+    {
+        $this->directory = config('admin.directory');
+    }
+
+    /**
+     * Initialize the admin directory.
      *
      * @return void
      */
     protected function initAdminDirectory()
     {
-        $this->directory = config('admin.directory');
+        $this->setDirectory();
 
         if (is_dir($this->directory)) {
             $this->warn("{$this->directory} directory already exists !");

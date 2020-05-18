@@ -172,7 +172,7 @@ EOF;
 
     protected function getSelectorPrefix()
     {
-        return $this->grid->getName().'_'.$this->column->getName();
+        return $this->grid->getName().'_'.$this->column->getName().'_'.$this->getKey();
     }
 
     protected function setupScript()
