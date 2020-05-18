@@ -65,7 +65,7 @@ $('.{$this->selector}+.save').on("click",function() {
         url = obj.data('url'),
         name = obj.data('name'),
         refresh = obj.data('refresh'),
-        old_value = obj.data('value').trim(),
+        old_value = obj.data('value'),
         value = obj.prev().html().replace(new RegExp("<br>","g"), '').replace(new RegExp("&nbsp;","g"), '').trim();
     
     var data = {
