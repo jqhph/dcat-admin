@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Controllers;
 
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
@@ -12,23 +13,11 @@ use Dcat\Admin\Widgets\Box;
 
 class MenuController extends AdminController
 {
-    /**
-     * Get content title.
-     *
-     * @return string
-     */
     public function title()
     {
         return trans('admin.menu');
     }
 
-    /**
-     * Index interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
     public function index(Content $content)
     {
         return $content
@@ -38,7 +27,7 @@ class MenuController extends AdminController
                 $row->column(7, $this->treeView()->render());
 
                 $row->column(5, function (Column $column) {
-                    $form = new \Dcat\Admin\Widgets\Form();
+                    $form = new WidgetForm();
                     $form->action(admin_url('auth/menu'));
 
                     $menuModel = config('admin.database.menu_model');
@@ -72,29 +61,27 @@ class MenuController extends AdminController
     {
         $menuModel = config('admin.database.menu_model');
 
-        $tree = new Tree(new $menuModel());
+        return new Tree(new $menuModel(), function (Tree $tree) {
+            $tree->disableCreateButton();
+            $tree->disableQuickCreateButton();
+            $tree->disableEditButton();
 
-        $tree->disableCreateButton();
-        $tree->disableQuickCreateButton();
-        $tree->disableEditButton();
+            $tree->branch(function ($branch) {
+                $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
 
-        $tree->branch(function ($branch) {
-            $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
+                if (! isset($branch['children'])) {
+                    if (url()->isValidUrl($branch['uri'])) {
+                        $uri = $branch['uri'];
+                    } else {
+                        $uri = admin_base_path($branch['uri']);
+                    }
 
-            if (! isset($branch['children'])) {
-                if (url()->isValidUrl($branch['uri'])) {
-                    $uri = $branch['uri'];
-                } else {
-                    $uri = admin_base_path($branch['uri']);
+                    $payload .= "&nbsp;&nbsp;&nbsp;<a href=\"$uri\" class=\"dd-nodrag\">$uri</a>";
                 }
 
-                $payload .= "&nbsp;&nbsp;&nbsp;<a href=\"$uri\" class=\"dd-nodrag\">$uri</a>";
-            }
-
-            return $payload;
+                return $payload;
+            });
         });
-
-        return $tree;
     }
 
     /**

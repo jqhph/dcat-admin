@@ -19,13 +19,6 @@ class ExtensionController extends Controller
 {
     use HasResourceActions;
 
-    /**
-     * Index interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
     public function index(Content $content)
     {
         $this->define();
@@ -36,9 +29,6 @@ class ExtensionController extends Controller
             ->body($this->grid());
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function import()
     {
         $extension = request('id');
@@ -63,87 +53,82 @@ class ExtensionController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new Extension());
+        return new Grid(new Extension(), function (Grid $grid) {
+            $grid->number();
+            $grid->name;
+            $grid->version;
+            $grid->alias;
 
-        $grid->number();
-        $grid->name;
-        $grid->version;
-        $grid->alias;
+            $grid->description
+                ->if(function () {
+                    return mb_strlen($this->description) > 14;
+                })
+                ->display(function ($v) {
+                    return mb_substr($v, 0, 14);
+                })
+                ->expand(function ($expand) {
+                    if (! $this->description) {
+                        return;
+                    }
 
-        $grid->description
-            ->if(function () {
-                return mb_strlen($this->description) > 14;
-            })
-            ->limit(14)
-            ->expand(function ($expand) {
-                if (! $this->description) {
-                    return;
-                }
+                    return "<div style='padding:10px 20px'>{$this->description}</div>";
+                });
 
-                return "<div style='padding:10px 20px'>{$this->description}</div>";
+            $grid->authors;
+            $grid->enable->switch();
+            $grid->imported;
+
+            $view = trans('admin.view');
+            $grid->config
+                ->if(function () {
+                    return $this->config ? true : false;
+                })
+                ->display($view)
+                ->expand($this->getExpandHandler('config'))
+                ->else()
+                ->emptyString();
+
+            $grid->require
+                ->if(function () {
+                    return $this->require ? true : false;
+                })
+                ->display($view)
+                ->expand($this->getExpandHandler())
+                ->else()
+                ->emptyString();
+
+            $grid->require_dev
+                ->if(function () {
+                    return $this->require_dev ? true : false;
+                })
+                ->display($view)
+                ->expand($this->getExpandHandler('require_dev'))
+                ->else()
+                ->emptyString();
+
+            $grid->disablePagination();
+            $grid->disableCreateButton();
+            $grid->disableDeleteButton();
+            $grid->disableBatchDelete();
+            $grid->disableFilterButton();
+            $grid->disableFilter();
+            $grid->disableQuickEditButton();
+            $grid->disableEditButton();
+            $grid->disableDeleteButton();
+            $grid->disableViewButton();
+
+            $grid->actions(new ImportButton());
+
+            $grid->quickCreate(function (Grid\Tools\QuickCreate $create) {
+                $create->text('package_name')->required();
+                $create->text('namespace')
+                    ->attribute('style', 'width:240px')
+                    ->required()
+                    ->default('Dcat\\Admin\\Extension\\:Name');
             });
-
-        $grid->authors;
-        $grid->enable->switch();
-        $grid->imported;
-
-        $view = trans('admin.view');
-        $grid->config
-            ->if(function () {
-                return $this->config ? true : false;
-            })
-            ->display($view)
-            ->expand($this->getExpandHandler('config'))
-            ->else()
-            ->emptyString();
-
-        $grid->require
-            ->if(function () {
-                return $this->require ? true : false;
-            })
-            ->display($view)
-            ->expand($this->getExpandHandler())
-            ->else()
-            ->emptyString();
-
-        $grid->require_dev
-            ->if(function () {
-                return $this->require_dev ? true : false;
-            })
-            ->display($view)
-            ->expand($this->getExpandHandler('require_dev'))
-            ->else()
-            ->emptyString();
-
-        $grid->disablePagination();
-        $grid->disableCreateButton();
-        $grid->disableDeleteButton();
-        $grid->disableBatchDelete();
-        $grid->disableFilterButton();
-        $grid->disableFilter();
-        $grid->disableQuickEditButton();
-        $grid->disableEditButton();
-        $grid->disableDeleteButton();
-        $grid->disableViewButton();
-
-        $grid->actions(new ImportButton());
-
-        $grid->quickCreate(function (Grid\Tools\QuickCreate $create) {
-            $create->text('package_name')->required();
-            $create->text('namespace')
-                ->attribute('style', 'width:240px')
-                ->required()
-                ->default('Dcat\\Admin\\Extension\\:Name');
         });
-
-        return $grid;
     }
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
     public function form()
     {
         $form = new Form(new Extension());
@@ -177,11 +162,6 @@ class ExtensionController extends Controller
         return $form;
     }
 
-    /**
-     * 创建扩展.
-     *
-     * @return string
-     */
     public function createExtension($package, $namespace)
     {
         $namespace = trim($namespace, '\\');
@@ -196,11 +176,6 @@ class ExtensionController extends Controller
         return $output->getContent();
     }
 
-    /**
-     * @param string $key
-     *
-     * @return \Closure
-     */
     protected function getExpandHandler($key = 'require')
     {
         return function () use ($key) {
@@ -219,9 +194,6 @@ class ExtensionController extends Controller
         };
     }
 
-    /**
-     * 字段显示定义.
-     */
     protected function define()
     {
         $name = function ($v) {

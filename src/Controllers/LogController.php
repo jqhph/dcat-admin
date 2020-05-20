@@ -11,13 +11,6 @@ use Illuminate\Support\Arr;
 
 class LogController extends Controller
 {
-    /**
-     * Index interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
     public function index(Content $content)
     {
         return $content
@@ -26,84 +19,74 @@ class LogController extends Controller
             ->body($this->grid());
     }
 
-    /**
-     * @return Grid
-     */
     protected function grid()
     {
-        $grid = new Grid(new OperationLog());
-
-        $grid->id('ID')->sortable();
-        $grid->user(trans('admin.user'))
-            ->get('name')
-            ->link(function () {
-                if ($this->user) {
-                    return admin_url('auth/users/'.$this->user['id']);
-                }
-            })
-            ->responsive();
-
-        $grid->method(trans('admin.method'))
-            ->responsive()
-            ->label(OperationLogModel::$methodColors)
-            ->filterByValue();
-
-        $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {
-            return "<code>$v</code>";
-        })->filterByValue();
-
-        $grid->ip('IP')->filterByValue()->responsive();
-
-        $grid->input->responsive()->display(function ($input) {
-            $input = json_decode($input, true);
-            $input = Arr::except($input, ['_pjax', '_token', '_method', '_previous_']);
-            if (empty($input)) {
-                return '';
-            }
-
-            return '<pre class="dump">'.json_encode($input, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE).'</pre>';
-        });
-
-        $grid->created_at(trans('admin.created_at'))->responsive();
-
-        $grid->model()->with('user')->orderBy('id', 'DESC');
-
-        $grid->disableCreateButton();
-        $grid->disableQuickEditButton();
-        $grid->disableEditButton();
-        $grid->disableViewButton();
-        $grid->setActionClass(Grid\Displayers\Actions::class);
-
-        $grid->filter(function (Grid\Filter $filter) {
-            $filter->equal('user_id', trans('admin.user'))
-                ->selectResource('auth/users')
-                ->options(function ($v) {
-                    if (! $v) {
-                        return $v;
+        return new Grid(new OperationLog(), function (Grid $grid) {
+            $grid->id('ID')->sortable();
+            $grid->user(trans('admin.user'))
+                ->get('name')
+                ->link(function () {
+                    if ($this->user) {
+                        return admin_url('auth/users/'.$this->user['id']);
                     }
-                    $userModel = config('admin.database.users_model');
+                })
+                ->responsive();
 
-                    return $userModel::findOrFail($v)->pluck('name', 'id');
-                });
+            $grid->method(trans('admin.method'))
+                ->responsive()
+                ->label(OperationLogModel::$methodColors)
+                ->filterByValue();
 
-            $filter->equal('method', trans('admin.method'))
-                ->select(
-                    array_combine(OperationLogModel::$methods, OperationLogModel::$methods)
-                );
+            $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {
+                return "<code>$v</code>";
+            })->filterByValue();
 
-            $filter->like('path', trans('admin.uri'));
-            $filter->equal('ip', 'IP');
-            $filter->between('created_at')->datetime();
+            $grid->ip('IP')->filterByValue()->responsive();
+
+            $grid->input->responsive()->display(function ($input) {
+                $input = json_decode($input, true);
+                $input = Arr::except($input, ['_pjax', '_token', '_method', '_previous_']);
+                if (empty($input)) {
+                    return '';
+                }
+
+                return '<pre class="dump">'.json_encode($input, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE).'</pre>';
+            });
+
+            $grid->created_at(trans('admin.created_at'))->responsive();
+
+            $grid->model()->with('user')->orderBy('id', 'DESC');
+
+            $grid->disableCreateButton();
+            $grid->disableQuickEditButton();
+            $grid->disableEditButton();
+            $grid->disableViewButton();
+            $grid->setActionClass(Grid\Displayers\Actions::class);
+
+            $grid->filter(function (Grid\Filter $filter) {
+                $filter->equal('user_id', trans('admin.user'))
+                    ->selectResource('auth/users')
+                    ->options(function ($v) {
+                        if (! $v) {
+                            return $v;
+                        }
+                        $userModel = config('admin.database.users_model');
+
+                        return $userModel::findOrFail($v)->pluck('name', 'id');
+                    });
+
+                $filter->equal('method', trans('admin.method'))
+                    ->select(
+                        array_combine(OperationLogModel::$methods, OperationLogModel::$methods)
+                    );
+
+                $filter->like('path', trans('admin.uri'));
+                $filter->equal('ip', 'IP');
+                $filter->between('created_at')->datetime();
+            });
         });
-
-        return $grid;
     }
 
-    /**
-     * @param mixed $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function destroy($id)
     {
         $ids = explode(',', $id);
