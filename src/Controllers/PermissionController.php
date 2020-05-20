@@ -87,10 +87,10 @@ class PermissionController extends AdminController
                 })->implode('&nbsp;&nbsp;');
 
                 $method = collect($method ?: ['ANY'])->unique()->map(function ($name) {
-                        return strtoupper($name);
-                    })->map(function ($name) {
-                        return "<span class='label bg-primary'>{$name}</span>";
-                    })->implode('&nbsp;').'&nbsp;';
+                    return strtoupper($name);
+                })->map(function ($name) {
+                    return "<span class='label bg-primary'>{$name}</span>";
+                })->implode('&nbsp;').'&nbsp;';
 
                 $payload .= "</div>&nbsp; $method<a class=\"dd-nodrag\">$path</a>";
 

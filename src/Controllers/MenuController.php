@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\Widgets\Form as WidgetForm;
 use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
@@ -10,6 +9,7 @@ use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Models\Repositories\Menu;
 use Dcat\Admin\Tree;
 use Dcat\Admin\Widgets\Box;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 
 class MenuController extends AdminController
 {
