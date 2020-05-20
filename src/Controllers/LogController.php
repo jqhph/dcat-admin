@@ -72,7 +72,7 @@ class LogController extends Controller
                         }
                         $userModel = config('admin.database.users_model');
 
-                        return $userModel::findOrFail($v)->pluck('name', 'id');
+                        return $userModel::find((array) $v)->pluck('name', 'id');
                     });
 
                 $filter->equal('method', trans('admin.method'))
