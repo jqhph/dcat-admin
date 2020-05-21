@@ -538,7 +538,7 @@ JS;
             Admin::script($this->script());
 
             view()->share([
-                'path'           => $this->url,
+                'currentUrl'     => $this->url,
                 'keyName'        => $this->repository->getKeyName(),
                 'branchView'     => $this->view['branch'],
                 'branchCallback' => $this->branchCallback,
