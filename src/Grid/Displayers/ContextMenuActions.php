@@ -6,14 +6,13 @@ use Dcat\Admin\Admin;
 
 class ContextMenuActions extends DropdownActions
 {
-
     /**
      * {@inheritdoc}
      */
     protected function addScript()
     {
         parent::addScript();
-        $script = <<<JS
+        $script = <<<'JS'
 (function () {
     $("body").on("contextmenu", "table#grid-table tr", function(e) {
          $('#grid-context-menu .dropdown-menu').hide();
