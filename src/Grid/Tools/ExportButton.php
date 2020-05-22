@@ -101,8 +101,9 @@ JS;
 
         $export = trans('admin.export');
 
-        return <<<EOT
-<div class="btn-group dropdown shadow-none" style="margin-right:3px">
+        return $this->grid->tools()->format(
+            <<<EOT
+<div class="btn-group dropdown" style="margin-right:3px">
     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
         <i class="feather icon-download"></i>
         <span class="d-none d-sm-inline">&nbsp;{$export}&nbsp;</span>
@@ -115,6 +116,7 @@ JS;
         {$this->renderExportSelectedRows()}
     </ul>
 </div>
-EOT;
+EOT
+        );
     }
 }

@@ -1,0 +1,61 @@
+<?php
+
+namespace Dcat\Admin\Grid\Displayers;
+
+use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
+use Illuminate\Support\Str;
+
+class Limit extends AbstractDisplayer
+{
+    protected function addScript()
+    {
+        $script = <<<'JS'
+$('.limit-more').click(function () {
+    $(this).parent('.limit-text').toggleClass('d-none').siblings().toggleClass('d-none');
+});
+JS;
+
+        Admin::script($script);
+    }
+
+    public function display($limit = 100, $end = '...')
+    {
+        // 数组
+        if ($this->value !== null && ! is_scalar($this->value)) {
+            $value = Helper::array($this->value);
+
+            if (count($value) <= $limit) {
+                return $value;
+            }
+
+            $value = array_slice($value, 0, $limit);
+
+            array_push($value, $end);
+
+            return $value;
+        }
+
+        // 字符串
+        $this->addScript();
+
+        $value = Str::limit($this->value, $limit, $end);
+
+        $original = $this->column->getOriginal();
+
+        if ($value == $original) {
+            return $value;
+        }
+
+        return <<<HTML
+<div class="limit-text">
+    <span class="text">{$value}</span>
+    &nbsp;<a href="javascript:void(0);" class="limit-more">&nbsp;<i class="fa fa-angle-double-down"></i></a>
+</div>
+<div class="limit-text d-none">
+    <span class="text">{$original}</span>
+    &nbsp;<a href="javascript:void(0);" class="limit-more">&nbsp;<i class="fa fa-angle-double-up"></i></a>
+</div>
+HTML;
+    }
+}

@@ -70,7 +70,7 @@ class ValueFilter
     protected function wrap($value)
     {
         if (! preg_match('/<[^>]+>(.*)<\/[^>]+>/', $value)) {
-            return "<span class='dashed'>{$value}</span>";
+            return "<span>{$value}</span>";
         }
 
         return $value;

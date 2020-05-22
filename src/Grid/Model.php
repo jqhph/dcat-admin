@@ -140,7 +140,15 @@ class Model
         }
 
         $this->request = $request;
-        $this->queries = collect();
+        $this->initQueries();
+    }
+
+    /**
+     * @return void
+     */
+    protected function initQueries()
+    {
+        $this->queries = new Collection();
     }
 
     /**
@@ -720,5 +728,6 @@ class Model
     {
         $this->data = null;
         $this->model = null;
+        $this->initQueries();
     }
 }

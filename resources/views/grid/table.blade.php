@@ -2,25 +2,23 @@
 <div class="card dcat-box dt-bootstrap4">
 
     @if ($grid->allowToolbar())
-        <div class="data-list-view-header card-header">
-            <div class="table-responsive">
-                <div class="top" style="padding: 0;margin: 0">
+        <div class="data-list-view-header card-header p-1 d-block">
+            <div class="table-responsive d-block">
+                <div class="top d-block" style="padding: 0">
                     @if(!empty($title))
-                        <h4 style="margin:5px 10px 0;">
+                        <h4 class="pull-left" style="margin:5px 10px 0;">
                             {!! $title !!}&nbsp;
                             @if(!empty($description))
                                 <small>{!! $description!!}</small>
                             @endif
                         </h4>
-                        <div data-responsive-table-toolbar="{{$tableId}}">
-                            {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!} {!! $grid->renderQuickSearch() !!}
+                        <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
+                            {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}  {!! $grid->renderQuickSearch() !!}
                         </div>
                     @else
-                        <div>
-                            {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
-                        </div>
+                        {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
 
-                        <div data-responsive-table-toolbar="{{$tableId}}">
+                        <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
                             {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
                         </div>
                     @endif
@@ -33,7 +31,7 @@
 
     {!! $grid->renderHeader() !!}
 
-    <div class="table-responsive table-wrapper complex-container" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
+    <div class="table-responsive table-wrapper complex-container table-middle" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
         <table
                 class="table dt-checkboxes-select
                 {{ $grid->getComplexHeaders() ? 'complex-headers' : ''}}
@@ -84,11 +82,11 @@
     {!! $grid->renderFooter() !!}
 
     @if ($paginator = $grid->paginator())
-        <div class="box-footer clearfix mt-1" style="padding:0 1rem;">
+        <div class="box-footer clearfix d-block" style="border-top: 0">
             {!! $paginator->render() !!}
         </div>
     @else
-        <div class="box-footer clearfix  mt-1 " style="height:48px;line-height:25px;">
+        <div class="box-footer clearfix" style="height:48px;line-height:25px;">
             @if ($grid->rows()->isEmpty())
                 {!! trans('admin.pagination.range', ['first' => '<b>0</b>', 'last' => '<b>'.$grid->rows()->count().'</b>', 'total' => '<b>'.$grid->rows()->count().'</b>',]) !!}
             @else
@@ -107,15 +105,4 @@
         left: 1.1rem;
     }
 </style>
-<script>
-(function () {
-    function change() {
-        $('#{{ $tableId }}').parents('.card').find('.data-list-view-header').first().find('.btn').addClass('btn-sm');
-    }
-    change();
 
-    Dcat.ready(function () {
-        setTimeout(change, 100);
-    })
-})();
-</script>

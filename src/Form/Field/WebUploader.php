@@ -221,16 +221,4 @@ trait WebUploader
     {
         $this->options['preview'] = $this->initialPreviewConfig();
     }
-
-    /**
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function options($options = [])
-    {
-        $this->options = array_merge($options, $this->options);
-
-        return $this;
-    }
 }

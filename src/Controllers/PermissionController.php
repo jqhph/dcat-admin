@@ -8,29 +8,16 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Repositories\Permission;
-use Dcat\Admin\Show;
 use Dcat\Admin\Tree;
 use Illuminate\Support\Str;
 
 class PermissionController extends AdminController
 {
-    /**
-     * Get content title.
-     *
-     * @return string
-     */
     protected function title()
     {
         return trans('admin.permissions');
     }
 
-    /**
-     * Index interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
     public function index(Content $content)
     {
         if (request(IFrameGrid::QUERY_NAME)) {
@@ -59,112 +46,59 @@ class PermissionController extends AdminController
         return $grid;
     }
 
-    /**
-     * @return \Dcat\Admin\Tree
-     */
     protected function treeView()
     {
         $model = config('admin.database.permissions_model');
 
-        $tree = new Tree(new $model());
+        return new Tree(new $model(), function (Tree $tree) {
+            $tree->disableCreateButton();
+            $tree->disableEditButton();
 
-        $tree->disableCreateButton();
+            $tree->branch(function ($branch) {
+                $payload = "<div class='pull-left' style='min-width:310px'><b>{$branch['name']}</b>&nbsp;&nbsp;[<span class='text-primary'>{$branch['slug']}</span>]";
 
-        $tree->branch(function ($branch) {
-            $payload = "<div class='pull-left' style='min-width:310px'><b>{$branch['name']}</b>&nbsp;&nbsp;[<span class='text-primary'>{$branch['slug']}</span>]";
+                $path = array_filter($branch['http_path']);
 
-            $path = array_filter($branch['http_path']);
-
-            if (! $path) {
-                return $payload.'</div>&nbsp;';
-            }
-
-            $max = 3;
-            if (count($path) > $max) {
-                $path = array_slice($path, 0, $max);
-                array_push($path, '...');
-            }
-
-            $method = $branch['http_method'] ?: [];
-
-            $path = collect($path)->map(function ($path) use ($branch, &$method) {
-                if (Str::contains($path, ':')) {
-                    [$me, $path] = explode(':', $path);
-
-                    $method = array_merge($method, explode(',', $me));
-                }
-                if ($path !== '...' && ! empty(config('admin.route.prefix'))) {
-                    $path = trim(admin_base_path($path), '/');
+                if (! $path) {
+                    return $payload.'</div>&nbsp;';
                 }
 
-                $color = Admin::color()->primaryDarker();
-
-                return "<code style='color:{$color}'>$path</code>";
-            })->implode('&nbsp;&nbsp;');
-
-            $method = collect($method ?: ['ANY'])->unique()->map(function ($name) {
-                return strtoupper($name);
-            })->map(function ($name) {
-                return "<span class='label bg-primary'>{$name}</span>";
-            })->implode('&nbsp;').'&nbsp;';
-
-            $payload .= "</div>&nbsp; $method<a class=\"dd-nodrag\">$path</a>";
-
-            return $payload;
-        });
-
-        return $tree;
-    }
-
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     *
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show($id, new Permission());
-
-        $show->id;
-        $show->slug;
-        $show->name;
-
-        $show->http_path->unescape()->as(function ($path) {
-            return collect($path)->filter()->map(function ($path) {
-                $method = $this->http_method ?: ['ANY'];
-
-                if (Str::contains($path, ':')) {
-                    [$method, $path] = explode(':', $path);
-                    $method = explode(',', $method);
+                $max = 3;
+                if (count($path) > $max) {
+                    $path = array_slice($path, 0, $max);
+                    array_push($path, '...');
                 }
 
-                $method = collect($method)->map(function ($name) {
+                $method = $branch['http_method'] ?: [];
+
+                $path = collect($path)->map(function ($path) use ($branch, &$method) {
+                    if (Str::contains($path, ':')) {
+                        [$me, $path] = explode(':', $path);
+
+                        $method = array_merge($method, explode(',', $me));
+                    }
+                    if ($path !== '...' && ! empty(config('admin.route.prefix'))) {
+                        $path = trim(admin_base_path($path), '/');
+                    }
+
+                    $color = Admin::color()->primaryDarker();
+
+                    return "<code style='color:{$color}'>$path</code>";
+                })->implode('&nbsp;&nbsp;');
+
+                $method = collect($method ?: ['ANY'])->unique()->map(function ($name) {
                     return strtoupper($name);
                 })->map(function ($name) {
                     return "<span class='label bg-primary'>{$name}</span>";
-                })->implode('&nbsp;');
+                })->implode('&nbsp;').'&nbsp;';
 
-                if (! empty(config('admin.route.prefix'))) {
-                    $path = '/'.trim(config('admin.route.prefix'), '/').$path;
-                }
+                $payload .= "</div>&nbsp; $method<a class=\"dd-nodrag\">$path</a>";
 
-                return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
-            })->implode('');
+                return $payload;
+            });
         });
-
-        $show->created_at;
-        $show->updated_at;
-
-        return $show;
     }
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
     public function form()
     {
         return Form::make(new Permission(), function (Form $form) {
@@ -203,9 +137,6 @@ class PermissionController extends AdminController
         });
     }
 
-    /**
-     * @return array
-     */
     public function getRoutes()
     {
         $prefix = config('admin.route.prefix');

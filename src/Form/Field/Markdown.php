@@ -166,7 +166,7 @@ JS
      */
     protected function defaultImageUploadUrl()
     {
-        return $this->formatUrl(route('dcat.api.editor-md.upload'));
+        return $this->formatUrl(route(admin_api_route('editor-md.upload')));
     }
 
     /**

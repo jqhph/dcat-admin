@@ -479,12 +479,12 @@ JS;
 
         $quickBtn = $btn = '';
         if ($this->useCreate) {
-            $btn = "<a href='{$url}' class='btn btn-sm btn-success'><i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp;{$new}</span></a>";
+            $btn = "<a href='{$url}' class='btn btn-sm btn-primary'><i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp;{$new}</span></a>";
         }
 
         if ($this->useQuickCreate) {
             $text = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp; $new</span>";
-            $quickBtn = "<button data-url='$url' class='btn btn-sm btn-success tree-quick-create'>$text</button>";
+            $quickBtn = "<button data-url='$url' class='btn btn-sm btn-primary tree-quick-create'>$text</button>";
         }
 
         return "&nbsp;<div class='btn-group pull-right' style='margin-right:3px'>{$btn}{$quickBtn}</div>";
@@ -538,7 +538,7 @@ JS;
             Admin::script($this->script());
 
             view()->share([
-                'path'           => $this->url,
+                'currentUrl'     => $this->url,
                 'keyName'        => $this->repository->getKeyName(),
                 'branchView'     => $this->view['branch'],
                 'branchCallback' => $this->branchCallback,

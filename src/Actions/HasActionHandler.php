@@ -66,7 +66,7 @@ trait HasActionHandler
      */
     public function handlerRoute()
     {
-        return route('dcat.api.action');
+        return route(admin_api_route('action'));
     }
 
     /**

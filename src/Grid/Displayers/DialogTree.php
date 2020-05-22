@@ -15,7 +15,7 @@ class DialogTree extends AbstractDisplayer
 
     protected $title;
 
-    protected $area = ['650px', '600px'];
+    protected $area = ['580px', '600px'];
 
     protected $options = [
         'plugins' => ['checkbox', 'types'],
@@ -172,7 +172,7 @@ EOF;
 
     protected function getSelectorPrefix()
     {
-        return $this->grid->getName().'_'.$this->column->getName();
+        return $this->grid->getName().'_'.$this->column->getName().'_'.$this->getKey();
     }
 
     protected function setupScript()

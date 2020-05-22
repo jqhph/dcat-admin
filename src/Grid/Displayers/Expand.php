@@ -66,16 +66,28 @@ EOT;
     {
         $script = <<<'JS'
 $('.grid-expand').off('click').on('click', function () {
+    var _th = $(this);
     
     if ($(this).data('inserted') == '0') {
     
-        var key = $(this).data('key');
-        var row = $(this).closest('tr');
+        var key = _th.data('key');
+        var row = _th.closest('tr');
         var html = $('template.grid-expand-'+key).html();
+        var id = 'expand-'+key+Dcat.helpers.random(10);
+        
+        $(this).attr('data-expand', '#'+id);
 
-        row.after("<tr><td colspan='"+(row.find('td').length)+"' style='padding:0 !important; border:0;height:0;'>"+html+"</td></tr>");
+        row.after("<tr id="+id+"><td colspan='"+(row.find('td').length)+"' style='padding:0 !important; border:0;height:0;'>"+html+"</td></tr>");
 
         $(this).data('inserted', 1);
+    } else {
+        if ($("i", this).hasClass('icon-chevrons-right')) {
+            $(_th.data('expand')).show();
+        } else {
+            setTimeout(function() {
+              $(_th.data('expand')).hide();
+            }, 250);
+        }
     }
     
     $("i", this).toggleClass("icon-chevrons-right icon-chevrons-down");

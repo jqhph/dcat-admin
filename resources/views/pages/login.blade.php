@@ -16,6 +16,9 @@
     .content {
         overflow-x: hidden;
     }
+    .form-group .control-label {
+        text-align: left;
+    }
 </style>
 
 <div class="login-page bg-40">

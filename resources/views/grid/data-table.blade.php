@@ -4,23 +4,21 @@
     @if ($grid->allowToolbar())
         <div class="custom-data-table-header">
             <div class="table-responsive">
-                <div class="top" style="padding: 0">
+                <div class="top d-block" style="padding: 0">
                 @if(!empty($title))
-                    <h4 style="margin:5px 10px 0;">
+                    <h4 class="pull-left" style="margin:5px 10px 0;">
                         {!! $title !!}&nbsp;
                         @if(!empty($description))
                             <small>{!! $description!!}</small>
                         @endif
                     </h4>
-                    <div data-responsive-table-toolbar="{{$tableId}}">
+                    <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
                         {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}  {!! $grid->renderQuickSearch() !!}
                     </div>
                 @else
-                    <div>
-                        {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
-                    </div>
+                    {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
 
-                    <div data-responsive-table-toolbar="{{$tableId}}">
+                    <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
                         {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
                     </div>
                 @endif

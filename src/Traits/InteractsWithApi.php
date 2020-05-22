@@ -78,7 +78,7 @@ trait InteractsWithApi
      */
     public function getRequestUrl()
     {
-        return $this->url ?: route('dcat.api.value');
+        return $this->url ?: route(admin_api_route('value'));
     }
 
     /**

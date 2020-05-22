@@ -52,7 +52,7 @@
     <div class="form-group row">
         <label class="{{$viewClass['label']}} control-label"></label>
         <div class="{{$viewClass['field']}}">
-            <div class="add btn btn-success btn-sm"><i class="feather icon-save"></i>&nbsp;{{ trans('admin.new') }}</div>
+            <div class="add btn btn-success btn-sm"><i class="feather icon-plus"></i>&nbsp;{{ trans('admin.new') }}</div>
         </div>
     </div>
     @endif

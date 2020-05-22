@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -118,6 +119,12 @@ class HasMany extends Field
         foreach ($form->fields() as $field) {
             if (! $fieldRules = $field->getRules()) {
                 continue;
+            }
+
+            if ($field instanceof File) {
+                $fieldRules = is_string($fieldRules) ? explode('|', $fieldRules) : $fieldRules;
+
+                Helper::deleteByValue($fieldRules, ['image', 'file']);
             }
 
             $column = $field->column();
@@ -340,7 +347,7 @@ class HasMany extends Field
      *
      * @return string
      */
-    protected function getKeyName()
+    public function getKeyName()
     {
         if (is_null($this->form)) {
             return;
@@ -475,14 +482,14 @@ class HasMany extends Field
          */
         $script = <<<JS
 (function () {
-    var index = 0;
+    var nestedIndex = 0;
 $('#has-many-{$this->column}').on('click', '.add', function () {
 
     var tpl = $('template.{$this->column}-tpl');
 
-    index++;
+    nestedIndex++;
 
-    var template = tpl.html().replace(/{$defaultKey}/g, index);
+    var template = tpl.html().replace(/{$defaultKey}/g, nestedIndex);
     $('.has-many-{$this->column}-forms').append(template);
     {$templateScript}
 });
@@ -527,11 +534,11 @@ JS;
     }
 });
 
-var index = 0;
+var nestedIndex = 0;
 $('#has-many-{$this->column} > .header').off('click', '.add').on('click', '.add', function(){
-    index++;
-    var navTabHtml = $('#has-many-{$this->column} > template.nav-tab-tpl').html().replace(/{$defaultKey}/g, index);
-    var paneHtml = $('#has-many-{$this->column} > template.pane-tpl').html().replace(/{$defaultKey}/g, index);
+    nestedIndex++;
+    var navTabHtml = $('#has-many-{$this->column} > template.nav-tab-tpl').html().replace(/{$defaultKey}/g, nestedIndex);
+    var paneHtml = $('#has-many-{$this->column} > template.pane-tpl').html().replace(/{$defaultKey}/g, nestedIndex);
     $('#has-many-{$this->column} > .nav').append(navTabHtml);
     $('#has-many-{$this->column} > .tab-content').append(paneHtml);
     $('#has-many-{$this->column} > .nav > li:last-child a').click();
@@ -574,13 +581,13 @@ JS;
          */
         $script = <<<JS
 (function () {
-    var index = 0;
+    var nestedIndex = 0;
     $('#has-many-{$this->column}').on('click', '.add', function () {
         var tpl = $('template.{$this->column}-tpl');
     
-        index++;
+        nestedIndex++;
     
-        var template = tpl.html().replace(/{$defaultKey}/g, index);
+        var template = tpl.html().replace(/{$defaultKey}/g, nestedIndex);
         $('.has-many-{$this->column}-forms').append(template);
         {$templateScript}
     });
@@ -700,6 +707,8 @@ JS;
 
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
+
+        Admin::style('.table-has-many .input-group{flex-wrap: nowrap!important}');
 
         return parent::render()->with([
             'headers'      => $headers,

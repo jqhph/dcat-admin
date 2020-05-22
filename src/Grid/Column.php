@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
+ * @method $this editable(bool $refresh = false)
  * @method $this switch(string $color = '')
  * @method $this switchGroup($columns = [], string $color = '')
  * @method $this image($server = '', int $width = 200, int $height = 200)
@@ -35,6 +36,7 @@ use Illuminate\Support\Traits\Macroable;
  * @method $this downloadable($server = '', $disk = null)
  * @method $this copyable()
  * @method $this orderable()
+ * @method $this limit(int $limit = 100, string $end = '...')
  * @method $this ascii()
  * @method $this camel()
  * @method $this finish($cap)
@@ -87,6 +89,8 @@ class Column
         'downloadable'     => Displayers\Downloadable::class,
         'copyable'         => Displayers\Copyable::class,
         'orderable'        => Displayers\Orderable::class,
+        'limit'            => Displayers\Limit::class,
+        'editable'         => Displayers\Editable::class,
     ];
 
     /**

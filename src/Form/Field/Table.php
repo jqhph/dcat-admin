@@ -88,15 +88,6 @@ class Table extends HasMany
         return parent::value($value);
     }
 
-    protected function getKeyName()
-    {
-        if (is_null($this->form)) {
-            return;
-        }
-
-        return 'id';
-    }
-
     public function buildNestedForm($key = null)
     {
         $form = new NestedForm($this->column);

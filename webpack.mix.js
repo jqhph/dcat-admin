@@ -69,3 +69,12 @@ mixAssetsDir('dcat/extra/*.scss', (src, dest) => {
 
   return mix.sass(src, dest.replace('scss', 'css'))
 });
+
+// 皮肤
+// mixAssetsDir('dcat/sass/skins/*.scss', (src, dest) => {
+//   if (theme) {
+//     return mix.sass(src, dest.replace('\.scss', '-'+theme+'.css').replace(/sass/g, 'css'))
+//   }
+//
+//   return mix.sass(src, dest.replace(/sass/g, 'css').replace('scss', 'css'))
+// });

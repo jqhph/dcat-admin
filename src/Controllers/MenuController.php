@@ -9,26 +9,15 @@ use Dcat\Admin\Layout\Row;
 use Dcat\Admin\Models\Repositories\Menu;
 use Dcat\Admin\Tree;
 use Dcat\Admin\Widgets\Box;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 
 class MenuController extends AdminController
 {
-    /**
-     * Get content title.
-     *
-     * @return string
-     */
     public function title()
     {
         return trans('admin.menu');
     }
 
-    /**
-     * Index interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
     public function index(Content $content)
     {
         return $content
@@ -38,7 +27,7 @@ class MenuController extends AdminController
                 $row->column(7, $this->treeView()->render());
 
                 $row->column(5, function (Column $column) {
-                    $form = new \Dcat\Admin\Widgets\Form();
+                    $form = new WidgetForm();
                     $form->action(admin_url('auth/menu'));
 
                     $menuModel = config('admin.database.menu_model');
@@ -72,28 +61,27 @@ class MenuController extends AdminController
     {
         $menuModel = config('admin.database.menu_model');
 
-        $tree = new Tree(new $menuModel());
+        return new Tree(new $menuModel(), function (Tree $tree) {
+            $tree->disableCreateButton();
+            $tree->disableQuickCreateButton();
+            $tree->disableEditButton();
 
-        $tree->disableCreateButton();
-        $tree->disableQuickCreateButton();
+            $tree->branch(function ($branch) {
+                $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
 
-        $tree->branch(function ($branch) {
-            $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
+                if (! isset($branch['children'])) {
+                    if (url()->isValidUrl($branch['uri'])) {
+                        $uri = $branch['uri'];
+                    } else {
+                        $uri = admin_base_path($branch['uri']);
+                    }
 
-            if (! isset($branch['children'])) {
-                if (url()->isValidUrl($branch['uri'])) {
-                    $uri = $branch['uri'];
-                } else {
-                    $uri = admin_base_path($branch['uri']);
+                    $payload .= "&nbsp;&nbsp;&nbsp;<a href=\"$uri\" class=\"dd-nodrag\">$uri</a>";
                 }
 
-                $payload .= "&nbsp;&nbsp;&nbsp;<a href=\"$uri\" class=\"dd-nodrag\">$uri</a>";
-            }
-
-            return $payload;
+                return $payload;
+            });
         });
-
-        return $tree;
     }
 
     /**
@@ -104,48 +92,51 @@ class MenuController extends AdminController
     public function form()
     {
         $menuModel = config('admin.database.menu_model');
-        $permissionModel = config('admin.database.permissions_model');
-        $roleModel = config('admin.database.roles_model');
 
-        $form = new Form(new Menu());
+        $relations = $menuModel::withPermission() ? ['permissions', 'roles'] : 'roles';
 
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-        });
+        return Form::make(new Menu($relations), function (Form $form) use ($menuModel) {
+            $permissionModel = config('admin.database.permissions_model');
+            $roleModel = config('admin.database.roles_model');
 
-        $form->display('id', 'ID');
-
-        $form->select('parent_id', trans('admin.parent_id'))->options(function () use ($menuModel) {
-            return $menuModel::selectOptions();
-        });
-        $form->text('title', trans('admin.title'))->required();
-        $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
-        $form->text('uri', trans('admin.uri'));
-        $form->multipleSelect('roles', trans('admin.roles'))
-            ->options(function () use ($roleModel) {
-                return $roleModel::all()->pluck('name', 'id');
-            })
-            ->customFormat(function ($v) {
-                return array_column($v, 'id');
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
             });
-        if ($menuModel::withPermission()) {
-            $form->tree('permissions', trans('admin.permission'))
-                ->nodes(function () use ($permissionModel) {
-                    return (new $permissionModel())->allNodes();
+
+            $form->display('id', 'ID');
+
+            $form->select('parent_id', trans('admin.parent_id'))->options(function () use ($menuModel) {
+                return $menuModel::selectOptions();
+            })->saving(function ($v) {
+                return (int) $v;
+            });
+            $form->text('title', trans('admin.title'))->required();
+            $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
+            $form->text('uri', trans('admin.uri'));
+            $form->multipleSelect('roles', trans('admin.roles'))
+                ->options(function () use ($roleModel) {
+                    return $roleModel::all()->pluck('name', 'id');
                 })
                 ->customFormat(function ($v) {
-                    if (! $v) {
-                        return [];
-                    }
-
                     return array_column($v, 'id');
                 });
-        }
+            if ($menuModel::withPermission()) {
+                $form->tree('permissions', trans('admin.permission'))
+                    ->nodes(function () use ($permissionModel) {
+                        return (new $permissionModel())->allNodes();
+                    })
+                    ->customFormat(function ($v) {
+                        if (! $v) {
+                            return [];
+                        }
 
-        $form->display('created_at', trans('admin.created_at'));
-        $form->display('updated_at', trans('admin.updated_at'));
+                        return array_column($v, 'id');
+                    });
+            }
 
-        return $form;
+            $form->display('created_at', trans('admin.created_at'));
+            $form->display('updated_at', trans('admin.updated_at'));
+        });
     }
 
     /**

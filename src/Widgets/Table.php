@@ -151,4 +151,14 @@ class Table extends Widget
 
         return view($this->view, $vars)->render();
     }
+
+    /**
+     * @return $this
+     */
+    public function withBorder()
+    {
+        $this->class('table-bordered', true);
+
+        return $this;
+    }
 }

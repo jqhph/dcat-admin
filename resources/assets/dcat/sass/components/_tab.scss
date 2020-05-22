@@ -57,7 +57,7 @@
   .nav.nav-tabs {
     background: $primary;
     padding-left: 10px;
-    border-radius: .4rem;
+    border-radius: $card-border-radius;
     box-shadow: $shadow;
     border-bottom: 0;
   }
@@ -82,7 +82,7 @@
   //  background: $white;
   //  box-shadow: $shadow;
   //  margin-bottom: 5px;
-  //  border-radius: .4rem;
+  //  border-radius: $card-border-radius;
   //}
 }
 .nav-theme-success .nav.nav-tabs {

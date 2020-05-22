@@ -135,7 +135,7 @@ class Editor extends Field
      */
     protected function defaultImageUploadUrl()
     {
-        return $this->formatUrl(route('dcat.api.tinymce.upload'));
+        return $this->formatUrl(route(admin_api_route('tinymce.upload')));
     }
 
     /**
