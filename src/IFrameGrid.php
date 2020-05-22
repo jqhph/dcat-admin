@@ -18,6 +18,7 @@ class IFrameGrid extends Grid
         $this->disablePerPages();
         $this->disableBatchActions();
         $this->disableFilterButton();
+        $this->toolsWithOutline();
 
         $this->rowSelector()->click();
 

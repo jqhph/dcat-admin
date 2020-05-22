@@ -56,6 +56,7 @@ table.dataTable {
 .table-responsive {
   border: 0!important;
   margin-bottom: 0!important;
+  overflow-x: inherit;
 }
 .custom-data-table-header .table-responsive {
   overflow: visible!important;
