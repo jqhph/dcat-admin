@@ -24,7 +24,7 @@ class QuickEdit extends RowAction
 
             [$width, $height] = $this->parent->option('dialog_form_area');
 
-            $title = trans('admin.edit').' - '.$this->getKey();
+            $title = trans('admin.edit');
 
             Form::dialog($title)
                 ->click(".{$this->getElementClass()}")
