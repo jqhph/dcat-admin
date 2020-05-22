@@ -9,10 +9,10 @@ use Dcat\Admin\Grid\Tools\BatchActions;
 use Dcat\Admin\Grid\Tools\FilterButton;
 use Dcat\Admin\Grid\Tools\RefreshButton;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class Tools implements Renderable
 {
