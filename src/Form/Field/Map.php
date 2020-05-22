@@ -150,8 +150,8 @@ JS;
                     lng.val(position.getLng());
                 });
             }
-            setTimeout(function(){ initTencentMap('{$this->id['lat']}{$this->id['lng']}'); }, 3000);
             
+            initTencentMap('{$this->id['lat']}{$this->id['lng']}');
         })();
 JS;
     }
