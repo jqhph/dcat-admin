@@ -8,6 +8,7 @@
 input.form-control, div.form-control {
   max-height: 36px;
   min-height: 36px;
+  border-radius: $card-border-radius;
 }
 
 .form-control-sm {
@@ -34,6 +35,7 @@ select.form-control:not([multiple=multiple]) {
 
 .input-group-text {
   padding: 0.6rem 0.9rem;
+  border-radius: $card-border-radius;
 }
 
 .help-block {
@@ -121,6 +123,7 @@ select.form-control:not([multiple=multiple]) {
 .select2-container--default .select2-selection--multiple,
 .select2-container--default .select2-search--dropdown .select2-search__field {
   border-color: $input-border-color!important;
+  border-radius: $card-border-radius!important;
 }
 
 .select2-container--default .select2-dropdown .select2-search__field:focus, .select2-container--default .select2-search--inline .select2-search__field:focus {

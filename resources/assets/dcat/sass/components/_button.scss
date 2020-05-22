@@ -119,3 +119,33 @@ a.btn-sm, .btn-group-sm > a.btn {
   margin-bottom: .15rem;
 }
 
+
+.btn-outline {
+  background: transparent;
+}
+.btn-primary.btn-outline {
+  color: $primary;
+  border-color: $primary;
+}
+.btn-info.btn-outline {
+  color: $info;
+  border-color: $info;
+}
+.btn-success.btn-outline {
+  color: $success;
+  border-color: $success;
+}
+.btn-danger.btn-outline {
+  color: $danger;
+  border-color: $danger;
+}
+.btn-warning.btn-outline {
+  color: $warning;
+  border-color: $warning;
+}
+
+.btn-primary.btn-outline:hover, .btn-info.btn-outline:hover, .btn-success.btn-outline:hover, .btn-danger.btn-outline:hover, .btn-warning.btn-outline:hover,
+//.btn-primary.btn-outline:focus, .btn-info.btn-outline:focus, .btn-success.btn-outline:focus, .btn-danger.btn-outline:focus, .btn-warning.btn-outline:focus,
+.btn-primary.btn-outline.active, .btn-info.btn-outline.active, .btn-success.btn-outline.active, .btn-danger.btn-outline.active, .btn-warning.btn-outline.active{
+  color: $white;
+}

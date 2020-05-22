@@ -523,11 +523,13 @@ class Grid
     }
 
     /**
+     * @param bool $value
+     *
      * @return $this
      */
-    public function withBorder()
+    public function withBorder(bool $value = true)
     {
-        $this->options['show_bordered'] = true;
+        $this->options['show_bordered'] = $value;
 
         return $this;
     }

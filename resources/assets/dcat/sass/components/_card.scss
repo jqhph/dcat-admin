@@ -1,7 +1,7 @@
 .card {
   box-shadow: $shadow;
   margin-bottom: 2rem;
-  border-radius: .45rem;
+  border-radius: $card-border-radius;
 }
 
 .card.dcat-box {

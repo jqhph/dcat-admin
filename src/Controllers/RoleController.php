@@ -14,11 +14,6 @@ use Dcat\Admin\Widgets\Tree;
 
 class RoleController extends AdminController
 {
-    /**
-     * Get content title.
-     *
-     * @return string
-     */
     public function title()
     {
         return trans('admin.roles');
@@ -63,13 +58,6 @@ class RoleController extends AdminController
         return $grid;
     }
 
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     *
-     * @return Show
-     */
     protected function detail($id)
     {
         return Show::make($id, new Role('permissions'), function (Show $show) {
@@ -101,11 +89,6 @@ class RoleController extends AdminController
         });
     }
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
     public function form()
     {
         return Form::make(new Role('permissions'), function (Form $form) {
@@ -147,13 +130,6 @@ class RoleController extends AdminController
         });
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         if (in_array(RoleModel::ADMINISTRATOR_ID, Helper::array($id))) {

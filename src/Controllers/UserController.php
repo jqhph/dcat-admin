@@ -14,21 +14,11 @@ use Dcat\Admin\Widgets\Tree;
 
 class UserController extends AdminController
 {
-    /**
-     * Get content title.
-     *
-     * @return string
-     */
     public function title()
     {
         return trans('admin.administrator');
     }
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
     protected function grid()
     {
         return Grid::make(new Administrator('roles'), function (Grid $grid) {
@@ -74,9 +64,6 @@ class UserController extends AdminController
         });
     }
 
-    /**
-     * @return IFrameGrid
-     */
     protected function iFrameGrid()
     {
         $grid = new IFrameGrid(new Administrator());
@@ -91,13 +78,6 @@ class UserController extends AdminController
         return $grid;
     }
 
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     *
-     * @return Show
-     */
     protected function detail($id)
     {
         return Show::make($id, new Administrator('roles'), function (Show $show) {
@@ -148,11 +128,6 @@ class UserController extends AdminController
         });
     }
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
     public function form()
     {
         return Form::make(new Administrator('roles'), function (Form $form) {
@@ -216,13 +191,6 @@ class UserController extends AdminController
         });
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         if (in_array(AdministratorModel::DEFAULT_ID, Helper::array($id))) {
