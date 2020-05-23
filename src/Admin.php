@@ -35,7 +35,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '1.4.0';
+    const VERSION = '1.4.5';
 
     /**
      * @var array
@@ -133,6 +133,7 @@ class Admin
      * @param Closure $callable
      *
      * @return Content
+     * @deprecated
      */
     public static function content(Closure $callable = null)
     {

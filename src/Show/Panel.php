@@ -95,6 +95,7 @@ class Panel implements Renderable
      * @param string $style
      *
      * @return $this
+     * @deprecated
      */
     public function style($style = 'info')
     {
