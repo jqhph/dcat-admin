@@ -29,18 +29,15 @@
 
 ## 截图
 
+![](https://cdn.learnku.com/uploads/images/202005/24/38389/fnbgQWK115.png!large)
+
 ![](https://cdn.learnku.com/uploads/images/202004/24/38389/Kj6fdUQEzF.png!large)
-
-![](https://cdn.learnku.com/uploads/images/202004/24/38389/ISATQMYO0i.png!large)
-
-![](https://cdn.learnku.com/uploads/images/202005/06/38389/p1lAW4NpQi.png!large)
 
 ![](https://cdn.learnku.com/uploads/images/202004/24/38389/GBkt9jYnW0.png!large)
 
 ![](https://cdn.learnku.com/uploads/images/202004/17/38389/MUGJxDwrSn.png!large)
 
 ![](https://cdn.learnku.com/uploads/images/202004/24/38389/bP75OeDbWH.png!large)
-
 
 ## 功能特性
 
