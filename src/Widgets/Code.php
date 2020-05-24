@@ -18,7 +18,9 @@ class Code extends Markdown
      */
     public function __construct($content = '', int $start = 1, int $end = 10)
     {
-        if (is_file($content)) {
+        if (is_array($content) || is_object($content)) {
+            $content = json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        } elseif (is_file($content)) {
             $this->read($content, $start, $end);
             $content = '';
         }
