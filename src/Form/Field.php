@@ -764,21 +764,25 @@ class Field implements Renderable
     /**
      * Set the field as readonly mode.
      *
+     * @param bool $condition
+     *
      * @return $this
      */
-    public function readOnly()
+    public function readOnly(bool $condition = true)
     {
-        return $this->attribute('readonly', true);
+        return $condition ? $this->attribute('readonly', true) : $this;
     }
 
     /**
      * Set field as disabled.
      *
+     * @param bool $condition
+     *
      * @return $this
      */
-    public function disable()
+    public function disable(bool $condition = true)
     {
-        return $this->attribute('disabled', true);
+        return $condition ? $this->attribute('disabled', true) : $this;
     }
 
     /**
