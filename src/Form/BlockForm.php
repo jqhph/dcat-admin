@@ -76,6 +76,10 @@ class BlockForm extends WidgetForm
 HTML;
     }
 
+    public function fillFields(array $data)
+    {
+    }
+
     protected function renderHeader()
     {
         if (! $this->title) {

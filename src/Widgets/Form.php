@@ -470,9 +470,7 @@ class Form implements Renderable
     {
         $this->setHtmlAttribute('id', $this->getElementId());
 
-        foreach ($this->fields as $field) {
-            $field->fill($this->model()->toArray());
-        }
+        $this->fillFields($this->model()->toArray());
 
         return [
             'start'   => $this->open(),
@@ -481,6 +479,13 @@ class Form implements Renderable
             'method'  => $this->getHtmlAttribute('method'),
             'buttons' => $this->buttons,
         ];
+    }
+
+    public function fillFields(array $data)
+    {
+        foreach ($this->fields as $field) {
+            $field->fill($data);
+        }
     }
 
     /**
