@@ -54,7 +54,7 @@ JS;
     public function display($callback = null)
     {
         Admin::html('<div id="grid-context-menu" class="dropdown" style="display: contents"></div>');
-        Admin::style('.grid__actions__ .dropdown{display: none!important;} th.grid__actions__{display: none!important}');
+        Admin::style('.grid__actions__ .dropdown{display: none!important;} th.grid__actions__{display: none!important;} .grid__actions__{width:1px}');
 
         return parent::display($callback);
     }
