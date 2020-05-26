@@ -124,7 +124,7 @@ class SelectResource extends Field
 
     protected function formatValue()
     {
-        $value = Helper::array(old($this->column, $this->value));
+        $value = Helper::array(old($this->column, $this->value()));
 
         $this->value = [];
 
