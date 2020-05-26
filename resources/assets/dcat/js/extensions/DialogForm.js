@@ -209,7 +209,7 @@ export default class DialogForm {
 
         Dcat.Form({
             form: _this.$form,
-            disableRedirect: true,
+            redirect: false,
             before: function () {
                 // 验证表单
                 _this.$form.validator('validate');
