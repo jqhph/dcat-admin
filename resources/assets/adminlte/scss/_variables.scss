@@ -107,7 +107,8 @@ $main-footer-bg: transparent !default;
 // Dark sidebar
 //$sidebar-dark-bg: darken(#505b6b, 14%) !default;
 //$sidebar-dark-bg: #1e1e2d !default;
-$sidebar-dark-bg: lighten(#1a1a27, 1%) !default;
+//$sidebar-dark-bg: lighten(#1a1a27, 1%) !default;
+$sidebar-dark-bg: #263238!default;
 $sidebar-dark-hover-bg: hsla(100, 100%, 100%, 0.1) !default;
 $sidebar-dark-color: lighten(#C2C7D0, 10%) !default;
 $sidebar-dark-hover-color: $white !default;
