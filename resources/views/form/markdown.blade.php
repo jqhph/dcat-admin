@@ -8,7 +8,7 @@
 
         <div class="{{$class}}" id="{{$id}}" name="{{$name}}" placeholder="{{ $placeholder }}" {!! $attributes !!} ></div>
 
-        <template id="{{$id}}-template">{{ old($column, $value) }}</template>
+        <div id="{{$id}}-template" class="d-none">{{ old($column, $value) }}</div>
 
         @include('admin::form.help-block')
 

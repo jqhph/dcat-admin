@@ -147,7 +147,7 @@ class Markdown extends Field
         $this->options['onload'] = JavaScript::make(
             <<<JS
 function () {
-    this.setMarkdown($('#{$this->id}-template').html());
+    this.setMarkdown($('#{$this->id}-template').text());
 }
 JS
         );
