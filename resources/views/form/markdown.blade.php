@@ -6,9 +6,9 @@
 
         @include('admin::form.error')
 
-        <div class="{{$class}}" id="{{$id}}" name="{{$name}}" placeholder="{{ $placeholder }}" {!! $attributes !!} ></div>
-
-        <div id="{{$id}}-template" class="d-none">{{ old($column, $value) }}</div>
+        <div id="{{$id}}" class="{{$class}}" {!! $attributes !!}>
+            <textarea class="d-none" name="{{$name}}" placeholder="{{ $placeholder }}">{!! old($column, $value) !!}</textarea>
+        </div>
 
         @include('admin::form.help-block')
 

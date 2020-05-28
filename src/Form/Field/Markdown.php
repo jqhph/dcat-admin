@@ -144,14 +144,6 @@ class Markdown extends Field
             $this->options['imageUploadURL'] = $this->defaultImageUploadUrl();
         }
 
-        $this->options['onload'] = JavaScript::make(
-            <<<JS
-function () {
-    this.setMarkdown($('#{$this->id}-template').text());
-}
-JS
-        );
-
         if (config('app.locale') !== 'zh-CN') {
             Admin::js($this->language);
         }
