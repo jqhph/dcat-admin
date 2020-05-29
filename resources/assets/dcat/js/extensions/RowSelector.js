@@ -11,7 +11,9 @@ export default class RowSelector {
             // 选中效果颜色
             background: 'rgba(255, 255,213,0.4)',
             // 点击行事件
-            clickRow: false, 
+            clickRow: false,
+            // 表格选择器
+            container: 'table',
         }, options);
 
         _this._bind()
@@ -24,7 +26,7 @@ export default class RowSelector {
             $checkbox = $(checkboxSelector);
 
         $selectAllSelector.on('change', function() {
-            var cbx = $(checkboxSelector);
+            var cbx = $(this).parents(options.container).find(checkboxSelector);
 
             for (var i = 0; i < cbx.length; i++) {
                 if (this.checked && !cbx[i].checked) {
