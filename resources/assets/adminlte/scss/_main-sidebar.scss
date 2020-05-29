@@ -387,6 +387,7 @@
       // border-left: 3px solid transparent;
       &:active {
         color: $sidebar-dark-active-color;
+        background: $sidebar-dark-active-bg;
       }
     }
 
@@ -400,6 +401,7 @@
 
     > .nav-link.active {
       color: $sidebar-dark-active-color;
+      background: $sidebar-dark-active-bg;
 
       @if $enable-shadows {
         box-shadow: map-get($elevations, 1);
@@ -476,14 +478,14 @@
 }
 
 // colors
-.sidebar-dark-white {
-  .nav-item {
-    & > .nav-link.active {
-      background: rgba($white, .8)!important;
-      box-shadow: none;
-    }
-  }
-}
+//.sidebar-dark-white {
+//  .nav-item {
+//    & > .nav-link.active {
+//      background: rgba($white, .8)!important;
+//      box-shadow: none;
+//    }
+//  }
+//}
 .sidebar-light-primary {
   .nav-item {
     & > .nav-link.active {
