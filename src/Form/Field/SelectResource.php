@@ -153,10 +153,6 @@ class SelectResource extends Field
     protected function prepareInputValue($value)
     {
         if ($this->maxItem == 1) {
-            if ($value === null || $value === '') {
-                return 0;
-            }
-
             return $value;
         }
 
