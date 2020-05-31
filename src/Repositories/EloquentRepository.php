@@ -708,7 +708,7 @@ class EloquentRepository extends Repository implements TreeRepository
     protected function updateRelation(Form $form, EloquentModel $model, array $relationsData, array $relationKeyMap)
     {
         foreach ($relationsData as $name => $values) {
-            $relationName = $relationKeyMap[$name];
+            $relationName = $relationKeyMap[$name] ?? $name;
 
             if (! method_exists($model, $relationName)) {
                 continue;
@@ -735,7 +735,7 @@ class EloquentRepository extends Repository implements TreeRepository
                     break;
                 case $relation instanceof Relations\HasOne:
 
-                    $related = $model->$name;
+                    $related = $model->$relationName;
 
                     // if related is empty
                     if (is_null($related)) {
@@ -754,7 +754,7 @@ class EloquentRepository extends Repository implements TreeRepository
                 case $relation instanceof Relations\BelongsTo:
                 case $relation instanceof Relations\MorphTo:
 
-                    $parent = $model->$name;
+                    $parent = $model->$relationName;
 
                     // if related is empty
                     if (is_null($parent)) {
@@ -777,7 +777,7 @@ class EloquentRepository extends Repository implements TreeRepository
 
                     break;
                 case $relation instanceof Relations\MorphOne:
-                    $related = $model->$name;
+                    $related = $model->$relationName;
                     if (is_null($related)) {
                         $related = $relation->make();
                     }
