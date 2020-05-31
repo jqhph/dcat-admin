@@ -160,7 +160,7 @@ abstract class Action implements Renderable
      */
     public function makeSelector($prefix, $class = null)
     {
-        $class = $class ?: static::class;
+        $class = $prefix.'-'.($class ?: static::class);
 
         if (! isset(static::$selectors[$class])) {
             static::$selectors[$class] = uniqid($prefix);
