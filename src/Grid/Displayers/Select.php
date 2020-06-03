@@ -28,21 +28,25 @@ class Select extends AbstractDisplayer
 
         return <<<EOT
 <div class="input-group input-group-sm">
-    <select style="width: 100%;" class="{$this->selector}" data-url="{$this->resource()}" data-key="{$this->getKey()}" data-name="{$this->column->getName()}">
+    <select style="width: 100%;" class="{$this->selector}" data-url="{$this->url()}" data-name="{$this->column->getName()}">
     $optionsHtml
     </select>
 </div>
 EOT;
     }
 
+    protected function url()
+    {
+        return $this->resource().'/'.$this->getKey();
+    }
+
     protected function addScript()
     {
         $script = <<<JS
 $('.{$this->selector}').off('change').select2().on('change', function(){
-    var pk = $(this).data('key'),
-        value = $(this).val(),
+    var value = $(this).val(),
         name = $(this).data('name'),
-        url = $(this).data('url') + '/' + pk,
+        url = $(this).data('url'),
         data = {
             _token: Dcat.token,
             _method: 'PUT'

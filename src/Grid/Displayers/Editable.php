@@ -6,7 +6,7 @@ use Dcat\Admin\Admin;
 
 class Editable extends AbstractDisplayer
 {
-    protected $selector = 'grid-editable';
+    protected $selector = 'grid-column-editable';
 
     public function display($refresh = false)
     {
