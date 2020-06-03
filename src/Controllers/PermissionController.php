@@ -141,13 +141,25 @@ class PermissionController extends AdminController
     {
         $prefix = config('admin.route.prefix');
 
-        return collect(app('router')->getRoutes())->map(function ($route) use ($prefix) {
+        $container = collect();
+
+        $routes = collect(app('router')->getRoutes())->map(function ($route) use ($prefix, $container) {
             if (! Str::startsWith($uri = $route->uri(), $prefix)) {
                 return;
             }
 
+            if (! Str::contains($uri, '{')) {
+                $route = Str::replaceFirst($prefix, '', $uri.'*');
+
+                if ($route !== '*') {
+                    $container->push($route);
+                }
+            }
+
             return Str::replaceFirst($prefix, '', preg_replace('/{.*}+/', '*', $uri));
-        })->filter()->all();
+        });
+
+        return $container->merge($routes)->filter()->all();
     }
 
     /**
