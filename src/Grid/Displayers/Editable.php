@@ -44,7 +44,7 @@ HTML;
         Admin::style(
             <<<CSS
 .grid-editable{border-bottom:dashed 1px $color;color: $color;display: inline-block}
-.grid-editable+.save{margin-left: 0.55rem;color: $color}
+.grid-editable+.save{margin-left: 0.5rem;color: $color}
 CSS
         );
     }
@@ -72,7 +72,15 @@ $('.{$this->selector}+.save').on("click",function() {
         _token: Dcat.token,
         _method: 'PUT'
     };
-    data[name] = value;
+    if (name.indexOf('.') === -1) {
+        data[name] = value;
+    } else {
+        name = name.split('.');
+        
+        data[name[0]] = {};
+        data[name[0]][name[1]] = value;
+    }
+    
     Dcat.NP.start();
     $.ajax({
         url: url,
