@@ -28,7 +28,7 @@ class Select extends AbstractDisplayer
 
         return <<<EOT
 <div class="input-group input-group-sm">
-    <select style="width: 100%;" class="{$this->selector}" data-key="{$this->getKey()}" data-name="{$this->column->getName()}">
+    <select style="width: 100%;" class="{$this->selector}" data-url="{$this->resource()}" data-key="{$this->getKey()}" data-name="{$this->column->getName()}">
     $optionsHtml
     </select>
 </div>
@@ -42,6 +42,7 @@ $('.{$this->selector}').off('change').select2().on('change', function(){
     var pk = $(this).data('key'),
         value = $(this).val(),
         name = $(this).data('name'),
+        url = $(this).data('url') + '/' + pk,
         data = {
             _token: Dcat.token,
             _method: 'PUT'
@@ -58,7 +59,7 @@ $('.{$this->selector}').off('change').select2().on('change', function(){
     
     Dcat.NP.start();
     $.ajax({
-        url: "{$this->resource()}/" + pk,
+        url: url,
         type: "POST",
         data: data,
         success: function (data) {
