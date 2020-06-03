@@ -1,14 +1,14 @@
 {
-    "name": "dcat/laravel-admin",
+    "name": "hhniao/laravel-admin",
     "description": "dcat admin",
     "type": "library",
     "keywords": ["dcat", "laravel", "admin", "grid", "form", "laravel admin"],
-    "homepage": "https://github.com/jqhph/dcat-admin",
+    "homepage": "https://github.com/hhniao/dcat-admin",
     "license": "MIT",
     "authors": [
         {
-            "name": "jqh",
-            "email": "841324345@qq.com"
+            "name": "lch",
+            "email": "448455556@qq.com"
         }
     ],
     "require": {
