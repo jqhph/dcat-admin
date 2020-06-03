@@ -317,9 +317,11 @@ JS;
      * @param string $idField
      * @param string $textField
      *
+     * @param string $currentValue
+     *
      * @return $this
      */
-    public function load($target, string $resourceUrl, string $idField = 'id', string $textField = 'text'): self
+    public function load($target, string $resourceUrl, string $idField = 'id', string $textField = 'text', $currentValue=''): self
     {
         $class = $this->getElementClass();
 
@@ -340,7 +342,7 @@ $(document).on('change', ".{$class}", function () {
                 text : item.$textField
             }));
         });
-        
+        $(target).val({$currentValue});
         $(target).trigger('change');
     });
 });
