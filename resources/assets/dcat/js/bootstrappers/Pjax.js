@@ -48,6 +48,7 @@ export default class Pjax {
 
             // 移除遮罩层
             $(".modal-backdrop").remove();
+            $("body").removeClass("modal-open");
         });
 
         $d.on('pjax:loaded', () => {
