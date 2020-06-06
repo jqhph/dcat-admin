@@ -46,12 +46,9 @@ JS;
         Admin::script($script);
     }
 
-    protected function setUpRemoteRenderable(string $modalId, $renderable)
+    protected function setUpRemoteRenderable(string $modalId, RemoteRenderable $renderable)
     {
-        /* @var RemoteRenderable $renderable */
-        if (is_string($renderable)) {
-            $renderable = $renderable::make($this->getKey());
-        }
+        $renderable->setKey($this->getKey());
 
         $this->addRenderableModalScript($modalId, $renderable->getUrl());
 
@@ -76,11 +73,11 @@ JS;
         } elseif (is_string($callback) && is_subclass_of($callback, RemoteRenderable::class)) {
             $html = '';
 
-            $this->setUpRemoteRenderable($id, $callback);
+            $this->setUpRemoteRenderable($id, $callback::make());
         } elseif ($callback instanceof RemoteRenderable) {
             $html = '';
 
-            $this->setUpRemoteRenderable($id, $callback->setKey($this->getKey()));
+            $this->setUpRemoteRenderable($id, $callback);
         }
 
         return <<<EOT
