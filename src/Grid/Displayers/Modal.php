@@ -2,12 +2,16 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Support\RemoteRenderable;
 use Illuminate\Support\Str;
 
 class Modal extends AbstractDisplayer
 {
     protected $title;
+
+    protected $renderable;
 
     public function title(string $title)
     {
@@ -21,6 +25,39 @@ class Modal extends AbstractDisplayer
         return 'grid-modal-'.$this->grid->getName().$key;
     }
 
+    protected function addRenderableModalScript(string $modalId, string $url)
+    {
+        $script = <<<JS
+(function () {
+    var modal = $('#{$modalId}');
+    
+    modal.on('show.bs.modal', function (e) {
+        modal.find('.modal-body').html('<div style="min-height:150px"></div>');
+    
+        modal.find('.modal-body').loading();
+        
+        $.ajax('{$url}').then(function (data) {
+            modal.find('.modal-body').html(data);
+        });
+    })
+})();
+JS;
+
+        Admin::script($script);
+    }
+
+    protected function setUpRemoteRenderable(string $modalId, $renderable)
+    {
+        /* @var RemoteRenderable $renderable */
+        if (is_string($renderable)) {
+            $renderable = $renderable::make($this->getKey());
+        }
+
+        $this->addRenderableModalScript($modalId, $renderable->getUrl());
+
+        $renderable::collectAssets();
+    }
+
     public function display($callback = null)
     {
         $title = $this->trans('title');
@@ -28,15 +65,23 @@ class Modal extends AbstractDisplayer
             [$title, $callback] = func_get_args();
         }
 
+        $title = $this->title ?: $title;
         $html = $this->value;
+        $id = $this->generateElementId();
+
         if ($callback instanceof \Closure) {
             $html = Helper::render(
                 $callback->call($this->row, $this)
             );
-        }
+        } elseif (is_string($callback) && is_subclass_of($callback, RemoteRenderable::class)) {
+            $html = '';
 
-        $title = $this->title ?: $title;
-        $id = $this->generateElementId();
+            $this->setUpRemoteRenderable($id, $callback);
+        } elseif ($callback instanceof RemoteRenderable) {
+            $html = '';
+
+            $this->setUpRemoteRenderable($id, $callback->setKey($this->getKey()));
+        }
 
         return <<<EOT
 <span class="grid-expand" data-toggle="modal" data-target="#{$id}">
