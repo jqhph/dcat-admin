@@ -4,7 +4,6 @@ namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Support\RemoteRenderable;
 use Illuminate\Http\Request;
 
 class RenderableController
