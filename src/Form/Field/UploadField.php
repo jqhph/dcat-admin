@@ -71,6 +71,11 @@ trait UploadField
     protected $retainable = false;
 
     /**
+     * @var bool
+     */
+    protected $saveFullUrl = false;
+
+    /**
      * Initialize the storage instance.
      *
      * @return void.
@@ -160,6 +165,13 @@ trait UploadField
         return $this;
     }
 
+    public function saveFullUrl(bool $value = true)
+    {
+        $this->saveFullUrl = $value;
+
+        return $this;
+    }
+
     /**
      * Upload File.
      *
@@ -195,9 +207,10 @@ trait UploadField
 
         if ($result) {
             $path = $this->getUploadPath();
+            $url = $this->objectUrl($path);
 
             // 上传成功
-            return $this->responseUploaded($path, $this->objectUrl($path));
+            return $this->responseUploaded($this->saveFullUrl ? $url : $path, $url);
         }
 
         // 上传失败
