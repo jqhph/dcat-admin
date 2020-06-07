@@ -549,7 +549,11 @@ class Form implements Renderable
                 'message' => $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed'),
             ];
         } catch (\Throwable $exception) {
-            $response = Admin::makeExceptionHandler()->handleDestroyException($exception);
+            $response = Admin::makeExceptionHandler()->handle($exception);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
 
             $response = $response ?: [
                 'status'  => false,
@@ -1586,7 +1590,7 @@ class Form implements Renderable
 
             return $this->builder->render();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
+            return Admin::makeExceptionHandler()->handle($e);
         }
     }
 

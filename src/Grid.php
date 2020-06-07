@@ -879,7 +879,7 @@ HTML;
 
             $this->build();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
+            return Admin::makeExceptionHandler()->handle($e);
         }
 
         return $this->doWrap();

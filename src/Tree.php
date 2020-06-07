@@ -546,7 +546,7 @@ JS;
 
             return $this->doWrap();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
+            return Admin::makeExceptionHandler()->handle($e);
         }
     }
 
