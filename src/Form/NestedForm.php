@@ -327,9 +327,7 @@ class NestedForm
             $field->attribute(Builder::BUILD_IGNORE, true);
         }
 
-        if ($field instanceof UploadField) {
-            $field->setRelation($this->relationName, $this->key);
-        }
+        $field->setNestedFormRelation($this->relationName, $this->key);
 
         $field::collectAssets();
 

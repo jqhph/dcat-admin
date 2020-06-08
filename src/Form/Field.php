@@ -261,6 +261,19 @@ class Field implements Renderable
     }
 
     /**
+     * @param string|null $relationName
+     * @param string      $relationPrimaryKey
+     *
+     * @return $this
+     */
+    public function setNestedFormRelation(?string $relationName, $relationPrimaryKey)
+    {
+        $this->id .= NestedForm::DEFAULT_KEY_NAME;
+
+        return $this;
+    }
+
+    /**
      * Format the label value.
      *
      * @param array $arguments
@@ -905,9 +918,11 @@ class Field implements Renderable
     public function getElementClass()
     {
         if (! $this->elementClass) {
-            $name = $this->elementName ?: $this->formatName($this->column);
+            $name = $this->getElementName();
 
-            $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
+            $this->elementClass = array_map(function ($value) {
+                return 'field-'.$value;
+            }, (array) str_replace(['[', ']'], '_', $name));
         }
 
         return $this->elementClass;

@@ -150,7 +150,9 @@ class Markdown extends Field
 
         $opts = JavaScript::format($this->options);
 
-        $this->script = "editormd(\"{$this->id}\", {$opts});";
+        $this->script = <<<JS
+editormd(replaceNestedFormIndex("{$this->id}"), {$opts});
+JS;
     }
 
     /**

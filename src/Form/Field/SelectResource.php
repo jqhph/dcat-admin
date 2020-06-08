@@ -175,7 +175,7 @@ Dcat.ResourceSelector({
     title: '{$label}',
     column: "{$this->getElementName()}",
     source: '{$this->source}',
-    selector: '#{$this->btnId}',
+    selector: replaceNestedFormIndex('#{$this->btnId}'),
     maxItem: {$maxItem}, 
     area: {$area},
     queryName: '{$queryName}',
@@ -184,7 +184,7 @@ Dcat.ResourceSelector({
     showCloseButton: false,
     disabled: '{$disabled}',
     displayer: 'default',
-    displayerContainer: $('$displayerContainer'),
+    displayerContainer: $(replaceNestedFormIndex('{$displayerContainer}')),
 });
 JS;
     }

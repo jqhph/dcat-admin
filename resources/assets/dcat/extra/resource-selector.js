@@ -36,7 +36,7 @@
             cls = column.replace(/[\[\]]*/g, '') + (Math.random().toString(36).substr(2)),
             layer = options.window.layer,
             $input = getQueryDomObject(options.displayerContainer) || $(options.selector).parents('.select-resource').find('div[name="' + column + '"]'),
-            $hidden = getQueryDomObject(options.hiddenInput) || $('input[name="' + column + '"]'),
+            $hidden = getQueryDomObject(options.hiddenInput) || $input.parents('.input-group').find('input[name="' + column + '"]'),
             tagClearClass = options.clearOneClass || (cls + '-tag-clear-button'),
             clearClass = options.clearAllClass || (cls + '-clear-button'),
             maxItem = options.maxItem,

@@ -175,7 +175,13 @@ JS;
     public function render()
     {
         $this->script = <<<JS
-    tinymce.init({$this->formatOptions()})
+(function () {
+    var opts = {$this->formatOptions()};
+
+    opts.selector = replaceNestedFormIndex(opts.selector);
+    
+    tinymce.init(opts)
+})();
 JS;
 
         return parent::render();
