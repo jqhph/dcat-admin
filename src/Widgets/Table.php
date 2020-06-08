@@ -22,11 +22,6 @@ class Table extends Widget
     protected $rows = [];
 
     /**
-     * @var array
-     */
-    protected $style = [];
-
-    /**
      * @var int
      */
     protected $depth = 0;
@@ -49,7 +44,7 @@ class Table extends Widget
         $this->setRows($rows);
         $this->setStyle($style);
 
-        $this->class('table '.implode(' ', (array) $this->style), true);
+        $this->class('table default-table');
     }
 
     /**
@@ -130,7 +125,9 @@ class Table extends Widget
      */
     public function setStyle($style = [])
     {
-        $this->style = $style;
+        if ($style) {
+            $this->class(implode(' ', (array) $style), true);
+        }
 
         return $this;
     }
@@ -145,7 +142,6 @@ class Table extends Widget
         $vars = [
             'headers'    => $this->headers,
             'rows'       => $this->rows,
-            'style'      => $this->style,
             'attributes' => $this->formatHtmlAttributes(),
         ];
 

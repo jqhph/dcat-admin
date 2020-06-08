@@ -33,7 +33,7 @@ table.dataTable {
 
 .table td {
   padding: .55rem;
-  height: 62px;
+  //height: 62px;
   line-height: 1.42857;
 }
 
@@ -140,4 +140,20 @@ table.table-bordered.dataTable.complex-headers {
 .table-hover tbody tr:hover {
   color: $font-color;
   background-color: lighten($dark30, 1%);
+}
+
+/*--------------------------------------------------- */
+
+.table.default-table {
+  tr {
+    box-shadow: none!important;
+  }
+
+  td {
+    border-top: 1px solid #f0f4f8!important;
+  }
+}
+
+.table.default-table.table-bordered th, .table.default-table.table-bordered td {
+  border: 1px solid #f0f4f8!important;
 }
