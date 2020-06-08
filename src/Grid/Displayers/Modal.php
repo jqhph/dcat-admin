@@ -57,12 +57,11 @@ JS;
 
     public function display($callback = null)
     {
-        $title = $this->trans('title');
+        $title = $this->value ?: $this->trans('title');
         if (func_num_args() == 2) {
             [$title, $callback] = func_get_args();
         }
 
-        $title = $this->title ?: $title;
         $html = $this->value;
         $id = $this->generateElementId();
 
@@ -79,6 +78,8 @@ JS;
 
             $this->setUpRemoteRenderable($id, $callback);
         }
+
+        $title = $this->title ?: $title;
 
         return <<<EOT
 <span class="grid-expand" data-toggle="modal" data-target="#{$id}">
