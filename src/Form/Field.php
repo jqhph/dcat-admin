@@ -920,9 +920,7 @@ class Field implements Renderable
         if (! $this->elementClass) {
             $name = $this->getElementName();
 
-            $this->elementClass = array_map(function ($value) {
-                return 'field-'.$value;
-            }, (array) str_replace(['[', ']'], '_', $name));
+            $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
         }
 
         return $this->elementClass;
