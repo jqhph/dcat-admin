@@ -16,12 +16,11 @@ class RenderableController
     public function handle(Request $request)
     {
         $class = $request->get('renderable');
-        $key = $request->get('key');
 
         $class = str_replace('_', '\\', $class);
 
         if (class_exists($class)) {
-            return $this->render(new $class($key));
+            return $this->render(new $class($request->all()));
         }
 
         return $class;

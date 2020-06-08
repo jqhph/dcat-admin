@@ -11,33 +11,36 @@ abstract class RemoteRenderable implements Renderable
 
     protected static $css = [];
 
-    protected $key;
+    protected $variables = [];
 
     public function __construct($key = null)
     {
-        $this->setKey($key);
+        $this->with($key);
     }
 
-    public function setKey($key)
+    public function with($key, $value = null)
     {
-        $this->key = $key;
+        if (is_array($key)) {
+            $this->variables = array_merge($this->variables, $key);
+        } elseif ($key !== null) {
+            $this->variables[$key] = $value;
+        }
 
         return $this;
     }
 
-    public function getKey()
-    {
-        return $this->key;
-    }
-
     public function getUrl()
     {
-        $data = [
-            'key'        => $this->key,
+        $data = array_merge($this->variables(), [
             'renderable' => str_replace('\\', '_', static::class),
-        ];
+        ]);
 
         return route(admin_api_route('render'), $data);
+    }
+
+    public function variables()
+    {
+        return $this->variables;
     }
 
     public static function collectAssets()
@@ -49,5 +52,15 @@ abstract class RemoteRenderable implements Renderable
     public static function make(...$params)
     {
         return new static(...$params);
+    }
+
+    public function __set($name, $value)
+    {
+        $this->with($name, $value);
+    }
+
+    public function __get($name)
+    {
+        return $this->variables[$name] ?? null;
     }
 }

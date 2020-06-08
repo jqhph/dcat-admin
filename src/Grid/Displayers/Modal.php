@@ -48,7 +48,7 @@ JS;
 
     protected function setUpRemoteRenderable(string $modalId, RemoteRenderable $renderable)
     {
-        $renderable->setKey($this->getKey());
+        $renderable->with('key', $this->getKey());
 
         $this->addRenderableModalScript($modalId, $renderable->getUrl());
 
