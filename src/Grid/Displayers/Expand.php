@@ -21,34 +21,6 @@ class Expand extends AbstractDisplayer
         $this->button = $button;
     }
 
-    protected function generateElementId()
-    {
-        $key = Str::random(8);
-
-        return 'grid-modal-'.$this->grid->getName().$key;
-    }
-
-    protected function addRenderableScript(string $modalId, string $url)
-    {
-        $script = <<<JS
-(function () {
-    var modal = $('#{$modalId}');
-    
-    modal.on('show.bs.modal', function (e) {
-        modal.find('.modal-body').html('<div style="min-height:150px"></div>');
-    
-        modal.find('.modal-body').loading();
-        
-        $.ajax('{$url}').then(function (data) {
-            modal.find('.modal-body').html(data);
-        });
-    })
-})();
-JS;
-
-        Admin::script($script);
-    }
-
     protected function setUpRemoteRenderable(RemoteRenderable $renderable)
     {
         $renderable::collectAssets();

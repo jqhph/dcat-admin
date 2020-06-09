@@ -1,6 +1,6 @@
 <thead>
 <tr class="{{ $elementClass }} quick-create" style="cursor: pointer">
-    <td colspan="{{ $columnCount }}" style="background: #ededed">
+    <td colspan="{{ $columnCount }}" style="background: {{ Admin::color()->darken('#ededed', 4) }}">
         <span class="create cursor-pointer" style="display: block;">
              <i class="feather icon-plus"></i>&nbsp;{{ __('admin.quick_create') }}
         </span>

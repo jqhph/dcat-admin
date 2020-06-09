@@ -45,13 +45,18 @@ trait InteractsWithApi
     ];
 
     /**
-     * 获取请求附带参数.
+     * @var array
+     */
+    protected $parameters = [];
+
+    /**
+     * 返回请求附带参数.
      *
      * @return array
      */
     public function parameters(): array
     {
-        return [];
+        return $this->parameters;
     }
 
     /**
@@ -270,6 +275,7 @@ JS;
         $this->method = $self->getRequestMethod();
         $this->uriKey = $self->getUriKey();
         $this->requestSelectors = $self->getRequestSelectors();
+        $this->parameters = array_merge($this->parameters, $self->parameters());
 
         $scripts = $self->getRequestScripts();
 
