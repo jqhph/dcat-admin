@@ -144,7 +144,7 @@ class PermissionController extends AdminController
         $container = collect();
 
         $routes = collect(app('router')->getRoutes())->map(function ($route) use ($prefix, $container) {
-            if (! Str::startsWith($uri = $route->uri(), $prefix)) {
+            if (! Str::startsWith($uri = $route->uri(), $prefix) && $prefix) {
                 return;
             }
 
