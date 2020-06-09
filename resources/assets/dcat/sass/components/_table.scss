@@ -151,6 +151,11 @@ table.table-bordered.dataTable.complex-headers {
 
   td {
     border-top: 1px solid #f0f4f8!important;
+    border-radius: 0!important;
+  }
+
+  thead th {
+    border-bottom: 2px solid #f0f4f8!important;
   }
 }
 

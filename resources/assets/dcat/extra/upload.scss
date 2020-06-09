@@ -74,7 +74,6 @@
   /*padding-top: 85px;*/
   /*background: url(./image.png) center 15px no-repeat;*/
   border: 3px dashed #e6e6e6;
-  padding-top: 5px;
   text-align: center;
   color: #ccc;
   font-size: 16px;
@@ -82,13 +81,13 @@
 }
 
 .web-uploader .placeholder .webuploader-pick {
-  background: lighten($primary, 2%);
+  background: lighten($primary, 1%);
   border-radius: 3px;
   line-height: 34px;
   padding: 0 25px;
   color: #fff;
   display: inline-block;
-  margin: 0 auto 20px;
+  margin: 0 auto 15px;
   cursor: pointer
 }
 
@@ -96,7 +95,7 @@
   opacity: .9
 }
 .web-uploader .placeholder p {
-  margin: 0 0 20px;
+  margin: 0 0 15px;
 }
 .web-uploader .placeholder .flashTip {
   color: #666;
@@ -108,7 +107,7 @@
 }
 
 .web-uploader .placeholder .flashTip a {
-  color: lighten($primary, 2%);
+  color: lighten($primary, 1%);
   text-decoration: none
 }
 
@@ -457,7 +456,7 @@
 
 .web-uploader .placeholder:before {
   font-family: feather;
-  font-size: 70px;
+  font-size: 58px;
   content: "\e8e3";
 }
 .red-dark {

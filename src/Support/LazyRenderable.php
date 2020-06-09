@@ -5,7 +5,7 @@ namespace Dcat\Admin\Support;
 use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
 
-abstract class RemoteRenderable implements Renderable
+abstract class LazyRenderable implements Renderable
 {
     protected static $js = [];
 

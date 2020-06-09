@@ -4,7 +4,7 @@ namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Support\RemoteRenderable;
+use Dcat\Admin\Support\LazyRenderable;
 use Illuminate\Support\Str;
 
 class Modal extends AbstractDisplayer
@@ -25,7 +25,7 @@ class Modal extends AbstractDisplayer
         return 'grid-modal-'.$this->grid->getName().$key;
     }
 
-    protected function addRenderableModalScript(string $modalId, string $url)
+    protected function addRenderableScript(string $modalId, string $url)
     {
         $script = <<<JS
 (function () {
@@ -46,11 +46,11 @@ JS;
         Admin::script($script);
     }
 
-    protected function setUpRemoteRenderable(string $modalId, RemoteRenderable $renderable)
+    protected function setUpLazyRenderable(string $modalId, LazyRenderable $renderable)
     {
         $renderable->with('key', $this->getKey());
 
-        $this->addRenderableModalScript($modalId, $renderable->getUrl());
+        $this->addRenderableScript($modalId, $renderable->getUrl());
 
         $renderable::collectAssets();
     }
@@ -69,14 +69,14 @@ JS;
             $html = Helper::render(
                 $callback->call($this->row, $this)
             );
-        } elseif (is_string($callback) && is_subclass_of($callback, RemoteRenderable::class)) {
+        } elseif (is_string($callback) && is_subclass_of($callback, LazyRenderable::class)) {
             $html = '';
 
-            $this->setUpRemoteRenderable($id, $callback::make());
-        } elseif ($callback instanceof RemoteRenderable) {
+            $this->setUpLazyRenderable($id, $callback::make());
+        } elseif ($callback instanceof LazyRenderable) {
             $html = '';
 
-            $this->setUpRemoteRenderable($id, $callback);
+            $this->setUpLazyRenderable($id, $callback);
         }
 
         $title = $this->title ?: $title;

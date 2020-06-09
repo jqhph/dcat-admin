@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Support\RemoteRenderable;
+use Dcat\Admin\Support\LazyRenderable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 
@@ -21,7 +21,7 @@ class Expand extends AbstractDisplayer
         $this->button = $button;
     }
 
-    protected function setUpRemoteRenderable(RemoteRenderable $renderable)
+    protected function setUpLazyRenderable(LazyRenderable $renderable)
     {
         $renderable::collectAssets();
     }
@@ -40,16 +40,16 @@ class Expand extends AbstractDisplayer
             }
         } elseif ($callbackOrButton && is_string($callbackOrButton)) {
             $this->button = $callbackOrButton;
-        } elseif ($callbackOrButton instanceof RemoteRenderable) {
+        } elseif ($callbackOrButton instanceof LazyRenderable) {
             $html = '<div style="min-height: 150px"></div>';
 
-            $this->setUpRemoteRenderable($callbackOrButton);
+            $this->setUpLazyRenderable($callbackOrButton);
 
             $remoteUrl = $callbackOrButton->getUrl();
-        } elseif (is_string($callbackOrButton) && is_subclass_of($callbackOrButton, RemoteRenderable::class)) {
+        } elseif (is_string($callbackOrButton) && is_subclass_of($callbackOrButton, LazyRenderable::class)) {
             $html = '<div style="min-height: 150px"></div>';
 
-            $this->setUpRemoteRenderable($renderable = $callbackOrButton::make());
+            $this->setUpLazyRenderable($renderable = $callbackOrButton::make());
 
             $remoteUrl = $renderable->getUrl();
         }
