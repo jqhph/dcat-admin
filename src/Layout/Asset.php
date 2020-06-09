@@ -470,7 +470,7 @@ class Asset
      */
     protected function hasAlias($value)
     {
-        return $value && mb_strpos($value, '@') !== false;
+        return $value && mb_strpos($value, '@') === 0;
     }
 
     /**
