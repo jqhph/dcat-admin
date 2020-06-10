@@ -487,13 +487,9 @@ class EloquentRepository extends Repository implements TreeRepository
         $model = $this->createEloquent();
         $keyName = $model->getKeyName();
 
+        $model->setRawAttributes($data);
+
         $model->{$keyName} = $id;
-
-        if ($this->isSoftDeletes) {
-            $deletedColumn = $model->getDeletedAtColumn();
-
-            $model->{$deletedColumn} = $data[$deletedColumn] ?? null;
-        }
 
         $model->exists = true;
 
