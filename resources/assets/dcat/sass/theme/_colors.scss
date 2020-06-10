@@ -91,13 +91,18 @@ $font-color: #414750;
 // body背景颜色
 //$body-bg: #f9fafc;
 //$body-bg: lighten($dark40, 1.3%);
-$body-bg: darken(#f4f7fa, 1.3%);
-//$body-bg: lighten(#edf1f3, 1.5%);
+//$body-bg: darken(#f4f7fa, 1.2%);
+$body-bg: lighten(#edf1f3, 0.4%);
 
-// 深色
+// 深色主题
+$body-dark-bg: #262c49;
 $body-dark-color: #222233;
+$body-content-dark-bg: #262c49;
 $body-darker-color: #1e1e2d;
 $body-dark-font-color: #a8a9bb;
+$body-dark-heading-color: #ebeefd;
+$body-dark-table-bg : #212744;
+$body-dark-border-color: #414561;
 
 // 灰背景色
 $gray-bg: #f1f1f1;
