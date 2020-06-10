@@ -130,9 +130,7 @@ class Content implements Renderable
      */
     public function full()
     {
-        $this->view = 'admin::layouts.full-content';
-
-        return $this->withConfig('blank_page', true);
+        return $this->view('admin::layouts.full-content');
     }
 
     /**
@@ -408,7 +406,7 @@ class Content implements Renderable
     /**
      * 页面滚动条优化.
      */
-    protected function makePerfectScrollbar()
+    protected function addPerfectScrollbarScript()
     {
         if (! $this->usingPerfectScrollbar) {
             return;
@@ -530,7 +528,7 @@ JS
 
         $this->callComposed();
 
-        $this->makePerfectScrollbar();
+        $this->addPerfectScrollbarScript();
 
         return view($this->view, $variables)->render();
     }
