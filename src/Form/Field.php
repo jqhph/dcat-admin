@@ -77,7 +77,7 @@ class Field implements Renderable
     /**
      * Form element name.
      *
-     * @var string
+     * @var string|array
      */
     protected $elementName = [];
 
@@ -161,7 +161,7 @@ class Field implements Renderable
     /**
      * Key for errors.
      *
-     * @var mixed
+     * @var string|array
      */
     protected $errorKey;
 
@@ -268,7 +268,13 @@ class Field implements Renderable
      */
     public function setNestedFormRelation(?string $relationName, $relationPrimaryKey)
     {
-        $this->id .= NestedForm::DEFAULT_KEY_NAME;
+        if (is_array($this->id)) {
+            $this->id = array_map(function ($v) {
+                return $v.NestedForm::DEFAULT_KEY_NAME;
+            }, $this->id);
+        } else {
+            $this->id .= NestedForm::DEFAULT_KEY_NAME;
+        }
 
         return $this;
     }
@@ -328,13 +334,13 @@ class Field implements Renderable
     /**
      * Set form element name.
      *
-     * @param string $name
+     * @param string|array $name
      *
-     * @return $this|string
+     * @return $this
      *
      * @author Edwin Hui
      */
-    public function setElementName(string $name)
+    public function setElementName($name)
     {
         $this->elementName = $name;
 
@@ -519,11 +525,11 @@ class Field implements Renderable
     /**
      * Set key for error message.
      *
-     * @param string $key
+     * @param string|array $key
      *
-     * @return $this|string
+     * @return $this
      */
-    public function setErrorKey(string $key)
+    public function setErrorKey($key)
     {
         $this->errorKey = $key;
 
