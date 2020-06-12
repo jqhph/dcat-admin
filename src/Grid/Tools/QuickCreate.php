@@ -71,6 +71,18 @@ class QuickCreate implements Renderable
      *
      * @return Text
      */
+    public function hidden($column, $placeholder = '')
+    {
+        return $this->text($column, $placeholder)
+            ->attribute('hidden', 'hidden');
+    }
+
+    /**
+     * @param string $column
+     * @param string $placeholder
+     *
+     * @return Text
+     */
     public function email($column, $placeholder = '')
     {
         return $this->text($column, $placeholder)
