@@ -14,4 +14,43 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
 
+
+
+    /**
+     * 这不是一个PR, 这是一个我在多后台应用的发现的一个我没法从框架底层解决的问题.
+     *
+     * 假设现在多后台环境是:  admin + new-admin
+     * 具体表现为: 在 admin 中创建一个新管理员 master, 此时 new-admin 的用户表中没有 master(这是正常的)
+     * 但是此时在 admin 中使用 master 登录后, 会字段跳到 new-admin 的登录界面, 要求 new-admin 也登录一个 [与 admin 者的 master 用户 相同主键 id 的用户]
+     *
+     * 其实他是执行了一句: select * from {new_admin_user_table} where id = {adminApp-master-user's-primaryKey}
+     * 此时当然在 new-admin 的user表中找不到一个与 admin 中 maser 用户主键id相同的用户
+     * 则此时 Auth::guard()->check() 判断为没有登录, 就从已经登录成功的admin的主页跳到 new-admin的登录界面了.
+     *
+     * 通过xdebug断点调试,追踪到这里, 尝试了很多解
+     *
+     * 从 AdminServiceProvider::bootApplication() 开始
+     * 到 Dcat\Admin\Application::registerRoute() 到
+     * 到 Dcat\Admin\Admin::registerApiRoute() 第252行
+     *
+     * $router->post('value', 'ValueController@handle')->name('value');
+     *
+     * 这里注册了一个 name = dcat.api.admin.value 的路由.
+     *
+     * *************************************************
+     * 那么上面注册的哪个 value 的路由是在哪里调用的呢? 经断点调试, 发现是这里调用的:
+     * Dcat\Admin\Traits\InteractsWithApi::getRequestUrl()
+     *
+     *
+     * 不知为何会出点使用admin主页的时候非要让new-admin也要登录一下同user_id的用户. 可能是bug吧,
+     * 在admin的routes.php中增加下面这个name=dcat.api.admin.value路由可以解决这个问题,但是完全不懂为何就解决了.
+     * 如果在new-admin中也定义一个name=dcat.api.admin.value的路由, 这个问题又会出现, 不知为何?
+     *
+     * 猜测: php artisan admin:app NewAdmin 生成新app后
+     * new-admin中有一个name=dcat.api.admin.value的路由覆盖了 admin 中 name=dcat.api.admin.value的路由导致的
+     */
+
+    // 这是那个 name=dcat.api.admin.value 的路由, 仅允许定义在 admin 中, 要是定义在 new-admin中, 就出大事儿了......
+    $router->match(['get', 'post'], 'any-name-you-can-set', 'Dcat\Admin\Controllers\ValueController@handle')->name('dcat.api.admin.value');
+
 });
