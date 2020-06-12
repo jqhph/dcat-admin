@@ -25,6 +25,8 @@ class Field implements Renderable
 
     const FILE_DELETE_FLAG = '_file_del_';
 
+    const FIELD_CLASS_PREFIX = 'field_';
+
     /**
      * Element id.
      *
@@ -926,7 +928,9 @@ class Field implements Renderable
         if (! $this->elementClass) {
             $name = $this->getElementName();
 
-            $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
+            $this->elementClass = array_map(function ($v) {
+                return static::FIELD_CLASS_PREFIX.$v;
+            }, (array) str_replace(['[', ']'], '_', $name));
         }
 
         return $this->elementClass;
