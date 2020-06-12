@@ -1,0 +1,362 @@
+
+body.dark-mode {
+  background-color: $body-dark-bg;
+  color: $body-dark-font-color;
+
+  .content-wrapper, .main-footer {
+    background: $body-dark-bg;
+  }
+
+  .bg-white {
+    background: $body-dark-bg!important;
+  }
+
+  //a {
+  //  color: $primary;
+  //}
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $body-dark-heading-color;
+  }
+
+  p, small, span, label {
+    color: $body-dark-font-color;
+  }
+
+  .label {
+    color: $white;
+  }
+
+  .btn.btn-white, .btn.btn-default {
+    color: $body-dark-font-color;
+    background: $body-dark-color;
+  }
+
+  hr {
+    border-color: $body-dark-border-color;
+  }
+
+  pre {
+    background-color: $body-content-dark-bg;
+    border: 0;
+
+    code {
+      background-color: inherit;
+      .operator,
+      .url {
+        background-color: $body-content-dark-bg;
+      }
+    }
+  }
+  code {
+    background-color: $body-content-dark-bg;
+    color: $gray-600;
+  }
+  kbd {
+    background-color: $body-content-dark-bg;
+  }
+
+  .text-dark {
+    color: $gray-600 !important;
+  }
+
+
+  .header-navbar {
+    background-color: $body-dark-color;
+    .navbar-container {
+      .nav {
+        .nav-item {
+          .nav-link {
+            color: $body-dark-font-color;
+            background-color: transparent;
+            i {
+              color: $body-dark-font-color;
+            }
+          }
+        }
+      }
+    }
+    &.navbar-static-top {
+      background-color: transparent;
+    }
+    &[class*="bg-"] {
+      .navbar-nav {
+        .nav-item {
+          .nav-link {
+            background-color: inherit;
+          }
+        }
+      }
+    }
+  }
+
+
+  .dropdown-toggle {
+    &:hover {
+      i,
+      &:after {
+        color: $white;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    background-color: $body-content-dark-bg;
+    &:before,
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+      background: $body-darker-color;
+    }
+    .dropdown-item {
+      color: $body-dark-font-color;
+    }
+    .form-control {
+      background-color: $body-dark-color;
+    }
+    .dropdown-divider {
+      border-color: $body-dark-border-color;
+    }
+  }
+
+
+  .modal {
+    .modal-header,
+    .modal-header[class*="bg-"] {
+      background-color: $body-dark-color;
+      .close {
+        background-color: $body-content-dark-bg;
+        span {
+          color: $white50;
+        }
+      }
+    }
+    .modal-content,
+    .modal-body,
+    .modal-footer {
+      background-color: $body-content-dark-bg;
+      .form-control,
+      .picker__input,
+      .custom-file-label,
+      .custom-file-label:after {
+        background-color: $body-dark-color !important;
+      }
+    }
+  }
+
+  .pagination {
+    &:not([class*="pagination-"]) {
+      .page-item {
+        &.active {
+          background-color: $body-content-dark-bg;
+          .page-link {
+            background-color: $primary;
+            &:hover {
+              color: $white;
+            }
+          }
+        }
+        .page-link {
+          background-color: $body-content-dark-bg;
+          color: $white;
+          &:hover {
+            color: $primary;
+          }
+        }
+        &.prev-item,
+        &.next-item {
+          .page-link:hover {
+            color: $white;
+          }
+        }
+      }
+    }
+    &[class*="pagination-"] {
+      .page-item:not(.active):not(:hover) {
+        .page-link {
+          background-color: $body-content-dark-bg;
+          color: $white;
+        }
+      }
+      .page-item {
+        &:not(.active) {
+          .page-link:hover {
+            background-color: $body-content-dark-bg;
+          }
+        }
+        &.active {
+          background-color: $body-content-dark-bg;
+        }
+      }
+    }
+  }
+
+  .nav {
+    .nav-item {
+      .nav-link {
+        color: $body-dark-font-color;
+        &.active,
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  .table {
+    background-color: $body-dark-table-bg;
+    padding: 0 1rem;
+    .thead,
+    tbody {
+      tr:not([class*="table-"]) {
+        th,
+        td {
+          border: 0;
+          color: $body-dark-font-color;
+          code {
+            background-color: $body-dark-color;
+          }
+        }
+      }
+    }
+    thead {
+      tr {
+        th {
+          border: 0;
+          background-color: $body-dark-table-bg;
+          color: $body-dark-font-color;
+        }
+      }
+    }
+    tbody {
+      tr {
+        &[class*="table-"] {
+          td,
+          th {
+            background-color: unset;
+            color: $black;
+            border-color: $body-dark-border-color;
+          }
+        }
+        &.table-dark {
+          td,
+          th {
+            color: $white;
+          }
+        }
+        &.table-active {
+          td,
+          th {
+            color: $body-dark-font-color;
+          }
+        }
+        th {
+          background-color: $body-content-dark-bg;
+        }
+        td {
+          background-color: $body-content-dark-bg;
+          color: $body-dark-font-color;
+        }
+      }
+    }
+
+    &.table-bordered {
+      border: 1px solid $body-dark-border-color;
+      thead,
+      tbody {
+        tr {
+          th,
+          td {
+            border: 1px solid $body-dark-border-color;
+          }
+        }
+      }
+    }
+
+    &.table-hover {
+      tbody {
+        tr {
+          &:hover {
+            background-color: $body-dark-color;
+          }
+          th,
+          td {
+            background-color: unset;
+          }
+        }
+      }
+    }
+
+    &.table-striped {
+      tbody {
+        tr {
+          &:nth-of-type(odd) {
+            background-color: $body-dark-color;
+          }
+          td,
+          th {
+            background-color: unset;
+          }
+        }
+      }
+    }
+
+  }
+
+  // ----- form
+  .input-group-text {
+    border-color: $body-dark-border-color;
+    color: $body-dark-font-color!important;
+  }
+  .select2-container--default .select2-selection--multiple,
+  .form-control {
+    background: $body-dark-bg;
+    color: $body-dark-font-color;
+    border-color: $body-dark-border-color;
+  }
+
+  .select2-container--default .select2-selection--multiple {
+    border-color: $body-dark-border-color!important;
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__rendered li:first-child.select2-search.select2-search--inline .select2-search__field {
+    color: $body-dark-font-color!important;
+  }
+  .select2-container--default .select2-results>.select2-results__options {
+    background: $body-dark-color!important;
+  }
+  .select2-dropdown {
+    background: $body-dark-color!important;
+  }
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: $body-darker-color!important;
+    color: $body-dark-font-color!important;
+  }
+
+  .dataTables_filter .form-control {
+    background: $body-dark-table-bg;
+    color: $body-dark-font-color;
+  }
+
+
+  .layui-layer {
+    background-color: $body-dark-bg!important;
+  }
+  .layui-layer-title {
+    background-color: $body-dark-bg!important;
+    border-bottom: 1px solid $body-dark-border-color!important;
+    color: $body-dark-font-color!important;
+  }
+  .layui-layer-btn1 {
+    border-color: $body-dark-color!important;
+    background: $body-dark-color!important;
+  }
+
+  .layui-layer-setwin .layui-layer-min cite:before,
+  .layui-layer-setwin .layui-layer-max:before,
+  .layui-layer-setwin .layui-layer-close1:before {
+    color: $body-dark-font-color!important;
+  }
+
+  .web-uploader .placeholder {
+    border-color: $body-dark-font-color!important;
+  }
+}
