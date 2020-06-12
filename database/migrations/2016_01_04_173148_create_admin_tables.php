@@ -10,7 +10,7 @@ class CreateAdminTables extends Migration
     {
         return config('database.connection') ?: config('database.default');
     }
-    
+
     public function config($key)
     {
         return config('admin.'.$key);
