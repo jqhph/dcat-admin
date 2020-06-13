@@ -393,6 +393,9 @@
         color: $sidebar-dark-hover-color;
       }
     }
+    i {
+      margin-right: .75rem;
+    }
 
     // Hover and active states
     &.menu-open > .nav-link,

@@ -101,10 +101,10 @@ $body-dark-color: #222233;
 $body-content-dark-bg: #2c2c43;
 $body-darker-color: #1e1e2d;
 $body-dark-font-color: #a8a9bb;
-$body-dark-heading-color: #ebeefd;
-//$body-dark-table-bg : #212744;
+//$body-dark-heading-color: darken(#ebeefd, 2%);
+$body-dark-heading-color: lighten($body-dark-font-color, 12%);
 $body-dark-table-bg: $body-dark-color;
-$body-dark-border-color: darken(#363950, 2%);
+$body-dark-border-color: darken(#363950, 3%);
 
 // 灰背景色
 $gray-bg: #f1f1f1;

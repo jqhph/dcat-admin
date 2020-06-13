@@ -28,6 +28,10 @@ body.dark-mode {
 
   a {
     color: lighten($primary, 1%);
+
+    &:hover {
+      color: darken($primary, 4%);
+    }
   }
 
   .grid-column-header a {
@@ -53,6 +57,7 @@ body.dark-mode {
     background-color: inherit!important;
   }
 
+  // ------- button
   .btn.btn-white,
   .btn.btn-default,
   .btn.btn-light {
@@ -66,7 +71,6 @@ body.dark-mode {
   .btn.btn-light:hover {
     color: lighten($body-dark-font-color, 2%)!important;
   }
-
   .btn.btn-light,
   .bg-light {
     color: $body-dark-font-color!important;
@@ -81,14 +85,24 @@ body.dark-mode {
   .btn-light:hover, .btn-light:focus {
     color: lighten($body-dark-font-color, 1.2%)!important;
   }
+  .btn.btn-primary:not(.btn-outline),
+  .btn.btn-warning:not(.btn-outline),
+  .btn.btn-success:not(.btn-outline),
+  .btn.btn-info:not(.btn-outline),
+  .btn.btn-danger:not(.btn-outline),
+  .btn.btn-custom:not(.btn-outline) {
+    color: darken($white, 8%)
+  }
 
   hr {
     border-color: $body-dark-border-color;
   }
 
+  // ------ pre
   pre {
-    background-color: $body-content-dark-bg;
+    background-color: $body-dark-color;
     border: 0;
+    color: $body-dark-font-color;
 
     code {
       background-color: inherit;
@@ -141,6 +155,7 @@ body.dark-mode {
   }
 
 
+  // ------ dropdown
   .dropdown-toggle {
     &:hover {
       i,
@@ -149,7 +164,9 @@ body.dark-mode {
       }
     }
   }
-
+  .dropdown .dropdown-menu {
+    box-shadow: $shadow-200;
+  }
   .dropdown-menu {
     background-color: $body-dark-color;
     &:before {
@@ -189,12 +206,6 @@ body.dark-mode {
     .modal-body,
     .modal-footer {
       background-color: lighten($body-dark-color, 1%);
-      .form-control,
-      .picker__input,
-      .custom-file-label,
-      .custom-file-label:after {
-        background-color: $body-dark-color !important;
-      }
     }
   }
 
@@ -253,9 +264,46 @@ body.dark-mode {
     }
   }
 
+  // ------ popover
+  .popover {
+    &[x-placement="top"] {
+      .arrow {
+        &:after {
+          border-top-color: $body-dark-color;
+        }
+      }
+    }
+    &[x-placement="bottom"] {
+      .arrow {
+        &:after {
+          border-bottom-color: $body-dark-color;
+        }
+      }
+    }
+    &[x-placement="left"] {
+      .arrow {
+        &:after {
+          border-left-color: $body-dark-color;
+        }
+      }
+    }
+    &[x-placement="right"] {
+      .arrow {
+        &:after {
+          border-right-color: $body-dark-color;
+        }
+      }
+    }
+
+    .popover-body {
+      background-color: $body-dark-color;
+      color: $body-dark-font-color;
+    }
+  }
+
   // ------ tab
   .nav.nav-tabs {
-    border-color: lighten($body-dark-border-color, 12%);
+    border-color: lighten($body-dark-border-color, 10%);
   }
 
   // ------ table
@@ -383,7 +431,7 @@ body.dark-mode {
   }
 
   .card, .box {
-    background: $body-darker-color;
+    background: $body-dark-color;
   }
   .box.box-solid.box-default {
     background-color: $body-dark-bg;
@@ -403,7 +451,7 @@ body.dark-mode {
   }
 
   .dd-handle {
-    background: $body-dark-color;
+    background: darken($body-dark-bg, 2%);
     color: $body-dark-font-color
   }
   .dd-item > button:before {
@@ -564,4 +612,81 @@ body.dark-mode {
   .iconpicker-popover.popover.bottomRight>.arrow:after, .iconpicker-popover.popover.bottomLeft>.arrow:after {
     border-color: $body-dark-color;
   }
+
+  // ----- alert
+  .alert.alert-danger {
+    h3, h4, h5 {
+      color: $danger;
+    }
+  }
+  .alert.alert-success {
+    h3, h4, h5 {
+      color: $success;
+    }
+  }
+  .alert.alert-info {
+    h3, h4, h5 {
+      color: $info;
+    }
+  }
+  .alert.alert-primary {
+    h3, h4, h5 {
+      color: $primary-darker;
+    }
+  }
+  .alert.alert-warning {
+    h3, h4, h5 {
+      color: darken($warning, 5%);
+    }
+  }
+
+  .callout {
+    background: darken($body-dark-bg, 3%);
+    border-color: #8e9aac;
+
+    h3, h4, h5 {
+      color: lighten($body-dark-font-color, 5%);
+    }
+  }
+  
+  // ----- apexcharts
+  .apexcharts-legend-series {
+    .apexcharts-legend-text {
+      color: $body-dark-font-color !important;
+    }
+  }
+  .apexcharts-radialbar-track {
+    path {
+      stroke: $body-dark-bg;
+    }
+  }
+  .apexcharts-inner {
+    polygon {
+      stroke: $body-dark-table-bg !important;
+      fill: $body-dark-bg !important;
+    }
+  }
+  .apexcharts-pie-series {
+    path {
+      stroke: $body-dark-bg;
+    }
+  }
+  .apexcharts-menu {
+    background-color: $body-dark-bg;
+    border: 0;
+  }
+  .apexcharts-toolbar {
+    .apexcharts-zoom-in-icon,
+    .apexcharts-zoom-out-icon,
+    .apexcharts-zoom-icon,
+    .apexcharts-menu-icon,
+    .apexcharts-reset-zoom-icon {
+      &:hover {
+        svg {
+          fill: $body-dark-font-color;
+        }
+      }
+    }
+  }
+
 }

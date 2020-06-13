@@ -1,4 +1,4 @@
-<div class="card p-2 {{ $expand ? '' : 'd-none' }} {{$containerClass}}" style="{{$border}};padding-bottom: .5rem!important;margin-top: 10px;margin-bottom: 8px;box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.04);">
+<div class="card p-2 {{ $expand ? '' : 'd-none' }} {{$containerClass}}" style="padding-bottom: .5rem!important;margin-top: 10px;margin-bottom: 8px;box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.04);">
     <div class="card-body" style="{!! $style !!}"  id="{{ $filterID }}">
         <form action="{!! $action !!}" class="form-horizontal" pjax-container method="get">
             <div class="btn-group">
