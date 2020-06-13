@@ -140,6 +140,18 @@ trait WebUploader
     }
 
     /**
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function withFormData(array $data)
+    {
+        $this->options['formData'] = array_merge($this->options['formData'], $data);
+
+        return $this;
+    }
+
+    /**
      * Set default options form file field.
      *
      * @return void

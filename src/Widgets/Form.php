@@ -83,6 +83,8 @@ class Form implements Renderable
             __call as macroCall;
         }
 
+    const REQUEST_NAME = '_form_';
+
     /**
      * @var string
      */
@@ -456,6 +458,14 @@ class Form implements Renderable
         $field->setForm($this);
         $field->width($this->width['field'], $this->width['label']);
 
+        if ($field instanceof Field\File) {
+            $formData = [static::REQUEST_NAME => get_called_class()];
+
+            $field->url(route(admin_api_route('form.upload')));
+            $field->deleteUrl(route(admin_api_route('form.destroy-file'), $formData));
+            $field->withFormData($formData);
+        }
+
         $field::collectAssets();
 
         return $this;
@@ -632,7 +642,7 @@ JS
      */
     public function sanitize(array $input)
     {
-        Arr::forget($input, ['_form_', '_token', '_current_']);
+        Arr::forget($input, [static::REQUEST_NAME, '_token', '_current_']);
 
         return $input;
     }
@@ -657,7 +667,7 @@ JS
         if (method_exists($this, 'handle')) {
             $this->method('POST');
             $this->action(route(admin_api_route('form')));
-            $this->hidden('_form_')->default(get_called_class());
+            $this->hidden(static::REQUEST_NAME)->default(get_called_class());
             $this->hidden('_current_')->default($this->getCurrentUrl());
         }
     }

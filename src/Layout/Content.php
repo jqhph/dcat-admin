@@ -159,6 +159,8 @@ class Content implements Renderable
      * @param bool $value
      *
      * @return $this
+     *
+     * @deprecated
      */
     public function perfectScrollbar(bool $value = true)
     {
