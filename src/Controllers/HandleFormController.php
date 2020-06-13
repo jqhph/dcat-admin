@@ -33,6 +33,8 @@ class HandleFormController
     {
         $form = $this->resolveForm($request);
 
+        $form->form();
+
         /* @var $field File */
         $field = $form->field($this->uploader()->upload_column);
 
@@ -42,6 +44,8 @@ class HandleFormController
     public function destroyFile(Request $request)
     {
         $form = $this->resolveForm($request);
+
+        $form->form();
 
         /* @var $field File */
         $field = $form->field($request->_column);
@@ -75,10 +79,6 @@ class HandleFormController
 
         if (! method_exists($form, 'handle')) {
             throw new Exception("Form method {$formClass}::handle() does not exist.");
-        }
-
-        if (method_exists($form, 'form')) {
-            $form->form();
         }
 
         return $form;
