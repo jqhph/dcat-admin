@@ -176,6 +176,11 @@ class Asset
     public $script = [];
 
     /**
+     * @var array
+     */
+    public $directScript = [];
+
+    /**
      * css代码.
      *
      * @var array
@@ -500,13 +505,18 @@ class Asset
      * 设置js代码.
      *
      * @param string|array $script
+     * @param bool         $direct
      */
-    public function script($script)
+    public function script($script, bool $direct = false)
     {
         if (! $script) {
             return;
         }
-        $this->script = array_merge($this->script, (array) $script);
+        if ($direct) {
+            $this->directScript = array_merge($this->directScript, (array) $script);
+        } else {
+            $this->script = array_merge($this->script, (array) $script);
+        }
     }
 
     /**
@@ -631,6 +641,7 @@ class Asset
     public function scriptToHtml()
     {
         $script = implode(';', array_unique($this->script));
+        $directScript = implode(';', array_unique($this->directScript));
 
         return <<<HTML
 <script data-exec-on-popstate>
@@ -640,8 +651,15 @@ Dcat.ready(function () {
     } catch (e) {
         console.error(e)
     }
- });
- </script>
+});
+(function () {
+    try {
+        {$directScript}
+    } catch (e) {
+        console.error(e)
+    }
+})()
+</script>
 HTML;
     }
 

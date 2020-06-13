@@ -53,7 +53,7 @@ body.dark-mode {
     color: darken($white, 2.5%);
   }
 
-  .dcat-loading {
+  .dcat-loading:not(.layui-layer-shade) {
     background-color: inherit!important;
   }
 
@@ -689,4 +689,12 @@ body.dark-mode {
     }
   }
 
+  // ---- login
+  .login-page {
+    background-color: $body-dark-bg!important;
+  }
+  .login-card-body, .register-card-body {
+    background-color: $body-dark-color;
+    color: $body-dark-font-color
+  }
 }

@@ -4,6 +4,7 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Widgets\DarkModeSwitcher;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -25,6 +26,8 @@ class Navbar implements Renderable
             'left'  => collect(),
             'right' => collect(),
         ];
+
+        $this->addDefaultElements();
 
         $this->callResolving();
     }
@@ -51,6 +54,13 @@ class Navbar implements Renderable
         $this->elements['right']->push($element);
 
         return $this;
+    }
+
+    protected function addDefaultElements()
+    {
+        if (config('admin.layout.dark_mode_switch')) {
+            $this->right((new DarkModeSwitcher())->render());
+        }
     }
 
     /**
