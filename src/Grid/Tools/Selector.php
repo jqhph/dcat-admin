@@ -60,7 +60,7 @@ class Selector
 
     /**
      * @param string        $column
-     * @param string        $label
+     * @param string|array  $label
      * @param array         $options
      * @param null|\Closure $query
      *

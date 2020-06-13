@@ -697,4 +697,22 @@ body.dark-mode {
     background-color: $body-dark-color;
     color: $body-dark-font-color
   }
+
+  // ----- selector
+  .custom-data-table .grid-selector {
+    .wrap {
+      background-color: $body-dark-color;
+    }
+
+    .select-label {
+      color: darken($body-dark-font-color, 5%);
+    }
+    ul > li a {
+      color: $body-dark-font-color;
+    }
+
+    .select-options a.active {
+      color: $primary
+    }
+  }
 }

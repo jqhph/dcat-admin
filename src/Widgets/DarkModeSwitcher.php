@@ -31,7 +31,7 @@ HTML;
 
     protected function addStyle()
     {
-        Admin::style('.dark-mode-switcher{font-size: 1.5rem;cursor: pointer}');
+        Admin::style('.dark-mode-switcher{margin:0 10px;font-size: 1.5rem;cursor: pointer}');
     }
 
     protected function addScript()
@@ -39,8 +39,7 @@ HTML;
         $default = $this->defaultDarkMode ? 'true' : 'false';
         $darkSidebar = config('admin.layout.sidebar_dark') ? 'true' : 'false';
 
-        $script =
-            <<<JS
+        $script = <<<JS
 (function() {
     var storage = localStorage || {setItem:function () {}, getItem: function () {}},
         key = 'dcat-admin-theme-mode',
