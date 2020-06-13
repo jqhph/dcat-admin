@@ -26,6 +26,7 @@
       font-size: 1.55rem;
       -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
       animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
+      font-weight: 300;
     }
 
     .nav-item {
@@ -88,7 +89,7 @@ body.sidebar-collapse {
 [class*=sidebar-dark-] {
   .navbar-header {
     padding: 0 1rem 0;
-    height: 60px;
+    height: 61px;
     background: $body-darker-color;
   }
 

@@ -1,4 +1,7 @@
 
+$body-dark-card-bg: $body-dark-color;
+$body-dark-modal-bg: lighten($body-dark-color, 3%);
+
 @mixin dark-scrollbar($selector) {
   #{$selector}::-webkit-scrollbar {
     width: 12px;
@@ -125,6 +128,7 @@ body.dark-mode {
   }
 
 
+  // ------ header-navbar
   .header-navbar {
     background-color: $body-dark-color;
     .navbar-container {
@@ -191,6 +195,7 @@ body.dark-mode {
   }
 
 
+  // ----- modal
   .modal {
     .modal-header,
     .modal-header[class*="bg-"] {
@@ -205,8 +210,11 @@ body.dark-mode {
     .modal-content,
     .modal-body,
     .modal-footer {
-      background-color: lighten($body-dark-color, 1%);
+      background-color: $body-dark-modal-bg;
     }
+  }
+  .modal-backdrop {
+    background-color: rgba(#22292f, .5);
   }
 
   .pagination {
@@ -305,17 +313,43 @@ body.dark-mode {
   .nav.nav-tabs {
     border-color: lighten($body-dark-border-color, 10%);
   }
+  .nav-theme-primary .nav.nav-tabs,
+  .nav-theme-white .nav.nav-tabs {
+    background-color: $body-dark-card-bg;
+
+    .nav-item .nav-link:not(.active) {
+      color: darken($body-dark-font-color, 4%)
+    }
+
+    .nav-item .nav-link.active {
+      color: $primary;
+    }
+
+    .nav-item .nav-link.active:after {
+      background: linear-gradient(30deg, $primary, rgba($primary, 0.5)) !important;
+    }
+  }
 
   // ------ table
   @include dark-scrollbar('.table-responsive[data-pattern=priority-columns]');
+
+  table.dataTable {
+    margin-top: 12px!important;
+  }
 
   .table.default-table td,
   .table.default-table th {
     border-color: $body-dark-border-color!important;
   }
+
+  table.table-bordered.dataTable.complex-headers,
   .table.default-table {
     th {
       background: darken($body-dark-bg, 3%);
+    }
+
+    td {
+      background: darken($body-dark-bg, 1%);
     }
   }
 
@@ -431,7 +465,7 @@ body.dark-mode {
   }
 
   .card, .box {
-    background: $body-dark-color;
+    background: $body-dark-card-bg;
   }
   .box.box-solid.box-default {
     background-color: $body-dark-bg;
@@ -451,8 +485,9 @@ body.dark-mode {
   }
 
   .dd-handle {
-    background: darken($body-dark-bg, 2%);
-    color: $body-dark-font-color
+    background: darken($body-dark-bg, 1.2%);
+    color: $body-dark-font-color;
+    margin-bottom: 2px;
   }
   .dd-item > button:before {
     color: $body-dark-font-color
@@ -484,6 +519,10 @@ body.dark-mode {
   }
   .help-block {
     color: darken($body-dark-font-color, 1.2%)!important;
+  }
+  .has-error .checkbox, .has-error .checkbox-inline, .has-error.checkbox label, .has-error .control-label, .has-error .form-control-position i, .has-error .form-control:focus~.form-control-position i, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.radio label
+  {
+    color: $red-darker!important;
   }
 
   @include dark-scrollbar('.select2-container--default .select2-results>.select2-results__options');
@@ -528,10 +567,17 @@ body.dark-mode {
     color: $body-dark-font-color;
   }
 
+  // ------ layer
   // 滚动条
   @include dark-scrollbar('.layui-layer-page .layui-layer-content');
   .layui-layer {
     background-color: lighten($body-dark-color, 1%)!important;
+  }
+  .layui-layer-page {
+    .layui-layer-btn,
+    .layui-layer-content{
+      background-color: $body-dark-modal-bg!important;
+    }
   }
   .layui-layer-title {
     background-color: lighten($body-dark-color, 1%)!important;
@@ -592,7 +638,7 @@ body.dark-mode {
   // ---- quick create
   .quick-create {
     td {
-      background-color: lighten($body-dark-color, 3%)!important;
+      background-color: $body-dark-modal-bg!important;
       color: darken($body-dark-font-color, 5%)
     }
   }
@@ -714,5 +760,23 @@ body.dark-mode {
     .select-options a.active {
       color: $primary
     }
+  }
+
+
+  // ----- switchery
+  .switchery {
+    background-color: lighten($body-dark-font-color, 4%)!important;
+    border-color: lighten($body-dark-font-color, 4%)!important;
+    box-shadow: $shadow-200;
+  }
+  .switchery>small {
+    background-color: lighten($body-dark-font-color, 10%)!important;
+  }
+
+
+  // ----- rwd table
+  //.no-touch .dropdown-menu>.checkbox-row:active,
+  .dropdown-menu li.checkbox-row:hover {
+    background-color: $body-darker-color!important;
   }
 }

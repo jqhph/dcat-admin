@@ -104,6 +104,7 @@ table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead 
 /* ------------------- 多表头 --------------------- */
 table.table-bordered.dataTable.complex-headers {
   border-spacing: 0;
+  margin-top: 12px!important;
 
   thead th {
     text-align: center;
