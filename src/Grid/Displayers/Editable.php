@@ -40,11 +40,14 @@ HTML;
     protected function addStyle()
     {
         $color = Admin::color()->link();
+        $primary = Admin::color()->primary();
 
         Admin::style(
             <<<CSS
-.grid-editable{border-bottom:dashed 1px $color;color: $color;display: inline-block}
-.grid-editable+.save{margin-left: 0.5rem;color: $color}
+.{$this->selector}{border-bottom:dashed 1px $color;color: $color;display: inline-block}
+.{$this->selector}+.save{margin-left: 0.4rem;color: $color}
+body.dark-mode .{$this->selector}{color: $primary;border-color: $primary;}
+body.dark-mode .{$this->selector}+.save{color: $primary}
 CSS
         );
     }
