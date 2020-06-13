@@ -38,8 +38,6 @@ class Expand extends AbstractDisplayer
             if ($html instanceof Renderable) {
                 $html = $html->render();
             }
-        } elseif ($callbackOrButton && is_string($callbackOrButton)) {
-            $this->button = $callbackOrButton;
         } elseif ($callbackOrButton instanceof LazyRenderable) {
             $html = '<div style="min-height: 150px"></div>';
 
@@ -52,6 +50,8 @@ class Expand extends AbstractDisplayer
             $this->setUpLazyRenderable($renderable = $callbackOrButton::make());
 
             $remoteUrl = $renderable->getUrl();
+        } elseif ($callbackOrButton && is_string($callbackOrButton)) {
+            $this->button = $callbackOrButton;
         }
 
         $this->addScript($remoteUrl);
