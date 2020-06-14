@@ -4,6 +4,7 @@ namespace Dcat\Admin\Middleware;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Widgets\DarkModeSwitcher;
 use Illuminate\Http\Request;
 
 class Bootstrap
@@ -11,14 +12,22 @@ class Bootstrap
     public function handle(Request $request, \Closure $next)
     {
         $this->includeBootstrapFile();
-        $this->setupScript();
+        $this->addScript();
         $this->fireEvents();
+        $this->setUpDarkMode();
 
         $response = $next($request);
 
         $this->storeCurrentUrl($request);
 
         return $response;
+    }
+
+    protected function setUpDarkMode()
+    {
+        if (config('admin.layout.dark_mode_switch')) {
+            Admin::navbar()->right((new DarkModeSwitcher())->render());
+        }
     }
 
     protected function includeBootstrapFile()
@@ -28,7 +37,7 @@ class Bootstrap
         }
     }
 
-    protected function setupScript()
+    protected function addScript()
     {
         $token = csrf_token();
         Admin::script("Dcat.token = \"$token\";");

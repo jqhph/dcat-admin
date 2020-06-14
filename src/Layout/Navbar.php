@@ -27,8 +27,6 @@ class Navbar implements Renderable
             'right' => collect(),
         ];
 
-        $this->addDefaultElements();
-
         $this->callResolving();
     }
 
@@ -54,13 +52,6 @@ class Navbar implements Renderable
         $this->elements['right']->push($element);
 
         return $this;
-    }
-
-    protected function addDefaultElements()
-    {
-        if (config('admin.layout.dark_mode_switch')) {
-            $this->right((new DarkModeSwitcher())->render());
-        }
     }
 
     /**
