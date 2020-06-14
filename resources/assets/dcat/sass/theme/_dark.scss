@@ -541,6 +541,7 @@ body.dark-mode {
     color: $body-dark-font-color!important;
     border-color: $body-dark-border-color!important;
   }
+  .select2-container--default .select2-search--inline .select2-search__field,
   .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: $body-dark-font-color!important;
   }
@@ -786,5 +787,48 @@ body.dark-mode {
   //.no-touch .dropdown-menu>.checkbox-row:active,
   .dropdown-menu li.checkbox-row:hover {
     background-color: $body-darker-color!important;
+  }
+
+
+  // ---- step
+  .dcat-step {
+    .dcat-step-title {
+      color: $body-dark-font-color;
+    }
+
+    .active > .dcat-step-item-container > .dcat-step-content > .dcat-step-title,
+    .done > .dcat-step-item-container > .dcat-step-content > .dcat-step-title {
+      color: lighten($body-dark-font-color, 8%);
+    }
+
+    .dcat-step-icons {
+      border-color: lighten($body-dark-font-color, 4%);
+      > .dcat-step-icon {
+        color: lighten($body-dark-font-color, 4%);
+      }
+    }
+
+    .dcat-step-title:after {
+      background-color: $body-dark-font-color;
+    }
+
+    .active > .dcat-step-item-container > .dcat-step-content > .dcat-step-title:after {
+      background-color: lighten($body-dark-font-color, 4%);
+    }
+
+    .done .dcat-step-icons {
+      background-color: transparent;
+      border-color: $primary;
+    }
+    .done .dcat-step-icons > .dcat-step-icon {
+      color: $primary
+    }
+  }
+  .dcat-done-step .st-title {
+    color: $body-dark-heading-color
+  }
+
+  .dcat-done-step .st-desc {
+    color: $body-dark-font-color;
   }
 }
