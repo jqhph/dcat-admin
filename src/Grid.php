@@ -246,14 +246,10 @@ class Grid
         if (mb_strpos($name, '.') !== false) {
             [$relationName, $relationColumn] = explode('.', $name);
 
-            $label = empty($label) ? admin_trans_field($relationColumn) : $label;
-
             $name = Str::snake($relationName).'.'.$relationColumn;
         }
 
-        $column = $this->addColumn($name, $label);
-
-        return $column;
+        return $this->addColumn($name, $label);
     }
 
     /**
