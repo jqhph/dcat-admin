@@ -12,10 +12,6 @@ export default class DarkMode {
         };
 
         Dcat.darkMode = this;
-
-        if (this.options.dark_mode) {
-            this.switch(true)
-        }
     }
 
     toggle() {

@@ -6,6 +6,7 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\ViewErrorBag;
 
@@ -503,6 +504,10 @@ JS
             ) {
                 $data[$key] = $defaultData[$key];
             }
+        }
+
+        if ($data['body_class'] && Str::contains($data['body_class'], 'dark-mode')) {
+            $data['sidebar_dark'] = true;
         }
 
         return [
