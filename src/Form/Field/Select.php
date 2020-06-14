@@ -97,9 +97,9 @@ class Select extends Field
     {
         if (Str::contains($field, '.')) {
             $field = $this->formatName($field);
-            $class = str_replace(['[', ']'], '_', $field);
+            $class = static::FIELD_CLASS_PREFIX.str_replace(['[', ']'], '_', $field);
         } else {
-            $class = $field;
+            $class = static::FIELD_CLASS_PREFIX.$field;
         }
 
         $sourceUrl = admin_url($sourceUrl);
@@ -108,7 +108,8 @@ class Select extends Field
 $(document).off('change', "{$this->getElementClassSelector()}");
 $(document).on('change', "{$this->getElementClassSelector()}", function () {
     var target = $(this).closest('.fields-group').find(".$class");
-    if (this.value !== '0' && ! this.value) {
+    
+    if (String(this.value) !== '0' && ! this.value) {
         return;
     }
     $.ajax("$sourceUrl?q="+this.value).then(function (data) {
@@ -144,10 +145,10 @@ JS;
     {
         $fieldsStr = implode('^', array_map(function ($field) {
             if (Str::contains($field, '.')) {
-                return str_replace('.', '_', $field).'_';
+                return static::FIELD_CLASS_PREFIX.str_replace('.', '_', $field).'_';
             }
 
-            return $field;
+            return static::FIELD_CLASS_PREFIX.$field;
         }, (array) $fields));
         $urlsStr = implode('^', array_map(function ($url) {
             return admin_url($url);
