@@ -4,7 +4,6 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Dcat\Admin\Widgets\DarkModeSwitcher;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 
