@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 
 /**
  * Class Admin.
@@ -490,6 +491,8 @@ class Admin
         static::$jsVariables['token'] = csrf_token();
         static::$jsVariables['lang'] = __('admin.client') ?: [];
         static::$jsVariables['colors'] = static::color()->all();
+        static::$jsVariables['dark_mode'] = Str::contains(config('admin.layout.body_class'), 'dark-mode');
+        static::$jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark');
 
         return json_encode(static::$jsVariables);
     }

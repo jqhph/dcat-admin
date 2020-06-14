@@ -36,37 +36,26 @@ HTML;
 
     protected function addScript()
     {
-        $default = $this->defaultDarkMode ? 'true' : 'false';
-        $darkSidebar = config('admin.layout.sidebar_dark') ? 'true' : 'false';
-
-        $script = <<<JS
+        $script = <<<'JS'
 (function() {
     var storage = localStorage || {setItem:function () {}, getItem: function () {}},
+        darkMode = Dcat.darkMode,
         key = 'dcat-admin-theme-mode',
         mode = storage.getItem(key),
-        body = $('body'),
-        sidebar = $('.main-menu .main-sidebar'),
         icon = $('.dark-mode-switcher i');
-        darkSidebar = {$darkSidebar},
-        defaultDark = {$default};
-    
+
     function switchMode(dark) {
         if (dark) {
-            body.addClass('dark-mode');
-            sidebar.removeClass('sidebar-light-primary').addClass('sidebar-dark-white');
             icon.addClass('icon-sun').removeClass('icon-moon');
-            
+            darkMode.display(true);
             return;
         }
         
-        body.removeClass('dark-mode');
+        darkMode.display(false);
         icon.removeClass('icon-sun').addClass('icon-moon');
-        if (! darkSidebar) {
-            sidebar.addClass('sidebar-light-primary').removeClass('sidebar-dark-white');
-        }
     }
     
-    if (mode === 'dark' || (! mode && defaultDark)) {
+    if (mode === 'dark') {
         switchMode(true);
     } else if (mode === 'def') {
         switchMode(false)
