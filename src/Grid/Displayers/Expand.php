@@ -54,14 +54,14 @@ class Expand extends AbstractDisplayer
             $this->button = $callbackOrButton;
         }
 
-        $this->addScript($remoteUrl);
+        $this->addScript();
 
         $key = $this->getDataKey();
 
         $button = is_null($this->button) ? $this->value : $this->button;
 
         return <<<EOT
-<span class="grid-expand" data-inserted="0" data-id="{$this->getKey()}" data-key="{$key}" data-toggle="collapse" data-target="#grid-collapse-{$key}">
+<span class="grid-expand" data-url="$remoteUrl" data-inserted="0" data-id="{$this->getKey()}" data-key="{$key}" data-toggle="collapse" data-target="#grid-collapse-{$key}">
    <a href="javascript:void(0)"><i class="feather icon-chevrons-right"></i>  $button</a>
 </span>
 <template class="grid-expand-{$key}">
@@ -82,11 +82,11 @@ EOT;
         return $this->grid->getName().$key.'-'.static::$counter;
     }
 
-    protected function addScript(?string $remoteUrl)
+    protected function addScript()
     {
-        $script = <<<JS
+        $script = <<<'JS'
 $('.grid-expand').off('click').on('click', function () {
-    var _th = $(this), url = "{$remoteUrl}";
+    var _th = $(this), url = _th.data('url');
     
     if ($(this).data('inserted') == '0') {
     
