@@ -13,7 +13,7 @@
             <tr>
                 <th>{{ __('Key') }}</th>
                 <th>{{ __('Value') }}</th>
-                <th style="width: 75px;"></th>
+                <th style="width: 85px;"></th>
             </tr>
             </thead>
             <tbody class="kv-{{ $class }}-table">
@@ -55,7 +55,7 @@
                     <td class="form-group">
                         <div>
                             <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
-                                <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
+                                <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
                             </div>
                         </div>
                     </td>
@@ -99,7 +99,7 @@
         <td class="form-group">
             <div>
                 <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
-                    <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
+                    <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
                 </div>
             </div>
         </td>

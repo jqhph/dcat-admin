@@ -4,16 +4,12 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class KeyValue extends Field
 {
     const DEFAULT_FLAG_NAME = '_def_';
-
-    /**
-     * @var array
-     */
-    protected $value = ['' => ''];
 
     /**
      * Fill data to the field.
@@ -26,7 +22,7 @@ class KeyValue extends Field
     {
         $this->data = $data;
 
-        return Arr::get($data, $this->column, $this->value);
+        return Helper::array(Arr::get($data, $this->column, $this->value));
     }
 
     /**
@@ -98,10 +94,10 @@ JS;
         unset($value[static::DEFAULT_FLAG_NAME]);
 
         if (empty($value)) {
-            return [];
+            return '[]';
         }
 
-        return array_combine($value['keys'], $value['values']);
+        return json_encode(array_combine($value['keys'], $value['values']));
     }
 
     public function render()

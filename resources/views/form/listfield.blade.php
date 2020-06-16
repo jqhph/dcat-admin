@@ -39,9 +39,9 @@
                         </div>
                     </td>
 
-                    <td style="width: 75px;">
+                    <td style="width: 85px;">
                         <div class="{{$column}}-remove btn btn-white btn-sm pull-right">
-                            <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
+                            <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
                         </div>
                     </td>
                 </tr>
@@ -72,9 +72,9 @@
             </div>
         </td>
 
-        <td style="width: 75px;">
+        <td style="width: 85px;">
             <div class="{{$column}}-remove btn btn-white btn-sm pull-right">
-                <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
+                <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
             </div>
         </td>
     </tr>
