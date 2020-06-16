@@ -58,7 +58,7 @@ class ListField extends Field
      *
      * @param array $data
      *
-     * @return void
+     * @return array
      */
     public function formatFieldData($data)
     {
@@ -118,7 +118,7 @@ class ListField extends Field
     /**
      * {@inheritdoc}
      */
-    protected function setupScript()
+    protected function addScript()
     {
         $value = old($this->column, $this->value());
 
@@ -159,7 +159,7 @@ JS;
      */
     public function render()
     {
-        $this->setupScript();
+        $this->addScript();
 
         Admin::style('td .form-group {margin-bottom: 0 !important;}');
 
