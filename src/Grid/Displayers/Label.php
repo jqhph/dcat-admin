@@ -34,7 +34,7 @@ class Label extends AbstractDisplayer
         $background = '#d2d6de';
 
         if ($style !== 'default') {
-            $style = Admin::color()->get($style);
+            $style = Admin::color()->get($style, $style);
 
             $background = "style='background:{$style}'";
         }

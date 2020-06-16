@@ -350,7 +350,7 @@ HTML;
 
             $style = $style === 'default' ? 'dark70' : $style;
 
-            $background = Admin::color()->get($style);
+            $background = Admin::color()->get($style, $style);
 
             return "<i class='fa fa-circle' style='font-size: 13px;color: {$background}'></i>&nbsp;&nbsp;";
         });
@@ -389,7 +389,7 @@ HTML;
         if ($style !== 'default') {
             $class = '';
 
-            $style = Admin::color()->get($style);
+            $style = Admin::color()->get($style, $style);
             $background = "style='background:{$style}'";
         }
 
