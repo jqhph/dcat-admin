@@ -32,12 +32,7 @@
     {!! $grid->renderHeader() !!}
 
     <div class="table-responsive table-wrapper">
-            <table
-                class="table custom-data-table dataTable dt-checkboxes-select
-                {{ $grid->option('table_class') }}
-                {{ $grid->option('show_bordered') ? 'table-bordered complex-headers' : '' }} "
-                id="{{ $tableId }}"
-            >
+            <table class="custom-data-table dataTable {{ $grid->formatTableClass() }}" id="{{ $tableId }}">
                 <thead>
                 @if ($headers = $grid->getComplexHeaders())
                     <tr>

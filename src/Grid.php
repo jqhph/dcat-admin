@@ -169,7 +169,7 @@ class Grid
         'show_toolbar'           => true,
         'create_mode'            => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'       => ['700px', '670px'],
-        'table_class'            => null,
+        'table_class'            => ['table', 'dt-checkboxes-select'],
     ];
 
     /**
@@ -349,6 +349,30 @@ class Grid
     protected function applyColumnFilter()
     {
         $this->columns->each->bindFilterQuery($this->model());
+    }
+
+    /**
+     * @param string|array $class
+     *
+     * @return $this
+     */
+    public function addTableClass($class)
+    {
+        $this->options['table_class'] = array_merge((array) $this->options['table_class'], (array) $class);
+
+        return $this;
+    }
+
+    public function formatTableClass()
+    {
+        if ($this->options['show_bordered']) {
+            $this->addTableClass(['table-bordered', 'complex-headers', 'dataTable']);
+        }
+        if ($this->getComplexHeaders()) {
+            $this->addTableClass('table-text-center');
+        }
+
+        return implode(' ', array_unique((array) $this->options['table_class']));
     }
 
     /**
