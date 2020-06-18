@@ -109,14 +109,14 @@ class Helper
             return $value;
         }
 
-        if ($value instanceof Grid) {
-            return (string) $value->render();
-        }
-
         if ($value instanceof \Closure) {
-            $newThis && $value = $value->bindTo($newThis);
+            $newThis && ($value = $value->bindTo($newThis));
 
             $value = $value(...(array) $params);
+        }
+
+        if ($value instanceof Grid) {
+            return (string) $value->render();
         }
 
         if ($value instanceof Renderable) {
