@@ -681,6 +681,13 @@ class Filter implements Renderable
         return $this;
     }
 
+    public function view(string $view)
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
     /**
      * Get the string contents of the filter view.
      *
@@ -688,13 +695,17 @@ class Filter implements Renderable
      */
     public function render()
     {
+        $this->grid()->callBuilder();
+
         if (empty($this->filters)) {
             return '';
         }
 
         $this->callComposing();
 
-        $this->view = $this->mode === static::MODE_RIGHT_SIDE ? 'admin::filter.right-side-container' : 'admin::filter.container';
+        if (! $this->view) {
+            $this->view = $this->mode === static::MODE_RIGHT_SIDE ? 'admin::filter.right-side-container' : 'admin::filter.container';
+        }
 
         return view($this->view)->with([
             'action'             => $this->action ?: $this->urlWithoutFilters(),

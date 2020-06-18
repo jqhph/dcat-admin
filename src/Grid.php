@@ -413,7 +413,7 @@ class Grid
     /**
      * @return void
      */
-    protected function callBuilder()
+    public function callBuilder()
     {
         if ($this->builder && ! $this->built) {
             call_user_func($this->builder, $this);
