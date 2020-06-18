@@ -2,7 +2,15 @@
 @import "../sass/variables/variables";
 
 .webuploader-container {
-  position: relative
+  position: relative;
+}
+
+.web-uploader {
+
+  .queueList {
+    border-radius: $card-border-radius;
+    border-color: $input-border-color!important;
+  }
 }
 
 .webuploader-element-invisible {

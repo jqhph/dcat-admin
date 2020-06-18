@@ -8,6 +8,7 @@
             preview: [], // 数据预览
             server: '',
             updateServer: '',
+            autoUpload: false,
             sortable: false,
             deleteUrl: '',
             deleteData: {},
@@ -539,8 +540,13 @@
                     $placeHolder.addClass('element-invisible');
                     $selector.find(addFileButtonSelector).removeClass('element-invisible');
                     $queue.show();
-                    if (!opts.disabled) {
+                    if (! opts.disabled) {
                         $statusBar.removeClass('element-invisible');
+
+                        if (opts.autoUpload) {
+                            // 自动上传
+                            uploader.upload()
+                        }
                     }
                     refreshButton();
                     if (showImg) {

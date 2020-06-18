@@ -176,8 +176,9 @@ class File extends Field implements UploadFieldInterface
         $this->setUpScript();
 
         $this->addVariables([
-            'fileType'    => $this->options['isImage'] ? '' : 'file',
-            'containerId' => $this->containerId,
+            'fileType'      => $this->options['isImage'] ? '' : 'file',
+            'containerId'   => $this->containerId,
+            'showUploadBtn' => ($this->options['autoUpload'] ?? false) ? false : true,
         ]);
 
         return parent::render();

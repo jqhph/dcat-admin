@@ -152,6 +152,20 @@ trait WebUploader
     }
 
     /**
+     * 是否开启自动上传.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function autoUpload(bool $value = true)
+    {
+        $this->options['autoUpload'] = $value;
+
+        return $this;
+    }
+
+    /**
      * Set default options form file field.
      *
      * @return void
