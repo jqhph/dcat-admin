@@ -78,10 +78,7 @@ class Application
             }
         }
 
-        // 命令行重置多后台配置
-        if ($this->app->runningInConsole()) {
-            $this->withConfig(static::DEFAULT);
-        }
+        $this->withConfig(static::DEFAULT);
     }
 
     /**
