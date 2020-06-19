@@ -819,11 +819,11 @@ class Builder
         $tabObj = $this->form->getTab();
 
         if (! $tabObj->isEmpty()) {
-            $this->setupTabScript();
+            $this->addTabScript();
         }
 
         if ($this->form->allowAjaxSubmit() && empty($this->stepBuilder)) {
-            $this->setupSubmitScript();
+            $this->addSubmitScript();
         }
 
         $open = $this->open(['class' => 'form-horizontal']);
@@ -864,7 +864,7 @@ EOF;
     /**
      * @return void
      */
-    protected function setupSubmitScript()
+    protected function addSubmitScript()
     {
         Admin::script(
             <<<JS
@@ -878,7 +878,7 @@ JS
     /**
      * @return void
      */
-    protected function setupTabScript()
+    protected function addTabScript()
     {
         $elementId = $this->getElementId();
 
