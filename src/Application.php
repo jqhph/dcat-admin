@@ -72,13 +72,15 @@ class Application
     {
         $this->registerRoute(static::DEFAULT);
 
-        if ($this->app->runningInConsole()) {
-            return;
-        }
         foreach ((array) config('admin.multi_app') as $app => $enable) {
             if ($enable) {
                 $this->registerRoute($app);
             }
+        }
+
+        // 命令行重置多后台配置
+        if ($this->app->runningInConsole()) {
+            $this->withConfig(static::DEFAULT);
         }
     }
 
