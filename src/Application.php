@@ -12,7 +12,12 @@ class Application
     /**
      * @var Container
      */
-    protected $app;
+    protected $container;
+
+    /**
+     * @var array
+     */
+    protected $apps;
 
     /**
      * 所有启用应用的配置.
@@ -30,7 +35,8 @@ class Application
 
     public function __construct(Container $app)
     {
-        $this->app = $app;
+        $this->container = $app;
+        $this->apps = (array) config('admin.multi_app');
     }
 
     /**
@@ -38,7 +44,7 @@ class Application
      *
      * @param string $app
      */
-    public function current(string $app = null)
+    public function switch(string $app = null)
     {
         $this->withName($app);
 
@@ -72,13 +78,20 @@ class Application
     {
         $this->registerRoute(static::DEFAULT);
 
-        foreach ((array) config('admin.multi_app') as $app => $enable) {
+        if ($this->apps) {
+            $this->registerMultiAppRoutes();
+
+            $this->withConfig(static::DEFAULT);
+        }
+    }
+
+    protected function registerMultiAppRoutes()
+    {
+        foreach ($this->apps as $app => $enable) {
             if ($enable) {
                 $this->registerRoute($app);
             }
         }
-
-        $this->withConfig(static::DEFAULT);
     }
 
     /**
@@ -124,7 +137,6 @@ class Application
     {
         if (! isset($this->configs[$app])) {
             $this->configs[$app] = config($app);
-            $this->configs[$app]['current_app'] = $app;
         }
 
         config(['admin' => $this->configs[$app]]);
@@ -140,7 +152,7 @@ class Application
      */
     protected function loadRoutesFrom(string $path, ?string $app)
     {
-        if (! $this->app->routesAreCached()) {
+        if (! $this->container->routesAreCached()) {
             Route::middleware('admin.app:'.$app)->group($path);
         }
     }
