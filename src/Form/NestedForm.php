@@ -406,12 +406,12 @@ class NestedForm
             foreach ($column as $k => $name) {
                 $errorKey[$k] = sprintf('%s.%s.%s', $this->relationName, $key, $name);
                 $elementName[$k] = sprintf('%s[%s][%s]', $this->relationName, $key, $name);
-                $elementClass[$k] = [$this->relationName, $name];
+                $elementClass[$k] = [$this->relationName, Field::FIELD_CLASS_PREFIX.$name];
             }
         } else {
             $errorKey = sprintf('%s.%s.%s', $this->relationName, $key, $column);
             $elementName = sprintf('%s[%s][%s]', $this->relationName, $key, $column);
-            $elementClass = [$this->relationName, $column];
+            $elementClass = [$this->relationName, Field::FIELD_CLASS_PREFIX.$column];
         }
 
         return $field->setErrorKey($errorKey)
