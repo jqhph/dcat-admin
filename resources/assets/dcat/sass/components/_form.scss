@@ -81,7 +81,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .control-label.asterisk:before {
-  content: "*";
+  content: "* ";
   font-weight: bold;
   color: $red-darker;
 }

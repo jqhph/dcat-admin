@@ -553,6 +553,8 @@
                         $wrap.find('.queueList').css({'border': '1px solid #d3dde5', 'padding':'5px'});
                         // $wrap.find('.queueList').removeAttr('style');
                     }
+
+                    setTimeout(removeValidatorErrors, 1);
                     break;
 
                 case 'uploading':
@@ -794,6 +796,10 @@
         // 重新计算按钮定位
         function refreshButton() {
             uploader.refresh();
+        }
+
+        function removeValidatorErrors() {
+            $input.parents('.form-group,.form-label-group,.form-field').find('.with-errors').html('')
         }
 
         // 文件排序
