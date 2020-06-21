@@ -85,6 +85,28 @@ class Application
         }
     }
 
+    /**
+     * 注册路由.
+     *
+     * @param string|\Closure $pathOrCallback
+     */
+    public function routes($pathOrCallback)
+    {
+        $this->loadRoutesFrom($pathOrCallback, static::DEFAULT);
+
+        if ($this->apps) {
+            foreach ($this->apps as $app => $enable) {
+                if ($enable) {
+                    $this->withConfig($app);
+
+                    $this->loadRoutesFrom($pathOrCallback, $app);
+                }
+            }
+
+            $this->withConfig(static::DEFAULT);
+        }
+    }
+
     protected function registerMultiAppRoutes()
     {
         foreach ($this->apps as $app => $enable) {
@@ -150,7 +172,7 @@ class Application
      *
      * @return void
      */
-    protected function loadRoutesFrom(string $path, ?string $app)
+    protected function loadRoutesFrom($path, ?string $app)
     {
         if (! $this->container->routesAreCached()) {
             Route::middleware('admin.app:'.$app)->group($path);
