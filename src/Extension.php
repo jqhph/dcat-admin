@@ -4,7 +4,6 @@ namespace Dcat\Admin;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 
 abstract class Extension
