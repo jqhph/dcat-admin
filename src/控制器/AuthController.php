@@ -173,7 +173,7 @@ class AuthController extends Controller
         });
 
         $form->display('username', trans('admin.username'));
-        $form->text('name', trans('admin.name'))->rules('required');
+        $form->text('name', trans('admin.name'))->required();
         $form->image('avatar', trans('admin.avatar'));
 
         $form->password('old_password', trans('admin.old_password'));
