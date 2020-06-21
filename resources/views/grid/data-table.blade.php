@@ -4,7 +4,7 @@
     @if ($grid->allowToolbar())
         <div class="custom-data-table-header">
             <div class="table-responsive">
-                <div class="top d-block" style="padding: 0">
+                <div class="top d-block clearfix p-0">
                 @if(!empty($title))
                     <h4 class="pull-left" style="margin:5px 10px 0;">
                         {!! $title !!}&nbsp;
