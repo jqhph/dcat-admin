@@ -10,6 +10,7 @@
 <a href="http://www.dcatadmin.com/">文档</a> |
 <a href="https://jqhph.github.io/dcat-admin/demo.html">Demo</a> |
 <a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
+<a href="https://gitee.com/jqhph/dcat-admin-demo">Demo源码 (码云)</a> |
 <a href="#extensions">扩展</a>
 </p>
 
