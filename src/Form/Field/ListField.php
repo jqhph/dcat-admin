@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
+use Illuminate\Support\MessageBag;
 
 class ListField extends Field
 {
@@ -81,7 +82,11 @@ class ListField extends Field
         }
 
         $rules = $attributes = [];
-        if (! $fieldRules = $this->getRules()) {
+        if (
+            (! $fieldRules = $this->getRules())
+            && ! $this->max
+            && ! $this->min
+        ) {
             return false;
         }
 
@@ -89,7 +94,9 @@ class ListField extends Field
             return false;
         }
 
-        $rules["{$this->column}.values.*"] = $fieldRules;
+        if ($fieldRules) {
+            $rules["{$this->column}.values.*"] = $fieldRules;
+        }
         $attributes["{$this->column}.values.*"] = __('Value');
         $rules["{$this->column}.values"][] = 'array';
 
@@ -106,6 +113,17 @@ class ListField extends Field
         $input = $this->prepareValidatorInput($input);
 
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
+    }
+
+    public function formatValidatorMessages($messageBag)
+    {
+        $messages = new MessageBag();
+
+        foreach ($messageBag->toArray() as $column => $message) {
+            $messages->add($this->column, $message);
+        }
+
+        return $messages;
     }
 
     protected function prepareValidatorInput(array $input)

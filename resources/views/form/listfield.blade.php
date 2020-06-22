@@ -11,7 +11,7 @@
                 <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
             @endforeach
         @endif
-        <error></error>
+        <div class="help-block with-errors"></div>
 
         <span name="{{$name}}"></span>
         <input name="{{ $name }}[values][{{ \Dcat\Admin\Form\Field\ListField::DEFAULT_FLAG_NAME }}]" type="hidden" />
@@ -29,7 +29,7 @@
                         <div class="form-group {{ $errors->has($itemErrorKey) ? 'has-error' : '' }}">
                             <div class="col-sm-12">
                                 <input name="{{ $name }}[values][{{ (int) $k }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
-                                <error></error>
+                                <div class="help-block with-errors"></div>
                                 @if($errors->has($itemErrorKey))
                                     @foreach($errors->get($itemErrorKey) as $message)
                                         <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
@@ -67,7 +67,7 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     <input name="{{ $name }}[values][{key}]" class="form-control" />
-                    <error></error>
+                    <div class="help-block with-errors"></div>
                 </div>
             </div>
         </td>

@@ -6,7 +6,7 @@
         <span name="{{$name}}"></span>
         <input name="{{ $name }}[{{ \Dcat\Admin\Form\Field\KeyValue::DEFAULT_FLAG_NAME }}]" type="hidden" />
 
-        <error></error>
+        <div class="help-block with-errors"></div>
 
         <table class="table table-hover">
             <thead>
@@ -27,7 +27,7 @@
                     <td>
                         <div class="form-group {{ $errors->has($keysErrorKey) ? 'has-error' : '' }}">
                             <div class="col-sm-12">
-                                <error></error>
+                                <div class="help-block with-errors"></div>
                                 @if($errors->has($keysErrorKey))
                                     @foreach($errors->get($keysErrorKey) as $message)
                                         <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
@@ -41,7 +41,7 @@
                     <td>
                         <div class="form-group {{ $errors->has($valsErrorKey) ? 'has-error' : '' }}">
                             <div class="col-sm-12">
-                                <error></error>
+                                <div class="help-block with-errors"></div>
                                 @if($errors->has($valsErrorKey))
                                     @foreach($errors->get($valsErrorKey) as $message)
                                         <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
@@ -82,7 +82,7 @@
         <td>
             <div class="form-group  ">
                 <div class="col-sm-12">
-                    <error></error>
+                    <div class="help-block with-errors"></div>
                     <input name="{{ $name }}[keys][{key}]" class="form-control" required/>
                 </div>
             </div>
@@ -90,7 +90,7 @@
         <td>
             <div class="form-group  ">
                 <div class="col-sm-12">
-                    <error></error>
+                    <div class="help-block with-errors"></div>
                     <input name="{{ $name }}[values][{key}]" class="form-control" />
                 </div>
             </div>

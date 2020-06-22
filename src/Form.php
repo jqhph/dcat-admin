@@ -1225,7 +1225,7 @@ class Form implements Renderable
             }
 
             if (($validator instanceof Validator) && ! $validator->passes()) {
-                $failedValidators[] = $validator;
+                $failedValidators[] = [$field, $validator];
             }
         }
 
@@ -1273,7 +1273,7 @@ class Form implements Renderable
     /**
      * Merge validation messages from input validators.
      *
-     * @param \Illuminate\Validation\Validator[] $validators
+     * @param array $validators
      *
      * @return MessageBag
      */
@@ -1281,8 +1281,10 @@ class Form implements Renderable
     {
         $messageBag = new MessageBag();
 
-        foreach ($validators as $validator) {
-            $messageBag = $messageBag->merge($validator->messages());
+        foreach ($validators as $value) {
+            [$field, $validator] = $value;
+
+            $messageBag = $messageBag->merge($field->formatValidatorMessages($validator->messages()));
         }
 
         if ($this->validationMessages) {
