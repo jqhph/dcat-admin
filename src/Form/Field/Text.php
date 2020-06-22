@@ -11,7 +11,9 @@ class Text extends Field
 
     public function __construct($column, $arguments = [])
     {
-        $this->prepend('<i class="feather icon-edit-2"></i>');
+        if (static::class === Text::class) {
+            $this->prepend('<i class="feather icon-edit-2"></i>');
+        }
 
         parent::__construct($column, $arguments);
     }
