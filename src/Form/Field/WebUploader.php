@@ -104,11 +104,13 @@ trait WebUploader
     /**
      * 禁止上传文件后自动更新字段值.
      *
+     * @param bool $value
+     *
      * @return $this
      */
-    public function disableAutoSave()
+    public function disableAutoSave(bool $value = true)
     {
-        $this->options['autoUpdateColumn'] = false;
+        $this->options['autoUpdateColumn'] = ! $value;
 
         return $this;
     }
@@ -116,11 +118,13 @@ trait WebUploader
     /**
      * Disable remove file.
      *
+     * @param bool $value
+     *
      * @return $this
      */
-    public function disableRemove()
+    public function disableRemove(bool $value = true)
     {
-        $this->options['disableRemove'] = true;
+        $this->options['disableRemove'] = $value;
 
         return $this;
     }
@@ -183,7 +187,6 @@ trait WebUploader
             'disableGlobalDnd'    => true,
             'fileSizeLimit'       => 20971520000, // 20000M
             'fileSingleSizeLimit' => 10485760, // 10M
-            'autoUpdateColumn'    => false, // 上传完图片后自动保存图片路径
             'elementName'         => $this->getElementName(), // 字段name属性值
             'lang'                => trans('admin.uploader'),
 
@@ -224,7 +227,9 @@ trait WebUploader
         ) {
             $this->options['formData']['_method'] = 'PUT';
             $this->options['deleteData']['_method'] = 'PUT';
-            $this->options['autoUpdateColumn'] = true;
+            if (! isset($this->options['autoUpdateColumn'])) {
+                $this->options['autoUpdateColumn'] = true;
+            }
         }
     }
 
