@@ -23,15 +23,21 @@ class DarkModeSwitcher implements Renderable
         $this->addStyle();
 
         return <<<HTML
-<span class="dark-mode-switcher">
-    <i class="feather {$icon}"></i>
-</span>
+<ul class="nav navbar-nav float-right">
+    <li class="dropdown dropdown-user nav-item">
+        <a class="dropdown-toggle nav-link">
+            <span class="dark-mode-switcher">
+                <i class="feather {$icon}"></i>
+            </span>
+        </a>
+    </li>
+</ul>
 HTML;
     }
 
     protected function addStyle()
     {
-        Admin::style('.dark-mode-switcher{margin:0 10px;font-size: 1.5rem;cursor: pointer}');
+        Admin::style('.dark-mode-switcher{margin:0 5px 0 0;font-size: 1.5rem;cursor: pointer}');
     }
 
     protected function addScript()
