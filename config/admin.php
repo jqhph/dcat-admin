@@ -37,6 +37,16 @@ return [
     'logo-mini' => '<img src="/vendors/dcat-admin/images/logo.png">',
 
     /*
+     |--------------------------------------------------------------------------
+     | User default avatar
+     |--------------------------------------------------------------------------
+     |
+     | Set a default avatar for newly created users.
+     |
+     */
+    'default_avatar' => '@admin/images/default-avatar.jpg',
+
+    /*
     |--------------------------------------------------------------------------
     | dcat-admin route settings
     |--------------------------------------------------------------------------
