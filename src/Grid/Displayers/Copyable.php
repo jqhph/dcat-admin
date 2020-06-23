@@ -35,10 +35,8 @@ JS;
     {
         $this->addScript();
 
-        $content = $this->column->getOriginal();
-
         $html = <<<HTML
-<a href="javascript:void(0);" class="grid-column-copyable text-muted" data-content="{$content}" title="Copied!" data-placement="bottom">
+<a href="javascript:void(0);" class="grid-column-copyable text-muted" data-content="{$this->value}" title="Copied!" data-placement="bottom">
     <i class="fa fa-copy"></i>
 </a>&nbsp;{$this->value}
 HTML;
