@@ -484,12 +484,9 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     protected function createDeletingModel($id, $data)
     {
-        $model = $this->createEloquent();
-        $keyName = $model->getKeyName();
+        $model = $this->createEloquent($data);
 
-        $model->setRawAttributes($data);
-
-        $model->{$keyName} = $id;
+        $model->{$model->getKeyName()} = $id;
 
         $model->exists = true;
 
@@ -637,7 +634,7 @@ class EloquentRepository extends Repository implements TreeRepository
         $model = new $this->eloquentClass();
 
         if ($data) {
-            $model->forceFill($data);
+            $model->setRawAttributes($data);
         }
 
         return $model;
