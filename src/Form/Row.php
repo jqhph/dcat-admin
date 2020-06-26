@@ -58,6 +58,7 @@ use Illuminate\Contracts\Support\Renderable;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
  */
 class Row implements Renderable
 {

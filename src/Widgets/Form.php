@@ -73,6 +73,7 @@ use Illuminate\Validation\Validator;
  * @method Field\KeyValue       keyValue($column, $label = '')
  * @method Field\Tel            tel($column, $label = '')
  * @method Field\Markdown       markdown($column, $label = '')
+ * @method Field\Range          range($start, $end, $label = '')
  */
 class Form implements Renderable
 {
