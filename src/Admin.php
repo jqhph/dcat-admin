@@ -223,7 +223,6 @@ class Admin
                 $router->get('auth/logout', $authController.'@getLogout');
                 $router->get('auth/setting', $authController.'@getSetting');
                 $router->put('auth/setting', $authController.'@putSetting');
-                $router->post('auth/verifypass', $authController.'@verifyPass');
             });
         }
 
