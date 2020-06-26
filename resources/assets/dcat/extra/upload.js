@@ -542,11 +542,6 @@
                     $queue.show();
                     if (! opts.disabled) {
                         $statusBar.removeClass('element-invisible');
-
-                        if (opts.autoUpload) {
-                            // 自动上传
-                            uploader.upload()
-                        }
                     }
                     refreshButton();
                     if (showImg) {
@@ -1021,6 +1016,11 @@
                 addFile(file);
                 setState('ready');
                 updateTotalProgress();
+
+                if (! opts.disabled && opts.autoUpload) {
+                    // 自动上传
+                    uploader.upload()
+                }
             };
 
             // 删除文件事件监听
