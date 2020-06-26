@@ -33,7 +33,7 @@ class Range extends Field
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getValidationMessages()
     {
