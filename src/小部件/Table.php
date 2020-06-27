@@ -33,7 +33,7 @@ class Table extends Widget
      * @param mixed $rows
      * @param array $style
      */
-    public function __construct($headers = [], $rows = [], $style = [])
+    public function __construct($headers = [], $rows = false, $style = [])
     {
         if ($headers && $rows === false) {
             $rows = $headers;
