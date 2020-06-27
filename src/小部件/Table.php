@@ -30,12 +30,12 @@ class Table extends Widget
      * Table constructor.
      *
      * @param array $headers
-     * @param array $rows
+     * @param mixed $rows
      * @param array $style
      */
     public function __construct($headers = [], $rows = [], $style = [])
     {
-        if ($headers && ! $rows) {
+        if ($headers && $rows === false) {
             $rows = $headers;
             $headers = [];
         }
