@@ -17,9 +17,7 @@ class Editable extends AbstractDisplayer
 
         return <<<HTML
 <div>
-    <span class="{$this->selector}" contenteditable="true">
-        {$this->value}
-    </span>
+    <span class="{$this->selector}" contenteditable="true">{$this->value}</span>
     <span class="save hidden" 
         data-value="{$this->value}" 
         data-name="{$this->column->getName()}" 
@@ -28,6 +26,7 @@ class Editable extends AbstractDisplayer
         data-url="{$this->getUrl()}">
         {$label}
     </span>
+    <div class="d-none"></div>
 </div>
 HTML;
     }
@@ -44,7 +43,7 @@ HTML;
 
         Admin::style(
             <<<CSS
-.{$this->selector}{border-bottom:dashed 1px $color;color: $color;display: inline-block}
+.{$this->selector}{border-bottom:dashed 1px $color;color: $color;display: inline-block; -webkit-user-modify: read-write-plaintext-only;}
 .{$this->selector}+.save{margin-left: 0.4rem;color: $color}
 body.dark-mode .{$this->selector}{color: $primary;border-color: $primary;}
 body.dark-mode .{$this->selector}+.save{color: $primary}
@@ -69,7 +68,12 @@ $('.{$this->selector}+.save').on("click",function() {
         name = obj.data('name'),
         refresh = obj.data('refresh'),
         old_value = obj.data('value'),
-        value = obj.prev().html().replace(new RegExp("<br>","g"), '').replace(new RegExp("&nbsp;","g"), '').trim();
+        value = obj.prev().html(),
+        tmp = obj.next();
+    
+    tmp.html(value);
+
+    value = tmp.text().replace(new RegExp("<br>","g"), '').replace(new RegExp("&nbsp;","g"), '').trim();
     
     var data = {
         _token: Dcat.token,

@@ -36,7 +36,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '1.5.2';
+    const VERSION = '1.5.3';
 
     /**
      * @var array
@@ -223,7 +223,6 @@ class Admin
                 $router->get('auth/logout', $authController.'@getLogout');
                 $router->get('auth/setting', $authController.'@getSetting');
                 $router->put('auth/setting', $authController.'@putSetting');
-                $router->post('auth/verifypass', $authController.'@verifyPass');
             });
         }
 

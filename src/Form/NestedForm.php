@@ -61,6 +61,7 @@ use Illuminate\Support\Collection;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
  */
 class NestedForm
 {
@@ -384,7 +385,7 @@ class NestedForm
             }
         }
 
-        return [$html, implode("\r\n", $scripts)];
+        return [$html, implode(";\r\n", $scripts)];
     }
 
     /**

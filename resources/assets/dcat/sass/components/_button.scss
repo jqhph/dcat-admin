@@ -11,6 +11,10 @@
   border-radius: 0.2rem;
 }
 
+.btn-primary, .btn-warning, .btn-success, .btn-custom, .btn-info, .btn-danger {
+  color: $white;
+}
+
 .btn-sm, .btn-xs {
   padding: .54rem .9rem!important
 }

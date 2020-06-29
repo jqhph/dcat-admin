@@ -324,8 +324,6 @@ return [
 
         'dark_mode_switch' => false,
 
-        'lock_screen_switch' => false,
-
         // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
         'navbar_color' => '',
     ],
