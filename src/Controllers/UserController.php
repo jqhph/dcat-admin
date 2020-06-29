@@ -25,26 +25,29 @@ class UserController extends AdminController
             $grid->id('ID')->sortable();
             $grid->username;
             $grid->name;
-            $grid->roles->pluck('name')->label('primary', 3);
 
-            $permissionModel = config('admin.database.permissions_model');
-            $roleModel = config('admin.database.roles_model');
-            $nodes = (new $permissionModel())->allNodes();
-            $grid->permissions
-                ->if(function () {
-                    return ! empty($this->roles);
-                })
-                ->showTreeInDialog(function (Grid\Displayers\DialogTree $tree) use (&$nodes, $roleModel) {
-                    $tree->nodes($nodes);
+            if (config('admin.permission.enable')) {
+                $grid->roles->pluck('name')->label('primary', 3);
 
-                    foreach (array_column($this->roles, 'slug') as $slug) {
-                        if ($roleModel::isAdministrator($slug)) {
-                            $tree->checkAll();
+                $permissionModel = config('admin.database.permissions_model');
+                $roleModel = config('admin.database.roles_model');
+                $nodes = (new $permissionModel())->allNodes();
+                $grid->permissions
+                    ->if(function () {
+                        return ! empty($this->roles);
+                    })
+                    ->showTreeInDialog(function (Grid\Displayers\DialogTree $tree) use (&$nodes, $roleModel) {
+                        $tree->nodes($nodes);
+
+                        foreach (array_column($this->roles, 'slug') as $slug) {
+                            if ($roleModel::isAdministrator($slug)) {
+                                $tree->checkAll();
+                            }
                         }
-                    }
-                })
-                ->else()
-                ->emptyString();
+                    })
+                    ->else()
+                    ->emptyString();
+            }
 
             $grid->created_at;
             $grid->updated_at->sortable();
@@ -87,41 +90,43 @@ class UserController extends AdminController
 
             $show->avatar(__('admin.avatar'))->image();
 
-            $show->roles->as(function ($roles) {
-                if (! $roles) {
-                    return;
-                }
-
-                return collect($roles)->pluck('name');
-            })->label();
-
-            $show->permissions->unescape()->as(function () {
-                $roles = (array) $this->roles;
-
-                $permissionModel = config('admin.database.permissions_model');
-                $roleModel = config('admin.database.roles_model');
-                $permissionModel = new $permissionModel();
-                $nodes = $permissionModel->allNodes();
-
-                $tree = Tree::make($nodes);
-
-                $isAdministrator = false;
-                foreach (array_column($roles, 'slug') as $slug) {
-                    if ($roleModel::isAdministrator($slug)) {
-                        $tree->checkAll();
-                        $isAdministrator = true;
+            if (config('admin.permission.enable')) {
+                $show->roles->as(function ($roles) {
+                    if (! $roles) {
+                        return;
                     }
-                }
 
-                if (! $isAdministrator) {
-                    $keyName = $permissionModel->getKeyName();
-                    $tree->check(
-                        $roleModel::getPermissionId(array_column($roles, $keyName))->flatten()
-                    );
-                }
+                    return collect($roles)->pluck('name');
+                })->label();
 
-                return $tree->render();
-            });
+                $show->permissions->unescape()->as(function () {
+                    $roles = (array) $this->roles;
+
+                    $permissionModel = config('admin.database.permissions_model');
+                    $roleModel = config('admin.database.roles_model');
+                    $permissionModel = new $permissionModel();
+                    $nodes = $permissionModel->allNodes();
+
+                    $tree = Tree::make($nodes);
+
+                    $isAdministrator = false;
+                    foreach (array_column($roles, 'slug') as $slug) {
+                        if ($roleModel::isAdministrator($slug)) {
+                            $tree->checkAll();
+                            $isAdministrator = true;
+                        }
+                    }
+
+                    if (! $isAdministrator) {
+                        $keyName = $permissionModel->getKeyName();
+                        $tree->check(
+                            $roleModel::getPermissionId(array_column($roles, $keyName))->flatten()
+                        );
+                    }
+
+                    return $tree->render();
+                });
+            }
 
             $show->created_at;
             $show->updated_at;
@@ -164,15 +169,17 @@ class UserController extends AdminController
 
             $form->ignore(['password_confirmation']);
 
-            $form->multipleSelect('roles', trans('admin.roles'))
-                ->options(function () {
-                    $roleModel = config('admin.database.roles_model');
+            if (config('admin.permission.enable')) {
+                $form->multipleSelect('roles', trans('admin.roles'))
+                    ->options(function () {
+                        $roleModel = config('admin.database.roles_model');
 
-                    return $roleModel::all()->pluck('name', 'id');
-                })
-                ->customFormat(function ($v) {
-                    return array_column($v, 'id');
-                });
+                        return $roleModel::all()->pluck('name', 'id');
+                    })
+                    ->customFormat(function ($v) {
+                        return array_column($v, 'id');
+                    });
+            }
 
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));

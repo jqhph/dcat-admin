@@ -6,7 +6,7 @@
 }
 
 input.form-control, div.form-control {
-  max-height: 36px;
+  //max-height: 36px;
   min-height: 36px;
   border-radius: $card-border-radius;
 }
@@ -143,7 +143,7 @@ select.form-control:not([multiple=multiple]) {
 
 .select2-container .select2-selection--multiple {
   min-height: 36px!important;
-  max-height: 36px!important;
+  //max-height: 36px!important;
 }
 
 .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
@@ -181,7 +181,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  padding: 2px .7rem!important;
+  padding: 0 .7rem!important;
 }
 
 .select2-selection .default-text {

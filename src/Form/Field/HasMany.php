@@ -722,7 +722,7 @@ JS;
         /* Build cell with hidden elements */
         $template .= '<td class="hidden">'.implode('', $hidden).'</td>';
 
-        $this->setupScript(implode("\r\n", $scripts));
+        $this->setupScript(implode(";\r\n", $scripts));
 
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];

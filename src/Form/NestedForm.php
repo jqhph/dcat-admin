@@ -385,7 +385,7 @@ class NestedForm
             }
         }
 
-        return [$html, implode("\r\n", $scripts)];
+        return [$html, implode(";\r\n", $scripts)];
     }
 
     /**
