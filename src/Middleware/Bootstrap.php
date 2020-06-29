@@ -6,6 +6,8 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\DarkModeSwitcher;
 use Illuminate\Http\Request;
+use Dcat\Admin\Widgets\LockScreenSwitcher;
+use Dcat\Admin\Widgets\LockScreenView;
 
 class Bootstrap
 {
@@ -15,12 +17,22 @@ class Bootstrap
         $this->addScript();
         $this->fireEvents();
         $this->setUpDarkMode();
+        $this->setUpLockScreen();
 
         $response = $next($request);
 
         $this->storeCurrentUrl($request);
 
         return $response;
+    }
+
+    protected function setUpLockScreen()
+    {
+        if (config('admin.layout.lock_screen_switch')) {
+            Admin::html((new LockScreenView())->render());
+            Admin::navbar()->right((new LockScreenSwitcher())->render());
+
+        }
     }
 
     protected function setUpDarkMode()

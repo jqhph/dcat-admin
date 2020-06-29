@@ -13,6 +13,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -267,5 +268,15 @@ class AuthController extends Controller
     protected function guard()
     {
         return Admin::guard();
+    }
+
+    public function verifyPass(Request $request){
+        $hashedPassword = Admin::user()->getAuthPassword();
+        if(Hash::check($request->lockpass,$hashedPassword)){
+            $admin = Admin::user();
+            return $this->ajaxResponse('解锁成功');
+        }else{
+            return $this->ajaxResponse('解锁失败',null,false);
+        }
     }
 }
