@@ -756,7 +756,7 @@ class Column
 
         return implode(' ', $attrArr);
     }
-    
+
     /**
      * Display column as boolean , `✓` for true, and `✗` for false.
      *
@@ -773,7 +773,6 @@ class Column
             return $bool ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>';
         });
     }
-
 
     /**
      * Passes through all unknown calls to builtin displayer or supported displayer.
