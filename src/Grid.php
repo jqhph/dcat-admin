@@ -31,6 +31,7 @@ class Grid
         Concerns\HasSelector,
         Concerns\HasQuickCreate,
         Concerns\HasQuickSearch,
+        Concerns\CanFixColumns,
         Macroable {
             __call as macroCall;
         }
@@ -898,6 +899,8 @@ HTML;
             $this->callComposing();
 
             $this->build();
+
+            $this->applyFixColumns();
         } catch (\Throwable $e) {
             return Admin::makeExceptionHandler()->handle($e);
         }
