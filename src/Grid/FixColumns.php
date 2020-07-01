@@ -16,12 +16,12 @@ class FixColumns
     /**
      * @var int
      */
-    protected $head;
+    public $head;
 
     /**
      * @var int
      */
-    protected $tail;
+    public $tail;
 
     /**
      * @var Collection
@@ -95,11 +95,6 @@ class FixColumns
      */
     protected function addScript()
     {
-        $allName = $this->grid->getSelectAllName();
-        //$rowName = $this->grid->getGridRowName();
-
-        $selected = trans('admin.grid_items_selected');
-
         $script = <<<JS
 
 (function () {
@@ -118,6 +113,18 @@ class FixColumns
     
     if ($('.table-main').width() >= $('.table-main').prop('scrollWidth')) {
         $('.table-fixed').hide();
+    } else {
+        var height = ($(window).height() - 200);
+        
+        $('.table-main,.table-fixed').css({height: height + 'px'});
+        $('.table-fixed-right').css({right: '15px'});
+        $('.table-fixed-right,.table-fixed-left').css({height: (height - 16) + 'px'});
+        
+        $('.table-main').scroll(function () {
+            var self = $(this); 
+            
+            self.parents('.tables-container').find('.table-fixed-right,.table-fixed-left').scrollTop(self.scrollTop());
+        });
     }
     
     $('.table-wrap tbody tr').on('mouseover', function () {
@@ -151,6 +158,7 @@ JS;
         $style = <<<'CSS'
 .tables-container {
     position:relative;
+    margin-top: 12px;
 }
 
 .tables-container table {
@@ -166,7 +174,7 @@ JS;
 }
 
 .table-main {
-    overflow-x: auto;
+    overflow: auto;
     width: 100%;
 }
 
@@ -174,6 +182,7 @@ JS;
     position:absolute;
 	top: 0;
 	z-index:10;
+	overflow: hidden;
 }
 
 .table-fixed th {
@@ -188,12 +197,16 @@ JS;
 	right:0;
 }
 
-.table-fixed-left table {
- box-shadow: 5px 0 5px -5px rgba(0,0,0,.1);
+.table-fixed-left {
+    box-shadow: 5px 0 5px -5px rgba(0,0,0,.1);
 }
 
-.table-fixed-right table {
- box-shadow: -5px 0 5px -5px rgba(0,0,0,.1);
+.table-fixed-right {
+    box-shadow: -5px 0 5px -5px rgba(0,0,0,.1);
+}
+
+.tables-container .table.table-bordered.dataTable.complex-headers {
+    margin-top: 0!important;
 }
 CSS;
 
