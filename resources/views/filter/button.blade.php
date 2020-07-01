@@ -5,6 +5,8 @@
             @if($scopes->isNotEmpty()) style="border-right: 0" @endif
     >
         <i class="feather icon-filter"></i>@if($show_filter_text)<span class="d-none d-sm-inline">&nbsp;&nbsp;{{ trans('admin.filter') }}</span>@endif
+
+        @if($valueCount) &nbsp;({!! $valueCount !!}) @endif
     </button>
     @if($scopes->isNotEmpty())
         <ul class="dropdown-menu" role="menu">
