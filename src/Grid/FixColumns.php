@@ -34,6 +34,16 @@ class FixColumns
     protected $right;
 
     /**
+     * @var Collection
+     */
+    protected $complexLeft;
+
+    /**
+     * @var Collection
+     */
+    protected $complexRight;
+
+    /**
      * @var string
      */
     protected $view = 'admin::grid.fixed-table';
@@ -53,6 +63,8 @@ class FixColumns
 
         $this->left = Collection::make();
         $this->right = Collection::make();
+        $this->complexLeft = Collection::make();
+        $this->complexRight = Collection::make();
     }
 
     /**
@@ -72,24 +84,63 @@ class FixColumns
     }
 
     /**
+     * @return Collection
+     */
+    public function leftComplexColumns()
+    {
+        return $this->complexLeft;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function rightComplexColumns()
+    {
+        return $this->complexRight;
+    }
+
+    /**
      * @return \Closure
      */
     public function apply()
     {
         $this->grid->view($this->view);
+        $complexHeaders = $this->grid->getComplexHeaders();
 
         if ($this->head > 0) {
-            $this->left = $this->grid->columns()->slice(0, $this->head);
+            if ($complexHeaders) {
+                $this->complexLeft = $complexHeaders->slice(0, $this->head);
+                $this->left = $this->formatColumns($this->complexLeft);
+            } else {
+                $this->left = $this->grid->columns()->slice(0, $this->head);
+            }
         }
 
         if ($this->tail < 0) {
-            $this->right = $this->grid->columns()->slice($this->tail);
+            if ($complexHeaders) {
+                $this->complexRight = $complexHeaders->slice($this->tail);
+                $this->right = $this->formatColumns($this->complexRight);
+            } else {
+                $this->right = $this->grid->columns()->slice($this->tail);
+            }
         }
 
         $this->addStyle();
         $this->addScript();
     }
 
+    protected function formatColumns(Collection $complexHeaders)
+    {
+        return $complexHeaders
+            ->map(function (ComplexHeader $header) {
+                return $header->getColumnNames()->toArray();
+            })
+            ->flatten()
+            ->filter()
+            ->map(function ($name) {
+                return $this->grid->allColumns()->get($name);
+            });
+    }
     /**
      * @return $this
      */
@@ -114,7 +165,7 @@ class FixColumns
     if ($('.table-main').width() >= $('.table-main').prop('scrollWidth')) {
         $('.table-fixed').hide();
     } else {
-        var height = ($(window).height() - 200);
+        var height = ($(window).height() - 210);
         
         $('.table-main,.table-fixed').css({height: height + 'px'});
         $('.table-fixed-right').css({right: '15px'});

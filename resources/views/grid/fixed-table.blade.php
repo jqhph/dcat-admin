@@ -73,15 +73,33 @@
                 </table>
             </div>
 
-            @if($grid->leftVisibleColumns()->isNotEmpty())
+            @if ($grid->leftVisibleColumns()->isNotEmpty() || $grid->leftVisibleComplexColumns()->isNotEmpty())
                 <div class="table-wrap table-fixed table-fixed-left">
                     <table class="custom-data-table dataTable {{ $grid->formatTableClass() }} ">
                         <thead>
-                        <tr>
-                            @foreach($grid->leftVisibleColumns() as $column)
-                                <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
+
+                        @if ($grid->getComplexHeaders())
+                            <tr>
+                                @foreach($grid->leftVisibleComplexColumns() as $header)
+                                    {!! $header->render() !!}
+                                @endforeach
+                            </tr>
+                            <tr>
+                            @foreach($grid->leftVisibleComplexColumns() as $header)
+                                @if ($header->getColumnNames()->count() > 1)
+                                    @foreach($header->columns() as $column)
+                                        <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
+                                    @endforeach
+                                @endif
                             @endforeach
-                        </tr>
+                            </tr>
+                        @else
+                            <tr>
+                                @foreach($grid->leftVisibleColumns() as $column)
+                                    <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
+                                @endforeach
+                            </tr>
+                        @endif
                         </thead>
                         <tbody>
 
@@ -99,15 +117,33 @@
                 </div>
             @endif
 
-            @if($grid->rightVisibleColumns()->isNotEmpty())
+            @if ($grid->rightVisibleColumns()->isNotEmpty() || $grid->rightVisibleComplexColumns()->isNotEmpty())
                 <div class="table-wrap table-fixed table-fixed-right">
                     <table class="custom-data-table dataTable {{ $grid->formatTableClass() }} ">
                         <thead>
-                        <tr>
-                            @foreach($grid->rightVisibleColumns() as $column)
-                                <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
+                        @if ($grid->getComplexHeaders())
+                            <tr>
+                                @foreach($grid->rightVisibleComplexColumns() as $header)
+                                    {!! $header->render() !!}
+                                @endforeach
+                            </tr>
+                            <tr>
+                            @foreach($grid->rightVisibleComplexColumns() as $header)
+                                @if ($header->getColumnNames()->count() > 1)
+                                    @foreach($header->columns() as $column)
+                                        <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
+                                    @endforeach
+                                @endif
                             @endforeach
-                        </tr>
+                            </tr>
+                        @else
+                            <tr>
+                                @foreach($grid->rightVisibleColumns() as $column)
+                                    <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
+                                @endforeach
+                            </tr>
+                        @endif
+
                         </thead>
 
                         <tbody>

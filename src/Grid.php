@@ -47,11 +47,18 @@ class Grid
     protected $model;
 
     /**
-     * Collection of all grid columns.
+     * Collection of grid columns.
      *
      * @var \Illuminate\Support\Collection
      */
     protected $columns;
+
+    /**
+     * Collection of all grid columns.
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    protected $allColumns;
 
     /**
      * Collection of all data rows.
@@ -185,6 +192,7 @@ class Grid
     {
         $this->model = new Model(request(), $repository);
         $this->columns = new Collection();
+        $this->allColumns = new Collection();
         $this->rows = new Collection();
         $this->builder = $builder;
 
@@ -274,7 +282,7 @@ class Grid
      *
      * @param array $columns
      *
-     * @return Collection|void
+     * @return Collection|Column[]|void
      */
     public function columns($columns = null)
     {
@@ -296,6 +304,14 @@ class Grid
     }
 
     /**
+     * @return Collection|Column[]
+     */
+    public function allColumns()
+    {
+        return $this->allColumns;
+    }
+
+    /**
      * Add column to grid.
      *
      * @param string $field
@@ -308,6 +324,23 @@ class Grid
         $column = $this->newColumn($field, $label);
 
         $this->columns->put($field, $column);
+        $this->allColumns->put($field, $column);
+
+        return $column;
+    }
+
+    /**
+     * @param string $field
+     * @param string $label
+     *
+     * @return Column
+     */
+    public function prependColumn($field = '', $label = '')
+    {
+        $column = $this->newColumn($field, $label);
+
+        $this->columns->prepend($column, $field);
+        $this->allColumns->prepend($column, $field);
 
         return $column;
     }
@@ -503,17 +536,12 @@ class Grid
         $rowSelector = $this->rowSelector();
         $keyName = $this->getKeyName();
 
-        $column = $this->newColumn(
+        $this->prependColumn(
             Grid\Column::SELECT_COLUMN_NAME,
             $rowSelector->renderHeader()
-        );
-        $column->setGrid($this);
-
-        $column->display(function () use ($rowSelector, $keyName) {
+        )->display(function () use ($rowSelector, $keyName) {
             return $rowSelector->renderColumn($this, $this->{$keyName});
         });
-
-        $this->columns->prepend($column, Grid\Column::SELECT_COLUMN_NAME);
     }
 
     /**

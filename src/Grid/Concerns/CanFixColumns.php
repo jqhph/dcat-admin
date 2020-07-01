@@ -63,4 +63,20 @@ trait CanFixColumns
     {
         return $this->fixColumns->rightColumns();
     }
+
+    /**
+     * @return Collection
+     */
+    public function leftVisibleComplexColumns()
+    {
+        return $this->fixColumns->leftComplexColumns();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function rightVisibleComplexColumns()
+    {
+        return $this->fixColumns->rightComplexColumns();
+    }
 }
