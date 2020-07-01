@@ -141,12 +141,13 @@ class FixColumns
                 return $this->grid->allColumns()->get($name);
             });
     }
+
     /**
      * @return $this
      */
     protected function addScript()
     {
-        $script = <<<JS
+        $script = <<<'JS'
 
 (function () {
     var theadHeight = $('.table-main thead tr').outerHeight();
