@@ -831,4 +831,15 @@ body.dark-mode {
   .dcat-done-step .st-desc {
     color: $body-dark-font-color;
   }
+
+  // ------- fixed-columns
+  @include dark-scrollbar('.table-main');
+
+  .table-fixed-left {
+    box-shadow: 6px 0 5px -5px rgba(0,0,0,.24);
+  }
+
+  .table-fixed-right {
+    box-shadow: -5px 0 5px -5px rgba(0,0,0,.24);
+  }
 }

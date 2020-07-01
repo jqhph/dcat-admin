@@ -169,7 +169,7 @@ class FixColumns
         var height = ($(window).height() - 210);
         
         $('.table-main,.table-fixed').css({height: height + 'px'});
-        $('.table-fixed-right').css({right: '15px'});
+        $('.table-fixed-right').css({right: '12px'});
         $('.table-fixed-right,.table-fixed-left').css({height: (height - 16) + 'px'});
         
         $('.table-main').scroll(function () {
