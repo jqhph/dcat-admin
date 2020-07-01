@@ -18,7 +18,7 @@ trait CanFixColumns
      * @param int $head
      * @param int $tail
      *
-     * @return $this
+     * @return FixColumns
      */
     public function fixColumns(int $head, int $tail = -1)
     {
@@ -26,7 +26,7 @@ trait CanFixColumns
 
         $this->resetActions();
 
-        return $this;
+        return $this->fixColumns;
     }
 
     protected function resetActions()

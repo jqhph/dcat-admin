@@ -31,7 +31,7 @@
 
     <div class="table-responsive table-wrapper">
         <div class="tables-container">
-            <div class="table-wrap table-main">
+            <div class="table-wrap table-main" data-height="{{ $tableHeight }}">
                 <table class="custom-data-table dataTable {{ $grid->formatTableClass() }}" id="{{ $tableId }}">
                     <thead>
                     @if ($headers = $grid->getComplexHeaders())
@@ -74,7 +74,7 @@
             </div>
 
             @if ($grid->leftVisibleColumns()->isNotEmpty() || $grid->leftVisibleComplexColumns()->isNotEmpty())
-                <div class="table-wrap table-fixed table-fixed-left">
+                <div class="table-wrap table-fixed table-fixed-left" data-height="{{ $tableHeight }}">
                     <table class="custom-data-table dataTable {{ $grid->formatTableClass() }} ">
                         <thead>
 
@@ -118,7 +118,7 @@
             @endif
 
             @if ($grid->rightVisibleColumns()->isNotEmpty() || $grid->rightVisibleComplexColumns()->isNotEmpty())
-                <div class="table-wrap table-fixed table-fixed-right">
+                <div class="table-wrap table-fixed table-fixed-right" data-height="{{ $tableHeight }}">
                     <table class="custom-data-table dataTable {{ $grid->formatTableClass() }} ">
                         <thead>
                         @if ($grid->getComplexHeaders())

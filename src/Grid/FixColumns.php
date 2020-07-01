@@ -49,6 +49,11 @@ class FixColumns
     protected $view = 'admin::grid.fixed-table';
 
     /**
+     * @var int
+     */
+    protected $height;
+
+    /**
      * FixColumns constructor.
      *
      * @param Grid $grid
@@ -100,11 +105,25 @@ class FixColumns
     }
 
     /**
+     * @param int $height px
+     *
+     * @return $this
+     */
+    public function height(int $height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
      * @return \Closure
      */
     public function apply()
     {
         $this->grid->view($this->view);
+        $this->grid->with(['tableHeight' => $this->height]);
+
         $complexHeaders = $this->grid->getComplexHeaders();
 
         if ($this->head > 0) {
@@ -150,6 +169,8 @@ class FixColumns
         $script = <<<'JS'
 
 (function () {
+    var $tableMain = $('.table-main');
+    
     var theadHeight = $('.table-main thead tr').outerHeight();
     $('.table-fixed thead tr').outerHeight(theadHeight);
     
@@ -163,16 +184,21 @@ class FixColumns
         $('.table-fixed-right tbody tr').eq(i).outerHeight(height);
     });
     
-    if ($('.table-main').width() >= $('.table-main').prop('scrollWidth')) {
+    if ($tableMain.width() >= $tableMain.prop('scrollWidth')) {
         $('.table-fixed').hide();
     } else {
-        var height = ($(window).height() - 210);
+        var height = ($(window).height() - 215);
         
-        $('.table-main,.table-fixed').css({height: height + 'px'});
+        $tableMain.each(function (k, v) {
+            $(v).css({height: ($(v).data('height') || height) + 'px'});
+        });
+        $('.table-fixed-right,.table-fixed-left').each(function (k, v) {
+            $(v).css({height: (($(v).data('height') || height) - 16) + 'px'});
+        });
+        
         $('.table-fixed-right').css({right: '12px'});
-        $('.table-fixed-right,.table-fixed-left').css({height: (height - 16) + 'px'});
         
-        $('.table-main').scroll(function () {
+        $tableMain.scroll(function () {
             var self = $(this); 
             
             self.parents('.tables-container').find('.table-fixed-right,.table-fixed-left').scrollTop(self.scrollTop());
