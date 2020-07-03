@@ -184,7 +184,7 @@ class FixColumns
         $('.table-fixed-right tbody tr').eq(i).outerHeight(height);
     });
     
-    if ($tableMain.width() >= $tableMain.prop('scrollWidth')) {
+    if ($tableMain.width() >= $tableMain.prop('scrollWidth') || $(window).width() < 600) {
         $('.table-fixed').hide();
     } else {
         var height = ($(window).height() - 215);
