@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Str;
 
 class Limit extends AbstractDisplayer
 {
@@ -39,7 +38,7 @@ JS;
         // 字符串
         $this->addScript();
 
-        $value = Str::limit($this->value, $limit, $end);
+        $value = Helper::strLimit($this->value, $limit, $end);
 
         $original = $this->column->getOriginal();
 
