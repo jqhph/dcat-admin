@@ -641,4 +641,21 @@ class Helper
 
         return (string) $value1 === (string) $value2;
     }
+
+    /**
+     * Limit the number of characters in a string.
+     *
+     * @param string $value
+     * @param int $limit
+     * @param string $end
+     * @return string
+     */
+    public static function strLimit($value, $limit = 100, $end = '...')
+    {
+        if (mb_strlen($value, 'UTF-8') <= $limit) {
+            return $value;
+        }
+
+        return rtrim(mb_substr($value, 0, $limit, 'UTF-8')) . $end;
+    }
 }
