@@ -33,7 +33,7 @@
                                         <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
                                     @endforeach
                                 @endif
-                                <input name="{{ $name }}[keys][{{ (int) $k }}]" value="{{ old("{$column}.keys.{$k}", $k) }}" class="form-control" required/>
+                                <input name="{{ $name }}[keys][{{ $loop->index }}]" value="{{ old("{$column}.keys.{$k}", $k) }}" class="form-control" required/>
 
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                         <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
                                     @endforeach
                                 @endif
-                                <input name="{{ $name }}[values][{{ (int) $k }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
+                                <input name="{{ $name }}[values][{{ $loop->index }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
                             </div>
                         </div>
                     </td>
