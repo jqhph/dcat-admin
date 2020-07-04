@@ -658,4 +658,56 @@ class Helper
 
         return rtrim(mb_substr($value, 0, $limit, 'UTF-8')).$end;
     }
+
+    /**
+     * 获取类名或对象的文件路径.
+     *
+     * @param string|object $class
+     *
+     * @return string
+     *
+     * @throws \ReflectionException
+     */
+    public static function guessClassFileName($class)
+    {
+        if (is_object($class)) {
+            $class = get_class($class);
+        }
+
+        if (class_exists($class)) {
+            return (new \ReflectionClass($class))->getFileName();
+        }
+
+        $class = trim($class, '\\');
+
+        $composer = Composer::parse(base_path('composer.json'));
+
+        $map = collect($composer->autoload['psr-4'] ?? [])->mapWithKeys(function ($path, $namespace) {
+            $namespace = trim($namespace, '\\').'\\';
+
+            return [$namespace => [$namespace, $path]];
+        })->sortBy(function ($_, $namespace) {
+            return strlen($namespace);
+        }, SORT_REGULAR, true);
+
+        $prefix = explode($class, '\\')[0];
+
+        if ($map->isEmpty()) {
+            if (Str::startsWith($class, 'App\\')) {
+                $values = ['App\\', 'app/'];
+            }
+        } else {
+            $values = $map->filter(function ($_, $k) use ($class) {
+                return Str::startsWith($class, $k);
+            })->first();
+        }
+
+        if (empty($values)) {
+            $values = [$prefix.'\\', Helper::slug($prefix).'/'];
+        }
+
+        [$namespace, $path] = $values;
+
+        return base_path(str_replace([$namespace, '\\'], [$path, '/'], $class)).'.php';
+    }
 }
