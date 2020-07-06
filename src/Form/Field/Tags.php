@@ -35,6 +35,11 @@ class Tags extends Field
     protected $key = null;
 
     /**
+     * @var string
+     */
+    protected $ajaxScript = null;
+
+    /**
      * {@inheritdoc}
      */
     protected function formatFieldData($data)
@@ -158,6 +163,55 @@ class Tags extends Field
     }
 
     /**
+     * Load options from ajax results.
+     *
+     * @param string $url
+     * @param $idField
+     * @param $textField
+     *
+     * @return $this
+     */
+    public function ajax(string $url, string $idField = 'id', string $textField = 'name')
+    {
+        $url = admin_url($url);
+
+        $this->ajaxScript = <<<JS
+
+  ajax: {
+    url: "$url",
+    dataType: 'json',
+    delay: 250,
+    cache: true,
+    data: function (params) {
+      return {
+        q: params.term,
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+      params.page = params.page || 1;
+
+      return {
+        results: $.map(data.data, function (d) {
+                   d.id = d.$idField;
+                   d.text = d.$textField;
+                   return d;
+                }),
+        pagination: {
+          more: data.next_page_url
+        }
+      };
+    },
+  },
+  escapeMarkup: function (markup) {
+      return markup;
+  },
+JS;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function render()
@@ -192,6 +246,7 @@ class Tags extends Field
 $("{$this->getElementClassSelector()}").select2({
     tags: true,
     tokenSeparators: [',', ';', '，', '；', ' '],
+    {$this->ajaxScript}
     createTag: function(params) {
         if (/[,;，； ]/.test(params.term)) {
             var str = params.term.trim().replace(/[,;，；]*$/, '');
