@@ -7,6 +7,7 @@ return [
         'table'             => '表名',
         'model'             => '模型',
         'controller'        => '控制器',
+        'repository'        => '数据仓库',
         'add_field'         => '添加字段',
         'pk'                => '主键',
         'soft_delete'       => '软删除',

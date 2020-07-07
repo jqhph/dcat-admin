@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Scaffold;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Str;
 
 class ModelCreator
@@ -93,11 +94,7 @@ class ModelCreator
      */
     public function getPath($name)
     {
-        $segments = explode('\\', $name);
-
-        array_shift($segments);
-
-        return app_path(implode('/', $segments)).'.php';
+        return Helper::guessClassFileName($name);
     }
 
     /**

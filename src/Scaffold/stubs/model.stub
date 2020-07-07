@@ -14,5 +14,4 @@ class DummyClass extends Model
     DummyModelTable
     DummyModelKey
     DummyTimestamp
-
 }

@@ -81,6 +81,16 @@
                     </div>
                 </div>
 
+
+                <div class="form-group row">
+                    <span for="inputRepositoryName" class="col-sm-1 control-label text-capitalize">{{(trans('admin.scaffold.repository'))}}</span>
+
+                    <div class="col-sm-4">
+                        <input type="text" name="repository_name" class="form-control text-capitalize" id="inputRepositoryName" placeholder="{{(trans('admin.scaffold.repository'))}}" value="{{ old('repository_name', "App\\Admin\\Repositories\\") }}">
+                    </div>
+                </div>
+
+
                 <div class="form-group row">
                     <div class="offset-sm-1 col-sm-11 mt-1 text-capitalize">
                         {!! $actionCreators->render(); !!}
@@ -259,10 +269,12 @@
     Dcat.ready(function () {
         var $model = $('#inputModelName'),
             $controller = $('#inputControllerName'),
+            $repository = $('#inputRepositoryName'),
             $table = $('#inputTableName'),
             $fieldsBody = $('#table-fields tbody'),
             tpl = $('#table-field-tpl').html(),
             modelNamespace = 'App\\Models\\',
+            repositoryNamespace = 'App\\Admin\\Repositories\\',
             controllerNamespace = 'App\\Admin\\Controllers\\',
             dataTypeMap = {!! json_encode($dataTypeMap) !!},
             helpers = Dcat.helpers;
@@ -272,6 +284,7 @@
                 success: function (data) {
                     writeController(data.value);
                     writeModel(data.value);
+                    witeRepository(data.value);
                 }
             });
         }, 500);
@@ -434,6 +447,9 @@
         }
         function writeModel(val) {
             $model.val(modelNamespace + ucfirst(ucfirst(toHump(toLine(val)))));
+        }
+        function witeRepository(val) {
+            $repository.val(repositoryNamespace + ucfirst(ucfirst(toHump(toLine(val)))))
         }
 
         function getTR() {
