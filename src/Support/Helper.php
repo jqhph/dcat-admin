@@ -703,7 +703,7 @@ class Helper
         }
 
         if (empty($values)) {
-            $values = [$prefix.'\\', Helper::slug($prefix).'/'];
+            $values = [$prefix.'\\', self::slug($prefix).'/'];
         }
 
         [$namespace, $path] = $values;
