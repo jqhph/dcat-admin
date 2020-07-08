@@ -31,7 +31,7 @@ class Label extends AbstractDisplayer
 
     protected function formatStyle($style)
     {
-        $background = '#d2d6de';
+        $background = 'style="background:#d2d6de;color: #555"';
 
         if ($style !== 'default') {
             $style = Admin::color()->get($style, $style);
