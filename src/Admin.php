@@ -174,6 +174,14 @@ class Admin
     }
 
     /**
+     * 禁用pjax.
+     */
+    public static function disablePjax()
+    {
+        static::$pjaxContainerId = null;
+    }
+
+    /**
      * section.
      *
      * @param Closure|null $builder
