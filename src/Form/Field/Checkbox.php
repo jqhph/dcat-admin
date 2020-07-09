@@ -7,10 +7,14 @@ use Dcat\Admin\Widgets\Checkbox as WidgetCheckbox;
 
 class Checkbox extends MultipleSelect
 {
+    use CanCascadeFields;
+
     public static $css = [];
     public static $js = [];
 
     protected $style = 'primary';
+
+    protected $cascadeEvent = 'change';
 
     /**
      * @param array|\Closure|string $options
@@ -55,6 +59,8 @@ class Checkbox extends MultipleSelect
             );
         }
 
+        $this->addCascadeScript();
+
         $checkbox = WidgetCheckbox::make(
             $this->getElementName().'[]',
             $this->options,
@@ -65,7 +71,10 @@ class Checkbox extends MultipleSelect
             $checkbox->disable();
         }
 
-        $checkbox->inline()->check(old($this->column, $this->value()));
+        $checkbox
+            ->inline()
+            ->check(old($this->column, $this->value()))
+            ->class($this->getElementClassString());
 
         $this->addVariables([
             'checkbox' => $checkbox,

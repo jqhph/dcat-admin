@@ -11,8 +11,12 @@ use Illuminate\Support\Str;
 
 class Select extends Field
 {
+    use CanCascadeFields;
+
     public static $js = '@select2';
     public static $css = '@select2';
+
+    protected $cascadeEvent = 'change';
 
     /**
      * @var array
@@ -398,6 +402,8 @@ JS;
         if (empty($this->script)) {
             $this->script = "$(\"{$this->getElementClassSelector()}\").select2($configs);";
         }
+
+        $this->addCascadeScript();
 
         if ($this->options instanceof \Closure) {
             $this->options = $this->options->bindTo($this->values());

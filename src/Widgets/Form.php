@@ -4,6 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Form\Concerns\HandleCascadeFields;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAuthorization;
@@ -80,6 +81,7 @@ class Form implements Renderable
     use HasHtmlAttributes,
         HasFormResponse,
         HasAuthorization,
+        HandleCascadeFields,
         Macroable {
             __call as macroCall;
         }

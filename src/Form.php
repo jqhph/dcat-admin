@@ -91,6 +91,7 @@ class Form implements Renderable
         Concerns\HasEvents,
         Concerns\HasFiles,
         Concerns\HasSteps,
+        Concerns\HandleCascadeFields,
         Macroable {
             __call as macroCall;
         }
@@ -328,6 +329,14 @@ class Form implements Renderable
     public function field($name = null)
     {
         return $this->builder->field($name);
+    }
+
+    /**
+     * @return Collection|Field[]
+     */
+    public function fields()
+    {
+        return $this->builder->fields();
     }
 
     /**
