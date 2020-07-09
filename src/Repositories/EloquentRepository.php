@@ -786,6 +786,11 @@ class EloquentRepository extends Repository implements TreeRepository
 
                         Arr::forget($related, Form::REMOVE_FLAG_NAME);
 
+                        $key = Arr::get($related, $relation->getModel()->getKeyName());
+                        if ($key === null || $key === '') {
+                            Arr::forget($related, $relation->getModel()->getKeyName());
+                        }
+
                         $instance->fill($related);
 
                         $instance->save();
