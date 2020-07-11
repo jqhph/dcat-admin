@@ -324,7 +324,13 @@ class Form implements Renderable
      */
     public function fields()
     {
-        return $this->builder->fields();
+        $fields = $this->builder->fields();
+
+        if ($steps = $this->builder->stepBuilder()) {
+            $fields = $fields->merge($steps->fields());
+        }
+
+        return $fields;
     }
 
     /**
@@ -659,7 +665,7 @@ class Form implements Renderable
     {
         Arr::forget($input, $this->ignored);
 
-        $ignored = $this->fields()->merge($this->multipleSteps()->fields())->map(function (Field $field) {
+        $ignored = $this->fields()->map(function (Field $field) {
             if ($field instanceof Field\Display || $field->getAttribute('readonly') || $field->getAttribute('disabled')) {
                 return $field->column();
             }

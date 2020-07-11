@@ -66,11 +66,7 @@ trait HasFiles
      */
     public function findFieldByName(?string $column)
     {
-        if ($field = $this->builder->field($column)) {
-            return $field;
-        }
-
-        return $this->builder->field($column) ?: $this->builder->stepField($column);
+        return $this->builder->field($column);
     }
 
     /**
@@ -95,7 +91,7 @@ trait HasFiles
         }
 
         if (empty($relation)) {
-            $field = $this->builder->field($column) ?: $this->builder->stepField($column);
+            $field = $this->findFieldByName($column);
         } else {
             $field = $this->getFieldByRelationName($relation[0], $column);
         }
@@ -115,7 +111,7 @@ trait HasFiles
      *
      * @return mixed
      */
-    protected function getFieldByRelationName($relation, $column)
+    public function getFieldByRelationName($relation, $column)
     {
         $relation = $this->findFieldByName($relation);
 

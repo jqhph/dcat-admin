@@ -486,9 +486,15 @@ class Builder
      */
     public function field($name)
     {
-        return $this->fields->first(function (Field $field) use ($name) {
+        $field = $this->fields->first(function (Field $field) use ($name) {
             return $field === $name || $field->column() == $name;
         });
+
+        if (! $field) {
+            $field = $this->stepField($name);
+        }
+
+        return $field;
     }
 
     /**
