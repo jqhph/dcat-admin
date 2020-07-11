@@ -2,6 +2,7 @@
 @mixin scrollbar($selector) {
   #{$selector}::-webkit-scrollbar {
     width: 12px;
+    height: 12px;
   }
   #{$selector}::-webkit-scrollbar-track {
     background-color: #eee;
