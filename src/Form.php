@@ -297,6 +297,7 @@ class Form implements Renderable
         $field->setForm($this);
 
         $this->builder->fields()->push($field);
+        $this->builder->layout()->addField($field);
 
         $width = $this->builder->getWidth();
 
@@ -1600,6 +1601,21 @@ class Form implements Renderable
         $callback($form = $layout->form());
 
         $layout->column($width, $form);
+
+        return $this;
+    }
+
+    /**
+     * @param int|float $width
+     * @param Closure   $callback
+     *
+     * @return $this
+     */
+    public function column($width, \Closure $callback)
+    {
+        $this->builder->layout()->onlyColumn($width, function () use ($callback) {
+            $callback($this);
+        });
 
         return $this;
     }

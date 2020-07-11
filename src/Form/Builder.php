@@ -843,13 +843,19 @@ class Builder
             'steps'      => $this->stepBuilder,
         ];
 
-        $this->layout->prepend(
-            $this->defaultBlockWidth,
-            $this->doWrap(view($this->view, $data))
-        );
+        if ($this->layout->hasColumns()) {
+            $content = $this->doWrap(view($this->view, $data));
+        } else {
+            $this->layout->prepend(
+                $this->defaultBlockWidth,
+                $this->doWrap(view($this->view, $data))
+            );
+
+            $content = $this->layout->build();
+        }
 
         return <<<EOF
-{$open} {$this->layout->build()} {$this->close()}
+{$open} {$content} {$this->close()}
 EOF;
     }
 

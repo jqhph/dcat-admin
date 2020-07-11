@@ -16,6 +16,8 @@
                         {!! $row->render() !!}
                     @endforeach
                 </div>
+            @elseif($form->layout()->hasColumns())
+                {!! $form->layout()->build() !!}
             @else
                 @foreach($form->fields() as $field)
                     {!! $field->render() !!}

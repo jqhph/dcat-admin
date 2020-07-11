@@ -22,6 +22,8 @@
                         @endif
                     @endforeach
                 </div>
+            @elseif($layout)
+                {!! $layout->build() !!}
             @else
                 @foreach($fields as $field)
                     {!! $field->render() !!}

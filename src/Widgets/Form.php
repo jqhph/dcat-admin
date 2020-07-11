@@ -8,6 +8,7 @@ use Dcat\Admin\Form\Concerns\HandleCascadeFields;
 use Dcat\Admin\Form\Concerns\HasRows;
 use Dcat\Admin\Form\Concerns\HasTabs;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\Layout;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAuthorization;
 use Dcat\Admin\Traits\HasFormResponse;
@@ -101,6 +102,11 @@ class Form implements Renderable
      * @var Field[]|Collection
      */
     protected $fields;
+
+    /**
+     * @var Layout
+     */
+    protected $layout;
 
     /**
      * @var array
@@ -318,6 +324,30 @@ class Form implements Renderable
         return $this->fields;
     }
 
+
+    /**
+     * @param int|float $width
+     * @param Closure   $callback
+     *
+     * @return $this
+     */
+    public function column($width, \Closure $callback)
+    {
+        $this->layout()->onlyColumn($width, function () use ($callback) {
+            $callback($this);
+        });
+
+        return $this;
+    }
+
+    /**
+     * @return Layout
+     */
+    public function layout()
+    {
+        return $this->layout ?: ($this->layout = new Layout($this));
+    }
+
     /**
      * Validate this form fields.
      *
@@ -466,6 +496,9 @@ class Form implements Renderable
     public function pushField(Field $field)
     {
         $this->fields->push($field);
+        if ($this->layout) {
+            $this->layout->addField($field);
+        }
 
         $field->setForm($this);
         $field->width($this->width['field'], $this->width['label']);
@@ -501,6 +534,7 @@ class Form implements Renderable
             'method'  => $this->getHtmlAttribute('method'),
             'buttons' => $this->buttons,
             'rows'    => $this->rows(),
+            'layout'  => $this->layout,
         ], $this->variables);
     }
 
