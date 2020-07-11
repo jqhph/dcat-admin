@@ -169,7 +169,7 @@ class FixColumns
         $script = <<<'JS'
 
 (function () {
-    var $tableMain = $('.table-main');
+    var $tableMain = $('.table-main'), minHeight = 600;
     
     var theadHeight = $('.table-main thead tr').outerHeight();
     $('.table-fixed thead tr').outerHeight(theadHeight);
@@ -187,16 +187,22 @@ class FixColumns
     if ($tableMain.width() >= $tableMain.prop('scrollWidth') || $(window).width() < 600) {
         $('.table-fixed').hide();
     } else {
-        var height = ($(window).height() - 215);
+        var height = ($(window).height() - 220);
+        height = height < minHeight ? minHeight : height;
         
         $tableMain.each(function (k, v) {
-            $(v).css({height: ($(v).data('height') || height) + 'px'});
+            var tableHight = $(v).find('.custom-data-table.table').eq(0).height();
+            var maxHeight = $(v).data('height') || (height >= tableHight ? tableHight : height);
+            
+            $(v).css({'max-height': maxHeight + 'px'});
+            
+            if (maxHeight < tableHight) {
+                $(v).parents('.tables-container').find('.table-fixed-right').css({right: '12px'})
+            }
         });
         $('.table-fixed-right,.table-fixed-left').each(function (k, v) {
-            $(v).css({height: (($(v).data('height') || height) - 16) + 'px'});
+            $(v).css({'max-height': (($(v).data('height') || height) - 15) + 'px'});
         });
-        
-        $('.table-fixed-right').css({right: '12px'});
         
         $tableMain.scroll(function () {
             var self = $(this); 
