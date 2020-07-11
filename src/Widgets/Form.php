@@ -324,7 +324,6 @@ class Form implements Renderable
         return $this->fields;
     }
 
-
     /**
      * @param int|float $width
      * @param Closure   $callback

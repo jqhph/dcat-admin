@@ -2,9 +2,9 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Widgets\Form as WidgetForm;
 use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Column;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 
 class Layout
 {
