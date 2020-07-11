@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Widgets\Form as WidgetForm;
 use Dcat\Admin\Form;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Renderable;
 
 /**

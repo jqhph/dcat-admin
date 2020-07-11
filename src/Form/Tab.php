@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Widgets\Form as WidgetForm;
 use Dcat\Admin\Form;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Collection;
 
 class Tab
