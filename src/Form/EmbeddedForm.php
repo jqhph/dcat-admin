@@ -117,7 +117,7 @@ class EmbeddedForm
      *
      * @return $this
      */
-    public function setParent(Form $parent)
+    public function setParent($parent)
     {
         $this->parent = $parent;
 
