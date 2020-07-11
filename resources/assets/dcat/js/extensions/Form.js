@@ -102,6 +102,16 @@ class Form {
 
                 Dcat.success(response.message || 'Save succeeded!');
 
+                if (typeof response.location !== "undefined") {
+                    return setTimeout(function () {
+                        if (response.location) {
+                            location.href = response.location;
+                        } else {
+                            location.reload();
+                        }
+                    }, 1500)
+                }
+
                 if (response.redirect === false || ! options.redirect) {
                     return;
                 }

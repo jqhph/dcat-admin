@@ -32,6 +32,32 @@ trait HasFormResponse
     }
 
     /**
+     * Send a location redirect response.
+     *
+     * @param string|null $message
+     * @param string|null $url
+     * @param bool        $status
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function location(?string $message, ?string $url = null, bool $status = true)
+    {
+        if ($this->isAjaxRequest()) {
+            return response()->json([
+                'status'   => $status,
+                'message'  => $message,
+                'location' => $url ? admin_url($url) : false,
+            ]);
+        }
+
+        if ($message) {
+            admin_toastr($message, $status ? 'success' : 'error');
+        }
+
+        return $url ? redirect(admin_url($url)) : redirect()->refresh();
+    }
+
+    /**
      * @param Request $request
      *
      * @return bool
@@ -132,13 +158,13 @@ trait HasFormResponse
             return $this->ajaxResponse($message, $url, $status);
         }
 
-        $status = (int) ($options['status_code'] ?? 302);
+        $statusCode = (int) ($options['status_code'] ?? 302);
 
         if ($message) {
-            admin_toastr($message);
+            admin_toastr($message, $status ? 'success' : 'error');
         }
 
-        return redirect(admin_url($url), $status);
+        return $url ? redirect(admin_url($url), $statusCode) : redirect()->back($statusCode);
     }
 
     /**

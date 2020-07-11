@@ -738,6 +738,16 @@ class Field implements Renderable
     }
 
     /**
+     * @param string $key
+     *
+     * @return mixed|null
+     */
+    public function getAttribute(string $key)
+    {
+        return $this->attributes[$key] ?? null;
+    }
+
+    /**
      * Specifies a regular expression against which to validate the value of the input.
      *
      * @param string $error
