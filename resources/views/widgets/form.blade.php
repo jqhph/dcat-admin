@@ -1,10 +1,33 @@
 {!! $start !!}
-    <div class="box-body fields-group">
+    <div class="box-body fields-group p-0">
+        @if(! $tabObj->isEmpty())
+            @include('admin::form.tab', compact('tabObj'))
 
-        @foreach($fields as $field)
-            {!! $field->render() !!}
-        @endforeach
+            @foreach($fields as $field)
+                @if($field instanceof \Dcat\Admin\Form\Field\Hidden)
+                    {!! $field->render() !!}
+                @endif
+            @endforeach
+        @else
+            @if($rows)
+                <div class="ml-2 mb-2">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    @foreach($rows as $row)
+                        {!! $row->render() !!}
+                    @endforeach
 
+                    @foreach($fields as $field)
+                        @if($field instanceof \Dcat\Admin\Form\Field\Hidden)
+                            {!! $field->render() !!}
+                        @endif
+                    @endforeach
+                </div>
+            @else
+                @foreach($fields as $field)
+                    {!! $field->render() !!}
+                @endforeach
+            @endif
+        @endif
     </div>
 
     @if ($method != 'GET')

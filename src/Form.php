@@ -11,8 +11,6 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
-use Dcat\Admin\Form\Row;
-use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Widgets\DialogForm;
@@ -92,6 +90,8 @@ class Form implements Renderable
         Concerns\HasFiles,
         Concerns\HasSteps,
         Concerns\HandleCascadeFields,
+        Concerns\HasRows,
+        Concerns\HasTabs,
         Macroable {
             __call as macroCall;
         }
@@ -239,18 +239,6 @@ class Form implements Renderable
      * @var array
      */
     protected $ignored = [];
-
-    /**
-     * @var Form\Tab
-     */
-    protected $tab = null;
-
-    /**
-     * Field rows in form.
-     *
-     * @var Row[]
-     */
-    protected $rows = [];
 
     /**
      * @var bool
@@ -493,35 +481,6 @@ class Form implements Renderable
         $this->html($fieldset->end())->plain();
 
         return $fieldset;
-    }
-
-    /**
-     * Use tab to split form.
-     *
-     * @param string  $title
-     * @param Closure $content
-     *
-     * @return $this
-     */
-    public function tab($title, Closure $content, $active = false)
-    {
-        $this->getTab()->append($title, $content, $active);
-
-        return $this;
-    }
-
-    /**
-     * Get Tab instance.
-     *
-     * @return Tab
-     */
-    public function getTab()
-    {
-        if (is_null($this->tab)) {
-            $this->tab = new Tab($this);
-        }
-
-        return $this->tab;
     }
 
     /**
@@ -1369,28 +1328,6 @@ class Form implements Renderable
         $this->builder->title($title);
 
         return $this;
-    }
-
-    /**
-     * Add a row in form.
-     *
-     * @param Closure $callback
-     *
-     * @return $this
-     */
-    public function row(Closure $callback)
-    {
-        $this->rows[] = new Row($callback, $this);
-
-        return $this;
-    }
-
-    /**
-     * @return Row[]
-     */
-    public function rows()
-    {
-        return $this->rows;
     }
 
     /**

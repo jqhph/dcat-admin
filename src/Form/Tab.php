@@ -2,13 +2,15 @@
 
 namespace Dcat\Admin\Form;
 
+use Dcat\Admin\Admin;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Dcat\Admin\Form;
 use Illuminate\Support\Collection;
 
 class Tab
 {
     /**
-     * @var Form
+     * @var Form|WidgetForm
      */
     protected $form;
 
@@ -25,9 +27,9 @@ class Tab
     /**
      * Tab constructor.
      *
-     * @param Form $form
+     * @param Form|WidgetForm $form
      */
-    public function __construct(Form $form)
+    public function __construct($form)
     {
         $this->form = $form;
 
@@ -65,7 +67,7 @@ class Tab
     {
         call_user_func($content, $this->form);
 
-        $fields = clone $this->form->builder()->fields();
+        $fields = clone $this->form->fields();
 
         $all = $fields->toArray();
 
@@ -122,5 +124,38 @@ class Tab
     public function isEmpty()
     {
         return $this->tabs->isEmpty();
+    }
+
+    /**
+     * @return void
+     */
+    public function addScript()
+    {
+        $elementId = $this->form->getElementId();
+
+        $script = <<<JS
+(function () {
+    var hash = document.location.hash;
+    if (hash) {
+        $('#$elementId .nav-tabs a[href="' + hash + '"]').tab('show');
+    }
+    
+    // Change hash for page-reload
+    $('#$elementId .nav-tabs a').on('shown.bs.tab', function (e) {
+        history.pushState(null,null, e.target.hash);
+    });
+    
+    if ($('#$elementId .has-error').length) {
+        $('#$elementId .has-error').each(function () {
+            var tabId = '#'+$(this).closest('.tab-pane').attr('id');
+            $('li a[href="'+tabId+'"] i').removeClass('hide');
+        });
+    
+        var first = $('#$elementId .has-error:first').closest('.tab-pane').attr('id');
+        $('li a[href="#'+first+'"]').tab('show');
+    }
+})();
+JS;
+        Admin::script($script);
     }
 }

@@ -819,7 +819,7 @@ class Builder
         $tabObj = $this->form->getTab();
 
         if (! $tabObj->isEmpty()) {
-            $this->addTabScript();
+            $tabObj->addScript();
         }
 
         if ($this->form->allowAjaxSubmit() && empty($this->stepBuilder)) {
@@ -873,38 +873,5 @@ $('#{$this->getElementId()}').form({
 });
 JS
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function addTabScript()
-    {
-        $elementId = $this->getElementId();
-
-        $script = <<<JS
-(function () {
-    var hash = document.location.hash;
-    if (hash) {
-        $('#$elementId .nav-tabs a[href="' + hash + '"]').tab('show');
-    }
-    
-    // Change hash for page-reload
-    $('#$elementId .nav-tabs a').on('shown.bs.tab', function (e) {
-        history.pushState(null,null, e.target.hash);
-    });
-    
-    if ($('#$elementId .has-error').length) {
-        $('#$elementId .has-error').each(function () {
-            var tabId = '#'+$(this).closest('.tab-pane').attr('id');
-            $('li a[href="'+tabId+'"] i').removeClass('hide');
-        });
-    
-        var first = $('#$elementId .has-error:first').closest('.tab-pane').attr('id');
-        $('li a[href="#'+first+'"]').tab('show');
-    }
-})();
-JS;
-        Admin::script($script);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form;
 
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Dcat\Admin\Form;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -72,7 +73,7 @@ class Row implements Renderable
     /**
      * Parent form.
      *
-     * @var Form
+     * @var Form|WidgetForm
      */
     protected $form;
 
@@ -93,10 +94,10 @@ class Row implements Renderable
     /**
      * Row constructor.
      *
-     * @param \Closure $callback
-     * @param Form     $form
+     * @param \Closure        $callback
+     * @param Form|WidgetForm $form
      */
-    public function __construct(\Closure $callback, Form $form)
+    public function __construct(\Closure $callback, $form)
     {
         $this->callback = $callback;
 

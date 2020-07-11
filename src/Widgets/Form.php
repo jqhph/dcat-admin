@@ -5,6 +5,8 @@ namespace Dcat\Admin\Widgets;
 use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Concerns\HandleCascadeFields;
+use Dcat\Admin\Form\Concerns\HasRows;
+use Dcat\Admin\Form\Concerns\HasTabs;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAuthorization;
@@ -82,6 +84,8 @@ class Form implements Renderable
         HasFormResponse,
         HasAuthorization,
         HandleCascadeFields,
+        HasRows,
+        HasTabs,
         Macroable {
             __call as macroCall;
         }
@@ -97,6 +101,11 @@ class Form implements Renderable
      * @var Field[]|Collection
      */
     protected $fields;
+
+    /**
+     * @var array
+     */
+    protected $variables = [];
 
     /**
      * @var bool
@@ -485,13 +494,21 @@ class Form implements Renderable
 
         $this->fillFields($this->model()->toArray());
 
-        return [
+        return array_merge([
             'start'   => $this->open(),
             'end'     => $this->close(),
             'fields'  => $this->fields,
             'method'  => $this->getHtmlAttribute('method'),
             'buttons' => $this->buttons,
-        ];
+            'rows'    => $this->rows(),
+        ], $this->variables);
+    }
+
+    public function addVariables(array $variables)
+    {
+        $this->variables = array_merge($this->variables, $variables);
+
+        return $this;
     }
 
     public function fillFields(array $data)
@@ -689,6 +706,14 @@ JS
         if ($this->allowAjaxSubmit()) {
             $this->setupSubmitScript();
         }
+
+        $tabObj = $this->getTab();
+
+        if (! $tabObj->isEmpty()) {
+            $tabObj->addScript();
+        }
+
+        $this->addVariables(['tabObj' => $tabObj]);
 
         return view($this->view, $this->variables())->render();
     }
