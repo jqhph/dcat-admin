@@ -98,7 +98,7 @@ trait HasTree
             if (
                 $query['method'] === 'where'
                 && $query['arguments']
-                && $query['arguments'][0] === $this->repository->getParentColumn()
+                && $query['arguments'][0] === optional($this->repository)->getParentColumn()
             ) {
                 return false;
             }
