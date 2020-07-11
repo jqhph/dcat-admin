@@ -463,7 +463,7 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function pushField(Field &$field)
+    public function pushField(Field $field)
     {
         $this->fields->push($field);
 

@@ -1,5 +1,5 @@
 {!! $start !!}
-    <div class="box-body fields-group p-0">
+    <div class="box-body fields-group p-0 pt-1">
         @if(! $tabObj->isEmpty())
             @include('admin::form.tab', compact('tabObj'))
 
