@@ -5,7 +5,6 @@ namespace Dcat\Admin\Grid\Displayers;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\LazyRenderable;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 
 class Expand extends AbstractDisplayer
