@@ -171,12 +171,11 @@ class Tags extends Field
      *
      * @return $this
      */
-    public function ajax(string $url, string $idField = 'id', string $textField = 'name')
+    public function ajax(string $url, string $idField = 'id', string $textField = 'text')
     {
         $url = admin_url($url);
 
         $this->ajaxScript = <<<JS
-
   ajax: {
     url: "$url",
     dataType: 'json',
@@ -193,8 +192,8 @@ class Tags extends Field
 
       return {
         results: $.map(data.data, function (d) {
-                   d.id = d.$idField;
-                   d.text = d.$textField;
+                   d.id = d.{$idField};
+                   d.text = d.{$textField};
                    return d;
                 }),
         pagination: {
@@ -229,7 +228,7 @@ JS;
         if ($this->keyAsValue) {
             $options = $value + $this->options;
         } else {
-            $options = array_unique(array_merge($value, $this->options));
+            $options = array_unique(array_merge($value, (array) $this->options));
         }
 
         return parent::render()->with([
