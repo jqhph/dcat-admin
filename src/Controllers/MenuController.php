@@ -144,10 +144,13 @@ class MenuController extends AdminController
             $form->display('updated_at', trans('admin.updated_at'));
         })->saved(function (Form $form, $result) {
             if ($result) {
-                return $form->location(__('admin.save_succeeded'), 'auth/menu');
+                return $form->location('auth/menu', __('admin.save_succeeded'));
             }
 
-            return $form->location(__('admin.nothing_updated'), 'auth/menu', false);
+            return $form->location('auth/menu', [
+                'message' => __('admin.nothing_updated'),
+                'status'  => false,
+            ]);
         });
     }
 
