@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\LazyRenderable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
@@ -32,13 +33,16 @@ class Expand extends AbstractDisplayer
         $remoteUrl = '';
 
         if ($callbackOrButton && $callbackOrButton instanceof \Closure) {
-            $callback = $callbackOrButton->bindTo($this->row);
+            $callbackOrButton = $callbackOrButton->call($this->row, $this);
 
-            $html = $callback($this);
-            if ($html instanceof Renderable) {
-                $html = $html->render();
+            if (! $callbackOrButton instanceof LazyRenderable) {
+                $html = Helper::render($callbackOrButton);
+
+                $callbackOrButton = null;
             }
-        } elseif ($callbackOrButton instanceof LazyRenderable) {
+        }
+
+        if ($callbackOrButton instanceof LazyRenderable) {
             $html = '<div style="min-height: 150px"></div>';
 
             $this->setUpLazyRenderable($callbackOrButton);
