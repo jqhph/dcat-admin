@@ -758,23 +758,6 @@ class Column
     }
 
     /**
-     * Display column as boolean , `✓` for true, and `✗` for false.
-     *
-     * @param array $map
-     * @param bool  $default
-     *
-     * @return $this
-     */
-    public function bool(array $map = [], $default = false)
-    {
-        return $this->display(function ($value) use ($map, $default) {
-            $bool = empty($map) ? boolval($value) : Arr::get($map, $value, $default);
-
-            return $bool ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>';
-        });
-    }
-
-    /**
      * Passes through all unknown calls to builtin displayer or supported displayer.
      *
      * Allow fluent calls on the Column object.

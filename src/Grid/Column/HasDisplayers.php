@@ -277,4 +277,21 @@ trait HasDisplayers
                 ->setRow($this);
         });
     }
+
+    /**
+     * Display column as boolean , `✓` for true, and `✗` for false.
+     *
+     * @param array $map
+     * @param bool  $default
+     *
+     * @return $this
+     */
+    public function bool(array $map = [], $default = false)
+    {
+        return $this->display(function ($value) use ($map, $default) {
+            $bool = empty($map) ? $value : Arr::get($map, $value, $default);
+
+            return $bool ? '<i class="feather icon-check font-md-2 font-w-600 text-green"></i>' : '<i class="feather icon-x font-md-1 font-w-600 text-red"></i>';
+        });
+    }
 }
