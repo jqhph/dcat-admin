@@ -235,7 +235,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($value, $key) use (&$space) {
                     return $space.sprintf($this->templates['grid-filter'], '\\'.$value, $key);
                 })
-                ->join("\r\n")
+                ->implode("\r\n")
         );
     }
 
@@ -253,7 +253,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($value, $key) use (&$space) {
                     return $space.sprintf($this->templates['show-column'], $key);
                 })
-                ->join("\r\n")
+                ->implode("\r\n")
         );
     }
 
@@ -279,7 +279,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($value, $key) use (&$space) {
                     return $space.sprintf($this->templates['form'], '\\'.$value, $key);
                 })
-                ->join("\r\n")
+                ->implode("\r\n")
         );
     }
 
@@ -305,7 +305,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($value) use (&$space) {
                     return $space.sprintf($this->templates['grid-column'], $value);
                 })
-                ->join("\r\n")
+                ->implode("\r\n")
         );
     }
 
