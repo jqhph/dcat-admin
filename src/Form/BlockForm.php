@@ -47,7 +47,7 @@ class BlockForm extends WidgetForm
      *
      * @return $this
      */
-    public function pushField(Field &$field)
+    public function pushField(Field $field)
     {
         $this->form->builder()->fields()->push($field);
         $this->fields->push($field);
