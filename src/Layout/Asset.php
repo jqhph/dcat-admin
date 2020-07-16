@@ -4,6 +4,7 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Color;
+use Illuminate\Support\Str;
 
 class Asset
 {
@@ -574,11 +575,27 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<link rel=\"stylesheet\" href=\"{$path}\">";
+                $html .= "<link rel=\"stylesheet\" href=\"{$this->withVersionQuery($path)}\">";
             }
         }
 
         return $html;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    public function withVersionQuery($url)
+    {
+        if (! Str::contains($url, '?')) {
+            $url .= '?';
+        }
+
+        $ver = 'v'.Admin::VERSION;
+
+        return Str::endsWith($url, '?') ? $url.$ver : $url.'&'.$ver;
     }
 
     /**
@@ -608,7 +625,7 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<script src=\"{$path}\"></script>";
+                $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
             }
         }
 
@@ -628,7 +645,7 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<script src=\"{$path}\"></script>";
+                $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
             }
         }
 
