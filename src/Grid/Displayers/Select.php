@@ -27,7 +27,7 @@ class Select extends AbstractDisplayer
         }
 
         return <<<EOT
-<div class="input-group input-group-sm d-inline">
+<div class="input-group input-group-sm">
     <select style="width: 100%;" class="{$this->selector}" data-url="{$this->url()}" data-name="{$this->column->getName()}">
     $optionsHtml
     </select>
