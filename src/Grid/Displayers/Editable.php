@@ -16,7 +16,7 @@ class Editable extends AbstractDisplayer
         $label = __('admin.save');
 
         return <<<HTML
-<div>
+<div class="d-inline">
     <span class="{$this->selector}" contenteditable="true">{$this->value}</span>
     <span class="save hidden" 
         data-value="{$this->value}" 
