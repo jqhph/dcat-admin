@@ -280,8 +280,12 @@ class Column
      *
      * @return Column\Condition
      */
-    public function if(\Closure $condition)
+    public function if(\Closure $condition = null)
     {
+        $condition = $condition ?: function ($column) {
+            return $column->getValue();
+        };
+
         return $this->conditions[] = new Grid\Column\Condition($condition, $this);
     }
 
