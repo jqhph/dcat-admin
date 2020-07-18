@@ -40,24 +40,29 @@
   }
 }
 .alert-danger {
-  background: rgba($danger,.2);
-  color: $danger;
+  background-color: #f5e0e8;
+  color: #ef5228;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
 }
 .alert-success {
   background: rgba($success,.2);
-  color: $success;
+  color: darken($success, 2%);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
 }
 .alert-info {
   background: rgba($info,.2);
   color: $info;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
 }
 .alert-primary {
   background: rgba($primary,.2);
   color: $primary-darker;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.17);
 }
 .alert-warning {
-  background: rgba($warning,.28);
-  color: darken($warning, 5%);
+  background-color: #f6f6eb;
+  color: darken($warning, 8%);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.09);
 }
 
 .callout {
