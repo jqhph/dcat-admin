@@ -4,6 +4,7 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Color;
+use Illuminate\Support\Str;
 
 class Asset
 {
@@ -174,6 +175,11 @@ class Asset
      * @var array
      */
     public $script = [];
+
+    /**
+     * @var array
+     */
+    public $directScript = [];
 
     /**
      * css代码.
@@ -470,7 +476,7 @@ class Asset
      */
     protected function hasAlias($value)
     {
-        return $value && mb_strpos($value, '@') !== false;
+        return $value && mb_strpos($value, '@') === 0;
     }
 
     /**
@@ -500,13 +506,18 @@ class Asset
      * 设置js代码.
      *
      * @param string|array $script
+     * @param bool         $direct
      */
-    public function script($script)
+    public function script($script, bool $direct = false)
     {
         if (! $script) {
             return;
         }
-        $this->script = array_merge($this->script, (array) $script);
+        if ($direct) {
+            $this->directScript = array_merge($this->directScript, (array) $script);
+        } else {
+            $this->script = array_merge($this->script, (array) $script);
+        }
     }
 
     /**
@@ -564,11 +575,27 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<link rel=\"stylesheet\" href=\"{$path}\">";
+                $html .= "<link rel=\"stylesheet\" href=\"{$this->withVersionQuery($path)}\">";
             }
         }
 
         return $html;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    public function withVersionQuery($url)
+    {
+        if (! Str::contains($url, '?')) {
+            $url .= '?';
+        }
+
+        $ver = 'v'.Admin::VERSION;
+
+        return Str::endsWith($url, '?') ? $url.$ver : $url.'&'.$ver;
     }
 
     /**
@@ -598,7 +625,7 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<script src=\"{$path}\"></script>";
+                $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
             }
         }
 
@@ -618,7 +645,7 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<script src=\"{$path}\"></script>";
+                $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
             }
         }
 
@@ -631,6 +658,7 @@ class Asset
     public function scriptToHtml()
     {
         $script = implode(';', array_unique($this->script));
+        $directScript = implode(';', array_unique($this->directScript));
 
         return <<<HTML
 <script data-exec-on-popstate>
@@ -640,8 +668,15 @@ Dcat.ready(function () {
     } catch (e) {
         console.error(e)
     }
- });
- </script>
+});
+(function () {
+    try {
+        {$directScript}
+    } catch (e) {
+        console.error(e)
+    }
+})()
+</script>
 HTML;
     }
 

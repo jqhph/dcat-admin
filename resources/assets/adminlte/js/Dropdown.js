@@ -46,14 +46,14 @@ const Dropdown = (($) => {
     // Public
 
     toggleSubmenu() {
-      this._element.siblings().show().toggleClass("show")
+      this._element.siblings().toggleClass("show")
 
       if (! this._element.next().hasClass('show')) {
-        this._element.parents('.dropdown-menu').first().find('.show').removeClass("show").hide()
+        this._element.parents('.dropdown-menu').first().find('.show').removeClass("show")
       }
 
       this._element.parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
-        $('.dropdown-submenu .show').removeClass("show").hide()
+        $('.dropdown-submenu .show').removeClass("show")
       })
     }
 
@@ -109,21 +109,20 @@ const Dropdown = (($) => {
    * Data API
    * ====================================================
    */
-
-  $(Selector.DROPDOWN_MENU + ' ' + Selector.DROPDOWN_TOGGLE).on("click", function(event) {
-    event.preventDefault()
-    event.stopPropagation()
-
-    Dropdown._jQueryInterface.call($(this), 'toggleSubmenu')
-  });
-
-  $(Selector.NAVBAR + ' ' + Selector.DROPDOWN_TOGGLE).on("click", function(event) {
-    event.preventDefault()
-
-    setTimeout(function() {
-      Dropdown._jQueryInterface.call($(this), 'fixPosition')
-    }, 1)
-  });
+  // $(Selector.DROPDOWN_TOGGLE).on("click", function(event) {
+  //   event.preventDefault()
+  //   event.stopPropagation()
+  //
+  //   Dropdown._jQueryInterface.call($(this), 'toggleSubmenu')
+  // });
+  //
+  // $(Selector.DROPDOWN_TOGGLE).on("click", function(event) {
+  //   event.preventDefault()
+  //
+  //   setTimeout(function() {
+  //     Dropdown._jQueryInterface.call($(this), 'fixPosition')
+  //   }, 1)
+  // });
 
   /**
    * jQuery API

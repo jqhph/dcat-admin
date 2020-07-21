@@ -51,7 +51,7 @@ JS;
         $active = empty($value) ? '' : 'active';
 
         return <<<HTML
-&nbsp;<span class="dropdown" style="position: absolute">
+&nbsp;<span class="dropdown">
     <form action="{$this->formAction()}" pjax-container style="display: inline-block;">
     <a href="javascript:void(0);" class="feather icon-filter {$active}" data-toggle="dropdown">
     </a>

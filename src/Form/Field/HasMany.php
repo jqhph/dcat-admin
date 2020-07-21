@@ -471,7 +471,6 @@ class HasMany extends Field
     protected function setupScriptForDefaultView($templateScript)
     {
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-        $defaultKey = NestedForm::DEFAULT_KEY_NAME;
 
         /**
          * When add a new sub form, replace all element key in new sub form.
@@ -483,13 +482,16 @@ class HasMany extends Field
         $script = <<<JS
 (function () {
     var nestedIndex = 0;
+    
+    {$this->makeReplaceNestedIndexScript()}
+    
 $('#has-many-{$this->column}').on('click', '.add', function () {
 
     var tpl = $('template.{$this->column}-tpl');
 
     nestedIndex++;
 
-    var template = tpl.html().replace(/{$defaultKey}/g, nestedIndex);
+    var template = replaceNestedFormIndex(tpl.html());
     $('.has-many-{$this->column}-forms').append(template);
     {$templateScript}
 });
@@ -514,46 +516,47 @@ JS;
     protected function setupScriptForTabView($templateScript)
     {
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-        $defaultKey = NestedForm::DEFAULT_KEY_NAME;
 
         $script = <<<JS
 (function () {
     $('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
-    var \$navTab = $(this).siblings('a');
-    var \$pane = $(\$navTab.attr('href'));
-    if( \$pane.hasClass('new') ){
-        \$pane.remove();
-    }else{
-        \$pane.removeClass('active').find('.$removeClass').val(1);
-    }
-    if(\$navTab.closest('li').hasClass('active')){
-        \$navTab.closest('li').remove();
-        $('#has-many-{$this->column} > .nav > li:nth-child(1) > a').click();
-    }else{
-        \$navTab.closest('li').remove();
-    }
-});
-
-var nestedIndex = 0;
-$('#has-many-{$this->column} > .header').off('click', '.add').on('click', '.add', function(){
-    nestedIndex++;
-    var navTabHtml = $('#has-many-{$this->column} > template.nav-tab-tpl').html().replace(/{$defaultKey}/g, nestedIndex);
-    var paneHtml = $('#has-many-{$this->column} > template.pane-tpl').html().replace(/{$defaultKey}/g, nestedIndex);
-    $('#has-many-{$this->column} > .nav').append(navTabHtml);
-    $('#has-many-{$this->column} > .tab-content').append(paneHtml);
-    $('#has-many-{$this->column} > .nav > li:last-child a').click();
-    {$templateScript}
-});
-
-if ($('.has-error').length) {
-    $('.has-error').parent('.tab-pane').each(function () {
-        var tabId = '#'+$(this).attr('id');
-        $('li a[href="'+tabId+'"] i').removeClass('d-none');
+        var \$navTab = $(this).siblings('a');
+        var \$pane = $(\$navTab.attr('href'));
+        if( \$pane.hasClass('new') ){
+            \$pane.remove();
+        }else{
+            \$pane.removeClass('active').find('.$removeClass').val(1);
+        }
+        if(\$navTab.closest('li').hasClass('active')){
+            \$navTab.closest('li').remove();
+            $('#has-many-{$this->column} > .nav > li:nth-child(1) > a').click();
+        }else{
+            \$navTab.closest('li').remove();
+        }
+    });
+        
+    {$this->makeReplaceNestedIndexScript()}
+    
+    var nestedIndex = 0;
+    $('#has-many-{$this->column} > .header').off('click', '.add').on('click', '.add', function(){
+        nestedIndex++;
+        var navTabHtml = replaceNestedFormIndex($('#has-many-{$this->column} > template.nav-tab-tpl').html());
+        var paneHtml = replaceNestedFormIndex($('#has-many-{$this->column} > template.pane-tpl').html());
+        $('#has-many-{$this->column} > .nav').append(navTabHtml);
+        $('#has-many-{$this->column} > .tab-content').append(paneHtml);
+        $('#has-many-{$this->column} > .nav > li:last-child a').click();
+        {$templateScript}
     });
     
-    var first = $('.has-error:first').parent().attr('id');
-    $('li a[href="#'+first+'"]').tab('show');
-}
+    if ($('.has-error').length) {
+        $('.has-error').parent('.tab-pane').each(function () {
+            var tabId = '#'+$(this).attr('id');
+            $('li a[href="'+tabId+'"] i').removeClass('d-none');
+        });
+        
+        var first = $('.has-error:first').parent().attr('id');
+        $('li a[href="#'+first+'"]').tab('show');
+    }
 })();
 JS;
 
@@ -570,7 +573,6 @@ JS;
     protected function setupScriptForTableView($templateScript)
     {
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-        $defaultKey = NestedForm::DEFAULT_KEY_NAME;
 
         /**
          * When add a new sub form, replace all element key in new sub form.
@@ -582,12 +584,15 @@ JS;
         $script = <<<JS
 (function () {
     var nestedIndex = 0;
+    
+    {$this->makeReplaceNestedIndexScript()}
+    
     $('#has-many-{$this->column}').on('click', '.add', function () {
         var tpl = $('template.{$this->column}-tpl');
     
         nestedIndex++;
     
-        var template = tpl.html().replace(/{$defaultKey}/g, nestedIndex);
+        var template = replaceNestedFormIndex(tpl.html());
         $('.has-many-{$this->column}-forms').append(template);
         {$templateScript}
     });
@@ -600,6 +605,20 @@ JS;
 JS;
 
         Admin::script($script);
+    }
+
+    /**
+     * @return string
+     */
+    protected function makeReplaceNestedIndexScript()
+    {
+        $defaultKey = NestedForm::DEFAULT_KEY_NAME;
+
+        return <<<JS
+function replaceNestedFormIndex(value) {
+    return String(value).replace(/{$defaultKey}/g, nestedIndex);
+}
+JS;
     }
 
     /**
@@ -703,7 +722,7 @@ JS;
         /* Build cell with hidden elements */
         $template .= '<td class="hidden">'.implode('', $hidden).'</td>';
 
-        $this->setupScript(implode("\r\n", $scripts));
+        $this->setupScript(implode(";\r\n", $scripts));
 
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];

@@ -486,9 +486,15 @@ class Builder
      */
     public function field($name)
     {
-        return $this->fields->first(function (Field $field) use ($name) {
+        $field = $this->fields->first(function (Field $field) use ($name) {
             return $field === $name || $field->column() == $name;
         });
+
+        if (! $field) {
+            $field = $this->stepField($name);
+        }
+
+        return $field;
     }
 
     /**
@@ -819,11 +825,11 @@ class Builder
         $tabObj = $this->form->getTab();
 
         if (! $tabObj->isEmpty()) {
-            $this->setupTabScript();
+            $tabObj->addScript();
         }
 
         if ($this->form->allowAjaxSubmit() && empty($this->stepBuilder)) {
-            $this->setupSubmitScript();
+            $this->addSubmitScript();
         }
 
         $open = $this->open(['class' => 'form-horizontal']);
@@ -837,13 +843,19 @@ class Builder
             'steps'      => $this->stepBuilder,
         ];
 
-        $this->layout->prepend(
-            $this->defaultBlockWidth,
-            $this->doWrap(view($this->view, $data))
-        );
+        if ($this->layout->hasColumns()) {
+            $content = $this->doWrap(view($this->view, $data));
+        } else {
+            $this->layout->prepend(
+                $this->defaultBlockWidth,
+                $this->doWrap(view($this->view, $data))
+            );
+
+            $content = $this->layout->build();
+        }
 
         return <<<EOF
-{$open} {$this->layout->build()} {$this->close()}
+{$open} {$content} {$this->close()}
 EOF;
     }
 
@@ -864,7 +876,7 @@ EOF;
     /**
      * @return void
      */
-    protected function setupSubmitScript()
+    protected function addSubmitScript()
     {
         Admin::script(
             <<<JS
@@ -873,38 +885,5 @@ $('#{$this->getElementId()}').form({
 });
 JS
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupTabScript()
-    {
-        $elementId = $this->getElementId();
-
-        $script = <<<JS
-(function () {
-    var hash = document.location.hash;
-    if (hash) {
-        $('#$elementId .nav-tabs a[href="' + hash + '"]').tab('show');
-    }
-    
-    // Change hash for page-reload
-    $('#$elementId .nav-tabs a').on('shown.bs.tab', function (e) {
-        history.pushState(null,null, e.target.hash);
-    });
-    
-    if ($('#$elementId .has-error').length) {
-        $('#$elementId .has-error').each(function () {
-            var tabId = '#'+$(this).closest('.tab-pane').attr('id');
-            $('li a[href="'+tabId+'"] i').removeClass('hide');
-        });
-    
-        var first = $('#$elementId .has-error:first').closest('.tab-pane').attr('id');
-        $('li a[href="#'+first+'"]').tab('show');
-    }
-})();
-JS;
-        Admin::script($script);
     }
 }

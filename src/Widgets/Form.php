@@ -4,7 +4,11 @@ namespace Dcat\Admin\Widgets;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Form\Concerns\HandleCascadeFields;
+use Dcat\Admin\Form\Concerns\HasRows;
+use Dcat\Admin\Form\Concerns\HasTabs;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\Layout;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAuthorization;
 use Dcat\Admin\Traits\HasFormResponse;
@@ -73,15 +77,21 @@ use Illuminate\Validation\Validator;
  * @method Field\KeyValue       keyValue($column, $label = '')
  * @method Field\Tel            tel($column, $label = '')
  * @method Field\Markdown       markdown($column, $label = '')
+ * @method Field\Range          range($start, $end, $label = '')
  */
 class Form implements Renderable
 {
     use HasHtmlAttributes,
         HasFormResponse,
         HasAuthorization,
+        HandleCascadeFields,
+        HasRows,
+        HasTabs,
         Macroable {
             __call as macroCall;
         }
+
+    const REQUEST_NAME = '_form_';
 
     /**
      * @var string
@@ -92,6 +102,16 @@ class Form implements Renderable
      * @var Field[]|Collection
      */
     protected $fields;
+
+    /**
+     * @var Layout
+     */
+    protected $layout;
+
+    /**
+     * @var array
+     */
+    protected $variables = [];
 
     /**
      * @var bool
@@ -305,6 +325,29 @@ class Form implements Renderable
     }
 
     /**
+     * @param int|float $width
+     * @param Closure   $callback
+     *
+     * @return $this
+     */
+    public function column($width, \Closure $callback)
+    {
+        $this->layout()->onlyColumn($width, function () use ($callback) {
+            $callback($this);
+        });
+
+        return $this;
+    }
+
+    /**
+     * @return Layout
+     */
+    public function layout()
+    {
+        return $this->layout ?: ($this->layout = new Layout($this));
+    }
+
+    /**
      * Validate this form fields.
      *
      * @param Request $request
@@ -449,12 +492,23 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function pushField(Field &$field)
+    public function pushField(Field $field)
     {
         $this->fields->push($field);
+        if ($this->layout) {
+            $this->layout->addField($field);
+        }
 
         $field->setForm($this);
         $field->width($this->width['field'], $this->width['label']);
+
+        if ($field instanceof Field\File) {
+            $formData = [static::REQUEST_NAME => get_called_class()];
+
+            $field->url(route(admin_api_route('form.upload')));
+            $field->deleteUrl(route(admin_api_route('form.destroy-file'), $formData));
+            $field->withFormData($formData);
+        }
 
         $field::collectAssets();
 
@@ -470,17 +524,31 @@ class Form implements Renderable
     {
         $this->setHtmlAttribute('id', $this->getElementId());
 
-        foreach ($this->fields as $field) {
-            $field->fill($this->model()->toArray());
-        }
+        $this->fillFields($this->model()->toArray());
 
-        return [
+        return array_merge([
             'start'   => $this->open(),
             'end'     => $this->close(),
             'fields'  => $this->fields,
             'method'  => $this->getHtmlAttribute('method'),
             'buttons' => $this->buttons,
-        ];
+            'rows'    => $this->rows(),
+            'layout'  => $this->layout,
+        ], $this->variables);
+    }
+
+    public function addVariables(array $variables)
+    {
+        $this->variables = array_merge($this->variables, $variables);
+
+        return $this;
+    }
+
+    public function fillFields(array $data)
+    {
+        foreach ($this->fields as $field) {
+            $field->fill($data);
+        }
     }
 
     /**
@@ -627,7 +695,7 @@ JS
      */
     public function sanitize(array $input)
     {
-        Arr::forget($input, ['_form_', '_token', '_current_']);
+        Arr::forget($input, [static::REQUEST_NAME, '_token', '_current_']);
 
         return $input;
     }
@@ -652,7 +720,7 @@ JS
         if (method_exists($this, 'handle')) {
             $this->method('POST');
             $this->action(route(admin_api_route('form')));
-            $this->hidden('_form_')->default(get_called_class());
+            $this->hidden(static::REQUEST_NAME)->default(get_called_class());
             $this->hidden('_current_')->default($this->getCurrentUrl());
         }
     }
@@ -671,6 +739,14 @@ JS
         if ($this->allowAjaxSubmit()) {
             $this->setupSubmitScript();
         }
+
+        $tabObj = $this->getTab();
+
+        if (! $tabObj->isEmpty()) {
+            $tabObj->addScript();
+        }
+
+        $this->addVariables(['tabObj' => $tabObj]);
 
         return view($this->view, $this->variables())->render();
     }

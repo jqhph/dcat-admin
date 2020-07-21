@@ -10,6 +10,7 @@ use Dcat\Admin\Scaffold\LangCreator;
 use Dcat\Admin\Scaffold\MigrationCreator;
 use Dcat\Admin\Scaffold\ModelCreator;
 use Dcat\Admin\Scaffold\RepositoryCreator;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
@@ -107,11 +108,15 @@ class ScaffoldController extends Controller
         $message = '';
 
         $creates = (array) $request->get('create');
+        $table = Helper::slug($request->get('table_name'), '_');
+        $controller = $request->get('controller_name');
+        $model = $request->get('model_name');
+        $repository = $request->get('repository_name');
 
         try {
             // 1. Create model.
             if (in_array('model', $creates)) {
-                $modelCreator = new ModelCreator($request->get('table_name'), $request->get('model_name'));
+                $modelCreator = new ModelCreator($table, $model);
 
                 $paths['model'] = $modelCreator->create(
                     $request->get('primary_key'),
@@ -122,30 +127,30 @@ class ScaffoldController extends Controller
 
             // 2. Create controller.
             if (in_array('controller', $creates)) {
-                $paths['controller'] = (new ControllerCreator($request->get('controller_name')))
-                    ->create(in_array('repository', $creates) ? null : $request->get('model_name'));
+                $paths['controller'] = (new ControllerCreator($controller))
+                    ->create(in_array('repository', $creates) ? $repository : $model);
             }
 
             // 3. Create migration.
             if (in_array('migration', $creates)) {
-                $migrationName = 'create_'.$request->get('table_name').'_table';
+                $migrationName = 'create_'.$table.'_table';
 
                 $paths['migration'] = (new MigrationCreator(app('files')))->buildBluePrint(
                     $request->get('fields'),
                     $request->get('primary_key', 'id'),
                     $request->get('timestamps') == 1,
                     $request->get('soft_deletes') == 1
-                )->create($migrationName, database_path('migrations'), $request->get('table_name'));
+                )->create($migrationName, database_path('migrations'), $table);
             }
 
             if (in_array('lang', $creates)) {
                 $paths['lang'] = (new LangCreator($request->get('fields')))
-                    ->create($request->get('controller_name'));
+                    ->create($controller);
             }
 
             if (in_array('repository', $creates)) {
                 $paths['repository'] = (new RepositoryCreator())
-                    ->create($request->get('controller_name'), $request->get('model_name'));
+                    ->create($model, $repository);
             }
 
             // Run migrate.
@@ -156,8 +161,6 @@ class ScaffoldController extends Controller
 
             // Make ide helper file.
             if (in_array('migrate', $creates) || in_array('controller', $creates)) {
-                $controller = $request->get('controller_name');
-
                 try {
                     Artisan::call('admin:ide-helper', ['-c' => $controller]);
 

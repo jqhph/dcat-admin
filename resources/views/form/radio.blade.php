@@ -6,6 +6,8 @@
 
         @include('admin::form.error')
 
+        <input type="hidden" name="{{$name}}">
+
         {!! $radio !!}
 
         @include('admin::form.help-block')

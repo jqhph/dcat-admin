@@ -49,7 +49,11 @@ class FilterButton extends AbstractTool
         $id = $filter->filterID();
 
         if ($filter->mode() === Filter::MODE_RIGHT_SIDE) {
-            $expand = $filter->expand ? 'true' : 'false';
+            if ($this->filter()->grid()->model()->getCurrentPage() > 1) {
+                $expand = 'false';
+            } else {
+                $expand = $filter->expand ? 'true' : 'false';
+            }
 
             $script = <<<JS
 (function () {
@@ -129,6 +133,8 @@ JS;
 
         $scopres = $filter->scopes();
         $filters = $filter->filters();
+        $valueCount = $filter->mode() === Filter::MODE_RIGHT_SIDE
+            ? count($this->parent->filter()->getConditions()) : 0;
 
         if ($scopres->isEmpty() && ! $filters) {
             return;
@@ -146,6 +152,7 @@ JS;
             'expand'           => $filter->expand,
             'show_filter_text' => true,
             'only_scopes'      => $onlyScopes,
+            'valueCount'       => $valueCount,
         ];
 
         return view($this->view, $variables)->render();

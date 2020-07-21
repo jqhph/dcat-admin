@@ -21,10 +21,10 @@ class HandleActionController
         $action->setKey($request->get('_key'));
 
         if (! $action->passesAuthorization()) {
-            return $action->failedAuthorization();
+            $response = $action->failedAuthorization();
+        } else {
+            $response = $action->handle($request);
         }
-
-        $response = $action->handle($request);
 
         return $response instanceof Response ? $response->send() : $response;
     }

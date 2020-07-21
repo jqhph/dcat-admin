@@ -87,11 +87,11 @@
     .navbar-nav {
       .nav-item {
         >a {
-          color: set-navbar-text-color($theme-dark-text-color) !important;
+          color: set-navbar-text-color($body-dark-font-color) !important;
 
           i,
           span {
-            color: set-navbar-text-color($theme-dark-text-color) !important;
+            color: set-navbar-text-color($body-dark-font-color) !important;
           }
         }
 

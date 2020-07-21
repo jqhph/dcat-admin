@@ -22,11 +22,6 @@ class Table extends Widget
     protected $rows = [];
 
     /**
-     * @var array
-     */
-    protected $style = [];
-
-    /**
      * @var int
      */
     protected $depth = 0;
@@ -35,12 +30,12 @@ class Table extends Widget
      * Table constructor.
      *
      * @param array $headers
-     * @param array $rows
+     * @param mixed $rows
      * @param array $style
      */
-    public function __construct($headers = [], $rows = [], $style = [])
+    public function __construct($headers = [], $rows = false, $style = [])
     {
-        if ($headers && ! $rows) {
+        if ($headers && $rows === false) {
             $rows = $headers;
             $headers = [];
         }
@@ -49,7 +44,7 @@ class Table extends Widget
         $this->setRows($rows);
         $this->setStyle($style);
 
-        $this->class('table '.implode(' ', (array) $this->style), true);
+        $this->class('table default-table');
     }
 
     /**
@@ -130,7 +125,9 @@ class Table extends Widget
      */
     public function setStyle($style = [])
     {
-        $this->style = $style;
+        if ($style) {
+            $this->class(implode(' ', (array) $style), true);
+        }
 
         return $this;
     }
@@ -145,7 +142,6 @@ class Table extends Widget
         $vars = [
             'headers'    => $this->headers,
             'rows'       => $this->rows,
-            'style'      => $this->style,
             'attributes' => $this->formatHtmlAttributes(),
         ];
 

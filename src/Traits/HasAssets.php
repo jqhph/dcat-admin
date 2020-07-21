@@ -105,12 +105,13 @@ trait HasAssets
 
     /**
      * @param string $script
+     * @param bool   $direct
      *
      * @return void
      */
-    public static function script($script)
+    public static function script($script, bool $direct = false)
     {
-        static::asset()->script($script);
+        static::asset()->script($script, $direct);
     }
 
     /**

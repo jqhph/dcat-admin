@@ -695,7 +695,7 @@ class Show implements Renderable
 
             return view($this->view, $data)->render();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
+            return Admin::makeExceptionHandler()->handle($e);
         }
     }
 

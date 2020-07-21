@@ -387,7 +387,14 @@
       // border-left: 3px solid transparent;
       &:active {
         color: $sidebar-dark-active-color;
+        background: $sidebar-dark-active-bg;
       }
+      &:hover {
+        color: $sidebar-dark-hover-color;
+      }
+    }
+    i {
+      margin-right: .75rem;
     }
 
     // Hover and active states
@@ -395,11 +402,12 @@
     &:hover > .nav-link,
     & > .nav-link:focus  {
       background-color: $sidebar-dark-hover-bg;
-      color: $sidebar-dark-hover-color;
+      //color: $sidebar-dark-hover-color;
     }
 
     > .nav-link.active {
       color: $sidebar-dark-active-color;
+      background: $sidebar-dark-active-bg;
 
       @if $enable-shadows {
         box-shadow: map-get($elevations, 1);
@@ -476,14 +484,14 @@
 }
 
 // colors
-.sidebar-dark-white {
-  .nav-item {
-    & > .nav-link.active {
-      background: rgba($white, .8)!important;
-      box-shadow: none;
-    }
-  }
-}
+//.sidebar-dark-white {
+//  .nav-item {
+//    & > .nav-link.active {
+//      background: rgba($white, .8)!important;
+//      box-shadow: none;
+//    }
+//  }
+//}
 .sidebar-light-primary {
   .nav-item {
     & > .nav-link.active {

@@ -266,7 +266,7 @@ EOT;
 
         return <<<EOF
 <a class="{$this->grid->getRowName()}-edit" data-url="{$this->resource()}/{$this->getKey()}/edit" href="javascript:void(0);">
-    <i class="fa fa-clone grid-action-icon"></i>
+    <i class="feather icon-edit grid-action-icon"></i>
 </a>&nbsp;
 EOF;
     }

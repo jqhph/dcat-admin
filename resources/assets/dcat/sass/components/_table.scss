@@ -9,6 +9,15 @@
   }
 }
 
+.table-text-center {
+  th {
+    text-align: center;
+  }
+  td {
+    text-align: center;
+  }
+}
+
 table.dataTable thead tr {
   background: transparent;
 }
@@ -33,7 +42,7 @@ table.dataTable {
 
 .table td {
   padding: .55rem;
-  height: 62px;
+  //height: 62px;
   line-height: 1.42857;
 }
 
@@ -57,6 +66,9 @@ table.dataTable {
   border: 0!important;
   margin-bottom: 0!important;
   overflow-x: inherit;
+}
+.table-responsive[data-pattern=priority-columns] {
+  overflow-y: auto!important;
 }
 .custom-data-table-header .table-responsive {
   overflow: visible!important;
@@ -101,9 +113,9 @@ table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead 
 /* ------------------- 多表头 --------------------- */
 table.table-bordered.dataTable.complex-headers {
   border-spacing: 0;
+  margin-top: 12px!important;
 
   thead th {
-    text-align: center;
     vertical-align: middle;
     font-size: 1rem!important;
   }
@@ -137,4 +149,25 @@ table.table-bordered.dataTable.complex-headers {
 .table-hover tbody tr:hover {
   color: $font-color;
   background-color: lighten($dark30, 1%);
+}
+
+/*--------------------------------------------------- */
+
+.table.default-table {
+  tr {
+    box-shadow: none!important;
+  }
+
+  td {
+    border-top: 1px solid #f0f4f8!important;
+    border-radius: 0!important;
+  }
+
+  thead th {
+    border-bottom: 2px solid #f0f4f8!important;
+  }
+}
+
+.table.default-table.table-bordered th, .table.default-table.table-bordered td {
+  border: 1px solid #f0f4f8!important;
 }

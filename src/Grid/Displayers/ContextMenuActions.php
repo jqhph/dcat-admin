@@ -12,13 +12,13 @@ class ContextMenuActions extends DropdownActions
     protected function addScript()
     {
         parent::addScript();
-        $script = <<<'JS'
+
+        $script = <<<JS
 (function () {
-    $("body").on("contextmenu", "table#grid-table tr", function(e) {
+    $("body").on("contextmenu", "table#{$this->grid->getTableId()} tr", function(e) {
          $('#grid-context-menu .dropdown-menu').hide();
         
          var menu = $(this).find('td .grid-dropdown-actions .dropdown-menu');
-         console.log(menu.html());
          var index = $(this).index();
          
          if (menu.length) {
@@ -27,7 +27,6 @@ class ContextMenuActions extends DropdownActions
              menu = $('#grid-context-menu .dropdown-menu[index='+index+']');
          }
          
-         var height = 0;
          if (menu.height() > (document.body.clientHeight - e.pageY)) {
             menu.css({left: e.pageX+10, top: e.pageY - menu.height()}).show();
          } else {
@@ -54,8 +53,8 @@ JS;
      */
     public function display($callback = null)
     {
-        Admin::html('<div id="grid-context-menu"></div>');
-        Admin::style('.column-__actions__ {display: none !important;}');
+        Admin::html('<div id="grid-context-menu" class="dropdown" style="display: contents"></div>');
+        Admin::style('.grid__actions__ .dropdown{display: none!important;} th.grid__actions__{display: none!important;} .grid__actions__{width:1px}');
 
         return parent::display($callback);
     }

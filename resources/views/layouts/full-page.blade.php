@@ -20,9 +20,9 @@
 
     {!! admin_section(\AdminSection::HEAD) !!}
 
-    {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
-
     {!! Dcat\Admin\Admin::asset()->headerJsToHtml() !!}
+
+    {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
 
     @yield('head')
 </head>

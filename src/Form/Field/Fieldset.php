@@ -32,7 +32,7 @@ JS;
         </a>
       </span>
     </div>
-    <div class="collapse in" id="{$this->name}">
+    <div class="collapse show" id="{$this->name}">
 HTML;
     }
 
@@ -44,7 +44,7 @@ HTML;
     public function collapsed()
     {
         $script = <<<JS
-$("#{$this->name}").removeClass("in");
+$("#{$this->name}").removeClass("show");
 $(".{$this->name}-title i").toggleClass("fa-angle-double-down fa-angle-double-up");
 JS;
 

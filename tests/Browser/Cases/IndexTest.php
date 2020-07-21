@@ -17,6 +17,7 @@ class IndexTest extends TestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(admin_base_path('/'))
+                ->pause(200)
                 ->assertSeeText('Administrator')
                 ->assertSeeText('Dashboard')
                 ->assertSeeText('Description...')
@@ -36,6 +37,7 @@ class IndexTest extends TestCase
             $browser->visit(admin_base_path('/'))
                 ->within('.main-menu-content', function (Browser $browser) {
                     $browser
+                        ->pause(500)
                         ->clickLink($this->translateMenuTitle('Admin'));
 //                        ->whenTextAvailable($this->translateMenuTitle('Users'), 2)
 //                        ->clickLink($this->translateMenuTitle('Users'))

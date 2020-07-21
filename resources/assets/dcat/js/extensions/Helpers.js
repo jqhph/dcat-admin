@@ -87,11 +87,11 @@ export default class Helpers {
      * @returns {def|boolean}
      */
     has(arr, key) {
-        if (LA.len(arr) < 1) return def;
+        if (this.len(arr) < 1) return def;
         key = String(key).split('.');
 
         for (var i = 0; i < key.length; i++) {
-            if (LA.isset(arr, key[i])) {
+            if (this.isset(arr, key[i])) {
                 arr = arr[key[i]];
             } else {
                 return false;

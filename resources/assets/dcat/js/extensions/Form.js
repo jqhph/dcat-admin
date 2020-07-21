@@ -24,6 +24,8 @@ class Form {
             tabSelector: '.tab-pane',
             // 错误信息模板
             errorTemplate: '<label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {message}</label><br/>',
+            // 是否允许跳转
+            redirect: true,
             // 保存成功后自动跳转
             autoRedirect: false,
             // 自动移除表单错误信息
@@ -100,7 +102,17 @@ class Form {
 
                 Dcat.success(response.message || 'Save succeeded!');
 
-                if (response.redirect === false) {
+                if (typeof response.location !== "undefined") {
+                    return setTimeout(function () {
+                        if (response.location) {
+                            location.href = response.location;
+                        } else {
+                            location.reload();
+                        }
+                    }, 1500)
+                }
+
+                if (response.redirect === false || ! options.redirect) {
                     return;
                 }
 

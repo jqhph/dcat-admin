@@ -164,7 +164,7 @@ JS;
         $active = empty(array_filter($value)) ? '' : 'active';
 
         return <<<EOT
-&nbsp;<span class="dropdown" style="position:absolute">
+&nbsp;<span class="dropdown">
 <form action="{$this->formAction()}" pjax-container style="display: inline-block;">
     <a href="javascript:void(0);" class="{$active}" data-toggle="dropdown">
         <i class="feather icon-filter"></i>

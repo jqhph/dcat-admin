@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 
 /**
  * Class Admin.
@@ -35,7 +36,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '1.4.0';
+    const VERSION = '1.6.0';
 
     /**
      * @var array
@@ -133,6 +134,7 @@ class Admin
      * @param Closure $callable
      *
      * @return Content
+     * @deprecated
      */
     public static function content(Closure $callable = null)
     {
@@ -169,6 +171,14 @@ class Admin
         $builder && $builder($navbar);
 
         return $navbar;
+    }
+
+    /**
+     * 禁用pjax.
+     */
+    public static function disablePjax()
+    {
+        static::$pjaxContainerId = null;
     }
 
     /**
@@ -248,7 +258,10 @@ class Admin
                 /* @var \Illuminate\Routing\Router $router */
                 $router->post('action', 'HandleActionController@handle')->name('action');
                 $router->post('form', 'HandleFormController@handle')->name('form');
+                $router->post('form/upload', 'HandleFormController@uploadFile')->name('form.upload');
+                $router->post('form/destroy-file', 'HandleFormController@destroyFile')->name('form.destroy-file');
                 $router->post('value', 'ValueController@handle')->name('value');
+                $router->get('render', 'RenderableController@handle')->name('render');
                 $router->post('tinymce/upload', 'TinymceController@upload')->name('tinymce.upload');
                 $router->post('editor-md/upload', 'EditorMDController@upload')->name('editor-md.upload');
             });
@@ -486,6 +499,8 @@ class Admin
         static::$jsVariables['token'] = csrf_token();
         static::$jsVariables['lang'] = __('admin.client') ?: [];
         static::$jsVariables['colors'] = static::color()->all();
+        static::$jsVariables['dark_mode'] = Str::contains(config('admin.layout.body_class'), 'dark-mode');
+        static::$jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark');
 
         return json_encode(static::$jsVariables);
     }

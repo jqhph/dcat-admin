@@ -84,3 +84,15 @@ body.sidebar-collapse {
 .nav-pills .nav-link:not(.active):hover {
   color: $font-color;
 }
+
+[class*=sidebar-dark-] {
+  .navbar-header {
+    padding: 0 1rem 0;
+    height: 61px;
+    background: $body-darker-color;
+  }
+
+  .navbar-header .navbar-brand {
+    margin: 8px 0;
+  }
+}

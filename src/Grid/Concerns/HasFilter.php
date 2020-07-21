@@ -85,6 +85,8 @@ trait HasFilter
         foreach ($this->beforeApplyFilterCallbacks as $callback) {
             $callback($this);
         }
+
+        $this->beforeApplyFilterCallbacks = [];
     }
 
     /**

@@ -25,6 +25,8 @@ class Field implements Renderable
 
     const FILE_DELETE_FLAG = '_file_del_';
 
+    const FIELD_CLASS_PREFIX = 'field_';
+
     /**
      * Element id.
      *
@@ -77,7 +79,7 @@ class Field implements Renderable
     /**
      * Form element name.
      *
-     * @var string
+     * @var string|array
      */
     protected $elementName = [];
 
@@ -161,7 +163,7 @@ class Field implements Renderable
     /**
      * Key for errors.
      *
-     * @var mixed
+     * @var string|array
      */
     protected $errorKey;
 
@@ -261,6 +263,25 @@ class Field implements Renderable
     }
 
     /**
+     * @param string|null $relationName
+     * @param string      $relationPrimaryKey
+     *
+     * @return $this
+     */
+    public function setNestedFormRelation(?string $relationName, $relationPrimaryKey)
+    {
+        if (is_array($this->id)) {
+            $this->id = array_map(function ($v) {
+                return $v.NestedForm::DEFAULT_KEY_NAME;
+            }, $this->id);
+        } else {
+            $this->id .= NestedForm::DEFAULT_KEY_NAME;
+        }
+
+        return $this;
+    }
+
+    /**
      * Format the label value.
      *
      * @param array $arguments
@@ -315,13 +336,13 @@ class Field implements Renderable
     /**
      * Set form element name.
      *
-     * @param string $name
+     * @param string|array $name
      *
-     * @return $this|string
+     * @return $this
      *
      * @author Edwin Hui
      */
-    public function setElementName(string $name)
+    public function setElementName($name)
     {
         $this->elementName = $name;
 
@@ -506,11 +527,11 @@ class Field implements Renderable
     /**
      * Set key for error message.
      *
-     * @param string $key
+     * @param string|array $key
      *
-     * @return $this|string
+     * @return $this
      */
-    public function setErrorKey(string $key)
+    public function setErrorKey($key)
     {
         $this->errorKey = $key;
 
@@ -717,6 +738,16 @@ class Field implements Renderable
     }
 
     /**
+     * @param string $key
+     *
+     * @return mixed|null
+     */
+    public function getAttribute(string $key)
+    {
+        return $this->attributes[$key] ?? null;
+    }
+
+    /**
      * Specifies a regular expression against which to validate the value of the input.
      *
      * @param string $error
@@ -905,9 +936,11 @@ class Field implements Renderable
     public function getElementClass()
     {
         if (! $this->elementClass) {
-            $name = $this->elementName ?: $this->formatName($this->column);
+            $name = $this->getElementName();
 
-            $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
+            $this->elementClass = array_map(function ($v) {
+                return static::FIELD_CLASS_PREFIX.$v;
+            }, (array) str_replace(['[', ']'], '_', $name));
         }
 
         return $this->elementClass;

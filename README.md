@@ -10,11 +10,12 @@
 <a href="http://www.dcatadmin.com/">文档</a> |
 <a href="https://jqhph.github.io/dcat-admin/demo.html">Demo</a> |
 <a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
+<a href="https://gitee.com/jqhph/dcat-admin-demo">Demo源码 (码云)</a> |
 <a href="#extensions">扩展</a>
 </p>
 
 <p align="center">
-    <a href="https://github.com/jqhph/dcat-admin/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-7389D8.svg?style=flat" ></a>
+    <a href="https://github.com/jqhph/dcat-admin/blob/master/LICENSE"><a href="https://opencollective.com/dcat-admin" alt="Financial Contributors on Open Collective"><img src="https://opencollective.com/dcat-admin/all/badge.svg?label=financial+contributors" /></a> <img src="https://img.shields.io/badge/license-MIT-7389D8.svg?style=flat" ></a>
     <a href="https://travis-ci.org/jqhph/dcat-admin">
         <img src="https://travis-ci.org/jqhph/dcat-admin.svg?branch=master" alt="Build Status">
     </a>
@@ -29,18 +30,15 @@
 
 ## 截图
 
-![](https://cdn.learnku.com/uploads/images/202004/24/38389/Kj6fdUQEzF.png!large)
+![](https://cdn.learnku.com/uploads/images/202005/24/38389/fnbgQWK115.png!large)
 
-![](https://cdn.learnku.com/uploads/images/202004/24/38389/ISATQMYO0i.png!large)
-
-![](https://cdn.learnku.com/uploads/images/202005/06/38389/p1lAW4NpQi.png!large)
+![](https://cdn.learnku.com/uploads/images/202006/13/38389/LMpJ0aqPEv.png!large)
 
 ![](https://cdn.learnku.com/uploads/images/202004/24/38389/GBkt9jYnW0.png!large)
 
-![](https://cdn.learnku.com/uploads/images/202004/17/38389/MUGJxDwrSn.png!large)
+![](https://cdn.learnku.com/uploads/images/202007/12/38389/DUzCgtpPi8.png!large)
 
-![](https://cdn.learnku.com/uploads/images/202004/24/38389/bP75OeDbWH.png!large)
-
+![](https://cdn.learnku.com/uploads/images/202007/12/38389/fjSNhbtg6f.png!large)
 
 ## 功能特性
 
@@ -147,6 +145,36 @@ php artisan admin:install
 + [bootstrap-validator](https://github.com/1000hz/bootstrap-validator)
 + [Google map](https://www.google.com/maps)
 + [Tencent map](http://lbs.qq.com/)
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/jqhph/dcat-admin/graphs/contributors"><img src="https://opencollective.com/dcat-admin/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/dcat-admin/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/dcat-admin"><img src="https://opencollective.com/dcat-admin/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/dcat-admin/contribute)]
+
+<a href="https://opencollective.com/dcat-admin/organization/0/website"><img src="https://opencollective.com/dcat-admin/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/1/website"><img src="https://opencollective.com/dcat-admin/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/2/website"><img src="https://opencollective.com/dcat-admin/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/3/website"><img src="https://opencollective.com/dcat-admin/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/4/website"><img src="https://opencollective.com/dcat-admin/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/5/website"><img src="https://opencollective.com/dcat-admin/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/6/website"><img src="https://opencollective.com/dcat-admin/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/7/website"><img src="https://opencollective.com/dcat-admin/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/8/website"><img src="https://opencollective.com/dcat-admin/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/9/website"><img src="https://opencollective.com/dcat-admin/organization/9/avatar.svg"></a>
 
 ## License
 ------------

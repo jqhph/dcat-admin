@@ -60,7 +60,7 @@ JS;
      */
     protected function prepareInputValue($value)
     {
-        return (int) $value;
+        return empty($value) ? 0 : $value;
     }
 
     /**

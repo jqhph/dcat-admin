@@ -25,8 +25,6 @@ class File extends Field implements UploadFieldInterface
 
     protected $containerId;
 
-    protected $relationName;
-
     /**
      * @param string $column
      * @param array  $arguments
@@ -107,29 +105,19 @@ class File extends Field implements UploadFieldInterface
     }
 
     /**
-     * 设置字段的关联关系（在一/多对多表单中使用）.
-     *
-     * @param string|null $name
+     * @param string|null $relationName
+     * @param string      $relationPrimaryKey
      *
      * @return $this
      */
-    public function setRelation(?string $name, $key)
+    public function setNestedFormRelation(?string $relationName, $relationPrimaryKey)
     {
-        $this->relationName = $name;
-        $this->options['formData']['_relation'] = [$name, $key];
+        $this->options['formData']['_relation'] = [$relationName, $relationPrimaryKey];
 
         $this->containerId .= NestedForm::DEFAULT_KEY_NAME;
         $this->id .= NestedForm::DEFAULT_KEY_NAME;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRelation()
-    {
-        return $this->relationName;
     }
 
     /**
@@ -188,8 +176,9 @@ class File extends Field implements UploadFieldInterface
         $this->setUpScript();
 
         $this->addVariables([
-            'fileType'    => $this->options['isImage'] ? '' : 'file',
-            'containerId' => $this->containerId,
+            'fileType'      => $this->options['isImage'] ? '' : 'file',
+            'containerId'   => $this->containerId,
+            'showUploadBtn' => ($this->options['autoUpload'] ?? false) ? false : true,
         ]);
 
         return parent::render();
@@ -199,25 +188,18 @@ class File extends Field implements UploadFieldInterface
     {
         $newButton = trans('admin.uploader.add_new_media');
         $options = JavaScript::format($this->options);
-        $hasManyKey = NestedForm::DEFAULT_KEY_NAME;
 
         $this->script = <<<JS
 (function () {
     var uploader, 
-    newPage, 
-    cID = '#{$this->containerId}',
-    ID = '#{$this->id}',
-    hasManyKey = '{$hasManyKey}',
-    options = {$options};
+        newPage, 
+        cID = replaceNestedFormIndex('#{$this->containerId}'),
+        ID = replaceNestedFormIndex('#{$this->id}'),
+        options = {$options};
 
-    if (typeof nestedIndex !== "undefined") {
-        cID = cID.replace(hasManyKey, nestedIndex);
-        ID = ID.replace(hasManyKey, nestedIndex);
-    }
+    init();
 
-    build();
-
-    function build() {
+    function init() {
         var opts = $.extend({
             selector: cID,
             addFileButton: cID+' .add-file-button',

@@ -6,6 +6,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 
 /**
@@ -424,5 +425,15 @@ trait HasFieldValidator
         $key = $key ? "{$key}-" : '';
 
         return $this->attribute("data-{$key}error", $error);
+    }
+
+    /**
+     * @param MessageBag $messageBag
+     *
+     * @return MessageBag
+     */
+    public function formatValidatorMessages($messageBag)
+    {
+        return $messageBag;
     }
 }

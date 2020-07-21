@@ -373,10 +373,21 @@ class Tree implements Renderable
             _token: Dcat.token,
             _order: JSON.stringify(serialize)
         },
-        function () {
+        function (data) {
             _this.buttonLoading(false);
-            Dcat.reload();
             Dcat.success('{$saveSucceeded}');
+            
+            if (typeof data.location !== "undefined") {
+                return setTimeout(function () {
+                    if (data.location) {
+                        location.href = data.location;
+                    } else {
+                        location.reload();
+                    }
+                }, 1500)
+            }
+            
+            Dcat.reload();
         });
     });
     
@@ -546,7 +557,7 @@ JS;
 
             return $this->doWrap();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
+            return Admin::makeExceptionHandler()->handle($e);
         }
     }
 

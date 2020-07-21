@@ -8,7 +8,11 @@ use Dcat\Admin\Widgets\Radio as WidgetRadio;
 
 class Radio extends Field
 {
+    use CanCascadeFields;
+
     protected $style = 'primary';
+
+    protected $cascadeEvent = 'change';
 
     /**
      * @param array|\Closure|string $options
@@ -53,13 +57,18 @@ class Radio extends Field
             );
         }
 
+        $this->addCascadeScript();
+
         $radio = WidgetRadio::make($this->getElementName(), $this->options, $this->style);
 
         if ($this->attributes['disabled'] ?? false) {
             $radio->disable();
         }
 
-        $radio->inline()->check(old($this->column, $this->value()));
+        $radio
+            ->inline()
+            ->check(old($this->column, $this->value()))
+            ->class($this->getElementClassString());
 
         $this->addVariables([
             'radio' => $radio,

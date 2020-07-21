@@ -11,8 +11,6 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
-use Dcat\Admin\Form\Row;
-use Dcat\Admin\Form\Tab;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Widgets\DialogForm;
@@ -82,6 +80,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
  */
 class Form implements Renderable
 {
@@ -90,6 +89,9 @@ class Form implements Renderable
         Concerns\HasEvents,
         Concerns\HasFiles,
         Concerns\HasSteps,
+        Concerns\HandleCascadeFields,
+        Concerns\HasRows,
+        Concerns\HasTabs,
         Macroable {
             __call as macroCall;
         }
@@ -156,6 +158,7 @@ class Form implements Renderable
         'keyValue'       => Field\KeyValue::class,
         'tel'            => Field\Tel::class,
         'markdown'       => Field\Markdown::class,
+        'range'          => Field\Range::class,
     ];
 
     /**
@@ -238,18 +241,6 @@ class Form implements Renderable
     protected $ignored = [];
 
     /**
-     * @var Form\Tab
-     */
-    protected $tab = null;
-
-    /**
-     * Field rows in form.
-     *
-     * @var Row[]
-     */
-    protected $rows = [];
-
-    /**
      * @var bool
      */
     protected $isSoftDeletes = false;
@@ -306,6 +297,7 @@ class Form implements Renderable
         $field->setForm($this);
 
         $this->builder->fields()->push($field);
+        $this->builder->layout()->addField($field);
 
         $width = $this->builder->getWidth();
 
@@ -326,6 +318,20 @@ class Form implements Renderable
     public function field($name = null)
     {
         return $this->builder->field($name);
+    }
+
+    /**
+     * @return Collection|Field[]
+     */
+    public function fields()
+    {
+        $fields = $this->builder->fields();
+
+        if ($steps = $this->builder->stepBuilder()) {
+            $fields = $fields->merge($steps->fields());
+        }
+
+        return $fields;
     }
 
     /**
@@ -485,35 +491,6 @@ class Form implements Renderable
     }
 
     /**
-     * Use tab to split form.
-     *
-     * @param string  $title
-     * @param Closure $content
-     *
-     * @return $this
-     */
-    public function tab($title, Closure $content, $active = false)
-    {
-        $this->getTab()->append($title, $content, $active);
-
-        return $this;
-    }
-
-    /**
-     * Get Tab instance.
-     *
-     * @return Tab
-     */
-    public function getTab()
-    {
-        if (is_null($this->tab)) {
-            $this->tab = new Tab($this);
-        }
-
-        return $this->tab;
-    }
-
-    /**
      * Destroy data entity and remove files.
      *
      * @param $id
@@ -549,7 +526,11 @@ class Form implements Renderable
                 'message' => $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed'),
             ];
         } catch (\Throwable $exception) {
-            $response = Admin::makeExceptionHandler()->handleDestroyException($exception);
+            $response = Admin::makeExceptionHandler()->handle($exception);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
 
             $response = $response ?: [
                 'status'  => false,
@@ -684,6 +665,16 @@ class Form implements Renderable
     public function removeIgnoredFields($input)
     {
         Arr::forget($input, $this->ignored);
+
+        $ignored = $this->fields()->map(function (Field $field) {
+            if ($field instanceof Field\Display || $field->getAttribute('readonly') || $field->getAttribute('disabled')) {
+                return $field->column();
+            }
+        })->filter()->toArray();
+
+        if ($ignored) {
+            Arr::forget($input, $ignored);
+        }
 
         return $input;
     }
@@ -1221,7 +1212,7 @@ class Form implements Renderable
             }
 
             if (($validator instanceof Validator) && ! $validator->passes()) {
-                $failedValidators[] = $validator;
+                $failedValidators[] = [$field, $validator];
             }
         }
 
@@ -1269,7 +1260,7 @@ class Form implements Renderable
     /**
      * Merge validation messages from input validators.
      *
-     * @param \Illuminate\Validation\Validator[] $validators
+     * @param array $validators
      *
      * @return MessageBag
      */
@@ -1277,8 +1268,10 @@ class Form implements Renderable
     {
         $messageBag = new MessageBag();
 
-        foreach ($validators as $validator) {
-            $messageBag = $messageBag->merge($validator->messages());
+        foreach ($validators as $value) {
+            [$field, $validator] = $value;
+
+            $messageBag = $messageBag->merge($field->formatValidatorMessages($validator->messages()));
         }
 
         if ($this->validationMessages) {
@@ -1352,28 +1345,6 @@ class Form implements Renderable
         $this->builder->title($title);
 
         return $this;
-    }
-
-    /**
-     * Add a row in form.
-     *
-     * @param Closure $callback
-     *
-     * @return $this
-     */
-    public function row(Closure $callback)
-    {
-        $this->rows[] = new Row($callback, $this);
-
-        return $this;
-    }
-
-    /**
-     * @return Row[]
-     */
-    public function rows()
-    {
-        return $this->rows;
     }
 
     /**
@@ -1586,7 +1557,7 @@ class Form implements Renderable
 
             return $this->builder->render();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
+            return Admin::makeExceptionHandler()->handle($e);
         }
     }
 
@@ -1630,6 +1601,21 @@ class Form implements Renderable
         $callback($form = $layout->form());
 
         $layout->column($width, $form);
+
+        return $this;
+    }
+
+    /**
+     * @param int|float $width
+     * @param Closure   $callback
+     *
+     * @return $this
+     */
+    public function column($width, \Closure $callback)
+    {
+        $this->builder->layout()->onlyColumn($width, function () use ($callback) {
+            $callback($this);
+        });
 
         return $this;
     }

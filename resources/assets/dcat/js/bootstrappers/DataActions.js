@@ -1,3 +1,4 @@
+import Dropdown from "../../../adminlte/js/Dropdown";
 
 let defaultActions = {
     // 刷新按钮
@@ -99,6 +100,37 @@ let defaultActions = {
         $('.box [data-action="remove"]').click(function () {
             $(this).closest(".box").removeClass().slideUp("fast");
         });
+    },
+
+    dropdown: function () {
+        function hide() {
+            $('.dropdown-menu').removeClass('show')
+        }
+        $(document).off('click', document, hide)
+        $(document).on('click', hide);
+
+        function toggle(event) {
+            var $this = $(this);
+
+            $('.dropdown-menu').each(function () {
+                if ($this.next()[0] !== this) {
+                    $(this).removeClass('show');
+                }
+            });
+
+            $this.Dropdown('toggleSubmenu')
+        }
+
+        function fix(event) {
+            event.preventDefault()
+            event.stopPropagation()
+            // console.log(666);
+            setTimeout(function() {
+                $(this).Dropdown('fixPosition')
+            }, 1)
+        }
+
+        $('[data-toggle="dropdown"]').off('click').on("click", toggle).on("click", fix);
     }
 };
 

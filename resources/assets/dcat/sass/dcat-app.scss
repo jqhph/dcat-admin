@@ -15,6 +15,8 @@
 // sweetalert弹窗
 @import "./sweetalert/sweetalert2";
 
+@import "./mixins/scrollbar";
+
 html {
   font-size: 14px;
   height: 100%;
@@ -29,6 +31,14 @@ html body {
 .content-wrapper {
   background: $body-bg;
 }
+
+// 滚动条
+@include scrollbar('body');
+@include scrollbar('.table-main');
+@include scrollbar('.table-responsive[data-pattern=priority-columns]');
+@include scrollbar('.select2-container--default .select2-results>.select2-results__options');
+@include scrollbar('.layui-layer-page .layui-layer-content');
+@include scrollbar('.iconpicker .iconpicker-items');
 
 // 字体
 body, .header-navbar, .navigation, .breadcrumb, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -101,3 +111,6 @@ li {
 @import "./components/modal";
 // icon picker
 @import "./components/icon-picker";
+
+// dark mode
+@import "./theme/dark";

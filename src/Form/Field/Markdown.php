@@ -144,21 +144,15 @@ class Markdown extends Field
             $this->options['imageUploadURL'] = $this->defaultImageUploadUrl();
         }
 
-        $this->options['onload'] = JavaScript::make(
-            <<<JS
-function () {
-    this.setMarkdown($('#{$this->id}-template').html());
-}
-JS
-        );
-
         if (config('app.locale') !== 'zh-CN') {
             Admin::js($this->language);
         }
 
         $opts = JavaScript::format($this->options);
 
-        $this->script = "editormd(\"{$this->id}\", {$opts});";
+        $this->script = <<<JS
+editormd(replaceNestedFormIndex("{$this->id}"), {$opts});
+JS;
     }
 
     /**

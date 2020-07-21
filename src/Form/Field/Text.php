@@ -9,6 +9,15 @@ class Text extends Field
 {
     use PlainInput;
 
+    public function __construct($column, $arguments = [])
+    {
+        if (static::class === self::class) {
+            $this->prepend('<i class="feather icon-edit-2"></i>');
+        }
+
+        parent::__construct($column, $arguments);
+    }
+
     /**
      * Render this filed.
      *
@@ -18,8 +27,7 @@ class Text extends Field
     {
         $this->initPlainInput();
 
-        $this->prepend('<i class="feather icon-edit-2"></i>')
-            ->defaultAttribute('type', 'text')
+        $this->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id)
             ->defaultAttribute('name', $this->getElementName())
             ->defaultAttribute('value', old($this->column, $this->value()))

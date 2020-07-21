@@ -6,6 +6,7 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\ViewErrorBag;
 
@@ -130,9 +131,7 @@ class Content implements Renderable
      */
     public function full()
     {
-        $this->view = 'admin::layouts.full-content';
-
-        return $this->withConfig('blank_page', true);
+        return $this->view('admin::layouts.full-content');
     }
 
     /**
@@ -161,6 +160,8 @@ class Content implements Renderable
      * @param bool $value
      *
      * @return $this
+     *
+     * @deprecated
      */
     public function perfectScrollbar(bool $value = true)
     {
@@ -408,7 +409,7 @@ class Content implements Renderable
     /**
      * 页面滚动条优化.
      */
-    protected function makePerfectScrollbar()
+    protected function addPerfectScrollbarScript()
     {
         if (! $this->usingPerfectScrollbar) {
             return;
@@ -505,6 +506,10 @@ JS
             }
         }
 
+        if ($data['body_class'] && Str::contains($data['body_class'], 'dark-mode')) {
+            $data['sidebar_dark'] = true;
+        }
+
         return [
             'theme' => $data['theme'],
             'sidebar_collapsed' => $data['sidebar_collapsed'],
@@ -530,7 +535,7 @@ JS
 
         $this->callComposed();
 
-        $this->makePerfectScrollbar();
+        $this->addPerfectScrollbarScript();
 
         return view($this->view, $variables)->render();
     }

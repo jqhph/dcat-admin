@@ -36,7 +36,7 @@
             cls = column.replace(/[\[\]]*/g, '') + (Math.random().toString(36).substr(2)),
             layer = options.window.layer,
             $input = getQueryDomObject(options.displayerContainer) || $(options.selector).parents('.select-resource').find('div[name="' + column + '"]'),
-            $hidden = getQueryDomObject(options.hiddenInput) || $('input[name="' + column + '"]'),
+            $hidden = getQueryDomObject(options.hiddenInput) || $input.parents('.input-group').find('input[type="hidden"]'),
             tagClearClass = options.clearOneClass || (cls + '-tag-clear-button'),
             clearClass = options.clearAllClass || (cls + '-clear-button'),
             maxItem = options.maxItem,
@@ -61,6 +61,10 @@
                 layerIdx = $layerWin = null;
             });
 
+            if (options.source.indexOf('?') === -1) {
+                options.source += '?'
+            }
+
             layerIdx = layer.open({
                 type: 2,
                 title: options.title,
@@ -71,7 +75,7 @@
                 scrollbar: false,
                 skin: 'select-resource',
                 area: formatArea(options.area),
-                content: `${options.source}?${options.queryName}=1`,
+                content: `${options.source}${options.queryName}=1`,
                 btn: options.showCloseButton ? [options.closeButtonText] : null,
                 success: function (layero) {
                     iframeWin = options.window[layero.find('iframe')[0]['name']];

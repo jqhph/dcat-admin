@@ -92,7 +92,7 @@ abstract class RowAction extends GridAction
     {
         $class = $class ?: static::class;
 
-        $key = $class.'-'.$this->getKey();
+        $key = $prefix.'-'.$class.'-'.$this->getKey();
 
         if (! isset(static::$selectors[$key])) {
             static::$selectors[$key] = uniqid($prefix);

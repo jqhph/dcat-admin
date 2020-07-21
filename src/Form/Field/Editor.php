@@ -163,7 +163,13 @@ class Editor extends Field
         return <<<JS
 function (editor) {
     editor.on('Change', function(e) {
-      $('{$this->getElementClassSelector()}').val(e.level.content);
+        var content = e.level.content;
+        if (! content) {
+            content = e.level.fragments;
+            content = content.length && content.join('');
+        }
+        
+      $(replaceNestedFormIndex('#{$this->id}')).val(String(content).replace('<p><br data-mce-bogus="1"></p>', '').replace('<p><br></p>', ''));
     });
 }
 JS;
@@ -175,7 +181,13 @@ JS;
     public function render()
     {
         $this->script = <<<JS
-    tinymce.init({$this->formatOptions()})
+(function () {
+    var opts = {$this->formatOptions()};
+
+    opts.selector = replaceNestedFormIndex(opts.selector);
+    
+    tinymce.init(opts)
+})();
 JS;
 
         return parent::render();

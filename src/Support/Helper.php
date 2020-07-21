@@ -109,14 +109,14 @@ class Helper
             return $value;
         }
 
-        if ($value instanceof Grid) {
-            return (string) $value->render();
-        }
-
         if ($value instanceof \Closure) {
-            $newThis && $value = $value->bindTo($newThis);
+            $newThis && ($value = $value->bindTo($newThis));
 
             $value = $value(...(array) $params);
+        }
+
+        if ($value instanceof Grid) {
+            return (string) $value->render();
         }
 
         if ($value instanceof Renderable) {
@@ -640,5 +640,74 @@ class Helper
         }
 
         return (string) $value1 === (string) $value2;
+    }
+
+    /**
+     * Limit the number of characters in a string.
+     *
+     * @param string $value
+     * @param int $limit
+     * @param string $end
+     * @return string
+     */
+    public static function strLimit($value, $limit = 100, $end = '...')
+    {
+        if (mb_strlen($value, 'UTF-8') <= $limit) {
+            return $value;
+        }
+
+        return rtrim(mb_substr($value, 0, $limit, 'UTF-8')).$end;
+    }
+
+    /**
+     * 获取类名或对象的文件路径.
+     *
+     * @param string|object $class
+     *
+     * @return string
+     *
+     * @throws \ReflectionException
+     */
+    public static function guessClassFileName($class)
+    {
+        if (is_object($class)) {
+            $class = get_class($class);
+        }
+
+        if (class_exists($class)) {
+            return (new \ReflectionClass($class))->getFileName();
+        }
+
+        $class = trim($class, '\\');
+
+        $composer = Composer::parse(base_path('composer.json'));
+
+        $map = collect($composer->autoload['psr-4'] ?? [])->mapWithKeys(function ($path, $namespace) {
+            $namespace = trim($namespace, '\\').'\\';
+
+            return [$namespace => [$namespace, $path]];
+        })->sortBy(function ($_, $namespace) {
+            return strlen($namespace);
+        }, SORT_REGULAR, true);
+
+        $prefix = explode($class, '\\')[0];
+
+        if ($map->isEmpty()) {
+            if (Str::startsWith($class, 'App\\')) {
+                $values = ['App\\', 'app/'];
+            }
+        } else {
+            $values = $map->filter(function ($_, $k) use ($class) {
+                return Str::startsWith($class, $k);
+            })->first();
+        }
+
+        if (empty($values)) {
+            $values = [$prefix.'\\', self::slug($prefix).'/'];
+        }
+
+        [$namespace, $path] = $values;
+
+        return base_path(str_replace([$namespace, '\\'], [$path, '/'], $class)).'.php';
     }
 }

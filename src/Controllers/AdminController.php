@@ -57,7 +57,7 @@ class AdminController extends Controller
     public function index(Content $content)
     {
         if (request(IFrameGrid::QUERY_NAME)) {
-            return $content->perfectScrollbar()->body($this->iFrameGrid());
+            return $content->body($this->iFrameGrid());
         }
 
         return $content

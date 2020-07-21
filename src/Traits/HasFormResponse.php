@@ -15,20 +15,47 @@ trait HasFormResponse
      * @param $message
      * @param null $redirect
      * @param bool $status
+     * @param array $options
      *
      * @return bool|\Illuminate\Http\JsonResponse
      */
-    public function ajaxResponse(?string $message, ?string $redirect = null, bool $status = true)
-    {
+    public function ajaxResponse(
+        ?string $message,
+        ?string $redirect = null,
+        bool $status = true,
+        array $options = []
+    ) {
         if ($this->isAjaxRequest()) {
+            $location = $options['location'] ?? false;
+            $urlKey = $location ? 'location' : 'redirect';
+
             return response()->json([
                 'status'   => $status,
                 'message'  => $message,
-                'redirect' => $redirect ? admin_url($redirect) : '',
+                $urlKey    => $redirect ? admin_url($redirect) : '',
             ]);
         }
 
         return false;
+    }
+
+    /**
+     * Send a location redirect response.
+     *
+     * @param string|null $message
+     * @param string|null $url
+     * @param bool        $status
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function location($url = null, $options = [])
+    {
+        if (is_string($options)) {
+            $options = ['message' => $options];
+        }
+        $options['location'] = true;
+
+        return $this->redirect($url, $options);
     }
 
     /**
@@ -110,13 +137,18 @@ trait HasFormResponse
     /**
      * Get redirect response.
      *
-     * @param string       $url
+     * @param string|array $url
      * @param array|string $options
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function redirect(?string $url, $options = null)
+    public function redirect($url = null, $options = null)
     {
+        if (is_array($url)) {
+            $options = $url;
+            $url = null;
+        }
+
         if (is_string($options)) {
             $message = $options;
             $options = [];
@@ -129,16 +161,16 @@ trait HasFormResponse
         if ($this->isAjaxRequest()) {
             $message = $message ?: trans('admin.save_succeeded');
 
-            return $this->ajaxResponse($message, $url, $status);
+            return $this->ajaxResponse($message, $url, $status, $options);
         }
 
-        $status = (int) ($options['status_code'] ?? 302);
+        $statusCode = (int) ($options['status_code'] ?? 302);
 
         if ($message) {
-            admin_toastr($message);
+            admin_toastr($message, $status ? 'success' : 'error');
         }
 
-        return redirect(admin_url($url), $status);
+        return $url ? redirect(admin_url($url), $statusCode) : redirect()->back($statusCode);
     }
 
     /**
