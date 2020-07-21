@@ -843,4 +843,28 @@ body.dark-mode {
   .table-fixed-right {
     box-shadow: -5px 0 5px -5px rgba(0,0,0,.24);
   }
+
+  // ------- sidebar
+  [class*=sidebar-dark-] {
+    background-color: $body-dark-color;
+
+    .navbar-header {
+      background: $body-darker-color;
+    }
+
+    .nav-sidebar > .nav-item > .nav-treeview {
+      background: transparent;
+    }
+
+    .nav-sidebar > .nav-item > .nav-link.active,
+    .nav-treeview > .nav-item > .nav-link.active,
+    .nav-treeview > .nav-item > .nav-link.active:hover,
+    .nav-treeview > .nav-item > .nav-link.active:focus {
+      background: $body-darker-color;
+    }
+
+    .nav-treeview.nav .nav-item .nav-link.active {
+      padding: 10px 10px 10px 15px !important;
+    }
+  }
 }
