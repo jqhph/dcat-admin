@@ -282,8 +282,7 @@ $.ajax({$ajaxOptions}).done(function(data) {
       var value = select.data('value') + '';
       
       if (value) {
-        value = value.split(',');
-        select.select2('val', value);
+        select.val(value.split(',')).trigger("change")
       }
   });
 });
