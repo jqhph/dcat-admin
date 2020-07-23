@@ -232,6 +232,11 @@ body:not(.dark-mode) {
     table.custom-data-table.dataTable tbody tr {
       box-shadow: none;
     }
+
+    .quick-create td {
+      background: #f7f7f9 !important;
+      border-radius: 0;
+    }
   }
 }
 
