@@ -174,6 +174,7 @@ class Grid
         'show_row_selector'      => true,
         'show_create_button'     => true,
         'show_bordered'          => false,
+        'table_collapse'         => false,
         'show_toolbar'           => true,
         'create_mode'            => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'       => ['700px', '670px'],
@@ -579,6 +580,18 @@ class Grid
     public function withBorder(bool $value = true)
     {
         $this->options['show_bordered'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function tableCollapse(bool $value = true)
+    {
+        $this->options['table_collapse'] = $value;
 
         return $this;
     }

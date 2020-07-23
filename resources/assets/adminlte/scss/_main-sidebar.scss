@@ -17,17 +17,17 @@
 
   .nav .nav-item .nav-link {
     padding: 10px 10px 10px 15px!important;
-    margin-right: 0;
+    //margin-right: .5rem;
   }
 
   .nav-treeview.nav {
     .nav-item .nav-link {
       padding: 7px 10px 7px 15px!important;
-      margin-right: 0;
+      //margin-right: 0;
     }
 
     .nav-item .nav-link.active {
-      padding: 10px 10px 10px 15px!important;
+      padding: 8px 10px 8px 15px!important;
     }
   }
 }

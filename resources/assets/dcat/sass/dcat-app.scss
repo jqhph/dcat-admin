@@ -35,7 +35,7 @@ html body {
 // 滚动条
 @include scrollbar('body');
 @include scrollbar('.table-main');
-@include scrollbar('.table-responsive[data-pattern=priority-columns]');
+@include scrollbar('.table-responsive');
 @include scrollbar('.select2-container--default .select2-results>.select2-results__options');
 @include scrollbar('.layui-layer-page .layui-layer-content');
 @include scrollbar('.iconpicker .iconpicker-items');
@@ -114,5 +114,3 @@ li {
 
 // dark mode
 @import "./theme/dark";
-
-@import "./skins/2nd";
