@@ -342,7 +342,7 @@ body.dark-mode {
   // ------ table
   @include dark-scrollbar('.table-responsive[data-pattern=priority-columns]');
 
-  table.dataTable {
+  .table-wrapper {
     margin-top: 12px!important;
   }
 
@@ -836,12 +836,12 @@ body.dark-mode {
   // ------- fixed-columns
   @include dark-scrollbar('.table-main');
 
-  .table-fixed-left {
-    box-shadow: 6px 0 5px -5px rgba(0,0,0,.24);
+  .table-fixed-left .table {
+    box-shadow: 6px 0 5px -5px rgba(0,0,0,1);
   }
 
-  .table-fixed-right {
-    box-shadow: -5px 0 5px -5px rgba(0,0,0,.24);
+  .table-fixed-right .table {
+    box-shadow: -5px 0 5px -5px rgba(0,0,0,1);
   }
 
   // ------- sidebar
