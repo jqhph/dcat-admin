@@ -480,7 +480,7 @@ class HasMany extends Field
          * {count} is increment number of current sub form count.
          */
         $script = <<<JS
-(function () {
+setTimeout(function () {
     var nestedIndex = 0;
     
     {$this->makeReplaceNestedIndexScript()}
@@ -500,7 +500,7 @@ $('#has-many-{$this->column}').on('click', '.remove', function () {
     $(this).closest('.has-many-{$this->column}-form').hide();
     $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
 });
-})();
+}, 1)
 JS;
 
         Admin::script($script);
