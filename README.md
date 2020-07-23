@@ -30,9 +30,9 @@
 
 ## 截图
 
-![](https://cdn.learnku.com/uploads/images/202007/23/38389/xgDn5TmYgV.png!large)
+![](https://cdn.learnku.com/uploads/images/202007/24/38389/4bCfBdtvq5.png!large)
 
-![](https://cdn.learnku.com/uploads/images/202007/23/38389/sPbaHyzKHQ.png!large)
+![](https://cdn.learnku.com/uploads/images/202007/24/38389/35KJXfVXib.png!large)
 
 ![](https://cdn.learnku.com/uploads/images/202004/24/38389/GBkt9jYnW0.png!large)
 
