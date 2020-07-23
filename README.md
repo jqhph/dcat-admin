@@ -30,13 +30,15 @@
 
 ## 截图
 
-![](https://cdn.learnku.com/uploads/images/202005/24/38389/fnbgQWK115.png!large)
+![](https://cdn.learnku.com/uploads/images/202007/23/38389/xgDn5TmYgV.png!large)
 
-![](https://cdn.learnku.com/uploads/images/202006/13/38389/LMpJ0aqPEv.png!large)
+![](https://cdn.learnku.com/uploads/images/202007/23/38389/sPbaHyzKHQ.png!large)
 
 ![](https://cdn.learnku.com/uploads/images/202004/24/38389/GBkt9jYnW0.png!large)
 
 ![](https://cdn.learnku.com/uploads/images/202007/12/38389/DUzCgtpPi8.png!large)
+
+![](https://cdn.learnku.com/uploads/images/202007/23/38389/sdgD7s9DP4.png!large)
 
 ![](https://cdn.learnku.com/uploads/images/202007/12/38389/fjSNhbtg6f.png!large)
 
