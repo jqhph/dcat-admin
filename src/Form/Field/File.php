@@ -78,11 +78,11 @@ class File extends Field implements UploadFieldInterface
 
         $rules = $attributes = [];
 
-        if (! $this->hasRule('required')) {
+        if (! $this->hasRule('required') && ! $requiredIf = $this->getRule('required_if*')) {
             return false;
         }
 
-        $rules[$this->column] = 'required';
+        $rules[$this->column] = $requiredIf ?: 'required';
         $attributes[$this->column] = $this->label;
 
         return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);
