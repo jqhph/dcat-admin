@@ -77,6 +77,7 @@ class File extends Field implements UploadFieldInterface
         }
 
         $rules = $attributes = [];
+        $requiredIf = null;
 
         if (! $this->hasRule('required') && ! $requiredIf = $this->getRule('required_if*')) {
             return false;
