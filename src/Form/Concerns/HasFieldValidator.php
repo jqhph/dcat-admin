@@ -309,7 +309,6 @@ trait HasFieldValidator
         return false;
     }
 
-
     /**
      * @param $rules
      * @param $rule

@@ -174,7 +174,7 @@ class Grid
         'show_row_selector'      => true,
         'show_create_button'     => true,
         'show_bordered'          => false,
-        'table_collapse'         => false,
+        'table_collapse'         => true,
         'show_toolbar'           => true,
         'create_mode'            => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'       => ['700px', '670px'],
@@ -687,12 +687,19 @@ HTML;
     public function option($key, $value = null)
     {
         if (is_null($value)) {
-            return $this->options[$key];
+            return $this->options[$key] ?? null;
         }
 
         $this->options[$key] = $value;
 
         return $this;
+    }
+
+    protected function setUpOptions()
+    {
+        if ($this->options['show_bordered']) {
+            $this->tableCollapse(false);
+        }
     }
 
     /**
@@ -942,6 +949,8 @@ HTML;
             $this->build();
 
             $this->applyFixColumns();
+
+            $this->setUpOptions();
         } catch (\Throwable $e) {
             return Admin::makeExceptionHandler()->handle($e);
         }
