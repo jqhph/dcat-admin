@@ -657,7 +657,7 @@ HTML;
     /**
      * @return void
      */
-    protected function setupSubmitScript()
+    protected function setUpSubmitScript()
     {
         Admin::script(
             <<<JS
@@ -665,9 +665,11 @@ $('#{$this->getElementId()}').form({
     validate: true,
     success: function (data) {
         {$this->buildSuccessScript()}
+        {$this->addSavedScript()}
     },
     error: function (response) {
         {$this->buildErrorScript()}
+        {$this->addErrorScript()}
     }
 });
 JS
@@ -676,6 +678,8 @@ JS
 
     /**
      * @return string|void
+     *
+     * @deprecated 将在2.0版本中废弃，请用 addSavedScript 代替
      */
     protected function buildSuccessScript()
     {
@@ -684,7 +688,23 @@ JS
     /**
      * @return string|void
      */
+    protected function addSavedScript()
+    {
+    }
+
+    /**
+     * @return string|void
+     *
+     * @deprecated 将在2.0版本中废弃，请用 addErrorScript 代替
+     */
     protected function buildErrorScript()
+    {
+    }
+
+    /**
+     * @return string|void
+     */
+    protected function addErrorScript()
     {
     }
 
@@ -737,7 +757,7 @@ JS
         $this->prepareHandler();
 
         if ($this->allowAjaxSubmit()) {
-            $this->setupSubmitScript();
+            $this->setUpSubmitScript();
         }
 
         $tabObj = $this->getTab();
