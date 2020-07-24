@@ -485,7 +485,7 @@ setTimeout(function () {
     
     {$this->makeReplaceNestedIndexScript()}
     
-$('#has-many-{$this->column}').on('click', '.add', function () {
+$('{$this->getContainerElementSelector()}').on('click', '.add', function () {
 
     var tpl = $('template.{$this->column}-tpl');
 
@@ -496,7 +496,7 @@ $('#has-many-{$this->column}').on('click', '.add', function () {
     {$templateScript}
 });
 
-$('#has-many-{$this->column}').on('click', '.remove', function () {
+$('{$this->getContainerElementSelector()}').on('click', '.remove', function () {
     $(this).closest('.has-many-{$this->column}-form').hide();
     $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
 });
@@ -519,7 +519,7 @@ JS;
 
         $script = <<<JS
 (function () {
-    $('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
+    $('{$this->getContainerElementSelector()} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
         var \$navTab = $(this).siblings('a');
         var \$pane = $(\$navTab.attr('href'));
         if( \$pane.hasClass('new') ){
@@ -529,7 +529,7 @@ JS;
         }
         if(\$navTab.closest('li').hasClass('active')){
             \$navTab.closest('li').remove();
-            $('#has-many-{$this->column} > .nav > li:nth-child(1) > a').click();
+            $('{$this->getContainerElementSelector()} > .nav > li:nth-child(1) > a').click();
         }else{
             \$navTab.closest('li').remove();
         }
@@ -538,13 +538,13 @@ JS;
     {$this->makeReplaceNestedIndexScript()}
     
     var nestedIndex = 0;
-    $('#has-many-{$this->column} > .header').off('click', '.add').on('click', '.add', function(){
+    $('{$this->getContainerElementSelector()} > .header').off('click', '.add').on('click', '.add', function(){
         nestedIndex++;
-        var navTabHtml = replaceNestedFormIndex($('#has-many-{$this->column} > template.nav-tab-tpl').html());
-        var paneHtml = replaceNestedFormIndex($('#has-many-{$this->column} > template.pane-tpl').html());
-        $('#has-many-{$this->column} > .nav').append(navTabHtml);
-        $('#has-many-{$this->column} > .tab-content').append(paneHtml);
-        $('#has-many-{$this->column} > .nav > li:last-child a').click();
+        var navTabHtml = replaceNestedFormIndex($('{$this->getContainerElementSelector()} > template.nav-tab-tpl').html());
+        var paneHtml = replaceNestedFormIndex($('{$this->getContainerElementSelector()} > template.pane-tpl').html());
+        $('{$this->getContainerElementSelector()} > .nav').append(navTabHtml);
+        $('{$this->getContainerElementSelector()} > .tab-content').append(paneHtml);
+        $('{$this->getContainerElementSelector()} > .nav > li:last-child a').click();
         {$templateScript}
     });
     
@@ -587,17 +587,17 @@ JS;
     
     {$this->makeReplaceNestedIndexScript()}
     
-    $('#has-many-{$this->column}').on('click', '.add', function () {
+    $('{$this->getContainerElementSelector()}').on('click', '.add', function () {
         var tpl = $('template.{$this->column}-tpl');
     
         nestedIndex++;
-    
+
         var template = replaceNestedFormIndex(tpl.html());
         $('.has-many-{$this->column}-forms').append(template);
         {$templateScript}
     });
     
-    $('#has-many-{$this->column}').on('click', '.remove', function () {
+    $('{$this->getContainerElementSelector()}').on('click', '.remove', function () {
         $(this).closest('.has-many-{$this->column}-form').hide();
         $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
     });
@@ -605,6 +605,14 @@ JS;
 JS;
 
         Admin::script($script);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getContainerElementSelector()
+    {
+        return ".has-many-{$this->column}";
     }
 
     /**
