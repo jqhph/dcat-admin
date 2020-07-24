@@ -114,6 +114,7 @@ table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead 
 table.table-bordered.dataTable.complex-headers {
   border-spacing: 0;
   margin-top: 12px!important;
+  box-shadow: $shadow;
 
   thead th {
     vertical-align: middle;
@@ -226,7 +227,7 @@ body:not(.dark-mode) {
 
     table.custom-data-table.dataTable tbody td {
       border-top: 1px solid $table-border-color;
-      height: 38px;
+      height: 40px;
     }
 
     table.custom-data-table.dataTable tbody tr {
