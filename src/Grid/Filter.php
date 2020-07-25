@@ -26,6 +26,7 @@ use Dcat\Admin\Grid\Filter\NotIn;
 use Dcat\Admin\Grid\Filter\Scope;
 use Dcat\Admin\Grid\Filter\StartWith;
 use Dcat\Admin\Grid\Filter\Where;
+use Dcat\Admin\Grid\Filter\WhereBetween;
 use Dcat\Admin\Grid\Filter\Year;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
@@ -37,27 +38,28 @@ use Illuminate\Support\Str;
 /**
  * Class Filter.
  *
- * @method Equal     equal($column, $label = '')
- * @method NotEqual  notEqual($column, $label = '')
- * @method Like      like($column, $label = '')
- * @method Ilike     ilike($column, $label = '')
- * @method StartWith startWith($column, $label = '')
- * @method EndWith   endWith($column, $label = '')
- * @method Gt        gt($column, $label = '')
- * @method Lt        lt($column, $label = '')
- * @method Ngt       ngt($column, $label = '')
- * @method Nlt       nlt($column, $label = '')
- * @method Between   between($column, $label = '')
- * @method In        in($column, $label = '')
- * @method NotIn     notIn($column, $label = '')
- * @method Where     where($colum, $callback, $label = '')
- * @method Date      date($column, $label = '')
- * @method Day       day($column, $label = '')
- * @method Month     month($column, $label = '')
- * @method Year      year($column, $label = '')
- * @method Hidden    hidden($name, $value)
- * @method Group     group($column, $builder = null, $label = '')
- * @method Newline   newline()
+ * @method Equal        equal($column, $label = '')
+ * @method NotEqual     notEqual($column, $label = '')
+ * @method Like         like($column, $label = '')
+ * @method Ilike        ilike($column, $label = '')
+ * @method StartWith    startWith($column, $label = '')
+ * @method EndWith      endWith($column, $label = '')
+ * @method Gt           gt($column, $label = '')
+ * @method Lt           lt($column, $label = '')
+ * @method Ngt          ngt($column, $label = '')
+ * @method Nlt          nlt($column, $label = '')
+ * @method Between      between($column, $label = '')
+ * @method In           in($column, $label = '')
+ * @method NotIn        notIn($column, $label = '')
+ * @method Where        where($colum, $callback, $label = '')
+ * @method WhereBetween whereBetween($colum, $callback, $label = '')
+ * @method Date         date($column, $label = '')
+ * @method Day          day($column, $label = '')
+ * @method Month        month($column, $label = '')
+ * @method Year         year($column, $label = '')
+ * @method Hidden       hidden($name, $value)
+ * @method Group        group($column, $builder = null, $label = '')
+ * @method Newline      newline()
  */
 class Filter implements Renderable
 {
@@ -75,27 +77,28 @@ class Filter implements Renderable
      * @var array
      */
     protected static $defaultFilters = [
-        'equal'     => Equal::class,
-        'notEqual'  => NotEqual::class,
-        'ilike'     => Ilike::class,
-        'like'      => Like::class,
-        'startWith' => StartWith::class,
-        'endWith'   => EndWith::class,
-        'gt'        => Gt::class,
-        'lt'        => Lt::class,
-        'ngt'       => Ngt::class,
-        'nlt'       => Nlt::class,
-        'between'   => Between::class,
-        'group'     => Group::class,
-        'where'     => Where::class,
-        'in'        => In::class,
-        'notIn'     => NotIn::class,
-        'date'      => Date::class,
-        'day'       => Day::class,
-        'month'     => Month::class,
-        'year'      => Year::class,
-        'hidden'    => Hidden::class,
-        'newline'   => Newline::class,
+        'equal'        => Equal::class,
+        'notEqual'     => NotEqual::class,
+        'ilike'        => Ilike::class,
+        'like'         => Like::class,
+        'startWith'    => StartWith::class,
+        'endWith'      => EndWith::class,
+        'gt'           => Gt::class,
+        'lt'           => Lt::class,
+        'ngt'          => Ngt::class,
+        'nlt'          => Nlt::class,
+        'between'      => Between::class,
+        'group'        => Group::class,
+        'where'        => Where::class,
+        'whereBetween' => WhereBetween::class,
+        'in'           => In::class,
+        'notIn'        => NotIn::class,
+        'date'         => Date::class,
+        'day'          => Day::class,
+        'month'        => Month::class,
+        'year'         => Year::class,
+        'hidden'       => Hidden::class,
+        'newline'      => Newline::class,
     ];
 
     /**
