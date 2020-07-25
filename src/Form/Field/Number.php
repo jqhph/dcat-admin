@@ -4,6 +4,8 @@ namespace Dcat\Admin\Form\Field;
 
 class Number extends Text
 {
+    protected $view = 'admin::form.number';
+
     protected static $js = [
         '@number-input',
     ];
@@ -20,7 +22,7 @@ $('{$this->getElementClassSelector()}:not(.initialized)')
     });
 JS;
 
-        $this->prepend('')->defaultAttribute('style', 'width: 200px');
+        $this->prepend('');
 
         return parent::render();
     }
