@@ -117,7 +117,7 @@
                 label = $this.data('label') || id,
                 exist = Dcat.helpers.isset(originalItems, id);
 
-            if ($this.prop('checked')) {
+            if ($this[0].checked) {
                 if (!exist) {
                     originalItems[id] = label;
                 }
@@ -197,17 +197,20 @@
 
         function bindCheckedDefaultEvent(iframeWin) {
             Dcat.ready(function () {
-                let $selectAll = $(layer.getChildFrame('.checkbox-grid .select-all', layerIdx));
+                let $selectAll = $(layer.getChildFrame('.checkbox-grid .select-all', layerIdx)),
+                    $checkboxed = getAllCheckboxes();
 
                 clickCheckedItems();
                 if (maxItem != 1) {
                     // 解决多选模式全选框无效问题
                     $selectAll.on('change', function () {
-                        getAllCheckboxes().trigger('change');
+                        setTimeout(function () {
+                            $checkboxed.trigger('change');
+                        }, 1)
                     });
                 }
 
-                getAllCheckboxes().on('change', function () {
+                $checkboxed.on('change', function () {
                     if (maxItem == 1) {
                         select($(this));
                     } else {
