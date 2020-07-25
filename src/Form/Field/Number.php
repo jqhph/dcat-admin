@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Admin;
+
 class Number extends Text
 {
     protected $view = 'admin::form.number';
@@ -12,6 +14,16 @@ class Number extends Text
 
     public function render()
     {
+        $this->addScript();
+        $this->addStyle();
+
+        $this->prepend('');
+
+        return parent::render();
+    }
+
+    protected function addScript()
+    {
         $this->script = <<<JS
 $('{$this->getElementClassSelector()}:not(.initialized)')
     .addClass('initialized')
@@ -21,10 +33,11 @@ $('{$this->getElementClassSelector()}:not(.initialized)')
         center: true
     });
 JS;
+    }
 
-        $this->prepend('');
-
-        return parent::render();
+    protected function addStyle()
+    {
+        Admin::style('.number-group .input-group{flex-wrap: nowrap}');
     }
 
     /**

@@ -8,7 +8,7 @@
 
         @include('admin::form.error')
 
-        <div class="input-group" style="flex-wrap: nowrap">
+        <div class="input-group number-group">
 
             @if ($prepend)
                 <span class="input-group-prepend"><span class="input-group-text bg-white">{!! $prepend !!}</span></span>
