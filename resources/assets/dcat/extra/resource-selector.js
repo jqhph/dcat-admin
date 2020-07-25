@@ -197,8 +197,17 @@
 
         function bindCheckedDefaultEvent(iframeWin) {
             Dcat.ready(function () {
+                let $selectAll = $(layer.getChildFrame('.checkbox-grid .select-all', layerIdx));
+
                 clickCheckedItems();
-                getAllCheckboxes().change(function () {
+                if (maxItem != 1) {
+                    // 解决多选模式全选框无效问题
+                    $selectAll.on('change', function () {
+                        getAllCheckboxes().trigger('change');
+                    });
+                }
+
+                getAllCheckboxes().on('change', function () {
                     if (maxItem == 1) {
                         select($(this));
                     } else {
@@ -207,7 +216,7 @@
                 });
                 if (maxItem == 1) {
                     // 单选模式禁用全选按钮
-                    $(layer.getChildFrame('.checkbox-grid .select-all', layerIdx)).click(function () {
+                    $selectAll.on('click', function () {
                         return false;
                     });
                 }
