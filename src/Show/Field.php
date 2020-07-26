@@ -226,7 +226,7 @@ class Field implements Renderable
                 if (url()->isValidUrl($path)) {
                     $src = $path;
                 } elseif ($server) {
-                    $src = $server.$path;
+                    $src = rtrim($server, '/').'/'.ltrim($path, '/');
                 } else {
                     $disk = config('admin.upload.disk');
 
