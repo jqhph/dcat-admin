@@ -521,17 +521,22 @@ class Form implements Renderable
         $field->setForm($this);
         $field->width($this->width['field'], $this->width['label']);
 
-        if ($field instanceof Field\File) {
+        $this->setFileUploadUrl($field);
+
+        $field::collectAssets();
+
+        return $this;
+    }
+
+    protected function setFileUploadUrl(Field $field)
+    {
+        if ($field instanceof Field\File && method_exists($this, 'form')) {
             $formData = [static::REQUEST_NAME => get_called_class()];
 
             $field->url(route(admin_api_route('form.upload')));
             $field->deleteUrl(route(admin_api_route('form.destroy-file'), $formData));
             $field->withFormData($formData);
         }
-
-        $field::collectAssets();
-
-        return $this;
     }
 
     /**
