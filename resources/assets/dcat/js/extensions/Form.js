@@ -14,6 +14,8 @@ class Form {
             form: null,
             // 开启表单验证
             validate: false,
+            // 确认弹窗
+            confirm: {title: null, content: null},
             // 表单错误信息class
             errorClass: 'has-error',
             // 表单错误信息容器选择器
@@ -48,6 +50,19 @@ class Form {
     }
 
     submit() {
+        let _this = this;
+        let confirm = _this.options.confirm;
+
+        if (! confirm.title) {
+            return _this._ajaxSubmit();
+        }
+
+        Dcat.confirm(confirm.title, confirm.content, function () {
+            _this._ajaxSubmit();
+        });
+    }
+
+    _ajaxSubmit() {
         let Dcat = window.Dcat,
             _this = this,
             $form = _this.$form,

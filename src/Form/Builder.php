@@ -151,6 +151,11 @@ class Builder
     protected $stepBuilder;
 
     /**
+     * @var array
+     */
+    protected $confirm = [];
+
+    /**
      * Builder constructor.
      *
      * @param Form $form
@@ -274,6 +279,20 @@ class Builder
     public function stepBuilder()
     {
         return $this->stepBuilder;
+    }
+
+    /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->confirm['title'] = $title;
+        $this->confirm['content'] = $content;
+
+        return $this;
     }
 
     /**
@@ -878,10 +897,13 @@ EOF;
      */
     protected function addSubmitScript()
     {
+        $confirm = json_encode($this->confirm);
+
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
+     confirm: {$confirm},
 });
 JS
         );

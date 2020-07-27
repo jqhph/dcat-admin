@@ -347,6 +347,19 @@ class Form implements Renderable
     }
 
     /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->builder->confirm($title, $content);
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isCreating()

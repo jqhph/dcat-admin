@@ -154,6 +154,11 @@ class Form implements Renderable
     ];
 
     /**
+     * @var array
+     */
+    protected $confirm = [];
+
+    /**
      * Form constructor.
      *
      * @param array $data
@@ -216,9 +221,23 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function method($method = 'POST')
+    public function method(string $method = 'POST')
     {
         return $this->setHtmlAttribute('method', strtoupper($method));
+    }
+
+    /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->confirm['title'] = $title;
+        $this->confirm['content'] = $content;
+
+        return $this;
     }
 
     /**
@@ -659,10 +678,13 @@ HTML;
      */
     protected function setUpSubmitScript()
     {
+        $confirm = json_encode($this->confirm);
+
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
+    confirm: {$confirm},
     success: function (data) {
         {$this->buildSuccessScript()}
         {$this->addSavedScript()}
