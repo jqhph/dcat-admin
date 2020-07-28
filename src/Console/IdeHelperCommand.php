@@ -116,7 +116,7 @@ class IdeHelperCommand extends Command
                 $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_schema = "%s"', $value['database']);
 
                 $each = collect(DB::connection($connectName)->select($sql))
-                    ->map(function ($v) use ($value, $exceptTables, &$reject) {
+                    ->map(function ($v) use ($exceptTables, &$reject) {
                         $v = (array) $v;
 
                         if (in_array($v['TABLE_NAME'], $exceptTables) || in_array($v['COLUMN_NAME'], $reject)) {
