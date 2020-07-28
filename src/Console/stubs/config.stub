@@ -121,17 +121,17 @@ return [
 
         'controller' => App\DummyNamespace\Controllers\AuthController::class,
 
-        'guard' => 'admin',
+        'guard' => 'DummyApp',
 
         'guards' => [
-            'admin' => [
+            'DummyApp' => [
                 'driver'   => 'session',
-                'provider' => 'admin',
+                'provider' => 'DummyApp',
             ],
         ],
 
         'providers' => [
-            'admin' => [
+            'DummyApp' => [
                 'driver' => 'eloquent',
                 'model'  => Dcat\Admin\Models\Administrator::class,
             ],
