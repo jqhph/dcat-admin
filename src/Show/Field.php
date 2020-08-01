@@ -425,7 +425,7 @@ HTML;
 
         return $this->as(function ($v) use (&$val, $name) {
             if ($val instanceof \Closure) {
-                $val = $val->call($this, $v, $this->$name);
+                $val = $val->call($this, $v, Arr::get($this, $name));
             }
 
             if (is_array($v)) {
@@ -451,7 +451,7 @@ HTML;
 
         return $this->as(function ($v) use (&$val, $name) {
             if ($val instanceof \Closure) {
-                $val = $val->call($this, $v, $this->$name);
+                $val = $val->call($this, $v, Arr::get($this, $name));
             }
 
             if (is_array($v)) {
