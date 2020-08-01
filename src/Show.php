@@ -7,6 +7,7 @@ use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Show\AbstractTool;
 use Dcat\Admin\Show\Divider;
 use Dcat\Admin\Show\Field;
+use Dcat\Admin\Show\Html;
 use Dcat\Admin\Show\Newline;
 use Dcat\Admin\Show\Panel;
 use Dcat\Admin\Show\Relation;
@@ -508,6 +509,16 @@ class Show implements Renderable
     public function newline()
     {
         $this->fields->push(new Newline());
+    }
+
+    /**
+     * Show the content of html.
+     *
+     * @param string $html
+     */
+    public function html($html = '')
+    {
+        $this->fields->push(new Html($html));
     }
 
     /**
