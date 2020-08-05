@@ -64,6 +64,8 @@ JS;
     {
         $this->addScript();
 
+        $this->defaultAttribute('style', 'width: 160px;flex:none');
+
         return parent::render();
     }
 }

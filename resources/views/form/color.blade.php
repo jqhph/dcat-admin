@@ -4,8 +4,7 @@
         <span>{!! $label !!}</span>
     </div>
 
-    <div class="{{$viewClass['field']}}" style="width: 210px;flex: none">
-
+    <div class="{{$viewClass['field']}}">
         @include('admin::form.error')
 
         <div class="input-group">

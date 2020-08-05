@@ -17,6 +17,8 @@ class Number extends Text
         $this->addScript();
         $this->addStyle();
 
+        $this->defaultAttribute('style', 'width: 140px;flex:none');
+
         $this->prepend('');
 
         return parent::render();
