@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://learnku.com/docs/dcat-admin/1.x">learnku文档</a> |
 <a href="http://www.dcatadmin.com/">文档</a> |
-<a href="https://jqhph.github.io/dcat-admin/demo.html">Demo (在线演示站)</a> |
+<a href="http://103.39.211.179:8080/admin">Demo (在线演示站)</a> |
 <a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
 <a href="https://gitee.com/jqhph/dcat-admin-demo">Demo源码 (码云)</a> |
 <a href="#extensions">扩展</a>
