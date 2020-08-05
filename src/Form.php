@@ -81,6 +81,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
  * @method Field\Range                  range($start, $end, $label = '')
+ * @method Field\Color                  color($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -159,6 +160,7 @@ class Form implements Renderable
         'tel'            => Field\Tel::class,
         'markdown'       => Field\Markdown::class,
         'range'          => Field\Range::class,
+        'color'          => Field\Color::class,
     ];
 
     /**

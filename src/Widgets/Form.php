@@ -78,6 +78,7 @@ use Illuminate\Validation\Validator;
  * @method Field\Tel            tel($column, $label = '')
  * @method Field\Markdown       markdown($column, $label = '')
  * @method Field\Range          range($start, $end, $label = '')
+ * @method Field\Color          color($column, $label = '')
  */
 class Form implements Renderable
 {
