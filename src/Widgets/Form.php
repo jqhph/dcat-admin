@@ -330,6 +330,10 @@ class Form implements Renderable
     public function field($name)
     {
         foreach ($this->fields as $field) {
+            if (is_array($field->column())) {
+                return in_array($name, $field->column(), true);
+            }
+
             if ($field === $name || $field->column() === $name) {
                 return $field;
             }
@@ -376,10 +380,6 @@ class Form implements Renderable
      */
     public function validate(Request $request)
     {
-        if (method_exists($this, 'form')) {
-            $this->form();
-        }
-
         $failedValidators = [];
 
         /** @var \Dcat\Admin\Form\Field $field */
@@ -745,7 +745,30 @@ JS
     {
         Arr::forget($input, [static::REQUEST_NAME, '_token', '_current_']);
 
-        return $input;
+        return $this->prepareInput($input);
+    }
+
+    public function prepareInput(array $input)
+    {
+        Helper::prepareHasOneRelation($this->fields, $input);
+
+        foreach ($input as $column => $value) {
+            if (is_null($field = $this->field($column))) {
+                unset($input[$column]);
+
+                continue;
+            }
+
+            $input[$column] = $field->prepare($value);
+        }
+
+        $prepared = [];
+
+        foreach ($input as $key => $value) {
+            Arr::set($prepared, $key, $value);
+        }
+
+        return $prepared;
     }
 
     protected function prepareForm()
