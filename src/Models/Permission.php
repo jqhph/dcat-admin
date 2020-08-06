@@ -78,12 +78,12 @@ class Permission extends Model implements Sortable
         $method = $this->http_method;
 
         $matches = array_map(function ($path) use ($method) {
-            $path = admin_base_path($path);
-
             if (Str::contains($path, ':')) {
                 [$method, $path] = explode(':', $path);
                 $method = explode(',', $method);
             }
+
+            $path = admin_base_path($path);
 
             return compact('method', 'path');
         }, $this->http_path);
@@ -146,6 +146,7 @@ class Permission extends Model implements Sortable
         if (! $path = trim($match['path'], '/')) {
             return false;
         }
+
         if (! Helper::matchRequestPath($path)) {
             return false;
         }
