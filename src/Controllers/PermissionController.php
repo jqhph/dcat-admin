@@ -77,7 +77,7 @@ class PermissionController extends AdminController
 
                         $method = array_merge($method, explode(',', $me));
                     }
-                    if ($path !== '...' && ! empty(config('admin.route.prefix'))) {
+                    if ($path !== '...' && ! empty(config('admin.route.prefix')) && ! Str::contains($path, '.')) {
                         $path = trim(admin_base_path($path), '/');
                     }
 
