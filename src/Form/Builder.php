@@ -506,7 +506,11 @@ class Builder
     public function field($name)
     {
         $field = $this->fields->first(function (Field $field) use ($name) {
-            return $field === $name || $field->column() == $name;
+            if (is_array($field->column())) {
+                return in_array($name, $field->column(), true);
+            }
+
+            return $field === $name || $field->column() === $name;
         });
 
         if (! $field) {
