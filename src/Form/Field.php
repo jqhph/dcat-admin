@@ -865,7 +865,7 @@ class Field implements Renderable
 
         if ($this->savingCallbacks) {
             foreach ($this->savingCallbacks as $callback) {
-                $value = $callback->call($this->data());
+                $value = $callback->call($this->data(), $value);
             }
         }
 
