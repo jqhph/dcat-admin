@@ -11,6 +11,7 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Widgets\DialogForm;
@@ -81,6 +82,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
  * @method Field\Range                  range($start, $end, $label = '')
+ * @method Field\Color                  color($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -159,6 +161,7 @@ class Form implements Renderable
         'tel'            => Field\Tel::class,
         'markdown'       => Field\Markdown::class,
         'range'          => Field\Range::class,
+        'color'          => Field\Color::class,
     ];
 
     /**
@@ -342,6 +345,19 @@ class Form implements Renderable
     public function removeField($column)
     {
         $this->builder->removeField($column);
+
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->builder->confirm($title, $content);
 
         return $this;
     }
@@ -954,10 +970,10 @@ class Form implements Renderable
      */
     public function prepareInsert($inserts)
     {
-        $this->prepareHasOneRelation($inserts);
+        Helper::prepareHasOneRelation($this->builder->fields(), $inserts);
 
         foreach ($inserts as $column => $value) {
-            if (is_null($field = $this->getFieldByColumn($column))) {
+            if (is_null($field = $this->field($column))) {
                 unset($inserts[$column]);
                 continue;
             }
@@ -972,41 +988,6 @@ class Form implements Renderable
         }
 
         return $prepared;
-    }
-
-    /**
-     * Is input data is has-one relation.
-     *
-     * @param array $inserts
-     */
-    public function prepareHasOneRelation(array &$inserts)
-    {
-        $relations = [];
-        $this->builder->fields()->each(function ($field) use (&$relations) {
-            $column = $field->column();
-
-            if (is_array($column)) {
-                foreach ($column as $v) {
-                    if (Str::contains($v, '.')) {
-                        $first = explode('.', $v)[0];
-                        $relations[$first] = null;
-                    }
-                }
-
-                return;
-            }
-
-            if (Str::contains($column, '.')) {
-                $first = explode('.', $column)[0];
-                $relations[$first] = null;
-            }
-        });
-
-        foreach ($relations as $first => $v) {
-            if (isset($inserts[$first])) {
-                $inserts = array_merge($inserts, Arr::dot([$first => $inserts[$first]]));
-            }
-        }
     }
 
     /**
@@ -1084,26 +1065,6 @@ class Form implements Renderable
 
             return $value;
         }
-    }
-
-    /**
-     * Find field object by column.
-     *
-     * @param $column
-     *
-     * @return mixed
-     */
-    protected function getFieldByColumn($column)
-    {
-        return $this->builder->fields()->first(
-            function (Field $field) use ($column) {
-                if (is_array($field->column())) {
-                    return in_array($column, $field->column());
-                }
-
-                return $field->column() == $column;
-            }
-        );
     }
 
     /**

@@ -342,7 +342,7 @@ body.dark-mode {
   // ------ table
   @include dark-scrollbar('.table-responsive[data-pattern=priority-columns]');
 
-  table.dataTable {
+  .table-wrapper {
     margin-top: 12px!important;
   }
 
@@ -836,11 +836,35 @@ body.dark-mode {
   // ------- fixed-columns
   @include dark-scrollbar('.table-main');
 
-  .table-fixed-left {
-    box-shadow: 6px 0 5px -5px rgba(0,0,0,.24);
+  .table-fixed-left .table {
+    box-shadow: 6px 0 5px -5px rgba(0,0,0,1);
   }
 
-  .table-fixed-right {
-    box-shadow: -5px 0 5px -5px rgba(0,0,0,.24);
+  .table-fixed-right .table {
+    box-shadow: -5px 0 5px -5px rgba(0,0,0,1);
+  }
+
+  // ------- sidebar
+  [class*=sidebar-dark-] {
+    background-color: $body-dark-color;
+
+    .navbar-header {
+      background: $body-darker-color;
+    }
+
+    .nav-sidebar > .nav-item > .nav-treeview {
+      background: transparent;
+    }
+
+    .nav-sidebar > .nav-item > .nav-link.active,
+    .nav-treeview > .nav-item > .nav-link.active,
+    .nav-treeview > .nav-item > .nav-link.active:hover,
+    .nav-treeview > .nav-item > .nav-link.active:focus {
+      background: $body-darker-color;
+    }
+
+    .nav-treeview.nav .nav-item .nav-link.active {
+      padding: 10px 10px 10px 15px !important;
+    }
   }
 }

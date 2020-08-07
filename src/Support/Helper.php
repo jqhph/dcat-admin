@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -709,5 +710,41 @@ class Helper
         [$namespace, $path] = $values;
 
         return base_path(str_replace([$namespace, '\\'], [$path, '/'], $class)).'.php';
+    }
+
+    /**
+     * Is input data is has-one relation.
+     *
+     * @param Collection $fields
+     * @param array      $input
+     */
+    public static function prepareHasOneRelation(Collection $fields, array &$input)
+    {
+        $relations = [];
+        $fields->each(function ($field) use (&$relations) {
+            $column = $field->column();
+
+            if (is_array($column)) {
+                foreach ($column as $v) {
+                    if (Str::contains($v, '.')) {
+                        $first = explode('.', $v)[0];
+                        $relations[$first] = null;
+                    }
+                }
+
+                return;
+            }
+
+            if (Str::contains($column, '.')) {
+                $first = explode('.', $column)[0];
+                $relations[$first] = null;
+            }
+        });
+
+        foreach ($relations as $first => $v) {
+            if (isset($input[$first])) {
+                $input = array_merge($input, Arr::dot([$first => $input[$first]]));
+            }
+        }
     }
 }

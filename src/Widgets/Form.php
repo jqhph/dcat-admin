@@ -78,6 +78,7 @@ use Illuminate\Validation\Validator;
  * @method Field\Tel            tel($column, $label = '')
  * @method Field\Markdown       markdown($column, $label = '')
  * @method Field\Range          range($start, $end, $label = '')
+ * @method Field\Color          color($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -154,6 +155,11 @@ class Form implements Renderable
     ];
 
     /**
+     * @var array
+     */
+    protected $confirm = [];
+
+    /**
      * Form constructor.
      *
      * @param array $data
@@ -216,9 +222,23 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function method($method = 'POST')
+    public function method(string $method = 'POST')
     {
         return $this->setHtmlAttribute('method', strtoupper($method));
+    }
+
+    /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->confirm['title'] = $title;
+        $this->confirm['content'] = $content;
+
+        return $this;
     }
 
     /**
@@ -310,6 +330,10 @@ class Form implements Renderable
     public function field($name)
     {
         foreach ($this->fields as $field) {
+            if (is_array($field->column())) {
+                return in_array($name, $field->column(), true);
+            }
+
             if ($field === $name || $field->column() === $name) {
                 return $field;
             }
@@ -356,10 +380,6 @@ class Form implements Renderable
      */
     public function validate(Request $request)
     {
-        if (method_exists($this, 'form')) {
-            $this->form();
-        }
-
         $failedValidators = [];
 
         /** @var \Dcat\Admin\Form\Field $field */
@@ -502,17 +522,22 @@ class Form implements Renderable
         $field->setForm($this);
         $field->width($this->width['field'], $this->width['label']);
 
-        if ($field instanceof Field\File) {
+        $this->setFileUploadUrl($field);
+
+        $field::collectAssets();
+
+        return $this;
+    }
+
+    protected function setFileUploadUrl(Field $field)
+    {
+        if ($field instanceof Field\File && method_exists($this, 'form')) {
             $formData = [static::REQUEST_NAME => get_called_class()];
 
             $field->url(route(admin_api_route('form.upload')));
             $field->deleteUrl(route(admin_api_route('form.destroy-file'), $formData));
             $field->withFormData($formData);
         }
-
-        $field::collectAssets();
-
-        return $this;
     }
 
     /**
@@ -657,17 +682,22 @@ HTML;
     /**
      * @return void
      */
-    protected function setupSubmitScript()
+    protected function setUpSubmitScript()
     {
+        $confirm = json_encode($this->confirm);
+
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
+    confirm: {$confirm},
     success: function (data) {
         {$this->buildSuccessScript()}
+        {$this->addSavedScript()}
     },
     error: function (response) {
         {$this->buildErrorScript()}
+        {$this->addErrorScript()}
     }
 });
 JS
@@ -676,6 +706,8 @@ JS
 
     /**
      * @return string|void
+     *
+     * @deprecated 将在2.0版本中废弃，请用 addSavedScript 代替
      */
     protected function buildSuccessScript()
     {
@@ -684,7 +716,23 @@ JS
     /**
      * @return string|void
      */
+    protected function addSavedScript()
+    {
+    }
+
+    /**
+     * @return string|void
+     *
+     * @deprecated 将在2.0版本中废弃，请用 addErrorScript 代替
+     */
     protected function buildErrorScript()
+    {
+    }
+
+    /**
+     * @return string|void
+     */
+    protected function addErrorScript()
     {
     }
 
@@ -697,7 +745,30 @@ JS
     {
         Arr::forget($input, [static::REQUEST_NAME, '_token', '_current_']);
 
-        return $input;
+        return $this->prepareInput($input);
+    }
+
+    public function prepareInput(array $input)
+    {
+        Helper::prepareHasOneRelation($this->fields, $input);
+
+        foreach ($input as $column => $value) {
+            if (is_null($field = $this->field($column))) {
+                unset($input[$column]);
+
+                continue;
+            }
+
+            $input[$column] = $field->prepare($value);
+        }
+
+        $prepared = [];
+
+        foreach ($input as $key => $value) {
+            Arr::set($prepared, $key, $value);
+        }
+
+        return $prepared;
     }
 
     protected function prepareForm()
@@ -737,7 +808,7 @@ JS
         $this->prepareHandler();
 
         if ($this->allowAjaxSubmit()) {
-            $this->setupSubmitScript();
+            $this->setUpSubmitScript();
         }
 
         $tabObj = $this->getTab();

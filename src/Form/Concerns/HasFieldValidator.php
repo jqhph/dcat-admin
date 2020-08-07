@@ -115,9 +115,9 @@ trait HasFieldValidator
      */
     protected function getRules()
     {
-        if (request()->isMethod('POST')) {
+        if ($this->isCreating()) {
             $rules = $this->creationRules ?: $this->rules;
-        } elseif (request()->isMethod('PUT')) {
+        } elseif ($this->isEditing()) {
             $rules = $this->updateRules ?: $this->rules;
         } else {
             $rules = $this->rules;
@@ -274,7 +274,39 @@ trait HasFieldValidator
      */
     public function hasRule($rule)
     {
-        return $this->isRuleExists($this->rules, $rule);
+        return $this->isRuleExists($this->getRules(), $rule);
+    }
+
+    /**
+     * @param string $rule
+     *
+     * @return bool|mixed
+     */
+    protected function getRule($rule)
+    {
+        $rules = $this->getRules();
+
+        if (is_array($rules)) {
+            foreach ($rules as $r) {
+                if ($this->isRuleExists($r, $rule)) {
+                    return $r;
+                }
+            }
+
+            return false;
+        }
+
+        if (! is_string($rules)) {
+            return false;
+        }
+
+        foreach (explode('|', $rules) as $r) {
+            if ($this->isRuleExists($r, $rule)) {
+                return $r;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -286,12 +318,20 @@ trait HasFieldValidator
     protected function isRuleExists($rules, $rule)
     {
         if (is_array($rules)) {
-            return in_array($rule, $rules);
+            foreach ($rules as $r) {
+                if ($this->isRuleExists($r, $rule)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         if (! is_string($rules)) {
             return false;
         }
+
+        $rule = str_replace(['*', '/'], ['([0-9a-z-_,:=><])*', "\/"], $rule);
 
         $pattern = "/{$rule}[^\|]?(\||$)/";
 
@@ -381,9 +421,9 @@ trait HasFieldValidator
         // Default validation message.
         $messages = $this->validationMessages['default'] ?? [];
 
-        if (request()->isMethod('POST')) {
+        if ($this->isCreating()) {
             $messages = $this->validationMessages['creation'] ?? $messages;
-        } elseif (request()->isMethod('PUT')) {
+        } elseif ($this->isEditing()) {
             $messages = $this->validationMessages['update'] ?? $messages;
         }
 

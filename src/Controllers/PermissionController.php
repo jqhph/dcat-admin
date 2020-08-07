@@ -71,13 +71,13 @@ class PermissionController extends AdminController
 
                 $method = $branch['http_method'] ?: [];
 
-                $path = collect($path)->map(function ($path) use ($branch, &$method) {
+                $path = collect($path)->map(function ($path) use (&$method) {
                     if (Str::contains($path, ':')) {
                         [$me, $path] = explode(':', $path);
 
                         $method = array_merge($method, explode(',', $me));
                     }
-                    if ($path !== '...' && ! empty(config('admin.route.prefix'))) {
+                    if ($path !== '...' && ! empty(config('admin.route.prefix')) && ! Str::contains($path, '.')) {
                         $path = trim(admin_base_path($path), '/');
                     }
 

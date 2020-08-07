@@ -291,7 +291,7 @@ trait HasDisplayers
         return $this->display(function ($value) use ($map, $default) {
             $bool = empty($map) ? $value : Arr::get($map, $value, $default);
 
-            return $bool ? '<i class="feather icon-check font-md-2 font-w-600 text-green"></i>' : '<i class="feather icon-x font-md-1 font-w-600 text-red"></i>';
+            return $bool ? '<i class="feather icon-check font-md-2 font-w-600 text-primary"></i>' : '<i class="feather icon-x font-md-1 font-w-600 text-70"></i>';
         });
     }
 }

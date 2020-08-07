@@ -143,7 +143,9 @@ class Application
     {
         $this->withConfig($app);
 
-        Admin::registerApiRoutes($this->getApiRoutePrefix($app));
+        $this->loadRoutesFrom(function () use ($app) {
+            Admin::registerApiRoutes($this->getApiRoutePrefix($app));
+        }, $app);
 
         if (is_file($routes = admin_path('routes.php'))) {
             $this->loadRoutesFrom($routes, $app);

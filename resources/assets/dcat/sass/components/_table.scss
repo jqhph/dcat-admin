@@ -114,6 +114,7 @@ table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead 
 table.table-bordered.dataTable.complex-headers {
   border-spacing: 0;
   margin-top: 12px!important;
+  box-shadow: $shadow;
 
   thead th {
     vertical-align: middle;
@@ -170,4 +171,91 @@ table.table-bordered.dataTable.complex-headers {
 
 .table.default-table.table-bordered th, .table.default-table.table-bordered td {
   border: 1px solid #f0f4f8!important;
+}
+
+
+
+$table-border-color: #eff3f8;
+
+.table-collapse {
+  table.custom-data-table.dataTable tbody tr td:first-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  table.custom-data-table.dataTable tbody tr td:last-child{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .table.custom-data-table {
+    padding: 5px 10px 10px;
+  }
+
+  .table-fixed-left .table.custom-data-table {
+    padding: 5px 0 0 10px;
+  }
+  .table-fixed-right .table.custom-data-table {
+    padding: 5px 10px 0 0;
+  }
+  .table-fixed th {
+    background: darken(#f7f7f9, 3.5%);
+  }
+}
+
+body:not(.dark-mode) {
+  .table-collapse {
+    box-shadow: $shadow;
+    background: darken(#f7f7f9, 3.5%);
+    margin-top: 1rem;
+
+    .custom-data-table {
+      border-spacing: 0;
+      //border-collapse:collapse!important;
+      margin-top: 0!important;
+      background-color: darken(#f7f7f9, 3.5%);
+      //border-radius: $card-border-radius;
+    }
+
+    table.custom-data-table.dataTable thead th {
+      //border-top: 1px solid $table-border-color;
+      //border-bottom: 2px solid $table-border-color;
+      height: 24px;
+      vertical-align: middle;
+      //background: $white;
+    }
+
+    table.custom-data-table.dataTable tbody td {
+      border-top: 1px solid $table-border-color;
+      height: 42px;
+    }
+
+    table.custom-data-table.dataTable tbody tr {
+      box-shadow: none;
+    }
+
+    .quick-create td {
+      background: #f7f7f9 !important;
+      border-radius: 0;
+    }
+  }
+}
+
+body.dark-mode {
+  .table-collapse {
+    table {
+      border-spacing: 0 0.24rem;
+    }
+
+    table.custom-data-table.dataTable tbody td {
+      height: 38px;
+    }
+  }
+
+  //.table-fixed-left .table.custom-data-table {
+  //  padding: 5px 0 0 10px;
+  //}
+  //.table-fixed-right .table.custom-data-table {
+  //  padding: 5px 10px 0 0;
+  //}
 }

@@ -76,7 +76,7 @@ body.sidebar-collapse {
 
 .main-sidebar {
   .nav-sidebar .nav-item > .nav-link {
-    font-size: 1.05rem;
+    font-size: 1.04rem;
     border-radius: .1rem;
   }
 }
@@ -89,10 +89,12 @@ body.sidebar-collapse {
   .navbar-header {
     padding: 0 1rem 0;
     height: 61px;
-    background: $body-darker-color;
+    //background: $body-darker-color;
+    background: #262d37
   }
 
   .navbar-header .navbar-brand {
     margin: 8px 0;
   }
 }
+
