@@ -75,13 +75,13 @@ EOT;
             },
             success: function (data) {
                 btn.buttonLoading(false);
-                btn.attr('loading', 0);
+                btn.removeAttr('loading');
                 Dcat.success(data.message);
                 reload && Dcat.reload()
             },
             error: function (a, b, c) {
                 btn.buttonLoading(false);
-                btn.attr('loading', 0);
+                btn.removeAttr('loading');
                 Dcat.handleAjaxError(a, b, c);
             },
         });
