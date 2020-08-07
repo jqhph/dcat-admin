@@ -21,21 +21,23 @@ class Map extends Field
      */
     public static function collectAssets()
     {
-        switch (config('admin.map_provider')) {
+        $keys = config('admin.map.keys');
+
+        switch (static::getUsingMap()) {
             case 'tencent':
-                $js = '//map.qq.com/api/js?v=2.exp&key='.env('TENCENT_MAP_API_KEY');
+                $js = '//map.qq.com/api/js?v=2.exp&key='.($keys['tencent'] ?? env('TENCENT_MAP_API_KEY'));
                 break;
             case 'google':
-                $js = '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key='.env('GOOGLE_API_KEY');
+                $js = '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key='.($keys['google'] ?? env('GOOGLE_API_KEY'));
                 break;
             case 'yandex':
                 $js = '//api-maps.yandex.ru/2.1/?lang=ru_RU';
                 break;
             case 'baidu':
-                $js = '//api.map.baidu.com/api?v=2.0&ak=' . env('BAIDU_MAP_API_KEY');
+                $js = '//api.map.baidu.com/api?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
                 break;
             default:
-                $js = '//api.map.baidu.com/api?v=2.0&ak=' . env('BAIDU_MAP_API_KEY');
+                $js = '//api.map.baidu.com/api?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
         }
 
         Admin::js($js);
@@ -55,7 +57,7 @@ class Map extends Field
          * Google map is blocked in mainland China
          * people in China can use Tencent map instead(;
          */
-        switch (config('admin.map_provider')) {
+        switch (static::getUsingMap()) {
             case 'tencent':
                 $this->useTencentMap();
                 break;
@@ -71,6 +73,11 @@ class Map extends Field
             default:
                 $this->useBaiduMap();
         }
+    }
+
+    protected static function getUsingMap()
+    {
+        return config('admin.map.provider') ?: config('admin.map_provider');
     }
 
     public function useGoogleMap()
@@ -269,6 +276,5 @@ JS;
             initBaiduMap('{$this->id['lat']}{$this->id['lng']}');
         })()
 JS;
-
     }
 }
