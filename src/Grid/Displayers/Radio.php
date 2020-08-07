@@ -6,7 +6,7 @@ use Dcat\Admin\Admin;
 
 class Radio extends AbstractDisplayer
 {
-    public function display($options = [])
+    public function display($options = [], $refresh = false)
     {
         if ($options instanceof \Closure) {
             $options = $options->call($this, $this->row);
@@ -30,7 +30,7 @@ class Radio extends AbstractDisplayer
 EOT;
         }
 
-        Admin::script($this->script());
+        Admin::script($this->addScript($refresh));
 
         return <<<EOT
 <form class="form-group {$this->getElementClass()}" style="text-align: left" data-key="{$this->getKey()}">
@@ -50,17 +50,19 @@ EOT;
         return 'grid-radio-'.$this->column->getName();
     }
 
-    protected function script()
+    protected function addScript($refresh)
     {
         return <<<JS
 (function () {
-    var f;
     $('form.{$this->getElementClass()}').on('submit', function () {
-        var value = $(this).find('input:radio:checked').val(), btn = $(this).find('[type="submit"]');
+        var value = $(this).find('input:radio:checked').val(), 
+            btn = $(this).find('[type="submit"]'),
+            reload = '{$refresh}';
         
-        if (f) return;
-        f = 1;
-        
+        if (btn.attr('loading')) {
+            return;
+        }
+        btn.attr('loading', 1);
         btn.buttonLoading();
     
         $.ajax({
@@ -73,12 +75,13 @@ EOT;
             },
             success: function (data) {
                 btn.buttonLoading(false);
-                f = 0;
+                btn.attr('loading', 0);
                 Dcat.success(data.message);
+                reload && Dcat.reload()
             },
             error: function (a, b, c) {
                 btn.buttonLoading(false);
-                f = 0;
+                btn.attr('loading', 0);
                 Dcat.handleAjaxError(a, b, c);
             },
         });

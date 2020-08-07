@@ -11,13 +11,13 @@ class Select extends AbstractDisplayer
 
     protected $selector = 'grid-column-select';
 
-    public function display($options = [])
+    public function display($options = [], $refresh = false)
     {
         if ($options instanceof \Closure) {
             $options = $options->call($this, $this->row);
         }
 
-        $this->addScript();
+        $this->addScript($refresh);
 
         $optionsHtml = '';
 
@@ -40,7 +40,7 @@ EOT;
         return $this->resource().'/'.$this->getKey();
     }
 
-    protected function addScript()
+    protected function addScript($refresh)
     {
         $script = <<<JS
 $('.{$this->selector}').off('change').select2().on('change', function(){
@@ -50,7 +50,8 @@ $('.{$this->selector}').off('change').select2().on('change', function(){
         data = {
             _token: Dcat.token,
             _method: 'PUT'
-        };
+        },
+        reload = '{$refresh}';
     
     if (name.indexOf('.') === -1) {
         data[name] = value;
@@ -69,6 +70,7 @@ $('.{$this->selector}').off('change').select2().on('change', function(){
         success: function (data) {
             Dcat.NP.done();
             Dcat.success(data.message);
+            reload && Dcat.reload();
         }
     });
 });
