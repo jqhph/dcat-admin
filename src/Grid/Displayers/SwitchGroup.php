@@ -9,7 +9,7 @@ class SwitchGroup extends SwitchDisplay
 {
     protected $selector = 'grid-column-switch-group';
 
-    public function display($columns = [], string $color = '', $refresh = false)
+    public function display($columns = [], $color = '', $refresh = false)
     {
         if ($columns instanceof \Closure) {
             $columns = $columns->call($this->row, $this);
