@@ -23,7 +23,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\MessageBag;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,6 +82,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Markdown               markdown($column, $label = '')
  * @method Field\Range                  range($start, $end, $label = '')
  * @method Field\Color                  color($column, $label = '')
+ * @method Field\Json                   json($column, $labelOrCallback, $callback = null)
  */
 class Form implements Renderable
 {
@@ -162,6 +162,7 @@ class Form implements Renderable
         'markdown'       => Field\Markdown::class,
         'range'          => Field\Range::class,
         'color'          => Field\Color::class,
+        'json'           => Field\Json::class,
     ];
 
     /**

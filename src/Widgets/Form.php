@@ -79,6 +79,7 @@ use Illuminate\Validation\Validator;
  * @method Field\Markdown       markdown($column, $label = '')
  * @method Field\Range          range($start, $end, $label = '')
  * @method Field\Color          color($column, $label = '')
+ * @method Field\Json           json($column, $labelOrCallback, $callback = null)
  */
 class Form implements Renderable
 {
