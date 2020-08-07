@@ -683,7 +683,7 @@ class Form implements Renderable
     {
         Arr::forget($input, $this->ignored);
 
-        $ignored = $this->fields()->transform(function (Field $field) {
+        $ignored = $this->fields()->map(function (Field $field) {
             if ($field instanceof Field\Display || $field->getAttribute('readonly') || $field->getAttribute('disabled')) {
                 return $field->column();
             }
