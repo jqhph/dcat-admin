@@ -82,7 +82,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Markdown               markdown($column, $label = '')
  * @method Field\Range                  range($start, $end, $label = '')
  * @method Field\Color                  color($column, $label = '')
- * @method Field\Json                   json($column, $labelOrCallback, $callback = null)
+ * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
  */
 class Form implements Renderable
 {
@@ -162,7 +162,7 @@ class Form implements Renderable
         'markdown'       => Field\Markdown::class,
         'range'          => Field\Range::class,
         'color'          => Field\Color::class,
-        'json'           => Field\Json::class,
+        'array'          => Field\ArrayField::class,
     ];
 
     /**

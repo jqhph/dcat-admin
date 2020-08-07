@@ -4,7 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 
-class Table extends Json
+class Table extends ArrayField
 {
     /**
      * @var string

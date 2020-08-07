@@ -5,7 +5,7 @@ namespace Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Support\Helper;
 
-class Json extends HasMany
+class ArrayField extends HasMany
 {
     public function __construct($column, $arguments = [])
     {
@@ -84,12 +84,5 @@ class Json extends HasMany
         $form->hidden(NestedForm::REMOVE_FLAG_NAME)->default(0)->addElementClass(NestedForm::REMOVE_FLAG_CLASS);
 
         return $form;
-    }
-
-    public function saveAsJson()
-    {
-        return $this->saving(function ($v) {
-            return json_encode($v);
-        });
     }
 }
