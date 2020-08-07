@@ -1,4 +1,9 @@
 
+.layout-fixed .main-sidebar {
+  background: url(/vendors/dcat-admin/images/waves.png) no-repeat;
+  background-color: #fff;
+}
+
 .main-menu {
   .navbar-header {
     padding: 0.35rem 1rem 0;
@@ -17,11 +22,13 @@
     .logo-mini {
       display: none;
       font-size: 1.8rem;
-      color: darken($primary-darker, 1%);
+      //color: darken($primary-darker, 1%);
+      color: $font-color;
     }
 
     .logo-lg {
-      color: darken($primary-darker, 1%);
+      //color: darken($primary-darker, 1%);
+      color: $font-color;
       letter-spacing: 0.01rem;
       font-size: 1.55rem;
       -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
@@ -96,5 +103,57 @@ body.sidebar-collapse {
   .navbar-header .navbar-brand {
     margin: 8px 0;
   }
+}
+
+[class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active:hover {
+  color: $primary-darker;
+  background: none;
+  box-shadow: 0 0;
+}
+
+.sidebar-light-primary .nav-item > .nav-link.active {
+  background: none;
+  color: $primary-darker !important;
+  font-weight: bold;
+  box-shadow: 0 0;
+}
+
+.nav-sidebar>.nav-item>.nav-treeview  .nav-link p {
+  font-size: 14px;
+}
+
+.main-menu .navbar-header .navbar-brand {
+  margin-top: 1rem;
+}
+
+// ----- sidebar-separate
+body.sidebar-separate {
+  .main-sidebar {
+    top: 6rem;
+    left: 1.5rem;
+    text-align: center;
+  }
+
+  .header-navbar.fixed-top {
+    left: 0;
+  }
+
+  .sidebar-collapse .header-navbar.fixed-top {
+    left: 0;
+  }
+
+  @media (min-width: 768px) {
+    .content-wrapper {
+      margin-left: 280px;
+    }
+  }
+
+  .main-sidebar .nav-sidebar .nav-item>.nav-link {
+    text-align: left;
+  }
+}
+
+body.sidebar-separate.dark-mode [class*=sidebar-dark-] .navbar-header {
+  background: unset!important;
 }
 
