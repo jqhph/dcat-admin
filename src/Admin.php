@@ -207,6 +207,7 @@ class Admin
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
+            'as'         => static::app()->getName().'.',
         ];
 
         if (config('admin.auth.enable', true)) {
