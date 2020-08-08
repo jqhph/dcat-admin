@@ -186,11 +186,29 @@ class Column
      */
     public function __construct($name, $label)
     {
-        $this->name = $name;
+        $this->name = $this->formatName($name);
 
         $this->label = $this->formatLabel($label);
 
         $this->callResolving();
+    }
+
+    protected function formatName($name)
+    {
+        if (! Str::contains($name, '.')) {
+            return $name;
+        }
+
+        $names = explode('.', $name);
+        $count = count($names);
+
+        foreach ($names as $i => &$name) {
+            if ($i + 1 < $count) {
+                $name = Str::snake($name);
+            }
+        }
+
+        return implode('.', $names);
     }
 
     /**
