@@ -15,7 +15,6 @@ use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 class Grid
@@ -253,12 +252,6 @@ class Grid
      */
     public function column($name, $label = '')
     {
-        if (mb_strpos($name, '.') !== false) {
-            [$relationName, $relationColumn] = explode('.', $name);
-
-            $name = Str::snake($relationName).'.'.$relationColumn;
-        }
-
         return $this->addColumn($name, $label);
     }
 

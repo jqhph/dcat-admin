@@ -203,17 +203,20 @@ $table-border-color: #eff3f8;
   }
 }
 
+
+$table-bg: darken(#f7f7f9, 3.5%);
+
 body:not(.dark-mode) {
   .table-collapse {
     box-shadow: $shadow;
-    background: darken(#f7f7f9, 3.5%);
+    background: $table-bg;
     margin-top: 1rem;
 
     .custom-data-table {
       border-spacing: 0;
       //border-collapse:collapse!important;
       margin-top: 0!important;
-      background-color: darken(#f7f7f9, 3.5%);
+      background-color: $table-bg;
       //border-radius: $card-border-radius;
     }
 
@@ -225,9 +228,13 @@ body:not(.dark-mode) {
       //background: $white;
     }
 
-    table.custom-data-table.dataTable tbody td {
+    .custom-data-table.dataTable tbody td {
       border-top: 1px solid $table-border-color;
-      height: 42px;
+      height: 45px;
+    }
+
+    .custom-data-table.dataTable tbody tr:first-child td {
+      border-top: 0
     }
 
     table.custom-data-table.dataTable tbody tr {

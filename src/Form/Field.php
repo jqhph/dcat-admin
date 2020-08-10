@@ -209,9 +209,9 @@ class Field implements Renderable
     protected $labelClass = [];
 
     /**
-     * @var \Closure
+     * @var \Closure[]
      */
-    protected $savingCallback;
+    protected $savingCallbacks = [];
 
     /**
      * Field constructor.
@@ -847,7 +847,7 @@ class Field implements Renderable
      */
     public function saving(\Closure $closure)
     {
-        $this->savingCallback = $closure;
+        $this->savingCallbacks[] = $closure;
 
         return $this;
     }
@@ -863,10 +863,10 @@ class Field implements Renderable
     {
         $value = $this->prepareInputValue($value);
 
-        if ($handler = $this->savingCallback) {
-            $handler->bindTo($this->data());
-
-            return $handler($value);
+        if ($this->savingCallbacks) {
+            foreach ($this->savingCallbacks as $callback) {
+                $value = $callback->call($this->data(), $value);
+            }
         }
 
         return $value;
@@ -1191,6 +1191,42 @@ class Field implements Renderable
     protected function shouldRender()
     {
         return $this->display;
+    }
+
+    public function saveAsJson($option = 0)
+    {
+        return $this->saving(function ($value) use ($option) {
+            if (! $value || is_scalar($value)) {
+                return $value;
+            }
+
+            return json_encode($value, $option);
+        });
+    }
+
+    public function saveAsJoin(string $glue = ',')
+    {
+        return $this->saving(function ($value) use ($glue) {
+            if (! $value || is_scalar($value)) {
+                return $value;
+            }
+
+            return implode($glue, (array) $value);
+        });
+    }
+
+    public function saveAsString()
+    {
+        return $this->saving(function ($value) {
+            return (string) $value;
+        });
+    }
+
+    public function saveAsInteger()
+    {
+        return $this->saving(function ($value) {
+            return (int) $value;
+        });
     }
 
     /**

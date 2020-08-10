@@ -60,6 +60,7 @@ use Illuminate\Support\Collection;
  * @method Field\Markdown               markdown($column, $label = '')
  * @method Field\Range                  range($start, $end, $label = '')
  * @method Field\Color                  color($column, $label = '')
+ * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
  */
 class EmbeddedForm
 {

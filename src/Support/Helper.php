@@ -743,6 +743,12 @@ class Helper
 
         foreach ($relations as $first => $v) {
             if (isset($input[$first])) {
+                foreach ($input[$first] as $key => $value) {
+                    if (is_array($value) && ! Arr::isAssoc($value)) {
+                        $input["$first.$key"] = $value;
+                    }
+                }
+
                 $input = array_merge($input, Arr::dot([$first => $input[$first]]));
             }
         }

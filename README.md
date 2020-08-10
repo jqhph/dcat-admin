@@ -30,17 +30,19 @@
 
 ## 截图
 
-![](https://cdn.learnku.com/uploads/images/202007/24/38389/4bCfBdtvq5.png!large)
+![](https://cdn.learnku.com/uploads/images/202008/08/38389/YRZvU7LEq9.jpg!large)
 
-![](https://cdn.learnku.com/uploads/images/202007/24/38389/35KJXfVXib.png!large)
+![](https://cdn.learnku.com/uploads/images/202008/08/38389/F4PRdaiGrP.jpg!large)
+![](https://cdn.learnku.com/uploads/images/202008/08/38389/B7ALEoKOPn.jpg!large)
 
-![](https://cdn.learnku.com/uploads/images/202004/24/38389/GBkt9jYnW0.png!large)
+![](https://cdn.learnku.com/uploads/images/202008/08/38389/HNom4eX9xr.jpg!large)
 
-![](https://cdn.learnku.com/uploads/images/202007/12/38389/DUzCgtpPi8.png!large)
+![](https://cdn.learnku.com/uploads/images/202008/08/38389/RnExzKgH8T.jpg!large)
 
-![](https://cdn.learnku.com/uploads/images/202007/23/38389/sdgD7s9DP4.png!large)
+![](https://cdn.learnku.com/uploads/images/202008/08/38389/O67S62aI4s.jpg!large)
 
-![](https://cdn.learnku.com/uploads/images/202007/12/38389/fjSNhbtg6f.png!large)
+![](https://cdn.learnku.com/uploads/images/202008/08/38389/lGYIdhifb5.jpg!large)
+
 
 ## 功能特性
 

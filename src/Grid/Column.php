@@ -17,19 +17,19 @@ use Illuminate\Support\Traits\Macroable;
 
 /**
  * @method $this editable(bool $refresh = false)
- * @method $this switch(string $color = '')
- * @method $this switchGroup($columns = [], string $color = '')
+ * @method $this switch(string $color = '', $refresh = false)
+ * @method $this switchGroup($columns = [], string $color = '', $refresh = false)
  * @method $this image($server = '', int $width = 200, int $height = 200)
  * @method $this label($style = 'primary', int $max = null)
  * @method $this button($style = 'success');
  * @method $this link($href = '', $target = '_blank');
  * @method $this badge($style = 'primary', int $max = null);
  * @method $this progressBar($style = 'primary', $size = 'sm', $max = 100)
- * @method $this checkbox($options = [])
- * @method $this radio($options = [])
+ * @method $this checkbox($options = [], $refresh = false)
+ * @method $this radio($options = [], $refresh = false)
  * @method $this expand($callbackOrButton = null)
  * @method $this table($titles = [])
- * @method $this select($options = [])
+ * @method $this select($options = [], $refresh = false)
  * @method $this modal($title = '', $callback = null)
  * @method $this showTreeInDialog($callbackOrNodes = null)
  * @method $this qrcode($formatter = null, $width = 150, $height = 150)
@@ -186,11 +186,29 @@ class Column
      */
     public function __construct($name, $label)
     {
-        $this->name = $name;
+        $this->name = $this->formatName($name);
 
         $this->label = $this->formatLabel($label);
 
         $this->callResolving();
+    }
+
+    protected function formatName($name)
+    {
+        if (! Str::contains($name, '.')) {
+            return $name;
+        }
+
+        $names = explode('.', $name);
+        $count = count($names);
+
+        foreach ($names as $i => &$name) {
+            if ($i + 1 < $count) {
+                $name = Str::snake($name);
+            }
+        }
+
+        return implode('.', $names);
     }
 
     /**
