@@ -64,10 +64,11 @@ HTML;
     public function renderColumn($row, $id)
     {
         $this->setupScript();
+        $title = e($this->getTitle($row, $id));
 
         return <<<EOT
 <div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid">
-    <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" data-label="{$this->getTitle($row, $id)}">
+    <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" data-label="{$title}">
     <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
 </div>        
 EOT;
