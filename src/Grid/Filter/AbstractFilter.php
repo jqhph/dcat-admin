@@ -201,6 +201,14 @@ abstract class AbstractFilter
     }
 
     /**
+     * @return Filter
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Get siblings of current filter.
      *
      * @param null $index

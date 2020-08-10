@@ -160,9 +160,13 @@ class Text extends Presenter
      */
     public function inputmask($options = [], $icon = 'pencil')
     {
+        Admin::js('@jquery.inputmask');
+
+        $options['rightAlign'] = false;
+
         $options = json_encode($options);
 
-        Admin::script("$('#filter-modal input.{$this->filter->getId()}').inputmask($options);");
+        Admin::script("$('#{$this->filter->getParent()->filterID()} input.{$this->filter->getId()}').inputmask($options);");
 
         $this->icon = $icon;
 
