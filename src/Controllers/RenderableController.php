@@ -29,6 +29,7 @@ class RenderableController
     protected function render($renderable)
     {
         return Helper::render($renderable->render())
+            .Admin::html()
             .Admin::asset()->scriptToHtml()
             .Admin::asset()->styleToHtml();
     }

@@ -35,7 +35,11 @@ class Modal extends AbstractDisplayer
         modal.find('.modal-body').loading();
         
         $.ajax('{$url}').then(function (data) {
-            modal.find('.modal-body').html(data);
+            var html = Dcat.assets.executeScripts(data, function () {
+                Dcat.triggerReady();
+            }).render();
+            
+            modal.find('.modal-body').html(html);
         });
     })
 })();

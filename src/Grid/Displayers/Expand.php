@@ -109,7 +109,11 @@ $('.grid-expand').off('click').on('click', function () {
             $('.dcat-loading').css({position: 'inherit', 'padding-top': '70px'});
         
             $.ajax(url+'&key='+rowKey).then(function (data) {
-                collapse.html(data);
+                var html = Dcat.assets.executeScripts(data, function () {
+                    Dcat.triggerReady();
+                }).render();
+            
+                collapse.html(html);
             });
         }
 
