@@ -5,10 +5,7 @@ namespace Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Support\Helper;
-use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 abstract class Filter implements Renderable
 {
@@ -138,37 +135,7 @@ abstract class Filter implements Renderable
      */
     protected function withQuery($model, string $query, array $params)
     {
-        $column = $this->getOriginalColumnName();
-
-        if (! Str::contains($column, '.')) {
-            $model->$query($column, ...$params);
-
-            return;
-        }
-
-        $this->withRelationQuery($model, $query, $params);
-    }
-
-    /**
-     * @param mixed $model
-     * @param string $query
-     * @param mixed ...$params
-     *
-     * @return void
-     */
-    protected function withRelationQuery($model, string $query, array $params)
-    {
-        $column = $this->getOriginalColumnName();
-
-        $relation = substr($column, 0, strrpos($column, '.'));
-        array_unshift($params, Arr::last(explode('.', $column)));
-
-        // 增加对whereHasIn的支持
-        $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
-
-        $model->$method($relation, function ($relation) use ($params, $query) {
-            $relation->$query(...$params);
-        });
+        Helper::withQueryCondition($model, $this->getOriginalColumnName(), $query, $params);
     }
 
     /**

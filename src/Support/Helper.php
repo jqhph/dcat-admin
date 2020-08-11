@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Support;
 
 use Dcat\Admin\Grid;
+use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -752,5 +753,49 @@ class Helper
                 $input = array_merge($input, Arr::dot([$first => $input[$first]]));
             }
         }
+    }
+
+    /**
+     * 设置查询条件.
+     *
+     * @param mixed $model
+     * @param string $column
+     * @param string $query
+     * @param mixed array $params
+     *
+     * @return void
+     */
+    public static function withQueryCondition($model, ?string $column, string $query, array $params)
+    {
+        if (! Str::contains($column, '.')) {
+            $model->$query($column, ...$params);
+
+            return;
+        }
+
+        static::withRelationQuery($model, $column, $query, $params);
+    }
+
+    /**
+     * 设置关联关系查询条件.
+     *
+     * @param mixed $model
+     * @param string $column
+     * @param string $query
+     * @param mixed ...$params
+     *
+     * @return void
+     */
+    public static function withRelationQuery($model, ?string $column, string $query, array $params)
+    {
+        $relation = substr($column, 0, strrpos($column, '.'));
+        array_unshift($params, Arr::last(explode('.', $column)));
+
+        // 增加对whereHasIn的支持
+        $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
+
+        $model->$method($relation, function ($relation) use ($params, $query) {
+            $relation->$query(...$params);
+        });
     }
 }
