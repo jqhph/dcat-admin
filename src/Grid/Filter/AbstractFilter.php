@@ -519,14 +519,15 @@ abstract class AbstractFilter
      */
     protected function buildRelationQuery(...$params)
     {
-        $relation = substr($this->column, 0, strrpos($this->column, '.'));
-        $params[0] = Arr::last(explode('.', $this->column));
+        $column = explode('.', $this->column);
+
+        $params[0] = array_pop($column);
 
         // 增加对whereHasIn的支持
         $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
 
-        return [$method => [$relation, function ($relation) use ($params) {
-            call_user_func_array([$relation, $this->query], $params);
+        return [$method => [implode('.', $column), function ($q) use ($params) {
+            call_user_func_array([$q, $this->query], $params);
         }]];
     }
 

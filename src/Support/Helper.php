@@ -788,13 +788,14 @@ class Helper
      */
     public static function withRelationQuery($model, ?string $column, string $query, array $params)
     {
-        $relation = substr($column, 0, strrpos($column, '.'));
-        array_unshift($params, Arr::last(explode('.', $column)));
+        $column = explode('.', $column);
+
+        array_unshift($params, array_pop($column));
 
         // 增加对whereHasIn的支持
         $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
 
-        $model->$method($relation, function ($relation) use ($params, $query) {
+        $model->$method(implode('.', $column), function ($relation) use ($params, $query) {
             $relation->$query(...$params);
         });
     }
