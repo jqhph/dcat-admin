@@ -159,7 +159,7 @@ class AuthController extends Controller
      */
     protected function settingForm()
     {
-        RETURN new Form(new Administrator(), function (Form $form) {
+        return new Form(new Administrator(), function (Form $form) {
             $form->action(admin_url('auth/setting'));
 
             $form->disableCreatingCheck();

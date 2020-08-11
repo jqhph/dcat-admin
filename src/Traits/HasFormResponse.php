@@ -84,7 +84,7 @@ trait HasFormResponse
     }
 
     /**
-     * 设置当前URL
+     * 设置当前URL.
      *
      * @param string $url
      *
