@@ -94,6 +94,7 @@ class Form implements Renderable
         }
 
     const REQUEST_NAME = '_form_';
+    const CURRENT_URL_NAME = '_current_';
 
     /**
      * @var string
@@ -744,7 +745,7 @@ JS
      */
     public function sanitize(array $input)
     {
-        Arr::forget($input, [static::REQUEST_NAME, '_token', '_current_']);
+        Arr::forget($input, [static::REQUEST_NAME, '_token', static::CURRENT_URL_NAME]);
 
         return $this->prepareInput($input);
     }
@@ -793,7 +794,7 @@ JS
             $this->method('POST');
             $this->action(route(admin_api_route('form')));
             $this->hidden(static::REQUEST_NAME)->default(get_called_class());
-            $this->hidden('_current_')->default($this->getCurrentUrl());
+            $this->hidden(static::CURRENT_URL_NAME)->default($this->getCurrentUrl());
         }
     }
 

@@ -103,6 +103,8 @@ class Form implements Renderable
      */
     const REMOVE_FLAG_NAME = '_remove_';
 
+    const CURRENT_URL_NAME = '_current_';
+
     /**
      * Available fields.
      *
