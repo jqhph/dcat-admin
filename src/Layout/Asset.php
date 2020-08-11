@@ -243,7 +243,6 @@ class Asset
      */
     public $fonts = [
         '@nunito',
-        '@montserrat',
     ];
 
     /**
