@@ -113,7 +113,7 @@ class Between extends Filter
             return;
         }
 
-        $this->withQuery($model, 'whereBetween', array_values($value));
+        $this->withQuery($model, 'whereBetween', [array_values($value)]);
     }
 
     protected function addScript()
