@@ -55,7 +55,7 @@ class QuickSearch extends AbstractTool
     /**
      * @return string
      */
-    public function queryName()
+    public function getQueryName()
     {
         return $this->queryName;
     }

@@ -58,7 +58,7 @@ trait HasQuickSearch
     {
         if ($this->quickSearch) {
             $this->quickSearch->setQueryName(
-                $this->getName().$this->quickSearch->queryName()
+                $this->getName().$this->quickSearch->getQueryName()
             );
         }
     }
@@ -94,7 +94,7 @@ trait HasQuickSearch
             return;
         }
 
-        $query = request()->get($this->quickSearch->queryName());
+        $query = request()->get($this->quickSearch->getQueryName());
 
         if ($query === '' || $query === null) {
             return;
@@ -104,7 +104,7 @@ trait HasQuickSearch
         $this->model()
             ->disableBindTreeQuery()
             ->treeUrlWithoutQuery(
-                $this->quickSearch->queryName()
+                $this->quickSearch->getQueryName()
             );
 
         if ($this->search instanceof \Closure) {
