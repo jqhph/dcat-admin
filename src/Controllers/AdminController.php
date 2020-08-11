@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Controllers;
 
-use Dcat\Admin\IFrameGrid;
+use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
 use Illuminate\Routing\Controller;
 
@@ -56,8 +56,12 @@ class AdminController extends Controller
      */
     public function index(Content $content)
     {
-        if (request(IFrameGrid::QUERY_NAME)) {
-            return $content->body($this->iFrameGrid());
+        if (request(Grid::IFRAME_QUERY_NAME)) {
+            if (method_exists($this, 'iframe')) {
+                return $content->full()->body($this->iframe());
+            }
+
+            return $content->full()->body($this->iFrameGrid());
         }
 
         return $content

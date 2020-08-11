@@ -38,6 +38,8 @@ class Grid
     const CREATE_MODE_DEFAULT = 'default';
     const CREATE_MODE_DIALOG = 'dialog';
 
+    const IFRAME_QUERY_NAME = '_grid_iframe_';
+
     /**
      * The grid data model instance.
      *
@@ -800,11 +802,31 @@ HTML;
     }
 
     /**
+     * @return $this
+     */
+    public function inIframe()
+    {
+        $this->setName('_dialog_');
+        $this->disableCreateButton();
+        $this->disableActions();
+        $this->disablePerPages();
+        $this->disableBatchActions();
+
+        $this->rowSelector()->click();
+
+        Admin::style('#app{padding: 1.4rem 1rem 1rem}');
+
+        return $this;
+    }
+
+    /**
      * Enable responsive tables.
      *
      * @see https://github.com/nadangergeo/RWD-Table-Patterns
      *
      * @return Responsive
+     *
+     * @deprecated 即将在2.0版本中废弃
      */
     public function responsive()
     {
