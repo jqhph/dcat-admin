@@ -5,7 +5,6 @@ namespace Dcat\Admin\Controllers;
 use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Models\Administrator as AdministratorModel;
 use Dcat\Admin\Models\Repositories\Administrator;
 use Dcat\Admin\Show;
