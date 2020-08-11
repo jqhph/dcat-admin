@@ -81,17 +81,30 @@
 
 > 如果安装过程中出现`composer`下载过慢或安装失败的情况，请运行命令`composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/`把`composer`镜像更换为阿里云镜像。
 
-
-首先请确保已经安装了`laravel`，如果没有安装`laravel`，则可以通过以下命令安装：
-```
-composer create-project --prefer-dist laravel/laravel 项目名称 5.8.*
+首先需要安装`laravel`，如已安装可以跳过此步骤
+```bash
+composer create-project --prefer-dist laravel/laravel 项目名称 7.*
 # 或
 composer create-project --prefer-dist laravel/laravel 项目名称
 ```
 
-安装好了`laravel`，然后设置数据库连接设置正确。
+安装完`laravel`之后需要修改`.env`文件，设置数据库连接设置正确
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=dcat-admin
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+安装`dcat-admin`
+
 
 ```
+cd {项目名称}
+
 composer require dcat/laravel-admin
 ```
 
@@ -106,11 +119,20 @@ php artisan admin:publish
 然后运行下面的命令完成安装：
 
 > 执行这一步命令可能会报以下错误`Specified key was too long ... 767 bytes`，如果出现这个报错，请在`app/Providers/AppServiceProvider.php`文件的`boot`方法中加上代码`\Schema::defaultStringLength(191);`，然后删除掉数据库中的所有数据表，再重新运行一遍`php artisan admin:install`命令即可。
+
 ```
 php artisan admin:install
 ```
 
-启动服务后，在浏览器打开 `http://localhost/admin/` ,使用用户名 `admin` 和密码 `admin`登陆.
+上述步骤操作完成之后就可以配置`web`服务了，**注意需要把`web`目录指向`public`目录**！如果用的是`nginx`，还需要在配置中加上伪静态配置
+```dotenv
+location / {
+	try_files $uri $uri/ /index.php?$query_string;
+}
+```
+
+启动服务后，在浏览器打开 `http://localhost/admin`，使用用户名 `admin` 和密码 `admin`登陆。
+
 
 <a name="extensions"></a>
 ## 扩展
