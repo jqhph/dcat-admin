@@ -10,6 +10,7 @@ use Dcat\Admin\Grid\Filter\Presenter\Presenter;
 use Dcat\Admin\Grid\Filter\Presenter\Radio;
 use Dcat\Admin\Grid\Filter\Presenter\Select;
 use Dcat\Admin\Grid\Filter\Presenter\Text;
+use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -521,7 +522,10 @@ abstract class AbstractFilter
         $relation = substr($this->column, 0, strrpos($this->column, '.'));
         $params[0] = Arr::last(explode('.', $this->column));
 
-        return ['whereHas' => [$relation, function ($relation) use ($params) {
+        // 增加对whereHasIn的支持
+        $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
+
+        return [$method => [$relation, function ($relation) use ($params) {
             call_user_func_array([$relation, $this->query], $params);
         }]];
     }

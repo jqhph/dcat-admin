@@ -19,6 +19,6 @@ class Nlt extends Equal
             return;
         }
 
-        $model->where($this->getColumnName(), '>=', $value);
+        $this->withQuery($model, 'where', ['>=', $value]);
     }
 }
