@@ -129,7 +129,7 @@ abstract class Widget implements Renderable
      */
     public function with($key, $value = null)
     {
-        if(is_array($key)) {
+        if (is_array($key)) {
             $this->variables = array_merge($this->variables, $key);
         } else {
             $this->variables[$key] = $value;
