@@ -261,9 +261,11 @@ var modal = $(this).find('.modal-body');
 
 modal.html('<div style="min-height:150px"></div>').loading();
         
-Dcat.helpers.asyncRender('{$url}', function (html) {
-    modal.html(html);
-});
+setTimeout(function () {
+    Dcat.helpers.asyncRender('{$url}', function (html) {
+        modal.html(html);
+    });
+}, 100);
 JS
 );
     }
@@ -319,7 +321,7 @@ HTML;
         }
 
         return <<<HTML
-<span data-toggle="modal" data-target="#{$this->getId()}">{$button}</span>
+<span style="cursor: pointer" data-toggle="modal" data-target="#{$this->getId()}">{$button}</span>
 HTML;
     }
 }
