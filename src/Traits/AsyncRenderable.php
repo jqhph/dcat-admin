@@ -14,11 +14,11 @@ trait AsyncRenderable
     /**
      * 获取请求地址
      *
-     * @return string
+     * @return string|null
      */
     public function getRequestUrl()
     {
-        return $this->getRenderable()->getUrl();
+        return optional($this->getRenderable())->getUrl();
     }
 
     /**
@@ -39,27 +39,5 @@ trait AsyncRenderable
     public function getRenderable()
     {
         return $this->renderable;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRenderableScript()
-    {
-        if (! $this->getRenderable()) {
-            return;
-        }
-
-        return <<<JS
-function render(callback) {
-    $.ajax('{$this->getRequestUrl()}').then(function (data) {
-        callback(
-            Dcat.assets.executeScripts(data, function () {
-                Dcat.triggerReady();
-            }).render()
-        );
-    })
-}
-JS;
     }
 }

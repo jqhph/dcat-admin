@@ -244,4 +244,17 @@ export default class Helpers {
             Dcat.warning('预览失败');
         };
     }
+
+    // 异步加载
+    asyncRender(url, callback) {
+        let Dcat = this.dcat;
+
+        $.ajax(url).then(function (data) {
+            callback(
+                Dcat.assets.executeScripts(data, function () {
+                    Dcat.triggerReady();
+                }).render()
+            );
+        })
+    }
 }

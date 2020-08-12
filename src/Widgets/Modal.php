@@ -14,8 +14,6 @@ class Modal extends Widget
 {
     use AsyncRenderable;
 
-    protected $view = 'admin::widgets.modal';
-
     /**
      * @var string
      */
@@ -254,8 +252,7 @@ JS;
 
     protected function addRenderableScript()
     {
-        $script = $this->getRenderableScript();
-        if (! $script) {
+        if (! $url = $this->getRequestUrl()) {
             return;
         }
 
@@ -264,9 +261,7 @@ var modal = $(this).find('.modal-body');
 
 modal.html('<div style="min-height:150px"></div>').loading();
         
-{$script}
-
-render(function (html) {
+Dcat.helpers.asyncRender('{$url}', function (html) {
     modal.html(html);
 });
 JS

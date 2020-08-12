@@ -17,7 +17,7 @@ class Modal extends AbstractDisplayer
 
     protected function setUpLazyRenderable(LazyRenderable $renderable)
     {
-        return $renderable->with('key', $this->getKey());
+        return clone $renderable->with('key', $this->getKey());
     }
 
     public function display($callback = null)

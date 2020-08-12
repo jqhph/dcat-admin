@@ -101,13 +101,9 @@ $('.grid-expand').off('click').on('click', function () {
             collapse.find('div').loading();
             $('.dcat-loading').css({position: 'inherit', 'padding-top': '70px'});
         
-            $.ajax(url+'&key='+rowKey).then(function (data) {
-                var html = Dcat.assets.executeScripts(data, function () {
-                    Dcat.triggerReady();
-                }).render();
-            
+            Dcat.helpers.asyncRender(url+'&key='+rowKey, function (html) {
                 collapse.html(html);
-            });
+            })
         }
 
         $(this).data('inserted', 1);
