@@ -119,16 +119,13 @@ abstract class Widget implements Renderable
         ]);
     }
 
-    public function addScript()
-    {
-        $this->script && Admin::script($this->script);
-    }
-
     /**
      * 收集静态资源.
      */
-    public static function collectAssets()
+    protected function collectAssets()
     {
+        $this->script && Admin::script($this->script);
+
         static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);
     }
@@ -148,8 +145,7 @@ abstract class Widget implements Renderable
      */
     public function render()
     {
-        static::collectAssets();
-        $this->addScript();
+        $this->collectAssets();
 
         return $this->html();
     }
