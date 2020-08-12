@@ -53,8 +53,6 @@ trait AsyncRenderable
         return <<<JS
 function render(callback) {
     $.ajax('{$this->getRequestUrl()}').then(function (data) {
-        _loading = 0;
-        
         callback(
             Dcat.assets.executeScripts(data, function () {
                 Dcat.triggerReady();

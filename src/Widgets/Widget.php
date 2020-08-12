@@ -174,6 +174,10 @@ abstract class Widget implements Renderable
      */
     public function html()
     {
+        if (! $this->view) {
+            return;
+        }
+
         return view($this->view, $this->variables())->render();
     }
 

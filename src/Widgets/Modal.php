@@ -278,16 +278,26 @@ JS
         $this->addRenderableScript();
         $this->addEventScript();
 
-        $this->with([
-            'id'      => $this->id,
-            'size'    => $this->size,
-            'title'   => $this->renderTitle(),
-            'content' => $this->renderContent(),
-        ]);
-
         Admin::html(parent::render());
 
         return $this->renderButton();
+    }
+
+    public function html()
+    {
+        return <<<HTML
+<div class="modal fade" id="{$this->getId()}" role="dialog">
+    <div class="modal-dialog modal-{$this->size}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{$this->renderTitle()}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">{$this->renderContent()}</div>
+        </div>
+    </div>
+</div>
+HTML;
     }
 
     protected function renderTitle()
@@ -314,9 +324,7 @@ JS
         }
 
         return <<<HTML
-<span class="grid-expand" data-toggle="modal" data-target="#{$this->getId()}">
-   $button
-</span>
+<span data-toggle="modal" data-target="#{$this->getId()}">{$button}</span>
 HTML;
     }
 }

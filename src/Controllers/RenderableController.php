@@ -4,6 +4,7 @@ namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Support\LazyRenderable;
 use Illuminate\Http\Request;
 
 class RenderableController
@@ -15,21 +16,18 @@ class RenderableController
      */
     public function handle(Request $request)
     {
-        $class = $request->get('renderable');
+        $renderable = $this->newRenderable($request);
 
-        $class = str_replace('_', '\\', $class);
+        $renderable::collectAssets();
+        $this->addScript();
 
-        if (class_exists($class)) {
-            return $this->render(new $class($request->all()));
-        }
+        $this->forgetDefaultAssets();
 
-        return $class;
+        return $this->render($renderable);
     }
 
-    protected function render($renderable)
+    protected function render(LazyRenderable $renderable)
     {
-        Admin::script('Dcat.pjaxResponded()', true);
-
         $asset = Admin::asset();
 
         return Helper::render($renderable->render())
@@ -38,5 +36,26 @@ class RenderableController
             .$asset->cssToHtml()
             .$asset->scriptToHtml()
             .$asset->styleToHtml();
+    }
+
+    protected function newRenderable(Request $request)
+    {
+        $class = $request->get('renderable');
+
+        $class = str_replace('_', '\\', $class);
+
+        return new $class($request->all());
+    }
+
+    protected function addScript()
+    {
+        Admin::script('Dcat.pjaxResponded()', true);
+    }
+
+    protected function forgetDefaultAssets()
+    {
+        Admin::baseJs([]);
+        Admin::baseCss([]);
+        Admin::fonts([]);
     }
 }
