@@ -2,9 +2,9 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Dcat\Admin\Widgets\Modal as WidgetModal;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\LazyRenderable;
+use Dcat\Admin\Widgets\Modal as WidgetModal;
 
 class Modal extends AbstractDisplayer
 {
@@ -41,7 +41,6 @@ class Modal extends AbstractDisplayer
 
         if ($callback && is_string($callback) && is_subclass_of($callback, LazyRenderable::class)) {
             $html = $this->setUpLazyRenderable($callback::make());
-
         } elseif ($callback && $callback instanceof LazyRenderable) {
             $html = $this->setUpLazyRenderable($callback);
         }
