@@ -45,6 +45,11 @@ class Modal extends Widget
     protected $events = [];
 
     /**
+     * @var int
+     */
+    protected $delay = 10;
+
+    /**
      * Modal constructor.
      *
      * @param string|Closure|Renderable                $title
@@ -113,6 +118,20 @@ class Modal extends Widget
     public function xl()
     {
         return $this->size('xl');
+    }
+
+    /**
+     * 设置loading效果延迟时间.
+     *
+     * @param int $delay
+     *
+     * @return $this
+     */
+    public function delay(int $delay)
+    {
+        $this->delay = $delay;
+
+        return $this;
     }
 
     /**
@@ -265,9 +284,9 @@ setTimeout(function () {
     Dcat.helpers.asyncRender('{$url}', function (html) {
         modal.html(html);
     });
-}, 100);
+}, {$this->delay});
 JS
-);
+        );
     }
 
     public function render()
