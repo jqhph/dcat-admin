@@ -2,13 +2,13 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Traits\AsyncRenderable;
 use Dcat\Admin\Support\LazyRenderable;
+use Dcat\Admin\Traits\AsyncRenderable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
-use Closure;
 
 class Modal extends Widget
 {
@@ -88,7 +88,7 @@ class Modal extends Widget
     }
 
     /**
-     * 设置弹窗尺寸为 sm 300px
+     * 设置弹窗尺寸为 sm 300px.
      *
      * @return $this
      */
@@ -98,7 +98,7 @@ class Modal extends Widget
     }
 
     /**
-     * 设置弹窗尺寸为 lg 800px
+     * 设置弹窗尺寸为 lg 800px.
      *
      * @return $this
      */
@@ -108,7 +108,7 @@ class Modal extends Widget
     }
 
     /**
-     * 设置弹窗尺寸为 xl 1140px
+     * 设置弹窗尺寸为 xl 1140px.
      *
      * @return $this
      */
@@ -221,7 +221,7 @@ class Modal extends Widget
     }
 
     /**
-     * 获取弹窗元素选择器
+     * 获取弹窗元素选择器.
      *
      * @return string
      */
