@@ -190,6 +190,8 @@ class Filter implements Renderable
      */
     protected $mode = self::MODE_RIGHT_SIDE;
 
+    protected $conditions;
+
     /**
      * Create a new filter instance.
      *
@@ -460,6 +462,10 @@ class Filter implements Renderable
             return [];
         }
 
+        if ($this->conditions !== null) {
+            return $this->conditions;
+        }
+
         $params = [];
 
         foreach ($inputs as $key => $value) {
@@ -478,6 +484,8 @@ class Filter implements Renderable
 
                 $this->grid()->model()->disableBindTreeQuery();
             }
+
+            $this->conditions = $conditions;
         });
     }
 
