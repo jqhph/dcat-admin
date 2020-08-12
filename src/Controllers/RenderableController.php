@@ -28,9 +28,15 @@ class RenderableController
 
     protected function render($renderable)
     {
+        Admin::script('Dcat.pjaxResponded()', true);
+
+        $asset = Admin::asset();
+
         return Helper::render($renderable->render())
             .Admin::html()
-            .Admin::asset()->scriptToHtml()
-            .Admin::asset()->styleToHtml();
+            .$asset->jsToHtml()
+            .$asset->cssToHtml()
+            .$asset->scriptToHtml()
+            .$asset->styleToHtml();
     }
 }

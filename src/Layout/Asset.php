@@ -661,20 +661,20 @@ class Asset
 
         return <<<HTML
 <script data-exec-on-popstate>
-Dcat.ready(function () { 
-    try {
-        {$script}
-    } catch (e) {
-        console.error(e)
-    }
-});
 (function () {
     try {
         {$directScript}
     } catch (e) {
         console.error(e)
     }
-})()
+})();
+Dcat.ready(function () { 
+    try {
+        {$script}
+    } catch (e) {
+        console.error(e)
+    }
+})
 </script>
 HTML;
     }
