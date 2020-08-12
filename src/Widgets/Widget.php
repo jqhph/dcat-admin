@@ -120,6 +120,25 @@ abstract class Widget implements Renderable
     }
 
     /**
+     * 设置视图变量.
+     *
+     * @param string|array $key
+     * @param mixed        $value
+     *
+     * @return $this
+     */
+    public function with($key, $value = null)
+    {
+        if(is_array($key)) {
+            $this->variables = array_merge($this->variables, $key);
+        } else {
+            $this->variables[$key] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
      * 收集静态资源.
      */
     protected function collectAssets()
