@@ -63,6 +63,7 @@ class Column
         }
 
     const SELECT_COLUMN_NAME = '__row_selector__';
+    const ACTION_COLUMN_NAME = '__actions__';
 
     /**
      * Displayers for grid column.
