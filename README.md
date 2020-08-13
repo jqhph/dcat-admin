@@ -32,12 +32,10 @@
 
 ![](https://cdn.learnku.com/uploads/images/202008/08/38389/YRZvU7LEq9.jpg!large)
 
-![](https://cdn.learnku.com/uploads/images/202008/08/38389/F4PRdaiGrP.jpg!large)
-![](https://cdn.learnku.com/uploads/images/202008/08/38389/B7ALEoKOPn.jpg!large)
-
-![](https://cdn.learnku.com/uploads/images/202008/08/38389/HNom4eX9xr.jpg!large)
-
-![](https://cdn.learnku.com/uploads/images/202008/08/38389/RnExzKgH8T.jpg!large)
+![](http://www.dcatadmin.com/assets/img/users.jpg)
+![](http://www.dcatadmin.com/assets/img/users-dark.jpg)
+![](http://www.dcatadmin.com/assets/img/users-2.jpg)
+![](http://www.dcatadmin.com/assets/img/users-dark-2.jpg)
 
 ![](https://cdn.learnku.com/uploads/images/202008/08/38389/O67S62aI4s.jpg!large)
 
