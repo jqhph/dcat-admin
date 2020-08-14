@@ -755,7 +755,9 @@ JS
         Helper::prepareHasOneRelation($this->fields, $input);
 
         foreach ($input as $column => $value) {
-            if (is_null($field = $this->field($column))) {
+            $field = $this->field($column);
+
+            if (! $field instanceof Field) {
                 unset($input[$column]);
 
                 continue;
