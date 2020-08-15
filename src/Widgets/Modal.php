@@ -15,11 +15,6 @@ class Modal extends Widget
     use AsyncRenderable;
 
     /**
-     * @var string
-     */
-    protected $id;
-
-    /**
      * @var string|Closure|Renderable
      */
     protected $title;
@@ -28,6 +23,11 @@ class Modal extends Widget
      * @var string|Closure|Renderable
      */
     protected $content;
+
+    /**
+     * @var string|Closure|Renderable
+     */
+    protected $footer;
 
     /**
      * @var string|Closure|Renderable
@@ -50,6 +50,11 @@ class Modal extends Widget
     protected $delay = 10;
 
     /**
+     * @var string
+     */
+    protected $load = '';
+
+    /**
      * Modal constructor.
      *
      * @param string|Closure|Renderable                $title
@@ -60,20 +65,8 @@ class Modal extends Widget
         $this->id('modal-'.Str::random(8));
         $this->title($title);
         $this->content($content);
-    }
 
-    /**
-     * 设置弹窗ID.
-     *
-     * @param string $id
-     *
-     * @return $this
-     */
-    public function id(string $id)
-    {
-        $this->id = $id;
-
-        return $this;
+        $this->class('modal fade');
     }
 
     /**
@@ -181,13 +174,25 @@ class Modal extends Widget
     }
 
     /**
-     * @param $content
+     * @param string|Closure|Renderable|LazyRenderable $content
      *
      * @return $this
      */
     public function body($content)
     {
         return $this->content($content);
+    }
+
+    /**
+     * @param string|Closure|Renderable|LazyRenderable $footer
+     *
+     * @return $this
+     */
+    public function footer($footer)
+    {
+        $this->footer = $footer;
+
+        return $this;
     }
 
     /**
@@ -206,6 +211,18 @@ class Modal extends Widget
     }
 
     /**
+     * 监听弹窗显示事件.
+     *
+     * @param string $script
+     *
+     * @return $this
+     */
+    public function onShow(string $script)
+    {
+        return $this->on('show.bs.modal', $script);
+    }
+
+    /**
      * 监听弹窗已显示事件.
      *
      * @param string $script
@@ -215,6 +232,18 @@ class Modal extends Widget
     public function onShown(string $script)
     {
         return $this->on('shown.bs.modal', $script);
+    }
+
+    /**
+     * 监听弹窗隐藏事件.
+     *
+     * @param string $script
+     *
+     * @return $this
+     */
+    public function onHide(string $script)
+    {
+        return $this->on('hide.bs.modal', $script);
     }
 
     /**
@@ -230,11 +259,25 @@ class Modal extends Widget
     }
 
     /**
+     * 监听弹窗异步渲染完成事件.
+     *
+     * @param string $script
+     *
+     * @return $this
+     */
+    public function onLoad(string $script)
+    {
+        $this->load .= "(function () { {$script} })();";
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getId()
     {
-        return $this->id;
+        return $this->getHtmlAttribute('id');
     }
 
     /**
@@ -276,13 +319,15 @@ JS;
         }
 
         $this->on('show.bs.modal', <<<JS
-var modal = $(this).find('.modal-body');
+var modal = $(this), body = modal.find('.modal-body');
 
-modal.html('<div style="min-height:150px"></div>').loading();
+body.html('<div style="min-height:150px"></div>').loading();
         
 setTimeout(function () {
     Dcat.helpers.asyncRender('{$url}', function (html) {
-        modal.html(html);
+        body.html(html);
+
+        {$this->load}
     });
 }, {$this->delay});
 JS
@@ -302,7 +347,7 @@ JS
     public function html()
     {
         return <<<HTML
-<div class="modal fade" id="{$this->getId()}" role="dialog">
+<div {$this->formatHtmlAttributes()} role="dialog">
     <div class="modal-dialog modal-{$this->size}">
         <div class="modal-content">
             <div class="modal-header">
@@ -310,6 +355,7 @@ JS
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">{$this->renderContent()}</div>
+            {$this->renderFooter()}
         </div>
     </div>
 </div>
@@ -324,6 +370,19 @@ HTML;
     protected function renderContent()
     {
         return Helper::render($this->content);
+    }
+
+    protected function renderFooter()
+    {
+        $footer = Helper::render($this->footer);
+
+        if (! $footer) {
+            return;
+        }
+
+        return <<<HTML
+<div class="modal-footer">{$footer}</div>
+HTML;
     }
 
     protected function renderButton()
