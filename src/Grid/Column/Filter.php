@@ -156,6 +156,21 @@ abstract class Filter implements Renderable
     }
 
     /**
+     * @return string
+     */
+    protected function renderFormButtons()
+    {
+        return <<<HMLT
+<li class="dropdown-divider"></li>
+<li>
+    <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>&nbsp;
+    <a href="{$this->urlWithoutFilter()}" class="btn btn-sm btn-default"><i class="feather icon-rotate-ccw"></i></a>
+</li>
+HMLT;
+
+    }
+
+    /**
      * Get form action url.
      *
      * @return string

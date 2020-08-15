@@ -83,6 +83,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Range                  range($start, $end, $label = '')
  * @method Field\Color                  color($column, $label = '')
  * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable            selectTable($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -165,6 +166,7 @@ class Form implements Renderable
         'range'          => Field\Range::class,
         'color'          => Field\Color::class,
         'array'          => Field\ArrayField::class,
+        'selectTable'    => Field\SelectTable::class,
     ];
 
     /**

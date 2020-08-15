@@ -191,11 +191,7 @@ JS;
                 value="{$value['end']}" 
                 autocomplete="off"/>
         </li>
-        <li class="dropdown-divider"></li>
-        <li class="dropdown-item">
-            <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>
-            <span onclick="Dcat.reload('{$this->urlWithoutFilter()}')" class="btn btn-sm btn-default"><i class="feather icon-rotate-ccw"></i></span>
-        </li>
+        {$this->renderFormButtons()}
     </ul>
     </form>
 </span>

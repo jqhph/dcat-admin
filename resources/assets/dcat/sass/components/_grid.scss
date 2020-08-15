@@ -51,3 +51,44 @@
     color: #777;
   }
 }
+
+
+.grid-modal {
+  .modal-body {
+    //background:$body-bg;
+    padding:1.5rem
+  }
+}
+
+.table-card {
+  .filter-box {
+    background: transparent;
+    box-shadow: none!important;
+    padding: 0!important;
+    margin: 1rem 0 -1rem!important;
+    padding-bottom: 0!important;
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .custom-data-table-header .table-responsive .top .dataTables_filter .form-control {
+    border-radius: .4rem;
+    border: 1px solid $input-border-color;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
+body:not(.dark-mode) .grid-modal {
+  .table-collapse .table.custom-data-table {
+    padding: 5px 0 0;
+  }
+  .table-collapse table.custom-data-table.dataTable thead th {
+    height: 20px;
+  }
+
+  .table-collapse .custom-data-table.dataTable tbody td {
+    height: 35px;
+  }
+}

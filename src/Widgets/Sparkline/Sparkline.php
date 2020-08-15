@@ -155,13 +155,13 @@ class Sparkline extends Widget
     /**
      * @return string
      */
-    protected function script()
+    protected function addScript()
     {
         $values = json_encode($this->values);
         $options = json_encode($this->options);
 
         if (! $this->allowBuildRequest()) {
-            return <<<JS
+            return $this->script = <<<JS
 $('#{$this->getId()}').sparkline($values, $options);
 {$this->buildCombinationScript()};
 JS;
@@ -178,7 +178,7 @@ $('#'+id).sparkline(response.values || $values, opt);
 JS
         );
 
-        return $this->buildRequestScript();
+        return $this->script = $this->buildRequestScript();
     }
 
     /**
@@ -205,14 +205,17 @@ JS;
      */
     public function render()
     {
-        Admin::script($this->script());
+        $this->addScript();
 
         $this->setHtmlAttribute([
             'id' => $this->getId(),
         ]);
 
-        $this->collectAssets();
+        return parent::render();
+    }
 
+    public function html()
+    {
         return <<<HTML
 <span {$this->formatHtmlAttributes()}></span>
 HTML;

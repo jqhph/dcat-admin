@@ -802,24 +802,6 @@ HTML;
     }
 
     /**
-     * @return $this
-     */
-    public function inIframe()
-    {
-        $this->setName('_dialog_');
-        $this->disableCreateButton();
-        $this->disableActions();
-        $this->disablePerPages();
-        $this->disableBatchActions();
-
-        $this->rowSelector()->click();
-
-        Admin::style('#app{padding: 1.4rem 1rem 1rem}');
-
-        return $this;
-    }
-
-    /**
      * Enable responsive tables.
      *
      * @see https://github.com/nadangergeo/RWD-Table-Patterns

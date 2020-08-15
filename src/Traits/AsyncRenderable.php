@@ -26,7 +26,7 @@ trait AsyncRenderable
      *
      * @return $this
      */
-    public function setRenderable(LazyRenderable $renderable)
+    public function setRenderable(?LazyRenderable $renderable)
     {
         $this->renderable = $renderable;
 

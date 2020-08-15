@@ -54,7 +54,7 @@ class RowSelector
     public function renderHeader()
     {
         return <<<HTML
-<div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid">
+<div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid checkbox-grid-header">
     <input type="checkbox" class="select-all {$this->grid->getSelectAllName()}">
     <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
 </div>
@@ -67,7 +67,7 @@ HTML;
         $title = e($this->getTitle($row, $id));
 
         return <<<EOT
-<div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid">
+<div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid checkbox-grid-column">
     <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" data-label="{$title}">
     <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
 </div>        
