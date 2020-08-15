@@ -66,20 +66,6 @@ class UserController extends AdminController
         });
     }
 
-    protected function iframe()
-    {
-        return new Grid(new Administrator(), function (Grid $grid) {
-            $grid->inIframe();
-
-            $grid->quickSearch(['id', 'name', 'username']);
-
-            $grid->column('id')->sortable();
-            $grid->column('username');
-            $grid->column('name');
-            $grid->column('created_at');
-        });
-    }
-
     protected function detail($id)
     {
         return Show::make($id, new Administrator('roles'), function (Show $show) {

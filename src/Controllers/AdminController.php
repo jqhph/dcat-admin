@@ -57,10 +57,6 @@ class AdminController extends Controller
     public function index(Content $content)
     {
         if (request(Grid::IFRAME_QUERY_NAME)) {
-            if (method_exists($this, 'iframe')) {
-                return $content->full()->body($this->iframe());
-            }
-
             return $content->full()->body($this->iFrameGrid());
         }
 

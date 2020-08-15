@@ -44,11 +44,6 @@ class RoleController extends AdminController
         });
     }
 
-    protected function iframe()
-    {
-        return $this->grid()->inIframe();
-    }
-
     protected function detail($id)
     {
         return Show::make($id, new Role('permissions'), function (Show $show) {

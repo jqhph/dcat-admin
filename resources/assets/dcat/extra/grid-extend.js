@@ -1,6 +1,12 @@
 (function (w, $) {
     let Dcat = w.Dcat;
-    
+
+    /**
+     * 树状表格
+     *
+     * @param opts
+     * @constructor
+     */
     function Tree(opts) {
         this.options = $.extend({
             button: null,
@@ -168,6 +174,12 @@
         }
     };
 
+    /**
+     * 可排序功能
+     *
+     * @param opts
+     * @constructor
+     */
     function Orderable(opts) {
         this.options = $.extend({
             button: null,
@@ -274,6 +286,60 @@
         },
     };
 
+    /**
+     * 异步加载表格
+     *
+     * @param options
+     * @constructor
+     */
+    function AsyncTable(options) {
+        options = $.extend({
+            container: '.table-card',
+        }, options)
+
+        function load(url, box) {
+            var $this = $(this);
+
+            box = box || $this;
+
+            url = $this.data('url') || url;
+            if (! url) {
+                return;
+            }
+
+            box.loading({background: 'transparent!important'});
+
+            Dcat.helpers.asyncRender(url, function (html) {
+                box.loading(false);
+                box.html(html);
+                bind(box);
+                box.trigger('table:loaded');
+            });
+        }
+
+        function bind(box) {
+            function loadLink() {
+                load($(this).attr('href'), box);
+
+                return false;
+            }
+
+            box.find('.pagination .page-link').on('click', loadLink);
+            box.find('.grid-column-header a').on('click', loadLink);
+
+            box.find('form').on('submit', function () {
+                load($(this).attr('action')+'&'+$(this).serialize(), box);
+
+                return false;
+            });
+
+            box.find('.filter-box .reset').on('click', loadLink);
+        }
+
+        $(options.container).on('table:load', load);
+    }
+
+
     function isTr(v) {
         return $(v).prop('tagName').toLocaleLowerCase() === 'tr'
     }
@@ -337,4 +403,7 @@
     Dcat.grid.Orderable = function (opts) {
         return new Orderable(opts);
     };
+    Dcat.grid.AsyncTable =function (opts) {
+        return new AsyncTable(opts)
+    }
 })(window, jQuery);

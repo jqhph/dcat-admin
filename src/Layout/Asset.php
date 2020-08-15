@@ -58,6 +58,9 @@ class Asset
         '@resource-selector' => [
             'js' => '@admin/dcat/extra/resource-selector.js',
         ],
+        '@select-table' => [
+            'js' => '@admin/dcat/extra/select-table.js',
+        ],
         '@layer' => [
             'js' => '@admin/dcat/plugins/layer/layer.js',
         ],

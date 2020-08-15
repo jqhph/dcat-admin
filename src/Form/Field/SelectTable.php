@@ -11,6 +11,10 @@ class SelectTable extends Field
 {
     use PlainInput;
 
+    protected static $js = [
+        '@select-table',
+    ];
+
     /**
      * @var TableModal
      */
@@ -101,107 +105,28 @@ class SelectTable extends Field
     protected function addScript()
     {
         $this->script .= <<<JS
-(function () {
-    var modal = $(replaceNestedFormIndex('#{$this->modal->getId()}'));
-    var input = $(replaceNestedFormIndex('#hidden-{$this->id}'));
-    var options = {$this->options};
-    
-    function getSelectedRows() {
-        var selected = [], ids = [];
-    
-        modal.find('.checkbox-grid-column input[type="checkbox"]:checked').each(function() {
-            var id = $(this).data('id'), i, exist;
-    
-            for (i in selected) {
-                if (selected[i].id === id) {
-                    exist = true
-                }
-            }
-    
-            if (! exist) {
-                selected.push({'id': id, 'label': $(this).data('label')});
-                ids.push(id)
-            }
-        });
-    
-        return [selected, ids];
-    }
-    
-    function setKeys(ids) {
-        input.val(ids.length ? ids.join(',') : '');
-    }
-            
-    $(replaceNestedFormIndex('#{$this->getButtonId()}')).on('click', function () {
-        var selected = getSelectedRows();
-        
-        setKeys(selected[1]);
-        
-        render(selected[0]);
-        
-        $(this).parents('.modal').modal('toggle');
-    });
-    
-    function render(selected) {
-        var box = $('{$this->getElementClassSelector()}'),
-            placeholder = box.find('.default-text'),
-            option = box.find('.option');
-        
-        if (! selected) {
-            placeholder.removeClass('d-none');
-            option.addClass('d-none');
-            
-            return;
-        }
-        
-        placeholder.addClass('d-none');
-        option.removeClass('d-none');
-        
-        var remove = $("<div class='pull-right ' style='font-weight:bold;cursor:pointer'>×</div>");
-
-        option.text(selected[0]['label']);
-        option.append(remove);
-        
-        remove.on('click', function () {
-            setKeys([]);
-            placeholder.removeClass('d-none');
-            option.addClass('d-none');
-        });
-    }
-    
-    render(options[0]);
-})();
+Dcat.grid.SelectTable({
+    modal: replaceNestedFormIndex('#{$this->modal->getId()}'),
+    container: '{$this->getElementClassSelector()}',
+    input: replaceNestedFormIndex('#hidden-{$this->id}'),
+    button: replaceNestedFormIndex('#{$this->getButtonId()}'),
+    values: {$this->options},
+});
 JS;
     }
 
     protected function setUpModal()
     {
         $this->modal
+            ->getTable()
+            ->getRenderable()
+            ->with('key', $this->form->getKey());
+
+        $this->modal
             ->join()
             ->id($this->getElementId())
             ->runScript(false)
-            ->footer($this->renderFooter())
-            ->onLoad($this->getOnLoadScript());
-    }
-
-    protected function getOnLoadScript()
-    {
-        // 实现单选效果
-        return <<<JS
-$(this).find('.checkbox-grid-header').remove();
-
-var checkbox = $(this).find('.checkbox-grid-column input[type="checkbox"]');
-
-checkbox.on('change', function () {
-    var id = $(this).data('id');
-    
-    checkbox.each(function () {
-        if ($(this).data('id') != id) {
-            $(this).prop('checked', false);
-            $(this).parents('tr').css('background-color', '');
-        }
-    });
-});
-JS;
+            ->footer($this->renderFooter());
     }
 
     public function render()
@@ -227,7 +152,7 @@ JS;
         $this->script = $this->modal->getScript();
 
         $this->addScript();
-        //dd($this->script);
+
         return parent::render();
     }
 

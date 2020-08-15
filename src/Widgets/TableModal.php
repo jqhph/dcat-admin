@@ -134,6 +134,22 @@ class TableModal extends Widget
             .$this->table->getScript();
     }
 
+    /**
+     * @return Modal
+     */
+    public function getModal()
+    {
+        return $this->modal;
+    }
+
+    /**
+     * @return AsyncTable
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
     public static function __callStatic($method, $arguments)
     {
         return static::make()->$method(...$arguments);

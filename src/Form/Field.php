@@ -493,17 +493,41 @@ class Field implements Renderable
      */
     public function options($options = [])
     {
+        $this->options = $this->prepareOptions($options);
+
+        return $this;
+    }
+
+    /**
+     * @param array|Arrayable $options
+     *
+     * @return $this
+     */
+    public function mergeOptions($options)
+    {
+        $this->options = array_merge($this->options, $this->prepareOptions($options));
+
+        return $this;
+    }
+
+    /**
+     * Prepare options.
+     *
+     * @param $options
+     *
+     * @return array|mixed
+     */
+    protected function prepareOptions($options)
+    {
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
+        }
+
         if ($options instanceof Arrayable) {
             $options = $options->toArray();
         }
 
-        if (is_array($this->options)) {
-            $this->options = array_merge($this->options, $options);
-        } else {
-            $this->options = $options;
-        }
-
-        return $this;
+        return $options;
     }
 
     /**

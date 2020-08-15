@@ -11,6 +11,10 @@ class AsyncTable extends Widget
 {
     use AsyncRenderable;
 
+    public static $js = [
+        '@grid-extension',
+    ];
+
     protected $load = true;
 
     public function __construct(LazyRenderable $renderable = null, bool $load = true)
@@ -53,48 +57,7 @@ class AsyncTable extends Widget
     protected function addScript()
     {
         Admin::script(<<<'JS'
-(function () {
-    function load(url, box) {
-        var $this = $(this);
-        
-        box = box || $this;
-        
-        url = $this.data('url') || url;
-        if (! url) {
-            return;
-        }
-        
-        box.loading({background: 'transparent!important'});
-        
-        Dcat.helpers.asyncRender(url, function (html) {
-            box.loading(false);
-            box.html(html);
-            bind(box);
-            box.trigger('table:loaded');
-        });
-    }            
-                
-    function bind(box) {
-        function loadLink() {
-            load($(this).attr('href'), box);
-            
-            return false;
-        }
-        
-        box.find('.pagination .page-link').on('click', loadLink);
-        box.find('.grid-column-header a').on('click', loadLink);
-  
-        box.find('form').on('submit', function () {
-            load($(this).attr('action')+'&'+$(this).serialize(), box);
-            
-            return false;
-        });
-         
-        box.find('.filter-box .reset').on('click', loadLink);
-    }
-    
-    $('.table-card').on('table:load', load);
-})();
+Dcat.grid.AsyncTable('.table-card');
 JS
         );
 

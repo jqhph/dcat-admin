@@ -55,6 +55,11 @@ class Modal extends Widget
     protected $load = '';
 
     /**
+     * @var string
+     */
+    protected $subScript;
+
+    /**
      * @var bool
      */
     protected $join = false;
@@ -326,6 +331,7 @@ class Modal extends Widget
         $this->script = <<<JS
 (function () {
     var modal = $(replaceNestedFormIndex('{$this->getElementSelector()}'));
+    {$this->subScript};
     {$script}
 })();
 JS;
@@ -337,17 +343,26 @@ JS;
             return;
         }
 
+        $this->subScript = <<<JS
+modal.on('modal:load', function () {
+    Dcat.helpers.asyncRender('{$url}', function (html) {
+        body.html(html);
+        
+        {$this->load}
+        
+        modal.trigger('modal:loaded');
+    });
+});
+JS;
+
+
         $this->on('show.bs.modal', <<<JS
-var modal = $(this), body = modal.find('.modal-body');
+body = modal.find('.modal-body');
 
 body.html('<div style="min-height:150px"></div>').loading();
         
 setTimeout(function () {
-    Dcat.helpers.asyncRender('{$url}', function (html) {
-        body.html(html);
-
-        {$this->load}
-    });
+    modal.trigger('modal:load')
 }, {$this->delay});
 JS
         );
