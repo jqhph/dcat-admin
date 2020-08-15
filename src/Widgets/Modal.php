@@ -55,6 +55,11 @@ class Modal extends Widget
     protected $load = '';
 
     /**
+     * @var bool
+     */
+    protected $join = false;
+
+    /**
      * Modal constructor.
      *
      * @param string|Closure|Renderable                $title
@@ -184,6 +189,20 @@ class Modal extends Widget
     }
 
     /**
+     * 设置是否返回弹窗HTML.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function join(bool $value = true)
+    {
+        $this->join = $value;
+
+        return $this;
+    }
+
+    /**
      * @param string|Closure|Renderable|LazyRenderable $footer
      *
      * @return $this
@@ -306,7 +325,7 @@ class Modal extends Widget
 
         $this->script = <<<JS
 (function () {
-    var modal = $('{$this->getElementSelector()}');
+    var modal = $(replaceNestedFormIndex('{$this->getElementSelector()}'));
     {$script}
 })();
 JS;
@@ -338,6 +357,10 @@ JS
     {
         $this->addRenderableScript();
         $this->addEventScript();
+
+        if ($this->join) {
+            return $this->renderButton().parent::render();
+        }
 
         Admin::html(parent::render());
 

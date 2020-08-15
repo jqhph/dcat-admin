@@ -246,15 +246,23 @@ export default class Helpers {
     }
 
     // 异步加载
-    asyncRender(url, callback) {
+    asyncRender(url, done, error) {
         let Dcat = this.dcat;
 
         $.ajax(url).then(function (data) {
-            callback(
+            done(
                 Dcat.assets.executeScripts(data, function () {
                     Dcat.triggerReady();
                 }).render()
             );
+        }, function (a, b, c) {
+            if (error) {
+                if (error(a, b, c) === false) {
+                    return false;
+                }
+            }
+
+            Dcat.handleAjaxError(a, b, c);
         })
     }
 }
