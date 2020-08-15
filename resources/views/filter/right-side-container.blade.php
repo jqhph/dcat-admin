@@ -1,5 +1,5 @@
 <div class="hidden">
-    <div class="right-side-filter-container" style="{!! $style !!}"  id="{{ $filterID }}">
+    <div class="filter-box right-side-filter-container" style="{!! $style !!}"  id="{{ $filterID }}">
         <form action="{!! $action !!}" class="form-horizontal" pjax-container method="get">
             <div class="mb-1" style="height: 55px">
                 <div class="p-1 position-fixed d-flex justify-content-between header">
