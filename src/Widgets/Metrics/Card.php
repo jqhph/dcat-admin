@@ -309,7 +309,7 @@ class Card extends Widget
      */
     public function chartMarginTop(int $number)
     {
-        $this->chartMarginBottom = $number;
+        $this->chartMarginTop = $number;
 
         $this->useChart();
 
