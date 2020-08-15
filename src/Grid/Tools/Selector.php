@@ -170,6 +170,8 @@ class Selector
 
         $query = $this->request->query();
 
+        $query[$this->grid->model()->getPageName()] = null;
+
         $selected = $this->parseSelected();
         $options = Arr::get($selected, $column, []);
         $queryName = "{$this->getQueryName()}.{$column}";
