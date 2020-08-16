@@ -18,7 +18,6 @@ use Illuminate\Contracts\Support\Renderable;
  * @method $this onHidden(string $script)
  * @method $this onHide(string $script)
  * @method $this footer(string|\Closure|Renderable $footer)
- * @method $this getId()
  * @method $this getElementSelector()
  */
 class TableModal extends Widget
@@ -47,7 +46,6 @@ class TableModal extends Widget
         'onShow',
         'onHidden',
         'onHide',
-        'getId',
         'getElementSelector',
         'footer',
     ];
@@ -88,9 +86,25 @@ class TableModal extends Widget
 
         $this->table = AsyncTable::make($renderable, false);
 
-        $this->modal
-            ->body($this->table)
-            ->onShow($this->table->getLoadScript());
+        $this->modal->body($this->table);
+
+        return $this;
+    }
+
+    /**
+     * 设置或获取ID.
+     *
+     * @param string|null $id
+     *
+     * @return |string
+     */
+    public function id(string $id = null)
+    {
+        $result = $this->modal->id($id);
+
+        if ($id === null) {
+            return $result;
+        }
 
         return $this;
     }
@@ -114,6 +128,10 @@ class TableModal extends Widget
      */
     public function html()
     {
+        if ($this->runScript) {
+            $this->modal->onShow($this->table->getLoadScript());
+        }
+
         if ($this->loadScript) {
             $this->table->onLoad($this->loadScript);
         }
@@ -160,7 +178,7 @@ class TableModal extends Widget
         if (in_array($method, $this->allowMethods, true)) {
             $result = $this->modal->$method(...$parameters);
 
-            if (in_array($method, ['getElementSelector', 'getId'], true)) {
+            if (in_array($method, ['getElementSelector'], true)) {
                 return $result;
             }
 

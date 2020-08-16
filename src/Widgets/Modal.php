@@ -297,21 +297,13 @@ class Modal extends Widget
     }
 
     /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->getHtmlAttribute('id');
-    }
-
-    /**
      * 获取弹窗元素选择器.
      *
      * @return string
      */
     public function getElementSelector()
     {
-        return '#'.$this->getId();
+        return '#'.$this->id();
     }
 
     protected function addEventScript()
@@ -436,7 +428,7 @@ HTML;
         }
 
         return <<<HTML
-<span style="cursor: pointer" data-toggle="modal" data-target="#{$this->getId()}">{$button}</span>
+<span style="cursor: pointer" data-toggle="modal" data-target="#{$this->id()}">{$button}</span>
 HTML;
     }
 }

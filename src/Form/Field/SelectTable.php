@@ -106,8 +106,8 @@ class SelectTable extends Field
     {
         $this->script .= <<<JS
 Dcat.grid.SelectTable({
-    modal: replaceNestedFormIndex('#{$this->modal->getId()}'),
-    container: '{$this->getElementClassSelector()}',
+    modal: replaceNestedFormIndex('#{$this->modal->id()}'),
+    container: replaceNestedFormIndex('#{$this->getAttribute('id')}'),
     input: replaceNestedFormIndex('#hidden-{$this->id}'),
     button: replaceNestedFormIndex('#{$this->getButtonId()}'),
     values: {$this->options},
@@ -117,8 +117,10 @@ JS;
 
     protected function setUpModal()
     {
-        $this->modal
-            ->getTable()
+        $table = $this->modal->getTable();
+
+        $table
+            ->id('table-card-'.$this->getElementId())
             ->getRenderable()
             ->with('key', $this->form->getKey());
 
@@ -127,6 +129,16 @@ JS;
             ->id($this->getElementId())
             ->runScript(false)
             ->footer($this->renderFooter());
+
+        // 显示弹窗的时候异步加载表格
+        $this->modal->getModal()->onShow(
+            <<<JS
+if (! modal.table) {
+    modal.table = $(replaceNestedFormIndex('{$table->getElementSelector()}'));
+}            
+modal.table.trigger('table:load');
+JS
+        );
     }
 
     public function render()
@@ -139,7 +151,8 @@ JS;
         $this->prepend('<i class="feather icon-arrow-up"></i>')
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('type', 'text')
-            ->defaultAttribute('name', $name);
+            ->defaultAttribute('name', $name)
+            ->defaultAttribute('id', 'container-'.$this->getElementId());
 
         $this->addVariables([
             'prepend'     => $this->prepend,
@@ -152,7 +165,7 @@ JS;
         $this->script = $this->modal->getScript();
 
         $this->addScript();
-
+//        dd($this->script);
         return parent::render();
     }
 
@@ -177,7 +190,7 @@ HTML;
      *
      * @return string
      */
-    protected function getButtonId()
+    public function getButtonId()
     {
         return 'submit-'.$this->id;
     }

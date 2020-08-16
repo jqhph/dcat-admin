@@ -38,8 +38,8 @@ class MultipleSelectTable extends SelectTable
     {
         $this->script .= <<<JS
 Dcat.grid.SelectTable({
-    modal: replaceNestedFormIndex('#{$this->modal->getId()}'),
-    container: '{$this->getElementClassSelector()}',
+    modal: replaceNestedFormIndex('#{$this->modal->id()}'),
+    container: replaceNestedFormIndex('#{$this->getAttribute('id')}'),
     input: replaceNestedFormIndex('#hidden-{$this->id}'),
     button: replaceNestedFormIndex('#{$this->getButtonId()}'),
     multiple: true,

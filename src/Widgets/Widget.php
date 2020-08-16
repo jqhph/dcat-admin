@@ -268,7 +268,7 @@ abstract class Widget implements Renderable
         }
 
         // 获取属性
-        if (count($parameters) === 0) {
+        if (count($parameters) === 0 || $parameters[0] === null) {
             return $this->getHtmlAttribute($method);
         }
 

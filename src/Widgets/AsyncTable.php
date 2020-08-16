@@ -56,10 +56,9 @@ class AsyncTable extends Widget
 
     protected function addScript()
     {
-        Admin::script(<<<'JS'
-Dcat.grid.AsyncTable('.table-card');
-JS
-        );
+        $this->script = <<<JS
+Dcat.grid.AsyncTable({container: replaceNestedFormIndex('{$this->getElementSelector()}')});
+JS;
 
         if ($this->load) {
             $this->script .= $this->getLoadScript();
@@ -80,7 +79,7 @@ JS
     public function getLoadScript()
     {
         return <<<JS
-$(replaceNestedFormIndex('{$this->getElementSelector()}')).trigger('table:load');
+$('{$this->getElementSelector()}').trigger('table:load');
 JS;
     }
 
