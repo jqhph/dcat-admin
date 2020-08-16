@@ -19,6 +19,7 @@ class RenderableController
         $renderable = $this->newRenderable($request);
 
         $renderable::collectAssets();
+
         $this->addScript();
 
         $this->forgetDefaultAssets();

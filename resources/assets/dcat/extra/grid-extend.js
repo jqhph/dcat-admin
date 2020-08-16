@@ -307,6 +307,9 @@
                 return;
             }
 
+            // 缓存当前请求地址
+            box.attr('data-current', url);
+
             box.loading({background: 'transparent!important'});
 
             Dcat.helpers.asyncRender(url, function (html) {
@@ -334,6 +337,16 @@
             });
 
             box.find('.filter-box .reset').on('click', loadLink);
+
+            Dcat.ready(function () {
+                setTimeout(function () {
+                    box.find('.grid-refresh').off('click').on('click', function () {
+                        load(box.data('current'), box);
+
+                        return false;
+                    })
+                }, 10)
+            })
         }
 
         $(options.container).on('table:load', load);

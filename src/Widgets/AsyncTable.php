@@ -14,15 +14,32 @@ class AsyncTable extends Widget
         '@grid-extension',
     ];
 
+    /**
+     * 设置是否自动加载.
+     *
+     * @var bool
+     */
     protected $load = true;
 
-    public function __construct(LazyRenderable $renderable = null, bool $load = true)
+    /**
+     * 设置是否启用表格简化模式.
+     *
+     * @var bool
+     */
+    protected $simple;
+
+    /**
+     * AsyncTable constructor.
+     *
+     * @param LazyRenderable $renderable
+     * @param bool $load
+     */
+    public function __construct(LazyRenderable $renderable, bool $load = true)
     {
         $this->setRenderable($renderable);
         $this->load($load);
 
         $this->id('table-card-'.Str::random(8));
-        $this->class('table-card');
     }
 
     /**
@@ -35,6 +52,24 @@ class AsyncTable extends Widget
     public function load(bool $value)
     {
         $this->load = $value;
+
+        return $this;
+    }
+
+    /**
+     * 设置是否启用表格简化模式.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function simple(bool $value = true)
+    {
+        $this->simple = $value;
+
+        if ($value) {
+            $this->class('table-card', true);
+        }
 
         return $this;
     }
@@ -84,6 +119,10 @@ JS;
 
     public function render()
     {
+        if ($this->simple !== null) {
+            $this->renderable->simple();
+        }
+
         $this->addScript();
 
         return parent::render();

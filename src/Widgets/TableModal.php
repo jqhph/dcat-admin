@@ -84,7 +84,7 @@ class TableModal extends Widget
             return $this;
         }
 
-        $this->table = AsyncTable::make($renderable, false);
+        $this->table = AsyncTable::make($renderable, false)->simple();
 
         $this->modal->body($this->table);
 
