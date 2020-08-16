@@ -6,7 +6,7 @@ use Dcat\Admin\Grid\LazyRenderable;
 use Illuminate\Contracts\Support\Renderable;
 
 /**
- * Class TableModal
+ * Class TableModal.
  *
  * @method $this title(string $title)
  * @method $this button(string|\Closure $title)
@@ -110,7 +110,7 @@ class TableModal extends Widget
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function html()
     {
@@ -125,7 +125,7 @@ class TableModal extends Widget
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getScript()
     {

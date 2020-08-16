@@ -167,7 +167,6 @@ abstract class Filter implements Renderable
     <a href="{$this->urlWithoutFilter()}" class="btn btn-sm btn-default"><i class="feather icon-rotate-ccw"></i></a>
 </li>
 HMLT;
-
     }
 
     /**

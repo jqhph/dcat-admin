@@ -3,9 +3,9 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Grid\LazyRenderable;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\TableModal;
-use Dcat\Admin\Grid\LazyRenderable;
 
 class SelectTable extends Field
 {
@@ -137,7 +137,7 @@ JS;
         $name = $this->getElementName();
 
         $this->prepend('<i class="feather icon-arrow-up"></i>')
-            ->defaultAttribute('class', 'form-control '. $this->getElementClassString())
+            ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('name', $name);
 
@@ -173,7 +173,7 @@ HTML;
     }
 
     /**
-     * 提交按钮ID
+     * 提交按钮ID.
      *
      * @return string
      */
