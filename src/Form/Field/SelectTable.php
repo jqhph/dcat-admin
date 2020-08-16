@@ -119,10 +119,7 @@ JS;
     {
         $table = $this->modal->getTable();
 
-        $table
-            ->id('table-card-'.$this->getElementId())
-            ->getRenderable()
-            ->with('key', $this->form->getKey());
+        $table->id('table-card-'.$this->getElementId());
 
         $this->modal
             ->join()
