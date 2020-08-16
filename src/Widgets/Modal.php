@@ -355,7 +355,6 @@ modal.on('modal:load', function () {
 });
 JS;
 
-
         $this->on('show.bs.modal', <<<JS
 body = modal.find('.modal-body');
 
