@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\LazyRenderable;
 use Dcat\Admin\Traits\AsyncRenderable;
 use Illuminate\Support\Str;
