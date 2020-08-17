@@ -22,7 +22,7 @@ abstract class LazyRenderable extends Renderable
     abstract public function grid(): Grid;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render()
     {
