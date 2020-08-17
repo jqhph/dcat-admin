@@ -3,10 +3,6 @@
 namespace Dcat\Admin\Grid\Filter\Presenter;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid\LazyRenderable;
-use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Widgets\TableModal;
-use Illuminate\Support\Str;
 
 class MultipleSelectTable extends SelectTable
 {
