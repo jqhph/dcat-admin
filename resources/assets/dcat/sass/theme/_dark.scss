@@ -22,7 +22,9 @@ body.dark-mode {
   background-color: $body-dark-bg;
   color: $body-dark-font-color;
 
-  .content-wrapper, .main-footer {
+  .body-bg,
+  .content-wrapper,
+  .main-footer {
     background: $body-dark-bg;
   }
 

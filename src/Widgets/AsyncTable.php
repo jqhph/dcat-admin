@@ -3,16 +3,18 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Grid\LazyRenderable;
-use Dcat\Admin\Traits\AsyncRenderable;
 use Illuminate\Support\Str;
 
 class AsyncTable extends Widget
 {
-    use AsyncRenderable;
-
     public static $js = [
         '@grid-extension',
     ];
+
+    /**
+     * @var LazyRenderable
+     */
+    protected $renderable;
 
     /**
      * 设置是否自动加载.
@@ -36,10 +38,29 @@ class AsyncTable extends Widget
      */
     public function __construct(LazyRenderable $renderable, bool $load = true)
     {
-        $this->setRenderable($renderable);
+        $this->from($renderable);
         $this->load($load);
 
-        $this->id('table-card-'.Str::random(8));
+        $this->class('async-table');
+        $this->id('async-table-'.Str::random(8));
+    }
+
+    /**
+     * 设置异步表格实例.
+     *
+     * @param LazyRenderable|null $renderable
+     *
+     * @return $this
+     */
+    public function from(?LazyRenderable $renderable)
+    {
+        if (! $renderable) {
+            return $this;
+        }
+
+        $this->renderable = $renderable;
+
+        return $this;
     }
 
     /**
@@ -68,7 +89,7 @@ class AsyncTable extends Widget
         $this->simple = $value;
 
         if ($value) {
-            $this->class('table-card', true);
+            $this->class('simple-grid', true);
         }
 
         return $this;
@@ -83,7 +104,7 @@ class AsyncTable extends Widget
      */
     public function onLoad(string $script)
     {
-        $this->script .= "$(replaceNestedFormIndex('{$this->getElementSelector()}')).on('table:loaded', function (event) { {$script} });";
+        $this->script .= "$('{$this->getElementSelector()}').on('table:loaded', function (event) { {$script} });";
 
         return $this;
     }
@@ -91,7 +112,7 @@ class AsyncTable extends Widget
     protected function addScript()
     {
         $this->script = <<<JS
-Dcat.grid.AsyncTable({container: replaceNestedFormIndex('{$this->getElementSelector()}')});
+Dcat.grid.AsyncTable({container: '{$this->getElementSelector()}'});
 JS;
 
         if ($this->load) {
@@ -131,7 +152,7 @@ JS;
     public function html()
     {
         $this->setHtmlAttribute([
-            'data-url' => $this->getRequestUrl(),
+            'data-url' => $this->renderable->getUrl(),
         ]);
 
         return <<<HTML

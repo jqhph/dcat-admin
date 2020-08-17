@@ -208,6 +208,8 @@ class Modal extends Widget
     }
 
     /**
+     * 设置弹窗底部内容.
+     *
      * @param string|Closure|Renderable|LazyRenderable $footer
      *
      * @return $this

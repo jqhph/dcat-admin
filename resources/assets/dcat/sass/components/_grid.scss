@@ -60,7 +60,7 @@
   }
 }
 
-.table-card {
+.simple-grid {
   .filter-box {
     background: transparent;
     box-shadow: none!important;
@@ -80,7 +80,7 @@
   }
 }
 
-body:not(.dark-mode) .grid-modal {
+body:not(.dark-mode) .simple-grid {
   .table-collapse .table.custom-data-table {
     padding: 5px 0 0;
   }
@@ -90,5 +90,10 @@ body:not(.dark-mode) .grid-modal {
 
   .table-collapse .custom-data-table.dataTable tbody td {
     height: 35px;
+  }
+
+  .table-collapse {
+    box-shadow: none;
+    border: 1px solid #ededf1!important;
   }
 }

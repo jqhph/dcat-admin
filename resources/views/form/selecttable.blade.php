@@ -13,13 +13,9 @@
                 <input name="{{ $name }}" type="hidden" id="hidden-{{ $id }}" value="{{ implode(',', \Dcat\Admin\Support\Helper::array($value)) }}" />
             @endif
             <div class="input-group-append">
-                <div class="btn btn-{{ $style }} " data-toggle="modal" data-target="#{{ $id }}">
-                    &nbsp;<i class="feather icon-arrow-up"></i>&nbsp;
-                </div>
+                {!! $dialog !!}
             </div>
         </div>
-
-        {!! $modal !!}
 
         @include('admin::form.help-block')
 

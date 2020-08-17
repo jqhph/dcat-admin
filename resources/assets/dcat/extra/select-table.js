@@ -1,10 +1,12 @@
 (function (w) {
     function SelectTable(options) {
         options = $.extend({
-            modal: null,
+            dialog: null,
             container: null,
             input: null,
-            button: null,
+            button: '.submit-btn',
+            cancel: '.cancel-btn',
+            table: '.async-table',
             multiple: false,
             max: 0,
             values: [],
@@ -17,9 +19,7 @@
             values = options.values;
 
         self.options = options;
-        self.$modal = $(options.modal);
         self.$input = $(options.input);
-        self.$button = $(options.button);
 
         self.labels = {};
 
@@ -30,18 +30,28 @@
         // 保存临时选中的值
         self.resetSelected();
 
-        // 提交按钮
-        self.$button.on('click', function () {
-            var selected = self.getSelectedRows();
+        $(document).on('dialog:shown', options.dialog, function () {
+            self.$dialog = $(options.dialog);
+            self.$button = self.$dialog.find(options.button);
+            self.$cancel = self.$dialog.find(options.cancel);
 
-            self.setKeys(selected[1]);
+            // 提交按钮
+            self.$button.on('click', function () {
+                var selected = self.getSelectedRows();
 
-            self.render(selected[0]);
+                self.setKeys(selected[1]);
 
-            self.$modal.modal('toggle');
+                self.render(selected[0]);
+
+                self.$dialog.trigger('dialog:close');
+            });
+
+            self.$cancel.on('click', function () {
+                self.$dialog.trigger('dialog:close');
+            });
+
+            self._bind();
         });
-
-        self._bind();
 
         self.render(values);
 
@@ -53,7 +63,7 @@
             let self = this, options = self.options;
 
             // 表格加载完成事件
-            self.$modal.find('.table-card').on('table:loaded', function () {
+            self.$dialog.find(options.table).on('table:loaded', function () {
                 let checkbox = self.getCheckbox();
 
                 if (! options.multiple) {
@@ -132,7 +142,7 @@
         },
 
         getCheckbox() {
-            return this.$modal.find('.checkbox-grid-column input[type="checkbox"]');
+            return this.$dialog.find('.checkbox-grid-column input[type="checkbox"]');
         },
 
         getSelectedRows() {
