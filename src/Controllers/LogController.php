@@ -70,16 +70,10 @@ class LogController extends Controller
             $grid->setActionClass(Grid\Displayers\Actions::class);
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('user_id', trans('admin.user'))
-                    ->selectResource('auth/users')
-                    ->options(function ($v) {
-                        if (! $v) {
-                            return $v;
-                        }
-                        $userModel = config('admin.database.users_model');
+                $userModel = config('admin.database.users_model');
 
-                        return $userModel::find((array) $v)->pluck('name', 'id');
-                    });
+                $filter->in('user_id', trans('admin.user'))
+                    ->multipleSelect($userModel::pluck('name', 'id'));
 
                 $filter->equal('method', trans('admin.method'))
                     ->select(

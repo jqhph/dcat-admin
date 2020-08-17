@@ -81,6 +81,22 @@ abstract class Presenter
     }
 
     /**
+     * Get filter value.
+     *
+     * @return array|string
+     */
+    public function value()
+    {
+        $value = $this->filter->getValue();
+
+        if ($value === null || $value === '') {
+            return $this->filter->getDefault();
+        }
+
+        return $value;
+    }
+
+    /**
      * Blade template variables for this presenter.
      *
      * @return array

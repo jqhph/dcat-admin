@@ -10,6 +10,7 @@ use Dcat\Admin\Grid\Filter\Presenter\Presenter;
 use Dcat\Admin\Grid\Filter\Presenter\Radio;
 use Dcat\Admin\Grid\Filter\Presenter\Select;
 use Dcat\Admin\Grid\Filter\Presenter\Text;
+use Dcat\Admin\Grid\LazyRenderable;
 use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -299,10 +300,32 @@ abstract class AbstractFilter
      * @param mixed $source
      *
      * @return Filter\Presenter\SelectResource
+     *
+     * @deprecated 即将在2.0版本中废弃，请使用 selectTable 和 multipleSelectTable 代替
      */
     public function selectResource($source = null)
     {
         return $this->setPresenter(new Filter\Presenter\SelectResource($source));
+    }
+
+    /**
+     * @param LazyRenderable $table
+     *
+     * @return mixed
+     */
+    public function selectTable(LazyRenderable $table)
+    {
+        return $this->setPresenter(new Filter\Presenter\SelectTable($table));
+    }
+
+    /**
+     * @param LazyRenderable $table
+     *
+     * @return mixed
+     */
+    public function multipleSelectTable(LazyRenderable $table)
+    {
+        return $this->setPresenter(new Filter\Presenter\MultipleSelectTable($table));
     }
 
     /**
@@ -472,6 +495,14 @@ abstract class AbstractFilter
         $parenName = $this->parent->getName();
 
         return $parenName ? "{$parenName}_{$this->column}" : $this->column;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
     }
 
     /**

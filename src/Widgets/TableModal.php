@@ -59,16 +59,21 @@ class TableModal extends Widget
      * TableModal constructor.
      *
      * @param null $title
-     * @param \Dcat\Admin\Grid\LazyRenderable|null $renderable
+     * @param \Dcat\Admin\Grid\LazyRenderable|null $table
      */
-    public function __construct($title = null, LazyRenderable $renderable = null)
+    public function __construct($title = null, LazyRenderable $table = null)
     {
         $this->modal = Modal::make()
             ->lg()
-            ->title($title)
             ->class('grid-modal', true);
 
-        $this->body($renderable);
+        if ($title instanceof LazyRenderable) {
+            $table = $title;
+            $title = null;
+        }
+
+        $this->title($title);
+        $this->body($table);
     }
 
     /**

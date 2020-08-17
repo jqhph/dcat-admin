@@ -54,9 +54,8 @@ abstract class LazyRenderable extends Renderable
 
         if ($this->allowSimpleMode()) {
             $grid->disableCreateButton();
-            $grid->disableActions();
             $grid->disablePerPages();
-            $grid->disableBatchActions();
+            $grid->disableBatchDelete();
             $grid->disableRefreshButton();
 
             $grid->filter()

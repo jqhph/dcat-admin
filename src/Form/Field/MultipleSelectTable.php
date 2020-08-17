@@ -2,10 +2,12 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 class MultipleSelectTable extends SelectTable
 {
+    public static $css = [
+        '@select2',
+    ];
+
     protected $view = 'admin::form.selecttable';
 
     /**
@@ -25,13 +27,6 @@ class MultipleSelectTable extends SelectTable
         $this->max = $max;
 
         return $this;
-    }
-
-    public function render()
-    {
-        Admin::css('@select2');
-
-        return parent::render();
     }
 
     protected function addScript()

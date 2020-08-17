@@ -163,6 +163,10 @@
                 placeholder.removeClass('d-none');
                 option.addClass('d-none');
 
+                if (options.multiple) {
+                    box.addClass('form-control');
+                }
+
                 return;
             }
 
