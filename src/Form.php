@@ -64,7 +64,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Html                   html($html, $label = '')
  * @method Field\Tags                   tags($column, $label = '')
  * @method Field\Icon                   icon($column, $label = '')
- * @method Field\Embeds                 embeds($column, $label = '')
+ * @method Field\Embeds                 embeds($column, $label = '', Closure $callback = null)
  * @method Field\Captcha                captcha()
  * @method Field\Listbox                listbox($column, $label = '')
  * @method Field\SelectResource         selectResource($column, $label = '')

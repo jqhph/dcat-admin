@@ -38,6 +38,13 @@ class File extends Field implements UploadFieldInterface
         $this->containerId = $this->generateId();
     }
 
+    public function setElementName($name)
+    {
+        $this->mergeOptions(['elementName' => $name]);
+
+        return parent::setElementName($name);
+    }
+
     /**
      * @return mixed
      */
@@ -174,7 +181,7 @@ class File extends Field implements UploadFieldInterface
 
         $this->forceOptions();
         $this->formatValue();
-        $this->setUpScript();
+        $this->addScript();
 
         $this->addVariables([
             'fileType'      => $this->options['isImage'] ? '' : 'file',
@@ -185,7 +192,7 @@ class File extends Field implements UploadFieldInterface
         return parent::render();
     }
 
-    protected function setUpScript()
+    protected function addScript()
     {
         $newButton = trans('admin.uploader.add_new_media');
         $options = JavaScript::format($this->options);
@@ -237,10 +244,6 @@ class File extends Field implements UploadFieldInterface
             }, 250);
         }
         resize();
-        
-        $('[name="file-{$this->getElementName()}"]').change(function () {
-            uploader.uploader.addFiles(this.files);
-        });
     }
 })();
 JS;
