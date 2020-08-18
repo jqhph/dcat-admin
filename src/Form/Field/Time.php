@@ -9,7 +9,7 @@ class Time extends Date
     public function render()
     {
         $this->prepend('<i class="fa fa-clock-o fa-fw"></i>')
-            ->defaultAttribute('style', 'width: 200px');
+            ->defaultAttribute('style', 'width: 200px;flex:none');
 
         return parent::render();
     }

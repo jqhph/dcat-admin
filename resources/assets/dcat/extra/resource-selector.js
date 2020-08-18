@@ -117,7 +117,7 @@
                 label = $this.data('label') || id,
                 exist = Dcat.helpers.isset(originalItems, id);
 
-            if ($this.prop('checked')) {
+            if ($this[0].checked) {
                 if (!exist) {
                     originalItems[id] = label;
                 }
@@ -197,8 +197,20 @@
 
         function bindCheckedDefaultEvent(iframeWin) {
             Dcat.ready(function () {
+                let $selectAll = $(layer.getChildFrame('.checkbox-grid .select-all', layerIdx)),
+                    $checkboxed = getAllCheckboxes();
+
                 clickCheckedItems();
-                getAllCheckboxes().change(function () {
+                if (maxItem != 1) {
+                    // 解决多选模式全选框无效问题
+                    $selectAll.on('change', function () {
+                        setTimeout(function () {
+                            $checkboxed.trigger('change');
+                        }, 1)
+                    });
+                }
+
+                $checkboxed.on('change', function () {
                     if (maxItem == 1) {
                         select($(this));
                     } else {
@@ -207,7 +219,7 @@
                 });
                 if (maxItem == 1) {
                     // 单选模式禁用全选按钮
-                    $(layer.getChildFrame('.checkbox-grid .select-all', layerIdx)).click(function () {
+                    $selectAll.on('click', function () {
                         return false;
                     });
                 }

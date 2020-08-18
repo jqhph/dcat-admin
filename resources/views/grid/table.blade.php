@@ -1,31 +1,7 @@
 
 <div class="card dcat-box dt-bootstrap4">
 
-    @if ($grid->allowToolbar())
-        <div class="data-list-view-header card-header p-1 d-block">
-            <div class="table-responsive d-block">
-                <div class="top d-block" style="padding: 0">
-                    @if(!empty($title))
-                        <h4 class="pull-left" style="margin:5px 10px 0;">
-                            {!! $title !!}&nbsp;
-                            @if(!empty($description))
-                                <small>{!! $description!!}</small>
-                            @endif
-                        </h4>
-                        <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                            {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}  {!! $grid->renderQuickSearch() !!}
-                        </div>
-                    @else
-                        {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
-
-                        <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                            {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
+    @include('admin::grid.table-toolbar')
 
     {!! $grid->renderFilter() !!}
 
@@ -75,19 +51,7 @@
 
     {!! $grid->renderFooter() !!}
 
-    @if ($paginator = $grid->paginator())
-        <div class="box-footer clearfix d-block" style="border-top: 0">
-            {!! $paginator->render() !!}
-        </div>
-    @else
-        <div class="box-footer clearfix" style="height:48px;line-height:25px;">
-            @if ($grid->rows()->isEmpty())
-                {!! trans('admin.pagination.range', ['first' => '<b>0</b>', 'last' => '<b>'.$grid->rows()->count().'</b>', 'total' => '<b>'.$grid->rows()->count().'</b>',]) !!}
-            @else
-                {!! trans('admin.pagination.range', ['first' => '<b>1</b>', 'last' => '<b>'.$grid->rows()->count().'</b>', 'total' => '<b>'.$grid->rows()->count().'</b>',]) !!}
-            @endif
-        </div>
-    @endif
+    @include('admin::grid.table-pagination')
 
 </div>
 <style>

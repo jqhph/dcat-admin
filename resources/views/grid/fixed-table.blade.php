@@ -1,35 +1,11 @@
 <div class="dcat-box custom-data-table dt-bootstrap4">
-    @if ($grid->allowToolbar())
-        <div class="custom-data-table-header">
-            <div class="table-responsive">
-                <div class="top d-block clearfix p-0">
-                    @if(!empty($title))
-                        <h4 class="pull-left" style="margin:5px 10px 0;">
-                            {!! $title !!}&nbsp;
-                            @if(!empty($description))
-                                <small>{!! $description!!}</small>
-                            @endif
-                        </h4>
-                        <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                            {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}  {!! $grid->renderQuickSearch() !!}
-                        </div>
-                    @else
-                        {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
-
-                        <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                            {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
+    @include('admin::grid.table-toolbar')
 
     {!! $grid->renderFilter() !!}
 
     {!! $grid->renderHeader() !!}
 
-    <div class="table-responsive table-wrapper">
+    <div class="table-responsive table-wrapper {{ $grid->option('table_collapse') ? 'table-collapse' : '' }}">
         <div class="tables-container">
             <div class="table-wrap table-main" data-height="{{ $tableHeight }}">
                 <table class="custom-data-table dataTable {{ $grid->formatTableClass() }}" id="{{ $tableId }}">
@@ -166,17 +142,5 @@
 
     {!! $grid->renderFooter() !!}
 
-    @if ($paginator = $grid->paginator())
-        <div class="box-footer clearfix " style="padding-bottom:5px;">
-            {!! $paginator->render() !!}
-        </div>
-    @else
-        <div class="box-footer clearfix text-80 " style="height:48px;line-height:25px;">
-            @if ($grid->rows()->isEmpty())
-                {!! trans('admin.pagination.range', ['first' => '<b>0</b>', 'last' => '<b>'.$grid->rows()->count().'</b>', 'total' => '<b>'.$grid->rows()->count().'</b>',]) !!}
-            @else
-                {!! trans('admin.pagination.range', ['first' => '<b>1</b>', 'last' => '<b>'.$grid->rows()->count().'</b>', 'total' => '<b>'.$grid->rows()->count().'</b>',]) !!}
-            @endif
-        </div>
-    @endif
+    @include('admin::grid.table-pagination')
 </div>

@@ -21,11 +21,6 @@ class Expand extends AbstractDisplayer
         $this->button = $button;
     }
 
-    protected function setUpLazyRenderable(LazyRenderable $renderable)
-    {
-        $renderable::collectAssets();
-    }
-
     public function display($callbackOrButton = null)
     {
         $html = $this->value;
@@ -44,13 +39,11 @@ class Expand extends AbstractDisplayer
         if ($callbackOrButton instanceof LazyRenderable) {
             $html = '<div style="min-height: 150px"></div>';
 
-            $this->setUpLazyRenderable($callbackOrButton);
-
             $remoteUrl = $callbackOrButton->getUrl();
         } elseif (is_string($callbackOrButton) && is_subclass_of($callbackOrButton, LazyRenderable::class)) {
             $html = '<div style="min-height: 150px"></div>';
 
-            $this->setUpLazyRenderable($renderable = $callbackOrButton::make());
+            $renderable = $callbackOrButton::make();
 
             $remoteUrl = $renderable->getUrl();
         } elseif ($callbackOrButton && is_string($callbackOrButton)) {
@@ -108,9 +101,9 @@ $('.grid-expand').off('click').on('click', function () {
             collapse.find('div').loading();
             $('.dcat-loading').css({position: 'inherit', 'padding-top': '70px'});
         
-            $.ajax(url+'&key='+rowKey).then(function (data) {
-                collapse.html(data);
-            });
+            Dcat.helpers.asyncRender(url+'&key='+rowKey, function (html) {
+                collapse.html(html);
+            })
         }
 
         $(this).data('inserted', 1);

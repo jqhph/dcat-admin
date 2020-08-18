@@ -41,7 +41,9 @@ trait CanFixColumns
     protected function applyFixColumns()
     {
         if ($this->fixColumns) {
-            $this->withBorder();
+            if (! $this->options['show_bordered'] && ! $this->options['table_collapse']) {
+                $this->tableCollapse();
+            }
 
             $this->fixColumns->apply();
         }

@@ -11,6 +11,7 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Widgets\DialogForm;
@@ -22,7 +23,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\MessageBag;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,6 +81,10 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
  * @method Field\Range                  range($start, $end, $label = '')
+ * @method Field\Color                  color($column, $label = '')
+ * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable            selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable    multipleSelectTable($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -101,64 +105,70 @@ class Form implements Renderable
      */
     const REMOVE_FLAG_NAME = '_remove_';
 
+    const CURRENT_URL_NAME = '_current_';
+
     /**
      * Available fields.
      *
      * @var array
      */
     protected static $availableFields = [
-        'button'         => Field\Button::class,
-        'checkbox'       => Field\Checkbox::class,
-        'currency'       => Field\Currency::class,
-        'date'           => Field\Date::class,
-        'dateRange'      => Field\DateRange::class,
-        'datetime'       => Field\Datetime::class,
-        'datetimeRange'  => Field\DatetimeRange::class,
-        'decimal'        => Field\Decimal::class,
-        'display'        => Field\Display::class,
-        'divider'        => Field\Divide::class,
-        'embeds'         => Field\Embeds::class,
-        'editor'         => Field\Editor::class,
-        'email'          => Field\Email::class,
-        'hidden'         => Field\Hidden::class,
-        'id'             => Field\Id::class,
-        'ip'             => Field\Ip::class,
-        'map'            => Field\Map::class,
-        'mobile'         => Field\Mobile::class,
-        'month'          => Field\Month::class,
-        'multipleSelect' => Field\MultipleSelect::class,
-        'number'         => Field\Number::class,
-        'password'       => Field\Password::class,
-        'radio'          => Field\Radio::class,
-        'rate'           => Field\Rate::class,
-        'select'         => Field\Select::class,
-        'slider'         => Field\Slider::class,
-        'switch'         => Field\SwitchField::class,
-        'text'           => Field\Text::class,
-        'textarea'       => Field\Textarea::class,
-        'time'           => Field\Time::class,
-        'timeRange'      => Field\TimeRange::class,
-        'url'            => Field\Url::class,
-        'year'           => Field\Year::class,
-        'html'           => Field\Html::class,
-        'tags'           => Field\Tags::class,
-        'icon'           => Field\Icon::class,
-        'captcha'        => Field\Captcha::class,
-        'listbox'        => Field\Listbox::class,
-        'selectResource' => Field\SelectResource::class,
-        'file'           => Field\File::class,
-        'image'          => Field\Image::class,
-        'multipleFile'   => Field\MultipleFile::class,
-        'multipleImage'  => Field\MultipleImage::class,
-        'hasMany'        => Field\HasMany::class,
-        'tree'           => Field\Tree::class,
-        'table'          => Field\Table::class,
-        'list'           => Field\ListField::class,
-        'timezone'       => Field\Timezone::class,
-        'keyValue'       => Field\KeyValue::class,
-        'tel'            => Field\Tel::class,
-        'markdown'       => Field\Markdown::class,
-        'range'          => Field\Range::class,
+        'button'              => Field\Button::class,
+        'checkbox'            => Field\Checkbox::class,
+        'currency'            => Field\Currency::class,
+        'date'                => Field\Date::class,
+        'dateRange'           => Field\DateRange::class,
+        'datetime'            => Field\Datetime::class,
+        'datetimeRange'       => Field\DatetimeRange::class,
+        'decimal'             => Field\Decimal::class,
+        'display'             => Field\Display::class,
+        'divider'             => Field\Divide::class,
+        'embeds'              => Field\Embeds::class,
+        'editor'              => Field\Editor::class,
+        'email'               => Field\Email::class,
+        'hidden'              => Field\Hidden::class,
+        'id'                  => Field\Id::class,
+        'ip'                  => Field\Ip::class,
+        'map'                 => Field\Map::class,
+        'mobile'              => Field\Mobile::class,
+        'month'               => Field\Month::class,
+        'multipleSelect'      => Field\MultipleSelect::class,
+        'number'              => Field\Number::class,
+        'password'            => Field\Password::class,
+        'radio'               => Field\Radio::class,
+        'rate'                => Field\Rate::class,
+        'select'              => Field\Select::class,
+        'slider'              => Field\Slider::class,
+        'switch'              => Field\SwitchField::class,
+        'text'                => Field\Text::class,
+        'textarea'            => Field\Textarea::class,
+        'time'                => Field\Time::class,
+        'timeRange'           => Field\TimeRange::class,
+        'url'                 => Field\Url::class,
+        'year'                => Field\Year::class,
+        'html'                => Field\Html::class,
+        'tags'                => Field\Tags::class,
+        'icon'                => Field\Icon::class,
+        'captcha'             => Field\Captcha::class,
+        'listbox'             => Field\Listbox::class,
+        'selectResource'      => Field\SelectResource::class,
+        'file'                => Field\File::class,
+        'image'               => Field\Image::class,
+        'multipleFile'        => Field\MultipleFile::class,
+        'multipleImage'       => Field\MultipleImage::class,
+        'hasMany'             => Field\HasMany::class,
+        'tree'                => Field\Tree::class,
+        'table'               => Field\Table::class,
+        'list'                => Field\ListField::class,
+        'timezone'            => Field\Timezone::class,
+        'keyValue'            => Field\KeyValue::class,
+        'tel'                 => Field\Tel::class,
+        'markdown'            => Field\Markdown::class,
+        'range'               => Field\Range::class,
+        'color'               => Field\Color::class,
+        'array'               => Field\ArrayField::class,
+        'selectTable'         => Field\SelectTable::class,
+        'multipleSelectTable' => Field\MultipleSelectTable::class,
     ];
 
     /**
@@ -342,6 +352,19 @@ class Form implements Renderable
     public function removeField($column)
     {
         $this->builder->removeField($column);
+
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->builder->confirm($title, $content);
 
         return $this;
     }
@@ -670,10 +693,10 @@ class Form implements Renderable
             if ($field instanceof Field\Display || $field->getAttribute('readonly') || $field->getAttribute('disabled')) {
                 return $field->column();
             }
-        })->filter()->toArray();
+        })->filter();
 
-        if ($ignored) {
-            Arr::forget($input, $ignored);
+        if (! $ignored->isEmpty()) {
+            Arr::forget($input, $ignored->flatten()->toArray());
         }
 
         return $input;
@@ -954,10 +977,10 @@ class Form implements Renderable
      */
     public function prepareInsert($inserts)
     {
-        $this->prepareHasOneRelation($inserts);
+        Helper::prepareHasOneRelation($this->builder->fields(), $inserts);
 
         foreach ($inserts as $column => $value) {
-            if (is_null($field = $this->getFieldByColumn($column))) {
+            if (is_null($field = $this->field($column))) {
                 unset($inserts[$column]);
                 continue;
             }
@@ -972,41 +995,6 @@ class Form implements Renderable
         }
 
         return $prepared;
-    }
-
-    /**
-     * Is input data is has-one relation.
-     *
-     * @param array $inserts
-     */
-    public function prepareHasOneRelation(array &$inserts)
-    {
-        $relations = [];
-        $this->builder->fields()->each(function ($field) use (&$relations) {
-            $column = $field->column();
-
-            if (is_array($column)) {
-                foreach ($column as $v) {
-                    if (Str::contains($v, '.')) {
-                        $first = explode('.', $v)[0];
-                        $relations[$first] = null;
-                    }
-                }
-
-                return;
-            }
-
-            if (Str::contains($column, '.')) {
-                $first = explode('.', $column)[0];
-                $relations[$first] = null;
-            }
-        });
-
-        foreach ($relations as $first => $v) {
-            if (isset($inserts[$first])) {
-                $inserts = array_merge($inserts, Arr::dot([$first => $inserts[$first]]));
-            }
-        }
     }
 
     /**
@@ -1084,26 +1072,6 @@ class Form implements Renderable
 
             return $value;
         }
-    }
-
-    /**
-     * Find field object by column.
-     *
-     * @param $column
-     *
-     * @return mixed
-     */
-    protected function getFieldByColumn($column)
-    {
-        return $this->builder->fields()->first(
-            function (Field $field) use ($column) {
-                if (is_array($field->column())) {
-                    return in_array($column, $field->column());
-                }
-
-                return $field->column() == $column;
-            }
-        );
     }
 
     /**

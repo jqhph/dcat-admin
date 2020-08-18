@@ -216,7 +216,7 @@ trait UploadField
         }
 
         // 上传失败
-        return $this->responseErrorMessage(trans('admin.upload.upload_failed'));
+        return $this->responseErrorMessage(trans('admin.uploader.upload_failed'));
     }
 
     /**

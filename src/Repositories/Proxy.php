@@ -6,6 +6,9 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 
+/**
+ * @deprecated 即将在2.0中废弃
+ */
 class Proxy implements \Dcat\Admin\Contracts\Repository
 {
     protected $repository;

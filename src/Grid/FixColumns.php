@@ -292,6 +292,13 @@ JS;
 .tables-container .table.table-bordered.dataTable.complex-headers {
     margin-top: 0!important;
 }
+
+body.dark-mode .table-fixed-left .table {
+     padding: 0 0 0 1rem;
+}
+body.dark-mode .table-fixed-right .table {
+     padding: 0 1rem 0 0;
+}
 CSS;
 
         Admin::style($style);

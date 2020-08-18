@@ -10,6 +10,8 @@ use Dcat\Admin\Grid\Filter\Presenter\Presenter;
 use Dcat\Admin\Grid\Filter\Presenter\Radio;
 use Dcat\Admin\Grid\Filter\Presenter\Select;
 use Dcat\Admin\Grid\Filter\Presenter\Text;
+use Dcat\Admin\Grid\LazyRenderable;
+use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -206,6 +208,14 @@ abstract class AbstractFilter
     }
 
     /**
+     * @return Filter
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Get siblings of current filter.
      *
      * @param null $index
@@ -311,10 +321,32 @@ abstract class AbstractFilter
      * @param mixed $source
      *
      * @return Filter\Presenter\SelectResource
+     *
+     * @deprecated 即将在2.0版本中废弃，请使用 selectTable 和 multipleSelectTable 代替
      */
     public function selectResource($source = null)
     {
         return $this->setPresenter(new Filter\Presenter\SelectResource($source));
+    }
+
+    /**
+     * @param LazyRenderable $table
+     *
+     * @return mixed
+     */
+    public function selectTable(LazyRenderable $table)
+    {
+        return $this->setPresenter(new Filter\Presenter\SelectTable($table));
+    }
+
+    /**
+     * @param LazyRenderable $table
+     *
+     * @return mixed
+     */
+    public function multipleSelectTable(LazyRenderable $table)
+    {
+        return $this->setPresenter(new Filter\Presenter\MultipleSelectTable($table));
     }
 
     /**
@@ -487,6 +519,14 @@ abstract class AbstractFilter
     }
 
     /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
      * Get value of current filter.
      *
      * @return array|string
@@ -531,11 +571,15 @@ abstract class AbstractFilter
      */
     protected function buildRelationQuery(...$params)
     {
-        $relation = substr($this->column, 0, strrpos($this->column, '.'));
-        $params[0] = Arr::last(explode('.', $this->column));
+        $column = explode('.', $this->column);
 
-        return ['whereHas' => [$relation, function ($relation) use ($params) {
-            call_user_func_array([$relation, $this->query], $params);
+        $params[0] = array_pop($column);
+
+        // 增加对whereHasIn的支持
+        $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
+
+        return [$method => [implode('.', $column), function ($q) use ($params) {
+            call_user_func_array([$q, $this->query], $params);
         }]];
     }
 

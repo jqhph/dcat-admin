@@ -3,12 +3,14 @@
 namespace Dcat\Admin\Support;
 
 use Dcat\Admin\Grid;
+use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -709,5 +711,92 @@ class Helper
         [$namespace, $path] = $values;
 
         return base_path(str_replace([$namespace, '\\'], [$path, '/'], $class)).'.php';
+    }
+
+    /**
+     * Is input data is has-one relation.
+     *
+     * @param Collection $fields
+     * @param array      $input
+     */
+    public static function prepareHasOneRelation(Collection $fields, array &$input)
+    {
+        $relations = [];
+        $fields->each(function ($field) use (&$relations) {
+            $column = $field->column();
+
+            if (is_array($column)) {
+                foreach ($column as $v) {
+                    if (Str::contains($v, '.')) {
+                        $first = explode('.', $v)[0];
+                        $relations[$first] = null;
+                    }
+                }
+
+                return;
+            }
+
+            if (Str::contains($column, '.')) {
+                $first = explode('.', $column)[0];
+                $relations[$first] = null;
+            }
+        });
+
+        foreach ($relations as $first => $v) {
+            if (isset($input[$first])) {
+                foreach ($input[$first] as $key => $value) {
+                    if (is_array($value) && ! Arr::isAssoc($value)) {
+                        $input["$first.$key"] = $value;
+                    }
+                }
+
+                $input = array_merge($input, Arr::dot([$first => $input[$first]]));
+            }
+        }
+    }
+
+    /**
+     * 设置查询条件.
+     *
+     * @param mixed $model
+     * @param string $column
+     * @param string $query
+     * @param mixed array $params
+     *
+     * @return void
+     */
+    public static function withQueryCondition($model, ?string $column, string $query, array $params)
+    {
+        if (! Str::contains($column, '.')) {
+            $model->$query($column, ...$params);
+
+            return;
+        }
+
+        static::withRelationQuery($model, $column, $query, $params);
+    }
+
+    /**
+     * 设置关联关系查询条件.
+     *
+     * @param mixed $model
+     * @param string $column
+     * @param string $query
+     * @param mixed ...$params
+     *
+     * @return void
+     */
+    public static function withRelationQuery($model, ?string $column, string $query, array $params)
+    {
+        $column = explode('.', $column);
+
+        array_unshift($params, array_pop($column));
+
+        // 增加对whereHasIn的支持
+        $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
+
+        $model->$method(implode('.', $column), function ($relation) use ($params, $query) {
+            $relation->$query(...$params);
+        });
     }
 }

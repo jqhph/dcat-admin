@@ -15,7 +15,6 @@ use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 class Grid
@@ -38,6 +37,8 @@ class Grid
 
     const CREATE_MODE_DEFAULT = 'default';
     const CREATE_MODE_DIALOG = 'dialog';
+
+    const IFRAME_QUERY_NAME = '_grid_iframe_';
 
     /**
      * The grid data model instance.
@@ -174,6 +175,7 @@ class Grid
         'show_row_selector'      => true,
         'show_create_button'     => true,
         'show_bordered'          => false,
+        'table_collapse'         => true,
         'show_toolbar'           => true,
         'create_mode'            => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'       => ['700px', '670px'],
@@ -252,12 +254,6 @@ class Grid
      */
     public function column($name, $label = '')
     {
-        if (mb_strpos($name, '.') !== false) {
-            [$relationName, $relationColumn] = explode('.', $name);
-
-            $name = Str::snake($relationName).'.'.$relationColumn;
-        }
-
         return $this->addColumn($name, $label);
     }
 
@@ -584,6 +580,18 @@ class Grid
     }
 
     /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function tableCollapse(bool $value = true)
+    {
+        $this->options['table_collapse'] = $value;
+
+        return $this;
+    }
+
+    /**
      * Set grid header.
      *
      * @param Closure|string|Renderable $content
@@ -674,12 +682,19 @@ HTML;
     public function option($key, $value = null)
     {
         if (is_null($value)) {
-            return $this->options[$key];
+            return $this->options[$key] ?? null;
         }
 
         $this->options[$key] = $value;
 
         return $this;
+    }
+
+    protected function setUpOptions()
+    {
+        if ($this->options['show_bordered']) {
+            $this->tableCollapse(false);
+        }
     }
 
     /**
@@ -792,6 +807,8 @@ HTML;
      * @see https://github.com/nadangergeo/RWD-Table-Patterns
      *
      * @return Responsive
+     *
+     * @deprecated 即将在2.0版本中废弃
      */
     public function responsive()
     {
@@ -929,6 +946,8 @@ HTML;
             $this->build();
 
             $this->applyFixColumns();
+
+            $this->setUpOptions();
         } catch (\Throwable $e) {
             return Admin::makeExceptionHandler()->handle($e);
         }

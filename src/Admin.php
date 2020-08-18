@@ -36,7 +36,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '1.6.0';
+    const VERSION = '1.7.0';
 
     /**
      * @var array
@@ -207,6 +207,7 @@ class Admin
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
+            'as'         => static::app()->getName().'.',
         ];
 
         if (config('admin.auth.enable', true)) {
@@ -282,6 +283,7 @@ class Admin
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
+            'as'         => static::app()->getName().'.',
         ];
 
         app('router')->group($attributes, function ($router) {

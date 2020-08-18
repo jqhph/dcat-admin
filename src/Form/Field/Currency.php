@@ -22,6 +22,7 @@ class Currency extends Text
         'radixPoint'         => '.',
         'prefix'             => '',
         'removeMaskOnSubmit' => true,
+        'rightAlign'         => false,
     ];
 
     /**

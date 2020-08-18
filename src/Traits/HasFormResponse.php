@@ -9,6 +9,8 @@ use Illuminate\Validation\Validator;
 
 trait HasFormResponse
 {
+    protected $currentUrl;
+
     /**
      * Get ajax response.
      *
@@ -25,18 +27,14 @@ trait HasFormResponse
         bool $status = true,
         array $options = []
     ) {
-        if ($this->isAjaxRequest()) {
-            $location = $options['location'] ?? false;
-            $urlKey = $location ? 'location' : 'redirect';
+        $location = $options['location'] ?? false;
+        $urlKey = $location ? 'location' : 'redirect';
 
-            return response()->json([
-                'status'   => $status,
-                'message'  => $message,
-                $urlKey    => $redirect ? admin_url($redirect) : '',
-            ]);
-        }
-
-        return false;
+        return response()->json([
+            'status'   => $status,
+            'message'  => $message,
+            $urlKey    => $redirect ? admin_url($redirect) : '',
+        ]);
     }
 
     /**
@@ -86,16 +84,34 @@ trait HasFormResponse
     }
 
     /**
+     * 设置当前URL.
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setCurrentUrl($url)
+    {
+        $this->currentUrl = admin_url($url);
+
+        return $this;
+    }
+
+    /**
      * @param Request|null $request
      *
      * @return string
      */
     protected function getCurrentUrl(Request $request = null)
     {
+        if ($this->currentUrl) {
+            return $this->currentUrl;
+        }
+
         /* @var Request $request */
         $request = $request ?: (empty($this->request) ? request() : $this->request);
 
-        if ($current = $request->get('_current_')) {
+        if ($current = $request->get(static::CURRENT_URL_NAME)) {
             return url($current);
         }
 

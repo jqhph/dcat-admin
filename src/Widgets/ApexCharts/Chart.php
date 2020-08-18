@@ -243,7 +243,7 @@ JS;
     /**
      * @return string
      */
-    public function script()
+    public function addScript()
     {
         if (! $this->allowBuildRequest()) {
             return $this->buildDefaultScript();
@@ -271,7 +271,7 @@ if (chartBox.length) {
 JS
         );
 
-        return $this->buildRequestScript();
+        return $this->script = $this->buildRequestScript();
     }
 
     /**
@@ -284,6 +284,11 @@ JS
         }
         $this->built = true;
 
+        return parent::render();
+    }
+
+    public function html()
+    {
         $hasSelector = $this->containerSelector ? true : false;
 
         if (! $hasSelector) {
@@ -293,9 +298,7 @@ JS
             $this->selector('#'.$id);
         }
 
-        $this->script = $this->script();
-
-        $this->collectAssets();
+        $this->addScript();
 
         if ($hasSelector) {
             return;

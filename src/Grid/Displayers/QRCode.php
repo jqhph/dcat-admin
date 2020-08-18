@@ -9,12 +9,24 @@ use Dcat\Admin\Admin;
  */
 class QRCode extends AbstractDisplayer
 {
+    protected static $js = [
+        '@admin/dcat/plugins/jquery-qrcode/dist/jquery-qrcode.min.js',
+    ];
+
     protected function addScript()
     {
         $script = <<<'JS'
-$('.grid-column-qrcode').popover({
-    html: true,
-    trigger: 'focus'
+$('.grid-column-qrcode').on('click', function () {
+    var $this = $(this), data = $this.data();
+    data.render = 'image';
+    $this.qrcode(data);
+    
+    var img = $this.find('img');
+    
+    $this.attr('data-content', '<img width="'+data.width+'" height="'+data.height+'" src="'+img.attr('src')+'">');
+    img.remove();
+    
+    $this.popover('show')
 });
 JS;
         Admin::script($script);
@@ -30,10 +42,17 @@ JS;
             $content = $formatter->call($this->row, $content);
         }
 
-        $img = "<img src='https://api.qrserver.com/v1/create-qr-code/?size={$width}x{$height}&data={$content}' style='height: {$width}px;width: {$height}px;'/>";
-
         return <<<HTML
-<a href="javascript:void(0);" class="grid-column-qrcode text-muted" data-content="{$img}" data-toggle='popover' tabindex='0'>
+<a href="javascript:void(0);" 
+    class="grid-column-qrcode text-muted" 
+    data-text="{$content}" 
+    data-width="{$width}"
+    data-height="{$height}"
+    data-trigger="trigger" 
+    data-html="true" 
+    data-toggle='popover' 
+    tabindex='0'
+>
     <i class="fa fa-qrcode"></i>
 </a>&nbsp;{$this->value}
 HTML;

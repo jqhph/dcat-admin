@@ -50,6 +50,11 @@ abstract class Widget implements Renderable
     protected $options = [];
 
     /**
+     * @var bool
+     */
+    protected $runScript = true;
+
+    /**
      * @param mixed ...$params
      *
      * @return static
@@ -120,14 +125,41 @@ abstract class Widget implements Renderable
     }
 
     /**
+     * 设置视图变量.
+     *
+     * @param string|array $key
+     * @param mixed        $value
+     *
+     * @return $this
+     */
+    public function with($key, $value = null)
+    {
+        if (is_array($key)) {
+            $this->variables = array_merge($this->variables, $key);
+        } else {
+            $this->variables[$key] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
      * 收集静态资源.
      */
-    protected function collectAssets()
+    public static function collectAssets()
     {
-        $this->script && Admin::script($this->script);
-
         static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);
+    }
+
+    /**
+     * 运行JS.
+     */
+    protected function withScript()
+    {
+        if ($this->runScript && $this->script) {
+            Admin::script($this->script);
+        }
     }
 
     /**
@@ -145,9 +177,13 @@ abstract class Widget implements Renderable
      */
     public function render()
     {
-        $this->collectAssets();
+        static::collectAssets();
 
-        return $this->html();
+        $html = $this->html();
+
+        $this->withScript();
+
+        return $html;
     }
 
     /**
@@ -155,6 +191,10 @@ abstract class Widget implements Renderable
      */
     public function html()
     {
+        if (! $this->view) {
+            return;
+        }
+
         return view($this->view, $this->variables())->render();
     }
 
@@ -180,6 +220,20 @@ abstract class Widget implements Renderable
     public function view($view)
     {
         $this->view = $view;
+    }
+
+    /**
+     * 设置是否执行JS代码.
+     *
+     * @param bool $run
+     *
+     * @return $this
+     */
+    public function runScript(bool $run = true)
+    {
+        $this->runScript = $run;
+
+        return $this;
     }
 
     /**
@@ -214,7 +268,7 @@ abstract class Widget implements Renderable
         }
 
         // 获取属性
-        if (count($parameters) === 0) {
+        if (count($parameters) === 0 || $parameters[0] === null) {
             return $this->getHtmlAttribute($method);
         }
 

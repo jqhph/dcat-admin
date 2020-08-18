@@ -8,6 +8,9 @@ use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * @deprecated 即将在2.0版本中废弃
+ */
 class SelectResource extends Field
 {
     use PlainInput;

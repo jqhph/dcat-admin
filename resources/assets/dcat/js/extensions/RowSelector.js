@@ -22,19 +22,11 @@ export default class RowSelector {
     _bind() {
         let options = this.options,
             checkboxSelector = options.checkboxSelector,
-            $selectAllSelector = $(options.selectAllSelector),
+            $selectAll = $(options.selectAllSelector),
             $checkbox = $(checkboxSelector);
 
-        $selectAllSelector.on('change', function() {
-            var cbx = $(this).parents(options.container).find(checkboxSelector);
-
-            for (var i = 0; i < cbx.length; i++) {
-                if (this.checked && !cbx[i].checked) {
-                    cbx[i].click();
-                } else if (!this.checked && cbx[i].checked) {
-                    cbx[i].click();
-                }
-            }
+        $selectAll.on('change', function() {
+            $(this).parents(options.container).find(checkboxSelector).prop('checked', this.checked).trigger('change');
         });
         if (options.clickRow) {
             $checkbox.click(function (e) {
@@ -55,7 +47,7 @@ export default class RowSelector {
                 tr.css('background-color', options.background);
 
                 if ($(checkboxSelector + ':checked').length === $checkbox.length) {
-                    $selectAllSelector.prop('checked', true)
+                    $selectAll.prop('checked', true)
                 }
             } else {
                 tr.css('background-color', '');

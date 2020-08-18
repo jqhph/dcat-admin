@@ -22,8 +22,8 @@ class LogController extends Controller
     protected function grid()
     {
         return new Grid(new OperationLog(), function (Grid $grid) {
-            $grid->id('ID')->sortable();
-            $grid->user(trans('admin.user'))
+            $grid->column('id')->sortable();
+            $grid->column('user', trans('admin.user'))
                 ->get('name')
                 ->link(function () {
                     if ($this->user) {
@@ -32,28 +32,34 @@ class LogController extends Controller
                 })
                 ->responsive();
 
-            $grid->method(trans('admin.method'))
+            $grid->column('method', trans('admin.method'))
                 ->responsive()
                 ->label(OperationLogModel::$methodColors)
                 ->filterByValue();
 
-            $grid->path(trans('admin.uri'))->responsive()->display(function ($v) {
+            $grid->column('path', trans('admin.uri'))->responsive()->display(function ($v) {
                 return "<code>$v</code>";
             })->filterByValue();
 
-            $grid->ip('IP')->filterByValue()->responsive();
+            $grid->column('ip', 'IP')->filterByValue()->responsive();
 
-            $grid->input->responsive()->display(function ($input) {
+            $grid->column('input')->responsive()->display(function ($input) {
                 $input = json_decode($input, true);
-                $input = Arr::except($input, ['_pjax', '_token', '_method', '_previous_']);
+
                 if (empty($input)) {
-                    return '';
+                    return;
+                }
+
+                $input = Arr::except($input, ['_pjax', '_token', '_method', '_previous_']);
+
+                if (empty($input)) {
+                    return;
                 }
 
                 return '<pre class="dump">'.json_encode($input, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE).'</pre>';
             });
 
-            $grid->created_at(trans('admin.created_at'))->responsive();
+            $grid->column('created_at', trans('admin.created_at'))->responsive();
 
             $grid->model()->with('user')->orderBy('id', 'DESC');
 
@@ -64,16 +70,10 @@ class LogController extends Controller
             $grid->setActionClass(Grid\Displayers\Actions::class);
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('user_id', trans('admin.user'))
-                    ->selectResource('auth/users')
-                    ->options(function ($v) {
-                        if (! $v) {
-                            return $v;
-                        }
-                        $userModel = config('admin.database.users_model');
+                $userModel = config('admin.database.users_model');
 
-                        return $userModel::find((array) $v)->pluck('name', 'id');
-                    });
+                $filter->in('user_id', trans('admin.user'))
+                    ->multipleSelect($userModel::pluck('name', 'id'));
 
                 $filter->equal('method', trans('admin.method'))
                     ->select(

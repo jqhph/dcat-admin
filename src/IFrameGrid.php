@@ -4,9 +4,12 @@ namespace Dcat\Admin;
 
 use Dcat\Admin\Layout\Content;
 
+/**
+ * @deprecated 即将在2.0版本中废弃
+ */
 class IFrameGrid extends Grid
 {
-    const QUERY_NAME = '_resource_';
+    const QUERY_NAME = '_grid_iframe_';
 
     public function __construct($repository, $builder = null)
     {
@@ -17,8 +20,6 @@ class IFrameGrid extends Grid
         $this->disableActions();
         $this->disablePerPages();
         $this->disableBatchActions();
-        $this->disableFilterButton();
-        $this->toolsWithOutline();
 
         $this->rowSelector()->click();
 
