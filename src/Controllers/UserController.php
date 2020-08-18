@@ -21,7 +21,7 @@ class UserController extends AdminController
     protected function grid()
     {
         return Grid::make(new Administrator('roles'), function (Grid $grid) {
-            $grid->column('id')->sortable();
+            $grid->column('id', 'ID')->sortable();
             $grid->column('username');
             $grid->column('name');
 

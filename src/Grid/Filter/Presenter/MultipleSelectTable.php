@@ -35,11 +35,12 @@ class MultipleSelectTable extends SelectTable
     {
         Admin::script(
             <<<JS
+{$this->dialog->getScript()}
+
 Dcat.grid.SelectTable({
-    modal: replaceNestedFormIndex('#{$this->modal->id()}'),
-    container: replaceNestedFormIndex('#{$this->id}'),
-    input: replaceNestedFormIndex('#hidden-{$this->id}'),
-    button: replaceNestedFormIndex('#{$this->getButtonId()}'),
+    dialog: '#{$this->dialog->id()}',
+    container: '#{$this->id}',
+    input: '#hidden-{$this->id}',
     multiple: true,
     max: {$this->max},
     values: {$this->options},

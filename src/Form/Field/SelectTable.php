@@ -76,6 +76,26 @@ class SelectTable extends Field
     }
 
     /**
+     * 设置选中数据显示.
+     *
+     * @param string $model
+     * @param string $id
+     * @param string $text
+     *
+     * @return $this
+     */
+    public function model(string $model, string $id = 'id', string $text = 'title')
+    {
+        return $this->options(function ($v) use ($model, $id, $text) {
+            if (! $v) {
+                return [];
+            }
+
+            return $model::find($v)->pluck($text, $id);
+        });
+    }
+
+    /**
      * 转化为数组格式保存.
      *
      * @param mixed $value

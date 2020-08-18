@@ -22,7 +22,7 @@ class LogController extends Controller
     protected function grid()
     {
         return new Grid(new OperationLog(), function (Grid $grid) {
-            $grid->column('id')->sortable();
+            $grid->column('id', 'ID')->sortable();
             $grid->column('user', trans('admin.user'))
                 ->get('name')
                 ->link(function () {

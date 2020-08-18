@@ -5,7 +5,7 @@ namespace Dcat\Admin\Grid\Filter\Presenter;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\LazyRenderable;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Widgets\TableModal;
+use Dcat\Admin\Widgets\DialogTable;
 use Illuminate\Support\Str;
 
 class SelectTable extends Presenter
@@ -15,9 +15,11 @@ class SelectTable extends Presenter
     ];
 
     /**
-     * @var TableModal
+     * @var DialogTable
      */
-    protected $modal;
+    protected $dialog;
+
+    protected $style = 'primary';
 
     protected $title;
 
@@ -29,7 +31,7 @@ class SelectTable extends Presenter
 
     public function __construct(LazyRenderable $table)
     {
-        $this->modal = TableModal::make($table);
+        $this->dialog = DialogTable::make($table);
         $this->id = 'select-table-filter-'.Str::random(8);
     }
 
@@ -48,13 +50,39 @@ class SelectTable extends Presenter
     }
 
     /**
-     * 设置尺寸为 xl.
+     * 设置选中数据显示.
+     *
+     * @param string $model
+     * @param string $id
+     * @param string $text
      *
      * @return $this
      */
-    public function xl()
+    public function model(string $model, string $id = 'id', string $text = 'title')
     {
-        $this->modal->xl();
+        return $this->options(function ($v) use ($model, $id, $text) {
+            if (! $v) {
+                return [];
+            }
+
+            return $model::find($v)->pluck($text, $id);
+        });
+    }
+
+    /**
+     * 设置弹窗宽度.
+     *
+     * @example
+     *    $this->width('500px');
+     *    $this->width('50%');
+     *
+     * @param string $width
+     *
+     * @return $this
+     */
+    public function dialogWidth(string $width)
+    {
+        $this->dialog->width($width);
 
         return $this;
     }
@@ -89,16 +117,13 @@ class SelectTable extends Presenter
         return $this;
     }
 
-    protected function setUpModal()
+    protected function setUpTable()
     {
-        $table = $this->modal->getTable();
-
-        $table->id('table-card-'.$this->id);
-
-        $this->modal
-            ->id('modal-'.$this->id)
-            ->title($this->title ?: $this->filter->getLabel())
-            ->footer($this->renderFooter());
+        $this->dialog
+            ->id('dialog-'.$this->id)
+            ->runScript(false)
+            ->footer($this->renderFooter())
+            ->button($this->renderButton());
     }
 
     protected function formatOptions()
@@ -126,11 +151,12 @@ class SelectTable extends Presenter
     {
         Admin::script(
             <<<JS
+{$this->dialog->getScript()}
+
 Dcat.grid.SelectTable({
-    modal: replaceNestedFormIndex('#{$this->modal->id()}'),
-    container: replaceNestedFormIndex('#{$this->id}'),
-    input: replaceNestedFormIndex('#hidden-{$this->id}'),
-    button: replaceNestedFormIndex('#{$this->getButtonId()}'),
+    dialog: '#{$this->dialog->id()}',
+    container: '#{$this->id}',
+    input: '#hidden-{$this->id}',
     values: {$this->options},
 });
 JS
@@ -143,14 +169,26 @@ JS
     public function variables(): array
     {
         $this->formatOptions();
-        $this->setUpModal();
+        $this->setUpTable();
+
+        $dialog = $this->dialog->render();
+
         $this->addScript();
 
         return [
             'id'          => $this->id,
-            'modal'       => $this->modal,
+            'dialog'      => $dialog,
             'placeholder' => $this->placeholder(),
         ];
+    }
+
+    protected function renderButton()
+    {
+        return <<<HTML
+<div class="btn btn-{$this->style} btn-sm">
+    &nbsp;<i class="feather icon-arrow-up"></i>&nbsp;
+</div>
+HTML;
     }
 
     /**
@@ -164,18 +202,8 @@ JS
         $cancel = trans('admin.cancel');
 
         return <<<HTML
-<a id="{$this->getButtonId()}" class="btn btn-primary" style="color: #fff">&nbsp;{$submit}&nbsp;</a>&nbsp;
-<a onclick="$(this).parents('.modal').modal('toggle')" class="btn btn-white">&nbsp;{$cancel}&nbsp;</a>
+<button class="btn btn-primary btn-sm submit-btn" style="color: #fff">&nbsp;{$submit}&nbsp;</button>&nbsp;
+<button class="btn btn-white btn-sm cancel-btn">&nbsp;{$cancel}&nbsp;</button>
 HTML;
-    }
-
-    /**
-     * 提交按钮ID.
-     *
-     * @return string
-     */
-    public function getButtonId()
-    {
-        return 'submit-'.$this->id;
     }
 }

@@ -21,7 +21,7 @@ class RoleController extends AdminController
     protected function grid()
     {
         return new Grid(new Role(), function (Grid $grid) {
-            $grid->column('id')->sortable();
+            $grid->column('id', 'ID')->sortable();
             $grid->column('slug')->label('primary');
             $grid->column('name');
 

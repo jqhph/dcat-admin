@@ -58,6 +58,8 @@ abstract class LazyRenderable extends Renderable
             $grid->disableBatchDelete();
             $grid->disableRefreshButton();
 
+            $grid->toolsWithOutline(false);
+
             $grid->filter()
                 ->panel()
                 ->view('admin::filter.tile-container');

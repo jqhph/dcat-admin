@@ -332,7 +332,7 @@ abstract class AbstractFilter
     /**
      * @param LazyRenderable $table
      *
-     * @return mixed
+     * @return Filter\Presenter\SelectTable
      */
     public function selectTable(LazyRenderable $table)
     {
@@ -342,7 +342,7 @@ abstract class AbstractFilter
     /**
      * @param LazyRenderable $table
      *
-     * @return mixed
+     * @return Filter\Presenter\MultipleSelectTable
      */
     public function multipleSelectTable(LazyRenderable $table)
     {

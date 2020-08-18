@@ -10,10 +10,7 @@
 
     <input name="{{ $name }}" type="hidden" id="hidden-{{ $id }}" value="{{ implode(',', \Dcat\Admin\Support\Helper::array($value)) }}" />
     <div class="input-group-append">
-        <div class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-{{ $id }}">
-            &nbsp;<i class="feather icon-arrow-up"></i>&nbsp;
-        </div>
+        {!! $dialog !!}
     </div>
 
-    {!! $modal !!}
 </div>
