@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Support\LazyRenderable;
 use Illuminate\Support\Str;
 
 class Expand extends AbstractDisplayer

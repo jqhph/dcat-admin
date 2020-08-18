@@ -105,14 +105,14 @@ trait HasFormResponse
     protected function getCurrentUrl(Request $request = null)
     {
         if ($this->currentUrl) {
-            return $this->currentUrl;
+            return admin_url($this->currentUrl);
         }
 
         /* @var Request $request */
         $request = $request ?: (empty($this->request) ? request() : $this->request);
 
         if ($current = $request->get(static::CURRENT_URL_NAME)) {
-            return url($current);
+            return admin_url($current);
         }
 
         $query = $request->query();

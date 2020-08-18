@@ -225,9 +225,7 @@ class Filter implements Renderable
      */
     protected function formatFilterId()
     {
-        $gridName = $this->model->grid()->getName();
-
-        return 'filter-box'.($gridName ? '-'.$gridName : '');
+        return 'filter-box'.Str::random(8);
     }
 
     /**
@@ -381,8 +379,6 @@ class Filter implements Renderable
     public function setName($name)
     {
         $this->name = $name;
-
-        $this->setFilterID("{$this->name}-{$this->filterID}");
 
         return $this;
     }

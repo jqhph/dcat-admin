@@ -4,6 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Form\Concerns\HandleCascadeFields;
 use Dcat\Admin\Form\Concerns\HasRows;
 use Dcat\Admin\Form\Concerns\HasTabs;
@@ -85,15 +86,17 @@ use Illuminate\Validation\Validator;
  */
 class Form implements Renderable
 {
-    use HasHtmlAttributes,
-        HasFormResponse,
-        HasAuthorization,
-        HandleCascadeFields,
-        HasRows,
-        HasTabs,
-        Macroable {
-            __call as macroCall;
-        }
+    use HasHtmlAttributes;
+    use HasAuthorization;
+    use HandleCascadeFields;
+    use HasRows;
+    use HasTabs;
+    use HasFormResponse {
+        setCurrentUrl as defaultSetCurrentUrl;
+    }
+    use Macroable {
+        __call as macroCall;
+    }
 
     const REQUEST_NAME = '_form_';
     const CURRENT_URL_NAME = '_current_';
@@ -176,9 +179,16 @@ class Form implements Renderable
         }
         $this->setKey($key);
 
+        $this->setUp();
+    }
+
+    protected function setUp()
+    {
         $this->initFields();
 
         $this->initFormAttributes();
+
+        $this->initCurrentUrl();
     }
 
     /**
@@ -201,6 +211,13 @@ class Form implements Renderable
             'accept-charset' => 'UTF-8',
             'pjax-container' => true,
         ]);
+    }
+
+    protected function initCurrentUrl()
+    {
+        if ($this instanceof LazyRenderable) {
+            $this->setCurrentUrl($this->getCurrentUrl());
+        }
     }
 
     /**
@@ -632,6 +649,18 @@ HTML;
     public function getElementId()
     {
         return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCurrentUrl($url)
+    {
+        if ($this instanceof LazyRenderable) {
+            $this->payload([static::CURRENT_URL_NAME => $url]);
+        }
+
+        return $this->defaultSetCurrentUrl($url);
     }
 
     /**

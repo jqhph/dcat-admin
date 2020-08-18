@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Controllers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Support\LazyRenderable;
 use Illuminate\Http\Request;
 
 class RenderableController
@@ -17,8 +17,6 @@ class RenderableController
     public function handle(Request $request)
     {
         $renderable = $this->newRenderable($request);
-
-        $renderable::collectAssets();
 
         $this->addScript();
 
@@ -39,13 +37,21 @@ class RenderableController
             .$asset->styleToHtml();
     }
 
-    protected function newRenderable(Request $request)
+    protected function newRenderable(Request $request): LazyRenderable
     {
         $class = $request->get('renderable');
 
         $class = str_replace('_', '\\', $class);
 
-        return new $class($request->all());
+        $renderable = new $class();
+
+        $renderable->payload($request->all());
+
+        if (method_exists($renderable, 'collectAssets')) {
+            $renderable->collectAssets();
+        }
+
+        return $renderable;
     }
 
     protected function addScript()

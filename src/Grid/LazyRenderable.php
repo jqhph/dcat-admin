@@ -38,7 +38,7 @@ abstract class LazyRenderable extends Renderable
      */
     public function simple(bool $value = true)
     {
-        return $this->with('_simple_', $value);
+        return $this->payload(['_simple_' => $value]);
     }
 
     /**
@@ -57,8 +57,6 @@ abstract class LazyRenderable extends Renderable
             $grid->disablePerPages();
             $grid->disableBatchDelete();
             $grid->disableRefreshButton();
-
-            $grid->toolsWithOutline(false);
 
             $grid->filter()
                 ->panel()

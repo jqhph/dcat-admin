@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
+use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Support\LazyRenderable;
 use Dcat\Admin\Widgets\Modal as WidgetModal;
 
 class Modal extends AbstractDisplayer
@@ -17,7 +17,7 @@ class Modal extends AbstractDisplayer
 
     protected function setUpLazyRenderable(LazyRenderable $renderable)
     {
-        return clone $renderable->with('key', $this->getKey());
+        return clone $renderable->payload(['key' => $this->getKey()]);
     }
 
     public function display($callback = null)

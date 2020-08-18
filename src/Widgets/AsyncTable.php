@@ -36,7 +36,7 @@ class AsyncTable extends Widget
      * @param LazyRenderable $renderable
      * @param bool $load
      */
-    public function __construct(LazyRenderable $renderable, bool $load = true)
+    public function __construct(LazyRenderable $renderable = null, bool $load = true)
     {
         $this->from($renderable);
         $this->load($load);
@@ -88,10 +88,6 @@ class AsyncTable extends Widget
     {
         $this->simple = $value;
 
-        if ($value) {
-            $this->class('simple-grid', true);
-        }
-
         return $this;
     }
 
@@ -141,7 +137,11 @@ JS;
     public function render()
     {
         if ($this->simple !== null) {
-            $this->renderable->simple();
+            $this->renderable->simple($this->simple);
+
+            if ($this->simple) {
+                $this->class('simple-grid', true);
+            }
         }
 
         $this->addScript();

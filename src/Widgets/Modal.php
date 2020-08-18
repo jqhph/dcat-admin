@@ -4,15 +4,18 @@ namespace Dcat\Admin\Widgets;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
+use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Support\LazyRenderable;
-use Dcat\Admin\Traits\AsyncRenderable;
+use Dcat\Admin\Traits\InteractsWithRenderApi;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 
 class Modal extends Widget
 {
-    use AsyncRenderable;
+    use InteractsWithRenderApi;
+
+    protected $target = 'modal';
 
     /**
      * @var string|Closure|Renderable
@@ -48,16 +51,6 @@ class Modal extends Widget
      * @var int
      */
     protected $delay = 10;
-
-    /**
-     * @var string
-     */
-    protected $load = '';
-
-    /**
-     * @var string
-     */
-    protected $subScript;
 
     /**
      * @var bool
@@ -174,6 +167,16 @@ class Modal extends Widget
      */
     public function content($content)
     {
+        if ($content instanceof LazyGrid) {
+            $content = $table =
+                AsyncTable::make()
+                ->from($content)
+                ->simple()
+                ->load(false);
+
+            $this->onShow($table->getLoadScript());
+        }
+
         if ($content instanceof LazyRenderable) {
             $this->setRenderable($content);
         } else {
@@ -285,20 +288,6 @@ class Modal extends Widget
     }
 
     /**
-     * 监听弹窗异步渲染完成事件.
-     *
-     * @param string $script
-     *
-     * @return $this
-     */
-    public function onLoad(string $script)
-    {
-        $this->load .= "(function () { {$script} })();";
-
-        return $this;
-    }
-
-    /**
      * 获取弹窗元素选择器.
      *
      * @return string
@@ -317,53 +306,44 @@ class Modal extends Widget
         $script = '';
 
         foreach ($this->events as $v) {
-            $script .= "modal.on('{$v['event']}', function (event) {
+            $script .= "target.on('{$v['event']}', function (event) {
                 {$v['script']}
             });";
         }
 
         $this->script = <<<JS
 (function () {
-    var modal = $(replaceNestedFormIndex('{$this->getElementSelector()}'));
-    {$this->subScript};
+    var target = $('{$this->getElementSelector()}');
+    {$this->getRenderableScript()}
     {$script}
 })();
 JS;
     }
 
-    protected function addRenderableScript()
+    protected function addLoadRenderableScript()
     {
-        if (! $url = $this->getRequestUrl()) {
+        if (! $this->getRenderable()) {
             return;
         }
 
-        $this->subScript = <<<JS
-modal.on('modal:load', function () {
-    Dcat.helpers.asyncRender('{$url}', function (html) {
-        body.html(html);
-        
-        {$this->load}
-        
-        modal.trigger('modal:loaded');
-    });
-});
-JS;
-
         $this->on('show.bs.modal', <<<JS
-body = modal.find('.modal-body');
+body = target.find('.modal-body');
 
 body.html('<div style="min-height:150px"></div>').loading();
         
 setTimeout(function () {
-    modal.trigger('modal:load')
+    target.trigger('modal:load')
 }, {$this->delay});
 JS
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function render()
     {
-        $this->addRenderableScript();
+        $this->addLoadRenderableScript();
         $this->addEventScript();
 
         if ($this->join) {
