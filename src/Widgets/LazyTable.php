@@ -5,7 +5,7 @@ namespace Dcat\Admin\Widgets;
 use Dcat\Admin\Grid\LazyRenderable;
 use Illuminate\Support\Str;
 
-class AsyncTable extends Widget
+class LazyTable extends Widget
 {
     public static $js = [
         '@grid-extension',
@@ -31,7 +31,7 @@ class AsyncTable extends Widget
     protected $simple;
 
     /**
-     * AsyncTable constructor.
+     * LazyTable constructor.
      *
      * @param LazyRenderable $renderable
      * @param bool $load
@@ -107,21 +107,12 @@ class AsyncTable extends Widget
 
     protected function addScript()
     {
+        $loader = $this->load ? $this->getLoadScript() : '';
+
         $this->script = <<<JS
 Dcat.grid.AsyncTable({container: '{$this->getElementSelector()}'});
+{$loader}
 JS;
-
-        if ($this->load) {
-            $this->script .= $this->getLoadScript();
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getElementSelector()
-    {
-        return '#'.$this->getHtmlAttribute('id');
     }
 
     /**
@@ -138,10 +129,6 @@ JS;
     {
         if ($this->simple !== null) {
             $this->renderable->simple($this->simple);
-
-            if ($this->simple) {
-                $this->class('simple-grid', true);
-            }
         }
 
         $this->addScript();

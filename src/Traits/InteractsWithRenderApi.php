@@ -38,7 +38,7 @@ trait InteractsWithRenderApi
         return $this->renderable;
     }
 
-    public function setRenderable(LazyRenderable $renderable)
+    public function setRenderable(?LazyRenderable $renderable)
     {
         $this->renderable = $renderable;
 

@@ -15,7 +15,7 @@ class DialogTable extends Widget
     protected $title;
 
     /**
-     * @var AsyncTable
+     * @var LazyTable
      */
     protected $table;
 
@@ -66,7 +66,7 @@ class DialogTable extends Widget
             return $this;
         }
 
-        $this->table = AsyncTable::make($renderable)->simple()->runScript(false);
+        $this->table = LazyTable::make($renderable)->simple()->runScript(false);
 
         return $this;
     }
@@ -174,7 +174,7 @@ class DialogTable extends Widget
     }
 
     /**
-     * @return AsyncTable
+     * @return LazyTable
      */
     public function getTable()
     {

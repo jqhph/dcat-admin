@@ -169,7 +169,7 @@ class Modal extends Widget
     {
         if ($content instanceof LazyGrid) {
             $content = $table =
-                AsyncTable::make()
+                LazyTable::make()
                 ->from($content)
                 ->simple()
                 ->load(false);
@@ -287,16 +287,6 @@ class Modal extends Widget
         return $this->on('hidden.bs.modal', $script);
     }
 
-    /**
-     * 获取弹窗元素选择器.
-     *
-     * @return string
-     */
-    public function getElementSelector()
-    {
-        return '#'.$this->id();
-    }
-
     protected function addEventScript()
     {
         if (! $this->events) {
@@ -313,7 +303,7 @@ class Modal extends Widget
 
         $this->script = <<<JS
 (function () {
-    var target = $('{$this->getElementSelector()}');
+    var target = $('{$this->getElementSelector()}'), body = target.find('.modal-body');
     {$this->getRenderableScript()}
     {$script}
 })();
@@ -327,12 +317,10 @@ JS;
         }
 
         $this->on('show.bs.modal', <<<JS
-body = target.find('.modal-body');
-
 body.html('<div style="min-height:150px"></div>').loading();
         
 setTimeout(function () {
-    target.trigger('modal:load')
+    target.trigger('{$this->target}:load')
 }, {$this->delay});
 JS
         );

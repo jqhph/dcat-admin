@@ -3,6 +3,8 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\LazyRenderable;
+use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
@@ -187,6 +189,18 @@ abstract class Widget implements Renderable
     }
 
     /**
+     * 获取元素选择器.
+     *
+     * @return string
+     */
+    public function getElementSelector()
+    {
+        return '#'.$this->id();
+    }
+
+    /**
+     * 渲染HTML.
+     *
      * @return string
      */
     public function html()
@@ -242,6 +256,24 @@ abstract class Widget implements Renderable
     public function getScript()
     {
         return $this->script;
+    }
+
+    /**
+     * @param mixed $content
+     *
+     * @return Lazy|LazyTable|mixed
+     */
+    protected function lazyRenderable($content)
+    {
+        if ($content instanceof LazyGrid) {
+            return LazyTable::make($content);
+        }
+
+        if ($content instanceof LazyRenderable) {
+            return Lazy::make($content);
+        }
+
+        return $content;
     }
 
     /**

@@ -26,7 +26,11 @@ abstract class LazyRenderable extends Renderable
      */
     public function render()
     {
-        return $this->prepare($this->grid())->render();
+        $class = $this->allowSimpleMode() ? 'simple-grid' : null;
+
+        return <<<HTML
+<div class="$class">{$this->prepare($this->grid())->render()}</div>
+HTML;
     }
 
     /**
