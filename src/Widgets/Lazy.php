@@ -16,6 +16,7 @@ class Lazy extends Widget
     public function __construct(LazyRenderable $renderable = null, bool $load = true)
     {
         $this->setRenderable($renderable);
+        $this->load($load);
 
         $this->class('lazy-box');
         $this->id('lazy-'.Str::random(8));
