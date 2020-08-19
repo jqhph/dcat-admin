@@ -652,7 +652,7 @@ HTML;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setCurrentUrl($url)
     {

@@ -4,8 +4,8 @@ namespace Dcat\Admin\Widgets;
 
 use Closure;
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Dcat\Admin\Contracts\LazyRenderable;
+use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\InteractsWithRenderApi;
 use Illuminate\Contracts\Support\Renderable;
@@ -327,7 +327,7 @@ JS
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function render()
     {
