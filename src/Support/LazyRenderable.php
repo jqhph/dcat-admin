@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Support;
 
-use Dcat\Admin\Contracts\LazyRenderable as Renderable;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\LazyRenderable as Renderable;
 use Dcat\Admin\Traits\LazyWidget;
 
 abstract class LazyRenderable implements Renderable

@@ -111,7 +111,7 @@ class Card extends Widget
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function variables()
     {
