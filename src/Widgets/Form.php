@@ -100,6 +100,7 @@ class Form implements Renderable
 
     const REQUEST_NAME = '_form_';
     const CURRENT_URL_NAME = '_current_';
+    const LAZY_PAYLOAD_NAME = '_payload_';
 
     /**
      * @var string
@@ -189,6 +190,8 @@ class Form implements Renderable
         $this->initFormAttributes();
 
         $this->initCurrentUrl();
+
+        $this->initPayload();
     }
 
     /**
@@ -217,6 +220,13 @@ class Form implements Renderable
     {
         if ($this instanceof LazyRenderable) {
             $this->setCurrentUrl($this->getCurrentUrl());
+        }
+    }
+
+    protected function initPayload()
+    {
+        if ($payload = \request(static::LAZY_PAYLOAD_NAME)) {
+            $this->payload(json_decode($payload, true) ?? []);
         }
     }
 
@@ -664,33 +674,6 @@ HTML;
     }
 
     /**
-     * Generate a Field object and add to form builder if Field exists.
-     *
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return Field|null
-     */
-    public function __call($method, $arguments)
-    {
-        if ($className = static::findFieldClass($method)) {
-            $name = Arr::get($arguments, 0, '');
-
-            $element = new $className($name, array_slice($arguments, 1));
-
-            $this->pushField($element);
-
-            return $element;
-        }
-
-        if (static::hasMacro($method)) {
-            return $this->macroCall($method, $arguments);
-        }
-
-        throw new \BadMethodCallException("Field [{$method}] does not exist.");
-    }
-
-    /**
      * Disable submit with ajax.
      *
      * @param bool $disable
@@ -828,6 +811,10 @@ JS
             $this->action(route(admin_api_route('form')));
             $this->hidden(static::REQUEST_NAME)->default(get_called_class());
             $this->hidden(static::CURRENT_URL_NAME)->default($this->getCurrentUrl());
+
+            if (! empty($this->payload) && is_array($this->payload)) {
+                $this->hidden(static::LAZY_PAYLOAD_NAME)->default(json_encode($this->payload));
+            }
         }
     }
 
@@ -855,6 +842,33 @@ JS
         $this->addVariables(['tabObj' => $tabObj]);
 
         return view($this->view, $this->variables())->render();
+    }
+
+    /**
+     * Generate a Field object and add to form builder if Field exists.
+     *
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return Field|null
+     */
+    public function __call($method, $arguments)
+    {
+        if ($className = static::findFieldClass($method)) {
+            $name = Arr::get($arguments, 0, '');
+
+            $element = new $className($name, array_slice($arguments, 1));
+
+            $this->pushField($element);
+
+            return $element;
+        }
+
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $arguments);
+        }
+
+        throw new \BadMethodCallException("Field [{$method}] does not exist.");
     }
 
     /**

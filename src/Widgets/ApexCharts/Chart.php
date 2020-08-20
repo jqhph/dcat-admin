@@ -32,14 +32,14 @@ class Chart extends Widget
         'extend' => 'return options',
     ];
 
-    public function __construct($containerSelector = null, $options = [])
+    public function __construct($selector = null, $options = [])
     {
-        if ($containerSelector && ! is_string($containerSelector)) {
-            $options = $containerSelector;
-            $containerSelector = null;
+        if ($selector && ! is_string($selector)) {
+            $options = $selector;
+            $selector = null;
         }
 
-        $this->selector($containerSelector);
+        $this->selector($selector);
 
         $this->options($options);
     }
@@ -246,7 +246,7 @@ JS;
     public function addScript()
     {
         if (! $this->allowBuildRequest()) {
-            return $this->buildDefaultScript();
+            return $this->script = $this->buildDefaultScript();
         }
 
         $this->fetched(
