@@ -1,5 +1,9 @@
 
-let w = top || window;
+let w = window;
+
+if (top && w.layer) {
+    w = top;
+}
 
 export default class DialogForm {
     constructor(Dcat, options) {
