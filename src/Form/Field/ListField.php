@@ -145,17 +145,25 @@ class ListField extends Field
         $this->script = <<<JS
 (function () {
     var index = {$number};
-    $('.{$this->column}-add').on('click', function () {
-        var tpl = $('template.{$this->column}-tpl').html().replace('{key}', index);
-        $('tbody.list-{$this->column}-table').append(tpl);
+    $('.{$this->formatColumn()}-add').on('click', function () {
+        var tpl = $('template.{$this->formatColumn()}-tpl').html().replace('{key}', index);
+        $('tbody.list-{$this->formatColumn()}-table').append(tpl);
         
         index++;
     });
-    $('tbody').on('click', '.{$this->column}-remove', function () {
+    $('tbody').on('click', '.{$this->formatColumn()}-remove', function () {
         $(this).closest('tr').remove();
     });
 })();
 JS;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function formatColumn()
+    {
+        return str_replace('.', '-', $this->column);
     }
 
     /**
@@ -180,6 +188,8 @@ JS;
         $this->addScript();
 
         Admin::style('td .form-group {margin-bottom: 0 !important;}');
+
+        $this->addVariables(['columnClass' => $this->formatColumn()]);
 
         return parent::render();
     }
