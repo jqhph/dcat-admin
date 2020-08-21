@@ -52,6 +52,16 @@ class Currency extends Text
     }
 
     /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function prepareInputValue($value)
+    {
+        return str_replace(',', '', $value);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function render()
