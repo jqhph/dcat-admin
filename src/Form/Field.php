@@ -1228,28 +1228,10 @@ class Field implements Renderable
         });
     }
 
-    public function saveAsJoin(string $glue = ',')
-    {
-        return $this->saving(function ($value) use ($glue) {
-            if (! $value || is_scalar($value)) {
-                return $value;
-            }
-
-            return implode($glue, (array) $value);
-        });
-    }
-
     public function saveAsString()
     {
         return $this->saving(function ($value) {
             return (string) $value;
-        });
-    }
-
-    public function saveAsInteger()
-    {
-        return $this->saving(function ($value) {
-            return (int) $value;
         });
     }
 
