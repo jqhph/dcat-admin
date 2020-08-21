@@ -689,16 +689,6 @@ class Form implements Renderable
     {
         Arr::forget($input, $this->ignored);
 
-        $ignored = $this->fields()->map(function (Field $field) {
-            if ($field instanceof Field\Display || $field->getAttribute('readonly') || $field->getAttribute('disabled')) {
-                return $field->column();
-            }
-        })->filter();
-
-        if (! $ignored->isEmpty()) {
-            Arr::forget($input, $ignored->flatten()->toArray());
-        }
-
         return $input;
     }
 
@@ -1007,6 +997,18 @@ class Form implements Renderable
     public function ignore($fields)
     {
         $this->ignored = array_merge($this->ignored, (array) $fields);
+
+        return $this;
+    }
+
+    /**
+     * @param $keys
+     *
+     * @return $this
+     */
+    public function forgetIgnored($keys)
+    {
+        Arr::forget($this->ignored, $keys);
 
         return $this;
     }
