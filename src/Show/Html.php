@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Show;
 
+use Dcat\Admin\Support\Helper;
+
 class Html extends Field
 {
     public $html;
@@ -14,6 +16,6 @@ class Html extends Field
 
     public function render()
     {
-        return $this->html;
+        return Helper::render($this->html, [], $this->parent->model());
     }
 }
