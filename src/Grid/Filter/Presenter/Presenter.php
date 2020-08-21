@@ -59,6 +59,18 @@ abstract class Presenter
     }
 
     /**
+     * 忽略筛选项.
+     *
+     * @return $this
+     */
+    public function ignore()
+    {
+        $this->filter->ignore();
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function view(): string
