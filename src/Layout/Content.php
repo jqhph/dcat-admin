@@ -418,7 +418,7 @@ class Content implements Renderable
         $defaultData = [
             'theme'             => '',
             'sidebar_collapsed' => false,
-            'sidebar_dark'      => false,
+            'sidebar_style'     => 'sidebar-light-primary',
             'navbar_color'      => '',
             'navbar_class'      => 'sticky',
             'footer_type'       => '',
@@ -430,13 +430,18 @@ class Content implements Renderable
             $this->config
         );
 
+        // 1.0 版本兼容 sidebar_dark 参数
+        if (empty($data['sidebar_style']) && ! empty($data['sidebar_dark'])) {
+            $data['sidebar_style'] = 'sidebar-dark-white';
+        }
+
         $allOptions = [
             'theme'             => '',
             'footer_type'       => '',
             'body_class'        => '',
-            'sidebar_dark'      => '',
-            'sidebar_collapsed' => [true, false],
-            'navbar_color'      => ['bg-primary', 'bg-info', 'bg-warning', 'bg-success', 'bg-danger', 'bg-dark'],
+            'sidebar_style'     => ['light' => 'sidebar-light-primary', 'primary' => 'sidebar-primary', 'dark' => 'sidebar-dark-white'],
+            'sidebar_collapsed' => [],
+            'navbar_color'      => [],
             'navbar_class'      => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
         ];
 
@@ -461,10 +466,14 @@ class Content implements Renderable
             ) {
                 $data[$key] = $defaultData[$key];
             }
+
+            if (! is_array($data[$key]) && isset($value[$data[$key]])) {
+                $data[$key] = $value[$data[$key]];
+            }
         }
 
         if ($data['body_class'] && Str::contains($data['body_class'], 'dark-mode')) {
-            $data['sidebar_dark'] = true;
+            $data['sidebar_style'] = 'sidebar-dark-white';
         }
 
         return [
@@ -474,7 +483,7 @@ class Content implements Renderable
             'navbar_class'      => $allOptions['navbar_class'][$data['navbar_class']],
             'sidebar_class'     => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
             'body_class'        => $data['body_class'],
-            'sidebar_dark'      => $data['sidebar_dark'],
+            'sidebar_style'     => $data['sidebar_style'],
         ];
     }
 

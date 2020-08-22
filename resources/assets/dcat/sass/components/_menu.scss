@@ -103,6 +103,10 @@ body.sidebar-collapse {
   box-shadow: 0 0;
 }
 
+.nav-treeview > .nav-item > .nav-link p i {
+  margin-top: -5px;
+}
+
 .sidebar-light-primary .nav-item > .nav-link.active {
   background: none;
   color: $primary-darker !important;
@@ -153,5 +157,49 @@ body.sidebar-separate {
 
 body.sidebar-separate.dark-mode [class*=sidebar-dark-] .navbar-header {
   background: unset!important;
+}
+
+//
+.main-sidebar.sidebar-primary {
+  background-color: $primary!important;
+
+  .navbar-header .logo-mini,
+  .navbar-header .logo-lg,
+  .nav-treeview > .nav-item > .nav-link,
+  .sidebar a {
+    color: $white;
+  }
+
+  .nav-pills .nav-link:not(.active):hover {
+    color: $white;
+  }
+
+  .nav.nav-pills .nav-item .nav-link.active,
+  .nav-treeview > .nav-item > .nav-link.active,
+  .nav-treeview>.nav-item>.nav-link:hover {
+    //background-color: #f7f7f9;
+    //color: #555;
+    font-weight: bold;
+    border-bottom: 1px solid $white;
+  }
+
+  .nav-item>.nav-link i {
+    margin-right: .71rem;
+    font-size: 1.2rem;
+  }
+  .nav-treeview>.nav-item>.nav-link i {
+    margin-right: .65rem;
+    margin-left: 3px;
+  }
+
+  //.navbar-header .navbar-brand {
+  //  margin-top: .5rem;
+  //}
+  //
+  //.navbar-header {
+  //  padding: 0 1rem 0;
+  //  height: 61px;
+  //  background: $primary-darker;
+  //}
 }
 

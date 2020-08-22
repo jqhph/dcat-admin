@@ -328,7 +328,8 @@ return [
 
         'sidebar_collapsed' => false,
 
-        'sidebar_dark' => false,
+        // light, primary, dark
+		'sidebar_style' => 'light',
 
         'dark_mode_switch' => false,
 
