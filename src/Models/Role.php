@@ -17,6 +17,11 @@ class Role extends Model
 
     protected $fillable = ['name', 'slug'];
 
+    protected $touches = [
+        'administrators',
+        'menus'
+    ];
+
     /**
      * Create a new Eloquent model instance.
      *
@@ -59,6 +64,20 @@ class Role extends Model
         $relatedModel = config('admin.database.permissions_model');
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'role_id', 'permission_id');
+    }
+
+    /**
+     * A role belongs to many menus.
+     *
+     * @return BelongsToMany
+     */
+    public function menus(): BelongsToMany
+    {
+        $pivotTable = config('admin.database.role_menu_table');
+
+        $relatedModel = config('admin.database.menu_model');
+
+        return $this->belongsToMany($relatedModel, $pivotTable, 'role_id', 'menu_id');
     }
 
     /**

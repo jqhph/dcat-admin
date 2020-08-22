@@ -15,8 +15,8 @@ class Permission extends Model implements Sortable
 {
     use HasDateTimeFormatter,
         ModelTree {
-            ModelTree::boot as treeBoot;
-        }
+        ModelTree::boot as treeBoot;
+    }
 
     /**
      * @var array
@@ -31,6 +31,11 @@ class Permission extends Model implements Sortable
     ];
 
     protected $titleColumn = 'name';
+
+    protected $touches = [
+        'roles',
+        'menus'
+    ];
 
     /**
      * Create a new Eloquent model instance.
@@ -60,6 +65,20 @@ class Permission extends Model implements Sortable
         $relatedModel = config('admin.database.roles_model');
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'permission_id', 'role_id');
+    }
+
+    /**
+     * Permission belongs to many menus.
+     *
+     * @return BelongsToMany
+     */
+    public function menus(): BelongsToMany
+    {
+        $pivotTable = config('admin.database.permission_menu_table');
+
+        $relatedModel = config('admin.database.menu_model');
+
+        return $this->belongsToMany($relatedModel, $pivotTable, 'permission_id', 'menu_id');
     }
 
     /**
