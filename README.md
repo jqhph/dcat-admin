@@ -30,7 +30,7 @@
 
 ## 截图
 
-![](https://cdn.learnku.com/uploads/images/202008/08/38389/YRZvU7LEq9.jpg!large)
+![](http://www.dcatadmin.com/assets/img/users-menu-primary.jpg)
 
 ![](http://www.dcatadmin.com/assets/img/users.jpg)
 ![](http://www.dcatadmin.com/assets/img/users-dark.jpg)
