@@ -30,12 +30,10 @@
 
 ## 截图
 
-![](http://www.dcatadmin.com/assets/img/users-menu-primary.jpg)
-
 ![](http://www.dcatadmin.com/assets/img/users.jpg)
+![](http://www.dcatadmin.com/assets/img/users-menu-primary.jpg)
+![](http://www.dcatadmin.com/assets/img/users-green-menu-primary.jpg)
 ![](http://www.dcatadmin.com/assets/img/users-dark.jpg)
-![](http://www.dcatadmin.com/assets/img/users-2.jpg)
-![](http://www.dcatadmin.com/assets/img/users-dark-2.jpg)
 
 ![](https://cdn.learnku.com/uploads/images/202008/08/38389/O67S62aI4s.jpg!large)
 
