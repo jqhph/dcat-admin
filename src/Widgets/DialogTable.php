@@ -203,6 +203,7 @@ class DialogTable extends Widget
     function open(btn) {
         var index = layer.open({
           type: 1,
+          title: '{$this->title}',
           area: '{$this->width}',
           offset: '70px',
           maxmin: false,
