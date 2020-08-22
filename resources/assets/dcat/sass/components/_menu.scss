@@ -124,9 +124,12 @@ body.sidebar-separate {
     top: 6rem;
     left: 1.5rem;
     text-align: center;
-    background: url(/vendors/dcat-admin/images/waves.png) no-repeat;
     background-color: #fff;
   }
+  //.main-sidebar:not(.sidebar-primary) {
+  //  background: url(/vendors/dcat-admin/images/waves.png) no-repeat;
+  //  background-color: #fff;
+  //}
 
   .navbar-header {
     .logo-lg,
@@ -135,7 +138,7 @@ body.sidebar-separate {
     }
 
     .navbar-brand {
-      margin-top: 1rem;
+      margin-top: 1rem!important;
     }
   }
 
@@ -157,6 +160,8 @@ body.sidebar-separate {
 
 body.sidebar-separate.dark-mode [class*=sidebar-dark-] .navbar-header {
   background: unset!important;
+  height: auto;
+  padding: 0.35rem 1rem 0;
 }
 
 //
