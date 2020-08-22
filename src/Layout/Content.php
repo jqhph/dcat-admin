@@ -56,11 +56,6 @@ class Content implements Renderable
     protected $config = [];
 
     /**
-     * @var bool
-     */
-    protected $usingPerfectScrollbar = false;
-
-    /**
      * Content constructor.
      *
      * @param Closure|null $callback
@@ -157,16 +152,10 @@ class Content implements Renderable
     }
 
     /**
-     * @param bool $value
-     *
-     * @return $this
-     *
      * @deprecated
      */
-    public function perfectScrollbar(bool $value = true)
+    public function perfectScrollbar()
     {
-        $this->usingPerfectScrollbar = $value;
-
         return $this;
     }
 
@@ -407,37 +396,6 @@ class Content implements Renderable
     }
 
     /**
-     * 页面滚动条优化.
-     */
-    protected function addPerfectScrollbarScript()
-    {
-        if (! $this->usingPerfectScrollbar) {
-            return;
-        }
-
-        Admin::script(
-            <<<'JS'
-(function () {
-    if ($(window).width() > 768) {
-        var ps, wps;
-        if ($('.full-page .wrapper').length) {
-            wps = new PerfectScrollbar('.full-page .wrapper');
-        }
-        ps = new PerfectScrollbar('html');
-        $(document).one('pjax:send',function () {
-            ps && ps.destroy();
-            ps = null; 
-              
-            wps && wps.destroy();
-            wps = null; 
-        });
-    }
-})()
-JS
-        );
-    }
-
-    /**
      * @return array
      */
     protected function variables()
@@ -446,8 +404,7 @@ JS
             'header'          => $this->title,
             'description'     => $this->description,
             'breadcrumb'      => $this->breadcrumb,
-            'configData'      => $this->applClasses(),
-            'content'         => $this->build(),
+            'configData'      => $this->applyClasses(),
             'pjaxContainerId' => Admin::$pjaxContainerId,
         ], $this->variables);
     }
@@ -455,17 +412,17 @@ JS
     /**
      * @return array
      */
-    protected function applClasses()
+    protected function applyClasses()
     {
         // default data array
         $defaultData = [
-            'theme' => '',
+            'theme'             => '',
             'sidebar_collapsed' => false,
-            'sidebar_dark' => false,
-            'navbar_color' => '',
-            'navbar_class' => 'sticky',
-            'footer_type' => '',
-            'body_class' => '',
+            'sidebar_dark'      => false,
+            'navbar_color'      => '',
+            'navbar_class'      => 'sticky',
+            'footer_type'       => '',
+            'body_class'        => '',
         ];
 
         $data = array_merge(
@@ -474,13 +431,13 @@ JS
         );
 
         $allOptions = [
-            'theme' => '',
-            'footer_type' => '',
-            'body_class' => '',
-            'sidebar_dark' => '',
+            'theme'             => '',
+            'footer_type'       => '',
+            'body_class'        => '',
+            'sidebar_dark'      => '',
             'sidebar_collapsed' => [true, false],
-            'navbar_color' => ['bg-primary', 'bg-info', 'bg-warning', 'bg-success', 'bg-danger', 'bg-dark'],
-            'navbar_class' => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
+            'navbar_color'      => ['bg-primary', 'bg-info', 'bg-warning', 'bg-success', 'bg-danger', 'bg-dark'],
+            'navbar_class'      => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
         ];
 
         $maps = [
@@ -511,13 +468,13 @@ JS
         }
 
         return [
-            'theme' => $data['theme'],
+            'theme'             => $data['theme'],
             'sidebar_collapsed' => $data['sidebar_collapsed'],
-            'navbar_color' => $data['navbar_color'],
-            'navbar_class' => $allOptions['navbar_class'][$data['navbar_class']],
-            'sidebar_class' => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
-            'body_class' => $data['body_class'],
-            'sidebar_dark' => $data['sidebar_dark'],
+            'navbar_color'      => $data['navbar_color'],
+            'navbar_class'      => $allOptions['navbar_class'][$data['navbar_class']],
+            'sidebar_class'     => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
+            'body_class'        => $data['body_class'],
+            'sidebar_dark'      => $data['sidebar_dark'],
         ];
     }
 
@@ -531,13 +488,11 @@ JS
         $this->callComposing();
         $this->shareDefaultErrors();
 
-        $variables = $this->variables();
+        $this->variables['content'] = $this->build();
 
         $this->callComposed();
 
-        $this->addPerfectScrollbarScript();
-
-        return view($this->view, $variables)->render();
+        return view($this->view, $this->variables())->render();
     }
 
     /**
