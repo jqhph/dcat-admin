@@ -51,6 +51,7 @@ class Modal extends AbstractDisplayer
             ->lg()
             ->title($title)
             ->body($html)
+            ->delay(300)
             ->button($this->renderButton());
     }
 
