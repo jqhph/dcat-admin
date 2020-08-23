@@ -65,7 +65,7 @@
     background: transparent;
     box-shadow: none!important;
     padding: 0!important;
-    margin: 1rem 0 -1rem!important;
+    margin: .5rem 0 -1rem!important;
     padding-bottom: 0!important;
 
     .form-group {
@@ -78,22 +78,35 @@
     border: 1px solid $input-border-color;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
   }
+
 }
 
 body:not(.dark-mode) .simple-grid {
-  .table-collapse .table.custom-data-table {
-    padding: 5px 0 0;
-  }
-  .table-collapse table.custom-data-table.dataTable thead th {
-    height: 20px;
-  }
-
-  .table-collapse .custom-data-table.dataTable tbody td {
-    height: 35px;
-  }
-
   .table-collapse {
     box-shadow: none;
-    border: 1px solid #ededf1!important;
+    background: transparent;
+    //border: 1px solid #ededf1!important;
+    .custom-data-table {
+      background: transparent;
+    }
+
+    .custom-data-table.dataTable tbody td {
+      height: 35px;
+    }
+
+    .custom-data-table.dataTable thead th {
+      height: 20px;
+    }
+
+    .custom-data-table {
+      padding: 5px 0 0;
+      border-top: 1px solid $table-border-color;
+      border-bottom: 1px solid $table-border-color;
+    }
+
+    table.dataTable thead tr:last-child th {
+      border-bottom: 2px solid $table-border-color;
+    }
   }
+
 }
