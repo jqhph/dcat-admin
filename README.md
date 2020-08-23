@@ -35,8 +35,6 @@
 ![](http://www.dcatadmin.com/assets/img/users-green-menu-primary.jpg)
 ![](http://www.dcatadmin.com/assets/img/users-dark.jpg)
 
-![](https://cdn.learnku.com/uploads/images/202008/08/38389/O67S62aI4s.jpg!large)
-
 ![](https://cdn.learnku.com/uploads/images/202008/08/38389/lGYIdhifb5.jpg!large)
 
 
