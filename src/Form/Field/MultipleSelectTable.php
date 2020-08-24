@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Support\Helper;
+
 class MultipleSelectTable extends SelectTable
 {
     public static $css = [
@@ -41,5 +43,17 @@ Dcat.grid.SelectTable({
     values: {$this->options},
 });
 JS;
+    }
+
+    /**
+     * 转化为数组格式保存.
+     *
+     * @param mixed $value
+     *
+     * @return array|mixed
+     */
+    public function prepareInputValue($value)
+    {
+        return Helper::array($value, true);
     }
 }

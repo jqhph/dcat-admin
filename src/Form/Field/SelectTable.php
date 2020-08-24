@@ -76,6 +76,18 @@ class SelectTable extends Field
     }
 
     /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function options($options = [])
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
      * 设置选中数据显示.
      *
      * @param string $model
@@ -93,18 +105,6 @@ class SelectTable extends Field
 
             return $model::find($v)->pluck($text, $id);
         });
-    }
-
-    /**
-     * 转化为数组格式保存.
-     *
-     * @param mixed $value
-     *
-     * @return array|mixed
-     */
-    public function prepareInputValue($value)
-    {
-        return Helper::array($value, true);
     }
 
     protected function formatOptions()
