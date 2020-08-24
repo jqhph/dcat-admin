@@ -202,14 +202,14 @@ $table-border-color: #eff3f8;
   }
 
   .table.custom-data-table {
-    padding: 3px 8px 8px;
+    padding: 3px 6px 6px;
   }
 
   .table-fixed-left .table.custom-data-table {
-    padding: 3px 0 0 8px;
+    padding: 3px 0 0 6px;
   }
   .table-fixed-right .table.custom-data-table {
-    padding: 3px 8px 0 0;
+    padding: 3px 6px 0 0;
   }
   .table-fixed th {
     background: darken(#f7f7f9, 3.5%);
@@ -269,6 +269,17 @@ body.dark-mode {
 
     table.custom-data-table.dataTable tbody td {
       height: 38px;
+    }
+
+    .table.custom-data-table {
+      padding: 5px 10px 10px;
+    }
+
+    .table-fixed-left .table.custom-data-table {
+      padding: 5px 0 0 10px;
+    }
+    .table-fixed-right .table.custom-data-table {
+      padding: 5px 10px 0 0;
     }
   }
 
