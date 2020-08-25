@@ -938,8 +938,6 @@ HTML;
      */
     public function render()
     {
-        $this->handleExportRequest();
-
         try {
             $this->callComposing();
 
