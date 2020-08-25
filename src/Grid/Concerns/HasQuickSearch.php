@@ -45,9 +45,11 @@ trait HasQuickSearch
         }
 
         return tap(new Tools\QuickSearch(), function ($search) {
-            $search->setGrid($this);
-
             $this->quickSearch = $search;
+
+            $this->setQuickSearchQueryName();
+
+            $search->setGrid($this);
         });
     }
 
