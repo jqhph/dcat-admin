@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Admin;
+
 class Color extends Text
 {
     protected static $css = [
@@ -62,6 +64,8 @@ JS;
      */
     public function render()
     {
+        Admin::style('.popover{z-index:29891015}');
+
         $this->addScript();
 
         $this->defaultAttribute('style', 'width: 160px;flex:none');
