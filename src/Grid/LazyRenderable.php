@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Support\LazyRenderable as Renderable;
 
@@ -26,11 +27,18 @@ abstract class LazyRenderable extends Renderable
      */
     public function render()
     {
+        $this->addStyle();
+
         $class = $this->allowSimpleMode() ? 'simple-grid' : null;
 
         return <<<HTML
 <div class="$class">{$this->prepare($this->grid())->render()}</div>
 HTML;
+    }
+
+    protected function addStyle()
+    {
+        Admin::style('.select2-container{z-index:29891015}');
     }
 
     /**
