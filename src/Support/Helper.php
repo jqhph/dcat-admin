@@ -822,4 +822,24 @@ class Helper
 
         dd($js, $css);
     }
+
+    /**
+     * Html转义.
+     *
+     * @param array|string $item
+     *
+     * @return mixed
+     */
+    public static function htmlEntityEncode($item)
+    {
+        if (is_array($item)) {
+            array_walk_recursive($item, function (&$value) {
+                $value = htmlentities($value);
+            });
+        } else {
+            $item = htmlentities($item);
+        }
+
+        return $item;
+    }
 }

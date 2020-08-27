@@ -20,6 +20,8 @@ JS;
 
     public function display($limit = 100, $end = '...')
     {
+        $this->value = Helper::htmlEntityEncode($this->value);
+
         // 数组
         if ($this->value !== null && ! is_scalar($this->value)) {
             $value = Helper::array($this->value);
