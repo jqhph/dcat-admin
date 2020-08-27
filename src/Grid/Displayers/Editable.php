@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 
 class Editable extends AbstractDisplayer
 {
@@ -13,11 +14,13 @@ class Editable extends AbstractDisplayer
         $this->addScript();
         $this->addStyle();
 
+        $value = Helper::render($this->value);
+
         $label = __('admin.save');
 
         return <<<HTML
 <div class="d-inline">
-    <span class="{$this->selector}" contenteditable="true">{$this->value}</span>
+    <span class="{$this->selector}" contenteditable="true">{$value}</span>
     <span class="save hidden" 
         data-value="{$this->value}" 
         data-name="{$this->column->getName()}" 

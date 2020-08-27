@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid;
 use Closure;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasDefinitions;
 use Illuminate\Contracts\Support\Arrayable;
@@ -635,15 +636,7 @@ class Column
      */
     protected function htmlEntityEncode($item)
     {
-        if (is_array($item)) {
-            array_walk_recursive($item, function (&$value) {
-                $value = htmlentities($value);
-            });
-        } else {
-            $item = htmlentities($item);
-        }
-
-        return $item;
+        return Helper::htmlEntityEncode($item);
     }
 
     /**
