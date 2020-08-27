@@ -81,7 +81,6 @@ trait HasExporter
         }
 
         if ($forceExport || $this->allowExporter()) {
-
             return $this->resolveExportDriver($scope)->export();
         }
     }
@@ -91,12 +90,6 @@ trait HasExporter
      */
     public function exporter()
     {
-//        if (! $this->exporter) {
-//            $this->exporter = new Exporter($this);
-//
-//            $this->setExporterQueryName();
-//        }
-
         return $this->exporter ?: ($this->exporter = new Exporter($this));
     }
 

@@ -518,7 +518,7 @@ class Show implements Renderable
      */
     public function html($html = '')
     {
-        $this->fields->push(new Html($html, $this));
+        $this->fields->push((new Html($html))->setParent($this));
     }
 
     /**
