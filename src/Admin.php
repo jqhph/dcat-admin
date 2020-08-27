@@ -6,12 +6,10 @@ use Closure;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Controllers\AuthController;
 use Dcat\Admin\Exception\Handler;
-use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Repositories\EloquentRepository;
-use Dcat\Admin\Repositories\Proxy;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Traits\HasPermissions;
@@ -128,17 +126,6 @@ class Admin
         }
 
         static::$favicon = $favicon;
-    }
-
-    /**
-     * @param Closure $callable
-     *
-     * @return Content
-     * @deprecated
-     */
-    public static function content(Closure $callable = null)
-    {
-        return new Content($callable);
     }
 
     /**
@@ -321,14 +308,12 @@ class Admin
             throw new \InvalidArgumentException("The class [{$class}] must be a type of [".Repository::class.'].');
         }
 
-        if ($repository instanceof Proxy) {
-            return $repository;
-        }
-
-        return new Proxy($repository);
+        return $repository;
     }
 
     /**
+     * 应用管理.
+     *
      * @return Application
      */
     public static function app()

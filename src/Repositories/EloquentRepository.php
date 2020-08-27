@@ -73,10 +73,10 @@ class EloquentRepository extends Repository implements TreeRepository
             $this->with($modelOrRelations);
         }
 
-        $this->setKeyName($this->eloquent()->getKeyName());
+        $this->setKeyName($this->model()->getKeyName());
 
         $this->setIsSoftDeletes(
-            in_array(SoftDeletes::class, class_uses($this->eloquent()))
+            in_array(SoftDeletes::class, class_uses($this->model()))
         );
     }
 
@@ -85,7 +85,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getCreatedAtColumn()
     {
-        return $this->eloquent()->getCreatedAtColumn();
+        return $this->model()->getCreatedAtColumn();
     }
 
     /**
@@ -93,7 +93,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getUpdatedAtColumn()
     {
-        return $this->eloquent()->getUpdatedAtColumn();
+        return $this->model()->getUpdatedAtColumn();
     }
 
     /**
@@ -324,7 +324,7 @@ class EloquentRepository extends Repository implements TreeRepository
         $result = null;
 
         DB::transaction(function () use ($form, &$result) {
-            $model = $this->eloquent();
+            $model = $this->model();
 
             $updates = $form->updates();
 
@@ -343,7 +343,7 @@ class EloquentRepository extends Repository implements TreeRepository
             $this->updateRelation($form, $model, $relations, $relationKeyMap);
         });
 
-        return $this->eloquent()->getKey();
+        return $this->model()->getKey();
     }
 
     /**
@@ -368,7 +368,7 @@ class EloquentRepository extends Repository implements TreeRepository
     public function update(Form $form)
     {
         /* @var EloquentModel $builder */
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (! $model->getKey()) {
             $model->exists = true;
@@ -407,7 +407,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function moveOrderUp()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (! $model instanceof Sortable) {
             throw new \RuntimeException(
@@ -429,7 +429,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function moveOrderDown()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (! $model instanceof Sortable) {
             throw new \RuntimeException(
@@ -514,7 +514,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getParentColumn()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (method_exists($model, 'getParentColumn')) {
             return $model->getParentColumn();
@@ -528,7 +528,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getTitleColumn()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (method_exists($model, 'getTitleColumn')) {
             return $model->getTitleColumn();
@@ -542,7 +542,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getOrderColumn()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (method_exists($model, 'getOrderColumn')) {
             return $model->getOrderColumn();
@@ -557,7 +557,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function saveOrder($tree = [], $parentId = 0)
     {
-        $this->eloquent()->saveOrder($tree, $parentId);
+        $this->model()->saveOrder($tree, $parentId);
     }
 
     /**
@@ -569,7 +569,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function withQuery($queryCallback)
     {
-        $this->eloquent()->withQuery($queryCallback);
+        $this->model()->withQuery($queryCallback);
 
         return $this;
     }
@@ -587,7 +587,7 @@ class EloquentRepository extends Repository implements TreeRepository
             });
         }
 
-        return $this->eloquent()->toTree();
+        return $this->model()->toTree();
     }
 
     /**
@@ -599,7 +599,7 @@ class EloquentRepository extends Repository implements TreeRepository
             return clone $this->queryBuilder;
         }
 
-        return $this->eloquent()->newQuery();
+        return $this->model()->newQuery();
     }
 
     /**
@@ -607,9 +607,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return EloquentModel
      */
-    public function eloquent()
+    public function model()
     {
-        return $this->model ?: ($this->model = $this->createEloquent());
+        return $this->model ?: ($this->model = $this->createModel());
     }
 
     /**
@@ -617,7 +617,7 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return EloquentModel
      */
-    public function createEloquent(array $data = [])
+    public function createModel(array $data = [])
     {
         $model = new $this->eloquentClass();
 

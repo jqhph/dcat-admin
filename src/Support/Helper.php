@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Support;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Contracts\Support\Arrayable;
@@ -798,5 +799,27 @@ class Helper
         $model->$method(implode('.', $column), function ($relation) use ($params, $query) {
             $relation->$query(...$params);
         });
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return string
+     */
+    public static function html($html)
+    {
+        if (! $html = static::render($html)) {
+            return $html;
+        }
+
+        $space = '';
+        $url = '[\s]*[\"\']([\s]*[\w-_\?\=\&\.\/]+[^\"\']*)[\"\']';
+        $rel = '(?:rel[\s]*=[\s]*[\"\'][\s]*stylesheet[\s]*[\"\'])*[\s]*';
+        $type = '(?:type[\s]*=[\s]*[\"\'][\s]*text\/javascript[\s]*[\"\'])*[\s]*';
+
+        preg_match_all("/<link[\s]+{$rel}href[\s]*={$url}/u", $html, $css);
+        preg_match_all("/<script[\s]+{$type}src[\s]*={$url}>/u", $html, $js);
+
+        dd($js, $css);
     }
 }
