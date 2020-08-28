@@ -741,6 +741,8 @@ class Builder
             $this->addHiddenField((new Hidden('_method'))->value('PUT'));
         }
 
+        $this->addHiddenField((new Hidden('_token'))->value(csrf_token()));
+
         $this->addRedirectUrlField();
 
         $attributes['id'] = $this->getElementId();
