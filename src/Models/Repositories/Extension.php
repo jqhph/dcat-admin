@@ -81,7 +81,7 @@ class Extension extends Repository
      *
      * @return array
      */
-    public function getDataWhenUpdating(Form $form): array
+    public function updating(Form $form): array
     {
         return [];
     }
@@ -91,7 +91,7 @@ class Extension extends Repository
         return [];
     }
 
-    public function destroy(Form $form, array $deletingData)
+    public function delete(Form $form, array $deletingData)
     {
     }
 
@@ -99,7 +99,7 @@ class Extension extends Repository
     {
     }
 
-    public function getDataWhenDeleting(Form $form): array
+    public function deleting(Form $form): array
     {
         return [];
     }

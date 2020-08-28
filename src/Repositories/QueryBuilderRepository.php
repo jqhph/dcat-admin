@@ -300,7 +300,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      *
      * @return array
      */
-    public function getDataWhenUpdating(Form $form): array
+    public function updating(Form $form): array
     {
         return $this->edit($form);
     }
@@ -353,7 +353,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      *
      * @return bool
      */
-    public function destroy(Form $form, array $deletingData)
+    public function delete(Form $form, array $deletingData)
     {
         $id = $form->getKey();
 
@@ -384,7 +384,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      *
      * @return array
      */
-    public function getDataWhenDeleting(Form $form): array
+    public function deleting(Form $form): array
     {
         $query = $this->newQuery();
 

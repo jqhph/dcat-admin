@@ -70,7 +70,7 @@ class EloquentRepository extends Repository implements TreeRepository
             $this->eloquentClass = get_class($this->model);
             $this->queryBuilder = $modelOrRelations;
         } else {
-            $this->with($modelOrRelations);
+            $this->setRelations($modelOrRelations);
         }
 
         $this->setKeyName($this->model()->getKeyName());
@@ -133,7 +133,7 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return $this
      */
-    public function with($relations)
+    public function setRelations($relations)
     {
         $this->relations = (array) $relations;
 
@@ -273,9 +273,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @param Form $form
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function edit(Form $form): array
+    public function edit(Form $form)
     {
         $query = $this->newQuery();
 
@@ -287,7 +287,7 @@ class EloquentRepository extends Repository implements TreeRepository
             ->with($this->getRelations())
             ->findOrFail($form->getKey(), $this->getFormColumns());
 
-        return $this->model->toArray();
+        return $this->model;
     }
 
     /**
@@ -295,9 +295,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @param Show $show
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function detail(Show $show): array
+    public function detail(Show $show)
     {
         $query = $this->newQuery();
 
@@ -309,7 +309,7 @@ class EloquentRepository extends Repository implements TreeRepository
             ->with($this->getRelations())
             ->findOrFail($show->getKey(), $this->getDetailColumns());
 
-        return $this->model->toArray();
+        return $this->model;
     }
 
     /**
@@ -351,9 +351,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @param Form $form
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function getDataWhenUpdating(Form $form): array
+    public function updating(Form $form)
     {
         return $this->edit($form);
     }
@@ -452,7 +452,7 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return bool
      */
-    public function destroy(Form $form, array $originalData)
+    public function delete(Form $form, array $originalData)
     {
         $models = $this->collection->keyBy($this->getKeyName());
 
@@ -487,7 +487,7 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return array
      */
-    public function getDataWhenDeleting(Form $form): array
+    public function deleting(Form $form)
     {
         $query = $this->newQuery();
 
@@ -629,11 +629,21 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
+     * @param array $relations
+     *
+     * @return $this
+     */
+    public static function with($relations = [])
+    {
+        return (new static())->setRelations($relations);
+    }
+
+    /**
      * 获取模型的所有关联关系.
      *
      * @return array
      */
-    protected function getRelations()
+    public function getRelations()
     {
         return $this->relations;
     }

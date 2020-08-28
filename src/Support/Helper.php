@@ -812,15 +812,31 @@ class Helper
             return $html;
         }
 
-        $space = '';
         $url = '[\s]*[\"\']([\s]*[\w-_\?\=\&\.\/]+[^\"\']*)[\"\']';
         $rel = '(?:rel[\s]*=[\s]*[\"\'][\s]*stylesheet[\s]*[\"\'])*[\s]*';
         $type = '(?:type[\s]*=[\s]*[\"\'][\s]*text\/javascript[\s]*[\"\'])*[\s]*';
 
-        preg_match_all("/<link[\s]+{$rel}href[\s]*={$url}/u", $html, $css);
-        preg_match_all("/<script[\s]+{$type}src[\s]*={$url}>/u", $html, $js);
+        $link = "/<link[\s]+{$rel}href[\s]*={$url}[\s]*[\/]*>/u";
+        $script = "/<script[\s]+{$type}src[\s]*={$url}>[\s]*<\/[\s]*script>/u";
 
-        dd($js, $css);
+        $js = $css = [];
+
+        $html = preg_replace_callback($link, function (&$match) use (&$css) {
+            if (! empty($match[1])) {
+                $css[] = $match[1];
+            }
+        }, $html);
+
+        $html = preg_replace_callback($script, function (&$match) use (&$js) {
+            if (! empty($match[1])) {
+                $js[] = $match[1];
+            }
+        }, $html);
+
+        $js && Admin::js($js);
+        $css && Admin::css($css);
+
+        return $html;
     }
 
     /**

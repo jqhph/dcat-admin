@@ -41,7 +41,7 @@ class Handler
 
     public function report(\Throwable $e)
     {
-        $this->getLogger()->error($this->convertExceptionToString($e));
+        $this->logger()->error($this->convertExceptionToString($e));
     }
 
     protected function convertExceptionToString(\Throwable $e)
@@ -65,7 +65,7 @@ class Handler
         );
     }
 
-    protected function getLogger()
+    protected function logger()
     {
         return logger();
     }

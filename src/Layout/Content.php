@@ -4,6 +4,7 @@ namespace Dcat\Admin\Layout;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
@@ -152,14 +153,6 @@ class Content implements Renderable
     }
 
     /**
-     * @deprecated
-     */
-    public function perfectScrollbar()
-    {
-        return $this;
-    }
-
-    /**
      * @param array $breadcrumb
      *
      * @throws \Exception
@@ -274,7 +267,7 @@ class Content implements Renderable
             $html .= $row->render();
         }
 
-        return $html;
+        return Helper::html($html);
     }
 
     /**

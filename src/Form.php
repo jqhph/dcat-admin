@@ -394,14 +394,18 @@ class Form implements Renderable
     }
 
     /**
-     * @param Fluent $model
+     * @param Fluent|array|\Illuminate\Database\Eloquent\Model $model
      *
-     * @return Fluent|void
+     * @return Fluent|\Illuminate\Database\Eloquent\Model|void
      */
-    public function model(Fluent $model = null)
+    public function model($model = null)
     {
         if ($model === null) {
             return $this->model;
+        }
+
+        if (is_array($model)) {
+            $model = new Fluent($model);
         }
 
         $this->model = $model;
@@ -487,7 +491,7 @@ class Form implements Renderable
         $this->builder->mode(Builder::MODE_EDIT);
         $this->builder->setResourceId($id);
 
-        $this->model(new Fluent($this->repository->edit($this)));
+        $this->model($this->repository->edit($this));
 
         return $this;
     }
@@ -526,7 +530,7 @@ class Form implements Renderable
             $this->builder->setResourceId($id);
             $this->builder->mode(Builder::MODE_DELETE);
 
-            $data = $this->repository->getDataWhenDeleting($this);
+            $data = $this->repository->deleting($this);
 
             $this->model(new Fluent($data));
 
@@ -538,7 +542,7 @@ class Form implements Renderable
                 return $response;
             }
 
-            $result = $this->repository->destroy($this, $data);
+            $result = $this->repository->delete($this, $data);
 
             if (($response = $this->callDeleted($result)) instanceof Response) {
                 return $response;
@@ -574,38 +578,48 @@ class Form implements Renderable
      */
     public function store(?array $data = null, $redirectTo = null)
     {
-        if ($data) {
-            $this->request->replace($data);
+        try {
+            if ($data) {
+                $this->request->replace($data);
+            }
+
+            $data = $data ?: $this->request->all();
+
+            if ($response = $this->beforeStore($data)) {
+                return $response;
+            }
+
+            $this->updates = $this->prepareInsert($this->updates);
+
+            $id = $this->repository->store($this);
+
+            $this->builder->setResourceId($id);
+
+            if (($response = $this->callSaved($id))) {
+                return $response;
+            }
+
+            if ($response = $this->responseMultipleStepsDonePage()) {
+                return $response;
+            }
+
+            if (! $id) {
+                return $this->error(trans('admin.save_failed'));
+            }
+
+            return $this->redirect(
+                $this->redirectUrl($id, $redirectTo),
+                trans('admin.save_succeeded')
+            );
+        } catch (\Throwable $e) {
+            $response = Admin::makeExceptionHandler()->handle($e);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
+
+            return $this->error($e->getMessage() ?: trans('admin.save_failed'));
         }
-
-        $data = $data ?: $this->request->all();
-
-        if ($response = $this->beforeStore($data)) {
-            return $response;
-        }
-
-        $this->updates = $this->prepareInsert($this->updates);
-
-        $id = $this->repository->store($this);
-
-        $this->builder->setResourceId($id);
-
-        if (($response = $this->callSaved($id))) {
-            return $response;
-        }
-
-        if ($response = $this->responseMultipleStepsDonePage()) {
-            return $response;
-        }
-
-        if (! $id) {
-            return $this->error(trans('admin.save_failed'));
-        }
-
-        return $this->redirect(
-            $this->redirectUrl($id, $redirectTo),
-            trans('admin.save_succeeded')
-        );
     }
 
     /**
@@ -745,32 +759,39 @@ class Form implements Renderable
         ?array $data = null,
         $redirectTo = null
     ) {
-        if ($data) {
-            $this->request->replace($data);
+        try {
+            if ($data) {
+                $this->request->replace($data);
+            }
+
+            $data = $data ?: $this->request->all();
+
+            if ($response = $this->beforeUpdate($id, $data)) {
+                return $response;
+            }
+
+            $this->updates = $this->prepareUpdate($this->updates);
+
+            $updated = $this->repository->update($this);
+
+            if (($response = $this->callSaved($updated))) {
+                return $response;
+            }
+
+            if (! $updated) {
+                return $this->error(trans('admin.update_succeeded'));
+            }
+
+            return $this->redirect($this->redirectUrl($id, $redirectTo), trans('admin.update_succeeded'));
+        } catch (\Throwable $e) {
+            $response = Admin::makeExceptionHandler()->handle($e);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
+
+            return $this->error($e->getMessage() ?: trans('admin.save_failed'));
         }
-
-        $data = $data ?: $this->request->all();
-
-        if ($response = $this->beforeUpdate($id, $data)) {
-            return $response;
-        }
-
-        $this->updates = $this->prepareUpdate($this->updates);
-
-        $updated = $this->repository->update($this);
-
-        if (($response = $this->callSaved($updated))) {
-            return $response;
-        }
-
-        if (! $updated) {
-            return $this->error(trans('admin.update_succeeded'));
-        }
-
-        return $this->redirect(
-            $this->redirectUrl($id, $redirectTo),
-            trans('admin.update_succeeded')
-        );
     }
 
     /**
@@ -787,7 +808,7 @@ class Form implements Renderable
 
         $this->inputs = $data;
 
-        $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
+        $this->model($this->repository->updating($this));
 
         $this->build();
 
