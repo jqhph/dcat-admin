@@ -8,7 +8,6 @@ use Dcat\Admin\Contracts\UploadField;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
 use Dcat\Admin\Form\Step\Builder as StepBuilder;
-use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\Renderable;
@@ -719,7 +718,7 @@ class Builder
 
         if (
             Str::contains($previous, url($this->getResource()))
-            && ! Helper::urlHasQuery($previous, [IFrameGrid::QUERY_NAME, DialogForm::QUERY_NAME])
+            && ! Helper::urlHasQuery($previous, [DialogForm::QUERY_NAME])
         ) {
             $this->addHiddenField(
                 (new Hidden(static::PREVIOUS_URL_KEY))->value($previous)

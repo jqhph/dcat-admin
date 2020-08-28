@@ -67,7 +67,6 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Embeds                 embeds($column, $label = '', Closure $callback = null)
  * @method Field\Captcha                captcha()
  * @method Field\Listbox                listbox($column, $label = '')
- * @method Field\SelectResource         selectResource($column, $label = '')
  * @method Field\File                   file($column, $label = '')
  * @method Field\Image                  image($column, $label = '')
  * @method Field\MultipleFile           multipleFile($column, $label = '')
@@ -151,7 +150,6 @@ class Form implements Renderable
         'icon'                => Field\Icon::class,
         'captcha'             => Field\Captcha::class,
         'listbox'             => Field\Listbox::class,
-        'selectResource'      => Field\SelectResource::class,
         'file'                => Field\File::class,
         'image'               => Field\Image::class,
         'multipleFile'        => Field\MultipleFile::class,

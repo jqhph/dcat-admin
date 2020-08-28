@@ -318,18 +318,6 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param mixed $source
-     *
-     * @return Filter\Presenter\SelectResource
-     *
-     * @deprecated 即将在2.0版本中废弃，请使用 selectTable 和 multipleSelectTable 代替
-     */
-    public function selectResource($source = null)
-    {
-        return $this->setPresenter(new Filter\Presenter\SelectResource($source));
-    }
-
-    /**
      * @param LazyRenderable $table
      *
      * @return Filter\Presenter\SelectTable

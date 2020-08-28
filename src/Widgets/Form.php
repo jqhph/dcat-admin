@@ -65,7 +65,6 @@ use Illuminate\Validation\Validator;
  * @method Field\Embeds              embeds($column, $label = '')
  * @method Field\Captcha             captcha($column, $label = '')
  * @method Field\Listbox             listbox($column, $label = '')
- * @method Field\SelectResource      selectResource($column, $label = '')
  * @method Field\File                file($column, $label = '')
  * @method Field\Image               image($column, $label = '')
  * @method Field\MultipleFile        multipleFile($column, $label = '')
