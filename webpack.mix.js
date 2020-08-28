@@ -47,7 +47,6 @@ function dcatDistPath(path) {
 
 mix.copyDirectory('resources/assets/images', distPath + '/images');
 mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
-mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
 
 // AdminLTE3.0
 mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', themeCss('adminlte/adminlte')).sourceMaps();

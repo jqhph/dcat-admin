@@ -46,11 +46,11 @@ class Asset
             'css' => '@admin/dcat/css/dcat-app.css',
         ],
         '@vendors' => [
-            'js'  => '@admin/vendors/js/vendors.min.js',
-            'css' => '@admin/vendors/css/vendors.min.css',
+            'js'  => '@admin/dcat/plugins/vendors.min.js',
+            'css' => '@admin/dcat/plugins/vendors.min.css',
         ],
         '@datatables' => [
-            'css' => '@admin/vendors/css/tables/datatable/datatables.min.css',
+            'css' => '@admin/dcat/plugins/tables/datatable/datatables.min.css',
         ],
         '@grid-extension' => [
             'js' => '@admin/dcat/extra/grid-extend.js',
@@ -71,8 +71,8 @@ class Asset
             'js' => '@admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
         ],
         '@toastr' => [
-            'js'  => '@admin/vendors/js/extensions/toastr.min.js',
-            'css' => '@admin/vendors/css/extensions/toastr.css',
+            'js'  => '@admin/dcat/plugins/extensions/toastr.min.js',
+            'css' => '@admin/dcat/plugins/extensions/toastr.css',
         ],
         '@jquery.nestable' => [
             'js'  => '@admin/dcat/plugins/nestable/jquery.nestable.min.js',
@@ -82,8 +82,8 @@ class Asset
             'js' => '@admin/dcat/plugins/bootstrap-validator/validator.min.js',
         ],
         '@select2' => [
-            'js'  => '@admin/vendors/js/forms/select/select2.full.min.js',
-            'css' => '@admin/vendors/css/forms/select/select2.min.css',
+            'js'  => '@admin/dcat/plugins/select/select2.full.min.js',
+            'css' => '@admin/dcat/plugins/select/select2.min.css',
         ],
         '@bootstrap-datetimepicker' => [
             'js'  => '@admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
@@ -160,7 +160,7 @@ class Asset
             'js' => '@admin/dcat/plugins/input-mask/jquery.inputmask.bundle.min.js',
         ],
         '@apex-charts' => [
-            'js' => '@admin/vendors/js/charts/apexcharts.min.js',
+            'js' => '@admin/dcat/plugins/charts/apexcharts.min.js',
         ],
         '@smart-wizard' => [
             'js' => '@admin/dcat/plugins/SmartWizard/dist/js/jquery.smartWizard.min.js',

@@ -89,17 +89,6 @@ class CreateAdminTables extends Migration
             $table->unique(['permission_id', 'menu_id']);
             $table->timestamps();
         });
-
-        Schema::create($this->config('database.operation_log_table'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('user_id');
-            $table->string('path');
-            $table->string('method', 10);
-            $table->string('ip');
-            $table->text('input');
-            $table->index('user_id');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -117,6 +106,5 @@ class CreateAdminTables extends Migration
         Schema::dropIfExists($this->config('database.role_permissions_table'));
         Schema::dropIfExists($this->config('database.role_menu_table'));
         Schema::dropIfExists($this->config('database.permission_menu_table'));
-        Schema::dropIfExists($this->config('database.operation_log_table'));
     }
 }

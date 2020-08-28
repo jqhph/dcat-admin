@@ -88,17 +88,6 @@ class AdminTablesSeeder extends Seeder
                 'order'       => 5,
                 'created_at'  => $createdAt,
             ],
-            [
-                'id'          => 6,
-                'name'        => 'Operation log',
-                'slug'        => 'operation-log',
-                'http_method' => '',
-                'http_path'   => '/auth/logs*',
-                'parent_id'   => 1,
-                'order'       => 6,
-                'created_at'  => $createdAt,
-            ],
-
         ]);
 
 //        Role::first()->permissions()->save(Permission::first());
@@ -152,14 +141,6 @@ class AdminTablesSeeder extends Seeder
                 'title'         => 'Menu',
                 'icon'          => '',
                 'uri'           => 'auth/menu',
-                'created_at'    => $createdAt,
-            ],
-            [
-                'parent_id'     => 2,
-                'order'         => 7,
-                'title'         => 'Operation log',
-                'icon'          => '',
-                'uri'           => 'auth/logs',
                 'created_at'    => $createdAt,
             ],
         ]);
