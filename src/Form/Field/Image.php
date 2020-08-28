@@ -90,7 +90,7 @@ class Image extends File
             return $this;
         }
 
-        $this->options(['dimensions' => $options]);
+        $this->mergeOptions(['dimensions' => $options]);
 
         foreach ($options as $k => &$v) {
             $v = "$k=$v";

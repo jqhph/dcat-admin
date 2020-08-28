@@ -113,7 +113,7 @@ class Markdown extends Field
      */
     public function imageUrl(string $url)
     {
-        return $this->options(['imageUploadURL' => $this->formatUrl(admin_url($url))]);
+        return $this->mergeOptions(['imageUploadURL' => $this->formatUrl(admin_url($url))]);
     }
 
     /**

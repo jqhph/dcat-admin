@@ -23,7 +23,7 @@ class Color extends Text
      */
     public function hex()
     {
-        return $this->options(['format' => 'hex']);
+        return $this->mergeOptions(['format' => 'hex']);
     }
 
     /**
@@ -33,7 +33,7 @@ class Color extends Text
      */
     public function rgb()
     {
-        return $this->options(['format' => 'rgb']);
+        return $this->mergeOptions(['format' => 'rgb']);
     }
 
     /**
@@ -43,7 +43,7 @@ class Color extends Text
      */
     public function rgba()
     {
-        return $this->options(['format' => 'rgba']);
+        return $this->mergeOptions(['format' => 'rgba']);
     }
 
     protected function addScript()

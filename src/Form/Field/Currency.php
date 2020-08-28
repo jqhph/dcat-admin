@@ -48,7 +48,7 @@ class Currency extends Text
      */
     public function digits($digits)
     {
-        return $this->options(compact('digits'));
+        return $this->mergeOptions(compact('digits'));
     }
 
     /**
