@@ -25,7 +25,7 @@ trait HasFiles
     protected function handleUploadFile($data)
     {
         $column = $data['upload_column'] ?? null;
-        $file = app('admin.web-uploader')->getCompleteUploadedFile() ?: ($data[WebUploader::FILE_NAME] ?? null);
+        $file = app('admin.web-uploader')->getUploadedFile() ?: ($data[WebUploader::FILE_NAME] ?? null);
 
         if (! $column || ! $file instanceof UploadedFile) {
             return;

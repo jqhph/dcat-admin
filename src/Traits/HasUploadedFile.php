@@ -31,7 +31,7 @@ trait HasUploadedFile
      */
     public function file()
     {
-        return $this->uploader()->getCompleteUploadedFile();
+        return $this->uploader()->getUploadedFile();
     }
 
     /**
