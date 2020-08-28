@@ -56,10 +56,6 @@ class AdminController extends Controller
      */
     public function index(Content $content)
     {
-        if (request(Grid::IFRAME_QUERY_NAME)) {
-            return $content->full()->body($this->iFrameGrid());
-        }
-
         return $content
             ->title($this->title())
             ->description($this->description()['index'] ?? trans('admin.list'))

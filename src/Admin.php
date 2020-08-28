@@ -204,7 +204,6 @@ class Admin
                     /* @var \Illuminate\Routing\Router $router */
                     $router->resource('auth/users', 'UserController');
                     $router->resource('auth/menu', 'MenuController', ['except' => ['create', 'show']]);
-                    $router->resource('auth/logs', 'LogController', ['only' => ['index', 'destroy']]);
 
                     if (config('admin.permission.enable')) {
                         $router->resource('auth/roles', 'RoleController');
