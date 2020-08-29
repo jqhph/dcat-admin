@@ -811,6 +811,16 @@ class Builder
             return in_array($field->column(), $reservedColumns)
                 && $field instanceof Form\Field\Display;
         });
+        
+        //移除tab中的ReservedFields
+        $this->form->getTab()->getTabs()->transform(function($item) use (&$reservedColumns) {
+            $item['fields'] = $item['fields']->reject(function (Field $field) use (&$reservedColumns) {
+                return in_array($field->column(), $reservedColumns)
+                    && $field instanceof Form\Field\Display;
+            });
+
+            return $item;
+        });
     }
 
     /**
