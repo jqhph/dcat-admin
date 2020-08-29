@@ -807,17 +807,15 @@ class Builder
             $this->form->updatedAtColumn(),
         ];
 
-        $this->fields = $this->fields()->reject(function (Field $field) use (&$reservedColumns) {
+        $reject = function (Field $field) use (&$reservedColumns) {
             return in_array($field->column(), $reservedColumns)
                 && $field instanceof Form\Field\Display;
-        });
+        };
+
+        $this->fields = $this->fields()->reject($reject);
         
-        //移除tab中的ReservedFields
-        $this->form->getTab()->getTabs()->transform(function($item) use (&$reservedColumns) {
-            $item['fields'] = $item['fields']->reject(function (Field $field) use (&$reservedColumns) {
-                return in_array($field->column(), $reservedColumns)
-                    && $field instanceof Form\Field\Display;
-            });
+        $this->form->getTab()->getTabs()->transform(function($item) use ($reject) {
+            $item['fields'] = $item['fields']->reject($reject);
 
             return $item;
         });

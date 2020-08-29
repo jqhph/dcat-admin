@@ -493,7 +493,27 @@ class Field implements Renderable
      */
     public function options($options = [])
     {
-        $this->options = $this->prepareOptions($options);
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
+        }
+
+        $this->options = array_merge($this->options, Helper::array($options));
+
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function replaceOptions($options)
+    {
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
+        }
+
+        $this->options = $options;
 
         return $this;
     }
@@ -505,29 +525,7 @@ class Field implements Renderable
      */
     public function mergeOptions($options)
     {
-        $this->options = array_merge($this->options, $this->prepareOptions($options));
-
-        return $this;
-    }
-
-    /**
-     * Prepare options.
-     *
-     * @param $options
-     *
-     * @return array|mixed
-     */
-    protected function prepareOptions($options)
-    {
-        if ($options instanceof \Closure) {
-            $options = $options->call($this->data(), $this->value());
-        }
-
-        if ($options instanceof Arrayable) {
-            $options = $options->toArray();
-        }
-
-        return $options;
+        return $this->options($options);
     }
 
     /**
