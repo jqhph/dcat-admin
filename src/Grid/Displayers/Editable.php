@@ -79,7 +79,6 @@ $('.{$this->selector}+.save').on("click",function() {
     value = tmp.text().replace(new RegExp("<br>","g"), '').replace(new RegExp("&nbsp;","g"), '').trim();
     
     var data = {
-        _token: Dcat.token,
         _method: 'PUT'
     };
     if (name.indexOf('.') === -1) {

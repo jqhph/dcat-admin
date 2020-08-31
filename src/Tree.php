@@ -370,7 +370,6 @@ class Tree implements Renderable
         var serialize = tree.nestable('serialize'), _this = $(this);
         _this.buttonLoading();
         $.post('{$this->url}', {
-            _token: Dcat.token,
             _order: JSON.stringify(serialize)
         },
         function (data) {

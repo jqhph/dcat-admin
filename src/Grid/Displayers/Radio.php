@@ -70,7 +70,6 @@ EOT;
             type: "POST",
             data: {
                 {$this->column->getName()}: value,
-                _token: Dcat.token,
                 _method: 'PUT'
             },
             success: function (data) {

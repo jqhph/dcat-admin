@@ -329,7 +329,7 @@
 
             withSingularName(tb);
 
-            $.post('{{ admin_url('helpers/scaffold/table') }}', {db: db, tb: tb, _token: Dcat.token}, function (res) {
+            $.post('{{ admin_url('helpers/scaffold/table') }}', {db: db, tb: tb}, function (res) {
                 Dcat.loading(false);
 
                 if (!res.list) return;
