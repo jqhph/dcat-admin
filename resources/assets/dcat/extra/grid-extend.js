@@ -95,9 +95,7 @@
             _this._req = 1;
             Dcat.loading();
 
-            var data = {
-                _token: Dcat.token,
-            };
+            var data = {};
 
             data[_this.options.parentIdQueryName] = key;
             data[_this.options.tierQueryName] = tier + 1;
@@ -232,7 +230,7 @@
             $.ajax({
                 type: 'POST',
                 url: _this.options.url.replace(':key', key),
-                data: {_method:'PUT', _token:Dcat.token, _orderable:direction},
+                data: {_method:'PUT', _orderable:direction},
                 success: function(data){
                     Dcat.loading(false);
                     _this._req = 0;

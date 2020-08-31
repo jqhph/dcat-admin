@@ -71,7 +71,6 @@ EOT;
     
         var data = {
             {$this->column->getName()}: values,
-            _token: Dcat.token,
             _method: 'PUT'
         };
         

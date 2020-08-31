@@ -48,7 +48,6 @@ $('.{$this->selector}').off('change').select2().on('change', function(){
         name = $(this).data('name'),
         url = $(this).data('url'),
         data = {
-            _token: Dcat.token,
             _method: 'PUT'
         },
         reload = '{$refresh}';

@@ -211,7 +211,7 @@ trait InteractsWithApi
           url: '{$this->getRequestUrl()}',
           dataType: 'json',
           method: '{$this->method}',
-          data: $.extend({_token: Dcat.token}, data),
+          data: data,
           success: function (response) {
             loading = 0;
             {$fetched};
