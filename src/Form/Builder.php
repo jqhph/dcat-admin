@@ -812,12 +812,16 @@ class Builder
         };
 
         $this->fields = $this->fields()->reject($reject);
-        
-        $this->form->getTab()->getTabs()->transform(function($item) use ($reject) {
-            $item['fields'] = $item['fields']->reject($reject);
 
-            return $item;
-        });
+        if ($this->form->hasTab()) {
+            $this->form->getTab()->getTabs()->transform(function($item) use ($reject) {
+                if (! empty($item['fields'])) {
+                    $item['fields'] = $item['fields']->reject($reject);
+                }
+
+                return $item;
+            });
+        }
     }
 
     /**
