@@ -27,6 +27,11 @@ trait HasTabs
         return $this;
     }
 
+    public function hasTab()
+    {
+        return $this->tab ? true : false;
+    }
+
     /**
      * Get Tab instance.
      *
