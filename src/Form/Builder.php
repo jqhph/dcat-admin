@@ -807,7 +807,7 @@ class Builder
         ];
 
         $reject = function (Field $field) use (&$reservedColumns) {
-            return in_array($field->column(), $reservedColumns)
+            return in_array($field->column(), $reservedColumns, true)
                 && $field instanceof Form\Field\Display;
         };
 

@@ -3,10 +3,16 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\Field;
+use Illuminate\Support\Str;
 
 class Button extends Field
 {
     protected $class = 'btn-primary';
+
+    public function __construct($label)
+    {
+        parent::__construct(Str::random(), [$label]);
+    }
 
     public function class(string $class)
     {
