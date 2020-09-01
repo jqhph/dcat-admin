@@ -83,6 +83,7 @@ use Illuminate\Validation\Validator;
  * @method Field\ArrayField          array($column, $labelOrCallback, $callback = null)
  * @method Field\SelectTable         selectTable($column, $label = '')
  * @method Field\MultipleSelectTable multipleSelectTable($column, $label = '')
+ * @method Field\Button              button(string $html = null)
  */
 class Form implements Renderable
 {

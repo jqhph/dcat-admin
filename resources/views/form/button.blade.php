@@ -3,6 +3,6 @@
     <label class="{{$viewClass['label']}} control-label"></label>
 
     <div class="{{$viewClass['field']}}">
-        <input type='button' value='{!! $label !!}' class="btn {{ $class }} {{ $buttonClass }}" {!! $attributes !!} />
+        <span class="btn {{ $class }} {{ $buttonClass }}" {!! $attributes !!}>{!! $label !!}</span>
     </div>
 </div>
