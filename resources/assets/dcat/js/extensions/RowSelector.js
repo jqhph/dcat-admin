@@ -16,10 +16,10 @@ export default class RowSelector {
             container: 'table',
         }, options);
 
-        _this._bind()
+        _this.init()
     }
 
-    _bind() {
+    init() {
         let options = this.options,
             checkboxSelector = options.checkboxSelector,
             $selectAll = $(options.selectAllSelector),
