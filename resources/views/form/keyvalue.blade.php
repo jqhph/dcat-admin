@@ -67,7 +67,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                    <div class="{{ $class }}-add btn btn-success btn-sm pull-right">
+                    <div class="{{ $class }}-add btn btn-primary btn-outline btn-sm pull-right">
                         <i class="feather icon-save"></i>&nbsp;{{ __('admin.new') }}
                     </div>
                 </td>

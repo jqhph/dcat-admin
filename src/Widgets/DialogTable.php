@@ -22,7 +22,7 @@ class DialogTable extends Widget
     /**
      * @var string
      */
-    protected $width = '800px';
+    protected $width = '825px';
 
     /**
      * @var string|\Closure|Renderable
@@ -189,7 +189,9 @@ class DialogTable extends Widget
 
         $this->script = <<<JS
 (function () {
-    var id = replaceNestedFormIndex('{$this->id()}'), 
+    var id = replaceNestedFormIndex('{$this->id()}'),
+        area = screen.width <= 850 ? ['100%', '100%',] : '{$this->width}',
+        offset = screen.width <= 850 ? 0 : '70px',
         _id, _tempId, _btnId, _tb;
     
     setId(id);
@@ -204,8 +206,8 @@ class DialogTable extends Widget
         var index = layer.open({
           type: 1,
           title: '{$this->title}',
-          area: '{$this->width}',
-          offset: '70px',
+          area: area,
+          offset: offset,
           maxmin: false,
           resize: false,
           content: $(_tempId).html(),
