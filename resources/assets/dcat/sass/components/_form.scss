@@ -1,6 +1,9 @@
-.form-control:not(textarea) {
+.form-control {
   border-color: $input-border-color;
   color: $font-color;
+}
+
+.form-control:not(textarea) {
   padding: .5rem .7rem;
   font-size: .9rem;
 }
@@ -9,6 +12,10 @@ input.form-control, div.form-control {
   //max-height: 36px;
   min-height: 36px;
   border-radius: $card-border-radius;
+}
+
+.input-group-text {
+  border-color: $input-border-color;
 }
 
 .form-control-sm {
