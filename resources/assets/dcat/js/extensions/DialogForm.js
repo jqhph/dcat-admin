@@ -1,5 +1,9 @@
 
-let w = top || window;
+let w = window;
+
+if (top && w.layer) {
+    w = top;
+}
 
 export default class DialogForm {
     constructor(Dcat, options) {
@@ -140,7 +144,7 @@ export default class DialogForm {
             options = _this.options;
 
         // 加载js代码
-        template = Dcat.assets.filterScriptsAndLoad(template).render();
+        template = Dcat.assets.executeScripts(template).render();
         
         let btns = [options.lang.submit],
             dialogOpts = {

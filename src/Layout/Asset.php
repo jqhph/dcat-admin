@@ -58,6 +58,9 @@ class Asset
         '@resource-selector' => [
             'js' => '@admin/dcat/extra/resource-selector.js',
         ],
+        '@select-table' => [
+            'js' => '@admin/dcat/extra/select-table.js',
+        ],
         '@layer' => [
             'js' => '@admin/dcat/plugins/layer/layer.js',
         ],
@@ -243,7 +246,6 @@ class Asset
      */
     public $fonts = [
         '@nunito',
-        '@montserrat',
     ];
 
     /**
@@ -662,20 +664,20 @@ class Asset
 
         return <<<HTML
 <script data-exec-on-popstate>
-Dcat.ready(function () { 
-    try {
-        {$script}
-    } catch (e) {
-        console.error(e)
-    }
-});
 (function () {
     try {
         {$directScript}
     } catch (e) {
         console.error(e)
     }
-})()
+})();
+Dcat.ready(function () { 
+    try {
+        {$script}
+    } catch (e) {
+        console.error(e)
+    }
+})
 </script>
 HTML;
     }

@@ -36,7 +36,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '1.6.7';
+    const VERSION = '1.7.0';
 
     /**
      * @var array
@@ -497,12 +497,15 @@ class Admin
      */
     public static function jsVariables()
     {
+        $sidebarStyle = config('admin.layout.sidebar_style') ?: 'light';
+
         static::$jsVariables['pjax_container_selector'] = '#'.static::$pjaxContainerId;
         static::$jsVariables['token'] = csrf_token();
         static::$jsVariables['lang'] = __('admin.client') ?: [];
         static::$jsVariables['colors'] = static::color()->all();
         static::$jsVariables['dark_mode'] = Str::contains(config('admin.layout.body_class'), 'dark-mode');
-        static::$jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark');
+        static::$jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
+        static::$jsVariables['sidebar_light_style'] = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
 
         return json_encode(static::$jsVariables);
     }

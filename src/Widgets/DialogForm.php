@@ -315,7 +315,6 @@ JS
         $form->disableFooter();
 
         $form->width(9, 2);
-        $form->hidden('_token')->value(csrf_token());
 
         Content::composing(function (Content $content) {
             $content->view(static::$contentView);

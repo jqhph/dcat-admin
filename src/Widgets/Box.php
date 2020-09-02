@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Illuminate\Contracts\Support\Renderable;
 
 class Box extends Widget
@@ -71,7 +72,11 @@ class Box extends Widget
      */
     public function content($content)
     {
-        $this->content = $content;
+        if ($content instanceof LazyGrid) {
+            $content->simple();
+        }
+
+        $this->content = $this->lazyRenderable($content);
 
         return $this;
     }

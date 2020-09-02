@@ -196,12 +196,12 @@ trait InteractsWithApi
 
         return <<<JS
 (function () {
-    var requesting;
+    var loading;
     function request(data) {
-        if (requesting) {
+        if (loading) {
             return;
         }
-        requesting = 1;
+        loading = 1;
         
         data = $.extend({$this->formatRequestData()}, data || {});
         
@@ -211,13 +211,13 @@ trait InteractsWithApi
           url: '{$this->getRequestUrl()}',
           dataType: 'json',
           method: '{$this->method}',
-          data: $.extend({_token: Dcat.token}, data),
+          data: data,
           success: function (response) {
-            requesting = 0;
+            loading = 0;
             {$fetched};
           },
           error: function (a, b, c) {
-              requesting = 0;
+              loading = 0;
               Dcat.handleAjaxError(a, b, c)
           },
         });

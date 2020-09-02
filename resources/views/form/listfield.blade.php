@@ -18,7 +18,7 @@
 
         <table class="table table-hover">
 
-            <tbody class="list-{{$column}}-table">
+            <tbody class="list-{{$columnClass}}-table">
 
             @foreach(old("{$column}.values", ($value ?: [])) as $k => $v)
 
@@ -40,7 +40,7 @@
                     </td>
 
                     <td style="width: 85px;">
-                        <div class="{{$column}}-remove btn btn-white btn-sm pull-right">
+                        <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right">
                             <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
                         </div>
                     </td>
@@ -51,7 +51,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <div class="{{ $column }}-add btn btn-success btn-sm pull-right">
+                    <div class="{{ $columnClass }}-add btn btn-success btn-sm pull-right">
                         <i class="feather icon-save"></i>&nbsp;{{ __('admin.new') }}
                     </div>
                 </td>
@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<template class="{{$column}}-tpl">
+<template class="{{$columnClass}}-tpl">
     <tr>
         <td>
             <div class="form-group">
@@ -73,7 +73,7 @@
         </td>
 
         <td style="width: 85px;">
-            <div class="{{$column}}-remove btn btn-white btn-sm pull-right">
+            <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right">
                 <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
             </div>
         </td>

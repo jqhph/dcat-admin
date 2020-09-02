@@ -19,7 +19,7 @@ trait ShowCreator
         $rows = [];
 
         if ($primaryKey) {
-            $rows[] = "            \$show->{$primaryKey};";
+            $rows[] = "            \$show->field('{$primaryKey}');";
         }
 
         foreach ($fields as $k => $field) {
@@ -27,7 +27,7 @@ trait ShowCreator
                 continue;
             }
 
-            $rows[] = "            \$show->{$field['name']};";
+            $rows[] = "            \$show->field('{$field['name']}');";
 
 //            if ($k === 1 && (count($fields) > 2 || $timestamps)) {
 //                $rows[] = '            $show->divider();';
@@ -35,8 +35,8 @@ trait ShowCreator
         }
 
         if ($timestamps) {
-            $rows[] = '            $show->created_at;';
-            $rows[] = '            $show->updated_at;';
+            $rows[] = '            $show->field(\'created_at\');';
+            $rows[] = '            $show->field(\'updated_at\');';
         }
 
         return trim(implode("\n", $rows));

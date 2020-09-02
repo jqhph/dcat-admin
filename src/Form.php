@@ -64,7 +64,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Html                   html($html, $label = '')
  * @method Field\Tags                   tags($column, $label = '')
  * @method Field\Icon                   icon($column, $label = '')
- * @method Field\Embeds                 embeds($column, $label = '')
+ * @method Field\Embeds                 embeds($column, $label = '', Closure $callback = null)
  * @method Field\Captcha                captcha()
  * @method Field\Listbox                listbox($column, $label = '')
  * @method Field\SelectResource         selectResource($column, $label = '')
@@ -83,6 +83,9 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Range                  range($start, $end, $label = '')
  * @method Field\Color                  color($column, $label = '')
  * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable            selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable    multipleSelectTable($column, $label = '')
+ * @method Field\Button                 button(string $html = null)
  */
 class Form implements Renderable
 {
@@ -103,66 +106,70 @@ class Form implements Renderable
      */
     const REMOVE_FLAG_NAME = '_remove_';
 
+    const CURRENT_URL_NAME = '_current_';
+
     /**
      * Available fields.
      *
      * @var array
      */
     protected static $availableFields = [
-        'button'         => Field\Button::class,
-        'checkbox'       => Field\Checkbox::class,
-        'currency'       => Field\Currency::class,
-        'date'           => Field\Date::class,
-        'dateRange'      => Field\DateRange::class,
-        'datetime'       => Field\Datetime::class,
-        'datetimeRange'  => Field\DatetimeRange::class,
-        'decimal'        => Field\Decimal::class,
-        'display'        => Field\Display::class,
-        'divider'        => Field\Divide::class,
-        'embeds'         => Field\Embeds::class,
-        'editor'         => Field\Editor::class,
-        'email'          => Field\Email::class,
-        'hidden'         => Field\Hidden::class,
-        'id'             => Field\Id::class,
-        'ip'             => Field\Ip::class,
-        'map'            => Field\Map::class,
-        'mobile'         => Field\Mobile::class,
-        'month'          => Field\Month::class,
-        'multipleSelect' => Field\MultipleSelect::class,
-        'number'         => Field\Number::class,
-        'password'       => Field\Password::class,
-        'radio'          => Field\Radio::class,
-        'rate'           => Field\Rate::class,
-        'select'         => Field\Select::class,
-        'slider'         => Field\Slider::class,
-        'switch'         => Field\SwitchField::class,
-        'text'           => Field\Text::class,
-        'textarea'       => Field\Textarea::class,
-        'time'           => Field\Time::class,
-        'timeRange'      => Field\TimeRange::class,
-        'url'            => Field\Url::class,
-        'year'           => Field\Year::class,
-        'html'           => Field\Html::class,
-        'tags'           => Field\Tags::class,
-        'icon'           => Field\Icon::class,
-        'captcha'        => Field\Captcha::class,
-        'listbox'        => Field\Listbox::class,
-        'selectResource' => Field\SelectResource::class,
-        'file'           => Field\File::class,
-        'image'          => Field\Image::class,
-        'multipleFile'   => Field\MultipleFile::class,
-        'multipleImage'  => Field\MultipleImage::class,
-        'hasMany'        => Field\HasMany::class,
-        'tree'           => Field\Tree::class,
-        'table'          => Field\Table::class,
-        'list'           => Field\ListField::class,
-        'timezone'       => Field\Timezone::class,
-        'keyValue'       => Field\KeyValue::class,
-        'tel'            => Field\Tel::class,
-        'markdown'       => Field\Markdown::class,
-        'range'          => Field\Range::class,
-        'color'          => Field\Color::class,
-        'array'          => Field\ArrayField::class,
+        'button'              => Field\Button::class,
+        'checkbox'            => Field\Checkbox::class,
+        'currency'            => Field\Currency::class,
+        'date'                => Field\Date::class,
+        'dateRange'           => Field\DateRange::class,
+        'datetime'            => Field\Datetime::class,
+        'datetimeRange'       => Field\DatetimeRange::class,
+        'decimal'             => Field\Decimal::class,
+        'display'             => Field\Display::class,
+        'divider'             => Field\Divide::class,
+        'embeds'              => Field\Embeds::class,
+        'editor'              => Field\Editor::class,
+        'email'               => Field\Email::class,
+        'hidden'              => Field\Hidden::class,
+        'id'                  => Field\Id::class,
+        'ip'                  => Field\Ip::class,
+        'map'                 => Field\Map::class,
+        'mobile'              => Field\Mobile::class,
+        'month'               => Field\Month::class,
+        'multipleSelect'      => Field\MultipleSelect::class,
+        'number'              => Field\Number::class,
+        'password'            => Field\Password::class,
+        'radio'               => Field\Radio::class,
+        'rate'                => Field\Rate::class,
+        'select'              => Field\Select::class,
+        'slider'              => Field\Slider::class,
+        'switch'              => Field\SwitchField::class,
+        'text'                => Field\Text::class,
+        'textarea'            => Field\Textarea::class,
+        'time'                => Field\Time::class,
+        'timeRange'           => Field\TimeRange::class,
+        'url'                 => Field\Url::class,
+        'year'                => Field\Year::class,
+        'html'                => Field\Html::class,
+        'tags'                => Field\Tags::class,
+        'icon'                => Field\Icon::class,
+        'captcha'             => Field\Captcha::class,
+        'listbox'             => Field\Listbox::class,
+        'selectResource'      => Field\SelectResource::class,
+        'file'                => Field\File::class,
+        'image'               => Field\Image::class,
+        'multipleFile'        => Field\MultipleFile::class,
+        'multipleImage'       => Field\MultipleImage::class,
+        'hasMany'             => Field\HasMany::class,
+        'tree'                => Field\Tree::class,
+        'table'               => Field\Table::class,
+        'list'                => Field\ListField::class,
+        'timezone'            => Field\Timezone::class,
+        'keyValue'            => Field\KeyValue::class,
+        'tel'                 => Field\Tel::class,
+        'markdown'            => Field\Markdown::class,
+        'range'               => Field\Range::class,
+        'color'               => Field\Color::class,
+        'array'               => Field\ArrayField::class,
+        'selectTable'         => Field\SelectTable::class,
+        'multipleSelectTable' => Field\MultipleSelectTable::class,
     ];
 
     /**
@@ -683,16 +690,6 @@ class Form implements Renderable
     {
         Arr::forget($input, $this->ignored);
 
-        $ignored = $this->fields()->map(function (Field $field) {
-            if ($field instanceof Field\Display || $field->getAttribute('readonly') || $field->getAttribute('disabled')) {
-                return $field->column();
-            }
-        })->filter();
-
-        if (! $ignored->isEmpty()) {
-            Arr::forget($input, $ignored->flatten()->toArray());
-        }
-
         return $input;
     }
 
@@ -1001,6 +998,18 @@ class Form implements Renderable
     public function ignore($fields)
     {
         $this->ignored = array_merge($this->ignored, (array) $fields);
+
+        return $this;
+    }
+
+    /**
+     * @param $keys
+     *
+     * @return $this
+     */
+    public function forgetIgnored($keys)
+    {
+        Arr::forget($this->ignored, $keys);
 
         return $this;
     }

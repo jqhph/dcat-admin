@@ -493,17 +493,39 @@ class Field implements Renderable
      */
     public function options($options = [])
     {
-        if ($options instanceof Arrayable) {
-            $options = $options->toArray();
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
         }
 
-        if (is_array($this->options)) {
-            $this->options = array_merge($this->options, $options);
-        } else {
-            $this->options = $options;
-        }
+        $this->options = array_merge($this->options, Helper::array($options));
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function replaceOptions($options)
+    {
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
+        }
+
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @param array|Arrayable $options
+     *
+     * @return $this
+     */
+    public function mergeOptions($options)
+    {
+        return $this->options($options);
     }
 
     /**
@@ -1204,28 +1226,10 @@ class Field implements Renderable
         });
     }
 
-    public function saveAsJoin(string $glue = ',')
-    {
-        return $this->saving(function ($value) use ($glue) {
-            if (! $value || is_scalar($value)) {
-                return $value;
-            }
-
-            return implode($glue, (array) $value);
-        });
-    }
-
     public function saveAsString()
     {
         return $this->saving(function ($value) {
             return (string) $value;
-        });
-    }
-
-    public function saveAsInteger()
-    {
-        return $this->saving(function ($value) {
-            return (int) $value;
         });
     }
 

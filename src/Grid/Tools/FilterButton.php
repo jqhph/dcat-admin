@@ -84,7 +84,15 @@ class FilterButton extends AbstractTool
         return false
     });
     
-    $('.wrapper').on('click', function () {
+    $('.wrapper').on('click', '.modal', function (e) {
+        if (typeof e.cancelBubble != "undefined") {
+            e.cancelBubble = true;
+        }
+        if (typeof e.stopPropagation != "undefined") {
+            e.stopPropagation();
+        }
+    });
+    $(document).on('click', '.wrapper', function (e) {
         if (slider && slider.close) {
             slider.close();
         }

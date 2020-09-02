@@ -81,7 +81,7 @@ trait CanCascadeFields
         $this->form->cascadeGroup($closure, [
             'column' => $this->column(),
             'index'  => count($this->conditions) - 1,
-            'class'  => $this->getCascadeClass($value),
+            'class'  => $this->getCascadeClass($value, $operator),
         ]);
     }
 
@@ -90,13 +90,25 @@ trait CanCascadeFields
      *
      * @return string
      */
-    protected function getCascadeClass($value)
+    protected function getCascadeClass($value, string $operator)
     {
         if (is_array($value)) {
             $value = implode('-', $value);
         }
 
-        return sprintf('cascade-%s-%s', $this->getElementClassString(), $value);
+        $map = [
+            '=' => '0',
+            '>' => '1',
+            '<' => '2',
+            '!=' => '3',
+            'in' => '4',
+            'notIn' => '5',
+            '>=' => '6',
+            '<=' => '7',
+            'has' => '8',
+        ];
+
+        return sprintf('cascade-%s-%s-%s', $this->getElementClassString(), $value, $map[$operator]);
     }
 
     /**
@@ -112,7 +124,7 @@ trait CanCascadeFields
 
         $cascadeGroups = collect($this->conditions)->map(function ($condition) {
             return [
-                'class'    => $this->getCascadeClass($condition['value']),
+                'class'    => $this->getCascadeClass($condition['value'], $condition['operator']),
                 'operator' => $condition['operator'],
                 'value'    => $condition['value'],
             ];
@@ -121,16 +133,27 @@ trait CanCascadeFields
         $script = <<<JS
 (function () {
     var compare = function (a, b, o) {
-        if ($.isArray(b)) {
-            for (var i in b) {
-                if (operator_table[o](a, b[i])) {
-                    return true;
-                }
-            }
-            return false;
+        if (! $.isArray(b)) {
+            return operator_table[o](a, b)
         }
         
-        return operator_table[o](a, b)
+        if (o === '!=') {
+            var result = true;
+            for (var i in b) {
+                if (! operator_table[o](a, b[i])) {
+                    result = false;
+                    
+                    break;
+                }
+            }
+            return result;
+        }
+        
+        for (var i in b) {
+            if (operator_table[o](a, b[i])) {
+                return true;
+            }
+        }
     };
     
     var operator_table = {

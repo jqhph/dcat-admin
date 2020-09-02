@@ -22,7 +22,9 @@ body.dark-mode {
   background-color: $body-dark-bg;
   color: $body-dark-font-color;
 
-  .content-wrapper, .main-footer {
+  .body-bg,
+  .content-wrapper,
+  .main-footer {
     background: $body-dark-bg;
   }
 
@@ -846,7 +848,7 @@ body.dark-mode {
 
   // ------- sidebar
   [class*=sidebar-dark-] {
-    background-color: $body-dark-color;
+    background-color: $body-dark-color!important;
 
     .navbar-header {
       background: $body-darker-color;
@@ -868,10 +870,13 @@ body.dark-mode {
     }
   }
 
-  .main-sidebar .sidebar {
-    margin-top: 1rem
-  }
   .main-menu .navbar-header .navbar-brand {
     margin-top: .5rem;
+  }
+}
+
+body.dark-mode:not(.sidebar-separate) {
+  .main-sidebar .sidebar {
+    margin-top: 1rem
   }
 }

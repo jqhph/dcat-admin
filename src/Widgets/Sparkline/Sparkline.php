@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Widgets\Sparkline;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\InteractsWithApi;
 use Dcat\Admin\Widgets\Widget;
@@ -88,6 +87,8 @@ class Sparkline extends Widget
         $this->values($values);
 
         $this->options['type'] = $this->type;
+
+        $this->id($this->generateId());
     }
 
     /**
@@ -155,14 +156,14 @@ class Sparkline extends Widget
     /**
      * @return string
      */
-    protected function script()
+    protected function addScript()
     {
         $values = json_encode($this->values);
         $options = json_encode($this->options);
 
         if (! $this->allowBuildRequest()) {
-            return <<<JS
-$('#{$this->getId()}').sparkline($values, $options);
+            return $this->script = <<<JS
+$('#{$this->id()}').sparkline($values, $options);
 {$this->buildCombinationScript()};
 JS;
         }
@@ -172,13 +173,13 @@ JS;
 if (!response.status) {
     return Dcat.error(response.message || 'Server internal error.');
 }        
-var id = '{$this->getId()}', opt = $options;
+var id = '{$this->id()}', opt = $options;
 opt = $.extend(opt, response.options || {});
 $('#'+id).sparkline(response.values || $values, opt);
 JS
         );
 
-        return $this->buildRequestScript();
+        return $this->script = $this->buildRequestScript();
     }
 
     /**
@@ -193,7 +194,7 @@ JS
             $options = json_encode($value[1]);
 
             $script .= <<<JS
-$('#{$this->getId()}').sparkline($value, $options);
+$('#{$this->id()}').sparkline($value, $options);
 JS;
         }
 
@@ -205,27 +206,16 @@ JS;
      */
     public function render()
     {
-        Admin::script($this->script());
+        $this->addScript();
 
-        $this->setHtmlAttribute([
-            'id' => $this->getId(),
-        ]);
+        return parent::render();
+    }
 
-        $this->collectAssets();
-
+    public function html()
+    {
         return <<<HTML
 <span {$this->formatHtmlAttributes()}></span>
 HTML;
-    }
-
-    /**
-     * 获取容器元素ID.
-     *
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id ?: ($this->id = $this->generateId());
     }
 
     /**

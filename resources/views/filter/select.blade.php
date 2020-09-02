@@ -3,7 +3,7 @@
         <span class="input-group-text bg-white text-capitalize"><b>{!! $label !!}</b></span>
     </div>
 
-    <select class="form-control {{ $class }}" name="{{$name}}" style="width: 100%;">
+    <select class="form-control {{ $class }}" name="{{$name}}" data-value="{{ request($name, $value) }}" style="width: 100%;">
         @if($selectAll)
             <option value="">{{trans('admin.all')}}</option>
         @endif

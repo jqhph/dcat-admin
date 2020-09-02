@@ -1,7 +1,5 @@
 <div class="box-footer">
 
-    {{ csrf_field() }}
-
     <div class="col-md-{{$width['label']}} d-md-block" style="display: none"></div>
 
     <div class="col-md-{{$width['field']}}">

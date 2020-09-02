@@ -4,6 +4,8 @@ namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
+use Dcat\Admin\Form\Field\MultipleSelectTable;
+use Dcat\Admin\Form\Field\SelectTable;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -63,6 +65,8 @@ use Illuminate\Support\Collection;
  * @method Field\Markdown               markdown($column, $label = '')
  * @method Field\Range                  range($start, $end, $label = '')
  * @method Field\Color                  color($column, $label = '')
+ * @method Field\SelectTable            selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable    multipleSelectTable($column, $label = '')
  */
 class NestedForm
 {

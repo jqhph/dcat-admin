@@ -72,7 +72,6 @@ EOT;
             checked = that.is(':checked'), 
             name = that.attr('name'), 
             data = {
-                _token: Dcat.token,
                 _method: 'PUT'
             },
             value = checked ? 1 : 0;

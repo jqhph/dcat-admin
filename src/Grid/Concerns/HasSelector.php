@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Tools\Selector;
+use Dcat\Admin\Support\Helper;
 
 /**
  * @mixin Grid
@@ -51,22 +52,29 @@ trait HasSelector
         $active = $this->_selector->parseSelected();
 
         $this->_selector->all()->each(function ($selector, $column) use ($active) {
-            if (! array_key_exists($column, $active)) {
+            $key = $this->_selector->formatKey($column);
+
+            if (! array_key_exists($key, $active)) {
                 return;
             }
 
-            $values = $active[$column];
+            $values = $active[$key];
             if ($selector['type'] == 'one') {
                 $values = current($values);
             }
 
-            if (is_null($selector['query'])) {
-                is_array($values)
-                    ? $this->model()->whereIn($column, $values)
-                    : $this->model()->where($column, $values);
-            } else {
+            if ($selector['query']) {
                 call_user_func($selector['query'], $this->model(), $values);
+
+                return;
             }
+
+            Helper::withQueryCondition(
+                $this->model(),
+                $column,
+                is_array($values) ? 'whereIn' : 'where',
+                [$values]
+            );
         });
 
         return $this;

@@ -2,18 +2,19 @@
 
 namespace Dcat\Admin\Show;
 
+use Dcat\Admin\Support\Helper;
+
 class Html extends Field
 {
     public $html;
 
-    public function __construct($html, string $name = '', string $label = '')
+    public function __construct($html)
     {
         $this->html = $html;
-        parent::__construct($name, $label);
     }
 
     public function render()
     {
-        return $this->html;
+        return Helper::render($this->html, [$this->value()], $this->parent->model());
     }
 }

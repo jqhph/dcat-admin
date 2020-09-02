@@ -129,7 +129,6 @@
 
             return new Promise(function (resolve, reject) {
                 Object.assign(data, {
-                    _token: Dcat.token,
                     _action: options.calledClass,
                     _key: options.key,
                 });

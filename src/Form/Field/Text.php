@@ -162,7 +162,7 @@ JS
      */
     protected function jsonEncodeOptions($options)
     {
-        $data = $this->prepareOptions($options);
+        $data = $this->formatOptions($options);
 
         $json = json_encode($data['options']);
 
@@ -172,20 +172,18 @@ JS
     }
 
     /**
-     * Prepare options.
-     *
      * @param array $options
      *
      * @return array
      */
-    protected function prepareOptions($options)
+    protected function formatOptions($options)
     {
         $original = [];
         $toReplace = [];
 
         foreach ($options as $key => &$value) {
             if (is_array($value)) {
-                $subArray = $this->prepareOptions($value);
+                $subArray = $this->formatOptions($value);
                 $value = $subArray['options'];
                 $original = array_merge($original, $subArray['original']);
                 $toReplace = array_merge($toReplace, $subArray['toReplace']);

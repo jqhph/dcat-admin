@@ -5,7 +5,6 @@ namespace Dcat\Admin\Controllers;
 use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Models\Administrator as AdministratorModel;
 use Dcat\Admin\Models\Repositories\Administrator;
 use Dcat\Admin\Show;
@@ -22,17 +21,17 @@ class UserController extends AdminController
     protected function grid()
     {
         return Grid::make(new Administrator('roles'), function (Grid $grid) {
-            $grid->id('ID')->sortable();
-            $grid->username;
-            $grid->name;
+            $grid->column('id', 'ID')->sortable();
+            $grid->column('username');
+            $grid->column('name');
 
             if (config('admin.permission.enable')) {
-                $grid->roles->pluck('name')->label('primary', 3);
+                $grid->column('roles')->pluck('name')->label('primary', 3);
 
                 $permissionModel = config('admin.database.permissions_model');
                 $roleModel = config('admin.database.roles_model');
                 $nodes = (new $permissionModel())->allNodes();
-                $grid->permissions
+                $grid->column('permissions')
                     ->if(function () {
                         return ! empty($this->roles);
                     })
@@ -49,8 +48,8 @@ class UserController extends AdminController
                     ->emptyString();
             }
 
-            $grid->created_at;
-            $grid->updated_at->sortable();
+            $grid->column('created_at');
+            $grid->column('updated_at')->sortable();
 
             $grid->quickSearch(['id', 'name', 'username']);
 
@@ -67,31 +66,17 @@ class UserController extends AdminController
         });
     }
 
-    protected function iFrameGrid()
-    {
-        $grid = new IFrameGrid(new Administrator());
-
-        $grid->quickSearch(['id', 'name', 'username']);
-
-        $grid->id->sortable();
-        $grid->username;
-        $grid->name;
-        $grid->created_at;
-
-        return $grid;
-    }
-
     protected function detail($id)
     {
         return Show::make($id, new Administrator('roles'), function (Show $show) {
-            $show->id;
-            $show->username;
-            $show->name;
+            $show->field('id');
+            $show->field('username');
+            $show->field('name');
 
-            $show->avatar(__('admin.avatar'))->image();
+            $show->field('avatar', __('admin.avatar'))->image();
 
             if (config('admin.permission.enable')) {
-                $show->roles->as(function ($roles) {
+                $show->field('roles')->as(function ($roles) {
                     if (! $roles) {
                         return;
                     }
@@ -99,7 +84,7 @@ class UserController extends AdminController
                     return collect($roles)->pluck('name');
                 })->label();
 
-                $show->permissions->unescape()->as(function () {
+                $show->field('permissions')->unescape()->as(function () {
                     $roles = (array) $this->roles;
 
                     $permissionModel = config('admin.database.permissions_model');
@@ -128,8 +113,8 @@ class UserController extends AdminController
                 });
             }
 
-            $show->created_at;
-            $show->updated_at;
+            $show->field('created_at');
+            $show->field('updated_at');
         });
     }
 

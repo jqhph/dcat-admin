@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Admin;
+
 class Color extends Text
 {
     protected static $css = [
@@ -21,7 +23,7 @@ class Color extends Text
      */
     public function hex()
     {
-        return $this->options(['format' => 'hex']);
+        return $this->mergeOptions(['format' => 'hex']);
     }
 
     /**
@@ -31,7 +33,7 @@ class Color extends Text
      */
     public function rgb()
     {
-        return $this->options(['format' => 'rgb']);
+        return $this->mergeOptions(['format' => 'rgb']);
     }
 
     /**
@@ -41,7 +43,7 @@ class Color extends Text
      */
     public function rgba()
     {
-        return $this->options(['format' => 'rgba']);
+        return $this->mergeOptions(['format' => 'rgba']);
     }
 
     protected function addScript()
@@ -62,6 +64,8 @@ JS;
      */
     public function render()
     {
+        Admin::style('.popover{z-index:29891015}');
+
         $this->addScript();
 
         $this->defaultAttribute('style', 'width: 160px;flex:none');

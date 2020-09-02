@@ -6,7 +6,7 @@ export default class DarkMode {
             dark_mode: Dcat.config.dark_mode,
             class: {
                 dark: 'dark-mode',
-                sidebarLight: 'sidebar-light-primary',
+                sidebarLight: Dcat.config.sidebar_light_style || 'sidebar-light-primary',
                 sidebarDark: 'sidebar-dark-white',
             }
         };

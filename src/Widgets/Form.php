@@ -4,6 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Form\Concerns\HandleCascadeFields;
 use Dcat\Admin\Form\Concerns\HasRows;
 use Dcat\Admin\Form\Concerns\HasTabs;
@@ -27,73 +28,80 @@ use Illuminate\Validation\Validator;
 /**
  * Class Form.
  *
- * @method Field\Text           text($column, $label = '')
- * @method Field\Checkbox       checkbox($column, $label = '')
- * @method Field\Radio          radio($column, $label = '')
- * @method Field\Select         select($column, $label = '')
- * @method Field\MultipleSelect multipleSelect($column, $label = '')
- * @method Field\Textarea       textarea($column, $label = '')
- * @method Field\Hidden         hidden($column, $label = '')
- * @method Field\Id             id($column, $label = '')
- * @method Field\Ip             ip($column, $label = '')
- * @method Field\Url            url($column, $label = '')
- * @method Field\Email          email($column, $label = '')
- * @method Field\Mobile         mobile($column, $label = '')
- * @method Field\Slider         slider($column, $label = '')
- * @method Field\Map            map($latitude, $longitude, $label = '')
- * @method Field\Editor         editor($column, $label = '')
- * @method Field\Date           date($column, $label = '')
- * @method Field\Datetime       datetime($column, $label = '')
- * @method Field\Time           time($column, $label = '')
- * @method Field\Year           year($column, $label = '')
- * @method Field\Month          month($column, $label = '')
- * @method Field\DateRange      dateRange($start, $end, $label = '')
- * @method Field\DateTimeRange  datetimeRange($start, $end, $label = '')
- * @method Field\TimeRange      timeRange($start, $end, $label = '')
- * @method Field\Number         number($column, $label = '')
- * @method Field\Currency       currency($column, $label = '')
- * @method Field\SwitchField    switch($column, $label = '')
- * @method Field\Display        display($column, $label = '')
- * @method Field\Rate           rate($column, $label = '')
- * @method Field\Divide         divider()
- * @method Field\Password       password($column, $label = '')
- * @method Field\Decimal        decimal($column, $label = '')
- * @method Field\Html           html($html, $label = '')
- * @method Field\Tags           tags($column, $label = '')
- * @method Field\Icon           icon($column, $label = '')
- * @method Field\Embeds         embeds($column, $label = '')
- * @method Field\Captcha        captcha($column, $label = '')
- * @method Field\Listbox        listbox($column, $label = '')
- * @method Field\SelectResource selectResource($column, $label = '')
- * @method Field\File           file($column, $label = '')
- * @method Field\Image          image($column, $label = '')
- * @method Field\MultipleFile   multipleFile($column, $label = '')
- * @method Field\MultipleImage  multipleImage($column, $label = '')
- * @method Field\HasMany        hasMany($column, \Closure $callback)
- * @method Field\Tree           tree($column, $label = '')
- * @method Field\Table          table($column, $callback)
- * @method Field\ListField      list($column, $label = '')
- * @method Field\Timezone       timezone($column, $label = '')
- * @method Field\KeyValue       keyValue($column, $label = '')
- * @method Field\Tel            tel($column, $label = '')
- * @method Field\Markdown       markdown($column, $label = '')
- * @method Field\Range          range($start, $end, $label = '')
- * @method Field\Color          color($column, $label = '')
- * @method Field\ArrayField     array($column, $labelOrCallback, $callback = null)
+ * @method Field\Text                text($column, $label = '')
+ * @method Field\Checkbox            checkbox($column, $label = '')
+ * @method Field\Radio               radio($column, $label = '')
+ * @method Field\Select              select($column, $label = '')
+ * @method Field\MultipleSelect      multipleSelect($column, $label = '')
+ * @method Field\Textarea            textarea($column, $label = '')
+ * @method Field\Hidden              hidden($column, $label = '')
+ * @method Field\Id                  id($column, $label = '')
+ * @method Field\Ip                  ip($column, $label = '')
+ * @method Field\Url                 url($column, $label = '')
+ * @method Field\Email               email($column, $label = '')
+ * @method Field\Mobile              mobile($column, $label = '')
+ * @method Field\Slider              slider($column, $label = '')
+ * @method Field\Map                 map($latitude, $longitude, $label = '')
+ * @method Field\Editor              editor($column, $label = '')
+ * @method Field\Date                date($column, $label = '')
+ * @method Field\Datetime            datetime($column, $label = '')
+ * @method Field\Time                time($column, $label = '')
+ * @method Field\Year                year($column, $label = '')
+ * @method Field\Month               month($column, $label = '')
+ * @method Field\DateRange           dateRange($start, $end, $label = '')
+ * @method Field\DateTimeRange       datetimeRange($start, $end, $label = '')
+ * @method Field\TimeRange           timeRange($start, $end, $label = '')
+ * @method Field\Number              number($column, $label = '')
+ * @method Field\Currency            currency($column, $label = '')
+ * @method Field\SwitchField         switch($column, $label = '')
+ * @method Field\Display             display($column, $label = '')
+ * @method Field\Rate                rate($column, $label = '')
+ * @method Field\Divide              divider()
+ * @method Field\Password            password($column, $label = '')
+ * @method Field\Decimal             decimal($column, $label = '')
+ * @method Field\Html                html($html, $label = '')
+ * @method Field\Tags                tags($column, $label = '')
+ * @method Field\Icon                icon($column, $label = '')
+ * @method Field\Embeds              embeds($column, $label = '')
+ * @method Field\Captcha             captcha($column, $label = '')
+ * @method Field\Listbox             listbox($column, $label = '')
+ * @method Field\SelectResource      selectResource($column, $label = '')
+ * @method Field\File                file($column, $label = '')
+ * @method Field\Image               image($column, $label = '')
+ * @method Field\MultipleFile        multipleFile($column, $label = '')
+ * @method Field\MultipleImage       multipleImage($column, $label = '')
+ * @method Field\HasMany             hasMany($column, \Closure $callback)
+ * @method Field\Tree                tree($column, $label = '')
+ * @method Field\Table               table($column, $callback)
+ * @method Field\ListField           list($column, $label = '')
+ * @method Field\Timezone            timezone($column, $label = '')
+ * @method Field\KeyValue            keyValue($column, $label = '')
+ * @method Field\Tel                 tel($column, $label = '')
+ * @method Field\Markdown            markdown($column, $label = '')
+ * @method Field\Range               range($start, $end, $label = '')
+ * @method Field\Color               color($column, $label = '')
+ * @method Field\ArrayField          array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable         selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable multipleSelectTable($column, $label = '')
+ * @method Field\Button              button(string $html = null)
  */
 class Form implements Renderable
 {
-    use HasHtmlAttributes,
-        HasFormResponse,
-        HasAuthorization,
-        HandleCascadeFields,
-        HasRows,
-        HasTabs,
-        Macroable {
-            __call as macroCall;
-        }
+    use HasHtmlAttributes;
+    use HasAuthorization;
+    use HandleCascadeFields;
+    use HasRows;
+    use HasTabs;
+    use HasFormResponse {
+        setCurrentUrl as defaultSetCurrentUrl;
+    }
+    use Macroable {
+        __call as macroCall;
+    }
 
     const REQUEST_NAME = '_form_';
+    const CURRENT_URL_NAME = '_current_';
+    const LAZY_PAYLOAD_NAME = '_payload_';
 
     /**
      * @var string
@@ -173,9 +181,18 @@ class Form implements Renderable
         }
         $this->setKey($key);
 
+        $this->setUp();
+    }
+
+    protected function setUp()
+    {
         $this->initFields();
 
         $this->initFormAttributes();
+
+        $this->initCurrentUrl();
+
+        $this->initPayload();
     }
 
     /**
@@ -198,6 +215,20 @@ class Form implements Renderable
             'accept-charset' => 'UTF-8',
             'pjax-container' => true,
         ]);
+    }
+
+    protected function initCurrentUrl()
+    {
+        if ($this instanceof LazyRenderable) {
+            $this->setCurrentUrl($this->getCurrentUrl());
+        }
+    }
+
+    protected function initPayload()
+    {
+        if ($payload = \request(static::LAZY_PAYLOAD_NAME)) {
+            $this->payload(json_decode($payload, true) ?? []);
+        }
     }
 
     /**
@@ -632,30 +663,15 @@ HTML;
     }
 
     /**
-     * Generate a Field object and add to form builder if Field exists.
-     *
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return Field|null
+     * {@inheritdoc}
      */
-    public function __call($method, $arguments)
+    public function setCurrentUrl($url)
     {
-        if ($className = static::findFieldClass($method)) {
-            $name = Arr::get($arguments, 0, '');
-
-            $element = new $className($name, array_slice($arguments, 1));
-
-            $this->pushField($element);
-
-            return $element;
+        if ($this instanceof LazyRenderable) {
+            $this->payload([static::CURRENT_URL_NAME => $url]);
         }
 
-        if (static::hasMacro($method)) {
-            return $this->macroCall($method, $arguments);
-        }
-
-        throw new \BadMethodCallException("Field [{$method}] does not exist.");
+        return $this->defaultSetCurrentUrl($url);
     }
 
     /**
@@ -744,7 +760,7 @@ JS
      */
     public function sanitize(array $input)
     {
-        Arr::forget($input, [static::REQUEST_NAME, '_token', '_current_']);
+        Arr::forget($input, [static::REQUEST_NAME, '_token', static::CURRENT_URL_NAME]);
 
         return $this->prepareInput($input);
     }
@@ -754,7 +770,9 @@ JS
         Helper::prepareHasOneRelation($this->fields, $input);
 
         foreach ($input as $column => $value) {
-            if (is_null($field = $this->field($column))) {
+            $field = $this->field($column);
+
+            if (! $field instanceof Field) {
                 unset($input[$column]);
 
                 continue;
@@ -793,7 +811,11 @@ JS
             $this->method('POST');
             $this->action(route(admin_api_route('form')));
             $this->hidden(static::REQUEST_NAME)->default(get_called_class());
-            $this->hidden('_current_')->default($this->getCurrentUrl());
+            $this->hidden(static::CURRENT_URL_NAME)->default($this->getCurrentUrl());
+
+            if (! empty($this->payload) && is_array($this->payload)) {
+                $this->hidden(static::LAZY_PAYLOAD_NAME)->default(json_encode($this->payload));
+            }
         }
     }
 
@@ -821,6 +843,33 @@ JS
         $this->addVariables(['tabObj' => $tabObj]);
 
         return view($this->view, $this->variables())->render();
+    }
+
+    /**
+     * Generate a Field object and add to form builder if Field exists.
+     *
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return Field|null
+     */
+    public function __call($method, $arguments)
+    {
+        if ($className = static::findFieldClass($method)) {
+            $name = Arr::get($arguments, 0, '');
+
+            $element = new $className($name, array_slice($arguments, 1));
+
+            $this->pushField($element);
+
+            return $element;
+        }
+
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $arguments);
+        }
+
+        throw new \BadMethodCallException("Field [{$method}] does not exist.");
     }
 
     /**

@@ -190,6 +190,8 @@ class Filter implements Renderable
      */
     protected $mode = self::MODE_RIGHT_SIDE;
 
+    protected $conditions;
+
     /**
      * Create a new filter instance.
      *
@@ -223,9 +225,7 @@ class Filter implements Renderable
      */
     protected function formatFilterId()
     {
-        $gridName = $this->model->grid()->getName();
-
-        return 'filter-box'.($gridName ? '-'.$gridName : '');
+        return 'filter-box'.Str::random(8);
     }
 
     /**
@@ -380,8 +380,6 @@ class Filter implements Renderable
     {
         $this->name = $name;
 
-        $this->setFilterID("{$this->name}-{$this->filterID}");
-
         return $this;
     }
 
@@ -460,6 +458,10 @@ class Filter implements Renderable
             return [];
         }
 
+        if ($this->conditions !== null) {
+            return $this->conditions;
+        }
+
         $params = [];
 
         foreach ($inputs as $key => $value) {
@@ -478,6 +480,8 @@ class Filter implements Renderable
 
                 $this->grid()->model()->disableBindTreeQuery();
             }
+
+            $this->conditions = $conditions;
         });
     }
 
