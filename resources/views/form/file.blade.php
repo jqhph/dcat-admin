@@ -21,8 +21,9 @@
                 </div>
                 <div class="info"></div>
                 <div class="btns">
-                    <div class="add-file-button"></div> &nbsp;
+                    <div class="add-file-button"></div>
                     @if($showUploadBtn)
+                    &nbsp;
                     <div class="upload-btn btn btn-primary"><i class="feather icon-upload"></i> &nbsp;{{trans('admin.upload')}}</div>
                     @endif
                 </div>
