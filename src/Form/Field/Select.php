@@ -124,7 +124,7 @@ $(document).on('change', "{$this->getElementClassSelector()}", function () {
                 d.text = d.$textField;
                 return d;
             })
-        }).val(target.attr('data-value')).trigger('change');
+        }).val(target.attr('data-value').split(',')).trigger('change');
     });
 });
 $("{$this->getElementClassSelector()}").trigger('change');
@@ -172,7 +172,7 @@ JS;
                     d.text = d.$textField;
                     return d;
                 })
-            }).val(target.data('value')).trigger('change');
+            }).val(target.data('value').split(',')).trigger('change');
         });
     };
     
