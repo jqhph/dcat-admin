@@ -146,10 +146,7 @@ trait HasEvents
 
             $ret = $callback($this, ...$event->payload);
 
-            if (
-                $ret instanceof Response
-                || ($ret instanceof RedirectResponse && ! $this->isAjaxRequest())
-            ) {
+            if ($ret instanceof Response) {
                 $event->form->eventResponse = $ret;
 
                 return false;

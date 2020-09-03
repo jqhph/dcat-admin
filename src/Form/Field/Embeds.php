@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\EmbeddedForm;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -232,19 +233,7 @@ class Embeds extends Field
      */
     protected function getEmbeddedData()
     {
-        if ($old = old($this->column)) {
-            return $old;
-        }
-
-        if (empty($this->value)) {
-            return [];
-        }
-
-        if (is_string($this->value)) {
-            return json_decode($this->value, true);
-        }
-
-        return (array) $this->value;
+        return Helper::array($this->value);
     }
 
     /**

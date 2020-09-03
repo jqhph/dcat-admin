@@ -18,36 +18,23 @@
             </thead>
             <tbody class="kv-{{ $class }}-table">
 
-            @foreach(old("{$column}.keys", ($value ?: [])) as $k => $v)
-
-                @php($keysErrorKey = "{$column}.keys.{$loop->index}")
-                @php($valsErrorKey = "{$column}.values.{$loop->index}")
-
+            @foreach(($value ?: []) as $k => $v)
                 <tr>
                     <td>
-                        <div class="form-group {{ $errors->has($keysErrorKey) ? 'has-error' : '' }}">
+                        <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="help-block with-errors"></div>
-                                @if($errors->has($keysErrorKey))
-                                    @foreach($errors->get($keysErrorKey) as $message)
-                                        <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
-                                    @endforeach
-                                @endif
-                                <input name="{{ $name }}[keys][{{ $loop->index }}]" value="{{ old("{$column}.keys.{$k}", $k) }}" class="form-control" required/>
+
+                                <input name="{{ $name }}[keys][{{ $loop->index }}]" value="{{ $k }}" class="form-control" required/>
 
                             </div>
                         </div>
                     </td>
                     <td>
-                        <div class="form-group {{ $errors->has($valsErrorKey) ? 'has-error' : '' }}">
+                        <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="help-block with-errors"></div>
-                                @if($errors->has($valsErrorKey))
-                                    @foreach($errors->get($valsErrorKey) as $message)
-                                        <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
-                                    @endforeach
-                                @endif
-                                <input name="{{ $name }}[values][{{ $loop->index }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
+                                <input name="{{ $name }}[values][{{ $loop->index }}]" value="{{ $v }}" class="form-control" />
                             </div>
                         </div>
                     </td>

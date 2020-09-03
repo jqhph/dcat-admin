@@ -9,18 +9,16 @@ class Icon extends Text
 
     public function render()
     {
-        $this->setupScript();
+        $this->addScript();
 
-        $value = old($this->column, $this->value());
-
-        $this->prepend("<i class='fa {$value}'>&nbsp;</i>")
+        $this->prepend("<i class='fa {$this->value()}'>&nbsp;</i>")
             ->defaultAttribute('autocomplete', 'off')
             ->defaultAttribute('style', 'width: 160px;flex:none');
 
         return parent::render();
     }
 
-    protected function setupScript()
+    protected function addScript()
     {
         $this->script = <<<JS
 setTimeout(function () {

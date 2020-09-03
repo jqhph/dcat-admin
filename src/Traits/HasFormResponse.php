@@ -57,16 +57,6 @@ trait HasFormResponse
     }
 
     /**
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function isAjaxRequest(Request $request = null)
-    {
-        return Helper::isAjaxRequest($request);
-    }
-
-    /**
      * @param string $message
      * @param string $redirectTo
      *
@@ -134,12 +124,6 @@ trait HasFormResponse
     public function error($message = null, $redirectTo = null, int $statusCode = 200)
     {
         if (! $redirectTo) {
-            if (! $this->isAjaxRequest()) {
-                admin_toastr($message, 'error');
-
-                return back()->withInput();
-            }
-
             return $this->ajaxResponse($message, null, false);
         }
 
@@ -174,19 +158,9 @@ trait HasFormResponse
 
         $status = (bool) ($options['status'] ?? true);
 
-        if ($this->isAjaxRequest()) {
-            $message = $message ?: trans('admin.save_succeeded');
+        $message = $message ?: trans('admin.save_succeeded');
 
-            return $this->ajaxResponse($message, $url, $status, $options);
-        }
-
-        $statusCode = (int) ($options['status_code'] ?? 302);
-
-        if ($message) {
-            admin_toastr($message, $status ? 'success' : 'error');
-        }
-
-        return $url ? redirect(admin_url($url), $statusCode) : redirect()->back($statusCode);
+        return $this->ajaxResponse($message, $url, $status, $options);
     }
 
     /**
@@ -211,10 +185,6 @@ trait HasFormResponse
     {
         if ($validationMessages instanceof Validator) {
             $validationMessages = $validationMessages->getMessageBag();
-        }
-
-        if (! static::isAjaxRequest()) {
-            return back()->withInput()->withErrors($validationMessages);
         }
 
         return response()->json([

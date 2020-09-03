@@ -223,7 +223,7 @@ JS;
             );
         }
 
-        $this->setupScript();
+        $this->addScript();
 
         if ($this->keyAsValue) {
             $options = $value + $this->options;
@@ -237,7 +237,7 @@ JS;
         ]);
     }
 
-    protected function setupScript()
+    protected function addScript()
     {
         // 解决部分浏览器开启 tags: true 后无法输入中文的BUG
         // 支持"逗号" "分号" "空格"结尾生成tags

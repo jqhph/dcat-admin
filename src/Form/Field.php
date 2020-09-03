@@ -705,14 +705,6 @@ class Field implements Renderable
     }
 
     /**
-     * @return mixed
-     */
-    public function old()
-    {
-        return old($this->column, $this->value());
-    }
-
-    /**
      * Get original value of the field.
      *
      * @return mixed

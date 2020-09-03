@@ -133,7 +133,7 @@ class Markdown extends Field
     /**
      * 初始化js.
      */
-    protected function setUpScript()
+    protected function addScript()
     {
         $this->options['path'] = admin_asset('@admin/dcat/plugins/editor-md/lib').'/';
         $this->options['name'] = $this->column;
@@ -185,7 +185,7 @@ JS;
      */
     public function render()
     {
-        $this->setUpScript();
+        $this->addScript();
 
         Admin::style('.editormd-fullscreen {z-index: 99999999;}');
 

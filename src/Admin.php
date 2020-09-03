@@ -4,8 +4,8 @@ namespace Dcat\Admin;
 
 use Closure;
 use Dcat\Admin\Contracts\Repository;
-use Dcat\Admin\Controllers\AuthController;
-use Dcat\Admin\Exception\Handler;
+use Dcat\Admin\Http\Controllers\AuthController;
+use Dcat\Admin\Http\Exception\Handler;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
@@ -200,7 +200,7 @@ class Admin
         if (config('admin.auth.enable', true)) {
             app('router')->group($attributes, function ($router) {
                 /* @var \Illuminate\Routing\Router $router */
-                $router->namespace('Dcat\Admin\Controllers')->group(function ($router) {
+                $router->namespace('Dcat\Admin\Http\Controllers')->group(function ($router) {
                     /* @var \Illuminate\Routing\Router $router */
                     $router->resource('auth/users', 'UserController');
                     $router->resource('auth/menu', 'MenuController', ['except' => ['create', 'show']]);
@@ -241,7 +241,7 @@ class Admin
 
         app('router')->group($attributes, function ($router) {
             /* @var \Illuminate\Routing\Router $router */
-            $router->namespace('Dcat\Admin\Controllers')->group(function ($router) {
+            $router->namespace('Dcat\Admin\Http\Controllers')->group(function ($router) {
                 /* @var \Illuminate\Routing\Router $router */
                 $router->post('action', 'HandleActionController@handle')->name('action');
                 $router->post('form', 'HandleFormController@handle')->name('form');
@@ -274,12 +274,12 @@ class Admin
 
         app('router')->group($attributes, function ($router) {
             /* @var \Illuminate\Routing\Router $router */
-            $router->get('helpers/scaffold', 'Dcat\Admin\Controllers\ScaffoldController@index');
-            $router->post('helpers/scaffold', 'Dcat\Admin\Controllers\ScaffoldController@store');
-            $router->post('helpers/scaffold/table', 'Dcat\Admin\Controllers\ScaffoldController@table');
-            $router->get('helpers/icons', 'Dcat\Admin\Controllers\IconController@index');
-            $router->resource('helpers/extensions', 'Dcat\Admin\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
-            $router->post('helpers/extensions/import', 'Dcat\Admin\Controllers\ExtensionController@import');
+            $router->get('helpers/scaffold', 'Dcat\Admin\Http\Controllers\ScaffoldController@index');
+            $router->post('helpers/scaffold', 'Dcat\Admin\Http\Controllers\ScaffoldController@store');
+            $router->post('helpers/scaffold/table', 'Dcat\Admin\Http\Controllers\ScaffoldController@table');
+            $router->get('helpers/icons', 'Dcat\Admin\Http\Controllers\IconController@index');
+            $router->resource('helpers/extensions', 'Dcat\Admin\Http\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
+            $router->post('helpers/extensions/import', 'Dcat\Admin\Http\Controllers\ExtensionController@import');
         });
     }
 

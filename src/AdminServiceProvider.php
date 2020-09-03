@@ -49,13 +49,13 @@ class AdminServiceProvider extends ServiceProvider
      * @var array
      */
     protected $routeMiddleware = [
-        'admin.auth'       => Middleware\Authenticate::class,
-        'admin.pjax'       => Middleware\Pjax::class,
-        'admin.permission' => Middleware\Permission::class,
-        'admin.bootstrap'  => Middleware\Bootstrap::class,
-        'admin.session'    => Middleware\Session::class,
-        'admin.upload'     => Middleware\WebUploader::class,
-        'admin.app'        => Middleware\Application::class,
+        'admin.auth'       => Http\Middleware\Authenticate::class,
+        'admin.pjax'       => Http\Middleware\Pjax::class,
+        'admin.permission' => Http\Middleware\Permission::class,
+        'admin.bootstrap'  => Http\Middleware\Bootstrap::class,
+        'admin.session'    => Http\Middleware\Session::class,
+        'admin.upload'     => Http\Middleware\WebUploader::class,
+        'admin.app'        => Http\Middleware\Application::class,
     ];
 
     /**

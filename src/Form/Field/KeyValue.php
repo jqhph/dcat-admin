@@ -67,7 +67,7 @@ class KeyValue extends Field
 
     protected function addScript()
     {
-        $value = old($this->column, $this->value());
+        $value = $this->value();
 
         $number = $value ? count($value) : 0;
         $class = $this->getElementClassString();

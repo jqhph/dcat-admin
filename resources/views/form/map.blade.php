@@ -1,4 +1,4 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<div class="{{$viewClass['form-group']}}">
 
     <label for="{{$id['lat']}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
@@ -20,8 +20,8 @@
         @endif
 
         <div id="map_{{$id['lat'].$id['lng']}}" style="width: 100%;height: 300px"></div>
-        <input type="hidden" id="{{$id['lat']}}" name="{{$name['lat']}}" value="{{ old($column['lat'], $value['lat'] ?? null) }}" {!! $attributes !!} />
-        <input type="hidden" id="{{$id['lng']}}" name="{{$name['lng']}}" value="{{ old($column['lng'], $value['lng'] ?? null) }}" {!! $attributes !!} />
+        <input type="hidden" id="{{$id['lat']}}" name="{{$name['lat']}}" value="{{ $value['lat'] ?? null }}" {!! $attributes !!} />
+        <input type="hidden" id="{{$id['lng']}}" name="{{$name['lng']}}" value="{{ $value['lng'] ?? null }}" {!! $attributes !!} />
 
         @include('admin::form.help-block')
 

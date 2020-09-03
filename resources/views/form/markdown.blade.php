@@ -1,4 +1,4 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<div class="{{$viewClass['form-group']}}">
 
     <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
@@ -7,7 +7,7 @@
         @include('admin::form.error')
 
         <div id="{{$id}}" class="{{$class}}" {!! $attributes !!}>
-            <textarea class="d-none" name="{{$name}}" placeholder="{{ $placeholder }}">{!! old($column, $value) !!}</textarea>
+            <textarea class="d-none" name="{{$name}}" placeholder="{{ $placeholder }}">{!! $value !!}</textarea>
         </div>
 
         @include('admin::form.help-block')

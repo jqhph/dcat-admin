@@ -421,15 +421,15 @@ class Form implements Renderable
     }
 
     /**
-     * Disable submit with ajax.
+     * 启用或禁用ajax表单提交.
      *
-     * @param bool $disable
+     * @param bool $value
      *
      * @return $this
      */
-    public function disableAjaxSubmit(bool $disable = true)
+    public function ajax(bool $value = true)
     {
-        $this->useAjaxSubmit = ! $disable;
+        $this->useAjaxSubmit = $value;
 
         return $this;
     }
@@ -890,7 +890,7 @@ class Form implements Renderable
 
         if ($this->request->get('after-save') == 1) {
             // continue editing
-            if ($this->builder->isEditing() && $this->isAjaxRequest()) {
+            if ($this->builder->isEditing()) {
                 return;
             }
 

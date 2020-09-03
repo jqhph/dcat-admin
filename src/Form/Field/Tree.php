@@ -134,14 +134,12 @@ class Tree extends Field
 
     protected function formatNodes()
     {
-        $value = Helper::array(
-            old($this->column, $this->value())
-        );
+        $value = Helper::array($this->value());
 
         $this->value = &$value;
 
         if ($this->nodes instanceof \Closure) {
-            $this->nodes = $this->nodes->call($this->values(), $this->value(), $this);
+            $this->nodes = $this->nodes->call($this->values(), $value, $this);
         }
 
         if (! $this->nodes) {

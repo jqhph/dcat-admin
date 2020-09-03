@@ -27,22 +27,12 @@ class ArrayField extends HasMany
 
         $forms = [];
 
-        if ($values = old($this->column)) {
-            foreach ($values as $key => $data) {
-                if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
-                    continue;
-                }
-
-                $forms[$key] = $this->buildNestedForm($key)->fill($data);
+        foreach (Helper::array($this->value()) as $key => $data) {
+            if (isset($data['pivot'])) {
+                $data = array_merge($data, $data['pivot']);
             }
-        } else {
-            foreach ($this->value() as $key => $data) {
-                if (isset($data['pivot'])) {
-                    $data = array_merge($data, $data['pivot']);
-                }
 
-                $forms[$key] = $this->buildNestedForm($key)->fill($data);
-            }
+            $forms[$key] = $this->buildNestedForm($key)->fill($data);
         }
 
         return $forms;

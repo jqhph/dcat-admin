@@ -30,7 +30,7 @@ class Text extends Field
         $this->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id)
             ->defaultAttribute('name', $this->getElementName())
-            ->defaultAttribute('value', old($this->column, $this->value()))
+            ->defaultAttribute('value', $this->value())
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('placeholder', $this->placeholder());
 

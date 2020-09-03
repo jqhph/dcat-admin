@@ -296,7 +296,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'exception_handler' => \Dcat\Admin\Exception\Handler::class,
+    'exception_handler' => Dcat\Admin\Http\Exception\Handler::class,
 
     /*
     |--------------------------------------------------------------------------

@@ -424,24 +424,11 @@ class HasMany extends Field
          *
          * Else get data from database.
          */
-        if ($values = old($this->column)) {
-            foreach ($values as $key => $data) {
-                if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
-                    continue;
-                }
+        foreach (Helper::array($this->value()) as $idx => $data) {
+            $key = Arr::get($data, $this->getKeyName(), $idx);
 
-                $forms[$key] = $this->buildNestedForm($key)
-                    ->fill($data);
-            }
-        } else {
-            if (is_array($this->value)) {
-                foreach ($this->value as $idx => $data) {
-                    $key = Arr::get($data, $this->getKeyName(), $idx);
-
-                    $forms[$key] = $this->buildNestedForm($key)
-                        ->fill($data);
-                }
-            }
+            $forms[$key] = $this->buildNestedForm($key)
+                ->fill($data);
         }
 
         return $forms;

@@ -1,4 +1,4 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($column) ?: 'has-error' !!}">
+<div class="{{$viewClass['form-group']}}">
     <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
     <div class="{{$viewClass['field']}} select-resource">
         @include('admin::form.error')

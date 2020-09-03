@@ -1,16 +1,9 @@
-@php($listErrorKey = "$column.values")
-
-<div class="{{$viewClass['form-group']}} {{ $errors->has($listErrorKey) ? 'has-error' : '' }}">
+<div class="{{$viewClass['form-group']}}">
 
     <label class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
     <div class="{{$viewClass['field']}}">
 
-        @if($errors->has($listErrorKey))
-            @foreach($errors->get($listErrorKey) as $message)
-                <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
-            @endforeach
-        @endif
         <div class="help-block with-errors"></div>
 
         <span name="{{$name}}"></span>
@@ -20,21 +13,14 @@
 
             <tbody class="list-{{$columnClass}}-table">
 
-            @foreach(old("{$column}.values", ($value ?: [])) as $k => $v)
-
-                @php($itemErrorKey = "{$column}.values.{$loop->index}")
+            @foreach(($value ?: []) as $k => $v)
 
                 <tr>
                     <td>
-                        <div class="form-group {{ $errors->has($itemErrorKey) ? 'has-error' : '' }}">
+                        <div class="form-group">
                             <div class="col-sm-12">
-                                <input name="{{ $name }}[values][{{ (int) $k }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
+                                <input name="{{ $name }}[values][{{ (int) $k }}]" value="{{ $v }}" class="form-control" />
                                 <div class="help-block with-errors"></div>
-                                @if($errors->has($itemErrorKey))
-                                    @foreach($errors->get($itemErrorKey) as $message)
-                                        <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
-                                    @endforeach
-                                @endif
                             </div>
                         </div>
                     </td>

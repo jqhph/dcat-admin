@@ -109,7 +109,7 @@ class SelectTable extends Field
 
     protected function formatOptions()
     {
-        $value = Helper::array(old($this->column, $this->value()));
+        $value = Helper::array($this->value());
 
         if ($this->options instanceof \Closure) {
             $this->options = $this->options->call($this->values(), $value, $this);

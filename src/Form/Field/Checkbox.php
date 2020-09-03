@@ -88,7 +88,7 @@ class Checkbox extends MultipleSelect
 
         $checkbox
             ->inline()
-            ->check(old($this->column, $this->value()))
+            ->check($this->value())
             ->class($this->getElementClassString());
 
         $this->addVariables([
