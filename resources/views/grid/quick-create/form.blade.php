@@ -11,7 +11,7 @@
             @endforeach
                 &nbsp;
             &nbsp;
-            <button type="submit" class="btn btn-primary btn-sm">{{ strtoupper(__('admin.submit')) }}</button>&nbsp;
+            <button type="submit" class="btn btn-primary btn-sm">{{ __('admin.submit') }}</button>&nbsp;
             &nbsp;
             <a href="javascript:void(0);" class="cancel">{{ __('admin.cancel') }}</a>
             {{ csrf_field() }}
