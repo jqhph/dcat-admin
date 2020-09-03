@@ -31,6 +31,7 @@ return [
         'confirm'           => '确认',
         'cancel'            => '取消',
         'refresh_succeeded' => '刷新成功 !',
+        'submit'            => '提交',
         'close'             => '关闭',
         'selected_options'  => '已选中:num个选项',
         'exceed_max_item'   => '已超出最大可选数量',
