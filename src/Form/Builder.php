@@ -814,7 +814,7 @@ class Builder
         $this->fields = $this->fields()->reject($reject);
 
         if ($this->form->hasTab()) {
-            $this->form->getTab()->getTabs()->transform(function($item) use ($reject) {
+            $this->form->getTab()->getTabs()->transform(function ($item) use ($reject) {
                 if (! empty($item['fields'])) {
                     $item['fields'] = $item['fields']->reject($reject);
                 }
