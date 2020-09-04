@@ -57,7 +57,7 @@ CSS
     protected function addScript()
     {
         $script = <<<JS
-$(".{$this->selector}").on("click", function() {
+$(".{$this->selector}").on("click focus", function() {
     $(this).next().removeClass("hidden");
 }).on('blur', function () {
     var icon = $(this).next();
