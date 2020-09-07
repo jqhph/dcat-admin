@@ -39,7 +39,7 @@ class AuthController extends Controller
             return redirect($this->redirectPath());
         }
 
-        return $content->full()->body(view($this->view));
+        return $content->full()->body(view($this->view)->with('username', $this->username()));
     }
 
     /**

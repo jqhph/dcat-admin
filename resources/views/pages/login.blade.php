@@ -38,7 +38,7 @@
                         <input
                                 type="text"
                                 class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
-                                name="username"
+                                name="{{ $username }}"
                                 placeholder="{{ trans('admin.username') }}"
                                 value="{{ old('username') }}"
                                 required
