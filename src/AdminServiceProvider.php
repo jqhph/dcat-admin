@@ -7,6 +7,7 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
+use Dcat\Admin\Extend\Manager;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
@@ -87,10 +88,10 @@ class AdminServiceProvider extends ServiceProvider
         require_once __DIR__.'/Support/AdminSection.php';
 
         $this->aliasAdmin();
-        $this->registerExtensionProviders();
         $this->loadAdminAuthConfig();
         $this->registerRouteMiddleware();
         $this->registerServices();
+        $this->loadExtensions();
 
         $this->commands($this->commands);
 
@@ -161,18 +162,6 @@ class AdminServiceProvider extends ServiceProvider
     }
 
     /**
-     * 扩展注册.
-     */
-    public function registerExtensionProviders()
-    {
-        foreach (Admin::availableExtensions() as $extension) {
-            if ($provider = $extension->serviceProvider()) {
-                $this->app->register($provider);
-            }
-        }
-    }
-
-    /**
      * 设置 auth 配置.
      *
      * @return void
@@ -217,10 +206,16 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('admin.asset', Asset::class);
         $this->app->singleton('admin.color', Color::class);
         $this->app->singleton('admin.sections', SectionManager::class);
+        $this->app->singleton('admin.extend', Manager::class);
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.menu', Menu::class);
         $this->app->singleton('admin.context', Fluent::class);
         $this->app->singleton('admin.web-uploader', WebUploader::class);
+    }
+
+    protected function loadExtensions()
+    {
+        Admin::extensions()->load();
     }
 
     /**

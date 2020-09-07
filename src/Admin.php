@@ -10,6 +10,7 @@ use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Repositories\EloquentRepository;
+use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Traits\HasPermissions;
@@ -35,16 +36,6 @@ class Admin
      * @var string
      */
     const VERSION = '1.7.1';
-
-    /**
-     * @var array
-     */
-    protected static $extensions = [];
-
-    /**
-     * @var array
-     */
-    protected static $availableExtensions;
 
     /**
      * @var string
@@ -321,88 +312,6 @@ class Admin
     }
 
     /**
-     * 获取所有已注册的扩展.
-     *
-     * @return array
-     */
-    public static function extensions()
-    {
-        return static::$extensions;
-    }
-
-    /**
-     * 获取所有可用扩展.
-     *
-     * @return Extension[]
-     */
-    public static function availableExtensions()
-    {
-        if (static::$availableExtensions !== null) {
-            return static::$availableExtensions;
-        }
-
-        static::$availableExtensions = [];
-        foreach (static::$extensions as $k => $extension) {
-            if (! config("admin-extensions.{$k}.enable")) {
-                continue;
-            }
-
-            static::$availableExtensions[$k] = $extension::make();
-        }
-
-        return static::$availableExtensions;
-    }
-
-    /**
-     * 注册扩展.
-     *
-     * @param string $class
-     *
-     * @return void
-     */
-    public static function extend(string $class)
-    {
-        static::$extensions[$class::NAME] = $class;
-    }
-
-    /**
-     * 启用扩展.
-     *
-     * @param string $class
-     * @param bool   $enable
-     *
-     * @return bool
-     */
-    public static function enableExtenstion(string $class, bool $enable = true)
-    {
-        if (! $class || ! is_subclass_of($class, Extension::class)) {
-            return false;
-        }
-
-        $name = $class::NAME;
-
-        $config = (array) config('admin-extensions');
-
-        $config[$name] = (array) ($config[$name] ?? []);
-
-        $config[$name]['enable'] = $enable;
-
-        return Helper::updateExtensionConfig($config);
-    }
-
-    /**
-     * 禁用扩展.
-     *
-     * @param string $class
-     *
-     * @return bool
-     */
-    public static function disableExtenstion(string $class)
-    {
-        return static::enableExtenstion($class, false);
-    }
-
-    /**
      * @return Handler
      */
     public static function makeExceptionHandler()
@@ -472,6 +381,26 @@ class Admin
     public static function getIgnoreQueryNames()
     {
         return static::context()->ignoreQueries ?? [];
+    }
+
+    /**
+     * 插件管理.
+     *
+     * @return \Dcat\Admin\Extend\Manager
+     */
+    public static function extensions()
+    {
+        return app('admin.extend');
+    }
+
+    /**
+     * 类自动加载器.
+     *
+     * @return \Composer\Autoload\ClassLoader
+     */
+    public static function classLoader()
+    {
+        return Composer::loader();
     }
 
     /**

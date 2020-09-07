@@ -395,3 +395,10 @@ if (! function_exists('admin_api_route')) {
         return Dcat\Admin\Admin::app()->getCurrentApiRoutePrefix().$path;
     }
 }
+
+if (! function_exists('admin_plugins_path')) {
+    function admin_plugins_path()
+    {
+        return admin_path('/Plugins');
+    }
+}
