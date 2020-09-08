@@ -37,7 +37,7 @@ class Composer
      */
     public static function parse(?string $path)
     {
-        return new ComposerProperty(static::readJson($path));
+        return new ComposerProperty(static::fromJson($path));
     }
 
     /**
@@ -54,7 +54,7 @@ class Composer
 
         $lockFile = $lockFile ?: base_path('composer.lock');
 
-        $content = collect(static::readJson($lockFile)['packages'] ?? [])
+        $content = collect(static::fromJson($lockFile)['packages'] ?? [])
             ->filter(function ($value) use ($packageName) {
                 return $value['name'] == $packageName;
             })->first();
@@ -67,7 +67,7 @@ class Composer
      *
      * @return array
      */
-    public static function readJson(?string $path)
+    public static function fromJson(?string $path)
     {
         if (isset(static::$files[$path])) {
             return static::$files[$path];

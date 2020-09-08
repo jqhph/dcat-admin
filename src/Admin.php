@@ -11,7 +11,6 @@ use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Composer;
-use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Auth\GuardHelpers;
@@ -40,12 +39,12 @@ class Admin
     /**
      * @var string
      */
-    protected static $metaTitle;
+    public static $metaTitle;
 
     /**
      * @var string
      */
-    protected static $favicon;
+    public static $favicon;
 
     /**
      * @var array
@@ -173,6 +172,16 @@ class Admin
         $builder && $builder($manager);
 
         return $manager;
+    }
+
+    /**
+     * 配置.
+     *
+     * @return \Dcat\Admin\Support\Setting
+     */
+    public static function setting()
+    {
+        return app('admin.setting');
     }
 
     /**

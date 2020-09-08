@@ -309,11 +309,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Extension Directory
+    | Extension
     |--------------------------------------------------------------------------
-    |
-    | When you use command `php artisan admin:extend` to generate extensions,
-    | the extension files will be generated in this directory.
     */
-    'extension_dir' => app_path('Admin/Extensions'),
+    'extension' => [
+        // When you use command `php artisan admin:extend` to generate extensions,
+        // the extension files will be generated in this directory.
+        'dir' => base_path('dcat-admin-extensions'),
+    ],
 ];

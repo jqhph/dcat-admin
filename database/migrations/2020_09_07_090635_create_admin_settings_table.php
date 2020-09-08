@@ -20,7 +20,7 @@ class CreateAdminSettingsTable extends Migration
     {
         Schema::create('admin_settings', function (Blueprint $table) {
             $table->string('slug', 100)->primary();
-            $table->text('value');
+            $table->longText('value');
             $table->timestamps();
         });
     }

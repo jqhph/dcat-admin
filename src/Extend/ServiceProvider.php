@@ -1,12 +1,12 @@
 <?php
 
-namespace Dcat\Admin\Plugin;
+namespace Dcat\Admin\Extend;
 
 use Dcat\Admin\Admin;
-use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Symfony\Component\Console\Output\NullOutput;
 
 abstract class ServiceProvider extends LaravelServiceProvider
 {
@@ -15,22 +15,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     /**
      * @var string
      */
-    protected $assets = '';
-
-    /**
-     * @var string
-     */
-    protected $views = '';
-
-    /**
-     * @var string
-     */
-    protected $lang = '';
-
-    /**
-     * @var string
-     */
-    protected $migrations = '';
+    protected $path;
 
     /**
      * @var array
@@ -43,8 +28,6 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected $permission = [];
 
     /**
-     * The menu validation rules.
-     *
      * @var array
      */
     protected $menuValidationRules = [
@@ -54,8 +37,6 @@ abstract class ServiceProvider extends LaravelServiceProvider
     ];
 
     /**
-     * The permission validation rules.
-     *
      * @var array
      */
     protected $permissionValidationRules = [
@@ -65,44 +46,195 @@ abstract class ServiceProvider extends LaravelServiceProvider
     ];
 
     /**
+     * @var \Symfony\Component\Console\Output\OutputInterface
+     */
+    public $output;
+
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        $this->output = new NullOutput();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function boot()
+    {
+        if ($views = $this->views()) {
+            $this->loadViewsFrom($views, static::NAME);
+        }
+
+        if ($lang = $this->lang()) {
+            $this->loadTranslationsFrom($lang, static::NAME);
+        }
+
+        if ($migrations = $this->migrations()) {
+            $this->loadMigrationsFrom($migrations);
+        }
+
+        if ($routes = $this->routes()) {
+            return $this->registerRoutes($routes);
+        }
+    }
+
+    /**
+     * 获取扩展包名称.
+     *
      * @return string
      */
-    final public function getName()
+    final public function name()
     {
         return static::NAME;
     }
 
     /**
-     * Get the path of assets files.
+     * 获取扩展包路径.
+     *
+     * @param string $path
+     *
+     * @return string
+     *
+     * @throws \ReflectionException
+     */
+    public function path(?string $path = null)
+    {
+        if (! $this->path) {
+            $this->path = realpath(dirname((new \ReflectionClass(static::class))->getFileName()).'/..');
+
+            if (! is_dir($this->path)) {
+                throw new \Exception("The {$this->path} is not a directory.");
+            }
+        }
+
+        $path = ltrim($path, '/');
+
+        return $path ? $this->path.'/'.$path : $this->path;
+    }
+
+    /**
+     * 判断扩展是否启用.
+     *
+     * @return bool
+     */
+    final public function enabled()
+    {
+    }
+
+    /**
+     * 判断扩展是否禁用.
+     *
+     * @return bool
+     */
+    final public function disable()
+    {
+    }
+
+    /**
+     * 获取配置.
+     *
+     * @param string $key
+     * @param null   $default
+     *
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    final public function config($key = null, $default = null)
+    {
+    }
+
+    /**
+     * 导入扩展.
+     */
+    public function import()
+    {
+        $this->importMenus();
+        $this->importPermissions();
+    }
+
+    /**
+     * 卸载扩展.
+     */
+    public function uninstall()
+    {
+    }
+
+    /**
+     * 注册路由.
+     *
+     * @param $callback
+     */
+    public function registerRoutes($callback)
+    {
+        Admin::app()->routes(function ($router) use ($callback) {
+            $attributes = array_merge(
+                [
+                    'prefix'     => config('admin.route.prefix'),
+                    'middleware' => config('admin.route.middleware'),
+                ]
+            );
+
+            $router->group($attributes, $callback);
+        });
+    }
+
+    /**
+     * 获取静态资源路径.
      *
      * @return string
      */
     public function assets()
     {
-        return $this->assets;
+        return $this->path('resources/assets');
     }
 
     /**
-     * Get the path of view files.
+     * 获取视图路径.
      *
      * @return string
      */
     public function views()
     {
-        return $this->views;
+        return $this->path('resources/views');
     }
 
     /**
-     * Get the path of migration files.
+     * 获取数据迁移文件路径.
      *
      * @return string
      */
     public function migrations()
     {
-        return $this->migrations;
+        return $this->path('database/migrations');
     }
 
     /**
+     * 获取语言包路径.
+     *
+     * @return string
+     */
+    public function lang()
+    {
+        return $this->path('resources/lang');
+    }
+
+    /**
+     * 获取路由地址.
+     *
+     * @return string
+     *
+     * @throws \ReflectionException
+     */
+    public function routes()
+    {
+        $path = $this->path('src/Http/routes.php');
+
+        return is_file($path) ? $path : null;
+    }
+
+    /**
+     * 获取菜单.
+     *
      * @return array
      */
     public function menu()
@@ -118,96 +250,55 @@ abstract class ServiceProvider extends LaravelServiceProvider
         return $this->permission;
     }
 
-    /**
-     * @return string
-     */
-    public function lang()
-    {
-        return $this->lang;
-    }
 
     /**
-     * Whether the extension is enabled.
+     * 导入菜单.
      *
-     * @return bool
+     * @throws \Exception
      */
-    final public static function enabled()
+    protected function importMenus()
     {
-        return config('admin-extensions.'.static::NAME.'.enable') ? true : false;
-    }
+        if (! ($menu = $this->menu()) || ! $this->validateMenu($menu)) {
+            return;
+        }
 
-    /**
-     * Whether the extension is disabled.
-     *
-     * @return bool
-     */
-    final public static function disable()
-    {
-        return ! static::enabled();
-    }
+        extract($menu);
 
-    /**
-     * Get config set in config/admin.php.
-     *
-     * @param string $key
-     * @param null   $default
-     *
-     * @return \Illuminate\Config\Repository|mixed
-     */
-    final public function config($key = null, $default = null)
-    {
-        if (is_null($key)) {
-            $key = sprintf('admin.extensions.%s', static::NAME);
+        if ($this->checkMenu($path)) {
+            $this->output->writeln("<warn>Menu [$path] already exists!</warn>");
         } else {
-            $key = sprintf('admin.extensions.%s.%s', static::NAME, $key);
-        }
-
-        return config($key, $default);
-    }
-
-    /**
-     * Import menu item and permission to dcat-admin.
-     */
-    public function import(Command $command)
-    {
-        if ($menu = $this->menu()) {
-            if ($this->validateMenu($menu)) {
-                extract($menu);
-
-                if ($this->checkMenuExist($path)) {
-                    $command->warn("Menu [$path] already exists!");
-                } else {
-                    $this->createMenu($title, $path, $icon);
-                    $command->info('Import extension menu succeeded!');
-                }
-            }
-        }
-
-        if ($permission = $this->permission()) {
-            if ($this->validatePermission($permission)) {
-                extract($permission);
-
-                if ($this->checkPermissionExist($slug)) {
-                    $command->warn("Permission [$slug] already exists!");
-                } else {
-                    $this->createPermission($name, $slug, $path);
-                    $command->info('Import extension permission succeeded!');
-                }
-            }
+            $this->createMenu($title, $path, $icon);
+            $this->output->writeln('<info>Import extension menu succeeded!</info>');
         }
     }
 
     /**
-     * Uninstall the extension.
+     * 导入权限.
      *
-     * @param Command $command
+     * @throws \Exception
      */
-    public function uninstall(Command $command)
+    protected function importPermissions()
     {
+        if (! $this->config('admin.permission.enable')) {
+            return;
+        }
+
+        if (! ($permission = $this->permission()) || ! $this->validatePermission($permission)) {
+            return;
+        }
+
+        extract($permission);
+
+        if ($this->checkPermission($slug)) {
+            $this->output->writeln("<warn>Permission [$slug] already exists!</warn>");
+        } else {
+            $this->createPermission($name, $slug, $path);
+            $this->output->writeln('<info>Import extension permission succeeded!</info>');
+        }
     }
 
     /**
-     * Validate menu fields.
+     * 验证菜单.
      *
      * @param array $menu
      *
@@ -215,7 +306,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return bool
      */
-    public function validateMenu(array $menu)
+    protected function validateMenu(array $menu)
     {
         /** @var \Illuminate\Validation\Validator $validator */
         $validator = Validator::make($menu, $this->menuValidationRules);
@@ -226,7 +317,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
 
         $message = "Invalid menu:\r\n".implode("\r\n", Arr::flatten($validator->errors()->messages()));
 
-        throw new \Exception($message);
+        $this->output->writeln("<error>{$message}</error>");
     }
 
     /**
@@ -234,22 +325,15 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return bool
      */
-    protected function checkMenuExist($path)
+    protected function checkMenu($path)
     {
         $menuModel = config('admin.database.menu_model');
 
-        /* @var \Illuminate\Database\Eloquent\Builder $query */
-        $query = $menuModel::query();
-
-        $result = $query->where('uri', $path)
-            ->get()
-            ->first();
-
-        return $result ? true : false;
+        return $result = $menuModel::where('uri', $path)->exists();
     }
 
     /**
-     * Validate permission fields.
+     * 验证权限.
      *
      * @param array $permission
      *
@@ -257,7 +341,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return bool
      */
-    public function validatePermission(array $permission)
+    protected function validatePermission(array $permission)
     {
         /** @var \Illuminate\Validation\Validator $validator */
         $validator = Validator::make($permission, $this->permissionValidationRules);
@@ -268,11 +352,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
 
         $message = "Invalid permission:\r\n".implode("\r\n", Arr::flatten($validator->errors()->messages()));
 
-        throw new \Exception($message);
+        $this->output->writeln("<error>{$message}</error>");
     }
 
     /**
-     * Create a item in dcat-admin left side menu.
+     * 创建菜单.
      *
      * @param string $title
      * @param string $uri
@@ -299,22 +383,15 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return bool
      */
-    protected function checkPermissionExist($slug)
+    protected function checkPermission($slug)
     {
         $permissionModel = config('admin.database.permissions_model');
 
-        /* @var \Illuminate\Database\Eloquent\Builder $query */
-        $query = $permissionModel::query();
-
-        $result = $query->where('slug', $slug)
-            ->get()
-            ->first();
-
-        return $result ? true : false;
+        return $permissionModel::where('slug', $slug)->exists();
     }
 
     /**
-     * Create a permission for this extension.
+     * 创建权限.
      *
      * @param $name
      * @param $slug
@@ -327,27 +404,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $permissionModel::create([
             'name'      => $name,
             'slug'      => $slug,
-            'http_path' => '/'.trim($path, '/'),
+            'http_path' => trim($path, '/'),
         ]);
-    }
-
-    /**
-     * Set routes for this extension.
-     *
-     * @param $callback
-     */
-    public function routes($callback)
-    {
-        Admin::app()->routes(function ($router) use ($callback) {
-            $attributes = array_merge(
-                [
-                    'prefix'     => config('admin.route.prefix'),
-                    'middleware' => config('admin.route.middleware'),
-                ],
-                $this->config('route', [])
-            );
-
-            $router->group($attributes, $callback);
-        });
     }
 }

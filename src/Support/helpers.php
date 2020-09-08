@@ -390,15 +390,24 @@ if (! function_exists('admin_api_route')) {
      *
      * @return string
      */
-    function admin_api_route(string $path = '')
+    function admin_api_route(?string $path = '')
     {
         return Dcat\Admin\Admin::app()->getCurrentApiRoutePrefix().$path;
     }
 }
 
-if (! function_exists('admin_plugins_path')) {
-    function admin_plugins_path()
+if (! function_exists('admin_extension_path')) {
+    /**
+     * @param string|null $path
+     *
+     * @return string
+     */
+    function admin_extension_path(?string $path = null)
     {
-        return admin_path('/Plugins');
+        $dir = rtrim(config('admin.extension.dir'), '/') ?: base_path('dcat-admin-extensions');
+
+        $path = ltrim($path, '/');
+
+        return $path ? $dir.'/'.$path : $dir;
     }
 }
