@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Extend;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\ComposerProperty;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
@@ -10,7 +11,15 @@ use Symfony\Component\Console\Output\NullOutput;
 
 abstract class ServiceProvider extends LaravelServiceProvider
 {
-    const NAME = null;
+    /**
+     * @var ComposerProperty
+     */
+    protected $composerProperty;
+
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * @var string
@@ -63,11 +72,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
     public function boot()
     {
         if ($views = $this->views()) {
-            $this->loadViewsFrom($views, static::NAME);
+            $this->loadViewsFrom($views, $this->name());
         }
 
         if ($lang = $this->lang()) {
-            $this->loadTranslationsFrom($lang, static::NAME);
+            $this->loadTranslationsFrom($lang, $this->name());
         }
 
         if ($migrations = $this->migrations()) {
@@ -80,13 +89,13 @@ abstract class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
-     * 获取扩展包名称.
+     * 获取扩展名称.
      *
      * @return string
      */
     final public function name()
     {
-        return static::NAME;
+        return $this->name ?: ($this->name = str_replace('/', '.', $this->composerProperty->name));
     }
 
     /**
@@ -120,6 +129,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     final public function enabled()
     {
+        return in_array($this->name(), Admin::setting()->getExtensionsEnabled(), true);
     }
 
     /**
@@ -127,8 +137,9 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return bool
      */
-    final public function disable()
+    final public function disabled()
     {
+        return ! $this->enabled();
     }
 
     /**
@@ -141,6 +152,9 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     final public function config($key = null, $default = null)
     {
+
+
+
     }
 
     /**
@@ -250,6 +264,17 @@ abstract class ServiceProvider extends LaravelServiceProvider
         return $this->permission;
     }
 
+    /**
+     * @param ComposerProperty $composerProperty
+     *
+     * @return $this
+     */
+    public function withComposerProperty(ComposerProperty $composerProperty)
+    {
+        $this->composerProperty = $composerProperty;
+
+        return $this;
+    }
 
     /**
      * 导入菜单.

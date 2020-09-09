@@ -6,22 +6,22 @@ trait HasBuilderEvents
 {
     public static function resolving(callable $callback, bool $once = false)
     {
-        static::addBuilderListeners('builder.resolving', $callback, $once);
+        static::addBuilderListeners('builder:resolving', $callback, $once);
     }
 
     protected function callResolving(...$params)
     {
-        $this->fireBuilderEvent('builder.resolving', ...$params);
+        $this->fireBuilderEvent('builder:resolving', ...$params);
     }
 
     public static function composing(callable $callback, bool $once = false)
     {
-        static::addBuilderListeners('builder.composing', $callback, $once);
+        static::addBuilderListeners('builder:composing', $callback, $once);
     }
 
     protected function callComposing(...$params)
     {
-        $this->fireBuilderEvent('builder.composing', ...$params);
+        $this->fireBuilderEvent('builder:composing', ...$params);
     }
 
     protected function fireBuilderEvent($key, ...$params)
@@ -60,6 +60,6 @@ trait HasBuilderEvents
 
     protected static function formatBuilderEventKey($key)
     {
-        return static::class.'::'.$key;
+        return static::class.':'.$key;
     }
 }

@@ -189,6 +189,7 @@ trait WebUploader
             'fileSingleSizeLimit' => 10485760, // 10M
             'elementName'         => $this->getElementName(), // 字段name属性值
             'lang'                => trans('admin.uploader'),
+            'compress'            => false,
 
             'deleteData' => [
                 static::FILE_DELETE_FLAG => '',

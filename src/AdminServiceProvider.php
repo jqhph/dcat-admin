@@ -82,6 +82,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->bootApplication();
         $this->registerPublishing();
         $this->compatibleBlade();
+        $this->bootExtensions();
     }
 
     public function register()
@@ -92,7 +93,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadAdminAuthConfig();
         $this->registerRouteMiddleware();
         $this->registerServices();
-        $this->loadExtensions();
+        $this->registerExtensions();
 
         $this->commands($this->commands);
 
@@ -212,14 +213,19 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('admin.menu', Menu::class);
         $this->app->singleton('admin.context', Fluent::class);
         $this->app->singleton('admin.setting', function () {
-            return Setting::from();
+            return Setting::fromDatabase();
         });
         $this->app->singleton('admin.web-uploader', WebUploader::class);
     }
 
-    protected function loadExtensions()
+    protected function registerExtensions()
     {
-        Admin::extensions()->load();
+        Admin::extensions()->register();
+    }
+
+    protected function bootExtensions()
+    {
+        Admin::extensions()->boot();
     }
 
     /**

@@ -2,19 +2,16 @@
 
 namespace Tests\Controllers;
 
-use App\Http\Controllers\Controller;
-use Dcat\Admin\Controllers\HasResourceActions;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
 use Tests\Models\Tag;
 use Tests\Repositories\User;
 
-class UserController extends Controller
+class UserController extends AdminController
 {
-    use HasResourceActions;
-
     /**
      * Index interface.
      *
@@ -35,7 +32,7 @@ class UserController extends Controller
      *
      * @return Content
      */
-    public function edit(Content $content, $id)
+    public function edit($id, Content $content)
     {
         $content->header('Edit user');
         $content->description('description');

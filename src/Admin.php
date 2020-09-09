@@ -335,7 +335,7 @@ class Admin
      */
     public static function booting($callback)
     {
-        Event::listen('admin.booting', $callback);
+        Event::listen('admin:booting', $callback);
     }
 
     /**
@@ -343,7 +343,7 @@ class Admin
      */
     public static function booted($callback)
     {
-        Event::listen('admin.booted', $callback);
+        Event::listen('admin:booted', $callback);
     }
 
     /**
@@ -351,7 +351,7 @@ class Admin
      */
     public static function callBooting()
     {
-        Event::dispatch('admin.booting');
+        Event::dispatch('admin:booting');
     }
 
     /**
@@ -359,7 +359,7 @@ class Admin
      */
     public static function callBooted()
     {
-        Event::dispatch('admin.booted');
+        Event::dispatch('admin:booted');
     }
 
     /**

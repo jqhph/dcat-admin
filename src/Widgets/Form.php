@@ -678,15 +678,13 @@ HTML;
     }
 
     /**
-     * Disable submit with ajax.
-     *
      * @param bool $disable
      *
      * @return $this
      */
-    public function disableAjaxSubmit(bool $disable = true)
+    public function ajax(bool $value = true)
     {
-        $this->useAjaxSubmit = ! $disable;
+        $this->useAjaxSubmit = $value;
 
         return $this;
     }
