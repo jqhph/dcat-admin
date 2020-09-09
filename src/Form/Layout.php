@@ -117,12 +117,6 @@ class Layout
             $html .= $column->render();
         }
 
-        $this->form->fields()->each(function ($field) use (&$html) {
-            if ($field instanceof Form\Field\Hidden) {
-                $html .= $field->render();
-            }
-        });
-
         return $html.'</div>';
     }
 }
