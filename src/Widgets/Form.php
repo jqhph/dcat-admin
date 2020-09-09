@@ -167,6 +167,8 @@ class Form implements Renderable
      */
     protected $confirm = [];
 
+    protected $hasColumns = false;
+
     /**
      * Form constructor.
      *
@@ -390,6 +392,8 @@ class Form implements Renderable
         $this->layout()->onlyColumn($width, function () use ($callback) {
             $callback($this);
         });
+
+        $this->hasColumns = true;
 
         return $this;
     }
@@ -807,14 +811,18 @@ JS
     protected function prepareHandler()
     {
         if (method_exists($this, 'handle')) {
-            $this->method('POST');
-            $this->action(route(admin_api_route('form')));
-            $this->hidden(static::REQUEST_NAME)->default(get_called_class());
-            $this->hidden(static::CURRENT_URL_NAME)->default($this->getCurrentUrl());
+            $addHiddenFields = function () {
+                $this->method('POST');
+                $this->action(route(admin_api_route('form')));
+                $this->hidden(static::REQUEST_NAME)->default(get_called_class());
+                $this->hidden(static::CURRENT_URL_NAME)->default($this->getCurrentUrl());
 
-            if (! empty($this->payload) && is_array($this->payload)) {
-                $this->hidden(static::LAZY_PAYLOAD_NAME)->default(json_encode($this->payload));
-            }
+                if (! empty($this->payload) && is_array($this->payload)) {
+                    $this->hidden(static::LAZY_PAYLOAD_NAME)->default(json_encode($this->payload));
+                }
+            };
+
+            $this->hasColumns ? $this->column(1, $addHiddenFields) : $addHiddenFields();
         }
     }
 
