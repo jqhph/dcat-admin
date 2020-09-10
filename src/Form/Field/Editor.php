@@ -163,7 +163,7 @@ class Editor extends Field
         return <<<JS
 function (editor) {
     editor.on('Change', function(e) {
-        var content = e.getContent();
+        var content = e.target.getContent();
         if (! content) {
             content = e.level.fragments;
             content = content.length && content.join('');
