@@ -13,6 +13,7 @@ use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Traits\HasPermissions;
+use Dcat\Admin\Traits\Renderable;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,6 +29,7 @@ use Illuminate\Support\Str;
 class Admin
 {
     use HasAssets;
+    use Renderable;
 
     /**
      * 版本号.

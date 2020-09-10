@@ -254,14 +254,6 @@ class Asset
     protected $isPjax = false;
 
     /**
-     * @var array
-     */
-    protected $themeCssMap = [
-        'dark'      => 'dark-layout',
-        'semi-dark' => 'semi-dark-layout',
-    ];
-
-    /**
      * Assets constructor.
      */
     public function __construct()
@@ -338,7 +330,7 @@ class Asset
      *
      * @param string $alias
      */
-    public function collect(string $alias)
+    public function collect(?string $alias)
     {
         if (mb_strpos($alias, '@') !== 0) {
             $alias = '@'.$alias;

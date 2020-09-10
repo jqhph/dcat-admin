@@ -7,30 +7,6 @@ use Dcat\Admin\Support\Helper;
 trait HasAssets
 {
     /**
-     * @var array
-     */
-    protected static $html = [];
-
-    /**
-     * @param string $html
-     *
-     * @return null|string
-     */
-    public static function html($html = '')
-    {
-        if (! empty($html)) {
-            static::$html = array_merge(
-                static::$html,
-                array_map([Helper::class, 'render'], (array) $html)
-            );
-
-            return;
-        }
-
-        return implode('', array_unique(static::$html));
-    }
-
-    /**
      * @return \Dcat\Admin\Layout\Asset
      */
     public static function asset()

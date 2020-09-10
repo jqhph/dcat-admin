@@ -371,7 +371,6 @@ if (! function_exists('admin_info')) {
 }
 
 if (! function_exists('admin_asset')) {
-
     /**
      * @param $path
      *
@@ -380,6 +379,19 @@ if (! function_exists('admin_asset')) {
     function admin_asset($path)
     {
         return Dcat\Admin\Admin::asset()->url($path);
+    }
+}
+
+if (! function_exists('admin_require_assets')) {
+
+    /**
+     * @param $alias
+     *
+     * @return void
+     */
+    function admin_require_assets(?string $alias)
+    {
+        Admin::asset()->collect($alias);
     }
 }
 
@@ -409,5 +421,21 @@ if (! function_exists('admin_extension_path')) {
         $path = ltrim($path, '/');
 
         return $path ? $dir.'/'.$path : $dir;
+    }
+}
+
+if (! function_exists('admin_color')) {
+    /**
+     * @param string|null $color
+     *
+     * @return string|\Dcat\Admin\Color
+     */
+    function admin_color(?string $color = null)
+    {
+        if ($color === null) {
+            return Admin::color();
+        }
+
+        return Admin::color()->get($color);
     }
 }
