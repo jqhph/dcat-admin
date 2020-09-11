@@ -4,7 +4,6 @@ namespace Dcat\Admin\Layout;
 
 use Closure;
 use Dcat\Admin\Admin;
-use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
@@ -267,7 +266,7 @@ class Content implements Renderable
             $html .= $row->render();
         }
 
-        return Helper::html($html);
+        return $html;
     }
 
     /**
@@ -398,7 +397,7 @@ class Content implements Renderable
             'description'     => $this->description,
             'breadcrumb'      => $this->breadcrumb,
             'configData'      => $this->applyClasses(),
-            'pjaxContainerId' => Admin::$pjaxContainerId,
+            'pjaxContainerId' => Admin::getPjaxContainerId(),
         ], $this->variables);
     }
 

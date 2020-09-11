@@ -8,33 +8,25 @@ use DOMDocument;
 
 trait Renderable
 {
-    private static $shouldResolveTags = ['style', 'script', 'template'];
+    protected static $shouldResolveTags = ['style', 'script', 'template'];
 
     /**
-     * @var array
-     */
-    public static $html = [];
-
-    /**
-     * @param string $html
+     * @param string|array $content
      *
      * @return null|string
      */
-    public static function html($html = '')
+    public static function html($content = null)
     {
-        $html = static::context()->html;
+        $html = static::context()->html ?: [];
 
-        if (! empty($html)) {
-
-            static::$html = array_merge(
-                static::$html,
-                array_map([Helper::class, 'render'], (array) $html)
-            );
-
-            return;
+        if ($content !== null) {
+            return implode('', array_unique($html));
         }
 
-        return implode('', array_unique(static::$html));
+        static::context()->html = array_merge(
+            $html,
+            array_map([Helper::class, 'render'], (array) $content)
+        );
     }
 
     /**
@@ -159,8 +151,8 @@ trait Renderable
 
         foreach ($element->childNodes as $child) {
             if (
-                $element instanceof DOMElement
-                && in_array($element->tagName, static::$shouldResolveTags, true)
+                $child instanceof DOMElement
+                && in_array($child->tagName, static::$shouldResolveTags, true)
             ) {
                 static::resolve($child);
 
@@ -168,8 +160,8 @@ trait Renderable
             }
 
             $html .= trim($element->ownerDocument->saveHTML($child));
-
-            return $html;
         }
+
+        return $html;
     }
 }

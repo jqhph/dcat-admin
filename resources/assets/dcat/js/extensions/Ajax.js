@@ -4,6 +4,24 @@ export default class Ajax {
         this.dcat = Dcat;
 
         Dcat.handleAjaxError = this.handleAjaxError.bind(this)
+
+        this.init(Dcat)
+    }
+
+    init(Dcat) {
+        $.delete = function (options) {
+            options.type = 'POST';
+            options.data = {_method: 'DELETE'};
+
+            return $.ajax(options);
+        };
+
+        $.put = function (options) {
+            options.type = 'POST';
+            Object.assign(options.data, {_method: 'PUT'});
+
+            return $.ajax(options);
+        };
     }
 
     handleAjaxError(xhr, text, msg) {

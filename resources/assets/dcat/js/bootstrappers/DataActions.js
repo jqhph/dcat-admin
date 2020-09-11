@@ -18,12 +18,8 @@ let defaultActions = {
 
             Dcat.confirm(lang.delete_confirm, msg, function () {
                 Dcat.NP.start();
-                $.ajax({
-                    method: 'post',
+                $.delete({
                     url: url,
-                    data: {
-                        _method: 'delete',
-                    },
                     success: function (data) {
                         Dcat.NP.done();
                         if (data.status) {
@@ -50,12 +46,8 @@ let defaultActions = {
             }
             Dcat.confirm(lang.delete_confirm, keys.join(', '), function () {
                 Dcat.NP.start();
-                $.ajax({
-                    method: 'post',
+                $.delete({
                     url: url + '/' + keys.join(','),
-                    data: {
-                        _method: 'delete',
-                    },
                     success: function (data) {
                         Dcat.NP.done();
                         if (data.status) {

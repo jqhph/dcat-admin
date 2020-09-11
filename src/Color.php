@@ -78,9 +78,9 @@ class Color
         ],
         'blue-light' => [
             'colors' => [
-                'primary'        => '#4199de',
-                'primary-darker' => '#278bd9',
-                'link'           => '#278bd9',
+                'primary'        => '#62a8ea',
+                'primary-darker' => '#62a8ea',
+                'link'           => '#62a8ea',
             ],
         ],
         'blue-dark' => [

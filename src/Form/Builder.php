@@ -761,7 +761,7 @@ class Builder
             $html[] = "$name=\"$value\"";
         }
 
-        return '<form '.implode(' ', $html).' pjax-container>';
+        return '<form '.implode(' ', $html).' '.Admin::getPjaxContainerId().'>';
     }
 
     /**

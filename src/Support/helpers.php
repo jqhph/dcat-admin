@@ -382,14 +382,14 @@ if (! function_exists('admin_asset')) {
     }
 }
 
-if (! function_exists('admin_require_assets')) {
+if (! function_exists('admin_assets_require')) {
 
     /**
      * @param $alias
      *
      * @return void
      */
-    function admin_require_assets(?string $alias)
+    function admin_assets_require(?string $alias)
     {
         Admin::asset()->collect($alias);
     }

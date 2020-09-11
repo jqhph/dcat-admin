@@ -802,44 +802,6 @@ class Helper
     }
 
     /**
-     * @param string $html
-     *
-     * @return string
-     */
-    public static function html($html)
-    {
-        if (! $html = static::render($html)) {
-            return $html;
-        }
-
-        $url = '[\s]*[\"\']([\s]*[\w-_\?\=\&\.\/]+[^\"\']*)[\"\']';
-        $rel = '(?:rel[\s]*=[\s]*[\"\'][\s]*stylesheet[\s]*[\"\'])*[\s]*';
-        $type = '(?:type[\s]*=[\s]*[\"\'][\s]*text\/javascript[\s]*[\"\'])*[\s]*';
-
-        $link = "/<link[\s]+{$rel}href[\s]*={$url}[\s]*[\/]*>/u";
-        $script = "/<script[\s]+{$type}src[\s]*={$url}>[\s]*<\/[\s]*script>/u";
-
-        $js = $css = [];
-
-        $html = preg_replace_callback($link, function (&$match) use (&$css) {
-            if (! empty($match[1])) {
-                $css[] = $match[1];
-            }
-        }, $html);
-
-        $html = preg_replace_callback($script, function (&$match) use (&$js) {
-            if (! empty($match[1])) {
-                $js[] = $match[1];
-            }
-        }, $html);
-
-        $js && Admin::js($js);
-        $css && Admin::css($css);
-
-        return $html;
-    }
-
-    /**
      * Html转义.
      *
      * @param array|string $item

@@ -1,13 +1,16 @@
 
 <div class="card dcat-box dt-bootstrap4">
 
-    @include('admin::grid.table-toolbar')
+    <div class="card-header d-block pb-0" style="border: 0;padding: 1.5rem">
+        @include('admin::grid.table-toolbar')
+        <hr class="mb-0" />
+    </div>
 
     {!! $grid->renderFilter() !!}
 
     {!! $grid->renderHeader() !!}
 
-    <div class="table-responsive table-wrapper complex-container table-middle" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
+    <div class="card-body table-responsive table-wrapper complex-container table-middle" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
         <table class="{{ $grid->formatTableClass() }}" id="{{ $tableId }}" >
             <thead>
             @if ($headers = $grid->getComplexHeaders())

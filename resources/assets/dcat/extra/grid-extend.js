@@ -223,10 +223,8 @@
                 prev = row.prevAll('tr').first(),
                 next = row.nextAll('tr').first();
 
-            $.ajax({
-                type: 'POST',
+            $.put({
                 url: _this.options.url.replace(':key', key),
-                data: {_method:'PUT', _orderable:direction},
                 success: function(data){
                     Dcat.loading(false);
                     _this._req = 0;
