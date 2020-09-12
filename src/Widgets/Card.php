@@ -2,30 +2,20 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
+use Dcat\Admin\Traits\LazyWidget;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 
 class Card extends Widget
 {
-    /**
-     * @var string
-     */
     protected $view = 'admin::widgets.card';
-
     protected $title;
-
     protected $content;
-
     protected $footer;
-
-    /**
-     * @var array
-     */
     protected $tools = [];
-
-    /**
-     * @var bool
-     */
     protected $divider = false;
+    protected $padding;
 
     public function __construct($title = '', $content = null)
     {
@@ -34,15 +24,11 @@ class Card extends Widget
             $title = '';
         }
 
-        if ($title) {
-            $this->title($title);
-        }
-
-        if ($content !== null) {
-            $this->content($content);
-        }
+        $this->title($title);
+        $this->content($content);
 
         $this->class('card');
+        $this->id('card-'.Str::random(8));
     }
 
     /**
@@ -67,14 +53,23 @@ class Card extends Widget
         return $this;
     }
 
+    public function noPadding()
+    {
+        return $this->padding('0');
+    }
+
     /**
-     * @param string $content
+     * @param string|\Closure|Renderable|LazyWidget $content
      *
      * @return $this
      */
     public function content($content)
     {
-        $this->content = $content;
+        if ($content instanceof LazyGrid) {
+            $content->simple();
+        }
+
+        $this->content = $this->lazyRenderable($content);
 
         return $this;
     }
@@ -116,9 +111,7 @@ class Card extends Widget
     }
 
     /**
-     * Variables in view.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function variables()
     {

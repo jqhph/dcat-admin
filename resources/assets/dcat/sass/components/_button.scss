@@ -11,6 +11,10 @@
   border-radius: 0.2rem;
 }
 
+.btn-primary {
+  color: $white;
+}
+
 .btn-sm, .btn-xs {
   padding: .54rem .9rem!important
 }
@@ -60,7 +64,7 @@ a.btn-sm, .btn-group-sm > a.btn {
     box-shadow: none!important;
   }
 
-  box-shadow: $btn-shadow;
+  box-shadow: $btn-white-shadow;
 }
 
 // --------------------- btn-custom -----------------------

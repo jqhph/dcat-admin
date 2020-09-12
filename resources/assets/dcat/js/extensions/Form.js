@@ -14,6 +14,8 @@ class Form {
             form: null,
             // 开启表单验证
             validate: false,
+            // 确认弹窗
+            confirm: {title: null, content: null},
             // 表单错误信息class
             errorClass: 'has-error',
             // 表单错误信息容器选择器
@@ -44,7 +46,20 @@ class Form {
         _this.$form = $(_this.options.form).first();
         _this._errColumns = {};
 
-        _this.submit();
+        _this.init();
+    }
+
+    init() {
+        let _this = this;
+        let confirm = _this.options.confirm;
+
+        if (! confirm.title) {
+            return _this.submit();
+        }
+
+        Dcat.confirm(confirm.title, confirm.content, function () {
+            _this.submit();
+        });
     }
 
     submit() {
@@ -80,7 +95,9 @@ class Form {
                 $submitButton.buttonLoading();
             },
             success: function (response) {
-                $submitButton.buttonLoading(false);
+                setTimeout(function () {
+                    $submitButton.buttonLoading(false);
+                }, 700);
 
                 if (options.after(true, response, _this) === false) {
                     return;
@@ -101,6 +118,16 @@ class Form {
                 }
 
                 Dcat.success(response.message || 'Save succeeded!');
+
+                if (typeof response.location !== "undefined") {
+                    return setTimeout(function () {
+                        if (response.location) {
+                            location.href = response.location;
+                        } else {
+                            location.reload();
+                        }
+                    }, 1500)
+                }
 
                 if (response.redirect === false || ! options.redirect) {
                     return;

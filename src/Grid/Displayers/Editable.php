@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 
 class Editable extends AbstractDisplayer
 {
@@ -13,13 +14,13 @@ class Editable extends AbstractDisplayer
         $this->addScript();
         $this->addStyle();
 
+        $value = Helper::render($this->value);
+
         $label = __('admin.save');
 
         return <<<HTML
-<div>
-    <span class="{$this->selector}" contenteditable="true">
-        {$this->value}
-    </span>
+<div class="d-inline">
+    <span class="{$this->selector}" contenteditable="true">{$value}</span>
     <span class="save hidden" 
         data-value="{$this->value}" 
         data-name="{$this->column->getName()}" 
@@ -28,6 +29,7 @@ class Editable extends AbstractDisplayer
         data-url="{$this->getUrl()}">
         {$label}
     </span>
+    <div class="d-none"></div>
 </div>
 HTML;
     }
@@ -44,7 +46,7 @@ HTML;
 
         Admin::style(
             <<<CSS
-.{$this->selector}{border-bottom:dashed 1px $color;color: $color;display: inline-block}
+.{$this->selector}{border-bottom:dashed 1px $color;color: $color;display: inline-block; -webkit-user-modify: read-write-plaintext-only;}
 .{$this->selector}+.save{margin-left: 0.4rem;color: $color}
 body.dark-mode .{$this->selector}{color: $primary;border-color: $primary;}
 body.dark-mode .{$this->selector}+.save{color: $primary}
@@ -55,7 +57,7 @@ CSS
     protected function addScript()
     {
         $script = <<<JS
-$(".{$this->selector}").on("click", function() {
+$(".{$this->selector}").on("click focus", function() {
     $(this).next().removeClass("hidden");
 }).on('blur', function () {
     var icon = $(this).next();
@@ -69,10 +71,14 @@ $('.{$this->selector}+.save').on("click",function() {
         name = obj.data('name'),
         refresh = obj.data('refresh'),
         old_value = obj.data('value'),
-        value = obj.prev().html().replace(new RegExp("<br>","g"), '').replace(new RegExp("&nbsp;","g"), '').trim();
+        value = obj.prev().html(),
+        tmp = obj.next();
+    
+    tmp.html(value);
+
+    value = tmp.text().replace(new RegExp("<br>","g"), '').replace(new RegExp("&nbsp;","g"), '').trim();
     
     var data = {
-        _token: Dcat.token,
         _method: 'PUT'
     };
     if (name.indexOf('.') === -1) {

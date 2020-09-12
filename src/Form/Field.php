@@ -63,6 +63,11 @@ class Field implements Renderable
     protected $default;
 
     /**
+     * @var bool
+     */
+    protected $allowDefaultValueInEditPage = false;
+
+    /**
      * Element label.
      *
      * @var string
@@ -209,9 +214,9 @@ class Field implements Renderable
     protected $labelClass = [];
 
     /**
-     * @var \Closure
+     * @var \Closure[]
      */
-    protected $savingCallback;
+    protected $savingCallbacks = [];
 
     /**
      * Field constructor.
@@ -493,17 +498,39 @@ class Field implements Renderable
      */
     public function options($options = [])
     {
-        if ($options instanceof Arrayable) {
-            $options = $options->toArray();
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
         }
 
-        if (is_array($this->options)) {
-            $this->options = array_merge($this->options, $options);
-        } else {
-            $this->options = $options;
-        }
+        $this->options = array_merge($this->options, Helper::array($options));
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function replaceOptions($options)
+    {
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
+        }
+
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @param array|Arrayable $options
+     *
+     * @return $this
+     */
+    public function mergeOptions($options)
+    {
+        return $this->options($options);
     }
 
     /**
@@ -598,22 +625,26 @@ class Field implements Renderable
     /**
      * Get or set default value for field.
      *
-     * @param $default
+     * @param mixed $default
+     * @param bool  $edit
      *
      * @return $this|mixed
      */
-    public function default($default = null)
+    public function default($default = null, bool $edit = false)
     {
         if ($default === null) {
             if (
                 $this->form
                 && method_exists($this->form, 'isCreating')
                 && ! $this->form->isCreating()
+                && ! $this->allowDefaultValueInEditPage
             ) {
                 return;
             }
 
             if ($this->default instanceof \Closure) {
+                $this->default->bindTo($this->data());
+
                 return call_user_func($this->default, $this->form);
             }
 
@@ -621,6 +652,7 @@ class Field implements Renderable
         }
 
         $this->default = $default;
+        $this->allowDefaultValueInEditPage = $edit;
 
         return $this;
     }
@@ -738,6 +770,16 @@ class Field implements Renderable
     }
 
     /**
+     * @param string $key
+     *
+     * @return mixed|null
+     */
+    public function getAttribute(string $key)
+    {
+        return $this->attributes[$key] ?? null;
+    }
+
+    /**
      * Specifies a regular expression against which to validate the value of the input.
      *
      * @param string $error
@@ -837,7 +879,7 @@ class Field implements Renderable
      */
     public function saving(\Closure $closure)
     {
-        $this->savingCallback = $closure;
+        $this->savingCallbacks[] = $closure;
 
         return $this;
     }
@@ -853,10 +895,10 @@ class Field implements Renderable
     {
         $value = $this->prepareInputValue($value);
 
-        if ($handler = $this->savingCallback) {
-            $handler->bindTo($this->data());
-
-            return $handler($value);
+        if ($this->savingCallbacks) {
+            foreach ($this->savingCallbacks as $callback) {
+                $value = $callback->call($this->data(), $value);
+            }
         }
 
         return $value;
@@ -1107,6 +1149,16 @@ class Field implements Renderable
         ]);
     }
 
+    protected function isCreating()
+    {
+        return request()->isMethod('POST');
+    }
+
+    protected function isEditing()
+    {
+        return request()->isMethod('PUT');
+    }
+
     /**
      * Get view of this field.
      *
@@ -1171,6 +1223,24 @@ class Field implements Renderable
     protected function shouldRender()
     {
         return $this->display;
+    }
+
+    public function saveAsJson($option = 0)
+    {
+        return $this->saving(function ($value) use ($option) {
+            if (! $value || is_scalar($value)) {
+                return $value;
+            }
+
+            return json_encode($value, $option);
+        });
+    }
+
+    public function saveAsString()
+    {
+        return $this->saving(function ($value) {
+            return (string) $value;
+        });
     }
 
     /**

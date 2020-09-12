@@ -84,7 +84,7 @@ class Editor extends Field
      */
     public function imageUrl(string $url)
     {
-        return $this->options(['images_upload_url' => $this->formatUrl(admin_url($url))]);
+        return $this->mergeOptions(['images_upload_url' => $this->formatUrl(admin_url($url))]);
     }
 
     /**
@@ -96,7 +96,7 @@ class Editor extends Field
      */
     public function languageUrl(string $url)
     {
-        return $this->options(['language_url' => $url]);
+        return $this->mergeOptions(['language_url' => $url]);
     }
 
     /**
@@ -108,7 +108,7 @@ class Editor extends Field
      */
     public function height(int $height)
     {
-        return $this->options(['min_height' => $height]);
+        return $this->mergeOptions(['min_height' => $height]);
     }
 
     /**
@@ -163,7 +163,13 @@ class Editor extends Field
         return <<<JS
 function (editor) {
     editor.on('Change', function(e) {
-      $(replaceNestedFormIndex('#{$this->id}')).val(e.level.content);
+        var content = e.target.getContent();
+        if (! content) {
+            content = e.level.fragments;
+            content = content.length && content.join('');
+        }
+        
+      $(replaceNestedFormIndex('#{$this->id}')).val(String(content).replace('<p><br data-mce-bogus="1"></p>', '').replace('<p><br></p>', ''));
     });
 }
 JS;

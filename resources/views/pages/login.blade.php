@@ -7,7 +7,7 @@
         padding: 1.5rem 1.8rem 1.6rem;
     }
     .card, .card-body {
-        border-radius: .45rem
+        border-radius: .25rem
     }
     .login-btn {
         padding-left: 2rem!important;;

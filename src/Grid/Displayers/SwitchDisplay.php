@@ -21,7 +21,7 @@ class SwitchDisplay extends AbstractDisplayer
         $this->color = Admin::color()->get($color);
     }
 
-    public function display(string $color = '')
+    public function display(string $color = '', $refresh = false)
     {
         if ($color instanceof \Closure) {
             $color->call($this->row, $this);
@@ -29,7 +29,7 @@ class SwitchDisplay extends AbstractDisplayer
             $this->color($color);
         }
 
-        $this->addScript();
+        $this->addScript($refresh);
 
         $checked = $this->value ? 'checked' : '';
         $color = $this->color ?: Admin::color()->primary();
@@ -44,27 +44,29 @@ EOF;
         return $this->resource().'/'.$this->getKey();
     }
 
-    protected function addScript()
+    protected function addScript($refresh)
     {
         Admin::script(
             <<<JS
-(function(){
-    var swt = $('.{$this->selector}'), that;
-    function init(){
+(function() {
+    var swt = $('.{$this->selector}'), 
+    that, 
+    reload = '{$refresh}';
+    function initSwitchery(){
         swt.parent().find('.switchery').remove();
         swt.each(function(k){
             that = $(this);
             new Switchery(that[0], that.data())
         })
     } 
-    init();
+    initSwitchery();
+    
     swt.off('change').change(function(e) {
         var that = $(this), 
          url = that.data('url'),
          checked = that.is(':checked'),
          name = that.attr('name'), 
          data = {
-            _token: Dcat.token,
             _method: 'PUT'
          },
          value = checked ? 1 : 0;
@@ -88,6 +90,7 @@ EOF;
                 Dcat.NP.done();
                 if (d.status) {
                     Dcat.success(d.message);
+                    reload && Dcat.reload();
                 } else {
                     Dcat.error(d.message);
                 }

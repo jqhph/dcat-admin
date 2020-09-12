@@ -2,7 +2,15 @@
 @import "../sass/variables/variables";
 
 .webuploader-container {
-  position: relative
+  position: relative;
+}
+
+.web-uploader {
+
+  .queueList {
+    border-radius: $card-border-radius;
+    border-color: $input-border-color!important;
+  }
 }
 
 .webuploader-element-invisible {
@@ -146,7 +154,8 @@
   overflow: hidden;
   border-radius: 2px;
   font-size: 12px;
-  box-shadow: $shadow-200;
+  //box-shadow: $shadow-200;
+  border: 1px solid $input-border-color;
   //color: #333;
   background: #fff;
   display: table;
@@ -393,8 +402,7 @@
 }
 
 .web-uploader .statusBar {
-  height: 53px;
-  line-height: 53px;
+  //line-height: 53px;
   vertical-align: middle;
   position: relative
 }
@@ -436,6 +444,7 @@
   display: inline-block;
   font-size: 14px;
   color: #666!important;
+  margin-top: 20px;
 }
 
 .web-uploader .statusBar .btns {

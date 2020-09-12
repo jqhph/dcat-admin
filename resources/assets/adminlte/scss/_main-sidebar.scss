@@ -16,7 +16,19 @@
   }
 
   .nav .nav-item .nav-link {
-    padding: 10px 15px!important;
+    padding: 10px 10px 10px 15px!important;
+    //margin-right: .5rem;
+  }
+
+  .nav-treeview.nav {
+    .nav-item .nav-link {
+      padding: 5px 10px 7px 15px!important;
+      //margin-right: 0;
+    }
+
+    //.nav-item .nav-link.active {
+    //    //  padding: 8px 10px 8px 15px!important;
+    //    //}
   }
 }
 
@@ -98,8 +110,11 @@
   }
 
   .menu-open {
+    //background: $sidebar-dark-submenu-bg;
+
     > .nav-treeview {
       display: block;
+      border-radius: 0;
     }
 
     > .nav-link {
@@ -351,6 +366,26 @@
 [class*='sidebar-dark-'] {
   // Sidebar background color
   background-color: $sidebar-dark-bg;
+
+  //.nav .nav-item .nav-link {
+  //
+  //}
+
+  .nav-treeview.nav {
+     .nav-item .nav-link {
+       //padding: 7px 0 7px 15px!important;
+      font-size: 1rem!important;
+       margin-bottom: 0
+    }
+
+    .nav-item .nav-link.active {
+      padding: 7px 10px 7px 15px!important;
+    }
+  }
+
+  .nav-sidebar .nav-link > p > .right {
+    right: .5rem
+  }
 
   // User Panel (resides in the sidebar)
   .user-panel {

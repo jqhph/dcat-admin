@@ -4,13 +4,14 @@ namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\ComplexHeader;
+use Illuminate\Support\Collection;
 
 trait HasComplexHeaders
 {
     /**
-     * @var ComplexHeader[]
+     * @var ComplexHeader[]|Collection
      */
-    protected $complexHeaders = [];
+    protected $complexHeaders;
 
     /**
      * Merge cells.
@@ -26,13 +27,17 @@ trait HasComplexHeaders
             throw new \InvalidArgumentException('Invalid column names.');
         }
 
+        if (! $this->complexHeaders) {
+            $this->complexHeaders = new Collection();
+        }
+
         $this->withBorder();
 
         return $this->complexHeaders[$label] = new ComplexHeader($this, $label, $columnNames);
     }
 
     /**
-     * @return ComplexHeader[]
+     * @return ComplexHeader[]|Collection
      */
     public function getComplexHeaders()
     {
@@ -48,7 +53,7 @@ trait HasComplexHeaders
             return;
         }
 
-        $originalHeaders = $this->complexHeaders;
+        $originalHeaders = $this->complexHeaders->toArray();
         $originalColumns = $this->columns;
 
         $headersColumns = $this->complexHeaders = $this->columns = [];
@@ -56,7 +61,7 @@ trait HasComplexHeaders
         foreach ($originalHeaders as $header) {
             $headersColumns = array_merge(
                 $headersColumns,
-                $tmp = $header->getColumnNames()
+                $tmp = $header->getColumnNames()->toArray()
             );
             foreach ($tmp as &$name) {
                 if ($column = $originalColumns->get($name)) {
@@ -88,10 +93,12 @@ trait HasComplexHeaders
         );
 
         $this->columns = collect($this->columns);
-        $this->complexHeaders = array_merge(
-            $beforeHeaders,
-            array_values($originalHeaders),
-            $afterHeaders
+        $this->complexHeaders = collect(
+            array_merge(
+                $beforeHeaders,
+                array_values($originalHeaders),
+                $afterHeaders
+            )
         );
     }
 

@@ -156,9 +156,11 @@ trait UploadField
     /**
      * Indicates if the underlying field is retainable.
      *
+     * @param bool $retainable
+     *
      * @return $this
      */
-    public function retainable($retainable = true)
+    public function retainable(bool $retainable = true)
     {
         $this->retainable = $retainable;
 
@@ -214,7 +216,7 @@ trait UploadField
         }
 
         // 上传失败
-        return $this->responseErrorMessage(trans('admin.upload.upload_failed'));
+        return $this->responseErrorMessage(trans('admin.uploader.upload_failed'));
     }
 
     /**
@@ -364,10 +366,6 @@ trait UploadField
      */
     public function destroy()
     {
-        if ($this->retainable) {
-            return;
-        }
-
         $this->deleteFile($this->original);
     }
 
@@ -395,7 +393,7 @@ trait UploadField
      */
     public function deleteFile($paths)
     {
-        if (! $paths) {
+        if (! $paths || $this->retainable) {
             return;
         }
 

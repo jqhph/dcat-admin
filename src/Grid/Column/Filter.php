@@ -22,7 +22,7 @@ abstract class Filter implements Renderable
     /**
      * @var string
      */
-    protected $getColumnName;
+    protected $columnName;
 
     /**
      * @var \Closure[]
@@ -81,7 +81,7 @@ abstract class Filter implements Renderable
      */
     public function setColumnName(string $name)
     {
-        $this->getColumnName = $name;
+        $this->columnName = $name;
 
         return $this;
     }
@@ -93,7 +93,15 @@ abstract class Filter implements Renderable
      */
     public function getColumnName()
     {
-        return $this->getColumnName ?: $this->parent->getName();
+        return str_replace(['.', '->'], '_', $this->getOriginalColumnName());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOriginalColumnName()
+    {
+        return $this->columnName ?: $this->parent->getName();
     }
 
     /**
@@ -119,6 +127,18 @@ abstract class Filter implements Renderable
     }
 
     /**
+     * @param mixed $model
+     * @param string $query
+     * @param mixed array $params
+     *
+     * @return void
+     */
+    protected function withQuery($model, string $query, array $params)
+    {
+        Helper::withQueryCondition($model, $this->getOriginalColumnName(), $query, $params);
+    }
+
+    /**
      * Add reset button.
      */
     protected function addResetButton()
@@ -133,6 +153,20 @@ abstract class Filter implements Renderable
         return $this->parent->addHeader(
             "&nbsp;<a class='feather icon-rotate-ccw' href='{$this->urlWithoutFilter()}' {$style}></a>"
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderFormButtons()
+    {
+        return <<<HMLT
+<li class="dropdown-divider"></li>
+<li>
+    <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>&nbsp;
+    <a href="{$this->urlWithoutFilter()}" class="btn btn-sm btn-default"><i class="feather icon-rotate-ccw"></i></a>
+</li>
+HMLT;
     }
 
     /**

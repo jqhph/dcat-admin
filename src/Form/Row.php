@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Renderable;
 
 /**
@@ -58,6 +59,7 @@ use Illuminate\Contracts\Support\Renderable;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
  */
 class Row implements Renderable
 {
@@ -71,7 +73,7 @@ class Row implements Renderable
     /**
      * Parent form.
      *
-     * @var Form
+     * @var Form|WidgetForm
      */
     protected $form;
 
@@ -92,10 +94,10 @@ class Row implements Renderable
     /**
      * Row constructor.
      *
-     * @param \Closure $callback
-     * @param Form     $form
+     * @param \Closure        $callback
+     * @param Form|WidgetForm $form
      */
-    public function __construct(\Closure $callback, Form $form)
+    public function __construct(\Closure $callback, $form)
     {
         $this->callback = $callback;
 

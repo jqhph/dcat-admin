@@ -58,6 +58,11 @@ use Illuminate\Support\Collection;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
+ * @method Field\Color                  color($column, $label = '')
+ * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable            selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable    multipleSelectTable($column, $label = '')
  */
 class EmbeddedForm
 {
@@ -116,7 +121,7 @@ class EmbeddedForm
      *
      * @return $this
      */
-    public function setParent(Form $parent)
+    public function setParent($parent)
     {
         $this->parent = $parent;
 

@@ -40,8 +40,8 @@ trait HasFilter
     public function processFilter($toArray = true)
     {
         $this->callBuilder();
+        $this->handleExportRequest();
         $this->callFetchingCallbacks();
-
         $this->applyQuickSearch();
         $this->applyColumnFilter();
         $this->applySelectorQuery();

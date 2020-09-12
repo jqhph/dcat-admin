@@ -4,7 +4,9 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
+use Illuminate\Support\MessageBag;
 
 class ListField extends Field
 {
@@ -23,11 +25,6 @@ class ListField extends Field
      * @var int
      */
     protected $min = 0;
-
-    /**
-     * @var array
-     */
-    protected $value = [''];
 
     /**
      * Set Max list size.
@@ -62,13 +59,13 @@ class ListField extends Field
      *
      * @param array $data
      *
-     * @return void
+     * @return array
      */
     public function formatFieldData($data)
     {
         $this->data = $data;
 
-        return Arr::get($data, $this->column, $this->value);
+        return Helper::array(Arr::get($data, $this->column, $this->value));
     }
 
     /**
@@ -85,7 +82,11 @@ class ListField extends Field
         }
 
         $rules = $attributes = [];
-        if (! $fieldRules = $this->getRules()) {
+        if (
+            (! $fieldRules = $this->getRules())
+            && ! $this->max
+            && ! $this->min
+        ) {
             return false;
         }
 
@@ -93,7 +94,9 @@ class ListField extends Field
             return false;
         }
 
-        $rules["{$this->column}.values.*"] = $fieldRules;
+        if ($fieldRules) {
+            $rules["{$this->column}.values.*"] = $fieldRules;
+        }
         $attributes["{$this->column}.values.*"] = __('Value');
         $rules["{$this->column}.values"][] = 'array';
 
@@ -112,6 +115,17 @@ class ListField extends Field
         return validator($input, $rules, $this->getValidationMessages(), $attributes);
     }
 
+    public function formatValidatorMessages($messageBag)
+    {
+        $messages = new MessageBag();
+
+        foreach ($messageBag->toArray() as $column => $message) {
+            $messages->add($this->column, $message);
+        }
+
+        return $messages;
+    }
+
     protected function prepareValidatorInput(array $input)
     {
         Arr::forget($input, "{$this->column}.values.".static::DEFAULT_FLAG_NAME);
@@ -122,7 +136,7 @@ class ListField extends Field
     /**
      * {@inheritdoc}
      */
-    protected function setupScript()
+    protected function addScript()
     {
         $value = old($this->column, $this->value());
 
@@ -131,17 +145,25 @@ class ListField extends Field
         $this->script = <<<JS
 (function () {
     var index = {$number};
-    $('.{$this->column}-add').on('click', function () {
-        var tpl = $('template.{$this->column}-tpl').html().replace('{key}', index);
-        $('tbody.list-{$this->column}-table').append(tpl);
+    $('.{$this->formatColumn()}-add').on('click', function () {
+        var tpl = $('template.{$this->formatColumn()}-tpl').html().replace('{key}', index);
+        $('tbody.list-{$this->formatColumn()}-table').append(tpl);
         
         index++;
     });
-    $('tbody').on('click', '.{$this->column}-remove', function () {
+    $('tbody').on('click', '.{$this->formatColumn()}-remove', function () {
         $(this).closest('tr').remove();
     });
 })();
 JS;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function formatColumn()
+    {
+        return str_replace('.', '-', $this->column);
     }
 
     /**
@@ -152,10 +174,10 @@ JS;
         unset($value['values'][static::DEFAULT_FLAG_NAME]);
 
         if (empty($value['values'])) {
-            return [];
+            return '[]';
         }
 
-        return array_values($value['values']);
+        return json_encode(array_values($value['values']));
     }
 
     /**
@@ -163,9 +185,11 @@ JS;
      */
     public function render()
     {
-        $this->setupScript();
+        $this->addScript();
 
         Admin::style('td .form-group {margin-bottom: 0 !important;}');
+
+        $this->addVariables(['columnClass' => $this->formatColumn()]);
 
         return parent::render();
     }

@@ -7,7 +7,7 @@ use Dcat\Admin\Support\Helper;
 
 class Checkbox extends AbstractDisplayer
 {
-    public function display($options = [])
+    public function display($options = [], $refresh = false)
     {
         if ($options instanceof \Closure) {
             $options = $options->call($this, $this->row);
@@ -34,7 +34,7 @@ class Checkbox extends AbstractDisplayer
 EOT;
         }
 
-        Admin::script($this->script());
+        Admin::script($this->addScript($refresh));
 
         return <<<EOT
 <form class="form-group {$this->getElementClass()}" style="text-align:left;" data-key="{$this->getKey()}">
@@ -54,24 +54,23 @@ EOT;
         return 'grid-checkbox-'.$this->column->getName();
     }
 
-    protected function script()
+    protected function addScript($refresh)
     {
         return <<<JS
 (function () {
-    var f;
     $('form.{$this->getElementClass()}').off('submit').on('submit', function () {
         var values = $(this).find('input:checkbox:checked').map(function (_, el) {
             return $(el).val();
-        }).get(), btn = $(this).find('[type="submit"]');
+        }).get(), 
+        btn = $(this).find('[type="submit"]'),
+        reload = '{$refresh}';
         
-        if (f) return;
-        f = 1;
-        
+        if (btn.attr('loading')) return;
+        btn.attr('loading', 1);
         btn.buttonLoading();
     
         var data = {
             {$this->column->getName()}: values,
-            _token: Dcat.token,
             _method: 'PUT'
         };
         
@@ -82,12 +81,13 @@ EOT;
             data: JSON.stringify(data),
             success: function (data) {
                 btn.buttonLoading(false);
-                f = 0;
+                btn.removeAttr('loading');
                 Dcat.success(data.message);
+                reload && Dcat.reload();
             },
             error: function (a, b, c) {
                 btn.buttonLoading(false);
-                f = 0;
+                btn.removeAttr('loading');
                 Dcat.handleAjaxError(a, b, c);
             },
         });

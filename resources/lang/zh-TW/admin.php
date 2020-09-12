@@ -7,6 +7,7 @@ return [
         'table'             => '表名',
         'model'             => '模型',
         'controller'        => '控制器',
+        'repository'        => '數據倉庫',
         'add_field'         => '添加欄位',
         'pk'                => '主鍵',
         'soft_delete'       => '軟刪除',
@@ -31,6 +32,7 @@ return [
         'cancel'            => '取消',
         'refresh_succeeded' => '刷新成功!',
         'close'             => '關閉',
+        'submit'            => '提交',
         'selected_options'  => '已選中:num個選項',
         'exceed_max_item'   => '已超出最大可選數量',
 

@@ -112,13 +112,23 @@ class Menu extends Model implements Sortable
     }
 
     /**
-     * determine if enable menu bind permission.
+     * Determine if enable menu bind permission.
      *
      * @return bool
      */
     public static function withPermission()
     {
-        return (bool) config('admin.menu.bind_permission');
+        return config('admin.menu.bind_permission') && config('admin.permission.enable');
+    }
+
+    /**
+     * Determine if enable menu bind role.
+     *
+     * @return bool
+     */
+    public static function withRole()
+    {
+        return (bool) config('admin.permission.enable');
     }
 
     /**

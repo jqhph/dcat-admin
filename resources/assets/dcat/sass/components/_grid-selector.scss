@@ -54,13 +54,14 @@
 
 .custom-data-table {
   .grid-selector {
-    padding: 2px;
+    padding: 2px 0;
+    margin: .35rem 0 -.5rem;
 
     .wrap {
       border-bottom: 0;
       background: $white;
       box-shadow: $shadow;
-      border-radius: .35rem;
+      border-radius: $card-border-radius;
       margin: 7px 0;
     }
   }

@@ -5,6 +5,7 @@ $body-dark-modal-bg: lighten($body-dark-color, 3%);
 @mixin dark-scrollbar($selector) {
   #{$selector}::-webkit-scrollbar {
     width: 12px;
+    height: 12px;
   }
   #{$selector}::-webkit-scrollbar-track {
     background-color: $body-dark-bg;
@@ -21,7 +22,9 @@ body.dark-mode {
   background-color: $body-dark-bg;
   color: $body-dark-font-color;
 
-  .content-wrapper, .main-footer {
+  .body-bg,
+  .content-wrapper,
+  .main-footer {
     background: $body-dark-bg;
   }
 
@@ -341,7 +344,7 @@ body.dark-mode {
   // ------ table
   @include dark-scrollbar('.table-responsive[data-pattern=priority-columns]');
 
-  table.dataTable {
+  .table-wrapper {
     margin-top: 12px!important;
   }
 
@@ -830,5 +833,50 @@ body.dark-mode {
 
   .dcat-done-step .st-desc {
     color: $body-dark-font-color;
+  }
+
+  // ------- fixed-columns
+  @include dark-scrollbar('.table-main');
+
+  .table-fixed-left .table {
+    box-shadow: 6px 0 5px -5px rgba(0,0,0,1);
+  }
+
+  .table-fixed-right .table {
+    box-shadow: -5px 0 5px -5px rgba(0,0,0,1);
+  }
+
+  // ------- sidebar
+  [class*=sidebar-dark-] {
+    background-color: $body-dark-color!important;
+
+    .navbar-header {
+      background: $body-darker-color;
+    }
+
+    .nav-sidebar > .nav-item > .nav-treeview {
+      background: transparent;
+    }
+
+    .nav-sidebar > .nav-item > .nav-link.active,
+    .nav-treeview > .nav-item > .nav-link.active,
+    .nav-treeview > .nav-item > .nav-link.active:hover,
+    .nav-treeview > .nav-item > .nav-link.active:focus {
+      background: $body-darker-color;
+    }
+
+    .nav-treeview.nav .nav-item .nav-link.active {
+      padding: 10px 10px 10px 15px !important;
+    }
+  }
+
+  .main-menu .navbar-header .navbar-brand {
+    margin-top: .5rem;
+  }
+}
+
+body.dark-mode:not(.sidebar-separate) {
+  .main-sidebar .sidebar {
+    margin-top: 1rem
   }
 }

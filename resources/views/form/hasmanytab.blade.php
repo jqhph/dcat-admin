@@ -11,7 +11,7 @@
         display: none;
     }
 </style>
-<div id="has-many-{{$column}}" class="nav-tabs-custom has-many-{{$column}}">
+<div class="nav-tabs-custom has-many-{{$column}}">
     <div class="row header">
         <div class="{{$viewClass['label']}}"><h4 class="pull-right">{!! $label !!}</h4></div>
         <div class="{{$viewClass['field']}}">

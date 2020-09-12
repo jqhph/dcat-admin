@@ -11,8 +11,12 @@ use Illuminate\Support\Str;
 
 class Select extends Field
 {
+    use CanCascadeFields;
+
     public static $js = '@select2';
     public static $css = '@select2';
+
+    protected $cascadeEvent = 'change';
 
     /**
      * @var array
@@ -120,7 +124,7 @@ $(document).on('change', "{$this->getElementClassSelector()}", function () {
                 d.text = d.$textField;
                 return d;
             })
-        }).val(target.attr('data-value')).trigger('change');
+        }).val(target.attr('data-value').split(',')).trigger('change');
     });
 });
 $("{$this->getElementClassSelector()}").trigger('change');
@@ -168,7 +172,7 @@ JS;
                     d.text = d.$textField;
                     return d;
                 })
-            }).val(target.data('value')).trigger('change');
+            }).val(target.data('value').split(',')).trigger('change');
         });
     };
     
@@ -278,8 +282,7 @@ $.ajax({$ajaxOptions}).done(function(data) {
       var value = select.data('value') + '';
       
       if (value) {
-        value = value.split(',');
-        select.select2('val', value);
+        select.val(value.split(',')).trigger("change")
       }
   });
 });
@@ -398,6 +401,8 @@ JS;
         if (empty($this->script)) {
             $this->script = "$(\"{$this->getElementClassSelector()}\").select2($configs);";
         }
+
+        $this->addCascadeScript();
 
         if ($this->options instanceof \Closure) {
             $this->options = $this->options->bindTo($this->values());

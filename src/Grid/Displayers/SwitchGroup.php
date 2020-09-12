@@ -9,13 +9,13 @@ class SwitchGroup extends SwitchDisplay
 {
     protected $selector = 'grid-column-switch-group';
 
-    public function display($columns = [], string $color = '')
+    public function display($columns = [], $color = '', $refresh = false)
     {
         if ($columns instanceof \Closure) {
             $columns = $columns->call($this->row, $this);
         }
 
-        $this->addScript();
+        $this->addScript($refresh);
 
         if ($color) {
             $this->color($color);
@@ -49,20 +49,22 @@ class SwitchGroup extends SwitchDisplay
 EOT;
     }
 
-    protected function addScript()
+    protected function addScript($refresh)
     {
         $script = <<<JS
 (function () {
-    var swt = $('.{$this->selector}'), that;
-    function init(){
-        swt.each(function(){
+    var swt = $('.{$this->selector}'),
+        reload = '{$refresh}', 
+        that;
+    function initSwitchery() {
+        swt.each(function() {
              that = $(this);
              that.parent().find('.switchery').remove();
              
              new Switchery(that[0], that.data())
         })
     } 
-    init();
+    initSwitchery();
     swt.off('change').change(function(e) {
         var that = $(this), 
             id = that.data('key'),
@@ -70,7 +72,6 @@ EOT;
             checked = that.is(':checked'), 
             name = that.attr('name'), 
             data = {
-                _token: Dcat.token,
                 _method: 'PUT'
             },
             value = checked ? 1 : 0;
@@ -93,6 +94,7 @@ EOT;
                 Dcat.NP.done();
                  if (d.status) {
                     Dcat.success(d.message);
+                    reload && Dcat.reload()
                 } else {
                     Dcat.error(d.message);
                 }

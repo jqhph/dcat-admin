@@ -31,6 +31,7 @@ class Permission
         if (
             ! $user
             || ! empty($args)
+            || ! config('admin.permission.enable')
             || $this->shouldPassThrough($request)
             || $user->isAdministrator()
             || $this->checkRoutePermission($request)

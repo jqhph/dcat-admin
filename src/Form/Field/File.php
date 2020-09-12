@@ -38,6 +38,13 @@ class File extends Field implements UploadFieldInterface
         $this->containerId = $this->generateId();
     }
 
+    public function setElementName($name)
+    {
+        $this->mergeOptions(['elementName' => $name]);
+
+        return parent::setElementName($name);
+    }
+
     /**
      * @return mixed
      */
@@ -77,12 +84,13 @@ class File extends Field implements UploadFieldInterface
         }
 
         $rules = $attributes = [];
+        $requiredIf = null;
 
-        if (! $this->hasRule('required')) {
+        if (! $this->hasRule('required') && ! $requiredIf = $this->getRule('required_if*')) {
             return false;
         }
 
-        $rules[$this->column] = 'required';
+        $rules[$this->column] = $requiredIf ?: 'required';
         $attributes[$this->column] = $this->label;
 
         return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);
@@ -144,7 +152,7 @@ class File extends Field implements UploadFieldInterface
     {
         $previews = [];
 
-        foreach ($this->value() as $value) {
+        foreach (Helper::array($this->value()) as $value) {
             $previews[] = [
                 'id'   => $value,
                 'path' => basename($value),
@@ -173,17 +181,18 @@ class File extends Field implements UploadFieldInterface
 
         $this->forceOptions();
         $this->formatValue();
-        $this->setUpScript();
+        $this->addScript();
 
         $this->addVariables([
-            'fileType'    => $this->options['isImage'] ? '' : 'file',
-            'containerId' => $this->containerId,
+            'fileType'      => $this->options['isImage'] ? '' : 'file',
+            'containerId'   => $this->containerId,
+            'showUploadBtn' => ($this->options['autoUpload'] ?? false) ? false : true,
         ]);
 
         return parent::render();
     }
 
-    protected function setUpScript()
+    protected function addScript()
     {
         $newButton = trans('admin.uploader.add_new_media');
         $options = JavaScript::format($this->options);
@@ -235,10 +244,6 @@ class File extends Field implements UploadFieldInterface
             }, 250);
         }
         resize();
-        
-        $('[name="file-{$this->getElementName()}"]').change(function () {
-            uploader.uploader.addFiles(this.files);
-        });
     }
 })();
 JS;

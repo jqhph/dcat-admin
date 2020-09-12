@@ -28,9 +28,7 @@ abstract class GeneratorCommand extends BaseCommand
      */
     protected function getPath($name)
     {
-        $name = Str::replaceFirst(explode('\\', $this->rootNamespace())[0], '', $name);
-
-        return $this->getBaseDir().'/'.str_replace('\\', '/', $name).'.php';
+        return Helper::guessClassFileName($name);
     }
 
     /**

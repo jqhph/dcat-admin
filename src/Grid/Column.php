@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid;
 use Closure;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasDefinitions;
 use Illuminate\Contracts\Support\Arrayable;
@@ -17,19 +18,19 @@ use Illuminate\Support\Traits\Macroable;
 
 /**
  * @method $this editable(bool $refresh = false)
- * @method $this switch(string $color = '')
- * @method $this switchGroup($columns = [], string $color = '')
+ * @method $this switch(string $color = '', $refresh = false)
+ * @method $this switchGroup($columns = [], string $color = '', $refresh = false)
  * @method $this image($server = '', int $width = 200, int $height = 200)
  * @method $this label($style = 'primary', int $max = null)
  * @method $this button($style = 'success');
  * @method $this link($href = '', $target = '_blank');
  * @method $this badge($style = 'primary', int $max = null);
  * @method $this progressBar($style = 'primary', $size = 'sm', $max = 100)
- * @method $this checkbox($options = [])
- * @method $this radio($options = [])
+ * @method $this checkbox($options = [], $refresh = false)
+ * @method $this radio($options = [], $refresh = false)
  * @method $this expand($callbackOrButton = null)
  * @method $this table($titles = [])
- * @method $this select($options = [])
+ * @method $this select($options = [], $refresh = false)
  * @method $this modal($title = '', $callback = null)
  * @method $this showTreeInDialog($callbackOrNodes = null)
  * @method $this qrcode($formatter = null, $width = 150, $height = 150)
@@ -63,6 +64,7 @@ class Column
         }
 
     const SELECT_COLUMN_NAME = '__row_selector__';
+    const ACTION_COLUMN_NAME = '__actions__';
 
     /**
      * Displayers for grid column.
@@ -186,11 +188,29 @@ class Column
      */
     public function __construct($name, $label)
     {
-        $this->name = $name;
+        $this->name = $this->formatName($name);
 
         $this->label = $this->formatLabel($label);
 
         $this->callResolving();
+    }
+
+    protected function formatName($name)
+    {
+        if (! Str::contains($name, '.')) {
+            return $name;
+        }
+
+        $names = explode('.', $name);
+        $count = count($names);
+
+        foreach ($names as $i => &$name) {
+            if ($i + 1 < $count) {
+                $name = Str::snake($name);
+            }
+        }
+
+        return implode('.', $names);
     }
 
     /**
@@ -280,8 +300,12 @@ class Column
      *
      * @return Column\Condition
      */
-    public function if(\Closure $condition)
+    public function if(\Closure $condition = null)
     {
+        $condition = $condition ?: function ($column) {
+            return $column->getValue();
+        };
+
         return $this->conditions[] = new Grid\Column\Condition($condition, $this);
     }
 
@@ -612,15 +636,7 @@ class Column
      */
     protected function htmlEntityEncode($item)
     {
-        if (is_array($item)) {
-            array_walk_recursive($item, function (&$value) {
-                $value = htmlentities($value);
-            });
-        } else {
-            $item = htmlentities($item);
-        }
-
-        return $item;
+        return Helper::htmlEntityEncode($item);
     }
 
     /**
