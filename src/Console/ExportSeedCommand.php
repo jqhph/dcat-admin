@@ -32,10 +32,13 @@ class ExportSeedCommand extends Command
         $exceptFields = [];
         $exportUsers = $this->option('users');
 
-        $seedFile = $this->laravel->databasePath().'/seeds/'.$name.'.php';
+        $namespace = version_compare(app()->version(), '8.0.0', '<') ? 'seeds' : 'seeders';
+
+        $seedFile = $this->laravel->databasePath().'/'.$namespace.'/'.$name.'.php';
         $contents = $this->getStub('AdminTablesSeeder');
 
         $replaces = [
+            'DummyNamespace' => ucwords($namespace),
             'DummyClass' => $name,
 
             'ClassMenu'       => config('admin.database.menu_model'),
