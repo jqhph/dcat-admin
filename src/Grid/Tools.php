@@ -33,7 +33,7 @@ class Tools implements Renderable
     /**
      * @var bool
      */
-    protected $outline = true;
+    protected $outline = false;
 
     /**
      * Create a new Tools instance.

@@ -1,16 +1,16 @@
 
 <div class="card dcat-box dt-bootstrap4">
 
-    <div class="card-header d-block pb-0" style="border: 0;padding: 1.5rem">
+    <div class="card-header d-block pb-0" style="border: 0;padding: 1.3rem 1.5rem">
         @include('admin::grid.table-toolbar')
-        <hr class="mb-0" />
+{{--        <hr class="mb-0" style="margin-top: .6rem" />--}}
     </div>
 
     {!! $grid->renderFilter() !!}
 
     {!! $grid->renderHeader() !!}
 
-    <div class="card-body table-responsive table-wrapper complex-container table-middle" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
+    <div class="card-body table-responsive table-wrapper complex-container table-middle" style="padding: 1.5rem 0 0;">
         <table class="{{ $grid->formatTableClass() }}" id="{{ $tableId }}" >
             <thead>
             @if ($headers = $grid->getComplexHeaders())
@@ -57,13 +57,5 @@
     @include('admin::grid.table-pagination')
 
 </div>
-<style>
-    .data-list-view-header .table-responsive .top .dataTables_filter .form-control {
-        padding: 1.1rem 2.8rem !important
-    }
-    .data-list-view-header .table-responsive .top .dataTables_filter label:after {
-        top: 0.42rem;
-        left: 1.1rem;
-    }
-</style>
+
 

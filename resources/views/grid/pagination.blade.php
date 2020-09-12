@@ -1,4 +1,4 @@
-<ul class="pagination pagination-sm no-margin pull-right shadow-100" style="border-radius: 1.5rem">
+<ul class="pagination pagination-sm no-margin pull-right" style="border-radius: 1.5rem">
     <!-- Previous Page Link -->
     @if ($paginator->onFirstPage())
     <li class="page-item previous disabled"><span class="page-link"></span></li>

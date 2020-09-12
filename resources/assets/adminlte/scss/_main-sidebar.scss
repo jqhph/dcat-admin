@@ -366,6 +366,7 @@
 [class*='sidebar-dark-'] {
   // Sidebar background color
   background-color: $sidebar-dark-bg;
+  //background-image: linear-gradient(0deg,#7e8ea1,#3c4655);
 
   //.nav .nav-item .nav-link {
   //
@@ -423,6 +424,7 @@
       &:active {
         color: $sidebar-dark-active-color;
         background: $sidebar-dark-active-bg;
+        font-weight: bold;
       }
       &:hover {
         color: $sidebar-dark-hover-color;
@@ -443,6 +445,7 @@
     > .nav-link.active {
       color: $sidebar-dark-active-color;
       background: $sidebar-dark-active-bg;
+      font-weight: bold;
 
       @if $enable-shadows {
         box-shadow: map-get($elevations, 1);
@@ -483,6 +486,7 @@
         &:focus {
           background-color: $sidebar-dark-submenu-hover-bg;
           color: $sidebar-dark-submenu-hover-color;
+          font-weight: bold;
         }
       }
 
@@ -490,6 +494,7 @@
         &,
         &:hover,
         &:focus {
+          font-weight: bold;
           background-color: $sidebar-dark-submenu-active-bg;
           color: $sidebar-dark-submenu-active-color;
         }

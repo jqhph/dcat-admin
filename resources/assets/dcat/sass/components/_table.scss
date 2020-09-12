@@ -22,10 +22,14 @@ table.dataTable thead tr {
   background: transparent;
 }
 
-.table th {
-  padding: .9rem;
+.table thead th {
+  padding: .65rem;
+  font-weight: 600;
   text-transform: capitalize;
   font-size: .95rem!important;
+  border-bottom: 1px solid $table-border-color;
+  //background: #f4f7fa;
+  //border-top: 1px solid $table-border-color!important;
 }
 
 table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
@@ -42,17 +46,13 @@ table.dataTable {
 
 .table td {
   padding: .55rem;
-  height: 48px;
+  height: 55px;
   line-height: 1.42857;
+  border-color: $table-border-color;
 }
 
 .table tr td:first-child, .table tr th:first-child {
-  padding-left: 1.4rem;
-}
-
-
-.card-header.custom-data-table-header .table-responsive .top .dataTables_filter .form-control {
-  box-shadow: $shadow-100;
+  padding-left: 2rem;
 }
 
 .quick-search-clear {

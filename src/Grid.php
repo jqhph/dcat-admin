@@ -122,7 +122,7 @@ class Grid
      *
      * @var string
      */
-    protected $view = 'admin::grid.data-table';
+    protected $view = 'admin::grid.table';
 
     /**
      * @var Closure

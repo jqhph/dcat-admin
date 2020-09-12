@@ -49,26 +49,30 @@ $table-border-radius: .3rem;
   box-shadow: none
 }
 
-.custom-data-table-header .table-responsive .top .dataTables_filter{
+.table-responsive .table-filter {
   display: inline-block
 }
 
-.custom-data-table-header .table-responsive .top .dataTables_filter .form-control{
-  //padding: 1.45rem 2.8rem !important;
-  //border-radius: 1.428rem;
-  //border: 1px solid #dae1e7;
-  padding: 1.2rem 2.8rem !important;
-  border-radius: 1.4rem;
+.table-filter .form-control {
+  padding: 1.25rem 2.8rem !important;
+  border-radius: 5rem;
   border: 0;
-  box-shadow: $shadow;
+  background: #f0f0f0;
   font-size: .82rem;
 }
 
-.custom-data-table-header .table-responsive .top .dataTables_filter label{
+.table-filter .form-control:focus {
+  background: #fff;
+  border: 2px solid $primary;
+  padding: 1.12rem 2.8rem !important;
+  box-shadow: none;
+}
+
+.table-filter label{
   position: relative
 }
 
-.custom-data-table-header .table-responsive .top .dataTables_filter label:after{
+.table-filter label:after{
   content: "\E8BD";
   font-family: feather;
   position: absolute;
@@ -383,12 +387,12 @@ table.data-thumb-view.dataTable tbody tr td.product-img img {
   width: auto
 }
 
-.custom-data-table.dataTable .table-responsive .top .dataTables_filter .form-control, .data-thumb-view.dataTable .table-responsive .top .dataTables_filter .form-control, _:-ms-lang(x) .table-responsive .top .dataTables_filter .form-control {
+.custom-data-table.dataTable .table-responsive .top .table-filter .form-control, .data-thumb-view.dataTable .table-responsive .top .table-filter .form-control, _:-ms-lang(x) .table-responsive .top .table-filter .form-control {
   height: 1.4rem !important;
   padding: 0 .5rem !important
 }
 
-.custom-data-table.dataTable .table-responsive .top .dataTables_filter .form-control:after, .data-thumb-view.dataTable .table-responsive .top .dataTables_filter .form-control:after, _:-ms-lang(x) .table-responsive .top .dataTables_filter .form-control:after {
+.custom-data-table.dataTable .table-responsive .top .table-filter .form-control:after, .data-thumb-view.dataTable .table-responsive .top .table-filter .form-control:after, _:-ms-lang(x) .table-responsive .top .table-filter .form-control:after {
   display: none
 }
 
