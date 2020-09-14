@@ -848,6 +848,7 @@ body.dark-mode {
 
   // ------- sidebar
   [class*=sidebar-dark-] {
+    background-image: none;
     background-color: $body-dark-color!important;
 
     .navbar-header {

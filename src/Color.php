@@ -68,14 +68,7 @@ class Color
      *
      * @var array
      */
-    protected static $colors = [
-        'indigo' => [
-            'colors' => [
-                'primary'        => 'indigo',
-                'primary-darker' => 'indigo-darker',
-                'link'           => 'indigo-darker',
-            ],
-        ],
+    protected static $extensions = [
         'blue-light' => [
             'colors' => [
                 'primary'        => '#62a8ea',
@@ -83,7 +76,7 @@ class Color
                 'link'           => '#62a8ea',
             ],
         ],
-        'blue-dark' => [
+        'indigo' => [
             'colors' => [
                 'primary'        => '#586cb1',
                 'primary-darker' => '#4c60a3',
@@ -111,7 +104,7 @@ class Color
      *
      * @var array
      */
-    protected static $default = [
+    protected static $colors = [
         'info'    => 'blue',
         'success' => 'green',
         'danger'  => 'red',
@@ -209,8 +202,8 @@ class Color
         $this->name = ($name ?: config('admin.layout.color')) ?: static::DEFAULT_COLOR;
 
         $this->currentColors = array_merge(
-            static::$default,
-            static::$colors[$this->name]['colors'] ?? []
+            static::$colors,
+            static::$extensions[$this->name]['colors'] ?? []
         );
     }
 
@@ -328,7 +321,7 @@ class Color
      */
     public static function extend(string $name, array $colors)
     {
-        static::$colors[$name] = [
+        static::$extensions[$name] = [
             'colors' => $colors,
         ];
     }

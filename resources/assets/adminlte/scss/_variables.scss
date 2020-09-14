@@ -124,27 +124,29 @@ $main-footer-bg: transparent !default;
 //$sidebar-dark-submenu-active-bg: $sidebar-dark-active-bg !default;
 //$sidebar-dark-header-color: hsla(0,0%,100%,.7) !default;
 
-// #262d37 #313a46 lighten(#8391a2, 8%)
-$sidebar-dark-bg: #3c4655!default;
+// #262d37 #313a46 lighten(#8391a2, 8%) #242939
+// icon lighten(#4B5575, 3%)   #989EB3
+$sidebar-dark-bg: #3a4452!default;
 $sidebar-dark-hover-bg: transparent !default;
-$sidebar-dark-color: darken(#ddd, 2%)!default;
+$sidebar-dark-color: hsla(0,0%,100%,.85)!default;
+$sidebar-dark-icon-color: hsla(0,0%,100%,.7)!default;
 $sidebar-dark-hover-color: lighten($sidebar-dark-color, 10%) !default;
-$sidebar-dark-active-bg: $sidebar-dark-bg !default;
+$sidebar-dark-active-bg: transparent !default;
 $sidebar-dark-active-color: $white !default;
-$sidebar-dark-submenu-bg: $sidebar-dark-bg !default;
+$sidebar-dark-submenu-bg: transparent !default;
 //$sidebar-dark-submenu-color: lighten(#C2C7D0, 6%) !default;
 $sidebar-dark-submenu-color: $sidebar-dark-color!default;
 $sidebar-dark-submenu-hover-color: $white !default;
 $sidebar-dark-submenu-hover-bg: $sidebar-dark-hover-bg !default;
 $sidebar-dark-submenu-active-color: $white !default;
-$sidebar-dark-submenu-active-bg: $sidebar-dark-bg !default;
+$sidebar-dark-submenu-active-bg: transparent !default;
 $sidebar-dark-header-color: hsla(0,0%,100%,.8) !default;
 // #505b6b #49525f
 
 // Light sidebar
 $sidebar-light-bg: $white !default;
 $sidebar-light-hover-bg: transparent !default;
-$sidebar-light-color: $pure-black !default;
+$sidebar-light-color: lighten($font-color, 5%) !default;
 $sidebar-light-hover-color: $gray-900 !default;
 $sidebar-light-active-color: $white !default;
 $sidebar-light-submenu-bg: transparent !default;

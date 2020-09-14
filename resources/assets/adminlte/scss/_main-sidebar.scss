@@ -365,8 +365,8 @@
 
 [class*='sidebar-dark-'] {
   // Sidebar background color
-  background-color: $sidebar-dark-bg;
-  //background-image: linear-gradient(0deg,#7e8ea1,#3c4655);
+  //background-color: $sidebar-dark-bg;
+  background-image: linear-gradient(0deg, #7b8b9f, $sidebar-dark-bg);
 
   //.nav .nav-item .nav-link {
   //
@@ -423,7 +423,7 @@
       // border-left: 3px solid transparent;
       &:active {
         color: $sidebar-dark-active-color;
-        background: $sidebar-dark-active-bg;
+        //background: $sidebar-dark-active-bg;
         font-weight: bold;
       }
       &:hover {
@@ -432,6 +432,7 @@
     }
     i {
       margin-right: .75rem;
+      color: $sidebar-dark-icon-color;
     }
 
     // Hover and active states
@@ -439,7 +440,7 @@
     &:hover > .nav-link,
     & > .nav-link:focus  {
       background-color: $sidebar-dark-hover-bg;
-      //color: $sidebar-dark-hover-color;
+      color: $sidebar-dark-hover-color;
     }
 
     > .nav-link.active {
@@ -454,7 +455,7 @@
 
     // First Level Submenu
     > .nav-treeview {
-      background: $sidebar-dark-submenu-bg;
+      //background: $sidebar-dark-submenu-bg;
     }
   }
 

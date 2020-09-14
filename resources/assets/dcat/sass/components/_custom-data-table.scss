@@ -57,7 +57,7 @@ $table-border-radius: .3rem;
   padding: 1.25rem 2.8rem !important;
   border-radius: 5rem;
   border: 0;
-  background: #f0f0f0;
+  background: #eef1f4;
   font-size: .82rem;
 }
 
@@ -169,12 +169,12 @@ $table-border-radius: .3rem;
   font-size: 2.857rem
 }
 
-table.custom-data-table.dataTable, table.data-thumb-view.dataTable {
+table.custom-data-table.dataTable {
   border-spacing: 0 .8rem;
   padding: 0;
 }
 
-table.custom-data-table.dataTable thead th, table.data-thumb-view.dataTable thead th {
+table.custom-data-table.dataTable thead th {
   //padding: .714rem 1.785rem;
   padding: 0.714rem .51rem;
   font-weight: 600;
@@ -182,37 +182,21 @@ table.custom-data-table.dataTable thead th, table.data-thumb-view.dataTable thea
   border-top: 0;
 }
 
-table.custom-data-table.dataTable thead th input:focus, table.data-thumb-view.dataTable thead th input:focus {
+table.custom-data-table.dataTable thead th input:focus {
   outline: 0
 }
 
-table.custom-data-table.dataTable thead th:first-child, table.data-thumb-view.dataTable thead th:first-child {
+table.custom-data-table.dataTable thead th:first-child {
   //padding-left: 0;
   padding-left: .9rem;
 }
 
-table.custom-data-table.dataTable thead .sorting, table.custom-data-table.dataTable thead .sorting_asc, table.custom-data-table.dataTable thead .sorting_desc, table.data-thumb-view.dataTable thead .sorting, table.data-thumb-view.dataTable thead .sorting_asc, table.data-thumb-view.dataTable thead .sorting_desc {
-  padding-right: inherit
-}
-
-table.custom-data-table.dataTable thead .sorting:before, table.custom-data-table.dataTable thead .sorting_asc:before, table.custom-data-table.dataTable thead .sorting_desc:before, table.data-thumb-view.dataTable thead .sorting:before, table.data-thumb-view.dataTable thead .sorting_asc:before, table.data-thumb-view.dataTable thead .sorting_desc:before {
-  font-size: .7rem;
-  left: .857rem;
-  top: .642rem
-}
-
-table.custom-data-table.dataTable thead .sorting:after, table.custom-data-table.dataTable thead .sorting_asc:after, table.custom-data-table.dataTable thead .sorting_desc:after, table.data-thumb-view.dataTable thead .sorting:after, table.data-thumb-view.dataTable thead .sorting_asc:after, table.data-thumb-view.dataTable thead .sorting_desc:after {
-  font-size: .7rem;
-  left: .857rem;
-  top: 1.071rem
-}
-
-table.custom-data-table.dataTable thead .dt-checkboxes-select-all input, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input {
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input {
   width: 0;
   position: relative
 }
 
-table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:before, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:before {
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:before {
   border: 2px solid #b4b4b4;
   content: "";
   width: 1.071rem;
@@ -225,7 +209,7 @@ table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:before, 
   position: absolute
 }
 
-table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:after, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:after {
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:after {
   background-color: $primary;
   border: 2px solid $primary;
   font-family: feather;
@@ -243,22 +227,22 @@ table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:after, t
   overflow: hidden
 }
 
-table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:active:checked:after, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:active:checked:after {
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:active:checked:after {
   transform: translate(3px)
 }
 
-table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:checked:before, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:checked:before {
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:checked:before {
   border: 2px solid $primary;
   transform: rotate(0deg)
 }
 
-table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:checked:after, table.data-thumb-view.dataTable thead .dt-checkboxes-select-all input:checked:after {
+table.custom-data-table.dataTable thead .dt-checkboxes-select-all input:checked:after {
   transition: all .2s ease;
   opacity: 1;
   transform: translate(0)
 }
 
-table.custom-data-table.dataTable tbody tr, table.data-thumb-view.dataTable tbody tr {
+table.custom-data-table.dataTable tbody tr {
   background-color: #fff;
   //box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .05);
   box-shadow: $shadow;
@@ -267,29 +251,29 @@ table.custom-data-table.dataTable tbody tr, table.data-thumb-view.dataTable tbod
   border-radius:$table-border-radius
 }
 
-table.custom-data-table.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover {
+table.custom-data-table.dataTable tbody tr:hover {
   //transform: translateY(-4px);
   //transition: all .3s ease;
   //transform: none;
   background: lighten($dark30, 1%);
 }
 
-table.custom-data-table.dataTable tbody tr td:first-child, table.data-thumb-view.dataTable tbody tr td:first-child {
+table.custom-data-table.dataTable tbody tr td:first-child {
   padding-left: 1rem;
   border-top-left-radius: $table-border-radius;
   border-bottom-left-radius: $table-border-radius
 }
 
-table.custom-data-table.dataTable tbody tr td:last-child, table.data-thumb-view.dataTable tbody tr td:last-child {
+table.custom-data-table.dataTable tbody tr td:last-child {
   border-top-right-radius:$table-border-radius;
   border-bottom-right-radius:$table-border-radius
 }
 
-table.custom-data-table.dataTable tbody tr.selected td, table.data-thumb-view.dataTable tbody tr.selected td {
+table.custom-data-table.dataTable tbody tr.selected td {
   border-radius: 0
 }
 
-table.custom-data-table.dataTable tbody td, table.data-thumb-view.dataTable tbody td {
+table.custom-data-table.dataTable tbody td {
   //padding: 1.357rem;
   border: none;
   vertical-align: middle;
@@ -298,24 +282,24 @@ table.custom-data-table.dataTable tbody td, table.data-thumb-view.dataTable tbod
   line-height: 1.42857;
 }
 
-table.custom-data-table.dataTable tbody td input:focus, table.data-thumb-view.dataTable tbody td input:focus {
+table.custom-data-table.dataTable tbody td input:focus {
   outline: 0
 }
 
-table.custom-data-table.dataTable tbody td.product-name, table.data-thumb-view.dataTable tbody td.product-name {
+table.custom-data-table.dataTable tbody td.product-name {
   font-weight: 500
 }
 
-table.custom-data-table.dataTable tbody td:focus, table.data-thumb-view.dataTable tbody td:focus {
+table.custom-data-table.dataTable tbody td:focus {
   outline: 0
 }
 
-table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input {
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input {
   width: 0;
   position: relative
 }
 
-table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:before, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:before {
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:before {
   border: 2px solid #b4b4b4;
   position: absolute;
   left: -8px;
@@ -329,7 +313,7 @@ table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:before, tabl
   transition: all .2s ease
 }
 
-table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:after, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:after {
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:after {
   background-color: $primary;
   font-family: feather;
   content: "\E83F";
@@ -346,34 +330,25 @@ table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:after, table
   transition: all .2s ease
 }
 
-table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:active:checked:after, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:active:checked:after {
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:active:checked:after {
   transform: translate(3px)
 }
 
-table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:checked:before, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:checked:before {
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:checked:before {
   transform: rotate(0deg);
   border: 2px solid $primary;
   transition: all .2s ease
 }
 
-table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:checked:after, table.data-thumb-view.dataTable tbody td.dt-checkboxes-cell input:checked:after {
+table.custom-data-table.dataTable tbody td.dt-checkboxes-cell input:checked:after {
   opacity: 1;
   transition: all .2s ease;
   transform: rotate(0deg) translate(0)
 }
 
-table.custom-data-table.dataTable tbody td .progress, table.data-thumb-view.dataTable tbody td .progress {
+table.custom-data-table.dataTable tbody td .progress {
   margin-bottom: 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .12), 0 2px 4px 0 rgba(0, 0, 0, .08)
-}
-
-table.data-thumb-view.dataTable tbody tr td {
-  padding-top: .714rem;
-  padding-bottom: .714rem
-}
-
-table.data-thumb-view.dataTable tbody tr td.product-img img {
-  height: 7.857rem
 }
 
 
@@ -383,39 +358,39 @@ table.data-thumb-view.dataTable tbody tr td.product-img img {
   }
 }
 
-.custom-data-table.dataTable tbody tr td.dt-checkboxes-cell input, .custom-data-table.dataTable tbody tr th.dt-checkboxes-cell input, .custom-data-table.dataTable thead tr td.dt-checkboxes-cell input, .custom-data-table.dataTable thead tr th.dt-checkboxes-cell input, .data-thumb-view.dataTable tbody tr td.dt-checkboxes-cell input, .data-thumb-view.dataTable tbody tr th.dt-checkboxes-cell input, .data-thumb-view.dataTable thead tr td.dt-checkboxes-cell input, .data-thumb-view.dataTable thead tr th.dt-checkboxes-cell input, _:-ms-lang(x) tbody tr td.dt-checkboxes-cell input, _:-ms-lang(x) tbody tr th.dt-checkboxes-cell input, _:-ms-lang(x) thead tr td.dt-checkboxes-cell input, _:-ms-lang(x) thead tr th.dt-checkboxes-cell input {
+.custom-data-table.dataTable tbody tr td.dt-checkboxes-cell input, .custom-data-table.dataTable tbody tr th.dt-checkboxes-cell input, .custom-data-table.dataTable thead tr td.dt-checkboxes-cell input, .custom-data-table.dataTable thead tr th.dt-checkboxes-cell input, _:-ms-lang(x) tbody tr td.dt-checkboxes-cell input, _:-ms-lang(x) tbody tr th.dt-checkboxes-cell input, _:-ms-lang(x) thead tr td.dt-checkboxes-cell input, _:-ms-lang(x) thead tr th.dt-checkboxes-cell input {
   width: auto
 }
 
-.custom-data-table.dataTable .table-responsive .top .table-filter .form-control, .data-thumb-view.dataTable .table-responsive .top .table-filter .form-control, _:-ms-lang(x) .table-responsive .top .table-filter .form-control {
+.custom-data-table.dataTable .table-responsive .top .table-filter .form-control _:-ms-lang(x) .table-responsive .top .table-filter .form-control {
   height: 1.4rem !important;
   padding: 0 .5rem !important
 }
 
-.custom-data-table.dataTable .table-responsive .top .table-filter .form-control:after, .data-thumb-view.dataTable .table-responsive .top .table-filter .form-control:after, _:-ms-lang(x) .table-responsive .top .table-filter .form-control:after {
+.custom-data-table.dataTable .table-responsive .top .table-filter .form-control:after _:-ms-lang(x) .table-responsive .top .table-filter .form-control:after {
   display: none
 }
 
 
 @supports (-moz-osx-font-smoothing:auto) {
-  .custom-data-table input, .data-thumb-view input {
+  .custom-data-table input {
     width: auto !important
   }
 }
 
 @media not all and (min-resolution: 0.001dpcm) {
   @supports (-webkit-appearance:none) {
-    table.custom-data-table tbody td.dt-checkboxes-cell input:after, table.data-thumb-view tbody td.dt-checkboxes-cell input:after {
+    table.custom-data-table tbody td.dt-checkboxes-cell input:after {
       left: -.485rem
     }
-    .custom-data-table .dt-checkboxes-cell input, .data-thumb-view .dt-checkboxes-cell input {
+    .custom-data-table .dt-checkboxes-cell input {
       -webkit-appearance: none;
       top: -10px
     }
   }
 }
 
-.custom-data-table .mac-checkbox, .data-thumb-view .mac-checkbox {
+.custom-data-table .mac-checkbox {
   -webkit-appearance: none;
   top: -10px
 }

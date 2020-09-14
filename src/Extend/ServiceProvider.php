@@ -29,6 +29,16 @@ abstract class ServiceProvider extends LaravelServiceProvider
     /**
      * @var array
      */
+    protected $js = [];
+
+    /**
+     * @var array
+     */
+    protected $css = [];
+
+    /**
+     * @var array
+     */
     protected $menu = [];
 
     /**
@@ -86,6 +96,8 @@ abstract class ServiceProvider extends LaravelServiceProvider
         if ($routes = $this->routes()) {
             return $this->registerRoutes($routes);
         }
+
+        $this->registerAssets();
     }
 
     /**
@@ -319,6 +331,16 @@ abstract class ServiceProvider extends LaravelServiceProvider
         } else {
             $this->createPermission($name, $slug, $path);
             $this->output->writeln('<info>Import extension permission succeeded!</info>');
+        }
+    }
+
+    /**
+     * 注册别名.
+     */
+    protected function registerAssets()
+    {
+        if ($this->js || $this->css) {
+            Admin::asset()->alias($this->name(), $this->js, $this->css);
         }
     }
 

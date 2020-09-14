@@ -22,7 +22,7 @@
     .logo-lg {
       color: darken($primary-darker, 1%);
       letter-spacing: 0.01rem;
-      font-size: 1.55rem;
+      font-size: 1.45rem;
       -webkit-animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
       animation: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;
     }
@@ -90,6 +90,7 @@ body.sidebar-collapse {
     height: 61px;
     //background: $body-darker-color;
     background: #262d37
+    //background: #313a46;
   }
 
   .navbar-header .navbar-brand {
