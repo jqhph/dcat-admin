@@ -1,3 +1,7 @@
+<style>
+    .number-group .input-group{flex-wrap: nowrap}
+</style>
+
 <div class="{{$viewClass['form-group']}}">
 
     <div for="{{ $id }}" class="{{$viewClass['label']}} control-label">
@@ -24,3 +28,13 @@
 
     </div>
 </div>
+
+<script require="@number-input">
+    $('{{ $selector }}:not(.initialized)')
+        .addClass('initialized')
+        .bootstrapNumber({
+            upClass: 'primary shadow-0',
+            downClass: 'light shadow-0',
+            center: true
+        });
+</script>

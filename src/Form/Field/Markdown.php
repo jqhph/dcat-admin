@@ -12,15 +12,6 @@ use Dcat\Admin\Support\JavaScript;
  */
 class Markdown extends Field
 {
-    protected static $css = [
-        '@admin/dcat/plugins/editor-md/css/editormd.min.css',
-    ];
-
-    protected static $js = [
-        '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
-        '@admin/dcat/plugins/editor-md/editormd.min.js',
-    ];
-
     /**
      * 编辑器配置.
      *
@@ -131,31 +122,6 @@ class Markdown extends Field
     }
 
     /**
-     * 初始化js.
-     */
-    protected function addScript()
-    {
-        $this->options['path'] = admin_asset('@admin/dcat/plugins/editor-md/lib').'/';
-        $this->options['name'] = $this->column;
-        $this->options['placeholder'] = $this->placeholder();
-        $this->options['readonly'] = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
-
-        if (empty($this->options['imageUploadURL'])) {
-            $this->options['imageUploadURL'] = $this->defaultImageUploadUrl();
-        }
-
-        if (config('app.locale') !== 'zh-CN') {
-            Admin::js($this->language);
-        }
-
-        $opts = JavaScript::format($this->options);
-
-        $this->script = <<<JS
-editormd(replaceNestedFormIndex("{$this->id}"), {$opts});
-JS;
-    }
-
-    /**
      * @return string
      */
     protected function defaultImageUploadUrl()
@@ -185,9 +151,20 @@ JS;
      */
     public function render()
     {
-        $this->addScript();
+        $this->options['path'] = admin_asset('@admin/dcat/plugins/editor-md/lib').'/';
+        $this->options['name'] = $this->column;
+        $this->options['placeholder'] = $this->placeholder();
+        $this->options['readonly'] = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
 
-        Admin::style('.editormd-fullscreen {z-index: 99999999;}');
+        if (empty($this->options['imageUploadURL'])) {
+            $this->options['imageUploadURL'] = $this->defaultImageUploadUrl();
+        }
+
+        if (config('app.locale') !== 'zh-CN') {
+            Admin::js($this->language);
+        }
+
+        $this->addVariables(['options' => JavaScript::format($this->options)]);
 
         return parent::render();
     }

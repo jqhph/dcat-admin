@@ -1,3 +1,7 @@
+<style>
+    td .form-group {margin-bottom: 0 !important;}
+</style>
+
 <div class="{{$viewClass['form-group']}}">
 
     <label class="{{$viewClass['label']}} control-label">{{$label}}</label>
@@ -64,31 +68,47 @@
     </div>
 </div>
 
-<template class="{{$class}}-tpl">
-    <tr>
-        <td>
-            <div class="form-group  ">
-                <div class="col-sm-12">
-                    <div class="help-block with-errors"></div>
-                    <input name="{{ $name }}[keys][{key}]" class="form-control" required/>
+<template>
+    <template class="{{$class}}-tpl">
+        <tr>
+            <td>
+                <div class="form-group  ">
+                    <div class="col-sm-12">
+                        <div class="help-block with-errors"></div>
+                        <input name="{{ $name }}[keys][{key}]" class="form-control" required/>
+                    </div>
                 </div>
-            </div>
-        </td>
-        <td>
-            <div class="form-group  ">
-                <div class="col-sm-12">
-                    <div class="help-block with-errors"></div>
-                    <input name="{{ $name }}[values][{key}]" class="form-control" />
+            </td>
+            <td>
+                <div class="form-group  ">
+                    <div class="col-sm-12">
+                        <div class="help-block with-errors"></div>
+                        <input name="{{ $name }}[values][{key}]" class="form-control" />
+                    </div>
                 </div>
-            </div>
-        </td>
+            </td>
 
-        <td class="form-group">
-            <div>
-                <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
-                    <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
+            <td class="form-group">
+                <div>
+                    <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
+                        <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
+                    </div>
                 </div>
-            </div>
-        </td>
-    </tr>
+            </td>
+        </tr>
+    </template>
 </template>
+
+<script>
+    var index = {{ $count }};
+    $('.{{ $class }}-add').on('click', function () {
+        var tpl = $('template.{{ $class }}-tpl').html().replace('{key}', index).replace('{key}', index);
+        $('tbody.kv-{{ $class }}-table').append(tpl);
+
+        index++;
+    });
+
+    $('tbody').on('click', '.{{ $class }}-remove', function () {
+        $(this).closest('tr').remove();
+    });
+</script>

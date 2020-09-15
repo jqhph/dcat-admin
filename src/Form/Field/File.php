@@ -9,33 +9,17 @@ use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\JavaScript;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class File extends Field implements UploadFieldInterface
 {
-    use WebUploader, UploadField;
+    use WebUploader,
+        UploadField;
 
-    protected static $css = [
-        '@webuploader',
-    ];
-
-    protected static $js = [
-        '@webuploader',
-    ];
-
-    protected $containerId;
-
-    /**
-     * @param string $column
-     * @param array  $arguments
-     */
     public function __construct($column, $arguments = [])
     {
         parent::__construct($column, $arguments);
 
         $this->setupDefaultOptions();
-
-        $this->containerId = $this->generateId();
     }
 
     public function setElementName($name)
@@ -97,9 +81,7 @@ class File extends Field implements UploadFieldInterface
     }
 
     /**
-     * @param string $file
-     *
-     * @return mixed|string
+     * {@inheritDoc}
      */
     protected function prepareInputValue($file)
     {
@@ -113,25 +95,19 @@ class File extends Field implements UploadFieldInterface
     }
 
     /**
-     * @param string|null $relationName
-     * @param string      $relationPrimaryKey
-     *
-     * @return $this
+     * {@inheritDoc}
      */
-    public function setNestedFormRelation(?string $relationName, $relationPrimaryKey)
+    public function setNestedFormRelation(array $options = [])
     {
-        $this->options['formData']['_relation'] = [$relationName, $relationPrimaryKey];
+        $this->options['formData']['_relation'] = [$options['relation'], $options['key']];
 
-        $this->containerId .= NestedForm::DEFAULT_KEY_NAME;
         $this->id .= NestedForm::DEFAULT_KEY_NAME;
 
         return $this;
     }
 
     /**
-     * Set field as disabled.
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function disable()
     {
@@ -169,7 +145,7 @@ class File extends Field implements UploadFieldInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function render()
     {
@@ -181,72 +157,14 @@ class File extends Field implements UploadFieldInterface
 
         $this->forceOptions();
         $this->formatValue();
-        $this->addScript();
 
         $this->addVariables([
             'fileType'      => $this->options['isImage'] ? '' : 'file',
-            'containerId'   => $this->containerId,
             'showUploadBtn' => ($this->options['autoUpload'] ?? false) ? false : true,
+            'options'       => JavaScript::format($this->options),
         ]);
 
         return parent::render();
-    }
-
-    protected function addScript()
-    {
-        $newButton = trans('admin.uploader.add_new_media');
-        $options = JavaScript::format($this->options);
-
-        $this->script = <<<JS
-(function () {
-    var uploader, 
-        newPage, 
-        cID = replaceNestedFormIndex('#{$this->containerId}'),
-        ID = replaceNestedFormIndex('#{$this->id}'),
-        options = {$options};
-
-    init();
-
-    function init() {
-        var opts = $.extend({
-            selector: cID,
-            addFileButton: cID+' .add-file-button',
-            inputSelector: ID,
-        }, options);
-
-        opts.upload = $.extend({
-            pick: {
-                id: cID+' .file-picker',
-                name: '_file_',
-                label: '<i class="feather icon-folder"></i>&nbsp; {$newButton}'
-            },
-            dnd: cID+' .dnd-area',
-            paste: cID+' .web-uploader'
-        }, opts);
-
-        uploader = Dcat.Uploader(opts);
-        uploader.build();
-        uploader.preview();
-
-        function resize() {
-            setTimeout(function () {
-                if (! uploader) return;
-
-                uploader.refreshButton();
-                resize();
-
-                if (! newPage) {
-                    newPage = 1;
-                    $(document).one('pjax:complete', function () {
-                        uploader = null;
-                    });
-                }
-            }, 250);
-        }
-        resize();
-    }
-})();
-JS;
     }
 
     /**
@@ -259,13 +177,5 @@ JS;
         } elseif (is_array($this->default)) {
             $this->default = implode(',', $this->default);
         }
-    }
-
-    /**
-     * @return string
-     */
-    protected function generateId()
-    {
-        return 'file-'.Str::random(8);
     }
 }

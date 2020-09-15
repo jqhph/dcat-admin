@@ -156,6 +156,15 @@ class Asset
                 '@admin/dcat/extra/markdown.css',
             ],
         ],
+        '@markdown' => [
+            'js' => [
+                '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
+                '@admin/dcat/plugins/editor-md/editormd.min.js',
+            ],
+            'css' => [
+                '@admin/dcat/plugins/editor-md/css/editormd.min.css',
+            ],
+        ],
         '@jquery.inputmask' => [
             'js' => '@admin/dcat/plugins/input-mask/jquery.inputmask.bundle.min.js',
         ],
@@ -169,6 +178,10 @@ class Asset
         '@fontawesome-iconpicker' => [
             'js' => '@admin/dcat/plugins/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js',
             'css' => '@admin/dcat/plugins/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css',
+        ],
+        '@color' => [
+            'js' => '@admin/dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
+            'css' => '@admin/dcat/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',
         ],
     ];
 
@@ -328,10 +341,18 @@ class Asset
     /**
      * 根据别名设置需要载入的js和css脚本.
      *
-     * @param string $alias
+     * @param string|array $alias
      */
-    public function collect(?string $alias)
+    public function collect($alias)
     {
+        if (is_array($alias)) {
+            foreach ($alias as $v) {
+                $this->collect($v);
+            }
+
+            return;
+        }
+
         if (mb_strpos($alias, '@') !== 0) {
             $alias = '@'.$alias;
         }

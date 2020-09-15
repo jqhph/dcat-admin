@@ -12,3 +12,13 @@
 
     </div>
 </div>
+
+<script require="@switchery">
+    var $input = $('[data-plugin="{{ $formId }}switchery"]');
+
+    $input.parent().find('.switchery').remove();
+
+    $input.each(function() {
+        new Switchery($(this)[0], $(this).data())
+    })
+</script>

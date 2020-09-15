@@ -12,3 +12,9 @@
 
     </div>
 </div>
+
+<script require="@ionslider">
+    setTimeout(function () {
+        $('{{ $selector }}').ionRangeSlider({!! $options !!})
+    }, 400);
+</script>

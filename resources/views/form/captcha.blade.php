@@ -19,3 +19,9 @@
 
     </div>
 </div>
+
+<script once>
+    $('.field-refresh-captcha').off('click').on('click', function () {
+        $(this).attr('src', $(this).attr('data-url')+'?'+Math.random());
+    });
+</script>

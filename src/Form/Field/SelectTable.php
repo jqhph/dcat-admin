@@ -11,10 +11,6 @@ class SelectTable extends Field
 {
     use PlainInput;
 
-    protected static $js = [
-        '@select-table',
-    ];
-
     /**
      * @var DialogTable
      */
@@ -128,18 +124,6 @@ class SelectTable extends Field
         $this->options = json_encode($values);
     }
 
-    protected function addScript()
-    {
-        $this->script .= <<<JS
-Dcat.grid.SelectTable({
-    dialog: replaceNestedFormIndex('#{$this->dialog->id()}'),
-    container: replaceNestedFormIndex('#{$this->getAttribute('id')}'),
-    input: replaceNestedFormIndex('#hidden-{$this->id}'),
-    values: {$this->options},
-});
-JS;
-    }
-
     protected function setUpTable()
     {
         $this->dialog
@@ -163,16 +147,13 @@ JS;
             ->defaultAttribute('id', 'container-'.$this->getElementId());
 
         $this->addVariables([
-            'prepend'     => $this->prepend,
-            'append'      => $this->append,
-            'style'       => $this->style,
-            'dialog'      => $this->dialog->render(),
-            'placeholder' => $this->placeholder(),
+            'prepend'      => $this->prepend,
+            'append'       => $this->append,
+            'style'        => $this->style,
+            'dialog'       => $this->dialog->render(),
+            'placeholder'  => $this->placeholder(),
+            'dialogScript' => $this->dialog->getScript(),
         ]);
-
-        $this->script = $this->dialog->getScript();
-
-        $this->addScript();
 
         return parent::render();
     }

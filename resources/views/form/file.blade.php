@@ -1,4 +1,4 @@
-<div id="{{ $containerId }}" class="{{$viewClass['form-group']}}">
+<div id="{{ $id }}-container" class="{{$viewClass['form-group']}}">
 
     <label for="{{$column}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
@@ -33,3 +33,52 @@
         @include('admin::form.help-block')
     </div>
 </div>
+
+<script require="@webuploader">
+    var uploader,
+        newPage,
+        cID = replaceNestedFormIndex('#{{ $id }}-container'),
+        ID = replaceNestedFormIndex('#{{ $id }}'),
+        options = {!! $options !!};
+
+    init();
+
+    function init() {
+        var opts = $.extend({
+            selector: cID,
+            addFileButton: cID+' .add-file-button',
+            inputSelector: ID,
+        }, options);
+
+        opts.upload = $.extend({
+            pick: {
+                id: cID+' .file-picker',
+                name: '_file_',
+                label: '<i class="feather icon-folder"></i>&nbsp; {!! trans('admin.uploader.add_new_media') !!}'
+            },
+            dnd: cID+' .dnd-area',
+            paste: cID+' .web-uploader'
+        }, opts);
+
+        uploader = Dcat.Uploader(opts);
+        uploader.build();
+        uploader.preview();
+
+        function resize() {
+            setTimeout(function () {
+                if (! uploader) return;
+
+                uploader.refreshButton();
+                resize();
+
+                if (! newPage) {
+                    newPage = 1;
+                    $(document).one('pjax:complete', function () {
+                        uploader = null;
+                    });
+                }
+            }, 250);
+        }
+        resize();
+    }
+</script>

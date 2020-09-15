@@ -136,48 +136,15 @@ class ListField extends Field
     /**
      * {@inheritdoc}
      */
-    protected function addScript()
-    {
-        $value = $this->value();
-
-        $number = $value ? count($value) : 0;
-
-        $this->script = <<<JS
-(function () {
-    var index = {$number};
-    $('.{$this->formatColumn()}-add').on('click', function () {
-        var tpl = $('template.{$this->formatColumn()}-tpl').html().replace('{key}', index);
-        $('tbody.list-{$this->formatColumn()}-table').append(tpl);
-        
-        index++;
-    });
-    $('tbody').on('click', '.{$this->formatColumn()}-remove', function () {
-        $(this).closest('tr').remove();
-    });
-})();
-JS;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function formatColumn()
-    {
-        return str_replace('.', '-', $this->column);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function prepareInputValue($value)
     {
         unset($value['values'][static::DEFAULT_FLAG_NAME]);
 
         if (empty($value['values'])) {
-            return '[]';
+            return [];
         }
 
-        return json_encode(array_values($value['values']));
+        return array_values($value['values']);
     }
 
     /**
@@ -185,11 +152,9 @@ JS;
      */
     public function render()
     {
-        $this->addScript();
+        $value = $this->value();
 
-        Admin::style('td .form-group {margin-bottom: 0 !important;}');
-
-        $this->addVariables(['columnClass' => $this->formatColumn()]);
+        $this->addVariables(['count' => $value ? count($value) : 0]);
 
         return parent::render();
     }

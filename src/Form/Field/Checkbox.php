@@ -10,9 +10,6 @@ class Checkbox extends MultipleSelect
 {
     use CanCascadeFields;
 
-    public static $css = [];
-    public static $js = [];
-
     protected $style = 'primary';
 
     protected $cascadeEvent = 'change';
@@ -96,8 +93,6 @@ class Checkbox extends MultipleSelect
             'checkAll' => $this->makeCheckAllCheckbox(),
         ]);
 
-        $this->script = ';';
-
         return parent::render();
     }
 
@@ -107,19 +102,8 @@ class Checkbox extends MultipleSelect
             return;
         }
 
-        $this->addCheckAllScript();
+        $this->addVariables(['canCheckAll' => $this->canCheckAll]);
 
         return WidgetCheckbox::make('_check_all_', [__('admin.all')]);
-    }
-
-    protected function addCheckAllScript()
-    {
-        Admin::script(
-            <<<'JS'
-$('[name="_check_all_"]').on('change', function () {
-    $(this).parents('.form-field').find('input[type="checkbox"]').prop('checked', this.checked);
-});
-JS
-        );
     }
 }

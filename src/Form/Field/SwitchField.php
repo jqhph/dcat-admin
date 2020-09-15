@@ -7,9 +7,6 @@ use Dcat\Admin\Form\Field;
 
 class SwitchField extends Field
 {
-    public static $js = '@switchery';
-    public static $css = '@switchery';
-
     public function primary()
     {
         return $this->color(Admin::color()->primary());
@@ -106,21 +103,6 @@ class SwitchField extends Field
         $this->attribute('value', 1);
         $this->attribute('type', 'checkbox');
         $this->attribute('data-plugin', $this->getFormElementId().'switchery');
-
-        $this->script = <<<JS
-(function () {
-    function swty(){
-        var ipt = \$('[data-plugin="{$this->getFormElementId()}switchery"]');
-        
-        ipt.parent().find('.switchery').remove();
-        
-        ipt.each(function() {
-            new Switchery($(this)[0],$(this).data())
-        })
-    } 
-    swty();
-})()
-JS;
 
         return parent::render();
     }

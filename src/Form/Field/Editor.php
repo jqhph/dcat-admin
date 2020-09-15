@@ -14,10 +14,6 @@ use Dcat\Admin\Support\JavaScript;
  */
 class Editor extends Field
 {
-    protected static $js = [
-        '@tinymce',
-    ];
-
     protected $options = [
         'plugins' => [
             'advlist',
@@ -124,9 +120,6 @@ class Editor extends Field
             $this->options['images_upload_url'] = $this->defaultImageUploadUrl();
         }
 
-        // 内容更改后保存到隐藏表单
-        $this->options['init_instance_callback'] = JavaScript::make($this->buildSaveContentScript());
-
         return JavaScript::format($this->options);
     }
 
@@ -158,37 +151,11 @@ class Editor extends Field
     /**
      * @return string
      */
-    protected function buildSaveContentScript()
-    {
-        return <<<JS
-function (editor) {
-    editor.on('Change', function(e) {
-        var content = e.target.getContent();
-        if (! content) {
-            content = e.level.fragments;
-            content = content.length && content.join('');
-        }
-        
-      $(replaceNestedFormIndex('#{$this->id}')).val(String(content).replace('<p><br data-mce-bogus="1"></p>', '').replace('<p><br></p>', ''));
-    });
-}
-JS;
-    }
-
-    /**
-     * @return string
-     */
     public function render()
     {
-        $this->script = <<<JS
-(function () {
-    var opts = {$this->formatOptions()};
-
-    opts.selector = replaceNestedFormIndex(opts.selector);
-    
-    tinymce.init(opts)
-})();
-JS;
+        $this->addVariables([
+            'options' => $this->formatOptions(),
+        ]);
 
         return parent::render();
     }

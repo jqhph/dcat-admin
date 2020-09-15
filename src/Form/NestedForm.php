@@ -331,7 +331,10 @@ class NestedForm
             $field->attribute(Builder::BUILD_IGNORE, true);
         }
 
-        $field->setNestedFormRelation($this->relationName, $this->key);
+        $field->setNestedFormRelation([
+            'relation' => $this->relationName,
+            'key'      => $this->key,
+        ]);
 
         $field::collectAssets();
 

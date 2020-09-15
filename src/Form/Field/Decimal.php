@@ -4,9 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 class Decimal extends Text
 {
-    public static $js = '@jquery.inputmask';
-    public static $css = '@jquery.inputmask';
-
     /**
      * @see https://github.com/RobinHerbots/Inputmask#options
      *

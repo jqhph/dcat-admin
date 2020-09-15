@@ -95,7 +95,7 @@ a.btn-sm, .btn-group-sm > a.btn {
 }
 
 .btn-light {
-  border-color: #f7f7f9!important;
+  border-color: $input-border-color!important;
   background-color: #f7f7f9!important;
   color: #444;
 }
@@ -162,5 +162,17 @@ a.btn-sm, .btn-group-sm > a.btn {
 .btn-primary.btn-outline:hover,
 .btn-primary.btn-outline.active {
   background: rgba($primary, .05);
+}
+
+.number-group {
+  .input-group-btn:first-child .btn {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-right: 0;
+  }
+  .input-group-btn:last-child .btn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
 }
 

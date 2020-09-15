@@ -1,3 +1,7 @@
+<style>
+    td .form-group {margin-bottom: 0 !important;}
+</style>
+
 <div class="{{$viewClass['form-group']}}">
 
     <label class="{{$viewClass['label']}} control-label">{{$label}}</label>
@@ -11,7 +15,7 @@
 
         <table class="table table-hover">
 
-            <tbody class="list-{{$columnClass}}-table">
+            <tbody class="list-{{$class}}-table">
 
             @foreach(($value ?: []) as $k => $v)
 
@@ -26,7 +30,7 @@
                     </td>
 
                     <td style="width: 85px;">
-                        <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right">
+                        <div class="{{$class}}-remove btn btn-white btn-sm pull-right">
                             <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
                         </div>
                     </td>
@@ -37,7 +41,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <div class="{{ $columnClass }}-add btn btn-primary btn-outline btn-sm pull-right">
+                    <div class="{{ $class }}-add btn btn-primary btn-outline btn-sm pull-right">
                         <i class="feather icon-save"></i>&nbsp;{{ __('admin.new') }}
                     </div>
                 </td>
@@ -47,21 +51,36 @@
     </div>
 </div>
 
-<template class="{{$columnClass}}-tpl">
-    <tr>
-        <td>
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <input name="{{ $name }}[values][{key}]" class="form-control" />
-                    <div class="help-block with-errors"></div>
+<template>
+    <template class="{{$class}}-tpl">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <input name="{{ $name }}[values][{key}]" class="form-control" />
+                        <div class="help-block with-errors"></div>
+                    </div>
                 </div>
-            </div>
-        </td>
+            </td>
 
-        <td style="width: 85px;">
-            <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right">
-                <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
-            </div>
-        </td>
-    </tr>
+            <td style="width: 85px;">
+                <div class="{{$class}}-remove btn btn-white btn-sm pull-right">
+                    <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
+                </div>
+            </td>
+        </tr>
+    </template>
 </template>
+
+<script>
+    var index = {{ $count }};
+    $('.{{ $class }}-add').on('click', function () {
+        var tpl = $('template.{{ $class }}-tpl').html().replace('{key}', index);
+        $('tbody.list-{{ $class }}-table').append(tpl);
+
+        index++;
+    });
+    $('tbody').on('click', '.{{ $class }}-remove', function () {
+        $(this).closest('tr').remove();
+    });
+</script>

@@ -4,9 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 class Ip extends Text
 {
-    public static $js = '@jquery.inputmask';
-    public static $css = '@jquery.inputmask';
-
     protected $rules = ['nullable', 'ip'];
 
     /**

@@ -2,18 +2,8 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
-
 class Color extends Text
 {
-    protected static $css = [
-        '@admin/dcat/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',
-    ];
-
-    protected static $js = [
-        '@admin/dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
-    ];
-
     protected $view = 'admin::form.color';
 
     /**
@@ -46,17 +36,6 @@ class Color extends Text
         return $this->mergeOptions(['format' => 'rgba']);
     }
 
-    protected function addScript()
-    {
-        $options = json_encode($this->options);
-
-        $this->script = <<<JS
-$('{$this->getElementClassSelector()}').colorpicker($options).on('colorpickerChange', function(event) {
-    $(this).parents('.input-group').find('.input-group-prepend i').css('background-color', event.color.toString());
-});
-JS;
-    }
-
     /**
      * Render this filed.
      *
@@ -64,10 +43,6 @@ JS;
      */
     public function render()
     {
-        Admin::style('.popover{z-index:29891015}');
-
-        $this->addScript();
-
         $this->defaultAttribute('style', 'width: 160px;flex:none');
 
         return parent::render();

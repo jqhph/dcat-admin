@@ -19,7 +19,7 @@ trait HasHtml
     {
         $html = static::context()->html ?: [];
 
-        if ($content !== null) {
+        if ($content === null) {
             return implode('', array_unique($html));
         }
 
@@ -58,10 +58,10 @@ trait HasHtml
         $head = $dom->getElementsByTagName('head')->item(0) ?: null;
         $body = $dom->getElementsByTagName('body')->item(0) ?: null;
 
-        [$headHtml, $headScript] = static::resolveElement($head);
-        [$bodyHtml, $bodyScript] = static::resolveElement($body);
+        $head = static::resolveElement($head);
+        $body = static::resolveElement($body);
 
-        $script = $headScript.$bodyScript;
+        $script = $head['script'].$body['script'];
 
         $runScript = $options['runScript'] ?? true;
         if ($runScript) {
@@ -70,7 +70,7 @@ trait HasHtml
             $script = '';
         }
 
-        return [$headHtml.$bodyHtml, $script];
+        return [$head['html'].$body['html'], $script];
     }
 
     /**
@@ -120,7 +120,7 @@ trait HasHtml
 
         if (! empty($script = trim($element->nodeValue))) {
             if ($require = $element->getAttribute('require')) {
-                static::asset()->collect($require);
+                static::asset()->collect(explode(',', $require));
             }
 
             $script = '(function () {'.$script.'})();';
@@ -165,7 +165,7 @@ trait HasHtml
         $html = $script = '';
 
         if (! $element) {
-            return [$html, $script];
+            return ['html' => $html, 'script' => $script];
         }
 
         foreach ($element->childNodes as $child) {
@@ -181,6 +181,6 @@ trait HasHtml
             $html .= trim($element->ownerDocument->saveHTML($child));
         }
 
-        return [$html, $script];
+        return ['html' => $html, 'script' => $script];
     }
 }

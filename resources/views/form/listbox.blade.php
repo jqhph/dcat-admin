@@ -17,3 +17,7 @@
 
     </div>
 </div>
+
+<script require="@jquery.bootstrap-duallistbox">
+    $("{{ $selector }}").bootstrapDualListbox({!! $settings !!});
+</script>

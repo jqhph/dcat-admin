@@ -31,20 +31,6 @@ class MultipleSelectTable extends SelectTable
         return $this;
     }
 
-    protected function addScript()
-    {
-        $this->script .= <<<JS
-Dcat.grid.SelectTable({
-    dialog: replaceNestedFormIndex('#{$this->dialog->id()}'),
-    container: replaceNestedFormIndex('#{$this->getAttribute('id')}'),
-    input: replaceNestedFormIndex('#hidden-{$this->id}'),
-    multiple: true,
-    max: {$this->max},
-    values: {$this->options},
-});
-JS;
-    }
-
     /**
      * 转化为数组格式保存.
      *
@@ -55,5 +41,12 @@ JS;
     public function prepareInputValue($value)
     {
         return Helper::array($value, true);
+    }
+
+    public function render()
+    {
+        $this->addVariables(['max' => $this->max]);
+
+        return parent::render();
     }
 }

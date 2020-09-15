@@ -19,3 +19,11 @@
 
     </div>
 </div>
+
+@if(! empty($canCheckAll))
+<script once>
+    $('[name="_check_all_"]').on('change', function () {
+        $(this).parents('.form-field').find('input[type="checkbox"]').prop('checked', this.checked);
+    });
+</script>
+@endif

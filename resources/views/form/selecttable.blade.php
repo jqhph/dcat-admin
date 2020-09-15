@@ -21,3 +21,18 @@
 
     </div>
 </div>
+
+<script require="@select-table">
+    {!! $dialogScript !!}
+
+    Dcat.grid.SelectTable({
+        dialog: replaceNestedFormIndex('#{$this->dialog->id()}'),
+        container: replaceNestedFormIndex('#{$this->getAttribute('id')}'),
+        input: replaceNestedFormIndex('#hidden-{$this->id}'),
+        @if(isset($max))
+        multiple: true,
+        max: {{ $max }},
+        @endif
+        values: {!! $options !!},
+    });
+</script>

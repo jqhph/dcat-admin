@@ -273,12 +273,11 @@ class Field implements Renderable
     }
 
     /**
-     * @param string|null $relationName
-     * @param string      $relationPrimaryKey
+     * @param array $options
      *
      * @return $this
      */
-    public function setNestedFormRelation(?string $relationName, $relationPrimaryKey)
+    public function setNestedFormRelation(array $options = [])
     {
         if (is_array($this->id)) {
             $this->id = array_map(function ($v) {
@@ -1129,7 +1128,7 @@ class Field implements Renderable
      */
     public function variables()
     {
-        return array_merge($this->variables, [
+        return array_merge([
             'id'          => $this->id,
             'name'        => $this->getElementName(),
             'help'        => $this->help,
@@ -1144,7 +1143,8 @@ class Field implements Renderable
             'disabled'    => $this->attributes['disabled'] ?? false,
             'formId'      => $this->getFormElementId(),
             'selector'    => $this->getElementClassSelector(),
-        ]);
+            'options'     => $this->options,
+        ], $this->variables);
     }
 
     protected function isCreating()

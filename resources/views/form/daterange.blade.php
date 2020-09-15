@@ -30,3 +30,16 @@
 
     </div>
 </div>
+
+<script require="@moment,@bootstrap-datetimepicker">
+    var options = {!! json_encode($options) !!};
+
+    $('{{ $selector['start'] }}').datetimepicker(options);
+    $('{{ $selector['end'] }}').datetimepicker($.extend(options, {useCurrent: false}));
+    $("{{ $selector['start'] }}").on("dp.change", function (e) {
+        $('{{ $selector['end'] }}').data("DateTimePicker").minDate(e.date);
+    });
+    $("{{ $selector['end'] }}").on("dp.change", function (e) {
+        $('{{ $selector['start'] }}').data("DateTimePicker").maxDate(e.date);
+    });
+</script>

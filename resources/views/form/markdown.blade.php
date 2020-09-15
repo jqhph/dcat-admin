@@ -1,3 +1,7 @@
+<style>
+    .editormd-fullscreen {z-index: 99999999;}
+</style>
+
 <div class="{{$viewClass['form-group']}}">
 
     <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
@@ -14,3 +18,7 @@
 
     </div>
 </div>
+
+<script require="@markdown">
+    editormd(replaceNestedFormIndex("{{ $id }}"), {!! $options !!});
+</script>
