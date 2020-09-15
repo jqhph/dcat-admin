@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Admin;
+
 trait HasBuilderEvents
 {
     public static function resolving(callable $callback, bool $once = false)
@@ -26,11 +28,11 @@ trait HasBuilderEvents
 
     protected function fireBuilderEvent($key, ...$params)
     {
-        $storage = app('admin.context');
+        $context = Admin::context();
 
-        $key = static::formatBuilderEventKey($key);
+        $key = static::formatEventKey($key);
 
-        $listeners = $storage->get($key) ?: [];
+        $listeners = $context->get($key) ?: [];
 
         foreach ($listeners as $k => $listener) {
             [$callback, $once] = $listener;
@@ -42,23 +44,23 @@ trait HasBuilderEvents
             call_user_func($callback, $this, ...$params);
         }
 
-        $storage[$key] = $listeners;
+        $context[$key] = $listeners;
     }
 
     protected static function addBuilderListeners($key, $callback, $once)
     {
-        $storage = app('admin.context');
+        $context = Admin::context();
 
-        $key = static::formatBuilderEventKey($key);
+        $key = static::formatEventKey($key);
 
-        $listeners = $storage->get($key) ?: [];
+        $listeners = $context->get($key) ?: [];
 
         $listeners[] = [$callback, $once];
 
-        $storage[$key] = $listeners;
+        $context[$key] = $listeners;
     }
 
-    protected static function formatBuilderEventKey($key)
+    protected static function formatEventKey($key)
     {
         return static::class.':'.$key;
     }

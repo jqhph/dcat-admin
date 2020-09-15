@@ -219,6 +219,11 @@ class Field implements Renderable
     protected $savingCallbacks = [];
 
     /**
+     * @var bool
+     */
+    protected $runScript = true;
+
+    /**
      * Field constructor.
      *
      * @param string|array $column
@@ -1138,6 +1143,7 @@ class Field implements Renderable
             'placeholder' => $this->placeholder(),
             'disabled'    => $this->attributes['disabled'] ?? false,
             'formId'      => $this->getFormElementId(),
+            'selector'    => $this->getElementClassSelector(),
         ]);
     }
 
@@ -1257,9 +1263,30 @@ class Field implements Renderable
 
         $this->callComposing();
 
-        Admin::script($this->script);
+        [$html, $script] = Admin::resolveHtml(
+            view($this->view(), $this->variables()),
+            ['runScript' => $this->runScript]
+        );
 
-        return view($this->view(), $this->variables());
+        $this->script .= $script;
+
+        $this->withScript();
+
+        return $html;
+    }
+
+    public function runScript(bool $value = true)
+    {
+        $this->runScript = $value;
+
+        return $this;
+    }
+
+    protected function withScript()
+    {
+        if ($this->script && $this->runScript) {
+            Admin::script($this->script);
+        }
     }
 
     /**

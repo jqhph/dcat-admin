@@ -13,14 +13,13 @@ use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Traits\HasPermissions;
-use Dcat\Admin\Traits\Renderable;
+use Dcat\Admin\Traits\HasHtml;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Fluent;
 use Illuminate\Support\Str;
 
 /**
@@ -29,7 +28,7 @@ use Illuminate\Support\Str;
 class Admin
 {
     use HasAssets;
-    use Renderable;
+    use HasHtml;
 
     /**
      * 版本号.
@@ -265,7 +264,7 @@ class Admin
     }
 
     /**
-     * @return Fluent
+     * @return \Dcat\Admin\Support\Context
      */
     public static function context()
     {

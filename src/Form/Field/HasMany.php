@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
@@ -435,188 +434,6 @@ class HasMany extends Field
     }
 
     /**
-     * Setup script for this field in different view mode.
-     *
-     * @param string $script
-     *
-     * @return void
-     */
-    protected function setupScript($script)
-    {
-        $method = 'setupScriptFor'.ucfirst($this->viewMode).'View';
-
-        call_user_func([$this, $method], $script);
-    }
-
-    /**
-     * Setup default template script.
-     *
-     * @param string $templateScript
-     *
-     * @return void
-     */
-    protected function setupScriptForDefaultView($templateScript)
-    {
-        $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-
-        /**
-         * When add a new sub form, replace all element key in new sub form.
-         *
-         * @example comments[new___key__][title]  => comments[new_{index}][title]
-         *
-         * {count} is increment number of current sub form count.
-         */
-        $script = <<<JS
-(function () {
-    var nestedIndex = 0;
-    
-    {$this->makeReplaceNestedIndexScript()}
-    
-$('{$this->getContainerElementSelector()}').on('click', '.add', function () {
-
-    var tpl = $('template.{$this->column}-tpl');
-
-    nestedIndex++;
-
-    var template = replaceNestedFormIndex(tpl.html());
-    $('.has-many-{$this->column}-forms').append(template);
-    {$templateScript}
-});
-
-$('{$this->getContainerElementSelector()}').on('click', '.remove', function () {
-    $(this).closest('.has-many-{$this->column}-form').hide();
-    $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
-});
-})()
-JS;
-
-        Admin::script($script);
-    }
-
-    /**
-     * Setup tab template script.
-     *
-     * @param string $templateScript
-     *
-     * @return void
-     */
-    protected function setupScriptForTabView($templateScript)
-    {
-        $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-
-        $script = <<<JS
-(function () {
-    $('{$this->getContainerElementSelector()} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
-        var \$navTab = $(this).siblings('a');
-        var \$pane = $(\$navTab.attr('href'));
-        if( \$pane.hasClass('new') ){
-            \$pane.remove();
-        }else{
-            \$pane.removeClass('active').find('.$removeClass').val(1);
-        }
-        if(\$navTab.closest('li').hasClass('active')){
-            \$navTab.closest('li').remove();
-            $('{$this->getContainerElementSelector()} > .nav > li:nth-child(1) > a').click();
-        }else{
-            \$navTab.closest('li').remove();
-        }
-    });
-        
-    {$this->makeReplaceNestedIndexScript()}
-    
-    var nestedIndex = 0;
-    $('{$this->getContainerElementSelector()} > .header').off('click', '.add').on('click', '.add', function(){
-        nestedIndex++;
-        var navTabHtml = replaceNestedFormIndex($('{$this->getContainerElementSelector()} > template.nav-tab-tpl').html());
-        var paneHtml = replaceNestedFormIndex($('{$this->getContainerElementSelector()} > template.pane-tpl').html());
-        $('{$this->getContainerElementSelector()} > .nav').append(navTabHtml);
-        $('{$this->getContainerElementSelector()} > .tab-content').append(paneHtml);
-        $('{$this->getContainerElementSelector()} > .nav > li:last-child a').click();
-        {$templateScript}
-    });
-    
-    if ($('.has-error').length) {
-        $('.has-error').parent('.tab-pane').each(function () {
-            var tabId = '#'+$(this).attr('id');
-            $('li a[href="'+tabId+'"] i').removeClass('d-none');
-        });
-        
-        var first = $('.has-error:first').parent().attr('id');
-        $('li a[href="#'+first+'"]').tab('show');
-    }
-})();
-JS;
-
-        Admin::script($script);
-    }
-
-    /**
-     * Setup default template script.
-     *
-     * @param string $templateScript
-     *
-     * @return void
-     */
-    protected function setupScriptForTableView($templateScript)
-    {
-        $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-
-        /**
-         * When add a new sub form, replace all element key in new sub form.
-         *
-         * @example comments[new___key__][title]  => comments[new_{index}][title]
-         *
-         * {count} is increment number of current sub form count.
-         */
-        $script = <<<JS
-(function () {
-    var nestedIndex = 0;
-    
-    {$this->makeReplaceNestedIndexScript()}
-    
-    $('{$this->getContainerElementSelector()}').on('click', '.add', function () {
-        var tpl = $('template.{$this->column}-tpl');
-    
-        nestedIndex++;
-
-        var template = replaceNestedFormIndex(tpl.html());
-        $('.has-many-{$this->column}-forms').append(template);
-        {$templateScript}
-    });
-    
-    $('{$this->getContainerElementSelector()}').on('click', '.remove', function () {
-        $(this).closest('.has-many-{$this->column}-form').hide();
-        $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
-    });
-})();
-JS;
-
-        Admin::script($script);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getContainerElementSelector()
-    {
-        return ".has-many-{$this->column}";
-    }
-
-    /**
-     * @return string
-     */
-    protected function makeReplaceNestedIndexScript()
-    {
-        $defaultKey = NestedForm::DEFAULT_KEY_NAME;
-
-        return <<<JS
-function replaceNestedFormIndex(value) {
-    return String(value).replace(/{$defaultKey}/g, nestedIndex);
-}
-JS;
-    }
-
-    /**
      * Disable create button.
      *
      * @return $this
@@ -663,14 +480,15 @@ JS;
         [$template, $script] = $this->buildNestedForm()
             ->getTemplateHtmlAndScript();
 
-        $this->setupScript($script);
-
-        return parent::render()->with([
-            'forms'        => $this->buildRelatedForms(),
-            'template'     => $template,
-            'relationName' => $this->relationName,
-            'options'      => $this->options,
+        $this->addVariables([
+            'forms'          => $this->buildRelatedForms(),
+            'template'       => $template,
+            'relationName'   => $this->relationName,
+            'options'        => $this->options,
+            'templateScript' => $script,
         ]);
+
+        return parent::render();
     }
 
     /**
@@ -689,6 +507,8 @@ JS;
 
         /* @var Field $field */
         foreach ($this->buildNestedForm()->fields() as $field) {
+            $field->runScript(false);
+
             if (is_a($field, Hidden::class)) {
                 $hidden[] = $field->render();
             } else {
@@ -702,8 +522,8 @@ JS;
             /*
              * Get and remove the last script of Admin::$script stack.
              */
-            if ($field->getScript()) {
-                $scripts[] = array_pop(Admin::asset()->script);
+            if ($script = $field->getScript()) {
+                $scripts[] = $script;
             }
         }
 
@@ -717,19 +537,18 @@ JS;
         /* Build cell with hidden elements */
         $template .= '<td class="hidden">'.implode('', $hidden).'</td>';
 
-        $this->setupScript(implode(";\r\n", $scripts));
-
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
-        Admin::style('.table-has-many .input-group{flex-wrap: nowrap!important}');
-
-        return parent::render()->with([
-            'headers'      => $headers,
-            'forms'        => $this->buildRelatedForms(),
-            'template'     => $template,
-            'relationName' => $this->relationName,
-            'options'      => $this->options,
+        $this->addVariables([
+            'headers'        => $headers,
+            'forms'          => $this->buildRelatedForms(),
+            'template'       => $template,
+            'relationName'   => $this->relationName,
+            'options'        => $this->options,
+            'templateScript' => implode(";\r\n", $scripts),
         ]);
+
+        return parent::render();
     }
 }

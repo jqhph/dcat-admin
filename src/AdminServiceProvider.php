@@ -8,11 +8,11 @@ use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Extend\Manager;
+use Dcat\Admin\Support\Context;
 use Dcat\Admin\Support\Setting;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Fluent;
 use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
@@ -211,7 +211,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('admin.extend', Manager::class);
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.menu', Menu::class);
-        $this->app->singleton('admin.context', Fluent::class);
+        $this->app->singleton('admin.context', Context::class);
         $this->app->singleton('admin.setting', function () {
             return Setting::fromDatabase();
         });

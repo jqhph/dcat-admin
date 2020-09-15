@@ -58,3 +58,29 @@
     @endif
 
 </div>
+
+<script>
+    var nestedIndex = 0,
+        container = '.has-many-{{ $column }}',
+        forms = '.has-many-{{ $column  }}-forms';
+
+    function replaceNestedFormIndex(value) {
+        return String(value).replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);
+    }
+
+    $(container).on('click', '.add', function () {
+
+        var tpl = $('template.{{ $column }}-tpl');
+
+        nestedIndex++;
+
+        var template = replaceNestedFormIndex(tpl.html());
+        $(forms).append(template);
+        {!! $templateScript !!}
+    });
+
+    $(container).on('click', '.remove', function () {
+        $(this).closest('.has-many-{{ $column  }}-form').hide();
+        $(this).closest('.has-many-{{ $column  }}-form').find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
+    });
+</script>

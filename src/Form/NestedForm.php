@@ -379,13 +379,13 @@ class NestedForm
         foreach ($this->fields() as $field) {
 
             //when field render, will push $script to Admin
-            $html .= $field->render();
+            $html .= $field->runScript(false)->render();
 
             /*
              * Get and remove the last script of Admin::$script stack.
              */
-            if ($field->getScript()) {
-                $scripts[] = array_pop(Admin::asset()->script);
+            if ($script = $field->getScript()) {
+                $scripts[] = $script;
             }
         }
 

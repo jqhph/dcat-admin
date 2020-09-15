@@ -2,8 +2,6 @@
 
 namespace Dcat\Admin\Traits;
 
-use Dcat\Admin\Support\Helper;
-
 trait HasAssets
 {
     /**

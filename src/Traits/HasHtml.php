@@ -6,7 +6,7 @@ use Dcat\Admin\Support\Helper;
 use DOMElement;
 use DOMDocument;
 
-trait Renderable
+trait HasHtml
 {
     protected static $shouldResolveTags = ['style', 'script', 'template'];
 
@@ -39,25 +39,38 @@ trait Renderable
      */
     public static function view(string $view, array $data = [])
     {
-        return static::render(view($view, $data));
+        return static::resolveHtml(view($view, $data))[0];
     }
 
     /**
-     * @param string|\Illuminate\Contracts\Support\Renderable $view
+     * @param string|\Illuminate\Contracts\Support\Renderable $content
      * @param array                                           $data
+     * @param array                                           $options
      *
      * @throws \Throwable
      *
-     * @return string
+     * @return array [$html, $script]
      */
-    public static function render($value): string
+    public static function resolveHtml($content, array $options = []): array
     {
-        $dom = static::getDOMDocument(Helper::render($value));
+        $dom = static::getDOMDocument(Helper::render($content));
 
         $head = $dom->getElementsByTagName('head')->item(0) ?: null;
         $body = $dom->getElementsByTagName('body')->item(0) ?: null;
 
-        return static::resolveElement($head).static::resolveElement($body);
+        [$headHtml, $headScript] = static::resolveElement($head);
+        [$bodyHtml, $bodyScript] = static::resolveElement($body);
+
+        $script = $headScript.$bodyScript;
+
+        $runScript = $options['runScript'] ?? true;
+        if ($runScript) {
+            static::script($script);
+
+            $script = '';
+        }
+
+        return [$headHtml.$bodyHtml, $script];
     }
 
     /**
@@ -83,7 +96,7 @@ trait Renderable
     /**
      * @param DOMElement $element
      *
-     * @return void
+     * @return void|string
      */
     protected static function resolve(DOMElement $element)
     {
@@ -95,7 +108,7 @@ trait Renderable
     /**
      * @param DOMElement $element
      *
-     * @return void
+     * @return string|void
      */
     protected static function resolveScript(DOMElement $element)
     {
@@ -110,7 +123,13 @@ trait Renderable
                 static::asset()->collect($require);
             }
 
-            static::script('(function () {'.$script.'})()');
+            $script = '(function () {'.$script.'})();';
+
+            if ($element->hasAttribute('once')) {
+                return static::script($script);
+            }
+
+            return $script;
         }
     }
 
@@ -143,10 +162,10 @@ trait Renderable
 
     protected static function resolveElement(?DOMElement $element)
     {
-        $html = '';
+        $html = $script = '';
 
         if (! $element) {
-            return $html;
+            return [$html, $script];
         }
 
         foreach ($element->childNodes as $child) {
@@ -154,7 +173,7 @@ trait Renderable
                 $child instanceof DOMElement
                 && in_array($child->tagName, static::$shouldResolveTags, true)
             ) {
-                static::resolve($child);
+                $script .= static::resolve($child);
 
                 continue;
             }
@@ -162,6 +181,6 @@ trait Renderable
             $html .= trim($element->ownerDocument->saveHTML($child));
         }
 
-        return $html;
+        return [$html, $script];
     }
 }
