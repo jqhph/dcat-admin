@@ -7,7 +7,7 @@ class Mac extends Text
     public static $js = '@jquery.inputmask';
     public static $css = '@jquery.inputmask';
 
-    protected $rules = ['nullable', 'ip'];
+    protected $rules = ['nullable', 'mac'];
 
     /**
      * @see https://github.com/RobinHerbots/Inputmask#options
