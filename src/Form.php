@@ -39,6 +39,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Hidden                 hidden($column, $label = '')
  * @method Field\Id                     id($column, $label = '')
  * @method Field\Ip                     ip($column, $label = '')
+ * @method Field\Mac                    mac($column, $label = '')
  * @method Field\Url                    url($column, $label = '')
  * @method Field\Email                  email($column, $label = '')
  * @method Field\Mobile                 mobile($column, $label = '')
@@ -130,6 +131,7 @@ class Form implements Renderable
         'hidden'              => Field\Hidden::class,
         'id'                  => Field\Id::class,
         'ip'                  => Field\Ip::class,
+        'mac'                 => Field\Mac::class,
         'map'                 => Field\Map::class,
         'mobile'              => Field\Mobile::class,
         'month'               => Field\Month::class,
