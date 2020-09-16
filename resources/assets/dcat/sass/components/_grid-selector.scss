@@ -1,18 +1,19 @@
 .grid-selector {
   //margin: -1rem;
   width: 100%;
+  margin-top: 1rem;
 }
 .grid-selector .wrap {
   position: relative;
   line-height: 40px;
   border-bottom: 1px dashed #eee;
-  padding: 0 30px;
+  padding: 0 25px;
   font-size: 13px;
   overflow:auto;
 }
-.grid-selector .wrap:last-child {
-  border-bottom: none;
-}
+//.grid-selector .wrap:last-child {
+//  border-bottom: none;
+//}
 .grid-selector .select-label {
   float: left;
   width: 100px;
@@ -63,6 +64,16 @@
       box-shadow: $shadow;
       border-radius: $card-border-radius;
       margin: 7px 0;
+    }
+  }
+}
+
+.simple-grid {
+  .grid-selector {
+    .wrap {
+      box-shadow: none;
+      border-radius: 0;
+      border-bottom: 1px dashed $table-border-color;
     }
   }
 }

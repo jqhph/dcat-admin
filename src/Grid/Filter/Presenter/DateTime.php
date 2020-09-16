@@ -7,15 +7,6 @@ use Illuminate\Support\Arr;
 
 class DateTime extends Presenter
 {
-    public static $js = [
-        '@moment',
-        '@bootstrap-datetimepicker',
-    ];
-
-    public static $css = [
-        '@bootstrap-datetimepicker',
-    ];
-
     /**
      * @var array
      */
@@ -49,19 +40,11 @@ class DateTime extends Presenter
         return $options;
     }
 
-    protected function prepare()
-    {
-        $script = "$('#{$this->filter->getId()}').datetimepicker(".json_encode($this->options).');';
-
-        Admin::script($script);
-    }
-
     public function variables(): array
     {
-        $this->prepare();
-
         return [
-            'group' => $this->filter->group,
+            'group'   => $this->filter->group,
+            'options' => $this->options,
         ];
     }
 }

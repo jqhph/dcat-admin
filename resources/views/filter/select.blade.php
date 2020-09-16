@@ -24,7 +24,7 @@
     $.ajax({!! $remote['ajaxOptions'] !!}).done(function(data) {
         $("{{ $selector }}").select2($.extend({!! json_encode($configs) !!}, {
             data: data,
-        })).val({!! $values !!}).trigger("change");
+        })).val({!! $remote['values'] !!}).trigger("change");
     });
     @else
     $("{!! $selector !!}").select2(configs);

@@ -502,9 +502,19 @@ abstract class AbstractFilter
      */
     public function column()
     {
+        return $this->formatColumnClass($this->column);
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return string
+     */
+    public function formatColumnClass($column)
+    {
         $parenName = $this->parent->getName();
 
-        return $parenName ? "{$parenName}_{$this->column}" : $this->column;
+        return $parenName ? "{$parenName}_{$column}" : $column;
     }
 
     /**

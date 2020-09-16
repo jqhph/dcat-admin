@@ -20,3 +20,7 @@
     </div>
     <input class="form-control" id="{{$id}}" autocomplete="off" placeholder="{{$label}}" name="{{$name}}" value="{{ request($name, $value) }}">
 </div>
+
+<script require="@moment,@bootstrap-datetimepicker">
+    $('#{{ $id }}').datetimepicker({!! json_encode($options) !!});
+</script>

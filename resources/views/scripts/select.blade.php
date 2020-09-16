@@ -43,7 +43,7 @@
 
         $(document).off('change', selector);
         $(document).on('change', selector, function () {
-            var target = $(this).closest('.{{ $load['group'] ?? 'fields-group' }}').find(".{{ $load['class'] }}");
+            var target = $(this).closest('{{ $load['group'] ?? '.fields-group' }}').find(".{{ $load['class'] }}");
 
             if (String(this.value) !== '0' && ! this.value) {
                 return;

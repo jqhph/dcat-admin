@@ -10,7 +10,7 @@
 
     {!! $grid->renderHeader() !!}
 
-    <div class="card-body table-responsive table-wrapper complex-container table-middle" style="padding: 1.5rem 0 0;">
+    <div class="card-body table-responsive table-wrapper complex-container table-middle">
         <table class="{{ $grid->formatTableClass() }}" id="{{ $tableId }}" >
             <thead>
             @if ($headers = $grid->getComplexHeaders())

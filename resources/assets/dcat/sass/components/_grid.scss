@@ -31,9 +31,20 @@
 }
 
 .dcat-box.card {
+  margin-bottom: 0;
+
   .card-header {
     border-bottom: 0;
     padding: 1.3rem 1.5rem
+  }
+
+  .card-body {
+    padding: 1rem 0 0;
+  }
+
+  .box-footer {
+    border:0;
+    padding: 1rem 1.5rem 1.3rem;
   }
 }
 
@@ -83,6 +94,10 @@
   .dcat-box.card {
     .card-header {
       padding: .8rem 0
+    }
+
+    .box-footer {
+      padding: 1rem 1.5rem 0;
     }
   }
 }

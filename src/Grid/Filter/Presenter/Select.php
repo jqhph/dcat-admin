@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Filter\Presenter;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -159,7 +160,7 @@ class Select extends Presenter
     protected function loadRemoteOptions(string $url, array $parameters = [], array $options = [])
     {
         $ajaxOptions = [
-            'url' => admin_url($url.'?'.http_build_query($parameters)),
+            'url' => Helper::urlWithQuery(admin_url($url), $parameters),
         ];
         $this->addDefaultConfig([
             'allowClear'  => true,
@@ -176,7 +177,7 @@ class Select extends Presenter
         $values = json_encode($values);
 
         return $this->addVariables([
-            'remote' => compact('ajaxOptions', 'values')
+            'remote' => compact('ajaxOptions', 'values'),
         ]);
     }
 
@@ -283,7 +284,7 @@ class Select extends Presenter
      */
     public function load($target, string $resourceUrl, string $idField = 'id', string $textField = 'text'): self
     {
-        $class = $this->getClass($target);
+        $class = $this->filter->formatColumnClass($target);
 
         $url = admin_url($resourceUrl);
 
