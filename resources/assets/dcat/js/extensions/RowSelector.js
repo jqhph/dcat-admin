@@ -22,14 +22,14 @@ export default class RowSelector {
     init() {
         let options = this.options,
             checkboxSelector = options.checkboxSelector,
-            $selectAll = $(options.selectAllSelector),
-            $checkbox = $(checkboxSelector);
+            $document = $(document),
+            selectAll = options.selectAllSelector;
 
-        $selectAll.on('change', function() {
+        $document.on('change', selectAll, function() {
             $(this).parents(options.container).find(checkboxSelector).prop('checked', this.checked).trigger('change');
         });
         if (options.clickRow) {
-            $checkbox.click(function (e) {
+            $document.on('click', checkboxSelector, function (e) {
                 if (typeof e.cancelBubble != "undefined") {
                     e.cancelBubble = true;
                 }
@@ -41,13 +41,13 @@ export default class RowSelector {
             });
         }
 
-        $checkbox.on('change', function () {
+        $document.on('change', checkboxSelector, function () {
             var tr = $(this).closest('tr');
             if (this.checked) {
                 tr.css('background-color', options.background);
 
-                if ($(checkboxSelector + ':checked').length === $checkbox.length) {
-                    $selectAll.prop('checked', true)
+                if ($(checkboxSelector + ':checked').length === $(checkboxSelector).length) {
+                    $(selectAll).prop('checked', true)
                 }
             } else {
                 tr.css('background-color', '');
