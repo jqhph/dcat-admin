@@ -144,13 +144,21 @@ class ListField extends Field
 
         $this->script = <<<JS
 (function () {
-    var index = {$number};
+    $('.{$this->formatColumn()}-add').off()
     $('.{$this->formatColumn()}-add').on('click', function () {
-        var tpl = $('template.{$this->formatColumn()}-tpl').html().replace('{key}', index);
-        $('tbody.list-{$this->formatColumn()}-table').append(tpl);
-        
-        index++;
+        var index = 0;
+         $(this).closest('table').children('tbody.list-value-table').children().each((i,child)=>{
+             let name = $(child).find('input').attr('name')
+             rep = /\[values\]\[\d+\]/;
+             name = rep.exec(name).pop();
+             index = Math.max(index,Number(name.slice(9,-1)));
+             console.log(index);
+         })
+         console.log(index);
+        var tpl = $(this).closest('div.form-group').next('template').html().replace('{key}', index+1);
+        $(this).closest('table').children('tbody.list-{$this->formatColumn()}-table').append(tpl);
     });
+    $('tbody').off('click', '.{$this->formatColumn()}-remove');
     $('tbody').on('click', '.{$this->formatColumn()}-remove', function () {
         $(this).closest('tr').remove();
     });
