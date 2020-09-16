@@ -1263,16 +1263,16 @@ class Field implements Renderable
 
         $this->callComposing();
 
-        [$html, $script] = Admin::resolveHtml(
+        $result = Admin::resolveHtml(
             view($this->view(), $this->variables()),
             ['runScript' => $this->runScript]
         );
 
-        $this->script .= $script;
+        $this->script .= $result['script'];
 
         $this->withScript();
 
-        return $html;
+        return $result['html'];
     }
 
     public function runScript(bool $value = true)

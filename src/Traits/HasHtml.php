@@ -39,7 +39,7 @@ trait HasHtml
      */
     public static function view(string $view, array $data = [])
     {
-        return static::resolveHtml(view($view, $data))[0];
+        return static::resolveHtml(view($view, $data))['html'];
     }
 
     /**
@@ -49,7 +49,7 @@ trait HasHtml
      *
      * @throws \Throwable
      *
-     * @return array [$html, $script]
+     * @return array ['html' => $html, 'script' => $script]
      */
     public static function resolveHtml($content, array $options = []): array
     {
@@ -70,7 +70,7 @@ trait HasHtml
             $script = '';
         }
 
-        return [$head['html'].$body['html'], $script];
+        return ['html' => $head['html'].$body['html'], 'script' => $script];
     }
 
     /**

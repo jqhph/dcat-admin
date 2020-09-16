@@ -27,7 +27,7 @@
 
     Dcat.grid.SelectTable({
         dialog: replaceNestedFormIndex('#{{ $dialogId }}'),
-        container: replaceNestedFormIndex('#{{ $id }}'),
+        container: replaceNestedFormIndex('#container-{{ $id }}'),
         input: replaceNestedFormIndex('#hidden-{{ $id }}'),
         @if(isset($max))
         multiple: true,
