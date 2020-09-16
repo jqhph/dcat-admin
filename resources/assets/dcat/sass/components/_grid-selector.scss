@@ -66,3 +66,15 @@
     }
   }
 }
+
+.simple-grid {
+  .custom-data-table {
+    .grid-selector {
+      .wrap {
+        box-shadow: none;
+        border-radius: 0;
+        border-bottom: 1px dashed $table-border-color;
+      }
+    }
+  }
+}

@@ -332,6 +332,8 @@
 
             box.find('.filter-box .reset').on('click', loadLink);
 
+            box.find('.grid-selector a').on('click', loadLink);
+
             Dcat.ready(function () {
                 setTimeout(function () {
                     box.find('.grid-refresh').off('click').on('click', function () {
