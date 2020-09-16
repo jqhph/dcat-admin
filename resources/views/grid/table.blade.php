@@ -1,7 +1,7 @@
 
 <div class="card dcat-box dt-bootstrap4">
 
-    <div class="card-header d-block pb-0" style="border: 0;padding: 1.3rem 1.5rem">
+    <div class="card-header d-block pb-0">
         @include('admin::grid.table-toolbar')
 {{--        <hr class="mb-0" style="margin-top: .6rem" />--}}
     </div>

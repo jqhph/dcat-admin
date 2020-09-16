@@ -33,6 +33,11 @@ abstract class Presenter
     protected $width = null;
 
     /**
+     * @var array
+     */
+    protected $variables = [];
+
+    /**
      * Set parent filter.
      *
      * @param AbstractFilter $filter
@@ -108,6 +113,13 @@ abstract class Presenter
         return $value;
     }
 
+    public function addVariables(array $variables)
+    {
+        $this->variables = array_merge($this->variables, $variables);
+
+        return $this;
+    }
+
     /**
      * Blade template variables for this presenter.
      *
@@ -115,7 +127,7 @@ abstract class Presenter
      */
     public function variables(): array
     {
-        return [];
+        return $this->variables;
     }
 
     /**

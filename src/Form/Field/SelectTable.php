@@ -152,6 +152,7 @@ class SelectTable extends Field
             'style'        => $this->style,
             'dialog'       => $this->dialog->render(),
             'placeholder'  => $this->placeholder(),
+            'dialogId'     => $this->dialog->id(),
             'dialogScript' => $this->dialog->getScript(),
         ]);
 

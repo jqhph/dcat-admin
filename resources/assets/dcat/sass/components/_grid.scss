@@ -30,6 +30,13 @@
   }
 }
 
+.dcat-box.card {
+  .card-header {
+    border-bottom: 0;
+    padding: 1.3rem 1.5rem
+  }
+}
+
 // 过滤器滑动面板
 .right-side-filter-container .header {
   border-bottom: 1px solid $divider-color;
@@ -72,9 +79,19 @@
       margin-bottom: 1rem;
     }
   }
+
+  .dcat-box.card {
+    .card-header {
+      padding: .8rem 0
+    }
+  }
 }
 
 body:not(.dark-mode) .simple-grid {
+  .card {
+    box-shadow: none;
+  }
+
   .table-collapse {
     box-shadow: none;
     background: transparent;

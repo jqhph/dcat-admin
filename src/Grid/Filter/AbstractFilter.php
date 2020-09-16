@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Filter;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Filter;
 use Dcat\Admin\Grid\Filter\Presenter\Checkbox;
 use Dcat\Admin\Grid\Filter\Presenter\DateTime;
@@ -578,29 +579,45 @@ abstract class AbstractFilter
      */
     protected function variables()
     {
-        $variables = $this->presenter()->variables();
-
-        $value = $this->value ?: Arr::get($this->parent->inputs(), $this->column);
-
         return array_merge([
             'id'        => $this->id,
             'name'      => $this->formatName($this->column),
             'label'     => $this->label,
-            'value'     => $value ?: $this->defaultValue,
-            'presenter' => $this->presenter(),
+            'value'     => $this->value(),
             'width'     => $this->width,
             'style'     => $this->style,
-        ], $variables);
+        ], $this->presenter()->variables());
+    }
+
+    public function value()
+    {
+        $value = $this->value ?: Arr::get($this->parent->inputs(), $this->column);
+
+        return $value === null || $value === '' ? $this->defaultValue : $value;
     }
 
     /**
      * Render this filter.
      *
-     * @return \Illuminate\View\View|string
+     * @return string
      */
     public function render()
     {
-        return view($this->view, $this->variables());
+        $variables = $this->variables();
+
+        $variables['presenter'] = $this->renderPresenter();
+
+        return Admin::view($this->view, $variables);
+    }
+
+    /**
+     * @return string
+     *
+     * @throws \Throwable
+     */
+    protected function renderPresenter()
+    {
+        return Admin::view($this->presenter->view(), $this->variables());
     }
 
     /**
