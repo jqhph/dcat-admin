@@ -45,7 +45,7 @@ setTimeout(function () {
         
         showIcon(val);
     })
-}, 10);
+}, 1);
 JS;
     }
 }

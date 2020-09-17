@@ -12,7 +12,7 @@
                 </ul>
             </div>
 
-            <div class="sidebar pb-3">
+            <div class="sidebar p-0 pb-3">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" style="padding-top: 10px">
                     {!! admin_section(AdminSection::LEFT_SIDEBAR_MENU_TOP) !!}
 

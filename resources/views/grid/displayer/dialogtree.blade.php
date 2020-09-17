@@ -1,19 +1,27 @@
-<a href="javascript:void(0)" class="{{ $prefix }}-open-tree" data-checked="{{ $checkAll }}" data-val="{{ $value }}">
+<a href="javascript:void(0)" class="grid-dialog-tree"
+   data-url="{{ $url }}"
+   data-title="{{ $title }}"
+   data-checked="{{ $checkAll }}"
+   data-val="{{ $value }}">
     <i class='feather icon-align-right'></i> {{ trans('admin.view') }}
 </a>
 
-<script require="@jstree">
-    var selector = '.{{ $prefix}}-open-tree';
+<template>
+    <template id="dialog-tree-tpl">
+        <div class="jstree-wrapper p-1" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>
+    </template>
+</template>
 
-    $(document).off('click', selector).on('click', selector, function () {
-        var tpl = '<div class="jstree-wrapper p-1" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>',
-            url = '{{ $url }}',
+<script require="jstree" once>
+    window.resolveDialogTree = function (options) {
+        var tpl = $('#dialog-tree-tpl').html(),
             t = $(this),
             val = t.data('val'),
+            url = t.data('url'),
+            title = t.data('title'),
             ckall = t.data('checked'),
             idx,
-            loading,
-            opts = {!! json_encode($options) !!};
+            loading;
 
         val = val ? String(val).split(',') : [];
 
@@ -37,19 +45,19 @@
         }
 
         function build(val) {
-            opts.core.data = formatNodes(val, {!! json_encode($nodes) !!});
+            options.config.core.data = formatNodes(val, options.nodes);
 
             idx = layer.open({
                 type: 1,
-                area: {!! json_encode($area) !!},
+                area: options.area,
                 content: tpl,
-                title: '{{ $title }}',
+                title: title,
                 success: function (a, idx) {
                     var tree = $('#layui-layer'+idx).find('.da-tree');
 
                     tree.on("loaded.jstree", function () {
                         tree.jstree('open_all');
-                    }).jstree(opts);
+                    }).jstree(options.config);
                 }
             });
 
@@ -59,9 +67,9 @@
         }
 
         function formatNodes(value, all) {
-            var idColumn = '{{ $columnNames['id'] }}',
-                textColumn = '{{ $columnNames['text'] }}',
-                parentColumn = '{{ $columnNames['parent'] }}',
+            var idColumn = options.columns.id,
+                textColumn = options.columns.text,
+                parentColumn = options.columns.parent,
                 parentIds = [], nodes = [], i, v, parentId;
 
             for (i in all) {
@@ -91,5 +99,15 @@
 
             return nodes;
         }
+    }
+</script>
+
+<script require="@jstree">
+    var nodes = {!! json_encode($nodes) !!};
+    var options = {!! json_encode($options) !!};
+    var area = {!! json_encode($area) !!};
+
+    $('.grid-dialog-tree').off('click').on('click', function () {
+        resolveDialogTree.call(this, {config: options, nodes: nodes, area: area, columns: {!! json_encode($columnNames) !!}});
     });
 </script>

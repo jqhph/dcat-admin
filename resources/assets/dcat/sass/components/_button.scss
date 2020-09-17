@@ -58,13 +58,13 @@ a.btn-sm, .btn-group-sm > a.btn {
 .btn-group {
 
   .btn:not(.btn-white):hover {
-    box-shadow: $shadow-200;
+    box-shadow: $shadow-100;
   }
   .btn {
     box-shadow: none!important;
   }
 
-  box-shadow: $btn-white-shadow;
+  box-shadow: $btn-group-btn-shadow;
 }
 
 // --------------------- btn-custom -----------------------
@@ -96,8 +96,9 @@ a.btn-sm, .btn-group-sm > a.btn {
 
 .btn-light {
   border-color: $input-border-color!important;
-  background-color: #f7f7f9!important;
+  background-color: $dark40!important;
   color: #444;
+  box-shadow: none;
 }
 
 .btn-light:hover, .btn-light:focus {

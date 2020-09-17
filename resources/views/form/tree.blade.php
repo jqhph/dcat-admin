@@ -22,11 +22,9 @@
     </div>
 </div>
 
-@php
-    $formId = $formId ? '#'.$formId : '';
-@endphp
-<script data-exec-on-popstate>
-Dcat.ready(function () {
+@php($formId = $formId ? '#'.$formId : '')
+
+<script require="@jstree">
     var $tree = $('{!!$formId !!} .{{$class}}-tree-wrapper').find('.da-tree'),
         opts = {!! $options !!},
         $input = $('{!!$formId !!} input[name="{{$name}}"]'),
@@ -57,6 +55,4 @@ Dcat.ready(function () {
     }).on("loaded.jstree", function () {
         @if($expand) $tree.jstree('open_all'); @endif
     }).jstree(opts);
-
-});
 </script>

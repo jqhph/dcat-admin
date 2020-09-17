@@ -148,7 +148,6 @@ class DialogTree extends AbstractDisplayer
 
         return Admin::view('admin::grid.displayer.dialogtree', [
             'value'       => $this->format($this->value),
-            'prefix'      => $this->getSelectorPrefix(),
             'nodes'       => $this->nodes,
             'title'       => $this->title ?: $this->column->getLabel(),
             'options'     => $this->options,
@@ -162,10 +161,5 @@ class DialogTree extends AbstractDisplayer
     protected function format($val)
     {
         return implode(',', Helper::array($val, true));
-    }
-
-    protected function getSelectorPrefix()
-    {
-        return $this->grid->getName().'_'.$this->column->getName().'_'.$this->getKey();
     }
 }

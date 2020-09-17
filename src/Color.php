@@ -69,18 +69,18 @@ class Color
      * @var array
      */
     protected static $extensions = [
-        'blue-light' => [
-            'colors' => [
-                'primary'        => '#62a8ea',
-                'primary-darker' => '#62a8ea',
-                'link'           => '#62a8ea',
-            ],
-        ],
         'indigo' => [
             'colors' => [
                 'primary'        => '#586cb1',
                 'primary-darker' => '#4c60a3',
                 'link'           => '#4c60a3',
+            ],
+        ],
+        'blue-light' => [
+            'colors' => [
+                'primary'        => '#62a8ea',
+                'primary-darker' => '#62a8ea',
+                'link'           => '#62a8ea',
             ],
         ],
         'blue' => [
