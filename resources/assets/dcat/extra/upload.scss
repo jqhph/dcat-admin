@@ -42,7 +42,6 @@
   user-select: none;
   background-image: none;
   color: #fff;
-  background-color: lighten($primary, 2%)
 }
 
 .webuploader-pick-hover {
@@ -89,7 +88,6 @@
 }
 
 .web-uploader .placeholder .webuploader-pick {
-  background: lighten($primary, 1%);
   border-radius: 3px;
   line-height: 34px;
   padding: 0 25px;
@@ -115,7 +113,6 @@
 }
 
 .web-uploader .placeholder .flashTip a {
-  color: lighten($primary, 1%);
   text-decoration: none
 }
 
@@ -242,8 +239,6 @@
   overflow: hidden;
   width: 0;
   height: 100%;
-  background: lighten($primary, 2%);
-  //background: lighten($primary, 2%) url(./progress.png) repeat-x;
   -webit-transition: width 200ms linear;
   -moz-transition: width 200ms linear;
   -o-transition: width 200ms linear;
@@ -431,7 +426,6 @@
   height: 100%;
   left: 0;
   top: 0;
-  background: lighten($primary, 2%);
   position: absolute
 }
 

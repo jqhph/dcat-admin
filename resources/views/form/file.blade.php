@@ -1,3 +1,24 @@
+<style>
+    @php($primary = admin_color()->primary())
+
+    .webuploader-pick {
+        background-color: {!! $primary !!}
+    }
+
+    .web-uploader .placeholder .webuploader-pick {
+        background: {!! admin_color()->lighten('primary', 12) !!};
+    }
+
+    .web-uploader .placeholder .flashTip a {
+        color: {!! admin_color()->lighten('primary', 12) !!};
+    }
+
+    .web-uploader .statusBar .upload-progress span.percentage,
+    .web-uploader .filelist li p.upload-progress span {
+        background: {!! admin_color()->lighten('primary', 10) !!};
+    }
+</style>
+
 <div id="{{ $id }}-container" class="{{$viewClass['form-group']}}">
 
     <label for="{{$column}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>

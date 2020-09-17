@@ -1,3 +1,28 @@
+<style>
+    @php($primary = admin_color()->primary())
+
+    .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-icons,
+    .done > .dcat-step-item-container > .dcat-step-line:after,
+    .done .dcat-step-icons,
+    .active .dcat-step-icons {
+        border-color: {!! $primary !!}
+    }
+
+    .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-icons .dcat-step-icon,
+    .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-desc .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-title,
+    .done .dcat-step-icons > .dcat-step-icon,
+    .active .dcat-step-icons > .dcat-step-icon {
+        color: {!! $primary !!}
+    }
+
+    .done > .dcat-step-item-container > .dcat-step-content > .dcat-step-title:after,
+    .done .dcat-step-icons > .dcat-step-icon .dcat-step-icon-dot,
+    .active .dcat-step-icons,
+    .active .dcat-step-icons > .dcat-step-icon .dcat-step-icon-dot {
+        background-color: {!! $primary !!}
+    }
+</style>
+
 @if($showHeader)
     <div class="box-header with-border">
         <h3 class="box-title" style="line-height:30px">{!! $form->title() !!}</h3>

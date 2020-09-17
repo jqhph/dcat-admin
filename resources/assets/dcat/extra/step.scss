@@ -114,15 +114,6 @@
 
 .active .dcat-step-icons {
   background-color: #fff;
-  border-color: $primary
-}
-
-.active .dcat-step-icons > .dcat-step-icon {
-  color: $primary
-}
-
-.active .dcat-step-icons > .dcat-step-icon .dcat-step-icon-dot {
-  background: $primary
 }
 
 .active > .dcat-step-item-container > .dcat-step-content > .dcat-step-title {
@@ -141,10 +132,6 @@
   background-color: #e8e8e8
 }
 
-.active .dcat-step-icons {
-  background: $primary
-}
-
 .active .dcat-step-icons > .dcat-step-icon {
   color: #fff
 }
@@ -155,31 +142,14 @@
 
 .done .dcat-step-icons {
   background-color: #fff;
-  border-color: $primary
-}
-
-.done .dcat-step-icons > .dcat-step-icon {
-  color: $primary
-}
-
-.done .dcat-step-icons > .dcat-step-icon .dcat-step-icon-dot {
-  background: $primary
 }
 
 .done > .dcat-step-item-container > .dcat-step-content > .dcat-step-title {
   color: rgba(0, 0, 0, .65)
 }
 
-.done > .dcat-step-item-container > .dcat-step-content > .dcat-step-title:after {
-  background-color: $primary
-}
-
 .done > .dcat-step-item-container > .dcat-step-content > .dcat-step-desc {
   color: rgba(0, 0, 0, .45)
-}
-
-.done > .dcat-step-item-container > .dcat-step-line:after {
-  background-color: $primary
 }
 
 .danger .dcat-step-icons {
@@ -221,18 +191,6 @@
 
 .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button] .dcat-step-desc, .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button] .dcat-step-icons .dcat-step-icon, .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button] .dcat-step-title {
   transition: color .3s
-}
-
-.dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-desc .dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-title {
-  color: $primary
-}
-
-.dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-icons {
-  border-color: $primary
-}
-
-.dcat-step .dcat-step-item:not(.active) > .dcat-step-item-container[role=button]:hover .dcat-step-icons .dcat-step-icon {
-  color: $primary
 }
 
 .dcat-step-horizontal:not(.dcat-step-label-vertical) .dcat-step-item {

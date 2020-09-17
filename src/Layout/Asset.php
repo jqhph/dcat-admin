@@ -293,8 +293,6 @@ class Asset
         $alias = [
             '@adminlte',
             '@dcat',
-            '@webuploader',
-            '@smart-wizard',
         ];
 
         foreach ($alias as $n) {
