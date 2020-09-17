@@ -183,6 +183,9 @@ class Asset
             'js' => '@admin/dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
             'css' => '@admin/dcat/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',
         ],
+        '@qrcode' => [
+            'js' => '@admin/dcat/plugins/jquery-qrcode/dist/jquery-qrcode.min.js',
+        ],
     ];
 
     /**

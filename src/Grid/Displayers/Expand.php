@@ -11,9 +11,6 @@ class Expand extends AbstractDisplayer
 {
     protected $button;
 
-    /**
-     * @var array
-     */
     protected static $counter = 0;
 
     public function button($button)
@@ -50,25 +47,17 @@ class Expand extends AbstractDisplayer
             $this->button = $callbackOrButton;
         }
 
-        $this->addScript();
-
-        $key = $this->getDataKey();
-
         $button = is_null($this->button) ? $this->value : $this->button;
 
-        return <<<EOT
-<span class="grid-expand" data-url="$remoteUrl" data-inserted="0" data-id="{$this->getKey()}" data-key="{$key}" data-toggle="collapse" data-target="#grid-collapse-{$key}">
-   <a href="javascript:void(0)"><i class="feather icon-chevrons-right"></i>  $button</a>
-</span>
-<template class="grid-expand-{$key}">
-    <div id="grid-collapse-{$key}" class="collapse">$html</div>
-</template>
-EOT;
+        return Admin::view('admin::grid.displayer.expand', [
+            'key'     => $this->getKey(),
+            'url'     => $remoteUrl,
+            'button'  => $button,
+            'html'    => $html,
+            'dataKey' => $this->getDataKey(),
+        ]);
     }
 
-    /**
-     * @return string
-     */
     protected function getDataKey()
     {
         $key = $this->getKey() ?: Str::random(8);
@@ -76,50 +65,5 @@ EOT;
         static::$counter++;
 
         return $this->grid->getName().$key.'-'.static::$counter;
-    }
-
-    protected function addScript()
-    {
-        $script = <<<'JS'
-$('.grid-expand').off('click').on('click', function () {
-    var _th = $(this), url = _th.data('url');
-    
-    if ($(this).data('inserted') == '0') {
-    
-        var key = _th.data('key');
-        var row = _th.closest('tr');
-        var html = $('template.grid-expand-'+key).html();
-        var id = 'expand-'+key+Dcat.helpers.random(10);
-        var rowKey = _th.data('id');
-        
-        $(this).attr('data-expand', '#'+id);
-
-        row.after("<tr id="+id+"><td colspan='"+(row.find('td').length)+"' style='padding:0 !important; border:0;height:0;'>"+html+"</td></tr>");
-        
-        if (url) {
-            var collapse = $('#grid-collapse-'+key);
-            collapse.find('div').loading();
-            $('.dcat-loading').css({position: 'inherit', 'padding-top': '70px'});
-        
-            Dcat.helpers.asyncRender(url+'&key='+rowKey, function (html) {
-                collapse.html(html);
-            })
-        }
-
-        $(this).data('inserted', 1);
-    } else {
-        if ($("i", this).hasClass('icon-chevrons-right')) {
-            $(_th.data('expand')).show();
-        } else {
-            setTimeout(function() {
-              $(_th.data('expand')).hide();
-            }, 250);
-        }
-    }
-    
-    $("i", this).toggleClass("icon-chevrons-right icon-chevrons-down");
-});
-JS;
-        Admin::script($script);
     }
 }

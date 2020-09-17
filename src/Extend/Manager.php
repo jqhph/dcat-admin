@@ -177,7 +177,7 @@ class Manager
 
     public function addExtension(ServiceProvider $serviceProvider)
     {
-        $this->extensions->put($serviceProvider->name(), $serviceProvider);
+        $this->extensions->put($serviceProvider->getName(), $serviceProvider);
     }
 
     protected function registerPsr4($directory, array $psr4)

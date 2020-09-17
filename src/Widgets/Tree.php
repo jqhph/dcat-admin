@@ -8,21 +8,8 @@ use Illuminate\Support\Str;
 
 class Tree extends Widget
 {
-    public static $js = [
-        '@jstree',
-    ];
-    public static $css = [
-        '@jstree',
-    ];
-
-    /**
-     * @var string
-     */
     protected $view = 'admin::widgets.tree';
 
-    /**
-     * @var array
-     */
     protected $options = [
         'plugins' => ['checkbox', 'types'],
         'core'    => [
@@ -43,33 +30,18 @@ class Tree extends Widget
         ],
     ];
 
-    /**
-     * @var string
-     */
     protected $id;
 
-    /**
-     * @var array
-     */
     protected $columnNames = [
         'id'     => 'id',
         'text'   => 'name',
         'parent' => 'parent_id',
     ];
 
-    /**
-     * @var array
-     */
     protected $nodes = [];
 
-    /**
-     * @var array
-     */
     protected $value = [];
 
-    /**
-     * @var bool
-     */
     protected $checkAll = false;
 
     public function __construct($nodes = [])

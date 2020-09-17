@@ -31,52 +31,6 @@ class DropdownActions extends Actions
         'delete'    => Delete::class,
     ];
 
-    /**
-     * Add JS script into pages.
-     *
-     * @return void.
-     */
-    protected function addScript()
-    {
-        $background = Admin::color()->dark20();
-        $checkbox = ".{$this->grid->getRowName()}-checkbox";
-
-        $script = <<<JS
-$(function() {
-  $('.table-responsive').on('shown.bs.dropdown', function(e) {
-    var t = $(this),
-      m = $(e.target).find('.dropdown-menu'),
-      tb = t.offset().top + t.height(),
-      mb = m.offset().top + m.outerHeight(true),
-      d = 20; // Space for shadow + scrollbar.   
-      
-    if (t[0].scrollWidth > t.innerWidth()) {
-      if (mb + d > tb) {
-        t.css('padding-bottom', ((mb + d) - tb));
-      }
-    } else {
-      t.css('overflow', 'visible');
-    }
-    
-    $(e.target).parents('tr').css({'background-color': '{$background}'});
-  }).on('hidden.bs.dropdown', function(e) {
-    $(this).css({
-      'padding-bottom': '',
-      'overflow': ''
-    });
-    
-    var tr = $(e.target).parents('tr').eq(0);
-    
-    if (! tr.find("{$checkbox}:checked").length) {
-        tr.css({'background-color': ''});
-    }
-  });
-});
-JS;
-
-        Admin::script($script);
-    }
-
     public function prepend($action)
     {
         return $this->append($action);
@@ -137,15 +91,14 @@ JS;
     {
         $this->resetDefaultActions();
 
-        $this->addScript();
-
         $this->call($callbacks);
 
         $this->prependDefaultActions();
 
         $actions = [
-            'default' => $this->default,
-            'custom'  => $this->appends,
+            'default'  => $this->default,
+            'custom'   => $this->appends,
+            'selector' => ".{$this->grid->getRowName()}-checkbox",
         ];
 
         return view('admin::grid.dropdown-actions', $actions);

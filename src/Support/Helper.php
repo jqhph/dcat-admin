@@ -646,6 +646,27 @@ class Helper
     }
 
     /**
+     * 判断给定的数组是是否包含给定元素.
+     *
+     * @param mixed $value
+     * @param array $array
+     *
+     * @return bool
+     */
+    public static function inArray($value, array $array)
+    {
+        $array = array_map(function ($v) {
+            if (is_scalar($v) || $v === null) {
+                $v = (string) $v;
+            }
+
+            return $v;
+        }, $array);
+
+        return in_array((string) $value, $array, true);
+    }
+
+    /**
      * Limit the number of characters in a string.
      *
      * @param string $value

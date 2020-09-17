@@ -209,7 +209,7 @@ abstract class Widget implements Renderable
             return;
         }
 
-        return view($this->view, $this->variables())->render();
+        return Admin::view($this->view, $this->variables());
     }
 
     /**

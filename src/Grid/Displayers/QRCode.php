@@ -10,7 +10,7 @@ use Dcat\Admin\Admin;
 class QRCode extends AbstractDisplayer
 {
     protected static $js = [
-        '@admin/dcat/plugins/jquery-qrcode/dist/jquery-qrcode.min.js',
+        '@qrcode',
     ];
 
     protected function addScript()

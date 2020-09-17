@@ -5,7 +5,7 @@
     <ul class="dropdown-menu" style="left: -65px;">
 
         @foreach($default as $action)
-            <li class="dropdown-item">{!! \Dcat\Admin\Support\Helper::render($action) !!}</li>
+            <li class="dropdown-item">{!! Dcat\Admin\Support\Helper::render($action) !!}</li>
         @endforeach
 
         @if(!empty($custom))

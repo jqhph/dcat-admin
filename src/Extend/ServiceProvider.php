@@ -81,19 +81,19 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
-        if ($views = $this->views()) {
-            $this->loadViewsFrom($views, $this->name());
+        if ($views = $this->getViewPath()) {
+            $this->loadViewsFrom($views, $this->getName());
         }
 
-        if ($lang = $this->lang()) {
-            $this->loadTranslationsFrom($lang, $this->name());
+        if ($lang = $this->getLangPath()) {
+            $this->loadTranslationsFrom($lang, $this->getName());
         }
 
-        if ($migrations = $this->migrations()) {
+        if ($migrations = $this->getMigrationPath()) {
             $this->loadMigrationsFrom($migrations);
         }
 
-        if ($routes = $this->routes()) {
+        if ($routes = $this->getRoutes()) {
             return $this->registerRoutes($routes);
         }
 
@@ -105,7 +105,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    final public function name()
+    final public function getName()
     {
         return $this->name ?: ($this->name = str_replace('/', '.', $this->composerProperty->name));
     }
@@ -141,7 +141,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     final public function enabled()
     {
-        return in_array($this->name(), Admin::setting()->getExtensionsEnabled(), true);
+        return in_array($this->getName(), Admin::setting()->getExtensionsEnabled(), true);
     }
 
     /**
@@ -209,7 +209,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    public function assets()
+    public function getAssetPath()
     {
         return $this->path('resources/assets');
     }
@@ -219,7 +219,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    public function views()
+    public function getViewPath()
     {
         return $this->path('resources/views');
     }
@@ -229,7 +229,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    public function migrations()
+    public function getMigrationPath()
     {
         return $this->path('database/migrations');
     }
@@ -239,7 +239,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    public function lang()
+    public function getLangPath()
     {
         return $this->path('resources/lang');
     }
@@ -251,7 +251,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @throws \ReflectionException
      */
-    public function routes()
+    public function getRoutes()
     {
         $path = $this->path('src/Http/routes.php');
 
@@ -263,7 +263,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return array
      */
-    public function menu()
+    protected function menu()
     {
         return $this->menu;
     }
@@ -271,7 +271,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     /**
      * @return array
      */
-    public function permission()
+    protected function permission()
     {
         return $this->permission;
     }
@@ -340,7 +340,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function registerAssets()
     {
         if ($this->js || $this->css) {
-            Admin::asset()->alias($this->name(), $this->js, $this->css);
+            Admin::asset()->alias($this->getName(), $this->js, $this->css);
         }
     }
 
