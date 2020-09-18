@@ -2,14 +2,16 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Admin;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 
 class Markdown extends Widget
 {
+    protected $view = 'admin::widgets.markdown';
+
     /**
-     * @var string
+     * @var string|Renderable
      */
     protected $content;
 
@@ -29,9 +31,7 @@ class Markdown extends Widget
 
     public function __construct($markdown = '')
     {
-        $markdown && $this->content($markdown);
-
-        Admin::collectAssets('@editor-md');
+        $this->content($markdown);
     }
 
     /**
@@ -46,27 +46,22 @@ class Markdown extends Widget
         return $this;
     }
 
-    protected function build()
+    protected function renderContent()
     {
-        if ($this->content instanceof Renderable) {
-            $this->content = $this->content->render();
-        }
-
-        return <<<EOF
-<div {$this->formatHtmlAttributes()}><textarea style="display:none;">{$this->content}</textarea></div>
-EOF;
+        return Helper::render($this->content);
     }
 
     public function render()
     {
-        $id = 'mkd-'.Str::random();
+        $id = 'mkd-'.Str::random(8);
 
         $this->defaultHtmlAttribute('id', $id);
 
-        $opts = json_encode($this->options);
+        $this->with([
+            'id'      => $id,
+            'content' => $this->renderContent(),
+        ]);
 
-        Admin::script("editormd.markdownToHTML('$id', $opts);");
-
-        return $this->build();
+        return parent::render();
     }
 }

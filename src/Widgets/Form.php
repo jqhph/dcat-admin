@@ -698,59 +698,16 @@ HTML;
     }
 
     /**
-     * @return void
-     */
-    protected function setUpSubmitScript()
-    {
-        $confirm = json_encode($this->confirm);
-
-        Admin::script(
-            <<<JS
-$('#{$this->getElementId()}').form({
-    validate: true,
-    confirm: {$confirm},
-    success: function (data) {
-        {$this->buildSuccessScript()}
-        {$this->addSavedScript()}
-    },
-    error: function (response) {
-        {$this->buildErrorScript()}
-        {$this->addErrorScript()}
-    }
-});
-JS
-        );
-    }
-
-    /**
      * @return string|void
-     *
-     * @deprecated 将在2.0版本中废弃，请用 addSavedScript 代替
      */
-    protected function buildSuccessScript()
+    protected function savedScript()
     {
     }
 
     /**
      * @return string|void
      */
-    protected function addSavedScript()
-    {
-    }
-
-    /**
-     * @return string|void
-     *
-     * @deprecated 将在2.0版本中废弃，请用 addErrorScript 代替
-     */
-    protected function buildErrorScript()
-    {
-    }
-
-    /**
-     * @return string|void
-     */
-    protected function addErrorScript()
+    protected function errorScript()
     {
     }
 
@@ -836,7 +793,12 @@ JS
         $this->prepareHandler();
 
         if ($this->allowAjaxSubmit()) {
-            $this->setUpSubmitScript();
+            $this->addVariables([
+                'elementId'   => $this->getElementId(),
+                'confirm'     => $this->confirm,
+                'savedScript' => $this->savedScript(),
+                'errorScript' => $this->errorScript(),
+            ]);
         }
 
         $tabObj = $this->getTab();
@@ -845,9 +807,11 @@ JS
             $tabObj->addScript();
         }
 
-        $this->addVariables(['tabObj' => $tabObj]);
+        $this->addVariables([
+            'tabObj' => $tabObj,
+        ]);
 
-        return view($this->view, $this->variables())->render();
+        return Admin::view($this->view, $this->variables());
     }
 
     /**

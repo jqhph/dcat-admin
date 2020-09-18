@@ -146,11 +146,13 @@ class SelectTable extends Field
             ->defaultAttribute('name', $name)
             ->defaultAttribute('id', 'container-'.$this->getElementId());
 
+        $dialog = $this->dialog->render();
+
         $this->addVariables([
             'prepend'      => $this->prepend,
             'append'       => $this->append,
             'style'        => $this->style,
-            'dialog'       => $this->dialog->render(),
+            'dialog'       => $dialog,
             'placeholder'  => $this->placeholder(),
             'dialogId'     => $this->dialog->id(),
             'dialogScript' => $this->dialog->getScript(),

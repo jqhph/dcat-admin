@@ -1015,6 +1015,28 @@ class Field implements Renderable
     }
 
     /**
+     * Get element class string.
+     *
+     * @return mixed
+     */
+    public function getElementClassString()
+    {
+        $elementClass = $this->getElementClass();
+
+        if (Arr::isAssoc($elementClass)) {
+            $classes = [];
+
+            foreach ($elementClass as $index => $class) {
+                $classes[$index] = is_array($class) ? implode(' ', $class) : $class;
+            }
+
+            return $classes;
+        }
+
+        return implode(' ', $elementClass);
+    }
+
+    /**
      * @return $this
      */
     public function hideInDialog()

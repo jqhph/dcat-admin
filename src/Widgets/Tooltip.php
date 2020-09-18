@@ -115,7 +115,7 @@ class Tooltip extends Widget
         return $this;
     }
 
-    protected function setupScript()
+    protected function addScript()
     {
         $background = $this->background ?: Admin::color()->primary(-5);
         $title = $this->title;
@@ -147,6 +147,6 @@ JS
         }
         $this->built = true;
 
-        $this->setupScript();
+        $this->addScript();
     }
 }

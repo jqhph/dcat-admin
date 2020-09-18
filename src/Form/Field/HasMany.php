@@ -557,6 +557,7 @@ class HasMany extends Field
             'relationName'   => $this->relationName,
             'options'        => $this->options,
             'templateScript' => implode(";\r\n", $scripts),
+            'count'          => count($this->value()),
         ]);
 
         return parent::render();

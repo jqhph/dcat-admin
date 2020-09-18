@@ -120,10 +120,10 @@ abstract class Widget implements Renderable
      */
     public function variables()
     {
-        return array_merge($this->variables, [
+        return array_merge([
             'attributes' => $this->formatHtmlAttributes(),
             'options'    => $this->options,
-        ]);
+        ], $this->variables);
     }
 
     /**
@@ -209,7 +209,11 @@ abstract class Widget implements Renderable
             return;
         }
 
-        return Admin::view($this->view, $this->variables());
+        $result = Admin::resolveHtml(view($this->view, $this->variables()), ['runScript' => $this->runScript]);
+
+        $this->script = $result['script'];
+
+        return $result['html'];
     }
 
     /**

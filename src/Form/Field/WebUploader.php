@@ -116,7 +116,7 @@ trait WebUploader
     }
 
     /**
-     * Disable remove file.
+     * 禁用前端删除功能.
      *
      * @param bool $value
      *
@@ -130,7 +130,7 @@ trait WebUploader
     }
 
     /**
-     * Set upload server.
+     * 设置图片删除地址.
      *
      * @param string $server
      *
@@ -144,6 +144,8 @@ trait WebUploader
     }
 
     /**
+     * 设置上传表单数据.
+     *
      * @param array $data
      *
      * @return $this
@@ -170,7 +172,21 @@ trait WebUploader
     }
 
     /**
-     * Set default options form file field.
+     * 是否开启图片压缩.
+     *
+     * @param bool|array $compress
+     *
+     * @return $this
+     */
+    public function compress($compress)
+    {
+        $this->options['compress'] = $compress;
+
+        return $this;
+    }
+
+    /**
+     * 默认上传配置.
      *
      * @return void
      */

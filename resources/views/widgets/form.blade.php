@@ -11,7 +11,6 @@
         @else
             @if($rows)
                 <div class="ml-2 mb-2">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @foreach($rows as $row)
                         {!! $row->render() !!}
                     @endforeach
@@ -53,3 +52,18 @@
     </div>
     @endif
 {!! $end !!}
+
+@if(! empty($elementId))
+<script>
+    $('#{{ $elementId }}').form({
+        validate: true,
+        confirm: {!! json_encode($confirm) !!},
+        success: function (data) {
+            {!! $savedScript !!}
+        },
+        error: function (response) {
+            {!! $errorScript !!}
+        }
+    });
+</script>
+@endif

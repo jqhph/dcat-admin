@@ -287,7 +287,7 @@ class Modal extends Widget
         return $this->on('hidden.bs.modal', $script);
     }
 
-    protected function addEventScript()
+    protected function addScript()
     {
         if (! $this->events) {
             return;
@@ -332,7 +332,7 @@ JS
     public function render()
     {
         $this->addLoadRenderableScript();
-        $this->addEventScript();
+        $this->addScript();
 
         if ($this->join) {
             return $this->renderButton().parent::render();
