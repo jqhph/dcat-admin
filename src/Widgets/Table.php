@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class Table extends Widget
@@ -82,7 +83,7 @@ class Table extends Widget
      */
     public function setRows($rows = [])
     {
-        if (! Arr::isAssoc($rows)) {
+        if ($rows && ! Arr::isAssoc(Helper::array($rows))) {
             $this->rows = $rows;
 
             return $this;

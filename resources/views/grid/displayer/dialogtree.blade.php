@@ -38,13 +38,13 @@
                     return Dcat.error(resp.message || '系统繁忙，请稍后再试');
                 }
 
-                build(resp.value);
+                open(resp.value);
             });
         } else {
-            build(val);
+            open(val);
         }
 
-        function build(val) {
+        function open(val) {
             options.config.core.data = formatNodes(val, options.nodes);
 
             idx = layer.open({

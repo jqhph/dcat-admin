@@ -74,17 +74,6 @@ class AdminServiceProvider extends ServiceProvider
         ],
     ];
 
-    public function boot()
-    {
-        $this->registerDefaultSections();
-        $this->registerViews();
-        $this->ensureHttps();
-        $this->bootApplication();
-        $this->registerPublishing();
-        $this->compatibleBlade();
-        $this->bootExtensions();
-    }
-
     public function register()
     {
         require_once __DIR__.'/Support/AdminSection.php';
@@ -100,6 +89,18 @@ class AdminServiceProvider extends ServiceProvider
         if (config('app.debug')) {
             $this->commands($this->devCommands);
         }
+    }
+
+    public function boot()
+    {
+        $this->registerDefaultSections();
+        $this->registerViews();
+        $this->ensureHttps();
+        $this->bootApplication();
+        $this->registerPublishing();
+        $this->compatibleBlade();
+        $this->bootExtensions();
+        $this->registerBladeDirective();
     }
 
     protected function aliasAdmin()
@@ -226,6 +227,25 @@ class AdminServiceProvider extends ServiceProvider
     protected function bootExtensions()
     {
         Admin::extensions()->boot();
+    }
+
+    protected function registerBladeDirective()
+    {
+        Blade::directive('color', function ($color = 'primary', $amt = 0) {
+            $color = $amt ? admin_color()->darken($color, $amt) : admin_color($color);
+
+            return <<<PHP
+<?php echo "{$color}";?>
+PHP;
+        });
+
+        Blade::directive('primary', function ($amt = 0) {
+            $color = $amt ? admin_color()->darken('primary', $amt) : admin_color('primary');
+
+            return <<<PHP
+<?php echo "{$color}";?>
+PHP;
+        });
     }
 
     /**

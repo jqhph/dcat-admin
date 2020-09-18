@@ -1,21 +1,15 @@
 <style>
-    @php($primary = admin_color()->primary())
-
     .webuploader-pick {
-        background-color: {!! $primary !!}
-    }
-
-    .web-uploader .placeholder .webuploader-pick {
-        background: {!! admin_color()->lighten('primary', 12) !!};
+        background-color: @primary;
     }
 
     .web-uploader .placeholder .flashTip a {
-        color: {!! admin_color()->lighten('primary', 12) !!};
+        color: @primary(-10);
     }
 
     .web-uploader .statusBar .upload-progress span.percentage,
     .web-uploader .filelist li p.upload-progress span {
-        background: {!! admin_color()->lighten('primary', 10) !!};
+        background: @primary(-8);
     }
 </style>
 
