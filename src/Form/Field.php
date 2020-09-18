@@ -391,17 +391,24 @@ class Field implements Renderable
      */
     protected function formatFieldData($data)
     {
-        if (is_array($this->column)) {
+        $column = $this->normalizeColumn();
+
+        if (is_array($column)) {
             $value = [];
 
-            foreach ($this->column as $key => $column) {
+            foreach ($column as $key => $column) {
                 $value[$key] = Arr::get($data, $column);
             }
 
             return $value;
         }
 
-        return Arr::get($data, $this->column, $this->value);
+        return Arr::get($data, $column, $this->value);
+    }
+
+    protected function normalizeColumn()
+    {
+        return str_replace('->', '.', $this->column);
     }
 
     /**
@@ -955,7 +962,7 @@ class Field implements Renderable
      */
     public function setElementClass($class)
     {
-        $this->elementClass = array_merge($this->elementClass, (array) $class);
+        $this->elementClass = array_merge($this->elementClass, (array) $this->normalizeElementClass($class));
 
         return $this;
     }
@@ -968,14 +975,24 @@ class Field implements Renderable
     public function getElementClass()
     {
         if (! $this->elementClass) {
-            $name = $this->getElementName();
-
-            $this->elementClass = array_map(function ($v) {
-                return static::FIELD_CLASS_PREFIX.$v;
-            }, (array) str_replace(['[', ']'], '_', $name));
+            $this->elementClass = $this->normalizeElementClass((array) $this->getElementName());
         }
 
         return $this->elementClass;
+    }
+
+    /**
+     * @param string|array $class
+     *
+     * @return array|string
+     */
+    public function normalizeElementClass($class)
+    {
+        if (is_array($class)) {
+            return array_map([$this, 'normalizeElementClass'], $class);
+        }
+
+        return static::FIELD_CLASS_PREFIX.str_replace(['[', ']', '->', '.'], '_', $class);
     }
 
     /**
