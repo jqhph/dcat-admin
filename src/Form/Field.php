@@ -391,24 +391,22 @@ class Field implements Renderable
      */
     protected function formatFieldData($data)
     {
-        $column = $this->normalizeColumn();
-
-        if (is_array($column)) {
+        if (is_array($this->column)) {
             $value = [];
 
-            foreach ($column as $key => $column) {
-                $value[$key] = Arr::get($data, $column);
+            foreach ($this->column as $key => $column) {
+                $value[$key] = Arr::get($data, $this->normalizeColumn($column));
             }
 
             return $value;
         }
 
-        return Arr::get($data, $column, $this->value);
+        return Arr::get($data, $this->normalizeColumn(), $this->value);
     }
 
-    protected function normalizeColumn()
+    protected function normalizeColumn(?string $column = null)
     {
-        return str_replace('->', '.', $this->column);
+        return str_replace('->', '.', $column ?: $this->column);
     }
 
     /**
