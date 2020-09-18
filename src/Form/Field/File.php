@@ -118,7 +118,7 @@ class File extends Field implements UploadFieldInterface
 
     protected function formatFieldData($data)
     {
-        return Helper::array(Arr::get($data, $this->column));
+        return Helper::array(Arr::get($data, $this->normalizeColumn()));
     }
 
     /**

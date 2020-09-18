@@ -53,15 +53,6 @@ class ArrayField extends HasMany
             ->toArray();
     }
 
-    public function value($value = null)
-    {
-        if ($value === null) {
-            return Helper::array(parent::value($value));
-        }
-
-        return parent::value($value);
-    }
-
     public function buildNestedForm($key = null)
     {
         $form = new NestedForm($this->column);

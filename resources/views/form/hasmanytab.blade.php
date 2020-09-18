@@ -79,7 +79,7 @@
         }
     });
 
-    var nestedIndex = 0;
+    var nestedIndex = {!! $count !!};
 
     function replaceNestedFormIndex(value) {
         return String(value).replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);

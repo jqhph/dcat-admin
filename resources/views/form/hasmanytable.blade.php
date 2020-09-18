@@ -81,7 +81,7 @@
 {{--<hr style="margin-top: 0px;">--}}
 
 <script>
-    var nestedIndex = 0,
+    var nestedIndex = {!! $count !!},
         container = '.has-many-{{ $column }}';
 
     function replaceNestedFormIndex(value) {

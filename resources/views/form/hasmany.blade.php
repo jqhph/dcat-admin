@@ -60,7 +60,7 @@
 </div>
 
 <script>
-    var nestedIndex = 0,
+    var nestedIndex = {!! $count !!},
         container = '.has-many-{{ $column }}',
         forms = '.has-many-{{ $column  }}-forms';
 

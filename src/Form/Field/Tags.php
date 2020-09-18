@@ -41,7 +41,7 @@ class Tags extends Field
      */
     protected function formatFieldData($data)
     {
-        $value = Arr::get($data, $this->column);
+        $value = Arr::get($data, $this->normalizeColumn());
 
         if (is_array($value) && $this->keyAsValue) {
             $value = array_column($value, $this->visibleColumn, $this->key);

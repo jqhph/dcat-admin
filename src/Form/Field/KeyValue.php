@@ -22,7 +22,7 @@ class KeyValue extends Field
     {
         $this->data = $data;
 
-        return Helper::array(Arr::get($data, $this->column, $this->value));
+        return Helper::array(Arr::get($data, $this->normalizeColumn(), $this->value));
     }
 
     /**

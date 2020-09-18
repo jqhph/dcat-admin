@@ -457,6 +457,15 @@ class HasMany extends Field
         return $this;
     }
 
+    public function value($value = null)
+    {
+        if ($value === null) {
+            return Helper::array(parent::value($value));
+        }
+
+        return parent::value($value);
+    }
+
     /**
      * Render the `HasMany` field.
      *
@@ -486,6 +495,7 @@ class HasMany extends Field
             'relationName'   => $this->relationName,
             'options'        => $this->options,
             'templateScript' => $script,
+            'count'          => count($this->value()),
         ]);
 
         return parent::render();

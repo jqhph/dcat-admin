@@ -399,13 +399,18 @@ class Field implements Renderable
             $value = [];
 
             foreach ($this->column as $key => $column) {
-                $value[$key] = Arr::get($data, $column);
+                $value[$key] = Arr::get($data, $this->normalizeColumn($column));
             }
 
             return $value;
         }
 
-        return Arr::get($data, $this->column, $this->value);
+        return Arr::get($data, $this->normalizeColumn(), $this->value);
+    }
+
+    protected function normalizeColumn(?string $column = null)
+    {
+        return str_replace('->', '.', $column ?: $this->column);
     }
 
     /**
@@ -951,7 +956,7 @@ class Field implements Renderable
      */
     public function setElementClass($class)
     {
-        $this->elementClass = array_merge($this->elementClass, (array) $class);
+        $this->elementClass = array_merge($this->elementClass, (array) $this->normalizeElementClass($class));
 
         return $this;
     }
@@ -964,36 +969,24 @@ class Field implements Renderable
     public function getElementClass()
     {
         if (! $this->elementClass) {
-            $name = $this->getElementName();
-
-            $this->elementClass = array_map(function ($v) {
-                return static::FIELD_CLASS_PREFIX.$v;
-            }, (array) str_replace(['[', ']'], '_', $name));
+            $this->elementClass = $this->normalizeElementClass((array) $this->getElementName());
         }
 
         return $this->elementClass;
     }
 
     /**
-     * Get element class string.
+     * @param string|array $class
      *
-     * @return mixed
+     * @return array|string
      */
-    public function getElementClassString()
+    public function normalizeElementClass($class)
     {
-        $elementClass = $this->getElementClass();
-
-        if (Arr::isAssoc($elementClass)) {
-            $classes = [];
-
-            foreach ($elementClass as $index => $class) {
-                $classes[$index] = is_array($class) ? implode(' ', $class) : $class;
-            }
-
-            return $classes;
+        if (is_array($class)) {
+            return array_map([$this, 'normalizeElementClass'], $class);
         }
 
-        return implode(' ', $elementClass);
+        return static::FIELD_CLASS_PREFIX.str_replace(['[', ']', '->', '.'], '_', $class);
     }
 
     /**

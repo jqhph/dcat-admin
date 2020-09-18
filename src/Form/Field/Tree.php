@@ -211,9 +211,7 @@ class Tree extends Field
 
     protected function formatFieldData($data)
     {
-        $value = Arr::get($data, $this->column);
-
-        return Helper::array($value, true);
+        return Helper::array(Arr::get($data, $this->normalizeColumn()), true);
     }
 
     protected function prepareInputValue($value)
