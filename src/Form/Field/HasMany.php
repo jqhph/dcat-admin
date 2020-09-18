@@ -472,6 +472,8 @@ class HasMany extends Field
     {
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
 
+        $count = count($this->value());
+
         /**
          * When add a new sub form, replace all element key in new sub form.
          *
@@ -481,7 +483,7 @@ class HasMany extends Field
          */
         $script = <<<JS
 (function () {
-    var nestedIndex = 0;
+    var nestedIndex = {$count};
     
     {$this->makeReplaceNestedIndexScript()}
     
@@ -517,6 +519,8 @@ JS;
     {
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
 
+        $count = count($this->value());
+
         $script = <<<JS
 (function () {
     $('{$this->getContainerElementSelector()} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
@@ -537,7 +541,7 @@ JS;
         
     {$this->makeReplaceNestedIndexScript()}
     
-    var nestedIndex = 0;
+    var nestedIndex = {$count};
     $('{$this->getContainerElementSelector()} > .header').off('click', '.add').on('click', '.add', function(){
         nestedIndex++;
         var navTabHtml = replaceNestedFormIndex($('{$this->getContainerElementSelector()} > template.nav-tab-tpl').html());
@@ -574,6 +578,8 @@ JS;
     {
         $removeClass = NestedForm::REMOVE_FLAG_CLASS;
 
+        $count = count($this->value());
+
         /**
          * When add a new sub form, replace all element key in new sub form.
          *
@@ -583,7 +589,7 @@ JS;
          */
         $script = <<<JS
 (function () {
-    var nestedIndex = 0;
+    var nestedIndex = {$count};
     
     {$this->makeReplaceNestedIndexScript()}
     
@@ -651,6 +657,15 @@ JS;
         $this->options['allowDelete'] = false;
 
         return $this;
+    }
+
+    public function value($value = null)
+    {
+        if ($value === null) {
+            return Helper::array(parent::value($value));
+        }
+
+        return parent::value($value);
     }
 
     /**
