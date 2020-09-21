@@ -266,7 +266,7 @@ class EmbeddedForm
 
         $this->fields->push($field);
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         return $this;
     }

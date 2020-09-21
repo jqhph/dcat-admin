@@ -72,7 +72,7 @@ class ScaffoldController extends Controller
             return $this->singular($tableName);
         }
 
-        Admin::collectAssets('select2');
+        Admin::requireAssets('select2');
 
         $dbTypes = static::$dbTypes;
         $dataTypeMap = static::$dataTypeMap;

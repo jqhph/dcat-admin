@@ -6,7 +6,7 @@
         var Dcat = CreateDcat({!! Dcat\Admin\Admin::jsVariables() !!});
     </script>
 
-    {!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
+    {!! admin_section(Dcat\Admin\Admin::SECTION['BODY_INNER_BEFORE']) !!}
 
     <div class="wrapper">
         @include('admin::partials.sidebar')
@@ -35,7 +35,7 @@
         </p>
     </footer>
 
-    {!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
+    {!! admin_section(Dcat\Admin\Admin::SECTION['BODY_INNER_AFTER']) !!}
 
     {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}
 

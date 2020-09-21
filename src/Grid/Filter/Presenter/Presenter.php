@@ -133,7 +133,7 @@ abstract class Presenter
     /**
      * Collect assets.
      */
-    public static function collectAssets()
+    public static function requireAssets()
     {
         if (static::$js) {
             Admin::js(static::$js);

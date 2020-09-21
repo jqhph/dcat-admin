@@ -138,21 +138,17 @@ class SelectTable extends Field
         $this->setUpTable();
         $this->formatOptions();
 
-        $name = $this->getElementName();
-
         $this->prepend('<i class="feather icon-arrow-up"></i>')
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('type', 'text')
-            ->defaultAttribute('name', $name)
+            ->defaultAttribute('name', $this->getElementName())
             ->defaultAttribute('id', 'container-'.$this->getElementId());
-
-        $dialog = $this->dialog->render();
 
         $this->addVariables([
             'prepend'      => $this->prepend,
             'append'       => $this->append,
             'style'        => $this->style,
-            'dialog'       => $dialog,
+            'dialog'       => $this->dialog->render(),
             'placeholder'  => $this->placeholder(),
             'dialogId'     => $this->dialog->id(),
             'dialogScript' => $this->dialog->getScript(),

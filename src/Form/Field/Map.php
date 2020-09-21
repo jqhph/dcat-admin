@@ -19,7 +19,7 @@ class Map extends Field
      *
      * @return void
      */
-    public static function collectAssets()
+    public static function requireAssets()
     {
         $keys = config('admin.map.keys');
 

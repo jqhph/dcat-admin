@@ -231,9 +231,8 @@ class Tree extends Field
             1 => trans('admin.selectall'),
             2 => trans('admin.expand'),
         ]);
-        if ($this->readOnly) {
-            $checkboxes->disable(1);
-        }
+
+        $this->readOnly && $checkboxes->disable(1);
 
         $this->expand && $checkboxes->check(2);
 

@@ -336,7 +336,7 @@ class NestedForm
             'key'      => $this->key,
         ]);
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         return $this;
     }

@@ -344,11 +344,11 @@ class Asset
      *
      * @param string|array $alias
      */
-    public function collect($alias)
+    public function require($alias)
     {
         if (is_array($alias)) {
             foreach ($alias as $v) {
-                $this->collect($v);
+                $this->require($v);
             }
 
             return;

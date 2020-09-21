@@ -1,14 +1,16 @@
-<span style="cursor: pointer" id="button-{{ $id }}">{!! $button !!}</span>
+<span>
+    <span style="cursor: pointer" id="button-{{ $id }}">{!! $button !!}</span>
 
-<template id="temp-{$this->id()}">
-    <div {!! $attributes !!}>
-        <div class="p-2 dialog-body">{!! $table !!}</div>
+    <template id="temp-{{ $id }}">
+        <div {!! $attributes !!}>
+            <div class="p-2 dialog-body">{!! $table !!}</div>
 
-        @if($footer)
-        <div class="dialog-footer layui-layer-btn">{!! $footer !!}</div>
-        @endif
-    </div>
-</template>
+            @if($footer)
+                <div class="dialog-footer layui-layer-btn">{!! $footer !!}</div>
+            @endif
+        </div>
+    </template>
+</span>
 
 <script>
     var id = replaceNestedFormIndex('{{ $id }}'),
@@ -39,6 +41,10 @@
                 setDataId($(_id));
 
                 {!! $events['shown'] !!}
+
+                @if(!empty($events['load']))
+                    $(_tb).on('table:loaded', function (event) { {!! $events['load'] !!} });
+                @endif
 
                 setTimeout(function () {
                     Dcat.grid.AsyncTable({container: _tb});

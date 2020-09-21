@@ -57,7 +57,7 @@ class BlockForm extends WidgetForm
         $field->setForm($this->form);
         $field->width($this->width['field'], $this->width['label']);
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         return $this;
     }

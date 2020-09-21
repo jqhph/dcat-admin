@@ -129,7 +129,7 @@ class Between extends AbstractFilter
     {
         $this->view = 'admin::filter.between-datetime';
 
-        DateTime::collectAssets();
+        DateTime::requireAssets();
 
         $this->setupDatetime($options);
 

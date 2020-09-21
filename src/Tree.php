@@ -141,7 +141,7 @@ class Tree implements Renderable
         $this->elementId .= Str::random(8);
 
         $this->setupTools();
-        $this->collectAssets();
+        $this->requireAssets();
 
         if ($callback instanceof \Closure) {
             call_user_func($callback, $this);
@@ -185,9 +185,9 @@ class Tree implements Renderable
     /**
      * Collect assets.
      */
-    protected function collectAssets()
+    protected function requireAssets()
     {
-        Admin::collectAssets('jquery.nestable');
+        Admin::requireAssets('jquery.nestable');
     }
 
     /**

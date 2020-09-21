@@ -32,12 +32,12 @@
 
     <div class="content-body" id="app">
         {{-- 页面埋点--}}
-        {!! admin_section(AdminSection::APP_INNER_BEFORE) !!}
+        {!! admin_section(Dcat\Admin\Admin::SECTION['APP_INNER_BEFORE']) !!}
 
         @yield('content')
 
         {{-- 页面埋点--}}
-        {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
+        {!! admin_section(Dcat\Admin\Admin::SECTION['APP_INNER_AFTER']) !!}
     </div>
 
     {!! Dcat\Admin\Admin::asset()->scriptToHtml() !!}

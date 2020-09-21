@@ -312,7 +312,7 @@ class Form implements Renderable
 
         $field->width($width['field'], $width['label']);
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         return $this;
     }

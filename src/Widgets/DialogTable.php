@@ -183,17 +183,8 @@ class DialogTable extends Widget
         return $this->table;
     }
 
-    protected function addScript()
-    {
-        if ($this->events['load']) {
-            $this->table->onLoad($this->events['load']);
-        }
-    }
-
     public function render()
     {
-        $this->addScript();
-
         $this->with([
             'id'     => $this->id(),
             'title'  => $this->title,

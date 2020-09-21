@@ -23,6 +23,55 @@ class Setting extends Fluent
     }
 
     /**
+     * 设置配置信息.
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function set($key, $value = null)
+    {
+        $data = is_array($key) ? $key : [$key => $value];
+
+        foreach ($data as $key => $value) {
+            Arr::set($this->attributes, $key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * 保存配置到数据库
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function save(array $data = [])
+    {
+        if ($data) {
+            $this->set($data);
+        }
+
+        foreach ($this->attributes as $key => $value) {
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+
+            $model = Model::query()
+                ->where('slug', $key)
+                ->first() ?: new Model();
+
+            $model->fill([
+                'slug'  => $key,
+                'value' => (string) $value,
+            ])->save();
+        }
+
+        return $this;
+    }
+
+    /**
      * 获取启用的扩展.
      *
      * @return array

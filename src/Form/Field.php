@@ -211,7 +211,17 @@ class Field implements Renderable
     /**
      * @var array
      */
-    protected $labelClass = [];
+    protected $labelClass = ['text-capitalize'];
+
+    /**
+     * @var array
+     */
+    protected $fieldClass = [];
+
+    /**
+     * @var array
+     */
+    protected $formGroupClass = ['form-field'];
 
     /**
      * @var \Closure[]
@@ -938,13 +948,17 @@ class Field implements Renderable
     {
         if ($this->horizontal) {
             return [
-                'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()} text-capitalize",
-                'field'      => "col-md-{$this->width['field']}",
-                'form-group' => 'form-group row form-field',
+                'label'      => "col-md-{$this->width['label']} {$this->getLabelClass()}",
+                'field'      => "col-md-{$this->width['field']} {$this->getFieldClass()}",
+                'form-group' => "form-group row {$this->getFormGroupClass()}",
             ];
         }
 
-        return ['label' => $this->getLabelClass().' text-capitalize', 'field' => '', 'form-group' => 'form-field'];
+        return [
+            'label'      => $this->getLabelClass(),
+            'field'      => $this->getFieldClass(),
+            'form-group' => $this->getFormGroupClass(),
+        ];
     }
 
     /**
@@ -1136,6 +1150,34 @@ class Field implements Renderable
         return implode(' ', $this->labelClass);
     }
 
+    public function setFormGroupClass($labelClass, bool $append = true)
+    {
+        $this->formGroupClass = $append
+            ? array_unique(array_merge($this->formGroupClass, (array) $labelClass))
+            : (array) $labelClass;
+
+        return $this;
+    }
+
+    public function getFormGroupClass()
+    {
+        return implode(' ', $this->formGroupClass);
+    }
+
+    public function setFieldClass($labelClass, bool $append = true)
+    {
+        $this->fieldClass = $append
+            ? array_unique(array_merge($this->fieldClass, (array) $labelClass))
+            : (array) $labelClass;
+
+        return $this;
+    }
+
+    public function getFieldClass()
+    {
+        return implode(' ', $this->fieldClass);
+    }
+
     /**
      * Get the view variables of this field.
      *
@@ -1259,7 +1301,7 @@ class Field implements Renderable
     /**
      * Collect assets required by this field.
      */
-    public static function collectAssets()
+    public static function requireAssets()
     {
         static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);

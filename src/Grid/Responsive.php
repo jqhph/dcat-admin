@@ -75,7 +75,7 @@ class Responsive
 
     public function build()
     {
-        Admin::collectAssets('rwd-table');
+        Admin::requireAssets('rwd-table');
 
         $this->disablePerfectScrollbar();
 

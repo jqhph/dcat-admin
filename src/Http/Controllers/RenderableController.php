@@ -47,8 +47,8 @@ class RenderableController
 
         $renderable->payload($request->all());
 
-        if (method_exists($renderable, 'collectAssets')) {
-            $renderable->collectAssets();
+        if (method_exists($renderable, 'requireAssets')) {
+            $renderable->requireAssets();
         }
 
         return $renderable;

@@ -6,6 +6,29 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\MessageBag;
 
+if (! function_exists('admin_setting')) {
+    /**
+     * @param string|array $key
+     * @param mixed         $default
+     *
+     * @return \Dcat\Admin\Support\Setting|mixed
+     */
+    function admin_setting($key = null, $default = [])
+    {
+        if ($key === null) {
+            return app('admin.setting');
+        }
+
+        if (is_array($key)) {
+            app('admin.setting')->save($key);
+
+            return;
+        }
+
+        return app('admin.setting')->get($key, $default);
+    }
+}
+
 if (! function_exists('admin_section')) {
     /**
      * Get the string contents of a section.

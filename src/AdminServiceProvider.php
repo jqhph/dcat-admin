@@ -76,8 +76,6 @@ class AdminServiceProvider extends ServiceProvider
 
     public function register()
     {
-        require_once __DIR__.'/Support/AdminSection.php';
-
         $this->aliasAdmin();
         $this->loadAdminAuthConfig();
         $this->registerRouteMiddleware();
@@ -186,14 +184,14 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerDefaultSections()
     {
         Content::composing(function () {
-            if (! admin_has_default_section(\AdminSection::NAVBAR_USER_PANEL)) {
-                admin_inject_default_section(\AdminSection::NAVBAR_USER_PANEL, function () {
+            if (! admin_has_default_section(Admin::SECTION['NAVBAR_USER_PANEL'])) {
+                admin_inject_default_section(Admin::SECTION['NAVBAR_USER_PANEL'], function () {
                     return view('admin::partials.navbar-user-panel', ['user' => Admin::user()]);
                 });
             }
 
-            if (! admin_has_default_section(\AdminSection::LEFT_SIDEBAR_USER_PANEL)) {
-                admin_inject_default_section(\AdminSection::LEFT_SIDEBAR_USER_PANEL, function () {
+            if (! admin_has_default_section(Admin::SECTION['LEFT_SIDEBAR_USER_PANEL'])) {
+                admin_inject_default_section(Admin::SECTION['LEFT_SIDEBAR_USER_PANEL'], function () {
                     return view('admin::partials.sidebar-user-panel', ['user' => Admin::user()]);
                 });
             }
@@ -221,24 +219,16 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerExtensions()
     {
-        Admin::extensions()->register();
+        Admin::extension()->register();
     }
 
     protected function bootExtensions()
     {
-        Admin::extensions()->boot();
+        Admin::extension()->boot();
     }
 
     protected function registerBladeDirective()
     {
-        Blade::directive('color', function ($color = 'primary', $amt = 0) {
-            $color = $amt ? admin_color()->darken($color, $amt) : admin_color($color);
-
-            return <<<PHP
-<?php echo "{$color}";?>
-PHP;
-        });
-
         Blade::directive('primary', function ($amt = 0) {
             $color = $amt ? admin_color()->darken('primary', $amt) : admin_color('primary');
 

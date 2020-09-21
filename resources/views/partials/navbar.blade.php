@@ -25,9 +25,9 @@
                 </div>
                 <ul class="nav navbar-nav float-right">
                     {{--User Account Menu--}}
-                    {!! admin_section(AdminSection::NAVBAR_USER_PANEL) !!}
+                    {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_USER_PANEL']) !!}
 
-                    {!! admin_section(AdminSection::NAVBAR_AFTER_USER_PANEL) !!}
+                    {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_AFTER_USER_PANEL']) !!}
                 </ul>
             </div>
         </div>

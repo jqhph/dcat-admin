@@ -22,21 +22,19 @@
     </div>
 </div>
 
-@php($formId = $formId ? '#'.$formId : '')
-
 <script require="@jstree">
-    var $tree = $('{!!$formId !!} .{{$class}}-tree-wrapper').find('.da-tree'),
+    var $tree = $('.{{ $class }}-tree-wrapper').find('.da-tree'),
+        $input = $('input[name="{{$name}}"].{{ $class }}'),
         opts = {!! $options !!},
-        $input = $('{!!$formId !!} input[name="{{$name}}"]'),
         parents = {!! $parents !!};
 
     opts.core = opts.core || {};
     opts.core.data = {!! $nodes !!};
 
-    $(document).on("click", "{!!$formId !!} .{{$class}}-tree-wrapper input[value=1]", function () {
+    $(document).on("click", ".{{$class}}-tree-wrapper input[value=1]", function () {
         $tree.jstree($(this).prop("checked") ? "check_all" : "uncheck_all");
     });
-    $(document).on("click", "{!!$formId !!} .{{$class}}-tree-wrapper input[value=2]", function () {
+    $(document).on("click", ".{{$class}}-tree-wrapper input[value=2]", function () {
         $tree.jstree($(this).prop("checked") ? "open_all" : "close_all");
     });
 

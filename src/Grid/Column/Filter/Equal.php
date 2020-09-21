@@ -66,7 +66,7 @@ class Equal extends Filter
     {
         $this->dateFormat = $format;
 
-        $this->collectAssets();
+        $this->requireAssets();
         $this->addDateScript();
 
         return $this;
@@ -111,9 +111,8 @@ class Equal extends Filter
         return $this->renderInput();
     }
 
-    protected function collectAssets()
+    protected function requireAssets()
     {
-        Admin::collectAssets('moment');
-        Admin::collectAssets('bootstrap-datetimepicker');
+        Admin::requireAssets(['moment', 'bootstrap-datetimepicker']);
     }
 }

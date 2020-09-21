@@ -262,7 +262,7 @@ class QuickCreate implements Renderable
 
         $field->setView($this->resolveView(get_class($field)));
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         $this->fields->push($field);
 

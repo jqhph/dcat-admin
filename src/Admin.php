@@ -22,24 +22,39 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 
-/**
- * Class Admin.
- */
 class Admin
 {
     use HasAssets;
     use HasHtml;
 
-    /**
-     * 版本号.
-     *
-     * @var string
-     */
     const VERSION = '2.0.0-beta';
 
-    /**
-     * @var string
-     */
+    const SECTION = [
+        // 往 <head> 标签内输入内容
+        'HEAD' => 'ADMIN_HEAD',
+
+        // 往body标签内部输入内容
+        'BODY_INNER_BEFORE' => 'ADMIN_BODY_INNER_BEFORE',
+        'BODY_INNER_AFTER' => 'ADMIN_BODY_INNER_AFTER',
+
+        // 往#app内部输入内容
+        'APP_INNER_BEFORE' => 'ADMIN_APP_INNER_BEFORE',
+        'APP_INNER_AFTER' => 'ADMIN_APP_INNER_AFTER',
+
+        // 顶部导航栏用户面板
+        'NAVBAR_USER_PANEL' => 'ADMIN_NAVBAR_USER_PANEL',
+        'NAVBAR_AFTER_USER_PANEL' => 'ADMIN_NAVBAR_AFTER_USER_PANEL',
+
+        // 侧边栏顶部用户信息面板
+        'LEFT_SIDEBAR_USER_PANEL' => 'ADMIN_LEFT_SIDEBAR_USER_PANEL',
+        // 菜单栏
+        'LEFT_SIDEBAR_MENU' => 'ADMIN_LEFT_SIDEBAR_MENU',
+        // 菜单栏顶部
+        'LEFT_SIDEBAR_MENU_TOP' => 'ADMIN_LEFT_SIDEBAR_MENU_TOP',
+        // 菜单栏底部
+        'LEFT_SIDEBAR_MENU_BOTTOM' => 'ADMIN_LEFT_SIDEBAR_MENU_BOTTOM',
+    ];
+
     private static $defaultPjaxContainerId = 'pjax-container';
 
     /**
@@ -298,7 +313,7 @@ class Admin
      *
      * @return \Dcat\Admin\Extend\Manager
      */
-    public static function extensions()
+    public static function extension()
     {
         return app('admin.extend');
     }

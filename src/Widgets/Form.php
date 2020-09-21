@@ -559,7 +559,7 @@ class Form implements Renderable
 
         $this->setFileUploadUrl($field);
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         return $this;
     }

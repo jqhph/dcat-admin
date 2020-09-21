@@ -148,7 +148,7 @@ abstract class Widget implements Renderable
     /**
      * 收集静态资源.
      */
-    public static function collectAssets()
+    public static function requireAssets()
     {
         static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);
@@ -179,7 +179,7 @@ abstract class Widget implements Renderable
      */
     public function render()
     {
-        static::collectAssets();
+        static::requireAssets();
 
         $html = $this->html();
 

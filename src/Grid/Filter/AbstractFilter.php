@@ -431,7 +431,7 @@ abstract class AbstractFilter
     {
         $presenter->setParent($this);
 
-        $presenter::collectAssets();
+        $presenter::requireAssets();
 
         return $this->presenter = $presenter;
     }

@@ -254,7 +254,7 @@ select.form-control:not([multiple=multiple]) {
 }
 .form-control-position {
   position: absolute;
-  top: 2px;
+  top: 0;
   right: 0;
   z-index: 2;
   display: block;

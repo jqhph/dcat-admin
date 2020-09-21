@@ -52,8 +52,8 @@ class Menu
      */
     public function register()
     {
-        if (! admin_has_default_section(\AdminSection::LEFT_SIDEBAR_MENU)) {
-            admin_inject_default_section(\AdminSection::LEFT_SIDEBAR_MENU, function () {
+        if (! admin_has_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'])) {
+            admin_inject_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'], function () {
                 $menuModel = config('admin.database.menu_model');
 
                 return $this->toHtml((new $menuModel())->allNodes());
@@ -73,7 +73,7 @@ class Menu
      */
     public function add(array $nodes = [], int $priority = 10)
     {
-        admin_inject_section(\AdminSection::LEFT_SIDEBAR_MENU_BOTTOM, function () use (&$nodes) {
+        admin_inject_section(Admin::SECTION['LEFT_SIDEBAR_MENU_BOTTOM'], function () use (&$nodes) {
             return $this->toHtml($nodes);
         }, true, $priority);
     }

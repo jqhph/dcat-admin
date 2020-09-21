@@ -24,7 +24,7 @@ abstract class LazyRenderable implements Renderable
         return new static(...$params);
     }
 
-    public static function collectAssets()
+    public static function requireAssets()
     {
         Admin::js(static::$js);
         Admin::css(static::$css);

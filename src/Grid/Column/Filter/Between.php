@@ -74,7 +74,7 @@ class Between extends Filter
     {
         $this->dateFormat = $format;
 
-        $this->collectAssets();
+        $this->requireAssets();
 
         return $this;
     }
@@ -198,9 +198,8 @@ JS;
 EOT;
     }
 
-    protected function collectAssets()
+    protected function requireAssets()
     {
-        Admin::collectAssets('moment');
-        Admin::collectAssets('bootstrap-datetimepicker');
+        Admin::requireAssets(['moment', 'bootstrap-datetimepicker']);
     }
 }

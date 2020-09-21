@@ -13,13 +13,13 @@ trait HasAssets
     }
 
     /**
-     * @param string $name
+     * @param string|array $name
      *
      * @return void
      */
-    public static function collectAssets(string $name)
+    public static function requireAssets($name)
     {
-        static::asset()->collect($name);
+        static::asset()->require($name);
     }
 
     /**

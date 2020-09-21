@@ -120,7 +120,7 @@ trait HasHtml
 
         if (! empty($script = trim($element->nodeValue))) {
             if ($require = $element->getAttribute('require')) {
-                static::asset()->collect(explode(',', $require));
+                static::asset()->require(explode(',', $require));
             }
 
             $script = '(function () {'.$script.'})();';

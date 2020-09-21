@@ -18,7 +18,7 @@
         <link rel="shortcut icon" href="{{$favicon}}">
     @endif
 
-    {!! admin_section(\AdminSection::HEAD) !!}
+    {!! admin_section(Dcat\Admin\Admin::SECTION['HEAD']) !!}
 
     {!! Dcat\Admin\Admin::asset()->headerJsToHtml() !!}
 
@@ -32,7 +32,7 @@
 </script>
 
 {{-- 页面埋点 --}}
-{!! admin_section(\AdminSection::BODY_INNER_BEFORE) !!}
+{!! admin_section(Dcat\Admin\Admin::SECTION['BODY_INNER_BEFORE']) !!}
 
 <div class="app-content content">
     <div class="wrapper" id="{{ $pjaxContainerId }}">
@@ -40,7 +40,7 @@
     </div>
 </div>
 
-{!! admin_section(\AdminSection::BODY_INNER_AFTER) !!}
+{!! admin_section(Dcat\Admin\Admin::SECTION['BODY_INNER_AFTER']) !!}
 
 {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}
 

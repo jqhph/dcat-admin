@@ -47,7 +47,7 @@ class Builder
             $this->flushStash();
         });
 
-        $this->collectAssets();
+        $this->requireAssets();
     }
 
     /**
@@ -347,9 +347,9 @@ class Builder
     /**
      * @return void
      */
-    protected function collectAssets()
+    protected function requireAssets()
     {
-        Admin::collectAssets('@smart-wizard');
+        Admin::requireAssets('@smart-wizard');
     }
 
     /**
