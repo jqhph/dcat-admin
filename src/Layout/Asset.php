@@ -38,9 +38,6 @@ class Asset
         '@nunito' => [
             'css' => ['https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i'],
         ],
-        '@montserrat' => [
-            'css' => ['https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600'],
-        ],
         '@dcat' => [
             'js'  => '@admin/dcat/js/dcat-app.js',
             'css' => '@admin/dcat/css/dcat-app.css',
@@ -383,9 +380,13 @@ class Asset
      *
      * @param array $css
      */
-    public function baseCss(array $css)
+    public function baseCss(array $css, bool $merge = false)
     {
-        $this->baseCss = $css;
+        if ($merge) {
+            $this->baseCss = array_merge($this->baseCss, $css);
+        } else {
+            $this->baseCss = $css;
+        }
     }
 
     /**
@@ -505,6 +506,7 @@ class Asset
         if (! $js) {
             return;
         }
+
         $this->headerJs = array_merge($this->headerJs, (array) $js);
     }
 
@@ -512,10 +514,15 @@ class Asset
      * 设置基础js脚本.
      *
      * @param array $js
+     * @param bool $merge
      */
-    public function baseJs(array $js)
+    public function baseJs(array $js, bool $merge = true)
     {
-        $this->baseJs = $js;
+        if ($merge) {
+            $this->baseJs = array_merge($this->baseJs, $js);
+        } else {
+            $this->baseJs = $js;
+        }
     }
 
     /**

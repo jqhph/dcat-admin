@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Extend;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Models\Extension as ExtensionModel;
 use Dcat\Admin\Support\Composer;
-use Dcat\Test\Test;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Collection;
 use RecursiveDirectoryIterator;
@@ -26,6 +26,11 @@ class Manager
      * @var array
      */
     protected $extensionPaths = [];
+
+    /**
+     * @var ExtensionModel[]|Collection
+     */
+    protected $settings;
 
     public function __construct(Container $app)
     {
@@ -52,10 +57,22 @@ class Manager
     public function boot()
     {
         foreach ($this->extensions as $extension) {
-            if ($extension->enabled()) {
+            if ($this->enabled($extension->getName())) {
                 $extension->boot();
             }
         }
+    }
+
+    /**
+     * 判断扩展是否启用.
+     *
+     * @param string|null $slug
+     *
+     * @return bool
+     */
+    public function enabled(?string $slug)
+    {
+        return (bool) optional($this->settings()->get($slug))->is_enabled;
     }
 
     /**
@@ -88,7 +105,7 @@ class Manager
     public function availableExtensions()
     {
         return $this->extensions()->filter(function (ServiceProvider $extension) {
-            return $extension->enabled();
+            return $this->enabled($extension->getName());
         });
     }
 
@@ -175,9 +192,34 @@ class Manager
         return $extensions;
     }
 
+    /**
+     * 添加扩展.
+     *
+     * @param \Dcat\Admin\Extend\ServiceProvider $serviceProvider
+     */
     public function addExtension(ServiceProvider $serviceProvider)
     {
         $this->extensions->put($serviceProvider->getName(), $serviceProvider);
+    }
+
+    /**
+     * 获取配置.
+     *
+     * @return ExtensionModel[]|Collection
+     */
+    public function settings()
+    {
+        if ($this->settings === null) {
+            try {
+                $this->settings = ExtensionModel::all()->keyBy('slug');
+            } catch (\Throwable $e) {
+                $this->reportException($e);
+
+                $this->settings = new Collection();
+            }
+        }
+
+        return $this->settings;
     }
 
     protected function registerPsr4($directory, array $psr4)
@@ -189,5 +231,10 @@ class Manager
 
             $classLoader->addPsr4($namespace, $path);
         }
+    }
+
+    protected function reportException(\Throwable $e)
+    {
+        logger()->error($e);
     }
 }

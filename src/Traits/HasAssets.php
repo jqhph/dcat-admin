@@ -38,12 +38,11 @@ trait HasAssets
      * Set base css.
      *
      * @param array $css
-     *
-     * @return array|void
+     * @param bool $merge
      */
-    public static function baseCss(array $css)
+    public static function baseCss(array $css, bool $merge = true)
     {
-        static::asset()->baseCss($css);
+        static::asset()->baseCss($css, $merge);
     }
 
     /**
@@ -74,12 +73,11 @@ trait HasAssets
      * Set base js.
      *
      * @param array $js
-     *
-     * @return void
+     * @param bool $merge
      */
-    public static function baseJs(array $js)
+    public static function baseJs(array $js, bool $merge = true)
     {
-        static::asset()->baseJs($js);
+        static::asset()->baseJs($js, $merge);
     }
 
     /**

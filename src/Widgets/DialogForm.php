@@ -302,8 +302,8 @@ JS
             return;
         }
 
-        Admin::baseCss([]);
-        Admin::baseJs([]);
+        Admin::baseCss([], false);
+        Admin::baseJs([], false);
         Admin::fonts(false);
         Admin::style('.form-content{ padding-top: 7px }');
 

@@ -55,11 +55,8 @@ trait HasHtml
     {
         $dom = static::getDOMDocument(Helper::render($content));
 
-        $head = $dom->getElementsByTagName('head')->item(0) ?: null;
-        $body = $dom->getElementsByTagName('body')->item(0) ?: null;
-
-        $head = static::resolveElement($head);
-        $body = static::resolveElement($body);
+        $head = static::resolveElement($dom->getElementsByTagName('head')->item(0) ?: null);
+        $body = static::resolveElement($dom->getElementsByTagName('body')->item(0) ?: null);
 
         $script = $head['script'].$body['script'];
 

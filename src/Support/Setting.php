@@ -72,20 +72,6 @@ class Setting extends Fluent
     }
 
     /**
-     * 获取启用的扩展.
-     *
-     * @return array
-     */
-    public function getExtensionsEnabled()
-    {
-        $value = $this->get('extensions_enabled') ?: '[]';
-
-        $value = json_decode($value, true);
-
-        return $value ?: [];
-    }
-
-    /**
      * @return static
      */
     public static function fromDatabase()

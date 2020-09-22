@@ -414,21 +414,19 @@ class Admin
             'prefix'     => admin_base_path('dcat-api'),
             'middleware' => config('admin.route.middleware'),
             'as'         => $as ?: static::app()->getApiRoutePrefix(Application::DEFAULT),
+            'namespace'  => 'Dcat\Admin\Http\Controllers',
         ];
 
         app('router')->group($attributes, function ($router) {
             /* @var \Illuminate\Routing\Router $router */
-            $router->namespace('Dcat\Admin\Http\Controllers')->group(function ($router) {
-                /* @var \Illuminate\Routing\Router $router */
-                $router->post('action', 'HandleActionController@handle')->name('action');
-                $router->post('form', 'HandleFormController@handle')->name('form');
-                $router->post('form/upload', 'HandleFormController@uploadFile')->name('form.upload');
-                $router->post('form/destroy-file', 'HandleFormController@destroyFile')->name('form.destroy-file');
-                $router->post('value', 'ValueController@handle')->name('value');
-                $router->get('render', 'RenderableController@handle')->name('render');
-                $router->post('tinymce/upload', 'TinymceController@upload')->name('tinymce.upload');
-                $router->post('editor-md/upload', 'EditorMDController@upload')->name('editor-md.upload');
-            });
+            $router->post('action', 'HandleActionController@handle')->name('action');
+            $router->post('form', 'HandleFormController@handle')->name('form');
+            $router->post('form/upload', 'HandleFormController@uploadFile')->name('form.upload');
+            $router->post('form/destroy-file', 'HandleFormController@destroyFile')->name('form.destroy-file');
+            $router->post('value', 'ValueController@handle')->name('value');
+            $router->get('render', 'RenderableController@handle')->name('render');
+            $router->post('tinymce/upload', 'TinymceController@upload')->name('tinymce.upload');
+            $router->post('editor-md/upload', 'EditorMDController@upload')->name('editor-md.upload');
         });
     }
 

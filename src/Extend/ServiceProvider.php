@@ -141,7 +141,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     final public function enabled()
     {
-        return in_array($this->getName(), Admin::setting()->getExtensionsEnabled(), true);
+        return Admin::extension()->enabled($this->getName());
     }
 
     /**

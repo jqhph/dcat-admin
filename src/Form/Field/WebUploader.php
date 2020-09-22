@@ -197,7 +197,7 @@ trait WebUploader
             'fileVal'             => WebUploaderHelper::FILE_NAME,
             'isImage'             => false,
             'disableRemove'       => false,
-            'chunked'             => true,
+            'chunked'             => false,
             'fileNumLimit'        => 10,
             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
             'disableGlobalDnd'    => true,

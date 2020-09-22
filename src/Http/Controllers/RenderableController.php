@@ -61,8 +61,8 @@ class RenderableController
 
     protected function forgetDefaultAssets()
     {
-        Admin::baseJs([]);
-        Admin::baseCss([]);
+        Admin::baseJs([], false);
+        Admin::baseCss([], false);
         Admin::fonts([]);
     }
 }
