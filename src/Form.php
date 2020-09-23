@@ -552,7 +552,7 @@ class Form implements Renderable
                 'message' => $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed'),
             ];
         } catch (\Throwable $exception) {
-            $response = Admin::makeExceptionHandler()->handle($exception);
+            $response = $this->handleException($exception);
 
             if ($response instanceof Response) {
                 return $response;
@@ -565,6 +565,16 @@ class Form implements Renderable
         }
 
         return response()->json($response);
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return mixed
+     */
+    protected function handleException(\Throwable $e)
+    {
+        return Admin::makeExceptionHandler()->handle($e);
     }
 
     /**
@@ -611,7 +621,7 @@ class Form implements Renderable
                 trans('admin.save_succeeded')
             );
         } catch (\Throwable $e) {
-            $response = Admin::makeExceptionHandler()->handle($e);
+            $response = $this->handleException($e);
 
             if ($response instanceof Response) {
                 return $response;
@@ -783,7 +793,7 @@ class Form implements Renderable
 
             return $this->redirect($this->redirectUrl($id, $redirectTo), trans('admin.update_succeeded'));
         } catch (\Throwable $e) {
-            $response = Admin::makeExceptionHandler()->handle($e);
+            $response = $this->handleException($e);
 
             if ($response instanceof Response) {
                 return $response;
@@ -1547,7 +1557,7 @@ class Form implements Renderable
 
             return $this->builder->render();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->handle($e);
+            return $this->handleException($e);
         }
     }
 

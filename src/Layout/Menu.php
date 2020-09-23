@@ -56,7 +56,7 @@ class Menu
             admin_inject_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'], function () {
                 $menuModel = config('admin.database.menu_model');
 
-                return $this->toHtml((new $menuModel())->allNodes());
+                return $this->toHtml((new $menuModel())->allNodes()->toArray());
             });
         }
 
@@ -87,9 +87,10 @@ class Menu
      *
      * @return string
      */
-    public function toHtml(array $nodes)
+    public function toHtml($nodes)
     {
         $html = '';
+
         foreach (Helper::buildNestedArray($nodes) as $item) {
             $html .= $this->render($item);
         }
@@ -114,7 +115,7 @@ class Menu
      *
      * @return string
      */
-    public function render(array $item)
+    public function render($item)
     {
         return view($this->view, ['item' => &$item, 'builder' => $this])->render();
     }
@@ -125,7 +126,7 @@ class Menu
      *
      * @return bool
      */
-    public function isActive(array $item, ?string $path = null)
+    public function isActive($item, ?string $path = null)
     {
         if (empty($path)) {
             $path = request()->path();
@@ -158,11 +159,11 @@ class Menu
      *
      * @return bool
      */
-    public function visible(array $item)
+    public function visible($item)
     {
         $permissionIds = $item['permission_id'] ?? null;
-        $roles = array_column($item['roles'] ?? [], 'slug');
-        $permissions = array_column($item['permissions'] ?? [], 'slug');
+        $roles = array_column(Helper::array($item['roles'] ?? []), 'slug');
+        $permissions = array_column(Helper::array($item['permissions'] ?? []), 'slug');
 
         if (! $permissionIds && ! $roles && ! $permissions) {
             return true;

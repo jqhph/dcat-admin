@@ -93,6 +93,8 @@ function listen(Dcat) {
         new Menu(Dcat);
         // 返回顶部按钮
         new Footer(Dcat);
+        // data-action 动作绑定(包括删除、批量删除等操作)
+        new DataActions(Dcat);
     });
 
     // 每个请求都初始化
@@ -108,9 +110,6 @@ function listen(Dcat) {
 
         // pjax初始化功能
         new Pjax(Dcat);
-        // data-action 动作绑定(包括删除、批量删除等操作)
-        new DataActions(Dcat);
-
     });
 }
 

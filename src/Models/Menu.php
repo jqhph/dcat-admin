@@ -82,9 +82,9 @@ class Menu extends Model implements Sortable
      *
      * @param bool $force
      *
-     * @return array
+     * @return static[]|\Illuminate\Support\Collection
      */
-    public function allNodes(bool $force = false): array
+    public function allNodes(bool $force = false)
     {
         if ($force || $this->queryCallbacks) {
             return $this->fetchAll();
@@ -98,9 +98,9 @@ class Menu extends Model implements Sortable
     /**
      * Fetch all elements.
      *
-     * @return array
+     * @return static[]|\Illuminate\Support\Collection
      */
-    public function fetchAll(): array
+    public function fetchAll()
     {
         return $this->withQuery(function ($query) {
             if (static::withPermission()) {

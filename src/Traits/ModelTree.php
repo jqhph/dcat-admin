@@ -31,26 +31,6 @@ trait ModelTree
     protected $queryCallbacks = [];
 
     /**
-     * Get children of current node.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function children()
-    {
-        return $this->hasMany(static::class, $this->getParentColumn());
-    }
-
-    /**
-     * Get parent of current node.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function parent()
-    {
-        return $this->belongsTo(static::class, $this->getParentColumn());
-    }
-
-    /**
      * @return string
      */
     public function getParentColumn()
@@ -114,14 +94,13 @@ trait ModelTree
     /**
      * Get all elements.
      *
-     * @return mixed
+     * @return static[]|\Illuminate\Support\Collection
      */
     public function allNodes()
     {
         return $this->callQueryCallbacks(new static())
             ->orderBy($this->getOrderColumn(), 'asc')
-            ->get()
-            ->toArray();
+            ->get();
     }
 
     /**
@@ -307,14 +286,14 @@ trait ModelTree
      *
      * @return array
      */
-    protected function buildSelectOptions(array $nodes = [], $parentId = 0, $prefix = '')
+    protected function buildSelectOptions($nodes = [], $parentId = 0, $prefix = '')
     {
         $prefix = $prefix ?: str_repeat('&nbsp;', 6);
 
         $options = [];
 
         if (empty($nodes)) {
-            $nodes = $this->allNodes();
+            $nodes = $this->allNodes()->toArray();
         }
 
         $titleColumn = $this->getTitleColumn();

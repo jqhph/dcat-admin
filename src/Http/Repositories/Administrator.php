@@ -21,15 +21,14 @@ class Administrator extends EloquentRepository
 
         $isPaginator = $results instanceof AbstractPaginator;
 
-        $items = collect($isPaginator ? $results->items() : $results)->toArray();
+        $items = $isPaginator ? $results->getCollection() : $results;
+        $items = is_array($items) ? collect($items) : $items;
 
-        if (! $items) {
+        if ($items->isEmpty()) {
             return $results;
         }
 
         $roleModel = config('admin.database.roles_model');
-
-        $items = collect($items);
 
         $roleKeyName = (new $roleModel())->getKeyName();
 
@@ -45,7 +44,7 @@ class Administrator extends EloquentRepository
             $items = $items->map(function ($v) use ($roleKeyName, $permissions) {
                 $v['permissions'] = [];
 
-                foreach (array_column($v['roles'], $roleKeyName) as $roleId) {
+                foreach ($v['roles']->pluck($roleKeyName) as $roleId) {
                     $v['permissions'] = array_merge($v['permissions'], $permissions->get($roleId, []));
                 }
 

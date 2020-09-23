@@ -319,13 +319,13 @@ class Helper
         $parentId = is_numeric($parentId) ? (int) $parentId : $parentId;
 
         foreach ($nodes as $node) {
-            $pk = Arr::get($node, $parentKeyName);
+            $pk = $node[$parentKeyName];
             $pk = is_numeric($pk) ? (int) $pk : $pk;
 
             if ($pk === $parentId) {
                 $children = static::buildNestedArray(
                     $nodes,
-                    Arr::get($node, $primaryKeyName),
+                    $node[$primaryKeyName],
                     $primaryKeyName,
                     $parentKeyName,
                     $childrenKeyName

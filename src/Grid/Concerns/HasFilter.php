@@ -13,7 +13,7 @@ trait HasFilter
      *
      * @var Grid\Filter
      */
-    protected $__filter;
+    protected $filter;
 
     /**
      * @var array
@@ -27,7 +27,7 @@ trait HasFilter
      */
     protected function setupFilter()
     {
-        $this->__filter = new Grid\Filter($this->model());
+        $this->filter = new Grid\Filter($this->model());
     }
 
     /**
@@ -46,7 +46,7 @@ trait HasFilter
         $this->applyColumnFilter();
         $this->applySelectorQuery();
 
-        return $this->__filter->execute($toArray);
+        return $this->filter->execute($toArray);
     }
 
     /**
@@ -59,10 +59,10 @@ trait HasFilter
     public function filter(Closure $callback = null)
     {
         if ($callback === null) {
-            return $this->__filter;
+            return $this->filter;
         }
 
-        call_user_func($callback, $this->__filter);
+        call_user_func($callback, $this->filter);
 
         return $this;
     }
@@ -100,7 +100,7 @@ trait HasFilter
             return '';
         }
 
-        return $this->__filter->render();
+        return $this->filter->render();
     }
 
     /**
@@ -110,7 +110,7 @@ trait HasFilter
      */
     public function expandFilter()
     {
-        $this->__filter->expand();
+        $this->filter->expand();
 
         return $this;
     }
@@ -122,7 +122,7 @@ trait HasFilter
      */
     public function disableFilter(bool $disable = true)
     {
-        $this->__filter->disableCollapse($disable);
+        $this->filter->disableCollapse($disable);
 
         return $this->option('show_filter', ! $disable);
     }

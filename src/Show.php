@@ -134,7 +134,7 @@ class Show implements Renderable
                 $this->key = $model->getKey();
                 $this->keyName = $model->getKeyName();
 
-                $this->model(new Fluent($model->toArray()));
+                $this->model($model);
             } else {
                 $this->repository = Admin::repository($model);
             }
@@ -144,6 +144,10 @@ class Show implements Renderable
             $this->model(new Fluent($model));
         } else {
             $this->model(new Fluent());
+        }
+
+        if (! $this->model && $this->repository) {
+            $this->model($this->repository->detail($this));
         }
     }
 
@@ -206,32 +210,23 @@ class Show implements Renderable
     }
 
     /**
-     * @param Fluent|null $model
+     * @param Fluent|\Illuminate\Database\Eloquent\Model|null $model
      *
-     * @return Fluent|$this
+     * @return Fluent|$this|\Illuminate\Database\Eloquent\Model
      */
-    public function model(Fluent $model = null)
+    public function model($model = null)
     {
         if ($model === null) {
-            if (! $this->model) {
-                $this->setupModel();
-            }
-
             return $this->model;
+        }
+
+        if (is_array($model)) {
+            $model = new Fluent($model);
         }
 
         $this->model = $model;
 
         return $this;
-    }
-
-    protected function setupModel()
-    {
-        if ($this->repository) {
-            $this->model(new Fluent($this->repository->detail($this)));
-        } else {
-            $this->model(new Fluent());
-        }
     }
 
     /**
@@ -706,8 +701,13 @@ class Show implements Renderable
 
             return view($this->view, $data)->render();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->handle($e);
+            return $this->handleException($e);
         }
+    }
+
+    protected function handleException(\Throwable $e)
+    {
+        return Admin::makeExceptionHandler()->handle($e);
     }
 
     /**

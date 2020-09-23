@@ -22,7 +22,9 @@ class UserController extends AdminController
     {
         return Grid::make(new Administrator('roles'), function (Grid $grid) {
             $grid->column('id', 'ID')->sortable();
-            $grid->column('username');
+            $grid->column('username')->prepend(function () {
+                return "<img src='{$this->getAvatar()}' data-action='preview-img' width='40' class='avatar img-circle' /> &nbsp; ";
+            });
             $grid->column('name');
 
             if (config('admin.permission.enable')) {

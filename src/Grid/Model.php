@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Middleware\Pjax;
 use Dcat\Admin\Repositories\Repository;
+use Dcat\Utils\Backtrace\BacktraceFormatter;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
@@ -424,10 +425,10 @@ class Model
             $this->setPaginator($data);
 
             $data = $data->getCollection();
-        } elseif (is_array($data)) {
+        } elseif ($data instanceof Collection) {
+
+        } elseif ($data instanceof Arrayable || is_array($data)) {
             $data = collect($data);
-        } elseif ($data instanceof Arrayable) {
-            $data = collect($data->toArray());
         }
 
         if ($data instanceof Collection) {

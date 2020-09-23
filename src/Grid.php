@@ -947,7 +947,7 @@ HTML;
 
             $this->setUpOptions();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->handle($e);
+            return $this->handleException($e);
         }
 
         return $this->doWrap();
@@ -965,6 +965,11 @@ HTML;
         }
 
         return $wrapper($view);
+    }
+
+    protected function handleException(\Throwable $e)
+    {
+        return Admin::makeExceptionHandler()->handle($e);
     }
 
     /**

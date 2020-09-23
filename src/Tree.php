@@ -556,7 +556,7 @@ JS;
 
             return $this->doWrap();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->handle($e);
+            return $this->handleException($e);
         }
     }
 
@@ -572,6 +572,11 @@ JS;
         }
 
         return $wrapper($view);
+    }
+
+    protected function handleException(\Throwable $e)
+    {
+        return Admin::makeExceptionHandler()->handle($e);
     }
 
     /**
