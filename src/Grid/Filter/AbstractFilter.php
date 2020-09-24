@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Filter;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Grid\Filter;
 use Dcat\Admin\Grid\Filter\Presenter\Checkbox;
 use Dcat\Admin\Grid\Filter\Presenter\DateTime;
@@ -654,7 +655,7 @@ abstract class AbstractFilter
             return $this->presenter()->{$method}(...$params);
         }
 
-        throw new \BadMethodCallException(sprintf(
+        throw new RuntimeException(sprintf(
             'Call to undefined method %s::%s()', static::class, $method
         ));
     }

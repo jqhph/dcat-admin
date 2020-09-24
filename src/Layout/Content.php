@@ -4,6 +4,7 @@ namespace Dcat\Admin\Layout;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
@@ -161,21 +162,21 @@ class Content implements Renderable
     protected function formatBreadcrumb(array &$breadcrumb)
     {
         if (! $breadcrumb) {
-            throw new \Exception('Breadcrumb format error!');
+            throw new RuntimeException('Breadcrumb format error!');
         }
 
         $notArray = false;
         foreach ($breadcrumb as &$item) {
             $isArray = is_array($item);
             if ($isArray && ! isset($item['text'])) {
-                throw new \Exception('Breadcrumb format error!');
+                throw new RuntimeException('Breadcrumb format error!');
             }
             if (! $isArray && $item) {
                 $notArray = true;
             }
         }
         if (! $breadcrumb) {
-            throw new \Exception('Breadcrumb format error!');
+            throw new RuntimeException('Breadcrumb format error!');
         }
         if ($notArray) {
             $breadcrumb = [

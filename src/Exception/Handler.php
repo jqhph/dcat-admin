@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Http\Exception;
+namespace Dcat\Admin\Exception;
 
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\MessageBag;

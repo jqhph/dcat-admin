@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Middleware\Pjax;
 use Dcat\Admin\Repositories\Repository;
@@ -485,7 +486,7 @@ class Model
             return $results->getCollection();
         }
 
-        throw new \Exception('Grid query error');
+        throw new AdminException('Grid query error');
     }
 
     /**

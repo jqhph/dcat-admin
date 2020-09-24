@@ -4,6 +4,7 @@ namespace Dcat\Admin;
 
 use Closure;
 use Dcat\Admin\Contracts\TreeRepository;
+use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Tree\AbstractTool;
@@ -176,7 +177,7 @@ class Tree implements Renderable
         if (! $repository instanceof TreeRepository) {
             $class = get_class($repository);
 
-            throw new \InvalidArgumentException("The class [{$class}] must be a type of [".TreeRepository::class.'].');
+            throw new InvalidArgumentException("The class [{$class}] must be a type of [".TreeRepository::class.'].');
         }
 
         return $repository;
@@ -342,7 +343,7 @@ class Tree implements Renderable
         $tree = json_decode($serialize, true);
 
         if (json_last_error() != JSON_ERROR_NONE) {
-            throw new \InvalidArgumentException(json_last_error_msg());
+            throw new InvalidArgumentException(json_last_error_msg());
         }
 
         $this->repository->saveOrder($tree);

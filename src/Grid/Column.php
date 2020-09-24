@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid;
 
 use Closure;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 use Dcat\Admin\Support\Helper;
@@ -621,7 +622,7 @@ class Column
         }
 
         if (! class_exists($class) || ! is_subclass_of($class, AbstractDisplayer::class)) {
-            throw new \Exception("Invalid column definition [$class]");
+            throw new RuntimeException("Invalid column definition [$class]");
         }
 
         $this->displayUsing($class);

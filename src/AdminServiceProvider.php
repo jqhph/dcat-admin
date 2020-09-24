@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin;
 
+use Dcat\Admin\Extend\UpdateManager;
+use Dcat\Admin\Extend\VersionManager;
 use Dcat\Admin\Layout\Asset;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
@@ -208,6 +210,12 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton('admin.color', Color::class);
         $this->app->singleton('admin.sections', SectionManager::class);
         $this->app->singleton('admin.extend', Manager::class);
+        $this->app->singleton('admin.extend.update', function () {
+            return new UpdateManager(app('admin.extend'));
+        });
+        $this->app->singleton('admin.extend.version', function () {
+            return new VersionManager(app('admin.extend'));
+        });
         $this->app->singleton('admin.navbar', Navbar::class);
         $this->app->singleton('admin.menu', Menu::class);
         $this->app->singleton('admin.context', Context::class);

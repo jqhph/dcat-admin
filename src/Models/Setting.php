@@ -10,4 +10,13 @@ class Setting extends Model
     protected $primaryKey = 'slug';
     public $incrementing = false;
     protected $fillable = ['slug', 'value'];
+
+    public function __construct(array $attributes = [])
+    {
+        $connection = config('admin.database.connection') ?: config('database.default');
+
+        $this->setConnection($connection);
+
+        parent::__construct($attributes);
+    }
 }

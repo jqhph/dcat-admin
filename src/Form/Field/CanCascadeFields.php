@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Form;
 use Illuminate\Support\Arr;
 
@@ -219,7 +220,7 @@ var checked = $('{$this->getElementClassSelector()}:checked').map(function(){
 }).get();
 JS;
             default:
-                throw new \InvalidArgumentException('Invalid form field type');
+                throw new RuntimeException('Invalid form field type');
         }
     }
 }

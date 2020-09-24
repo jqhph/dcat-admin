@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Extend;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Support\ComposerProperty;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
@@ -125,7 +126,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
             $this->path = realpath(dirname((new \ReflectionClass(static::class))->getFileName()).'/..');
 
             if (! is_dir($this->path)) {
-                throw new \Exception("The {$this->path} is not a directory.");
+                throw new RuntimeException("The {$this->path} is not a directory.");
             }
         }
 

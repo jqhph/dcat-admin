@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Grid\Filter\AbstractFilter;
 use Dcat\Admin\Grid\Filter\Between;
 use Dcat\Admin\Grid\Filter\Date;
@@ -776,7 +777,7 @@ class Filter implements Renderable
         if (! empty(static::$supports[$method])) {
             $class = static::$supports[$method];
             if (! is_subclass_of($class, AbstractFilter::class)) {
-                throw new \InvalidArgumentException("The class [{$class}] must be a type of ".AbstractFilter::class.'.');
+                throw new RuntimeException("The class [{$class}] must be a type of ".AbstractFilter::class.'.');
             }
 
             return $this->addFilter(new $class(...$arguments));

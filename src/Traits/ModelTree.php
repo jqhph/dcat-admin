@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Tree;
 use Illuminate\Database\Eloquent\Builder;
@@ -340,7 +341,7 @@ trait ModelTree
                 && Request::has($parentColumn)
                 && Request::input($parentColumn) == $branch->getKey()
             ) {
-                throw new \Exception(trans('admin.parent_select_error'));
+                throw new AdminException(trans('admin.parent_select_error'));
             }
 
             if (Request::has('_order')) {

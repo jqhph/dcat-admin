@@ -4,6 +4,7 @@ namespace Dcat\Admin\Http\Middleware;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Auth\Permission as Checker;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -69,7 +70,7 @@ class Permission
         $method = array_shift($args);
 
         if (! method_exists(Checker::class, $method)) {
-            throw new \InvalidArgumentException("Invalid permission method [$method].");
+            throw new RuntimeException("Invalid permission method [$method].");
         }
 
         call_user_func_array([Checker::class, $method], [$args]);

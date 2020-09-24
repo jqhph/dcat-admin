@@ -4,8 +4,9 @@ namespace Dcat\Admin;
 
 use Closure;
 use Dcat\Admin\Contracts\Repository;
+use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Http\Controllers\AuthController;
-use Dcat\Admin\Http\Exception\Handler;
+use Dcat\Admin\Exception\Handler;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
@@ -220,7 +221,7 @@ class Admin
         if (! $repository instanceof Repository) {
             $class = is_object($repository) ? get_class($repository) : $repository;
 
-            throw new \InvalidArgumentException("The class [{$class}] must be a type of [".Repository::class.'].');
+            throw new InvalidArgumentException("The class [{$class}] must be a type of [".Repository::class.'].');
         }
 
         return $repository;

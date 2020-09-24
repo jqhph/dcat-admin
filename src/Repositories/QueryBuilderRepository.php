@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Repositories;
 
 use Dcat\Admin\Contracts\TreeRepository;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -333,7 +334,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     public function moveOrderUp()
     {
-        throw new \RuntimeException('Not support.');
+        throw new RuntimeException('Not support.');
     }
 
     /**
@@ -343,7 +344,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     public function moveOrderDown()
     {
-        throw new \RuntimeException('Not support.');
+        throw new RuntimeException('Not support.');
     }
 
     /**
@@ -409,7 +410,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     public function getParentColumn()
     {
-        throw new \RuntimeException('Not support.');
+        throw new RuntimeException('Not support.');
     }
 
     /**
@@ -419,7 +420,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     public function getTitleColumn()
     {
-        throw new \RuntimeException('Not support.');
+        throw new RuntimeException('Not support.');
     }
 
     /**
@@ -429,7 +430,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     public function getOrderColumn()
     {
-        throw new \RuntimeException('Not support.');
+        throw new RuntimeException('Not support.');
     }
 
     /**
@@ -440,7 +441,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     public function saveOrder($tree = [], $parentId = 0)
     {
-        throw new \RuntimeException('Not support.');
+        throw new RuntimeException('Not support.');
     }
 
     /**
@@ -452,7 +453,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     public function withQuery($queryCallback)
     {
-        throw new \RuntimeException('Not support.');
+        throw new RuntimeException('Not support.');
     }
 
     /**
@@ -462,7 +463,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     public function toTree()
     {
-        throw new \RuntimeException('Not support.');
+        throw new RuntimeException('Not support.');
     }
 
     /**

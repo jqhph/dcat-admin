@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Repositories;
 
 use Dcat\Admin\Contracts\TreeRepository;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -410,7 +411,7 @@ class EloquentRepository extends Repository implements TreeRepository
         $model = $this->model();
 
         if (! $model instanceof Sortable) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'The model "%s" must be a type of %s.',
                     get_class($model),
@@ -432,7 +433,7 @@ class EloquentRepository extends Repository implements TreeRepository
         $model = $this->model();
 
         if (! $model instanceof Sortable) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'The model "%s" must be a type of %s.',
                     get_class($model),

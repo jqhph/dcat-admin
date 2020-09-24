@@ -12,6 +12,8 @@ use RecursiveIteratorIterator;
 
 class Manager
 {
+    use Note;
+
     /**
      * @var Container
      */
@@ -88,6 +90,41 @@ class Manager
     }
 
     /**
+     * 获取扩展路径.
+     *
+     * @param string|ServiceProvider $name
+     * @param string|null            $path
+     *
+     * @return string|void
+     *
+     * @throws \ReflectionException
+     */
+    public function path($name, $path = null)
+    {
+        if (! $extension = $this->get($name)) {
+            return;
+        }
+
+        return $extension->path($path);
+    }
+
+    /**
+     * 获取扩展对象.
+     *
+     * @param string|ServiceProvider $name
+     *
+     * @return ServiceProvider|null
+     */
+    public function get($name)
+    {
+        if ($name instanceof ServiceProvider) {
+            return $name;
+        }
+
+        return $this->extensions->get($name);
+    }
+
+    /**
      * 获取所有扩展.
      *
      * @return ServiceProvider[]|Collection
@@ -104,9 +141,7 @@ class Manager
      */
     public function availableExtensions()
     {
-        return $this->extensions()->filter(function (ServiceProvider $extension) {
-            return $this->enabled($extension->getName());
-        });
+        return $this->extensions()->filter->enabled();
     }
 
     /**
@@ -203,6 +238,22 @@ class Manager
     }
 
     /**
+     * 获取扩展名称.
+     *
+     * @param $extension
+     *
+     * @return string
+     */
+    public function getName($extension)
+    {
+        if ($extension instanceof ServiceProvider) {
+            return $extension->getName();
+        }
+
+        return $extension;
+    }
+
+    /**
      * 获取配置.
      *
      * @return ExtensionModel[]|Collection
@@ -220,6 +271,22 @@ class Manager
         }
 
         return $this->settings;
+    }
+
+    /**
+     * @return UpdateManager
+     */
+    public function updateManager()
+    {
+        return app('admin.extend.update');
+    }
+
+    /**
+     * @return VersionManager
+     */
+    public function versionManager()
+    {
+        return app('admin.extend.version');
     }
 
     protected function registerPsr4($directory, array $psr4)

@@ -5,6 +5,7 @@ namespace Dcat\Admin\Widgets;
 use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Contracts\LazyRenderable;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Form\Concerns\HandleCascadeFields;
 use Dcat\Admin\Form\Concerns\HasRows;
 use Dcat\Admin\Form\Concerns\HasTabs;
@@ -838,7 +839,7 @@ HTML;
             return $this->macroCall($method, $arguments);
         }
 
-        throw new \BadMethodCallException("Field [{$method}] does not exist.");
+        throw new RuntimeException("Field [{$method}] does not exist.");
     }
 
     /**

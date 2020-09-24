@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Concerns;
 
+use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\ComplexHeader;
 use Illuminate\Support\Collection;
@@ -24,7 +25,7 @@ trait HasComplexHeaders
     public function combine(string $label, array $columnNames)
     {
         if (count($columnNames) < 2) {
-            throw new \InvalidArgumentException('Invalid column names.');
+            throw new InvalidArgumentException('Invalid column names.');
         }
 
         if (! $this->complexHeaders) {

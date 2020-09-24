@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Show;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
@@ -711,7 +712,7 @@ HTML;
         $class = static::$definitions[$this->name];
 
         if (! $class instanceof \Closure) {
-            throw new \Exception("Invalid column definition [$class]");
+            throw new RuntimeException("Invalid column definition [$class]");
         }
 
         $this->as($class);

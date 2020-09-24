@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Column;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
@@ -262,7 +263,7 @@ trait HasDisplayers
     public function action($action)
     {
         if (! is_subclass_of($action, RowAction::class)) {
-            throw new \InvalidArgumentException("Action class [$action] must be sub-class of [Dcat\Admin\Grid\RowAction]");
+            throw new InvalidArgumentException("Action class [$action] must be sub-class of [Dcat\Admin\Grid\RowAction]");
         }
 
         $grid = $this->grid;

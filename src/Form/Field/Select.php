@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Database\Eloquent\Model;
@@ -152,7 +153,7 @@ class Select extends Field
         if (! class_exists($model)
             || ! in_array(Model::class, class_parents($model))
         ) {
-            throw new \InvalidArgumentException("[$model] must be a valid model class");
+            throw new RuntimeException("[$model] must be a valid model class");
         }
 
         $this->options = function ($value) use ($model, $idField, $textField) {
