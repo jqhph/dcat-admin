@@ -121,17 +121,14 @@ class VersionManager
                 }
 
                 if ($stopOnNextVersion && $history->version !== $stopOnVersion) {
-                    // Stop if the $stopOnVersion value was found and
-                    // this is a new version. The history could contain
-                    // multiple items for a single version (comments and scripts).
                     $newPluginVersion = $history->version;
 
                     break;
                 }
 
-                if ($history->type == self::HISTORY_TYPE_COMMENT) {
+                if ($history->type == static::HISTORY_TYPE_COMMENT) {
                     $this->removeDatabaseComment($name, $history->version);
-                } elseif ($history->type == self::HISTORY_TYPE_SCRIPT) {
+                } elseif ($history->type == static::HISTORY_TYPE_SCRIPT) {
                     $this->removeDatabaseScript($name, $history->version, $history->detail);
                 }
 
@@ -186,7 +183,7 @@ class VersionManager
     {
         $versionInfo = $this->getFileVersions($name);
         if (!$versionInfo) {
-            return self::NO_VERSION_VALUE;
+            return static::NO_VERSION_VALUE;
         }
 
         return trim(key(array_slice($versionInfo, -1, 1)));
@@ -195,7 +192,7 @@ class VersionManager
     public function getNewFileVersions($name, $version = null)
     {
         if ($version === null) {
-            $version = self::NO_VERSION_VALUE;
+            $version = static::NO_VERSION_VALUE;
         }
 
         $versions = $this->getFileVersions($name);
@@ -254,7 +251,7 @@ class VersionManager
                 ->value('version');
         }
 
-        return $this->databaseVersions[$name] ?? self::NO_VERSION_VALUE;
+        return $this->databaseVersions[$name] ?? static::NO_VERSION_VALUE;
     }
 
     protected function setDatabaseVersion($name, $version = null)
@@ -282,7 +279,7 @@ class VersionManager
     {
         ExtensionHistory::query()->create([
             'name'    => $name,
-            'type'    => self::HISTORY_TYPE_COMMENT,
+            'type'    => static::HISTORY_TYPE_COMMENT,
             'version' => $version,
             'detail'  => $comment,
         ]);
@@ -292,7 +289,7 @@ class VersionManager
     {
         ExtensionHistory::query()
             ->where('name', $name)
-            ->where('type', self::HISTORY_TYPE_COMMENT)
+            ->where('type', static::HISTORY_TYPE_COMMENT)
             ->where('version', $version)
             ->delete();
     }
@@ -310,7 +307,7 @@ class VersionManager
         $this->updater->setUp($updateFile, function () use ($name, $version, $script) {
             ExtensionHistory::query()->create([
                 'name'    => $name,
-                'type'    => self::HISTORY_TYPE_SCRIPT,
+                'type'    => static::HISTORY_TYPE_SCRIPT,
                 'version' => $version,
                 'detail'  => $script,
             ]);
@@ -324,7 +321,7 @@ class VersionManager
         $this->updater->packDown($updateFile, function () use ($name, $version, $script) {
             ExtensionHistory::query()
                 ->where('name', $name)
-                ->where('type', self::HISTORY_TYPE_SCRIPT)
+                ->where('type', static::HISTORY_TYPE_SCRIPT)
                 ->where('version', $version)
                 ->where('detail', $script)
                 ->delete();
@@ -366,11 +363,11 @@ class VersionManager
                 continue;
             }
 
-            if ($history->type == self::HISTORY_TYPE_COMMENT && ! $script) {
+            if ($history->type == static::HISTORY_TYPE_COMMENT && ! $script) {
                 return true;
             }
 
-            if ($history->type == self::HISTORY_TYPE_SCRIPT && $history->detail == $script) {
+            if ($history->type == static::HISTORY_TYPE_SCRIPT && $history->detail == $script) {
                 return true;
             }
         }
@@ -422,7 +419,7 @@ class VersionManager
         $histories = $this->getDatabaseHistory($name);
 
         $lastHistory = Arr::last(Arr::where($histories, function ($history) {
-            return $history->type === self::HISTORY_TYPE_COMMENT;
+            return $history->type === static::HISTORY_TYPE_COMMENT;
         }));
 
         return $lastHistory ? $lastHistory->detail : '';

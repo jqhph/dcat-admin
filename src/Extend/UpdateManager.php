@@ -87,12 +87,12 @@ class UpdateManager
 
         $this->versionUpdate($extension, $stopOnVersion);
 
-        $this->publishAssets($name);
+        $this->publish($name);
 
         return $this;
     }
 
-    protected function publishAssets($name)
+    protected function publish($name)
     {
         Artisan::call('vendor:publish', ['--force' => true, '--tag' => $name]);
     }

@@ -90,10 +90,6 @@ abstract class ServiceProvider extends LaravelServiceProvider
             $this->loadTranslationsFrom($lang, $this->getName());
         }
 
-        if ($migrations = $this->getMigrationPath()) {
-            $this->loadMigrationsFrom($migrations);
-        }
-
         if ($routes = $this->getRoutes()) {
             return $this->registerRoutes($routes);
         }
@@ -165,9 +161,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     final public function config($key = null, $default = null)
     {
-
-
-
+        return Admin::setting()->get($this->name);
     }
 
     /**
@@ -210,7 +204,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    public function getAssetPath()
+    final public function getAssetPath()
     {
         return $this->path('resources/assets');
     }
@@ -220,19 +214,9 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    public function getViewPath()
+    final public function getViewPath()
     {
         return $this->path('resources/views');
-    }
-
-    /**
-     * 获取数据迁移文件路径.
-     *
-     * @return string
-     */
-    public function getMigrationPath()
-    {
-        return $this->path('database/migrations');
     }
 
     /**
@@ -240,7 +224,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    public function getLangPath()
+    final public function getLangPath()
     {
         return $this->path('resources/lang');
     }
@@ -252,7 +236,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @throws \ReflectionException
      */
-    public function getRoutes()
+    final public function getRoutes()
     {
         $path = $this->path('src/Http/routes.php');
 
