@@ -56,11 +56,11 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Column
 {
-    use HasBuilderEvents,
-        HasDefinitions,
-        Grid\Column\HasHeader,
-        Grid\Column\HasDisplayers,
-        Macroable {
+    use HasBuilderEvents;
+    use HasDefinitions;
+    use Grid\Column\HasHeader;
+    use Grid\Column\HasDisplayers;
+    use Macroable {
             __call as __macroCall;
         }
 

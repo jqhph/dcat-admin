@@ -31,6 +31,7 @@ class Grid
     use Concerns\HasQuickCreate;
     use Concerns\HasQuickSearch;
     use Concerns\CanFixColumns;
+    use Concerns\CanHidesColumns;
     use Macroable {
             __call as macroCall;
         }
