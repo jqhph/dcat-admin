@@ -18,8 +18,8 @@ use Illuminate\Support\Traits\Macroable;
 
 class Tree implements Renderable
 {
-    use HasBuilderEvents,
-        Macroable;
+    use HasBuilderEvents;
+    use Macroable;
 
     /**
      * @var array

@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Concerns;
 use Closure;
 use Dcat\Admin\Form\Events;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
+use Dcat\Admin\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -146,7 +147,7 @@ trait HasEvents
 
             $ret = $callback($this, ...$event->payload);
 
-            if ($ret instanceof Response) {
+            if ($ret instanceof Response || $ret instanceof JsonResponse) {
                 $event->form->eventResponse = $ret;
 
                 return false;

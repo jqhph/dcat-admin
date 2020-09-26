@@ -28,8 +28,6 @@ class Form {
             errorTemplate: '<label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {message}</label><br/>',
             // 是否允许跳转
             redirect: true,
-            // 保存成功后自动跳转
-            autoRedirect: false,
             // 自动移除表单错误信息
             autoRemoveError: true,
             // 表单提交之前事件监听，返回false可以中止表单继续提交
@@ -63,8 +61,7 @@ class Form {
     }
 
     submit() {
-        let Dcat = window.Dcat,
-            _this = this,
+        let _this = this,
             $form = _this.$form,
             options = _this.options,
             $submitButton = $form.find('[type="submit"],.submit');
@@ -111,35 +108,15 @@ class Form {
                     return;
                 }
 
-
-                if (! response.status) {
-                    Dcat.error(response.message || 'Save failed!');
-                    return;
-                }
-
-                Dcat.success(response.message || 'Save succeeded!');
-
-                if (typeof response.location !== "undefined") {
-                    return setTimeout(function () {
-                        if (response.location) {
-                            location.href = response.location;
-                        } else {
-                            location.reload();
-                        }
-                    }, 1500)
-                }
-
                 if (response.redirect === false || ! options.redirect) {
-                    return;
+                    if (response.data && response.data.then) {
+                        delete response.data['then']['redirect'];
+                        delete response.data['then']['location'];
+                        delete response.data['then']['refresh'];
+                    }
                 }
 
-                if (response.redirect) {
-                    return Dcat.reload(response.redirect);
-                }
-
-                if (options.autoRedirect) {
-                    history.back(-1);
-                }
+                Dcat.handleJsonResponse(response);
             },
             error: function (response) {
                 $submitButton.buttonLoading(false);

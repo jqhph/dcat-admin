@@ -4,9 +4,12 @@ namespace Dcat\Admin;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Traits\Macroable;
 
 class Application
 {
+    use Macroable;
+
     const DEFAULT = 'admin';
 
     /**

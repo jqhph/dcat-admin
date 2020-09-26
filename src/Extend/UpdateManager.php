@@ -43,10 +43,8 @@ class UpdateManager
 
     public function rollback($name, ?string $stopOnVersion = null)
     {
-        /*
-         * Remove the plugin database and version
-         */
-        if (! ($extension = $this->manager->get($name))
+        if (
+            ! ($extension = $this->manager->get($name))
             && $this->versionManager->purge($name)
         ) {
             $this->note('<info>Purged from database:</info> ' . $name);
@@ -54,7 +52,7 @@ class UpdateManager
             return $this;
         }
 
-        if ($stopOnVersion && !$this->versionManager->hasDatabaseVersion($extension, $stopOnVersion)) {
+        if ($stopOnVersion && ! $this->versionManager->hasDatabaseVersion($extension, $stopOnVersion)) {
             throw new AdminException('Extension version not found');
         }
 
@@ -69,6 +67,10 @@ class UpdateManager
         }
 
         $this->note('<error>Unable to find:</error> '.$name);
+
+        if ($stopOnVersion === null) {
+            // 移除静态资源
+        }
 
         return $this;
     }

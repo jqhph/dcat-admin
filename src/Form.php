@@ -88,15 +88,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Form implements Renderable
 {
-    use HasBuilderEvents,
-        HasFormResponse,
-        Concerns\HasEvents,
-        Concerns\HasFiles,
-        Concerns\HasSteps,
-        Concerns\HandleCascadeFields,
-        Concerns\HasRows,
-        Concerns\HasTabs,
-        Macroable {
+    use HasBuilderEvents;
+    use HasFormResponse;
+    use Concerns\HasEvents;
+    use Concerns\HasFiles;
+    use Concerns\HasSteps;
+    use Concerns\HandleCascadeFields;
+    use Concerns\HasRows;
+    use Concerns\HasTabs;
+    use Macroable {
             __call as macroCall;
         }
 
@@ -547,10 +547,8 @@ class Form implements Renderable
                 return $response;
             }
 
-            $response = [
-                'status'  => $result ? true : false,
-                'message' => $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed'),
-            ];
+            $status = $result ? true : false;
+            $message = $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed');
         } catch (\Throwable $exception) {
             $response = $this->handleException($exception);
 
@@ -558,13 +556,17 @@ class Form implements Renderable
                 return $response;
             }
 
-            $response = $response ?: [
-                'status'  => false,
-                'message' => $exception->getMessage() ?: trans('admin.delete_failed'),
-            ];
+            $status = false;
+            $message = $exception->getMessage() ?: trans('admin.delete_failed');
         }
 
-        return response()->json($response);
+        return $this->sendResponse(
+            $this->response()
+                ->alert()
+                ->status($status)
+                ->message($message)
+                ->refreshIf($status)
+        );
     }
 
     /**
@@ -595,7 +597,7 @@ class Form implements Renderable
             $data = $data ?: $this->request->all();
 
             if ($response = $this->beforeStore($data)) {
-                return $response;
+                return $this->sendResponse($response);
             }
 
             $this->updates = $this->prepareInsert($this->updates);
@@ -605,20 +607,24 @@ class Form implements Renderable
             $this->builder->setResourceId($id);
 
             if (($response = $this->callSaved($id))) {
-                return $response;
+                return $this->sendResponse($response);
             }
 
             if ($response = $this->responseMultipleStepsDonePage()) {
-                return $response;
+                return $this->sendResponse($response);
             }
 
             if (! $id) {
-                return $this->error(trans('admin.save_failed'));
+                return $this->sendResponse(
+                    $this->response()
+                        ->error(trans('admin.save_failed'))
+                );
             }
 
-            return $this->redirect(
-                $this->redirectUrl($id, $redirectTo),
-                trans('admin.save_succeeded')
+            return $this->sendResponse(
+                $this->response()
+                    ->redirect($this->getRedirectUrl($id, $redirectTo))
+                    ->success(trans('admin.save_succeeded'))
             );
         } catch (\Throwable $e) {
             $response = $this->handleException($e);
@@ -627,7 +633,11 @@ class Form implements Renderable
                 return $response;
             }
 
-            return $this->error($e->getMessage() ?: trans('admin.save_failed'));
+            return $this->sendResponse(
+                $this->response()
+                    ->error(trans('admin.save_failed'))
+                    ->withExceptionIf($e->getMessage(), $e)
+            );
         }
     }
 
@@ -748,9 +758,15 @@ class Form implements Renderable
                 ? $this->repository->moveOrderUp()
                 : $this->repository->moveOrderDown();
 
-            return $updated
-                ? $this->ajaxResponse(__('admin.update_succeeded'))
-                : $this->error(__('admin.nothing_updated'));
+            $message = $updated
+                ? __('admin.update_succeeded')
+                : __('admin.nothing_updated');
+
+            return $this->sendResponse(
+                $this->response()
+                    ->status((bool) $updated)
+                    ->message($message)
+            );
         }
     }
 
@@ -776,7 +792,7 @@ class Form implements Renderable
             $data = $data ?: $this->request->all();
 
             if ($response = $this->beforeUpdate($id, $data)) {
-                return $response;
+                return $this->sendResponse($response);
             }
 
             $this->updates = $this->prepareUpdate($this->updates);
@@ -784,14 +800,21 @@ class Form implements Renderable
             $updated = $this->repository->update($this);
 
             if (($response = $this->callSaved($updated))) {
-                return $response;
+                return $this->sendResponse($response);
             }
 
             if (! $updated) {
-                return $this->error(trans('admin.update_succeeded'));
+                return $this->sendResponse(
+                    $this->response()
+                        ->error(trans('admin.update_failed'))
+                );
             }
 
-            return $this->redirect($this->redirectUrl($id, $redirectTo), trans('admin.update_succeeded'));
+            return $this->sendResponse(
+                $this->response()
+                    ->success(trans('admin.update_succeeded'))
+                    ->redirect($this->getRedirectUrl($id, $redirectTo))
+            );
         } catch (\Throwable $e) {
             $response = $this->handleException($e);
 
@@ -799,7 +822,11 @@ class Form implements Renderable
                 return $response;
             }
 
-            return $this->error($e->getMessage() ?: trans('admin.save_failed'));
+            return $this->sendResponse(
+                $this->response()
+                    ->error(trans('admin.update_failed'))
+                    ->withExceptionIf($e->getMessage(), $e)
+            );
         }
     }
 
@@ -889,7 +916,7 @@ class Form implements Renderable
      *
      * @return string|null
      */
-    public function redirectUrl($key, $redirectTo = null)
+    public function getRedirectUrl($key, $redirectTo = null)
     {
         if ($redirectTo) {
             return $redirectTo;
@@ -917,7 +944,7 @@ class Form implements Renderable
             return rtrim($resourcesPath, '/')."/{$key}";
         }
 
-        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: $resourcesPath;
+        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: ($this->getCurrentUrl() ?: $resourcesPath);
     }
 
     /**

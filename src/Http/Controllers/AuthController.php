@@ -36,7 +36,7 @@ class AuthController extends Controller
     public function getLogin(Content $content)
     {
         if ($this->guard()->check()) {
-            return redirect($this->redirectPath());
+            return redirect($this->getRedirectPath());
         }
 
         return $content->full()->body(view($this->view));
@@ -202,10 +202,10 @@ class AuthController extends Controller
             });
 
             $form->saved(function (Form $form) {
-                return $form->redirect(
-                    admin_url('auth/setting'),
-                    trans('admin.update_succeeded')
-                );
+                return $form
+                    ->response()
+                    ->success(trans('admin.update_succeeded'))
+                    ->redirect('auth/setting');
             });
         });
     }
@@ -225,7 +225,7 @@ class AuthController extends Controller
      *
      * @return string
      */
-    protected function redirectPath()
+    protected function getRedirectPath()
     {
         return $this->redirectTo ?: admin_url('/');
     }
@@ -241,10 +241,10 @@ class AuthController extends Controller
     {
         $request->session()->regenerate();
 
-        return $this->redirectToIntended(
-            $this->redirectPath(),
-            trans('admin.login_successful')
-        );
+        return $this->response()
+            ->success(trans('admin.login_successful'))
+            ->redirectToIntended($this->getRedirectPath())
+            ->send();
     }
 
     /**

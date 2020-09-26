@@ -3,7 +3,8 @@ export default class Ajax {
     constructor(Dcat) {
         this.dcat = Dcat;
 
-        Dcat.handleAjaxError = this.handleAjaxError.bind(this)
+        Dcat.handleAjaxError = this.handleAjaxError.bind(this);
+        Dcat.handleJsonResponse = this.handleJsonResponse.bind(this);
 
         this.init(Dcat)
     }
@@ -25,13 +26,14 @@ export default class Ajax {
     }
 
     handleAjaxError(xhr, text, msg) {
-        let Dcat = this.dcat;
+        let Dcat = this.dcat,
+            json = xhr.responseJSON || {},
+            _msg = json.message;
 
         Dcat.NP.done();
         Dcat.loading(false);// 关闭所有loading效果
         $('.btn-loading').buttonLoading(false);
 
-        var json = xhr.responseJSON || {}, _msg = json.message;
         switch (xhr.status) {
             case 500:
                 return Dcat.error(_msg || (Dcat.lang['500'] || 'Server internal error.'));
@@ -59,5 +61,71 @@ export default class Ajax {
         }
 
         Dcat.error(_msg || (xhr.status + ' ' + msg));
+    }
+
+    // 处理接口返回数据
+    handleJsonResponse(response, options) {
+        let Dcat = this.dcat,
+            data = response.data;
+
+        if (typeof response !== 'object') {
+            return Dcat.error({type: 'error', title: 'Oops!'});
+        }
+
+        var then = function (then) {
+            switch (then.action) {
+                case 'refresh':
+                    Dcat.reload();
+                    break;
+                case 'download':
+                    window.open(then.value, '_blank');
+                    break;
+                case 'redirect':
+                    Dcat.reload(then.value || null);
+                    break;
+                case 'location':
+                    setTimeout(function () {
+                        if (then.value) {
+                            window.location = then.value;
+                        } else {
+                            window.location.reload();
+                        }
+                    }, 1000);
+                    break;
+                case 'script':
+                    (function () {
+                        eval(then.value);
+                    })();
+                    break;
+            }
+        };
+
+        if (typeof response.html === 'string' && response.html && options.target) {
+            if (typeof options.html === 'function') {
+                // 处理api返回的HTML代码
+                options.html(options.target, response.html, response);
+            } else {
+                $(target).html(response.html);
+            }
+        }
+
+        let message = data.message || response.message;
+
+        // 判断默认弹窗类型.
+        if (! data.type) {
+            data.type = response.status ? 'success' : 'error';
+        }
+
+        if (typeof message === 'string' && data.type && message) {
+            if (data.alert) {
+                Dcat.swal[data.type](message, data.detail);
+            } else {
+                Dcat[data.type](message);
+            }
+        }
+
+        if (data.then) {
+            then(data.then);
+        }
     }
 }

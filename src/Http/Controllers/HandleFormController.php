@@ -2,10 +2,11 @@
 
 namespace Dcat\Admin\Http\Controllers;
 
+use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Form\Field\File;
+use Dcat\Admin\Http\JsonResponse;
 use Dcat\Admin\Traits\HasUploadedFile;
 use Dcat\Admin\Widgets\Form;
-use Exception;
 use Illuminate\Http\Request;
 
 class HandleFormController
@@ -28,7 +29,7 @@ class HandleFormController
 
         $input = $form->sanitize($request->all());
 
-        return $form->handle($input) ?: $form->success();
+        return $this->sendResponse($form->handle($input));
     }
 
     public function uploadFile(Request $request)
@@ -60,29 +61,38 @@ class HandleFormController
     /**
      * @param Request $request
      *
-     * @throws Exception
+     * @throws AdminException
      *
      * @return Form
      */
     protected function resolveForm(Request $request)
     {
         if (! $request->has(Form::REQUEST_NAME)) {
-            throw new Exception('Invalid form request.');
+            throw new AdminException('Invalid form request.');
         }
 
         $formClass = $request->get(Form::REQUEST_NAME);
 
         if (! class_exists($formClass)) {
-            throw new Exception("Form [{$formClass}] does not exist.");
+            throw new AdminException("Form [{$formClass}] does not exist.");
         }
 
         /** @var Form $form */
         $form = app($formClass);
 
         if (! method_exists($form, 'handle')) {
-            throw new Exception("Form method {$formClass}::handle() does not exist.");
+            throw new AdminException("Form method {$formClass}::handle() does not exist.");
         }
 
         return $form;
+    }
+
+    protected function sendResponse($response)
+    {
+        if ($response instanceof JsonResponse) {
+            return $response->send();
+        }
+
+        return $response;
     }
 }

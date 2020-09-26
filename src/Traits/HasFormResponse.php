@@ -2,75 +2,35 @@
 
 namespace Dcat\Admin\Traits;
 
-use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use Illuminate\Validation\Validator;
 
 trait HasFormResponse
 {
     protected $currentUrl;
 
     /**
-     * Get ajax response.
-     *
-     * @param $message
-     * @param null $redirect
-     * @param bool $status
-     * @param array $options
-     *
-     * @return bool|\Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function ajaxResponse(
-        ?string $message,
-        ?string $redirect = null,
-        bool $status = true,
-        array $options = []
-    ) {
-        $location = $options['location'] ?? false;
-        $urlKey = $location ? 'location' : 'redirect';
-
-        return response()->json([
-            'status'   => $status,
-            'message'  => $message,
-            $urlKey    => $redirect ? admin_url($redirect) : '',
-        ]);
+    public function response()
+    {
+        return new JsonResponse();
     }
 
     /**
-     * Send a location redirect response.
+     * 返回字段验证错误信息.
      *
-     * @param string|null $message
-     * @param string|null $url
-     * @param bool        $status
+     * @param array|MessageBag|\Illuminate\Validation\Validator $validationMessages
      *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function location($url = null, $options = [])
+    public function validationErrorsResponse($validationMessages)
     {
-        if (is_string($options)) {
-            $options = ['message' => $options];
-        }
-        $options['location'] = true;
-
-        return $this->redirect($url, $options);
-    }
-
-    /**
-     * @param string $message
-     * @param string $redirectTo
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function success($message = null, $redirectTo = null)
-    {
-        $redirectTo = $redirectTo ?: $this->getCurrentUrl();
-
-        return $this->redirect($redirectTo, [
-            'message'     => $message,
-            'status'      => true,
-            'status_code' => 200,
-        ]);
+        return $this
+            ->response()
+            ->withValidation($validationMessages)
+            ->send();
     }
 
     /**
@@ -88,6 +48,8 @@ trait HasFormResponse
     }
 
     /**
+     * 获取当前URL.
+     *
      * @param Request|null $request
      *
      * @return string
@@ -115,80 +77,18 @@ trait HasFormResponse
     }
 
     /**
-     * @param string $message
-     * @param string $redirectTo
-     * @param int    $statusCode
+     * 响应数据.
      *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param $response
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function error($message = null, $redirectTo = null, int $statusCode = 200)
+    protected function sendResponse($response)
     {
-        if (! $redirectTo) {
-            return $this->ajaxResponse($message, null, false);
+        if ($response instanceof JsonResponse) {
+            return $response->send();
         }
 
-        return $this->redirect($redirectTo, [
-            'message'     => $message,
-            'status'      => false,
-            'status_code' => $statusCode,
-        ]);
-    }
-
-    /**
-     * Get redirect response.
-     *
-     * @param string|array $url
-     * @param array|string $options
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function redirect($url = null, $options = null)
-    {
-        if (is_array($url)) {
-            $options = $url;
-            $url = null;
-        }
-
-        if (is_string($options)) {
-            $message = $options;
-            $options = [];
-        } else {
-            $message = $options['message'] ?? null;
-        }
-
-        $status = (bool) ($options['status'] ?? true);
-
-        $message = $message ?: trans('admin.save_succeeded');
-
-        return $this->ajaxResponse($message, $url, $status, $options);
-    }
-
-    /**
-     * @param string|null  $url
-     * @param array|string $options
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function redirectToIntended(?string $url, $options = null)
-    {
-        $path = session()->pull('url.intended');
-
-        return $this->redirect($path ?: $url, $options);
-    }
-
-    /**
-     * @param array|MessageBag|\Illuminate\Validation\Validator $validationMessages
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function validationErrorsResponse($validationMessages)
-    {
-        if ($validationMessages instanceof Validator) {
-            $validationMessages = $validationMessages->getMessageBag();
-        }
-
-        return response()->json([
-            'errors' => is_array($validationMessages) ? $validationMessages : $validationMessages->getMessages(),
-        ], 422);
+        return $response;
     }
 }

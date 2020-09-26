@@ -19,19 +19,19 @@ use Illuminate\Support\Traits\Macroable;
 
 class Grid
 {
-    use HasBuilderEvents,
-        Concerns\HasNames,
-        Concerns\HasFilter,
-        Concerns\HasTools,
-        Concerns\HasActions,
-        Concerns\HasPaginator,
-        Concerns\HasExporter,
-        Concerns\HasComplexHeaders,
-        Concerns\HasSelector,
-        Concerns\HasQuickCreate,
-        Concerns\HasQuickSearch,
-        Concerns\CanFixColumns,
-        Macroable {
+    use HasBuilderEvents;
+    use Concerns\HasNames;
+    use Concerns\HasFilter;
+    use Concerns\HasTools;
+    use Concerns\HasActions;
+    use Concerns\HasPaginator;
+    use Concerns\HasExporter;
+    use Concerns\HasComplexHeaders;
+    use Concerns\HasSelector;
+    use Concerns\HasQuickCreate;
+    use Concerns\HasQuickSearch;
+    use Concerns\CanFixColumns;
+    use Macroable {
             __call as macroCall;
         }
 

@@ -152,7 +152,7 @@ class Builder
     /**
      * @var array
      */
-    protected $confirm = [];
+    public $confirm = [];
 
     /**
      * Builder constructor.

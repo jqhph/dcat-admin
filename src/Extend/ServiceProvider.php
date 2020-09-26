@@ -91,8 +91,10 @@ abstract class ServiceProvider extends LaravelServiceProvider
         }
 
         if ($routes = $this->getRoutes()) {
-            return $this->registerRoutes($routes);
+            $this->registerRoutes($routes);
         }
+
+        $this->publishAssets();
 
         $this->registerAssets();
     }
@@ -178,6 +180,18 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     public function uninstall()
     {
+    }
+
+    /**
+     * 发布静态资源.
+     */
+    protected function publishAssets()
+    {
+        if ($assets = $this->getAssetPath()) {
+            $this->publishes([
+                $assets => public_path(Admin::asset()->getRealPath('@extension'))
+            ], $this->getName());
+        }
     }
 
     /**

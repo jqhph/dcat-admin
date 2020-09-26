@@ -229,7 +229,7 @@ class DialogForm
      */
     protected function render()
     {
-        $this->setupOptions();
+        $this->setUpOptions();
 
         $opts = json_encode($this->options);
 
@@ -273,7 +273,7 @@ JS
      *
      * @return void
      */
-    protected function setupOptions()
+    protected function setUpOptions()
     {
         $this->options['lang'] = [
             'submit' => trans('admin.submit'),
@@ -316,8 +316,23 @@ JS
 
         $form->width(9, 2);
 
+        $form->composing(function ($form) {
+            static::addScript($form);
+        });
+
         Content::composing(function (Content $content) {
             $content->view(static::$contentView);
         });
+    }
+
+    protected static function addScript(Form $form)
+    {
+        $confirm = json_encode($form->builder()->confirm);
+
+        Admin::script(
+            <<<JS
+Dcat.FormConfirm = {$confirm};
+JS
+        );
     }
 }

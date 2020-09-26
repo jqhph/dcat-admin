@@ -91,7 +91,10 @@ trait HasSteps
         // Stash input data.
         $this->multipleSteps()->stash($data);
 
-        return $this->ajaxResponse('Success');
+        return $this
+            ->response()
+            ->success('Success')
+            ->send();
     }
 
     /**

@@ -7,11 +7,6 @@ use Dcat\Admin\Support\WebUploader;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * 文件上传辅助功能.
- *
- * Trait HasUploadedFile
- */
 trait HasUploadedFile
 {
     /**
@@ -148,7 +143,7 @@ trait HasUploadedFile
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function responseDeleteFail($message = '')
+    public function responseDeleteFailed($message = '')
     {
         return response()->json(['status' => false, 'message' => $message]);
     }

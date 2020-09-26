@@ -22,14 +22,12 @@ let defaultActions = {
                 Dcat.NP.start();
                 $.delete({
                     url: url,
-                    success: function (data) {
+                    success: function (response) {
                         Dcat.NP.done();
-                        if (data.status) {
-                            Dcat.reload(redirect);
-                            Dcat.swal.success(data.message, msg);
-                        } else {
-                            Dcat.swal.error(data.message, msg);
-                        }
+
+                        response.data.detail = msg;
+
+                        Dcat.handleJsonResponse(response);
                     }
                 });
             });
@@ -46,18 +44,16 @@ let defaultActions = {
             if (! keys.length) {
                 return;
             }
-            Dcat.confirm(lang.delete_confirm, keys.join(', '), function () {
+            let msg = 'ID - ' + keys.join(', ');
+
+            Dcat.confirm(lang.delete_confirm, msg, function () {
                 Dcat.NP.start();
                 $.delete({
                     url: url + '/' + keys.join(','),
                     success: function (data) {
                         Dcat.NP.done();
-                        if (data.status) {
-                            Dcat.reload();
-                            Dcat.swal.success(data.message, keys.join(', '));
-                        } else {
-                            Dcat.swal.error(data.message, keys.join(', '));
-                        }
+
+                        Dcat.handleJsonResponse(data);
                     }
                 });
             });

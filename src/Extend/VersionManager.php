@@ -100,9 +100,9 @@ class VersionManager
 
     public function remove($extension, $stopOnVersion = null, $stopCurrentVersion = false)
     {
-        $name = is_string($extension) ? $extension : $this->manager->getIdentifier($extension);
+        $name = $this->manager->getName($extension);
 
-        if (!$this->hasVersionFile($name)) {
+        if (! $this->hasVersionFile($name)) {
             return false;
         }
 
@@ -296,7 +296,7 @@ class VersionManager
 
     protected function applyDatabaseScript($name, $version, $script)
     {
-        $updateFile = $this->manager->path($name, '/updates/'.$script);
+        $updateFile = $this->manager->path($name, 'updates/'.$script);
 
         if (! is_file($updateFile)) {
             $this->note('- <error>v'.$version.':  Migration file "'.$script.'" not found</error>');

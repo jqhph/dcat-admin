@@ -4,7 +4,7 @@ namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Actions\Action;
 use Dcat\Admin\Actions\Response;
-use Exception;
+use Dcat\Admin\Exception\AdminException;
 use Illuminate\Http\Request;
 
 class HandleActionController
@@ -32,27 +32,27 @@ class HandleActionController
     /**
      * @param Request $request
      *
-     * @throws Exception
+     * @throws AdminException
      *
      * @return Action
      */
     protected function resolveActionInstance(Request $request): Action
     {
         if (! $request->has('_action')) {
-            throw new Exception('Invalid action request.');
+            throw new AdminException('Invalid action request.');
         }
 
         $actionClass = str_replace('_', '\\', $request->get('_action'));
 
         if (! class_exists($actionClass)) {
-            throw new Exception("Action [{$actionClass}] does not exist.");
+            throw new AdminException("Action [{$actionClass}] does not exist.");
         }
 
         /** @var Action $action */
         $action = app($actionClass);
 
         if (! method_exists($action, 'handle')) {
-            throw new Exception("Action method {$actionClass}::handle() does not exist.");
+            throw new AdminException("Action method {$actionClass}::handle() does not exist.");
         }
 
         return $action;

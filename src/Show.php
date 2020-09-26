@@ -26,8 +26,8 @@ use Illuminate\Support\Traits\Macroable;
 
 class Show implements Renderable
 {
-    use HasBuilderEvents,
-        Macroable {
+    use HasBuilderEvents;
+    use Macroable {
             __call as macroCall;
         }
 

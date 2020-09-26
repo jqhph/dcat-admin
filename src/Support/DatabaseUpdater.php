@@ -33,7 +33,7 @@ class DatabaseUpdater
 
         Model::unguard();
 
-        Db::connection($this->connection())->transaction(function () use ($object, $callback) {
+        $this->transaction(function () use ($object, $callback) {
             if ($object instanceof Migration) {
                 $object->up();
             }
@@ -64,7 +64,7 @@ class DatabaseUpdater
 
         Model::unguard();
 
-        Db::connection($this->connection())->transaction(function () use ($object, $callback) {
+        $this->transaction(function () use ($object, $callback) {
             if ($object instanceof Migration) {
                 $object->down();
             }
@@ -169,6 +169,11 @@ class DatabaseUpdater
         }
 
         return trim($namespace) . '\\' . trim($class);
+    }
+
+    public function transaction($callback)
+    {
+        return DB::connection($this->connection())->transaction($callback);
     }
 
     public function connection()
