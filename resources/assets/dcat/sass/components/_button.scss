@@ -3,8 +3,29 @@
   height: 34px;
   line-height: 1.2;
   border-radius: 0.2rem;
-  box-shadow: $btn-shadow;
   cursor: pointer;
+  box-shadow: $default-btn-shadow;
+}
+
+.btn.btn-trans {
+  box-shadow: none;
+}
+
+.btn-trans.btn-primary {
+  background-color: lighten($primary, 40%);
+  border-color: lighten($primary, 40%);
+  color: $primary;
+}
+
+.btn-shadow.btn,
+.btn:hover,
+.btn:focus {
+  box-shadow: $btn-shadow;
+}
+
+.btn-shadow.btn:hover,
+.btn-shadow.btn:focus {
+  box-shadow: $btn-shadow-hover;
 }
 
 .btn-group-sm>.btn, .btn-sm, .btn-lg {
@@ -56,7 +77,6 @@ a.btn-sm, .btn-group-sm > a.btn {
 }
 
 .btn-group {
-
   .btn:not(.btn-white):hover {
     box-shadow: $shadow-100;
   }
@@ -64,6 +84,10 @@ a.btn-sm, .btn-group-sm > a.btn {
     box-shadow: none!important;
   }
 
+  box-shadow: $default-btn-shadow;
+}
+
+.btn-group.btn-shadow {
   box-shadow: $btn-group-btn-shadow;
 }
 
@@ -85,12 +109,18 @@ a.btn-sm, .btn-group-sm > a.btn {
 
 .btn.btn-white, .btn.btn-default {
   color: $font-color;
-  box-shadow: $btn-white-shadow;
+  box-shadow: none;
+  background: darken(#f2f2f3, 1%);
 }
+
+//.btn.btn-white.btn-shadow, .btn.btn-default.btn-shadow {
+//  box-shadow: none;
+//}
+
 .btn.btn-white.btn-primary, .btn.btn-white.btn-primary:hover, .btn.btn-white.btn-primary:focus {
   color: $white !important;
 }
-.btn-white:hover,.btn-white:focus,.btn-white.active {
+.btn-white:hover, .btn-white:focus, .btn-white.active {
   box-shadow: $btn-shadow-hover !important;
 }
 
@@ -176,4 +206,3 @@ a.btn-sm, .btn-group-sm > a.btn {
     border-top-left-radius: 0;
   }
 }
-

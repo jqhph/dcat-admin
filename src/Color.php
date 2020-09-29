@@ -85,9 +85,9 @@ class Color
         ],
         'blue' => [
             'colors' => [
-                'primary'        => '#5686d4',
-                'primary-darker' => '#4277cf',
-                'link'           => '#4277cf',
+                'primary'        => '#6d8be6',
+                'primary-darker' => '#6d8be6',
+                'link'           => '#6d8be6',
             ],
         ],
         'green' => [

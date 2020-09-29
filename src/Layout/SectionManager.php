@@ -195,8 +195,6 @@ class SectionManager
             $options->previous = $result;
         }
 
-//        $this->sections[$name] = [['value' => &$result]];
-
         return $result;
     }
 
