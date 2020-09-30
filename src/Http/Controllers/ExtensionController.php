@@ -57,14 +57,12 @@ class ExtensionController extends Controller
             $grid->number();
             $grid->column('name');
             $grid->column('version');
-            $grid->column('alias');
-
-            $grid->description
-                ->if(function () {
-                    return mb_strlen($this->description) > 14;
+            $grid->column('description')
+                ->if(function ($column) {
+                    return mb_strlen($column->getValue(), 'UTF-8') > 14;
                 })
                 ->display(function ($v) {
-                    return mb_substr($v, 0, 14);
+                    return Helper::strLimit($v, 0, 14);
                 })
                 ->expand(function ($expand) {
                     if (! $this->description) {
@@ -74,37 +72,8 @@ class ExtensionController extends Controller
                     return "<div style='padding:10px 20px'>{$this->description}</div>";
                 });
 
-            $grid->authors;
-            $grid->enable->switch();
-            $grid->imported;
-
-            $view = trans('admin.view');
-            $grid->config
-                ->if(function () {
-                    return $this->config ? true : false;
-                })
-                ->display($view)
-                ->expand($this->getExpandHandler('config'))
-                ->else()
-                ->emptyString();
-
-            $grid->require
-                ->if(function () {
-                    return $this->require ? true : false;
-                })
-                ->display($view)
-                ->expand($this->getExpandHandler())
-                ->else()
-                ->emptyString();
-
-            $grid->require_dev
-                ->if(function () {
-                    return $this->require_dev ? true : false;
-                })
-                ->display($view)
-                ->expand($this->getExpandHandler('require_dev'))
-                ->else()
-                ->emptyString();
+            $grid->column('authors');
+            $grid->column('enable')->switch();
 
             $grid->disablePagination();
             $grid->disableCreateButton();
@@ -117,7 +86,7 @@ class ExtensionController extends Controller
             $grid->disableDeleteButton();
             $grid->disableViewButton();
 
-            $grid->actions(new ImportButton());
+            $grid->actions([new ImportButton()]);
 
             $grid->quickCreate(function (Grid\Tools\QuickCreate $create) {
                 $create->text('package_name')->required();

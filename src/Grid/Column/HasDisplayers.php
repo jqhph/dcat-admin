@@ -220,14 +220,6 @@ trait HasDisplayers
     }
 
     /**
-     * @return $this
-     */
-    public function emptyString()
-    {
-        return $this->display('');
-    }
-
-    /**
      * Show children of current node.
      *
      * @param bool $showAll

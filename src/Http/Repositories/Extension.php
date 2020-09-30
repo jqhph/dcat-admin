@@ -3,20 +3,19 @@
 namespace Dcat\Admin\Http\Repositories;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Extension as AbstractExtension;
+use Dcat\Admin\Extend\ServiceProvider as AbstractExtension;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Repositories\Repository;
 use Dcat\Admin\Show;
-use Dcat\Admin\Support\Composer;
 
 class Extension extends Repository
 {
     public function get(Grid\Model $model)
     {
         $data = [];
-        foreach (Admin::extension() as $class) {
-            $data[] = $this->each($class::make());
+        foreach (Admin::extension()->all() as $extension) {
+            $data[] = $this->each($extension);
         }
 
         return $data;
@@ -29,24 +28,17 @@ class Extension extends Repository
      */
     protected function each(AbstractExtension $extension)
     {
-        $property = Composer::parse($extension->composer());
-
-        $config = (array) config('admin-extensions.'.$extension->getName());
+        $property = $extension->composerProperty;
 
         return [
-            'id'           => $extension::NAME,
+            'id'           => $extension->getName(),
             'alias'        => $extension->getName(),
             'name'         => $property->name,
-            'version'      => Composer::getVersion($property->name),
+            'version'      => $extension->getVersion(),
             'description'  => $property->description,
             'authors'      => $property->authors,
-            'require'      => $property->require,
-            'require_dev'  => $property->require_dev,
             'homepage'     => $property->homepage,
-            'enable'       => $extension::enabled(),
-            'config'       => (array) $extension->config(),
-            'imported'     => $config['imported'] ?? false,
-            'imported_at'  => $config['imported_at'] ?? null,
+            'enable'       => $extension->enabled(),
         ];
     }
 
@@ -58,18 +50,6 @@ class Extension extends Repository
     public function update(Form $form)
     {
         $id = $form->getKey();
-
-        $extension = Admin::extensions()[$id] ?? null;
-
-        if (! $extension) {
-            return false;
-        }
-
-        $attributes = $form->updates();
-
-        $enable = (bool) ($attributes['enable'] ?? false);
-
-        Admin::enableExtenstion($extension, $enable);
 
         return true;
     }

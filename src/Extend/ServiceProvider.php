@@ -15,7 +15,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     /**
      * @var ComposerProperty
      */
-    protected $composerProperty;
+    public $composerProperty;
 
     /**
      * @var string
@@ -107,6 +107,36 @@ abstract class ServiceProvider extends LaravelServiceProvider
     final public function getName()
     {
         return $this->name ?: ($this->name = str_replace('/', '.', $this->composerProperty->name));
+    }
+
+    /**
+     * 获取当前已安装版本.
+     *
+     * @return string
+     */
+    final public function getVersion()
+    {
+        return Admin::extension()->versionManager()->getCurrentVersion($this);
+    }
+
+    /**
+     * 获取当前最新版本.
+     *
+     * @return string
+     */
+    final public function getLatestVersion()
+    {
+        return Admin::extension()->versionManager()->getFileVersions($this);
+    }
+
+    /**
+     * 获取当前本地最新版本.
+     *
+     * @return string
+     */
+    final public function getLocalLatestVersion()
+    {
+        return Admin::extension()->versionManager()->getFileVersions($this);
     }
 
     /**

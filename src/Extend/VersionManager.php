@@ -182,7 +182,7 @@ class VersionManager
     protected function getLatestFileVersion($name)
     {
         $versionInfo = $this->getFileVersions($name);
-        if (!$versionInfo) {
+        if (! $versionInfo) {
             return static::NO_VERSION_VALUE;
         }
 
@@ -191,6 +191,8 @@ class VersionManager
 
     public function getNewFileVersions($name, $version = null)
     {
+        $name = $this->manager->getName($name);
+
         if ($version === null) {
             $version = static::NO_VERSION_VALUE;
         }
@@ -204,6 +206,8 @@ class VersionManager
 
     public function getFileVersions($name)
     {
+        $name = $this->manager->getName($name);
+
         if ($this->fileVersions !== null && array_key_exists($name, $this->fileVersions)) {
             return $this->fileVersions[$name];
         }

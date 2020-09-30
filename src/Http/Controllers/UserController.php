@@ -47,7 +47,7 @@ class UserController extends AdminController
                         }
                     })
                     ->else()
-                    ->emptyString();
+                    ->display('');
             }
 
             $grid->column('created_at');

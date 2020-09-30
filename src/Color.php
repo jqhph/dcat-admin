@@ -197,7 +197,7 @@ class Color
      *
      * @param string $name
      */
-    public function __construct($name = null)
+    public function __construct(?string $name = null)
     {
         $this->name = ($name ?: config('admin.layout.color')) ?: static::DEFAULT_COLOR;
 
@@ -210,7 +210,7 @@ class Color
     /**
      * @return string
      */
-    public function name()
+    public function getName()
     {
         return $this->name;
     }
@@ -218,12 +218,12 @@ class Color
     /**
      * 获取颜色.
      *
-     * @param array  $colorName
+     * @param string $colorName
      * @param string $default
      *
      * @return string
      */
-    public function get(string $colorName, string $default = null)
+    public function get(?string $colorName, ?string $default = null)
     {
         if ($this->realColors) {
             return $this->realColors[$colorName] ?? $default;
@@ -264,7 +264,7 @@ class Color
      *
      * @return string
      */
-    public function lighten(string $color, int $amt)
+    public function lighten(?string $color, int $amt)
     {
         return Helper::colorLighten($this->get($color, $color), $amt);
     }
@@ -290,7 +290,7 @@ class Color
      *
      * @return string
      */
-    public function alpha(string $color, $alpha)
+    public function alpha(?string $color, $alpha)
     {
         return Helper::colorAlpha($this->get($color, $color), $alpha);
     }

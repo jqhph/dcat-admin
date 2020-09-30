@@ -51,7 +51,7 @@ class Box extends Widget
             $content->simple();
         }
 
-        $this->content = $this->lazyRenderable($content);
+        $this->content = $this->formatRenderable($content);
 
         return $this;
     }

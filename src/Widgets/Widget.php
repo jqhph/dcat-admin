@@ -267,7 +267,7 @@ abstract class Widget implements Renderable
      *
      * @return Lazy|LazyTable|mixed
      */
-    protected function lazyRenderable($content)
+    protected function formatRenderable($content)
     {
         if ($content instanceof LazyGrid) {
             return LazyTable::make($content);

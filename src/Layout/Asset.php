@@ -281,7 +281,7 @@ class Asset
      */
     protected function initTheme()
     {
-        $color = Admin::color()->name();
+        $color = Admin::color()->getName();
 
         if ($color === Color::DEFAULT_COLOR) {
             return;

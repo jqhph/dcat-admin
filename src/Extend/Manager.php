@@ -129,7 +129,7 @@ class Manager
      *
      * @return ServiceProvider[]|Collection
      */
-    public function extensions()
+    public function all()
     {
         return $this->extensions;
     }
@@ -139,9 +139,9 @@ class Manager
      *
      * @return ServiceProvider[]|Collection
      */
-    public function availableExtensions()
+    public function available()
     {
-        return $this->extensions()->filter->enabled();
+        return $this->all()->filter->enabled();
     }
 
     /**
