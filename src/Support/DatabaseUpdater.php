@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
  *
  * Executes database migration and seed scripts based on their filename.
  *
- * @package october\database
  * @author Alexey Bobkov, Samuel Georges
  */
 class DatabaseUpdater

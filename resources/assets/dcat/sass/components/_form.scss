@@ -99,6 +99,7 @@ select.form-control:not([multiple=multiple]) {
 
 .input-group-prepend .input-group-text {
   margin-right: -1px;
+  max-height: $input-height;
 }
 
 // --------------------- input-group-addon ---------------------

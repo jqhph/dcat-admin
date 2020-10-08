@@ -77,7 +77,7 @@ class RoleController extends AdminController
 
     public function form()
     {
-        return Form::make(new Role('permissions'), function (Form $form) {
+        return Form::make(Role::with(['permissions']), function (Form $form) {
             $roleTable = config('admin.database.roles_table');
             $connection = config('admin.database.connection');
 

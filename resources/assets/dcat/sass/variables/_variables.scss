@@ -22,9 +22,9 @@ $shadow-180: 0 3px 1px -2px rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.08), 0 1px 
 $shadow-200: 0 3px 1px -2px rgba(0,0,0,.1), 0 2px 2px 0 rgba(0,0,0,.1), 0 1px 5px 1px rgba(0,0,0,.1);
 
 // 按钮阴影颜色
-$btn-white-shadow: 0 3px 1px -2px rgba(0,0,0,.1), 0 2px 2px 0 rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.08);
-$default-btn-shadow: 0 2px 4px 0 rgba(0,0,0,.06);
-$btn-shadow: $shadow-100;
+$default-btn-shadow: $shadow-150;
+$btn-white-shadow: $default-btn-shadow;
+$btn-shadow: $default-btn-shadow;
 $btn-shadow-hover: $shadow-200;
 $btn-group-btn-shadow: $btn-shadow;
 

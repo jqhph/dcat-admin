@@ -7,7 +7,7 @@ if (top && w.layer) {
 
 export default class DialogForm {
     constructor(Dcat, options) {
-        let _this = this, nullFun = function (a, b) {};
+        let _this = this, nullFun = function () {};
 
         _this.options = $.extend({
             // 弹窗标题
@@ -47,8 +47,8 @@ export default class DialogForm {
         _this._counter = 1;
         _this._idx = {};
         _this._dialogs = {};
-        _this.isLoading = 0;
-        _this.isSubmitting = 0;
+        _this.rendering = 0;
+        _this.submitting = 0;
 
         _this.init(options)
     }
@@ -92,7 +92,7 @@ export default class DialogForm {
         let _this = this,
             $btn = _this.$target;
 
-        if (! url || _this.isLoading) {
+        if (! url || _this.rendering) {
             return;
         }
 
@@ -112,7 +112,7 @@ export default class DialogForm {
             _this._destroy(counter);
         });
 
-        _this.isLoading = 1;
+        _this.rendering = 1;
 
         $btn && $btn.buttonLoading();
 
@@ -122,7 +122,7 @@ export default class DialogForm {
         $.ajax({
             url: url,
             success: function (template) {
-                _this.isLoading = 0;
+                _this.rendering = 0;
                 Dcat.NP.done();
 
                 if ($btn) {
@@ -144,7 +144,7 @@ export default class DialogForm {
             options = _this.options;
 
         // 加载js代码
-        template = Dcat.assets.executeScripts(template).render();
+        template = Dcat.assets.resolveHtml(template).render();
         
         let btns = [options.lang.submit],
             dialogOpts = {
@@ -207,7 +207,7 @@ export default class DialogForm {
             counter = _this.$target.attr('counter'),
             $submitBtn = _this._dialogs[counter].find('.layui-layer-btn0');
 
-        if (_this.isSubmitting) {
+        if (_this.submitting) {
             return;
         }
 
@@ -223,14 +223,14 @@ export default class DialogForm {
                     return false;
                 }
 
-                _this.isSubmitting = 1;
+                _this.submitting = 1;
 
                 $submitBtn.buttonLoading();
             },
             after: function (success, res) {
                 $submitBtn.buttonLoading(false);
 
-                _this.isSubmitting = 0;
+                _this.submitting = 0;
 
                 if (options.saved(success, res) === false) {
                     return false;

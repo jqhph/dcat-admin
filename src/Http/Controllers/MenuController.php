@@ -97,7 +97,7 @@ class MenuController extends AdminController
 
         $relations = $menuModel::withPermission() ? ['permissions', 'roles'] : 'roles';
 
-        return Form::make(new Menu($relations), function (Form $form) use ($menuModel) {
+        return Form::make(Menu::with($relations), function (Form $form) use ($menuModel) {
             $form->tools(function (Form\Tools $tools) {
                 $tools->disableView();
             });

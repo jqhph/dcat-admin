@@ -180,7 +180,7 @@ class Grid
         'show_toolbar'           => true,
         'create_mode'            => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'       => ['700px', '670px'],
-        'table_class'            => ['table', 'dt-checkboxes-select'],
+        'table_class'            => ['table', 'custom-data-table'],
     ];
 
     /**
@@ -397,7 +397,7 @@ class Grid
     public function formatTableClass()
     {
         if ($this->options['show_bordered']) {
-            $this->addTableClass(['table-bordered', 'complex-headers', 'dataTable']);
+            $this->addTableClass(['table-bordered', 'complex-headers', 'data-table']);
         }
         if ($this->getComplexHeaders()) {
             $this->addTableClass('table-text-center');

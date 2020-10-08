@@ -109,8 +109,8 @@ a.btn-sm, .btn-group-sm > a.btn {
 
 .btn.btn-white, .btn.btn-default {
   color: $font-color;
-  box-shadow: none;
-  background: darken(#f2f2f3, 1%);
+  box-shadow: $default-btn-shadow;
+  background: $white;
 }
 
 //.btn.btn-white.btn-shadow, .btn.btn-default.btn-shadow {

@@ -251,9 +251,7 @@ export default class Helpers {
 
         $.ajax(url).then(function (data) {
             done(
-                Dcat.assets.executeScripts(data, function () {
-                    Dcat.triggerReady();
-                }).render()
+                Dcat.assets.resolveHtml(data, Dcat.triggerReady).render()
             );
         }, function (a, b, c) {
             if (error) {

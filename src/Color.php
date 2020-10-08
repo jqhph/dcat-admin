@@ -61,7 +61,7 @@ class Color
 {
     use Macroable;
 
-    const DEFAULT_COLOR = 'indigo';
+    const DEFAULT_COLOR = 'default';
 
     /**
      * 颜色.
@@ -69,7 +69,7 @@ class Color
      * @var array
      */
     protected static $extensions = [
-        'indigo' => [
+        'default' => [
             'colors' => [
                 'primary'        => '#586cb1',
                 'primary-darker' => '#4c60a3',

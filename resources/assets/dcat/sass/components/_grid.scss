@@ -116,11 +116,11 @@ body:not(.dark-mode) .simple-grid {
       background: transparent;
     }
 
-    .custom-data-table.dataTable tbody td {
+    .custom-data-table.data-table tbody td {
       height: 35px;
     }
 
-    .custom-data-table.dataTable thead th {
+    .custom-data-table.data-table thead th {
       height: 20px;
     }
 
@@ -130,7 +130,7 @@ body:not(.dark-mode) .simple-grid {
       border-bottom: 1px solid $table-border-color;
     }
 
-    table.dataTable thead tr:last-child th {
+    table.data-table thead tr:last-child th {
       border-bottom: 2px solid $table-border-color;
     }
   }

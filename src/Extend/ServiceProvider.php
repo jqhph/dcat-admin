@@ -405,7 +405,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     {
         $menuModel = config('admin.database.menu_model');
 
-        return $result = $menuModel::where('uri', $path)->exists();
+        return $menuModel::where('uri', $path)->exists();
     }
 
     /**

@@ -3,6 +3,7 @@ import Helpers from './extensions/Helpers'
 import Translator from './extensions/Translator'
 
 let $ = jQuery,
+    $document = $(document),
     pjaxResponded = false,
     bootingCallbacks = [],
     actions = {},
@@ -104,7 +105,7 @@ export default class Dcat {
         }
 
         $(() => {
-            $(document).trigger('pjax:loaded');
+            $document.trigger('pjax:loaded');
         });
     }
 
@@ -155,10 +156,10 @@ export default class Dcat {
         once = once === undefined ? true : once;
 
         if (once) {
-            return $(document).one('pjax:loaded', callback);
+            return $document.one('pjax:loaded', callback);
         }
 
-        return $(document).on('pjax:loaded', callback);
+        return $document.on('pjax:loaded', callback);
     }
 
     /**
@@ -172,10 +173,10 @@ export default class Dcat {
         once = once === undefined ? true : once;
 
         if (once) {
-            return $(document).one('pjax:complete', callback);
+            return $document.one('pjax:complete', callback);
         }
 
-        return $(document).on('pjax:complete', callback);
+        return $document.on('pjax:complete', callback);
     }
 
     withConfig(config) {

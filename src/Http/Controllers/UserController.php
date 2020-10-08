@@ -20,7 +20,7 @@ class UserController extends AdminController
 
     protected function grid()
     {
-        return Grid::make(new Administrator('roles'), function (Grid $grid) {
+        return Grid::make(Administrator::with(['roles']), function (Grid $grid) {
             $grid->column('id', 'ID')->sortable();
             $grid->column('username')->prepend(function () {
                 return "<img src='{$this->getAvatar()}' data-action='preview-img' width='40' class='avatar img-circle' /> &nbsp; ";
@@ -70,7 +70,7 @@ class UserController extends AdminController
 
     protected function detail($id)
     {
-        return Show::make($id, new Administrator('roles'), function (Show $show) {
+        return Show::make($id, Administrator::with(['roles']), function (Show $show) {
             $show->field('id');
             $show->field('username');
             $show->field('name');
@@ -122,7 +122,7 @@ class UserController extends AdminController
 
     public function form()
     {
-        return Form::make(new Administrator('roles'), function (Form $form) {
+        return Form::make(Administrator::with(['roles']), function (Form $form) {
             $userTable = config('admin.database.users_table');
 
             $connection = config('admin.database.connection');

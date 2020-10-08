@@ -1,4 +1,4 @@
-<div class="dcat-box custom-data-table dt-bootstrap4">
+<div class="dcat-box custom-data-table">
     @include('admin::grid.table-toolbar')
 
     {!! $grid->renderFilter() !!}

@@ -96,9 +96,9 @@ abstract class Widget implements Renderable
     {
         if ($value === null) {
             return Arr::get($this->options, $key);
-        } else {
-            Arr::set($this->options, $key, $value);
         }
+
+        Arr::set($this->options, $key, $value);
 
         return $this;
     }
