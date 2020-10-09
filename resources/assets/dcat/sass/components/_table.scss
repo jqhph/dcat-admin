@@ -92,11 +92,11 @@ table.table-bordered.data-table th:last-child, table.table-bordered.data-table t
 }
 
 table.data-table.complex-headers {
-  border: 1px solid $table-border-color;
+  border: 1px solid $table-border-color-darker;
 }
 table.data-table.complex-headers thead th, table.data-table.complex-headers thead td, table.data-table.complex-headers tfoot th, table.data-table.complex-headers tfoot td {
-  border-bottom: 1px solid $table-border-color;
-  border-right: 1px solid $table-border-color;
+  border-bottom: 1px solid $table-border-color-darker;
+  border-right: 1px solid $table-border-color-darker;
 }
 
 .data-table.table-bordered:not(.complex-headers) thead th {
@@ -126,8 +126,8 @@ table.table-bordered.data-table.complex-headers {
     border-radius: 0;
 
     td {
-      border-bottom: 1px solid lighten($table-border-color, 4%);
-      border-right: 1px solid lighten($table-border-color, 4%);
+      border-bottom: 1px solid lighten($table-border-color-darker, 4%);
+      border-right: 1px solid lighten($table-border-color-darker, 4%);
     }
 
     td:first-child {
@@ -176,6 +176,7 @@ table.table-bordered.data-table.complex-headers {
 
 
 $table-border-color: #eff3f8;
+$table-bg: darken(#f7f7f9, 3.8%);
 
 .table-collapse {
   .custom-data-table.data-table tbody tr td:first-child {
@@ -202,23 +203,20 @@ $table-border-color: #eff3f8;
   }
 
   .table.custom-data-table {
-    padding: 3px 7px 7px;
+    padding: 3px 5px 5px;
   }
 
   .table-fixed-left .table.custom-data-table {
-    padding: 3px 0 0 7px;
+    padding: 3px 0 0 5px;
   }
   .table-fixed-right .table.custom-data-table {
-    padding: 3px 7px 0 0;
+    padding: 3px 5px 0 0;
   }
   .table-fixed th {
-    background: darken(#f7f7f9, 3.5%);
+    background: $table-bg;
   }
 }
 
-
-//$table-bg: darken(#f7f7f9, 3.5%);
-$table-bg: $white;
 
 body:not(.dark-mode) {
   .table-collapse {
@@ -232,23 +230,20 @@ body:not(.dark-mode) {
       //border-collapse:collapse!important;
       margin-top: 0!important;
       background-color: $table-bg;
-      border: 1px solid #e1e4e8;
       //border-radius: $card-border-radius;
     }
 
     table.custom-data-table thead th {
       //border-top: 1px solid $table-border-color;
       //border-bottom: 2px solid $table-border-color;
-      height: 36px;
+      height: 42px;
       vertical-align: middle;
-      border-top: 1px solid #e1e4e8;
-      border-bottom: 1px solid #e1e4e8;
       //background: $white;
     }
 
     .custom-data-table tbody td {
       border-top: 1px solid $table-border-color;
-      height: 45px;
+      height: $table-td-height;
     }
 
     .custom-data-table tbody tr:first-child td {

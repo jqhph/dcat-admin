@@ -357,7 +357,6 @@ class QuickCreate implements Renderable
             success: function(data) {
                 ctr.attr('submitting', '');
                 btn.buttonLoading(false);
-                console.info(data);
                 
                 if (data.status == true) {
                     Dcat.success(data.message);

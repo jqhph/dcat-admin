@@ -180,7 +180,7 @@ class Grid
         'show_toolbar'           => true,
         'create_mode'            => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'       => ['700px', '670px'],
-        'table_class'            => ['table', 'custom-data-table'],
+        'table_class'            => ['table', 'custom-data-table', 'data-table'],
     ];
 
     /**

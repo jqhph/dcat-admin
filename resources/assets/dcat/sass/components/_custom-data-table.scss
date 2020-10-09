@@ -84,6 +84,10 @@ table.custom-data-table tbody tr {
   background: $white;
 }
 
+table.data-table {
+  border-collapse: separate !important;
+}
+
 table.custom-data-table.data-table thead th {
   //padding: .714rem 1.785rem;
   padding: 0.714rem .51rem;
@@ -136,7 +140,7 @@ table.custom-data-table.data-table tbody td {
   //padding: 1.357rem;
   border: none;
   vertical-align: middle;
-  height: 46px;
+  height: $table-td-height;
   padding: .55rem;
   line-height: 1.42857;
 }

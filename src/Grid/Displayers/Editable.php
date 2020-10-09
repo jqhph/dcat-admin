@@ -78,9 +78,7 @@ $('.{$this->selector}+.save').on("click",function() {
 
     value = tmp.text().replace(new RegExp("<br>","g"), '').replace(new RegExp("&nbsp;","g"), '').trim();
     
-    var data = {
-        _method: 'PUT'
-    };
+    var data = {};
     if (name.indexOf('.') === -1) {
         data[name] = value;
     } else {
@@ -91,9 +89,8 @@ $('.{$this->selector}+.save').on("click",function() {
     }
     
     Dcat.NP.start();
-    $.ajax({
+    $.put({
         url: url,
-        type: "POST",
         data: data,
         success: function (data) {
             if (data.status) {

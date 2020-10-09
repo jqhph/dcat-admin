@@ -10,6 +10,39 @@ export default class Ajax {
     }
 
     init(Dcat) {
+        $.get = function (url, data, success, dataType) {
+            let options = {
+                type: 'GET',
+                url: url,
+            };
+
+            if (typeof data === 'function') {
+                dataType = success;
+                success = data;
+                data = null
+            }
+
+            if (typeof success === 'function') {
+                options.success = success;
+            }
+
+            if (typeof data === 'object') {
+                options.data = data
+            }
+
+            if (dataType) {
+                options.dataType = dataType;
+            }
+
+            return $.ajax(options)
+        };
+
+        $.post = function (options) {
+            options.type = 'POST';
+
+            return $.ajax(options);
+        };
+
         $.delete = function (options) {
             options.type = 'POST';
             options.data = {_method: 'DELETE'};
