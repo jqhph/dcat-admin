@@ -24,4 +24,11 @@ trait Note
             $this->notes[] = $message;
         }
     }
+
+    public function setOutPut($output)
+    {
+        $this->output = $output;
+
+        return $this;
+    }
 }

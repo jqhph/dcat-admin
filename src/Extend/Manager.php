@@ -3,9 +3,12 @@
 namespace Dcat\Admin\Extend;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Models\Extension as ExtensionModel;
 use Dcat\Admin\Support\Composer;
+use Dcat\Admin\Support\Zip;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -34,11 +37,22 @@ class Manager
      */
     protected $settings;
 
+    /**
+     * @var string
+     */
+    protected $tempDirectory;
+
     public function __construct(Container $app)
     {
         $this->app = $app;
 
         $this->extensions = new Collection();
+
+        $this->tempDirectory = storage_path('extensions');
+
+        if (! is_dir($this->tempDirectory)) {
+            app('files')->makeDirectory($this->tempDirectory, 0777, true);
+        }
     }
 
     /**
@@ -82,7 +96,7 @@ class Manager
      *
      * @return void
      */
-    protected function load()
+    public function load()
     {
         foreach ($this->getExtensionDirectories() as $directory) {
             $this->loadExtension($directory);
@@ -121,7 +135,21 @@ class Manager
             return $name;
         }
 
-        return $this->extensions->get($name);
+        return $this->extensions->get($this->formatName($name));
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    protected function formatName($name)
+    {
+        if (! is_string($name)) {
+            return $name;
+        }
+
+        return str_replace('/', '.', $name);
     }
 
     /**
@@ -250,7 +278,34 @@ class Manager
             return $extension->getName();
         }
 
-        return $extension;
+        return $this->formatName($extension);
+    }
+
+    /**
+     * 解压缩扩展包.
+     */
+    public function extract($filePath)
+    {
+        $filePath = is_file($filePath) ? $filePath : $this->getFilePath($filePath);
+
+        if (! Zip::extract($filePath, admin_extension_path())) {
+            throw new AdminException(sprintf('Unable to extract core file \'%s\'.', $filePath));
+        }
+
+        @unlink($filePath);
+    }
+
+    /**
+     * Calculates a file path for a file code
+     *
+     * @param string $fileCode A unique file code
+     * @return string           Full path on the disk
+     */
+    protected function getFilePath($fileCode)
+    {
+        $name = md5($fileCode).'.arc';
+
+        return $this->tempDirectory.'/'.$name;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin;
 
+use Dcat\Admin\Console\ExtensionInstallCommand;
 use Dcat\Admin\Extend\UpdateManager;
 use Dcat\Admin\Extend\VersionManager;
 use Dcat\Admin\Layout\Asset;
@@ -27,7 +28,6 @@ class AdminServiceProvider extends ServiceProvider
         Console\InstallCommand::class,
         Console\PublishCommand::class,
         Console\UninstallCommand::class,
-        Console\ImportCommand::class,
         Console\CreateUserCommand::class,
         Console\ResetPasswordCommand::class,
         Console\ExtendCommand::class,
@@ -38,6 +38,13 @@ class AdminServiceProvider extends ServiceProvider
         Console\MenuCacheCommand::class,
         Console\MinifyCommand::class,
         Console\AppCommand::class,
+        Console\ExtensionInstallCommand::class,
+        Console\ExtensionUninstallCommand::class,
+        Console\ExtensionRefreshCommand::class,
+        Console\ExtensionRollbackCommand::class,
+        Console\ExtensionEnableCommand::class,
+        Console\ExtensionDiableCommand::class,
+        Console\ExtensionUpdateCommand::class,
     ];
 
     /**

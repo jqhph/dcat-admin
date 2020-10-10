@@ -29,7 +29,7 @@ class CreateAdminExtensionsTable extends Migration
             $table->string('name', 100);
             $table->tinyInteger('type')->default(1);
             $table->string('version', 20)->default(0);
-            $table->text('description')->nullable();
+            $table->text('detail')->nullable();
 
             $table->index('name');
             $table->timestamps();
