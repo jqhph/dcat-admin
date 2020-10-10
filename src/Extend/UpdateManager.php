@@ -94,8 +94,17 @@ class UpdateManager
         return $this;
     }
 
-    protected function publish($name)
+    /**
+     * 发布扩展资源.
+     *
+     * @param string $name
+     */
+    public function publish($name)
     {
+        $name = $this->manager->getName($name);
+
+        $this->manager->get($name)->publishable();
+
         Artisan::call('vendor:publish', ['--force' => true, '--tag' => $name]);
     }
 

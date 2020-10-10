@@ -614,7 +614,7 @@ class Field implements Renderable
             return $this->value;
         }
 
-        $this->value = $value;
+        $this->value = value($value);
 
         return $this;
     }
@@ -670,7 +670,7 @@ class Field implements Renderable
             return $this->default;
         }
 
-        $this->default = $default;
+        $this->default = value($default);
         $this->allowDefaultValueInEditPage = $edit;
 
         return $this;

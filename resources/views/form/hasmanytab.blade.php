@@ -11,7 +11,7 @@
         display: none;
     }
 </style>
-<div class="nav-tabs-custom has-many-{{$column}}">
+<div class="nav-tabs-custom has-many-{{$columnClass}}">
     <div class="row header">
         <div class="{{$viewClass['label']}}"><h4 class="pull-right">{!! $label !!}</h4></div>
         <div class="{{$viewClass['field']}}" style="margin-bottom: 5px">
@@ -33,10 +33,10 @@
 
     </ul>
     
-    <div class="tab-content has-many-{{$column}}-forms">
+    <div class="tab-content has-many-{{$columnClass}}-forms">
 
         @foreach($forms as $pk => $form)
-            <div class="tab-pane fields-group has-many-{{$column}}-form @if ($form == reset($forms)) active @endif" id="{{ $relationName . '_' . $pk }}">
+            <div class="tab-pane fields-group has-many-{{$columnClass}}-form @if ($form == reset($forms)) active @endif" id="{{ $relationName . '_' . $pk }}">
                 @foreach($form->fields() as $field)
                     {!! $field->render() !!}
                 @endforeach
@@ -61,7 +61,7 @@
 </div>
 
 <script>
-    var container = '.has-many-{{ $column }}';
+    var container = '.has-many-{{ $columnClass }}';
     
     $(container+' > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
         var $navTab = $(this).siblings('a');

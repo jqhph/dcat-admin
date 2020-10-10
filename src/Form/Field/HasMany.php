@@ -73,6 +73,8 @@ class HasMany extends Field
         'allowDelete' => true,
     ];
 
+    protected $columnClass;
+
     /**
      * Create a new HasMany field instance.
      *
@@ -85,6 +87,8 @@ class HasMany extends Field
 
         $this->column = $relationName;
 
+        $this->columnClass = $this->formatClass($relationName);
+
         if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
             $this->builder = $arguments[0];
@@ -93,6 +97,11 @@ class HasMany extends Field
         if (count($arguments) == 2) {
             [$this->label, $this->builder] = $arguments;
         }
+    }
+
+    protected function formatClass(string $column)
+    {
+        return str_replace('.', '-', $column);
     }
 
     /**
@@ -496,6 +505,7 @@ class HasMany extends Field
             'options'        => $this->options,
             'templateScript' => $script,
             'count'          => count($this->value()),
+            'columnClass'    => $this->columnClass,
         ]);
 
         return parent::render();
@@ -558,6 +568,7 @@ class HasMany extends Field
             'options'        => $this->options,
             'templateScript' => implode(";\r\n", $scripts),
             'count'          => count($this->value()),
+            'columnClass'    => $this->columnClass,
         ]);
 
         return parent::render();

@@ -110,18 +110,18 @@ class VersionManager
         $extensionHistory = array_reverse($extensionHistory);
 
         $stopOnNextVersion = false;
-        $newPluginVersion = null;
+        $newExtensionVersion = null;
 
         try {
             foreach ($extensionHistory as $history) {
                 if ($stopCurrentVersion && $stopOnVersion === $history->version) {
-                    $newPluginVersion = $history->version;
+                    $newExtensionVersion = $history->version;
 
                     break;
                 }
 
                 if ($stopOnNextVersion && $history->version !== $stopOnVersion) {
-                    $newPluginVersion = $history->version;
+                    $newExtensionVersion = $history->version;
 
                     break;
                 }
@@ -144,7 +144,7 @@ class VersionManager
             throw $exception;
         }
 
-        $this->setDatabaseVersion($name, $newPluginVersion);
+        $this->setDatabaseVersion($name, $newExtensionVersion);
 
         if (isset($this->fileVersions[$name])) {
             unset($this->fileVersions[$name]);

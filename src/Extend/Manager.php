@@ -4,7 +4,9 @@ namespace Dcat\Admin\Extend;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\AdminException;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Models\Extension as ExtensionModel;
+use Dcat\Admin\Models\Extension;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Support\Zip;
 use Illuminate\Contracts\Container\Container;
@@ -82,13 +84,36 @@ class Manager
     /**
      * 判断扩展是否启用.
      *
-     * @param string|null $slug
+     * @param string|null $name
      *
      * @return bool
      */
-    public function enabled(?string $slug)
+    public function enabled(?string $name)
     {
-        return (bool) optional($this->settings()->get($slug))->is_enabled;
+        return (bool) optional($this->settings()->get($name))->is_enabled;
+    }
+
+    /**
+     * 启用或禁用扩展.
+     *
+     * @param string|null $name
+     * @param bool        $enable
+     *
+     * @return void
+     */
+    public function enable(?string $name, bool $enable = true)
+    {
+        $name = $this->getName($name);
+
+        $extension = Extension::where('name', $name)->first();
+
+        if (! $extension) {
+            throw new RuntimeException(sprintf('Please install the extension(%s) first!', $name));
+        }
+
+        $extension->is_enabled = $enable;
+
+        $extension->save();
     }
 
     /**
@@ -136,6 +161,18 @@ class Manager
         }
 
         return $this->extensions->get($this->formatName($name));
+    }
+
+    /**
+     * 判断插件是否存在.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function has($name)
+    {
+        return $this->extensions->has($this->formatName($name));
     }
 
     /**
@@ -317,7 +354,7 @@ class Manager
     {
         if ($this->settings === null) {
             try {
-                $this->settings = ExtensionModel::all()->keyBy('slug');
+                $this->settings = ExtensionModel::all()->keyBy('name');
             } catch (\Throwable $e) {
                 $this->reportException($e);
 

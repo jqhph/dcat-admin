@@ -94,9 +94,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
             $this->registerRoutes($routes);
         }
 
-        $this->publishAssets();
-
-        $this->registerAssets();
+        $this->aliasAssets();
     }
 
     /**
@@ -215,7 +213,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     /**
      * 发布静态资源.
      */
-    protected function publishAssets()
+    public function publishable()
     {
         if ($assets = $this->getAssetPath()) {
             $this->publishes([
@@ -366,7 +364,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
     /**
      * 注册别名.
      */
-    protected function registerAssets()
+    protected function aliasAssets()
     {
         if ($this->js || $this->css) {
             Admin::asset()->alias($this->getName(), $this->js, $this->css);

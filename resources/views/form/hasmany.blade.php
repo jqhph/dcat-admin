@@ -4,15 +4,15 @@
     <div class="{{$viewClass['field']}}"></div>
 </div>
 
-<hr style="margin-top: 0px;">
+<hr class="mt-0">
 
-<div class="has-many-{{$column}}">
+<div class="has-many-{{$columnClass}}">
 
-    <div class="has-many-{{$column}}-forms">
+    <div class="has-many-{{$columnClass}}-forms">
 
         @foreach($forms as $pk => $form)
 
-            <div class="has-many-{{$column}}-form fields-group">
+            <div class="has-many-{{$columnClass}}-form fields-group">
 
                 @foreach($form->fields() as $field)
                     {!! $field->render() !!}
@@ -33,8 +33,8 @@
     </div>
     
 
-    <template class="{{$column}}-tpl">
-        <div class="has-many-{{$column}}-form fields-group">
+    <template class="{{$columnClass}}-tpl">
+        <div class="has-many-{{$columnClass}}-form fields-group">
 
             {!! $template !!}
 
@@ -61,8 +61,8 @@
 
 <script>
     var nestedIndex = {!! $count !!},
-        container = '.has-many-{{ $column }}',
-        forms = '.has-many-{{ $column  }}-forms';
+        container = '.has-many-{{ $columnClass }}',
+        forms = '.has-many-{{ $columnClass  }}-forms';
 
     function replaceNestedFormIndex(value) {
         return String(value).replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);
@@ -70,7 +70,7 @@
 
     $(container).on('click', '.add', function () {
 
-        var tpl = $('template.{{ $column }}-tpl');
+        var tpl = $('template.{{ $columnClass }}-tpl');
 
         nestedIndex++;
 
@@ -80,7 +80,7 @@
     });
 
     $(container).on('click', '.remove', function () {
-        $(this).closest('.has-many-{{ $column  }}-form').hide();
-        $(this).closest('.has-many-{{ $column  }}-form').find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
+        $(this).closest('.has-many-{{ $columnClass  }}-form').hide();
+        $(this).closest('.has-many-{{ $columnClass  }}-form').find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
     });
 </script>

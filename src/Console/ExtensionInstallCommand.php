@@ -12,7 +12,7 @@ class ExtensionInstallCommand extends Command
     {name : The name of the extension. Eg: author-name/extension-name} 
     {--path= : The path of the extension.}';
 
-    protected $description = 'Install an extension.';
+    protected $description = 'Install an extension';
 
     public function handle()
     {
