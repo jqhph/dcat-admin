@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class ExtensionUninstallCommand extends Command
 {
-    protected $signature = 'admin:extension-uninstall 
+    protected $signature = 'admin:ext-uninstall 
     {name : The name of the extension. Eg: author-name/extension-name}';
 
     protected $description = 'Uninstall an existing extension';
@@ -24,6 +24,8 @@ class ExtensionUninstallCommand extends Command
                     ->updateManager()
                     ->setOutPut($this->output)
                     ->rollback($name);
+
+                Admin::extension()->get($name)->uninstall();
             } catch (\Throwable $exception) {
                 $lastVersion = Admin::extension()->versionManager()->getCurrentVersion($name);
 

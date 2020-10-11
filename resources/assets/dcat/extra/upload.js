@@ -363,15 +363,19 @@
                             post._relation = relation;
 
                             Dcat.loading();
-                            $.post(opts.deleteUrl, post, function (result) {
-                                Dcat.loading(false);
-                                if (result.status) {
-                                    deleteInput(file.serverId);
-                                    uploader.removeFile(file);
-                                    return;
-                                }
+                            $.post({
+                                url: opts.deleteUrl,
+                                data: post,
+                                success: function (result) {
+                                    Dcat.loading(false);
+                                    if (result.status) {
+                                        deleteInput(file.serverId);
+                                        uploader.removeFile(file);
+                                        return;
+                                    }
 
-                                Dcat.error(result.message || 'Remove file failed.');
+                                    Dcat.error(result.message || 'Remove file failed.');
+                                }
                             });
 
                         });
@@ -505,7 +509,10 @@
             delete form['_relation'];
             delete form['upload_column'];
 
-            $.post(opts.updateServer, form);
+            $.post({
+                url: opts.updateServer,
+                data: form,
+            });
         }
 
         function setState(val, args) {
@@ -894,17 +901,21 @@
                     post._relation = relation;
 
                     Dcat.loading();
-                    $.post(opts.deleteUrl, post, function (result) {
-                        Dcat.loading(false);
-                        if (result.status) {
-                            // 移除
-                            html.remove();
+                    $.post({
+                        url: opts.deleteUrl,
+                        data: post,
+                        success: function (result) {
+                            Dcat.loading(false);
+                            if (result.status) {
+                                // 移除
+                                html.remove();
 
-                            removeFormFile(fileId);
-                            return;
+                                removeFormFile(fileId);
+                                return;
+                            }
+
+                            Dcat.error(result.message || 'Remove file failed.')
                         }
-
-                        Dcat.error(result.message || 'Remove file failed.')
                     });
                 });
             };

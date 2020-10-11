@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class ExtensionRefreshCommand extends Command
 {
-    protected $signature = 'admin:extension-refresh 
+    protected $signature = 'admin:ext-refresh 
     {name : The name of the extension. Eg: author-name/extension-name} 
     {--path= : The path of the extension.}';
 
@@ -21,7 +21,7 @@ class ExtensionRefreshCommand extends Command
             throw new \InvalidArgumentException(sprintf('Plugin "%s" not found.', $name));
         }
 
-        $confirmQuestion = 'Please confirm that you wish to remove and re-add this extension?';
+        $confirmQuestion = 'Please confirm that you wish to reinstall this extension?';
 
         if (! $this->confirm($confirmQuestion)) {
             return;

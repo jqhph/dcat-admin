@@ -29,6 +29,24 @@ if (! function_exists('admin_setting')) {
     }
 }
 
+if (! function_exists('admin_extension_setting')) {
+    /**
+     * @param string       $extension
+     * @param string|array $key
+     * @param mixed        $default
+     *
+     * @return mixed
+     */
+    function admin_extension_setting($extension, $key = null, $default = [])
+    {
+        $extension = app($extension);
+
+        if ($extension instanceof Dcat\Admin\Extend\ServiceProvider) {
+            return $extension->config($key, $default);
+        }
+    }
+}
+
 if (! function_exists('admin_section')) {
     /**
      * Get the string contents of a section.

@@ -33,12 +33,14 @@ class Extension extends Repository
         return [
             'id'           => $extension->getName(),
             'alias'        => $extension->getName(),
-            'name'         => $property->name,
+            'name'         => $extension->getName(),
             'version'      => $extension->getVersion(),
+            'type'         => $extension->getType(),
             'description'  => $property->description,
             'authors'      => $property->authors,
             'homepage'     => $property->homepage,
-            'enable'       => $extension->enabled(),
+            'enabled'      => $extension->enabled(),
+            'new_version'  => key($extension->getLocalLatestVersion()),
         ];
     }
 

@@ -177,8 +177,13 @@ table.table-bordered.data-table.complex-headers {
 
 $table-border-color: #eff3f8;
 $table-bg: darken(#f7f7f9, 3.8%);
+//$table-bg: #f7f7f9;
 
 .table-collapse {
+  //table.data-table thead th {
+  //  font-weight: 500;
+  //}
+
   .custom-data-table.data-table tbody tr td:first-child {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -223,22 +228,16 @@ body:not(.dark-mode) {
     box-shadow: $shadow;
     background: $table-bg;
     margin-top: 1rem;
-    //padding: 0 3px 3px;
 
     .custom-data-table {
       border-spacing: 0;
-      //border-collapse:collapse!important;
       margin-top: 0!important;
       background-color: $table-bg;
-      //border-radius: $card-border-radius;
     }
 
     table.custom-data-table thead th {
-      //border-top: 1px solid $table-border-color;
-      //border-bottom: 2px solid $table-border-color;
-      height: 42px;
+      height: 40px;
       vertical-align: middle;
-      //background: $white;
     }
 
     .custom-data-table tbody td {

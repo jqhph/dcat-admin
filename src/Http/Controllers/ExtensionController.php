@@ -2,16 +2,16 @@
 
 namespace Dcat\Admin\Http\Controllers;
 
-use Dcat\Admin\Http\Actions\ImportButton;
+use Dcat\Admin\Extend\ServiceProvider;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Http\Actions\Extensions\InstallFromLocal;
+use Dcat\Admin\Http\Actions\Extensions\Marketplace;
+use Dcat\Admin\Http\Displayers\Extensions;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Http\Repositories\Extension;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\StringOutput;
-use Dcat\Admin\Widgets\Alert;
-use Dcat\Admin\Widgets\Table;
-use Dcat\Admin\Widgets\Terminal;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 
@@ -21,29 +21,10 @@ class ExtensionController extends Controller
 
     public function index(Content $content)
     {
-        $this->define();
-
         return $content
             ->title(admin_trans_label('Extensions'))
             ->description(trans('admin.list'))
             ->body($this->grid());
-    }
-
-    public function import()
-    {
-        $extension = request('id');
-
-        if (! $extension) {
-            return response()->json(['status' => false, 'messages' => 'Invalid extension hash.']);
-        }
-
-        $box = Alert::make()
-            ->title("<span>php artisan admin:import $extension</span>")
-            ->content(Terminal::call('admin:import', ['extension' => $extension, '--force' => '1'])->transparent())
-            ->success()
-            ->removable();
-
-        return response()->json(['status' => true, 'content' => $box->render()]);
     }
 
     /**
@@ -55,25 +36,23 @@ class ExtensionController extends Controller
     {
         return new Grid(new Extension(), function (Grid $grid) {
             $grid->number();
-            $grid->column('name');
-            $grid->column('version');
-            $grid->column('description')
-                ->if(function ($column) {
-                    return mb_strlen($column->getValue(), 'UTF-8') > 14;
-                })
-                ->display(function ($v) {
-                    return Helper::strLimit($v, 0, 14);
-                })
-                ->expand(function ($expand) {
-                    if (! $this->description) {
-                        return;
-                    }
+            $grid->column('type')->display(function ($v) {
+                return $v === ServiceProvider::TYPE_THEME ? trans('admin.theme') : trans('admin.application');
+            });
+            $grid->column('name')->displayUsing(Extensions\Name::class);
+            $grid->column('description')->displayUsing(Extensions\Description::class)->width('55%');
 
-                    return "<div style='padding:10px 20px'>{$this->description}</div>";
-                });
+            $grid->column('authors')->display(function ($v) {
+                if (! $v) {
+                    return;
+                }
 
-            $grid->column('authors');
-            $grid->column('enable')->switch();
+                foreach ($v as &$item) {
+                    $item = "<span class='text-80'>{$item['name']}</span> <<code>{$item['email']}</code>>";
+                }
+
+                return implode('<div style="margin-top: 5px"></div>', $v);
+            });
 
             $grid->disablePagination();
             $grid->disableCreateButton();
@@ -85,15 +64,27 @@ class ExtensionController extends Controller
             $grid->disableEditButton();
             $grid->disableDeleteButton();
             $grid->disableViewButton();
+            $grid->disableActions();
 
-            $grid->actions([new ImportButton()]);
+            $grid->tools([
+                new Marketplace(),
+                new InstallFromLocal()
+            ]);
 
             $grid->quickCreate(function (Grid\Tools\QuickCreate $create) {
-                $create->text('package_name')->required();
+                $create->text('name')
+                    ->attribute('style', 'width:240px')
+                    ->placeholder('Input Name. Eg: dcat-admin/demo')
+                    ->required();
                 $create->text('namespace')
                     ->attribute('style', 'width:240px')
-                    ->required()
-                    ->default('Dcat\\Admin\\Extension\\:Name');
+                    ->placeholder('Input Namespace. Eg: DcatAdmin\\Demo')
+                    ->required();
+                $create->select('type')
+                    ->options([1 => trans('admin.application'), 2 => trans('admin.theme')])
+                    ->attribute('style', 'width:140px!important')
+                    ->default(1)
+                    ->required();
             });
         });
     }
@@ -143,66 +134,5 @@ class ExtensionController extends Controller
         ], $output);
 
         return $output->getContent();
-    }
-
-    protected function getExpandHandler($key = 'require')
-    {
-        return function () use ($key) {
-            if (! $this->{$key}) {
-                return;
-            }
-
-            $rows = [];
-            foreach ((array) $this->{$key} as $k => $v) {
-                $k = "<b class='text-80'>$k</b>";
-
-                $rows[$k] = is_array($v) ? "<pre>{$v}</pre>" : $v;
-            }
-
-            return new Table($rows);
-        };
-    }
-
-    protected function define()
-    {
-        $name = function ($v) {
-            $url = $this->homepage;
-
-            return "<a href='$url' target='_blank'>$v</a>";
-        };
-
-        $version = function ($v) {
-            $this->version = $this->version ?: 'unknown';
-            $style = in_array($this->version, ['dev-master', 'unknown']) ? 'default' : 'primary';
-
-            return $this->version ? "<span class='label bg-$style'>{$this->version}</span>" : '';
-        };
-
-        $authors = function ($v) {
-            if (! $v) {
-                return;
-            }
-
-            foreach ($v as &$item) {
-                $item = "<span class='text-80'>{$item['name']}</span> <<code>{$item['email']}</code>>";
-            }
-
-            return implode('<br/>', $v);
-        };
-
-        $imported = function ($v) {
-            if (! $v) {
-                $text = trans('admin.is_not_import');
-
-                return "<label class='label label-default'>$text</label>";
-            }
-
-            return $this->imported_at;
-        };
-
-        Grid\Column::define('name', $name);
-        Grid\Column::define('version', $version);
-        Grid\Column::define('authors', $authors);
-        Grid\Column::define('imported', $imported);
     }
 }

@@ -12,6 +12,8 @@ use Symfony\Component\Console\Output\NullOutput;
 
 abstract class ServiceProvider extends LaravelServiceProvider
 {
+    const TYPE_THEME = 'theme';
+
     /**
      * @var ComposerProperty
      */
@@ -21,6 +23,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
      * @var string
      */
     protected $name;
+
+    /**
+     * @var string
+     */
+    protected $type;
 
     /**
      * @var string
@@ -70,6 +77,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     public $output;
 
+    /**
+     * @var array
+     */
+    protected $config;
+
     public function __construct($app)
     {
         parent::__construct($app);
@@ -105,6 +117,16 @@ abstract class ServiceProvider extends LaravelServiceProvider
     final public function getName()
     {
         return $this->name ?: ($this->name = str_replace('/', '.', $this->composerProperty->name));
+    }
+
+    /**
+     * 获取插件类型.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -182,16 +204,80 @@ abstract class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
-     * 获取配置.
+     * 获取或保存配置.
      *
      * @param string $key
      * @param null   $default
      *
-     * @return \Illuminate\Config\Repository|mixed
+     * @return mixed
      */
     final public function config($key = null, $default = null)
     {
-        return Admin::setting()->get($this->name);
+        if ($this->config === null) {
+            $this->config = Admin::setting()->get($this->getConfigKey());
+            $this->config = $this->config ? $this->unserializeConfig($this->config) : [];
+        }
+
+        if (is_array($key)) {
+            $this->config = array_merge($this->config, $key);
+
+            Admin::setting()->save([$this->getConfigKey() => $this->serializeConfig($this->config)]);
+
+            return;
+        }
+
+        if ($key === null) {
+            return $this->config;
+        }
+
+        return Arr::get($this->config, $key, $default);
+    }
+
+    /**
+     * 获取或保存配置.
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @return mixed
+     */
+    public static function setting($key = null, $value = null)
+    {
+        $extension = app(static::class);
+
+        if ($extension instanceof ServiceProvider) {
+            return $extension->config($key, $value);
+        }
+    }
+
+    /**
+     * 配置key.
+     *
+     * @return mixed
+     */
+    protected function getConfigKey()
+    {
+        return str_replace('.', ':', $this->getName());
+    }
+
+    /**
+     * @param $config
+     *
+     * @return false|string
+     */
+    protected function serializeConfig($config)
+    {
+        return json_encode($config);
+    }
+
+    /**
+     * @param $config
+     *
+     * @return array
+     */
+    protected function unserializeConfig($config)
+    {
+        return json_decode($config, true);
     }
 
     /**
@@ -217,9 +303,21 @@ abstract class ServiceProvider extends LaravelServiceProvider
     {
         if ($assets = $this->getAssetPath()) {
             $this->publishes([
-                $assets => public_path(Admin::asset()->getRealPath('@extension'))
+                $assets => $this->getPublishsPath(),
             ], $this->getName());
         }
+    }
+
+    /**
+     * 获取资源发布路径.
+     *
+     * @return string
+     */
+    protected function getPublishsPath()
+    {
+        return public_path(
+            Admin::asset()->getRealPath('@extension/'.str_replace('.', '/', $this->getName()))
+        );
     }
 
     /**

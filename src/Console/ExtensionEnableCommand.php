@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class ExtensionEnableCommand extends Command
 {
-    protected $signature = 'admin:extension-enable 
+    protected $signature = 'admin:ext-enable 
     {name : The name of the extension. Eg: author-name/extension-name}';
 
     protected $description = 'Enable an existing extension';

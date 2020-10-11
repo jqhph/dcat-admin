@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 class ExtensionUpdateCommand extends Command
 {
-    protected $signature = 'admin:extension-update 
+    protected $signature = 'admin:ext-update 
     {name : The name of the extension. Eg: author-name/extension-name}
     {--ver= : If this parameter is specified, the process will stop on the specified version, if not, it will update to the latest version. Example: 1.3.9}';
 

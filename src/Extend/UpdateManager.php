@@ -68,10 +68,6 @@ class UpdateManager
 
         $this->note('<error>Unable to find:</error> '.$name);
 
-        if ($stopOnVersion === null) {
-            // 移除静态资源
-        }
-
         return $this;
     }
 

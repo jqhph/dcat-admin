@@ -4,7 +4,6 @@
         <span>{!! $label !!}</span>
     </div>
 
-
     <div class="{{$viewClass['field']}}">
 
         @include('admin::form.error')
@@ -32,5 +31,3 @@
 
     </div>
 </div>
-
-@include('admin::form.select-script')

@@ -65,34 +65,36 @@
 @endsection
 
 @section('admin.select-lang')
-{{--本地化--}}
-<script once>
-    @php
-        $lang = trans('select2');
-        $locale = config('app.locale');
-    @endphp
-    if ($.fn.select2) {
-        var e = $.fn.select2.amd;
+@if (config('app.locale') !== 'en')
+    {{--本地化--}}
+    <script once>
+        @php
+            $lang = trans('select2');
+            $locale = config('app.locale');
+        @endphp
+        if ($.fn.select2) {
+            var e = $.fn.select2.amd;
 
-        e.define("select2/i18n/{{ $locale }}", [], function () {
-            return {
-                errorLoading: function () {
-                    return "{{ $lang['error_loading'] }}"
-                }, inputTooLong: function (e) {
-                    return "{{ $lang['input_too_long'] }}".replace(':num', e.input.length - e.maximum)
-                }, inputTooShort: function (e) {
-                    return "{{ $lang['input_too_short'] }}".replace(':num', e.minimum - e.input.length)
-                }, loadingMore: function () {
-                    return "{{ $lang['loading_more'] }}"
-                }, maximumSelected: function (e) {
-                    return "{{ $lang['maximum_selected'] }}".replace(':num', e.maximum)
-                }, noResults: function () {
-                    return "{{ $lang['no_results'] }}"
-                }, searching: function () {
-                    return "{{ $lang['searching'] }}"
+            e.define("select2/i18n/{{ $locale }}", [], function () {
+                return {
+                    errorLoading: function () {
+                        return "{{ $lang['error_loading'] }}"
+                    }, inputTooLong: function (e) {
+                        return "{{ $lang['input_too_long'] }}".replace(':num', e.input.length - e.maximum)
+                    }, inputTooShort: function (e) {
+                        return "{{ $lang['input_too_short'] }}".replace(':num', e.minimum - e.input.length)
+                    }, loadingMore: function () {
+                        return "{{ $lang['loading_more'] }}"
+                    }, maximumSelected: function (e) {
+                        return "{{ $lang['maximum_selected'] }}".replace(':num', e.maximum)
+                    }, noResults: function () {
+                        return "{{ $lang['no_results'] }}"
+                    }, searching: function () {
+                        return "{{ $lang['searching'] }}"
+                    }
                 }
-            }
-        }), {define: e.define, require: e.require}
-    }
-</script>
+            }), {define: e.define, require: e.require}
+        }
+    </script>
+@endif
 @endsection

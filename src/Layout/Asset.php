@@ -9,24 +9,16 @@ use Illuminate\Support\Str;
 class Asset
 {
     /**
-     * 路径别名.
-     *
-     * @var array
-     */
-    protected $pathAlias = [
-        // Dcat Admin静态资源路径别名
-        '@admin' => 'vendors/dcat-admin',
-
-        // Dcat Acmin扩展静态资源路径别名
-        '@extension' => 'vendors/dcat-admin-extensions',
-    ];
-
-    /**
      * 别名.
      *
      * @var array
      */
     protected $alias = [
+        // Dcat Admin静态资源路径别名
+        '@admin' => 'vendor/dcat-admin',
+        // Dcat Acmin扩展静态资源路径别名
+        '@extension' => 'vendor/dcat-admin-extensions',
+
         '@adminlte' => [
             'js' => [
                 '@admin/adminlte/adminlte.js',
@@ -307,22 +299,21 @@ class Asset
      * 设置或获取别名.
      *
      * @param string|array $name
-     * @param string|array $js
-     * @param string|array $css
+     * @param string|array $value
      *
      * @return void|array
      */
-    public function alias($name, $js = null, $css = null)
+    public function alias($name, $value = null)
     {
         if (is_array($name)) {
             foreach ($name as $key => $value) {
-                $this->alias($key, $value['js'] ?? [], $value['css'] ?? []);
+                $this->alias($key, $value);
             }
 
             return;
         }
 
-        if ($js === null && $css === null) {
+        if ($value === null) {
             return $this->alias[$name] ?? [];
         }
 
@@ -330,10 +321,7 @@ class Asset
             $name = '@'.$name;
         }
 
-        $this->alias[$name] = [
-            'js'  => $js,
-            'css' => $css,
-        ];
+        $this->alias[$name] = $value;
     }
 
     /**
@@ -463,7 +451,7 @@ class Asset
      */
     public function getRealPath(?string $path)
     {
-        if (! $this->hasAlias($path)) {
+        if (! $this->containsAlias($path)) {
             return $path;
         }
 
@@ -471,17 +459,39 @@ class Asset
             '/',
             array_map(
                 function ($v) {
-                    $v = $this->pathAlias[$v] ?? $v;
-
-                    if (! $this->hasAlias($v)) {
+                    if (! $this->isPathAlias($v)) {
                         return $v;
                     }
 
-                    return $this->getRealPath($v);
+                    return $this->getRealPath($this->alias($v));
                 },
                 explode('/', $path)
             )
         );
+    }
+
+    /**
+     * 判断是否是路径别名.
+     *
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    public function isPathAlias($value)
+    {
+        return $this->hasAlias($value) && is_string($this->alias[$value]);
+    }
+
+    /**
+     * 判断别名是否存在
+     *
+     * @param $value
+     * 
+     * @return bool
+     */
+    public function hasAlias($value)
+    {
+        return isset($this->alias[$value]);
     }
 
     /**
@@ -491,7 +501,7 @@ class Asset
      *
      * @return bool
      */
-    protected function hasAlias($value)
+    protected function containsAlias($value)
     {
         return $value && mb_strpos($value, '@') === 0;
     }

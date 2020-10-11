@@ -300,6 +300,9 @@ class Manager
     public function addExtension(ServiceProvider $serviceProvider)
     {
         $this->extensions->put($serviceProvider->getName(), $serviceProvider);
+
+        $this->app->instance($abstract = get_class($serviceProvider), $serviceProvider);
+        $this->app->alias($abstract, $serviceProvider->getName());
     }
 
     /**
