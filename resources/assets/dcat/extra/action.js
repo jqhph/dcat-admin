@@ -83,7 +83,7 @@
                 if (request && typeof request.responseJSON === 'object') {
                     Dcat.error(request.responseJSON.message)
                 }
-                console.error(request);
+                console.error(result);
             }
         }
 

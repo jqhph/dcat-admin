@@ -9,7 +9,7 @@ class Enable extends RowAction
 {
     public function title()
     {
-        return trans('admin.enable');
+        return sprintf('<b>%s</b>', trans('admin.enable'));
     }
 
     public function handle()

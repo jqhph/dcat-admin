@@ -78,8 +78,7 @@ class ExtensionController extends Controller
                     ->required();
                 $create->text('namespace')
                     ->attribute('style', 'width:240px')
-                    ->placeholder('Input Namespace. Eg: DcatAdmin\\Demo')
-                    ->required();
+                    ->placeholder('Input Namespace. Eg: DcatAdmin\\Demo');
                 $create->select('type')
                     ->options([1 => trans('admin.application'), 2 => trans('admin.theme')])
                     ->attribute('style', 'width:140px!important')
@@ -93,46 +92,54 @@ class ExtensionController extends Controller
     {
         $form = new Form(new Extension());
 
-        $form->text('package_name')->rules(function () {
+        $form->hidden('name')->rules(function () {
             return [
                 'required',
                 function ($attribute, $value, $fail) {
                     if (! Helper::validateExtensionName($value)) {
                         return $fail(
-                            "[$value] is not a valid package name, please input a name like \"vendor/name\""
+                            "[$value] is not a valid package name, please type a name like \"vendor/name\""
                         );
                     }
                 },
             ];
         });
-        $form->text('namespace')->required();
-        $form->hidden('enable');
+        $form->hidden('namespace');
+        $form->hidden('type');
 
-        $form->saving(function (Form $form) {
-            $package = $form->package_name;
+        $self = $this;
+
+        $form->saving(function (Form $form) use ($self) {
+            $package = $form->name;
             $namespace = $form->namespace;
+            $type = $form->type;
 
-            if ($package && $namespace) {
-                $results = $this->createExtension($package, $namespace);
+            if ($package) {
+                $results = $self->createExtension($package, $namespace, $type);
 
-                return $form->success($results);
+                return $form
+                    ->response()
+                    ->refresh()
+                    ->timeout(10)
+                    ->success($results);
             }
         });
 
         return $form;
     }
 
-    public function createExtension($package, $namespace)
+    public function createExtension($package, $namespace, $type)
     {
         $namespace = trim($namespace, '\\');
 
         $output = new StringOutput();
 
-        Artisan::call('admin:extend', [
-            'extension'   => $package,
-            '--namespace' => $namespace,
+        Artisan::call('admin:ext-make', [
+            'name'        => $package,
+            '--namespace' => $namespace ?: 'defualt',
+            '--theme'     => $type == 2,
         ], $output);
 
-        return $output->getContent();
+        return sprintf('<pre class="bg-transparent text-white">%s</pre>', (string) $output->getContent());
     }
 }

@@ -9,7 +9,7 @@ class Disable extends RowAction
 {
     public function title()
     {
-        return trans('admin.disable');
+        return sprintf('<span class="text-80">%s</span>', trans('admin.disable'));
     }
 
     public function handle()

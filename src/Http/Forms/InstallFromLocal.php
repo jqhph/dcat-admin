@@ -20,47 +20,41 @@ class InstallFromLocal extends Form implements LazyRenderable
             return $this->response()->error('Invalid arguments.');
         }
 
-        $path = $this->getFilePath($file);
+        try {
+            $path = $this->getFilePath($file);
 
-        $manager = Admin::extension();
+            $manager = Admin::extension();
 
-        $allNames = $manager->all()->keys()->toArray();
+            $allNames = $manager->all()->keys()->toArray();
 
-        $manager->extract($path);
+            $manager->extract($path);
 
-        $manager->load();
+            $manager->load();
 
-        $newAllNames = $manager->all()->keys()->toArray();
+            $newAllNames = $manager->all()->keys()->toArray();
 
-        $diff = array_diff($newAllNames, $allNames);
+            $diff = array_diff($newAllNames, $allNames);
 
-        if (! $diff) {
-            return $this->response()->error(trans('admin.invalid_extension_package'));
+            if (! $diff) {
+                return $this->response()->error(trans('admin.invalid_extension_package'));
+            }
+
+            $manager
+                ->updateManager()
+                ->update(current($diff));
+
+            return $this->response()
+                ->success(implode('<br>', $manager->updateManager()->notes))
+                ->refresh();
+        } catch (\Throwable $e) {
+            report($e);
+
+            return $this->response()->error($e->getMessage());
+        } finally {
+            if (! empty($path)) {
+                @unlink($path);
+            }
         }
-
-        $manager
-            ->updateManager()
-            ->update(current($diff));
-
-        return $this->response()
-            ->success(implode('<br>', $manager->updateManager()->notes))
-            ->refresh();
-    }
-
-    protected function getFilePath($file)
-    {
-        $root = config("filesystems.disks.{$this->disk()}.root");
-
-        if (! $root) {
-            throw new RuntimeException(sprintf('Invalid configurations of disk [%s], missing "root".', $this->disk()));
-        }
-
-        return rtrim($root, '/').'/'.$file;
-    }
-
-    protected function disk()
-    {
-        return config('admin.extension.disk') ?: 'local';
     }
 
     public function form()
@@ -70,5 +64,21 @@ class InstallFromLocal extends Form implements LazyRenderable
             ->disk($this->disk())
             ->accept('zip,arc,rar,tar.gz', 'application/zip')
             ->autoUpload();
+    }
+
+    protected function getFilePath($file)
+    {
+        $root = config("filesystems.disks.{$this->disk()}.root");
+
+        if (! $root) {
+            throw new RuntimeException(sprintf('Missing \'root\' for disk [%s].', $this->disk()));
+        }
+
+        return rtrim($root, '/').'/'.$file;
+    }
+
+    protected function disk()
+    {
+        return config('admin.extension.disk') ?: 'local';
     }
 }

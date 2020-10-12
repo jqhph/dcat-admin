@@ -1,9 +1,10 @@
 <span class="ext-name">
     {{ $value }}
-    @if($row->homepage)
-        <a href='{!! $row->homepage !!}' target='_blank' class="feather icon-chrome"></a>
-    @endif
 </span>
+@if($row->homepage)
+    <a href='{!! $row->homepage !!}' target='_blank' class="feather icon-chrome"></a>
+@endif
+
 <div style="height: 10px"></div>
 
 @if($row->version)
@@ -28,6 +29,6 @@
         display: inline;
     }
     .ext-name {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
 </style>

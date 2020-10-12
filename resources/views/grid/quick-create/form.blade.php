@@ -62,15 +62,7 @@
                 ctr.attr('submitting', '');
                 btn.buttonLoading(false);
 
-                if (data.status == true) {
-                    Dcat.success(data.message);
-                    Dcat.reload();
-                    return;
-                }
-
-                if (typeof data.validation !== 'undefined') {
-                    Dcat.warning(data.message)
-                }
+                Dcat.handleJsonResponse(data);
             },
             error:function(xhq){
                 btn.buttonLoading(false);

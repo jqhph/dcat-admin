@@ -123,6 +123,18 @@ class JsonResponse
     }
 
     /**
+     * 设置 toastr 显示时长.
+     *
+     * @param $seconds
+     *
+     * @return $this
+     */
+    public function timeout($seconds)
+    {
+        return $this->data(['timeout' => $seconds]);
+    }
+
+    /**
      * 显示确认弹窗.
      *
      * @param bool $alert

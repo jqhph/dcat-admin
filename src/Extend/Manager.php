@@ -8,10 +8,12 @@ use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Models\Extension as ExtensionModel;
 use Dcat\Admin\Models\Extension;
 use Dcat\Admin\Support\Composer;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\Zip;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -40,9 +42,9 @@ class Manager
     protected $settings;
 
     /**
-     * @var string
+     * @var Filesystem
      */
-    protected $tempDirectory;
+    protected $files;
 
     public function __construct(Container $app)
     {
@@ -50,11 +52,7 @@ class Manager
 
         $this->extensions = new Collection();
 
-        $this->tempDirectory = storage_path('extensions');
-
-        if (! is_dir($this->tempDirectory)) {
-            app('files')->makeDirectory($this->tempDirectory, 0777, true);
-        }
+        $this->files = app('files');
     }
 
     /**
@@ -74,11 +72,7 @@ class Manager
      */
     public function boot()
     {
-        foreach ($this->extensions as $extension) {
-            if ($this->enabled($extension->getName())) {
-                $extension->boot();
-            }
-        }
+        $this->extensions->each->boot();
     }
 
     /**
@@ -124,7 +118,11 @@ class Manager
     public function load()
     {
         foreach ($this->getExtensionDirectories() as $directory) {
-            $this->loadExtension($directory);
+            try {
+                $this->loadExtension($directory);
+            } catch (\Throwable $e) {
+                $this->reportException($e);
+            }
         }
     }
 
@@ -244,7 +242,7 @@ class Manager
     {
         $composerProperty = Composer::parse($directory.'/composer.json');
 
-        $serviceProvider = $composerProperty->get('dcat-admin.provider');
+        $serviceProvider = $composerProperty->get('extra.dcat-admin');
         $psr4 = $composerProperty->get('autoload.psr-4');
 
         if (! $serviceProvider || ! $psr4) {
@@ -263,13 +261,15 @@ class Manager
     /**
      * 获取扩展目录.
      *
+     * @param string $dirPath
+     *
      * @return array
      */
-    public function getExtensionDirectories()
+    public function getExtensionDirectories($dirPath = null)
     {
         $extensions = [];
 
-        $dirPath = admin_extension_path();
+        $dirPath = $dirPath ?: admin_extension_path();
 
         if (! is_dir($dirPath)) {
             return $extensions;
@@ -299,6 +299,16 @@ class Manager
      */
     public function addExtension(ServiceProvider $serviceProvider)
     {
+        if (! $serviceProvider->getName()) {
+            $json = dirname(Helper::guessClassFileName($serviceProvider)).'/composer.json';
+
+            if (! is_file($json)) {
+                throw new RuntimeException('Error extension "%s"', get_class($serviceProvider));
+            }
+
+            $serviceProvider->withComposerProperty(Composer::parse($json));
+        }
+
         $this->extensions->put($serviceProvider->getName(), $serviceProvider);
 
         $this->app->instance($abstract = get_class($serviceProvider), $serviceProvider);
@@ -328,6 +338,10 @@ class Manager
     {
         $filePath = is_file($filePath) ? $filePath : $this->getFilePath($filePath);
 
+        if (! $this->checkZip($filePath)) {
+            throw new RuntimeException(sprintf('Error extension file "%s".', $filePath));
+        }
+
         if (! Zip::extract($filePath, admin_extension_path())) {
             throw new AdminException(sprintf('Unable to extract core file \'%s\'.', $filePath));
         }
@@ -336,7 +350,34 @@ class Manager
     }
 
     /**
-     * Calculates a file path for a file code
+     * 验证文件是否正确.
+     *
+     * @param string $filePath
+     *
+     * @return bool
+     */
+    public function checkZip($filePath)
+    {
+        // 创建临时目录.
+        $tempPath = $this->makeTempDirectory();
+
+        try {
+            $filePath = is_file($filePath) ? $filePath : $this->getFilePath($filePath);
+
+            if (! Zip::extract($filePath, $tempPath)) {
+                throw new AdminException(sprintf('Unable to extract core file \'%s\'.', $filePath));
+            }
+
+            $extensions = $this->getExtensionDirectories($tempPath);
+        } finally {
+            $this->files->deleteDirectory($tempPath);
+        }
+
+        return count($extensions) === 1;
+    }
+
+    /**
+     * 生成临时文件.
      *
      * @param string $fileCode A unique file code
      * @return string           Full path on the disk
@@ -345,7 +386,7 @@ class Manager
     {
         $name = md5($fileCode).'.arc';
 
-        return $this->tempDirectory.'/'.$name;
+        return $this->makeTempDirectory('extensions').'/'.$name;
     }
 
     /**
@@ -384,6 +425,32 @@ class Manager
         return app('admin.extend.version');
     }
 
+    /**
+     * 创建临时目录.
+     *
+     * @param string $dir
+     *
+     * @return string
+     */
+    protected function makeTempDirectory($dir = null)
+    {
+        $tempDir = storage_path('tmp/'.($dir ?: time().Str::random()));
+
+        if (! is_dir($tempDir)) {
+            if (! $this->files->makeDirectory($tempDir, 777, true)) {
+                throw new RuntimeException(sprintf('Cannot write to directory "%s"', storage_path()));
+            }
+        }
+
+        return $tempDir;
+    }
+
+    /**
+     * 注册 PSR4 验证规则.
+     *
+     * @param string $directory
+     * @param array  $psr4
+     */
     protected function registerPsr4($directory, array $psr4)
     {
         $classLoader = Admin::classLoader();
@@ -395,8 +462,13 @@ class Manager
         }
     }
 
+    /**
+     * 上报异常.
+     *
+     * @param \Throwable $e
+     */
     protected function reportException(\Throwable $e)
     {
-        logger()->error($e);
+        report($e);
     }
 }

@@ -153,7 +153,7 @@ export default class Ajax {
             if (data.alert) {
                 Dcat.swal[data.type](message, data.detail);
             } else {
-                Dcat[data.type](message);
+                Dcat[data.type](message, null, data.timeout ? {timeOut: data.timeout*1000} : {});
             }
         }
 

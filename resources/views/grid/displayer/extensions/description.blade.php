@@ -5,7 +5,7 @@
 @else
     {!! $updateAction !!}
 @endif
- |&nbsp;
+ &nbsp;|&nbsp;
 
 @if($settingAction)
     {!! $settingAction !!}

@@ -57,8 +57,8 @@ export default class SweetAlert2 {
     fire(title, message, type, options) {
         options = $.extend({
             title: title,
-            text: message,
             type: type,
+            html: message,
         }, options);
 
         return this.swal.fire(options);
