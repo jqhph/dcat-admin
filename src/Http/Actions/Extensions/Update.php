@@ -9,7 +9,9 @@ class Update extends RowAction
 {
     public function title()
     {
-        return sprintf('<b>%s</b>', trans('admin.upgrade_to_version', ['version' => $this->row->new_version]));
+        $replace = ['version' => $this->row->extension->getLocalLatestVersion()];
+
+        return sprintf('<b>%s</b>', trans('admin.upgrade_to_version', $replace));
     }
 
     public function handle()

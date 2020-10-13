@@ -19,6 +19,9 @@ class Extension extends Repository
         }
 
         return $data;
+        //return collect($data)->sort(function ($row) {
+        //    return ! empty($row['version']) && empty($row['new_version']);
+        //})->toArray();
     }
 
     /**
@@ -30,17 +33,22 @@ class Extension extends Repository
     {
         $property = $extension->composerProperty;
 
+        $name = $extension->getName();
+        $current = $extension->getVersion();
+        $latest = $extension->getLocalLatestVersion();
+
         return [
-            'id'           => $extension->getName(),
-            'alias'        => $extension->getName(),
-            'name'         => $extension->getName(),
-            'version'      => $extension->getVersion(),
+            'id'           => $name,
+            'alias'        => $name,
+            'name'         => $name,
+            'version'      => $current,
             'type'         => $extension->getType(),
             'description'  => $property->description,
             'authors'      => $property->authors,
             'homepage'     => $property->homepage,
             'enabled'      => $extension->enabled(),
-            'new_version'  => key($extension->getLocalLatestVersion()),
+            'new_version'  => $latest === $current || ! $current ? '' : $latest,
+            'extension'    => $extension,
         ];
     }
 
