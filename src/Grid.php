@@ -184,6 +184,11 @@ class Grid
     ];
 
     /**
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+
+    /**
      * Create a new grid instance.
      *
      * Grid constructor.
@@ -191,13 +196,14 @@ class Grid
      * @param Repository|\Illuminate\Database\Eloquent\Model|Builder|null $repository
      * @param null|\Closure                                       $builder
      */
-    public function __construct($repository = null, ?\Closure $builder = null)
+    public function __construct($repository = null, ?\Closure $builder = null, $request = null)
     {
         $this->model = new Model(request(), $repository);
         $this->columns = new Collection();
         $this->allColumns = new Collection();
         $this->rows = new Collection();
         $this->builder = $builder;
+        $this->request = $request ?: request();
 
         if ($repository = $this->model->repository()) {
             $this->setKeyName($repository->getKeyName());

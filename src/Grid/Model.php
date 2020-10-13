@@ -244,21 +244,7 @@ class Model
      */
     public function getPerPageName()
     {
-        return $this->perPageName;
-    }
-
-    /**
-     * Set the query string variable used to store the per-page.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setPerPageName($name)
-    {
-        $this->perPageName = $name;
-
-        return $this;
+        return $this->grid->makeName($this->perPageName);
     }
 
     /**
@@ -272,21 +258,11 @@ class Model
     }
 
     /**
-     * @param string $pageName
-     */
-    public function setPageName(string $pageName)
-    {
-        $this->pageName = $pageName;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getPageName()
     {
-        return $this->pageName;
+        return $this->grid->makeName($this->pageName);
     }
 
     /**
@@ -296,21 +272,7 @@ class Model
      */
     public function getSortName()
     {
-        return $this->sortName;
-    }
-
-    /**
-     * Set the query string variable used to store the sort.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setSortName($name)
-    {
-        $this->sortName = $name;
-
-        return $this;
+        return $this->grid->makeName($this->sortName);
     }
 
     /**
@@ -498,7 +460,7 @@ class Model
     {
         $this->paginator = $paginator;
 
-        $paginator->setPageName($this->pageName);
+        $paginator->setPageName($this->getPageName());
     }
 
     /**
@@ -550,7 +512,7 @@ class Model
             return;
         }
 
-        return $this->currentPage ?: ($this->currentPage = ($this->request->get($this->pageName) ?: 1));
+        return $this->currentPage ?: ($this->currentPage = ($this->request->get($this->getPageName()) ?: 1));
     }
 
     /**
@@ -574,7 +536,7 @@ class Model
             return;
         }
 
-        return $this->request->get($this->perPageName) ?: $this->perPage;
+        return $this->request->get($this->getPerPageName()) ?: $this->perPage;
     }
 
     /**

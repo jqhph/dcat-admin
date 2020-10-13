@@ -106,7 +106,7 @@ class Selector
      */
     public function getQueryName()
     {
-        return $this->grid->getName().$this->queryNameSuffix;
+        return $this->grid->makeName($this->queryNameSuffix);
     }
 
     /**

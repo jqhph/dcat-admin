@@ -19,7 +19,7 @@ class ColumnSelector extends AbstractTool
     /**
      * @var array
      */
-    protected static $ignoredColumns = [
+    protected $ignoredColumns = [
         Grid\Column::SELECT_COLUMN_NAME,
         Grid\Column::ACTION_COLUMN_NAME,
     ];
@@ -41,30 +41,44 @@ class ColumnSelector extends AbstractTool
      */
     public function render()
     {
-        if (! $this->grid->allowColumnSelector()) {
-            return '';
-        }
+        $show = $this->getVisibleColumnNames();
+        $all = $this->getGridColumns();
 
-        $show = $this->grid->getVisibleColumnNames();
+        $list = Checkbox::make()
+            ->class('column-select-item')
+            ->options($all)
+            ->check(
+                $this->getGridColumns()->filter(function ($label, $key) use ($show) {
+                    if (empty($show)) {
+                        return true;
+                    }
 
-        $list = new Checkbox();
-
-        $list->class('column-select-item');
-        $list->options($this->getGridColumns());
-        $list->check(
-            $this->getGridColumns()->filter(function ($label, $key) use ($show) {
-                if (empty($show)) {
-                    return true;
+                    return in_array($key, $show) ? true : false;
                 }
+            )
+            ->keys()
+        );
 
-                return in_array($key, $show) ? true : false;
-            })->keys()
+        $selectAll = Checkbox::make('_all_', [1 => trans('admin.all')])->check(
+            $all->count() === count($show) ? 1 : null
         );
 
         return Admin::view('admin::grid.column-selector', [
-            'checkbox' => $list,
-            'defaults' => $this->grid->getDefaultVisibleColumnNames(),
+            'checkbox'   => $list,
+            'defaults'   => $this->grid->getDefaultVisibleColumnNames(),
+            'selectAll'  => $selectAll,
+            'columnName' => $this->grid->getColumnSelectorQueryName(),
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getVisibleColumnNames()
+    {
+        return array_filter($this->grid->getVisibleColumnNames(), function ($v) {
+            return ! in_array($v, [Grid\Column::SELECT_COLUMN_NAME, Grid\Column::ACTION_COLUMN_NAME]);
+        });
     }
 
     /**
@@ -92,16 +106,20 @@ class ColumnSelector extends AbstractTool
      */
     protected function isColumnIgnored($name)
     {
-        return in_array($name, static::$ignoredColumns);
+        return in_array($name, $this->ignoredColumns);
     }
 
     /**
      * Ignore a column to display in column selector.
      *
      * @param string|array $name
+     *
+     * @return $this
      */
-    public static function ignore($name)
+    public function ignore($name)
     {
-        static::$ignoredColumns = array_merge(static::$ignoredColumns, (array) $name);
+        $this->ignoredColumns = array_merge($this->ignoredColumns, (array) $name);
+
+        return $this;
     }
 }

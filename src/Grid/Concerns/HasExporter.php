@@ -64,7 +64,7 @@ trait HasExporter
             $this->exported
             || (
                 (! $this->allowExporter()
-                    || ! $scope = request($this->exporter()->queryName()))
+                    || ! $scope = request($this->exporter()->getQueryName()))
                 && ! $forceExport
             )
         ) {
@@ -91,20 +91,6 @@ trait HasExporter
     public function exporter()
     {
         return $this->exporter ?: ($this->exporter = new Exporter($this));
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    protected function setExporterQueryName(string $name = null)
-    {
-        if (! $this->exporter) {
-            return;
-        }
-
-        $this->exporter->setQueryName(($name ?: $this->getName()).'_export_');
     }
 
     /**

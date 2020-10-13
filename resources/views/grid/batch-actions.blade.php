@@ -14,3 +14,17 @@
     </ul>
 </div>
 @endif
+
+<script>
+$('.{{ $parent->getRowName() }}-checkbox').on('change', function () {
+    var btn = $('.{{ $selectAllName }}-btn'), selected = Dcat.grid.selectedRows('{{ $parent->getName() }}').length;
+    if (selected) {
+        btn.show()
+    } else {
+        btn.hide()
+    }
+    setTimeout(function () {
+        btn.find('.selected').html("{!! trans('admin.grid_items_selected') !!}".replace('{n}', selected));
+    }, 50)
+});
+</script>

@@ -120,7 +120,7 @@ trait HasHtml
                 static::asset()->require(explode(',', $require));
             }
 
-            $script = '(function () {'.$script.'})();';
+            $script = "(function () {{$script}\n})();";
 
             if ($element->hasAttribute('once')) {
                 return static::script($script);

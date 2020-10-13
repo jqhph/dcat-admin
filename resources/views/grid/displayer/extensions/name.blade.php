@@ -1,13 +1,25 @@
+@if($row->homepage)
+    <a href='{!! $row->homepage !!}' target='_blank' class="feather icon-chrome"></a>
+@endif
 <span class="ext-name">
     {{ $value }}
 </span>
-@if($row->homepage)
-    <a href='{!! $row->homepage !!}' target='_blank' class="feather icon-chrome"></a>
+
+@if($row->new_version || ! $row->version)
+    &nbsp;
+    <span class="badge bg-primary">New</span>
 @endif
 
 <div style="height: 10px"></div>
 
+@if($row->type === Dcat\Admin\Extend\ServiceProvider::TYPE_THEME)
+    <span class="text-uppercase">{{ trans('admin.theme') }}</span>
+@endif
+
 @if($row->version)
+    @if($row->type === Dcat\Admin\Extend\ServiceProvider::TYPE_THEME)
+        &nbsp;|&nbsp;
+    @endif
 
     @if($row->enabled)
         {!! $disableAction !!}

@@ -64,6 +64,6 @@ class Expand extends AbstractDisplayer
 
         static::$counter++;
 
-        return $this->grid->getName().$key.'-'.static::$counter;
+        return $this->grid->makeName($key.'-'.static::$counter);
     }
 }

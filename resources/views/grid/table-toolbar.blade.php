@@ -10,13 +10,19 @@
                         @endif
                     </h4>
                     <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                        {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}  {!! $grid->renderQuickSearch() !!}
+                        {!! $grid->renderTools() !!}
+                        {!! $grid->renderColumnSelector() !!}
+                        {!! $grid->renderCreateButton() !!}
+                        {!! $grid->renderExportButton() !!}
+                        {!! $grid->renderQuickSearch() !!}
                     </div>
                 @else
                     {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
 
                     <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                        {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
+                        {!! $grid->renderColumnSelector() !!}
+                        {!! $grid->renderCreateButton() !!}
+                        {!! $grid->renderExportButton() !!}
                     </div>
                 @endif
             </div>

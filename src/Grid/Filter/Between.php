@@ -45,9 +45,9 @@ class Between extends AbstractFilter
     public function formatId($column)
     {
         $id = str_replace('.', '_', $column);
-        $prefix = 'filter_column_'.$this->parent->grid()->getName().'_';
+        $prefix = $this->parent->grid()->makeName('filter-column-');
 
-        return ['start' => "{$prefix}{$id}_start", 'end' => "{$prefix}{$id}_end"];
+        return ['start' => "{$prefix}{$id}-start", 'end' => "{$prefix}{$id}-end"];
     }
 
     /**
@@ -59,14 +59,12 @@ class Between extends AbstractFilter
      */
     protected function formatName($column)
     {
-        $gridName = $this->parent->grid()->getName();
-        $prefix = $gridName ? $gridName.'_' : '';
         $columns = explode('.', $column);
 
         if (count($columns) == 1) {
-            $name = $prefix.$columns[0];
+            $name = $this->parent->grid()->makeName($columns[0]);
         } else {
-            $name = $prefix.array_shift($columns);
+            $name = $this->parent->grid()->makeName(array_shift($columns));
 
             foreach ($columns as $column) {
                 $name .= "[$column]";
@@ -131,33 +129,11 @@ class Between extends AbstractFilter
 
         DateTime::requireAssets();
 
-        $this->setupDatetime($options);
-
-        return $this;
-    }
-
-    /**
-     * @param array $options
-     */
-    protected function setupDatetime($options = [])
-    {
         $options['format'] = Arr::get($options, 'format', 'YYYY-MM-DD HH:mm:ss');
         $options['locale'] = Arr::get($options, 'locale', config('app.locale'));
 
-        $startOptions = json_encode($options);
-        $endOptions = json_encode($options + ['useCurrent' => false]);
-
-        $script = <<<JS
-            $('#{$this->id['start']}').datetimepicker($startOptions);
-            $('#{$this->id['end']}').datetimepicker($endOptions);
-            $("#{$this->id['start']}").on("dp.change", function (e) {
-                $('#{$this->id['end']}').data("DateTimePicker").minDate(e.date);
-            });
-            $("#{$this->id['end']}").on("dp.change", function (e) {
-                $('#{$this->id['start']}').data("DateTimePicker").maxDate(e.date);
-            });
-JS;
-
-        Admin::script($script);
+        return $this->addVariables([
+            'dateOptions' => $options,
+        ]);
     }
 }

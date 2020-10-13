@@ -47,22 +47,8 @@ trait HasQuickSearch
         return tap(new Tools\QuickSearch(), function ($search) {
             $this->quickSearch = $search;
 
-            $this->setQuickSearchQueryName();
-
             $search->setGrid($this);
         });
-    }
-
-    /**
-     * @param string $gridName
-     */
-    public function setQuickSearchQueryName()
-    {
-        if ($this->quickSearch) {
-            $this->quickSearch->setQueryName(
-                $this->getName().$this->quickSearch->getQueryName()
-            );
-        }
     }
 
     /**

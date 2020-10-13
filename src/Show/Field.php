@@ -528,11 +528,11 @@ HTML;
     }
 
     /**
-     * @param Fluent $model
+     * @param Fluent|\Illuminate\Database\Eloquent\Model $model
      *
      * @return void
      */
-    public function fill(Fluent $model)
+    public function fill($model)
     {
         $this->value(Arr::get($model->toArray(), $this->name));
     }

@@ -109,9 +109,9 @@ abstract class Filter implements Renderable
      */
     public function getQueryName()
     {
-        return $this->parent->grid()->getName().
-            '_filter_'.
-            $this->getColumnName();
+        return $this->parent->grid()->makeName(
+            'filter-'.$this->getColumnName()
+        );
     }
 
     /**

@@ -38,17 +38,7 @@ trait HasNames
     public function setName($name)
     {
         $this->_name = $name;
-        $this->tableId = $this->tableId.'-'.$name;
-
-        $model = $this->model();
-
-        $model->setPerPageName("{$name}_{$model->getPerPageName()}")
-            ->setPageName("{$name}_{$model->getPageName()}")
-            ->setSortName("{$name}_{$model->getSortName()}");
-
-        $this->filter()->setName($name);
-        $this->setExporterQueryName();
-        $this->setQuickSearchQueryName();
+        $this->tableId = $this->makeName($this->tableId);
 
         return $this;
     }
@@ -61,6 +51,40 @@ trait HasNames
     public function getName()
     {
         return $this->_name;
+    }
+
+    /**
+     * Retrieve an input item from the request.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    public function getRequestInput($key)
+    {
+        return $this->request->get($this->makeName($key));
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function makeName($key)
+    {
+        return $this->getNamePrefix().$key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNamePrefix()
+    {
+        if (! $name = $this->getName()) {
+            return;
+        }
+
+        return $name.'-';
     }
 
     /**

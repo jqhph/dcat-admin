@@ -1,30 +1,35 @@
-<div class="dropdown pull-right column-selector" style="margin-right: 10px">
-    <button type="button" class="btn btn-sm btn-instagram dropdown-toggle" data-toggle="dropdown">
+<span class="dropdown column-selector" >
+    <button class="btn btn-primary btn-outline dropdown-toggle" data-toggle="dropdown">
         <i class="fa fa-table"></i>
-        &nbsp;
         <span class="caret"></span>
     </button>
-    <ul class="dropdown-menu" role="menu" style="padding: 10px;height: auto;max-height: 500px;overflow-x: hidden;">
-        <li>
-            <ul style='padding: 0;'>
+    <ul class="dropdown-menu" role="menu">
+        <li class="dropdown-item">
+            <ul class="selectors">
+                {!! $selectAll !!}
+            </ul>
+        </li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item">
+            <ul class="selectors">
                 {!! $checkbox !!}
             </ul>
         </li>
-        <li class="divider"></li>
-        <li class="text-right">
-            <button class="btn btn-sm btn-default column-select-all">{!! trans('admin.all') !!}</button>&nbsp;&nbsp;
-            <button class="btn btn-sm btn-primary column-select-submit">{!! trans('admin.submit') !!}</button>
-        </li>
     </ul>
-</div>
+</span>
 
-<script>
-    $('.column-select-submit').on('click', function () {
+<script once>
+    $('.column-selector input[name="_all_"]').on('change', function () {
+        $(this).parents('.column-selector').find('.column-select-item').prop('checked', this.checked).change()
+    });
 
+    var submit = Dcat.helpers.debounce(function ($this) {
         var defaults = {!! json_encode($defaults) !!};
         var selected = [];
+        var $parent = $this.parents('.column-selector');
+        var column = '{{ $columnName }}'
 
-        $('.column-select-item:checked').each(function () {
+        $parent.find('.column-select-item:checked').each(function () {
             selected.push($(this).val());
         });
 
@@ -35,20 +40,15 @@
         var url = new URL(location);
 
         if (selected.sort().toString() == defaults.sort().toString()) {
-            url.searchParams.delete('_columns_');
+            url.searchParams.set(column, '');
         } else {
-            url.searchParams.set('_columns_', selected.join());
+            url.searchParams.set(column, selected.join());
         }
 
-        $.pjax({container:'#pjax-container', url: url.toString()});
-    });
+        Dcat.reload(url.toString());
+    }, 1400);
 
-    $('.column-select-all').on('click', function () {
-        $('.column-select-item').iCheck('check');
-        return false;
-    });
-
-    $('.column-select-item').iCheck({
-        checkboxClass:'icheckbox_minimal-blue'
+    $('.column-selector .column-select-item').on('change', function () {
+        submit($(this));
     });
 </script>

@@ -20,7 +20,7 @@
                 </tr>
             @endif
             <tr>
-                @foreach($grid->columns() as $column)
+                @foreach($grid->getVisibleColumns() as $column)
                     <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
                 @endforeach
             </tr>
@@ -33,7 +33,7 @@
             <tbody>
             @foreach($grid->rows() as $row)
                 <tr {!! $row->rowAttributes() !!}>
-                    @foreach($grid->getColumnNames() as $name)
+                    @foreach($grid->getVisibleColumnNames() as $name)
                         <td {!! $row->columnAttributes($name) !!}>
                             {!! $row->column($name) !!}
                         </td>
@@ -42,7 +42,7 @@
             @endforeach
             @if ($grid->rows()->isEmpty())
                 <tr>
-                    <td colspan="{!! count($grid->getColumnNames()) !!}">
+                    <td colspan="{!! count($grid->getVisibleColumnNames()) !!}">
                         <div style="margin:5px 0 0 10px;"><span class="help-block" style="margin-bottom:0"><i class="feather icon-alert-circle"></i>&nbsp;{{ trans('admin.no_data') }}</span></div>
                     </td>
                 </tr>

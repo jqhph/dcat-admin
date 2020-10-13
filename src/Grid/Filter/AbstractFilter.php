@@ -108,6 +108,11 @@ abstract class AbstractFilter
     protected $ignore = false;
 
     /**
+     * @var array
+     */
+    protected $variables = [];
+
+    /**
      * AbstractFilter constructor.
      *
      * @param $column
@@ -182,9 +187,7 @@ abstract class AbstractFilter
             }
         }
 
-        $parenName = $this->parent->getName();
-
-        return $parenName ? "{$parenName}_{$name}" : $name;
+        return $this->parent->grid()->makeName($name);
     }
 
     /**
@@ -196,7 +199,7 @@ abstract class AbstractFilter
      */
     protected function formatId($columns)
     {
-        return 'filter_column_'.$this->parent->grid()->getName().'_'.str_replace('.', '_', $columns);
+        return $this->parent->grid()->makeName('filter-column-'.str_replace('.', '-', $columns));
     }
 
     /**
@@ -513,9 +516,7 @@ abstract class AbstractFilter
      */
     public function formatColumnClass($column)
     {
-        $parenName = $this->parent->getName();
-
-        return $parenName ? "{$parenName}_{$column}" : $column;
+        return $this->parent->grid()->makeName(str_replace('.', '-', $column));
     }
 
     /**
@@ -584,6 +585,18 @@ abstract class AbstractFilter
     }
 
     /**
+     * @param array $variables
+     *
+     * @return $this
+     */
+    public function addVariables(array $variables)
+    {
+        $this->variables = array_merge($this->variables, $variables);
+
+        return $this;
+    }
+
+    /**
      * Variables for filter view.
      *
      * @return array
@@ -597,7 +610,7 @@ abstract class AbstractFilter
             'value'     => $this->value(),
             'width'     => $this->width,
             'style'     => $this->style,
-        ], $this->presenter()->variables());
+        ], $this->presenter()->variables(), $this->variables);
     }
 
     public function value()
@@ -628,7 +641,9 @@ abstract class AbstractFilter
      */
     protected function renderPresenter()
     {
-        return Admin::view($this->presenter->view(), $this->variables());
+        return function () {
+            return Admin::view($this->presenter->view(), $this->variables());
+        };
     }
 
     /**

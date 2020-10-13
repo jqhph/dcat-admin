@@ -24,7 +24,7 @@ trait CanHidesColumns
      */
     public function disableColumnSelector(bool $disable = true)
     {
-        return $this->option('show_column_selector', !$disable);
+        return $this->option('show_column_selector', ! $disable);
     }
 
     /**
@@ -48,6 +48,10 @@ trait CanHidesColumns
      */
     public function renderColumnSelector()
     {
+        if (! $this->allowColumnSelector()) {
+            return '';
+        }
+
         return (new ColumnSelector($this))->render();
     }
 
@@ -72,13 +76,21 @@ trait CanHidesColumns
     }
 
     /**
+     * @return string
+     */
+    public function getColumnSelectorQueryName()
+    {
+        return $this->makeName(ColumnSelector::SELECT_COLUMN_NAME);
+    }
+
+    /**
      * Get visible columns from request query.
      *
      * @return array
      */
     protected function getVisibleColumnsFromQuery()
     {
-        $columns = explode(',', request(ColumnSelector::SELECT_COLUMN_NAME));
+        $columns = explode(',', request($this->getColumnSelectorQueryName()));
 
         return array_filter($columns) ?:
             array_values(array_diff($this->columnNames, $this->hiddenColumns));

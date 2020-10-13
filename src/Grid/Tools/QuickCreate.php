@@ -309,9 +309,7 @@ class QuickCreate implements Renderable
 
     public function getElementClass()
     {
-        $name = $this->parent->getName();
-
-        return 'quick-create'.($name ? "-{$name}" : '');
+        return $this->parent->makeName('quick-create');
     }
 
     /**

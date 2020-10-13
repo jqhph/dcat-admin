@@ -373,26 +373,6 @@ class Filter implements Renderable
     }
 
     /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @return $this
      */
     public function withoutBorder()
@@ -493,14 +473,14 @@ class Filter implements Renderable
      */
     protected function sanitizeInputs(&$inputs)
     {
-        if (! $this->name) {
+        if (! $prefix = $this->grid()->getNamePrefix()) {
             return $inputs;
         }
 
-        $inputs = collect($inputs)->filter(function ($input, $key) {
-            return Str::startsWith($key, "{$this->name}_");
-        })->mapWithKeys(function ($val, $key) {
-            $key = str_replace("{$this->name}_", '', $key);
+        $inputs = collect($inputs)->filter(function ($input, $key) use ($prefix) {
+            return Str::startsWith($key, $prefix);
+        })->mapWithKeys(function ($val, $key) use ($prefix) {
+            $key = str_replace($prefix, '', $key);
 
             return [$key => $val];
         })->toArray();
@@ -564,7 +544,7 @@ class Filter implements Renderable
      */
     public function getScopeQueryName()
     {
-        return $this->grid()->getName().'_scope_';
+        return $this->grid()->makeName('_scope_');
     }
 
     /**
