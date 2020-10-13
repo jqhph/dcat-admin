@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Tools\ColumnSelector;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
 trait CanHidesColumns
@@ -94,12 +95,17 @@ trait CanHidesColumns
             return $this->visibleColumnsFromQuery;
         }
 
-        $columns = explode(',', request($this->getColumnSelectorQueryName()));
+        $columns = $input = Helper::array($this->request->get($this->getColumnSelectorQueryName()));
 
-        return $this->visibleColumnsFromQuery = array_filter($columns) ?:
-            array_values(array_diff(
+        if (! $input && ! $this->hasColumnSelectorRequestInput()) {
+            $columns = $this->getVisibleColumnsFromStorage() ?: array_values(array_diff(
                 $this->getComplexHeaderNames() ?: $this->columnNames, $this->hiddenColumns
             ));
+        }
+
+        $this->storeVisibleColumns($input);
+
+        return $this->visibleColumnsFromQuery = $columns;
     }
 
     protected function formatWithComplexHeaders(array $columns)
@@ -197,5 +203,29 @@ trait CanHidesColumns
                 [Grid\Column::SELECT_COLUMN_NAME, Grid\Column::ACTION_COLUMN_NAME]
             )
         );
+    }
+
+    protected function hasColumnSelectorRequestInput()
+    {
+        return $this->request->has($this->getColumnSelectorQueryName());
+    }
+
+    protected function storeVisibleColumns(array $input)
+    {
+        if (! $this->hasColumnSelectorRequestInput()) {
+            return;
+        }
+
+        session()->put($this->getVisibleColumnsKey(), $input);
+    }
+
+    protected function getVisibleColumnsFromStorage()
+    {
+        return session()->get($this->getVisibleColumnsKey());
+    }
+
+    protected function getVisibleColumnsKey()
+    {
+        return $this->getName().'/'.$this->request->path();
     }
 }

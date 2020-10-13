@@ -55,7 +55,6 @@ class UserController extends AdminController
 
             $grid->quickSearch(['id', 'name', 'username']);
 
-            $grid->disableBatchDelete();
             $grid->showQuickEditButton();
             $grid->disableFilterButton();
             $grid->enableDialogCreate();
