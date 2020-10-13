@@ -52,7 +52,7 @@ class Currency extends Text
      */
     protected function prepareInputValue($value)
     {
-        return str_replace(',', '', $value);
+        return is_string($value) ? str_replace(',', '', $value) : $value;
     }
 
     /**
