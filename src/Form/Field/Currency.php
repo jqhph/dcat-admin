@@ -71,9 +71,6 @@ class Currency extends Text
      */
     protected function prepareInputValue($value)
     {
-        if (empty($value)) {
-            $value = 0;
-        }
-        return str_replace(',', '', $value);
+        return is_string($value) ? str_replace(',', '', $value) : $value;
     }
 }
