@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\NestedForm;
-use Dcat\Admin\Support\Helper;
 
 class ArrayField extends HasMany
 {
