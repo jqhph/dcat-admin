@@ -243,7 +243,7 @@ class AuthController extends Controller
 
         return $this->response()
             ->success(trans('admin.login_successful'))
-            ->redirectToIntended($this->getRedirectPath())
+            ->locationToIntended($this->getRedirectPath())
             ->send();
     }
 
