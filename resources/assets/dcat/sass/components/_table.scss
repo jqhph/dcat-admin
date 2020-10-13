@@ -257,6 +257,12 @@ body:not(.dark-mode) {
       background: #f7f7f9 !important;
       border-radius: 0;
     }
+
+    .table-wrap {
+      table.custom-data-table thead th {
+        height: 21px;
+      }
+    }
   }
 }
 
@@ -291,7 +297,11 @@ body.dark-mode {
 }
 
 .column-selector {
-  margin: 0 8px;
+  margin: 0 5px;
+  
+  .dropdown-menu {
+    z-index: 100;
+  }
 
   .selectors {
     padding: 0 1rem;

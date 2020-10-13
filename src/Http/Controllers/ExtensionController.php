@@ -36,11 +36,8 @@ class ExtensionController extends Controller
     {
         return new Grid(new Extension(), function (Grid $grid) {
             $grid->number();
-            $grid->column('type')->display(function ($v) {
-                return $v === ServiceProvider::TYPE_THEME ? trans('admin.theme') : trans('admin.application');
-            });
             $grid->column('name')->displayUsing(Extensions\Name::class);
-            $grid->column('description')->displayUsing(Extensions\Description::class)->width('55%');
+            $grid->column('description')->displayUsing(Extensions\Description::class)->width('58%');
 
             $grid->column('authors')->display(function ($v) {
                 if (! $v) {
@@ -136,7 +133,7 @@ class ExtensionController extends Controller
 
         Artisan::call('admin:ext-make', [
             'name'        => $package,
-            '--namespace' => $namespace ?: 'defualt',
+            '--namespace' => $namespace ?: 'default',
             '--theme'     => $type == 2,
         ], $output);
 

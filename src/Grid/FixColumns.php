@@ -124,14 +124,14 @@ class FixColumns
         $this->grid->view($this->view);
         $this->grid->with(['tableHeight' => $this->height]);
 
-        $complexHeaders = $this->grid->getComplexHeaders();
+        $complexHeaders = $this->grid->getVisibleComplexHeaders();
 
         if ($this->head > 0) {
             if ($complexHeaders) {
                 $this->complexLeft = $complexHeaders->slice(0, $this->head);
                 $this->left = $this->formatColumns($this->complexLeft);
             } else {
-                $this->left = $this->grid->columns()->slice(0, $this->head);
+                $this->left = $this->grid->getVisibleColumns()->slice(0, $this->head);
             }
         }
 
@@ -140,7 +140,7 @@ class FixColumns
                 $this->complexRight = $complexHeaders->slice($this->tail);
                 $this->right = $this->formatColumns($this->complexRight);
             } else {
-                $this->right = $this->grid->columns()->slice($this->tail);
+                $this->right = $this->grid->getVisibleColumns()->slice($this->tail);
             }
         }
 
