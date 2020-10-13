@@ -17,12 +17,13 @@ trait HasComplexHeaders
     /**
      * Merge cells.
      *
-     * @param string $label
+     * @param string $column
      * @param array  $columnNames
+     * @param string $label
      *
      * @return ComplexHeader
      */
-    public function combine(string $label, array $columnNames)
+    public function combine(string $column, array $columnNames, string $label = null)
     {
         if (count($columnNames) < 2) {
             throw new InvalidArgumentException('Invalid column names.');
@@ -34,11 +35,25 @@ trait HasComplexHeaders
 
         $this->withBorder();
 
-        return $this->complexHeaders[$label] = new ComplexHeader($this, $label, $columnNames);
+        return $this->complexHeaders[$column] = new ComplexHeader($this, $column, $columnNames, $label);
     }
 
     /**
-     * @return ComplexHeader[]|Collection
+     * @return ComplexHeader[]
+     */
+    public function getComplexHeaderNames()
+    {
+        if (! $this->complexHeaders) {
+            return [];
+        }
+
+        return $this->complexHeaders->map(function ($header) {
+            return $header->getName();
+        })->toArray();
+    }
+
+    /**
+     * @return ComplexHeader[]|Collection|null
      */
     public function getComplexHeaders()
     {
@@ -109,12 +124,7 @@ trait HasComplexHeaders
 
         /* @var Column $column */
         foreach ($columns as $name => $column) {
-            $header = new ComplexHeader($this, $column->getLabel(), [$name]);
-            $prio = $column->getDataPriority();
-
-            if (is_int($prio)) {
-                $header->responsive($prio);
-            }
+            $header = new ComplexHeader($this, $column->getName(), [$name], $column->getLabel());
 
             if ($html = $column->renderHeader()) {
                 $header->append($html);

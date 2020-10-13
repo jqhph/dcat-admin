@@ -76,7 +76,19 @@ class ColumnSelector extends AbstractTool
      */
     protected function getVisibleColumnNames()
     {
-        return array_filter($this->grid->getVisibleColumnNames(), function ($v) {
+        $visible = $this->grid->getVisibleColumnsFromQuery();
+
+        $columns = $this->grid->getComplexHeaderNames() ?: $this->grid->getColumnNames();
+
+        if (! empty($visible)) {
+            array_push($visible, Grid\Column::SELECT_COLUMN_NAME, Grid\Column::ACTION_COLUMN_NAME);
+
+            $columns = collect($columns)->filter(function ($column) use ($visible) {
+                return in_array($column, $visible);
+            })->toArray();
+        }
+
+        return array_filter($columns, function ($v) {
             return ! in_array($v, [Grid\Column::SELECT_COLUMN_NAME, Grid\Column::ACTION_COLUMN_NAME]);
         });
     }
@@ -86,7 +98,9 @@ class ColumnSelector extends AbstractTool
      */
     protected function getGridColumns()
     {
-        return $this->grid->columns()->map(function (Grid\Column $column) {
+        $columns = $this->grid->getComplexHeaders() ?: $this->grid->columns();
+
+        return $columns->map(function ($column) {
             $name = $column->getName();
 
             if ($this->isColumnIgnored($name)) {

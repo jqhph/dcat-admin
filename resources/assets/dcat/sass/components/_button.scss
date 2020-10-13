@@ -193,6 +193,7 @@ a.btn-sm, .btn-group-sm > a.btn {
 .btn-primary.btn-outline:hover,
 .btn-primary.btn-outline.active {
   background: rgba($primary, .05);
+  color: $primary;
 }
 
 .number-group {

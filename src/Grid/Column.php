@@ -341,34 +341,9 @@ class Column
      */
     public function hide()
     {
-        return $this->responsive(0);
-    }
+        $this->grid->hideColumns($this->getName());
 
-    /**
-     * data-priority=”1″ 保持可见，但可以在下拉列表筛选隐藏。
-     * data-priority=”2″ 480px 分辨率以下可见
-     * data-priority=”3″ 640px 以下可见
-     * data-priority=”4″ 800px 以下可见
-     * data-priority=”5″ 960px 以下可见
-     * data-priority=”6″ 1120px 以下可见
-     *
-     * @param int $priority
-     *
-     * @return $this
-     */
-    public function responsive(?int $priority = 1)
-    {
-        $this->grid->responsive();
-
-        return $this->setHeaderAttributes(['data-priority' => $priority]);
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getDataPriority()
-    {
-        return isset($this->titleHtmlAttributes['data-priority']) ? $this->titleHtmlAttributes['data-priority'] : null;
+        return $this;
     }
 
     /**

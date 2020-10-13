@@ -405,9 +405,6 @@ class Grid
         if ($this->options['show_bordered']) {
             $this->addTableClass(['table-bordered', 'complex-headers', 'data-table']);
         }
-        if ($this->getComplexHeaders()) {
-            $this->addTableClass('table-text-center');
-        }
 
         return implode(' ', array_unique((array) $this->options['table_class']));
     }

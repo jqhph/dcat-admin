@@ -17,6 +17,11 @@ class ComplexHeader extends Widget
     /**
      * @var string
      */
+    protected $column;
+
+    /**
+     * @var string
+     */
     protected $label;
 
     /**
@@ -29,10 +34,11 @@ class ComplexHeader extends Widget
      */
     protected $html = [];
 
-    public function __construct(Grid $grid, string $label, array $columnNames)
+    public function __construct(Grid $grid, ?string $column, array $columnNames, ?string $label = null)
     {
         $this->grid = $grid;
-        $this->label = admin_trans_field($label);
+        $this->column = $column;
+        $this->label = $label ?: admin_trans_field($column);
         $this->columnNames = collect($columnNames);
 
         $this->addDefaultAttributes();
@@ -58,40 +64,24 @@ class ComplexHeader extends Widget
 
     /**
      * 默认隐藏字段
-     * 开启responsive模式有效.
      *
      * @return $this
      */
     public function hide()
     {
-        return $this->responsive(0);
+        $this->grid->hideColumns($this->column);
+
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->column;
     }
 
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * 允许使用responsive
-     * 开启responsive模式有效.
-     *
-     * data-priority=”1″ 保持可见，但可以在下拉列表筛选隐藏。
-     * data-priority=”2″ 480px 分辨率以下可见
-     * data-priority=”3″ 640px 以下可见
-     * data-priority=”4″ 800px 以下可见
-     * data-priority=”5″ 960px 以下可见
-     * data-priority=”6″ 1120px 以下可见
-     *
-     * @param int $priority
-     *
-     * @return $this
-     */
-    public function responsive(int $priority = 1)
-    {
-        $this->setHtmlAttribute('data-priority', $priority);
-
-        return $this;
     }
 
     /**

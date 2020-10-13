@@ -88,12 +88,55 @@ trait CanHidesColumns
      *
      * @return array
      */
-    protected function getVisibleColumnsFromQuery()
+    public function getVisibleColumnsFromQuery()
     {
+        if (isset($this->visibleColumnsFromQuery)) {
+            return $this->visibleColumnsFromQuery;
+        }
+
         $columns = explode(',', request($this->getColumnSelectorQueryName()));
 
-        return array_filter($columns) ?:
-            array_values(array_diff($this->columnNames, $this->hiddenColumns));
+        return $this->visibleColumnsFromQuery = array_filter($columns) ?:
+            array_values(array_diff(
+                $this->getComplexHeaderNames() ?: $this->columnNames, $this->hiddenColumns
+            ));
+    }
+
+    protected function formatWithComplexHeaders(array $columns)
+    {
+        if (empty($this->getComplexHeaderNames())) {
+            return $columns;
+        }
+
+        return $this->getComplexHeaders()
+            ->map(function (Grid\ComplexHeader $header) use ($columns) {
+                if (! in_array($header->getName(), $columns, true)) {
+                    return;
+                }
+
+                return $header->getColumnNames() ?: $this->getName();
+            })
+            ->filter()
+            ->flatten()
+            ->toArray();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVisibleComplexHeaders()
+    {
+        $visible = $this->getVisibleColumnsFromQuery();
+
+        if (empty($visible)) {
+            return $this->getComplexHeaders();
+        }
+
+        array_push($visible, Grid\Column::SELECT_COLUMN_NAME, Grid\Column::ACTION_COLUMN_NAME);
+
+        return $this->getComplexHeaders()->filter(function ($column) use ($visible) {
+            return in_array($column->getName(), $visible);
+        });
     }
 
     /**
@@ -103,7 +146,9 @@ trait CanHidesColumns
      */
     public function getVisibleColumns()
     {
-        $visible = $this->getVisibleColumnsFromQuery();
+        $visible = $this->formatWithComplexHeaders(
+            $this->getVisibleColumnsFromQuery()
+        );
 
         if (empty($visible)) {
             return $this->columns;
@@ -123,7 +168,9 @@ trait CanHidesColumns
      */
     public function getVisibleColumnNames()
     {
-        $visible = $this->getVisibleColumnsFromQuery();
+        $visible = $this->formatWithComplexHeaders(
+            $this->getVisibleColumnsFromQuery()
+        );
 
         if (empty($visible)) {
             return $this->columnNames;
