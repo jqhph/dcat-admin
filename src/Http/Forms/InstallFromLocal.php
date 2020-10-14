@@ -62,7 +62,7 @@ class InstallFromLocal extends Form implements LazyRenderable
         $this->file('extension')
             ->required()
             ->disk($this->disk())
-            ->accept('zip,arc,rar,tar.gz', 'application/zip')
+            ->accept('zip', 'application/zip')
             ->autoUpload();
     }
 

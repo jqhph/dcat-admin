@@ -592,14 +592,65 @@ class Form implements Renderable
             'end'       => $this->close(),
             'fields'    => $this->fields,
             'method'    => $this->getHtmlAttribute('method'),
-            'buttons'   => $this->buttons,
             'rows'      => $this->rows(),
             'layout'    => $this->layout(),
             'elementId' => $this->getElementId(),
             'ajax'      => $this->useAjaxSubmit,
+            'footer'    => $this->renderFooter(),
         ], $this->variables);
     }
 
+    /**
+     * 表单底部内容.
+     *
+     * @return string
+     */
+    protected function renderFooter()
+    {
+        if (empty($this->buttons['reset']) && empty($this->buttons['submit'])) {
+            return;
+        }
+
+        $buttons = '';
+
+        if (! empty($this->buttons['reset'])) {
+            $reset = trans('admin.reset');
+
+            $buttons .= "<button type=\"reset\" class=\"btn btn-white pull-left\"><i class=\"feather icon-rotate-ccw\"></i> {$reset}</button>";
+        }
+
+        if(! empty($this->buttons['submit'])) {
+            $submit = $this->getSubmitButtonLabel();
+
+            $buttons .= "<button type=\"submit\" class=\"btn btn-primary pull-right\"><i class=\"feather icon-save\"></i> {$submit}</button>";
+        }
+
+        return <<<HTML
+<div class="box-footer row d-flex">
+    <div class="col-md-2"> &nbsp;</div>
+
+    <div class="col-md-8">{$buttons}</div>
+</div>
+HTML;
+    }
+
+    /**
+     * 提交按钮文本.
+     *
+     * @return string
+     */
+    protected function getSubmitButtonLabel()
+    {
+        return trans('admin.submit');
+    }
+
+    /**
+     * 设置视图变量.
+     *
+     * @param array $variables
+     *
+     * @return $this
+     */
     public function addVariables(array $variables)
     {
         $this->variables = array_merge($this->variables, $variables);

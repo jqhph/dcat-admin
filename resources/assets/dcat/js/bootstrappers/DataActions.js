@@ -125,47 +125,6 @@ let defaultActions = {
             .on('click', selector, toggle)
             .on('click', selector, fix);
     },
-
-    // 暗黑模式切换按钮
-    'dark-mode' (action, Dcat) {
-        var storage = localStorage || {setItem:function () {}, getItem: function () {}},
-            darkMode = Dcat.darkMode,
-            key = 'dcat-admin-theme-mode',
-            mode = storage.getItem(key),
-            icon = '.dark-mode-switcher i';
-
-        function switchMode(dark) {
-            if (dark) {
-                $(icon).addClass('icon-sun').removeClass('icon-moon');
-                darkMode.display(true);
-                return;
-            }
-
-            darkMode.display(false);
-            $(icon).removeClass('icon-sun').addClass('icon-moon');
-        }
-
-        if (mode === 'dark') {
-            switchMode(true);
-        } else if (mode === 'def') {
-            switchMode(false)
-        }
-
-        $document.off('click', action).on('click', action, function () {
-            $(icon).toggleClass('icon-sun icon-moon');
-
-            if ($(icon).hasClass('icon-moon')) {
-                switchMode(false);
-
-                storage.setItem(key, 'def');
-
-            } else {
-                storage.setItem(key, 'dark');
-
-                switchMode(true)
-            }
-        })
-    },
 };
 
 export default class DataActions {

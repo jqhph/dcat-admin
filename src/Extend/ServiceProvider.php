@@ -258,23 +258,6 @@ abstract class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
-     * 获取或保存配置.
-     *
-     * @param string $key
-     * @param string $value
-     *
-     * @return mixed
-     */
-    public static function setting($key = null, $value = null)
-    {
-        $extension = app(static::class);
-
-        if ($extension instanceof ServiceProvider) {
-            return $extension->config($key, $value);
-        }
-    }
-
-    /**
      * 卸载扩展.
      */
     public function uninstall()
@@ -374,6 +357,23 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $this->composerProperty = $composerProperty;
 
         return $this;
+    }
+
+    /**
+     * 获取或保存配置.
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @return mixed
+     */
+    public static function setting($key = null, $value = null)
+    {
+        $extension = app(static::class);
+
+        if ($extension && $extension instanceof ServiceProvider) {
+            return $extension->config($key, $value);
+        }
     }
 
     /**

@@ -101,8 +101,12 @@ export default class Ajax {
         let Dcat = this.dcat,
             data = response.data;
 
+        if (! response) {
+            return;
+        }
+
         if (typeof response !== 'object') {
-            return Dcat.error({type: 'error', title: 'Oops!'});
+            return Dcat.error('error', 'Oops!');
         }
 
         var then = function (then) {
