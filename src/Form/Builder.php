@@ -110,19 +110,9 @@ class Builder
     protected $title;
 
     /**
-     * @var BlockForm[]
-     */
-    protected $multipleForms = [];
-
-    /**
      * @var Layout
      */
     protected $layout;
-
-    /**
-     * @var int
-     */
-    protected $defaultBlockWidth = 12;
 
     /**
      * @var string
@@ -210,20 +200,6 @@ class Builder
     public function setDefaultBlockWidth(int $width)
     {
         $this->defaultBlockWidth = $width;
-
-        return $this;
-    }
-
-    /**
-     * @param BlockForm $form
-     */
-    public function addForm(BlockForm $form)
-    {
-        $this->multipleForms[] = $form;
-
-        $form->disableResetButton();
-        $form->disableSubmitButton();
-        $form->disableFormTag();
 
         return $this;
     }
@@ -885,17 +861,30 @@ class Builder
         if ($this->layout->hasColumns()) {
             $content = $this->doWrap(view($this->view, $data));
         } else {
-            $this->layout->prepend(
-                $this->defaultBlockWidth,
-                $this->doWrap(view($this->view, $data))
-            );
+            if (! $this->layout->hasBlocks()) {
+                $this->layout->prepend(
+                    12,
+                    $this->doWrap(view($this->view, $data))
+                );
+            }
 
             $content = $this->layout->build();
         }
 
         return <<<EOF
-{$open} {$content} {$this->close()}
+{$open} {$content} {$this->renderHiddenFields()} {$this->close()}
 EOF;
+    }
+
+    protected function renderHiddenFields()
+    {
+        $html = '';
+
+        foreach($this->hiddenFields() as $field) {
+            $html .= $field->render();
+        }
+
+        return $html;
     }
 
     /**
@@ -923,7 +912,7 @@ EOF;
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
-     confirm: {$confirm},
+    confirm: {$confirm},
 });
 JS
         );

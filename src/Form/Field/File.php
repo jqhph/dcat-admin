@@ -173,7 +173,7 @@ class File extends Field implements UploadFieldInterface
     protected function formatValue()
     {
         if ($this->value !== null) {
-            $this->value = implode(',', $this->value);
+            $this->value = implode(',', Helper::array($this->value));
         } elseif (is_array($this->default)) {
             $this->default = implode(',', $this->default);
         }

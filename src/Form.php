@@ -1053,7 +1053,9 @@ class Form implements Renderable
      */
     public function ignore($fields)
     {
-        $this->ignored = array_merge($this->ignored, (array) $fields);
+        $this->ignored = Arr::flatten(
+            array_merge($this->ignored, (array) $fields)
+        );
 
         return $this;
     }
@@ -1623,11 +1625,10 @@ class Form implements Renderable
      */
     public function block(int $width, \Closure $callback)
     {
-        $layout = $this->builder->layout();
-
-        $callback($form = $layout->form());
-
-        $layout->column($width, $form);
+        $this
+            ->builder
+            ->layout()
+            ->block($width, $callback);
 
         return $this;
     }
@@ -1643,18 +1644,6 @@ class Form implements Renderable
         $this->builder->layout()->onlyColumn($width, function () use ($callback) {
             $callback($this);
         });
-
-        return $this;
-    }
-
-    /**
-     * @param int $width
-     *
-     * @return $this
-     */
-    public function setDefaultBlockWidth(int $width)
-    {
-        $this->builder->setDefaultBlockWidth($width);
 
         return $this;
     }

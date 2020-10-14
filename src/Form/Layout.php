@@ -23,6 +23,8 @@ class Layout
      */
     protected $currentFields = [];
 
+    protected $hasBlock = false;
+
     /**
      * @var bool
      */
@@ -38,26 +40,31 @@ class Layout
         $this->currentFields[] = $field;
     }
 
+    public function hasBlocks()
+    {
+        return $this->hasBlock;
+    }
+
     public function hasColumns()
     {
         return $this->hasColumn;
     }
 
     /**
+     * 列布局.
+     *
      * @param int   $width   1~12
      * @param mixed $content
      */
     public function onlyColumn($width, $content)
     {
-        $width = $width < 1 ? round(12 * $width) : $width;
+        $width = (int) ($width < 1 ? round(12 * $width) : $width);
 
         $this->hasColumn = true;
 
-        $this->currentFields = [];
+        $this->resetCurrentFields();
 
-        $column = new Column($content, $width);
-
-        $this->columns[] = $column;
+        $column = $this->column($width, $content);
 
         foreach ($this->currentFields as $field) {
             $column->append($field);
@@ -65,14 +72,41 @@ class Layout
     }
 
     /**
+     * 增加列.
+     *
      * @param int   $width   1~12
      * @param mixed $content
+     *
+     * @return Column
      */
-    public function column($width, $content)
+    public function column(int $width, $content)
     {
-        $width = $width < 1 ? round(12 * $width) : $width;
+        return $this->columns[] = new Column($content, $width);
+    }
 
-        $this->columns[] = new Column($content, $width);
+    /**
+     * block布局.
+     *
+     * @param int $width
+     * @param \Closure $callback
+     */
+    public function block(int $width, \Closure $callback)
+    {
+        $this->hasBlock = true;
+
+        $this->column($width, function (Column $column) use ($callback) {
+            $this->form->layoutColumn = $column;
+
+            $column->row(function (\Dcat\Admin\Layout\Row $row) use ($callback) {
+                $form = $this->form();
+
+                $form->layoutRow = $row;
+
+                $row->column(12, $form);
+
+                $callback($form);
+            });
+        });
     }
 
     /**
@@ -95,7 +129,10 @@ class Layout
     {
         $form = new Form\BlockForm($this->form);
 
-        $this->form->builder()->addForm($form);
+        $form->disableResetButton();
+        $form->disableSubmitButton();
+        $form->disableFormTag();
+        $form->ajax(false);
 
         if ($callback) {
             $callback($form);
@@ -118,5 +155,10 @@ class Layout
         }
 
         return $html.'</div>';
+    }
+
+    protected function resetCurrentFields()
+    {
+        $this->currentFields = [];
     }
 }

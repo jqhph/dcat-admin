@@ -168,8 +168,6 @@ class Form implements Renderable
      */
     protected $confirm = [];
 
-    protected $hasColumns = false;
-
     /**
      * Form constructor.
      *
@@ -394,8 +392,6 @@ class Form implements Renderable
             $callback($this);
         });
 
-        $this->hasColumns = true;
-
         return $this;
     }
 
@@ -479,11 +475,13 @@ class Form implements Renderable
     /**
      * Disable reset button.
      *
+     * @param bool $value
+     *
      * @return $this
      */
-    public function disableResetButton()
+    public function disableResetButton(bool $value = true)
     {
-        $this->buttons['reset'] = false;
+        $this->buttons['reset'] = ! $value;
 
         return $this;
     }
@@ -491,11 +489,13 @@ class Form implements Renderable
     /**
      * Disable submit button.
      *
+     * @param bool $value
+     *
      * @return $this
      */
-    public function disableSubmitButton()
+    public function disableSubmitButton(bool $value = true)
     {
-        $this->buttons['submit'] = false;
+        $this->buttons['submit'] = ! $value;
 
         return $this;
     }
@@ -551,8 +551,8 @@ class Form implements Renderable
     public function pushField(Field $field)
     {
         $this->fields->push($field);
-        if ($this->layout) {
-            $this->layout->addField($field);
+        if ($this->layout()->hasColumns()) {
+            $this->layout()->addField($field);
         }
 
         $field->setForm($this);
@@ -588,13 +588,15 @@ class Form implements Renderable
         $this->fillFields($this->model()->toArray());
 
         return array_merge([
-            'start'   => $this->open(),
-            'end'     => $this->close(),
-            'fields'  => $this->fields,
-            'method'  => $this->getHtmlAttribute('method'),
-            'buttons' => $this->buttons,
-            'rows'    => $this->rows(),
-            'layout'  => $this->layout(),
+            'start'     => $this->open(),
+            'end'       => $this->close(),
+            'fields'    => $this->fields,
+            'method'    => $this->getHtmlAttribute('method'),
+            'buttons'   => $this->buttons,
+            'rows'      => $this->rows(),
+            'layout'    => $this->layout(),
+            'elementId' => $this->getElementId(),
+            'ajax'      => $this->useAjaxSubmit,
         ], $this->variables);
     }
 
@@ -617,6 +619,10 @@ class Form implements Renderable
      */
     protected function open()
     {
+        if (! $this->useFormTag) {
+            return;
+        }
+
         return <<<HTML
 <form {$this->formatHtmlAttributes()}>
 HTML;
@@ -627,6 +633,10 @@ HTML;
      */
     protected function close()
     {
+        if (! $this->useFormTag) {
+            return;
+        }
+
         return '</form>';
     }
 
@@ -778,7 +788,7 @@ HTML;
                 }
             };
 
-            $this->hasColumns ? $this->column(1, $addHiddenFields) : $addHiddenFields();
+            $this->layout()->hasColumns() ? $this->column(1, $addHiddenFields) : $addHiddenFields();
         }
     }
 
@@ -795,7 +805,6 @@ HTML;
 
         if ($this->allowAjaxSubmit()) {
             $this->addVariables([
-                'elementId'   => $this->getElementId(),
                 'confirm'     => $this->confirm,
                 'savedScript' => $this->savedScript(),
                 'errorScript' => $this->errorScript(),
