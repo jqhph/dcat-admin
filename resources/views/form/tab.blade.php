@@ -8,20 +8,25 @@
             </li>
         @endforeach
     </ul>
-    <div class="tab-content fields-group mt-2" style="padding:18px 0">
+    <div class="tab-content fields-group mt-2 pt-1 pb-1">
         @foreach($tabObj->getTabs() as $tab)
             <div class="tab-pane {{ $tab['active'] ? 'active' : '' }}" id="{{ $tab['id'] }}">
-                @if($form->hasRows())
-                    <div class="ml-2 mb-2">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        @foreach($form->rows() as $row)
+                @if($rows)
+                    <div class="ml-2 mb-2" style="margin-top: -1rem">
+                        @foreach($rows as $row)
                             {!! $row->render() !!}
                         @endforeach
+
+                        @foreach($fields as $field)
+                            @if($field instanceof \Dcat\Admin\Form\Field\Hidden)
+                                {!! $field->render() !!}
+                            @endif
+                        @endforeach
                     </div>
-                @elseif($form->layout()->hasColumns())
-                    {!! $form->layout()->build() !!}
+                @elseif($layout->hasColumns())
+                    {!! $layout->build() !!}
                 @else
-                    @foreach($form->fields() as $field)
+                    @foreach($fields as $field)
                         {!! $field->render() !!}
                     @endforeach
                 @endif

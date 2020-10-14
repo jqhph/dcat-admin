@@ -877,6 +877,9 @@ class Builder
             'elementId'  => $this->getElementId(),
             'showHeader' => $this->showHeader,
             'steps'      => $this->stepBuilder,
+            'fields'     => $this->fields,
+            'rows'       => $this->rows(),
+            'layout'     => $this->layout(),
         ];
 
         if ($this->layout->hasColumns()) {

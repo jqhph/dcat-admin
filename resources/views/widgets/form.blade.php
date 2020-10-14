@@ -21,7 +21,7 @@
                         @endif
                     @endforeach
                 </div>
-            @elseif($layout)
+            @elseif($layout->hasColumns())
                 {!! $layout->build() !!}
             @else
                 @foreach($fields as $field)

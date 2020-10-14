@@ -11,9 +11,14 @@
         <div class="fields-group">
             @if($form->hasRows())
                 <div class="ml-2 mb-2">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @foreach($form->rows() as $row)
                         {!! $row->render() !!}
+                    @endforeach
+
+                    @foreach($form->fields() as $field)
+                        @if($field instanceof \Dcat\Admin\Form\Field\Hidden)
+                            {!! $field->render() !!}
+                        @endif
                     @endforeach
                 </div>
             @elseif($form->layout()->hasColumns())
