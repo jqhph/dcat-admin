@@ -338,25 +338,17 @@ class Manager
     {
         $filePath = is_file($filePath) ? $filePath : $this->getFilePath($filePath);
 
-        if (! $this->checkZip($filePath)) {
-            throw new RuntimeException(sprintf('Error extension file "%s".', $filePath));
-        }
-
-        if (! Zip::extract($filePath, admin_extension_path())) {
-            throw new AdminException(sprintf('Unable to extract core file \'%s\'.', $filePath));
-        }
+        $this->extractZip($filePath);
 
         @unlink($filePath);
     }
 
     /**
-     * 验证文件是否正确.
-     *
      * @param string $filePath
      *
      * @return bool
      */
-    public function checkZip($filePath)
+    public function extractZip($filePath)
     {
         // 创建临时目录.
         $tempPath = $this->makeTempDirectory();
@@ -369,11 +361,63 @@ class Manager
             }
 
             $extensions = $this->getExtensionDirectories($tempPath);
+
+            // 无上层目录
+            $directory = $tempPath;
+
+            if (count($extensions) === 1) {
+                // 双层目录
+                $directory = current($extensions);
+            } elseif (count($results = $this->scandir($tempPath)) === 1) {
+                // 单层目录
+                $directory = current($results);
+            }
+
+            // 验证扩展包内容是否正确.
+            if (! $this->checkFiles($directory)) {
+                throw new RuntimeException(sprintf('Error extension file "%s".', $filePath));
+            }
+
+            $composerProperty = Composer::parse($directory.'/composer.json');
+
+            $extensionDir = admin_extension_path($composerProperty->name);
+
+            if (is_dir($extensionDir)) {
+                throw new RuntimeException(sprintf('The extension [%s] already exist!', $composerProperty->name));
+            }
+
+            $this->files->makeDirectory($extensionDir, 0755, true);
+
+            $this->files->copyDirectory($directory, $extensionDir);
         } finally {
             $this->files->deleteDirectory($tempPath);
         }
+    }
 
-        return count($extensions) === 1;
+    /**
+     * 校验扩展包内容是否正确.
+     *
+     * @param $directory
+     *
+     * @return bool
+     */
+    protected function checkFiles($directory)
+    {
+        if (
+            ! is_dir($directory.'/src')
+            || ! is_file($directory.'/composer.json')
+            || ! is_file($directory.'/version.php')
+        ) {
+            return false;
+        }
+
+        $composerProperty = Composer::parse($directory.'/composer.json');
+
+        if (! $composerProperty->name || ! $composerProperty->get('extra.dcat-admin')) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -470,5 +514,27 @@ class Manager
     protected function reportException(\Throwable $e)
     {
         Admin::reportException($e);
+    }
+
+    /**
+     * @param string $dir
+     *
+     * @return array
+     */
+    protected function scandir($dir)
+    {
+        $results = [];
+
+        foreach (scandir($dir) as $value) {
+            if (
+                $value !== '.'
+                && $value !== '..'
+                && is_dir($value = $dir.'/'.$value)
+            ) {
+                $results[] = $value;
+            }
+        }
+
+        return $results;
     }
 }
