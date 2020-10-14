@@ -58,6 +58,7 @@ mix.copyDirectory(dcatPath('plugins'), dcatDistPath('plugins'));
 mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js')).sourceMaps();
 // 打包app.scss
 mix.sass(dcatPath('sass/dcat-app.scss'), themeCss('dcat/css/dcat-app')).sourceMaps();
+mix.copy(dcatPath('sass/nunito.css'), `${distPath}/dcat/css/nunito.css`);
 
 // 打包所有 extra 里面的所有js和css
 mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.js(src, dest));
