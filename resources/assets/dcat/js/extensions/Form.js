@@ -46,23 +46,23 @@ class Form {
         _this.$form = $(_this.options.form).first();
         _this._errColumns = {};
 
-        _this.submit();
+        _this.init();
     }
 
-    submit() {
+    init() {
         let _this = this;
         let confirm = _this.options.confirm;
 
         if (! confirm.title) {
-            return _this._ajaxSubmit();
+            return _this.submit();
         }
 
         Dcat.confirm(confirm.title, confirm.content, function () {
-            _this._ajaxSubmit();
+            _this.submit();
         });
     }
 
-    _ajaxSubmit() {
+    submit() {
         let Dcat = window.Dcat,
             _this = this,
             $form = _this.$form,
@@ -95,7 +95,9 @@ class Form {
                 $submitButton.buttonLoading();
             },
             success: function (response) {
-                $submitButton.buttonLoading(false);
+                setTimeout(function () {
+                    $submitButton.buttonLoading(false);
+                }, 700);
 
                 if (options.after(true, response, _this) === false) {
                     return;

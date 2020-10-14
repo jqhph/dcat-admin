@@ -38,7 +38,7 @@ HTML;
 
     protected function addStyle()
     {
-        Admin::style('.select2-container{z-index:29891015}');
+        Admin::style('.select2-container--open{z-index:29891015}');
     }
 
     /**

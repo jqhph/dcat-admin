@@ -19,10 +19,10 @@
                 error: function (target, results) {}, // 请求出错回调，返回false可以中断默认的错误处理逻辑
             }, options);
 
-            this._bind();
+            this.init();
         }
 
-        _bind() {
+        init() {
             let _this = this, options = _this.options;
 
             $(options.selector).off(options.event).on(options.event, function (e) {
@@ -42,7 +42,7 @@
 
                     Object.assign(data, options.data);
 
-                    _this._buildActionPromise(target, data).then(_this._resolver()).catch(_this._reject());
+                    _this.promise(target, data).then(_this.resolve()).catch(_this.reject());
                 }
 
                 var conform = options.confirm;
@@ -55,7 +55,7 @@
             });
         }
 
-        _resolver() {
+        resolve() {
             let _this = this, options = _this.options;
 
             return function (result) {
@@ -107,7 +107,7 @@
             };
         }
 
-        _reject() {
+        reject() {
             let options = this.options;
 
             return function (result) {
@@ -124,7 +124,7 @@
             }
         }
 
-        _buildActionPromise(target, data) {
+        promise(target, data) {
             let options = this.options;
 
             return new Promise(function (resolve, reject) {

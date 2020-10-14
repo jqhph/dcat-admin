@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid;
 use Dcat\Admin\Support\Helper;
 
 class QuickSearch extends AbstractTool

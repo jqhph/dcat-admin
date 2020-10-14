@@ -18,11 +18,11 @@ class Currency extends Text
      * @var array
      */
     protected $options = [
-        'alias'              => 'currency',
-        'radixPoint'         => '.',
-        'prefix'             => '',
+        'alias' => 'currency',
+        'radixPoint' => '.',
+        'prefix' => '',
         'removeMaskOnSubmit' => true,
-        'rightAlign'         => false,
+        'rightAlign' => false,
     ];
 
     /**
@@ -52,16 +52,6 @@ class Currency extends Text
     }
 
     /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    protected function prepareInputValue($value)
-    {
-        return str_replace(',', '', $value);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function render()
@@ -72,5 +62,15 @@ class Currency extends Text
             ->defaultAttribute('style', 'width: 200px');
 
         return parent::render();
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function prepareInputValue($value)
+    {
+        return is_string($value) ? str_replace(',', '', $value) : $value;
     }
 }

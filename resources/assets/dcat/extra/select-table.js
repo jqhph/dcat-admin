@@ -15,51 +15,56 @@
             },
         }, options);
 
-        let self = this,
-            values = options.values;
+        let self = this;
 
         self.options = options;
         self.$input = $(options.input);
 
-        self.labels = {};
-
-        for (let i in values) {
-            self.labels[values[i]['id']] = values[i]['label']
-        }
-
-        // 保存临时选中的值
-        self.resetSelected();
-
-        $(document).on('dialog:shown', options.dialog, function () {
-            self.$dialog = $(options.dialog);
-            self.$button = self.$dialog.find(options.button);
-            self.$cancel = self.$dialog.find(options.cancel);
-
-            // 提交按钮
-            self.$button.on('click', function () {
-                var selected = self.getSelectedRows();
-
-                self.setKeys(selected[1]);
-
-                self.render(selected[0]);
-
-                self.$dialog.trigger('dialog:close');
-            });
-
-            self.$cancel.on('click', function () {
-                self.$dialog.trigger('dialog:close');
-            });
-
-            self._bind();
-        });
-
-        self.render(values);
-
-        return self;
+        self.init();
     }
 
     SelectTable.prototype = {
-        _bind() {
+        init() {
+            let self = this,
+                options = self.options,
+                values = options.values;
+
+            self.labels = {};
+
+            for (let i in values) {
+                self.labels[values[i]['id']] = values[i]['label']
+            }
+
+            // 保存临时选中的值
+            self.resetSelected();
+
+            $(document).on('dialog:shown', options.dialog, function () {
+                self.$dialog = $(options.dialog);
+                self.$button = self.$dialog.find(options.button);
+                self.$cancel = self.$dialog.find(options.cancel);
+
+                // 提交按钮
+                self.$button.on('click', function () {
+                    var selected = self.getSelectedRows();
+
+                    self.setKeys(selected[1]);
+
+                    self.render(selected[0]);
+
+                    self.$dialog.trigger('dialog:close');
+                });
+
+                self.$cancel.on('click', function () {
+                    self.$dialog.trigger('dialog:close');
+                });
+
+                self.bind();
+            });
+
+            self.render(values);
+        },
+
+        bind() {
             let self = this, options = self.options;
 
             // 表格加载完成事件

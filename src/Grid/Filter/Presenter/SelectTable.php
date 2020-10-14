@@ -21,8 +21,6 @@ class SelectTable extends Presenter
 
     protected $style = 'primary';
 
-    protected $title;
-
     protected $id;
 
     protected $options;
@@ -96,7 +94,7 @@ class SelectTable extends Presenter
      */
     public function title($title)
     {
-        $this->title = $title;
+        $this->dialog->title($title);
 
         return $this;
     }

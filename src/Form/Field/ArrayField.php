@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\NestedForm;
-use Dcat\Admin\Support\Helper;
 
 class ArrayField extends HasMany
 {
@@ -61,15 +60,6 @@ class ArrayField extends HasMany
             })
             ->values()
             ->toArray();
-    }
-
-    public function value($value = null)
-    {
-        if ($value === null) {
-            return Helper::array(parent::value($value));
-        }
-
-        return parent::value($value);
     }
 
     public function buildNestedForm($key = null)

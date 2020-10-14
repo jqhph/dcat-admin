@@ -1,6 +1,9 @@
 <?php
 
+namespace Database\DummyNamespace;
+
 use Illuminate\Database\Seeder;
+use DB;
 
 class DummyClass extends Seeder
 {

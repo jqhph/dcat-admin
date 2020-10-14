@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class Table extends Widget
@@ -35,7 +36,7 @@ class Table extends Widget
      */
     public function __construct($headers = [], $rows = false, $style = [])
     {
-        if ($headers && $rows === false) {
+        if ($rows === false) {
             $rows = $headers;
             $headers = [];
         }
@@ -82,7 +83,7 @@ class Table extends Widget
      */
     public function setRows($rows = [])
     {
-        if (! Arr::isAssoc($rows)) {
+        if ($rows && ! Arr::isAssoc(Helper::array($rows))) {
             $this->rows = $rows;
 
             return $this;
@@ -93,11 +94,10 @@ class Table extends Widget
         foreach ($rows as $key => $item) {
             if (is_array($item)) {
                 if (Arr::isAssoc($item)) {
-                    $borderLeft = $this->level ? 'table-left-border-nofirst' : 'table-left-border';
+                    $borderLeft = $this->depth ? 'table-left-border-nofirst' : 'table-left-border';
 
-                    $item = static::make()
+                    $item = static::make($item)
                         ->depth($this->depth + 1)
-                        ->setRows($item)
                         ->class('table-no-top-border '.$borderLeft, true)
                         ->render();
 
