@@ -182,7 +182,7 @@ class Tools implements Renderable
 
         return <<<EOT
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a href="{$this->getListPath()}" class="btn btn-sm btn-white "><i class="feather icon-list"></i><span class="d-none d-sm-inline">&nbsp;$text</span></a>
+    <a href="{$this->getListPath()}" class="btn btn-sm btn-primary "><i class="feather icon-list"></i><span class="d-none d-sm-inline">&nbsp;$text</span></a>
 </div>
 EOT;
     }
@@ -216,7 +216,7 @@ HTML;
 
         return <<<HTML
 <div class="btn-group pull-right" style="margin-right: 5px">
-    <a class="btn btn-sm btn-danger text-white" data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
+    <a class="btn btn-sm btn-white" data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
         <i class="feather icon-trash"></i><span class="d-none d-sm-inline"> {$delete}</span>
     </a>
 </div>
