@@ -35,4 +35,15 @@ trait HasRows
     {
         return $this->rows;
     }
+
+    /**
+     * @param array $rows
+     * @return $this
+     */
+    public function setRows(array $rows)
+    {
+        $this->rows = $rows;
+
+        return $this;
+    }
 }
