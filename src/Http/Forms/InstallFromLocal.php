@@ -47,7 +47,7 @@ class InstallFromLocal extends Form implements LazyRenderable
                 ->success(implode('<br>', $manager->updateManager()->notes))
                 ->refresh();
         } catch (\Throwable $e) {
-            report($e);
+            Admin::reportException($e);
 
             return $this->response()->error($e->getMessage());
         } finally {

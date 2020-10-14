@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Support;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Models\Setting as Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Arr;
@@ -81,6 +82,7 @@ class Setting extends Fluent
         try {
             $values = Model::pluck('value', 'slug')->toArray();
         } catch (QueryException $e) {
+            Admin::reportException($e);
         }
 
         return new static($values);

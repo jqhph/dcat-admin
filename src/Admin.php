@@ -3,6 +3,7 @@
 namespace Dcat\Admin;
 
 use Closure;
+use Dcat\Admin\Contracts\ExceptionHandler;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Http\Controllers\AuthController;
@@ -238,13 +239,39 @@ class Admin
     }
 
     /**
-     * @return Handler
+     * 处理异常.
+     *
+     * @param \Throwable $e
+     *
+     * @return mixed
      */
-    public static function makeExceptionHandler()
+    public static function handleException(\Throwable $e)
     {
-        return app(
-            config('admin.exception_handler') ?: Handler::class
-        );
+        return app(ExceptionHandler::class)->handle($e);
+    }
+
+    /**
+     * 上报异常.
+     *
+     * @param \Throwable $e
+     *
+     * @return mixed
+     */
+    public static function reportException(\Throwable $e)
+    {
+        return app(ExceptionHandler::class)->report($e);
+    }
+
+    /**
+     * 显示异常信息.
+     *
+     * @param \Throwable $e
+     *
+     * @return mixed
+     */
+    public static function renderException(\Throwable $e)
+    {
+        return app(ExceptionHandler::class)->render($e);
     }
 
     /**

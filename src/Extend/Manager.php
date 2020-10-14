@@ -469,6 +469,6 @@ class Manager
      */
     protected function reportException(\Throwable $e)
     {
-        report($e);
+        Admin::reportException($e);
     }
 }

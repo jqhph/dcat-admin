@@ -576,7 +576,7 @@ class Form implements Renderable
      */
     protected function handleException(\Throwable $e)
     {
-        return Admin::makeExceptionHandler()->handle($e);
+        return Admin::handleException($e);
     }
 
     /**

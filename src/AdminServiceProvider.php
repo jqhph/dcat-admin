@@ -3,6 +3,8 @@
 namespace Dcat\Admin;
 
 use Dcat\Admin\Console\ExtensionInstallCommand;
+use Dcat\Admin\Contracts\ExceptionHandler;
+use Dcat\Admin\Exception\Handler;
 use Dcat\Admin\Extend\UpdateManager;
 use Dcat\Admin\Extend\VersionManager;
 use Dcat\Admin\Layout\Asset;
@@ -230,6 +232,7 @@ class AdminServiceProvider extends ServiceProvider
             return Setting::fromDatabase();
         });
         $this->app->singleton('admin.web-uploader', WebUploader::class);
+        $this->app->singleton(ExceptionHandler::class, config('admin.exception_handler') ?: Handler::class);
     }
 
     protected function registerExtensions()
