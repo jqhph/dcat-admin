@@ -207,7 +207,6 @@ trait HasTools
                 $this->tools()->has()
                 || $this->allowExporter()
                 || $this->allowCreateButton()
-                || $this->allowResponsive()
                 || ! empty($this->variables['title'])
             )
         ) {

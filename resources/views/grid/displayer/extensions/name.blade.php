@@ -13,7 +13,7 @@
 <div style="height: 10px"></div>
 
 @if($row->type === Dcat\Admin\Extend\ServiceProvider::TYPE_THEME)
-    <span class="text-uppercase">{{ trans('admin.theme') }}</span>
+    <span>{{ trans('admin.theme') }}</span>
 @endif
 
 @if($row->version)

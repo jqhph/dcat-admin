@@ -4,13 +4,13 @@ let $document = $(document);
 
 let defaultActions = {
     // 刷新按钮
-    refresh: function (action, Dcat) {
+    refresh (action, Dcat) {
         $document.on('click', action, function () {
             Dcat.reload($(this).data('url'));
         });
     },
     // 删除按钮初始化
-    delete: function (action, Dcat) {
+    delete (action, Dcat) {
         let lang = Dcat.lang;
 
         $document.on('click', action, function() {
@@ -34,7 +34,7 @@ let defaultActions = {
         });
     },
     // 批量删除按钮初始化
-    'batch-delete': function (action, Dcat) {
+    'batch-delete' (action, Dcat) {
         $document.on('click', action, function() {
             let url = $(this).data('url'),
                 name = $(this).data('name'),
@@ -61,13 +61,13 @@ let defaultActions = {
     },
 
     // 图片预览
-    'preview-img': function (action, Dcat) {
+    'preview-img' (action, Dcat) {
         $document.on('click', action, function () {
             return Dcat.helpers.previewImage($(this).attr('src'));
         });
     },
 
-    'popover': function (action, Dcat) {
+    'popover' (action, Dcat) {
         Dcat.onPjaxComplete(function () {
             $('.popover').remove();
         }, false);
@@ -77,7 +77,7 @@ let defaultActions = {
         });
     },
 
-    'box-actions': function () {
+    'box-actions' () {
         $document.on('click', '.box [data-action="collapse"]', function (e) {
             e.preventDefault();
 
@@ -92,7 +92,7 @@ let defaultActions = {
         });
     },
 
-    dropdown: function () {
+    dropdown () {
         function hide() {
             $('.dropdown-menu').removeClass('show')
         }
@@ -124,7 +124,48 @@ let defaultActions = {
         $document
             .on('click', selector, toggle)
             .on('click', selector, fix);
-    }
+    },
+
+    // 暗黑模式切换按钮
+    'dark-mode' (action, Dcat) {
+        var storage = localStorage || {setItem:function () {}, getItem: function () {}},
+            darkMode = Dcat.darkMode,
+            key = 'dcat-admin-theme-mode',
+            mode = storage.getItem(key),
+            icon = '.dark-mode-switcher i';
+
+        function switchMode(dark) {
+            if (dark) {
+                $(icon).addClass('icon-sun').removeClass('icon-moon');
+                darkMode.display(true);
+                return;
+            }
+
+            darkMode.display(false);
+            $(icon).removeClass('icon-sun').addClass('icon-moon');
+        }
+
+        if (mode === 'dark') {
+            switchMode(true);
+        } else if (mode === 'def') {
+            switchMode(false)
+        }
+
+        $document.off('click', action).on('click', action, function () {
+            $(icon).toggleClass('icon-sun icon-moon');
+
+            if ($(icon).hasClass('icon-moon')) {
+                switchMode(false);
+
+                storage.setItem(key, 'def');
+
+            } else {
+                storage.setItem(key, 'dark');
+
+                switchMode(true)
+            }
+        })
+    },
 };
 
 export default class DataActions {

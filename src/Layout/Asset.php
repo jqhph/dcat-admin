@@ -88,10 +88,6 @@ class Asset
                 '@admin/dcat/plugins/moment/moment-timezone-with-data.min.js',
             ],
         ],
-        '@rwd-table' => [
-            'js'  => '@admin/dcat/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js',
-            'css' => '@admin/dcat/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css',
-        ],
         '@jstree' => [
             'js'  => '@admin/dcat/plugins/jstree-theme/jstree.min.js',
             'css' => '@admin/dcat/plugins/jstree-theme/themes/proton/style.min.css',

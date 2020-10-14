@@ -339,10 +339,16 @@ class Admin
     /**
      * 插件管理.
      *
-     * @return \Dcat\Admin\Extend\Manager
+     * @param string $name
+     *
+     * @return \Dcat\Admin\Extend\Manager|\Dcat\Admin\Extend\ServiceProvider|null
      */
-    public static function extension()
+    public static function extension(?string $name = null)
     {
+        if ($name) {
+            return app('admin.extend')->get($name);
+        }
+
         return app('admin.extend');
     }
 

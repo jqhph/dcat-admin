@@ -7,7 +7,6 @@ use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Concerns;
 use Dcat\Admin\Grid\Model;
-use Dcat\Admin\Grid\Responsive;
 use Dcat\Admin\Grid\Row;
 use Dcat\Admin\Grid\Tools;
 use Dcat\Admin\Support\Helper;
@@ -139,11 +138,6 @@ class Grid
      * @var Closure
      */
     protected $wrapper;
-
-    /**
-     * @var Responsive
-     */
-    protected $responsive;
 
     /**
      * @var bool
@@ -437,10 +431,6 @@ class Grid
 
         $this->buildRows($data);
 
-        if ($data && $this->responsive) {
-            $this->responsive->build();
-        }
-
         $this->sortHeaders();
     }
 
@@ -678,8 +668,8 @@ HTML;
     /**
      * Get or set option for grid.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param string|array $key
+     * @param mixed        $value
      *
      * @return $this|mixed
      */
@@ -689,7 +679,11 @@ HTML;
             return $this->options[$key] ?? null;
         }
 
-        $this->options[$key] = $value;
+        if (is_array($key)) {
+            $this->options = array_merge($this->options, $key);
+        } else {
+            $this->options[$key] = $value;
+        }
 
         return $this;
     }
@@ -803,32 +797,6 @@ HTML;
     public static function make(...$params)
     {
         return new static(...$params);
-    }
-
-    /**
-     * Enable responsive tables.
-     *
-     * @see https://github.com/nadangergeo/RWD-Table-Patterns
-     *
-     * @return Responsive
-     *
-     * @deprecated 即将在2.0版本中废弃
-     */
-    public function responsive()
-    {
-        if (! $this->responsive) {
-            $this->responsive = new Responsive($this);
-        }
-
-        return $this->responsive;
-    }
-
-    /**
-     * @return bool
-     */
-    public function allowResponsive()
-    {
-        return $this->responsive ? true : false;
     }
 
     /**
