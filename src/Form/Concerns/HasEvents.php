@@ -24,7 +24,7 @@ trait HasEvents
      */
     public function creating(Closure $callback)
     {
-        Event::listen(Events\Creating::class, $this->makeListener($callback));
+        Event::listen(Events\Creating::class, $this->makeListener($callback, $this));
 
         return $this;
     }
@@ -38,7 +38,7 @@ trait HasEvents
      */
     public function editing(Closure $callback)
     {
-        Event::listen(Events\Editing::class, $this->makeListener($callback));
+        Event::listen(Events\Editing::class, $this->makeListener($callback, $this));
 
         return $this;
     }
@@ -52,13 +52,13 @@ trait HasEvents
      */
     public function submitted(Closure $callback)
     {
-        Event::listen(Events\Submitted::class, $this->makeListener($callback));
+        Event::listen(Events\Submitted::class, $this->makeListener($callback, $this));
 
         return $this;
     }
 
     /**
-     * Set saving callback.
+     * 保存.
      *
      * @param Closure $callback
      *
@@ -66,13 +66,13 @@ trait HasEvents
      */
     public function saving(Closure $callback)
     {
-        Event::listen(Events\Saving::class, $this->makeListener($callback));
+        Event::listen(Events\Saving::class, $this->makeListener($callback, $this));
 
         return $this;
     }
 
     /**
-     * Set saved callback.
+     * 保存完成.
      *
      * @param Closure $callback
      *
@@ -80,55 +80,92 @@ trait HasEvents
      */
     public function saved(Closure $callback)
     {
-        Event::listen(Events\Saved::class, $this->makeListener($callback));
+        Event::listen(Events\Saved::class, $this->makeListener($callback, $this));
 
         return $this;
     }
 
     /**
+     * 删除.
+     *
      * @param Closure $callback
      *
      * @return $this
      */
     public function deleting(Closure $callback)
     {
-        Event::listen(Events\Deleting::class, $this->makeListener($callback));
+        Event::listen(Events\Deleting::class, $this->makeListener($callback, $this));
 
         return $this;
     }
 
     /**
+     * 删除完成.
+     *
      * @param Closure $callback
      *
      * @return $this
      */
     public function deleted(Closure $callback)
     {
-        Event::listen(Events\Deleted::class, $this->makeListener($callback));
+        Event::listen(Events\Deleted::class, $this->makeListener($callback, $this));
 
         return $this;
     }
 
     /**
+     * 文件上传.
+     *
      * @param \Closure $callback
      *
      * @return $this
      */
     public function uploading(Closure $callback)
     {
-        Event::listen(Events\Uploading::class, $this->makeListener($callback));
+        Event::listen(Events\Uploading::class, $this->makeListener($callback, $this));
 
         return $this;
     }
 
     /**
+     * 上传完成.
+     *
      * @param \Closure $callback
      *
      * @return $this
      */
     public function uploaded(Closure $callback)
     {
-        Event::listen(Events\Uploaded::class, $this->makeListener($callback));
+        Event::listen(Events\Uploaded::class, $this->makeListener($callback, $this));
+
+        return $this;
+    }
+
+    /**
+     * 删除文件.
+     *
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function fileDeleting(Closure $callback)
+    {
+        Event::listen(Events\FileDeleting::class, $this->makeListener($callback, $this));
+
+        return $this;
+    }
+
+
+    /**
+     * 删除文件完成.
+     *
+     * @param \Closure $callback
+     *
+     * @return $this
+     */
+    public function fileDeleted(Closure $callback)
+    {
+        Event::listen(Events\FileDeleted::class, $this->makeListener($callback, $this));
 
         return $this;
     }
@@ -138,9 +175,13 @@ trait HasEvents
      *
      * @return \Closure
      */
-    protected function makeListener(Closure $callback)
+    protected function makeListener(Closure $callback, self $form)
     {
-        return function (Events\Event $event) use ($callback) {
+        return function (Events\Event $event) use ($callback, $form) {
+            if ($event->form !== $form) {
+                return;
+            }
+
             if ($model = $event->form->model()) {
                 $callback = $callback->bindTo($model);
             }
@@ -254,6 +295,34 @@ trait HasEvents
     protected function callUploaded($field, $file, $response)
     {
         return $this->fire(Events\Uploaded::class, [$field, $file, $response]);
+    }
+
+    /**
+     * 触发文件删除事件
+     *
+     * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
+     * @param UploadedFile                                $file
+     * @param Response                                    $response
+     *
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\RedirectResponse|void
+     */
+    protected function callFileDeleting($field)
+    {
+        return $this->fire(Events\FileDeleting::class, [$field]);
+    }
+
+    /**
+     * 触发文件删除完成事件
+     *
+     * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
+     * @param UploadedFile                                $file
+     * @param Response                                    $response
+     *
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\RedirectResponse|void
+     */
+    protected function callFileDeleted($field)
+    {
+        return $this->fire(Events\FileDeleted::class, [$field]);
     }
 
     /**
