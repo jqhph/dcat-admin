@@ -11,6 +11,7 @@ use Dcat\Admin\Grid\Row;
 use Dcat\Admin\Grid\Tools;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Traits\HasVariables;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -19,6 +20,7 @@ use Illuminate\Support\Traits\Macroable;
 class Grid
 {
     use HasBuilderEvents;
+    use HasVariables;
     use Concerns\HasNames;
     use Concerns\HasFilter;
     use Concerns\HasTools;
@@ -95,13 +97,6 @@ class Grid
      * @var bool
      */
     protected $built = false;
-
-    /**
-     * All variables in grid view.
-     *
-     * @var array
-     */
-    protected $variables = [];
 
     /**
      * Resource path of the grid.
@@ -826,7 +821,7 @@ HTML;
      *
      * @return $this
      */
-    public function with($variables = [])
+    public function with(array $variables)
     {
         $this->variables = $variables;
 
@@ -838,27 +833,26 @@ HTML;
      *
      * @return array
      */
-    protected function variables()
+    protected function defaultVariables()
     {
-        $this->variables['grid'] = $this;
-        $this->variables['tableId'] = $this->getTableId();
-
-        return $this->variables;
+        return [
+            'grid'    => $this,
+            'tableId' => $this->getTableId(),
+        ];
     }
 
     /**
      * Set a view to render.
      *
      * @param string $view
-     * @param array  $variables
+     *
+     * @return $this
      */
-    public function view($view, $variables = [])
+    public function view($view)
     {
-        if (! empty($variables)) {
-            $this->with($variables);
-        }
-
         $this->view = $view;
+
+        return $this;
     }
 
     /**

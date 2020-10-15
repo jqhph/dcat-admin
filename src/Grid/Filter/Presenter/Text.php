@@ -36,7 +36,7 @@ class Text extends Presenter
      *
      * @return array
      */
-    public function variables(): array
+    public function defaultVariables(): array
     {
         return [
             'placeholder' => $this->placeholder,

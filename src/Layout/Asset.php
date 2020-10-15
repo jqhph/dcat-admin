@@ -157,10 +157,6 @@ class Asset
         '@apex-charts' => [
             'js' => '@admin/dcat/plugins/charts/apexcharts.min.js',
         ],
-        '@smart-wizard' => [
-            'js' => '@admin/dcat/plugins/SmartWizard/dist/js/jquery.smartWizard.min.js',
-            'css' => '@admin/dcat/extra/step.css',
-        ],
         '@fontawesome-iconpicker' => [
             'js' => '@admin/dcat/plugins/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js',
             'css' => '@admin/dcat/plugins/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css',

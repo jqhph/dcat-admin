@@ -32,6 +32,8 @@ class Markdown extends Widget
     public function __construct($markdown = '')
     {
         $this->content($markdown);
+
+        $this->id('mkd-'.Str::random(8));
     }
 
     /**
@@ -53,12 +55,8 @@ class Markdown extends Widget
 
     public function render()
     {
-        $id = 'mkd-'.Str::random(8);
-
-        $this->defaultHtmlAttribute('id', $id);
-
-        $this->with([
-            'id'      => $id,
+        $this->addVariables([
+            'id'      => $this->id(),
             'content' => $this->renderContent(),
         ]);
 

@@ -221,7 +221,7 @@ class Dropdown extends Widget
      */
     public function render()
     {
-        $this->with([
+        $this->addVariables([
             'options'  => $this->renderOptions(),
             'button'   => $this->button,
             'buttonId' => $this->buttonId,

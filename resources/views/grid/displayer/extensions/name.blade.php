@@ -1,5 +1,5 @@
 @if($row->homepage)
-    <a href='{!! $row->homepage !!}' target='_blank' class="feather icon-chrome"></a>
+    <a href='{!! $row->homepage !!}' target='_blank' class="feather {{ $linkIcon }}"></a>
 @endif
 <span class="ext-name">
     {{ $value }}

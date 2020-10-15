@@ -201,7 +201,7 @@ class Form implements Renderable
     /**
      * @var bool
      */
-    protected $useAjaxSubmit = true;
+    protected $ajax = true;
 
     /**
      * Model of the form.
@@ -262,6 +262,11 @@ class Form implements Renderable
      * @var Condition[]
      */
     protected $conditions = [];
+
+    /**
+     * @var array
+     */
+    public $context = [];
 
     /**
      * Create a new form instance.
@@ -422,7 +427,7 @@ class Form implements Renderable
      */
     public function ajax(bool $value = true)
     {
-        $this->useAjaxSubmit = $value;
+        $this->ajax = $value;
 
         return $this;
     }
@@ -432,7 +437,7 @@ class Form implements Renderable
      */
     public function allowAjaxSubmit()
     {
-        return $this->useAjaxSubmit === true;
+        return $this->ajax === true;
     }
 
     /**
@@ -643,24 +648,15 @@ class Form implements Renderable
 
         $this->build();
 
-        //$this->prepareStepFormFields($this->inputs);
-
         if (($response = $this->callSubmitted())) {
             return $response;
         }
-        //
-        //// Validate step form.
-        //if ($this->isStepFormValidationRequest()) {
-        //    return $this->validateStepForm($this->inputs);
-        //}
 
         if ($response = $this->handleUploadFile($this->inputs)) {
             return $response;
         }
 
         if ($response = $this->deleteFileWhenCreating($this->inputs)) {
-            //$this->deleteFileInStepFormStashData($this->inputs);
-
             return $response;
         }
 
@@ -670,8 +666,6 @@ class Form implements Renderable
         }
 
         if (($response = $this->prepare($this->inputs))) {
-            $this->deleteFiles($this->inputs, true);
-
             return $response;
         }
     }
@@ -1581,8 +1575,12 @@ class Form implements Renderable
      *
      * @return array|mixed
      */
-    public function input($key, $value = null)
+    public function input($key = null, $value = null)
     {
+        if (is_null($key)) {
+            return $this->inputs;
+        }
+
         if (is_null($value)) {
             return Arr::get($this->inputs, $key);
         }

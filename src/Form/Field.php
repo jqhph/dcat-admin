@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Traits\HasVariables;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -19,9 +20,10 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Field implements Renderable
 {
-    use Macroable,
-        Form\Concerns\HasFieldValidator,
-        HasBuilderEvents;
+    use Macroable;
+    use Form\Concerns\HasFieldValidator;
+    use HasBuilderEvents;
+    use HasVariables;
 
     const FILE_DELETE_FLAG = '_file_del_';
 
@@ -94,13 +96,6 @@ class Field implements Renderable
      * @var array
      */
     protected $elementClass = [];
-
-    /**
-     * Variables of elements.
-     *
-     * @var array
-     */
-    protected $variables = [];
 
     /**
      * Options for specify elements.
@@ -1114,20 +1109,6 @@ class Field implements Renderable
     }
 
     /**
-     * Add variables to field view.
-     *
-     * @param array $variables
-     *
-     * @return $this
-     */
-    protected function addVariables(array $variables = [])
-    {
-        $this->variables = array_merge($this->variables, $variables);
-
-        return $this;
-    }
-
-    /**
      * @param array|string $labelClass
      * @param bool         $append
      *
@@ -1183,9 +1164,9 @@ class Field implements Renderable
      *
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
-        return array_merge([
+        return [
             'id'          => $this->id,
             'name'        => $this->getElementName(),
             'help'        => $this->help,
@@ -1201,7 +1182,7 @@ class Field implements Renderable
             'formId'      => $this->getFormElementId(),
             'selector'    => $this->getElementClassSelector(),
             'options'     => $this->options,
-        ], $this->variables);
+        ];
     }
 
     protected function isCreating()

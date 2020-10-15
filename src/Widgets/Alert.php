@@ -140,7 +140,7 @@ class Alert extends Widget
     /**
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
         $this->class("alert alert-{$this->style} alert-dismissable");
 

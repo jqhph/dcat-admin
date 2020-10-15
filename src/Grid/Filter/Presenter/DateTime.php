@@ -40,7 +40,7 @@ class DateTime extends Presenter
         return $options;
     }
 
-    public function variables(): array
+    public function defaultVariables(): array
     {
         return [
             'group'   => $this->filter->group,

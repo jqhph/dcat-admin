@@ -138,7 +138,7 @@ class Callout extends Widget
     /**
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
         $this->class("callout callout-{$this->style} alert alert-dismissable");
 

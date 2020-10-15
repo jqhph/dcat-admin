@@ -175,7 +175,7 @@ class Radio extends Widget
     /**
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
         return [
             'style'      => $this->style,

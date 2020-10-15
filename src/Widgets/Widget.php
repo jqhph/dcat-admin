@@ -8,6 +8,7 @@ use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
+use Dcat\Admin\Traits\HasVariables;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -20,6 +21,7 @@ use Illuminate\Support\Arr;
 abstract class Widget implements Renderable
 {
     use HasHtmlAttributes;
+    use HasVariables;
 
     /**
      * @var array
@@ -40,11 +42,6 @@ abstract class Widget implements Renderable
      * @var string
      */
     protected $script = '';
-
-    /**
-     * @var array
-     */
-    protected $variables = [];
 
     /**
      * @var array
@@ -118,31 +115,12 @@ abstract class Widget implements Renderable
      *
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
-        return array_merge([
+        return [
             'attributes' => $this->formatHtmlAttributes(),
             'options'    => $this->options,
-        ], $this->variables);
-    }
-
-    /**
-     * 设置视图变量.
-     *
-     * @param string|array $key
-     * @param mixed        $value
-     *
-     * @return $this
-     */
-    public function with($key, $value = null)
-    {
-        if (is_array($key)) {
-            $this->variables = array_merge($this->variables, $key);
-        } else {
-            $this->variables[$key] = $value;
-        }
-
-        return $this;
+        ];
     }
 
     /**

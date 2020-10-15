@@ -126,7 +126,7 @@ class Form implements Renderable
     /**
      * @var bool
      */
-    protected $useAjaxSubmit = true;
+    protected $ajax = true;
 
     /**
      * @var Fluent
@@ -595,7 +595,7 @@ class Form implements Renderable
             'rows'      => $this->rows(),
             'layout'    => $this->layout(),
             'elementId' => $this->getElementId(),
-            'ajax'      => $this->useAjaxSubmit,
+            'ajax'      => $this->ajax,
             'footer'    => $this->renderFooter(),
         ], $this->variables);
     }
@@ -746,7 +746,7 @@ HTML;
      */
     public function ajax(bool $value = true)
     {
-        $this->useAjaxSubmit = $value;
+        $this->ajax = $value;
 
         return $this;
     }
@@ -756,7 +756,7 @@ HTML;
      */
     public function allowAjaxSubmit()
     {
-        return $this->useAjaxSubmit === true;
+        return $this->ajax === true;
     }
 
     /**

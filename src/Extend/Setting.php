@@ -41,7 +41,7 @@ abstract class Setting extends Form implements LazyRenderable
      */
     public function handle(array $input)
     {
-        $this->extension()->config($this->formatConfig($input));
+        $this->extension()->config($this->formatInput($input));
 
         return $this->response()->success(trans('admin.save_succeeded'));
     }
@@ -53,7 +53,7 @@ abstract class Setting extends Form implements LazyRenderable
      *
      * @return array
      */
-    protected function formatConfig(array $input)
+    protected function formatInput(array $input)
     {
         return $input;
     }

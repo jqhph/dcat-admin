@@ -8,6 +8,7 @@ use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasDefinitions;
+use Dcat\Admin\Traits\HasVariables;
 use Dcat\Admin\Widgets\Dump;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -20,9 +21,10 @@ use Illuminate\Support\Traits\Macroable;
 
 class Field implements Renderable
 {
-    use HasBuilderEvents,
-        HasDefinitions,
-        Macroable {
+    use HasBuilderEvents;
+    use HasVariables;
+    use HasDefinitions;
+    use Macroable {
             __call as macroCall;
         }
 
@@ -659,7 +661,7 @@ HTML;
      *
      * @return array
      */
-    protected function variables()
+    protected function defaultVariables()
     {
         return [
             'content' => $this->value,

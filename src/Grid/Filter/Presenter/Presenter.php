@@ -4,9 +4,12 @@ namespace Dcat\Admin\Grid\Filter\Presenter;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Filter\AbstractFilter;
+use Dcat\Admin\Traits\HasVariables;
 
 abstract class Presenter
 {
+    use HasVariables;
+
     /**
      * @var array
      */
@@ -31,11 +34,6 @@ abstract class Presenter
      * @var int
      */
     protected $width = null;
-
-    /**
-     * @var array
-     */
-    protected $variables = [];
 
     /**
      * Set parent filter.
@@ -111,23 +109,6 @@ abstract class Presenter
         }
 
         return $value;
-    }
-
-    public function addVariables(array $variables)
-    {
-        $this->variables = array_merge($this->variables, $variables);
-
-        return $this;
-    }
-
-    /**
-     * Blade template variables for this presenter.
-     *
-     * @return array
-     */
-    public function variables(): array
-    {
-        return $this->variables;
     }
 
     /**

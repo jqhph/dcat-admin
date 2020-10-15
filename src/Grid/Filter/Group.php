@@ -299,13 +299,13 @@ JS;
     /**
      * {@inheritdoc}
      */
-    public function variables()
+    public function defaultVariables()
     {
         $select = request("{$this->id}_group");
 
         $default = $this->group->get($select) ?: $this->group->first();
 
-        return array_merge(parent::variables(), [
+        return array_merge(parent::defaultVariables(), [
             'group_name' => $this->name,
             'default'    => $default,
         ]);

@@ -185,7 +185,7 @@ class DialogTable extends Widget
 
     public function render()
     {
-        $this->with([
+        $this->addVariables([
             'id'     => $this->id(),
             'title'  => $this->title,
             'width'  => $this->width,

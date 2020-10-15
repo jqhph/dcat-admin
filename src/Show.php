@@ -233,16 +233,11 @@ class Show implements Renderable
      * Set a view to render.
      *
      * @param string $view
-     * @param array  $variables
      *
      * @return $this
      */
-    public function view($view, $variables = [])
+    public function view($view)
     {
-        if (! empty($variables)) {
-            $this->with($variables);
-        }
-
         $this->panel->view($view);
 
         return $this;

@@ -7,6 +7,7 @@ use Dcat\Admin\Contracts\TreeRepository;
 use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Traits\HasVariables;
 use Dcat\Admin\Tree\AbstractTool;
 use Dcat\Admin\Tree\Tools;
 use Illuminate\Contracts\Support\Htmlable;
@@ -19,6 +20,7 @@ use Illuminate\Support\Traits\Macroable;
 class Tree implements Renderable
 {
     use HasBuilderEvents;
+    use HasVariables;
     use Macroable;
 
     /**
@@ -46,10 +48,12 @@ class Tree implements Renderable
      *
      * @var string
      */
-    protected $view = [
-        'tree'   => 'admin::tree.container',
-        'branch' => 'admin::tree.branch',
-    ];
+    protected $view = 'admin::tree.container';
+
+    /**
+     * @var string
+     */
+    protected $branchView = 'admin::tree.branch';
 
     /**
      * @var \Closure
@@ -408,10 +412,26 @@ JS;
      * Set view of tree.
      *
      * @param string $view
+     *
+     * @return $this
      */
     public function view($view)
     {
         $this->view = $view;
+
+        return $this;
+    }
+
+    /**
+     * @param string $view
+     *
+     * @return $this
+     */
+    public function branchView($view)
+    {
+        $this->branchView = $view;
+
+        return $this;
     }
 
     /**
@@ -429,7 +449,7 @@ JS;
      *
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
         return [
             'id'             => $this->elementId,
@@ -551,7 +571,7 @@ JS;
             view()->share([
                 'currentUrl'     => $this->url,
                 'keyName'        => $this->repository->getKeyName(),
-                'branchView'     => $this->view['branch'],
+                'branchView'     => $this->branchView,
                 'branchCallback' => $this->branchCallback,
             ]);
 
@@ -566,7 +586,7 @@ JS;
      */
     protected function doWrap()
     {
-        $view = view($this->view['tree'], $this->variables());
+        $view = view($this->view, $this->variables());
 
         if (! $wrapper = $this->wrapper) {
             return "<div class='card'>{$view->render()}</div>";

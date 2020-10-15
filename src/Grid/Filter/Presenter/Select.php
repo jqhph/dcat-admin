@@ -248,15 +248,15 @@ class Select extends Presenter
     /**
      * @return array
      */
-    public function variables(): array
+    public function defaultVariables(): array
     {
-        return array_merge([
+        return [
             'options'   => $this->buildOptions(),
             'class'     => $this->getElementClass(),
             'selector'  => $this->getElementClassSelector(),
             'selectAll' => $this->selectAll,
             'configs'   => $this->config,
-        ], $this->variables);
+        ];
     }
 
     public function getElementClassSelector()

@@ -113,7 +113,7 @@ class Card extends Widget
     /**
      * {@inheritdoc}
      */
-    public function variables()
+    public function defaultVariables()
     {
         return [
             'title'      => $this->title,

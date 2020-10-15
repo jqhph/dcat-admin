@@ -7,8 +7,8 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Contracts\UploadField;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
-use Dcat\Admin\Form\Step\Builder as StepBuilder;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\HasVariables;
 use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -21,6 +21,8 @@ use Illuminate\Support\Str;
  */
 class Builder
 {
+    use HasVariables;
+
     /**
      *  上个页面URL保存的key.
      */
@@ -54,7 +56,7 @@ class Builder
     protected $action;
 
     /**
-     * @var Collection
+     * @var Collection|Field[]
      */
     protected $fields;
 
@@ -733,6 +735,20 @@ class Builder
         return $this->footer->render();
     }
 
+    protected function defaultVariables()
+    {
+        return [
+            'form'       => $this,
+            'tabObj'     => $this->form->getTab(),
+            'width'      => $this->width,
+            'elementId'  => $this->getElementId(),
+            'showHeader' => $this->showHeader,
+            'fields'     => $this->fields,
+            'rows'       => $this->rows(),
+            'layout'     => $this->layout(),
+        ];
+    }
+
     /**
      * Render form.
      *
@@ -755,24 +771,13 @@ class Builder
 
         $open = $this->open(['class' => 'form-horizontal']);
 
-        $data = [
-            'form'       => $this,
-            'tabObj'     => $tabObj,
-            'width'      => $this->width,
-            'elementId'  => $this->getElementId(),
-            'showHeader' => $this->showHeader,
-            'fields'     => $this->fields,
-            'rows'       => $this->rows(),
-            'layout'     => $this->layout(),
-        ];
-
         if ($this->layout->hasColumns()) {
-            $content = $this->doWrap(view($this->view, $data));
+            $content = $this->doWrap(view($this->view, $this->variables()));
         } else {
             if (! $this->layout->hasBlocks()) {
                 $this->layout->prepend(
                     12,
-                    $this->doWrap(view($this->view, $data))
+                    $this->doWrap(view($this->view, $this->variables()))
                 );
             }
 
@@ -803,10 +808,12 @@ EOF;
     protected function doWrap(Renderable $view)
     {
         if ($wrapper = $this->wrapper) {
-            return $wrapper($view);
+            return Admin::resolveHtml($wrapper($view))['html'];
         }
 
-        return "<div class='card'>{$view->render()}</div>";
+        $html = Admin::resolveHtml($view->render())['html'];
+
+        return "<div class='card'>{$html}</div>";
     }
 
     /**

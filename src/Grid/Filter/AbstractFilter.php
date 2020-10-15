@@ -13,6 +13,7 @@ use Dcat\Admin\Grid\Filter\Presenter\Radio;
 use Dcat\Admin\Grid\Filter\Presenter\Select;
 use Dcat\Admin\Grid\Filter\Presenter\Text;
 use Dcat\Admin\Grid\LazyRenderable;
+use Dcat\Admin\Traits\HasVariables;
 use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -34,6 +35,8 @@ use Illuminate\Support\Collection;
  */
 abstract class AbstractFilter
 {
+    use HasVariables;
+
     /**
      * Element id.
      *
@@ -106,11 +109,6 @@ abstract class AbstractFilter
      * @var bool
      */
     protected $ignore = false;
-
-    /**
-     * @var array
-     */
-    protected $variables = [];
 
     /**
      * AbstractFilter constructor.
@@ -585,23 +583,11 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array $variables
-     *
-     * @return $this
-     */
-    public function addVariables(array $variables)
-    {
-        $this->variables = array_merge($this->variables, $variables);
-
-        return $this;
-    }
-
-    /**
      * Variables for filter view.
      *
      * @return array
      */
-    protected function variables()
+    protected function defaultVariables()
     {
         return array_merge([
             'id'        => $this->id,
@@ -610,7 +596,7 @@ abstract class AbstractFilter
             'value'     => $this->value(),
             'width'     => $this->width,
             'style'     => $this->style,
-        ], $this->presenter()->variables(), $this->variables);
+        ], $this->presenter()->variables());
     }
 
     public function value()

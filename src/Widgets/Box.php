@@ -141,7 +141,7 @@ class Box extends Widget
      *
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
         return [
             'title'      => $this->title,
