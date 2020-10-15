@@ -7,6 +7,7 @@ use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Support\WebUploader;
+use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -92,7 +93,8 @@ trait HasFiles
 
                 return $column === $field->column() && $field instanceof UploadFieldInterface;
             })->each(function (UploadFieldInterface $file) use ($input) {
-                $file->deleteFile($input[Field::FILE_DELETE_FLAG]);
+                /* @var Field $file */
+                $this->deleteFile($file, $input[Field::FILE_DELETE_FLAG]);
             });
 
             return $this
@@ -100,6 +102,34 @@ trait HasFiles
                 ->status(true)
                 ->send();
         }
+    }
+
+    /**
+     * 删除文件.
+     *
+     * @param UploadFieldInterface|Field $field
+     * @param array                      $input
+     */
+    protected function deleteFile(UploadFieldInterface $field, $input = null)
+    {
+        if ($input) {
+            if (
+                is_string($input)
+                || (is_array($input) && ! Arr::isAssoc($input))
+            ) {
+                $input = [$field->column() => $input];
+            }
+
+            $field->setOriginal($input);
+        }
+
+        if ($this->callFileDeleting($field) === false) {
+            return;
+        }
+
+        $field->destroy();
+
+        $this->callFileDeleted($field);
     }
 
     /**
@@ -116,10 +146,10 @@ trait HasFiles
         }
 
         $column = $data['_column'] ?? null;
-        $file = $data['key'] ?? null;
+        $filePath = $data['key'] ?? null;
         $relation = $data['_relation'] ?? null;
 
-        if (! $column && ! $file) {
+        if (! $column && ! $filePath) {
             return;
         }
 
@@ -130,7 +160,7 @@ trait HasFiles
         }
 
         if ($field && $field instanceof UploadFieldInterface) {
-            $field->deleteFile($file);
+            $this->deleteFile($field, $filePath);
 
             return $this
                 ->response()
@@ -178,10 +208,8 @@ trait HasFiles
             ->filter(function ($field) {
                 return $field instanceof UploadFieldInterface;
             })
-            ->each(function (UploadFieldInterface $file) use ($input) {
-                $file->setOriginal($input);
-
-                $file->destroy();
+            ->each(function (UploadFieldInterface $field) use ($input) {
+                $this->deleteFile($field, $input);
             });
     }
 

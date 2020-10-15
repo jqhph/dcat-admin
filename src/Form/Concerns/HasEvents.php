@@ -24,7 +24,7 @@ trait HasEvents
      */
     public function creating(Closure $callback)
     {
-        Event::listen(Events\Creating::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Creating::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -38,7 +38,7 @@ trait HasEvents
      */
     public function editing(Closure $callback)
     {
-        Event::listen(Events\Editing::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Editing::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -52,7 +52,7 @@ trait HasEvents
      */
     public function submitted(Closure $callback)
     {
-        Event::listen(Events\Submitted::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Submitted::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -66,7 +66,7 @@ trait HasEvents
      */
     public function saving(Closure $callback)
     {
-        Event::listen(Events\Saving::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Saving::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -80,7 +80,7 @@ trait HasEvents
      */
     public function saved(Closure $callback)
     {
-        Event::listen(Events\Saved::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Saved::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -94,7 +94,7 @@ trait HasEvents
      */
     public function deleting(Closure $callback)
     {
-        Event::listen(Events\Deleting::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Deleting::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -108,7 +108,7 @@ trait HasEvents
      */
     public function deleted(Closure $callback)
     {
-        Event::listen(Events\Deleted::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Deleted::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -122,7 +122,7 @@ trait HasEvents
      */
     public function uploading(Closure $callback)
     {
-        Event::listen(Events\Uploading::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Uploading::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -136,7 +136,7 @@ trait HasEvents
      */
     public function uploaded(Closure $callback)
     {
-        Event::listen(Events\Uploaded::class, $this->makeListener($callback, $this));
+        Event::listen(Events\Uploaded::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -150,7 +150,7 @@ trait HasEvents
      */
     public function fileDeleting(Closure $callback)
     {
-        Event::listen(Events\FileDeleting::class, $this->makeListener($callback, $this));
+        Event::listen(Events\FileDeleting::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -165,7 +165,7 @@ trait HasEvents
      */
     public function fileDeleted(Closure $callback)
     {
-        Event::listen(Events\FileDeleted::class, $this->makeListener($callback, $this));
+        Event::listen(Events\FileDeleted::class, $this->makeListener($callback));
 
         return $this;
     }
@@ -175,10 +175,10 @@ trait HasEvents
      *
      * @return \Closure
      */
-    protected function makeListener(Closure $callback, self $form)
+    protected function makeListener(Closure $callback)
     {
-        return function (Events\Event $event) use ($callback, $form) {
-            if ($event->form !== $form) {
+        return function (Events\Event $event) use ($callback) {
+            if ($event->form !== $this) {
                 return;
             }
 
