@@ -92,7 +92,6 @@ class Form implements Renderable
     use HasFormResponse;
     use Concerns\HasEvents;
     use Concerns\HasFiles;
-    use Concerns\HasSteps;
     use Concerns\HandleCascadeFields;
     use Concerns\HasRows;
     use Concerns\HasTabs;
@@ -334,13 +333,7 @@ class Form implements Renderable
      */
     public function fields()
     {
-        $fields = $this->builder->fields();
-
-        if ($steps = $this->builder->stepBuilder()) {
-            $fields = $fields->merge($steps->fields());
-        }
-
-        return $fields;
+        return $this->builder->fields();
     }
 
     /**
@@ -610,10 +603,6 @@ class Form implements Renderable
                 return $this->sendResponse($response);
             }
 
-            if ($response = $this->responseMultipleStepsDonePage()) {
-                return $this->sendResponse($response);
-            }
-
             if (! $id) {
                 return $this->sendResponse(
                     $this->response()
@@ -654,29 +643,23 @@ class Form implements Renderable
 
         $this->build();
 
-        $this->prepareStepFormFields($this->inputs);
+        //$this->prepareStepFormFields($this->inputs);
 
         if (($response = $this->callSubmitted())) {
             return $response;
         }
-
-        // Validate step form.
-        if ($this->isStepFormValidationRequest()) {
-            return $this->validateStepForm($this->inputs);
-        }
+        //
+        //// Validate step form.
+        //if ($this->isStepFormValidationRequest()) {
+        //    return $this->validateStepForm($this->inputs);
+        //}
 
         if ($response = $this->handleUploadFile($this->inputs)) {
             return $response;
         }
 
-        if ($response = $this->handleFileDeleteBeforeCreate($this->inputs)) {
-            $this->deleteFileInStepFormStashData($this->inputs);
-
-            return $response;
-        }
-
-        if ($response = $this->handleFileDeleteWhenCreating($this->inputs)) {
-            $this->deleteFileInStepFormStashData($this->inputs);
+        if ($response = $this->deleteFileWhenCreating($this->inputs)) {
+            //$this->deleteFileInStepFormStashData($this->inputs);
 
             return $response;
         }
@@ -687,7 +670,7 @@ class Form implements Renderable
         }
 
         if (($response = $this->prepare($this->inputs))) {
-            $this->deleteFilesWhenCreating($this->inputs);
+            $this->deleteFiles($this->inputs, true);
 
             return $response;
         }
@@ -1248,7 +1231,7 @@ class Form implements Renderable
         $message = $this->mergeValidationMessages($failedValidators);
 
         if ($message->any() && $this->builder->isCreating()) {
-            $this->deleteFilesWhenCreating($input);
+            $this->deleteFiles($input, true);
         }
 
         return $message->any() ? $message : false;

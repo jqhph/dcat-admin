@@ -72,9 +72,6 @@ class ExtensionMakeCommand extends Command
         'resources/views',
         'resources/lang',
         'src/Models',
-        'src/Form',
-        'src/Grid',
-        'src/Show',
         'src/Http/Controllers',
         'src/Http/Middleware',
     ];
@@ -165,9 +162,6 @@ TREE;
         ├── {$this->className}ServiceProvider.php
         ├── Setting.php
         ├── Models
-        ├── Grid
-        ├── Form
-        ├── Show
         └── Http
             ├── routes.php
             ├── Middleware

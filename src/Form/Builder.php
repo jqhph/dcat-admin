@@ -135,11 +135,6 @@ class Builder
     protected $showFooter = true;
 
     /**
-     * @var StepBuilder
-     */
-    protected $stepBuilder;
-
-    /**
      * @var array
      */
     public $confirm = [];
@@ -193,18 +188,6 @@ class Builder
     }
 
     /**
-     * @param int $width
-     *
-     * @return $this
-     */
-    public function setDefaultBlockWidth(int $width)
-    {
-        $this->defaultBlockWidth = $width;
-
-        return $this;
-    }
-
-    /**
      * Get form tools instance.
      *
      * @return Tools
@@ -222,38 +205,6 @@ class Builder
     public function footer()
     {
         return $this->footer;
-    }
-
-    /**
-     * @param \Closure|StepForm[]|null $builder
-     *
-     * @return StepBuilder
-     */
-    public function multipleSteps($builder = null)
-    {
-        if (! $this->stepBuilder) {
-            $this->view = 'admin::form.steps';
-
-            $this->stepBuilder = new StepBuilder($this->form);
-        }
-
-        if ($builder) {
-            if ($builder instanceof \Closure) {
-                $builder($this->stepBuilder);
-            } elseif (is_array($builder)) {
-                $this->stepBuilder->add($builder);
-            }
-        }
-
-        return $this->stepBuilder;
-    }
-
-    /**
-     * @return StepBuilder
-     */
-    public function stepBuilder()
-    {
-        return $this->stepBuilder;
     }
 
     /**
@@ -480,55 +431,13 @@ class Builder
      */
     public function field($name)
     {
-        $field = $this->fields->first(function (Field $field) use ($name) {
+        return $this->fields->first(function (Field $field) use ($name) {
             if (is_array($field->column())) {
                 return in_array($name, $field->column(), true) ? $field : null;
             }
 
             return $field === $name || $field->column() === $name;
         });
-
-        if (! $field) {
-            $field = $this->stepField($name);
-        }
-
-        return $field;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return Field|null
-     */
-    public function stepField($name)
-    {
-        if (! $builder = $this->stepBuilder()) {
-            return;
-        }
-
-        foreach ($builder->all() as $step) {
-            if ($field = $step->field($name)) {
-                return $field;
-            }
-        }
-    }
-
-    /**
-     * @return Field[]|Collection
-     */
-    public function stepFields()
-    {
-        $fields = new Collection();
-
-        if (! $builder = $this->stepBuilder()) {
-            return $fields;
-        }
-
-        foreach ($builder->all() as $step) {
-            $fields = $fields->merge($step->fields());
-        }
-
-        return $fields;
     }
 
     /**
@@ -840,7 +749,7 @@ class Builder
             $tabObj->addScript();
         }
 
-        if ($this->form->allowAjaxSubmit() && empty($this->stepBuilder)) {
+        if ($this->form->allowAjaxSubmit()) {
             $this->addSubmitScript();
         }
 
@@ -852,7 +761,6 @@ class Builder
             'width'      => $this->width,
             'elementId'  => $this->getElementId(),
             'showHeader' => $this->showHeader,
-            'steps'      => $this->stepBuilder,
             'fields'     => $this->fields,
             'rows'       => $this->rows(),
             'layout'     => $this->layout(),
