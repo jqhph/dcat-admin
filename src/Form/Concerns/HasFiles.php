@@ -70,13 +70,46 @@ trait HasFiles
     }
 
     /**
-     * 新增之前删除文件操作.
+     * 新增页面删除文件.
+     *
+     * @param array $input
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function deleteFileWhenCreating(array $input)
+    {
+        if ($response = $this->deleteFileIfIsFileDeleteRequest($input)) {
+            return $response;
+        }
+
+        $input = $this->handleFileDelete($input);
+
+        $column = $input['_column'] ?? null;
+
+        if (isset($input[Field::FILE_DELETE_FLAG]) && $column) {
+            $this->builder->fields()->filter(function ($field) use ($column) {
+                /* @var Field $field */
+
+                return $column === $field->column() && $field instanceof UploadFieldInterface;
+            })->each(function (UploadFieldInterface $file) use ($input) {
+                $file->deleteFile($input[Field::FILE_DELETE_FLAG]);
+            });
+
+            return $this
+                ->response()
+                ->status(true)
+                ->send();
+        }
+    }
+
+    /**
+     * 如果是删除文件请求，则直接删除文件.
      *
      * @param array $data
      *
      * @return \Illuminate\Http\JsonResponse|void
      */
-    protected function handleFileDeleteBeforeCreate(array $data)
+    protected function deleteFileIfIsFileDeleteRequest(array $data)
     {
         if (! array_key_exists(Field::FILE_DELETE_FLAG, $data)) {
             return;
@@ -99,8 +132,13 @@ trait HasFiles
         if ($field && $field instanceof UploadFieldInterface) {
             $field->deleteFile($file);
 
-            return response()->json(['status' => true]);
+            return $this
+                ->response()
+                ->status(true)
+                ->send();
         }
+
+        return;
     }
 
     /**
@@ -123,12 +161,18 @@ trait HasFiles
     }
 
     /**
-     * @param array $input
+     * 根据传入数据删除文件.
      *
-     * @return void
+     * @param array $input
+     * @param bool  $forceDelete
      */
-    public function deleteFilesWhenCreating(array $input)
+    public function deleteFiles($input, $forceDelete = false)
     {
+        // If it's a soft delete, the files in the data will not be deleted.
+        if (! $forceDelete && $this->isSoftDeletes) {
+            return;
+        }
+
         $this->builder
             ->fields()
             ->filter(function ($field) {
@@ -142,31 +186,6 @@ trait HasFiles
     }
 
     /**
-     * 根据传入数据删除文件.
-     *
-     * @param array $data
-     * @param bool  $forceDelete
-     */
-    public function deleteFiles($data, $forceDelete = false)
-    {
-        // If it's a soft delete, the files in the data will not be deleted.
-        if (! $forceDelete && $this->isSoftDeletes) {
-            return;
-        }
-
-        $this->builder->fields()->filter(function ($field) {
-            return $field instanceof Field\BootstrapFile
-                || $field instanceof UploadFieldInterface;
-        })->each(function (UploadFieldInterface $file) use ($data) {
-            $file->setOriginal($data);
-
-            $file->destroy();
-        });
-    }
-
-    /**
-     * 编辑页面删除上传文件操作.
-     *
      * @param array $input
      *
      * @return array
@@ -201,29 +220,5 @@ trait HasFiles
         $this->request->replace($input);
 
         return $input;
-    }
-
-    /**
-     * @param array $input
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function handleFileDeleteWhenCreating(array $input)
-    {
-        $input = $this->handleFileDelete($input);
-
-        $column = $input['_column'] ?? null;
-
-        if (isset($input[Field::FILE_DELETE_FLAG]) && $column) {
-            $this->builder->fields()->filter(function ($field) use ($column) {
-                /* @var Field $field */
-
-                return $column === $field->column() && $field instanceof UploadFieldInterface;
-            })->each(function (UploadFieldInterface $file) use ($input) {
-                $file->deleteFile($input[Field::FILE_DELETE_FLAG]);
-            });
-
-            return \response()->json(['status' => true]);
-        }
     }
 }
