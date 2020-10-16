@@ -75,6 +75,11 @@ select.form-control:not([multiple=multiple]) {
   margin-bottom: 4px;
 }
 
+.form-control:disabled, .form-control[readonly] {
+  background-color: #F7F7F9;
+  cursor: not-allowed;
+}
+
 .has-error .checkbox,
 .has-error .checkbox-inline,
 .has-error .control-label, .has-error .help-block,
