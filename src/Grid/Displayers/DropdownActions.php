@@ -24,7 +24,7 @@ class DropdownActions extends Actions
     /**
      * @var array
      */
-    protected $defaultClass = [
+    protected $defaultActions = [
         'view'      => Show::class,
         'edit'      => Edit::class,
         'quickEdit' => QuickEdit::class,
@@ -74,7 +74,7 @@ class DropdownActions extends Actions
                 continue;
             }
 
-            $action = new $this->defaultClass[$action]();
+            $action = new $this->defaultActions[$action]();
 
             $this->prepareAction($action);
 

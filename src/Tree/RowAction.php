@@ -6,5 +6,60 @@ use Dcat\Admin\Actions\Action;
 
 class RowAction extends Action
 {
+    /**
+     * @var \Dcat\Admin\Tree\Actions;
+     */
+    protected $actions;
 
+    /**
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $row;
+
+    public $selectorPrefix = '.tree-row-action-';
+
+    /**
+     * 获取主键值.
+     *
+     * @return array|mixed|string
+     */
+    public function getKey()
+    {
+        return $this->row->{$this->actions->getParent()->getKeyName()};
+    }
+
+    /**
+     * 获取行数据.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getRow()
+    {
+        return $this->row;
+    }
+
+    /**
+     * 获取资源路径.
+     *
+     * @return string
+     */
+    public function resource()
+    {
+        return $this->actions->getParent()->resource();
+    }
+
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    public function setParent(Actions $actions)
+    {
+        $this->actions = $actions;
+    }
+
+    public function setRow($row)
+    {
+        $this->row = $row;
+    }
 }

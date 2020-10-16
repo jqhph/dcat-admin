@@ -344,12 +344,14 @@ trait ModelTree
                 throw new AdminException(trans('admin.parent_select_error'));
             }
 
-            if (Request::has('_order')) {
-                $order = Request::input('_order');
+            if (Request::has(Tree::SAVE_ORDER_NAME)) {
+                $order = Request::input(Tree::SAVE_ORDER_NAME);
 
-                Request::offsetUnset('_order');
+                Request::offsetUnset(Tree::SAVE_ORDER_NAME);
 
                 Tree::make(new static())->saveOrder($order);
+
+                $branch->{$branch->getKeyName()} = true;
 
                 return false;
             }

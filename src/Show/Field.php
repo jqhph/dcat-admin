@@ -7,7 +7,6 @@ use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Dcat\Admin\Traits\HasDefinitions;
 use Dcat\Admin\Traits\HasVariables;
 use Dcat\Admin\Widgets\Dump;
 use Illuminate\Contracts\Support\Arrayable;
@@ -23,7 +22,6 @@ class Field implements Renderable
 {
     use HasBuilderEvents;
     use HasVariables;
-    use HasDefinitions;
     use Macroable {
             __call as macroCall;
         }
@@ -679,10 +677,6 @@ HTML;
      */
     public function render()
     {
-        if (static::hasDefinition($this->name)) {
-            $this->useDefinedColumn();
-        }
-
         if ($this->showAs->isNotEmpty()) {
             $this->showAs->each(function ($callable) {
                 [$callable, $params] = $callable;
@@ -702,22 +696,6 @@ HTML;
         }
 
         return view($this->view, $this->variables());
-    }
-
-    /**
-     * Use a defined column.
-     *
-     * @throws \Exception
-     */
-    protected function useDefinedColumn()
-    {
-        $class = static::$definitions[$this->name];
-
-        if (! $class instanceof \Closure) {
-            throw new RuntimeException("Invalid column definition [$class]");
-        }
-
-        $this->as($class);
     }
 
     /**

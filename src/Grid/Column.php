@@ -3,12 +3,10 @@
 namespace Dcat\Admin\Grid;
 
 use Closure;
-use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Dcat\Admin\Traits\HasDefinitions;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -57,7 +55,6 @@ use Illuminate\Support\Traits\Macroable;
 class Column
 {
     use HasBuilderEvents;
-    use HasDefinitions;
     use Grid\Column\HasHeader;
     use Grid\Column\HasDisplayers;
     use Macroable {
@@ -537,10 +534,6 @@ class Column
      */
     public function fill(array &$data)
     {
-        if (static::hasDefinition($this->name)) {
-            $this->useDefinedColumn();
-        }
-
         $i = 0;
         foreach ($data as $key => &$row) {
             $i++;
@@ -579,28 +572,6 @@ class Column
         foreach ($this->conditions as $condition) {
             $condition->process();
         }
-    }
-
-    /**
-     * Use a defined column.
-     *
-     * @throws \Exception
-     */
-    protected function useDefinedColumn()
-    {
-        $class = static::$definitions[$this->name];
-
-        if ($class instanceof Closure) {
-            $this->display($class);
-
-            return;
-        }
-
-        if (! class_exists($class) || ! is_subclass_of($class, AbstractDisplayer::class)) {
-            throw new RuntimeException("Invalid column definition [$class]");
-        }
-
-        $this->displayUsing($class);
     }
 
     /**

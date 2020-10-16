@@ -22,9 +22,7 @@ class UserController extends AdminController
     {
         return Grid::make(Administrator::with(['roles']), function (Grid $grid) {
             $grid->column('id', 'ID')->sortable();
-            $grid->column('username')->prepend(function () {
-                return "<img src='{$this->getAvatar()}' data-action='preview-img' width='40' class='avatar img-circle' /> &nbsp; ";
-            });
+            $grid->column('username');
             $grid->column('name');
 
             if (config('admin.permission.enable')) {
@@ -58,6 +56,7 @@ class UserController extends AdminController
             $grid->showQuickEditButton();
             $grid->disableFilterButton();
             $grid->enableDialogCreate();
+            $grid->showColumnSelector();
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if ($actions->getKey() == AdministratorModel::DEFAULT_ID) {

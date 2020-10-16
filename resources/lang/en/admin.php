@@ -101,6 +101,7 @@ return [
     'update_succeeded'      => 'Update succeeded !',
     'update_failed'         => 'Update failed !',
     'save_succeeded'        => 'Save succeeded !',
+    'save_failed'           => 'Save failed !',
     'refresh_succeeded'     => 'Refresh succeeded !',
     'login_successful'      => 'Login successful',
     'choose'                => 'Choose',
