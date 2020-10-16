@@ -11,11 +11,7 @@ class KeyValue extends Field
     const DEFAULT_FLAG_NAME = '_def_';
 
     /**
-     * Fill data to the field.
-     *
-     * @param array $data
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function formatFieldData($data)
     {

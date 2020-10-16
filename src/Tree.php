@@ -487,19 +487,23 @@ class Tree implements Renderable
     }
 
     /**
+     * @return string
+     */
+    public function resource()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set resource path.
+     *
      * @param string $path
      *
-     * @return $this|string
+     * @return $this
      */
-    public function resource(string $path = null)
+    public function setResource($path)
     {
-        if ($path === null) {
-            return $this->url;
-        }
-
-        if (! empty($path)) {
-            $this->url = admin_url($path);
-        }
+        $this->url = admin_url($path);
 
         return $this;
     }

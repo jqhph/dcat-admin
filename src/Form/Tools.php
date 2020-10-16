@@ -134,7 +134,7 @@ class Tools implements Renderable
      */
     protected function getListPath()
     {
-        return $this->form->getResource();
+        return $this->form->resource();
     }
 
     /**

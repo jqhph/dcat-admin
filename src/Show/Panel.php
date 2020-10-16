@@ -80,7 +80,7 @@ class Panel implements Renderable
      *
      * @return Show
      */
-    public function getParent()
+    public function parent()
     {
         return $this->parent;
     }

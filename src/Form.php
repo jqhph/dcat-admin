@@ -900,7 +900,7 @@ class Form implements Renderable
         }
 
         $resourcesPath = $this->builder->isCreating() ?
-            $this->getResource(0) : $this->getResource(-1);
+            $this->resource(0) : $this->resource(-1);
 
         if ($this->request->get('after-save') == 1) {
             // continue editing
@@ -1520,7 +1520,7 @@ class Form implements Renderable
      *
      * @return string
      */
-    public function getResource($slice = -2)
+    public function resource($slice = -2)
     {
         $path = $this->resource ?: $this->request->getUri();
 
@@ -1540,7 +1540,7 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function resource(string $resource)
+    public function setResource(string $resource)
     {
         if ($resource) {
             $this->resource = admin_url($resource);

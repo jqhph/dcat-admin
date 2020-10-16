@@ -25,7 +25,7 @@ class RowAction extends Action
      */
     public function getKey()
     {
-        return $this->row->{$this->actions->getParent()->getKeyName()};
+        return $this->row->{$this->actions->parent()->getKeyName()};
     }
 
     /**
@@ -45,7 +45,7 @@ class RowAction extends Action
      */
     public function resource()
     {
-        return $this->actions->getParent()->resource();
+        return $this->actions->parent()->resource();
     }
 
     public function getActions()

@@ -35,7 +35,7 @@ class MenuController extends AdminController
                     $roleModel = config('admin.database.roles_model');
 
                     $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
-                    $form->text('title', trans('admin.title'))->required()->disable();
+                    $form->text('title', trans('admin.title'))->required();
                     $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
 

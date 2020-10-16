@@ -575,27 +575,9 @@ class Show implements Renderable
     }
 
     /**
-     * Set resource path.
-     *
-     * @param string $resource
-     *
-     * @return $this
-     */
-    public function resource(string $resource)
-    {
-        if ($resource) {
-            $this->resource = admin_url($resource);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get resource path.
-     *
      * @return string
      */
-    public function getResource()
+    public function resource()
     {
         if (empty($this->resource)) {
             $path = request()->path();
@@ -607,6 +589,22 @@ class Show implements Renderable
         }
 
         return $this->resource;
+    }
+
+    /**
+     * Set resource path.
+     *
+     * @param string $path
+     *
+     * @return $this
+     */
+    public function setResource($path)
+    {
+        if ($path) {
+            $this->resource = admin_url($path);
+        }
+
+        return $this;
     }
 
     /**

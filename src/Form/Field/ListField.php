@@ -54,11 +54,7 @@ class ListField extends Field
     }
 
     /**
-     * Fill data to the field.
-     *
-     * @param array $data
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function formatFieldData($data)
     {
