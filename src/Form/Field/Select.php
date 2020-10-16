@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
@@ -101,7 +100,7 @@ class Select extends Field
             $field = $this->formatName($field);
         }
 
-        $class = $this->normalizeElementClass($field);;
+        $class = $this->normalizeElementClass($field);
 
         $url = admin_url($sourceUrl);
 

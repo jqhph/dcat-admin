@@ -4,10 +4,9 @@ namespace Dcat\Admin\Extend;
 
 use Dcat\Admin\Exception\AdminException;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Lang;
 
 /**
- * Class UpdateManager
+ * Class UpdateManager.
  *
  * @see https://github.com/octobercms/october/blob/develop/modules/system/classes/UpdateManager.php
  */
@@ -35,7 +34,7 @@ class UpdateManager
     {
         return $this->update($extension);
     }
-    
+
     public function uninstall($extension)
     {
         return $this->rollback($extension);
@@ -47,7 +46,7 @@ class UpdateManager
             ! ($extension = $this->manager->get($name))
             && $this->versionManager->purge($name)
         ) {
-            $this->note('<info>Purged from database:</info> ' . $name);
+            $this->note('<info>Purged from database:</info> '.$name);
 
             return $this;
         }
@@ -57,7 +56,7 @@ class UpdateManager
         }
 
         if ($this->versionManager->remove($extension, $stopOnVersion, true)) {
-            $this->note('<info>Rolled back:</info> ' . $name);
+            $this->note('<info>Rolled back:</info> '.$name);
 
             if ($currentVersion = $this->versionManager->getCurrentVersion($extension)) {
                 $this->note('<info>Current Version:</info> '.$currentVersion.' ('.$this->versionManager->getCurrentVersionNote($extension).')');

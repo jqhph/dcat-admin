@@ -7,9 +7,8 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 
 /**
- * Class BlockForm
+ * Class BlockForm.
  *
- * @package Dcat\Admin\Form
  *
  * @mixin Form
  */
@@ -157,5 +156,4 @@ HTML;
     public function fillFields(array $data)
     {
     }
-
 }

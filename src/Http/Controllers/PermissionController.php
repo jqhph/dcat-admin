@@ -4,8 +4,8 @@ namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
-use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Http\Repositories\Permission;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Tree;
 use Illuminate\Support\Str;
 

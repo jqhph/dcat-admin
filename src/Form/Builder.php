@@ -793,7 +793,7 @@ EOF;
     {
         $html = '';
 
-        foreach($this->hiddenFields() as $field) {
+        foreach ($this->hiddenFields() as $field) {
             $html .= $field->render();
         }
 

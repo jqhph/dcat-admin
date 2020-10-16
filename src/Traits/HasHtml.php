@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Traits;
 
 use Dcat\Admin\Support\Helper;
-use DOMElement;
 use DOMDocument;
+use DOMElement;
 
 trait HasHtml
 {

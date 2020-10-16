@@ -42,7 +42,7 @@ class Setting extends Fluent
     }
 
     /**
-     * 保存配置到数据库
+     * 保存配置到数据库.
      *
      * @param array $data
      *

@@ -6,7 +6,7 @@ use Dcat\EasyExcel\Support\Arr;
 use Illuminate\Support\Fluent;
 
 /**
- * Class Context
+ * Class Context.
  *
  * @property string $favicon
  * @property string $metaTitle
