@@ -214,6 +214,7 @@ return [
     'install_from_local'        => 'Install From Local',
     'install_succeeded'         => 'Install succeeded !',
     'invalid_extension_package' => 'Invalid extension package !',
+    'copied'                    => 'Copied',
     'validation'               => [
         'match'     => 'The :attribute and :other must match.',
         'minlength' => 'The :attribute must be at least :min characters.',

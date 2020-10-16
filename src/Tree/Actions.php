@@ -76,7 +76,7 @@ class Actions implements Renderable
 
     public function getKey()
     {
-        return $this->row->{$this->getParent()->getKeyName()};
+        return $this->row->{$this->parent()->getKeyName()};
     }
 
     public function disableQuickEdit(bool $value = true)
@@ -135,7 +135,7 @@ class Actions implements Renderable
         }
     }
 
-    public function getParent()
+    public function parent()
     {
         return $this->parent;
     }

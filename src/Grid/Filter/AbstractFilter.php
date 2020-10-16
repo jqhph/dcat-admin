@@ -213,7 +213,7 @@ abstract class AbstractFilter
     /**
      * @return Filter
      */
-    public function getParent()
+    public function parent()
     {
         return $this->parent;
     }

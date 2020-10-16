@@ -215,6 +215,7 @@ return [
     'install_from_local'        => '本地安装',
     'install_succeeded'         => '安装成功',
     'invalid_extension_package' => '安装包异常',
+    'copied'                    => '已复制',
     'validation'               => [
         'match'     => '与 :attribute 不匹配。',
         'minlength' => ':attribute 字符长度不能少于 :min。',
