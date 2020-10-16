@@ -21,6 +21,7 @@ return [
         'roles'                 => '角色',
         'path'                  => '路徑',
         'input'                 => '輸入',
+        'type'                  => '类型',
     ],
     'labels' => [
         'list'     => '列表',

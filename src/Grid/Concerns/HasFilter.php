@@ -25,7 +25,7 @@ trait HasFilter
      *
      * @return void
      */
-    protected function setupFilter()
+    protected function setUpFilter()
     {
         $this->filter = new Grid\Filter($this->model());
     }
@@ -41,7 +41,9 @@ trait HasFilter
     {
         $this->callBuilder();
         $this->handleExportRequest();
-        $this->callFetchingCallbacks();
+
+        $this->fireOnce(new Grid\Events\Fetching($this));
+
         $this->applyQuickSearch();
         $this->applyColumnFilter();
         $this->applySelectorQuery();

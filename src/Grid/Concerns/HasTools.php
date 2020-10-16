@@ -21,7 +21,7 @@ trait HasTools
     /**
      * Setup grid tools.
      */
-    public function setupTools()
+    public function setUpTools()
     {
         $this->tools = new Tools($this);
     }

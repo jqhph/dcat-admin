@@ -6,6 +6,7 @@ use Closure;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Concerns;
+use Dcat\Admin\Grid\Events\Rows;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Row;
 use Dcat\Admin\Grid\Tools;
@@ -21,6 +22,7 @@ class Grid
 {
     use HasBuilderEvents;
     use HasVariables;
+    use Concerns\HasEvents;
     use Concerns\HasNames;
     use Concerns\HasFilter;
     use Concerns\HasTools;
@@ -69,13 +71,6 @@ class Grid
      * @var \Illuminate\Support\Collection
      */
     protected $rows;
-
-    /**
-     * Rows callable fucntion.
-     *
-     * @var \Closure[]
-     */
-    protected $rowsCallback = [];
 
     /**
      * All column names of the grid.
@@ -193,6 +188,7 @@ class Grid
         $this->rows = new Collection();
         $this->builder = $builder;
         $this->request = $request ?: request();
+        $this->resourcePath = url($this->request->getPathInfo());
 
         if ($repository = $this->model->repository()) {
             $this->setKeyName($repository->getKeyName());
@@ -200,8 +196,8 @@ class Grid
 
         $this->model->setGrid($this);
 
-        $this->setupTools();
-        $this->setupFilter();
+        $this->setUpTools();
+        $this->setUpFilter();
 
         $this->callResolving();
     }
@@ -453,28 +449,16 @@ class Grid
         $this->rows = collect($data)->map(function ($model) {
             return new Row($this, $model);
         });
-
-        if ($this->rowsCallback) {
-            foreach ($this->rowsCallback as $value) {
-                $value($this->rows);
-            }
-        }
     }
 
     /**
      * Set grid row callback function.
      *
-     * @param Closure $callable
-     *
-     * @return Collection|void
+     * @return Collection
      */
-    public function rows(Closure $callable = null)
+    public function rows()
     {
-        if (is_null($callable)) {
-            return $this->rows;
-        }
-
-        $this->rowsCallback[] = $callable;
+        return $this->rows;
     }
 
     /**
@@ -763,23 +747,11 @@ HTML;
     /**
      * Get or set resource path.
      *
-     * @param string $path
-     *
-     * @return $this|string
+     * @return string
      */
-    public function resource(string $path = null)
+    public function resource()
     {
-        if ($path === null) {
-            return $this->resourcePath ?: (
-            $this->resourcePath = url(app('request')->getPathInfo())
-            );
-        }
-
-        if (! empty($path)) {
-            $this->resourcePath = admin_url($path);
-        }
-
-        return $this;
+        return $this->resourcePath;
     }
 
     /**
@@ -892,7 +864,7 @@ HTML;
      */
     public function setResource($path)
     {
-        $this->resourcePath = $path;
+        $this->resourcePath = admin_url($path);
 
         return $this;
     }

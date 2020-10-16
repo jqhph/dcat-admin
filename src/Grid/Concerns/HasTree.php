@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Grid\Events\Fetched;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
@@ -58,9 +59,9 @@ trait HasTree
             $this->addIgnoreQueries();
         });
 
-        $this->collection(function (Collection $collection) {
+        $this->grid()->listen(Fetched::class, function (Grid $grid, Collection $collection) {
             if (! $this->getParentIdFromRequest()) {
-                return $collection;
+                return;
             }
 
             if ($collection->isEmpty()) {
@@ -68,8 +69,6 @@ trait HasTree
             }
 
             $this->buildChildrenNodesPagination();
-
-            return $collection;
         });
     }
 

@@ -17,18 +17,6 @@ trait HasNames
     protected $_name;
 
     /**
-     * HTML element names.
-     *
-     * @var array
-     */
-    protected $elementNames = [
-        'grid_row'        => 'grid-row',
-        'grid_select_all' => 'grid-select-all',
-        'grid_per_page'   => 'grid-per-pager',
-        'export_selected' => 'export-selected',
-    ];
-
-    /**
      * Set name to grid.
      *
      * @param string $name
@@ -84,7 +72,7 @@ trait HasNames
             return;
         }
 
-        return $name.'-';
+        return $name.'_';
     }
 
     /**
@@ -92,7 +80,7 @@ trait HasNames
      */
     public function getRowName()
     {
-        return $this->getElementNameWithPrefix('grid_row');
+        return $this->makeName('grid-row');
     }
 
     /**
@@ -100,7 +88,7 @@ trait HasNames
      */
     public function getSelectAllName()
     {
-        return $this->getElementNameWithPrefix('grid_select_all');
+        return $this->makeName('grid-select-all');
     }
 
     /**
@@ -108,7 +96,7 @@ trait HasNames
      */
     public function getPerPageName()
     {
-        return $this->getElementNameWithPrefix('grid_per_page');
+        return $this->makeName('grid-per-page');
     }
 
     /**
@@ -116,20 +104,6 @@ trait HasNames
      */
     public function getExportSelectedName()
     {
-        return $this->getElementNameWithPrefix('export_selected');
-    }
-
-    /**
-     * @return string
-     */
-    protected function getElementNameWithPrefix($name)
-    {
-        $elementName = $this->elementNames[$name];
-
-        if ($this->_name) {
-            return sprintf('%s-%s', $this->_name, $elementName);
-        }
-
-        return $elementName;
+        return $this->makeName('export-selected');
     }
 }

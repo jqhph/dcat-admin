@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\RuntimeException;
+use Dcat\Admin\Grid\Events\ApplyFilter;
 use Dcat\Admin\Grid\Filter\AbstractFilter;
 use Dcat\Admin\Grid\Filter\Between;
 use Dcat\Admin\Grid\Filter\Date;
@@ -458,6 +459,8 @@ class Filter implements Renderable
         return tap(array_filter($conditions), function ($conditions) {
             if (! empty($conditions)) {
                 $this->expand();
+
+                $this->grid()->fireOnce(new ApplyFilter($this, [$conditions]));
 
                 $this->grid()->model()->disableBindTreeQuery();
             }

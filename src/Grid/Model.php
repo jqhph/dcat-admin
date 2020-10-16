@@ -5,7 +5,7 @@ namespace Dcat\Admin\Grid;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Middleware\Pjax;
+use Dcat\Admin\Http\Middleware\Pjax;
 use Dcat\Admin\Repositories\Repository;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -100,13 +100,6 @@ class Model
      * @var string
      */
     protected $sortName = '_sort';
-
-    /**
-     * Collection callback.
-     *
-     * @var callable[]
-     */
-    protected $collectionCallback = [];
 
     /**
      * @var Grid
@@ -331,20 +324,6 @@ class Model
     }
 
     /**
-     * Set collection callback.
-     *
-     * @param callable $callback
-     *
-     * @return $this
-     */
-    public function collection(callable $callback = null)
-    {
-        $this->collectionCallback[] = $callback;
-
-        return $this;
-    }
-
-    /**
      * Build.
      *
      * @param bool $toArray
@@ -355,17 +334,9 @@ class Model
     {
         if (is_null($this->data)) {
             $this->setData($this->fetch());
-
-            if ($this->collectionCallback) {
-                $data = $this->data;
-
-                foreach ($this->collectionCallback as $cb) {
-                    $data = call_user_func($cb, $data);
-                }
-
-                $this->setData($data);
-            }
         }
+
+        $this->grid->fireOnce(new Grid\Events\Fetched($this->grid(), [$this->data]));
 
         return $toArray ? $this->data->toArray() : $this->data;
     }
