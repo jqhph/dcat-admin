@@ -25,23 +25,16 @@ class InstallFromLocal extends Form implements LazyRenderable
 
             $manager = Admin::extension();
 
-            $allNames = $manager->all()->keys()->toArray();
+            $extensionName = $manager->extract($path, true);
 
-            $manager->extract($path);
-
-            $manager->load();
-
-            $newAllNames = $manager->all()->keys()->toArray();
-
-            $diff = array_diff($newAllNames, $allNames);
-
-            if (! $diff) {
+            if (! $extensionName) {
                 return $this->response()->error(trans('admin.invalid_extension_package'));
             }
 
             $manager
+                ->load()
                 ->updateManager()
-                ->update(current($diff));
+                ->update($extensionName);
 
             return $this->response()
                 ->success(implode('<br>', $manager->updateManager()->notes))

@@ -113,7 +113,7 @@ class Manager
     /**
      * 加载扩展，注册自动加载规则.
      *
-     * @return void
+     * @return $this
      */
     public function load()
     {
@@ -124,6 +124,8 @@ class Manager
                 $this->reportException($e);
             }
         }
+
+        return $this;
     }
 
     /**
@@ -333,22 +335,30 @@ class Manager
 
     /**
      * 解压缩扩展包.
+     *
+     * @param string $filePath
+     * @param bool   $force
+     *
+     * @return string
      */
-    public function extract($filePath)
+    public function extract($filePath, bool $force = false)
     {
         $filePath = is_file($filePath) ? $filePath : $this->getFilePath($filePath);
 
-        $this->extractZip($filePath);
+        $name = $this->extractZip($filePath, $force);
 
         @unlink($filePath);
+
+        return $name;
     }
 
     /**
      * @param string $filePath
+     * @param bool   $force
      *
      * @return bool
      */
-    public function extractZip($filePath)
+    public function extractZip($filePath, bool $force = false)
     {
         // 创建临时目录.
         $tempPath = $this->makeTempDirectory();
@@ -382,13 +392,17 @@ class Manager
 
             $extensionDir = admin_extension_path($composerProperty->name);
 
-            if (is_dir($extensionDir)) {
+            if (! $force && is_dir($extensionDir)) {
                 throw new RuntimeException(sprintf('The extension [%s] already exist!', $composerProperty->name));
             }
 
-            $this->files->makeDirectory($extensionDir, 0755, true);
+            if (! is_dir($extensionDir)) {
+                $this->files->makeDirectory($extensionDir, 0755, true);
+            }
 
             $this->files->copyDirectory($directory, $extensionDir);
+
+            return $composerProperty->name;
         } finally {
             $this->files->deleteDirectory($tempPath);
         }
