@@ -3,10 +3,10 @@
 namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Http\Repositories\Menu;
 use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Row;
-use Dcat\Admin\Http\Repositories\Menu;
 use Dcat\Admin\Tree;
 use Dcat\Admin\Widgets\Box;
 use Dcat\Admin\Widgets\Form as WidgetForm;

@@ -619,7 +619,7 @@ class Form implements Renderable
             $buttons .= "<button type=\"reset\" class=\"btn btn-white pull-left\"><i class=\"feather icon-rotate-ccw\"></i> {$reset}</button>";
         }
 
-        if(! empty($this->buttons['submit'])) {
+        if (! empty($this->buttons['submit'])) {
             $submit = $this->getSubmitButtonLabel();
 
             $buttons .= "<button type=\"submit\" class=\"btn btn-primary pull-right\"><i class=\"feather icon-save\"></i> {$submit}</button>";

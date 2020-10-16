@@ -2,14 +2,14 @@
 
 namespace Dcat\Admin\Extend;
 
+use Carbon\Carbon;
 use Dcat\Admin\Models\Extension;
 use Dcat\Admin\Models\ExtensionHistory;
-use Carbon\Carbon;
 use Dcat\Admin\Support\DatabaseUpdater;
 use Illuminate\Support\Arr;
 
 /**
- * Class VersionManager
+ * Class VersionManager.
  *
  * @see https://github.com/octobercms/october/blob/develop/modules/system/classes/VersionManager.php
  */
@@ -68,7 +68,7 @@ class VersionManager
     {
         $name = $this->manager->getName($extension);
 
-        if (!$this->hasVersionFile($name)) {
+        if (! $this->hasVersionFile($name)) {
             return [];
         }
 
@@ -157,6 +157,7 @@ class VersionManager
         if (isset($this->databaseHistory[$name])) {
             unset($this->databaseHistory[$name]);
         }
+
         return true;
     }
 
@@ -270,7 +271,7 @@ class VersionManager
         } elseif ($version && $currentVersion) {
             Extension::query()->where('name', $name)->update([
                 'version'    => $version,
-                'updated_at' => new Carbon
+                'updated_at' => new Carbon,
             ]);
         } elseif ($currentVersion) {
             Extension::query()->where('name', $name)->delete();

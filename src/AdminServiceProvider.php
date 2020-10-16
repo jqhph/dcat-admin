@@ -2,9 +2,9 @@
 
 namespace Dcat\Admin;
 
-use Dcat\Admin\Console\ExtensionInstallCommand;
 use Dcat\Admin\Contracts\ExceptionHandler;
 use Dcat\Admin\Exception\Handler;
+use Dcat\Admin\Extend\Manager;
 use Dcat\Admin\Extend\UpdateManager;
 use Dcat\Admin\Extend\VersionManager;
 use Dcat\Admin\Layout\Asset;
@@ -12,7 +12,6 @@ use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
-use Dcat\Admin\Extend\Manager;
 use Dcat\Admin\Support\Context;
 use Dcat\Admin\Support\Setting;
 use Dcat\Admin\Support\WebUploader;

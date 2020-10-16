@@ -2,14 +2,13 @@
 
 namespace Dcat\Admin\Http\Controllers;
 
-use Dcat\Admin\Extend\ServiceProvider;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Actions\Extensions\InstallFromLocal;
 use Dcat\Admin\Http\Actions\Extensions\Marketplace;
 use Dcat\Admin\Http\Displayers\Extensions;
-use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Http\Repositories\Extension;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\StringOutput;
 use Illuminate\Routing\Controller;
@@ -65,7 +64,7 @@ class ExtensionController extends Controller
 
             $grid->tools([
                 new Marketplace(),
-                new InstallFromLocal()
+                new InstallFromLocal(),
             ]);
 
             $grid->quickCreate(function (Grid\Tools\QuickCreate $create) {

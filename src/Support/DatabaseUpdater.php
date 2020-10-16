@@ -3,13 +3,13 @@
 namespace Dcat\Admin\Support;
 
 use Dcat\Admin\Exception\AdminException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Database updater
+ * Database updater.
  *
  * Executes database migration and seed scripts based on their filename.
  *
@@ -35,8 +35,7 @@ class DatabaseUpdater
         $this->transaction(function () use ($object, $callback) {
             if ($object instanceof Migration) {
                 $object->up();
-            }
-            elseif ($object instanceof Seeder) {
+            } elseif ($object instanceof Seeder) {
                 $object->run();
             }
 
@@ -101,8 +100,7 @@ class DatabaseUpdater
     {
         if ($object instanceof Migration) {
             return true;
-        }
-        elseif ($object instanceof Seeder) {
+        } elseif ($object instanceof Seeder) {
             return true;
         }
 
@@ -133,7 +131,7 @@ class DatabaseUpdater
             $buffer .= fread($fileParser, 512);
 
             // Prefix and suffix string to prevent unterminated comment warning
-            $tokens = token_get_all('/**/' . $buffer . '/**/');
+            $tokens = token_get_all('/**/'.$buffer.'/**/');
 
             if (strpos($buffer, '{') === false) {
                 continue;
@@ -156,18 +154,18 @@ class DatabaseUpdater
                 /*
                  * Class opening
                  */
-                if ($tokens[$i][0] === T_CLASS && $tokens[$i-1][1] !== '::') {
-                    $class = $tokens[$i+2][1];
+                if ($tokens[$i][0] === T_CLASS && $tokens[$i - 1][1] !== '::') {
+                    $class = $tokens[$i + 2][1];
                     break;
                 }
             }
         }
 
-        if (!strlen(trim($namespace)) && !strlen(trim($class))) {
+        if (! strlen(trim($namespace)) && ! strlen(trim($class))) {
             return false;
         }
 
-        return trim($namespace) . '\\' . trim($class);
+        return trim($namespace).'\\'.trim($class);
     }
 
     public function transaction($callback)

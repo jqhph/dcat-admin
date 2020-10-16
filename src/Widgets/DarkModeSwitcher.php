@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 

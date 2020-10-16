@@ -476,10 +476,10 @@ class Asset
     }
 
     /**
-     * 判断别名是否存在
+     * 判断别名是否存在.
      *
      * @param $value
-     * 
+     *
      * @return bool
      */
     public function hasAlias($value)

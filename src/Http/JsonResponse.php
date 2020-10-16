@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Class JsonResponse
+ * Class JsonResponse.
  *
  * @method $this redirectIf($condition, ?string $url)
  * @method $this locationIf($condition, ?string $url)

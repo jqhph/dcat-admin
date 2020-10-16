@@ -42,7 +42,7 @@ class ExtensionRollbackCommand extends Command
             } catch (\Throwable $exception) {
                 $lastVersion = Admin::extension()->versionManager()->getCurrentVersion($name);
 
-                $this->output->writeln(sprintf("<comment>An exception occurred during the rollback and the process has been stopped. The extension was rolled back to version v%s.</comment>", $lastVersion));
+                $this->output->writeln(sprintf('<comment>An exception occurred during the rollback and the process has been stopped. The extension was rolled back to version v%s.</comment>', $lastVersion));
 
                 throw $exception;
             }

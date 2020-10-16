@@ -7,7 +7,6 @@ use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Middleware\Pjax;
 use Dcat\Admin\Repositories\Repository;
-use Dcat\Utils\Backtrace\BacktraceFormatter;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
@@ -389,7 +388,6 @@ class Model
 
             $data = $data->getCollection();
         } elseif ($data instanceof Collection) {
-
         } elseif ($data instanceof Arrayable || is_array($data)) {
             $data = collect($data);
         }

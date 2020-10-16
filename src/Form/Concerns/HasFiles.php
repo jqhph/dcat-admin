@@ -167,8 +167,6 @@ trait HasFiles
                 ->status(true)
                 ->send();
         }
-
-        return;
     }
 
     /**

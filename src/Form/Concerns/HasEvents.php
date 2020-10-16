@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Form\Concerns;
 
 use Closure;
-use Dcat\Admin\Form\Events;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
+use Dcat\Admin\Form\Events;
 use Dcat\Admin\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -44,7 +44,7 @@ trait HasEvents
     }
 
     /**
-     * 监听提交事件
+     * 监听提交事件.
      *
      * @param Closure $callback
      *
@@ -154,7 +154,6 @@ trait HasEvents
 
         return $this;
     }
-
 
     /**
      * 删除文件完成.
@@ -284,7 +283,7 @@ trait HasEvents
     }
 
     /**
-     * 触发文件上传完成事件
+     * 触发文件上传完成事件.
      *
      * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
      * @param UploadedFile                                $file
@@ -298,7 +297,7 @@ trait HasEvents
     }
 
     /**
-     * 触发文件删除事件
+     * 触发文件删除事件.
      *
      * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
      * @param UploadedFile                                $file
@@ -312,7 +311,7 @@ trait HasEvents
     }
 
     /**
-     * 触发文件删除完成事件
+     * 触发文件删除完成事件.
      *
      * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
      * @param UploadedFile                                $file

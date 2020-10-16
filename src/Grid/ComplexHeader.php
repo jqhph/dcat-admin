@@ -63,7 +63,7 @@ class ComplexHeader extends Widget
     }
 
     /**
-     * 默认隐藏字段
+     * 默认隐藏字段.
      *
      * @return $this
      */

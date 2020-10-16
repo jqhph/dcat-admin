@@ -254,6 +254,7 @@ protected $js = [
     ];
 TEXT;
         }
+
         return <<<'TEXT'
 protected $type = self::TYPE_THEME;
 

@@ -7,15 +7,14 @@ use Dcat\Admin\Contracts\ExceptionHandler;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Http\Controllers\AuthController;
-use Dcat\Admin\Exception\Handler;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Traits\HasAssets;
-use Dcat\Admin\Traits\HasPermissions;
 use Dcat\Admin\Traits\HasHtml;
+use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
@@ -383,7 +382,7 @@ class Admin
         }
 
         $sidebarStyle = config('admin.layout.sidebar_style') ?: 'light';
-        
+
         $jsVariables['pjax_container_selector'] = '#'.static::getPjaxContainerId();
         $jsVariables['token'] = csrf_token();
         $jsVariables['lang'] = __('admin.client') ?: [];

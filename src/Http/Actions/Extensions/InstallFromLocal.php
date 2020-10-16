@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Http\Actions\Extensions;
 
-use Dcat\Admin\Http\Forms\InstallFromLocal as InstallFromLocalForm;
 use Dcat\Admin\Grid\Tools\AbstractTool;
+use Dcat\Admin\Http\Forms\InstallFromLocal as InstallFromLocalForm;
 use Dcat\Admin\Widgets\Modal;
 
 class InstallFromLocal extends AbstractTool

@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Actions\Delete;
 use Dcat\Admin\Grid\Actions\Edit;
 use Dcat\Admin\Grid\Actions\QuickEdit;
