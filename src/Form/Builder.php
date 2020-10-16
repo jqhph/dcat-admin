@@ -304,16 +304,16 @@ class Builder
     /**
      * @return string
      */
-    public function getResource($slice = null)
+    public function resource($slice = null)
     {
         if ($this->mode == self::MODE_CREATE) {
-            return $this->form->getResource(-1);
+            return $this->form->resource(-1);
         }
         if ($slice !== null) {
-            return $this->form->getResource($slice);
+            return $this->form->resource($slice);
         }
 
-        return $this->form->getResource();
+        return $this->form->resource();
     }
 
     /**
@@ -360,11 +360,11 @@ class Builder
         }
 
         if ($this->isMode(static::MODE_EDIT)) {
-            return $this->form->getResource().'/'.$this->id;
+            return $this->form->resource().'/'.$this->id;
         }
 
         if ($this->isMode(static::MODE_CREATE)) {
-            return $this->form->getResource(-1);
+            return $this->form->resource(-1);
         }
 
         return '';
@@ -604,7 +604,7 @@ class Builder
         }
 
         if (
-            Str::contains($previous, url($this->getResource()))
+            Str::contains($previous, url($this->resource()))
             && ! Helper::urlHasQuery($previous, [DialogForm::QUERY_NAME])
         ) {
             $this->addHiddenField(
