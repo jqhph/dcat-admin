@@ -261,13 +261,17 @@ class Content implements Renderable
      */
     public function build()
     {
-        $html = '';
+        try {
+            $html = '';
 
-        foreach ($this->rows as $row) {
-            $html .= $row->render();
+            foreach ($this->rows as $row) {
+                $html .= $row->render();
+            }
+
+            return $html;
+        } catch (\Throwable $e) {
+            return Admin::handleException($e);
         }
-
-        return $html;
     }
 
     /**
@@ -487,18 +491,14 @@ class Content implements Renderable
      */
     public function render()
     {
-        try {
-            $this->callComposing();
-            $this->shareDefaultErrors();
+        $this->callComposing();
+        $this->shareDefaultErrors();
 
-            $this->variables['content'] = $this->build();
+        $this->variables['content'] = $this->build();
 
-            $this->callComposed();
+        $this->callComposed();
 
-            return view($this->view, $this->variables())->render();
-        } catch (\Throwable $e) {
-            return Admin::handleException($e);
-        }
+        return view($this->view, $this->variables())->render();
     }
 
     /**

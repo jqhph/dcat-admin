@@ -9,7 +9,7 @@ class Number extends Text
     protected $options = [
         'upClass'   => 'primary shadow-0',
         'downClass' => 'light shadow-0',
-        'center'    => true
+        'center'    => true,
     ];
 
     /**
