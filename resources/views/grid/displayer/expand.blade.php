@@ -1,17 +1,17 @@
-<span class="grid-expand" data-url="{{ $url }}" data-inserted="0" data-id="{{ $key }}" data-key="{{ $dataKey }}" data-toggle="collapse" data-target="#grid-collapse-{{ $dataKey }}">
-   <a href="javascript:void(0)"><i class="feather icon-chevrons-right"></i>  {!! $button !!}</a>
-</span>
-<template>
+<div>
+    <span class="grid-expand" data-url="{{ $url }}" data-inserted="0" data-id="{{ $key }}" data-key="{{ $dataKey }}" data-toggle="collapse" data-target="#grid-collapse-{{ $dataKey }}">
+       <a href="javascript:void(0)"><i class="feather icon-chevrons-right"></i>  {!! $button !!}</a>
+    </span>
     <template class="grid-expand-{{ $dataKey }}">
-        <div id="grid-collapse-{{ $dataKey }}" class="collapse">{!! $html !!}</div>
+        <div id="grid-collapse-{{ $dataKey }}">{!! $html !!}</div>
     </template>
-</template>
+</div>
 
 <script once>
-    $(document).off('click', '.grid-expand').on('click', '.grid-expand', function () {
+    $('.grid-expand').off('click').on('click', function () {
         var _th = $(this), url = _th.data('url');
 
-        if (String(_th.data('inserted')) === '0') {
+        if ($(this).data('inserted') == '0') {
 
             var key = _th.data('key');
             var row = _th.closest('tr');
@@ -20,7 +20,6 @@
             var rowKey = _th.data('id');
 
             $(this).attr('data-expand', '#'+id);
-
             row.after("<tr id="+id+"><td colspan='"+(row.find('td').length)+"' style='padding:0 !important; border:0;height:0;'>"+html+"</td></tr>");
 
             if (url) {
@@ -32,7 +31,6 @@
                     collapse.html(html);
                 })
             }
-
             $(this).data('inserted', 1);
         } else {
             if ($("i", this).hasClass('icon-chevrons-right')) {
