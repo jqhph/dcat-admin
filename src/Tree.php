@@ -435,13 +435,19 @@ class Tree implements Renderable
     /**
      * 设置行操作回调.
      *
-     * @param \Closure $callback
+     * @param \Closure|array $callback
      *
      * @return $this
      */
-    public function actions(\Closure $callback)
+    public function actions($callback)
     {
-        $this->actionCallbacks[] = $callback;
+        if ($callback instanceof \Closure) {
+            $this->actionCallbacks[] = $callback;
+        } else {
+            $this->actionCallbacks[] = function (Actions $actions) use ($callback) {
+                $actions->append($callback);
+            };
+        }
 
         return $this;
     }
@@ -585,24 +591,20 @@ class Tree implements Renderable
      */
     public function render()
     {
-        try {
-            $this->callResolving();
+        $this->callResolving();
 
-            $this->setDefaultBranchCallback();
+        $this->setDefaultBranchCallback();
 
-            $this->renderQuickCreateButton();
+        $this->renderQuickCreateButton();
 
-            view()->share([
-                'currentUrl'     => $this->url,
-                'keyName'        => $this->getKeyName(),
-                'branchView'     => $this->branchView,
-                'branchCallback' => $this->branchCallback,
-            ]);
+        view()->share([
+            'currentUrl'     => $this->url,
+            'keyName'        => $this->getKeyName(),
+            'branchView'     => $this->branchView,
+            'branchCallback' => $this->branchCallback,
+        ]);
 
-            return $this->doWrap();
-        } catch (\Throwable $e) {
-            return $this->handleException($e);
-        }
+        return $this->doWrap();
     }
 
     /**
@@ -619,11 +621,6 @@ class Tree implements Renderable
         }
 
         return Admin::resolveHtml(Helper::render($wrapper($view)))['html'];
-    }
-
-    protected function handleException(\Throwable $e)
-    {
-        return Admin::handleException($e);
     }
 
     /**

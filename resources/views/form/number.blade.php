@@ -32,9 +32,5 @@
 <script require="@number-input">
     $('{{ $selector }}:not(.initialized)')
         .addClass('initialized')
-        .bootstrapNumber({
-            upClass: 'primary shadow-0',
-            downClass: 'light shadow-0',
-            center: true
-        });
+        .bootstrapNumber({!! json_encode($options) !!});
 </script>

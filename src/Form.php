@@ -1556,15 +1556,11 @@ class Form implements Renderable
      */
     public function render()
     {
-        try {
-            $this->rendering();
+        $this->rendering();
 
-            $this->callComposing();
+        $this->callComposing();
 
-            return $this->builder->render();
-        } catch (\Throwable $e) {
-            return $this->handleException($e);
-        }
+        return $this->builder->render();
     }
 
     /**

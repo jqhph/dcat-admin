@@ -6,7 +6,6 @@ use Closure;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Concerns;
-use Dcat\Admin\Grid\Events\Rows;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Row;
 use Dcat\Admin\Grid\Tools;
@@ -876,17 +875,13 @@ HTML;
      */
     public function render()
     {
-        try {
-            $this->callComposing();
+        $this->callComposing();
 
-            $this->build();
+        $this->build();
 
-            $this->applyFixColumns();
+        $this->applyFixColumns();
 
-            $this->setUpOptions();
-        } catch (\Throwable $e) {
-            return $this->handleException($e);
-        }
+        $this->setUpOptions();
 
         return $this->doWrap();
     }
@@ -903,11 +898,6 @@ HTML;
         }
 
         return $wrapper($view);
-    }
-
-    protected function handleException(\Throwable $e)
-    {
-        return Admin::handleException($e);
     }
 
     /**

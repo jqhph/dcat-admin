@@ -191,7 +191,7 @@ class Menu
      */
     public function translate($text)
     {
-        $titleTranslation = 'admin.menu_titles.'.trim(str_replace(' ', '_', strtolower($text)));
+        $titleTranslation = 'menu.titles.'.trim(str_replace(' ', '_', strtolower($text)));
 
         if (Lang::has($titleTranslation)) {
             return __($titleTranslation);
