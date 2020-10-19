@@ -145,7 +145,7 @@ class ScaffoldController extends Controller
 
             if (in_array('lang', $creates)) {
                 $paths['lang'] = (new LangCreator($request->get('fields')))
-                    ->create($controller);
+                    ->create($controller, $request->get('translate_title'));
             }
 
             if (in_array('repository', $creates)) {

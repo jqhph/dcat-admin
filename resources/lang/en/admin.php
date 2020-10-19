@@ -25,6 +25,7 @@ return [
         'type'              => 'type',
         'nullable'          => 'nullable',
         'key'               => 'key',
+        'translate_title'   => 'Translate Title',
     ],
     'client' => [
         'delete_confirm'    => 'Are you sure to delete this item ?',

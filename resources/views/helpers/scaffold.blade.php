@@ -202,8 +202,26 @@
 
                 <div class="row">
                     <div class="form-group text-capitalize" style="margin-right: 20px;">
+                        <span for="titleTranslation">{{(trans('admin.scaffold.translate_title'))}}&nbsp;&nbsp;</span>
+                        <input type="text"
+                               name="translate_title"
+                               class="form-control"
+                               id="titleTranslation"
+                               placeholder="{{(trans('admin.scaffold.translate_title'))}}"
+                               value="{{ request('translate_title') }}"
+                               style="width: 150px;">
+                    </div>
+
+                    <div class="form-group text-capitalize" style="margin-right: 20px;">
                         <span for="inputPrimaryKey">{{(trans('admin.scaffold.pk'))}}&nbsp;&nbsp;</span>
-                        <input type="text" name="primary_key" class="form-control" id="inputPrimaryKey" placeholder="{{(trans('admin.scaffold.pk'))}}" value="id" style="width: 100px;">
+                        <input
+                                type="text"
+                                name="primary_key"
+                                class="form-control"
+                                id="inputPrimaryKey"
+                                placeholder="{{(trans('admin.scaffold.pk'))}}"
+                                value="{{ request('primary_key') ?: 'id' }}"
+                                style="width: 100px;">
                     </div>
 
                     <div class='form-group text-capitalize'>

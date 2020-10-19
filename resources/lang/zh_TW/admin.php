@@ -25,6 +25,7 @@ return [
         'type'              => '類型',
         'nullable'          => '允許null',
         'key'               => '索引',
+        'translate_title'   => '翻譯標題',
     ],
     'client' => [
         'delete_confirm'    => '確認刪除?',

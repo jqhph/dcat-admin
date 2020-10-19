@@ -25,6 +25,7 @@ return [
         'type'              => '类型',
         'nullable'          => '允许空值',
         'key'               => '索引',
+        'translate_title'   => '翻译标题',
     ],
     'client' => [
         'delete_confirm'    => '确认删除?',
