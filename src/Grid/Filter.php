@@ -460,7 +460,7 @@ class Filter implements Renderable
             if (! empty($conditions)) {
                 $this->expand();
 
-                $this->grid()->fireOnce(new ApplyFilter($this, [$conditions]));
+                $this->grid()->fireOnce(new ApplyFilter($this->grid(), [$conditions]));
 
                 $this->grid()->model()->disableBindTreeQuery();
             }
