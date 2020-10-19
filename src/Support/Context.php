@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Support;
 
-use Dcat\EasyExcel\Support\Arr;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
 
 /**
