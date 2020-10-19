@@ -270,8 +270,26 @@ class Content implements Renderable
 
             return $html;
         } catch (\Throwable $e) {
-            return Admin::handleException($e);
+            return $this->handleException($e);
         }
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return mixed|string
+     */
+    protected function handleException(\Throwable $e)
+    {
+        $response = Admin::handleException($e);
+
+        if (is_string($response) || $response instanceof Renderable) {
+            $row = new Row($response);
+
+            return $row->render();
+        }
+
+        return $response;
     }
 
     /**
