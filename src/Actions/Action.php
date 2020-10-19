@@ -115,11 +115,13 @@ abstract class Action implements Renderable
      *
      * @param mixed $key
      *
-     * @return void
+     * @return $this
      */
     public function setKey($key)
     {
         $this->primaryKey = $key;
+
+        return $this;
     }
 
     /**
