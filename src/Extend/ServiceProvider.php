@@ -238,14 +238,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
     final public function config($key = null, $default = null)
     {
         if ($this->config === null) {
-            $this->config = Admin::setting()->get($this->getConfigKey());
-            $this->config = $this->config ? $this->unserializeConfig($this->config) : [];
+            $this->initConfig();
         }
 
         if (is_array($key)) {
-            $this->config = array_merge($this->config, $key);
-
-            Admin::setting()->save([$this->getConfigKey() => $this->serializeConfig($this->config)]);
+            $this->saveConfig($key);
 
             return;
         }
@@ -255,6 +252,27 @@ abstract class ServiceProvider extends LaravelServiceProvider
         }
 
         return Arr::get($this->config, $key, $default);
+    }
+
+    /**
+     * 保存配置.
+     *
+     * @param array $config
+     */
+    public function saveConfig(array $config)
+    {
+        $this->config = array_merge($this->config, $config);
+
+        Admin::setting()->save([$this->getConfigKey() => $this->serializeConfig($this->config)]);
+    }
+
+    /**
+     * 初始化配置.
+     */
+    protected function initConfig()
+    {
+        $this->config = Admin::setting()->get($this->getConfigKey());
+        $this->config = $this->config ? $this->unserializeConfig($this->config) : [];
     }
 
     /**

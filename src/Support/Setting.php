@@ -11,10 +11,29 @@ use Illuminate\Support\Fluent;
 class Setting extends Fluent
 {
     /**
+     * 获取配置，并转化为数组.
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return array
+     */
+    public function getArray($key, $default = [])
+    {
+        $value = $this->get($key, $default);
+
+        if (! $value) {
+            return [];
+        }
+
+        return json_decode($value, true) ?: [];
+    }
+
+    /**
      * 获取配置.
      *
      * @param string $key
-     * @param null $default
+     * @param mixed  $default
      *
      * @return mixed
      */

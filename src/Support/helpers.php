@@ -13,7 +13,7 @@ if (! function_exists('admin_setting')) {
      *
      * @return \Dcat\Admin\Support\Setting|mixed
      */
-    function admin_setting($key = null, $default = [])
+    function admin_setting($key = null, $default = null)
     {
         if ($key === null) {
             return app('admin.setting');
@@ -29,6 +29,19 @@ if (! function_exists('admin_setting')) {
     }
 }
 
+if (! function_exists('admin_setting_array')) {
+    /**
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return \Dcat\Admin\Support\Setting|mixed
+     */
+    function admin_setting_array(?string $key, $default = [])
+    {
+        return app('admin.setting')->getArray($key, $default);
+    }
+}
+
 if (! function_exists('admin_extension_setting')) {
     /**
      * @param string       $extension
@@ -37,7 +50,7 @@ if (! function_exists('admin_extension_setting')) {
      *
      * @return mixed
      */
-    function admin_extension_setting($extension, $key = null, $default = [])
+    function admin_extension_setting($extension, $key = null, $default = null)
     {
         $extension = app($extension);
 
