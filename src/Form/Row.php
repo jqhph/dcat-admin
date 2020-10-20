@@ -117,6 +117,17 @@ class Row implements Renderable
     }
 
     /**
+     * @param array $fields
+     * @return $this
+     */
+    public function setFields(array $fields)
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
+
+    /**
      * Set width for a incomming field.
      *
      * @param int $width

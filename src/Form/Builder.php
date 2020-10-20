@@ -797,7 +797,7 @@ class Builder
      */
     protected function removeReservedFields()
     {
-        if (! $this->isMode(static::MODE_CREATE)) {
+        if (!$this->isMode(static::MODE_CREATE)) {
             return;
         }
 
@@ -812,12 +812,30 @@ class Builder
                 && $field instanceof Form\Field\Display;
         };
 
+        $rowFilter = function (array $field) use (&$reservedColumns) {
+            $field = $field['element'];
+            return !(in_array($field->column(), $reservedColumns, true)
+                && $field instanceof Form\Field\Display);
+        };
+
         $this->fields = $this->fields()->reject($reject);
+
+        if ($this->hasRows()) {
+            $rows = array_map(function (Row $row) use ($rowFilter) {
+                $fields = collect($row->fields())->filter($rowFilter)->toArray();
+                return $row->setFields($fields);
+
+            }, $this->rows());
+
+            $this->form->setRows($rows);
+        }
 
         if ($this->form->hasTab()) {
             $this->form->getTab()->getTabs()->transform(function ($item) use ($reject) {
-                if (! empty($item['fields'])) {
-                    $item['fields'] = $item['fields']->reject($reject);
+                if (!empty($item['fields'])) {
+                    $item['fields'] = $item['fields']->filter(function ($field) use ($reject) {
+                        return $field instanceof Row || ($field instanceof Field && !$reject($field));
+                    });
                 }
 
                 return $item;
