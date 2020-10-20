@@ -477,7 +477,7 @@ class Filter implements Renderable
     protected function sanitizeInputs(&$inputs)
     {
         if (! $prefix = $this->grid()->getNamePrefix()) {
-            return $inputs;
+            return;
         }
 
         $inputs = collect($inputs)->filter(function ($input, $key) use ($prefix) {

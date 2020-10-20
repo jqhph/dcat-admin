@@ -14,7 +14,8 @@ use Illuminate\Contracts\Support\Renderable;
  */
 abstract class Action implements Renderable
 {
-    use HasHtmlAttributes, HasActionHandler;
+    use HasHtmlAttributes;
+    use HasActionHandler;
 
     /**
      * @var array
@@ -59,7 +60,7 @@ abstract class Action implements Renderable
     /**
      * @var bool
      */
-    protected $usingHandler = true;
+    protected $allowHandler = true;
 
     /**
      * @var array
@@ -207,10 +208,10 @@ HTML;
     /**
      * @return void
      */
-    protected function setupHandler()
+    protected function prepareHandler()
     {
         if (
-            ! $this->usingHandler
+            ! $this->allowHandler
             || ! method_exists($this, 'handle')
         ) {
             return;
@@ -228,7 +229,7 @@ HTML;
             return '';
         }
 
-        $this->setupHandler();
+        $this->prepareHandler();
 
         $this->setupHtmlAttributes();
 
@@ -259,7 +260,7 @@ HTML;
         ];
 
         if (method_exists($this, 'href') && ($href = $this->href())) {
-            $this->usingHandler = false;
+            $this->allowHandler = false;
 
             $attributes['href'] = $href;
         }
