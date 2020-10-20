@@ -1,6 +1,6 @@
 
 <div align="center">
-    <img src="http://www.dcatadmin.com/assets/img/logo-text.png" height="80"> 
+    <img src="https://cdn.learnku.com/uploads/images/202009/27/38389/WFQxJ7qZ1k.png!large" height="80"> 
 </div>
 <br>
 <p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台系统构建工具，只需很少的代码即可快速构建出一个功能完善的高颜值后台系统。内置丰富的后台常用组件，开箱即用，让开发者告别冗杂的HTML代码，对后端开发者非常友好。</p>
@@ -30,10 +30,9 @@
 
 ## 截图
 
-![](http://www.dcatadmin.com/assets/img/users.jpg)
-![](http://www.dcatadmin.com/assets/img/users-menu-primary.jpg)
-![](http://www.dcatadmin.com/assets/img/users-green-menu-primary.jpg)
-![](http://www.dcatadmin.com/assets/img/users-dark.jpg)
+![](https://cdn.learnku.com/uploads/images/202008/23/38389/Oam6CYOobf.jpeg!large)
+![](https://cdn.learnku.com/uploads/images/202007/24/38389/35KJXfVXib.png!large)
+![](https://cdn.learnku.com/uploads/images/202008/23/38389/Lu7LZDSX0M.jpg!large)
 
 ![](https://cdn.learnku.com/uploads/images/202008/08/38389/lGYIdhifb5.jpg!large)
 
@@ -151,15 +150,12 @@ location / {
 + [jquery-form](https://github.com/jquery-form/form)
 + [moment](http://momentjs.com/)
 + [webuploader](http://fex.baidu.com/webuploader/)
-+ [bootstrap-fileinput](https://github.com/kartik-v/bootstrap-fileinput)
 + [jquery-pjax](https://github.com/defunkt/jquery-pjax)
 + [Nestable](http://dbushell.github.io/Nestable/)
 + [toastr](http://codeseven.github.io/toastr/)
 + [editor-md](https://github.com/pandao/editor.md)
 + [fontawesome-iconpicker](https://github.com/itsjavi/fontawesome-iconpicker)
 + [layer弹出层](http://layer.layui.com/)
-+ [waves](https://github.com/fians/Waves)
-+ [bootstrap-duallistbox](https://www.virtuosoft.eu/code/bootstrap-duallistbox/)
 + [char.js](https://www.chartjs.org)
 + [nprogress](https://ricostacruz.com/nprogress/)
 + [bootstrap-validator](https://github.com/1000hz/bootstrap-validator)
