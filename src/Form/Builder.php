@@ -830,9 +830,9 @@ class Builder
 
         if ($this->form->hasTab()) {
             $this->form->getTab()->getTabs()->transform(function ($item) use ($reject) {
-                if (!empty($item['fields'])) {
+                if (! empty($item['fields'])) {
                     $item['fields'] = $item['fields']->filter(function ($field) use ($reject) {
-                        return $field instanceof Row || ($field instanceof Field && !$reject($field));
+                        return $field instanceof Row || ($field instanceof Field && ! $reject($field));
                     });
                 }
 
