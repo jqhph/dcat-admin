@@ -818,6 +818,7 @@ class Builder
             $rows = array_map(function (Row $row) {
                 $fields = collect($row->fields())->filter(function (array $field) use (&$reservedColumns) {
                     $field = $field['element'];
+
                     return ! (in_array($field->column(), $reservedColumns, true)
                         && $field instanceof Form\Field\Display);
                 })->toArray();
