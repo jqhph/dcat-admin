@@ -1,10 +1,10 @@
 <?php
 
-namespace Dcat\Admin\Auth;
+namespace Dcat\Admin\Http\Auth;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Middleware\Pjax;
+use Dcat\Admin\Http\Middleware\Pjax;
 use Dcat\Admin\Models\Role;
 use Illuminate\Contracts\Support\Arrayable;
 

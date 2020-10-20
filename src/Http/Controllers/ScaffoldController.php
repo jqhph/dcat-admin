@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Auth\Permission;
+use Dcat\Admin\Http\Auth\Permission;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Scaffold\ControllerCreator;
 use Dcat\Admin\Scaffold\LangCreator;
