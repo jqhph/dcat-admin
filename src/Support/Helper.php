@@ -795,7 +795,12 @@ class Helper
             return;
         }
 
-        static::withRelationQuery($model, $column, $query, $params);
+        $method = $query === 'orWhere' ? 'orWhere' : 'where';
+        $subQuery = $query === 'orWhere' ? 'where' : $query;
+
+        $model->$method(function () use ($model, $column, $subQuery, $params) {
+            static::withRelationQuery($model, $column, $subQuery, $params);
+        });
     }
 
     /**

@@ -115,6 +115,8 @@ class UserController extends AdminController
         $grid->created_at();
         $grid->updated_at();
 
+        $grid->quickSearch('profile.postcode', 'username');
+
         $grid->filter(function (Grid\Filter $filter) {
             $filter->equal('id');
             $filter->like('username');
