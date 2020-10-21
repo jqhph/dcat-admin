@@ -815,7 +815,7 @@ class Builder
         $this->fields = $this->fields()->reject($reject);
 
         if ($this->hasRows()) {
-            $rows = array_map(function (Row $row) {
+            $rows = array_map(function (Row $row) use (&$reservedColumns) {
                 $fields = collect($row->fields())->filter(function (array $field) use (&$reservedColumns) {
                     $field = $field['element'];
 
