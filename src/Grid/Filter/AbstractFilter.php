@@ -592,17 +592,24 @@ abstract class AbstractFilter
     {
         $variables = $this->presenter()->variables();
 
-        $value = $this->value ?: Arr::get($this->parent->inputs(), $this->column);
-
         return array_merge([
             'id'        => $this->id,
             'name'      => $this->formatName($this->column),
             'label'     => $this->label,
-            'value'     => $value ?: $this->defaultValue,
+            'value'     => $this->normalizeValue(),
             'presenter' => $this->presenter(),
             'width'     => $this->width,
             'style'     => $this->style,
         ], $variables);
+    }
+
+    protected function normalizeValue()
+    {
+        if ($this->value === '' || $this->value === null) {
+            $this->value = Arr::get($this->parent->inputs(), $this->column);
+        }
+
+        return $this->value === '' || $this->value === null ? $this->defaultValue : $this->value;
     }
 
     /**
