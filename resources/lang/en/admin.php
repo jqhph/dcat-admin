@@ -216,6 +216,7 @@ return [
     'install_succeeded'         => 'Install succeeded !',
     'invalid_extension_package' => 'Invalid extension package !',
     'copied'                    => 'Copied',
+    'auth_failed'               => 'These credentials do not match our records.',
     'validation'               => [
         'match'     => 'The :attribute and :other must match.',
         'minlength' => 'The :attribute must be at least :min characters.',

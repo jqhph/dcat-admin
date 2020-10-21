@@ -217,6 +217,7 @@ return [
     'install_succeeded'         => '安装成功',
     'invalid_extension_package' => '安装包异常',
     'copied'                    => '已复制',
+    'auth_failed'               => '账号或密码错误',
     'validation'               => [
         'match'     => '与 :attribute 不匹配。',
         'minlength' => ':attribute 字符长度不能少于 :min。',

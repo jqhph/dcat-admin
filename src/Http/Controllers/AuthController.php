@@ -215,8 +215,8 @@ class AuthController extends Controller
      */
     protected function getFailedLoginMessage()
     {
-        return Lang::has('auth.failed')
-            ? trans('auth.failed')
+        return Lang::has('admin.auth_failed')
+            ? trans('admin.auth_failed')
             : 'These credentials do not match our records.';
     }
 
