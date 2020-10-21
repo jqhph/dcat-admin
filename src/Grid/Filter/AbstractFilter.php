@@ -593,17 +593,19 @@ abstract class AbstractFilter
             'id'        => $this->id,
             'name'      => $this->formatName($this->column),
             'label'     => $this->label,
-            'value'     => $this->value(),
+            'value'     => $this->normalizeValue(),
             'width'     => $this->width,
             'style'     => $this->style,
         ], $this->presenter()->variables());
     }
 
-    public function value()
+    protected function normalizeValue()
     {
-        $value = $this->value ?: Arr::get($this->parent->inputs(), $this->column);
+        if ($this->value === '' || $this->value === null) {
+            $this->value = Arr::get($this->parent->inputs(), $this->column);
+        }
 
-        return $value === null || $value === '' ? $this->defaultValue : $value;
+        return $this->value === '' || $this->value === null ? $this->defaultValue : $this->value;
     }
 
     /**
