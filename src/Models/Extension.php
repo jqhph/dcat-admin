@@ -10,6 +10,10 @@ class Extension extends Model
 
     protected $fillable = ['name', 'is_enabled', 'version', 'options'];
 
+    protected $casts = [
+        'options' => 'json',
+    ];
+
     public function __construct(array $attributes = [])
     {
         $connection = config('admin.database.connection') ?: config('database.default');

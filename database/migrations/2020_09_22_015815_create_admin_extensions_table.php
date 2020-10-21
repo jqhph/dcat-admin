@@ -18,7 +18,7 @@ class CreateAdminExtensionsTable extends Migration
             $table->string('name', 100)->unique();
             $table->string('version', 20)->default('');
             $table->tinyInteger('is_enabled')->default(0);
-            $table->json('options')->nullable();
+            $table->text('options')->nullable();
             $table->timestamps();
 
             $table->engine = 'InnoDB';
