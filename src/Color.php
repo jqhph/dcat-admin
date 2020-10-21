@@ -56,6 +56,10 @@ use Illuminate\Support\Traits\Macroable;
  * @method string border(int $amt = 0)
  * @method string inputBorder(int $amt = 0)
  * @method string background(int $amt = 0)
+ * @method string darkModeBg(int $amt = 0)
+ * @method string darkModeFont(int $amt = 0)
+ * @method string darkModeColor(int $amt = 0)
+ * @method string darkModeColor2(int $amt = 0)
  */
 class Color
 {
@@ -173,6 +177,14 @@ class Color
 
         // 背景色
         'background' => '#eff3f8',
+
+        // 深色模式
+        // 背景色
+        'dark-mode-bg' => '#2c2c43',
+        // 深色
+        'dark-mode-color' => '#222233',
+        'dark-mode-color2' => '#1e1e2d',
+        'dark-mode-font' => '##a8a9bb',
     ];
 
     /**

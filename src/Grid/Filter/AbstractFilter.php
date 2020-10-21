@@ -271,10 +271,6 @@ abstract class AbstractFilter
      */
     public function condition($inputs)
     {
-        if ($this->ignore) {
-            return;
-        }
-
         $value = Arr::get($inputs, $this->column);
 
         if ($value === null) {
@@ -554,6 +550,10 @@ abstract class AbstractFilter
      */
     protected function buildCondition(...$params)
     {
+        if ($this->ignore) {
+            return;
+        }
+
         $column = explode('.', $this->column);
 
         if (count($column) == 1) {
