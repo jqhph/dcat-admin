@@ -157,6 +157,27 @@ class Layout
         return $html.'</div>';
     }
 
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    public function setColumns(array $columns)
+    {
+        $this->columns = $columns;
+
+        return $this;
+    }
+
+    public function reset()
+    {
+        $this->hasColumn = false;
+
+        $this->resetCurrentFields();
+
+        $this->setColumns([]);
+    }
+
     protected function resetCurrentFields()
     {
         $this->currentFields = [];

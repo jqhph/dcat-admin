@@ -25,6 +25,11 @@ class Tab
     protected $offset = 0;
 
     /**
+     * @var int
+     */
+    protected $columnOffset = 0;
+
+    /**
      * Tab constructor.
      *
      * @param Form|WidgetForm $form
@@ -47,11 +52,14 @@ class Tab
      */
     public function append($title, \Closure $content, $active = false)
     {
-        $fields = $this->collectFields($content);
+        call_user_func($content, $this->form);
+
+        $fields = $this->collectFields();
+        $layout = $this->collectColumnLayout();
 
         $id = 'tab-form-'.($this->tabs->count() + 1).'-'.mt_rand(0, 9999);
 
-        $this->tabs->push(compact('id', 'title', 'fields', 'active'));
+        $this->tabs->push(compact('id', 'title', 'fields', 'active', 'layout'));
 
         return $this;
     }
@@ -59,14 +67,10 @@ class Tab
     /**
      * Collect fields under current tab.
      *
-     * @param \Closure $content
-     *
      * @return Collection
      */
-    protected function collectFields(\Closure $content)
+    protected function collectFields()
     {
-        call_user_func($content, $this->form);
-
         $fields = clone $this->form->fields();
 
         $all = $fields->toArray();
@@ -96,6 +100,15 @@ class Tab
         $this->offset += $fields->count();
 
         return $fields;
+    }
+
+    protected function collectColumnLayout()
+    {
+        $layout = clone $this->form->layout();
+
+        $this->form->layout()->reset();
+
+        return $layout;
     }
 
     /**

@@ -11,22 +11,10 @@
     <div class="tab-content fields-group mt-2 pt-1 pb-1">
         @foreach($tabObj->getTabs() as $tab)
             <div class="tab-pane {{ $tab['active'] ? 'active' : '' }}" id="{{ $tab['id'] }}">
-                @if($rows)
-                    <div class="ml-2 mb-2" style="margin-top: -1rem">
-                        @foreach($rows as $row)
-                            {!! $row->render() !!}
-                        @endforeach
-
-                        @foreach($fields as $field)
-                            @if($field instanceof \Dcat\Admin\Form\Field\Hidden)
-                                {!! $field->render() !!}
-                            @endif
-                        @endforeach
-                    </div>
-                @elseif($layout->hasColumns())
-                    {!! $layout->build() !!}
+                @if($tab['layout']->hasColumns())
+                    {!! $tab['layout']->build() !!}
                 @else
-                    @foreach($fields as $field)
+                    @foreach($tab['fields'] as $field)
                         {!! $field->render() !!}
                     @endforeach
                 @endif
