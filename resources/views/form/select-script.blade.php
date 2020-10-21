@@ -2,12 +2,12 @@
 @include('admin::scripts.select')
 
 <script require="@select2">
-    var configs = {!! json_encode($configs) !!};
+    var configs = {!! admin_javascript_json($configs) !!};
 
     @yield('admin.select-ajax')
 
     @if(isset($remoteOptions))
-    $.ajax({!! json_encode($remoteOptions) !!}).done(function(data) {
+    $.ajax({!! admin_javascript_json($remoteOptions) !!}).done(function(data) {
         configs.data = data;
 
         $("{!! $selector !!}").each(function (_, select) {

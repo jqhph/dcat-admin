@@ -22,5 +22,5 @@
 </div>
 
 <script require="@moment,@bootstrap-datetimepicker">
-    $('#{{ $id }}').datetimepicker({!! json_encode($options) !!});
+    $('#{{ $id }}').datetimepicker({!! admin_javascript_json($options) !!});
 </script>

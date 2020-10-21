@@ -391,7 +391,7 @@ class Admin
         $jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
         $jsVariables['sidebar_light_style'] = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
 
-        return json_encode($jsVariables);
+        return admin_javascript_json($jsVariables);
     }
 
     /**

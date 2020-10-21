@@ -38,7 +38,7 @@
 <script>
     $('#{{ $elementId }}').form({
         validate: true,
-        confirm: {!! json_encode($confirm) !!},
+        confirm: {!! admin_javascript_json($confirm) !!},
         success: function (data) {
             {!! $savedScript !!}
         },

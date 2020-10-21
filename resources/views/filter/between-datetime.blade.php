@@ -14,7 +14,7 @@
 </div>
 
 <script require="@moment,@bootstrap-datetimepicker">
-    var options = {!! json_encode($dateOptions) !!};
+    var options = {!! admin_javascript_json($dateOptions) !!};
 
     $('#{{ $id['start'] }}').datetimepicker(options);
     $('#{{ $id['end'] }}').datetimepicker($.extend(options, {useCurrent: false}));

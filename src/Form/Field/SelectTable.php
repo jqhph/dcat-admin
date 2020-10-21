@@ -121,7 +121,7 @@ class SelectTable extends Field
             }
         }
 
-        $this->options = json_encode($values);
+        $this->options = $values;
     }
 
     protected function setUpTable()

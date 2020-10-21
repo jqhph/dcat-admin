@@ -16,15 +16,15 @@
 @include('admin::scripts.select')
 
 <script require="@select2">
-    var configs = {!! json_encode($configs) !!};
+    var configs = {!! admin_javascript_json($configs) !!};
 
     @yield('admin.select-ajax')
 
     @if(isset($remote))
-    $.ajax({!! $remote['ajaxOptions'] !!}).done(function(data) {
-        $("{{ $selector }}").select2($.extend({!! json_encode($configs) !!}, {
+    $.ajax({!! admin_javascript_json($remote['ajaxOptions']) !!}).done(function(data) {
+        $("{{ $selector }}").select2($.extend({!! admin_javascript_json($configs) !!}, {
             data: data,
-        })).val({!! $remote['values'] !!}).trigger("change");
+        })).val({!! json_encode($remote['values']) !!}).trigger("change");
     });
     @else
     $("{!! $selector !!}").select2(configs);

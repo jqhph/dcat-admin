@@ -26,7 +26,7 @@
 </div>
 
 <script require="@color">
-    $('{{ $selector }}').colorpicker({!! json_encode($options) !!}).on('colorpickerChange', function(event) {
+    $('{{ $selector }}').colorpicker({!! admin_javascript_json($options) !!}).on('colorpickerChange', function(event) {
         $(this).parents('.input-group').find('.input-group-prepend i').css('background-color', event.color.toString());
     });
 </script>

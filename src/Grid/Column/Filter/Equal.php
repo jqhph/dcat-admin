@@ -80,7 +80,7 @@ class Equal extends Filter
             'format'           => $this->dateFormat,
         ];
 
-        $options = json_encode($options);
+        $options = admin_javascript_json($options);
 
         Admin::script("$('.{$this->class}').datetimepicker($options);");
     }

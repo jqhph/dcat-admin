@@ -821,7 +821,7 @@ EOF;
      */
     protected function addSubmitScript()
     {
-        $confirm = json_encode($this->confirm);
+        $confirm = admin_javascript_json($this->confirm);
 
         Admin::script(
             <<<JS

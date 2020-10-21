@@ -32,7 +32,7 @@
 </div>
 
 <script require="@moment,@bootstrap-datetimepicker">
-    var options = {!! json_encode($options) !!};
+    var options = {!! admin_javascript_json($options) !!};
 
     $('{{ $selector['start'] }}').datetimepicker(options);
     $('{{ $selector['end'] }}').datetimepicker($.extend(options, {useCurrent: false}));

@@ -33,6 +33,6 @@
         multiple: true,
         max: {{ $max }},
         @endif
-        values: {!! $options !!},
+        values: {!! json_encode($options) !!},
     });
 </script>

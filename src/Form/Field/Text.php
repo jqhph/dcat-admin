@@ -146,29 +146,11 @@ JS
     {
         Admin::js('@jquery.inputmask');
 
-        $options = $this->jsonEncodeOptions($options);
+        $options = admin_javascript_json($options);
 
         $this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
 
         return $this;
-    }
-
-    /**
-     * Encode options to Json.
-     *
-     * @param array $options
-     *
-     * @return $json
-     */
-    protected function jsonEncodeOptions($options)
-    {
-        $data = $this->formatOptions($options);
-
-        $json = json_encode($data['options']);
-
-        $json = str_replace($data['toReplace'], $data['original'], $json);
-
-        return $json;
     }
 
     /**

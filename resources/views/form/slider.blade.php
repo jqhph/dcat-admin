@@ -15,6 +15,6 @@
 
 <script require="@ionslider">
     setTimeout(function () {
-        $('{{ $selector }}').ionRangeSlider({!! $options !!})
+        $('{{ $selector }}').ionRangeSlider({!! admin_javascript_json($options) !!})
     }, 400);
 </script>

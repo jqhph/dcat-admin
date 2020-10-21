@@ -11,11 +11,4 @@ class Slider extends Field
         'prettify' => false,
         'hasGrid'  => true,
     ];
-
-    public function render()
-    {
-        $this->addVariables(['options' => json_encode($this->options)]);
-
-        return parent::render();
-    }
 }

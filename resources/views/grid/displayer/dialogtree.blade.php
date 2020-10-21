@@ -104,7 +104,7 @@
 
 <script require="@jstree">
     var nodes = {!! json_encode($nodes) !!};
-    var options = {!! json_encode($options) !!};
+    var options = {!! admin_javascript_json($options) !!};
     var area = {!! json_encode($area) !!};
 
     $('.grid-dialog-tree').off('click').on('click', function () {

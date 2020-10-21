@@ -142,11 +142,13 @@ class SelectTable extends Presenter
             }
         }
 
-        $this->options = json_encode($values);
+        $this->options = $values;
     }
 
     protected function addScript()
     {
+        $options = json_encode($this->options);
+
         Admin::script(
             <<<JS
 {$this->dialog->getScript()}
@@ -155,7 +157,7 @@ Dcat.grid.SelectTable({
     dialog: '#{$this->dialog->id()}',
     container: '#{$this->id}',
     input: '#hidden-{$this->id}',
-    values: {$this->options},
+    values: {$options},
 });
 JS
         );

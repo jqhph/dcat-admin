@@ -69,19 +69,21 @@ class Tree extends Field
     }
 
     /**
+     * 禁止过滤父节点.
+     *
+     * @param bool $value
+     *
      * @return $this
      */
-    public function disableFilterParents()
+    public function disableFilterParents(bool $value = true)
     {
-        $this->filterParents = false;
+        $this->filterParents = ! $value;
 
         return $this;
     }
 
     /**
-     * Set the field as readonly mode.
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function readOnly()
     {
@@ -244,11 +246,10 @@ class Tree extends Field
 
         $this->addVariables([
             'checkboxes' => $checkboxes,
-            'options'    => json_encode($this->options),
-            'nodes'      => json_encode($this->nodes),
+            'nodes'      => $this->nodes,
             'expand'     => $this->expand,
             'disabled'   => empty($this->attributes['disabled']) ? '' : 'disabled',
-            'parents'    => json_encode($this->parents),
+            'parents'    => $this->parents,
         ]);
 
         return parent::render();

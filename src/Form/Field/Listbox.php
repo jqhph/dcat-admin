@@ -28,7 +28,7 @@ class Listbox extends MultipleSelect
             'filterPlaceHolder' => trans('admin.listbox.filter_placeholder'),
         ]);
 
-        $this->addVariables(['settings' => json_encode($settings)]);
+        $this->addVariables(['settings' => $settings]);
 
         return parent::render();
     }

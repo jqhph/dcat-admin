@@ -171,11 +171,9 @@ class Select extends Presenter
             ],
         ]);
 
-        $ajaxOptions = json_encode(array_merge($ajaxOptions, $options), JSON_UNESCAPED_UNICODE);
+        $ajaxOptions = array_merge($ajaxOptions, $options);
 
-        $values = (array) $this->filter->getValue();
-        $values = array_filter($values);
-        $values = json_encode($values);
+        $values = array_filter((array) $this->filter->getValue());
 
         return $this->addVariables([
             'remote' => compact('ajaxOptions', 'values'),

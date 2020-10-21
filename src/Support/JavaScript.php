@@ -16,7 +16,7 @@ class JavaScript
 
     public function __construct($script)
     {
-        $this->id = Str::random();
+        $this->id = 'js('.Str::random().')';
 
         $this->value($script);
     }

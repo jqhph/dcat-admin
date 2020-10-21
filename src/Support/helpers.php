@@ -493,3 +493,27 @@ if (! function_exists('admin_color')) {
         return Admin::color()->get($color);
     }
 }
+
+if (! function_exists('admin_javascript')) {
+    /**
+     * @param string|null $color
+     *
+     * @return string|\Dcat\Admin\Color
+     */
+    function admin_javascript($data)
+    {
+        return new Dcat\Admin\Support\JavaScript($data);
+    }
+}
+
+if (! function_exists('admin_javascript_json')) {
+    /**
+     * @param string|null $color
+     *
+     * @return string
+     */
+    function admin_javascript_json($data)
+    {
+        return Dcat\Admin\Support\JavaScript::format($data);
+    }
+}

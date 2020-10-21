@@ -32,5 +32,5 @@
 <script require="@number-input">
     $('{{ $selector }}:not(.initialized)')
         .addClass('initialized')
-        .bootstrapNumber({!! json_encode($options) !!});
+        .bootstrapNumber({!! admin_javascript_json($options) !!});
 </script>
