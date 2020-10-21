@@ -76,10 +76,6 @@ class JavaScript
      */
     public static function format($value)
     {
-        if (! $value) {
-            return $value;
-        }
-
         if (is_array($value) || is_object($value)) {
             $value = json_encode(Helper::array($value));
         }
