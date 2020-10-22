@@ -61,6 +61,43 @@ class Setting extends Fluent
     }
 
     /**
+     * 追加数据.
+     *
+     * @param mixed $key
+     * @param mixed $value
+     * @param mixed $k
+     *
+     * @return $this
+     */
+    public function add($key, $value, $k = null)
+    {
+        $results = $this->getArray($key);
+
+        if ($k !== null) {
+            $results[] = $value;
+        } else {
+            $results[$k] = $value;
+        }
+
+        return $this->set($key, $results);
+    }
+
+    /**
+     * 批量追加数据.
+     *
+     * @param string $key
+     * @param array  $value
+     *
+     * @return $this
+     */
+    public function addMany($key, array $value)
+    {
+        $results = $this->getArray($key);
+
+        return $this->set($key, array_merge($results, $value));
+    }
+
+    /**
      * 保存配置到数据库.
      *
      * @param array $data

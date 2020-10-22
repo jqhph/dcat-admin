@@ -17,9 +17,45 @@ use Illuminate\Support\Fluent;
  */
 class Context extends Fluent
 {
+    public function set($key, $value = null)
+    {
+        $data = is_array($key) ? $key : [$key => $value];
+
+        foreach ($data as $key => $value) {
+            Arr::set($this->attributes, $key, $value);
+        }
+
+        return $this;
+    }
+
     public function get($key, $default = null)
     {
         return Arr::get($this->attributes, $key, $default);
+    }
+
+    public function getArray($key, $default = null)
+    {
+        return Helper::array($this->get($key, $default));
+    }
+
+    public function add($key, $value, $k = null)
+    {
+        $results = $this->getArray($key);
+
+        if ($k !== null) {
+            $results[] = $value;
+        } else {
+            $results[$k] = $value;
+        }
+
+        return $this->set($key, $results);
+    }
+
+    public function addMany($key, array $value)
+    {
+        $results = $this->getArray($key);
+
+        return $this->set($key, array_merge($results, $value));
     }
 
     public function forget($keys)

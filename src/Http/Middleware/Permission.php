@@ -101,7 +101,12 @@ class Permission
             return true;
         }
 
-        foreach (config('admin.permission.except', []) as $except) {
+        $excepts = array_merge(
+            (array) config('admin.permission.except', []),
+            Admin::context()->getArray('permission.except')
+        );
+
+        foreach ($excepts as $except) {
             $except = admin_base_path($except);
 
             if ($except !== '/') {

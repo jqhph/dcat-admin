@@ -49,7 +49,12 @@ class Authenticate
      */
     protected function shouldPassThrough($request)
     {
-        foreach (config('admin.auth.except', []) as $except) {
+        $excepts = array_merge(
+            (array) config('admin.auth.except', []),
+            Admin::context()->getArray('auth.except')
+        );
+
+        foreach ($excepts as $except) {
             $except = admin_base_path($except);
 
             if ($except !== '/') {
