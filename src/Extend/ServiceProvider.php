@@ -58,6 +58,16 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     protected $config;
 
+    /**
+     * @var array
+     */
+    protected $middleware = [];
+
+    /**
+     * @var array
+     */
+    protected $exceptRoutes = [];
+
     public function __construct($app)
     {
         parent::__construct($app);
@@ -96,6 +106,14 @@ abstract class ServiceProvider extends LaravelServiceProvider
 
         if ($routes = $this->getRoutes()) {
             $this->registerRoutes($routes);
+        }
+
+        if ($this->middleware) {
+            $this->addMiddleware();
+        }
+
+        if ($this->exceptRoutes) {
+            $this->addExceptRoutes();
         }
 
         $this->aliasAssets();
@@ -319,6 +337,35 @@ abstract class ServiceProvider extends LaravelServiceProvider
                 'middleware' => config('admin.route.middleware'),
             ], $callback);
         });
+    }
+
+    /**
+     * 注册中间件.
+     */
+    protected function addMiddleware()
+    {
+        $middleware = (array) config('admin.route.middleware');
+
+        $before = $this->middleware['before'] ?? [];
+        $after = $this->middleware['after'] ?? [];
+
+        config([
+            'admin.route.middleware' => array_merge((array) $before, $middleware, (array) $after),
+        ]);
+    }
+
+    /**
+     * 配置需要跳过权限认证和登录认证的路由.
+     */
+    protected function addExceptRoutes()
+    {
+        if (! empty($this->exceptRoutes['permission'])) {
+            Admin::context()->addMany('permission.except', (array) $this->exceptRoutes['permission']);
+        }
+
+        if (! empty($this->exceptRoutes['auth'])) {
+            Admin::context()->addMany('auth.except', (array) $this->exceptRoutes['auth']);
+        }
     }
 
     /**
