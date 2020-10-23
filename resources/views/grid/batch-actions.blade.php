@@ -16,7 +16,7 @@
 @endif
 
 <script>
-$('.{{ $parent->getRowName() }}-checkbox').on('change', function () {
+$(document).off('change', '.{{ $parent->getRowName() }}-checkbox').on('change', '.{{ $parent->getRowName() }}-checkbox', function () {
     var btn = $('.{{ $selectAllName }}-btn'), selected = Dcat.grid.selectedRows('{{ $parent->getName() }}').length;
     if (selected) {
         btn.show()
