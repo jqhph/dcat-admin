@@ -30,9 +30,9 @@
         $.put({
             url: url,
             data: data,
-            success: function (data) {
+            success: function (d) {
                 Dcat.NP.done();
-                Dcat.success(data.message);
+                Dcat.success(d.data.message || d.message);
                 reload && Dcat.reload();
             }
         });

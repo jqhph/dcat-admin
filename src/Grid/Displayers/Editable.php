@@ -92,15 +92,16 @@ $('.{$this->selector}+.save').on("click",function() {
     $.put({
         url: url,
         data: data,
-        success: function (data) {
+        success: function (d) {
+            var msg = d.data.message || d.message;
             if (data.status) {
                 obj.attr('data-value',value).addClass("hidden").prev().html(value);
-                Dcat.success(data.message);
+                Dcat.success(msg);
                 
                 refresh && Dcat.reload()
             } else {
                 obj.prev().html(old_value);
-                Dcat.error(data.message);
+                Dcat.error(msg);
             }
         },
         error:function(a,b,c) {

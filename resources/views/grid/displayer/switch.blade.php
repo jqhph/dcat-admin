@@ -37,11 +37,13 @@
             data: data,
             success: function (d) {
                 Dcat.NP.done();
+                var msg = d.data.message || d.message;
+
                 if (d.status) {
-                    Dcat.success(d.message);
+                    Dcat.success(msg);
                     reload && Dcat.reload();
                 } else {
-                    Dcat.error(d.message);
+                    Dcat.error(msg);
                 }
             }
         });

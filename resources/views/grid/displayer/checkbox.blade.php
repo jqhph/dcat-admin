@@ -36,10 +36,10 @@
             data: {
                 '{{ $column }}': values,
             },
-            success: function (data) {
+            success: function (d) {
                 btn.buttonLoading(false);
                 btn.removeAttr('loading');
-                Dcat.success(data.message);
+                Dcat.success(d.data.message || d.message);
                 reload && Dcat.reload();
             },
             error: function (a, b, c) {
