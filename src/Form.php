@@ -535,13 +535,13 @@ class Form implements Renderable
 
             $this->build();
 
-            if (($response = $this->callDeleting()) instanceof Response) {
+            if ($response = $this->callDeleting()) {
                 return $response;
             }
 
             $result = $this->repository->delete($this, $data);
 
-            if (($response = $this->callDeleted($result)) instanceof Response) {
+            if ($response = $this->callDeleted($result)) {
                 return $response;
             }
 
@@ -681,7 +681,7 @@ class Form implements Renderable
     {
         $this->inputs = $this->removeIgnoredFields($data);
 
-        if (($response = $this->callSaving()) instanceof Response) {
+        if ($response = $this->callSaving()) {
             return $response;
         }
 
@@ -776,7 +776,7 @@ class Form implements Renderable
 
             $updated = $this->repository->update($this);
 
-            if (($response = $this->callSaved($updated))) {
+            if ($response = $this->callSaved($updated)) {
                 return $this->sendResponse($response);
             }
 
