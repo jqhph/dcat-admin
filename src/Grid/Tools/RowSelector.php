@@ -64,7 +64,8 @@ HTML;
     public function renderColumn($row, $id)
     {
         $this->setupScript();
-        $title = e($this->getTitle($row, $id));
+        $title = $this->getTitle($row, $id);
+        $title = e(is_array($title) ? json_encode($title) : $title);
 
         return <<<EOT
 <div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid checkbox-grid-column">
