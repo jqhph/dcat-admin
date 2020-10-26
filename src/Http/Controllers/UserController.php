@@ -2,9 +2,9 @@
 
 namespace Dcat\Admin\Http\Controllers;
 
-use Dcat\Admin\Http\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Http\Auth\Permission;
 use Dcat\Admin\Http\Repositories\Administrator;
 use Dcat\Admin\Models\Administrator as AdministratorModel;
 use Dcat\Admin\Show;

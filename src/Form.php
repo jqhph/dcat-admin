@@ -536,13 +536,13 @@ class Form implements Renderable
             $this->build();
 
             if ($response = $this->callDeleting()) {
-                return $response;
+                return $this->sendResponse($response);
             }
 
             $result = $this->repository->delete($this, $data);
 
             if ($response = $this->callDeleted($result)) {
-                return $response;
+                return $this->sendResponse($response);
             }
 
             $status = $result ? true : false;

@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Http\Middleware;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Http\Auth\Permission as Checker;
 use Dcat\Admin\Exception\RuntimeException;
+use Dcat\Admin\Http\Auth\Permission as Checker;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

@@ -44,14 +44,14 @@ trait HasFiles
         }
 
         if ($field && $field instanceof UploadFieldInterface) {
-            if (($results = $this->callUploading($field, $file)) && $results instanceof Response) {
-                return $results;
+            if ($results = $this->callUploading($field, $file)) {
+                return $this->sendResponse($results);
             }
 
             $response = $field->upload($file);
 
-            if (($results = $this->callUploaded($field, $file, $response)) && $results instanceof Response) {
-                return $results;
+            if ($results = $this->callUploaded($field, $file, $response)) {
+                return $this->sendResponse($results);
             }
 
             return $response;
