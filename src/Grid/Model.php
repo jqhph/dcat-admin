@@ -258,6 +258,18 @@ class Model
     }
 
     /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setPageName($name)
+    {
+        $this->pageName = $name;
+
+        return $this;
+    }
+
+    /**
      * Get the query string variable used to store the sort.
      *
      * @return string
@@ -265,6 +277,18 @@ class Model
     public function getSortName()
     {
         return $this->grid->makeName($this->sortName);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setSortName($name)
+    {
+        $this->sortName = $name;
+
+        return $this;
     }
 
     /**

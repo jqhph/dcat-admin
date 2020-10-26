@@ -231,7 +231,7 @@ trait HasDisplayers
     {
         $this->grid->model()->enableTree($showAll, $sortable);
 
-        $this->grid->fetching(function () use ($showAll) {
+        $this->grid->listen(Grid\Events\Fetching::class, function () use ($showAll) {
             if ($this->grid->model()->getParentIdFromRequest()) {
                 $this->grid->disableFilter();
                 $this->grid->disableToolbar();

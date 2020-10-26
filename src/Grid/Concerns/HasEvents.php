@@ -37,9 +37,9 @@ trait HasEvents
      */
     public function fire(Events\Event $event)
     {
-        Event::dispatch($event);
-
         $this->dispatched[get_class($event)] = $event;
+
+        Event::dispatch($event);
     }
 
     /**

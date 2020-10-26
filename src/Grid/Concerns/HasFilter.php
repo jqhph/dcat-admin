@@ -16,11 +16,6 @@ trait HasFilter
     protected $filter;
 
     /**
-     * @var array
-     */
-    protected $beforeApplyFilterCallbacks = [];
-
-    /**
      * Setup grid filter.
      *
      * @return void
@@ -67,28 +62,6 @@ trait HasFilter
         call_user_func($callback, $this->filter);
 
         return $this;
-    }
-
-    /**
-     * @param Closure $callback
-     *
-     * @return void
-     */
-    public function fetching(\Closure $callback)
-    {
-        $this->beforeApplyFilterCallbacks[] = $callback;
-    }
-
-    /**
-     * @return void
-     */
-    protected function callFetchingCallbacks()
-    {
-        foreach ($this->beforeApplyFilterCallbacks as $callback) {
-            $callback($this);
-        }
-
-        $this->beforeApplyFilterCallbacks = [];
     }
 
     /**

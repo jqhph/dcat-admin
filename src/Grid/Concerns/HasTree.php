@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Events\Fetched;
+use Dcat\Admin\Grid\Events\Fetching;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
@@ -46,7 +47,7 @@ trait HasTree
     {
         $this->showAllChildrenNodes = $showAll;
 
-        $this->grid->fetching(function () use ($sortable) {
+        $this->grid()->listen(Fetching::class, function () use ($sortable) {
             $this->sortTree($sortable);
             $this->bindChildrenNodesQuery();
 
@@ -59,7 +60,7 @@ trait HasTree
             $this->addIgnoreQueries();
         });
 
-        $this->grid()->listen(Fetched::class, function (Grid $grid, Collection $collection) {
+        $this->grid()->listen(Fetched::class, function ($grid, Collection $collection) {
             if (! $this->getParentIdFromRequest()) {
                 return;
             }
@@ -126,7 +127,7 @@ trait HasTree
     public function generateTreeUrl()
     {
         return Helper::urlWithoutQuery(
-            $this->grid->filter()->urlWithoutFilters(),
+            $this->grid()->filter()->urlWithoutFilters(),
             $this->treeIgnoreQueryNames
         );
     }
