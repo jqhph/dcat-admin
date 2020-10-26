@@ -310,6 +310,7 @@ trait ModelTree
     protected function buildSelectOptions(array $nodes = [], $parentId = 0, $prefix = '')
     {
         $prefix = $prefix ?: str_repeat('&nbsp;', 6);
+        $this->tree_prefix = $this->tree_prefix ?? $prefix;
 
         $options = [];
 
@@ -321,9 +322,9 @@ trait ModelTree
         $parentColumn = $this->getParentColumn();
 
         foreach ($nodes as $node) {
-            $node[$titleColumn] = $prefix.'&nbsp;'.$node[$titleColumn];
+            $node[$titleColumn] = $prefix.' '.$node[$titleColumn];
             if ($node[$parentColumn] == $parentId) {
-                $children = $this->buildSelectOptions($nodes, $node[$this->getKeyName()], $prefix.$prefix);
+                $children = $this->buildSelectOptions($nodes, $node[$this->getKeyName()], $prefix . $this->tree_prefix);
 
                 $options[$node[$this->getKeyName()]] = $node[$titleColumn];
 
