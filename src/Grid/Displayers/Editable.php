@@ -94,7 +94,7 @@ $('.{$this->selector}+.save').on("click",function() {
         data: data,
         success: function (d) {
             var msg = d.data.message || d.message;
-            if (data.status) {
+            if (d.status) {
                 obj.attr('data-value',value).addClass("hidden").prev().html(value);
                 Dcat.success(msg);
                 
