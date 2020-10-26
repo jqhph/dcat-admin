@@ -121,6 +121,7 @@ $(document).on('change', "{$this->getElementClassSelector()}", function () {
             data: $.map(data, function (d) {
                 d.id = d.$idField;
                 d.text = d.$textField;
+                d = d.replace(/&nbsp;/g,'-');
                 return d;
             })
         }).val(target.attr('data-value').split(',')).trigger('change');
