@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Http\Auth;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Http\Middleware\Pjax;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Models\Role;
 use Illuminate\Contracts\Support\Arrayable;
 
