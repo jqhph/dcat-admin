@@ -469,6 +469,14 @@ class Form implements Renderable
     }
 
     /**
+     * @return \Dcat\Admin\Form\Layout
+     */
+    public function layout()
+    {
+        return $this->builder->layout();
+    }
+
+    /**
      * @return Repository
      */
     public function repository()
