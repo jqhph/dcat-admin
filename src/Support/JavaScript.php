@@ -77,7 +77,7 @@ class JavaScript
     public static function format($value)
     {
         if (is_array($value) || is_object($value)) {
-            $value = json_encode(Helper::array($value));
+            $value = json_encode(Helper::array($value, false));
         }
 
         foreach (static::all() as $id => $script) {
