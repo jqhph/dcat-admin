@@ -96,6 +96,7 @@ let defaultActions = {
         function hide() {
             $('.dropdown-menu').removeClass('show')
         }
+        $document.off('click', document, hide)
         $document.on('click', hide);
 
         function toggle(event) {
@@ -114,16 +115,16 @@ let defaultActions = {
             event.preventDefault()
             event.stopPropagation()
 
+            let $this = $(this);
+
             setTimeout(function() {
-                $(this).Dropdown('fixPosition')
+                $this.Dropdown('fixPosition')
             }, 1)
         }
 
         let selector = '[data-toggle="dropdown"]';
 
-        $document
-            .on('click', selector, toggle)
-            .on('click', selector, fix);
+        $document.off('click',selector).on('click', selector, toggle).on('click', selector, fix);
     },
 };
 
