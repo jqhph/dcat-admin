@@ -897,7 +897,7 @@ HTML;
             return $view->render();
         }
 
-        return $wrapper($view);
+        return Helper::render($wrapper($view));
     }
 
     /**

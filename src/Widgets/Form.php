@@ -855,11 +855,7 @@ HTML;
         $this->prepareHandler();
 
         if ($this->allowAjaxSubmit()) {
-            $this->addVariables([
-                'confirm'     => $this->confirm,
-                'savedScript' => $this->savedScript(),
-                'errorScript' => $this->errorScript(),
-            ]);
+            $this->addAjaxScript();
         }
 
         $tabObj = $this->getTab();
@@ -872,7 +868,27 @@ HTML;
             'tabObj' => $tabObj,
         ]);
 
-        return Admin::view($this->view, $this->variables());
+        return view($this->view, $this->variables())->render();
+    }
+
+    protected function addAjaxScript()
+    {
+        $confirm = admin_javascript_json($this->confirm);
+
+        Admin::script(
+            <<<JS
+$('#{$this->getElementId()}').form({
+    validate: true,
+    confirm: {$confirm},
+    success: function (data) {
+        {$this->savedScript()}
+    },
+    error: function (response) {
+        {$this->errorScript()}
+    }
+});
+JS
+        );
     }
 
     /**

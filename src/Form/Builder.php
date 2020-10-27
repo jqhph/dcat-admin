@@ -808,12 +808,10 @@ EOF;
     protected function doWrap(Renderable $view)
     {
         if ($wrapper = $this->wrapper) {
-            return Admin::resolveHtml($wrapper($view))['html'];
+            return Helper::render($wrapper($view));
         }
 
-        $html = Admin::resolveHtml($view->render())['html'];
-
-        return "<div class='card'>{$html}</div>";
+        return "<div class='card'>{$view->render()}</div>";
     }
 
     /**

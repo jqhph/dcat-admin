@@ -33,18 +33,3 @@
 
     {!! $footer !!}
 {!! $end !!}
-
-@if(! empty($ajax))
-<script>
-    $('#{{ $elementId }}').form({
-        validate: true,
-        confirm: {!! admin_javascript_json($confirm) !!},
-        success: function (data) {
-            {!! $savedScript !!}
-        },
-        error: function (response) {
-            {!! $errorScript !!}
-        }
-    });
-</script>
-@endif
