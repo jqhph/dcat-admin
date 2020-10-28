@@ -17,6 +17,8 @@ class ArrayField extends HasMany
         } elseif (count($arguments) == 2) {
             [$this->label, $this->builder] = $arguments;
         }
+
+        $this->columnClass = $this->formatClass($column);
     }
 
     protected function buildRelatedForms()
