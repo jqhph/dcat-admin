@@ -33,6 +33,8 @@ class MultipleSelectTable extends SelectTable
 
     protected function addScript()
     {
+        $options = json_encode($this->options);
+
         Admin::script(
             <<<JS
 {$this->dialog->getScript()}
@@ -43,7 +45,7 @@ Dcat.grid.SelectTable({
     input: '#hidden-{$this->id}',
     multiple: true,
     max: {$this->max},
-    values: {$this->options},
+    values: {$options},
 });
 JS
         );
