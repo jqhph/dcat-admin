@@ -798,8 +798,8 @@ class Helper
         $method = $query === 'orWhere' ? 'orWhere' : 'where';
         $subQuery = $query === 'orWhere' ? 'where' : $query;
 
-        $model->$method(function () use ($model, $column, $subQuery, $params) {
-            static::withRelationQuery($model, $column, $subQuery, $params);
+        $model->$method(function ($q) use ($column, $subQuery, $params) {
+            static::withRelationQuery($q, $column, $subQuery, $params);
         });
     }
 
