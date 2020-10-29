@@ -53,18 +53,16 @@
   visibility: visible;
 }
 
-.custom-data-table {
-  .grid-selector {
-    padding: 2px 0;
-    margin: .35rem 0 -.5rem;
+.grid-selector {
+  padding: 2px 0;
+  margin: .35rem 0 -.5rem;
 
-    .wrap {
-      border-bottom: 0;
-      background: $white;
-      box-shadow: $shadow;
-      border-radius: $card-border-radius;
-      margin: 7px 0;
-    }
+  .wrap {
+    border-bottom: 0;
+    background: $white;
+    box-shadow: $shadow;
+    border-radius: $card-border-radius;
+    margin: 7px 0;
   }
 }
 
