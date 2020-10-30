@@ -269,7 +269,7 @@ class NestedForm
                 $value = $field->prepare($value);
             }
 
-            if (($field instanceof Form\Field\Hidden) || $value != $field->original()) {
+            if (($field instanceof Form\Field\Hidden) || ! Helper::equal($field->original(), $value)) {
                 if (is_array($columns)) {
                     foreach ($columns as $name => $column) {
                         Arr::set($prepared, $column, $value[$name]);
