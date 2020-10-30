@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'menu_titles' => [
+    'titles' => [
         'index'         => '首頁',
         'admin'         => '系統',
         'users'         => '管理員',
