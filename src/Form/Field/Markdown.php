@@ -32,7 +32,12 @@ class Markdown extends Field
         'autoFocus'          => true,
     ];
 
-    protected $language = '@admin/dcat/plugins/editor-md/languages/en.js';
+    protected $language;
+
+    protected $defaultLangs = [
+        'en'    => '@admin/dcat/plugins/editor-md/languages/en.js',
+        'zh_TW' => '@admin/dcat/plugins/editor-md/languages/zh-tw.js',
+    ];
 
     protected $disk;
 
@@ -160,12 +165,25 @@ class Markdown extends Field
             $this->options['imageUploadURL'] = $this->defaultImageUploadUrl();
         }
 
-        if (config('app.locale') !== 'zh-CN') {
-            Admin::js($this->language);
-        }
+        $this->requireLang();
 
         $this->addVariables(['options' => JavaScript::format($this->options)]);
 
         return parent::render();
+    }
+
+    protected function requireLang()
+    {
+        $locale = config('app.locale');
+
+        if (isset($this->defaultLangs[$locale])) {
+            Admin::js($this->defaultLangs[$locale]);
+
+            return;
+        }
+
+        if ($this->language) {
+            Admin::js($this->language);
+        }
     }
 }
