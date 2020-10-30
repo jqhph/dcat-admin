@@ -767,7 +767,7 @@ class Helper
         foreach ($relations as $first => $v) {
             if (isset($input[$first])) {
                 foreach ($input[$first] as $key => $value) {
-                    if (is_array($value) && ! Arr::isAssoc($value)) {
+                    if (is_array($value)) {
                         $input["$first.$key"] = $value;
                     }
                 }
@@ -845,5 +845,40 @@ class Helper
         }
 
         return $item;
+    }
+
+    /**
+     * 格式化表单元素 name 属性.
+     *
+     * @param string|array $name
+     *
+     * @return mixed|string
+     */
+    public static function formatElementName($name)
+    {
+        if (! $name) {
+            return $name;
+        }
+
+        if (is_array($name)) {
+            foreach ($name as &$v) {
+                $v = static::formatElementName($name);
+            }
+
+            return $name;
+        }
+
+        $name = explode('.', $name);
+
+        if (count($name) == 1) {
+            return $name[0];
+        }
+
+        $html = array_shift($name);
+        foreach ($name as $piece) {
+            $html .= "[$piece]";
+        }
+
+        return $html;
     }
 }
