@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\MultipleSelectTable;
 use Dcat\Admin\Form\Field\SelectTable;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -268,7 +269,7 @@ class NestedForm
                 $value = $field->prepare($value);
             }
 
-            if (($field instanceof Form\Field\Hidden) || $value != $field->original()) {
+            if (($field instanceof Form\Field\Hidden) || ! Helper::equal($field->original(), $value)) {
                 if (is_array($columns)) {
                     foreach ($columns as $name => $column) {
                         Arr::set($prepared, $column, $value[$name]);
@@ -413,18 +414,28 @@ class NestedForm
         if (is_array($column)) {
             foreach ($column as $k => $name) {
                 $errorKey[$k] = sprintf('%s.%s.%s', $this->relationName, $key, $name);
-                $elementName[$k] = sprintf('%s[%s][%s]', $this->relationName, $key, $name);
-                $elementClass[$k] = [$this->relationName, $name];
+                $elementName[$k] = sprintf('%s[%s][%s]', $this->formatName(), $key, $name);
+                $elementClass[$k] = [$this->formatClass(), $this->formatClass($name)];
             }
         } else {
             $errorKey = sprintf('%s.%s.%s', $this->relationName, $key, $column);
-            $elementName = sprintf('%s[%s][%s]', $this->relationName, $key, $column);
-            $elementClass = [$this->relationName, $column];
+            $elementName = sprintf('%s[%s][%s]', $this->formatName(), $key, $column);
+            $elementClass = [$this->formatClass(), $this->formatClass($column)];
         }
 
         return $field->setErrorKey($errorKey)
             ->setElementName($elementName)
             ->setElementClass($elementClass);
+    }
+
+    protected function formatClass($name = null)
+    {
+        return str_replace('.', '_', $name ?: $this->relationName);
+    }
+
+    protected function formatName($name = null)
+    {
+        return Helper::formatElementName($name ?: $this->relationName);
     }
 
     /**

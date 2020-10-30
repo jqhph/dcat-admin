@@ -113,11 +113,9 @@ class HasMany extends Field
      */
     public function getValidator(array $input)
     {
-        if (! array_key_exists($this->column, $input)) {
+        if (! Arr::has($input, $this->column)) {
             return false;
         }
-
-        $input = Arr::only($input, $this->column);
 
         $form = $this->buildNestedForm();
 
@@ -168,15 +166,17 @@ class HasMany extends Field
         $newInput = [];
 
         foreach ($rules as $column => $rule) {
-            foreach (array_keys($input[$this->column]) as $key) {
-                if ($input[$this->column][$key][NestedForm::REMOVE_FLAG_NAME]) {
+            foreach (array_keys(Arr::get($input, $this->column)) as $key) {
+                if (Arr::get($input, "{$this->column}.{$key}.".NestedForm::REMOVE_FLAG_NAME)) {
                     continue;
                 }
 
                 $newRules["{$this->column}.$key.$column"] = $rule;
-                if (isset($input[$this->column][$key][$column]) &&
-                    is_array($input[$this->column][$key][$column])) {
-                    foreach ($input[$this->column][$key][$column] as $vkey => $value) {
+
+                $ruleValue = Arr::get($input, "{$this->column}.$key.$column");
+
+                if (is_array($ruleValue)) {
+                    foreach ($ruleValue as $vkey => $value) {
                         $newInput["{$this->column}.$key.{$column}$vkey"] = $value;
                     }
                 }
@@ -201,7 +201,7 @@ class HasMany extends Field
     protected function formatValidationMessages(array $input, array $messages)
     {
         $result = [];
-        foreach ($input[$this->column] as $key => &$value) {
+        foreach (Arr::get($input, $this->column) as $key => &$value) {
             $newKey = $this->column.'.'.$key;
 
             foreach ($messages as $k => $message) {
@@ -278,7 +278,7 @@ class HasMany extends Field
          *
          * in the HasMany relation, has many data/field set, $set is field set in the below
          */
-        foreach ($input[$this->column] as $index => $set) {
+        foreach (Arr::get($input, $this->column) as $index => $set) {
 
             /*
              * foreach the field set to find the corresponding $column

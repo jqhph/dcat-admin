@@ -320,31 +320,7 @@ class Field implements Renderable
      */
     protected function formatName($column)
     {
-        if (is_string($column)) {
-            $name = explode('.', $column);
-
-            if (count($name) == 1) {
-                return $name[0];
-            }
-
-            $html = array_shift($name);
-            foreach ($name as $piece) {
-                $html .= "[$piece]";
-            }
-
-            return $html;
-        }
-
-        if (is_array($this->column)) {
-            $names = [];
-            foreach ($this->column as $key => $name) {
-                $names[$key] = $this->formatName($name);
-            }
-
-            return $names;
-        }
-
-        return '';
+        return Helper::formatElementName($column);
     }
 
     /**
