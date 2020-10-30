@@ -737,9 +737,7 @@ class EloquentRepository extends Repository implements TreeRepository
                         $related->{$relation->getForeignKeyName()} = $model->{$localKey};
                     }
 
-                    foreach ($prepared[$name] as $column => $value) {
-                        $related->setAttribute($column, $value);
-                    }
+                    $related->setAttribute($name, $values);
 
                     $related->save();
                     break;
