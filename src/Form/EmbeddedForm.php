@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -236,14 +237,14 @@ class EmbeddedForm
 
         if (is_array($jsonKey)) {
             foreach ($jsonKey as $index => $name) {
-                $elementName[$index] = "{$this->column}[$name]";
+                $elementName[$index] = $this->formatName("{$this->column}").$name;
                 $errorKey[$index] = "{$this->column}.$name";
-                $elementClass[$index] = "{$this->column}_$name";
+                $elementClass[$index] = $this->formatClass("{$this->column}_$name");
             }
         } else {
-            $elementName = "{$this->column}[$jsonKey]";
+            $elementName = $this->formatName("{$this->column}.$jsonKey");
             $errorKey = "{$this->column}.$jsonKey";
-            $elementClass = "{$this->column}_$jsonKey";
+            $elementClass = $this->formatClass("{$this->column}_$jsonKey");
         }
 
         $field->setElementName($elementName)
@@ -251,6 +252,16 @@ class EmbeddedForm
             ->setElementClass($elementClass);
 
         return $field;
+    }
+
+    protected function formatName($name)
+    {
+        return Helper::formatElementName($name);
+    }
+
+    protected function formatClass(string $column)
+    {
+        return str_replace('.', '-', $column);
     }
 
     /**

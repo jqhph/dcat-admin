@@ -55,11 +55,11 @@ class Embeds extends Field
      */
     public function getValidator(array $input)
     {
-        if (! array_key_exists($this->column, $input)) {
+        if (! Arr::has($input, $this->column)) {
             return false;
         }
 
-        $input = Arr::only($input, $this->column);
+        //$input = Arr::only($input, $this->column);
 
         $rules = $attributes = $messages = [];
 
@@ -204,7 +204,7 @@ class Embeds extends Field
     {
         $column = array_flip($column);
 
-        foreach ($input[$this->column] as $key => $value) {
+        foreach (Arr::get($input, $this->column) as $key => $value) {
             if (! array_key_exists($key, $column)) {
                 continue;
             }
