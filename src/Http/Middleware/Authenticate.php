@@ -55,6 +55,10 @@ class Authenticate
         );
 
         foreach ($excepts as $except) {
+            if ($request->routeIs($except)) {
+                return true;
+            }
+
             $except = admin_base_path($except);
 
             if ($except !== '/') {
