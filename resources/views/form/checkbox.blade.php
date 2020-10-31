@@ -23,7 +23,7 @@
 @if(! empty($canCheckAll))
 <script once>
     $('[name="_check_all_"]').on('change', function () {
-        $(this).parents('.form-field').find('input[type="checkbox"]').prop('checked', this.checked);
+        $(this).parents('.form-field').find('input[type="checkbox"]:not(:first)').prop('checked', this.checked).trigger('change');
     });
 </script>
 @endif
