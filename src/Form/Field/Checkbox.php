@@ -15,6 +15,8 @@ class Checkbox extends MultipleSelect
 
     protected $canCheckAll = false;
 
+    protected $inline = true;
+
     /**
      * @param array|\Closure|string $options
      *
@@ -59,6 +61,13 @@ class Checkbox extends MultipleSelect
         return $this;
     }
 
+    public function inline(bool $inline)
+    {
+        $this->inline = $inline;
+
+        return $this;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -83,7 +92,7 @@ class Checkbox extends MultipleSelect
         }
 
         $checkbox
-            ->inline()
+            ->inline($this->inline)
             ->check($this->value())
             ->class($this->getElementClassString());
 
