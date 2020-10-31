@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class Admin
@@ -359,6 +360,44 @@ class Admin
     public static function classLoader()
     {
         return Composer::loader();
+    }
+
+    /**
+     * 往分组插入中间件.
+     *
+     * @param array $mix
+     */
+    public static function mixMiddlewareGroup(array $mix = [])
+    {
+        $router = app('router');
+
+        $group = $router->getMiddlewareGroups()['admin'] ?? [];
+
+        if ($mix) {
+            $finalGroup = [];
+
+            foreach ($group as $i => $mid) {
+                $next = $i + 1;
+
+                $finalGroup[] = $mid;
+
+                if (! isset($group[$next]) || $group[$next] !== 'admin.permission') {
+                    continue;
+                }
+
+                $finalGroup = array_merge($finalGroup, $mix);
+
+                $mix = [];
+            }
+
+            if ($mix) {
+                $finalGroup = array_merge($finalGroup, $mix);
+            }
+
+            $group = $finalGroup;
+        }
+
+        $router->middlewareGroup('admin', $group);
     }
 
     /**

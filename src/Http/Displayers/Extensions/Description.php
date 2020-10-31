@@ -31,9 +31,15 @@ class Description extends AbstractDisplayer
 
         return Modal::make()
             ->lg()
-            ->title(trans('admin.setting').' - '.$this->getKey())
+            ->title($this->getModalTitle($extension))
             ->body($extension->settingForm())
             ->button($label);
+    }
+
+    protected function getModalTitle($extension)
+    {
+        return $extension->settingForm()->title()
+            ?: (trans('admin.setting').' - '.str_replace('.', '/', $this->getKey()));
     }
 
     protected function resolveAction($action)

@@ -12,6 +12,12 @@ use Illuminate\Validation\ValidationException;
 /**
  * Class JsonResponse.
  *
+ * @method $this successIf($condition, ?string $message)
+ * @method $this errorIf($condition, ?string $message)
+ * @method $this warningIf($condition, ?string $message)
+ * @method $this infoIf($condition, ?string $message)
+ * @method $this detailIf($condition, ?string $message)
+ * @method $this statusCodeIf($condition, int $code)
  * @method $this redirectIf($condition, ?string $url)
  * @method $this locationIf($condition, ?string $url)
  * @method $this refreshIf($condition)
@@ -374,7 +380,9 @@ class JsonResponse
             if (array_shift($arguments)) {
                 $method = Str::replaceLast('If', '', $method);
 
-                return $this->$method(...$arguments);
+                $condition = value(array_shift($arguments));
+
+                return $condition ? $this->$method(...$arguments) : $this;
             }
         }
 

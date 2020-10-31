@@ -347,11 +347,19 @@ abstract class ServiceProvider extends LaravelServiceProvider
         $middleware = (array) config('admin.route.middleware');
 
         $before = $this->middleware['before'] ?? [];
+        $middle = $this->middleware['middle'] ?? [];
         $after = $this->middleware['after'] ?? [];
+
+        $this->mixMiddleware($middle);
 
         config([
             'admin.route.middleware' => array_merge((array) $before, $middleware, (array) $after),
         ]);
+    }
+
+    protected function mixMiddleware(array $middle)
+    {
+        Admin::mixMiddlewareGroup($middle);
     }
 
     /**
