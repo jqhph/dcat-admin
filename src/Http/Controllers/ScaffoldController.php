@@ -3,22 +3,22 @@
 namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Http\Auth\Permission;
-use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Scaffold\ControllerCreator;
-use Dcat\Admin\Scaffold\LangCreator;
-use Dcat\Admin\Scaffold\MigrationCreator;
-use Dcat\Admin\Scaffold\ModelCreator;
-use Dcat\Admin\Scaffold\RepositoryCreator;
-use Dcat\Admin\Support\Helper;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Dcat\Admin\Layout\Content;
+use Dcat\Admin\Support\Helper;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\URL;
+use Dcat\Admin\Http\Auth\Permission;
+use Dcat\Admin\Scaffold\LangCreator;
+use Dcat\Admin\Scaffold\ModelCreator;
+use Illuminate\Support\Facades\Artisan;
+use Dcat\Admin\Scaffold\MigrationCreator;
+use Dcat\Admin\Scaffold\ControllerCreator;
+use Dcat\Admin\Scaffold\RepositoryCreator;
 
 class ScaffoldController extends Controller
 {
@@ -73,6 +73,7 @@ class ScaffoldController extends Controller
         }
 
         Admin::requireAssets('select2');
+        Admin::requireAssets('sortable');
 
         $dbTypes = static::$dbTypes;
         $dataTypeMap = static::$dataTypeMap;
