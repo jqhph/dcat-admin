@@ -26,6 +26,10 @@ class RowAction extends Action
      */
     public function getKey()
     {
+        if ($key = parent::getKey()) {
+            return $key;
+        }
+
         return $this->row->{$this->actions->parent()->getKeyName()};
     }
 
