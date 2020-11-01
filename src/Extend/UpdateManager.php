@@ -51,6 +51,10 @@ class UpdateManager
             return $this;
         }
 
+        if ($stopOnVersion === null) {
+            $extension->uninstall();
+        }
+
         if ($stopOnVersion && ! $this->versionManager->hasDatabaseVersion($extension, $stopOnVersion)) {
             throw new AdminException('Extension version not found');
         }
@@ -79,6 +83,8 @@ class UpdateManager
 
             return;
         }
+
+        $extension->update();
 
         $this->note($name);
 

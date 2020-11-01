@@ -294,6 +294,13 @@ abstract class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
+     * 更新扩展.
+     */
+    public function update()
+    {
+    }
+
+    /**
      * 卸载扩展.
      */
     public function uninstall()
@@ -442,11 +449,35 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     public static function setting($key = null, $value = null)
     {
-        $extension = app(static::class);
+        $extension = static::instance();
 
         if ($extension && $extension instanceof ServiceProvider) {
             return $extension->config($key, $value);
         }
+    }
+
+    /**
+     * 翻译.
+     *
+     * @param string $key
+     * @param array  $replace
+     * @param null   $locale
+     *
+     * @return array|string|null
+     */
+    public static function trans($key, $replace = [], $locale = null)
+    {
+        return trans(static::instance()->getName().'::'.$key, $replace, $locale);
+    }
+
+    /**
+     * 获取自身实例.
+     *
+     * @return $this
+     */
+    public static function instance()
+    {
+        return app(static::class);
     }
 
     /**

@@ -161,6 +161,53 @@ class Menu
      */
     public function visible($item)
     {
+        if (! $this->checkPermission($item)) {
+            return false;
+        }
+
+        if (! $this->checkExtension($item)) {
+            return false;
+        }
+
+        $show = $item['show'] ?? null;
+        if ($show !== null && ! $show) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 判断扩展是否启用.
+     *
+     * @param $item
+     *
+     * @return bool
+     */
+    protected function checkExtension($item)
+    {
+        $extension = $item['extension'] ?? null;
+
+        if (! $extension) {
+            return true;
+        }
+
+        if (! $extension = Admin::extension($extension)) {
+            return false;
+        }
+
+        return $extension->enabled();
+    }
+
+    /**
+     * 判断权限.
+     *
+     * @param $item
+     *
+     * @return bool
+     */
+    protected function checkPermission($item)
+    {
         $permissionIds = $item['permission_id'] ?? null;
         $roles = array_column(Helper::array($item['roles'] ?? []), 'slug');
         $permissions = array_column(Helper::array($item['permissions'] ?? []), 'slug');

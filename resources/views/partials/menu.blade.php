@@ -5,11 +5,7 @@
 @endphp
 
 @if($builder->visible($item))
-    @if(isset($item['is_header']))
-        <li class="nav-header">
-            {{ $builder->translate($item['title']) }}
-        </li>
-    @elseif(empty($item['children']))
+    @if(empty($item['children']))
         <li class="nav-item">
             <a @if(mb_strpos($item['uri'], '://') !== false) target="_blank" @endif href="{{ $builder->getUrl($item['uri']) }}" class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
                 {!! str_repeat('&nbsp;', $depth) !!}<i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>

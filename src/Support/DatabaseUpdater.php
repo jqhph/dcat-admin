@@ -82,6 +82,10 @@ class DatabaseUpdater
      */
     public function resolve($file)
     {
+        if (is_object($file)) {
+            return $file;
+        }
+
         if (! is_file($file)) {
             return;
         }

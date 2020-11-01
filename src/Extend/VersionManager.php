@@ -309,7 +309,7 @@ class VersionManager
             return;
         }
 
-        $this->updater->setUp($updateFile, function () use ($name, $version, $script) {
+        $this->updater->setUp($this->resolveUpdater($name, $updateFile), function () use ($name, $version, $script) {
             ExtensionHistory::query()->create([
                 'name'    => $name,
                 'type'    => static::HISTORY_TYPE_SCRIPT,
@@ -319,11 +319,22 @@ class VersionManager
         });
     }
 
+    protected function resolveUpdater($name, $updateFile)
+    {
+        $updater = $this->updater->resolve($updateFile);
+
+        if (method_exists($updater, 'setExtension')) {
+            $updater->setExtension($this->manager->get($name));
+        }
+
+        return $updater;
+    }
+
     protected function removeDatabaseScript($name, $version, $script)
     {
         $updateFile = $this->manager->path($name, 'updates/'.$script);
 
-        $this->updater->packDown($updateFile, function () use ($name, $version, $script) {
+        $this->updater->packDown($this->resolveUpdater($name, $updateFile), function () use ($name, $version, $script) {
             ExtensionHistory::query()
                 ->where('name', $name)
                 ->where('type', static::HISTORY_TYPE_SCRIPT)

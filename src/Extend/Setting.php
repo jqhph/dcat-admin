@@ -75,6 +75,20 @@ abstract class Setting extends Form implements LazyRenderable
     }
 
     /**
+     * 翻译.
+     *
+     * @param string $key
+     * @param array  $replace
+     * @param null   $locale
+     *
+     * @return array|string|null
+     */
+    protected function trans($key, $replace = [], $locale = null)
+    {
+        return $this->extension()->trans($key, $replace, $locale);
+    }
+
+    /**
      * 填充表单数据.
      *
      * @return array

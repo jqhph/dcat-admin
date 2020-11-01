@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Http\Actions\Menu\Visiable;
 use Dcat\Admin\Http\Repositories\Menu;
 use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
@@ -68,6 +69,14 @@ class MenuController extends AdminController
             $tree->disableQuickCreateButton();
             $tree->disableEditButton();
 
+            $tree->actions(function (Tree\Actions $actions) {
+                if ($actions->getRow()->extension) {
+                    $actions->disableDelete();
+                }
+
+                $actions->prepend(new Visiable());
+            });
+
             $tree->branch(function ($branch) {
                 $payload = "<i class='fa {$branch['icon']}'></i>&nbsp;<strong>{$branch['title']}</strong>";
 
@@ -112,6 +121,7 @@ class MenuController extends AdminController
             $form->text('title', trans('admin.title'))->required();
             $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
             $form->text('uri', trans('admin.uri'));
+            $form->switch('show', trans('admin.show'));
 
             if ($menuModel::withRole()) {
                 $form->multipleSelect('roles', trans('admin.roles'))
