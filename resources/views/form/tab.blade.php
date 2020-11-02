@@ -14,9 +14,17 @@
                 @if($tab['layout']->hasColumns())
                     {!! $tab['layout']->build() !!}
                 @else
-                    @foreach($tab['fields'] as $field)
-                        {!! $field->render() !!}
-                    @endforeach
+                    @if($tabObj->hasRows)
+                    <div class="ml-2 mb-2" style="margin-top: -1rem">
+                        @foreach($tab['fields'] as $field)
+                            {!! $field->render() !!}
+                        @endforeach
+                    </div>
+                    @else
+                        @foreach($tab['fields'] as $field)
+                            {!! $field->render() !!}
+                        @endforeach
+                    @endif
                 @endif
             </div>
         @endforeach

@@ -30,6 +30,11 @@ class Tab
     protected $columnOffset = 0;
 
     /**
+     * @var bool
+     */
+    public $hasRows = false;
+
+    /**
      * Tab constructor.
      *
      * @param Form|WidgetForm $form
@@ -93,6 +98,8 @@ class Tab
                     $match = true;
                 }
             }
+
+            $this->hasRows = true;
         }
 
         $fields = $fields->slice($this->offset);
