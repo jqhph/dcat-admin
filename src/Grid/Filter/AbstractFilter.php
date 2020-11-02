@@ -503,6 +503,11 @@ abstract class AbstractFilter
         return $this->formatColumnClass($this->column);
     }
 
+    public function originalColumn()
+    {
+        return $this->column;
+    }
+
     /**
      * @param string $column
      *

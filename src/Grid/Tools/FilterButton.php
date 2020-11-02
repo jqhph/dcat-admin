@@ -43,7 +43,7 @@ class FilterButton extends AbstractTool
     /**
      * Set up script for filter button.
      */
-    protected function setupScripts()
+    protected function addScript()
     {
         $filter = $this->filter();
         $id = $filter->filterID();
@@ -148,7 +148,7 @@ JS;
             return;
         }
 
-        $this->setupScripts();
+        $this->addScript();
 
         $onlyScopes = ((! $filters || $this->parent->option('show_filter') === false) && ! $scopres->isEmpty()) ? true : false;
 

@@ -32,6 +32,7 @@ use Dcat\Admin\Grid\Filter\WhereBetween;
 use Dcat\Admin\Grid\Filter\Year;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\EasyExcel\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -66,6 +67,7 @@ use Illuminate\Support\Str;
 class Filter implements Renderable
 {
     use HasBuilderEvents;
+    use Macroable;
 
     const MODE_RIGHT_SIDE = 'right-side';
     const MODE_PANEL = 'panel';
@@ -720,7 +722,7 @@ class Filter implements Renderable
         $filters = collect($this->filters);
 
         /** @var Collection $columns */
-        $columns = $filters->map->column()->flatten();
+        $columns = $filters->map->originalColumn()->flatten();
 
         $columns->push(
             $this->grid()->model()->getPageName()
