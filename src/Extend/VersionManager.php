@@ -51,6 +51,8 @@ class VersionManager
             return;
         }
 
+        $this->manager->get($extension)->update($databaseVersion, $stopOnVersion ?: $currentVersion);
+
         $newUpdates = $this->getNewFileVersions($name, $databaseVersion);
 
         foreach ($newUpdates as $version => $details) {
@@ -304,7 +306,7 @@ class VersionManager
         $updateFile = $this->manager->path($name, 'updates/'.$script);
 
         if (! is_file($updateFile)) {
-            $this->note('- <error>v'.$version.':  Migration file "'.$script.'" not found</error>');
+            $this->note(sprintf('- <error>v%s:  Migration file "%s" not found</error>', $version, $script));
 
             return;
         }
@@ -317,6 +319,8 @@ class VersionManager
                 'detail'  => $script,
             ]);
         });
+
+        $this->note(sprintf('- <info>v%s:  Migrated</info> %s', $version, $script));
     }
 
     protected function resolveUpdater($name, $updateFile)

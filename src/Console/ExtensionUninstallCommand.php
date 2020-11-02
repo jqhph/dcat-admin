@@ -23,9 +23,7 @@ class ExtensionUninstallCommand extends Command
                 Admin::extension()
                     ->updateManager()
                     ->setOutPut($this->output)
-                    ->rollback($name);
-
-                Admin::extension()->get($name)->uninstall();
+                    ->uninstall($name);
             } catch (\Throwable $exception) {
                 $lastVersion = Admin::extension()->versionManager()->getCurrentVersion($name);
 

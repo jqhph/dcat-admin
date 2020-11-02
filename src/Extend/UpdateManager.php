@@ -84,8 +84,6 @@ class UpdateManager
             return;
         }
 
-        $extension->update();
-
         $this->note($name);
 
         $this->versionUpdate($extension, $stopOnVersion);

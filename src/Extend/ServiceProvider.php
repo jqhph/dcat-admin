@@ -11,6 +11,8 @@ use Symfony\Component\Console\Output\NullOutput;
 
 abstract class ServiceProvider extends LaravelServiceProvider
 {
+    use CanImportMenu;
+
     const TYPE_THEME = 'theme';
 
     /**
@@ -108,7 +110,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
             $this->registerRoutes($routes);
         }
 
-        if ($this->middleware) {
+        if ($this->middleware()) {
             $this->addMiddleware();
         }
 
@@ -295,9 +297,15 @@ abstract class ServiceProvider extends LaravelServiceProvider
 
     /**
      * 更新扩展.
+     *
+     * @param $currentVersion
+     * @param $stopOnVersion
+     *
+     * @throws \Exception
      */
-    public function update()
+    public function update($currentVersion, $stopOnVersion)
     {
+        $this->refreshMenu();
     }
 
     /**
@@ -305,6 +313,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     public function uninstall()
     {
+        $this->flushMenu();
     }
 
     /**
@@ -347,20 +356,31 @@ abstract class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
+     * 获取中间件.
+     *
+     * @return array
+     */
+    protected function middleware()
+    {
+        return $this->middleware;
+    }
+
+    /**
      * 注册中间件.
      */
     protected function addMiddleware()
     {
-        $middleware = (array) config('admin.route.middleware');
+        $adminMiddleware = (array) config('admin.route.middleware');
+        $middleware = $this->middleware();
 
-        $before = $this->middleware['before'] ?? [];
-        $middle = $this->middleware['middle'] ?? [];
-        $after = $this->middleware['after'] ?? [];
+        $before = $middleware['before'] ?? [];
+        $middle = $middleware['middle'] ?? [];
+        $after = $middleware['after'] ?? [];
 
         $this->mixMiddleware($middle);
 
         config([
-            'admin.route.middleware' => array_merge((array) $before, $middleware, (array) $after),
+            'admin.route.middleware' => array_merge((array) $before, $adminMiddleware, (array) $after),
         ]);
     }
 

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
  */
 trait CanImportMenu
 {
+    protected $menu = [];
+
     protected $menuValidationRules = [
         'parent' => 'nullable',
         'title'  => 'required',
@@ -18,14 +20,26 @@ trait CanImportMenu
     ];
 
     /**
+     * 获取菜单节点.
+     *
+     * @return array
+     */
+    protected function menu()
+    {
+        return $this->menu;
+    }
+
+    /**
      * 添加菜单
      *
      * @param array $menu
      *
      * @throws \Exception
      */
-    protected function addMenu(array $menu)
+    protected function addMenu(array $menu = [])
     {
+        $menu = $menu ?: $this->menu();
+
         if (! Arr::isAssoc($menu)) {
             foreach ($menu as $v) {
                 $this->addMenu($v);
@@ -47,9 +61,21 @@ trait CanImportMenu
                 'title'     => $menu['title'],
                 'icon'      => (string) ($icon ?? ''),
                 'uri'       => (string) ($menu['uri'] ?? ''),
-                'extension' => $this->getExtensionName(),
+                'extension' => $this->getName(),
             ]);
         }
+    }
+
+    /**
+     * 刷新菜单.
+     *
+     * @throws \Exception
+     */
+    protected function refreshMenu()
+    {
+        $this->flushMenu();
+
+        $this->addMenu();
     }
 
     /**
@@ -69,14 +95,14 @@ trait CanImportMenu
 
         return $menuModel::query()
             ->where('title', $parent)
-            ->where('extension', $this->getExtensionName())
+            ->where('extension', $this->getName())
             ->value('id') ?: 0;
     }
 
     /**
      * 删除菜单.
      */
-    protected function deleteMenu()
+    protected function flushMenu()
     {
         $menuModel = $this->getMenuModel();
 
@@ -85,7 +111,7 @@ trait CanImportMenu
         }
 
         $menuModel::query()
-            ->where('extension', $this->getExtensionName())
+            ->where('extension', $this->getName())
             ->delete();
     }
 
