@@ -46,7 +46,6 @@ use Illuminate\Contracts\Support\Renderable;
  * @method Field\Embeds                 embeds($column, $label = '')
  * @method Field\Captcha                captcha()
  * @method Field\Listbox                listbox($column, $label = '')
- * @method Field\SelectResource         selectResource($column, $label = '')
  * @method Field\File                   file($column, $label = '')
  * @method Field\Image                  image($column, $label = '')
  * @method Field\MultipleFile           multipleFile($column, $label = '')
@@ -114,6 +113,22 @@ class Row implements Renderable
     public function fields()
     {
         return $this->fields;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->form->getKey();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Support\Fluent|void
+     */
+    public function model()
+    {
+        return $this->form->model();
     }
 
     /**
