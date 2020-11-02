@@ -4,9 +4,12 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
+use Dcat\EasyExcel\Support\Traits\Macroable;
 
 class QuickSearch extends AbstractTool
 {
+    use Macroable;
+
     /**
      * @var string
      */
