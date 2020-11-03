@@ -32,11 +32,11 @@ use Dcat\Admin\Grid\Filter\WhereBetween;
 use Dcat\Admin\Grid\Filter\Year;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Dcat\EasyExcel\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 
 /**
  * Class Filter.

@@ -8,9 +8,9 @@ use Dcat\Admin\Form\Field\MultipleSelect;
 use Dcat\Admin\Form\Field\Select;
 use Dcat\Admin\Form\Field\Text;
 use Dcat\Admin\Grid;
-use Dcat\EasyExcel\Support\Traits\Macroable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\Macroable;
 
 class QuickCreate implements Renderable
 {
