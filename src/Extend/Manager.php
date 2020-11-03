@@ -302,10 +302,10 @@ class Manager
     public function addExtension(ServiceProvider $serviceProvider)
     {
         if (! $serviceProvider->getName()) {
-            $json = dirname(Helper::guessClassFileName($serviceProvider)).'/composer.json';
+            $json = dirname(dirname(Helper::guessClassFileName($serviceProvider))).'/composer.json';
 
             if (! is_file($json)) {
-                throw new RuntimeException('Error extension "%s"', get_class($serviceProvider));
+                throw new RuntimeException(sprintf('Error extension "%s"', get_class($serviceProvider)));
             }
 
             $serviceProvider->withComposerProperty(Composer::parse($json));

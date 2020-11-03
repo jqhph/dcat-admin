@@ -126,7 +126,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      */
     protected function autoRegister()
     {
-        if (! $this->getName()) {
+        if ($this->getName()) {
             return;
         }
 
