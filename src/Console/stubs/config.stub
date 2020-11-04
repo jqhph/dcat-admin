@@ -274,7 +274,7 @@ return [
     | This value is the layout of admin pages.
     */
     'layout' => [
-        // default, blue, blue-light, blue-dark, green
+        // default, blue, blue-light, green
         'color' => 'default',
 
         'body_class' => '',
