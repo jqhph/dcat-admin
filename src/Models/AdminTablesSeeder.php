@@ -88,6 +88,16 @@ class AdminTablesSeeder extends Seeder
                 'order'       => 5,
                 'created_at'  => $createdAt,
             ],
+            [
+                'id'          => 6,
+                'name'        => 'Extension',
+                'slug'        => 'extension',
+                'http_method' => '',
+                'http_path'   => '/auth/extensions*',
+                'parent_id'   => 1,
+                'order'       => 6,
+                'created_at'  => $createdAt,
+            ],
         ]);
 
 //        Role::first()->permissions()->save(Permission::first());
@@ -141,6 +151,14 @@ class AdminTablesSeeder extends Seeder
                 'title'         => 'Menu',
                 'icon'          => '',
                 'uri'           => 'auth/menu',
+                'created_at'    => $createdAt,
+            ],
+            [
+                'parent_id'     => 2,
+                'order'         => 7,
+                'title'         => 'Extensions',
+                'icon'          => '',
+                'uri'           => 'auth/extensions',
                 'created_at'    => $createdAt,
             ],
         ]);

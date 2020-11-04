@@ -460,6 +460,8 @@ class Admin
                     }
                 });
 
+                $router->resource('auth/extensions', 'Dcat\Admin\Http\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
+
                 $authController = config('admin.auth.controller', AuthController::class);
 
                 $router->get('auth/login', $authController.'@getLogin');
