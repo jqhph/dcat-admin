@@ -57,14 +57,18 @@ class Select extends Presenter
      *
      * all configurations see https://select2.org/configuration/options-api
      *
-     * @param string $key
+     * @param string|array $key
      * @param mixed  $val
      *
      * @return $this
      */
-    public function config($key, $val)
+    public function config($key, $val = null)
     {
-        $this->config[$key] = $val;
+        if (is_array($key)) {
+            $this->config = array_merge($this->config, $key);
+        } else {
+            $this->config[$key] = $val;
+        }
 
         return $this;
     }
@@ -98,7 +102,7 @@ class Select extends Presenter
             $this->options = $this->options->toArray();
         }
 
-        $this->addVariables([
+        $this->addDefaultConfig([
             'allowClear'  => true,
             'placeholder' => [
                 'id'   => '',
@@ -163,7 +167,7 @@ class Select extends Presenter
         $ajaxOptions = [
             'url' => Helper::urlWithQuery(admin_url($url), $parameters),
         ];
-        $this->addDefaultConfig([
+        $this->config([
             'allowClear'  => true,
             'placeholder' => [
                 'id'   => '',
@@ -175,7 +179,7 @@ class Select extends Presenter
 
         $values = array_filter((array) $this->filter->getValue());
 
-        return $this->addVariables([
+        return $this->config([
             'remote' => compact('ajaxOptions', 'values'),
         ]);
     }
@@ -232,7 +236,7 @@ class Select extends Presenter
      */
     public function ajax(string $resourceUrl, string $idField = 'id', string $textField = 'text')
     {
-        $this->addDefaultConfig([
+        $this->config([
             'allowClear'         => true,
             'placeholder'        => $this->placeholder(),
             'minimumInputLength' => 1,
@@ -240,7 +244,7 @@ class Select extends Presenter
 
         $url = admin_url($resourceUrl);
 
-        return $this->addVariables(['ajax' => compact('url', 'idField', 'textField')]);
+        return $this->config(['ajax' => compact('url', 'idField', 'textField')]);
     }
 
     /**
@@ -289,7 +293,7 @@ class Select extends Presenter
 
         $group = 'form';
 
-        return $this->addVariables(['load' => compact('url', 'class', 'idField', 'textField', 'group')]);
+        return $this->config(['load' => compact('url', 'class', 'idField', 'textField', 'group')]);
     }
 
     /**
