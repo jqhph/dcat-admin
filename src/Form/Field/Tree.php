@@ -42,7 +42,7 @@ class Tree extends Field
         'parent' => 'parent_id',
     ];
 
-    protected $filterParents = true;
+    protected $exceptParents = true;
 
     protected $readOnly = false;
 
@@ -69,15 +69,15 @@ class Tree extends Field
     }
 
     /**
-     * 禁止过滤父节点.
+     * 过滤父节点.
      *
      * @param bool $value
      *
      * @return $this
      */
-    public function disableFilterParents(bool $value = true)
+    public function exceptParentNode(bool $value = true)
     {
-        $this->filterParents = ! $value;
+        $this->exceptParents = $value;
 
         return $this;
     }
@@ -163,7 +163,7 @@ class Tree extends Field
             ];
         }
 
-        if ($this->filterParents) {
+        if ($this->exceptParents) {
             // 筛选出所有父节点，最终点击树节点时过滤掉父节点
             $this->parents = array_unique($parentIds);
         }
