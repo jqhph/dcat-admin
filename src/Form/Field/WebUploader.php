@@ -37,13 +37,13 @@ trait WebUploader
     }
 
     /**
-     * @param bool $disable
+     * @param bool $value
      *
      * @return $this
      */
-    public function disableChunked(bool $disable = true)
+    public function chunked(bool $value = true)
     {
-        $this->options['chunked'] = ! $disable;
+        $this->options['chunked'] = $value;
 
         return $this;
     }
@@ -56,6 +56,8 @@ trait WebUploader
     public function chunkSize(int $size)
     {
         $this->options['chunkSize'] = $size * 1024;
+
+        $this->checked(true);
 
         return $this;
     }
@@ -108,9 +110,9 @@ trait WebUploader
      *
      * @return $this
      */
-    public function disableAutoSave(bool $value = true)
+    public function autoSave(bool $value = true)
     {
-        $this->options['autoUpdateColumn'] = ! $value;
+        $this->options['autoUpdateColumn'] = $value;
 
         return $this;
     }
@@ -122,9 +124,9 @@ trait WebUploader
      *
      * @return $this
      */
-    public function disableRemove(bool $value = true)
+    public function removeable(bool $value = true)
     {
-        $this->options['disableRemove'] = $value;
+        $this->options['disableRemove'] = ! $value;
 
         return $this;
     }
