@@ -8,6 +8,10 @@ class Session
 {
     public function handle(Request $request, \Closure $next)
     {
+        if (! config('admin.auth.enable_session_middleware') && ! config('admin.multi_app')) {
+            return $next($request);
+        }
+
         $path = '/'.trim(config('admin.route.prefix'), '/');
 
         config(['session.path' => $path]);
