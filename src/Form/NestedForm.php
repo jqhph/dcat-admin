@@ -2,10 +2,7 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
-use Dcat\Admin\Form\Field\MultipleSelectTable;
-use Dcat\Admin\Form\Field\SelectTable;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
@@ -70,6 +67,11 @@ use Illuminate\Support\Collection;
  */
 class NestedForm
 {
+    use Form\Concerns\HandleCascadeFields;
+    use Form\Concerns\HasRows;
+    use Form\Concerns\HasTabs;
+    use Form\Concerns\HasLayout;
+
     const DEFAULT_KEY_NAME = '__LA_KEY__';
 
     const REMOVE_FLAG_NAME = '_remove_';
@@ -143,9 +145,14 @@ class NestedForm
      *
      * @return Form
      */
-    public function getForm()
+    public function form()
     {
         return $this->form;
+    }
+
+    public function model()
+    {
+        return $this->form->model();
     }
 
     /**
@@ -438,15 +445,7 @@ class NestedForm
         return Helper::formatElementName($name ?: $this->relationName);
     }
 
-    /**
-     * Add nested-form fields dynamically.
-     *
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return mixed
-     */
-    public function __call($method, $arguments)
+    protected function resolveField($method, $arguments)
     {
         if ($className = Form::findFieldClass($method)) {
             $column = Arr::get($arguments, 0, '');
@@ -457,6 +456,22 @@ class NestedForm
             $field->setForm($this->form);
 
             $field = $this->formatField($field);
+
+            return $field;
+        }
+    }
+
+    /**
+     * Add nested-form fields dynamically.
+     *
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        if ($field = $this->resolveField($method, $arguments)) {
 
             $this->pushField($field);
 

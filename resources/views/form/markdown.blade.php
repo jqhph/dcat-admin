@@ -4,13 +4,13 @@
 
 <div class="{{$viewClass['form-group']}}">
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
     <div class="{{$viewClass['field']}}">
 
         @include('admin::form.error')
 
-        <div id="{{$id}}" class="{{$class}}" {!! $attributes !!}>
+        <div class="{{$class}} form-field-markdown" {!! $attributes !!}>
             <textarea class="d-none" name="{{$name}}" placeholder="{{ $placeholder }}">{!! $value !!}</textarea>
         </div>
 
@@ -19,6 +19,6 @@
     </div>
 </div>
 
-<script require="@markdown">
-    editormd(replaceNestedFormIndex("{{ $id }}"), {!! $options !!});
+<script require="@markdown" init=".form-field-markdown" id>
+    editormd(id, {!! $options !!});
 </script>

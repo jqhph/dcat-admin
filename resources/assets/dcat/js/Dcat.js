@@ -7,6 +7,7 @@ let $ = jQuery,
     pjaxResponded = false,
     bootingCallbacks = [],
     actions = {},
+    initialized = {},
     defaultOptions = {
         pjax_container_selector: '#pjax-container',
     };
@@ -94,6 +95,39 @@ export default class Dcat {
         }
 
         _window.Dcat.ready(run);
+    }
+
+    /**
+     * 监听动态生成元素.
+     *
+     * @param selector
+     * @param callback
+     * @param options
+     */
+    initialize(selector, callback, options) {
+        if (initialized[selector]) {
+            initialized[selector].takeRecords();
+            initialized[selector].disconnect();
+        }
+
+        let self = this;
+
+        // 这里必须使用定时器，否则无法立即停止上次绑定的观察回调
+        setTimeout(function () {
+            initialized[selector] = $.initialize(selector, function () {
+                var $this = $(this);
+                if ($this.hasClass('initialized')) {
+                    return;
+                }
+                $this.addClass('initialized');
+
+                // 生成随机ID
+                var id = "_"+self.helpers.random();
+                $this.attr('id', id);
+
+                callback.call(this, $(this), id)
+            }, options);
+        }, 1)
     }
 
     /**
