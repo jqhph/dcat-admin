@@ -862,7 +862,7 @@ class Helper
 
         if (is_array($name)) {
             foreach ($name as &$v) {
-                $v = static::formatElementName($name);
+                $v = static::formatElementName($v);
             }
 
             return $name;
