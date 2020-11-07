@@ -60,11 +60,8 @@ class ExportSeedCommand extends Command
             $replaces = array_merge($replaces, [
                 'ClassUsers'            => config('admin.database.users_model'),
                 'TableRoleUsers'        => config('admin.database.role_users_table'),
-                'TablePermissionsUsers' => config('admin.database.user_permissions_table'),
-
-                'ArrayUsers'                 => $this->getTableDataArrayAsString(config('admin.database.users_table'), $exceptFields),
-                'ArrayPivotRoleUsers'        => $this->getTableDataArrayAsString(config('admin.database.role_users_table'), $exceptFields),
-                'ArrayPivotPermissionsUsers' => $this->getTableDataArrayAsString(config('admin.database.user_permissions_table'), $exceptFields),
+                'ArrayUsers'            => $this->getTableDataArrayAsString(config('admin.database.users_table'), $exceptFields),
+                'ArrayPivotRoleUsers'   => $this->getTableDataArrayAsString(config('admin.database.role_users_table'), $exceptFields),
             ]);
         } else {
             $contents = preg_replace('/\/\/ users tables[\s\S]*?(?=\/\/ finish)/mu', '', $contents);
