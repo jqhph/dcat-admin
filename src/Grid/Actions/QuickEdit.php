@@ -46,14 +46,8 @@ class QuickEdit extends RowAction
      *
      * @return string
      */
-    public function makeSelector($prefix, $class = null)
+    public function getSelectorKey($prefix, $class = null)
     {
-        $class = $class ?: static::class;
-
-        if (! isset(static::$selectors[$class])) {
-            static::$selectors[$class] = uniqid($prefix);
-        }
-
-        return static::$selectors[$class];
+        return $class ?: static::class;
     }
 }

@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid;
 
 use Illuminate\Support\Fluent;
-use Illuminate\Support\Str;
 
 abstract class RowAction extends GridAction
 {
@@ -84,7 +83,7 @@ abstract class RowAction extends GridAction
     }
 
     /**
-     * 生成选择器.
+     * 生成选择器键名.
      * 需要保证每个行操作的选择器都不同.
      *
      * @param string $prefix
@@ -92,16 +91,10 @@ abstract class RowAction extends GridAction
      *
      * @return string
      */
-    public function makeSelector($prefix, $class = null)
+    public function getSelectorKey($prefix, $class = null)
     {
         $class = $class ?: static::class;
 
-        $key = $prefix.'-'.$class.'-'.$this->getKey();
-
-        if (! isset(static::$selectors[$key])) {
-            static::$selectors[$key] = $prefix.Str::random(8);
-        }
-
-        return static::$selectors[$key];
+        return $prefix.'-'.$class.'-'.$this->getKey();
     }
 }

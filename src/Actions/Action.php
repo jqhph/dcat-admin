@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 
 /**
  * Class Action.
@@ -156,6 +157,8 @@ abstract class Action implements Renderable
     }
 
     /**
+     * 选择器.
+     *
      * @param string $prefix
      * @param string $class
      *
@@ -163,13 +166,24 @@ abstract class Action implements Renderable
      */
     public function makeSelector($prefix, $class = null)
     {
-        $class = $prefix.'-'.($class ?: static::class);
+        $key = $this->getSelectorKey($prefix, $class);
 
-        if (! isset(static::$selectors[$class])) {
-            static::$selectors[$class] = uniqid($prefix);
+        if (! isset(static::$selectors[$key])) {
+            static::$selectors[$key] = $prefix.Str::random(8);
         }
 
         return static::$selectors[$class];
+    }
+
+    /**
+     * @param string $prefix
+     * @param string $class
+     *
+     * @return string
+     */
+    public function getSelectorKey($prefix, $class)
+    {
+        return $prefix.'-'.($class ?: static::class);
     }
 
     /**
