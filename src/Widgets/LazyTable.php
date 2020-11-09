@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Grid\LazyRenderable;
-use Illuminate\Support\Str;
 
 class LazyTable extends Widget
 {
@@ -41,8 +40,7 @@ class LazyTable extends Widget
         $this->from($renderable);
         $this->load($load);
 
-        $this->class('async-table');
-        $this->id('async-table-'.Str::random(8));
+        $this->class($this->elementClass = 'async-table');
     }
 
     /**
@@ -100,7 +98,7 @@ class LazyTable extends Widget
      */
     public function onLoad(string $script)
     {
-        $this->script .= "$('{$this->getElementSelector()}').on('table:loaded', function (event) { {$script} });";
+        $this->script .= "\$this.on('table:loaded', function (event) { {$script} });";
 
         return $this;
     }
@@ -110,18 +108,20 @@ class LazyTable extends Widget
         $loader = $this->load ? $this->getLoadScript() : '';
 
         $this->script = <<<JS
-Dcat.grid.AsyncTable({container: '{$this->getElementSelector()}'});
-{$loader}
+Dcat.init('{$this->getElementSelector()}', function (\$this) {
+    Dcat.grid.AsyncTable({container: \$this});
+    {$loader}
+});
 JS;
     }
 
     /**
      * @return string
      */
-    public function getLoadScript()
+    protected function getLoadScript()
     {
         return <<<JS
-$('{$this->getElementSelector()}').trigger('table:load');
+\$this.trigger('table:load');
 JS;
     }
 

@@ -51,8 +51,9 @@ class DialogTable extends Widget
         $this->title($title);
         $this->from($table);
 
+        $this->elementClass = 'dialog-table-container';
+
         $this->class('dialog-table');
-        $this->id('dialog-table-'.Str::random(8));
     }
 
     /**

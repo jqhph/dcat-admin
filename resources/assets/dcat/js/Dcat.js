@@ -104,7 +104,7 @@ export default class Dcat {
      * @param callback
      * @param options
      */
-    initialize(selector, callback, options) {
+    init(selector, callback, options) {
         if (initialized[selector]) {
             initialized[selector].takeRecords();
             initialized[selector].disconnect();
@@ -121,9 +121,12 @@ export default class Dcat {
                 }
                 $this.addClass('initialized');
 
-                // 生成随机ID
-                var id = "_"+self.helpers.random();
-                $this.attr('id', id);
+                // 如果没有ID，则自动生成
+                var id = $this.attr('id');
+                if (! id) {
+                    id = "_"+self.helpers.random();
+                    $this.attr('id', id);
+                }
 
                 callback.call(this, $(this), id)
             }, options);
