@@ -161,11 +161,11 @@ class Menu
      */
     public function visible($item)
     {
-        if (! $this->checkPermission($item)) {
-            return false;
-        }
-
-        if (! $this->checkExtension($item)) {
+        if (
+            ! $this->checkPermission($item)
+            || ! $this->checkExtension($item)
+            || ! $this->userCanSeeMenu($item)
+        ) {
             return false;
         }
 
@@ -197,6 +197,24 @@ class Menu
         }
 
         return $extension->enabled();
+    }
+
+    /**
+     * 判断用户
+     *
+     * @param array|\Dcat\Admin\Models\Menu $item
+     *
+     * @return bool
+     */
+    protected function userCanSeeMenu($item)
+    {
+        $user = Admin::user();
+
+        if (! $user || ! method_exists($user, 'canSeeMenu')) {
+            return true;
+        }
+
+        return $user->canSeeMenu($item);
     }
 
     /**

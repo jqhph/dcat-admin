@@ -1,7 +1,7 @@
-<span>
-    <span style="cursor: pointer" id="button-{{ $id }}">{!! $button !!}</span>
+<span class="{{ $class }}">
+    <span style="cursor: pointer" class="switch-dialog">{!! $button !!}</span>
 
-    <template id="temp-{{ $id }}">
+    <template>
         <div {!! $attributes !!}>
             <div class="p-2 dialog-body">{!! $table !!}</div>
 
@@ -12,18 +12,18 @@
     </template>
 </span>
 
-<script>
-    var id = replaceNestedFormIndex('{{ $id }}'),
-        area = screen.width <= 850 ? ['100%', '100%',] : '{{ $width }}',
+<script init=".{{ $class }}">
+    var area = screen.width <= 850 ? ['100%', '100%',] : '{{ $width }}',
         offset = screen.width <= 850 ? 0 : '70px',
-        _id, _tempId, _btnId, _tb;
+        _tb = '.async-table', _container = '.dialog-table',
+        _id, _temp, _btnId;
 
     setId(id);
 
     function hidden(index) {
         {!! $events['hidden'] !!}
 
-        $(_id).trigger('dialog:hidden');
+        getLayer(index).find(_container).trigger('dialog:hidden');
     }
 
     function open(btn) {
@@ -34,28 +34,32 @@
             offset: offset,
             maxmin: false,
             resize: false,
-            content: $(_tempId).html(),
+            content: $(_temp).html(),
             success: function(layero, index) {
-                $(_id).attr('layer', index);
+                var $c = getLayer(index).find(_container),
+                    $t = getLayer(index).find(_tb);
 
-                setDataId($(_id));
+                $c.attr('layer', index);
+
+                setDataId($c);
+                setMaxHeight(index);
 
                 {!! $events['shown'] !!}
 
                 @if(!empty($events['load']))
-                    $(_tb).on('table:loaded', function (event) { {!! $events['load'] !!} });
+                $t.on('table:loaded', function (event) { {!! $events['load'] !!} });
                 @endif
 
                 setTimeout(function () {
-                    Dcat.grid.AsyncTable({container: _tb});
+                    Dcat.grid.AsyncTable({container: $t});
 
-                    $(_tb).trigger('table:load');
+                    $t.trigger('table:load');
                 }, 100);
 
-                $(_id).trigger('dialog:shown');
+                $c.trigger('dialog:shown');
 
-                $(_id).on('dialog:open', openDialog);
-                $(_id).on('dialog:close', closeDialog)
+                $c.on('dialog:open', openDialog);
+                $c.on('dialog:close', closeDialog)
             },
             cancel: function (index) {
                 btn && btn.removeAttr('layer');
@@ -76,11 +80,9 @@
     function setId(val) {
         if (! val) return;
 
-        id = val;
-        _id = '#'+id;
-        _tempId = '#temp-'+id;
-        _btnId = '#button-'+id;
-        _tb = _id+' .async-table';
+        _id = '#' + val;
+        _temp = _id + ' template';
+        _btnId = _id + ' .switch-dialog';
     }
 
     function openDialog () {
@@ -92,16 +94,29 @@
         }
     }
 
+    function getLayer(index) {
+        return $('#layui-layer'+index)
+    }
+
     function closeDialog() {
         var index = $(this).attr('layer');
 
-        $(_id).removeAttr('layer');
+        getLayer(index).find(_container).removeAttr('layer');
         $(_btnId).removeAttr('layer');
 
         if (index) {
             layer.close(index);
             hidden(index);
         }
+    }
+
+    function setMaxHeight(index) {
+        var maxHeight = ($(window).height() - 250);
+        if (maxHeight < 250) {
+            maxHeight = maxHeight + 120;
+        }
+
+        getLayer(index).find('.layui-layer-content').css({'max-height': maxHeight});
     }
 
     $(_btnId).on('click', openDialog);

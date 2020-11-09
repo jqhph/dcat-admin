@@ -565,6 +565,21 @@ HTML;
     }
 
     /**
+     * @param  mixed  $value
+     * @param  callable  $callback
+     *
+     * @return $this|mixed
+     */
+    public function when($value, $callback)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        }
+
+        return $this;
+    }
+
+    /**
      * @param string $method
      * @param array  $arguments
      *
