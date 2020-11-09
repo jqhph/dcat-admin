@@ -47,7 +47,7 @@ class Authenticate
      *
      * @return bool
      */
-    protected function shouldPassThrough($request)
+    public static function shouldPassThrough($request)
     {
         $excepts = array_merge(
             (array) config('admin.auth.except', []),
