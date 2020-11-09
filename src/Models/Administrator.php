@@ -75,4 +75,16 @@ class Administrator extends Model implements AuthenticatableContract
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'role_id');
     }
+
+    /**
+     * 判断是否允许查看菜单.
+     *
+     * @param array|Menu $menu
+     *
+     * @return bool
+     */
+    public function canSeeMenu($menu)
+    {
+        return true;
+    }
 }
