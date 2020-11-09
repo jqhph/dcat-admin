@@ -172,7 +172,7 @@ abstract class Action implements Renderable
             static::$selectors[$key] = $prefix.Str::random(8);
         }
 
-        return static::$selectors[$class];
+        return static::$selectors[$key];
     }
 
     /**
