@@ -1107,6 +1107,21 @@ class Field implements Renderable
         return implode(' ', $this->labelClass);
     }
 
+    /**
+     * @param  mixed  $value
+     * @param  callable  $callback
+     *
+     * @return $this|mixed
+     */
+    public function when($value, $callback)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        }
+
+        return $this;
+    }
+
     public function setFormGroupClass($labelClass, bool $append = true)
     {
         $this->formGroupClass = $append
