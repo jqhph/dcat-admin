@@ -494,21 +494,45 @@ if (! function_exists('admin_color')) {
     }
 }
 
-if (! function_exists('admin_javascript')) {
+if (! function_exists('admin_js')) {
     /**
-     * @param string|null $color
+     * @param string|array $js
      *
-     * @return string|\Dcat\Admin\Color
+     * @return void
      */
-    function admin_javascript($data)
+    function admin_js($js)
     {
-        return new Dcat\Admin\Support\JavaScript($data);
+        Admin::js($js);
+    }
+}
+
+if (! function_exists('admin_css')) {
+    /**
+     * @param string|array $css
+     *
+     * @return void
+     */
+    function admin_css($css)
+    {
+        Admin::css($css);
+    }
+}
+
+if (! function_exists('admin_require_assets')) {
+    /**
+     * @param string|array $asset
+     *
+     * @return void
+     */
+    function admin_require_assets($asset)
+    {
+        Admin::requireAssets($asset);
     }
 }
 
 if (! function_exists('admin_javascript_json')) {
     /**
-     * @param string|null $color
+     * @param array|object $data
      *
      * @return string
      */
