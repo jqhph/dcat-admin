@@ -183,7 +183,8 @@ abstract class Action implements Renderable
      */
     public function getSelectorKey($prefix, $class)
     {
-        return $prefix.'-'.($class ?: static::class);
+        return $prefix.'-'.($class ?: static::class)
+            .md5($this->normalizeConfirmData().$this->normalizeParameters());
     }
 
     /**
@@ -245,7 +246,7 @@ HTML;
 
         $this->prepareHandler();
 
-        $this->setupHtmlAttributes();
+        $this->setUpHtmlAttributes();
 
         if ($script = $this->script()) {
             Admin::script($script);
@@ -265,7 +266,7 @@ HTML;
     /**
      * @return void
      */
-    protected function setupHtmlAttributes()
+    protected function setUpHtmlAttributes()
     {
         $this->addHtmlClass($this->getElementClass());
 

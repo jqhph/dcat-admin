@@ -78,8 +78,6 @@ class RowAction extends Action
      */
     public function getSelectorKey($prefix, $class = null)
     {
-        $class = $class ?: static::class;
-
-        return $prefix.'-'.$class.'-'.$this->getKey();
+        return parent::getSelectorKey($prefix, $class).$this->getKey();
     }
 }
