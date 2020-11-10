@@ -215,6 +215,7 @@ class DialogTable extends Widget
               $(_id).attr('layer', index);
               
               setDataId($(_id));
+              setMaxHeight(index);
               
               {$this->events['shown']}
               
@@ -274,6 +275,19 @@ class DialogTable extends Widget
             layer.close(index);
             hidden(index);
         }
+    }
+    
+     function setMaxHeight(index) {
+        var maxHeight = ($(window).height() - 250);
+        if (maxHeight < 250) {
+            maxHeight = maxHeight + 120;
+        }
+
+        getLayer(index).find('.layui-layer-content').css({'max-height': maxHeight});
+    }
+    
+    function getLayer(index) {
+        return $('#layui-layer'+index)
     }
     
     $(_btnId).on('click', openDialog);
