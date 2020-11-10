@@ -19,11 +19,6 @@ abstract class Action implements Renderable
     use HasActionHandler;
 
     /**
-     * @var array
-     */
-    protected static $selectors = [];
-
-    /**
      * @var array|string
      */
     protected $primaryKey;
@@ -37,11 +32,6 @@ abstract class Action implements Renderable
      * @var string
      */
     protected $selector;
-
-    /**
-     * @var string
-     */
-    public $selectorPrefix = '.admin-action-';
 
     /**
      * @var string
@@ -149,30 +139,19 @@ abstract class Action implements Renderable
      */
     public function selector()
     {
-        if (is_null($this->selector)) {
-            return $this->makeSelector($this->selectorPrefix);
-        }
-
-        return $this->selector;
+        return $this->selector ?: ($this->selector = $this->makeSelector());
     }
 
     /**
-     * 选择器.
+     * 生成选择器.
      *
      * @param string $prefix
-     * @param string $class
      *
      * @return string
      */
-    public function makeSelector($prefix, $class = null)
+    public function makeSelector()
     {
-        $key = $this->getSelectorKey($prefix, $class);
-
-        if (! isset(static::$selectors[$key])) {
-            static::$selectors[$key] = $prefix.Str::random(8);
-        }
-
-        return static::$selectors[$key];
+        return 'act-'.Str::random();
     }
 
     /**

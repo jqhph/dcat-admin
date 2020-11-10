@@ -116,10 +116,10 @@ export default class Dcat {
         setTimeout(function () {
             initialized[selector] = $.initialize(selector, function () {
                 var $this = $(this);
-                if ($this.hasClass('initialized')) {
+                if ($this.attr('initialized')) {
                     return;
                 }
-                $this.addClass('initialized');
+                $this.attr('initialized', '1');
 
                 // 如果没有ID，则自动生成
                 var id = $this.attr('id');

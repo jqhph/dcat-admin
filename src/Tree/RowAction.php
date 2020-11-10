@@ -16,8 +16,6 @@ class RowAction extends Action
      */
     protected $row;
 
-    public $selectorPrefix = '.tree-row-action-';
-
     /**
      * 获取主键值.
      *
@@ -65,19 +63,5 @@ class RowAction extends Action
     public function setRow($row)
     {
         $this->row = $row;
-    }
-
-    /**
-     * 生成选择器键名.
-     * 需要保证每个行操作的选择器都不同.
-     *
-     * @param string $prefix
-     * @param string $class
-     *
-     * @return string
-     */
-    public function getSelectorKey($prefix, $class = null)
-    {
-        return parent::getSelectorKey($prefix, $class).$this->getKey();
     }
 }
