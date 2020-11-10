@@ -225,6 +225,7 @@
 
             $.put({
                 url: _this.options.url.replace(':key', key),
+                data: {_orderable: direction},
                 success: function(data){
                     Dcat.loading(false);
                     _this._req = 0;
