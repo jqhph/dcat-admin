@@ -377,7 +377,7 @@ class JsonResponse
     public function __call($method, $arguments)
     {
         if (Str::endsWith($method, 'If')) {
-            if (array_shift($arguments)) {
+            if ($arguments) {
                 $method = Str::replaceLast('If', '', $method);
 
                 $condition = value(array_shift($arguments));
@@ -393,6 +393,7 @@ class JsonResponse
      * @param mixed ...$params
      *
      * @return $this
+     *
      */
     public static function make(...$params)
     {
