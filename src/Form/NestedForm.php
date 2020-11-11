@@ -379,28 +379,19 @@ class NestedForm
     /**
      * Get the html and script of template.
      *
-     * @return array
+     * @return string
      */
-    public function getTemplateHtmlAndScript()
+    public function getTemplate()
     {
         $html = '';
-        $scripts = [];
 
         /* @var Field $field */
         foreach ($this->fields() as $field) {
-
             //when field render, will push $script to Admin
-            $html .= $field->runScript(false)->render();
-
-            /*
-             * Get and remove the last script of Admin::$script stack.
-             */
-            if ($script = $field->getScript()) {
-                $scripts[] = $script;
-            }
+            $html .= $field->render();
         }
 
-        return [$html, implode(";\r\n", $scripts)];
+        return $html;
     }
 
     /**

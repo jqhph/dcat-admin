@@ -92,7 +92,6 @@
         $(container+' > .nav').append(navTabHtml);
         $(container+' > .tab-content').append(paneHtml);
         $(container+' > .nav > li:last-child a').click();
-        {!! $templateScript !!}
     });
 
     if ($('.has-error').length) {

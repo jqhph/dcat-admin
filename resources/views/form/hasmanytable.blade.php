@@ -95,7 +95,6 @@
 
         var template = replaceNestedFormIndex(tpl.html());
         $('.has-many-{{ $columnClass }}-forms').append(template);
-        {!! $templateScript !!}
     });
 
     $(container).on('click', '.remove', function () {

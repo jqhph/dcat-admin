@@ -126,8 +126,3 @@ function prepare(Dcat) {
 win.CreateDcat = function(config) {
     return prepare(new Dcat(config));
 };
-
-win.replaceNestedFormIndex = function (value) {
-    return value;
-};
-

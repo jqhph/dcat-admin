@@ -46,7 +46,7 @@
                     <td class="form-group">
                         <div>
                             <div class="kv-remove btn btn-white btn-sm pull-right">
-                                <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
+                                <i class="feather icon-trash">&nbsp;</i>
                             </div>
                         </div>
                     </td>
@@ -89,7 +89,7 @@
             <td class="form-group">
                 <div>
                     <div class="kv-remove btn btn-white btn-sm pull-right">
-                        <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
+                        <i class="feather icon-trash">&nbsp;</i>
                     </div>
                 </div>
             </td>

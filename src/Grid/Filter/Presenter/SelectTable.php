@@ -118,8 +118,6 @@ class SelectTable extends Presenter
     protected function setUpTable()
     {
         $this->dialog
-            ->id('dialog-'.$this->id)
-            ->runScript(false)
             ->footer($this->renderFooter())
             ->button($this->renderButton());
     }
@@ -151,14 +149,16 @@ class SelectTable extends Presenter
 
         Admin::script(
             <<<JS
-{$this->dialog->getScript()}
-
-Dcat.grid.SelectTable({
-    dialog: '#{$this->dialog->id()}',
-    container: '#{$this->id}',
-    input: '#hidden-{$this->id}',
-    values: {$options},
-});
+Dcat.init('#{$this->id}', function (self) {
+    var dialogId = self.parent().find('{$this->dialog->getElementSelector()}').attr('id');
+    
+    Dcat.grid.SelectTable({
+        dialog: '[data-id="' + dialogId + '"]',
+        container: '#{$this->id}',
+        input: '#hidden-{$this->id}',
+        values: {$options},
+    });
+})
 JS
         );
     }

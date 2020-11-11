@@ -122,6 +122,8 @@ trait HasHtml
             }
 
             if ($init = $element->getAttribute('init')) {
+                $init = str_replace("'", "\\'", $init);
+
                 $script = "Dcat.init('{$init}', function (\$this, id) { {$script}\n });";
             } else {
                 $script = "(function () {{$script}\n})();";

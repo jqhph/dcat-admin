@@ -36,7 +36,13 @@ class Date extends Text
         $this->options['locale'] = config('app.locale');
         $this->options['allowInputToggle'] = true;
 
-        $this->script = "$('{$this->getElementClassSelector()}').datetimepicker(".admin_javascript_json($this->options).');';
+        $options = admin_javascript_json($this->options);
+
+        $this->script = <<<JS
+Dcat.init('{$this->getElementClassSelector()}', function (self) {
+    self.datetimepicker({$options});
+});
+JS;
 
         $this->prepend('<i class="fa fa-calendar fa-fw"></i>')
             ->defaultAttribute('style', 'width: 200px;flex:none');

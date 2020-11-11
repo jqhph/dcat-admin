@@ -76,7 +76,6 @@
 
         var template = replaceNestedFormIndex(tpl.html());
         $(forms).append(template);
-        {!! $templateScript !!}
     });
 
     $(container).on('click', '.remove', function () {

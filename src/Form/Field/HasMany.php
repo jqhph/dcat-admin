@@ -495,15 +495,11 @@ class HasMany extends Field
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
-        [$template, $script] = $this->buildNestedForm()
-            ->getTemplateHtmlAndScript();
-
         $this->addVariables([
             'forms'          => $this->buildRelatedForms(),
-            'template'       => $template,
+            'template'       => $this->buildNestedForm()->getTemplate(),
             'relationName'   => $this->relationName,
             'options'        => $this->options,
-            'templateScript' => $script,
             'count'          => count($this->value()),
             'columnClass'    => $this->columnClass,
         ]);
@@ -523,12 +519,9 @@ class HasMany extends Field
         $headers = [];
         $fields = [];
         $hidden = [];
-        $scripts = [];
 
         /* @var Field $field */
         foreach ($this->buildNestedForm()->fields() as $field) {
-            $field->runScript(false);
-
             if (is_a($field, Hidden::class)) {
                 $hidden[] = $field->render();
             } else {
@@ -537,13 +530,6 @@ class HasMany extends Field
                 $field->width(12, 0);
                 $fields[] = $field->render();
                 $headers[] = $field->label();
-            }
-
-            /*
-             * Get and remove the last script of Admin::$script stack.
-             */
-            if ($script = $field->getScript()) {
-                $scripts[] = $script;
             }
         }
 
@@ -561,14 +547,13 @@ class HasMany extends Field
         $this->view = $this->views[$this->viewMode];
 
         $this->addVariables([
-            'headers'        => $headers,
-            'forms'          => $this->buildRelatedForms(),
-            'template'       => $template,
-            'relationName'   => $this->relationName,
-            'options'        => $this->options,
-            'templateScript' => implode(";\r\n", $scripts),
-            'count'          => count($this->value()),
-            'columnClass'    => $this->columnClass,
+            'headers'      => $headers,
+            'forms'        => $this->buildRelatedForms(),
+            'template'     => $template,
+            'relationName' => $this->relationName,
+            'options'      => $this->options,
+            'count'        => count($this->value()),
+            'columnClass'  => $this->columnClass,
         ]);
 
         return parent::render();

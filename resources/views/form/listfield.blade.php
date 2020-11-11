@@ -30,7 +30,7 @@
 
                     <td style="width: 85px;">
                         <div class="{{$class}}-remove btn btn-white btn-sm pull-right">
-                            <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
+                            <i class="feather icon-trash">&nbsp;</i>
                         </div>
                     </td>
                 </tr>
@@ -62,7 +62,7 @@
 
             <td style="width: 85px;">
                 <div class="list-remove btn btn-white btn-sm pull-right">
-                    <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
+                    <i class="feather icon-trash">&nbsp;</i>
                 </div>
             </td>
         </tr>
