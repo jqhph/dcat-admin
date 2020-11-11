@@ -144,6 +144,11 @@ HTML;
         return $this->form->getKey();
     }
 
+    public function model()
+    {
+        return $this->form->model();
+    }
+
     public function __call($method, $arguments)
     {
         try {

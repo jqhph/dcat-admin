@@ -108,11 +108,10 @@ class Editor extends Field
     }
 
     /**
-     * @return string
+     * @return array
      */
     protected function formatOptions()
     {
-        $this->options['selector'] = '#'.$this->id;
         $this->options['language'] = config('app.locale');
         $this->options['readonly'] = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
 
@@ -120,7 +119,7 @@ class Editor extends Field
             $this->options['images_upload_url'] = $this->defaultImageUploadUrl();
         }
 
-        return JavaScript::format($this->options);
+        return $this->options;
     }
 
     /**

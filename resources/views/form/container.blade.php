@@ -4,30 +4,12 @@
         <div class="pull-right">{!! $form->renderTools() !!}</div>
     </div>
 @endif
-<div class="box-body" {!! $tabObj->isEmpty() && !$form->hasRows() ? 'style="margin-top: 10px"' : '' !!} >
+<div class="box-body" {!! $tabObj->isEmpty() && !$form->hasRows() ? 'style="margin-top: 6px"' : '' !!} >
     @if(!$tabObj->isEmpty())
         @include('admin::form.tab', compact('tabObj', 'form'))
     @else
         <div class="fields-group">
-            @if($form->hasRows())
-                <div class="ml-2 mb-2">
-                    @foreach($form->rows() as $row)
-                        {!! $row->render() !!}
-                    @endforeach
-
-                    @foreach($form->fields() as $field)
-                        @if($field instanceof \Dcat\Admin\Form\Field\Hidden)
-                            {!! $field->render() !!}
-                        @endif
-                    @endforeach
-                </div>
-            @elseif($form->layout()->hasColumns())
-                {!! $form->layout()->build() !!}
-            @else
-                @foreach($form->fields() as $field)
-                    {!! $field->render() !!}
-                @endforeach
-            @endif
+            @include('admin::form.fields', ['rows' => $form->rows(), 'fields' => $form->fields(), 'layout' => $form->layout()])
         </div>
     @endif
 </div>

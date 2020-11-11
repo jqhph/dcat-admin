@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 
 /**
  * Class Action.
@@ -16,11 +17,6 @@ abstract class Action implements Renderable
 {
     use HasHtmlAttributes;
     use HasActionHandler;
-
-    /**
-     * @var array
-     */
-    protected static $selectors = [];
 
     /**
      * @var array|string
@@ -36,11 +32,6 @@ abstract class Action implements Renderable
      * @var string
      */
     protected $selector;
-
-    /**
-     * @var string
-     */
-    public $selectorPrefix = '.admin-action-';
 
     /**
      * @var string
@@ -148,11 +139,19 @@ abstract class Action implements Renderable
      */
     public function selector()
     {
-        if (is_null($this->selector)) {
-            return $this->makeSelector($this->selectorPrefix);
-        }
+        return $this->selector ?: ($this->selector = $this->makeSelector());
+    }
 
-        return $this->selector;
+    /**
+     * 生成选择器.
+     *
+     * @param string $prefix
+     *
+     * @return string
+     */
+    public function makeSelector()
+    {
+        return 'act-'.Str::random();
     }
 
     /**
@@ -161,15 +160,10 @@ abstract class Action implements Renderable
      *
      * @return string
      */
-    public function makeSelector($prefix, $class = null)
+    public function getSelectorKey($prefix, $class)
     {
-        $class = $prefix.'-'.($class ?: static::class);
-
-        if (! isset(static::$selectors[$class])) {
-            static::$selectors[$class] = uniqid($prefix);
-        }
-
-        return static::$selectors[$class];
+        return $prefix.'-'.($class ?: static::class)
+            .md5($this->normalizeConfirmData().$this->normalizeParameters());
     }
 
     /**
@@ -231,7 +225,7 @@ HTML;
 
         $this->prepareHandler();
 
-        $this->setupHtmlAttributes();
+        $this->setUpHtmlAttributes();
 
         if ($script = $this->script()) {
             Admin::script($script);
@@ -251,7 +245,7 @@ HTML;
     /**
      * @return void
      */
-    protected function setupHtmlAttributes()
+    protected function setUpHtmlAttributes()
     {
         $this->addHtmlClass($this->getElementClass());
 

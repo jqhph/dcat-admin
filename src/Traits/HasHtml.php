@@ -120,7 +120,12 @@ trait HasHtml
                 static::asset()->require(explode(',', $require));
             }
 
-            $script = "(function () {{$script}\n})();";
+            if ($init = $element->getAttribute('init')) {
+                $script = "Dcat.init('{$init}', function (\$this, id) { {$script}\n });";
+            } else {
+                $script = "(function () {{$script}\n})();";
+            }
+
 
             if ($element->hasAttribute('once')) {
                 return static::script($script);

@@ -95,9 +95,9 @@ class Permission
      *
      * @return bool
      */
-    protected function shouldPassThrough($request)
+    public function shouldPassThrough($request)
     {
-        if ($this->isApiRoute($request)) {
+        if ($this->isApiRoute($request) || Authenticate::shouldPassThrough($request)) {
             return true;
         }
 

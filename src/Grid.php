@@ -35,8 +35,8 @@ class Grid
     use Concerns\CanFixColumns;
     use Concerns\CanHidesColumns;
     use Macroable {
-            __call as macroCall;
-        }
+        __call as macroCall;
+    }
 
     const CREATE_MODE_DEFAULT = 'default';
     const CREATE_MODE_DIALOG = 'dialog';
@@ -505,9 +505,8 @@ class Grid
         $keyName = $this->getKeyName();
 
         $this->prependColumn(
-            Grid\Column::SELECT_COLUMN_NAME,
-            $rowSelector->renderHeader()
-        )->display(function () use ($rowSelector, $keyName) {
+            Grid\Column::SELECT_COLUMN_NAME
+        )->setLabel($rowSelector->renderHeader())->display(function () use ($rowSelector, $keyName) {
             return $rowSelector->renderColumn($this, $this->{$keyName});
         });
     }

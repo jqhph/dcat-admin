@@ -721,6 +721,21 @@ class Column
     }
 
     /**
+     * @param  mixed  $value
+     * @param  callable  $callback
+     *
+     * @return $this|mixed
+     */
+    public function when($value, $callback)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        }
+
+        return $this;
+    }
+
+    /**
      * Passes through all unknown calls to builtin displayer or supported displayer.
      *
      * Allow fluent calls on the Column object.

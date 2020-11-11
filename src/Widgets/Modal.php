@@ -174,7 +174,7 @@ class Modal extends Widget
                 ->simple()
                 ->load(false);
 
-            $this->onShow($table->getLoadScript());
+            $this->onShow("target.find('{$table->getElementSelector()}').trigger('table:load')");
         }
 
         if ($content instanceof LazyRenderable) {
@@ -303,7 +303,7 @@ class Modal extends Widget
 
         $this->script = <<<JS
 (function () {
-    var target = $('{$this->getElementSelector()}'), body = target.find('.modal-body');
+    var target = $('#{$this->id()}'), body = target.find('.modal-body');
     {$this->getRenderableScript()}
     {$script}
 })();

@@ -39,6 +39,9 @@ class Asset
             'js'  => '@admin/dcat/plugins/vendors.min.js',
             'css' => '@admin/dcat/plugins/vendors.min.css',
         ],
+        '@jquery.initialize' => [
+            'js' => '@admin/dcat/plugins/jquery.initialize/jquery.initialize.min.js',
+        ],
         '@datatables' => [
             'css' => '@admin/dcat/plugins/tables/datatable/datatables.min.css',
         ],
@@ -240,6 +243,7 @@ class Asset
         'pjax'      => '@pjax',
         'validator' => '@validator',
         'layer'     => '@layer',
+        'init'      => '@jquery.initialize',
     ];
 
     /**
@@ -568,8 +572,8 @@ class Asset
     protected function addFontCss()
     {
         $this->fonts && ($this->baseCss = array_merge(
-                $this->baseCss,
-                (array) $this->fonts
+            $this->baseCss,
+            (array) $this->fonts
         ));
     }
 

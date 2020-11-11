@@ -128,6 +128,16 @@ class EmbeddedForm
         return $this;
     }
 
+    public function getKey()
+    {
+        return $this->parent->getKey();
+    }
+
+    public function model()
+    {
+        return $this->parent->model();
+    }
+
     /**
      * Set original values for fields.
      *

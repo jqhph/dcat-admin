@@ -13,7 +13,7 @@
     }
 </style>
 
-<div id="{{ $id }}-container" class="{{$viewClass['form-group']}}">
+<div class="{{$viewClass['form-group']}} form-field-file">
 
     <label for="{{$column}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
@@ -21,7 +21,7 @@
 
         @include('admin::form.error')
 
-        <input name="{{ $name }}" id="{{ $id }}" type="hidden" />
+        <input name="{{ $name }}" class="file-input" type="hidden" />
 
         <div class="web-uploader {{ $fileType }}">
             <div class="queueList">
@@ -49,30 +49,28 @@
     </div>
 </div>
 
-<script require="@webuploader">
+<script require="@webuploader" init=".form-field-file">
     var uploader,
         newPage,
-        cID = replaceNestedFormIndex('#{{ $id }}-container'),
-        ID = replaceNestedFormIndex('#{{ $id }}'),
         options = {!! $options !!};
 
     init();
 
     function init() {
         var opts = $.extend({
-            selector: cID,
-            addFileButton: cID+' .add-file-button',
-            inputSelector: ID,
+            selector: $this,
+            addFileButton: $this.find('.add-file-button'),
+            inputSelector: $this.find('.file-input'),
         }, options);
 
         opts.upload = $.extend({
             pick: {
-                id: cID+' .file-picker',
+                id: $this.find('.file-picker'),
                 name: '_file_',
                 label: '<i class="feather icon-folder"></i>&nbsp; {!! trans('admin.uploader.add_new_media') !!}'
             },
-            dnd: cID+' .dnd-area',
-            paste: cID+' .web-uploader'
+            dnd: $this.find('.dnd-area'),
+            paste: $this.find('.web-uploader')
         }, opts);
 
         uploader = Dcat.Uploader(opts);

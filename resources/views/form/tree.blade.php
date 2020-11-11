@@ -2,7 +2,7 @@
 
     <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
-    <div id="{{ $id }}" class="{{$viewClass['field']}}">
+    <div class="{{$viewClass['field']}} form-field-tree">
 
         @include('admin::form.error')
 
@@ -22,21 +22,19 @@
     </div>
 </div>
 
-<script require="@jstree">
-    var selector = replaceNestedFormIndex('#{{ $id }}'),
-        tree = selector+' .jstree-wrapper .da-tree',
-        $tree = $(tree),
-        $input = $(selector+' .hidden-input'),
+<script require="@jstree" init=".form-field-tree">
+    var $tree = $this.find('.jstree-wrapper .da-tree'),
+        $input = $this.find('.hidden-input'),
         opts = {!! admin_javascript_json($options) !!},
         parents = {!! json_encode($parents) !!};
 
     opts.core = opts.core || {};
     opts.core.data = {!! json_encode($nodes) !!};
 
-    $(document).on("click", selector+" input[value=1]", function () {
+    $this.find('input[value=1]').on("click", function () {
         $(this).parents('.jstree-wrapper').find('.da-tree').jstree($(this).prop("checked") ? "check_all" : "uncheck_all");
     });
-    $(document).on("click", selector+" input[value=2]", function () {
+    $this.find('input[value=2]').on("click", function () {
         $(this).parents('.jstree-wrapper').find('.da-tree').jstree($(this).prop("checked") ? "open_all" : "close_all");
     });
 
