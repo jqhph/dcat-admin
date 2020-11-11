@@ -20,7 +20,6 @@ class Range extends Field
 
         array_shift($arguments);
         $this->label = $this->formatLabel($arguments);
-        $this->id = $this->formatId($this->column);
     }
 
     protected function prepareInputValue($value)

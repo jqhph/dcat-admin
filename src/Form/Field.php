@@ -30,13 +30,6 @@ class Field implements Renderable
     const FIELD_CLASS_PREFIX = 'field_';
 
     /**
-     * Element id.
-     *
-     * @var array|string
-     */
-    protected $id;
-
-    /**
      * Element value.
      *
      * @var mixed
@@ -224,11 +217,6 @@ class Field implements Renderable
     protected $savingCallbacks = [];
 
     /**
-     * @var bool
-     */
-    protected $runScript = true;
-
-    /**
      * Field constructor.
      *
      * @param string|array $column
@@ -238,43 +226,8 @@ class Field implements Renderable
     {
         $this->column = $column;
         $this->label = $this->formatLabel($arguments);
-        $this->id = $this->formatId($column);
 
         $this->callResolving();
-    }
-
-    /**
-     * Get the field element id.
-     *
-     * @return string|array
-     */
-    public function getElementId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Format the field element id.
-     *
-     * @param string|array $column
-     *
-     * @return string|array
-     */
-    protected function formatId($column)
-    {
-        $random = Str::random(5);
-
-        if (is_array($column)) {
-            $id = [];
-
-            foreach (str_replace('.', '-', $column) as $k => $v) {
-                $id[$k] = "{$v}-{$random}";
-            }
-
-            return $id;
-        }
-
-        return 'form-field-'.str_replace('.', '-', $column).'-'.$random;
     }
 
     /**
@@ -284,14 +237,6 @@ class Field implements Renderable
      */
     public function setNestedFormRelation(array $options = [])
     {
-        if (is_array($this->id)) {
-            $this->id = array_map(function ($v) {
-                return $v.NestedForm::DEFAULT_KEY_NAME;
-            }, $this->id);
-        } else {
-            $this->id .= NestedForm::DEFAULT_KEY_NAME;
-        }
-
         return $this;
     }
 
@@ -1158,7 +1103,6 @@ class Field implements Renderable
     public function defaultVariables()
     {
         return [
-            'id'          => $this->id,
             'name'        => $this->getElementName(),
             'help'        => $this->help,
             'class'       => $this->getElementClassString(),
@@ -1292,28 +1236,14 @@ class Field implements Renderable
 
         $this->callComposing();
 
-        $result = Admin::resolveHtml(
-            view($this->view(), $this->variables()),
-            ['runScript' => $this->runScript]
-        );
-
-        $this->script .= $result['script'];
-
         $this->withScript();
 
-        return $result['html'];
-    }
-
-    public function runScript(bool $value = true)
-    {
-        $this->runScript = $value;
-
-        return $this;
+        return Admin::view($this->view(), $this->variables());
     }
 
     protected function withScript()
     {
-        if ($this->script && $this->runScript) {
+        if ($this->script) {
             Admin::script($this->script);
         }
     }

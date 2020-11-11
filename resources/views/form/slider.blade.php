@@ -1,6 +1,6 @@
 <div class="{{$viewClass['form-group']}}">
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
     <div class="{{$viewClass['field']}}">
 
@@ -13,8 +13,8 @@
     </div>
 </div>
 
-<script require="@ionslider">
+<script require="@ionslider" init="{!! $selector !!}">
     setTimeout(function () {
-        $('{{ $selector }}').ionRangeSlider({!! admin_javascript_json($options) !!})
+        $this.ionRangeSlider({!! admin_javascript_json($options) !!})
     }, 400);
 </script>

@@ -19,6 +19,6 @@
     </div>
 </div>
 
-<script require="@markdown" init=".form-field-markdown" id>
+<script require="@markdown" init=".form-field-markdown">
     editormd(id, {!! $options !!});
 </script>

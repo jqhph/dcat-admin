@@ -1,6 +1,6 @@
 <div class="{{$viewClass['form-group']}}">
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
     <div class="{{$viewClass['field']}}">
 
@@ -70,11 +70,10 @@
 </script>
 
 {{--解决输入中文后无法回车结束的问题。--}}
-<script once>
-    var selector = '.select2-selection--multiple .select2-search__field';
-    $(document).off('keyup', selector).on('keyup', selector, function (event) {
+<script init=".select2-selection--multiple .select2-search__field">
+    $this.on('keyup', function (e) {
         try {
-            if (event.keyCode == 13) {
+            if (e.keyCode == 13) {
                 var $this = $(this), optionText = $this.val();
                 if (optionText != "" && $this.find("option[value='" + optionText + "']").length === 0) {
                     var $select = $this.parents('.select2-container').prev("select");

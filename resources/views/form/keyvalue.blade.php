@@ -2,7 +2,7 @@
     td .form-group {margin-bottom: 0 !important;}
 </style>
 
-<div class="{{$viewClass['form-group']}}">
+<div class="{{$viewClass['form-group']}} {{ $class }}">
 
     <label class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
@@ -20,7 +20,7 @@
                 <th style="width: 85px;"></th>
             </tr>
             </thead>
-            <tbody class="kv-{{ $class }}-table">
+            <tbody class="kv-table">
 
             @foreach(($value ?: []) as $k => $v)
                 <tr>
@@ -45,7 +45,7 @@
 
                     <td class="form-group">
                         <div>
-                            <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
+                            <div class="kv-remove btn btn-white btn-sm pull-right">
                                 <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                    <div class="{{ $class }}-add btn btn-primary btn-outline btn-sm pull-right">
+                    <div class="kv-add btn btn-primary btn-outline btn-sm pull-right">
                         <i class="feather icon-save"></i>&nbsp;{{ __('admin.new') }}
                     </div>
                 </td>
@@ -66,10 +66,8 @@
             </tfoot>
         </table>
     </div>
-</div>
 
-<template>
-    <template class="{{$class}}-tpl">
+    <template>
         <tr>
             <td>
                 <div class="form-group  ">
@@ -90,25 +88,25 @@
 
             <td class="form-group">
                 <div>
-                    <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
+                    <div class="kv-remove btn btn-white btn-sm pull-right">
                         <i class="feather icon-trash">&nbsp;</i>{{ __('admin.remove') }}
                     </div>
                 </div>
             </td>
         </tr>
     </template>
-</template>
+</div>
 
-<script>
+<script init="{!! $selector !!}">
     var index = {{ $count }};
-    $('.{{ $class }}-add').on('click', function () {
-        var tpl = $('template.{{ $class }}-tpl').html().replace('{key}', index).replace('{key}', index);
-        $('tbody.kv-{{ $class }}-table').append(tpl);
+    $this.find('.kv-add').on('click', function () {
+        var tpl = $this.find('template').html().replace('{key}', index).replace('{key}', index);
+        $this.find('tbody.kv-table').append(tpl);
 
         index++;
     });
 
-    $('tbody').on('click', '.{{ $class }}-remove', function () {
+    $this.find('tbody.kv-table').on('click', '.kv-remove', function () {
         $(this).closest('tr').remove();
     });
 </script>

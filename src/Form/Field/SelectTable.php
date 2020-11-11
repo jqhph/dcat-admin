@@ -127,8 +127,6 @@ class SelectTable extends Field
     protected function setUpTable()
     {
         $this->dialog
-            ->id($this->getElementId())
-            ->runScript(false)
             ->footer($this->renderFooter())
             ->button($this->renderButton());
     }
@@ -141,17 +139,15 @@ class SelectTable extends Field
         $this->prepend('<i class="feather icon-arrow-up"></i>')
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('type', 'text')
-            ->defaultAttribute('name', $this->getElementName())
-            ->defaultAttribute('id', 'container-'.$this->getElementId());
+            ->defaultAttribute('name', $this->getElementName());
 
         $this->addVariables([
-            'prepend'      => $this->prepend,
-            'append'       => $this->append,
-            'style'        => $this->style,
-            'dialog'       => $this->dialog->render(),
-            'placeholder'  => $this->placeholder(),
-            'dialogId'     => $this->dialog->id(),
-            'dialogScript' => $this->dialog->getScript(),
+            'prepend'        => $this->prepend,
+            'append'         => $this->append,
+            'style'          => $this->style,
+            'dialog'         => $this->dialog->render(),
+            'placeholder'    => $this->placeholder(),
+            'dialogSelector' => $this->dialog->getElementSelector(),
         ]);
 
         return parent::render();

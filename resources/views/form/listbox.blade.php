@@ -1,6 +1,6 @@
 <div class="{{$viewClass['form-group']}}">
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
     <div class="{{$viewClass['field']}}">
 
@@ -18,6 +18,6 @@
     </div>
 </div>
 
-<script require="@jquery.bootstrap-duallistbox">
-    $("{{ $selector }}").bootstrapDualListbox({!! admin_javascript_json($settings) !!});
+<script require="@jquery.bootstrap-duallistbox" init="{!! $selector !!}">
+    $this.bootstrapDualListbox({!! admin_javascript_json($settings) !!});
 </script>

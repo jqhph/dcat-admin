@@ -17,7 +17,6 @@ class DateRange extends Field
 
         array_shift($arguments);
         $this->label = $this->formatLabel($arguments);
-        $this->id = $this->formatId($this->column);
 
         $this->options(['format' => $this->format]);
     }

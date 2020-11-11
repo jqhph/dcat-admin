@@ -1,7 +1,7 @@
 
 @include('admin::scripts.select')
 
-<script require="@select2">
+<script require="@select2" init="{!! $selector !!}">
     var configs = {!! admin_javascript_json($configs) !!};
 
     @yield('admin.select-ajax')
@@ -10,7 +10,7 @@
     $.ajax({!! admin_javascript_json($remoteOptions) !!}).done(function(data) {
         configs.data = data;
 
-        $("{!! $selector !!}").each(function (_, select) {
+        $this.each(function (_, select) {
             select = $(select);
 
             select.select2(configs);
@@ -23,7 +23,7 @@
         });
     });
     @else
-    $("{!! $selector !!}").select2(configs);
+    $this.select2(configs);
     @endif
 </script>
 

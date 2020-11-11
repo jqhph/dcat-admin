@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Illuminate\Support\Str;
 
 class Text extends Field
 {
@@ -28,7 +29,6 @@ class Text extends Field
         $this->initPlainInput();
 
         $this->defaultAttribute('type', 'text')
-            ->defaultAttribute('id', $this->id)
             ->defaultAttribute('name', $this->getElementName())
             ->defaultAttribute('value', $this->value())
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
@@ -76,7 +76,7 @@ class Text extends Field
         }
 
         $attributes = [
-            'data-match'       => '#'.$field->getElementId(),
+            'data-match'       => $field->getElementClassSelector(),
             'data-match-error' => str_replace(
                 [':attribute', ':other'],
                 [$field->label(), $this->label()],
@@ -188,9 +188,11 @@ JS
      */
     public function datalist($entries = [])
     {
-        $this->defaultAttribute('list', "list-{$this->id}");
+        $id = Str::random(8);
 
-        $datalist = "<datalist id=\"list-{$this->id}\">";
+        $this->defaultAttribute('list', "list-{$id}");
+
+        $datalist = "<datalist id=\"list-{$id}\">";
         foreach ($entries as $k => $v) {
             $value = is_string($k) ? "value=\"{$k}\"" : '';
 
@@ -198,7 +200,7 @@ JS
         }
         $datalist .= '</datalist>';
 
-        Admin::script("$('#list-{$this->id}').parent().hide()");
+        Admin::script("$('#list-{$id}').parent().hide()");
 
         return $this->append($datalist);
     }

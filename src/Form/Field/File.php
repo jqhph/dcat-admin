@@ -101,8 +101,6 @@ class File extends Field implements UploadFieldInterface
     {
         $this->options['formData']['_relation'] = [$options['relation'], $options['key']];
 
-        $this->id .= NestedForm::DEFAULT_KEY_NAME;
-
         return $this;
     }
 

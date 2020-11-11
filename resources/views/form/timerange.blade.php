@@ -1,6 +1,6 @@
 <div class="{{$viewClass['form-group']}}">
 
-    <label for="{{$id['start']}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
     <div class="{{$viewClass['field']}}">
 
@@ -30,3 +30,18 @@
 
     </div>
 </div>
+
+<script require="@moment,@bootstrap-datetimepicker" init="{!! $selector['start'] !!}">
+    var options = {!! admin_javascript_json($options) !!};
+    var $end = $this.parents('.row').find('{!! $selector['end'] !!}');
+
+    $this.datetimepicker(options);
+    $end.datetimepicker($.extend(options, {useCurrent: false}));
+    $this.on("dp.change", function (e) {
+        $('{{ $selector['end'] }}').data("DateTimePicker").minDate(e.date);
+    });
+    $end.on("dp.change", function (e) {
+        $this.data("DateTimePicker").maxDate(e.date);
+    });
+</script>
+

@@ -7,11 +7,12 @@
             <div {!! $attributes !!}>
                 <span class="default-text" style="opacity:0.75">{{ $placeholder }}</span>
                 <span class="option d-none"></span>
+
+                @if(! $disabled)
+                    <input name="{{ $name }}" type="hidden" value="{{ implode(',', Dcat\Admin\Support\Helper::array($value)) }}" />
+                @endif
             </div>
 
-            @if(! $disabled)
-                <input name="{{ $name }}" type="hidden" id="hidden-{{ $id }}" value="{{ implode(',', \Dcat\Admin\Support\Helper::array($value)) }}" />
-            @endif
             <div class="input-group-append">
                 {!! $dialog !!}
             </div>
@@ -22,13 +23,13 @@
     </div>
 </div>
 
-<script require="@select-table">
-    {!! $dialogScript !!}
+<script require="@select-table" init="{!! $selector !!}">
+    var dialogId = $this.parent().find('{!! $dialogSelector !!}').attr('id');
 
     Dcat.grid.SelectTable({
-        dialog: replaceNestedFormIndex('#{{ $dialogId }}'),
-        container: replaceNestedFormIndex('#container-{{ $id }}'),
-        input: replaceNestedFormIndex('#hidden-{{ $id }}'),
+        dialog: '[data-id="' + dialogId + '"]',
+        container: $this,
+        input: $(this).find('input'),
         @if(isset($max))
         multiple: true,
         max: {{ $max }},

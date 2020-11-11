@@ -15,7 +15,8 @@
 <script init=".{{ $class }}">
     var area = screen.width <= 850 ? ['100%', '100%',] : '{{ $width }}',
         offset = screen.width <= 850 ? 0 : '70px',
-        _tb = '.async-table', _container = '.dialog-table',
+        _tb = '.async-table',
+        _container = '.dialog-table',
         _id, _temp, _btnId;
 
     setId(id);

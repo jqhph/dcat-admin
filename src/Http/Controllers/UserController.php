@@ -129,8 +129,6 @@ class UserController extends AdminController
 
             $form->display('id', 'ID');
 
-            $form->editor('test');
-
             $form->text('username', trans('admin.username'))
                 ->required()
                 ->creationRules(['required', "unique:{$connection}.{$userTable}"])

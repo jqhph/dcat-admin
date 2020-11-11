@@ -51,7 +51,6 @@ class Map extends Field
         array_shift($arguments);
 
         $this->label = $this->formatLabel($arguments);
-        $this->id = $this->formatId($this->column);
 
         /*
          * Google map is blocked in mainland China
