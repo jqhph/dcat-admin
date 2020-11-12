@@ -141,9 +141,11 @@ abstract class AbstractFilter
      */
     protected function formatLabel($label)
     {
-        $label = $label ?: admin_trans_field($this->column);
+        if($label) return $label;
 
-        return str_replace(['.', '_'], ' ', $label);
+        $label = admin_trans_field($this->column);
+
+        return str_replace('_', ' ', $label);
     }
 
     /**
