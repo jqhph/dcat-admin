@@ -112,7 +112,7 @@
     }
 
     function setMaxHeight(index) {
-        var maxHeight = ($(window).height() - 250);
+        var maxHeight = ($(window).height() - 220);
         if (maxHeight < 250) {
             maxHeight = maxHeight + 120;
         }
