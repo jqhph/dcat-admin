@@ -249,11 +249,15 @@ class Field implements Renderable
      */
     protected function formatLabel($arguments = [])
     {
+	if(isset($arguments[0])) {
+	    return $arguments[0];
+	}
+	
         $column = is_array($this->column) ? current($this->column) : $this->column;
 
-        $label = isset($arguments[0]) ? $arguments[0] : admin_trans_field($column);
+        $label = admin_trans_field($column);
 
-        return str_replace(['.', '_'], ' ', $label);
+        return str_replace('_', ' ', $label);
     }
 
     /**
