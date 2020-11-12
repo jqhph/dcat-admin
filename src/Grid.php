@@ -72,6 +72,11 @@ class Grid
     protected $rows;
 
     /**
+     * @var array
+     */
+    protected $rowsCallbacks = [];
+
+    /**
      * All column names of the grid.
      *
      * @var array
@@ -448,15 +453,25 @@ class Grid
         $this->rows = collect($data)->map(function ($model) {
             return new Row($this, $model);
         });
+
+        foreach ($this->rowsCallbacks as $callback) {
+            $callback($this->rows);
+        }
     }
 
     /**
      * Set grid row callback function.
      *
-     * @return Collection
+     * @return Collection|$this
      */
-    public function rows()
+    public function rows(\Closure $callback = null)
     {
+        if ($callback) {
+            $this->rowsCallbacks[] = $callback;
+
+            return $this;
+        }
+
         return $this->rows;
     }
 
