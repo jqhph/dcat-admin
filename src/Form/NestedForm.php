@@ -10,11 +10,6 @@ use Illuminate\Support\Collection;
 
 class NestedForm extends WidgetForm
 {
-    use Form\Concerns\HandleCascadeFields;
-    use Form\Concerns\HasRows;
-    use Form\Concerns\HasTabs;
-    use Form\Concerns\HasLayout;
-
     const DEFAULT_KEY_NAME = '__LA_KEY__';
 
     const REMOVE_FLAG_NAME = '_remove_';
@@ -274,13 +269,13 @@ class NestedForm extends WidgetForm
     }
 
     /**
-     * @param Field $field
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function pushField(Field $field)
     {
         $this->fields->push($field);
+
+        $field->setForm($this->form);
 
         if ($this->layout()->hasColumns()) {
             $this->layout()->addField($field);
@@ -301,6 +296,18 @@ class NestedForm extends WidgetForm
         $field->width($this->width['field'], $this->width['label']);
 
         return $this;
+    }
+
+    protected function resolveField($method, $arguments)
+    {
+        if ($className = Form::findFieldClass($method)) {
+            $column = Arr::get($arguments, 0, '');
+
+            /* @var Field $field */
+            $field = new $className($column, array_slice($arguments, 1));
+
+            return $this->formatField($field);
+        }
     }
 
     /**
@@ -370,22 +377,6 @@ class NestedForm extends WidgetForm
     protected function formatName($name = null)
     {
         return Helper::formatElementName($name ?: $this->relationName);
-    }
-
-    protected function resolveField($method, $arguments)
-    {
-        if ($className = Form::findFieldClass($method)) {
-            $column = Arr::get($arguments, 0, '');
-
-            /* @var Field $field */
-            $field = new $className($column, array_slice($arguments, 1));
-
-            $field->setForm($this->form);
-
-            $field = $this->formatField($field);
-
-            return $field;
-        }
     }
 
     /**

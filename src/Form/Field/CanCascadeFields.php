@@ -132,7 +132,7 @@ trait CanCascadeFields
         })->toJson();
 
         $script = <<<JS
-(function () {
+Dcat.init('{$this->getElementClassSelector()}', function (\$this) {
     var compare = function (a, b, o) {
         if (! $.isArray(b)) {
             return operator_table[o](a, b)
@@ -182,7 +182,7 @@ trait CanCascadeFields
     };
     var cascade_groups = {$cascadeGroups}, event = '{$this->cascadeEvent}';
 
-    $('{$this->getElementClassSelector()}').on(event, function (e) {
+    \$this.on(event, function (e) {
         {$this->getFormFrontValue()}
 
         cascade_groups.forEach(function (event) {
@@ -194,7 +194,7 @@ trait CanCascadeFields
             }
         });
     }).trigger(event);
-})();
+});
 JS;
 
         Admin::script($script);
