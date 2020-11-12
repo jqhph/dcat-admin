@@ -497,7 +497,7 @@ class HasMany extends Field
 
         $this->addVariables([
             'forms'          => $this->buildRelatedForms(),
-            'template'       => $this->buildNestedForm()->getTemplate(),
+            'template'       => $this->buildNestedForm()->render(),
             'relationName'   => $this->relationName,
             'options'        => $this->options,
             'count'          => count($this->value()),
