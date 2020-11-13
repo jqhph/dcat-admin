@@ -436,19 +436,6 @@ if (! function_exists('admin_asset')) {
     }
 }
 
-if (! function_exists('admin_assets_require')) {
-
-    /**
-     * @param $alias
-     *
-     * @return void
-     */
-    function admin_assets_require(?string $alias)
-    {
-        Admin::asset()->collect($alias);
-    }
-}
-
 if (! function_exists('admin_api_route')) {
 
     /**
@@ -491,6 +478,19 @@ if (! function_exists('admin_color')) {
         }
 
         return Admin::color()->get($color);
+    }
+}
+
+if (! function_exists('admin_view')) {
+    /**
+     * @param string $view
+     * @param array  $data
+     *
+     * @throws \Throwable
+     */
+    function admin_view($view, array $data = [])
+    {
+        Admin::view($view, $data);
     }
 }
 

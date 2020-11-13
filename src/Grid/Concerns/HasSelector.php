@@ -58,7 +58,7 @@ trait HasSelector
                 return;
             }
 
-            $this->fireOnce(new Grid\Events\ApplySelector($this));
+            $this->fireOnce(new Grid\Events\ApplySelector($this, [$active]));
 
             $values = $active[$key];
             if ($selector['type'] == 'one') {

@@ -204,7 +204,7 @@ abstract class Widget implements Renderable
 
         $result = Admin::resolveHtml(view($this->view, $this->variables()), ['runScript' => $this->runScript]);
 
-        $this->script = $result['script'];
+        $this->script .= $result['script'];
 
         return $result['html'];
     }
