@@ -16,6 +16,8 @@ class RowSelector
 
     protected $rowClickable = false;
 
+    protected $idColumn;
+
     protected $titleColumn;
 
     public function __construct(Grid $grid)
@@ -44,6 +46,13 @@ class RowSelector
         return $this;
     }
 
+    public function idColumn(string $value)
+    {
+        $this->idColumn = $value;
+
+        return $this;
+    }
+
     public function titleColumn(string $value)
     {
         $this->titleColumn = $value;
@@ -63,9 +72,10 @@ HTML;
 
     public function renderColumn($row, $id)
     {
-        $this->setupScript();
+        $this->addScript();
         $title = $this->getTitle($row, $id);
         $title = e(is_array($title) ? json_encode($title) : $title);
+        $id = $this->idColumn ? Arr::get($row->toArray(), $this->idColumn) : $id;
 
         return <<<EOT
 <div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid checkbox-grid-column">
@@ -75,7 +85,7 @@ HTML;
 EOT;
     }
 
-    protected function setupScript()
+    protected function addScript()
     {
         $clickable = $this->rowClickable ? 'true' : 'false';
         $background = $this->background ?: Admin::color()->dark20();
