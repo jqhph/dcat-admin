@@ -59,7 +59,7 @@ trait CanImportMenu
                 'parent_id' => $this->getParentMenuId($menu['parent'] ?? 0),
                 'order'     => $lastOrder + 1,
                 'title'     => $menu['title'],
-                'icon'      => (string) ($icon ?? ''),
+                'icon'      => (string) ($menu['icon'] ?? ''),
                 'uri'       => (string) ($menu['uri'] ?? ''),
                 'extension' => $this->getName(),
             ]);
