@@ -410,7 +410,9 @@ class Column
      */
     protected function formatLabel($label)
     {
-        if($label) return $label;
+        if ($label) {
+            return $label;
+        }
 
         $label = admin_trans_field($this->name);
 

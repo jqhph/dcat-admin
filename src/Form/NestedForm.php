@@ -390,7 +390,6 @@ class NestedForm extends WidgetForm
     public function __call($method, $arguments)
     {
         if ($field = $this->resolveField($method, $arguments)) {
-
             $this->pushField($field);
 
             return $field;

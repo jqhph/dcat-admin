@@ -200,7 +200,7 @@ class Menu
     }
 
     /**
-     * 判断用户
+     * 判断用户.
      *
      * @param array|\Dcat\Admin\Models\Menu $item
      *

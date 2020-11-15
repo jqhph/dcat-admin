@@ -4,7 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Field;
-use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\JavaScript;
 use Illuminate\Support\Arr;
