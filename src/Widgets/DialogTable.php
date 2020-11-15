@@ -5,7 +5,6 @@ namespace Dcat\Admin\Widgets;
 use Dcat\Admin\Grid\LazyRenderable;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Str;
 
 class DialogTable extends Widget
 {

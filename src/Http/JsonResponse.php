@@ -393,7 +393,6 @@ class JsonResponse
      * @param mixed ...$params
      *
      * @return $this
-     *
      */
     public static function make(...$params)
     {

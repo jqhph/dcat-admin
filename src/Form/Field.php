@@ -12,7 +12,6 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
@@ -249,7 +248,7 @@ class Field implements Renderable
      */
     protected function formatLabel($arguments = [])
     {
-        if(isset($arguments[0])) {
+        if (isset($arguments[0])) {
             return $arguments[0];
         }
 

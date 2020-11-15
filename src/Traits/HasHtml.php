@@ -129,7 +129,6 @@ trait HasHtml
                 $script = "(function () {{$script}\n})();";
             }
 
-
             if ($element->hasAttribute('once')) {
                 return static::script($script);
             }

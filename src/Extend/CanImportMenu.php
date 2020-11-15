@@ -30,7 +30,7 @@ trait CanImportMenu
     }
 
     /**
-     * 添加菜单
+     * 添加菜单.
      *
      * @param array $menu
      *

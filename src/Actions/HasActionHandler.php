@@ -15,9 +15,9 @@ trait HasActionHandler
      * @var Response
      */
     protected $response;
-    
+
     private $confirmString;
-    
+
     private $paramString;
 
     /**
@@ -81,7 +81,7 @@ trait HasActionHandler
         if ($this->confirmString !== null) {
             return $this->confirmString;
         }
-        
+
         $confirm = $this->confirm();
 
         return $this->confirmString = ($confirm ? admin_javascript_json((array) $confirm) : 'false');
