@@ -33,12 +33,13 @@
         }
     });
     @endif
-@endsection
+@overwrite
 </script>
 
 @section('admin.select-load')
     @if(isset($load))
     <script once>
+        console.log(123213)
         var selector = '{!! $selector !!}';
 
         $(document).off('change', selector);
@@ -62,7 +63,7 @@
         $(selector).trigger('change');
     </script>
     @endif
-@endsection
+@overwrite
 
 @section('admin.select-lang')
 @if (config('app.locale') !== 'en')
