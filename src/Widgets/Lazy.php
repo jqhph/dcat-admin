@@ -4,7 +4,6 @@ namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Traits\InteractsWithRenderApi;
-use Illuminate\Support\Str;
 
 class Lazy extends Widget
 {

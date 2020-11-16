@@ -120,8 +120,8 @@ JS;
      */
     protected function getLoadScript()
     {
-        return <<<JS
-\$this.trigger('table:load');
+        return <<<'JS'
+$this.trigger('table:load');
 JS;
     }
 

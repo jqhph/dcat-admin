@@ -158,7 +158,9 @@ class Field implements Renderable
      */
     protected function formatLabel($label)
     {
-        if($label) return $label;
+        if ($label) {
+            return $label;
+        }
 
         $label = admin_trans_field($this->name);
 
@@ -256,7 +258,7 @@ class Field implements Renderable
     {
         $field = $this;
 
-        return $this->unescape()->as(function ($path) use ($server , $field) {
+        return $this->unescape()->as(function ($path) use ($server, $field) {
             $name = basename($path);
 
             $field->wrap(false);

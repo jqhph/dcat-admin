@@ -24,7 +24,7 @@ abstract class RowAction extends GridAction
     public function getKey()
     {
         if ($this->row) {
-            return $this->row->get($this->parent->getKeyName());
+            return $this->row->{$this->parent->getKeyName()};
         }
 
         return parent::getKey();

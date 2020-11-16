@@ -6,13 +6,11 @@
     <i class='feather icon-align-right'></i> {{ trans('admin.view') }}
 </a>
 
-<template>
-    <template id="dialog-tree-tpl">
-        <div class="jstree-wrapper p-1" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>
-    </template>
+<template id="dialog-tree-tpl">
+    <div class="jstree-wrapper p-1" style="border:0"><div class="da-tree" style="margin-top:10px"></div></div>
 </template>
 
-<script require="jstree" once>
+<script require="@jstree" once>
     window.resolveDialogTree = function (options) {
         var tpl = $('#dialog-tree-tpl').html(),
             t = $(this),

@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class Admin
@@ -29,7 +28,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.6-beta';
+    const VERSION = '2.0.7-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容

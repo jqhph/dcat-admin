@@ -151,7 +151,7 @@ abstract class Action implements Renderable
      */
     public function makeSelector()
     {
-        return 'act-'.Str::random();
+        return '.act-'.Str::random();
     }
 
     /**

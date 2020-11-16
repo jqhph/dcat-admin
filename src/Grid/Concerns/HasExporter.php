@@ -48,7 +48,7 @@ trait HasExporter
             $exporter->resolve($exporterDriver);
         }
 
-        return $exporter->titles($titles);
+        return $titles ? $exporter->titles($titles) : $exporter;
     }
 
     /**

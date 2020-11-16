@@ -494,6 +494,31 @@ if (! function_exists('admin_view')) {
     }
 }
 
+if (! function_exists('admin_script')) {
+    /**
+     * @param string $js
+     * @param bool   $direct
+     *
+     * @return void
+     */
+    function admin_script($script, bool $direct = false)
+    {
+        Admin::script($script, $direct);
+    }
+}
+
+if (! function_exists('admin_style')) {
+    /**
+     * @param string $style
+     *
+     * @return void
+     */
+    function admin_style($style)
+    {
+        Admin::style($style);
+    }
+}
+
 if (! function_exists('admin_js')) {
     /**
      * @param string|array $js

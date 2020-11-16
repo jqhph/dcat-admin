@@ -180,7 +180,7 @@ trait WebUploader
      *
      * @return $this
      */
-    public function compress($compress)
+    public function compress($compress = true)
     {
         $this->options['compress'] = $compress;
 

@@ -4,7 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Support\JavaScript;
 
 /**
  * TinyMCE editor.
