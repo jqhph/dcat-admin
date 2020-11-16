@@ -105,32 +105,35 @@ export default class Dcat {
      * @param options
      */
     init(selector, callback, options) {
-        if (initialized[selector]) {
-            initialized[selector].takeRecords();
-            initialized[selector].disconnect();
-        }
-
-        let self = this;
-
-        // 这里必须使用定时器，否则无法立即停止上次绑定的观察回调
-        setTimeout(function () {
-            initialized[selector] = $.initialize(selector, function () {
-                var $this = $(this);
-                if ($this.attr('initialized')) {
-                    return;
+        let self = this,
+            clear = function () {
+                if (initialized[selector]) {
+                    initialized[selector].takeRecords();
+                    initialized[selector].disconnect();
                 }
-                $this.attr('initialized', '1');
+            };
 
-                // 如果没有ID，则自动生成
-                var id = $this.attr('id');
-                if (! id) {
-                    id = "_"+self.helpers.random();
-                    $this.attr('id', id);
-                }
+        self.onPjaxComplete(clear, true);
+        $document.one('pjax:responded', clear);
 
-                callback.call(this, $(this), id)
-            }, options);
-        }, 1)
+        clear();
+
+        initialized[selector] = $.initialize(selector, function () {
+            var $this = $(this);
+            if ($this.attr('initialized')) {
+                return;
+            }
+            $this.attr('initialized', '1');
+
+            // 如果没有ID，则自动生成
+            var id = $this.attr('id');
+            if (! id) {
+                id = "_"+self.helpers.random();
+                $this.attr('id', id);
+            }
+
+            callback.call(this, $(this), id)
+        }, options);
     }
 
     /**
@@ -153,6 +156,8 @@ export default class Dcat {
      */
     pjaxResponded(value) {
         pjaxResponded = value !== false;
+
+        $document.trigger('pjax:responded');
 
         return this
     }
