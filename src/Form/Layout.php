@@ -131,7 +131,7 @@ class Layout
 
         $form->disableResetButton();
         $form->disableSubmitButton();
-        $form->disableFormTag();
+        $form->useFormTag(false);
         $form->ajax(false);
 
         if ($callback) {

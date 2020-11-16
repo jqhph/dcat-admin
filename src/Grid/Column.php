@@ -58,8 +58,8 @@ class Column
     use Grid\Column\HasHeader;
     use Grid\Column\HasDisplayers;
     use Macroable {
-            __call as __macroCall;
-        }
+        __call as __macroCall;
+    }
 
     const SELECT_COLUMN_NAME = '__row_selector__';
     const ACTION_COLUMN_NAME = '__actions__';
@@ -410,13 +410,7 @@ class Column
      */
     protected function formatLabel($label)
     {
-        if ($label) {
-            return $label;
-        }
-
-        $label = admin_trans_field($this->name);
-
-        return str_replace('_', ' ', $label);
+        return $label ?: str_replace('_', ' ', admin_trans_field($this->name));
     }
 
     /**

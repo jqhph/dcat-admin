@@ -254,9 +254,7 @@ class Field implements Renderable
 
         $column = is_array($this->column) ? current($this->column) : $this->column;
 
-        $label = admin_trans_field($column);
-
-        return str_replace('_', ' ', $label);
+        return str_replace('_', ' ', admin_trans_field($column));
     }
 
     /**
