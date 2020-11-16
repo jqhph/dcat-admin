@@ -6,6 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAdminExtensionsTable extends Migration
 {
+    public function getConnection()
+    {
+        return $this->config('database.connection') ?: config('database.default');
+    }
+
+    public function config($key)
+    {
+        return config('admin.'.$key);
+    }
+
     /**
      * Run the migrations.
      *
@@ -13,7 +23,7 @@ class CreateAdminExtensionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admin_extensions', function (Blueprint $table) {
+        Schema::create($this->config('database.extensions_table'), function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 100)->unique();
             $table->string('version', 20)->default('');
@@ -24,7 +34,7 @@ class CreateAdminExtensionsTable extends Migration
             $table->engine = 'InnoDB';
         });
 
-        Schema::create('admin_extension_histories', function (Blueprint $table) {
+        Schema::create($this->config('database.extension_histories_table'), function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('name', 100);
             $table->tinyInteger('type')->default(1);
@@ -45,7 +55,7 @@ class CreateAdminExtensionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_extensions');
-        Schema::dropIfExists('admin_extension_histories');
+        Schema::dropIfExists($this->config('database.extensions_table'));
+        Schema::dropIfExists($this->config('database.extension_histories_table'));
     }
 }
