@@ -36,27 +36,6 @@ class Helper
     ];
 
     /**
-     * 更新扩展配置.
-     *
-     * @param array $config
-     *
-     * @return bool
-     */
-    public static function updateExtensionConfig(array $config)
-    {
-        $files = app('files');
-        $result = (bool) $files->put(config_path('admin-extensions.php'), self::exportArrayPhp($config));
-
-        if ($result && is_file(base_path('bootstrap/cache/config.php'))) {
-            Artisan::call('config:cache');
-        }
-
-        config(['admin-extensions' => $config]);
-
-        return $result;
-    }
-
-    /**
      * 把给定的值转化为数组.
      *
      * @param $value

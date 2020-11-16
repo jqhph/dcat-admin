@@ -211,7 +211,6 @@ trait WebUploader
 
             'deleteData' => [
                 static::FILE_DELETE_FLAG => '',
-                '_token'                 => csrf_token(),
             ],
             'formData' => [
                 '_id'           => Str::random(),
