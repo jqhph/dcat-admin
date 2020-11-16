@@ -18,7 +18,7 @@ class Extension extends Model
 
         $this->setConnection($connection);
 
-        $this->setTable(config('admin.database.extensions_table'));
+        $this->setTable(config('admin.database.extensions_table') ?: 'admin_extensions');
 
         parent::__construct($attributes);
     }

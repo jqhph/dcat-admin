@@ -16,7 +16,7 @@ class Setting extends Model
 
         $this->setConnection($connection);
 
-        $this->setTable(config('admin.database.settings_table'));
+        $this->setTable(config('admin.database.settings_table') ?: 'admin_settings');
 
         parent::__construct($attributes);
     }

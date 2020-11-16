@@ -14,7 +14,7 @@ class ExtensionHistory extends Model
 
         $this->setConnection($connection);
 
-        $this->setTable(config('admin.database.extension_histories_table'));
+        $this->setTable(config('admin.database.extension_histories_table') ?: 'admin_extension_histories');
 
         parent::__construct($attributes);
     }

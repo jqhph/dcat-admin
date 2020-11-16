@@ -23,7 +23,7 @@ class CreateAdminExtensionsTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->config('database.extensions_table'), function (Blueprint $table) {
+        Schema::create($this->config('database.extensions_table') ?: 'admin_extensions', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name', 100)->unique();
             $table->string('version', 20)->default('');
@@ -34,7 +34,7 @@ class CreateAdminExtensionsTable extends Migration
             $table->engine = 'InnoDB';
         });
 
-        Schema::create($this->config('database.extension_histories_table'), function (Blueprint $table) {
+        Schema::create($this->config('database.extension_histories_table') ?: 'admin_extension_histories', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('name', 100);
             $table->tinyInteger('type')->default(1);
@@ -55,7 +55,7 @@ class CreateAdminExtensionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->config('database.extensions_table'));
-        Schema::dropIfExists($this->config('database.extension_histories_table'));
+        Schema::dropIfExists($this->config('database.extensions_table') ?: 'admin_extensions');
+        Schema::dropIfExists($this->config('database.extension_histories_table') ?: 'admin_extension_histories');
     }
 }
