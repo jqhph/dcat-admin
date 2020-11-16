@@ -8,7 +8,7 @@ class UpdateAdminMenuTable extends Migration
 {
     public function getConnection()
     {
-        return config('database.connection') ?: config('database.default');
+        return $this->config('database.connection') ?: config('database.default');
     }
 
     public function config($key)
