@@ -1187,6 +1187,15 @@ class Field implements Renderable
         return $this;
     }
 
+    protected function defaultAttribute($attribute, $value)
+    {
+        if (! array_key_exists($attribute, $this->attributes)) {
+            $this->attribute($attribute, $value);
+        }
+
+        return $this;
+    }
+
     /**
      * If this field should render.
      *
@@ -1233,6 +1242,10 @@ class Field implements Renderable
     {
         if (! $this->shouldRender()) {
             return '';
+        }
+
+        if (is_string($class = $this->getElementClassString())) {
+            $this->defaultAttribute('class', $class);
         }
 
         $this->callComposing();

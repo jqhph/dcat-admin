@@ -6,14 +6,14 @@
 
         @include('admin::form.error')
 
-        <textarea class="form-control {{$class}} form-field-editor" name="{{$name}}" placeholder="{{ $placeholder }}" {!! $attributes !!} >{{ $value }}</textarea>
+        <textarea class="form-control {{$class}}" name="{{$name}}" placeholder="{{ $placeholder }}" {!! $attributes !!} >{{ $value }}</textarea>
 
         @include('admin::form.help-block')
 
     </div>
 </div>
 
-<script require="@tinymce" init=".form-field-editor" id>
+<script require="@tinymce" init="{!! $selector !!}">
     var opts = {!! admin_javascript_json($options) !!};
 
     opts.selector = '#'+id;

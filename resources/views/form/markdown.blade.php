@@ -10,7 +10,7 @@
 
         @include('admin::form.error')
 
-        <div class="{{$class}} form-field-markdown" {!! $attributes !!}>
+        <div class="{{$class}}" {!! $attributes !!}>
             <textarea class="d-none" name="{{$name}}" placeholder="{{ $placeholder }}">{!! $value !!}</textarea>
         </div>
 
@@ -19,6 +19,6 @@
     </div>
 </div>
 
-<script require="@markdown" init=".form-field-markdown">
+<script require="@markdown" init="{!! $selector !!}">
     editormd(id, {!! $options !!});
 </script>
