@@ -179,7 +179,7 @@ class Select extends Presenter
 
         $values = array_filter((array) $this->filter->getValue());
 
-        return $this->config([
+        return $this->addVariables([
             'remote' => compact('ajaxOptions', 'values'),
         ]);
     }
@@ -244,7 +244,7 @@ class Select extends Presenter
 
         $url = admin_url($resourceUrl);
 
-        return $this->config(['ajax' => compact('url', 'idField', 'textField')]);
+        return $this->addVariables(['ajax' => compact('url', 'idField', 'textField')]);
     }
 
     /**
@@ -293,7 +293,7 @@ class Select extends Presenter
 
         $group = 'form';
 
-        return $this->config(['load' => compact('url', 'class', 'idField', 'textField', 'group')]);
+        return $this->addVariables(['load' => compact('url', 'class', 'idField', 'textField', 'group')]);
     }
 
     /**
