@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    protected $table = 'admin_settings';
     protected $primaryKey = 'slug';
     public $incrementing = false;
     protected $fillable = ['slug', 'value'];
@@ -16,6 +15,8 @@ class Setting extends Model
         $connection = config('admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
+
+        $this->setTable(config('admin.database.settings_table') ?: 'admin_settings');
 
         parent::__construct($attributes);
     }

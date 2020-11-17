@@ -39,7 +39,6 @@
 @section('admin.select-load')
     @if(isset($load))
     <script once>
-        console.log(123213)
         var selector = '{!! $selector !!}';
 
         $(document).off('change', selector);

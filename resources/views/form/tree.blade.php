@@ -2,7 +2,7 @@
 
     <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
-    <div class="{{$viewClass['field']}} form-field-tree">
+    <div class="{{$viewClass['field']}} {{ $class }}">
 
         @include('admin::form.error')
 
@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<script require="@jstree" init=".form-field-tree">
+<script require="@jstree" init="{!! $selector !!}">
     var $tree = $this.find('.jstree-wrapper .da-tree'),
         $input = $this.find('.hidden-input'),
         opts = {!! admin_javascript_json($options) !!},

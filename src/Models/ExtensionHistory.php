@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExtensionHistory extends Model
 {
-    protected $table = 'admin_extension_histories';
-
     protected $fillable = ['name', 'type', 'version', 'detail'];
 
     public function __construct(array $attributes = [])
@@ -15,6 +13,8 @@ class ExtensionHistory extends Model
         $connection = config('admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
+
+        $this->setTable(config('admin.database.extension_histories_table') ?: 'admin_extension_histories');
 
         parent::__construct($attributes);
     }

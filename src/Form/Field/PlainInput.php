@@ -28,13 +28,4 @@ trait PlainInput
             $this->view = 'admin::form.input';
         }
     }
-
-    protected function defaultAttribute($attribute, $value)
-    {
-        if (! array_key_exists($attribute, $this->attributes)) {
-            $this->attribute($attribute, $value);
-        }
-
-        return $this;
-    }
 }

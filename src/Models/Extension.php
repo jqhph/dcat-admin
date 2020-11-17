@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Extension extends Model
 {
-    protected $table = 'admin_extensions';
-
     protected $fillable = ['name', 'is_enabled', 'version', 'options'];
 
     protected $casts = [
@@ -19,6 +17,8 @@ class Extension extends Model
         $connection = config('admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
+
+        $this->setTable(config('admin.database.extensions_table') ?: 'admin_extensions');
 
         parent::__construct($attributes);
     }

@@ -13,7 +13,7 @@
     }
 </style>
 
-<div class="{{$viewClass['form-group']}} form-field-file">
+<div class="{{$viewClass['form-group']}} {{ $class }}">
 
     <label for="{{$column}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<script require="@webuploader" init=".form-field-file">
+<script require="@webuploader" init="{!! $selector !!}">
     var uploader,
         newPage,
         options = {!! $options !!};

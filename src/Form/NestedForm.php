@@ -371,7 +371,7 @@ class NestedForm extends WidgetForm
 
     protected function formatClass($name = null)
     {
-        return str_replace('.', '_', $name ?: $this->relationName);
+        return str_replace('.', '_', $name ?: $this->relationName).'_'.$this->key;
     }
 
     protected function formatName($name = null)
