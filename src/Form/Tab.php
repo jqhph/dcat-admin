@@ -81,9 +81,9 @@ class Tab
         $all = $fields->toArray();
 
         foreach ($this->form->rows() as $row) {
-            $rowFields = array_map(function ($field) {
+            $rowFields = $row->fields()->map(function ($field) {
                 return $field['element'];
-            }, $row->fields());
+            });
 
             $match = false;
 

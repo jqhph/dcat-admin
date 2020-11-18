@@ -121,7 +121,7 @@ class UserController extends AdminController
             $filter->equal('id');
             $filter->like('username');
             $filter->like('email');
-            $filter->like('profile.postcode');
+            $filter->equal('profile.postcode')->select('api/placard-classify');
             $filter->between('profile.start_at')->datetime();
             $filter->between('profile.end_at')->datetime();
         });
