@@ -108,7 +108,6 @@ export default class Dcat {
         let self = this,
             clear = function () {
                 if (initialized[selector]) {
-                    initialized[selector].takeRecords();
                     initialized[selector].disconnect();
                 }
             };
@@ -119,20 +118,21 @@ export default class Dcat {
         clear();
 
         initialized[selector] = $.initialize(selector, function () {
-            var $this = $(this);
+            let $this = $(this),
+                id = $this.attr('id');
+
             if ($this.attr('initialized')) {
                 return;
             }
             $this.attr('initialized', '1');
 
             // 如果没有ID，则自动生成
-            var id = $this.attr('id');
             if (! id) {
                 id = "_"+self.helpers.random();
                 $this.attr('id', id);
             }
 
-            callback.call(this, $(this), id)
+            callback.call(this, $this, id)
         }, options);
     }
 

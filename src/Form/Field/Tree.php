@@ -223,8 +223,6 @@ class Tree extends Field
 
     public function render()
     {
-        $this->attribute('type', 'hidden');
-
         $checkboxes = new WidgetCheckbox();
 
         $checkboxes->style('primary');
