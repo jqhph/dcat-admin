@@ -89,7 +89,7 @@ class Asset
         ],
         '@moment-timezone' => [
             'js' => [
-                '@admin/dcat/plugins/moment/moment-timezone-with-data.min.js',
+                '@admin/dcat/plugins/moment-timezone/moment-timezone-with-data.min.js',
             ],
         ],
         '@jstree' => [
