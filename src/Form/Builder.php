@@ -430,7 +430,11 @@ class Builder
     {
         return $this->fields->first(function (Field $field) use ($name) {
             if (is_array($field->column())) {
-                return in_array($name, $field->column(), true) ? $field : null;
+                $result = in_array($name, $field->column(), true) || $field->column() === $name ? $field : null;
+
+                if ($result) {
+                    return $result;
+                }
             }
 
             return $field === $name || $field->column() === $name;

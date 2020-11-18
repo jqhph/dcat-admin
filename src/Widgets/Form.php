@@ -358,7 +358,11 @@ class Form implements Renderable
     {
         foreach ($this->fields as $field) {
             if (is_array($field->column())) {
-                return in_array($name, $field->column(), true) ? $field : null;
+                $result = in_array($name, $field->column(), true) || $field->column() === $name ? $field : null;
+
+                if ($result) {
+                    return $result;
+                }
             }
 
             if ($field === $name || $field->column() === $name) {
