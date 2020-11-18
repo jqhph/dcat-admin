@@ -103,7 +103,7 @@ class BlockForm extends WidgetForm
             $this->layout()->addField($field);
         }
 
-        $field->attribute(Builder::BUILD_IGNORE, true);
+        $field->attribute(Field::BUILD_IGNORE, true);
 
         $field->setForm($this->form);
         $field->width($this->width['field'], $this->width['label']);

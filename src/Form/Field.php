@@ -28,6 +28,8 @@ class Field implements Renderable
 
     const FIELD_CLASS_PREFIX = 'field_';
 
+    const BUILD_IGNORE = 'build-ignore';
+
     /**
      * Element value.
      *

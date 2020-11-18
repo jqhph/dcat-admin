@@ -29,11 +29,6 @@ class Builder
     const PREVIOUS_URL_KEY = '_previous_';
 
     /**
-     * 构建时需要忽略的字段.
-     */
-    const BUILD_IGNORE = 'build-ignore';
-
-    /**
      * Modes constants.
      */
     const MODE_EDIT = 'edit';
@@ -672,7 +667,7 @@ class Builder
     protected function removeIgnoreFields()
     {
         $this->fields = $this->fields()->reject(function (Field $field) {
-            return $field->hasAttribute(static::BUILD_IGNORE);
+            return $field->hasAttribute(Field::BUILD_IGNORE);
         });
     }
 
