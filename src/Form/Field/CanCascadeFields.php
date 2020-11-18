@@ -112,12 +112,27 @@ trait CanCascadeFields
         return sprintf('cascade-%s-%s-%s', $this->getElementClassString(), $value, $map[$operator]);
     }
 
+    protected function addCascadeScript()
+    {
+        if (! $script = $this->getCascadeScript()) {
+            return;
+        }
+
+        Admin::script(
+            <<<JS
+Dcat.init('{$this->getElementClassSelector()}', function (\$this) {
+    {$script}
+});
+JS
+        );
+    }
+
     /**
      * Add cascade scripts to contents.
      *
-     * @return void
+     * @return string
      */
-    protected function addCascadeScript()
+    protected function getCascadeScript()
     {
         if (empty($this->conditions)) {
             return;
@@ -131,8 +146,8 @@ trait CanCascadeFields
             ];
         })->toJson();
 
-        $script = <<<JS
-Dcat.init('{$this->getElementClassSelector()}', function (\$this) {
+        return <<<JS
+(function () {
     var compare = function (a, b, o) {
         if (! $.isArray(b)) {
             return operator_table[o](a, b)
@@ -194,10 +209,8 @@ Dcat.init('{$this->getElementClassSelector()}', function (\$this) {
             }
         });
     }).trigger(event);
-});
+})();
 JS;
-
-        Admin::script($script);
     }
 
     /**

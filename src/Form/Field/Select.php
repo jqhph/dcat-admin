@@ -281,14 +281,13 @@ class Select extends Field
             ],
         ]);
 
-        $this->addCascadeScript();
-
         $this->formatOptions();
 
         $this->addVariables([
-            'options' => $this->options,
-            'groups'  => $this->groups,
-            'configs' => $this->config,
+            'options'       => $this->options,
+            'groups'        => $this->groups,
+            'configs'       => $this->config,
+            'cascadeScript' => $this->getCascadeScript(),
         ]);
 
         $this->attribute('data-value', implode(',', Helper::array($this->value())));

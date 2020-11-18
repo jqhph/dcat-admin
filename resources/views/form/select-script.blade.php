@@ -25,6 +25,8 @@
     @else
     $this.select2(configs);
     @endif
+
+    {!! $cascadeScript !!}
 </script>
 
 @if(isset($loads))
