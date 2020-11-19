@@ -97,4 +97,4 @@
         }
     </script>
 @endif
-@endsection
+@overwrite

@@ -29,11 +29,6 @@ class Builder
     const PREVIOUS_URL_KEY = '_previous_';
 
     /**
-     * 构建时需要忽略的字段.
-     */
-    const BUILD_IGNORE = 'build-ignore';
-
-    /**
      * Modes constants.
      */
     const MODE_EDIT = 'edit';
@@ -435,7 +430,11 @@ class Builder
     {
         return $this->fields->first(function (Field $field) use ($name) {
             if (is_array($field->column())) {
-                return in_array($name, $field->column(), true) ? $field : null;
+                $result = in_array($name, $field->column(), true) || $field->column() === $name ? $field : null;
+
+                if ($result) {
+                    return $result;
+                }
             }
 
             return $field === $name || $field->column() === $name;
@@ -672,7 +671,7 @@ class Builder
     protected function removeIgnoreFields()
     {
         $this->fields = $this->fields()->reject(function (Field $field) {
-            return $field->hasAttribute(static::BUILD_IGNORE);
+            return $field->hasAttribute(Field::BUILD_IGNORE);
         });
     }
 
@@ -693,9 +692,20 @@ class Builder
             $this->form->updatedAtColumn(),
         ];
 
-        $reject = function (Field $field) use (&$reservedColumns) {
-            return in_array($field->column(), $reservedColumns, true)
-                && $field instanceof Form\Field\Display;
+        $reject = function ($field) use (&$reservedColumns) {
+            if ($field instanceof Field) {
+                return in_array($field->column(), $reservedColumns, true)
+                    && $field instanceof Form\Field\Display;
+            }
+
+            if ($field instanceof Row) {
+                $fields = $field->fields()->reject(function ($item) use (&$reservedColumns) {
+                    return in_array($item['element']->column(), $reservedColumns, true)
+                        && $item['element'] instanceof Form\Field\Display;
+                });
+
+                $field->setFields($fields);
+            }
         };
 
         $this->fields = $this->fields()->reject($reject);

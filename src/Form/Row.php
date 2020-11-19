@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form;
 use Dcat\Admin\Form;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 
 /**
  * Class Row.
@@ -81,7 +82,7 @@ class Row implements Renderable
      *
      * @var array
      */
-    protected $fields = [];
+    protected $fields;
 
     /**
      * Default field width for appended field.
@@ -99,6 +100,7 @@ class Row implements Renderable
     public function __construct(\Closure $callback, $form)
     {
         $this->callback = $callback;
+        $this->fields = collect();
 
         $this->form = $form;
 
@@ -108,11 +110,18 @@ class Row implements Renderable
     /**
      * Get fields of this row.
      *
-     * @return array
+     * @return array|Collection
      */
     public function fields()
     {
         return $this->fields;
+    }
+
+    public function setFields(Collection $collection)
+    {
+        $this->fields = $collection;
+
+        return $this;
     }
 
     /**
@@ -169,10 +178,10 @@ class Row implements Renderable
 
         $field->disableHorizontal();
 
-        $this->fields[] = [
+        $this->fields->push([
             'width'   => $this->defaultFieldWidth,
             'element' => $field,
-        ];
+        ]);
 
         return $field;
     }

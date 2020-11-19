@@ -358,7 +358,11 @@ class Form implements Renderable
     {
         foreach ($this->fields as $field) {
             if (is_array($field->column())) {
-                return in_array($name, $field->column(), true) ? $field : null;
+                $result = in_array($name, $field->column(), true) || $field->column() === $name ? $field : null;
+
+                if ($result) {
+                    return $result;
+                }
             }
 
             if ($field === $name || $field->column() === $name) {
@@ -628,7 +632,9 @@ HTML;
     public function fillFields(array $data)
     {
         foreach ($this->fields as $field) {
-            $field->fill($data);
+            if (! $field->hasAttribute(Field::BUILD_IGNORE)) {
+                $field->fill($data);
+            }
         }
     }
 

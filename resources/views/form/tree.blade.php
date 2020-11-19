@@ -7,7 +7,7 @@
         @include('admin::form.error')
 
         <div class="input-group" style="width:100%">
-            <input {{$disabled}} {!! $attributes !!} class="hidden-input" name="{{$name}}" />
+            <input {{$disabled}} type="hidden" class="hidden-input" name="{{$name}}" />
 
             <div class="jstree-wrapper">
                 <div class="d-flex">

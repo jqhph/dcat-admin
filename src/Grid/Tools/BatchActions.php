@@ -56,11 +56,11 @@ class BatchActions extends AbstractTool
     }
 
     /**
-     * Disable delete And Hode SelectAll Checkbox.
+     * Disable delete And Hide SelectAll Checkbox.
      *
      * @return $this
      */
-    public function disableDeleteAndHodeSelectAll()
+    public function disableDeleteAndHideSelectAll()
     {
         $this->enableDelete = false;
 
