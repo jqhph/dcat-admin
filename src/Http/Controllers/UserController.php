@@ -84,7 +84,7 @@ class UserController extends AdminController
                 })->label();
 
                 $show->field('permissions')->unescape()->as(function () {
-                    $roles = (array) $this->roles;
+                    $roles = $this->roles->toArray();
 
                     $permissionModel = config('admin.database.permissions_model');
                     $roleModel = config('admin.database.roles_model');

@@ -41,24 +41,32 @@ class ExportSeedCommand extends Command
             'DummyNamespace' => ucwords($namespace),
             'DummyClass' => $name,
 
-            'ClassMenu'       => config('admin.database.menu_model'),
-            'ClassPermission' => config('admin.database.permissions_model'),
-            'ClassRole'       => config('admin.database.roles_model'),
+            'ClassMenu'             => $this->getTableName('admin.database.menu_model'),
+            'ClassPermission'       => $this->getTableName('admin.database.permissions_model'),
+            'ClassRole'             => $this->getTableName('admin.database.roles_model'),
+            'ClassSetting'          => 'Models\Setting',
+            'ClassExtension'        => 'Models\Extension',
+            'ClassExtensionHistory' => 'Models\ExtensionHistory',
 
-            'TableRoleMenu'        => config('admin.database.role_menu_table'),
-            'TableRolePermissions' => config('admin.database.role_permissions_table'),
+            'TablePermissionMenu'  => $this->getTableName('admin.database.permission_menu_table'),
+            'TableRoleMenu'        => $this->getTableName('admin.database.role_menu_table'),
+            'TableRolePermissions' => $this->getTableName('admin.database.role_permissions_table'),
 
             'ArrayMenu'       => $this->getTableDataArrayAsString(config('admin.database.menu_table'), $exceptFields),
             'ArrayPermission' => $this->getTableDataArrayAsString(config('admin.database.permissions_table'), $exceptFields),
             'ArrayRole'       => $this->getTableDataArrayAsString(config('admin.database.roles_table'), $exceptFields),
+            'ArraySetting'    => $this->getTableDataArrayAsString(config('admin.database.settings_table') ?: 'admin_settings', $exceptFields),
+            'ArrayExtension'  => $this->getTableDataArrayAsString(config('admin.database.extensions_table') ?: 'admin_extensions', $exceptFields),
+            'ArrayExtHistory' => $this->getTableDataArrayAsString(config('admin.database.extension_histories_table') ?: 'admin_extension_histories', $exceptFields),
 
+            'ArrayPivotPermissionMenu'  => $this->getTableDataArrayAsString(config('admin.database.permission_menu_table'), $exceptFields),
             'ArrayPivotRoleMenu'        => $this->getTableDataArrayAsString(config('admin.database.role_menu_table'), $exceptFields),
             'ArrayPivotRolePermissions' => $this->getTableDataArrayAsString(config('admin.database.role_permissions_table'), $exceptFields),
         ];
 
         if ($exportUsers) {
             $replaces = array_merge($replaces, [
-                'ClassUsers'            => config('admin.database.users_model'),
+                'ClassUsers'            => $this->getTableName('admin.database.users_model'),
                 'TableRoleUsers'        => config('admin.database.role_users_table'),
                 'ArrayUsers'            => $this->getTableDataArrayAsString(config('admin.database.users_table'), $exceptFields),
                 'ArrayPivotRoleUsers'   => $this->getTableDataArrayAsString(config('admin.database.role_users_table'), $exceptFields),
@@ -73,6 +81,11 @@ class ExportSeedCommand extends Command
 
         $this->line('<info>Admin tables seed file was created:</info> '.str_replace(base_path(), '', $seedFile));
         $this->line("Use: <info>php artisan db:seed --class={$name}</info>");
+    }
+
+    protected function getTableName($config)
+    {
+        return trim(str_replace('Dcat\\Admin\\', '', config($config)), '\\');
     }
 
     /**
