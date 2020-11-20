@@ -68,6 +68,7 @@ class MenuController extends AdminController
             $tree->disableCreateButton();
             $tree->disableQuickCreateButton();
             $tree->disableEditButton();
+            $tree->maxDepth(3);
 
             $tree->actions(function (Tree\Actions $actions) {
                 if ($actions->getRow()->extension) {
