@@ -283,7 +283,6 @@ class NestedForm extends WidgetForm
 
         if (method_exists($this->form, 'builder')) {
             $this->form->builder()->fields()->push($field);
-            $this->form->ignore($field->column());
             $field->attribute(Field::BUILD_IGNORE, true);
         }
 

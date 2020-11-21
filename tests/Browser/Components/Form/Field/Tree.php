@@ -45,10 +45,8 @@ class Tree extends Component
      */
     public function elements()
     {
-        $prefix = Field::FIELD_CLASS_PREFIX;
-
         return [
-            '@container' => ".{$prefix}{$this->name}-tree-wrapper",
+            '@container' => (new Field($this->name))->getElementClassSelector(),
             '@tree'      => '.da-tree',
             '@input'     => sprintf('input[name="%s"][type="hidden"]', $this->name),
         ];
