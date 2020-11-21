@@ -18,9 +18,9 @@ services:
 
 install:
 #  - wget - https://dl.google.com/dl/linux/direct/google-chrome-stable_current_amd64.deb
-  - apt-get clean
-  - apt-get update
-  - apt-get install dpkg -f
+  - sudo apt-get clean
+  - sudo apt-get update
+  - sudo apt-get install dpkg -f
 #  - sudo apt-get -f install
 #  - sudo apt upgrade dpkg
   - dpkg -i /tmp/google-chrome-stable_current_amd64.deb
