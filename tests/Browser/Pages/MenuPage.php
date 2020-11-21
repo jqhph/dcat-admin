@@ -36,8 +36,7 @@ class MenuPage extends Page
                     ->assertSeeText('Users')
                     ->assertSeeText('Roles')
                     ->assertSeeText('Permission')
-                    ->assertSeeText('Menu')
-                    ->assertSeeText('Operation log');
+                    ->assertSeeText('Menu');
             }, 1)
             ->within('@form', function (Browser $browser) {
                 $browser->assertSeeText(__('admin.parent_id'))
