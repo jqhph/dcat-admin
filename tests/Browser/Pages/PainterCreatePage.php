@@ -74,11 +74,11 @@ class PainterCreatePage extends Page
                 }
 
                 if ($key === 'paintings') {
-                    $browser->within(new HasMany($key), function (Browser $browser) use ($key, $value) {
+                    $browser->within(new HasMany($key), function (Browser $browser) use ($value) {
                         foreach ($value as $input) {
                             $browser->add();
 
-                            $browser->withLastFormGroup(function (Browser $browser) use ($key, $input) {
+                            $browser->withLastFormGroup(function (Browser $browser) use ($input) {
                                 foreach ($input as $k => $v) {
                                     $browser->fillFieldValue($k, $v);
                                 }

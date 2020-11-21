@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
- * Class Tree
+ * Class Tree.
  *
  * @see https://github.com/dbushell/Nestable
  */
@@ -234,7 +234,7 @@ class Tree implements Renderable
     }
 
     /**
-     * number of levels an item can be nested (default 5)
+     * number of levels an item can be nested (default 5).
      *
      * @see https://github.com/dbushell/Nestable
      *
