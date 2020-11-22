@@ -32,7 +32,7 @@ class InstallTest extends TestCase
         $this->assertFileExists(public_path(Admin::asset()->getRealPath('@admin')));
         $this->assertFileExists(database_path('migrations/2016_01_04_173148_create_admin_tables.php'));
         $this->assertFileExists(resource_path('lang/en/admin.php'));
-        $this->assertFileExists(resource_path('lang/zh-CN/admin.php'));
-        $this->assertFileExists(resource_path('lang/zh-CN/global.php'));
+        $this->assertFileExists(resource_path('lang/zh_CN/admin.php'));
+        $this->assertFileExists(resource_path('lang/zh_CN/global.php'));
     }
 }
