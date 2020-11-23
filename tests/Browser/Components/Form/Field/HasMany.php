@@ -2,9 +2,7 @@
 
 namespace Tests\Browser\Components\Form\Field;
 
-use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
-use Dcat\Utils\Backtrace\BacktraceFormatter;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Component;
 use Tests\PHPUnit;
