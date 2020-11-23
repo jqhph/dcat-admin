@@ -19,6 +19,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
+/**
+ * Class Tree.
+ *
+ * @see https://github.com/dbushell/Nestable
+ */
 class Tree implements Renderable
 {
     use HasBuilderEvents;
@@ -144,8 +149,7 @@ class Tree implements Renderable
 
         $this->elementId .= Str::random(8);
 
-        $this->setupTools();
-        $this->requireAssets();
+        $this->setUpTools();
 
         if ($callback instanceof \Closure) {
             call_user_func($callback, $this);
@@ -157,7 +161,7 @@ class Tree implements Renderable
     /**
      * Setup tree tools.
      */
-    public function setupTools()
+    public function setUpTools()
     {
         $this->tools = new Tools($this);
     }
@@ -184,14 +188,6 @@ class Tree implements Renderable
         }
 
         return $repository;
-    }
-
-    /**
-     * Collect assets.
-     */
-    protected function requireAssets()
-    {
-        Admin::requireAssets('jquery.nestable');
     }
 
     /**
@@ -235,6 +231,20 @@ class Tree implements Renderable
         $this->queryCallback = $callback;
 
         return $this;
+    }
+
+    /**
+     * number of levels an item can be nested (default 5).
+     *
+     * @see https://github.com/dbushell/Nestable
+     *
+     * @param int $max
+     *
+     * @return $this
+     */
+    public function maxDepth(int $max)
+    {
+        return $this->nestable(['maxDepth' => $max]);
     }
 
     /**

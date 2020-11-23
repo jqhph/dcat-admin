@@ -25,6 +25,7 @@ install:
 #  - sudo apt upgrade dpkg
   - sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb
   - mysql -e 'create database if not exists laravel;'
+  - composer self-update --2
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
   - cp -f ./tests/resources/stubs/ComposerConfigCommand.php ./laravel-tests/app/
@@ -47,7 +48,7 @@ install:
   - php artisan admin:publish --force
   - php artisan admin:install
   - php artisan migrate:rollback
-  - php artisan dusk:chrome-driver 85
+  - php artisan dusk:chrome-driver 87
 #  - php artisan dusk:update 79
   - cp -f ./tests/routes.php ./app/Admin/
   - cp -rf ./tests/resources/config ./config/

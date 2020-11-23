@@ -2,7 +2,6 @@
 
 namespace Tests\Browser\Pages;
 
-use Dcat\Admin\Form\Field;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Form\Field\HasMany;
 
@@ -81,11 +80,7 @@ class PainterCreatePage extends Page
 
                             $browser->withLastFormGroup(function (Browser $browser) use ($input) {
                                 foreach ($input as $k => $v) {
-                                    $browser->script(
-                                        <<<JS
-                                    $('{$browser->resolver->format('.'.Field::FIELD_CLASS_PREFIX.$k)}').val('$v');
-JS
-                                    );
+                                    $browser->fillFieldValue($k, $v);
                                 }
                             });
                         }

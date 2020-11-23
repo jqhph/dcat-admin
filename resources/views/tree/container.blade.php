@@ -49,11 +49,11 @@
     </div>
 </div>
 
-<script>
+<script require="@jquery.nestable">
     var id = '{{ $id }}';
     var tree = $('#'+id);
 
-    tree.nestable({!! json_encode($nestableOptions) !!});
+    tree.nestable({!! admin_javascript_json($nestableOptions) !!});
 
     $('.'+id+'-save').on('click', function () {
         var serialize = tree.nestable('serialize'), _this = $(this);

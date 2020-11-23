@@ -2,7 +2,7 @@
 
 namespace Tests\Browser\Components\Form\Field;
 
-use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\NestedForm;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Component;
 use Tests\PHPUnit;
@@ -51,7 +51,7 @@ class HasMany extends Component
             '@add' => '.add',
             '@remove' => '.remove',
             '@forms' => ".has-many-{$this->relation}-forms",
-            '@group' => ".has-many-{$this->relation}-forms .fields-group",
+            '@group' => ".has-many-{$this->relation}-forms .has-many-{$this->relation}-form",
         ];
     }
 
@@ -97,7 +97,7 @@ return $('{$this->formatSelector($browser, '@group')}').length;
 JS
         );
 
-        return $length[0] ?? null;
+        return $length[0] ?? 0;
     }
 
     /**
@@ -183,14 +183,48 @@ JS
      *
      * @return string|null
      */
-    public function assertFormGroupInputValue(Browser $browser, $field, $value)
+    public function assertFormGroupInputValue(Browser $browser, $field, $value, $id = null)
     {
         $input = $browser->script(
                 <<<JS
-return $('{$browser->resolver->format('.'.Field::FIELD_CLASS_PREFIX.$field)}').val();
+return $('{$this->getFieldSelector($browser, $field, $id)}').val();
 JS
         )[0] ?? null;
 
         PHPUnit::assertEquals($input, $value);
+    }
+
+    /**
+     * 填充字段数据.
+     *
+     * @param \Laravel\Dusk\Browser $browser
+     * @param $field
+     * @param $value
+     * @param null $id
+     */
+    public function fillFieldValue(Browser $browser, $field, $value, $id = null)
+    {
+        $browser->script(
+            <<<JS
+$('{$this->getFieldSelector($browser, $field, $id)}').val('$value');
+JS
+        );
+    }
+
+    /**
+     * 获取元素选择器.
+     *
+     * @param $field
+     * @param null $id
+     *
+     * @return array|string
+     */
+    public function getFieldSelector(Browser $browser, $field, $id = null)
+    {
+        return $browser->resolver->format(
+            (new NestedForm($this->relation, $id))
+                ->text($field)
+                ->getElementClassSelector()
+        );
     }
 }
