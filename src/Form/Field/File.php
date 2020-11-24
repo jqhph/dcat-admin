@@ -106,9 +106,9 @@ class File extends Field implements UploadFieldInterface
     /**
      * {@inheritDoc}
      */
-    public function disable()
+    public function disable(bool $value = true)
     {
-        $this->options['disabled'] = true;
+        $this->options['disabled'] = $value;
 
         return $this;
     }
