@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Exporters;
 
 use Dcat\Admin\Grid;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -54,7 +55,9 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function __construct($titles = [])
     {
-        $this->titles($titles);
+        if ($titles) {
+            $this->titles($titles);
+        }
     }
 
     /**
@@ -62,15 +65,38 @@ abstract class AbstractExporter implements ExporterInterface
      *
      * @param array|false $titles
      *
-     * @return $this
+     * @return $this|array
      */
-    public function titles($titles)
+    public function titles($titles = null)
     {
+        if ($titles === null) {
+            return $this->titles ?: ($this->titles = $this->defaultTitles());
+        }
+
         if (is_array($titles) || $titles === false) {
             $this->titles = $titles;
         }
 
         return $this;
+    }
+
+    /**
+     * 读取默认标题.
+     *
+     * @return array
+     */
+    protected function defaultTitles()
+    {
+        return $this
+            ->grid
+            ->columns()
+            ->mapWithKeys(function (Grid\Column $column, $name) {
+                return [$name => $column->getLabel()];
+            })
+            ->reject(function ($v, $k) {
+                return in_array($k, ['#', Grid\Column::ACTION_COLUMN_NAME, Grid\Column::SELECT_COLUMN_NAME]);
+            })
+            ->toArray();
     }
 
     /**
@@ -190,7 +216,23 @@ abstract class AbstractExporter implements ExporterInterface
 
         $model->reset();
 
-        return $this->callBuilder($array);
+        return $this->normalize($this->callBuilder($array));
+    }
+
+    /**
+     * 格式化待导出数据.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function normalize(array $data)
+    {
+        foreach ($data as &$row) {
+            $row = Arr::dot($row);
+        }
+
+        return $data;
     }
 
     /**

@@ -138,7 +138,12 @@ class Field implements Renderable
      *
      * @var Form|WidgetForm
      */
-    protected $form = null;
+    protected $form;
+
+    /**
+     * @var WidgetForm
+     */
+    protected $parent;
 
     /**
      * View for field to render.
@@ -397,6 +402,18 @@ class Field implements Renderable
     public function setForm($form = null)
     {
         $this->form = $form;
+
+        return $this;
+    }
+
+    /**
+     * @param WidgetForm $form
+     *
+     * @return $this
+     */
+    public function setParent($form = null)
+    {
+        $this->parent = $form;
 
         return $this;
     }

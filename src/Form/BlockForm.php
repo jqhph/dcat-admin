@@ -106,6 +106,7 @@ class BlockForm extends WidgetForm
         $field->attribute(Field::BUILD_IGNORE, true);
 
         $field->setForm($this->form);
+        $field->setParent($this);
         $field->width($this->width['field'], $this->width['label']);
 
         $field::requireAssets();
