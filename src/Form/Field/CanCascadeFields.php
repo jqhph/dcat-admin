@@ -79,7 +79,7 @@ trait CanCascadeFields
     {
         $this->conditions[] = compact('operator', 'value', 'closure');
 
-        $this->form->cascadeGroup($closure, [
+        ($this->parent ?: $this->form)->cascadeGroup($closure, [
             'column' => $this->column(),
             'index'  => count($this->conditions) - 1,
             'class'  => $this->getCascadeClass($value, $operator),

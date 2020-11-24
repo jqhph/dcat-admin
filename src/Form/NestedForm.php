@@ -276,6 +276,7 @@ class NestedForm extends WidgetForm
         $this->fields->push($field);
 
         $field->setForm($this->form);
+        $field->setParent($this);
 
         if ($this->layout()->hasColumns()) {
             $this->layout()->addField($field);
