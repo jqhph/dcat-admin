@@ -92,7 +92,7 @@ class Field implements Renderable
     /**
      * @var int
      */
-    protected $width = 8;
+    protected $width = ['field' => 8, 'label' => 2];
 
     /**
      * Field constructor.
@@ -136,15 +136,14 @@ class Field implements Renderable
     /**
      * @param int $width
      *
-     * @return $this|int
+     * @return $this|array
      */
-    public function width(int $width = null)
+    public function width(int $field = 8, int $label = 2)
     {
-        if ($width === null) {
-            return $this->width;
-        }
-
-        $this->width = $width;
+        $this->width = [
+            'label' => $label,
+            'field' => $field,
+        ];
 
         return $this;
     }

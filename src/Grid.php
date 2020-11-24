@@ -613,7 +613,7 @@ class Grid
         }
 
         return <<<HTML
-<div class="card-header clearfix" style="border-bottom: 0;background: transparent;padding: 0">{$content}</div>
+<div class="card-header clearfix" style="border-bottom: 0;background: transparent;padding: 0"><div class="col-md-12">{$content}</div></div>
 HTML;
     }
 
