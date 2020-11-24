@@ -444,11 +444,37 @@ class Form implements Renderable
     }
 
     /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function submitButton(bool $value = true)
+    {
+        $this->buttons['submit'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function resetButton(bool $value = true)
+    {
+        $this->buttons['reset'] = $value;
+
+        return $this;
+    }
+
+    /**
      * Disable reset button.
      *
      * @param bool $value
      *
      * @return $this
+     *
+     * @deprecated 即将废弃，请使用 resetButton 代替
      */
     public function disableResetButton(bool $value = true)
     {
@@ -463,6 +489,8 @@ class Form implements Renderable
      * @param bool $value
      *
      * @return $this
+     *
+     * @deprecated 即将废弃，请使用 submitButton 代替
      */
     public function disableSubmitButton(bool $value = true)
     {
