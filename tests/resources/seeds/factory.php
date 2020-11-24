@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use Illuminate\Database\Eloquent\Factory;
+use Tests\Factory;
 
 $factory = app(Factory::class);
 

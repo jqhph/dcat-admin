@@ -3,12 +3,14 @@
 namespace Dcat\Admin\Support;
 
 use Dcat\Admin\Grid;
+use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -109,14 +111,14 @@ class Helper
             return $value;
         }
 
-        if ($value instanceof Grid) {
-            return (string) $value->render();
-        }
-
         if ($value instanceof \Closure) {
-            $newThis && $value = $value->bindTo($newThis);
+            $newThis && ($value = $value->bindTo($newThis));
 
             $value = $value(...(array) $params);
+        }
+
+        if ($value instanceof Grid) {
+            return (string) $value->render();
         }
 
         if ($value instanceof Renderable) {
@@ -640,5 +642,186 @@ class Helper
         }
 
         return (string) $value1 === (string) $value2;
+    }
+
+    /**
+     * Limit the number of characters in a string.
+     *
+     * @param string $value
+     * @param int $limit
+     * @param string $end
+     * @return string
+     */
+    public static function strLimit($value, $limit = 100, $end = '...')
+    {
+        if (mb_strlen($value, 'UTF-8') <= $limit) {
+            return $value;
+        }
+
+        return rtrim(mb_substr($value, 0, $limit, 'UTF-8')).$end;
+    }
+
+    /**
+     * 获取类名或对象的文件路径.
+     *
+     * @param string|object $class
+     *
+     * @return string
+     *
+     * @throws \ReflectionException
+     */
+    public static function guessClassFileName($class)
+    {
+        if (is_object($class)) {
+            $class = get_class($class);
+        }
+
+        if (class_exists($class)) {
+            return (new \ReflectionClass($class))->getFileName();
+        }
+
+        $class = trim($class, '\\');
+
+        $composer = Composer::parse(base_path('composer.json'));
+
+        $map = collect($composer->autoload['psr-4'] ?? [])->mapWithKeys(function ($path, $namespace) {
+            $namespace = trim($namespace, '\\').'\\';
+
+            return [$namespace => [$namespace, $path]];
+        })->sortBy(function ($_, $namespace) {
+            return strlen($namespace);
+        }, SORT_REGULAR, true);
+
+        $prefix = explode($class, '\\')[0];
+
+        if ($map->isEmpty()) {
+            if (Str::startsWith($class, 'App\\')) {
+                $values = ['App\\', 'app/'];
+            }
+        } else {
+            $values = $map->filter(function ($_, $k) use ($class) {
+                return Str::startsWith($class, $k);
+            })->first();
+        }
+
+        if (empty($values)) {
+            $values = [$prefix.'\\', self::slug($prefix).'/'];
+        }
+
+        [$namespace, $path] = $values;
+
+        return base_path(str_replace([$namespace, '\\'], [$path, '/'], $class)).'.php';
+    }
+
+    /**
+     * Is input data is has-one relation.
+     *
+     * @param Collection $fields
+     * @param array      $input
+     */
+    public static function prepareHasOneRelation(Collection $fields, array &$input)
+    {
+        $relations = [];
+        $fields->each(function ($field) use (&$relations) {
+            $column = $field->column();
+
+            if (is_array($column)) {
+                foreach ($column as $v) {
+                    if (Str::contains($v, '.')) {
+                        $first = explode('.', $v)[0];
+                        $relations[$first] = null;
+                    }
+                }
+
+                return;
+            }
+
+            if (Str::contains($column, '.')) {
+                $first = explode('.', $column)[0];
+                $relations[$first] = null;
+            }
+        });
+
+        foreach ($relations as $first => $v) {
+            if (isset($input[$first])) {
+                foreach ($input[$first] as $key => $value) {
+                    if (is_array($value) && ! Arr::isAssoc($value)) {
+                        $input["$first.$key"] = $value;
+                    }
+                }
+
+                $input = array_merge($input, Arr::dot([$first => $input[$first]]));
+            }
+        }
+    }
+
+    /**
+     * 设置查询条件.
+     *
+     * @param mixed $model
+     * @param string $column
+     * @param string $query
+     * @param mixed array $params
+     *
+     * @return void
+     */
+    public static function withQueryCondition($model, ?string $column, string $query, array $params)
+    {
+        if (! Str::contains($column, '.')) {
+            $model->$query($column, ...$params);
+
+            return;
+        }
+
+        $method = $query === 'orWhere' ? 'orWhere' : 'where';
+        $subQuery = $query === 'orWhere' ? 'where' : $query;
+
+        $model->$method(function ($q) use ($column, $subQuery, $params) {
+            static::withRelationQuery($q, $column, $subQuery, $params);
+        });
+    }
+
+    /**
+     * 设置关联关系查询条件.
+     *
+     * @param mixed $model
+     * @param string $column
+     * @param string $query
+     * @param mixed ...$params
+     *
+     * @return void
+     */
+    public static function withRelationQuery($model, ?string $column, string $query, array $params)
+    {
+        $column = explode('.', $column);
+
+        array_unshift($params, array_pop($column));
+
+        // 增加对whereHasIn的支持
+        $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
+
+        $model->$method(implode('.', $column), function ($relation) use ($params, $query) {
+            $relation->$query(...$params);
+        });
+    }
+
+    /**
+     * Html转义.
+     *
+     * @param array|string $item
+     *
+     * @return mixed
+     */
+    public static function htmlEntityEncode($item)
+    {
+        if (is_array($item)) {
+            array_walk_recursive($item, function (&$value) {
+                $value = htmlentities($value);
+            });
+        } else {
+            $item = htmlentities($item);
+        }
+
+        return $item;
     }
 }

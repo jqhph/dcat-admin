@@ -7,11 +7,15 @@ use Illuminate\Support\Arr;
 
 class SwitchGroup extends SwitchDisplay
 {
-    public function display($columns = [], string $color = '')
+    protected $selector = 'grid-column-switch-group';
+
+    public function display($columns = [], $color = '', $refresh = false)
     {
         if ($columns instanceof \Closure) {
             $columns = $columns->call($this->row, $this);
         }
+
+        $this->addScript($refresh);
 
         if ($color) {
             $this->color($color);
@@ -33,49 +37,64 @@ class SwitchGroup extends SwitchDisplay
 
     protected function buildSwitch($name, $label = '')
     {
-        $class = 'grid-switch-group-'.$this->grid->getName();
-        $keys = collect(explode('.', $name));
+        $checked = Arr::get($this->row->toArray(), $name) ? 'checked' : '';
+        $color = $this->color ?: Admin::color()->primary();
 
-        if ($keys->isEmpty()) {
-            $elementName = $name;
-        } else {
-            $elementName = $keys->shift().$keys->reduce(function ($carry, $val) {
-                return "{$carry}[{$val}]";
-            });
-        }
+        return <<<EOT
+<tr style="box-shadow: none;background: transparent">
+    <td style="padding: 3px 0;height:23px;">{$label}:&nbsp;&nbsp;&nbsp;</td>
+    <td style="padding: 3px 0;height:23px;"><input name="{$name}" data-path="{$this->resource()}" data-key="{$this->getKey()}" $checked 
+        type="checkbox" class="{$this->selector}" data-size="small" data-color="{$color}"/></td>
+</tr>
+EOT;
+    }
 
+    protected function addScript($refresh)
+    {
         $script = <<<JS
 (function () {
-    var swt = $('.$class'), t;
-    function init(){
-        swt.each(function(){
-             t = $(this);
-             t.parent().find('.switchery').remove();
+    var swt = $('.{$this->selector}'),
+        reload = '{$refresh}', 
+        that;
+    function initSwitchery() {
+        swt.each(function() {
+             that = $(this);
+             that.parent().find('.switchery').remove();
              
-             new Switchery(t[0], t.data())
+             new Switchery(that[0], that.data())
         })
     } 
-    init();
+    initSwitchery();
     swt.off('change').change(function(e) {
-        var t = $(this), 
-            id = t.data('key'),
-            checked = t.is(':checked'), 
-            name = t.attr('name'), 
+        var that = $(this), 
+            id = that.data('key'),
+            url = that.data('path') + '/' + id,
+            checked = that.is(':checked'), 
+            name = that.attr('name'), 
             data = {
-                _token: Dcat.token,
                 _method: 'PUT'
-            };
-        data[name] = checked ? 1 : 0;
+            },
+            value = checked ? 1 : 0;
+        
+        if (name.indexOf('.') === -1) {
+            data[name] = value;
+        } else {
+            name = name.split('.');
+            
+            data[name[0]] = {};
+            data[name[0]][name[1]] = value;
+        }
         Dcat.NP.start();
     
          $.ajax({
-            url: "{$this->resource()}/" + id,
+            url: url,
             type: "POST",
             data: data,
             success: function (d) {
                 Dcat.NP.done();
                  if (d.status) {
                     Dcat.success(d.message);
+                    reload && Dcat.reload()
                 } else {
                     Dcat.error(d.message);
                 }
@@ -85,16 +104,5 @@ class SwitchGroup extends SwitchDisplay
 })();
 JS;
         Admin::script($script);
-
-        $key = $this->getKey();
-        $checked = $this->row->$name ? 'checked' : '';
-        $color = $this->color ?: Admin::color()->primary();
-
-        return <<<EOT
-<tr style="box-shadow: none;background: transparent">
-    <td style="padding: 3px 0;height:23px;">{$label}:&nbsp;&nbsp;&nbsp;</td>
-    <td style="padding: 3px 0;height:23px;"><input name="{$elementName}" data-key="$key" $checked type="checkbox" class="$class" data-size="small" data-color="{$color}"/></td>
-</tr>
-EOT;
     }
 }

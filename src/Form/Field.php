@@ -25,6 +25,8 @@ class Field implements Renderable
 
     const FILE_DELETE_FLAG = '_file_del_';
 
+    const FIELD_CLASS_PREFIX = 'field_';
+
     /**
      * Element id.
      *
@@ -61,6 +63,11 @@ class Field implements Renderable
     protected $default;
 
     /**
+     * @var bool
+     */
+    protected $allowDefaultValueInEditPage = false;
+
+    /**
      * Element label.
      *
      * @var string
@@ -77,7 +84,7 @@ class Field implements Renderable
     /**
      * Form element name.
      *
-     * @var string
+     * @var string|array
      */
     protected $elementName = [];
 
@@ -161,7 +168,7 @@ class Field implements Renderable
     /**
      * Key for errors.
      *
-     * @var mixed
+     * @var string|array
      */
     protected $errorKey;
 
@@ -207,9 +214,9 @@ class Field implements Renderable
     protected $labelClass = [];
 
     /**
-     * @var \Closure
+     * @var \Closure[]
      */
-    protected $savingCallback;
+    protected $savingCallbacks = [];
 
     /**
      * Field constructor.
@@ -258,6 +265,25 @@ class Field implements Renderable
         }
 
         return 'form-field-'.str_replace('.', '-', $column).'-'.$random;
+    }
+
+    /**
+     * @param string|null $relationName
+     * @param string      $relationPrimaryKey
+     *
+     * @return $this
+     */
+    public function setNestedFormRelation(?string $relationName, $relationPrimaryKey)
+    {
+        if (is_array($this->id)) {
+            $this->id = array_map(function ($v) {
+                return $v.NestedForm::DEFAULT_KEY_NAME;
+            }, $this->id);
+        } else {
+            $this->id .= NestedForm::DEFAULT_KEY_NAME;
+        }
+
+        return $this;
     }
 
     /**
@@ -315,13 +341,13 @@ class Field implements Renderable
     /**
      * Set form element name.
      *
-     * @param string $name
+     * @param string|array $name
      *
-     * @return $this|string
+     * @return $this
      *
      * @author Edwin Hui
      */
-    public function setElementName(string $name)
+    public function setElementName($name)
     {
         $this->elementName = $name;
 
@@ -369,13 +395,18 @@ class Field implements Renderable
             $value = [];
 
             foreach ($this->column as $key => $column) {
-                $value[$key] = Arr::get($data, $column);
+                $value[$key] = Arr::get($data, $this->normalizeColumn($column));
             }
 
             return $value;
         }
 
-        return Arr::get($data, $this->column, $this->value);
+        return Arr::get($data, $this->normalizeColumn(), $this->value);
+    }
+
+    protected function normalizeColumn(?string $column = null)
+    {
+        return str_replace('->', '.', $column ?: $this->column);
     }
 
     /**
@@ -472,17 +503,39 @@ class Field implements Renderable
      */
     public function options($options = [])
     {
-        if ($options instanceof Arrayable) {
-            $options = $options->toArray();
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
         }
 
-        if (is_array($this->options)) {
-            $this->options = array_merge($this->options, $options);
-        } else {
-            $this->options = $options;
-        }
+        $this->options = array_merge($this->options, Helper::array($options));
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function replaceOptions($options)
+    {
+        if ($options instanceof \Closure) {
+            $options = $options->call($this->data(), $this->value());
+        }
+
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @param array|Arrayable $options
+     *
+     * @return $this
+     */
+    public function mergeOptions($options)
+    {
+        return $this->options($options);
     }
 
     /**
@@ -506,11 +559,11 @@ class Field implements Renderable
     /**
      * Set key for error message.
      *
-     * @param string $key
+     * @param string|array $key
      *
-     * @return $this|string
+     * @return $this
      */
-    public function setErrorKey(string $key)
+    public function setErrorKey($key)
     {
         $this->errorKey = $key;
 
@@ -577,22 +630,26 @@ class Field implements Renderable
     /**
      * Get or set default value for field.
      *
-     * @param $default
+     * @param mixed $default
+     * @param bool  $edit
      *
      * @return $this|mixed
      */
-    public function default($default = null)
+    public function default($default = null, bool $edit = false)
     {
         if ($default === null) {
             if (
                 $this->form
                 && method_exists($this->form, 'isCreating')
                 && ! $this->form->isCreating()
+                && ! $this->allowDefaultValueInEditPage
             ) {
                 return;
             }
 
             if ($this->default instanceof \Closure) {
+                $this->default->bindTo($this->data());
+
                 return call_user_func($this->default, $this->form);
             }
 
@@ -600,6 +657,7 @@ class Field implements Renderable
         }
 
         $this->default = $default;
+        $this->allowDefaultValueInEditPage = $edit;
 
         return $this;
     }
@@ -717,6 +775,16 @@ class Field implements Renderable
     }
 
     /**
+     * @param string $key
+     *
+     * @return mixed|null
+     */
+    public function getAttribute(string $key)
+    {
+        return $this->attributes[$key] ?? null;
+    }
+
+    /**
      * Specifies a regular expression against which to validate the value of the input.
      *
      * @param string $error
@@ -816,7 +884,7 @@ class Field implements Renderable
      */
     public function saving(\Closure $closure)
     {
-        $this->savingCallback = $closure;
+        $this->savingCallbacks[] = $closure;
 
         return $this;
     }
@@ -832,10 +900,10 @@ class Field implements Renderable
     {
         $value = $this->prepareInputValue($value);
 
-        if ($handler = $this->savingCallback) {
-            $handler->bindTo($this->data());
-
-            return $handler($value);
+        if ($this->savingCallbacks) {
+            foreach ($this->savingCallbacks as $callback) {
+                $value = $callback->call($this->data(), $value);
+            }
         }
 
         return $value;
@@ -892,7 +960,7 @@ class Field implements Renderable
      */
     public function setElementClass($class)
     {
-        $this->elementClass = array_merge($this->elementClass, (array) $class);
+        $this->elementClass = array_merge($this->elementClass, (array) $this->normalizeElementClass($class));
 
         return $this;
     }
@@ -905,12 +973,24 @@ class Field implements Renderable
     public function getElementClass()
     {
         if (! $this->elementClass) {
-            $name = $this->elementName ?: $this->formatName($this->column);
-
-            $this->elementClass = (array) str_replace(['[', ']'], '_', $name);
+            $this->elementClass = $this->normalizeElementClass((array) $this->getElementName());
         }
 
         return $this->elementClass;
+    }
+
+    /**
+     * @param string|array $class
+     *
+     * @return array|string
+     */
+    public function normalizeElementClass($class)
+    {
+        if (is_array($class)) {
+            return array_map([$this, 'normalizeElementClass'], $class);
+        }
+
+        return static::FIELD_CLASS_PREFIX.str_replace(['[', ']', '->', '.'], '_', $class);
     }
 
     /**
@@ -1084,6 +1164,16 @@ class Field implements Renderable
         ]);
     }
 
+    protected function isCreating()
+    {
+        return request()->isMethod('POST');
+    }
+
+    protected function isEditing()
+    {
+        return request()->isMethod('PUT');
+    }
+
     /**
      * Get view of this field.
      *
@@ -1148,6 +1238,24 @@ class Field implements Renderable
     protected function shouldRender()
     {
         return $this->display;
+    }
+
+    public function saveAsJson($option = 0)
+    {
+        return $this->saving(function ($value) use ($option) {
+            if (! $value || is_scalar($value)) {
+                return $value;
+            }
+
+            return json_encode($value, $option);
+        });
+    }
+
+    public function saveAsString()
+    {
+        return $this->saving(function ($value) {
+            return (string) $value;
+        });
     }
 
     /**

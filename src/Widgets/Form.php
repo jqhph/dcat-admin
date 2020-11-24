@@ -4,7 +4,12 @@ namespace Dcat\Admin\Widgets;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\LazyRenderable;
+use Dcat\Admin\Form\Concerns\HandleCascadeFields;
+use Dcat\Admin\Form\Concerns\HasRows;
+use Dcat\Admin\Form\Concerns\HasTabs;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\Layout;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAuthorization;
 use Dcat\Admin\Traits\HasFormResponse;
@@ -23,65 +28,80 @@ use Illuminate\Validation\Validator;
 /**
  * Class Form.
  *
- * @method Field\Text           text($column, $label = '')
- * @method Field\Checkbox       checkbox($column, $label = '')
- * @method Field\Radio          radio($column, $label = '')
- * @method Field\Select         select($column, $label = '')
- * @method Field\MultipleSelect multipleSelect($column, $label = '')
- * @method Field\Textarea       textarea($column, $label = '')
- * @method Field\Hidden         hidden($column, $label = '')
- * @method Field\Id             id($column, $label = '')
- * @method Field\Ip             ip($column, $label = '')
- * @method Field\Url            url($column, $label = '')
- * @method Field\Email          email($column, $label = '')
- * @method Field\Mobile         mobile($column, $label = '')
- * @method Field\Slider         slider($column, $label = '')
- * @method Field\Map            map($latitude, $longitude, $label = '')
- * @method Field\Editor         editor($column, $label = '')
- * @method Field\Date           date($column, $label = '')
- * @method Field\Datetime       datetime($column, $label = '')
- * @method Field\Time           time($column, $label = '')
- * @method Field\Year           year($column, $label = '')
- * @method Field\Month          month($column, $label = '')
- * @method Field\DateRange      dateRange($start, $end, $label = '')
- * @method Field\DateTimeRange  datetimeRange($start, $end, $label = '')
- * @method Field\TimeRange      timeRange($start, $end, $label = '')
- * @method Field\Number         number($column, $label = '')
- * @method Field\Currency       currency($column, $label = '')
- * @method Field\SwitchField    switch($column, $label = '')
- * @method Field\Display        display($column, $label = '')
- * @method Field\Rate           rate($column, $label = '')
- * @method Field\Divide         divider()
- * @method Field\Password       password($column, $label = '')
- * @method Field\Decimal        decimal($column, $label = '')
- * @method Field\Html           html($html, $label = '')
- * @method Field\Tags           tags($column, $label = '')
- * @method Field\Icon           icon($column, $label = '')
- * @method Field\Embeds         embeds($column, $label = '')
- * @method Field\Captcha        captcha($column, $label = '')
- * @method Field\Listbox        listbox($column, $label = '')
- * @method Field\SelectResource selectResource($column, $label = '')
- * @method Field\File           file($column, $label = '')
- * @method Field\Image          image($column, $label = '')
- * @method Field\MultipleFile   multipleFile($column, $label = '')
- * @method Field\MultipleImage  multipleImage($column, $label = '')
- * @method Field\HasMany        hasMany($column, \Closure $callback)
- * @method Field\Tree           tree($column, $label = '')
- * @method Field\Table          table($column, $callback)
- * @method Field\ListField      list($column, $label = '')
- * @method Field\Timezone       timezone($column, $label = '')
- * @method Field\KeyValue       keyValue($column, $label = '')
- * @method Field\Tel            tel($column, $label = '')
- * @method Field\Markdown       markdown($column, $label = '')
+ * @method Field\Text                text($column, $label = '')
+ * @method Field\Checkbox            checkbox($column, $label = '')
+ * @method Field\Radio               radio($column, $label = '')
+ * @method Field\Select              select($column, $label = '')
+ * @method Field\MultipleSelect      multipleSelect($column, $label = '')
+ * @method Field\Textarea            textarea($column, $label = '')
+ * @method Field\Hidden              hidden($column, $label = '')
+ * @method Field\Id                  id($column, $label = '')
+ * @method Field\Ip                  ip($column, $label = '')
+ * @method Field\Url                 url($column, $label = '')
+ * @method Field\Email               email($column, $label = '')
+ * @method Field\Mobile              mobile($column, $label = '')
+ * @method Field\Slider              slider($column, $label = '')
+ * @method Field\Map                 map($latitude, $longitude, $label = '')
+ * @method Field\Editor              editor($column, $label = '')
+ * @method Field\Date                date($column, $label = '')
+ * @method Field\Datetime            datetime($column, $label = '')
+ * @method Field\Time                time($column, $label = '')
+ * @method Field\Year                year($column, $label = '')
+ * @method Field\Month               month($column, $label = '')
+ * @method Field\DateRange           dateRange($start, $end, $label = '')
+ * @method Field\DateTimeRange       datetimeRange($start, $end, $label = '')
+ * @method Field\TimeRange           timeRange($start, $end, $label = '')
+ * @method Field\Number              number($column, $label = '')
+ * @method Field\Currency            currency($column, $label = '')
+ * @method Field\SwitchField         switch($column, $label = '')
+ * @method Field\Display             display($column, $label = '')
+ * @method Field\Rate                rate($column, $label = '')
+ * @method Field\Divide              divider()
+ * @method Field\Password            password($column, $label = '')
+ * @method Field\Decimal             decimal($column, $label = '')
+ * @method Field\Html                html($html, $label = '')
+ * @method Field\Tags                tags($column, $label = '')
+ * @method Field\Icon                icon($column, $label = '')
+ * @method Field\Embeds              embeds($column, $label = '')
+ * @method Field\Captcha             captcha($column, $label = '')
+ * @method Field\Listbox             listbox($column, $label = '')
+ * @method Field\SelectResource      selectResource($column, $label = '')
+ * @method Field\File                file($column, $label = '')
+ * @method Field\Image               image($column, $label = '')
+ * @method Field\MultipleFile        multipleFile($column, $label = '')
+ * @method Field\MultipleImage       multipleImage($column, $label = '')
+ * @method Field\HasMany             hasMany($column, \Closure $callback)
+ * @method Field\Tree                tree($column, $label = '')
+ * @method Field\Table               table($column, $callback)
+ * @method Field\ListField           list($column, $label = '')
+ * @method Field\Timezone            timezone($column, $label = '')
+ * @method Field\KeyValue            keyValue($column, $label = '')
+ * @method Field\Tel                 tel($column, $label = '')
+ * @method Field\Markdown            markdown($column, $label = '')
+ * @method Field\Range               range($start, $end, $label = '')
+ * @method Field\Color               color($column, $label = '')
+ * @method Field\ArrayField          array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable         selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable multipleSelectTable($column, $label = '')
+ * @method Field\Button              button(string $html = null)
  */
 class Form implements Renderable
 {
-    use HasHtmlAttributes,
-        HasFormResponse,
-        HasAuthorization,
-        Macroable {
-            __call as macroCall;
-        }
+    use HasHtmlAttributes;
+    use HasAuthorization;
+    use HandleCascadeFields;
+    use HasRows;
+    use HasTabs;
+    use HasFormResponse {
+        setCurrentUrl as defaultSetCurrentUrl;
+    }
+    use Macroable {
+        __call as macroCall;
+    }
+
+    const REQUEST_NAME = '_form_';
+    const CURRENT_URL_NAME = '_current_';
+    const LAZY_PAYLOAD_NAME = '_payload_';
 
     /**
      * @var string
@@ -92,6 +112,16 @@ class Form implements Renderable
      * @var Field[]|Collection
      */
     protected $fields;
+
+    /**
+     * @var Layout
+     */
+    protected $layout;
+
+    /**
+     * @var array
+     */
+    protected $variables = [];
 
     /**
      * @var bool
@@ -134,6 +164,13 @@ class Form implements Renderable
     ];
 
     /**
+     * @var array
+     */
+    protected $confirm = [];
+
+    protected $hasColumns = false;
+
+    /**
      * Form constructor.
      *
      * @param array $data
@@ -146,9 +183,18 @@ class Form implements Renderable
         }
         $this->setKey($key);
 
+        $this->setUp();
+    }
+
+    protected function setUp()
+    {
         $this->initFields();
 
         $this->initFormAttributes();
+
+        $this->initCurrentUrl();
+
+        $this->initPayload();
     }
 
     /**
@@ -171,6 +217,20 @@ class Form implements Renderable
             'accept-charset' => 'UTF-8',
             'pjax-container' => true,
         ]);
+    }
+
+    protected function initCurrentUrl()
+    {
+        if ($this instanceof LazyRenderable) {
+            $this->setCurrentUrl($this->getCurrentUrl());
+        }
+    }
+
+    protected function initPayload()
+    {
+        if ($payload = \request(static::LAZY_PAYLOAD_NAME)) {
+            $this->payload(json_decode($payload, true) ?? []);
+        }
     }
 
     /**
@@ -196,9 +256,23 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function method($method = 'POST')
+    public function method(string $method = 'POST')
     {
         return $this->setHtmlAttribute('method', strtoupper($method));
+    }
+
+    /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->confirm['title'] = $title;
+        $this->confirm['content'] = $content;
+
+        return $this;
     }
 
     /**
@@ -290,6 +364,10 @@ class Form implements Renderable
     public function field($name)
     {
         foreach ($this->fields as $field) {
+            if (is_array($field->column())) {
+                return in_array($name, $field->column(), true) ? $field : null;
+            }
+
             if ($field === $name || $field->column() === $name) {
                 return $field;
             }
@@ -305,6 +383,31 @@ class Form implements Renderable
     }
 
     /**
+     * @param int|float $width
+     * @param Closure   $callback
+     *
+     * @return $this
+     */
+    public function column($width, \Closure $callback)
+    {
+        $this->layout()->onlyColumn($width, function () use ($callback) {
+            $callback($this);
+        });
+
+        $this->hasColumns = true;
+
+        return $this;
+    }
+
+    /**
+     * @return Layout
+     */
+    public function layout()
+    {
+        return $this->layout ?: ($this->layout = new Layout($this));
+    }
+
+    /**
      * Validate this form fields.
      *
      * @param Request $request
@@ -313,10 +416,6 @@ class Form implements Renderable
      */
     public function validate(Request $request)
     {
-        if (method_exists($this, 'form')) {
-            $this->form();
-        }
-
         $failedValidators = [];
 
         /** @var \Dcat\Admin\Form\Field $field */
@@ -449,16 +548,32 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function pushField(Field &$field)
+    public function pushField(Field $field)
     {
         $this->fields->push($field);
+        if ($this->layout) {
+            $this->layout->addField($field);
+        }
 
         $field->setForm($this);
         $field->width($this->width['field'], $this->width['label']);
 
+        $this->setFileUploadUrl($field);
+
         $field::collectAssets();
 
         return $this;
+    }
+
+    protected function setFileUploadUrl(Field $field)
+    {
+        if ($field instanceof Field\File && method_exists($this, 'form')) {
+            $formData = [static::REQUEST_NAME => get_called_class()];
+
+            $field->url(route(admin_api_route('form.upload')));
+            $field->deleteUrl(route(admin_api_route('form.destroy-file'), $formData));
+            $field->withFormData($formData);
+        }
     }
 
     /**
@@ -472,13 +587,22 @@ class Form implements Renderable
 
         $this->fillFields($this->model()->toArray());
 
-        return [
+        return array_merge([
             'start'   => $this->open(),
             'end'     => $this->close(),
             'fields'  => $this->fields,
             'method'  => $this->getHtmlAttribute('method'),
             'buttons' => $this->buttons,
-        ];
+            'rows'    => $this->rows(),
+            'layout'  => $this->layout,
+        ], $this->variables);
+    }
+
+    public function addVariables(array $variables)
+    {
+        $this->variables = array_merge($this->variables, $variables);
+
+        return $this;
     }
 
     public function fillFields(array $data)
@@ -543,30 +667,15 @@ HTML;
     }
 
     /**
-     * Generate a Field object and add to form builder if Field exists.
-     *
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return Field|null
+     * {@inheritdoc}
      */
-    public function __call($method, $arguments)
+    public function setCurrentUrl($url)
     {
-        if ($className = static::findFieldClass($method)) {
-            $name = Arr::get($arguments, 0, '');
-
-            $element = new $className($name, array_slice($arguments, 1));
-
-            $this->pushField($element);
-
-            return $element;
+        if ($this instanceof LazyRenderable) {
+            $this->payload([static::CURRENT_URL_NAME => $url]);
         }
 
-        if (static::hasMacro($method)) {
-            return $this->macroCall($method, $arguments);
-        }
-
-        throw new \BadMethodCallException("Field [{$method}] does not exist.");
+        return $this->defaultSetCurrentUrl($url);
     }
 
     /**
@@ -594,17 +703,22 @@ HTML;
     /**
      * @return void
      */
-    protected function setupSubmitScript()
+    protected function setUpSubmitScript()
     {
+        $confirm = json_encode($this->confirm);
+
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
+    confirm: {$confirm},
     success: function (data) {
         {$this->buildSuccessScript()}
+        {$this->addSavedScript()}
     },
     error: function (response) {
         {$this->buildErrorScript()}
+        {$this->addErrorScript()}
     }
 });
 JS
@@ -613,6 +727,8 @@ JS
 
     /**
      * @return string|void
+     *
+     * @deprecated 将在2.0版本中废弃，请用 addSavedScript 代替
      */
     protected function buildSuccessScript()
     {
@@ -621,7 +737,23 @@ JS
     /**
      * @return string|void
      */
+    protected function addSavedScript()
+    {
+    }
+
+    /**
+     * @return string|void
+     *
+     * @deprecated 将在2.0版本中废弃，请用 addErrorScript 代替
+     */
     protected function buildErrorScript()
+    {
+    }
+
+    /**
+     * @return string|void
+     */
+    protected function addErrorScript()
     {
     }
 
@@ -632,9 +764,34 @@ JS
      */
     public function sanitize(array $input)
     {
-        Arr::forget($input, ['_form_', '_token', '_current_']);
+        Arr::forget($input, [static::REQUEST_NAME, '_token', static::CURRENT_URL_NAME]);
 
-        return $input;
+        return $this->prepareInput($input);
+    }
+
+    public function prepareInput(array $input)
+    {
+        Helper::prepareHasOneRelation($this->fields, $input);
+
+        foreach ($input as $column => $value) {
+            $field = $this->field($column);
+
+            if (! $field instanceof Field) {
+                unset($input[$column]);
+
+                continue;
+            }
+
+            $input[$column] = $field->prepare($value);
+        }
+
+        $prepared = [];
+
+        foreach ($input as $key => $value) {
+            Arr::set($prepared, $key, $value);
+        }
+
+        return $prepared;
     }
 
     protected function prepareForm()
@@ -655,10 +812,18 @@ JS
     protected function prepareHandler()
     {
         if (method_exists($this, 'handle')) {
-            $this->method('POST');
-            $this->action(route(admin_api_route('form')));
-            $this->hidden('_form_')->default(get_called_class());
-            $this->hidden('_current_')->default($this->getCurrentUrl());
+            $addHiddenFields = function () {
+                $this->method('POST');
+                $this->action(route(admin_api_route('form')));
+                $this->hidden(static::REQUEST_NAME)->default(get_called_class());
+                $this->hidden(static::CURRENT_URL_NAME)->default($this->getCurrentUrl());
+
+                if (! empty($this->payload) && is_array($this->payload)) {
+                    $this->hidden(static::LAZY_PAYLOAD_NAME)->default(json_encode($this->payload));
+                }
+            };
+
+            $this->hasColumns ? $this->column(1, $addHiddenFields) : $addHiddenFields();
         }
     }
 
@@ -674,10 +839,45 @@ JS
         $this->prepareHandler();
 
         if ($this->allowAjaxSubmit()) {
-            $this->setupSubmitScript();
+            $this->setUpSubmitScript();
         }
 
+        $tabObj = $this->getTab();
+
+        if (! $tabObj->isEmpty()) {
+            $tabObj->addScript();
+        }
+
+        $this->addVariables(['tabObj' => $tabObj]);
+
         return view($this->view, $this->variables())->render();
+    }
+
+    /**
+     * Generate a Field object and add to form builder if Field exists.
+     *
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return Field|null
+     */
+    public function __call($method, $arguments)
+    {
+        if ($className = static::findFieldClass($method)) {
+            $name = Arr::get($arguments, 0, '');
+
+            $element = new $className($name, array_slice($arguments, 1));
+
+            $this->pushField($element);
+
+            return $element;
+        }
+
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $arguments);
+        }
+
+        throw new \BadMethodCallException("Field [{$method}] does not exist.");
     }
 
     /**

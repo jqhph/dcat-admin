@@ -36,7 +36,7 @@
             cls = column.replace(/[\[\]]*/g, '') + (Math.random().toString(36).substr(2)),
             layer = options.window.layer,
             $input = getQueryDomObject(options.displayerContainer) || $(options.selector).parents('.select-resource').find('div[name="' + column + '"]'),
-            $hidden = getQueryDomObject(options.hiddenInput) || $('input[name="' + column + '"]'),
+            $hidden = getQueryDomObject(options.hiddenInput) || $input.parents('.input-group').find('input[type="hidden"]'),
             tagClearClass = options.clearOneClass || (cls + '-tag-clear-button'),
             clearClass = options.clearAllClass || (cls + '-clear-button'),
             maxItem = options.maxItem,
@@ -61,6 +61,10 @@
                 layerIdx = $layerWin = null;
             });
 
+            if (options.source.indexOf('?') === -1) {
+                options.source += '?'
+            }
+
             layerIdx = layer.open({
                 type: 2,
                 title: options.title,
@@ -71,7 +75,7 @@
                 scrollbar: false,
                 skin: 'select-resource',
                 area: formatArea(options.area),
-                content: `${options.source}?${options.queryName}=1`,
+                content: `${options.source}${options.queryName}=1`,
                 btn: options.showCloseButton ? [options.closeButtonText] : null,
                 success: function (layero) {
                     iframeWin = options.window[layero.find('iframe')[0]['name']];
@@ -113,7 +117,7 @@
                 label = $this.data('label') || id,
                 exist = Dcat.helpers.isset(originalItems, id);
 
-            if ($this.prop('checked')) {
+            if ($this[0].checked) {
                 if (!exist) {
                     originalItems[id] = label;
                 }
@@ -193,8 +197,20 @@
 
         function bindCheckedDefaultEvent(iframeWin) {
             Dcat.ready(function () {
+                let $selectAll = $(layer.getChildFrame('.checkbox-grid .select-all', layerIdx)),
+                    $checkboxed = getAllCheckboxes();
+
                 clickCheckedItems();
-                getAllCheckboxes().change(function () {
+                if (maxItem != 1) {
+                    // 解决多选模式全选框无效问题
+                    $selectAll.on('change', function () {
+                        setTimeout(function () {
+                            $checkboxed.trigger('change');
+                        }, 1)
+                    });
+                }
+
+                $checkboxed.on('change', function () {
                     if (maxItem == 1) {
                         select($(this));
                     } else {
@@ -203,7 +219,7 @@
                 });
                 if (maxItem == 1) {
                     // 单选模式禁用全选按钮
-                    $(layer.getChildFrame('.checkbox-grid .select-all', layerIdx)).click(function () {
+                    $selectAll.on('click', function () {
                         return false;
                     });
                 }

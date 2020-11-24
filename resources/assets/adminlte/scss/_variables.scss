@@ -108,19 +108,38 @@ $main-footer-bg: transparent !default;
 //$sidebar-dark-bg: darken(#505b6b, 14%) !default;
 //$sidebar-dark-bg: #1e1e2d !default;
 //$sidebar-dark-bg: lighten(#1a1a27, 1%) !default;
-$sidebar-dark-bg: #263238!default;
+//$sidebar-dark-bg: #263238!default;
+//$sidebar-dark-bg: $body-dark-color!default;
+//$sidebar-dark-hover-bg: transparent !default;
+//$sidebar-dark-color: $body-dark-font-color!default;
+//$sidebar-dark-hover-color: $white !default;
+//$sidebar-dark-active-bg: $body-darker-color !default;
+//$sidebar-dark-active-color: $white !default;
+//$sidebar-dark-submenu-bg: transparent !default;
+////$sidebar-dark-submenu-color: lighten(#C2C7D0, 6%) !default;
+//$sidebar-dark-submenu-color: $body-dark-font-color!default;
+//$sidebar-dark-submenu-hover-color: $white !default;
+//$sidebar-dark-submenu-hover-bg: $sidebar-dark-hover-bg !default;
+//$sidebar-dark-submenu-active-color: $white !default;
+//$sidebar-dark-submenu-active-bg: $sidebar-dark-active-bg !default;
+//$sidebar-dark-header-color: hsla(0,0%,100%,.7) !default;
+
+// #262d37
+$sidebar-dark-bg: darken(#505b6b, 2%)!default;
 $sidebar-dark-hover-bg: transparent !default;
-$sidebar-dark-color: lighten(#C2C7D0, 6%) !default;
+$sidebar-dark-color: $white!default;
 $sidebar-dark-hover-color: $white !default;
-$sidebar-dark-active-bg: hsla(100, 100%, 100%, 0.1) !default;
+$sidebar-dark-active-bg: darken(#49525f, 4%) !default;
 $sidebar-dark-active-color: $white !default;
-$sidebar-dark-submenu-bg: transparent !default;
-$sidebar-dark-submenu-color: lighten(#C2C7D0, 6%) !default;
+$sidebar-dark-submenu-bg: darken(#49525f, 1%) !default;
+//$sidebar-dark-submenu-color: lighten(#C2C7D0, 6%) !default;
+$sidebar-dark-submenu-color: $sidebar-dark-color!default;
 $sidebar-dark-submenu-hover-color: $white !default;
 $sidebar-dark-submenu-hover-bg: $sidebar-dark-hover-bg !default;
 $sidebar-dark-submenu-active-color: $white !default;
-$sidebar-dark-submenu-active-bg: hsla(100, 100%, 100%, 0.1) !default;
-$sidebar-dark-header-color: hsla(0,0%,100%,.7) !default;
+$sidebar-dark-submenu-active-bg: rgba(255,255,255, 0.12) !default;
+$sidebar-dark-header-color: hsla(0,0%,100%,.8) !default;
+// #505b6b #49525f
 
 // Light sidebar
 $sidebar-light-bg: $white !default;

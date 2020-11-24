@@ -39,6 +39,11 @@ class EloquentRepository extends Repository implements TreeRepository
     protected $relations = [];
 
     /**
+     * @var \Illuminate\Database\Eloquent\Collection
+     */
+    protected $collection;
+
+    /**
      * EloquentRepository constructor.
      *
      * @param EloquentModel|array|string $modelOrRelations $modelOrRelations
@@ -442,24 +447,23 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 删除数据.
      *
-     * @param Form $form
+     * @param Form  $form
+     * @param array $originalData
      *
      * @return bool
      */
-    public function destroy(Form $form, array $deletingData)
+    public function destroy(Form $form, array $originalData)
     {
-        $id = $form->getKey();
+        $models = $this->collection->keyBy($this->getKeyName());
 
-        $deletingData = collect($deletingData)->keyBy($this->getKeyName());
+        collect(explode(',', $form->getKey()))->filter()->each(function ($id) use ($form, $models) {
+            $model = $models->get($id);
 
-        collect(explode(',', $id))->filter()->each(function ($id) use ($form, $deletingData) {
-            $data = $deletingData->get($id, []);
-
-            if (! $data) {
+            if (! $model) {
                 return;
             }
 
-            $model = $this->createDeletingModel($id, $data);
+            $data = $model->toArray();
 
             if ($this->isSoftDeletes && $model->trashed()) {
                 $form->deleteFiles($data, true);
@@ -474,30 +478,6 @@ class EloquentRepository extends Repository implements TreeRepository
         });
 
         return true;
-    }
-
-    /**
-     * @param mixed $id
-     * @param array $data
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    protected function createDeletingModel($id, $data)
-    {
-        $model = $this->createEloquent();
-        $keyName = $model->getKeyName();
-
-        $model->{$keyName} = $id;
-
-        if ($this->isSoftDeletes) {
-            $deletedColumn = $model->getDeletedAtColumn();
-
-            $model->{$deletedColumn} = $data[$deletedColumn] ?? null;
-        }
-
-        $model->exists = true;
-
-        return $model;
     }
 
     /**
@@ -517,13 +497,14 @@ class EloquentRepository extends Repository implements TreeRepository
 
         $id = $form->getKey();
 
-        return $query
+        $this->collection = $query
             ->with($this->getRelations())
             ->findOrFail(
                 collect(explode(',', $id))->filter()->toArray(),
                 $this->getFormColumns()
-            )
-            ->toArray();
+            );
+
+        return $this->collection->toArray();
     }
 
     /**
@@ -641,7 +622,7 @@ class EloquentRepository extends Repository implements TreeRepository
         $model = new $this->eloquentClass();
 
         if ($data) {
-            $model->forceFill($data);
+            $model->setRawAttributes($data);
         }
 
         return $model;
@@ -797,13 +778,18 @@ class EloquentRepository extends Repository implements TreeRepository
 
                         $instance = $relation->findOrNew(Arr::get($related, $keyName));
 
-                        if ($related[Form::REMOVE_FLAG_NAME] == 1) {
+                        if (Arr::get($related, Form::REMOVE_FLAG_NAME) == 1) {
                             $instance->delete();
 
                             continue;
                         }
 
                         Arr::forget($related, Form::REMOVE_FLAG_NAME);
+
+                        $key = Arr::get($related, $relation->getModel()->getKeyName());
+                        if ($key === null || $key === '') {
+                            Arr::forget($related, $relation->getModel()->getKeyName());
+                        }
 
                         $instance->fill($related);
 

@@ -6,7 +6,7 @@
 
         <span name="{{$column}}"></span> {{-- 用于显示错误信息 --}}
 
-        <div id="has-many-{{$column}}" >
+        <div class="has-many-{{$column}}" >
             <table class="table table-has-many has-many-{{$column}}">
                 <thead>
                 <tr>
@@ -67,7 +67,7 @@
             @if($options['allowCreate'])
                 <div class="form-group row m-t-10">
                     <div class="{{$viewClass['field']}}" style="margin-top: 8px">
-                        <div class="add btn btn-success btn-sm"><i class="feather icon-plus"></i>&nbsp;{{ trans('admin.new') }}</div>
+                        <div class="add btn btn-primary btn-outline btn-sm"><i class="feather icon-plus"></i>&nbsp;{{ trans('admin.new') }}</div>
                     </div>
                 </div>
             @endif

@@ -9,7 +9,7 @@ class Application
     public function handle($request, \Closure $next, $app = null)
     {
         if ($app) {
-            Admin::app()->current($app);
+            Admin::app()->switch($app);
         }
 
         return $next($request);

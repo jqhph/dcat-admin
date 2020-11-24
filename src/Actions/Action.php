@@ -115,11 +115,13 @@ abstract class Action implements Renderable
      *
      * @param mixed $key
      *
-     * @return void
+     * @return $this
      */
     public function setKey($key)
     {
         $this->primaryKey = $key;
+
+        return $this;
     }
 
     /**
@@ -160,7 +162,7 @@ abstract class Action implements Renderable
      */
     public function makeSelector($prefix, $class = null)
     {
-        $class = $class ?: static::class;
+        $class = $prefix.'-'.($class ?: static::class);
 
         if (! isset(static::$selectors[$class])) {
             static::$selectors[$class] = uniqid($prefix);

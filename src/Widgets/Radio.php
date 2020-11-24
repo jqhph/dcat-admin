@@ -12,7 +12,7 @@ class Radio extends Widget
 
     protected $style = 'primary';
 
-    protected $right = '14px';
+    protected $right = '16px';
 
     protected $checked;
 

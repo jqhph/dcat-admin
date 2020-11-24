@@ -4,7 +4,6 @@ namespace Dcat\Admin\Grid\Displayers;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Illuminate\Support\Str;
 
 class Limit extends AbstractDisplayer
 {
@@ -21,6 +20,8 @@ JS;
 
     public function display($limit = 100, $end = '...')
     {
+        $this->value = Helper::htmlEntityEncode($this->value);
+
         // 数组
         if ($this->value !== null && ! is_scalar($this->value)) {
             $value = Helper::array($this->value);
@@ -39,7 +40,7 @@ JS;
         // 字符串
         $this->addScript();
 
-        $value = Str::limit($this->value, $limit, $end);
+        $value = Helper::strLimit($this->value, $limit, $end);
 
         $original = $this->column->getOriginal();
 

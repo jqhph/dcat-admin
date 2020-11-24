@@ -170,7 +170,7 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function buildData(?int $page = null, ?int $perPage = null)
     {
-        $model = $this->grid->model();
+        $model = $this->getGridModel();
 
         // current page
         if ($this->scope === Grid\Exporter::SCOPE_CURRENT_PAGE) {
@@ -191,6 +191,24 @@ abstract class AbstractExporter implements ExporterInterface
         $model->reset();
 
         return $this->callBuilder($array);
+    }
+
+    /**
+     * @return Grid\Model
+     */
+    protected function getGridModel()
+    {
+        $model = $this->grid->model();
+
+        if (empty($this->modelQueries)) {
+            $model->rejectQuery(['forPage']);
+
+            $this->modelQueries = clone $model->getQueries();
+        }
+
+        $model->setQueries($this->modelQueries);
+
+        return $model;
     }
 
     /**

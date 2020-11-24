@@ -39,9 +39,7 @@ $('.import-extension').on('click', function () {
         req = 1;
         
         Dcat.loading();
-        $.post('$url?id='+id, {
-            _token: Dcat.token,
-        }, function (response) {
+        $.post('$url?id='+id, {}, function (response) {
            Dcat.loading(false);
            req = 0;
         

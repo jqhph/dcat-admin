@@ -38,8 +38,10 @@ class MenuController extends AdminController
                     $form->text('title', trans('admin.title'))->required();
                     $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
-                    $form->multipleSelect('roles', trans('admin.roles'))
-                        ->options($roleModel::all()->pluck('name', 'id'));
+
+                    if ($menuModel::withRole()) {
+                        $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
+                    }
                     if ($menuModel::withPermission()) {
                         $form->tree('permissions', trans('admin.permission'))
                             ->expand(false)
@@ -96,9 +98,6 @@ class MenuController extends AdminController
         $relations = $menuModel::withPermission() ? ['permissions', 'roles'] : 'roles';
 
         return Form::make(new Menu($relations), function (Form $form) use ($menuModel) {
-            $permissionModel = config('admin.database.permissions_model');
-            $roleModel = config('admin.database.roles_model');
-
             $form->tools(function (Form\Tools $tools) {
                 $tools->disableView();
             });
@@ -113,16 +112,23 @@ class MenuController extends AdminController
             $form->text('title', trans('admin.title'))->required();
             $form->icon('icon', trans('admin.icon'))->help($this->iconHelp());
             $form->text('uri', trans('admin.uri'));
-            $form->multipleSelect('roles', trans('admin.roles'))
-                ->options(function () use ($roleModel) {
-                    return $roleModel::all()->pluck('name', 'id');
-                })
-                ->customFormat(function ($v) {
-                    return array_column($v, 'id');
-                });
+
+            if ($menuModel::withRole()) {
+                $form->multipleSelect('roles', trans('admin.roles'))
+                    ->options(function () {
+                        $roleModel = config('admin.database.roles_model');
+
+                        return $roleModel::all()->pluck('name', 'id');
+                    })
+                    ->customFormat(function ($v) {
+                        return array_column($v, 'id');
+                    });
+            }
             if ($menuModel::withPermission()) {
                 $form->tree('permissions', trans('admin.permission'))
-                    ->nodes(function () use ($permissionModel) {
+                    ->nodes(function () {
+                        $permissionModel = config('admin.database.permissions_model');
+
                         return (new $permissionModel())->allNodes();
                     })
                     ->customFormat(function ($v) {
@@ -136,6 +142,15 @@ class MenuController extends AdminController
 
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
+        })->saved(function (Form $form, $result) {
+            if ($result) {
+                return $form->location('auth/menu', __('admin.save_succeeded'));
+            }
+
+            return $form->location('auth/menu', [
+                'message' => __('admin.nothing_updated'),
+                'status'  => false,
+            ]);
         });
     }
 

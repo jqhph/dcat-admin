@@ -55,6 +55,7 @@ use Illuminate\Support\Traits\Macroable;
  * @method string grayBg(int $amt = 0)
  * @method string border(int $amt = 0)
  * @method string inputBorder(int $amt = 0)
+ * @method string background(int $amt = 0)
  */
 class Color
 {
@@ -176,6 +177,9 @@ class Color
 
         // 表单边框
         'input-border' => '#d9d9d9',
+
+        // 背景色
+        'background' => '#eff3f8',
     ];
 
     /**

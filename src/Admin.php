@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 
 /**
  * Class Admin.
@@ -35,7 +36,7 @@ class Admin
      *
      * @var string
      */
-    const VERSION = '1.4.7';
+    const VERSION = '1.7.7';
 
     /**
      * @var array
@@ -173,6 +174,14 @@ class Admin
     }
 
     /**
+     * 禁用pjax.
+     */
+    public static function disablePjax()
+    {
+        static::$pjaxContainerId = null;
+    }
+
+    /**
      * section.
      *
      * @param Closure|null $builder
@@ -198,6 +207,7 @@ class Admin
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
+            'as'         => static::app()->getName().'.',
         ];
 
         if (config('admin.auth.enable', true)) {
@@ -249,7 +259,10 @@ class Admin
                 /* @var \Illuminate\Routing\Router $router */
                 $router->post('action', 'HandleActionController@handle')->name('action');
                 $router->post('form', 'HandleFormController@handle')->name('form');
+                $router->post('form/upload', 'HandleFormController@uploadFile')->name('form.upload');
+                $router->post('form/destroy-file', 'HandleFormController@destroyFile')->name('form.destroy-file');
                 $router->post('value', 'ValueController@handle')->name('value');
+                $router->get('render', 'RenderableController@handle')->name('render');
                 $router->post('tinymce/upload', 'TinymceController@upload')->name('tinymce.upload');
                 $router->post('editor-md/upload', 'EditorMDController@upload')->name('editor-md.upload');
             });
@@ -270,6 +283,7 @@ class Admin
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
+            'as'         => static::app()->getName().'.',
         ];
 
         app('router')->group($attributes, function ($router) {
@@ -483,10 +497,15 @@ class Admin
      */
     public static function jsVariables()
     {
+        $sidebarStyle = config('admin.layout.sidebar_style') ?: 'light';
+
         static::$jsVariables['pjax_container_selector'] = '#'.static::$pjaxContainerId;
         static::$jsVariables['token'] = csrf_token();
         static::$jsVariables['lang'] = __('admin.client') ?: [];
         static::$jsVariables['colors'] = static::color()->all();
+        static::$jsVariables['dark_mode'] = Str::contains(config('admin.layout.body_class'), 'dark-mode');
+        static::$jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
+        static::$jsVariables['sidebar_light_style'] = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
 
         return json_encode(static::$jsVariables);
     }

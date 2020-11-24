@@ -80,6 +80,11 @@ class Alert extends Widget
         return $this;
     }
 
+    public function primary()
+    {
+        return $this->style('primary');
+    }
+
     /**
      * Set info style.
      *

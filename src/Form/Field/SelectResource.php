@@ -8,6 +8,9 @@ use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * @deprecated 即将在2.0版本中废弃
+ */
 class SelectResource extends Field
 {
     use PlainInput;
@@ -175,7 +178,7 @@ Dcat.ResourceSelector({
     title: '{$label}',
     column: "{$this->getElementName()}",
     source: '{$this->source}',
-    selector: '#{$this->btnId}',
+    selector: replaceNestedFormIndex('#{$this->btnId}'),
     maxItem: {$maxItem}, 
     area: {$area},
     queryName: '{$queryName}',
@@ -184,7 +187,7 @@ Dcat.ResourceSelector({
     showCloseButton: false,
     disabled: '{$disabled}',
     displayer: 'default',
-    displayerContainer: $('$displayerContainer'),
+    displayerContainer: $(replaceNestedFormIndex('{$displayerContainer}')),
 });
 JS;
     }

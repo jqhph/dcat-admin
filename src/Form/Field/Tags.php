@@ -35,11 +35,16 @@ class Tags extends Field
     protected $key = null;
 
     /**
+     * @var string
+     */
+    protected $ajaxScript = null;
+
+    /**
      * {@inheritdoc}
      */
     protected function formatFieldData($data)
     {
-        $value = Arr::get($data, $this->column);
+        $value = Arr::get($data, $this->normalizeColumn());
 
         if (is_array($value) && $this->keyAsValue) {
             $value = array_column($value, $this->visibleColumn, $this->key);
@@ -158,6 +163,54 @@ class Tags extends Field
     }
 
     /**
+     * Load options from ajax results.
+     *
+     * @param string $url
+     * @param $idField
+     * @param $textField
+     *
+     * @return $this
+     */
+    public function ajax(string $url, string $idField = 'id', string $textField = 'text')
+    {
+        $url = admin_url($url);
+
+        $this->ajaxScript = <<<JS
+  ajax: {
+    url: "$url",
+    dataType: 'json',
+    delay: 250,
+    cache: true,
+    data: function (params) {
+      return {
+        q: params.term,
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+      params.page = params.page || 1;
+
+      return {
+        results: $.map(data.data, function (d) {
+                   d.id = d.{$idField};
+                   d.text = d.{$textField};
+                   return d;
+                }),
+        pagination: {
+          more: data.next_page_url
+        }
+      };
+    },
+  },
+  escapeMarkup: function (markup) {
+      return markup;
+  },
+JS;
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function render()
@@ -175,7 +228,7 @@ class Tags extends Field
         if ($this->keyAsValue) {
             $options = $value + $this->options;
         } else {
-            $options = array_unique(array_merge($value, $this->options));
+            $options = array_unique(array_merge($value, (array) $this->options));
         }
 
         return parent::render()->with([
@@ -186,12 +239,15 @@ class Tags extends Field
 
     protected function setupScript()
     {
+        Select::defineLang();
+
         // 解决部分浏览器开启 tags: true 后无法输入中文的BUG
         // 支持"逗号" "分号" "空格"结尾生成tags
         $this->script = <<<JS
 $("{$this->getElementClassSelector()}").select2({
     tags: true,
     tokenSeparators: [',', ';', '，', '；', ' '],
+    {$this->ajaxScript}
     createTag: function(params) {
         if (/[,;，； ]/.test(params.term)) {
             var str = params.term.trim().replace(/[,;，；]*$/, '');

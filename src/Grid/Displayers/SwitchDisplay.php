@@ -9,6 +9,8 @@ class SwitchDisplay extends AbstractDisplayer
     public static $js = '@switchery';
     public static $css = '@switchery';
 
+    protected $selector = 'grid-column-switch';
+
     /**
      * @var string
      */
@@ -19,7 +21,7 @@ class SwitchDisplay extends AbstractDisplayer
         $this->color = Admin::color()->get($color);
     }
 
-    public function display(string $color = '')
+    public function display(string $color = '', $refresh = false)
     {
         if ($color instanceof \Closure) {
             $color->call($this->row, $this);
@@ -27,48 +29,68 @@ class SwitchDisplay extends AbstractDisplayer
             $this->color($color);
         }
 
-        $this->setupScript();
+        $this->addScript($refresh);
 
-        $name = $this->getElementName();
-        $key = $this->getKey();
         $checked = $this->value ? 'checked' : '';
         $color = $this->color ?: Admin::color()->primary();
 
         return <<<EOF
-<input class="grid-switch-{$this->grid->getName()}" data-size="small" name="{$name}" data-key="$key" {$checked} type="checkbox" data-color="{$color}"/>
+<input class="{$this->selector}" data-url="{$this->url()}" data-size="small" name="{$this->column->getName()}" {$checked} type="checkbox" data-color="{$color}"/>
 EOF;
     }
 
-    protected function setupScript()
+    protected function url()
+    {
+        return $this->resource().'/'.$this->getKey();
+    }
+
+    protected function addScript($refresh)
     {
         Admin::script(
             <<<JS
-(function(){
-    var swt = $('.grid-switch-{$this->grid->getName()}'), t;
-    function init(){
+(function() {
+    var swt = $('.{$this->selector}'), 
+    that, 
+    reload = '{$refresh}';
+    function initSwitchery(){
         swt.parent().find('.switchery').remove();
         swt.each(function(k){
-            t = $(this);
-            new Switchery(t[0], t.data())
+            that = $(this);
+            new Switchery(that[0], that.data())
         })
     } 
-    init();
+    initSwitchery();
+    
     swt.off('change').change(function(e) {
-        var t = $(this), id = t.data('key'), checked = t.is(':checked'), name = t.attr('name'), data = {
-            _token: Dcat.token,
+        var that = $(this), 
+         url = that.data('url'),
+         checked = that.is(':checked'),
+         name = that.attr('name'), 
+         data = {
             _method: 'PUT'
-        };
-        data[name] = checked ? 1 : 0;
+         },
+         value = checked ? 1 : 0;
+        
+        if (name.indexOf('.') === -1) {
+            data[name] = value;
+        } else {
+            name = name.split('.');
+            
+            data[name[0]] = {};
+            data[name[0]][name[1]] = value;
+        }
+        
         Dcat.NP.start();
     
         $.ajax({
-            url: "{$this->resource()}/" + id,
+            url: url,
             type: "POST",
             data: data,
             success: function (d) {
                 Dcat.NP.done();
                 if (d.status) {
                     Dcat.success(d.message);
+                    reload && Dcat.reload();
                 } else {
                     Dcat.error(d.message);
                 }

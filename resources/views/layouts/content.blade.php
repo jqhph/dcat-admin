@@ -1,5 +1,5 @@
 @section('content-header')
-    <section class="content-header breadcrumbs-top mb-2">
+    <section class="content-header breadcrumbs-top">
         @if($header || $description)
             <h1 class=" float-left">
                 <span class="text-capitalize">{!! $header !!}</span>

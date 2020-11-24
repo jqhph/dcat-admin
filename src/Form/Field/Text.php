@@ -9,6 +9,15 @@ class Text extends Field
 {
     use PlainInput;
 
+    public function __construct($column, $arguments = [])
+    {
+        if (static::class === self::class) {
+            $this->prepend('<i class="feather icon-edit-2"></i>');
+        }
+
+        parent::__construct($column, $arguments);
+    }
+
     /**
      * Render this filed.
      *
@@ -18,8 +27,7 @@ class Text extends Field
     {
         $this->initPlainInput();
 
-        $this->prepend('<i class="feather icon-edit-2"></i>')
-            ->defaultAttribute('type', 'text')
+        $this->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id)
             ->defaultAttribute('name', $this->getElementName())
             ->defaultAttribute('value', old($this->column, $this->value()))
@@ -136,6 +144,8 @@ JS
      */
     public function inputmask($options)
     {
+        Admin::js('@jquery.inputmask');
+
         $options = $this->jsonEncodeOptions($options);
 
         $this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
@@ -152,7 +162,7 @@ JS
      */
     protected function jsonEncodeOptions($options)
     {
-        $data = $this->prepareOptions($options);
+        $data = $this->formatOptions($options);
 
         $json = json_encode($data['options']);
 
@@ -162,20 +172,18 @@ JS
     }
 
     /**
-     * Prepare options.
-     *
      * @param array $options
      *
      * @return array
      */
-    protected function prepareOptions($options)
+    protected function formatOptions($options)
     {
         $original = [];
         $toReplace = [];
 
         foreach ($options as $key => &$value) {
             if (is_array($value)) {
-                $subArray = $this->prepareOptions($value);
+                $subArray = $this->formatOptions($value);
                 $value = $subArray['options'];
                 $original = array_merge($original, $subArray['original']);
                 $toReplace = array_merge($toReplace, $subArray['toReplace']);

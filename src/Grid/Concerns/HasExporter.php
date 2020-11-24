@@ -12,12 +12,17 @@ trait HasExporter
     /**
      * @var Exporter
      */
-    protected $__exporter;
+    protected $exporter;
 
     /**
      * @var bool
      */
     protected $enableExporter = false;
+
+    /**
+     * @var bool
+     */
+    protected $exported = false;
 
     /**
      * Set exporter driver for Grid to export.
@@ -53,11 +58,20 @@ trait HasExporter
      *
      * @return mixed
      */
-    protected function handleExportRequest($forceExport = false)
+    public function handleExportRequest($forceExport = false)
     {
-        if (! $scope = request($this->exporter()->queryName())) {
+        if (
+            $this->exported
+            || (
+                (! $this->allowExporter()
+                    || ! $scope = request($this->exporter()->queryName()))
+                && ! $forceExport
+            )
+        ) {
             return;
         }
+
+        $this->exported = true;
 
         $this->callBuilder();
 
@@ -76,7 +90,7 @@ trait HasExporter
      */
     public function exporter()
     {
-        return $this->__exporter ?: ($this->__exporter = new Exporter($this));
+        return $this->exporter ?: ($this->exporter = new Exporter($this));
     }
 
     /**
@@ -86,11 +100,11 @@ trait HasExporter
      */
     protected function setExporterQueryName(string $name = null)
     {
-        if (! $this->allowExporter()) {
+        if (! $this->exporter) {
             return;
         }
 
-        $this->exporter()->setQueryName(($name ?: $this->getName()).'_export_');
+        $this->exporter->setQueryName(($name ?: $this->getName()).'_export_');
     }
 
     /**

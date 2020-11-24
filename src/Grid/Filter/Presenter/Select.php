@@ -341,7 +341,7 @@ $(document).on('change', ".{$class}", function () {
             }));
         });
         
-        $(target).trigger('change');
+        $(target).val(target.attr('data-value')).trigger('change');
     });
 });
 $(".{$class}").trigger('change')

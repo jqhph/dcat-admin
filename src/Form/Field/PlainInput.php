@@ -10,18 +10,14 @@ trait PlainInput
 
     public function prepend($string)
     {
-        if (is_null($this->prepend)) {
-            $this->prepend = $string;
-        }
+        $this->prepend = $string;
 
         return $this;
     }
 
     public function append($string)
     {
-        if (is_null($this->append)) {
-            $this->append = $string;
-        }
+        $this->append = $string;
 
         return $this;
     }

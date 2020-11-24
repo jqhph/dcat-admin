@@ -4,6 +4,9 @@ namespace Dcat\Admin\Repositories;
 
 use Dcat\Admin\Form;
 
+/**
+ * @deprecated 即将在2.0中废弃
+ */
 abstract class RepositoryListener
 {
     /**

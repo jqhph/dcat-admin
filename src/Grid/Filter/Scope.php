@@ -75,9 +75,10 @@ class Scope implements Renderable
      */
     public function render()
     {
-        $url = request()->fullUrlWithQuery(
-            [$this->filter->getScopeQueryName() => $this->key]
-        );
+        $url = request()->fullUrlWithQuery([
+            $this->filter->getScopeQueryName() => $this->key,
+            $this->filter->grid()->model()->getPageName() => null,
+        ]);
 
         return "<li class='dropdown-item'><a href=\"{$url}\">{$this->label}</a></li>";
     }

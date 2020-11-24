@@ -113,7 +113,7 @@ class Markdown extends Field
      */
     public function imageUrl(string $url)
     {
-        return $this->options(['imageUploadURL' => $this->formatUrl(admin_url($url))]);
+        return $this->mergeOptions(['imageUploadURL' => $this->formatUrl(admin_url($url))]);
     }
 
     /**
@@ -150,7 +150,9 @@ class Markdown extends Field
 
         $opts = JavaScript::format($this->options);
 
-        $this->script = "editormd(\"{$this->id}\", {$opts});";
+        $this->script = <<<JS
+editormd(replaceNestedFormIndex("{$this->id}"), {$opts});
+JS;
     }
 
     /**

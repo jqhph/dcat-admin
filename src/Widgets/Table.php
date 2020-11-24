@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class Table extends Widget
@@ -22,11 +23,6 @@ class Table extends Widget
     protected $rows = [];
 
     /**
-     * @var array
-     */
-    protected $style = [];
-
-    /**
      * @var int
      */
     protected $depth = 0;
@@ -35,12 +31,12 @@ class Table extends Widget
      * Table constructor.
      *
      * @param array $headers
-     * @param array $rows
+     * @param mixed $rows
      * @param array $style
      */
-    public function __construct($headers = [], $rows = [], $style = [])
+    public function __construct($headers = [], $rows = false, $style = [])
     {
-        if ($headers && ! $rows) {
+        if ($rows === false) {
             $rows = $headers;
             $headers = [];
         }
@@ -49,7 +45,7 @@ class Table extends Widget
         $this->setRows($rows);
         $this->setStyle($style);
 
-        $this->class('table '.implode(' ', (array) $this->style), true);
+        $this->class('table default-table');
     }
 
     /**
@@ -87,7 +83,7 @@ class Table extends Widget
      */
     public function setRows($rows = [])
     {
-        if (! Arr::isAssoc($rows)) {
+        if ($rows && ! Arr::isAssoc(Helper::array($rows))) {
             $this->rows = $rows;
 
             return $this;
@@ -98,11 +94,10 @@ class Table extends Widget
         foreach ($rows as $key => $item) {
             if (is_array($item)) {
                 if (Arr::isAssoc($item)) {
-                    $borderLeft = $this->level ? 'table-left-border-nofirst' : 'table-left-border';
+                    $borderLeft = $this->depth ? 'table-left-border-nofirst' : 'table-left-border';
 
-                    $item = static::make()
+                    $item = static::make($item)
                         ->depth($this->depth + 1)
-                        ->setRows($item)
                         ->class('table-no-top-border '.$borderLeft, true)
                         ->render();
 
@@ -130,7 +125,9 @@ class Table extends Widget
      */
     public function setStyle($style = [])
     {
-        $this->style = $style;
+        if ($style) {
+            $this->class(implode(' ', (array) $style), true);
+        }
 
         return $this;
     }
@@ -145,7 +142,6 @@ class Table extends Widget
         $vars = [
             'headers'    => $this->headers,
             'rows'       => $this->rows,
-            'style'      => $this->style,
             'attributes' => $this->formatHtmlAttributes(),
         ];
 
