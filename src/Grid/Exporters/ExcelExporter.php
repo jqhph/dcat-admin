@@ -34,7 +34,7 @@ class ExcelExporter extends AbstractExporter
             $exporter->data($this->buildData() ?: [[]]);
         }
 
-        $exporter->headings($this->titles)->download($filename);
+        $exporter->headings($this->titles())->download($filename);
 
         exit;
     }
