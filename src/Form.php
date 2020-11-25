@@ -189,9 +189,9 @@ class Form implements Renderable
     protected $repository;
 
     /**
-     * @var Closure
+     * @var Closure[]
      */
-    protected $callback;
+    protected $callbacks = [];
 
     /**
      * @var Request
@@ -278,7 +278,9 @@ class Form implements Renderable
     public function __construct($repository = null, ?Closure $callback = null, Request $request = null)
     {
         $this->repository = $repository ? Admin::repository($repository) : null;
-        $this->callback = $callback;
+        if ($callback) {
+            $this->callbacks[] = $callback;
+        }
         $this->request = $request ?: request();
         $this->builder = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
@@ -298,6 +300,16 @@ class Form implements Renderable
     public static function make(...$params)
     {
         return new static(...$params);
+    }
+
+    /**
+     * Extend form with callback.
+     *
+     * @var Closure
+     */
+    public function callback(Closure $callback)
+    {
+        $this->callbacks[] = $callback;
     }
 
     /**
@@ -1199,7 +1211,7 @@ class Form implements Renderable
      */
     protected function build()
     {
-        if ($callback = $this->callback) {
+        foreach ($this->callbacks as $callback) {
             $callback($this);
         }
 
