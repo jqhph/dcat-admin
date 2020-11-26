@@ -1,11 +1,11 @@
 
 export default class Menu {
     constructor(Dcat) {
-        this.bindClick();
+        this.init();
     }
 
     // 菜单点击选中效果
-    bindClick() {
+    init() {
         if (! $('.main-sidebar .sidebar').length) {
             return;
         }

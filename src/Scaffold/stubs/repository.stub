@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Admin\Repositories;
+namespace {namespace};
 
+use {model} as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
-use {modelClass} as {model}Model;
 
-class {controller} extends EloquentRepository
+class {class} extends EloquentRepository
 {
     /**
      * Model.
      *
      * @var string
      */
-    protected $eloquentClass = {model}Model::class;
+    protected $eloquentClass = Model::class;
 }

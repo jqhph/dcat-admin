@@ -94,6 +94,6 @@ class Sorter implements Renderable
             ]);
         }
 
-        return "&nbsp;<a href='{$url}' class='feather icon-arrow-{$icon} {$active}'></a>";
+        return "&nbsp;<a href='{$url}' class='grid-sort feather icon-arrow-{$icon} {$active}'></a>";
     }
 }

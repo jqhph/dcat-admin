@@ -8,6 +8,7 @@
             preview: [], // 数据预览
             server: '',
             updateServer: '',
+            autoUpload: false,
             sortable: false,
             deleteUrl: '',
             deleteData: {},
@@ -539,7 +540,7 @@
                     $placeHolder.addClass('element-invisible');
                     $selector.find(addFileButtonSelector).removeClass('element-invisible');
                     $queue.show();
-                    if (!opts.disabled) {
+                    if (! opts.disabled) {
                         $statusBar.removeClass('element-invisible');
                     }
                     refreshButton();
@@ -547,6 +548,8 @@
                         $wrap.find('.queueList').css({'border': '1px solid #d3dde5', 'padding':'5px'});
                         // $wrap.find('.queueList').removeAttr('style');
                     }
+
+                    setTimeout(removeValidatorErrors, 1);
                     break;
 
                 case 'uploading':
@@ -790,6 +793,10 @@
             uploader.refresh();
         }
 
+        function removeValidatorErrors() {
+            $input.parents('.form-group,.form-label-group,.form-field').find('.with-errors').html('')
+        }
+
         // 文件排序
         function orderFiles() {
             var $this = $(this),
@@ -1009,6 +1016,11 @@
                 addFile(file);
                 setState('ready');
                 updateTotalProgress();
+
+                if (! opts.disabled && opts.autoUpload) {
+                    // 自动上传
+                    uploader.upload()
+                }
             };
 
             // 删除文件事件监听

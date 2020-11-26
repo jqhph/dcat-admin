@@ -1,44 +1,14 @@
 
 <div class="card dcat-box dt-bootstrap4">
 
-    @if ($grid->allowToolbar())
-        <div class="data-list-view-header card-header p-1 d-block">
-            <div class="table-responsive d-block">
-                <div class="top d-block" style="padding: 0">
-                    @if(!empty($title))
-                        <h4 class="pull-left" style="margin:5px 10px 0;">
-                            {!! $title !!}&nbsp;
-                            @if(!empty($description))
-                                <small>{!! $description!!}</small>
-                            @endif
-                        </h4>
-                        <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                            {!! $grid->renderTools() !!} {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}  {!! $grid->renderQuickSearch() !!}
-                        </div>
-                    @else
-                        {!! $grid->renderTools() !!}  {!! $grid->renderQuickSearch() !!}
-
-                        <div class="pull-right" data-responsive-table-toolbar="{{$tableId}}">
-                            {!! $grid->renderCreateButton() !!} {!! $grid->renderExportButton() !!}
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    @endif
+    @include('admin::grid.table-toolbar')
 
     {!! $grid->renderFilter() !!}
 
     {!! $grid->renderHeader() !!}
 
     <div class="table-responsive table-wrapper complex-container table-middle" style="{!! $grid->option('show_bordered') ? 'padding:3px 10px 10px' : '' !!};border-bottom: 1px solid #f8f8f8!important;">
-        <table
-                class="table dt-checkboxes-select
-                {{ $grid->getComplexHeaders() ? 'complex-headers' : ''}}
-                {{ $grid->option('table_class') }}
-                {{ $grid->option('show_bordered') ? 'table-bordered complex-headers dataTable' : '' }} "
-                id="{{ $tableId }}"
-        >
+        <table class="{{ $grid->formatTableClass() }}" id="{{ $tableId }}" >
             <thead>
             @if ($headers = $grid->getComplexHeaders())
                 <tr>
@@ -81,19 +51,7 @@
 
     {!! $grid->renderFooter() !!}
 
-    @if ($paginator = $grid->paginator())
-        <div class="box-footer clearfix d-block" style="border-top: 0">
-            {!! $paginator->render() !!}
-        </div>
-    @else
-        <div class="box-footer clearfix" style="height:48px;line-height:25px;">
-            @if ($grid->rows()->isEmpty())
-                {!! trans('admin.pagination.range', ['first' => '<b>0</b>', 'last' => '<b>'.$grid->rows()->count().'</b>', 'total' => '<b>'.$grid->rows()->count().'</b>',]) !!}
-            @else
-                {!! trans('admin.pagination.range', ['first' => '<b>1</b>', 'last' => '<b>'.$grid->rows()->count().'</b>', 'total' => '<b>'.$grid->rows()->count().'</b>',]) !!}
-            @endif
-        </div>
-    @endif
+    @include('admin::grid.table-pagination')
 
 </div>
 <style>

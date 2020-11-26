@@ -5,7 +5,6 @@ namespace Dcat\Admin\Controllers;
 use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Models\Administrator as AdministratorModel;
 use Dcat\Admin\Models\Repositories\Administrator;
 use Dcat\Admin\Show;
@@ -22,32 +21,35 @@ class UserController extends AdminController
     protected function grid()
     {
         return Grid::make(new Administrator('roles'), function (Grid $grid) {
-            $grid->id('ID')->sortable();
-            $grid->username;
-            $grid->name;
-            $grid->roles->pluck('name')->label('primary', 3);
+            $grid->column('id', 'ID')->sortable();
+            $grid->column('username');
+            $grid->column('name');
 
-            $permissionModel = config('admin.database.permissions_model');
-            $roleModel = config('admin.database.roles_model');
-            $nodes = (new $permissionModel())->allNodes();
-            $grid->permissions
-                ->if(function () {
-                    return ! empty($this->roles);
-                })
-                ->showTreeInDialog(function (Grid\Displayers\DialogTree $tree) use (&$nodes, $roleModel) {
-                    $tree->nodes($nodes);
+            if (config('admin.permission.enable')) {
+                $grid->column('roles')->pluck('name')->label('primary', 3);
 
-                    foreach (array_column($this->roles, 'slug') as $slug) {
-                        if ($roleModel::isAdministrator($slug)) {
-                            $tree->checkAll();
+                $permissionModel = config('admin.database.permissions_model');
+                $roleModel = config('admin.database.roles_model');
+                $nodes = (new $permissionModel())->allNodes();
+                $grid->column('permissions')
+                    ->if(function () {
+                        return ! empty($this->roles);
+                    })
+                    ->showTreeInDialog(function (Grid\Displayers\DialogTree $tree) use (&$nodes, $roleModel) {
+                        $tree->nodes($nodes);
+
+                        foreach (array_column($this->roles, 'slug') as $slug) {
+                            if ($roleModel::isAdministrator($slug)) {
+                                $tree->checkAll();
+                            }
                         }
-                    }
-                })
-                ->else()
-                ->emptyString();
+                    })
+                    ->else()
+                    ->emptyString();
+            }
 
-            $grid->created_at;
-            $grid->updated_at->sortable();
+            $grid->column('created_at');
+            $grid->column('updated_at')->sortable();
 
             $grid->quickSearch(['id', 'name', 'username']);
 
@@ -64,67 +66,55 @@ class UserController extends AdminController
         });
     }
 
-    protected function iFrameGrid()
-    {
-        $grid = new IFrameGrid(new Administrator());
-
-        $grid->quickSearch(['id', 'name', 'username']);
-
-        $grid->id->sortable();
-        $grid->username;
-        $grid->name;
-        $grid->created_at;
-
-        return $grid;
-    }
-
     protected function detail($id)
     {
         return Show::make($id, new Administrator('roles'), function (Show $show) {
-            $show->id;
-            $show->username;
-            $show->name;
+            $show->field('id');
+            $show->field('username');
+            $show->field('name');
 
-            $show->avatar(__('admin.avatar'))->image();
+            $show->field('avatar', __('admin.avatar'))->image();
 
-            $show->roles->as(function ($roles) {
-                if (! $roles) {
-                    return;
-                }
-
-                return collect($roles)->pluck('name');
-            })->label();
-
-            $show->permissions->unescape()->as(function () {
-                $roles = (array) $this->roles;
-
-                $permissionModel = config('admin.database.permissions_model');
-                $roleModel = config('admin.database.roles_model');
-                $permissionModel = new $permissionModel();
-                $nodes = $permissionModel->allNodes();
-
-                $tree = Tree::make($nodes);
-
-                $isAdministrator = false;
-                foreach (array_column($roles, 'slug') as $slug) {
-                    if ($roleModel::isAdministrator($slug)) {
-                        $tree->checkAll();
-                        $isAdministrator = true;
+            if (config('admin.permission.enable')) {
+                $show->field('roles')->as(function ($roles) {
+                    if (! $roles) {
+                        return;
                     }
-                }
 
-                if (! $isAdministrator) {
-                    $keyName = $permissionModel->getKeyName();
-                    $tree->check(
-                        $roleModel::getPermissionId(array_column($roles, $keyName))->flatten()
-                    );
-                }
+                    return collect($roles)->pluck('name');
+                })->label();
 
-                return $tree->render();
-            });
+                $show->field('permissions')->unescape()->as(function () {
+                    $roles = (array) $this->roles;
 
-            $show->created_at;
-            $show->updated_at;
+                    $permissionModel = config('admin.database.permissions_model');
+                    $roleModel = config('admin.database.roles_model');
+                    $permissionModel = new $permissionModel();
+                    $nodes = $permissionModel->allNodes();
+
+                    $tree = Tree::make($nodes);
+
+                    $isAdministrator = false;
+                    foreach (array_column($roles, 'slug') as $slug) {
+                        if ($roleModel::isAdministrator($slug)) {
+                            $tree->checkAll();
+                            $isAdministrator = true;
+                        }
+                    }
+
+                    if (! $isAdministrator) {
+                        $keyName = $permissionModel->getKeyName();
+                        $tree->check(
+                            $roleModel::getPermissionId(array_column($roles, $keyName))->flatten()
+                        );
+                    }
+
+                    return $tree->render();
+                });
+            }
+
+            $show->field('created_at');
+            $show->field('updated_at');
         });
     }
 
@@ -144,7 +134,7 @@ class UserController extends AdminController
                 ->creationRules(['required', "unique:{$connection}.{$userTable}"])
                 ->updateRules(['required', "unique:{$connection}.{$userTable},username,$id"]);
             $form->text('name', trans('admin.name'))->required();
-            $form->image('avatar', trans('admin.avatar'));
+            $form->image('avatar', trans('admin.avatar'))->autoUpload();
 
             if ($id) {
                 $form->password('password', trans('admin.password'))
@@ -164,15 +154,17 @@ class UserController extends AdminController
 
             $form->ignore(['password_confirmation']);
 
-            $form->multipleSelect('roles', trans('admin.roles'))
-                ->options(function () {
-                    $roleModel = config('admin.database.roles_model');
+            if (config('admin.permission.enable')) {
+                $form->multipleSelect('roles', trans('admin.roles'))
+                    ->options(function () {
+                        $roleModel = config('admin.database.roles_model');
 
-                    return $roleModel::all()->pluck('name', 'id');
-                })
-                ->customFormat(function ($v) {
-                    return array_column($v, 'id');
-                });
+                        return $roleModel::all()->pluck('name', 'id');
+                    })
+                    ->customFormat(function ($v) {
+                        return array_column($v, 'id');
+                    });
+            }
 
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));

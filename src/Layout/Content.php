@@ -6,6 +6,7 @@ use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\ViewErrorBag;
 
@@ -53,11 +54,6 @@ class Content implements Renderable
      * @var array
      */
     protected $config = [];
-
-    /**
-     * @var bool
-     */
-    protected $usingPerfectScrollbar = false;
 
     /**
      * Content constructor.
@@ -130,9 +126,7 @@ class Content implements Renderable
      */
     public function full()
     {
-        $this->view = 'admin::layouts.full-content';
-
-        return $this->withConfig('blank_page', true);
+        return $this->view('admin::layouts.full-content');
     }
 
     /**
@@ -158,14 +152,10 @@ class Content implements Renderable
     }
 
     /**
-     * @param bool $value
-     *
-     * @return $this
+     * @deprecated
      */
-    public function perfectScrollbar(bool $value = true)
+    public function perfectScrollbar()
     {
-        $this->usingPerfectScrollbar = $value;
-
         return $this;
     }
 
@@ -406,37 +396,6 @@ class Content implements Renderable
     }
 
     /**
-     * 页面滚动条优化.
-     */
-    protected function makePerfectScrollbar()
-    {
-        if (! $this->usingPerfectScrollbar) {
-            return;
-        }
-
-        Admin::script(
-            <<<'JS'
-(function () {
-    if ($(window).width() > 768) {
-        var ps, wps;
-        if ($('.full-page .wrapper').length) {
-            wps = new PerfectScrollbar('.full-page .wrapper');
-        }
-        ps = new PerfectScrollbar('html');
-        $(document).one('pjax:send',function () {
-            ps && ps.destroy();
-            ps = null; 
-              
-            wps && wps.destroy();
-            wps = null; 
-        });
-    }
-})()
-JS
-        );
-    }
-
-    /**
      * @return array
      */
     protected function variables()
@@ -445,8 +404,7 @@ JS
             'header'          => $this->title,
             'description'     => $this->description,
             'breadcrumb'      => $this->breadcrumb,
-            'configData'      => $this->applClasses(),
-            'content'         => $this->build(),
+            'configData'      => $this->applyClasses(),
             'pjaxContainerId' => Admin::$pjaxContainerId,
         ], $this->variables);
     }
@@ -454,17 +412,17 @@ JS
     /**
      * @return array
      */
-    protected function applClasses()
+    protected function applyClasses()
     {
         // default data array
         $defaultData = [
-            'theme' => '',
+            'theme'             => '',
             'sidebar_collapsed' => false,
-            'sidebar_dark' => false,
-            'navbar_color' => '',
-            'navbar_class' => 'sticky',
-            'footer_type' => '',
-            'body_class' => '',
+            'sidebar_style'     => 'sidebar-light-primary',
+            'navbar_color'      => '',
+            'navbar_class'      => 'sticky',
+            'footer_type'       => '',
+            'body_class'        => '',
         ];
 
         $data = array_merge(
@@ -472,14 +430,19 @@ JS
             $this->config
         );
 
+        // 1.0 版本兼容 sidebar_dark 参数
+        if (empty($data['sidebar_style']) && ! empty($data['sidebar_dark'])) {
+            $data['sidebar_style'] = 'sidebar-dark-white';
+        }
+
         $allOptions = [
-            'theme' => '',
-            'footer_type' => '',
-            'body_class' => '',
-            'sidebar_dark' => '',
-            'sidebar_collapsed' => [true, false],
-            'navbar_color' => ['bg-primary', 'bg-info', 'bg-warning', 'bg-success', 'bg-danger', 'bg-dark'],
-            'navbar_class' => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
+            'theme'             => '',
+            'footer_type'       => '',
+            'body_class'        => '',
+            'sidebar_style'     => ['light' => 'sidebar-light-primary', 'primary' => 'sidebar-primary', 'dark' => 'sidebar-dark-white'],
+            'sidebar_collapsed' => [],
+            'navbar_color'      => [],
+            'navbar_class'      => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
         ];
 
         $maps = [
@@ -503,16 +466,24 @@ JS
             ) {
                 $data[$key] = $defaultData[$key];
             }
+
+            if (! is_array($data[$key]) && isset($value[$data[$key]])) {
+                $data[$key] = $value[$data[$key]];
+            }
+        }
+
+        if ($data['body_class'] && Str::contains($data['body_class'], 'dark-mode')) {
+            $data['sidebar_style'] = 'sidebar-dark-white';
         }
 
         return [
-            'theme' => $data['theme'],
+            'theme'             => $data['theme'],
             'sidebar_collapsed' => $data['sidebar_collapsed'],
-            'navbar_color' => $data['navbar_color'],
-            'navbar_class' => $allOptions['navbar_class'][$data['navbar_class']],
-            'sidebar_class' => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
-            'body_class' => $data['body_class'],
-            'sidebar_dark' => $data['sidebar_dark'],
+            'navbar_color'      => $data['navbar_color'],
+            'navbar_class'      => $allOptions['navbar_class'][$data['navbar_class']],
+            'sidebar_class'     => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
+            'body_class'        => $data['body_class'],
+            'sidebar_style'     => $data['sidebar_style'],
         ];
     }
 
@@ -526,13 +497,11 @@ JS
         $this->callComposing();
         $this->shareDefaultErrors();
 
-        $variables = $this->variables();
+        $this->variables['content'] = $this->build();
 
         $this->callComposed();
 
-        $this->makePerfectScrollbar();
-
-        return view($this->view, $variables)->render();
+        return view($this->view, $this->variables())->render();
     }
 
     /**

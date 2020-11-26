@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column\Help;
 use Dcat\Admin\Widgets\Widget;
+use Illuminate\Support\Collection;
 
 class ComplexHeader extends Widget
 {
@@ -32,17 +33,27 @@ class ComplexHeader extends Widget
     {
         $this->grid = $grid;
         $this->label = admin_trans_field($label);
-        $this->columnNames = $columnNames;
+        $this->columnNames = collect($columnNames);
 
-        $this->setupAttributes();
+        $this->addDefaultAttributes();
     }
 
     /**
-     * @return array
+     * @return Collection
      */
     public function getColumnNames()
     {
         return $this->columnNames;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function columns()
+    {
+        return $this->columnNames->map(function ($name) {
+            return $this->grid->allColumns()->get($name);
+        })->filter();
     }
 
     /**
@@ -107,9 +118,9 @@ class ComplexHeader extends Widget
         return $this->append((new Help($message, $style, $placement))->render());
     }
 
-    protected function setupAttributes()
+    protected function addDefaultAttributes()
     {
-        $count = count($this->columnNames);
+        $count = $this->columnNames->count();
 
         if ($count == 1) {
             $this->htmlAttributes['rowspan'] = 2;

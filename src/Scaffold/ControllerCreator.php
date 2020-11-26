@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Scaffold;
 
+use Dcat\Admin\Support\Helper;
+
 class ControllerCreator
 {
     use GridCreator, FormCreator, ShowCreator;
@@ -44,7 +46,7 @@ class ControllerCreator
      */
     public function create($model)
     {
-        $path = $this->getpath($this->name);
+        $path = $this->getPath($this->name);
         $dir = dirname($path);
 
         if (! is_dir($dir)) {
@@ -131,17 +133,13 @@ class ControllerCreator
     /**
      * Get file path from giving controller name.
      *
-     * @param $name
+     * @param string $name
      *
      * @return string
      */
     public function getPath($name)
     {
-        $segments = explode('\\', $name);
-
-        array_shift($segments);
-
-        return app_path(implode('/', $segments)).'.php';
+        return Helper::guessClassFileName($name);
     }
 
     /**

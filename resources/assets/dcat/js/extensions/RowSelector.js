@@ -16,46 +16,40 @@ export default class RowSelector {
             container: 'table',
         }, options);
 
-        _this._bind()
+        _this.init()
     }
 
-    _bind() {
+    init() {
         let options = this.options,
             checkboxSelector = options.checkboxSelector,
-            $selectAllSelector = $(options.selectAllSelector),
-            $checkbox = $(checkboxSelector);
+            $document = $(document),
+            selectAll = options.selectAllSelector;
 
-        $selectAllSelector.on('change', function() {
-            var cbx = $(this).parents(options.container).find(checkboxSelector);
-
-            for (var i = 0; i < cbx.length; i++) {
-                if (this.checked && !cbx[i].checked) {
-                    cbx[i].click();
-                } else if (!this.checked && cbx[i].checked) {
-                    cbx[i].click();
-                }
-            }
+        $(selectAll).on('change', function() {
+            $(this).parents(options.container).find(checkboxSelector).prop('checked', this.checked).trigger('change');
         });
         if (options.clickRow) {
-            $checkbox.click(function (e) {
+            $document.off('click', checkboxSelector).on('click', checkboxSelector, function (e) {
                 if (typeof e.cancelBubble != "undefined") {
                     e.cancelBubble = true;
                 }
                 if (typeof e.stopPropagation != "undefined") {
                     e.stopPropagation();
                 }
-            }).parents('tr').click(function (e) {
+            });
+
+            $document.off('click', options.container+' tr').on('click', options.container+' tr', function () {
                 $(this).find(checkboxSelector).click();
             });
         }
 
-        $checkbox.on('change', function () {
+        $document.off('change', checkboxSelector).on('change', checkboxSelector, function () {
             var tr = $(this).closest('tr');
             if (this.checked) {
                 tr.css('background-color', options.background);
 
-                if ($(checkboxSelector + ':checked').length === $checkbox.length) {
-                    $selectAllSelector.prop('checked', true)
+                if ($(checkboxSelector + ':checked').length === $(checkboxSelector).length) {
+                    $(selectAll).prop('checked', true)
                 }
             } else {
                 tr.css('background-color', '');

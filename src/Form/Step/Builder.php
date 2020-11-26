@@ -7,6 +7,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Form as ParentForm;
 use Dcat\Admin\Form\StepForm as Form;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class Builder
 {
@@ -97,6 +98,20 @@ class Builder
     public function all()
     {
         return $this->stepForms;
+    }
+
+    /**
+     * @return ParentForm\Field[]|Collection
+     */
+    public function fields()
+    {
+        $fields = new Collection();
+
+        foreach ($this->all() as $form) {
+            $fields = $fields->merge($form->fields());
+        }
+
+        return $fields;
     }
 
     /**

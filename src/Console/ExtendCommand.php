@@ -82,7 +82,7 @@ class ExtendCommand extends Command
 
         $this->package = $this->argument('extension');
 
-        InputExtensionName:
+        InputExtensionName :
         if (! Helper::validateExtensionName($this->package)) {
             $this->package = $this->ask("[$this->package] is not a valid package name, please input a name like (<vendor>/<name>)");
             goto InputExtensionName;

@@ -11,8 +11,7 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
-use Dcat\Admin\Form\Row;
-use Dcat\Admin\Form\Tab;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Widgets\DialogForm;
@@ -24,7 +23,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\MessageBag;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,6 +39,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Hidden                 hidden($column, $label = '')
  * @method Field\Id                     id($column, $label = '')
  * @method Field\Ip                     ip($column, $label = '')
+ * @method Field\Mac                    mac($column, $label = '')
  * @method Field\Url                    url($column, $label = '')
  * @method Field\Email                  email($column, $label = '')
  * @method Field\Mobile                 mobile($column, $label = '')
@@ -66,7 +65,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\Html                   html($html, $label = '')
  * @method Field\Tags                   tags($column, $label = '')
  * @method Field\Icon                   icon($column, $label = '')
- * @method Field\Embeds                 embeds($column, $label = '')
+ * @method Field\Embeds                 embeds($column, $label = '', Closure $callback = null)
  * @method Field\Captcha                captcha()
  * @method Field\Listbox                listbox($column, $label = '')
  * @method Field\SelectResource         selectResource($column, $label = '')
@@ -82,6 +81,12 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
+ * @method Field\Color                  color($column, $label = '')
+ * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable            selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable    multipleSelectTable($column, $label = '')
+ * @method Field\Button                 button(string $html = null)
  */
 class Form implements Renderable
 {
@@ -90,6 +95,9 @@ class Form implements Renderable
         Concerns\HasEvents,
         Concerns\HasFiles,
         Concerns\HasSteps,
+        Concerns\HandleCascadeFields,
+        Concerns\HasRows,
+        Concerns\HasTabs,
         Macroable {
             __call as macroCall;
         }
@@ -99,63 +107,71 @@ class Form implements Renderable
      */
     const REMOVE_FLAG_NAME = '_remove_';
 
+    const CURRENT_URL_NAME = '_current_';
+
     /**
      * Available fields.
      *
      * @var array
      */
     protected static $availableFields = [
-        'button'         => Field\Button::class,
-        'checkbox'       => Field\Checkbox::class,
-        'currency'       => Field\Currency::class,
-        'date'           => Field\Date::class,
-        'dateRange'      => Field\DateRange::class,
-        'datetime'       => Field\Datetime::class,
-        'datetimeRange'  => Field\DatetimeRange::class,
-        'decimal'        => Field\Decimal::class,
-        'display'        => Field\Display::class,
-        'divider'        => Field\Divide::class,
-        'embeds'         => Field\Embeds::class,
-        'editor'         => Field\Editor::class,
-        'email'          => Field\Email::class,
-        'hidden'         => Field\Hidden::class,
-        'id'             => Field\Id::class,
-        'ip'             => Field\Ip::class,
-        'map'            => Field\Map::class,
-        'mobile'         => Field\Mobile::class,
-        'month'          => Field\Month::class,
-        'multipleSelect' => Field\MultipleSelect::class,
-        'number'         => Field\Number::class,
-        'password'       => Field\Password::class,
-        'radio'          => Field\Radio::class,
-        'rate'           => Field\Rate::class,
-        'select'         => Field\Select::class,
-        'slider'         => Field\Slider::class,
-        'switch'         => Field\SwitchField::class,
-        'text'           => Field\Text::class,
-        'textarea'       => Field\Textarea::class,
-        'time'           => Field\Time::class,
-        'timeRange'      => Field\TimeRange::class,
-        'url'            => Field\Url::class,
-        'year'           => Field\Year::class,
-        'html'           => Field\Html::class,
-        'tags'           => Field\Tags::class,
-        'icon'           => Field\Icon::class,
-        'captcha'        => Field\Captcha::class,
-        'listbox'        => Field\Listbox::class,
-        'selectResource' => Field\SelectResource::class,
-        'file'           => Field\File::class,
-        'image'          => Field\Image::class,
-        'multipleFile'   => Field\MultipleFile::class,
-        'multipleImage'  => Field\MultipleImage::class,
-        'hasMany'        => Field\HasMany::class,
-        'tree'           => Field\Tree::class,
-        'table'          => Field\Table::class,
-        'list'           => Field\ListField::class,
-        'timezone'       => Field\Timezone::class,
-        'keyValue'       => Field\KeyValue::class,
-        'tel'            => Field\Tel::class,
-        'markdown'       => Field\Markdown::class,
+        'button'              => Field\Button::class,
+        'checkbox'            => Field\Checkbox::class,
+        'currency'            => Field\Currency::class,
+        'date'                => Field\Date::class,
+        'dateRange'           => Field\DateRange::class,
+        'datetime'            => Field\Datetime::class,
+        'datetimeRange'       => Field\DatetimeRange::class,
+        'decimal'             => Field\Decimal::class,
+        'display'             => Field\Display::class,
+        'divider'             => Field\Divide::class,
+        'embeds'              => Field\Embeds::class,
+        'editor'              => Field\Editor::class,
+        'email'               => Field\Email::class,
+        'hidden'              => Field\Hidden::class,
+        'id'                  => Field\Id::class,
+        'ip'                  => Field\Ip::class,
+        'mac'                 => Field\Mac::class,
+        'map'                 => Field\Map::class,
+        'mobile'              => Field\Mobile::class,
+        'month'               => Field\Month::class,
+        'multipleSelect'      => Field\MultipleSelect::class,
+        'number'              => Field\Number::class,
+        'password'            => Field\Password::class,
+        'radio'               => Field\Radio::class,
+        'rate'                => Field\Rate::class,
+        'select'              => Field\Select::class,
+        'slider'              => Field\Slider::class,
+        'switch'              => Field\SwitchField::class,
+        'text'                => Field\Text::class,
+        'textarea'            => Field\Textarea::class,
+        'time'                => Field\Time::class,
+        'timeRange'           => Field\TimeRange::class,
+        'url'                 => Field\Url::class,
+        'year'                => Field\Year::class,
+        'html'                => Field\Html::class,
+        'tags'                => Field\Tags::class,
+        'icon'                => Field\Icon::class,
+        'captcha'             => Field\Captcha::class,
+        'listbox'             => Field\Listbox::class,
+        'selectResource'      => Field\SelectResource::class,
+        'file'                => Field\File::class,
+        'image'               => Field\Image::class,
+        'multipleFile'        => Field\MultipleFile::class,
+        'multipleImage'       => Field\MultipleImage::class,
+        'hasMany'             => Field\HasMany::class,
+        'tree'                => Field\Tree::class,
+        'table'               => Field\Table::class,
+        'list'                => Field\ListField::class,
+        'timezone'            => Field\Timezone::class,
+        'keyValue'            => Field\KeyValue::class,
+        'tel'                 => Field\Tel::class,
+        'markdown'            => Field\Markdown::class,
+        'range'               => Field\Range::class,
+        'color'               => Field\Color::class,
+        'array'               => Field\ArrayField::class,
+        'selectTable'         => Field\SelectTable::class,
+        'multipleSelectTable' => Field\MultipleSelectTable::class,
     ];
 
     /**
@@ -238,18 +254,6 @@ class Form implements Renderable
     protected $ignored = [];
 
     /**
-     * @var Form\Tab
-     */
-    protected $tab = null;
-
-    /**
-     * Field rows in form.
-     *
-     * @var Row[]
-     */
-    protected $rows = [];
-
-    /**
      * @var bool
      */
     protected $isSoftDeletes = false;
@@ -306,6 +310,7 @@ class Form implements Renderable
         $field->setForm($this);
 
         $this->builder->fields()->push($field);
+        $this->builder->layout()->addField($field);
 
         $width = $this->builder->getWidth();
 
@@ -329,6 +334,20 @@ class Form implements Renderable
     }
 
     /**
+     * @return Collection|Field[]
+     */
+    public function fields()
+    {
+        $fields = $this->builder->fields();
+
+        if ($steps = $this->builder->stepBuilder()) {
+            $fields = $fields->merge($steps->fields());
+        }
+
+        return $fields;
+    }
+
+    /**
      * @param $column
      *
      * @return $this
@@ -336,6 +355,19 @@ class Form implements Renderable
     public function removeField($column)
     {
         $this->builder->removeField($column);
+
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->builder->confirm($title, $content);
 
         return $this;
     }
@@ -485,35 +517,6 @@ class Form implements Renderable
     }
 
     /**
-     * Use tab to split form.
-     *
-     * @param string  $title
-     * @param Closure $content
-     *
-     * @return $this
-     */
-    public function tab($title, Closure $content, $active = false)
-    {
-        $this->getTab()->append($title, $content, $active);
-
-        return $this;
-    }
-
-    /**
-     * Get Tab instance.
-     *
-     * @return Tab
-     */
-    public function getTab()
-    {
-        if (is_null($this->tab)) {
-            $this->tab = new Tab($this);
-        }
-
-        return $this->tab;
-    }
-
-    /**
      * Destroy data entity and remove files.
      *
      * @param $id
@@ -549,7 +552,11 @@ class Form implements Renderable
                 'message' => $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed'),
             ];
         } catch (\Throwable $exception) {
-            $response = Admin::makeExceptionHandler()->handleDestroyException($exception);
+            $response = Admin::makeExceptionHandler()->handle($exception);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
 
             $response = $response ?: [
                 'status'  => false,
@@ -963,10 +970,10 @@ class Form implements Renderable
      */
     public function prepareInsert($inserts)
     {
-        $this->prepareHasOneRelation($inserts);
+        Helper::prepareHasOneRelation($this->builder->fields(), $inserts);
 
         foreach ($inserts as $column => $value) {
-            if (is_null($field = $this->getFieldByColumn($column))) {
+            if (is_null($field = $this->field($column))) {
                 unset($inserts[$column]);
                 continue;
             }
@@ -984,41 +991,6 @@ class Form implements Renderable
     }
 
     /**
-     * Is input data is has-one relation.
-     *
-     * @param array $inserts
-     */
-    public function prepareHasOneRelation(array &$inserts)
-    {
-        $relations = [];
-        $this->builder->fields()->each(function ($field) use (&$relations) {
-            $column = $field->column();
-
-            if (is_array($column)) {
-                foreach ($column as $v) {
-                    if (Str::contains($v, '.')) {
-                        $first = explode('.', $v)[0];
-                        $relations[$first] = null;
-                    }
-                }
-
-                return;
-            }
-
-            if (Str::contains($column, '.')) {
-                $first = explode('.', $column)[0];
-                $relations[$first] = null;
-            }
-        });
-
-        foreach ($relations as $first => $v) {
-            if (isset($inserts[$first])) {
-                $inserts = array_merge($inserts, Arr::dot([$first => $inserts[$first]]));
-            }
-        }
-    }
-
-    /**
      * Ignore fields to save.
      *
      * @param string|array $fields
@@ -1028,6 +1000,18 @@ class Form implements Renderable
     public function ignore($fields)
     {
         $this->ignored = array_merge($this->ignored, (array) $fields);
+
+        return $this;
+    }
+
+    /**
+     * @param $keys
+     *
+     * @return $this
+     */
+    public function forgetIgnored($keys)
+    {
+        Arr::forget($this->ignored, $keys);
 
         return $this;
     }
@@ -1093,26 +1077,6 @@ class Form implements Renderable
 
             return $value;
         }
-    }
-
-    /**
-     * Find field object by column.
-     *
-     * @param $column
-     *
-     * @return mixed
-     */
-    protected function getFieldByColumn($column)
-    {
-        return $this->builder->fields()->first(
-            function (Field $field) use ($column) {
-                if (is_array($field->column())) {
-                    return in_array($column, $field->column());
-                }
-
-                return $field->column() == $column;
-            }
-        );
     }
 
     /**
@@ -1221,7 +1185,7 @@ class Form implements Renderable
             }
 
             if (($validator instanceof Validator) && ! $validator->passes()) {
-                $failedValidators[] = $validator;
+                $failedValidators[] = [$field, $validator];
             }
         }
 
@@ -1269,7 +1233,7 @@ class Form implements Renderable
     /**
      * Merge validation messages from input validators.
      *
-     * @param \Illuminate\Validation\Validator[] $validators
+     * @param array $validators
      *
      * @return MessageBag
      */
@@ -1277,8 +1241,10 @@ class Form implements Renderable
     {
         $messageBag = new MessageBag();
 
-        foreach ($validators as $validator) {
-            $messageBag = $messageBag->merge($validator->messages());
+        foreach ($validators as $value) {
+            [$field, $validator] = $value;
+
+            $messageBag = $messageBag->merge($field->formatValidatorMessages($validator->messages()));
         }
 
         if ($this->validationMessages) {
@@ -1352,28 +1318,6 @@ class Form implements Renderable
         $this->builder->title($title);
 
         return $this;
-    }
-
-    /**
-     * Add a row in form.
-     *
-     * @param Closure $callback
-     *
-     * @return $this
-     */
-    public function row(Closure $callback)
-    {
-        $this->rows[] = new Row($callback, $this);
-
-        return $this;
-    }
-
-    /**
-     * @return Row[]
-     */
-    public function rows()
-    {
-        return $this->rows;
     }
 
     /**
@@ -1586,7 +1530,7 @@ class Form implements Renderable
 
             return $this->builder->render();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
+            return Admin::makeExceptionHandler()->handle($e);
         }
     }
 
@@ -1630,6 +1574,21 @@ class Form implements Renderable
         $callback($form = $layout->form());
 
         $layout->column($width, $form);
+
+        return $this;
+    }
+
+    /**
+     * @param int|float $width
+     * @param Closure   $callback
+     *
+     * @return $this
+     */
+    public function column($width, \Closure $callback)
+    {
+        $this->builder->layout()->onlyColumn($width, function () use ($callback) {
+            $callback($this);
+        });
 
         return $this;
     }

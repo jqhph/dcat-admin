@@ -10,6 +10,7 @@
         letter-spacing: .1rem;
         text-decoration: none;
         text-transform: uppercase;
+        color: #fff;
     }
     .dashboard-title h1 {
         font-weight: 200;
@@ -23,13 +24,13 @@
     }
 </style>
 
-<div class="dashboard-title card">
+<div class="dashboard-title card bg-primary">
     <div class="card-body">
         <div class="text-center ">
             <img class="avatar img-circle shadow mt-1" src="{{ admin_asset('@admin/images/logo.png') }}">
 
             <div class="text-center mb-1">
-                <h1 class="mb-3 mt-2 text-primary-darker">Dcat Admin</h1>
+                <h1 class="mb-3 mt-2 text-white">Dcat Admin</h1>
                 <div class="links">
                     <a href="https://github.com/jqhph/dcat-admin" target="_blank">Github</a>
                     <a href="http://www.dcatadmin.com/" id="doc-link" target="_blank">{{ __('admin.documentation') }}</a>

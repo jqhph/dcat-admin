@@ -23,7 +23,6 @@ let defaultActions = {
                     url: url,
                     data: {
                         _method: 'delete',
-                        _token: Dcat.token,
                     },
                     success: function (data) {
                         Dcat.NP.done();
@@ -56,7 +55,6 @@ let defaultActions = {
                     url: url + '/' + keys.join(','),
                     data: {
                         _method: 'delete',
-                        _token: Dcat.token,
                     },
                     success: function (data) {
                         Dcat.NP.done();

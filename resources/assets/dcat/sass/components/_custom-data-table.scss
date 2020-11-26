@@ -1,8 +1,11 @@
+
+$table-border-radius: .3rem;
+
 .custom-data-table-header .table-responsive .top {
   display: flex;
   justify-content: space-between;
   padding: 0 1rem;
-  margin-bottom: .5rem
+  //margin-bottom: .5rem
 }
 
 .custom-data-table-header .table-responsive .top .action-btns {
@@ -12,7 +15,7 @@
 
 .custom-data-table-header .table-responsive .top .action-btns .actions-dropodown {
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .14);
-  border-radius:.45rem;
+  border-radius: $table-border-radius;
   margin-right: .75rem
 }
 
@@ -257,7 +260,7 @@ table.custom-data-table.dataTable tbody tr, table.data-thumb-view.dataTable tbod
   box-shadow: $shadow;
   cursor: pointer;
   transition: all .3s ease;
-  border-radius:.45rem
+  border-radius:$table-border-radius
 }
 
 table.custom-data-table.dataTable tbody tr:hover, table.data-thumb-view.dataTable tbody tr:hover {
@@ -269,13 +272,13 @@ table.custom-data-table.dataTable tbody tr:hover, table.data-thumb-view.dataTabl
 
 table.custom-data-table.dataTable tbody tr td:first-child, table.data-thumb-view.dataTable tbody tr td:first-child {
   padding-left: 1rem;
-  border-top-left-radius:.45rem;
-  border-bottom-left-radius:.45rem
+  border-top-left-radius: $table-border-radius;
+  border-bottom-left-radius: $table-border-radius
 }
 
 table.custom-data-table.dataTable tbody tr td:last-child, table.data-thumb-view.dataTable tbody tr td:last-child {
-  border-top-right-radius:.45rem;
-  border-bottom-right-radius:.45rem
+  border-top-right-radius:$table-border-radius;
+  border-bottom-right-radius:$table-border-radius
 }
 
 table.custom-data-table.dataTable tbody tr.selected td, table.data-thumb-view.dataTable tbody tr.selected td {

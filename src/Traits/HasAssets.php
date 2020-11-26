@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Support\Helper;
+
 trait HasAssets
 {
     /**
@@ -17,7 +19,10 @@ trait HasAssets
     public static function html($html = '')
     {
         if (! empty($html)) {
-            static::$html = array_merge(static::$html, (array) $html);
+            static::$html = array_merge(
+                static::$html,
+                array_map([Helper::class, 'render'], (array) $html)
+            );
 
             return;
         }
@@ -105,12 +110,13 @@ trait HasAssets
 
     /**
      * @param string $script
+     * @param bool   $direct
      *
      * @return void
      */
-    public static function script($script)
+    public static function script($script, bool $direct = false)
     {
-        static::asset()->script($script);
+        static::asset()->script($script, $direct);
     }
 
     /**

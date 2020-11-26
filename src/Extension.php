@@ -4,7 +4,6 @@ namespace Dcat\Admin;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 
 abstract class Extension
@@ -363,15 +362,17 @@ abstract class Extension
      */
     public function routes($callback)
     {
-        $attributes = array_merge(
-            [
-                'prefix'     => config('admin.route.prefix'),
-                'middleware' => config('admin.route.middleware'),
-            ],
-            $this->config('route', [])
-        );
+        Admin::app()->routes(function ($router) use ($callback) {
+            $attributes = array_merge(
+                [
+                    'prefix'     => config('admin.route.prefix'),
+                    'middleware' => config('admin.route.middleware'),
+                ],
+                $this->config('route', [])
+            );
 
-        Route::group($attributes, $callback);
+            $router->group($attributes, $callback);
+        });
     }
 
     /**

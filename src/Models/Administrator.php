@@ -59,7 +59,7 @@ class Administrator extends Model implements AuthenticatableContract
             return $avatar;
         }
 
-        return admin_asset('@admin/images/default-avatar.jpg');
+        return admin_asset(config('admin.default_avatar') ?: '@admin/images/default-avatar.jpg');
     }
 
     /**

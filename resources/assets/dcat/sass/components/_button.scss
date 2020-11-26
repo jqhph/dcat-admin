@@ -11,6 +11,10 @@
   border-radius: 0.2rem;
 }
 
+.btn-primary {
+  color: $white;
+}
+
 .btn-sm, .btn-xs {
   padding: .54rem .9rem!important
 }
@@ -60,7 +64,7 @@ a.btn-sm, .btn-group-sm > a.btn {
     box-shadow: none!important;
   }
 
-  box-shadow: $btn-shadow;
+  box-shadow: $btn-white-shadow;
 }
 
 // --------------------- btn-custom -----------------------
@@ -121,7 +125,7 @@ a.btn-sm, .btn-group-sm > a.btn {
 
 
 .btn-outline {
-  background: transparent;
+  background-color: transparent;
 }
 .btn-primary.btn-outline {
   color: $primary;
@@ -144,8 +148,19 @@ a.btn-sm, .btn-group-sm > a.btn {
   border-color: $warning;
 }
 
-.btn-primary.btn-outline:hover, .btn-info.btn-outline:hover, .btn-success.btn-outline:hover, .btn-danger.btn-outline:hover, .btn-warning.btn-outline:hover,
+.btn-primary.btn-outline.disabled,
+.btn-primary.btn-outline:disabled {
+  background: transparent;
+}
+
+.btn-info.btn-outline:hover, .btn-success.btn-outline:hover, .btn-danger.btn-outline:hover, .btn-warning.btn-outline:hover,
 //.btn-primary.btn-outline:focus, .btn-info.btn-outline:focus, .btn-success.btn-outline:focus, .btn-danger.btn-outline:focus, .btn-warning.btn-outline:focus,
-.btn-primary.btn-outline.active, .btn-info.btn-outline.active, .btn-success.btn-outline.active, .btn-danger.btn-outline.active, .btn-warning.btn-outline.active{
+.btn-info.btn-outline.active, .btn-success.btn-outline.active, .btn-danger.btn-outline.active, .btn-warning.btn-outline.active{
   color: $white;
 }
+
+.btn-primary.btn-outline:hover,
+.btn-primary.btn-outline.active {
+  background: rgba($primary, .05);
+}
+

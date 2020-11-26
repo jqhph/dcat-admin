@@ -30,7 +30,7 @@ class ExcelExporter extends AbstractExporter
                 return $this->buildData($times);
             });
         } else {
-            $exporter->data($this->buildData());
+            $exporter->data($this->buildData() ?: [[]]);
         }
 
         $exporter->headings($this->titles)->download($filename);

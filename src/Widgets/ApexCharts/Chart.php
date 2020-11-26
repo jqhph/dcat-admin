@@ -32,14 +32,14 @@ class Chart extends Widget
         'extend' => 'return options',
     ];
 
-    public function __construct($containerSelector = null, $options = [])
+    public function __construct($selector = null, $options = [])
     {
-        if ($containerSelector && ! is_string($containerSelector)) {
-            $options = $containerSelector;
-            $containerSelector = null;
+        if ($selector && ! is_string($selector)) {
+            $options = $selector;
+            $selector = null;
         }
 
-        $this->selector($containerSelector);
+        $this->selector($selector);
 
         $this->options($options);
     }
@@ -243,10 +243,10 @@ JS;
     /**
      * @return string
      */
-    public function script()
+    public function addScript()
     {
         if (! $this->allowBuildRequest()) {
-            return $this->buildDefaultScript();
+            return $this->script = $this->buildDefaultScript();
         }
 
         $this->fetched(
@@ -271,7 +271,7 @@ if (chartBox.length) {
 JS
         );
 
-        return $this->buildRequestScript();
+        return $this->script = $this->buildRequestScript();
     }
 
     /**
@@ -284,6 +284,11 @@ JS
         }
         $this->built = true;
 
+        return parent::render();
+    }
+
+    public function html()
+    {
         $hasSelector = $this->containerSelector ? true : false;
 
         if (! $hasSelector) {
@@ -293,9 +298,7 @@ JS
             $this->selector('#'.$id);
         }
 
-        $this->script = $this->script();
-
-        $this->collectAssets();
+        $this->addScript();
 
         if ($hasSelector) {
             return;

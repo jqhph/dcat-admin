@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid\Concerns;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Grid\Tools;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -44,9 +45,11 @@ trait HasQuickSearch
         }
 
         return tap(new Tools\QuickSearch(), function ($search) {
-            $search->setGrid($this);
-
             $this->quickSearch = $search;
+
+            $this->setQuickSearchQueryName();
+
+            $search->setGrid($this);
         });
     }
 
@@ -57,7 +60,7 @@ trait HasQuickSearch
     {
         if ($this->quickSearch) {
             $this->quickSearch->setQueryName(
-                $this->getName().$this->quickSearch->queryName()
+                $this->getName().$this->quickSearch->getQueryName()
             );
         }
     }
@@ -93,20 +96,23 @@ trait HasQuickSearch
             return;
         }
 
-        $query = request()->get($this->quickSearch->queryName());
+        $query = request()->get($this->quickSearch->getQueryName());
 
         if ($query === '' || $query === null) {
             return;
         }
 
+        // 树表格子节点忽略查询条件
         $this->model()
             ->disableBindTreeQuery()
             ->treeUrlWithoutQuery(
-                $this->quickSearch->queryName()
+                $this->quickSearch->getQueryName()
             );
 
         if ($this->search instanceof \Closure) {
-            return call_user_func($this->search, $this->model(), $query);
+            return $this->model()->where(function ($q) use ($query) {
+                return call_user_func($this->search, $q, $query);
+            });
         }
 
         if (is_string($this->search)) {
@@ -233,7 +239,7 @@ trait HasQuickSearch
         $likeOperator = 'like';
         $method = $or ? 'orWhere' : 'where';
 
-        $query->{$method}($column, $likeOperator, $pattern);
+        Helper::withQueryCondition($query, $column, $method, [$likeOperator, $pattern]);
     }
 
     /**
@@ -249,7 +255,7 @@ trait HasQuickSearch
     {
         $method = ($or ? 'orWhere' : 'where').ucfirst($function);
 
-        $query->$method($column, $value);
+        Helper::withQueryCondition($query, $column, $method, [$value]);
     }
 
     /**
@@ -274,7 +280,7 @@ trait HasQuickSearch
         $where = $or ? 'orWhere' : 'where';
         $method = $where.($not ? 'NotIn' : 'In');
 
-        $query->$method($column, $values);
+        Helper::withQueryCondition($query, $column, $method, [$values]);
     }
 
     /**
@@ -290,7 +296,7 @@ trait HasQuickSearch
     {
         $method = $or ? 'orWhereBetween' : 'whereBetween';
 
-        $query->$method($column, [$start, $end]);
+        Helper::withQueryCondition($query, $column, $method, [[$start, $end]]);
     }
 
     /**
@@ -319,6 +325,6 @@ trait HasQuickSearch
             $value = substr($value, 1, -1);
         }
 
-        $query->{$method}($column, $operator, $value);
+        Helper::withQueryCondition($query, $column, $method, [$operator, $value]);
     }
 }

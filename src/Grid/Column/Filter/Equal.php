@@ -98,7 +98,7 @@ class Equal extends Filter
             return;
         }
 
-        $model->where($this->getColumnName(), $value);
+        $this->withQuery($model, 'where', [$value]);
     }
 
     /**
@@ -113,6 +113,7 @@ class Equal extends Filter
 
     protected function collectAssets()
     {
+        Admin::collectAssets('moment');
         Admin::collectAssets('bootstrap-datetimepicker');
     }
 }

@@ -14,7 +14,8 @@ class Icon extends Text
         $value = old($this->column, $this->value());
 
         $this->prepend("<i class='fa {$value}'>&nbsp;</i>")
-            ->defaultAttribute('autocomplete', 'off');
+            ->defaultAttribute('autocomplete', 'off')
+            ->defaultAttribute('style', 'width: 160px;flex:none');
 
         return parent::render();
     }

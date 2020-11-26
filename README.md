@@ -1,6 +1,6 @@
 
 <div align="center">
-    <img src="https://jqhph.github.io/dcat-admin/assets/img/logo-text.png" height="80"> 
+    <img src="https://cdn.learnku.com/uploads/images/202009/27/38389/WFQxJ7qZ1k.png!large" height="80"> 
 </div>
 <br>
 <p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台系统构建工具，只需很少的代码即可快速构建出一个功能完善的高颜值后台系统。内置丰富的后台常用组件，开箱即用，让开发者告别冗杂的HTML代码，对后端开发者非常友好。</p>
@@ -8,13 +8,14 @@
 <p align="center">
 <a href="https://learnku.com/docs/dcat-admin/1.x">learnku文档</a> |
 <a href="http://www.dcatadmin.com/">文档</a> |
-<a href="https://jqhph.github.io/dcat-admin/demo.html">Demo</a> |
+<a href="http://103.39.211.179:8080/admin">Demo (在线演示站)</a> |
 <a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
+<a href="https://gitee.com/jqhph/dcat-admin-demo">Demo源码 (码云)</a> |
 <a href="#extensions">扩展</a>
 </p>
 
 <p align="center">
-    <a href="https://github.com/jqhph/dcat-admin/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-7389D8.svg?style=flat" ></a>
+    <a href="https://github.com/jqhph/dcat-admin/blob/master/LICENSE"><a href="https://opencollective.com/dcat-admin" alt="Financial Contributors on Open Collective"><img src="https://opencollective.com/dcat-admin/all/badge.svg?label=financial+contributors" /></a> <img src="https://img.shields.io/badge/license-MIT-7389D8.svg?style=flat" ></a>
     <a href="https://travis-ci.org/jqhph/dcat-admin">
         <img src="https://travis-ci.org/jqhph/dcat-admin.svg?branch=master" alt="Build Status">
     </a>
@@ -29,15 +30,13 @@
 
 ## 截图
 
-![](https://cdn.learnku.com/uploads/images/202005/24/38389/fnbgQWK115.png!large)
+![](http://www.dcatadmin.com/assets/img/users.jpg)
+![](http://www.dcatadmin.com/assets/img/users-menu-primary.jpg)
+![](http://www.dcatadmin.com/assets/img/users-green-menu-primary.jpg)
+![](http://www.dcatadmin.com/assets/img/users-dark.jpg)
 
-![](https://cdn.learnku.com/uploads/images/202004/24/38389/Kj6fdUQEzF.png!large)
+![](https://cdn.learnku.com/uploads/images/202008/08/38389/lGYIdhifb5.jpg!large)
 
-![](https://cdn.learnku.com/uploads/images/202004/24/38389/GBkt9jYnW0.png!large)
-
-![](https://cdn.learnku.com/uploads/images/202004/17/38389/MUGJxDwrSn.png!large)
-
-![](https://cdn.learnku.com/uploads/images/202004/24/38389/bP75OeDbWH.png!large)
 
 ## 功能特性
 
@@ -69,24 +68,37 @@
 
 ## 环境
  - PHP >= 7.1.0
- - Laravel 5.5.0 ~ 7.*
+ - Laravel 5.5.0 ~ 8.*
  - Fileinfo PHP Extension
 
 ## 安装
 
 > 如果安装过程中出现`composer`下载过慢或安装失败的情况，请运行命令`composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/`把`composer`镜像更换为阿里云镜像。
 
-
-首先请确保已经安装了`laravel`，如果没有安装`laravel`，则可以通过以下命令安装：
-```
-composer create-project --prefer-dist laravel/laravel 项目名称 5.8.*
+首先需要安装`laravel`，如已安装可以跳过此步骤
+```bash
+composer create-project --prefer-dist laravel/laravel 项目名称 7.*
 # 或
 composer create-project --prefer-dist laravel/laravel 项目名称
 ```
 
-安装好了`laravel`，然后设置数据库连接设置正确。
+安装完`laravel`之后需要修改`.env`文件，设置数据库连接设置正确
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=dcat-admin
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+安装`dcat-admin`
+
 
 ```
+cd {项目名称}
+
 composer require dcat/laravel-admin
 ```
 
@@ -101,11 +113,20 @@ php artisan admin:publish
 然后运行下面的命令完成安装：
 
 > 执行这一步命令可能会报以下错误`Specified key was too long ... 767 bytes`，如果出现这个报错，请在`app/Providers/AppServiceProvider.php`文件的`boot`方法中加上代码`\Schema::defaultStringLength(191);`，然后删除掉数据库中的所有数据表，再重新运行一遍`php artisan admin:install`命令即可。
+
 ```
 php artisan admin:install
 ```
 
-启动服务后，在浏览器打开 `http://localhost/admin/` ,使用用户名 `admin` 和密码 `admin`登陆.
+上述步骤操作完成之后就可以配置`web`服务了，**注意需要把`web`目录指向`public`目录**！如果用的是`nginx`，还需要在配置中加上伪静态配置
+```dotenv
+location / {
+	try_files $uri $uri/ /index.php?$query_string;
+}
+```
+
+启动服务后，在浏览器打开 `http://localhost/admin`，使用用户名 `admin` 和密码 `admin`登陆。
+
 
 <a name="extensions"></a>
 ## 扩展
@@ -144,6 +165,36 @@ php artisan admin:install
 + [bootstrap-validator](https://github.com/1000hz/bootstrap-validator)
 + [Google map](https://www.google.com/maps)
 + [Tencent map](http://lbs.qq.com/)
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/jqhph/dcat-admin/graphs/contributors"><img src="https://opencollective.com/dcat-admin/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/dcat-admin/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/dcat-admin"><img src="https://opencollective.com/dcat-admin/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/dcat-admin/contribute)]
+
+<a href="https://opencollective.com/dcat-admin/organization/0/website"><img src="https://opencollective.com/dcat-admin/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/1/website"><img src="https://opencollective.com/dcat-admin/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/2/website"><img src="https://opencollective.com/dcat-admin/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/3/website"><img src="https://opencollective.com/dcat-admin/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/4/website"><img src="https://opencollective.com/dcat-admin/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/5/website"><img src="https://opencollective.com/dcat-admin/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/6/website"><img src="https://opencollective.com/dcat-admin/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/7/website"><img src="https://opencollective.com/dcat-admin/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/8/website"><img src="https://opencollective.com/dcat-admin/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/dcat-admin/organization/9/website"><img src="https://opencollective.com/dcat-admin/organization/9/avatar.svg"></a>
 
 ## License
 ------------

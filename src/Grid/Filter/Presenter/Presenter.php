@@ -59,6 +59,18 @@ abstract class Presenter
     }
 
     /**
+     * 忽略筛选项.
+     *
+     * @return $this
+     */
+    public function ignore()
+    {
+        $this->filter->ignore();
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function view(): string
@@ -78,6 +90,22 @@ abstract class Presenter
         $this->filter->default($default);
 
         return $this;
+    }
+
+    /**
+     * Get filter value.
+     *
+     * @return array|string
+     */
+    public function value()
+    {
+        $value = $this->filter->getValue();
+
+        if ($value === null || $value === '') {
+            return $this->filter->getDefault();
+        }
+
+        return $value;
     }
 
     /**

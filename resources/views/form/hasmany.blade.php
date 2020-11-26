@@ -6,7 +6,7 @@
 
 <hr style="margin-top: 0px;">
 
-<div id="has-many-{{$column}}" class="has-many-{{$column}}">
+<div class="has-many-{{$column}}">
 
     <div class="has-many-{{$column}}-forms">
 
@@ -52,7 +52,7 @@
     <div class="form-group row">
         <label class="{{$viewClass['label']}} control-label"></label>
         <div class="{{$viewClass['field']}}">
-            <div class="add btn btn-success btn-sm"><i class="feather icon-plus"></i>&nbsp;{{ trans('admin.new') }}</div>
+            <div class="add btn btn-primary btn-outline btn-sm"><i class="feather icon-plus"></i>&nbsp;{{ trans('admin.new') }}</div>
         </div>
     </div>
     @endif
