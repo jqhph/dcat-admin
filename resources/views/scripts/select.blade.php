@@ -48,7 +48,7 @@
             if (String(this.value) !== '0' && ! this.value) {
                 return;
             }
-            $.ajax("{{ $load['url'] }}?q="+this.value).then(function (data) {
+            $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+this.value).then(function (data) {
                 target.find("option").remove();
                 $(target).select2({
                     data: $.map(data, function (d) {
