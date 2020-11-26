@@ -13,11 +13,6 @@ class DropdownActions extends Actions
     /**
      * @var array
      */
-    protected $custom = [];
-
-    /**
-     * @var array
-     */
     protected $default = [];
 
     /**
