@@ -39,9 +39,9 @@
     <!-- /.box-body -->
     @if($buttons['submit'] || $buttons['reset'])
     <div class="box-footer row" style="display: flex">
-        <div class="col-md-2"> &nbsp;</div>
+        <div class="col-md-{{$width['label']}}"> &nbsp;</div>
 
-        <div class="col-md-8">
+        <div class="col-md-{{ $width['field'] }}">
             @if(! empty($buttons['reset']))
                 <button type="reset" class="btn btn-white pull-left"><i class="feather icon-rotate-ccw"></i> {{ trans('admin.reset') }}</button>
             @endif
