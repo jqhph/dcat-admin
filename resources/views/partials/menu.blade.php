@@ -8,7 +8,7 @@
     @if(empty($item['children']))
         <li class="nav-item">
             <a @if(mb_strpos($item['uri'], '://') !== false) target="_blank" @endif href="{{ $builder->getUrl($item['uri']) }}" class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
-                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
+                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
                 </p>
@@ -21,7 +21,7 @@
 
         <li class="nav-item has-treeview {{ $active ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
-                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
+                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
                     <i class="right fa fa-angle-left"></i>
