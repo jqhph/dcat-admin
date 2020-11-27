@@ -18,7 +18,7 @@ class File extends Field implements UploadFieldInterface
     {
         parent::__construct($column, $arguments);
 
-        $this->setupDefaultOptions();
+        $this->setUpDefaultOptions();
     }
 
     public function setElementName($name)
@@ -96,7 +96,7 @@ class File extends Field implements UploadFieldInterface
     /**
      * {@inheritDoc}
      */
-    public function setNestedFormRelation(array $options = [])
+    public function setRelation(array $options = [])
     {
         $this->options['formData']['_relation'] = [$options['relation'], $options['key']];
 

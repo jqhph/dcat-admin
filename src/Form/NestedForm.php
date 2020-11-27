@@ -287,7 +287,7 @@ class NestedForm extends WidgetForm
             $field->attribute(Field::BUILD_IGNORE, true);
         }
 
-        $field->setNestedFormRelation([
+        $field->setRelation([
             'relation' => $this->relationName,
             'key'      => $this->key,
         ]);

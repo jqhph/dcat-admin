@@ -241,7 +241,7 @@ class Field implements Renderable
      *
      * @return $this
      */
-    public function setNestedFormRelation(array $options = [])
+    public function setRelation(array $options = [])
     {
         return $this;
     }
