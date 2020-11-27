@@ -830,12 +830,14 @@ EOF;
     protected function addSubmitScript()
     {
         $confirm = admin_javascript_json($this->confirm);
+        $toastr = $this->form->validationErrorToastr ? 'true' : 'false';
 
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
     confirm: {$confirm},
+    validationErrorToastr: $toastr,
 });
 JS
         );

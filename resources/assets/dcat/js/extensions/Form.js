@@ -16,6 +16,8 @@ class Form {
             validate: false,
             // 确认弹窗
             confirm: {title: null, content: null},
+            // 是否使用Toastr展示字段验证错误信息
+            validationErrorToastr: false,
             // 表单错误信息class
             errorClass: 'has-error',
             // 表单错误信息容器选择器
@@ -170,6 +172,10 @@ class Form {
                     $group.find(_this.options.errorContainerSelector).first().append(
                         _this.options.errorTemplate.replace('{message}', msg[j])
                     );
+                }
+
+                if (_this.options.validationErrorToastr) {
+                    Dcat.error(msg.join('<br/>'));
                 }
             };
 

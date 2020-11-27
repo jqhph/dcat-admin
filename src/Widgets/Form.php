@@ -164,6 +164,11 @@ class Form implements Renderable
     protected $confirm = [];
 
     /**
+     * @var bool
+     */
+    protected $validationErrorToastr = true;
+
+    /**
      * Form constructor.
      *
      * @param array $data
@@ -264,6 +269,20 @@ class Form implements Renderable
     {
         $this->confirm['title'] = $title;
         $this->confirm['content'] = $content;
+
+        return $this;
+    }
+
+    /**
+     * 设置使用 Toastr 展示字段验证信息.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function validationErrorToastr(bool $value = true)
+    {
+        $this->validationErrorToastr = $value;
 
         return $this;
     }
@@ -875,12 +894,14 @@ HTML;
     protected function addAjaxScript()
     {
         $confirm = admin_javascript_json($this->confirm);
+        $toastr = $this->validationErrorToastr ? 'true' : 'false';
 
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
     confirm: {$confirm},
+    validationErrorToastr: $toastr,
     success: function (data) {
         {$this->savedScript()}
     },
