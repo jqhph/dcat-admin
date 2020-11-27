@@ -48,7 +48,7 @@
             if (String(this.value) !== '0' && ! this.value) {
                 return;
             }
-            $.ajax("{{ $load['url'] }}?q="+this.value).then(function (data) {
+            $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+this.value).then(function (data) {
                 target.find("option").remove();
                 $(target).select2({
                     data: $.map(data, function (d) {
@@ -69,7 +69,7 @@
     {{--本地化--}}
     <script once>
         @php
-            $lang = trans('select2');
+            $lang = trans('select2') ?: [];
             $locale = config('app.locale');
         @endphp
         if ($.fn.select2) {
@@ -78,19 +78,19 @@
             e.define("select2/i18n/{{ $locale }}", [], function () {
                 return {
                     errorLoading: function () {
-                        return "{{ $lang['error_loading'] }}"
+                        return "{{ $lang['error_loading'] ?? '' }}"
                     }, inputTooLong: function (e) {
-                        return "{{ $lang['input_too_long'] }}".replace(':num', e.input.length - e.maximum)
+                        return "{{ $lang['input_too_long'] ?? '' }}".replace(':num', e.input.length - e.maximum)
                     }, inputTooShort: function (e) {
-                        return "{{ $lang['input_too_short'] }}".replace(':num', e.minimum - e.input.length)
+                        return "{{ $lang['input_too_short'] ?? '' }}".replace(':num', e.minimum - e.input.length)
                     }, loadingMore: function () {
-                        return "{{ $lang['loading_more'] }}"
+                        return "{{ $lang['loading_more'] ?? '' }}"
                     }, maximumSelected: function (e) {
-                        return "{{ $lang['maximum_selected'] }}".replace(':num', e.maximum)
+                        return "{{ $lang['maximum_selected'] ?? '' }}".replace(':num', e.maximum)
                     }, noResults: function () {
-                        return "{{ $lang['no_results'] }}"
+                        return "{{ $lang['no_results'] ?? '' }}"
                     }, searching: function () {
-                        return "{{ $lang['searching'] }}"
+                        return "{{ $lang['searching'] ?? '' }}"
                     }
                 }
             }), {define: e.define, require: e.require}

@@ -486,11 +486,13 @@ if (! function_exists('admin_view')) {
      * @param string $view
      * @param array  $data
      *
+     * @return string
+     *
      * @throws \Throwable
      */
     function admin_view($view, array $data = [])
     {
-        Admin::view($view, $data);
+        return Admin::view($view, $data);
     }
 }
 

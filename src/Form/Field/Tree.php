@@ -85,7 +85,7 @@ class Tree extends Field
     /**
      * {@inheritDoc}
      */
-    public function readOnly()
+    public function readOnly(bool $value = true)
     {
         $this->readOnly = true;
 

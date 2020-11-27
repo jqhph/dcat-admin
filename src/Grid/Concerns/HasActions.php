@@ -70,7 +70,7 @@ trait HasActions
                 }
 
                 foreach ($action as $v) {
-                    $actions->append($v);
+                    $actions->append(clone $v);
                 }
             };
         }

@@ -164,6 +164,11 @@ class Form implements Renderable
     protected $confirm = [];
 
     /**
+     * @var bool
+     */
+    protected $validationErrorToastr = true;
+
+    /**
      * Form constructor.
      *
      * @param array $data
@@ -264,6 +269,20 @@ class Form implements Renderable
     {
         $this->confirm['title'] = $title;
         $this->confirm['content'] = $content;
+
+        return $this;
+    }
+
+    /**
+     * 设置使用 Toastr 展示字段验证信息.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function validationErrorToastr(bool $value = true)
+    {
+        $this->validationErrorToastr = $value;
 
         return $this;
     }
@@ -444,11 +463,37 @@ class Form implements Renderable
     }
 
     /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function submitButton(bool $value = true)
+    {
+        $this->buttons['submit'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function resetButton(bool $value = true)
+    {
+        $this->buttons['reset'] = $value;
+
+        return $this;
+    }
+
+    /**
      * Disable reset button.
      *
      * @param bool $value
      *
      * @return $this
+     *
+     * @deprecated 即将废弃，请使用 resetButton 代替
      */
     public function disableResetButton(bool $value = true)
     {
@@ -463,6 +508,8 @@ class Form implements Renderable
      * @param bool $value
      *
      * @return $this
+     *
+     * @deprecated 即将废弃，请使用 submitButton 代替
      */
     public function disableSubmitButton(bool $value = true)
     {
@@ -847,12 +894,14 @@ HTML;
     protected function addAjaxScript()
     {
         $confirm = admin_javascript_json($this->confirm);
+        $toastr = $this->validationErrorToastr ? 'true' : 'false';
 
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
     confirm: {$confirm},
+    validationErrorToastr: $toastr,
     success: function (data) {
         {$this->savedScript()}
     },

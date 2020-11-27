@@ -455,7 +455,13 @@ class Tree implements Renderable
             $this->actionCallbacks[] = $callback;
         } else {
             $this->actionCallbacks[] = function (Actions $actions) use ($callback) {
-                $actions->append($callback);
+                if (! is_array($callback)) {
+                    $callback = [$callback];
+                }
+
+                foreach ($callback as $value) {
+                    $actions->append(clone $value);
+                }
             };
         }
 

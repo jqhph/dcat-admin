@@ -28,7 +28,7 @@ class DialogForm
         'query'          => null,
         'lang'           => null,
         'forceRefresh'   => false,
-        'disableReset'   => false,
+        'reset'          => true,
     ];
 
     /**
@@ -104,13 +104,15 @@ class DialogForm
     }
 
     /**
-     * 禁用重置按钮.
+     * 重置按钮.
+     *
+     * @param bool $value
      *
      * @return $this
      */
-    public function disableResetButton()
+    public function resetButton(bool $value = true)
     {
-        $this->options['disableReset'] = true;
+        $this->options['reset'] = $value;
 
         return $this;
     }
