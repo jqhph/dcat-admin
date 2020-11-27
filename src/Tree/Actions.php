@@ -53,13 +53,6 @@ class Actions implements Renderable
      */
     public function append($action)
     {
-        if (is_array($action)) {
-            foreach ($action as $value) {
-                $this->append($value);
-            }
-
-            return $this;
-        }
         $this->prepareAction($action);
 
         array_push($this->appends, $action);
@@ -74,14 +67,6 @@ class Actions implements Renderable
      */
     public function prepend($action)
     {
-        if (is_array($action)) {
-            foreach ($action as $value) {
-                $this->prepend($value);
-            }
-
-            return $this;
-        }
-
         $this->prepareAction($action);
 
         array_unshift($this->prepends, $action);

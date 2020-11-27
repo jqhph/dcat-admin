@@ -155,18 +155,6 @@ abstract class Action implements Renderable
     }
 
     /**
-     * @param string $prefix
-     * @param string $class
-     *
-     * @return string
-     */
-    public function getSelectorKey($prefix, $class)
-    {
-        return $prefix.'-'.($class ?: static::class)
-            .md5($this->normalizeConfirmData().$this->normalizeParameters());
-    }
-
-    /**
      * @param string|array $class
      *
      * @return $this
