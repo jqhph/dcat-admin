@@ -14,9 +14,17 @@
 
             <div class="has-many-{{$columnClass}}-form fields-group">
 
-                @foreach($form->fields() as $field)
-                    {!! $field->render() !!}
-                @endforeach
+                @if($form->rows())
+                    <div class="ml-2 mb-2" style="margin-top: -0.5rem">
+                        @foreach($form->rows() as $row)
+                            {!! $row->render() !!}
+                        @endforeach
+                    </div>
+                @else
+                    @foreach($form->fields() as $field)
+                        {!! $field->render() !!}
+                    @endforeach
+                @endif
 
                 @if($options['allowDelete'])
                 <div class="form-group row">
