@@ -1,5 +1,5 @@
 {
-    "name": "dcat/laravel-admin",
+    "name": "zjcf/dcat-admin",
     "description": "dcat admin",
     "type": "library",
     "keywords": ["dcat", "laravel", "admin", "grid", "form", "laravel admin"],
