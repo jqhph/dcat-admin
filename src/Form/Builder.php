@@ -578,10 +578,7 @@ class Builder
     public function hasFile()
     {
         foreach ($this->fields() as $field) {
-            if (
-                $field instanceof UploadField
-                || $field instanceof Form\Field\BootstrapFile
-            ) {
+            if ($field instanceof UploadField) {
                 return true;
             }
         }

@@ -284,7 +284,7 @@ class Form implements Renderable
     {
         $this->repository = $repository ? Admin::repository($repository) : null;
         $this->callback = $callback;
-        $this->request = $request ?: request();
+        $this->request = clone ($request ?: request());
         $this->builder = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
@@ -642,9 +642,11 @@ class Form implements Renderable
                 );
             }
 
+            $url = $this->getRedirectUrl($id, $redirectTo);
+
             return $this->sendResponse(
                 $this->response()
-                    ->redirect($this->getRedirectUrl($id, $redirectTo))
+                    ->redirectIf($url !== false, $url)
                     ->success(trans('admin.save_succeeded'))
             );
         } catch (\Throwable $e) {
@@ -814,10 +816,12 @@ class Form implements Renderable
                 );
             }
 
+            $url = $this->getRedirectUrl($id, $redirectTo);
+
             return $this->sendResponse(
                 $this->response()
                     ->success(trans('admin.update_succeeded'))
-                    ->redirect($this->getRedirectUrl($id, $redirectTo))
+                    ->redirectIf($url !== false, $url)
             );
         } catch (\Throwable $e) {
             $response = $this->handleException($e);
@@ -932,7 +936,7 @@ class Form implements Renderable
         if ($this->request->get('after-save') == 1) {
             // continue editing
             if ($this->builder->isEditing()) {
-                return;
+                return false;
             }
 
             return rtrim($resourcesPath, '/')."/{$key}/edit";

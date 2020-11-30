@@ -112,9 +112,9 @@ class Form {
 
                 if (response.redirect === false || ! options.redirect) {
                     if (response.data && response.data.then) {
-                        delete response.data['then']['redirect'];
-                        delete response.data['then']['location'];
-                        delete response.data['then']['refresh'];
+                        delete response.data['then'];
+                        delete response.data['then'];
+                        delete response.data['then'];
                     }
                 }
 
