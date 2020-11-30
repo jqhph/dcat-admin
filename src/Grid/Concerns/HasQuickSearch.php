@@ -89,7 +89,7 @@ trait HasQuickSearch
             return;
         }
 
-        $this->fireOnce(new ApplyQuickSearch($this, [$query]));
+        $this->fireOnce(new ApplyQuickSearch([$query]));
 
         // 树表格子节点忽略查询条件
         $this->model()

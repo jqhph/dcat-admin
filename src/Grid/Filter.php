@@ -5,6 +5,8 @@ namespace Dcat\Admin\Grid;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Grid\Events\ApplyFilter;
+use Dcat\Admin\Grid\Events\Fetched;
+use Dcat\Admin\Grid\Events\Fetching;
 use Dcat\Admin\Grid\Filter\AbstractFilter;
 use Dcat\Admin\Grid\Filter\Between;
 use Dcat\Admin\Grid\Filter\Date;
@@ -462,7 +464,7 @@ class Filter implements Renderable
             if (! empty($conditions)) {
                 $this->expand();
 
-                $this->grid()->fireOnce(new ApplyFilter($this->grid(), [$conditions]));
+                $this->grid()->fireOnce(new ApplyFilter([$conditions]));
 
                 $this->grid()->model()->disableBindTreeQuery();
             }
@@ -628,7 +630,15 @@ class Filter implements Renderable
             $this->getScopeConditions()
         );
 
-        return $this->model->addConditions($conditions)->buildData($toArray);
+        $this->model->addConditions($conditions);
+
+        $this->grid()->fireOnce(new Fetching());
+
+        $data = $this->model->buildData($toArray);
+
+        $this->grid()->fireOnce(new Fetched([&$data]));
+
+        return $data;
     }
 
     /**

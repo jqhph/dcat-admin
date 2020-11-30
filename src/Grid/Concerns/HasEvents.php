@@ -39,6 +39,8 @@ trait HasEvents
     {
         $this->dispatched[get_class($event)] = $event;
 
+        $event->setGrid($this);
+
         Event::dispatch($event);
     }
 

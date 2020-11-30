@@ -63,8 +63,8 @@ class NestedForm extends WidgetForm
 
         $this->key = $key;
 
-        $this->disableResetButton();
-        $this->disableSubmitButton();
+        $this->resetButton(false);
+        $this->submitButton(false);
         $this->ajax(false);
         $this->useFormTag(false);
     }

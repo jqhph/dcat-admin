@@ -13,9 +13,13 @@ abstract class Event
 
     public $payload = [];
 
-    public function __construct(Grid $grid, array $payload = [])
+    public function __construct(array $payload = [])
+    {
+        $this->payload = $payload;
+    }
+
+    public function setGrid(Grid $grid)
     {
         $this->grid = $grid;
-        $this->payload = $payload;
     }
 }

@@ -75,7 +75,7 @@ trait HasExporter
 
         $this->callBuilder();
 
-        $this->fire(new Grid\Events\Exporting($this, [$scope]));
+        $this->fire(new Grid\Events\Exporting([$scope]));
 
         // clear output buffer.
         if (ob_get_length()) {

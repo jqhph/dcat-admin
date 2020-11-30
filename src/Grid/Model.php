@@ -360,8 +360,6 @@ class Model
             $this->setData($this->fetch());
         }
 
-        $this->grid->fireOnce(new Grid\Events\Fetched($this->grid(), [$this->data]));
-
         return $toArray ? $this->data->toArray() : $this->data;
     }
 
