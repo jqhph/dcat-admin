@@ -930,8 +930,7 @@ class Form implements Renderable
             return $redirectTo;
         }
 
-        $resourcesPath = $this->builder->isCreating() ?
-            $this->resource(0) : $this->resource(-1);
+        $resourcesPath = $this->resource(-1);
 
         if ($this->request->get('after-save') == 1) {
             // continue editing
