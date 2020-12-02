@@ -593,7 +593,7 @@ class Form implements Renderable
             'fields'  => $this->fields,
             'method'  => $this->getHtmlAttribute('method'),
             'buttons' => $this->buttons,
-            'width'   => $this->width
+            'width'   => $this->width,
             'rows'    => $this->rows(),
             'layout'  => $this->layout,
         ], $this->variables);
