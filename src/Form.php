@@ -767,7 +767,7 @@ class Form implements Renderable
         }
 
         if (! $updated) {
-            return $this->error(trans('admin.update_succeeded'));
+            return $this->error(trans('admin.update_failed'));
         }
 
         return $this->redirect(
