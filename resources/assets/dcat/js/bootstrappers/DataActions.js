@@ -28,7 +28,7 @@ let defaultActions = {
                         response.data.detail = msg;
 
                         if (! response.then) {
-                            response.them = {action: 'redirect', value: redirect}
+                            response.then = {action: 'redirect', value: redirect}
                         }
 
                         Dcat.handleJsonResponse(response);
@@ -58,7 +58,7 @@ let defaultActions = {
                         Dcat.NP.done();
 
                         if (! response.then) {
-                            response.them = {action: 'refresh', value: true}
+                            response.then = {action: 'refresh', value: true}
                         }
 
                         Dcat.handleJsonResponse(data);
