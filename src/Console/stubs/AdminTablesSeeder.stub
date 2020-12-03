@@ -73,11 +73,6 @@ class DummyClass extends Seeder
             ArrayPivotRoleUsers
         );
 
-        DB::table('TablePermissionsUsers')->truncate();
-        DB::table('TablePermissionsUsers')->insert(
-            ArrayPivotPermissionsUsers
-        );
-
         // finish
     }
 }

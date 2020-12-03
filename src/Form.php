@@ -822,6 +822,7 @@ class Form implements Renderable
                 $this->response()
                     ->success(trans('admin.update_succeeded'))
                     ->redirectIf($url !== false, $url)
+                    ->refreshIf($url === false)
             );
         } catch (\Throwable $e) {
             $response = $this->handleException($e);
@@ -930,8 +931,7 @@ class Form implements Renderable
             return $redirectTo;
         }
 
-        $resourcesPath = $this->builder->isCreating() ?
-            $this->resource(0) : $this->resource(-1);
+        $resourcesPath = $this->resource(-1);
 
         if ($this->request->get('after-save') == 1) {
             // continue editing

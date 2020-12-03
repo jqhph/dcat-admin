@@ -12,20 +12,13 @@ class Button extends Field
     public function __construct($label)
     {
         parent::__construct(Str::random(), [$label]);
+
+        $this->addVariables(['buttonClass' => $this->class]);
     }
 
     public function class(string $class)
     {
-        $this->class = $class;
-
-        return $this;
-    }
-
-    public function variables()
-    {
-        $this->addVariables(['buttonClass' => $this->class]);
-
-        return parent::variables();
+        return $this->addVariables(['buttonClass' => $class]);
     }
 
     public function on($event, $callback)

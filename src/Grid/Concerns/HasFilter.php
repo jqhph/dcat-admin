@@ -37,8 +37,6 @@ trait HasFilter
         $this->callBuilder();
         $this->handleExportRequest();
 
-        $this->fireOnce(new Grid\Events\Fetching($this));
-
         $this->applyQuickSearch();
         $this->applyColumnFilter();
         $this->applySelectorQuery();
