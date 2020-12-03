@@ -822,6 +822,7 @@ class Form implements Renderable
                 $this->response()
                     ->success(trans('admin.update_succeeded'))
                     ->redirectIf($url !== false, $url)
+                    ->refreshIf($url === false)
             );
         } catch (\Throwable $e) {
             $response = $this->handleException($e);
