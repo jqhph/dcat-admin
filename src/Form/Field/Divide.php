@@ -8,6 +8,15 @@ class Divide extends Field
 {
     public function render()
     {
-        return '<hr>';
+        if ($this->label) {
+            return <<<HTML
+<div class="row">
+  <div class="col"><hr/></div>
+  <div class="col-auto text-muted h4">{$this->label}</div>
+  <div class="col"><hr/></div>
+</div>
+HTML;
+        }
+        return '<hr/>';
     }
 }
