@@ -119,14 +119,14 @@ class Grid
     protected $view = 'admin::grid.table';
 
     /**
-     * @var Closure
+     * @var Closure[]
      */
-    protected $header;
+    protected $header = [];
 
     /**
-     * @var Closure
+     * @var Closure[]
      */
-    protected $footer;
+    protected $footer = [];
 
     /**
      * @var Closure
@@ -582,15 +582,11 @@ class Grid
      *
      * @param Closure|string|Renderable $content
      *
-     * @return $this|Closure
+     * @return $this
      */
-    public function header($content = null)
+    public function header($content)
     {
-        if (! $content) {
-            return $this->header;
-        }
-
-        $this->header = $content;
+        $this->header[] = $content;
 
         return $this;
     }
@@ -606,15 +602,25 @@ class Grid
             return '';
         }
 
-        $content = Helper::render($this->header, [$this->processFilter(false)]);
+        return <<<HTML
+<div class="card-header clearfix" style="border-bottom: 0;background: transparent;padding: 0">{$this->renderHeaderOrFooter($this->header)}</div>
+HTML;
+    }
+
+    protected function renderHeaderOrFooter($callbacks)
+    {
+        $target = [$this->processFilter(false)];
+        $content = [];
+
+        foreach ($callbacks as $callback) {
+            $content[] = Helper::render($callback, $target);
+        }
 
         if (empty($content)) {
             return '';
         }
 
-        return <<<HTML
-<div class="card-header clearfix" style="border-bottom: 0;background: transparent;padding: 0"><div class="col-md-12">{$content}</div></div>
-HTML;
+        return implode('<div class="mb-1 clearfix"></div>', $content);
     }
 
     /**
@@ -622,15 +628,11 @@ HTML;
      *
      * @param Closure|string|Renderable $content
      *
-     * @return $this|Closure
+     * @return $this
      */
-    public function footer($content = null)
+    public function footer($content)
     {
-        if (! $content) {
-            return $this->footer;
-        }
-
-        $this->footer = $content;
+        $this->footer[] = $content;
 
         return $this;
     }
@@ -646,14 +648,8 @@ HTML;
             return '';
         }
 
-        $content = Helper::render($this->footer, [$this->processFilter(false)]);
-
-        if (empty($content)) {
-            return '';
-        }
-
         return <<<HTML
-<div class="box-footer clearfix">{$content}</div>
+<div class="box-footer clearfix">{$this->renderHeaderOrFooter($this->footer)}</div>
 HTML;
     }
 

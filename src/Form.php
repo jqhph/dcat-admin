@@ -58,7 +58,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\SwitchField            switch($column, $label = '')
  * @method Field\Display                display($column, $label = '')
  * @method Field\Rate                   rate($column, $label = '')
- * @method Field\Divide                 divider()
+ * @method Field\Divide                 divider(string $title = null)
  * @method Field\Password               password($column, $label = '')
  * @method Field\Decimal                decimal($column, $label = '')
  * @method Field\Html                   html($html, $label = '')
@@ -822,6 +822,7 @@ class Form implements Renderable
                 $this->response()
                     ->success(trans('admin.update_succeeded'))
                     ->redirectIf($url !== false, $url)
+                    ->refreshIf($url === false)
             );
         } catch (\Throwable $e) {
             $response = $this->handleException($e);

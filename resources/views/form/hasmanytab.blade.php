@@ -37,9 +37,7 @@
 
         @foreach($forms as $pk => $form)
             <div class="tab-pane fields-group has-many-{{$columnClass}}-form @if ($form == reset($forms)) active @endif" id="{{ $relationName . '_' . $pk }}">
-                @foreach($form->fields() as $field)
-                    {!! $field->render() !!}
-                @endforeach
+                {!! $form->render() !!}
             </div>
         @endforeach
     </div>

@@ -44,17 +44,17 @@
         $(document).off('change', selector);
         $(document).on('change', selector, function () {
             var target = $(this).closest('{{ $load['group'] ?? '.fields-group' }}').find(".{{ $load['class'] }}");
-            target.find("option").remove();
 
             if (String(this.value) !== '0' && ! this.value) {
                 return;
             }
+            target.find("option").remove();
+
             $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+this.value).then(function (data) {
                 $.map(data, function (d) {
-                    var newOption = new Option(d.{{ $load['textField'] }}, d.{{ $load['idField'] }}, false, false);
-                    target.append(newOption);
+                    target.append(new Option(d.{{ $load['textField'] }}, d.{{ $load['idField'] }}, false, false));
                 });
-                target.val(target.attr('data-value').split(',')).trigger('change');
+                target.val(String(target.attr('data-value')).split(',')).trigger('change');
             });
         });
         $(selector).trigger('change');
