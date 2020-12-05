@@ -48,7 +48,7 @@
             if (String(this.value) !== '0' && ! this.value) {
                 return;
             }
-            $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+this.value).then(function (data) {
+            $.ajax("{!! $load['url'].(mb_strpos($load['url'],'?')?'&':'?') !!}q="+this.value).then(function (data) {
                 target.find("option").remove();
                 $(target).select2({
                     data: $.map(data, function (d) {
@@ -56,7 +56,7 @@
                         d.text = d.{{ $load['textField'] }};
                         return d;
                     })
-                }).val(target.attr('data-value').split(',')).trigger('change');
+                }).val(String(target.attr('data-value')).split(',')).trigger('change');
             });
         });
         $(selector).trigger('change');
