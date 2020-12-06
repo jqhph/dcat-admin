@@ -54,14 +54,14 @@ let defaultActions = {
                 Dcat.NP.start();
                 $.delete({
                     url: url + '/' + keys.join(','),
-                    success: function (data) {
+                    success: function (response) {
                         Dcat.NP.done();
 
                         if (! response.then) {
                             response.then = {action: 'refresh', value: true}
                         }
 
-                        Dcat.handleJsonResponse(data);
+                        Dcat.handleJsonResponse(response);
                     }
                 });
             });
