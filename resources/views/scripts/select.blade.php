@@ -48,15 +48,13 @@
             if (String(this.value) !== '0' && ! this.value) {
                 return;
             }
+            target.find("option").remove();
+
             $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+this.value).then(function (data) {
-                target.find("option").remove();
-                $(target).select2({
-                    data: $.map(data, function (d) {
-                        d.id = d.{{ $load['idField'] }};
-                        d.text = d.{{ $load['textField'] }};
-                        return d;
-                    })
-                }).val(target.attr('data-value').split(',')).trigger('change');
+                $.map(data, function (d) {
+                    target.append(new Option(d.{{ $load['textField'] }}, d.{{ $load['idField'] }}, false, false));
+                });
+                target.val(String(target.attr('data-value')).split(',')).trigger('change');
             });
         });
         $(selector).trigger('change');

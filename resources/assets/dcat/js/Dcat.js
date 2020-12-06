@@ -113,7 +113,7 @@ export default class Dcat {
             };
 
         self.onPjaxComplete(clear, true);
-        $document.one('pjax:responded', clear);
+        $document.one('init:off', clear);
 
         clear();
 
@@ -134,6 +134,10 @@ export default class Dcat {
 
             callback.call(this, $this, id)
         }, options);
+    }
+
+    offInit() {
+        $(document).trigger('init:off')
     }
 
     /**

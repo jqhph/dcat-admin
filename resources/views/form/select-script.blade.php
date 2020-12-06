@@ -46,7 +46,7 @@
                         d.text = d.{{ $loads['textField'] }};
                         return d;
                     })
-                }).val(target.data('value').split(',')).trigger('change');
+                }).val(String(target.data('value')).split(',')).trigger('change');
             });
         };
 
