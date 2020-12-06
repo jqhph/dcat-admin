@@ -3,16 +3,6 @@
     <img src="https://cdn.learnku.com/uploads/images/202009/27/38389/WFQxJ7qZ1k.png!large" height="80"> 
 </div>
 <br>
-<p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台系统构建工具，只需很少的代码即可快速构建出一个功能完善的高颜值后台系统。内置丰富的后台常用组件，开箱即用，让开发者告别冗杂的HTML代码，对后端开发者非常友好。</p>
-
-<p align="center">
-<a href="https://learnku.com/docs/dcat-admin/1.x">learnku文档</a> |
-<a href="http://www.dcatadmin.com/">文档</a> |
-<a href="http://103.39.211.179:8080/admin">Demo (在线演示站)</a> |
-<a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
-<a href="https://gitee.com/jqhph/dcat-admin-demo">Demo源码 (码云)</a> |
-<a href="#extensions">扩展</a>
-</p>
 
 <p align="center">
     <a href="https://travis-ci.org/jqhph/dcat-admin">
@@ -26,6 +16,8 @@
     <a><img src="https://img.shields.io/badge/php-7.1+-59a9f8.svg?style=flat" /></a> 
     <a><img src="https://img.shields.io/badge/laravel-5.5+-59a9f8.svg?style=flat" ></a>
 </p>
+
+<p align=""><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台系统构建工具，只需很少的代码即可快速构建出一个功能完善的高颜值后台系统。内置丰富的后台常用组件，开箱即用，让开发者告别冗杂的HTML代码，对后端开发者非常友好。</p>
 
 
 - [Learnku文档](https://learnku.com/docs/dcat-admin)
