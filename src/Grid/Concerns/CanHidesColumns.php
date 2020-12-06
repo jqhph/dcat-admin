@@ -91,6 +91,10 @@ trait CanHidesColumns
      */
     public function getVisibleColumnsFromQuery()
     {
+        if (! $this->allowColumnSelector()) {
+            return [];
+        }
+
         if (isset($this->visibleColumnsFromQuery)) {
             return $this->visibleColumnsFromQuery;
         }
@@ -110,6 +114,10 @@ trait CanHidesColumns
 
     protected function formatWithComplexHeaders(array $columns)
     {
+        if (! $columns) {
+            return $this->getComplexHeaders();
+        }
+
         if (empty($this->getComplexHeaderNames())) {
             return $columns;
         }
@@ -152,6 +160,10 @@ trait CanHidesColumns
      */
     public function getVisibleColumns()
     {
+        if (! $this->allowColumnSelector()) {
+            return $this->columns;
+        }
+
         $visible = $this->formatWithComplexHeaders(
             $this->getVisibleColumnsFromQuery()
         );
@@ -174,6 +186,10 @@ trait CanHidesColumns
      */
     public function getVisibleColumnNames()
     {
+        if (! $this->allowColumnSelector()) {
+            return $this->columnNames;
+        }
+
         $visible = $this->formatWithComplexHeaders(
             $this->getVisibleColumnsFromQuery()
         );
