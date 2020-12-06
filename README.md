@@ -3,19 +3,8 @@
     <img src="https://cdn.learnku.com/uploads/images/202009/27/38389/WFQxJ7qZ1k.png!large" height="80"> 
 </div>
 <br>
-<p align="center"><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台系统构建工具，只需很少的代码即可快速构建出一个功能完善的高颜值后台系统。内置丰富的后台常用组件，开箱即用，让开发者告别冗杂的HTML代码，对后端开发者非常友好。</p>
 
 <p align="center">
-<a href="https://learnku.com/docs/dcat-admin/1.x">learnku文档</a> |
-<a href="http://www.dcatadmin.com/">文档</a> |
-<a href="http://103.39.211.179:8080/admin">Demo (在线演示站)</a> |
-<a href="https://github.com/jqhph/dcat-admin-demo">Demo源码</a> |
-<a href="https://gitee.com/jqhph/dcat-admin-demo">Demo源码 (码云)</a> |
-<a href="#extensions">扩展</a>
-</p>
-
-<p align="center">
-    <a href="https://github.com/jqhph/dcat-admin/blob/master/LICENSE"><a href="https://opencollective.com/dcat-admin" alt="Financial Contributors on Open Collective"><img src="https://opencollective.com/dcat-admin/all/badge.svg?label=financial+contributors" /></a> <img src="https://img.shields.io/badge/license-MIT-7389D8.svg?style=flat" ></a>
     <a href="https://travis-ci.org/jqhph/dcat-admin">
         <img src="https://travis-ci.org/jqhph/dcat-admin.svg?branch=master" alt="Build Status">
     </a>
@@ -28,7 +17,20 @@
     <a><img src="https://img.shields.io/badge/laravel-5.5+-59a9f8.svg?style=flat" ></a>
 </p>
 
-## 截图
+<p align=""><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台系统构建工具，只需很少的代码即可快速构建出一个功能完善的高颜值后台系统。内置丰富的后台常用组件，开箱即用，让开发者告别冗杂的HTML代码，对后端开发者非常友好。</p>
+
+
+- [Learnku文档](https://learnku.com/docs/dcat-admin)
+- [中文文档](http://www.dcatadmin.com/)
+- [English documentions](http://www.dcatadmin.com/docs/en-2.x/quick-start.html)
+- [Demo / 在线演示](http://103.39.211.179:8080/admin)
+- [Demo源码](https://github.com/jqhph/dcat-admin-demo)
+- [Demo源码 (码云)](https://gitee.com/jqhph/dcat-admin-demo)
+- [扩展](#)
+
+
+
+### 截图
 
 ![](https://cdn.learnku.com/uploads/images/202008/23/38389/Oam6CYOobf.jpeg!large)
 ![](https://cdn.learnku.com/uploads/images/202007/24/38389/35KJXfVXib.png!large)
@@ -37,7 +39,7 @@
 ![](https://cdn.learnku.com/uploads/images/202008/08/38389/lGYIdhifb5.jpg!large)
 
 
-## 功能特性
+### 功能特性
 
 - [x] 简洁优雅、灵活可扩展的API
 - [x] 用户管理
@@ -65,12 +67,12 @@
 - [ ] 插件市场，只需在管理页面轻轻点击鼠标即可完成插件的安装、更新和卸载等操作
 
 
-## 环境
+### 环境
  - PHP >= 7.1.0
  - Laravel 5.5.0 ~ 8.*
  - Fileinfo PHP Extension
 
-## 安装
+### 安装
 
 > 如果安装过程中出现`composer`下载过慢或安装失败的情况，请运行命令`composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/`把`composer`镜像更换为阿里云镜像。
 
@@ -128,7 +130,7 @@ location / {
 
 
 <a name="extensions"></a>
-## 扩展
+### 扩展
 
 | 扩展                                        | 描述                              | dcat-admin 版本                             |
 | ------------------------------------------------ | ---------------------------------------- |---------------------------------------- |
@@ -137,7 +139,7 @@ location / {
 | [grid-sortable](https://github.com/jqhph/dcat-admin-grid-sortable) | 表格拖曳排序工具      | * |
 
 
-## 鸣谢
+### 鸣谢
 `Dcat Admin` 基于以下组件:
 
 + [Laravel](https://laravel.com/)
@@ -162,9 +164,9 @@ location / {
 + [Google map](https://www.google.com/maps)
 + [Tencent map](http://lbs.qq.com/)
 
-## Contributors
+### Contributors
 
-### Code Contributors
+#### Code Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
 <a href="https://github.com/jqhph/dcat-admin/graphs/contributors"><img src="https://opencollective.com/dcat-admin/contributors.svg?width=890&button=false" /></a>
@@ -192,6 +194,6 @@ Support this project with your organization. Your logo will show up here with a 
 <a href="https://opencollective.com/dcat-admin/organization/8/website"><img src="https://opencollective.com/dcat-admin/organization/8/avatar.svg"></a>
 <a href="https://opencollective.com/dcat-admin/organization/9/website"><img src="https://opencollective.com/dcat-admin/organization/9/avatar.svg"></a>
 
-## License
+### License
 ------------
 `dcat-admin` is licensed under [The MIT License (MIT)](LICENSE).

@@ -112,7 +112,7 @@ export default class Dcat {
                 }
             };
 
-        self.onPjaxComplete(clear, true);
+        $document.one('pjax:loaded', clear);
         $document.one('init:off', clear);
 
         clear();
