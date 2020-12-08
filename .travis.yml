@@ -25,8 +25,6 @@ install:
 #  - sudo apt-get -f install
 #  - sudo apt upgrade dpkg
   - sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb
-  - pecl install zip
-  - echo "extension=zip.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - mysql -e 'create database if not exists laravel;'
   - composer self-update --2
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
@@ -46,7 +44,7 @@ install:
   - cd ./laravel-tests
   - php artisan admin:composer-config
   - travis_retry composer require dcat/laravel-admin:*@dev
-  - travis_retry composer require laravel/dusk --dev
+  - travis_retry composer require laravel/dusk --dev --ignore-platform-reqs
 #  - travis_retry composer require --dev staudenmeir/dusk-updater:"^1.1"
   - php artisan admin:publish --force
   - php artisan admin:install
