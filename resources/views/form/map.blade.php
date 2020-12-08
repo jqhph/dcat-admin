@@ -1,6 +1,6 @@
 <div class="{{$viewClass['form-group']}}">
 
-    <label for="{{$id['lat']}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
     <div class="{{$viewClass['field']}}">
 
