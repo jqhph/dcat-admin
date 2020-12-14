@@ -1065,10 +1065,12 @@
                         //正常来说上传返回必须是个json 必须包含 reason.id  否则肯定出错了
                         if (!reason || !reason.id) {
                             var errorMessage;
-                            if (reason.data && reason.data.message) {
+                            if (reason && reason.data && reason.data.message) {
                                 errorMessage = reason.data.message
+                            } else if(reason && reason.error) {
+                                errorMessage = reason.error.message //DCAT 原有的逻辑
                             } else {
-                                errorMessage = reason.error.message //原有的逻辑
+                                errorMessage = "Unknown error!"
                             }
 
                             Dcat.error(errorMessage);
