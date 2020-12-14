@@ -98,6 +98,13 @@ class Card extends Widget
     protected $chartMarginBottom;
 
     /**
+     * 图表右间距.
+     *
+     * @var int
+     */
+    protected $chartMarginRight = 1;
+
+    /**
      * 图表配置.
      *
      * @var array
@@ -131,7 +138,7 @@ class Card extends Widget
      */
     protected function init()
     {
-        $this->id('metric-card-'.Str::random(8));
+        $this->id('metric-card-' . Str::random(8));
         $this->class('card');
     }
 
@@ -341,7 +348,7 @@ class Card extends Widget
      */
     public function chartLabels($label)
     {
-        $this->chartOptions['labels'] = (array) $label;
+        $this->chartOptions['labels'] = (array)$label;
 
         $this->useChart();
 
@@ -357,7 +364,7 @@ class Card extends Widget
      */
     public function chartColors($colors)
     {
-        $this->chartOptions['colors'] = (array) $colors;
+        $this->chartOptions['colors'] = (array)$colors;
 
         $this->useChart();
 
@@ -392,7 +399,7 @@ class Card extends Widget
      */
     protected function setUpChart()
     {
-        if (! $chart = $this->chart) {
+        if (!$chart = $this->chart) {
             return;
         }
 
@@ -403,7 +410,7 @@ class Card extends Widget
 
         // 颜色
         if (empty($this->chartOptions['colors'])) {
-            $this->chartOptions['colors'] = (array) Admin::color()->get($this->style);
+            $this->chartOptions['colors'] = (array)Admin::color()->get($this->style);
         }
 
         // 图表配置选项
@@ -428,6 +435,10 @@ class Card extends Widget
         if ($this->chartMarginBottom !== null) {
             $this->chart->style("margin-bottom: {$this->chartMarginBottom}px;");
         }
+
+        if ($this->chartMarginRight !== null) {
+            $this->chart->style("margin-right: {$this->chartMarginRight}px;");
+        }
     }
 
     /**
@@ -435,7 +446,7 @@ class Card extends Widget
      */
     public function addScript()
     {
-        if (! $this->allowBuildRequest()) {
+        if (!$this->allowBuildRequest()) {
             return;
         }
 
@@ -514,7 +525,7 @@ JS;
      */
     protected function setUpCardHeight()
     {
-        if (! $height = $this->height) {
+        if (!$height = $this->height) {
             return;
         }
 
@@ -557,11 +568,11 @@ JS;
 
         return array_merge(
             [
-                'status'  => 1,
-                'header'  => $this->renderHeader(),
+                'status' => 1,
+                'header' => $this->renderHeader(),
                 'content' => $this->renderContent(),
             ],
-            (array) optional($this->chart)->valueResult()
+            (array)optional($this->chart)->valueResult()
         );
     }
 }
