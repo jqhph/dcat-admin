@@ -185,5 +185,4 @@ class File extends Field implements UploadFieldInterface
 
         return $this;
     }
-
 }
