@@ -54,6 +54,7 @@
         newPage,
         options = {!! $options !!};
 
+    var events = {!!$events??'[]'!!};
     init();
 
     function init() {
