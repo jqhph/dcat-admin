@@ -14,6 +14,8 @@ class File extends Field implements UploadFieldInterface
     use WebUploader,
         UploadField;
 
+    protected $events = [];
+
     public function __construct($column, $arguments = [])
     {
         parent::__construct($column, $arguments);
@@ -159,6 +161,7 @@ class File extends Field implements UploadFieldInterface
             'fileType'      => $this->options['isImage'] ? '' : 'file',
             'showUploadBtn' => ($this->options['autoUpload'] ?? false) ? false : true,
             'options'       => JavaScript::format($this->options),
+            'events'        => JavaScript::format($this->events),
         ]);
 
         return parent::render();
@@ -175,4 +178,12 @@ class File extends Field implements UploadFieldInterface
             $this->default = implode(',', $this->default);
         }
     }
+
+    public function on(string $event, string $script)
+    {
+        $this->events[] = compact('event', 'script');
+
+        return $this;
+    }
+
 }
