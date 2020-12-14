@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Traits;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Models\HasPermissions;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 

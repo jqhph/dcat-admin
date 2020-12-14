@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Scaffold;
 
+use Dcat\Admin\Exception\AdminException;
 use Illuminate\Database\Migrations\MigrationCreator as BaseMigrationCreator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
@@ -88,7 +89,7 @@ class MigrationCreator extends BaseMigrationCreator
         });
 
         if (empty($fields)) {
-            throw new \Exception('Table fields can\'t be empty');
+            throw new AdminException('Table fields can\'t be empty');
         }
 
         $rows[] = "\$table->increments('$keyName');\n";

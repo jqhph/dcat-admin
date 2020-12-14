@@ -1,4 +1,4 @@
-<div class="card-header pb-1" style="padding:.9rem 1rem">
+<div class="card-header pb-1 with-border" style="padding:.9rem 1rem">
 
     <div>
         <div class="btn-group" style="margin-right:3px">
@@ -48,3 +48,36 @@
         </ol>
     </div>
 </div>
+
+<script require="@jquery.nestable">
+    var id = '{{ $id }}';
+    var tree = $('#'+id);
+
+    tree.nestable({!! admin_javascript_json($nestableOptions) !!});
+
+    $('.'+id+'-save').on('click', function () {
+        var serialize = tree.nestable('serialize'), _this = $(this);
+        _this.buttonLoading();
+        $.post({
+            url: '{{ $url }}',
+            data: {
+                '{{ \Dcat\Admin\Tree::SAVE_ORDER_NAME }}': JSON.stringify(serialize)
+            },
+            success: function (data) {
+                _this.buttonLoading(false);
+
+                Dcat.handleJsonResponse(data)
+            }
+        });
+    });
+
+    $('.'+id+'-tree-tools').on('click', function(e){
+        var action = $(this).data('action');
+        if (action === 'expand') {
+            tree.nestable('expandAll');
+        }
+        if (action === 'collapse') {
+            tree.nestable('collapseAll');
+        }
+    });
+</script>

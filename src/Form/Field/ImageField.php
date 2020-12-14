@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Exception\AdminException;
 use Illuminate\Support\Str;
 use Intervention\Image\Constraint;
 use Intervention\Image\Facades\Image as InterventionImage;
@@ -42,6 +43,7 @@ trait ImageField
      * Execute Intervention calls.
      *
      * @param string $target
+     * @param string $mime
      *
      * @return mixed
      */
@@ -80,7 +82,7 @@ trait ImageField
         }
 
         if (! class_exists(ImageManagerStatic::class)) {
-            throw new \Exception('To use image handling and manipulation, please install [intervention/image] first.');
+            throw new AdminException('To use image handling and manipulation, please install [intervention/image] first.');
         }
 
         $this->interventionCalls[] = [

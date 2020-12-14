@@ -3,7 +3,9 @@
 namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Collection;
 
 /**
  * Class Row.
@@ -45,7 +47,6 @@ use Illuminate\Contracts\Support\Renderable;
  * @method Field\Embeds                 embeds($column, $label = '')
  * @method Field\Captcha                captcha()
  * @method Field\Listbox                listbox($column, $label = '')
- * @method Field\SelectResource         selectResource($column, $label = '')
  * @method Field\File                   file($column, $label = '')
  * @method Field\Image                  image($column, $label = '')
  * @method Field\MultipleFile           multipleFile($column, $label = '')
@@ -58,6 +59,7 @@ use Illuminate\Contracts\Support\Renderable;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
  */
 class Row implements Renderable
 {
@@ -71,7 +73,7 @@ class Row implements Renderable
     /**
      * Parent form.
      *
-     * @var Form
+     * @var Form|WidgetForm
      */
     protected $form;
 
@@ -80,7 +82,7 @@ class Row implements Renderable
      *
      * @var array
      */
-    protected $fields = [];
+    protected $fields;
 
     /**
      * Default field width for appended field.
@@ -92,12 +94,13 @@ class Row implements Renderable
     /**
      * Row constructor.
      *
-     * @param \Closure $callback
-     * @param Form     $form
+     * @param \Closure        $callback
+     * @param Form|WidgetForm $form
      */
-    public function __construct(\Closure $callback, Form $form)
+    public function __construct(\Closure $callback, $form)
     {
         $this->callback = $callback;
+        $this->fields = collect();
 
         $this->form = $form;
 
@@ -107,11 +110,34 @@ class Row implements Renderable
     /**
      * Get fields of this row.
      *
-     * @return array
+     * @return array|Collection
      */
     public function fields()
     {
         return $this->fields;
+    }
+
+    public function setFields(Collection $collection)
+    {
+        $this->fields = $collection;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->form->getKey();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Support\Fluent|void
+     */
+    public function model()
+    {
+        return $this->form->model();
     }
 
     /**
@@ -152,10 +178,10 @@ class Row implements Renderable
 
         $field->disableHorizontal();
 
-        $this->fields[] = [
+        $this->fields->push([
             'width'   => $this->defaultFieldWidth,
             'element' => $field,
-        ];
+        ]);
 
         return $field;
     }

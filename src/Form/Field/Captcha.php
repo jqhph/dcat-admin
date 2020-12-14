@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Exception\AdminException;
+
 class Captcha extends Text
 {
     protected $rules = ['required', 'captcha'];
@@ -11,7 +13,7 @@ class Captcha extends Text
     public function __construct()
     {
         if (! class_exists(\Mews\Captcha\Captcha::class)) {
-            throw new \Exception('To use captcha field, please install [mews/captcha] first.');
+            throw new AdminException('To use captcha field, please install [mews/captcha] first.');
         }
 
         $this->column = '__captcha__';
@@ -31,12 +33,6 @@ class Captcha extends Text
 
     public function render()
     {
-        $this->script = <<<'JS'
-$('.field-refresh-captcha').off('click').on('click', function () {
-    $(this).attr('src', $(this).attr('data-url')+'?'+Math.random());
-});
-JS;
-
         $this->addVariables(['captchaSrc' => captcha_src()]);
 
         return parent::render();

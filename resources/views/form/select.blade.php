@@ -1,9 +1,8 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<div class="{{$viewClass['form-group']}}">
 
-    <div for="{{ $id }}" class="{{ $viewClass['label'] }} control-label">
+    <div  class="{{ $viewClass['label'] }} control-label">
         <span>{!! $label !!}</span>
     </div>
-
 
     <div class="{{$viewClass['field']}}">
 
@@ -12,18 +11,18 @@
         <input type="hidden" name="{{$name}}"/>
 
         <select class="form-control {{$class}}" style="width: 100%;" name="{{$name}}" {!! $attributes !!} >
+            <option value=""></option>
             @if($groups)
                 @foreach($groups as $group)
                     <optgroup label="{{ $group['label'] }}">
                         @foreach($group['options'] as $select => $option)
-                            <option value="{{$select}}" {{ $select == old($column, $value) ?'selected':'' }}>{{$option}}</option>
+                            <option value="{{$select}}" {{ $select == $value ?'selected':'' }}>{{$option}}</option>
                         @endforeach
                     </optgroup>
                 @endforeach
              @else
-                <option value=""></option>
                 @foreach($options as $select => $option)
-                    <option value="{{$select}}" {{ Dcat\Admin\Support\Helper::equal($select, old($column, $value)) ?'selected':'' }}>{{$option}}</option>
+                    <option value="{{$select}}" {{ Dcat\Admin\Support\Helper::equal($select, $value) ?'selected':'' }}>{{$option}}</option>
                 @endforeach
             @endif
         </select>
@@ -32,3 +31,5 @@
 
     </div>
 </div>
+
+@include('admin::form.select-script')

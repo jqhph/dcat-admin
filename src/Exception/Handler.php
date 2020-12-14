@@ -2,22 +2,44 @@
 
 namespace Dcat\Admin\Exception;
 
+use Dcat\Admin\Contracts\ExceptionHandler;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 
-class Handler
+class Handler implements ExceptionHandler
 {
     /**
-     * Render exception.
+     * 处理异常.
      *
-     * @param \Exception $exception
+     * @param \Throwable $e
      *
-     * @return string
+     * @return array|string|void
      */
-    public function renderException(\Throwable $exception)
+    public function handle(\Throwable $e)
+    {
+        $this->report($e);
+
+        return $this->render($e);
+    }
+
+    /**
+     * 显示异常信息.
+     *
+     * @param \Throwable $exception
+     *
+     * @return array|string|void
+     *
+     * @throws \Throwable
+     */
+    public function render(\Throwable $exception)
     {
         if (config('app.debug')) {
             throw $exception;
+        }
+
+        if (Helper::isAjaxRequest()) {
+            return;
         }
 
         $error = new MessageBag([
@@ -25,6 +47,7 @@ class Handler
             'message' => $exception->getMessage(),
             'file'    => $exception->getFile(),
             'line'    => $exception->getLine(),
+            'trace'   => $this->replaceBasePath($exception->getTraceAsString()),
         ]);
 
         $errors = new ViewErrorBag();
@@ -34,26 +57,26 @@ class Handler
     }
 
     /**
+     * 上报异常信息.
+     *
      * @param \Throwable $e
+     */
+    public function report(\Throwable $e)
+    {
+        report($e);
+    }
+
+    /**
+     * @param string $path
      *
      * @return mixed
      */
-    public function handleDestroyException(\Throwable $e)
+    protected function replaceBasePath(string $path)
     {
-        $root = dirname(app_path());
-
-        $context = [
-            'trace' => str_replace($root, '', $e->getTraceAsString()),
-        ];
-
-        $message = sprintf(
-            '[%s] %s in %s(%s)',
-            get_class($e),
-            $e->getMessage(),
-            str_replace($root, '', $e->getFile()),
-            $e->getLine()
+        return str_replace(
+            str_replace('\\', '/', base_path().'/'),
+            '',
+            str_replace('\\', '/', $path)
         );
-
-        logger()->error($message, $context);
     }
 }

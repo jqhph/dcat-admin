@@ -30,6 +30,25 @@
   }
 }
 
+.dcat-box.card {
+  margin-bottom: 0;
+
+  .card-header {
+    border-bottom: 0;
+    padding: 1.3rem 1.5rem;
+    margin-bottom: .5rem;
+  }
+
+  .card-body {
+    padding: 1rem 0 0;
+  }
+
+  .box-footer {
+    border:0;
+    padding: 1rem 1.5rem 1.3rem;
+  }
+}
+
 // 过滤器滑动面板
 .right-side-filter-container .header {
   border-bottom: 1px solid $divider-color;
@@ -46,8 +65,75 @@
     padding-left: 45px;
     background-color: #f3f3f3;
     vertical-align: middle;
-    border-radius: .5rem;
-    height: 35px;
+    //border-radius: .5rem;
+    height: 42px;
     color: #777;
+    border-bottom: $table-border-color;
   }
+}
+
+
+.grid-modal {
+  .modal-body {
+    //background:$body-bg;
+    padding:1.5rem
+  }
+}
+
+.simple-grid {
+  .filter-box {
+    background: transparent;
+    box-shadow: none!important;
+    padding: 0!important;
+    margin: .5rem 0 -1rem!important;
+    padding-bottom: 0!important;
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .dcat-box.card {
+    .card-header {
+      padding: .8rem 0
+    }
+
+    .box-footer {
+      padding: 1rem 1.5rem 0;
+    }
+  }
+}
+
+body:not(.dark-mode) .simple-grid {
+  .card {
+    box-shadow: none;
+  }
+
+  .table-collapse {
+    box-shadow: none;
+    background: transparent;
+    //border: 1px solid #ededf1!important;
+    .custom-data-table {
+      background: transparent;
+    }
+
+    .custom-data-table.data-table tbody td {
+      height: 48px;
+    }
+
+    .custom-data-table.data-table thead th {
+      height: 20px;
+    }
+
+    .custom-data-table {
+      padding: 5px 0 0;
+      //border-top: 1px solid $table-border-color;
+      border-bottom: 1px solid $table-border-color;
+    }
+
+    table.data-table thead tr:last-child th {
+      border-bottom: 2px solid $table-border-color;
+    }
+  }
+
 }

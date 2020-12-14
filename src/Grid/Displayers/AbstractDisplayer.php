@@ -55,10 +55,10 @@ abstract class AbstractDisplayer
         $this->column = $column;
 
         $this->setRow($row);
-        $this->collectAssets();
+        $this->requireAssets();
     }
 
-    protected function collectAssets()
+    protected function requireAssets()
     {
         if (static::$js) {
             Admin::js(static::$js);

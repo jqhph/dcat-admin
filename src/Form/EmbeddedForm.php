@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Form;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -37,7 +38,7 @@ use Illuminate\Support\Collection;
  * @method Field\SwitchField            switch($column, $label = '')
  * @method Field\Display                display($column, $label = '')
  * @method Field\Rate                   rate($column, $label = '')
- * @method Field\Divide                 divider()
+ * @method Field\Divide                 divider(string $title = null)
  * @method Field\Password               password($column, $label = '')
  * @method Field\Decimal                decimal($column, $label = '')
  * @method Field\Html                   html($html, $label = '')
@@ -46,7 +47,6 @@ use Illuminate\Support\Collection;
  * @method Field\Embeds                 embeds($column, $label = '')
  * @method Field\Captcha                captcha()
  * @method Field\Listbox                listbox($column, $label = '')
- * @method Field\SelectResource         selectResource($column, $label = '')
  * @method Field\File                   file($column, $label = '')
  * @method Field\Image                  image($column, $label = '')
  * @method Field\MultipleFile           multipleFile($column, $label = '')
@@ -58,6 +58,11 @@ use Illuminate\Support\Collection;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
+ * @method Field\Color                  color($column, $label = '')
+ * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable            selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable    multipleSelectTable($column, $label = '')
  */
 class EmbeddedForm
 {
@@ -116,11 +121,21 @@ class EmbeddedForm
      *
      * @return $this
      */
-    public function setParent(Form $parent)
+    public function setParent($parent)
     {
         $this->parent = $parent;
 
         return $this;
+    }
+
+    public function getKey()
+    {
+        return $this->parent->getKey();
+    }
+
+    public function model()
+    {
+        return $this->parent->model();
     }
 
     /**
@@ -232,14 +247,14 @@ class EmbeddedForm
 
         if (is_array($jsonKey)) {
             foreach ($jsonKey as $index => $name) {
-                $elementName[$index] = "{$this->column}[$name]";
+                $elementName[$index] = $this->formatName("{$this->column}.{$name}");
                 $errorKey[$index] = "{$this->column}.$name";
-                $elementClass[$index] = "{$this->column}_$name";
+                $elementClass[$index] = $this->formatClass("{$this->column}_$name");
             }
         } else {
-            $elementName = "{$this->column}[$jsonKey]";
+            $elementName = $this->formatName("{$this->column}.$jsonKey");
             $errorKey = "{$this->column}.$jsonKey";
-            $elementClass = "{$this->column}_$jsonKey";
+            $elementClass = $this->formatClass("{$this->column}_$jsonKey");
         }
 
         $field->setElementName($elementName)
@@ -247,6 +262,16 @@ class EmbeddedForm
             ->setElementClass($elementClass);
 
         return $field;
+    }
+
+    protected function formatName($name)
+    {
+        return Helper::formatElementName($name);
+    }
+
+    protected function formatClass(string $column)
+    {
+        return str_replace('.', '-', $column);
     }
 
     /**
@@ -262,7 +287,7 @@ class EmbeddedForm
 
         $this->fields->push($field);
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         return $this;
     }

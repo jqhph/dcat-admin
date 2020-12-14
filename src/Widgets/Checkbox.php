@@ -8,9 +8,7 @@ use Illuminate\Support\Arr;
 class Checkbox extends Radio
 {
     protected $view = 'admin::widgets.checkbox';
-
     protected $type = 'checkbox';
-
     protected $checked = [];
 
     /**

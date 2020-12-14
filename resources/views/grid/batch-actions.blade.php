@@ -1,5 +1,5 @@
 @if(! $isHoldSelectAllCheckbox)
-<div class="btn-group dropdown  {{$selectAllName}}-btn" style="display:none;margin-right: 3px;">
+<div class="btn-group dropdown  {{$selectAllName}}-btn" style="display:none;margin-right: 3px;z-index: 100">
     <button type="button" class="btn btn-white dropdown-toggle btn-mini" data-toggle="dropdown">
         <span class="d-none d-sm-inline selected"></span>
         <span class="caret"></span>
@@ -14,3 +14,17 @@
     </ul>
 </div>
 @endif
+
+<script>
+$(document).off('change', '.{{ $parent->getRowName() }}-checkbox').on('change', '.{{ $parent->getRowName() }}-checkbox', function () {
+    var btn = $('.{{ $selectAllName }}-btn'), selected = Dcat.grid.selectedRows('{{ $parent->getName() }}').length;
+    if (selected) {
+        btn.show()
+    } else {
+        btn.hide()
+    }
+    setTimeout(function () {
+        btn.find('.selected').html("{!! trans('admin.grid_items_selected') !!}".replace('{n}', selected));
+    }, 50)
+});
+</script>

@@ -4,6 +4,7 @@ namespace Dcat\Admin\Show;
 
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Fluent;
 
 class Relation extends Field
@@ -53,11 +54,11 @@ class Relation extends Field
     /**
      * Set parent model for relation.
      *
-     * @param Fluent $model
+     * @param Fluent|Model $model
      *
      * @return $this|Fluent
      */
-    public function model(Fluent $model = null)
+    public function model($model = null)
     {
         if ($model === null) {
             return $this->model;

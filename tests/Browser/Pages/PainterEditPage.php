@@ -44,9 +44,9 @@ class PainterEditPage extends PainterCreatePage
             $browser->within(new HasMany('paintings'), function (Browser $browser) {
                 $this->painter->paintings->each(function (Painting $painting, $key) use ($browser) {
                     $browser->withFormGroup($key + 1, function (Browser $browser) use ($painting) {
-                        $browser->assertFormGroupInputValue('title', $painting->title);
-                        $browser->assertFormGroupInputValue('body', $painting->body);
-                        $browser->assertFormGroupInputValue('completed_at', $painting->completed_at);
+                        $browser->assertFormGroupInputValue('title', $painting->title, $painting->getKey());
+                        $browser->assertFormGroupInputValue('body', $painting->body, $painting->getKey());
+                        $browser->assertFormGroupInputValue('completed_at', $painting->completed_at, $painting->getKey());
                     });
                 });
             });

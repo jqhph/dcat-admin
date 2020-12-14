@@ -1,15 +1,15 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<div class="{{$viewClass['form-group']}}">
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
-    <div class="{{$viewClass['field']}}">
+    <div class="{{$viewClass['field']}} {{ $class }}">
 
         @include('admin::form.error')
 
         <div class="input-group" style="width:100%">
-            <input {{$disabled}} {!! $attributes !!} name="{{$name}}" />
+            <input {{$disabled}} type="hidden" class="hidden-input" name="{{$name}}" />
 
-            <div class="jstree-wrapper {{$class}}-tree-wrapper">
+            <div class="jstree-wrapper">
                 <div class="d-flex">
                     {!! $checkboxes !!}
                 </div>
@@ -22,30 +22,27 @@
     </div>
 </div>
 
-@php
-    $formId = $formId ? '#'.$formId : '';
-@endphp
-<script data-exec-on-popstate>
-Dcat.ready(function () {
-    var $tree = $('{!!$formId !!} .{{$class}}-tree-wrapper').find('.da-tree'),
-        opts = {!! $options !!},
-        $input = $('{!!$formId !!} input[name="{{$name}}"]'),
-        parents = {!! $parents !!};
+<script require="@jstree" init="{!! $selector !!}">
+    var $tree = $this.find('.jstree-wrapper .da-tree'),
+        $input = $this.find('.hidden-input'),
+        opts = {!! admin_javascript_json($options) !!},
+        parents = {!! json_encode($parents) !!};
 
     opts.core = opts.core || {};
-    opts.core.data = {!! $nodes !!};
+    opts.core.data = {!! json_encode($nodes) !!};
 
-    $(document).on("click", "{!!$formId !!} .{{$class}}-tree-wrapper input[value=1]", function () {
-        $tree.jstree($(this).prop("checked") ? "check_all" : "uncheck_all");
+    $this.find('input[value=1]').on("click", function () {
+        $(this).parents('.jstree-wrapper').find('.da-tree').jstree($(this).prop("checked") ? "check_all" : "uncheck_all");
     });
-    $(document).on("click", "{!!$formId !!} .{{$class}}-tree-wrapper input[value=2]", function () {
-        $tree.jstree($(this).prop("checked") ? "open_all" : "close_all");
+    $this.find('input[value=2]').on("click", function () {
+        $(this).parents('.jstree-wrapper').find('.da-tree').jstree($(this).prop("checked") ? "open_all" : "close_all");
     });
 
     $tree.on("changed.jstree", function (e, data) {
+        var i, selected = [];
+
         $input.val('');
 
-        var i, selected = [];
         for (i in data.selected) {
             if (Dcat.helpers.inObject(parents, data.selected[i])) { // 过滤父节点
                 continue;
@@ -55,8 +52,6 @@ Dcat.ready(function () {
 
         selected.length && $input.val(selected.join(','));
     }).on("loaded.jstree", function () {
-        @if($expand) $tree.jstree('open_all'); @endif
+        @if($expand) $(this).jstree('open_all'); @endif
     }).jstree(opts);
-
-});
 </script>

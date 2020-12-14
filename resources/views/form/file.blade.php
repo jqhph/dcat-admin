@@ -1,4 +1,19 @@
-<div id="{{ $containerId }}" class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<style>
+    .webuploader-pick {
+        background-color: @primary;
+    }
+
+    .web-uploader .placeholder .flashTip a {
+        color: @primary(-10);
+    }
+
+    .web-uploader .statusBar .upload-progress span.percentage,
+    .web-uploader .filelist li p.upload-progress span {
+        background: @primary(-8);
+    }
+</style>
+
+<div class="{{$viewClass['form-group']}} {{ $class }}">
 
     <label for="{{$column}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
@@ -6,8 +21,7 @@
 
         @include('admin::form.error')
 
-        <input name="{{ $name }}" id="{{ $id }}" type="hidden" />
-        <input name="file-{{ $name }}" type="file" style="display: none"/>
+        <input name="{{ $name }}" class="file-input" type="hidden" />
 
         <div class="web-uploader {{ $fileType }}">
             <div class="queueList">
@@ -22,8 +36,11 @@
                 </div>
                 <div class="info"></div>
                 <div class="btns">
-                    <div class="add-file-button"></div> &nbsp;
+                    <div class="add-file-button"></div>
+                    @if($showUploadBtn)
+                    &nbsp;
                     <div class="upload-btn btn btn-primary"><i class="feather icon-upload"></i> &nbsp;{{trans('admin.upload')}}</div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -31,3 +48,50 @@
         @include('admin::form.help-block')
     </div>
 </div>
+
+<script require="@webuploader" init="{!! $selector !!}">
+    var uploader,
+        newPage,
+        options = {!! $options !!};
+
+    init();
+
+    function init() {
+        var opts = $.extend({
+            selector: $this,
+            addFileButton: $this.find('.add-file-button'),
+            inputSelector: $this.find('.file-input'),
+        }, options);
+
+        opts.upload = $.extend({
+            pick: {
+                id: $this.find('.file-picker'),
+                name: '_file_',
+                label: '<i class="feather icon-folder"></i>&nbsp; {!! trans('admin.uploader.add_new_media') !!}'
+            },
+            dnd: $this.find('.dnd-area'),
+            paste: $this.find('.web-uploader')
+        }, opts);
+
+        uploader = Dcat.Uploader(opts);
+        uploader.build();
+        uploader.preview();
+
+        function resize() {
+            setTimeout(function () {
+                if (! uploader) return;
+
+                uploader.refreshButton();
+                resize();
+
+                if (! newPage) {
+                    newPage = 1;
+                    $(document).one('pjax:complete', function () {
+                        uploader = null;
+                    });
+                }
+            }, 250);
+        }
+        resize();
+    }
+</script>

@@ -7,10 +7,10 @@ export default class AssetsLoader {
 
         Dcat.assets = {
             // 加载js脚本，并触发 ready 事件
-            loadScripts: _this.load.bind(_this),
+            load: _this.load.bind(_this),
 
             // 从给定的内容中过滤"<script>"标签内容，并自动加载其中的js脚本
-            filterScriptsAndLoad: _this.filterScriptsAndLoad.bind(_this)
+            resolveHtml: _this.resolveHtml.bind(_this)
         };
     }
 
@@ -58,7 +58,7 @@ export default class AssetsLoader {
     }
     
     // 返回过滤 <script src> 标签后的内容，并在加载完 script 脚本后触发 "pjax:script" 事件
-    filterScriptsAndLoad(content, callback) {
+    resolveHtml(content, callback) {
         var obj = this.filterScripts(content);
 
         this.load(obj.js, function () {
@@ -68,12 +68,12 @@ export default class AssetsLoader {
         return obj.contents;
     }
 
-    findAll(elems, selector) {
-        if (typeof elems == 'string') {
-            elems = $(elems);
+    findAll($el, selector) {
+        if (typeof $el === 'string') {
+            $el = $($el);
         }
 
-        return elems.filter(selector).add(elems.find(selector));
+        return $el.filter(selector).add($el.find(selector));
     }
 
     fire() {

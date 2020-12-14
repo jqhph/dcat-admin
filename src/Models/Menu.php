@@ -36,7 +36,7 @@ class Menu extends Model implements Sortable
      *
      * @var array
      */
-    protected $fillable = ['parent_id', 'order', 'title', 'icon', 'uri', 'permission_id'];
+    protected $fillable = ['parent_id', 'order', 'title', 'icon', 'uri', 'extension', 'show'];
 
     /**
      * Create a new Eloquent model instance.
@@ -65,7 +65,7 @@ class Menu extends Model implements Sortable
 
         $relatedModel = config('admin.database.roles_model');
 
-        return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'role_id');
+        return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'role_id')->withTimestamps();
     }
 
     public function permissions(): BelongsToMany
@@ -74,7 +74,7 @@ class Menu extends Model implements Sortable
 
         $relatedModel = config('admin.database.permissions_model');
 
-        return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'permission_id');
+        return $this->belongsToMany($relatedModel, $pivotTable, 'menu_id', 'permission_id')->withTimestamps();
     }
 
     /**
@@ -82,9 +82,9 @@ class Menu extends Model implements Sortable
      *
      * @param bool $force
      *
-     * @return array
+     * @return static[]|\Illuminate\Support\Collection
      */
-    public function allNodes(bool $force = false): array
+    public function allNodes(bool $force = false)
     {
         if ($force || $this->queryCallbacks) {
             return $this->fetchAll();
@@ -98,9 +98,9 @@ class Menu extends Model implements Sortable
     /**
      * Fetch all elements.
      *
-     * @return array
+     * @return static[]|\Illuminate\Support\Collection
      */
-    public function fetchAll(): array
+    public function fetchAll()
     {
         return $this->withQuery(function ($query) {
             if (static::withPermission()) {
@@ -112,13 +112,23 @@ class Menu extends Model implements Sortable
     }
 
     /**
-     * determine if enable menu bind permission.
+     * Determine if enable menu bind permission.
      *
      * @return bool
      */
     public static function withPermission()
     {
-        return (bool) config('admin.menu.bind_permission');
+        return config('admin.menu.bind_permission') && config('admin.permission.enable');
+    }
+
+    /**
+     * Determine if enable menu bind role.
+     *
+     * @return bool
+     */
+    public static function withRole()
+    {
+        return (bool) config('admin.permission.enable');
     }
 
     /**

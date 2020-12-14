@@ -122,7 +122,7 @@ class Tools implements Renderable
     protected function prepareTool($tool)
     {
         if ($tool instanceof AbstractTool) {
-            $tool->setParent($this->panel->getParent());
+            $tool->setParent($this->panel->parent());
         }
     }
 
@@ -131,10 +131,10 @@ class Tools implements Renderable
      *
      * @return string
      */
-    public function getResource()
+    public function resource()
     {
         if (is_null($this->resource)) {
-            $this->resource = $this->panel->getParent()->getResource();
+            $this->resource = $this->panel->parent()->resource();
         }
 
         return $this->resource;
@@ -212,7 +212,7 @@ class Tools implements Renderable
      */
     protected function getListPath()
     {
-        $url = $this->getResource();
+        $url = $this->resource();
 
         return url()->isValidUrl($url) ? $url : '/'.trim($url, '/');
     }
@@ -224,7 +224,7 @@ class Tools implements Renderable
      */
     protected function getEditPath()
     {
-        $key = $this->panel->getParent()->getKey();
+        $key = $this->panel->parent()->getKey();
 
         return $this->getListPath().'/'.$key.'/edit';
     }
@@ -236,7 +236,7 @@ class Tools implements Renderable
      */
     protected function getDeletePath()
     {
-        $key = $this->panel->getParent()->getKey();
+        $key = $this->panel->parent()->getKey();
 
         return $this->getListPath().'/'.$key;
     }
@@ -256,7 +256,7 @@ class Tools implements Renderable
 
         return <<<HTML
 <div class="btn-group pull-right btn-mini" style="margin-right: 5px">
-    <a href="{$this->getListPath()}" class="btn btn-sm btn-white ">
+    <a href="{$this->getListPath()}" class="btn btn-sm btn-primary ">
         <i class="feather icon-list"></i><span class="d-none d-sm-inline"> {$list}</span>
     </a>
 </div>
@@ -321,7 +321,7 @@ HTML;
 
         return <<<HTML
 <div class="btn-group pull-right btn-mini" style="margin-right: 5px">
-    <button class="btn btn-sm btn-danger " data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
+    <button class="btn btn-sm btn-white " data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
         <i class="feather icon-trash"></i><span class="d-none d-sm-inline">  {$delete}</span>
     </button>
 </div>

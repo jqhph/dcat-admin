@@ -1,4 +1,8 @@
-<div class="{{$viewClass['form-group']}}">
+<style>
+    td .form-group {margin-bottom: 0 !important;}
+</style>
+
+<div class="{{$viewClass['form-group']}} {{ $class }}">
 
     <label class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
@@ -6,56 +10,43 @@
         <span name="{{$name}}"></span>
         <input name="{{ $name }}[{{ \Dcat\Admin\Form\Field\KeyValue::DEFAULT_FLAG_NAME }}]" type="hidden" />
 
-        <error></error>
+        <div class="help-block with-errors"></div>
 
         <table class="table table-hover">
             <thead>
             <tr>
                 <th>{{ __('Key') }}</th>
                 <th>{{ __('Value') }}</th>
-                <th style="width: 75px;"></th>
+                <th style="width: 85px;"></th>
             </tr>
             </thead>
-            <tbody class="kv-{{ $class }}-table">
+            <tbody class="kv-table">
 
-            @foreach(old("{$column}.keys", ($value ?: [])) as $k => $v)
-
-                @php($keysErrorKey = "{$column}.keys.{$loop->index}")
-                @php($valsErrorKey = "{$column}.values.{$loop->index}")
-
+            @foreach(($value ?: []) as $k => $v)
                 <tr>
                     <td>
-                        <div class="form-group {{ $errors->has($keysErrorKey) ? 'has-error' : '' }}">
+                        <div class="form-group">
                             <div class="col-sm-12">
-                                <error></error>
-                                @if($errors->has($keysErrorKey))
-                                    @foreach($errors->get($keysErrorKey) as $message)
-                                        <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
-                                    @endforeach
-                                @endif
-                                <input name="{{ $name }}[keys][{{ (int) $k }}]" value="{{ old("{$column}.keys.{$k}", $k) }}" class="form-control" required/>
+                                <div class="help-block with-errors"></div>
+
+                                <input name="{{ $name }}[keys][{{ $loop->index }}]" value="{{ $k }}" class="form-control" required/>
 
                             </div>
                         </div>
                     </td>
                     <td>
-                        <div class="form-group {{ $errors->has($valsErrorKey) ? 'has-error' : '' }}">
+                        <div class="form-group">
                             <div class="col-sm-12">
-                                <error></error>
-                                @if($errors->has($valsErrorKey))
-                                    @foreach($errors->get($valsErrorKey) as $message)
-                                        <label class="control-label" for="inputError"><i class="feather icon-x-circle"></i> {{$message}}</label><br/>
-                                    @endforeach
-                                @endif
-                                <input name="{{ $name }}[values][{{ (int) $k }}]" value="{{ old("{$column}.values.{$k}", $v) }}" class="form-control" />
+                                <div class="help-block with-errors"></div>
+                                <input name="{{ $name }}[values][{{ $loop->index }}]" value="{{ $v }}" class="form-control" />
                             </div>
                         </div>
                     </td>
 
                     <td class="form-group">
                         <div>
-                            <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
-                                <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
+                            <div class="kv-remove btn btn-white btn-sm pull-right">
+                                <i class="feather icon-trash">&nbsp;</i>
                             </div>
                         </div>
                     </td>
@@ -67,7 +58,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                    <div class="{{ $class }}-add btn btn-success btn-sm pull-right">
+                    <div class="kv-add btn btn-primary btn-outline btn-sm pull-right">
                         <i class="feather icon-save"></i>&nbsp;{{ __('admin.new') }}
                     </div>
                 </td>
@@ -75,33 +66,47 @@
             </tfoot>
         </table>
     </div>
+
+    <template>
+        <tr>
+            <td>
+                <div class="form-group  ">
+                    <div class="col-sm-12">
+                        <div class="help-block with-errors"></div>
+                        <input name="{{ $name }}[keys][{key}]" class="form-control" required/>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="form-group  ">
+                    <div class="col-sm-12">
+                        <div class="help-block with-errors"></div>
+                        <input name="{{ $name }}[values][{key}]" class="form-control" />
+                    </div>
+                </div>
+            </td>
+
+            <td class="form-group">
+                <div>
+                    <div class="kv-remove btn btn-white btn-sm pull-right">
+                        <i class="feather icon-trash">&nbsp;</i>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </template>
 </div>
 
-<template class="{{$class}}-tpl">
-    <tr>
-        <td>
-            <div class="form-group  ">
-                <div class="col-sm-12">
-                    <error></error>
-                    <input name="{{ $name }}[keys][{key}]" class="form-control" required/>
-                </div>
-            </div>
-        </td>
-        <td>
-            <div class="form-group  ">
-                <div class="col-sm-12">
-                    <error></error>
-                    <input name="{{ $name }}[values][{key}]" class="form-control" />
-                </div>
-            </div>
-        </td>
+<script init="{!! $selector !!}">
+    var index = {{ $count }};
+    $this.find('.kv-add').on('click', function () {
+        var tpl = $this.find('template').html().replace('{key}', index).replace('{key}', index);
+        $this.find('tbody.kv-table').append(tpl);
 
-        <td class="form-group">
-            <div>
-                <div class="{{ $class }}-remove btn btn-white btn-sm pull-right">
-                    <i class="fa fa-trash">&nbsp;</i>{{ __('admin.remove') }}
-                </div>
-            </div>
-        </td>
-    </tr>
-</template>
+        index++;
+    });
+
+    $this.find('tbody.kv-table').on('click', '.kv-remove', function () {
+        $(this).closest('tr').remove();
+    });
+</script>

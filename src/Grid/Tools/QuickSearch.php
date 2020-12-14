@@ -3,11 +3,13 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Support\Traits\Macroable;
 
 class QuickSearch extends AbstractTool
 {
+    use Macroable;
+
     /**
      * @var string
      */
@@ -26,7 +28,7 @@ class QuickSearch extends AbstractTool
     /**
      * @var int rem
      */
-    protected $width = 19;
+    protected $width = 18;
 
     /**
      * @var bool
@@ -34,30 +36,11 @@ class QuickSearch extends AbstractTool
     protected $autoSubmit = true;
 
     /**
-     * @param string|null $name
-     *
-     * @return $this
-     */
-    public function setQueryName(?string $name)
-    {
-        $this->queryName = $name;
-
-        return $this;
-    }
-
-    public function setGrid(Grid $grid)
-    {
-        $grid->setQuickSearchQueryName();
-
-        return parent::setGrid($grid);
-    }
-
-    /**
      * @return string
      */
-    public function queryName()
+    public function getQueryName()
     {
-        return $this->queryName;
+        return $this->parent->makeName($this->queryName);
     }
 
     /**
@@ -91,7 +74,7 @@ class QuickSearch extends AbstractTool
      */
     public function value()
     {
-        return trim(request($this->queryName));
+        return trim(request($this->getQueryName()));
     }
 
     /**
@@ -100,7 +83,7 @@ class QuickSearch extends AbstractTool
     public function formAction()
     {
         return Helper::fullUrlWithoutQuery([
-            $this->queryName,
+            $this->getQueryName(),
             $this->parent->model()->getPageName(),
             '_pjax',
         ]);
@@ -127,7 +110,7 @@ class QuickSearch extends AbstractTool
 
         $data = [
             'action'      => $this->formAction(),
-            'key'         => $this->queryName,
+            'key'         => $this->getQueryName(),
             'value'       => $this->value(),
             'placeholder' => $this->placeholder ?: trans('admin.search'),
             'width'       => $this->width,

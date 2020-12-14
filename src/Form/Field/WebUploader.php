@@ -37,13 +37,13 @@ trait WebUploader
     }
 
     /**
-     * @param bool $disable
+     * @param bool $value
      *
      * @return $this
      */
-    public function disableChunked(bool $disable = true)
+    public function chunked(bool $value = true)
     {
-        $this->options['chunked'] = ! $disable;
+        $this->options['chunked'] = $value;
 
         return $this;
     }
@@ -56,6 +56,8 @@ trait WebUploader
     public function chunkSize(int $size)
     {
         $this->options['chunkSize'] = $size * 1024;
+
+        $this->checked(true);
 
         return $this;
     }
@@ -104,29 +106,33 @@ trait WebUploader
     /**
      * 禁止上传文件后自动更新字段值.
      *
-     * @return $this
-     */
-    public function disableAutoSave()
-    {
-        $this->options['autoUpdateColumn'] = false;
-
-        return $this;
-    }
-
-    /**
-     * Disable remove file.
+     * @param bool $value
      *
      * @return $this
      */
-    public function disableRemove()
+    public function autoSave(bool $value = true)
     {
-        $this->options['disableRemove'] = true;
+        $this->options['autoUpdateColumn'] = $value;
 
         return $this;
     }
 
     /**
-     * Set upload server.
+     * 禁用前端删除功能.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function removeable(bool $value = true)
+    {
+        $this->options['disableRemove'] = ! $value;
+
+        return $this;
+    }
+
+    /**
+     * 设置图片删除地址.
      *
      * @param string $server
      *
@@ -140,35 +146,94 @@ trait WebUploader
     }
 
     /**
-     * Set default options form file field.
+     * 设置上传表单请求参数.
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function withFormData(array $data)
+    {
+        $this->options['formData'] = array_merge($this->options['formData'], $data);
+
+        return $this;
+    }
+
+    /**
+     * 设置删除图片请求参数.
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function withDeleteData(array $data)
+    {
+        $this->options['deleteData'] = array_merge($this->options['deleteData'], $data);
+
+        return $this;
+    }
+
+    /**
+     * 是否开启自动上传.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function autoUpload(bool $value = true)
+    {
+        $this->options['autoUpload'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * 是否开启图片压缩.
+     *
+     * @param bool|array $compress
+     *
+     * @return $this
+     */
+    public function compress($compress = true)
+    {
+        $this->options['compress'] = $compress;
+
+        return $this;
+    }
+
+    /**
+     * 默认上传配置.
      *
      * @return void
      */
-    protected function setupDefaultOptions()
+    protected function setUpDefaultOptions()
     {
+        $key = optional($this->form)->getKey();
+
         $defaultOptions = [
             'name'                => WebUploaderHelper::FILE_NAME,
             'fileVal'             => WebUploaderHelper::FILE_NAME,
             'isImage'             => false,
             'disableRemove'       => false,
-            'chunked'             => true,
+            'chunked'             => false,
             'fileNumLimit'        => 10,
             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
             'disableGlobalDnd'    => true,
             'fileSizeLimit'       => 20971520000, // 20000M
             'fileSingleSizeLimit' => 10485760, // 10M
-            'autoUpdateColumn'    => false, // 上传完图片后自动保存图片路径
             'elementName'         => $this->getElementName(), // 字段name属性值
             'lang'                => trans('admin.uploader'),
+            'compress'            => false,
 
             'deleteData' => [
                 static::FILE_DELETE_FLAG => '',
-                '_token'                 => csrf_token(),
+                'primary_key'            => $key,
             ],
             'formData' => [
                 '_id'           => Str::random(),
                 '_token'        => csrf_token(),
                 'upload_column' => $this->column(),
+                'primary_key'   => $key,
             ],
         ];
 
@@ -198,7 +263,9 @@ trait WebUploader
         ) {
             $this->options['formData']['_method'] = 'PUT';
             $this->options['deleteData']['_method'] = 'PUT';
-            $this->options['autoUpdateColumn'] = true;
+            if (! isset($this->options['autoUpdateColumn'])) {
+                $this->options['autoUpdateColumn'] = true;
+            }
         }
     }
 

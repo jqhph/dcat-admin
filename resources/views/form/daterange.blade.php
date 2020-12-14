@@ -1,6 +1,6 @@
-<div class="{{$viewClass['form-group']}} {!! ($errors->has($errorKey['start'].'start') || $errors->has($errorKey['end'].'end')) ? 'has-error' : ''  !!}">
+<div class="{{$viewClass['form-group']}}">
 
-    <label for="{{$id['start']}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
     <div class="{{$viewClass['field']}}">
 
@@ -12,7 +12,7 @@
                      <span class="input-group-prepend">
                         <span class="input-group-text bg-white"><i class="feather icon-calendar"></i></span>
                     </span>
-                    <input autocomplete="off" type="text" name="{{$name['start']}}" value="{{ old($column['start'], $value['start'] ?? null) }}" class="form-control {{$class['start']}}" style="width: 150px" {!! $attributes !!} />
+                    <input autocomplete="off" type="text" name="{{$name['start']}}" value="{{ $value['start'] ?? null }}" class="form-control {{$class['start']}}" style="width: 150px" {!! $attributes !!} />
                 </div>
             </div>
 
@@ -21,7 +21,7 @@
                      <span class="input-group-prepend">
                         <span class="input-group-text bg-white"><i class="feather icon-calendar"></i></span>
                     </span>
-                    <input autocomplete="off" type="text" name="{{$name['end']}}" value="{{ old($column['end'], $value['end'] ?? null) }}" class="form-control {{$class['end']}}" style="width: 150px" {!! $attributes !!} />
+                    <input autocomplete="off" type="text" name="{{$name['end']}}" value="{{ $value['end'] ?? null }}" class="form-control {{$class['end']}}" style="width: 150px" {!! $attributes !!} />
                 </div>
             </div>
         </div>
@@ -30,3 +30,17 @@
 
     </div>
 </div>
+
+<script require="@moment,@bootstrap-datetimepicker" init="{!! $selector['start'] !!}">
+    var options = {!! admin_javascript_json($options) !!};
+    var $end = $this.parents('.row').find('{!! $selector['end'] !!}');
+
+    $this.datetimepicker(options);
+    $end.datetimepicker($.extend(options, {useCurrent: false}));
+    $this.on("dp.change", function (e) {
+        $('{{ $selector['end'] }}').data("DateTimePicker").minDate(e.date);
+    });
+    $end.on("dp.change", function (e) {
+        $this.data("DateTimePicker").maxDate(e.date);
+    });
+</script>

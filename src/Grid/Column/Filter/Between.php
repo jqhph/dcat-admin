@@ -74,7 +74,7 @@ class Between extends Filter
     {
         $this->dateFormat = $format;
 
-        $this->collectAssets();
+        $this->requireAssets();
 
         return $this;
     }
@@ -102,14 +102,18 @@ class Between extends Filter
         }
 
         if (! isset($value['start'])) {
-            return $model->where($this->getColumnName(), '<=', $value['end']);
+            $this->withQuery($model, 'where', ['<=', $value['end']]);
+
+            return;
         }
 
         if (! isset($value['end'])) {
-            return $model->where($this->getColumnName(), '=>', $value['start']);
+            $this->withQuery($model, 'where', ['>=', $value['start']]);
+
+            return;
         }
 
-        return $model->whereBetween($this->getColumnName(), array_values($value));
+        $this->withQuery($model, 'whereBetween', [array_values($value)]);
     }
 
     protected function addScript()
@@ -164,7 +168,7 @@ JS;
         $active = empty(array_filter($value)) ? '' : 'active';
 
         return <<<EOT
-&nbsp;<span class="dropdown" style="position:absolute">
+&nbsp;<span class="dropdown">
 <form action="{$this->formAction()}" pjax-container style="display: inline-block;">
     <a href="javascript:void(0);" class="{$active}" data-toggle="dropdown">
         <i class="feather icon-filter"></i>
@@ -187,20 +191,15 @@ JS;
                 value="{$value['end']}" 
                 autocomplete="off"/>
         </li>
-        <li class="dropdown-divider"></li>
-        <li class="dropdown-item">
-            <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>
-            <span onclick="Dcat.reload('{$this->urlWithoutFilter()}')" class="btn btn-sm btn-default"><i class="feather icon-rotate-ccw"></i></span>
-        </li>
+        {$this->renderFormButtons()}
     </ul>
     </form>
 </span>
 EOT;
     }
 
-    protected function collectAssets()
+    protected function requireAssets()
     {
-        Admin::collectAssets('moment');
-        Admin::collectAssets('bootstrap-datetimepicker');
+        Admin::requireAssets(['moment', 'bootstrap-datetimepicker']);
     }
 }

@@ -53,11 +53,17 @@ trait CreatesApplication
 
     protected function destory()
     {
-        (new \CreateAdminTables())->down();
-
+        //(new \CreateAdminTables())->down();
+        //(new \CreateAdminSettingsTable())->down();
+        //(new \CreateAdminExtensionsTable())->down();
+        //(new \UpdateAdminMenuTable())->down();
+        //
         (new \CreateTestTables())->down();
 
-        DB::select("delete from `migrations` where `migration` = '2016_01_04_173148_create_admin_tables'");
+        //DB::select("delete from `migrations` where `migration` = '2016_01_04_173148_create_admin_tables'");
+        //DB::select("delete from `migrations` where `migration` = '2020_09_07_090635_create_admin_settings_table'");
+        //DB::select("delete from `migrations` where `migration` = '2020_09_22_015815_create_admin_extensions_table'");
+        //DB::select("delete from `migrations` where `migration` = '2020_11_01_083237_update_admin_menu_table'");
         DB::select("delete from `migrations` where `migration` = '2016_11_22_093148_create_test_tables'");
 
         Artisan::call('migrate:rollback');

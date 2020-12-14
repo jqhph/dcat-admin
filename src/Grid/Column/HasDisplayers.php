@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Column;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
@@ -212,18 +213,10 @@ trait HasDisplayers
 
             $style = $style === 'default' ? 'dark70' : $style;
 
-            $background = Admin::color()->get($style);
+            $background = Admin::color()->get($style, $style);
 
             return "<i class='fa fa-circle' style='font-size: 13px;color: {$background}'></i>&nbsp;&nbsp;";
         });
-    }
-
-    /**
-     * @return $this
-     */
-    public function emptyString()
-    {
-        return $this->display('');
     }
 
     /**
@@ -238,7 +231,7 @@ trait HasDisplayers
     {
         $this->grid->model()->enableTree($showAll, $sortable);
 
-        $this->grid->fetching(function () use ($showAll) {
+        $this->grid->listen(Grid\Events\Fetching::class, function () use ($showAll) {
             if ($this->grid->model()->getParentIdFromRequest()) {
                 $this->grid->disableFilter();
                 $this->grid->disableToolbar();
@@ -262,7 +255,7 @@ trait HasDisplayers
     public function action($action)
     {
         if (! is_subclass_of($action, RowAction::class)) {
-            throw new \InvalidArgumentException("Action class [$action] must be sub-class of [Dcat\Admin\Grid\RowAction]");
+            throw new InvalidArgumentException("Action class [$action] must be sub-class of [Dcat\Admin\Grid\RowAction]");
         }
 
         $grid = $this->grid;
@@ -275,6 +268,23 @@ trait HasDisplayers
                 ->setGrid($grid)
                 ->setColumn($column)
                 ->setRow($this);
+        });
+    }
+
+    /**
+     * Display column as boolean , `✓` for true, and `✗` for false.
+     *
+     * @param array $map
+     * @param bool  $default
+     *
+     * @return $this
+     */
+    public function bool(array $map = [], $default = false)
+    {
+        return $this->display(function ($value) use ($map, $default) {
+            $bool = empty($map) ? $value : Arr::get($map, $value, $default);
+
+            return $bool ? '<i class="feather icon-check font-md-2 font-w-600 text-primary"></i>' : '<i class="feather icon-x font-md-1 font-w-600 text-70"></i>';
         });
     }
 }

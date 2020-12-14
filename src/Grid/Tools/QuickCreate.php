@@ -10,9 +10,12 @@ use Dcat\Admin\Form\Field\Text;
 use Dcat\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\Macroable;
 
 class QuickCreate implements Renderable
 {
+    use Macroable;
+
     /**
      * @var Grid
      */
@@ -63,6 +66,17 @@ class QuickCreate implements Renderable
         $this->addField($field->attribute('style', 'width:180px'));
 
         return $field;
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return Text
+     */
+    public function hidden($column)
+    {
+        return $this->text($column)
+            ->attribute('hidden', 'hidden');
     }
 
     /**
@@ -139,21 +153,6 @@ class QuickCreate implements Renderable
         return $this->text($column, $placeholder)
             ->inputmask(['alias' => 'integer'])
             ->attribute('style', 'width:150px');
-    }
-
-    /**
-     * @param string $column
-     * @param string $placeholder
-     *
-     * @return Field\SelectResource
-     */
-    public function selectResource($column, $placeholder = '')
-    {
-        $field = new Field\SelectResource($column, $this->formatPlaceholder($placeholder));
-
-        $this->addField($field->attribute('style', 'width:150px'));
-
-        return $field;
     }
 
     /**
@@ -251,7 +250,7 @@ class QuickCreate implements Renderable
 
         $field->setView($this->resolveView(get_class($field)));
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         $this->fields->push($field);
 
@@ -296,100 +295,9 @@ class QuickCreate implements Renderable
         return $this;
     }
 
-    protected function script()
-    {
-        $url = $this->action;
-        $method = $this->method;
-
-        $uniqueName = $this->parent->getName();
-
-        $script = <<<JS
-(function () {
-    var ctr = $('.{$this->getElementClass()}'),
-        btn = $('.quick-create-button-{$uniqueName}');
-    
-    btn.on('click', function () {
-        ctr.toggle().click();
-    });
-    
-    ctr.on('click', function () {
-        ctr.find('.create-form').show();
-        ctr.find('.create').hide();
-    });
-    
-    ctr.find('.cancel').on('click', function () {
-        if (btn.length) {
-            ctr.hide();
-            return;
-        }
-        
-        ctr.find('.create-form').hide();
-        ctr.find('.create').show();
-        return false;
-    });
-
-    ctr.find('.create-form').submit(function (e) {
-        e.preventDefault();
-        
-        if (ctr.attr('submitting')) {
-            return;
-        }
-        
-        var btn = $(this).find(':submit').buttonLoading();
-        
-        ctr.attr('submitting', 1);
-    
-        $.ajax({
-            url: '{$url}',
-            type: '{$method}',
-            data: $(this).serialize(),
-            success: function(data) {
-                ctr.attr('submitting', '');
-                btn.buttonLoading(false);
-                console.info(data);
-                
-                if (data.status == true) {
-                    Dcat.success(data.message);
-                    Dcat.reload();
-                    return;
-                }
-                
-                if (typeof data.validation !== 'undefined') {
-                    Dcat.warning(data.message)
-                }
-            },
-            error:function(xhq){
-                btn.buttonLoading(false);
-                ctr.attr('submitting', '');
-                var json = xhq.responseJSON;
-                if (typeof json === 'object') {
-                    if (json.message) {
-                        Dcat.error(json.message);
-                    } else if (json.errors) {
-                        var i, errors = [];
-                        for (i in json.errors) {
-                            errors.push(json.errors[i].join("<br>"));
-                        } 
-                        
-                        Dcat.error(errors.join("<br>"));
-                    }
-                }
-            }
-        });
-        
-        return false;
-    });
-})();
-JS;
-
-        Admin::script($script);
-    }
-
     public function getElementClass()
     {
-        $name = $this->parent->getName();
-
-        return 'quick-create'.($name ? "-{$name}" : '');
+        return $this->parent->makeName('quick-create');
     }
 
     /**
@@ -403,14 +311,15 @@ JS;
             return '';
         }
 
-        $this->script();
-
         $vars = [
             'columnCount'  => $columnCount,
             'fields'       => $this->fields,
             'elementClass' => $this->getElementClass(),
+            'url'          => $this->action,
+            'method'       => $this->method,
+            'uniqueName'   => $this->parent->getName(),
         ];
 
-        return view('admin::grid.quick-create.form', $vars)->render();
+        return Admin::view('admin::grid.quick-create.form', $vars);
     }
 }

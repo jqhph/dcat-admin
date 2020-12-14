@@ -59,7 +59,7 @@ class Administrator extends Model implements AuthenticatableContract
             return $avatar;
         }
 
-        return admin_asset('@admin/images/default-avatar.jpg');
+        return admin_asset(config('admin.default_avatar') ?: '@admin/images/default-avatar.jpg');
     }
 
     /**
@@ -73,6 +73,18 @@ class Administrator extends Model implements AuthenticatableContract
 
         $relatedModel = config('admin.database.roles_model');
 
-        return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'role_id');
+        return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'role_id')->withTimestamps();
+    }
+
+    /**
+     * 判断是否允许查看菜单.
+     *
+     * @param array|Menu $menu
+     *
+     * @return bool
+     */
+    public function canSeeMenu($menu)
+    {
+        return true;
     }
 }

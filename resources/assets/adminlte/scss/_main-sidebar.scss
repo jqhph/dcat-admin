@@ -16,7 +16,19 @@
   }
 
   .nav .nav-item .nav-link {
-    padding: 10px 15px!important;
+    padding: $sidebar-item-padding!important;
+    //margin-right: .5rem;
+  }
+
+  .nav-treeview.nav {
+    .nav-item .nav-link {
+      padding: $sidebar-tree-item-padding!important;
+      //margin-right: 0;
+    }
+
+    //.nav-item .nav-link.active {
+    //    //  padding: 8px 10px 8px 15px!important;
+    //    //}
   }
 }
 
@@ -98,8 +110,11 @@
   }
 
   .menu-open {
+    //background: $sidebar-dark-submenu-bg;
+
     > .nav-treeview {
       display: block;
+      border-radius: 0;
     }
 
     > .nav-link {
@@ -350,7 +365,28 @@
 
 [class*='sidebar-dark-'] {
   // Sidebar background color
-  background-color: $sidebar-dark-bg;
+  //background-color: $sidebar-dark-bg;#7b8b9f
+  background-image: linear-gradient(0deg, lighten($sidebar-dark-bg, 25%), $sidebar-dark-bg);
+
+  //.nav .nav-item .nav-link {
+  //
+  //}
+
+  .nav-treeview.nav {
+     .nav-item .nav-link {
+       //padding: 7px 0 7px 15px!important;
+      font-size: 1rem!important;
+       margin-bottom: 0
+    }
+
+    //.nav-item .nav-link.active {
+    //  padding: $sidebar-tree-item-padding!important;
+    //}
+  }
+
+  .nav-sidebar .nav-link > p > .right {
+    right: .5rem
+  }
 
   // User Panel (resides in the sidebar)
   .user-panel {
@@ -387,7 +423,16 @@
       // border-left: 3px solid transparent;
       &:active {
         color: $sidebar-dark-active-color;
+        //background: $sidebar-dark-active-bg;
+        font-weight: bold;
       }
+      &:hover {
+        color: $sidebar-dark-hover-color;
+      }
+    }
+    i {
+      margin-right: .75rem;
+      color: $sidebar-dark-icon-color;
     }
 
     // Hover and active states
@@ -400,6 +445,8 @@
 
     > .nav-link.active {
       color: $sidebar-dark-active-color;
+      background: $sidebar-dark-active-bg;
+      font-weight: bold;
 
       @if $enable-shadows {
         box-shadow: map-get($elevations, 1);
@@ -408,7 +455,7 @@
 
     // First Level Submenu
     > .nav-treeview {
-      background: $sidebar-dark-submenu-bg;
+      //background: $sidebar-dark-submenu-bg;
     }
   }
 
@@ -440,6 +487,7 @@
         &:focus {
           background-color: $sidebar-dark-submenu-hover-bg;
           color: $sidebar-dark-submenu-hover-color;
+          font-weight: bold;
         }
       }
 
@@ -447,6 +495,7 @@
         &,
         &:hover,
         &:focus {
+          font-weight: bold;
           background-color: $sidebar-dark-submenu-active-bg;
           color: $sidebar-dark-submenu-active-color;
         }
@@ -476,14 +525,14 @@
 }
 
 // colors
-.sidebar-dark-white {
-  .nav-item {
-    & > .nav-link.active {
-      background: rgba($white, .8)!important;
-      box-shadow: none;
-    }
-  }
-}
+//.sidebar-dark-white {
+//  .nav-item {
+//    & > .nav-link.active {
+//      background: rgba($white, .8)!important;
+//      box-shadow: none;
+//    }
+//  }
+//}
 .sidebar-light-primary {
   .nav-item {
     & > .nav-link.active {

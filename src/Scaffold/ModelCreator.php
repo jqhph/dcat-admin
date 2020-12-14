@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Scaffold;
 
+use Dcat\Admin\Exception\AdminException;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Str;
 
 class ModelCreator
@@ -64,7 +66,7 @@ class ModelCreator
         }
 
         if ($this->files->exists($path)) {
-            throw new \Exception("Model [$this->name] already exists!");
+            throw new AdminException("Model [$this->name] already exists!");
         }
 
         $stub = $this->files->get($this->getStub());
@@ -93,11 +95,7 @@ class ModelCreator
      */
     public function getPath($name)
     {
-        $segments = explode('\\', $name);
-
-        array_shift($segments);
-
-        return app_path(implode('/', $segments)).'.php';
+        return Helper::guessClassFileName($name);
     }
 
     /**

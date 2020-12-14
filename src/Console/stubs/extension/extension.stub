@@ -1,26 +1,32 @@
 <?php
 
-namespace :namespace;
+namespace {namespace};
 
-use Dcat\Admin\Extension;
+use Dcat\Admin\Extend\ServiceProvider;
+use Dcat\Admin\Admin;
 
-class :class_name extends Extension
+class {className}ServiceProvider extends ServiceProvider
 {
-    const NAME = ':base_package';
+	{property}
+	protected $css = [
+		'css/index.css',
+	];
 
-    protected $serviceProvider = :class_nameServiceProvider::class;
+	public function register()
+	{
+		//
+	}
 
-    protected $composer = __DIR__.'/../composer.json';
+	public function init()
+	{
+		parent::init();
 
-    protected $assets = __DIR__.'/../resources/assets';
+		//
+		{registerTheme}
+	}
 
-    protected $views = __DIR__.'/../resources/views';
-
-//    protected $lang = __DIR__.'/../resources/lang';
-
-    protected $menu = [
-        'title' => ':title',
-        'path'  => ':path',
-        'icon'  => '',
-    ];
+	public function settingForm()
+	{
+		return new Setting($this);
+	}
 }

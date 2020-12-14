@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid;
 
 use Closure;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -86,12 +87,7 @@ class Row implements Arrayable
      */
     private function formatHtmlAttributes($attributes = [])
     {
-        $attrArr = [];
-        foreach ($attributes as $name => $val) {
-            $attrArr[] = "$name=\"$val\"";
-        }
-
-        return implode(' ', $attrArr);
+        return Helper::buildHtmlAttributes($attributes);
     }
 
     /**
@@ -102,6 +98,8 @@ class Row implements Arrayable
     public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
+
+        return $this;
     }
 
     /**

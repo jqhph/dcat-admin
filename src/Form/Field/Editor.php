@@ -4,7 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
-use Dcat\Admin\Support\JavaScript;
 
 /**
  * TinyMCE editor.
@@ -14,10 +13,6 @@ use Dcat\Admin\Support\JavaScript;
  */
 class Editor extends Field
 {
-    protected static $js = [
-        '@tinymce',
-    ];
-
     protected $options = [
         'plugins' => [
             'advlist',
@@ -84,7 +79,7 @@ class Editor extends Field
      */
     public function imageUrl(string $url)
     {
-        return $this->options(['images_upload_url' => $this->formatUrl(admin_url($url))]);
+        return $this->mergeOptions(['images_upload_url' => $this->formatUrl(admin_url($url))]);
     }
 
     /**
@@ -96,7 +91,7 @@ class Editor extends Field
      */
     public function languageUrl(string $url)
     {
-        return $this->options(['language_url' => $url]);
+        return $this->mergeOptions(['language_url' => $url]);
     }
 
     /**
@@ -108,15 +103,14 @@ class Editor extends Field
      */
     public function height(int $height)
     {
-        return $this->options(['min_height' => $height]);
+        return $this->mergeOptions(['min_height' => $height]);
     }
 
     /**
-     * @return string
+     * @return array
      */
     protected function formatOptions()
     {
-        $this->options['selector'] = '#'.$this->id;
         $this->options['language'] = config('app.locale');
         $this->options['readonly'] = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
 
@@ -124,10 +118,7 @@ class Editor extends Field
             $this->options['images_upload_url'] = $this->defaultImageUploadUrl();
         }
 
-        // 内容更改后保存到隐藏表单
-        $this->options['init_instance_callback'] = JavaScript::make($this->buildSaveContentScript());
-
-        return JavaScript::format($this->options);
+        return $this->options;
     }
 
     /**
@@ -158,25 +149,11 @@ class Editor extends Field
     /**
      * @return string
      */
-    protected function buildSaveContentScript()
-    {
-        return <<<JS
-function (editor) {
-    editor.on('Change', function(e) {
-      $('{$this->getElementClassSelector()}').val(e.level.content);
-    });
-}
-JS;
-    }
-
-    /**
-     * @return string
-     */
     public function render()
     {
-        $this->script = <<<JS
-    tinymce.init({$this->formatOptions()})
-JS;
+        $this->addVariables([
+            'options' => $this->formatOptions(),
+        ]);
 
         return parent::render();
     }

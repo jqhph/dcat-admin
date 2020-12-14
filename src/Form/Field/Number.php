@@ -4,26 +4,13 @@ namespace Dcat\Admin\Form\Field;
 
 class Number extends Text
 {
-    protected static $js = [
-        '@number-input',
+    protected $view = 'admin::form.number';
+
+    protected $options = [
+        'upClass'   => 'primary shadow-0',
+        'downClass' => 'light shadow-0',
+        'center'    => true,
     ];
-
-    public function render()
-    {
-        $this->script = <<<JS
-$('{$this->getElementClassSelector()}:not(.initialized)')
-    .addClass('initialized')
-    .bootstrapNumber({
-        upClass: 'primary',
-        downClass: 'white',
-        center: true
-    });
-JS;
-
-        $this->prepend('')->defaultAttribute('style', 'width: 200px');
-
-        return parent::render();
-    }
 
     /**
      * Set min value of number field.
@@ -54,21 +41,15 @@ JS;
     }
 
     /**
-     * @param mixed $value
-     *
-     * @return int
+     * {@inheritDoc}
      */
     protected function prepareInputValue($value)
     {
-        return (int) $value;
+        return empty($value) ? 0 : $value;
     }
 
     /**
-     * Set or get value of the field.
-     *
-     * @param null $value
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function value($value = null)
     {
@@ -77,5 +58,14 @@ JS;
         }
 
         return parent::value($value);
+    }
+
+    public function render()
+    {
+        $this->defaultAttribute('style', 'width: 140px;flex:none');
+
+        $this->prepend('');
+
+        return parent::render();
     }
 }

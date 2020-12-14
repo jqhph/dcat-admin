@@ -16,7 +16,7 @@ class JavaScript
 
     public function __construct($script)
     {
-        $this->id = '@javascript:'.Str::random();
+        $this->id = 'js('.Str::random().')';
 
         $this->value($script);
     }
@@ -76,12 +76,8 @@ class JavaScript
      */
     public static function format($value)
     {
-        if (! $value) {
-            return $value;
-        }
-
         if (is_array($value) || is_object($value)) {
-            $value = json_encode(Helper::array($value));
+            $value = json_encode(Helper::array($value, false));
         }
 
         foreach (static::all() as $id => $script) {

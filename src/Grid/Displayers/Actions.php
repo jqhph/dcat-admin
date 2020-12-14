@@ -11,7 +11,7 @@ use Illuminate\Contracts\Support\Renderable;
 
 class Actions extends AbstractDisplayer
 {
-    protected static $resolvedWindow;
+    protected static $resolvedDialog;
 
     /**
      * @var array
@@ -227,8 +227,10 @@ class Actions extends AbstractDisplayer
      */
     protected function renderView()
     {
+        $label = trans('admin.show');
+
         return <<<EOT
-<a href="{$this->resource()}/{$this->getKey()}">
+<a href="{$this->resource()}/{$this->getKey()}" title="{$label}">
     <i class="feather icon-eye grid-action-icon"></i>
 </a>&nbsp;
 EOT;
@@ -241,8 +243,10 @@ EOT;
      */
     protected function renderEdit()
     {
+        $label = trans('admin.edit');
+
         return <<<EOT
-<a href="{$this->resource()}/{$this->getKey()}/edit">
+<a href="{$this->resource()}/{$this->getKey()}/edit" title="{$label}">
     <i class="feather icon-edit-1 grid-action-icon"></i>
 </a>&nbsp;
 EOT;
@@ -253,8 +257,8 @@ EOT;
      */
     protected function renderQuickEdit()
     {
-        if (! static::$resolvedWindow) {
-            static::$resolvedWindow = true;
+        if (! static::$resolvedDialog) {
+            static::$resolvedDialog = true;
 
             [$width, $height] = $this->grid->option('dialog_form_area');
 
@@ -264,9 +268,11 @@ EOT;
                 ->success('Dcat.reload()');
         }
 
+        $label = trans('admin.quick_edit');
+
         return <<<EOF
-<a class="{$this->grid->getRowName()}-edit" data-url="{$this->resource()}/{$this->getKey()}/edit" href="javascript:void(0);">
-    <i class="fa fa-clone grid-action-icon"></i>
+<a title="{$label}" class="{$this->grid->getRowName()}-edit" data-url="{$this->resource()}/{$this->getKey()}/edit" href="javascript:void(0);">
+    <i class="feather icon-edit grid-action-icon"></i>
 </a>&nbsp;
 EOF;
     }
@@ -278,8 +284,10 @@ EOF;
      */
     protected function renderDelete()
     {
+        $label = trans('admin.delete');
+
         return <<<EOT
-<a href="javascript:void(0);" data-message="ID - {$this->getKey()}" data-url="{$this->resource()}/{$this->getKey()}" data-action="delete">
+<a title="{$label}" href="javascript:void(0);" data-message="ID - {$this->getKey()}" data-url="{$this->resource()}/{$this->getKey()}" data-action="delete">
     <i class="feather icon-trash grid-action-icon"></i>
 </a>&nbsp;
 EOT;

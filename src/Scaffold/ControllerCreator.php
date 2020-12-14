@@ -2,6 +2,9 @@
 
 namespace Dcat\Admin\Scaffold;
 
+use Dcat\Admin\Exception\AdminException;
+use Dcat\Admin\Support\Helper;
+
 class ControllerCreator
 {
     use GridCreator, FormCreator, ShowCreator;
@@ -44,7 +47,7 @@ class ControllerCreator
      */
     public function create($model)
     {
-        $path = $this->getpath($this->name);
+        $path = $this->getPath($this->name);
         $dir = dirname($path);
 
         if (! is_dir($dir)) {
@@ -52,7 +55,7 @@ class ControllerCreator
         }
 
         if ($this->files->exists($path)) {
-            throw new \Exception("Controller [$this->name] already exists!");
+            throw new AdminException("Controller [$this->name] already exists!");
         }
 
         $stub = $this->files->get($this->getStub());
@@ -131,17 +134,13 @@ class ControllerCreator
     /**
      * Get file path from giving controller name.
      *
-     * @param $name
+     * @param string $name
      *
      * @return string
      */
     public function getPath($name)
     {
-        $segments = explode('\\', $name);
-
-        array_shift($segments);
-
-        return app_path(implode('/', $segments)).'.php';
+        return Helper::guessClassFileName($name);
     }
 
     /**

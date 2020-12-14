@@ -4,9 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 class Ip extends Text
 {
-    public static $js = '@jquery.inputmask';
-    public static $css = '@jquery.inputmask';
-
     protected $rules = ['nullable', 'ip'];
 
     /**
@@ -21,6 +18,8 @@ class Ip extends Text
     public function render()
     {
         $this->inputmask($this->options);
+
+        $this->defaultAttribute('style', 'width: 160px;flex:none');
 
         $this->prepend('<i class="fa fa-laptop fa-fw"></i>')
             ->defaultAttribute('style', 'width: 200px');

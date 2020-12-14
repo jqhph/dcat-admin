@@ -4,6 +4,7 @@
     border: 0;
     min-width: 10rem;
     transform: none;
+    z-index: 20;
 
     .dropdown-item:hover {
       background-color: $dark30;

@@ -9,8 +9,8 @@
             <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                 <ul class="nav navbar-nav">
                     <li class="nav-item mr-auto">
-                        <a class="nav-link menu-toggle" data-widget="pushmenu" style="cursor: pointer">
-                            <i class="text-primary feather icon-disc"></i>
+                        <a class="nav-link menu-toggle" data-widget="pushmenu" style="cursor: pointer;">
+                            <i class="fa fa-bars font-md-2"></i>
                         </a>
                     </li>
                 </ul>
@@ -25,9 +25,9 @@
                 </div>
                 <ul class="nav navbar-nav float-right">
                     {{--User Account Menu--}}
-                    {!! admin_section(AdminSection::NAVBAR_USER_PANEL) !!}
+                    {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_USER_PANEL']) !!}
 
-                    {!! admin_section(AdminSection::NAVBAR_AFTER_USER_PANEL) !!}
+                    {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_AFTER_USER_PANEL']) !!}
                 </ul>
             </div>
         </div>

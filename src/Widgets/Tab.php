@@ -41,7 +41,7 @@ class Tab extends Widget
         $this->data['tabs'][] = [
             'id'      => mt_rand(),
             'title'   => $title,
-            'content' => $content instanceof Renderable ? $content->render() : $content,
+            'content' => $this->toString($this->formatRenderable($content)),
             'type'    => static::TYPE_CONTENT,
         ];
 

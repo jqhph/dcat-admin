@@ -21,7 +21,7 @@ trait HasTools
     /**
      * Setup grid tools.
      */
-    public function setupTools()
+    public function setUpTools()
     {
         $this->tools = new Tools($this);
     }
@@ -207,7 +207,6 @@ trait HasTools
                 $this->tools()->has()
                 || $this->allowExporter()
                 || $this->allowCreateButton()
-                || $this->allowResponsive()
                 || ! empty($this->variables['title'])
             )
         ) {

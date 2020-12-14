@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Components\Form\Field;
 
+use Dcat\Admin\Form\Field;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Component;
 
@@ -45,7 +46,7 @@ class Tree extends Component
     public function elements()
     {
         return [
-            '@container' => ".{$this->name}-tree-wrapper",
+            '@container' => (new Field($this->name))->getElementClassSelector(),
             '@tree'      => '.da-tree',
             '@input'     => sprintf('input[name="%s"][type="hidden"]', $this->name),
         ];

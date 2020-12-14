@@ -80,11 +80,7 @@ class PainterCreatePage extends Page
 
                             $browser->withLastFormGroup(function (Browser $browser) use ($input) {
                                 foreach ($input as $k => $v) {
-                                    $browser->script(
-                                        <<<JS
-                                    $('{$browser->resolver->format('.'.$k)}').val('$v');
-JS
-                                    );
+                                    $browser->fillFieldValue($k, $v);
                                 }
                             });
                         }

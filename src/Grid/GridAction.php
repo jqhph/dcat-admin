@@ -16,11 +16,6 @@ abstract class GridAction extends Action
     protected $parent;
 
     /**
-     * @var string
-     */
-    public $selectorPrefix = '.grid-action-';
-
-    /**
      * @param Grid $grid
      *
      * @return $this

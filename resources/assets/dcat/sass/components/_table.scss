@@ -9,41 +9,50 @@
   }
 }
 
-table.dataTable thead tr {
+.table-text-center {
+  th {
+    text-align: center;
+  }
+  td {
+    text-align: center;
+  }
+}
+
+table.data-table thead tr {
   background: transparent;
 }
 
-.table th {
-  padding: .9rem;
+.table thead th {
+  padding: .65rem;
+  font-weight: 600;
   text-transform: capitalize;
   font-size: .95rem!important;
+  border-bottom: 1px solid $table-border-color;
+  //background: #f4f7fa;
+  //border-top: 1px solid $table-border-color!important;
 }
 
-table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+table.data-table thead th, table.data-table thead td, table.data-table tfoot th, table.data-table tfoot td {
   font-size: .9rem!important;
 }
 
-table.dataTable:not(.table-bordered) thead tr th {
+table.data-table:not(.table-bordered) thead tr th {
   text-transform: capitalize;
 }
 
-table.dataTable {
+table.data-table {
   border: 0;
 }
 
 .table td {
   padding: .55rem;
-  height: 62px;
+  height: 55px;
   line-height: 1.42857;
+  border-color: $table-border-color;
 }
 
 .table tr td:first-child, .table tr th:first-child {
-  padding-left: 1.4rem;
-}
-
-
-.card-header.custom-data-table-header .table-responsive .top .dataTables_filter .form-control {
-  box-shadow: $shadow-100;
+  padding-left: 2rem;
 }
 
 .quick-search-clear {
@@ -58,6 +67,9 @@ table.dataTable {
   margin-bottom: 0!important;
   overflow-x: inherit;
 }
+.table-responsive[data-pattern=priority-columns] {
+  overflow-y: auto!important;
+}
 .custom-data-table-header .table-responsive {
   overflow: visible!important;
   padding-bottom: 0!important;
@@ -69,41 +81,42 @@ table.dataTable {
 // 解决 rwd-table 下拉选框显示bug
 
 
-table.table-bordered.dataTable:not(.complex-headers) tbody th, table.table-bordered.dataTable tbody td {
+table.table-bordered.data-table:not(.complex-headers) tbody th, table.table-bordered.data-table tbody td {
   border-bottom-width: 1px
 }
-table.table-bordered.dataTable th:not(.complex-headers), table.table-bordered.dataTable td {
+table.table-bordered.data-table th:not(.complex-headers), table.table-bordered.data-table td {
   border-left-width: 1px;
 }
-table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable td:last-child, table.table-bordered.dataTable td:last-child {
+table.table-bordered.data-table th:last-child, table.table-bordered.data-table th:last-child, table.table-bordered.data-table td:last-child, table.table-bordered.data-table td:last-child {
   border-right-width: 1px;
 }
 
-table.dataTable.complex-headers {
-  border: 1px solid $table-border-color;
+table.data-table.complex-headers {
+  border: 1px solid $table-border-color-darker;
 }
-table.dataTable.complex-headers thead th, table.dataTable.complex-headers thead td, table.dataTable.complex-headers tfoot th, table.dataTable.complex-headers tfoot td {
-  border-bottom: 1px solid $table-border-color;
-  border-right: 1px solid $table-border-color;
+table.data-table.complex-headers thead th, table.data-table.complex-headers thead td, table.data-table.complex-headers tfoot th, table.data-table.complex-headers tfoot td {
+  border-bottom: 1px solid $table-border-color-darker;
+  border-right: 1px solid $table-border-color-darker;
 }
 
-.dataTable.table-bordered:not(.complex-headers) thead th {
+.data-table.table-bordered:not(.complex-headers) thead th {
   border-right: 1px solid darken($border-color, 3%);
   border-bottom: 1px solid darken($border-color, 3%);
 }
-.dataTable.table-bordered:not(.complex-headers) tr:first-child th {
+.data-table.table-bordered:not(.complex-headers) tr:first-child th {
   border-top: 1px solid darken($border-color, 3%);
 }
-.dataTable.table-bordered:not(.complex-headers) thead tr th:first-child {
+.data-table.table-bordered:not(.complex-headers) thead tr th:first-child {
   border-left: 1px solid darken($border-color, 3%);
 }
 
 /* ------------------- 多表头 --------------------- */
-table.table-bordered.dataTable.complex-headers {
+table.table-bordered.data-table.complex-headers {
   border-spacing: 0;
+  margin-top: 12px!important;
+  box-shadow: $shadow;
 
   thead th {
-    text-align: center;
     vertical-align: middle;
     font-size: 1rem!important;
   }
@@ -113,8 +126,8 @@ table.table-bordered.dataTable.complex-headers {
     border-radius: 0;
 
     td {
-      border-bottom: 1px solid lighten($table-border-color, 4%);
-      border-right: 1px solid lighten($table-border-color, 4%);
+      border-bottom: 1px solid lighten($table-border-color-darker, 4%);
+      border-right: 1px solid lighten($table-border-color-darker, 4%);
     }
 
     td:first-child {
@@ -138,3 +151,164 @@ table.table-bordered.dataTable.complex-headers {
   color: $font-color;
   background-color: lighten($dark30, 1%);
 }
+
+/*--------------------------------------------------- */
+
+.table.default-table {
+  tr {
+    box-shadow: none!important;
+  }
+
+  td {
+    border-top: 1px solid #f0f4f8!important;
+    border-radius: 0!important;
+  }
+
+  thead th {
+    border-bottom: 2px solid #f0f4f8!important;
+  }
+}
+
+.table.default-table.table-bordered th, .table.default-table.table-bordered td {
+  border: 1px solid #f0f4f8!important;
+}
+
+
+
+$table-border-color: #eff3f8;
+$table-bg: darken(#f7f7f9, 3.8%);
+//$table-bg: #f7f7f9;
+
+.table-collapse {
+  //table.data-table thead th {
+  //  font-weight: 500;
+  //}
+
+  .custom-data-table.data-table tbody tr td:first-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .custom-data-table.data-table tbody tr td:last-child{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .custom-data-table.data-table tbody tr:first-child td:first-child {
+    border-top-left-radius: $card-border-radius;
+  }
+  .custom-data-table.data-table tbody tr:first-child td:last-child{
+    border-top-right-radius: $card-border-radius;
+  }
+
+  .custom-data-table.data-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: $card-border-radius;
+  }
+  .custom-data-table.data-table tbody tr:last-child td:last-child{
+    border-bottom-right-radius: $card-border-radius;
+  }
+
+  .table.custom-data-table {
+    padding: 3px 5px 5px;
+  }
+
+  .table-fixed-left .table.custom-data-table {
+    padding: 3px 0 0 5px;
+  }
+  .table-fixed-right .table.custom-data-table {
+    padding: 3px 5px 0 0;
+  }
+  .table-fixed th {
+    background: $table-bg;
+  }
+}
+
+
+body:not(.dark-mode) {
+  .table-collapse {
+    box-shadow: $shadow;
+    background: $table-bg;
+    margin-top: 1rem;
+
+    .custom-data-table {
+      border-spacing: 0;
+      margin-top: 0!important;
+      background-color: $table-bg;
+    }
+
+    table.custom-data-table thead th {
+      height: 38px;
+      vertical-align: middle;
+    }
+
+    .custom-data-table tbody td {
+      border-top: 1px solid $table-border-color;
+      height: $table-td-height;
+    }
+
+    .custom-data-table tbody tr:first-child td {
+      border-top: 0
+    }
+
+    table.custom-data-table tbody tr {
+      box-shadow: none;
+    }
+
+    .quick-create td {
+      background: #f7f7f9 !important;
+      border-radius: 0;
+    }
+
+    .table-wrap {
+      table.custom-data-table thead th {
+        height: 19px;
+      }
+    }
+  }
+}
+
+body.dark-mode {
+  .table-collapse {
+    table {
+      border-spacing: 0 0.24rem;
+    }
+
+    table.custom-data-table.data-table tbody td {
+      height: 56px;
+    }
+
+    .table.custom-data-table {
+      padding: 3px 10px 10px;
+    }
+
+    .table-fixed-left .table.custom-data-table {
+      padding: 3px 0 0 10px;
+    }
+    .table-fixed-right .table.custom-data-table {
+      padding: 3px 10px 0 0;
+    }
+  }
+
+  //.table-fixed-left .table.custom-data-table {
+  //  padding: 5px 0 0 10px;
+  //}
+  //.table-fixed-right .table.custom-data-table {
+  //  padding: 5px 10px 0 0;
+  //}
+}
+
+.column-selector {
+  margin: 0 5px;
+  
+  .dropdown-menu {
+    z-index: 100;
+  }
+
+  .selectors {
+    padding: 0 1rem;
+    height: auto;
+    max-height: 500px;
+    overflow-x: hidden;
+  }
+}
+
+@include scrollbar('.column-selector .selectors')

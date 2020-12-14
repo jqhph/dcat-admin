@@ -2,10 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
-use Dcat\Admin\Admin;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Arr;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Str;
 
 class Dropdown extends Widget
@@ -17,17 +14,14 @@ class Dropdown extends Widget
      */
     protected static $dividerHtml = '<li class="dropdown-divider"></li>';
 
-    /**
-     * @var string
-     */
-    protected $template = '<span class="dropdown" style="display:inline-block">%s<ul class="dropdown-menu">%s</ul></span>';
+    protected $view = 'admin::widgets.dropdown';
 
     /**
      * @var array
      */
     protected $button = [
         'text'  => null,
-        'class' => 'btn btn-sm btn-white  waves-effect',
+        'class' => 'btn btn-sm btn-white waves-effect',
         'style' => null,
     ];
 
@@ -51,11 +45,6 @@ class Dropdown extends Widget
      */
     protected $click = false;
 
-    /**
-     * @var array
-     */
-    protected $firstOptions = [];
-
     public function __construct(array $options = [])
     {
         $this->options($options);
@@ -69,23 +58,13 @@ class Dropdown extends Widget
      *
      * @return $this
      */
-    public function options($options = [], string $title = null)
+    public function options($options = [], ?string $title = null)
     {
         if (! $options) {
             return $this;
         }
 
-        if ($options instanceof Arrayable) {
-            $options = $options->toArray();
-        }
-
-        $options = (array) $options;
-
-        if (! $this->options) {
-            $this->firstOptions = &$options;
-        }
-
-        $this->options[] = [$title, &$options];
+        $this->options[] = [$title, Helper::array($options)];
 
         return $this;
     }
@@ -105,23 +84,13 @@ class Dropdown extends Widget
     }
 
     /**
-     * Without text of button.
-     *
-     * @return $this
-     */
-    public function withoutTextButton()
-    {
-        return $this->button('');
-    }
-
-    /**
      * Set the button class.
      *
      * @param string $class
      *
      * @return $this
      */
-    public function buttonClass(string $class)
+    public function buttonClass(?string $class)
     {
         $this->button['class'] = $class;
 
@@ -135,7 +104,7 @@ class Dropdown extends Widget
      *
      * @return $this
      */
-    public function buttonStyle(string $style)
+    public function buttonStyle(?string $style)
     {
         $this->button['style'] = $style;
 
@@ -181,69 +150,13 @@ class Dropdown extends Widget
     {
         $this->click = true;
 
-        $this->buttonId = 'dropd_'.Str::random(8);
+        $this->buttonId = 'dropd-'.Str::random(8);
 
         if ($defaultLabel !== null) {
             $this->button($defaultLabel);
         }
 
         return $this;
-    }
-
-    /**
-     * Set the template of dropdown menu.
-     *
-     * @param string|\Closure|Renderable $template
-     *
-     * @return $this
-     */
-    public function template($template)
-    {
-        $this->template = $this->toString($template);
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    protected function renderButton()
-    {
-        if (is_null($this->button['text']) && ! $this->click) {
-            return;
-        }
-
-        $text = $this->button['text'];
-        $class = $this->button['class'];
-        $style = $this->button['style'];
-
-        if ($this->click && ! $text) {
-            if (Arr::isAssoc($this->firstOptions)) {
-                $text = array_keys($this->firstOptions)[0];
-            } else {
-                $text = $this->firstOptions[0] ?? '';
-            }
-
-            if (is_array($text)) {
-                $text = $text['label'] ?? current($text);
-            }
-        }
-
-        return str_replace(
-            ['{id}', '{class}', '{style}', '{text}'],
-            [
-                $this->buttonId,
-                $class,
-                $style ? "style='$style'" : '',
-                $text ? " $text &nbsp;" : '',
-            ],
-            <<<'HTML'
-<a id="{id}" class="{class} dropdown-toggle " data-toggle="dropdown" href="javascript:void(0)" {style}>
-    <stub>{text}</stub>
-    <span class="caret"></span>
-</a>
-HTML
-        );
     }
 
     /**
@@ -259,21 +172,21 @@ HTML
      */
     protected function renderOptions()
     {
-        $opt = '';
+        $html = '';
 
         foreach ($this->options as &$items) {
             [$title, $options] = $items;
 
             if ($title) {
-                $opt .= "<li class='dropdown-header'>$title</li>";
+                $html .= "<li class='dropdown-header'>$title</li>";
             }
 
             foreach ($options as $key => $val) {
-                $opt .= $this->renderOption($key, $val);
+                $html .= $this->renderOption($key, $val);
             }
         }
 
-        return $opt;
+        return $html;
     }
 
     /**
@@ -308,46 +221,13 @@ HTML
      */
     public function render()
     {
-        if (is_null($this->button['text']) && ! $this->options) {
-            return '';
-        }
+        $this->addVariables([
+            'options'  => $this->renderOptions(),
+            'button'   => $this->button,
+            'buttonId' => $this->buttonId,
+            'click'    => $this->click,
+        ]);
 
-        $button = $this->renderButton();
-
-        if (! $this->options) {
-            return $button;
-        }
-
-        $opt = $this->renderOptions();
-
-        if (! $button) {
-            return sprintf('<ul class="dropdown-menu">%s</ul>', $opt);
-        }
-
-        $label = $this->button['text'];
-
-        if ($this->click) {
-            Admin::script(
-                <<<JS
-(function () {
-    var btn = $('#{$this->buttonId}'), _a = btn.parent().find('ul li a'), text = '$label';                
-    _a.on('click', function () {
-        btn.find('stub').html($(this).html() + ' &nbsp;');
-    });
-    if (text) {
-        btn.find('stub').html(text + ' &nbsp;');
-    } else {
-        (!_a.length) || btn.find('stub').html($(_a[0]).html() + ' &nbsp;');
-    }
-})();
-JS
-            );
-        }
-
-        return sprintf(
-            $this->template,
-            $button,
-            $opt
-        );
+        return parent::render();
     }
 }

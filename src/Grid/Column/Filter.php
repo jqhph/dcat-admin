@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Column;
 
 use Dcat\Admin\Grid\Column;
+use Dcat\Admin\Grid\Events\Fetching;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
@@ -22,7 +23,7 @@ abstract class Filter implements Renderable
     /**
      * @var string
      */
-    protected $getColumnName;
+    protected $columnName;
 
     /**
      * @var \Closure[]
@@ -41,7 +42,7 @@ abstract class Filter implements Renderable
     {
         $this->parent = $column;
 
-        $this->parent->grid()->fetching(function () {
+        $this->parent->grid()->listen(Fetching::class, function () {
             $this->addResetButton();
 
             $this->parent->grid()->model()->treeUrlWithoutQuery(
@@ -81,7 +82,7 @@ abstract class Filter implements Renderable
      */
     public function setColumnName(string $name)
     {
-        $this->getColumnName = $name;
+        $this->columnName = $name;
 
         return $this;
     }
@@ -93,7 +94,15 @@ abstract class Filter implements Renderable
      */
     public function getColumnName()
     {
-        return $this->getColumnName ?: $this->parent->getName();
+        return str_replace(['.', '->'], '_', $this->getOriginalColumnName());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOriginalColumnName()
+    {
+        return $this->columnName ?: $this->parent->getName();
     }
 
     /**
@@ -101,9 +110,9 @@ abstract class Filter implements Renderable
      */
     public function getQueryName()
     {
-        return $this->parent->grid()->getName().
-            '_filter_'.
-            $this->getColumnName();
+        return $this->parent->grid()->makeName(
+            'filter-'.$this->getColumnName()
+        );
     }
 
     /**
@@ -116,6 +125,18 @@ abstract class Filter implements Renderable
     public function value($default = '')
     {
         return request($this->getQueryName(), $default);
+    }
+
+    /**
+     * @param mixed $model
+     * @param string $query
+     * @param mixed array $params
+     *
+     * @return void
+     */
+    protected function withQuery($model, string $query, array $params)
+    {
+        Helper::withQueryCondition($model, $this->getOriginalColumnName(), $query, $params);
     }
 
     /**
@@ -133,6 +154,20 @@ abstract class Filter implements Renderable
         return $this->parent->addHeader(
             "&nbsp;<a class='feather icon-rotate-ccw' href='{$this->urlWithoutFilter()}' {$style}></a>"
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderFormButtons()
+    {
+        return <<<HMLT
+<li class="dropdown-divider"></li>
+<li>
+    <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>&nbsp;
+    <a href="{$this->urlWithoutFilter()}" class="btn btn-sm btn-default"><i class="feather icon-rotate-ccw"></i></a>
+</li>
+HMLT;
     }
 
     /**

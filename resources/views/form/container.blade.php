@@ -4,23 +4,12 @@
         <div class="pull-right">{!! $form->renderTools() !!}</div>
     </div>
 @endif
-<div class="box-body" {!! $tabObj->isEmpty() ? 'style="margin-top: 10px"' : '' !!} >
+<div class="box-body" {!! $tabObj->isEmpty() && !$form->hasRows() ? 'style="margin-top: 6px"' : '' !!} >
     @if(!$tabObj->isEmpty())
         @include('admin::form.tab', compact('tabObj', 'form'))
     @else
         <div class="fields-group">
-            @if($form->hasRows())
-                <div class="ml-2 mb-2">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @foreach($form->rows() as $row)
-                        {!! $row->render() !!}
-                    @endforeach
-                </div>
-            @else
-                @foreach($form->fields() as $field)
-                    {!! $field->render() !!}
-                @endforeach
-            @endif
+            @include('admin::form.fields', ['rows' => $form->rows(), 'fields' => $form->fields(), 'layout' => $form->layout()])
         </div>
     @endif
 </div>

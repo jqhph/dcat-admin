@@ -10,18 +10,14 @@ trait PlainInput
 
     public function prepend($string)
     {
-        if (is_null($this->prepend)) {
-            $this->prepend = $string;
-        }
+        $this->prepend = $string;
 
         return $this;
     }
 
     public function append($string)
     {
-        if (is_null($this->append)) {
-            $this->append = $string;
-        }
+        $this->append = $string;
 
         return $this;
     }
@@ -31,14 +27,5 @@ trait PlainInput
         if (empty($this->view)) {
             $this->view = 'admin::form.input';
         }
-    }
-
-    protected function defaultAttribute($attribute, $value)
-    {
-        if (! array_key_exists($attribute, $this->attributes)) {
-            $this->attribute($attribute, $value);
-        }
-
-        return $this;
     }
 }

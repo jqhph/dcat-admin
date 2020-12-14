@@ -1,17 +1,18 @@
 <?php
 
-namespace :namespace\Http\Controllers;
+namespace {namespace}\Http\Controllers;
 
 use Dcat\Admin\Layout\Content;
+use Dcat\Admin\Admin;
 use Illuminate\Routing\Controller;
 
-class :class_nameController extends Controller
+class {className}Controller extends Controller
 {
     public function index(Content $content)
     {
         return $content
             ->title('Title')
             ->description('Description')
-            ->body(view(':base_package::index'));
+            ->body(Admin::view('{name}::index'));
     }
 }

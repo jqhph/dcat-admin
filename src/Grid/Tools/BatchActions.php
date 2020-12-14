@@ -56,11 +56,11 @@ class BatchActions extends AbstractTool
     }
 
     /**
-     * Disable delete And Hode SelectAll Checkbox.
+     * Disable delete And Hide SelectAll Checkbox.
      *
      * @return $this
      */
-    public function disableDeleteAndHodeSelectAll()
+    public function disableDeleteAndHideSelectAll()
     {
         $this->enableDelete = false;
 
@@ -98,34 +98,6 @@ class BatchActions extends AbstractTool
     }
 
     /**
-     * Scripts of BatchActions button groups.
-     */
-    protected function setupScript()
-    {
-        $name = $this->parent->getName();
-        $allName = $this->parent->getSelectAllName();
-        $rowName = $this->parent->getRowName();
-
-        $selected = trans('admin.grid_items_selected');
-
-        $script = <<<JS
-$('.{$rowName}-checkbox').on('change', function () {
-    var btn = $('.{$allName}-btn'), selected = Dcat.grid.selectedRows('$name').length;
-    if (selected) {
-        btn.show()
-    } else {
-        btn.hide()
-    }
-    setTimeout(function () {
-         btn.find('.selected').html("{$selected}".replace('{n}', selected));
-    }, 50)
-});
-JS;
-
-        Admin::script($script);
-    }
-
-    /**
      * Render BatchActions button groups.
      *
      * @return string
@@ -140,15 +112,15 @@ JS;
             return '';
         }
 
-        $this->setupScript();
         $this->prepareActions();
 
         $data = [
             'actions'                 => $this->actions,
             'selectAllName'           => $this->parent->getSelectAllName(),
             'isHoldSelectAllCheckbox' => $this->isHoldSelectAllCheckbox,
+            'parent'                  => $this->parent,
         ];
 
-        return view('admin::grid.batch-actions', $data)->render();
+        return Admin::view('admin::grid.batch-actions', $data);
     }
 }

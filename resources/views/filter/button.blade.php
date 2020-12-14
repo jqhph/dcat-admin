@@ -5,6 +5,8 @@
             @if($scopes->isNotEmpty()) style="border-right: 0" @endif
     >
         <i class="feather icon-filter"></i>@if($show_filter_text)<span class="d-none d-sm-inline">&nbsp;&nbsp;{{ trans('admin.filter') }}</span>@endif
+
+        @if($valueCount) &nbsp;({!! $valueCount !!}) @endif
     </button>
     @if($scopes->isNotEmpty())
         <ul class="dropdown-menu" role="menu">
@@ -14,7 +16,7 @@
             <li role="separator" class="dropdown-divider"></li>
             <li class="dropdown-item"><a href="{{ $url_no_scopes }}">{{ trans('admin.cancel') }}</a></li>
         </ul>
-        <button type="button" class="btn btn-primary" data-toggle="dropdown" style="padding: 0.75rem 1rem !important;border-left: 0">
+        <button type="button" class="btn btn-primary" data-toggle="dropdown" style="border-left: 0">
             @if($current_label) <span>{{ $current_label }}&nbsp;</span>@endif <i class="feather icon-chevron-down"></i>
         </button>
     @endif

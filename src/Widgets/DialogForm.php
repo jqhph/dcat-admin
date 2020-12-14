@@ -28,7 +28,7 @@ class DialogForm
         'query'          => null,
         'lang'           => null,
         'forceRefresh'   => false,
-        'disableReset'   => false,
+        'reset'          => true,
     ];
 
     /**
@@ -45,8 +45,6 @@ class DialogForm
         $this->title($title);
 
         $this->url($url);
-
-        $this->autoRender();
     }
 
     /**
@@ -106,13 +104,15 @@ class DialogForm
     }
 
     /**
-     * 禁用重置按钮.
+     * 重置按钮.
+     *
+     * @param bool $value
      *
      * @return $this
      */
-    public function disableResetButton()
+    public function resetButton(bool $value = true)
     {
-        $this->options['disableReset'] = true;
+        $this->options['reset'] = $value;
 
         return $this;
     }
@@ -229,7 +229,7 @@ class DialogForm
      */
     protected function render()
     {
-        $this->setupOptions();
+        $this->setUpOptions();
 
         $opts = json_encode($this->options);
 
@@ -255,25 +255,11 @@ JS
     }
 
     /**
-     * 自动渲染.
-     *
-     * @return void
-     */
-    protected function autoRender()
-    {
-        Content::composed(function () {
-            if ($results = Helper::render($this->render())) {
-                Admin::html($results);
-            }
-        });
-    }
-
-    /**
      * 配置选项初始化.
      *
      * @return void
      */
-    protected function setupOptions()
+    protected function setUpOptions()
     {
         $this->options['lang'] = [
             'submit' => trans('admin.submit'),
@@ -302,8 +288,8 @@ JS
             return;
         }
 
-        Admin::baseCss([]);
-        Admin::baseJs([]);
+        Admin::baseCss([], false);
+        Admin::baseJs([], false);
         Admin::fonts(false);
         Admin::style('.form-content{ padding-top: 7px }');
 
@@ -315,10 +301,31 @@ JS
         $form->disableFooter();
 
         $form->width(9, 2);
-        $form->hidden('_token')->value(csrf_token());
+
+        $form->composing(function ($form) {
+            static::addScript($form);
+        });
 
         Content::composing(function (Content $content) {
             $content->view(static::$contentView);
         });
+    }
+
+    protected static function addScript(Form $form)
+    {
+        $confirm = json_encode($form->builder()->confirm);
+
+        Admin::script(
+            <<<JS
+Dcat.FormConfirm = {$confirm};
+JS
+        );
+    }
+
+    public function __destruct()
+    {
+        if ($results = Helper::render($this->render())) {
+            Admin::html($results);
+        }
     }
 }

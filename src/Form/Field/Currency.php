@@ -4,12 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 class Currency extends Text
 {
-    public static $js = '@jquery.inputmask';
-    public static $css = '@jquery.inputmask';
-
-    /**
-     * @var string
-     */
     protected $symbol = '$';
 
     /**
@@ -22,6 +16,7 @@ class Currency extends Text
         'radixPoint'         => '.',
         'prefix'             => '',
         'removeMaskOnSubmit' => true,
+        'rightAlign'         => false,
     ];
 
     /**
@@ -47,7 +42,17 @@ class Currency extends Text
      */
     public function digits($digits)
     {
-        return $this->options(compact('digits'));
+        return $this->mergeOptions(compact('digits'));
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected function prepareInputValue($value)
+    {
+        return is_string($value) ? str_replace(',', '', $value) : $value;
     }
 
     /**

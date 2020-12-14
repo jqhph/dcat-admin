@@ -272,7 +272,9 @@ class Group extends AbstractFilter
 
         $group = Arr::get($inputs, "{$this->id}_group");
 
-        call_user_func($this->builder, $this);
+        if ($this->group->isEmpty()) {
+            call_user_func($this->builder, $this);
+        }
 
         if ($query = $this->group->get($group)) {
             return $this->buildCondition(...$query['condition']);
@@ -297,13 +299,13 @@ JS;
     /**
      * {@inheritdoc}
      */
-    public function variables()
+    public function defaultVariables()
     {
         $select = request("{$this->id}_group");
 
         $default = $this->group->get($select) ?: $this->group->first();
 
-        return array_merge(parent::variables(), [
+        return array_merge(parent::defaultVariables(), [
             'group_name' => $this->name,
             'default'    => $default,
         ]);

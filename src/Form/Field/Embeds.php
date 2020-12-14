@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\EmbeddedForm;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -54,11 +55,11 @@ class Embeds extends Field
      */
     public function getValidator(array $input)
     {
-        if (! array_key_exists($this->column, $input)) {
+        if (! Arr::has($input, $this->column)) {
             return false;
         }
 
-        $input = Arr::only($input, $this->column);
+        //$input = Arr::only($input, $this->column);
 
         $rules = $attributes = $messages = [];
 
@@ -203,7 +204,7 @@ class Embeds extends Field
     {
         $column = array_flip($column);
 
-        foreach ($input[$this->column] as $key => $value) {
+        foreach (Arr::get($input, $this->column) as $key => $value) {
             if (! array_key_exists($key, $column)) {
                 continue;
             }
@@ -232,19 +233,7 @@ class Embeds extends Field
      */
     protected function getEmbeddedData()
     {
-        if ($old = old($this->column)) {
-            return $old;
-        }
-
-        if (empty($this->value)) {
-            return [];
-        }
-
-        if (is_string($this->value)) {
-            return json_decode($this->value, true);
-        }
-
-        return (array) $this->value;
+        return Helper::array($this->value);
     }
 
     /**
@@ -272,6 +261,8 @@ class Embeds extends Field
      */
     public function render()
     {
-        return parent::render()->with(['form' => $this->buildEmbeddedForm()]);
+        $this->addVariables(['form' => $this->buildEmbeddedForm()]);
+
+        return parent::render();
     }
 }

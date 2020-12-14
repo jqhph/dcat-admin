@@ -2,41 +2,17 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Illuminate\Contracts\Support\Renderable;
 
 class Box extends Widget
 {
-    /**
-     * @var string
-     */
     protected $view = 'admin::widgets.box';
-
-    /**
-     * @var string
-     */
     protected $title = 'Box header';
-
-    /**
-     * @var string
-     */
     protected $content = 'here is the box content.';
-
-    /**
-     * @var array
-     */
     protected $tools = [];
-
-    /**
-     * @var string
-     */
     protected $padding;
 
-    /**
-     * Box constructor.
-     *
-     * @param string $title
-     * @param string $content
-     */
     public function __construct($title = '', $content = '')
     {
         if ($title) {
@@ -71,7 +47,11 @@ class Box extends Widget
      */
     public function content($content)
     {
-        $this->content = $content;
+        if ($content instanceof LazyGrid) {
+            $content->simple();
+        }
+
+        $this->content = $this->formatRenderable($content);
 
         return $this;
     }
@@ -161,7 +141,7 @@ class Box extends Widget
      *
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
         return [
             'title'      => $this->title,

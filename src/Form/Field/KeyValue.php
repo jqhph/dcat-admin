@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 class KeyValue extends Field
@@ -11,22 +11,13 @@ class KeyValue extends Field
     const DEFAULT_FLAG_NAME = '_def_';
 
     /**
-     * @var array
-     */
-    protected $value = ['' => ''];
-
-    /**
-     * Fill data to the field.
-     *
-     * @param array $data
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function formatFieldData($data)
     {
         $this->data = $data;
 
-        return Arr::get($data, $this->column, $this->value);
+        return Helper::array(Arr::get($data, $this->normalizeColumn(), $this->value));
     }
 
     /**
@@ -69,30 +60,6 @@ class KeyValue extends Field
         return $input;
     }
 
-    protected function setupScript()
-    {
-        $value = old($this->column, $this->value());
-
-        $number = $value ? count($value) : 0;
-        $class = $this->getElementClassString();
-
-        $this->script = <<<JS
-(function () {
-    var index = {$number};
-    $('.{$class}-add').on('click', function () {
-        var tpl = $('template.{$class}-tpl').html().replace('{key}', index).replace('{key}', index);
-        $('tbody.kv-{$class}-table').append(tpl);
-        
-        index++;
-    });
-    
-    $('tbody').on('click', '.{$class}-remove', function () {
-        $(this).closest('tr').remove();
-    });
-})();
-JS;
-    }
-
     protected function prepareInputValue($value)
     {
         unset($value[static::DEFAULT_FLAG_NAME]);
@@ -106,9 +73,11 @@ JS;
 
     public function render()
     {
-        $this->setupScript();
+        $value = $this->value();
 
-        Admin::style('td .form-group {margin-bottom: 0 !important;}');
+        $this->addVariables([
+            'count' => $value ? count($value) : 0,
+        ]);
 
         return parent::render();
     }

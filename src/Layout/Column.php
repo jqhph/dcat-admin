@@ -27,6 +27,8 @@ class Column implements Renderable
      */
     public function __construct($content, $width = 12)
     {
+        $width = $this->normalizeWidth($width);
+
         if ($content instanceof \Closure) {
             call_user_func($content, $this);
         } else {
@@ -44,6 +46,11 @@ class Column implements Renderable
         } else {
             $this->width = $width;
         }
+    }
+
+    protected function normalizeWidth($width)
+    {
+        return (int) ($width < 1 ? round(12 * $width) : $width);
     }
 
     /**

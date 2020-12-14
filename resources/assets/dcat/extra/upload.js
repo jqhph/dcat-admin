@@ -8,6 +8,7 @@
             preview: [], // 数据预览
             server: '',
             updateServer: '',
+            autoUpload: false,
             sortable: false,
             deleteUrl: '',
             deleteData: {},
@@ -362,15 +363,19 @@
                             post._relation = relation;
 
                             Dcat.loading();
-                            $.post(opts.deleteUrl, post, function (result) {
-                                Dcat.loading(false);
-                                if (result.status) {
-                                    deleteInput(file.serverId);
-                                    uploader.removeFile(file);
-                                    return;
-                                }
+                            $.post({
+                                url: opts.deleteUrl,
+                                data: post,
+                                success: function (result) {
+                                    Dcat.loading(false);
+                                    if (result.status) {
+                                        deleteInput(file.serverId);
+                                        uploader.removeFile(file);
+                                        return;
+                                    }
 
-                                Dcat.error(result.message || 'Remove file failed.');
+                                    Dcat.error(result.message || 'Remove file failed.');
+                                }
                             });
 
                         });
@@ -504,7 +509,10 @@
             delete form['_relation'];
             delete form['upload_column'];
 
-            $.post(opts.updateServer, form);
+            $.post({
+                url: opts.updateServer,
+                data: form,
+            });
         }
 
         function setState(val, args) {
@@ -539,7 +547,7 @@
                     $placeHolder.addClass('element-invisible');
                     $selector.find(addFileButtonSelector).removeClass('element-invisible');
                     $queue.show();
-                    if (!opts.disabled) {
+                    if (! opts.disabled) {
                         $statusBar.removeClass('element-invisible');
                     }
                     refreshButton();
@@ -547,6 +555,8 @@
                         $wrap.find('.queueList').css({'border': '1px solid #d3dde5', 'padding':'5px'});
                         // $wrap.find('.queueList').removeAttr('style');
                     }
+
+                    setTimeout(removeValidatorErrors, 1);
                     break;
 
                 case 'uploading':
@@ -790,6 +800,10 @@
             uploader.refresh();
         }
 
+        function removeValidatorErrors() {
+            $input.parents('.form-group,.form-label-group,.form-field').find('.with-errors').html('')
+        }
+
         // 文件排序
         function orderFiles() {
             var $this = $(this),
@@ -887,17 +901,21 @@
                     post._relation = relation;
 
                     Dcat.loading();
-                    $.post(opts.deleteUrl, post, function (result) {
-                        Dcat.loading(false);
-                        if (result.status) {
-                            // 移除
-                            html.remove();
+                    $.post({
+                        url: opts.deleteUrl,
+                        data: post,
+                        success: function (result) {
+                            Dcat.loading(false);
+                            if (result.status) {
+                                // 移除
+                                html.remove();
 
-                            removeFormFile(fileId);
-                            return;
+                                removeFormFile(fileId);
+                                return;
+                            }
+
+                            Dcat.error(result.message || 'Remove file failed.')
                         }
-
-                        Dcat.error(result.message || 'Remove file failed.')
                     });
                 });
             };
@@ -1009,6 +1027,11 @@
                 addFile(file);
                 setState('ready');
                 updateTotalProgress();
+
+                if (! opts.disabled && opts.autoUpload) {
+                    // 自动上传
+                    uploader.upload()
+                }
             };
 
             // 删除文件事件监听

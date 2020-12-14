@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Tree;
 use Illuminate\Database\Eloquent\Builder;
@@ -29,26 +30,6 @@ trait ModelTree
      * @var \Closure[]
      */
     protected $queryCallbacks = [];
-
-    /**
-     * Get children of current node.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function children()
-    {
-        return $this->hasMany(static::class, $this->getParentColumn());
-    }
-
-    /**
-     * Get parent of current node.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function parent()
-    {
-        return $this->belongsTo(static::class, $this->getParentColumn());
-    }
 
     /**
      * @return string
@@ -114,14 +95,13 @@ trait ModelTree
     /**
      * Get all elements.
      *
-     * @return mixed
+     * @return static[]|\Illuminate\Support\Collection
      */
     public function allNodes()
     {
         return $this->callQueryCallbacks(new static())
             ->orderBy($this->getOrderColumn(), 'asc')
-            ->get()
-            ->toArray();
+            ->get();
     }
 
     /**
@@ -304,28 +284,32 @@ trait ModelTree
      * @param array  $nodes
      * @param int    $parentId
      * @param string $prefix
+     * @param string $space
      *
      * @return array
      */
-    protected function buildSelectOptions(array $nodes = [], $parentId = 0, $prefix = '')
+    protected function buildSelectOptions(array $nodes = [], $parentId = 0, $prefix = '', $space = '&nbsp;')
     {
-        $prefix = $prefix ?: str_repeat('&nbsp;', 6);
+        $d = '├─';
+        $prefix = $prefix ?: $d.$space;
 
         $options = [];
 
         if (empty($nodes)) {
-            $nodes = $this->allNodes();
+            $nodes = $this->allNodes()->toArray();
         }
 
-        $titleColumn = $this->getTitleColumn();
-        $parentColumn = $this->getParentColumn();
+        foreach ($nodes as $index => $node) {
+            if ($node[$this->getParentColumn()] == $parentId) {
+                $currentPrefix = $this->hasNextSibling($nodes, $node[$this->getParentColumn()], $index) ? $prefix : str_replace($d, '└─', $prefix);
 
-        foreach ($nodes as $node) {
-            $node[$titleColumn] = $prefix.'&nbsp;'.$node[$titleColumn];
-            if ($node[$parentColumn] == $parentId) {
-                $children = $this->buildSelectOptions($nodes, $node[$this->getKeyName()], $prefix.$prefix);
+                $node[$this->getTitleColumn()] = $currentPrefix.$space.$node[$this->getTitleColumn()];
 
-                $options[$node[$this->getKeyName()]] = $node[$titleColumn];
+                $childrenPrefix = str_replace($d, str_repeat($space, 6), $prefix).$d.str_replace([$d, $space], '', $prefix);
+
+                $children = $this->buildSelectOptions($nodes, $node[$this->getKeyName()], $childrenPrefix);
+
+                $options[$node[$this->getKeyName()]] = $node[$this->getTitleColumn()];
 
                 if ($children) {
                     $options += $children;
@@ -334,6 +318,15 @@ trait ModelTree
         }
 
         return $options;
+    }
+
+    protected function hasNextSibling($nodes, $parentId, $index)
+    {
+        foreach ($nodes as $i => $node) {
+            if ($node[$this->getParentColumn()] == $parentId && $i > $index) {
+                return true;
+            }
+        }
     }
 
     /**
@@ -361,15 +354,17 @@ trait ModelTree
                 && Request::has($parentColumn)
                 && Request::input($parentColumn) == $branch->getKey()
             ) {
-                throw new \Exception(trans('admin.parent_select_error'));
+                throw new AdminException(trans('admin.parent_select_error'));
             }
 
-            if (Request::has('_order')) {
-                $order = Request::input('_order');
+            if (Request::has(Tree::SAVE_ORDER_NAME)) {
+                $order = Request::input(Tree::SAVE_ORDER_NAME);
 
-                Request::offsetUnset('_order');
+                Request::offsetUnset(Tree::SAVE_ORDER_NAME);
 
                 Tree::make(new static())->saveOrder($order);
+
+                $branch->{$branch->getKeyName()} = true;
 
                 return false;
             }

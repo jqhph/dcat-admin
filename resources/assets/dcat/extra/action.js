@@ -19,10 +19,10 @@
                 error: function (target, results) {}, // 请求出错回调，返回false可以中断默认的错误处理逻辑
             }, options);
 
-            this._bind();
+            this.init();
         }
 
-        _bind() {
+        init() {
             let _this = this, options = _this.options;
 
             $(options.selector).off(options.event).on(options.event, function (e) {
@@ -42,7 +42,7 @@
 
                     Object.assign(data, options.data);
 
-                    _this._buildActionPromise(target, data).then(_this._resolver()).catch(_this._reject());
+                    _this.promise(target, data).then(_this.resolve()).catch(_this.reject());
                 }
 
                 var conform = options.confirm;
@@ -55,7 +55,7 @@
             });
         }
 
-        _resolver() {
+        resolve() {
             let _this = this, options = _this.options;
 
             return function (result) {
@@ -66,48 +66,11 @@
                     return;
                 }
 
-                if (typeof response !== 'object') {
-                    return Dcat.error({type: 'error', title: 'Oops!'});
-                }
-
-                var then = function (then) {
-                    switch (then.action) {
-                        case 'refresh':
-                            Dcat.reload();
-                            break;
-                        case 'download':
-                            window.open(then.value, '_blank');
-                            break;
-                        case 'redirect':
-                            Dcat.reload(then.value);
-                            break;
-                        case 'location':
-                            window.location = then.value;
-                            break;
-                        case 'script':
-                            (function () {
-                                eval(then.value);
-                            })();
-                            break;
-                    }
-                };
-
-                if (typeof response.html === 'string' && response.html) {
-                    // 处理api返回的HTML代码
-                    options.html(target, response.html, response);
-                }
-
-                if (typeof response.data.message === 'string' && response.data.type) {
-                    Dcat[response.data.type](response.data.message);
-                }
-
-                if (response.data.then) {
-                    then(response.data.then);
-                }
+                Dcat.handleJsonResponse(response, {html: options.html, target: target});
             };
         }
 
-        _reject() {
+        reject() {
             let options = this.options;
 
             return function (result) {
@@ -120,16 +83,15 @@
                 if (request && typeof request.responseJSON === 'object') {
                     Dcat.error(request.responseJSON.message)
                 }
-                console.error(request);
+                console.error(result);
             }
         }
 
-        _buildActionPromise(target, data) {
+        promise(target, data) {
             let options = this.options;
 
             return new Promise(function (resolve, reject) {
                 Object.assign(data, {
-                    _token: Dcat.token,
                     _action: options.calledClass,
                     _key: options.key,
                 });

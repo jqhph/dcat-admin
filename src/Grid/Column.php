@@ -5,8 +5,8 @@ namespace Dcat\Admin\Grid;
 use Closure;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Dcat\Admin\Traits\HasDefinitions;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -17,20 +17,20 @@ use Illuminate\Support\Traits\Macroable;
 
 /**
  * @method $this editable(bool $refresh = false)
- * @method $this switch(string $color = '')
- * @method $this switchGroup($columns = [], string $color = '')
+ * @method $this switch(string $color = '', $refresh = false)
+ * @method $this switchGroup($columns = [], string $color = '', $refresh = false)
  * @method $this image($server = '', int $width = 200, int $height = 200)
  * @method $this label($style = 'primary', int $max = null)
  * @method $this button($style = 'success');
  * @method $this link($href = '', $target = '_blank');
  * @method $this badge($style = 'primary', int $max = null);
  * @method $this progressBar($style = 'primary', $size = 'sm', $max = 100)
- * @method $this checkbox($options = [])
- * @method $this radio($options = [])
+ * @method $this checkbox($options = [], $refresh = false)
+ * @method $this radio($options = [], $refresh = false)
  * @method $this expand($callbackOrButton = null)
  * @method $this table($titles = [])
- * @method $this select($options = [])
- * @method $this modal($title = '', \Closure $callback = null)
+ * @method $this select($options = [], $refresh = false)
+ * @method $this modal($title = '', $callback = null)
  * @method $this showTreeInDialog($callbackOrNodes = null)
  * @method $this qrcode($formatter = null, $width = 150, $height = 150)
  * @method $this downloadable($server = '', $disk = null)
@@ -54,15 +54,15 @@ use Illuminate\Support\Traits\Macroable;
  */
 class Column
 {
-    use HasBuilderEvents,
-        HasDefinitions,
-        Grid\Column\HasHeader,
-        Grid\Column\HasDisplayers,
-        Macroable {
-            __call as __macroCall;
-        }
+    use HasBuilderEvents;
+    use Grid\Column\HasHeader;
+    use Grid\Column\HasDisplayers;
+    use Macroable {
+        __call as __macroCall;
+    }
 
     const SELECT_COLUMN_NAME = '__row_selector__';
+    const ACTION_COLUMN_NAME = '__actions__';
 
     /**
      * Displayers for grid column.
@@ -186,11 +186,29 @@ class Column
      */
     public function __construct($name, $label)
     {
-        $this->name = $name;
+        $this->name = $this->formatName($name);
 
         $this->label = $this->formatLabel($label);
 
         $this->callResolving();
+    }
+
+    protected function formatName($name)
+    {
+        if (! Str::contains($name, '.')) {
+            return $name;
+        }
+
+        $names = explode('.', $name);
+        $count = count($names);
+
+        foreach ($names as $i => &$name) {
+            if ($i + 1 < $count) {
+                $name = Str::snake($name);
+            }
+        }
+
+        return implode('.', $names);
     }
 
     /**
@@ -280,8 +298,12 @@ class Column
      *
      * @return Column\Condition
      */
-    public function if(\Closure $condition)
+    public function if(\Closure $condition = null)
     {
+        $condition = $condition ?: function ($column) {
+            return $column->getValue();
+        };
+
         return $this->conditions[] = new Grid\Column\Condition($condition, $this);
     }
 
@@ -316,34 +338,9 @@ class Column
      */
     public function hide()
     {
-        return $this->responsive(0);
-    }
+        $this->grid->hideColumns($this->getName());
 
-    /**
-     * data-priority=”1″ 保持可见，但可以在下拉列表筛选隐藏。
-     * data-priority=”2″ 480px 分辨率以下可见
-     * data-priority=”3″ 640px 以下可见
-     * data-priority=”4″ 800px 以下可见
-     * data-priority=”5″ 960px 以下可见
-     * data-priority=”6″ 1120px 以下可见
-     *
-     * @param int $priority
-     *
-     * @return $this
-     */
-    public function responsive(?int $priority = 1)
-    {
-        $this->grid->responsive();
-
-        return $this->setHeaderAttributes(['data-priority' => $priority]);
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getDataPriority()
-    {
-        return isset($this->titleHtmlAttributes['data-priority']) ? $this->titleHtmlAttributes['data-priority'] : null;
+        return $this;
     }
 
     /**
@@ -413,13 +410,7 @@ class Column
      */
     protected function formatLabel($label)
     {
-        if (! $label) {
-            $label = admin_trans_field($this->name);
-        }
-
-        $label = $label ?: $this->name;
-
-        return str_replace(['.', '_'], ' ', $label);
+        return $label ?: str_replace('_', ' ', admin_trans_field($this->name));
     }
 
     /**
@@ -541,10 +532,6 @@ class Column
      */
     public function fill(array &$data)
     {
-        if (static::hasDefinition($this->name)) {
-            $this->useDefinedColumn();
-        }
-
         $i = 0;
         foreach ($data as $key => &$row) {
             $i++;
@@ -586,28 +573,6 @@ class Column
     }
 
     /**
-     * Use a defined column.
-     *
-     * @throws \Exception
-     */
-    protected function useDefinedColumn()
-    {
-        $class = static::$definitions[$this->name];
-
-        if ($class instanceof Closure) {
-            $this->display($class);
-
-            return;
-        }
-
-        if (! class_exists($class) || ! is_subclass_of($class, AbstractDisplayer::class)) {
-            throw new \Exception("Invalid column definition [$class]");
-        }
-
-        $this->displayUsing($class);
-    }
-
-    /**
      * Convert characters to HTML entities recursively.
      *
      * @param array|string $item
@@ -616,15 +581,7 @@ class Column
      */
     protected function htmlEntityEncode($item)
     {
-        if (is_array($item)) {
-            array_walk_recursive($item, function (&$value) {
-                $value = htmlentities($value);
-            });
-        } else {
-            $item = htmlentities($item);
-        }
-
-        return $item;
+        return Helper::htmlEntityEncode($item);
     }
 
     /**
@@ -759,6 +716,21 @@ class Column
         }
 
         return implode(' ', $attrArr);
+    }
+
+    /**
+     * @param  mixed  $value
+     * @param  callable  $callback
+     *
+     * @return $this|mixed
+     */
+    public function when($value, $callback)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        }
+
+        return $this;
     }
 
     /**

@@ -1,16 +1,24 @@
-<div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
+<style>
+    .editormd-fullscreen {z-index: 99999999;}
+</style>
 
-    <label for="{{$id}}" class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
+<div class="{{$viewClass['form-group']}}">
+
+    <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
 
     <div class="{{$viewClass['field']}}">
 
         @include('admin::form.error')
 
-        <div class="{{$class}}" id="{{$id}}" name="{{$name}}" placeholder="{{ $placeholder }}" {!! $attributes !!} ></div>
-
-        <template id="{{$id}}-template">{{ old($column, $value) }}</template>
+        <div class="{{$class}}" {!! $attributes !!}>
+            <textarea class="d-none" name="{{$name}}" placeholder="{{ $placeholder }}">{!! $value !!}</textarea>
+        </div>
 
         @include('admin::form.help-block')
 
     </div>
 </div>
+
+<script require="@markdown" init="{!! $selector !!}">
+    editormd(id, {!! $options !!});
+</script>

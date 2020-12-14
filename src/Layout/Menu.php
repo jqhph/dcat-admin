@@ -52,11 +52,11 @@ class Menu
      */
     public function register()
     {
-        if (! admin_has_default_section(\AdminSection::LEFT_SIDEBAR_MENU)) {
-            admin_inject_default_section(\AdminSection::LEFT_SIDEBAR_MENU, function () {
+        if (! admin_has_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'])) {
+            admin_inject_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'], function () {
                 $menuModel = config('admin.database.menu_model');
 
-                return $this->toHtml((new $menuModel())->allNodes());
+                return $this->toHtml((new $menuModel())->allNodes()->toArray());
             });
         }
 
@@ -73,7 +73,7 @@ class Menu
      */
     public function add(array $nodes = [], int $priority = 10)
     {
-        admin_inject_section(\AdminSection::LEFT_SIDEBAR_MENU_BOTTOM, function () use (&$nodes) {
+        admin_inject_section(Admin::SECTION['LEFT_SIDEBAR_MENU_BOTTOM'], function () use (&$nodes) {
             return $this->toHtml($nodes);
         }, true, $priority);
     }
@@ -87,9 +87,10 @@ class Menu
      *
      * @return string
      */
-    public function toHtml(array $nodes)
+    public function toHtml($nodes)
     {
         $html = '';
+
         foreach (Helper::buildNestedArray($nodes) as $item) {
             $html .= $this->render($item);
         }
@@ -114,7 +115,7 @@ class Menu
      *
      * @return string
      */
-    public function render(array $item)
+    public function render($item)
     {
         return view($this->view, ['item' => &$item, 'builder' => $this])->render();
     }
@@ -125,7 +126,7 @@ class Menu
      *
      * @return bool
      */
-    public function isActive(array $item, ?string $path = null)
+    public function isActive($item, ?string $path = null)
     {
         if (empty($path)) {
             $path = request()->path();
@@ -158,11 +159,76 @@ class Menu
      *
      * @return bool
      */
-    public function visible(array $item)
+    public function visible($item)
+    {
+        if (
+            ! $this->checkPermission($item)
+            || ! $this->checkExtension($item)
+            || ! $this->userCanSeeMenu($item)
+        ) {
+            return false;
+        }
+
+        $show = $item['show'] ?? null;
+        if ($show !== null && ! $show) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 判断扩展是否启用.
+     *
+     * @param $item
+     *
+     * @return bool
+     */
+    protected function checkExtension($item)
+    {
+        $extension = $item['extension'] ?? null;
+
+        if (! $extension) {
+            return true;
+        }
+
+        if (! $extension = Admin::extension($extension)) {
+            return false;
+        }
+
+        return $extension->enabled();
+    }
+
+    /**
+     * 判断用户.
+     *
+     * @param array|\Dcat\Admin\Models\Menu $item
+     *
+     * @return bool
+     */
+    protected function userCanSeeMenu($item)
+    {
+        $user = Admin::user();
+
+        if (! $user || ! method_exists($user, 'canSeeMenu')) {
+            return true;
+        }
+
+        return $user->canSeeMenu($item);
+    }
+
+    /**
+     * 判断权限.
+     *
+     * @param $item
+     *
+     * @return bool
+     */
+    protected function checkPermission($item)
     {
         $permissionIds = $item['permission_id'] ?? null;
-        $roles = array_column($item['roles'] ?? [], 'slug');
-        $permissions = array_column($item['permissions'] ?? [], 'slug');
+        $roles = array_column(Helper::array($item['roles'] ?? []), 'slug');
+        $permissions = array_column(Helper::array($item['permissions'] ?? []), 'slug');
 
         if (! $permissionIds && ! $roles && ! $permissions) {
             return true;
@@ -190,7 +256,7 @@ class Menu
      */
     public function translate($text)
     {
-        $titleTranslation = 'admin.menu_titles.'.trim(str_replace(' ', '_', strtolower($text)));
+        $titleTranslation = 'menu.titles.'.trim(str_replace(' ', '_', strtolower($text)));
 
         if (Lang::has($titleTranslation)) {
             return __($titleTranslation);
