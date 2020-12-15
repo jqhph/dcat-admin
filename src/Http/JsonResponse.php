@@ -359,6 +359,27 @@ class JsonResponse
                 sprintf('[%s] %s', get_class($exception), $exception->getMessage())
             );
     }
+    
+    
+    /**
+     * Flash a piece of data to the session.
+     *
+     * @param  string|array  $key
+     * @param  mixed  $value
+     * @return $this
+     */
+    public function with($key, $value = null)
+    {
+        $key = is_array($key) ? $key : [$key => $value];
+
+        foreach ($key as $k => $v) {
+            session()->flash($k, $v);
+        }
+
+        return $this;
+    }
+        
+    
 
     /**
      * @return \Illuminate\Http\JsonResponse
