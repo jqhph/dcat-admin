@@ -676,8 +676,11 @@ class Helper
             $class = get_class($class);
         }
 
-        if (class_exists($class)) {
-            return (new \ReflectionClass($class))->getFileName();
+        try {
+            if (class_exists($class)) {
+                return (new \ReflectionClass($class))->getFileName();
+            }
+        } catch (\Throwable $e) {
         }
 
         $class = trim($class, '\\');

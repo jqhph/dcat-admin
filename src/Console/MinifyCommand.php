@@ -77,16 +77,12 @@ class MinifyCommand extends Command
             // 编译
             $this->runProcess("cd {$this->packagePath} && npm run prod", 1800);
 
-            // 重置文件
-            $this->resetFiles();
-
             if ($publish) {
                 $this->publishAssets();
             }
-        } catch (\Throwable $e) {
+        } finally {
+            // 重置文件
             $this->resetFiles();
-
-            throw $e;
         }
     }
 
