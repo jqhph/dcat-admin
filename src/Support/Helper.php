@@ -818,7 +818,7 @@ class Helper
     public static function htmlEntityEncode($item)
     {
         if (is_array($item)) {
-            array_walk_recursive($item, function ($value) {
+            array_walk_recursive($item, function (&$value) {
                 $value = htmlentities($value);
             });
         } else {

@@ -619,11 +619,9 @@ class Filter implements Renderable
     /**
      * Execute the filter with conditions.
      *
-     * @param bool $toArray
-     *
-     * @return array|Collection|mixed
+     * @return Collection|mixed
      */
-    public function execute(bool $toArray = true)
+    public function execute()
     {
         $conditions = array_merge(
             $this->getConditions(),
@@ -638,7 +636,7 @@ class Filter implements Renderable
 
         $this->grid()->fireOnce(new Fetched([&$data]));
 
-        return $toArray ? $data->toArray() : $data;
+        return $data;
     }
 
     /**
