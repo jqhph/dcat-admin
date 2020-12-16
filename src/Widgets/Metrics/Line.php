@@ -115,7 +115,7 @@ class Line extends Card
 
         return <<<HTML
 {$content}
-<div class="card-content" style="overflow-x:hidden;overflow-y:hidden">
+<div class="card-content">
     {$this->renderChart()}
 </div>
 HTML;

@@ -54,6 +54,7 @@
         newPage,
         options = {!! $options !!};
 
+    var events = {!!$events??'[]'!!};
     init();
 
     function init() {
@@ -76,7 +77,13 @@
         uploader = Dcat.Uploader(opts);
         uploader.build();
         uploader.preview();
-
+        /* register events */
+        for (i = 0; i < events.length; i++) {
+            var evt = events[i]
+            if (evt.event && evt.script) {
+                uploader.uploader.on(evt.event, (new Function('return ' + evt.script)()).bind(uploader))
+            }
+        }
         function resize() {
             setTimeout(function () {
                 if (! uploader) return;
