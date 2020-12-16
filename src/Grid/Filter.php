@@ -634,11 +634,11 @@ class Filter implements Renderable
 
         $this->grid()->fireOnce(new Fetching());
 
-        $data = $this->model->buildData($toArray);
+        $data = $this->model->buildData();
 
         $this->grid()->fireOnce(new Fetched([&$data]));
 
-        return $data;
+        return $toArray ? $data->toArray() : $data;
     }
 
     /**
