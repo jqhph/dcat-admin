@@ -517,19 +517,19 @@ body.dark-mode {
   }
 
   input::-webkit-input-placeholder{
-    color: darken($body-dark-font-color, 1.2%)!important;
-  }
-  input:-moz-placeholder{
-    color: darken($body-dark-font-color, 1.2%)!important;
+    color: darken($body-dark-font-color, 5%)!important;
   }
   input::-moz-placeholder{
-    color: darken($body-dark-font-color, 1.2%)!important;
+    color: darken($body-dark-font-color, 5%)!important;
+  }
+  input::-moz-placeholder{
+    color: darken($body-dark-font-color, 5%)!important;
   }
   input:-ms-input-placeholder {
-    color: darken($body-dark-font-color, 1.2%)!important;
+    color: darken($body-dark-font-color, 5%)!important;
   }
   .help-block {
-    color: darken($body-dark-font-color, 1.2%)!important;
+    color: darken($body-dark-font-color, 1.3%)!important;
   }
   .has-error .checkbox, .has-error .checkbox-inline, .has-error.checkbox label, .has-error .control-label, .has-error .form-control-position i, .has-error .form-control:focus~.form-control-position i, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.radio label
   {
@@ -577,6 +577,22 @@ body.dark-mode {
   .table-filter .form-control {
     background: $body-dark-table-bg;
     color: $body-dark-font-color;
+  }
+
+  // form divider
+  .form-divider {
+    border-color: $body-dark-border-color;
+
+    span {
+      background-color: $body-dark-card-bg;
+    }
+  }
+
+  .form-control:disabled,
+  .form-control[readonly],
+  .select2-container--default.select2-container--disabled .select2-selection--single,
+  .select2-container--default.select2-container--disabled .select2-selection--multiple {
+    background-color: darken($body-dark-bg, 2%)!important;
   }
 
   // ------ layer
