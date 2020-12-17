@@ -75,9 +75,12 @@ select.form-control:not([multiple=multiple]) {
   margin-bottom: 4px;
 }
 
-.form-control:disabled, .form-control[readonly] {
-  background-color: #F7F7F9;
-  cursor: not-allowed;
+.form-control:disabled,
+.form-control[readonly],
+.select2-container--default.select2-container--disabled .select2-selection--single,
+.select2-container--default.select2-container--disabled .select2-selection--multiple {
+  background-color: #F7F7F9!important;
+  cursor: not-allowed!important;
 }
 
 .has-error .checkbox,
@@ -203,7 +206,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-  line-height: 31px!important;
+  line-height: 30px!important;
 }
 
 .input-group-sm {
@@ -272,4 +275,16 @@ select.form-control:not([multiple=multiple]) {
 .has-icon-left .form-control {
   padding-right: 2rem;
   padding-left: 3rem;
+}
+
+// divider
+.form-divider {
+  height: 20px;
+  border-bottom: 1px solid #eee;
+
+  span {
+    font-size: 16px;
+    background-color: #ffffff;
+    padding: 0 10px;
+  }
 }

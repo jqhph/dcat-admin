@@ -409,7 +409,7 @@ class Grid
             return;
         }
 
-        $collection = $this->processFilter(false);
+        $collection = $this->processFilter();
 
         $data = $collection->toArray();
 
@@ -609,7 +609,7 @@ HTML;
 
     protected function renderHeaderOrFooter($callbacks)
     {
-        $target = [$this->processFilter(false)];
+        $target = [$this->processFilter()];
         $content = [];
 
         foreach ($callbacks as $callback) {

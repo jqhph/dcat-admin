@@ -676,8 +676,11 @@ class Helper
             $class = get_class($class);
         }
 
-        if (class_exists($class)) {
-            return (new \ReflectionClass($class))->getFileName();
+        try {
+            if (class_exists($class)) {
+                return (new \ReflectionClass($class))->getFileName();
+            }
+        } catch (\Throwable $e) {
         }
 
         $class = trim($class, '\\');
@@ -815,7 +818,7 @@ class Helper
     public static function htmlEntityEncode($item)
     {
         if (is_array($item)) {
-            array_walk_recursive($item, function ($value) {
+            array_walk_recursive($item, function (&$value) {
                 $value = htmlentities($value);
             });
         } else {

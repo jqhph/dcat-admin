@@ -526,8 +526,6 @@ class Admin
             $router->post('helpers/scaffold', 'Dcat\Admin\Http\Controllers\ScaffoldController@store');
             $router->post('helpers/scaffold/table', 'Dcat\Admin\Http\Controllers\ScaffoldController@table');
             $router->get('helpers/icons', 'Dcat\Admin\Http\Controllers\IconController@index');
-            $router->resource('helpers/extensions', 'Dcat\Admin\Http\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
-            $router->post('helpers/extensions/import', 'Dcat\Admin\Http\Controllers\ExtensionController@import');
         });
     }
 }

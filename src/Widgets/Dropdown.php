@@ -45,6 +45,11 @@ class Dropdown extends Widget
      */
     protected $click = false;
 
+    /**
+     * @var string
+     */
+    protected $direction = 'down';
+
     public function __construct(array $options = [])
     {
         $this->options($options);
@@ -109,6 +114,23 @@ class Dropdown extends Widget
         $this->button['style'] = $style;
 
         return $this;
+    }
+
+    public function direction(string $direction = 'down')
+    {
+        $this->direction = $direction;
+
+        return $this;
+    }
+
+    public function up()
+    {
+        return $this->direction('up');
+    }
+
+    public function down()
+    {
+        return $this->direction('down');
     }
 
     /**
@@ -222,10 +244,11 @@ class Dropdown extends Widget
     public function render()
     {
         $this->addVariables([
-            'options'  => $this->renderOptions(),
-            'button'   => $this->button,
-            'buttonId' => $this->buttonId,
-            'click'    => $this->click,
+            'options'   => $this->renderOptions(),
+            'button'    => $this->button,
+            'buttonId'  => $this->buttonId,
+            'click'     => $this->click,
+            'direction' => $this->direction,
         ]);
 
         return parent::render();

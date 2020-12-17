@@ -68,7 +68,7 @@
     <script once>
         @php
             $lang = trans('select2') ?: [];
-            $locale = config('app.locale');
+            $locale = str_replace('_', '-', config('app.locale'));
         @endphp
         if ($.fn.select2) {
             var e = $.fn.select2.amd;

@@ -77,10 +77,11 @@ class PerPageSelector implements Renderable
         $options = $this->getOptions()->map(function ($option) {
             $url = app('request')->fullUrlWithQuery([$this->perPageName => $option]);
 
-            return "<a href=\"$url\">$option</a>";
+            return "<a href=\"{$url}\">$option</a>";
         })->toArray();
 
         $dropdown = Dropdown::make($options)
+            ->up()
             ->button($this->perPage)
             ->render();
 

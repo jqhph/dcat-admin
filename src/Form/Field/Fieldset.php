@@ -25,14 +25,14 @@ JS;
 
         return <<<HTML
 <div>
-    <div class="mt-2 text-center" style="height: 20px; border-bottom: 1px solid #eee; margin-bottom: 25px">
-      <span style="font-size: 16px; background-color: #ffffff; padding: 0 10px;">
+    <div class="mt-2 text-center mb-2 form-divider">
+      <span>
         <a data-toggle="collapse" href="#{$this->name}" class="{$this->name}-title">
           <i class="fa fa-angle-double-up"></i>&nbsp;&nbsp;{$title}
         </a>
       </span>
-    </div>
-    <div class="collapse show" id="{$this->name}">
+</div>
+<div class="collapse show" id="{$this->name}">
 HTML;
     }
 
