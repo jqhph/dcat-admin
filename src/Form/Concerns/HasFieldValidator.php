@@ -384,7 +384,7 @@ trait HasFieldValidator
 
         if (is_array($this->column)) {
             foreach ($this->column as $key => $column) {
-                if (! array_key_exists($column, $input)) {
+                if (! Arr::has($input, $column)) {
                     continue;
                 }
                 $input[$column.$key] = Arr::get($input, $column);
