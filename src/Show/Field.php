@@ -138,7 +138,7 @@ class Field implements Renderable
      *
      * @return $this|array
      */
-    public function width(int $field = 8, int $label = 2)
+    public function width(int $field, int $label = 2)
     {
         $this->width = [
             'label' => $label,
