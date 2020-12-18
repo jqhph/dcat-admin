@@ -13,11 +13,6 @@ use Illuminate\Support\Str;
 trait WebUploader
 {
     /**
-     * @var array
-     */
-    protected $options = [];
-
-    /**
      * @param string      $extensions exp. gif,jpg,jpeg,bmp,png
      * @param string|null $mimeTypes  exp. image/*
      *

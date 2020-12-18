@@ -14,7 +14,10 @@ class File extends Field implements UploadFieldInterface
     use WebUploader,
         UploadField;
 
-    protected $events = [];
+    /**
+     * @var array
+     */
+    protected $options = ['events' => []];
 
     public function __construct($column, $arguments = [])
     {
@@ -161,7 +164,6 @@ class File extends Field implements UploadFieldInterface
             'fileType'      => $this->options['isImage'] ? '' : 'file',
             'showUploadBtn' => ($this->options['autoUpload'] ?? false) ? false : true,
             'options'       => JavaScript::format($this->options),
-            'events'        => JavaScript::format($this->events),
         ]);
 
         return parent::render();
@@ -179,10 +181,38 @@ class File extends Field implements UploadFieldInterface
         }
     }
 
-    public function on(string $event, string $script)
+    /**
+     * Webuploader 事件监听.
+     *
+     * @see http://fex.baidu.com/webuploader/doc/index.html#WebUploader_Uploader_events
+     *
+     * @param string $event
+     * @param string $script
+     * @param bool   $once
+     *
+     * @return $this
+     */
+    public function on(string $event, string $script, bool $once = false)
     {
-        $this->events[] = compact('event', 'script');
+        $script = JavaScript::make($script);
+
+        $this->options['events'][] = compact('event', 'script', 'once');
 
         return $this;
+    }
+
+    /**
+     * Webuploader 事件监听(once).
+     *
+     * @see http://fex.baidu.com/webuploader/doc/index.html#WebUploader_Uploader_events
+     *
+     * @param string $event
+     * @param string $script
+     *
+     * @return $this
+     */
+    public function once(string $event, string $script)
+    {
+        return $this->on($event, $script, true);
     }
 }
