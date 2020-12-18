@@ -196,7 +196,8 @@
         },
 
         setKeys(keys) {
-            this.$input.val(keys.length ? keys.join(',') : '');
+            // 手动触发change事件，方便监听值变化
+            this.$input.val(keys.length ? keys.join(',') : '').trigger('change');
         },
 
         deleteKey(key) {
