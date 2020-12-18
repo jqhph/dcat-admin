@@ -38,6 +38,21 @@ class PublishCommand extends Command
             $options['--force'] = true;
         }
 
+        $tags = $this->getTags();
+
+        foreach ($tags as $tag) {
+            $this->call('vendor:publish', $options + ['--tag' => $tag]);
+        }
+
+        if (! $tags) {
+            $this->call('vendor:publish', $options);
+        }
+
+        $this->call('view:clear');
+    }
+
+    protected function getTags()
+    {
         $tags = [];
 
         if ($this->option('lang')) {
@@ -53,18 +68,6 @@ class PublishCommand extends Command
             $tags[] = 'dcat-admin-config';
         }
 
-        if (! $tags) {
-            $tags[] = null;
-        }
-
-        foreach ($tags as $tag) {
-            if ($tag) {
-                $options['--tag'] = $tag;
-            }
-
-            $this->call('vendor:publish', $options);
-        }
-
-        $this->call('view:clear');
+        return $tags;
     }
 }
