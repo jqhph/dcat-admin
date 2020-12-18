@@ -66,7 +66,7 @@ trait HasTree
             }
 
             if ($collection->isEmpty()) {
-                abort(404);
+                return $grid->show(false);
             }
 
             $this->buildChildrenNodesPagination();
