@@ -53,8 +53,16 @@ class PublishCommand extends Command
             $tags[] = 'dcat-admin-config';
         }
 
+        if (! $tags) {
+            $tags[] = null;
+        }
+
         foreach ($tags as $tag) {
-            $this->call('vendor:publish', $options + ['--tag' => $tag]);
+            if ($tag) {
+                $options['--tag'] = $tag;
+            }
+
+            $this->call('vendor:publish', $options);
         }
 
         $this->call('view:clear');
