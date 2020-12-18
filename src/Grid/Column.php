@@ -187,6 +187,7 @@ class Column
     public function __construct($name, $label)
     {
         $this->name = $this->formatName($name);
+        $this->originalName = $name;
 
         $this->label = $this->formatLabel($label);
 
@@ -195,7 +196,20 @@ class Column
 
     protected function formatName($name)
     {
-        return $name;
+        if (! Str::contains($name, '.')) {
+            return $name;
+        }
+
+        $names = explode('.', $name);
+        $count = count($names);
+
+        foreach ($names as $i => &$name) {
+            if ($i + 1 < $count) {
+                $name = Str::snake($name);
+            }
+        }
+
+        return implode('.', $names);
     }
 
     /**
@@ -350,6 +364,16 @@ class Column
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get orignal name of this column.
+     *
+     * @return mixed
+     */
+    public function getOriginalName()
+    {
+        return $this->originalName;
     }
 
     /**
