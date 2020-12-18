@@ -69,6 +69,23 @@ abstract class Widget implements Renderable
     }
 
     /**
+     * 符合条件则执行.
+     *
+     * @param  mixed  $value
+     * @param  callable  $callback
+     *
+     * @return $this|mixed
+     */
+    public function when($value, $callback)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        }
+
+        return $this;
+    }
+
+    /**
      * 批量设置选项.
      *
      * @param array $options

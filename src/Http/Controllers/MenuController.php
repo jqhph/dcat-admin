@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Form;
-use Dcat\Admin\Http\Actions\Menu\Visiable;
+use Dcat\Admin\Http\Actions\Menu\Show;
 use Dcat\Admin\Http\Repositories\Menu;
 use Dcat\Admin\Layout\Column;
 use Dcat\Admin\Layout\Content;
@@ -75,7 +75,7 @@ class MenuController extends AdminController
                     $actions->disableDelete();
                 }
 
-                $actions->prepend(new Visiable());
+                $actions->prepend(new Show());
             });
 
             $tree->branch(function ($branch) {

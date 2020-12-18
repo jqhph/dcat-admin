@@ -195,20 +195,7 @@ class Column
 
     protected function formatName($name)
     {
-        if (! Str::contains($name, '.')) {
-            return $name;
-        }
-
-        $names = explode('.', $name);
-        $count = count($names);
-
-        foreach ($names as $i => &$name) {
-            if ($i + 1 < $count) {
-                $name = Str::snake($name);
-            }
-        }
-
-        return implode('.', $names);
+        return $name;
     }
 
     /**
@@ -532,6 +519,8 @@ class Column
      */
     public function fill(array &$data)
     {
+        $name = $this->getSnakeName($this->name);
+
         $i = 0;
         foreach ($data as $key => &$row) {
             $i++;
@@ -539,7 +528,7 @@ class Column
                 $row['#'] = $i;
             }
 
-            $this->original = $value = Arr::get($row, $this->name);
+            $this->original = $value = Arr::get($row, $name);
 
             $this->value = $value = $this->htmlEntityEncode($value);
 
@@ -547,15 +536,33 @@ class Column
 
             $this->processConditions();
 
-            Arr::set($row, $this->name, $value);
+            Arr::set($row, $name, $value);
 
             if ($this->hasDisplayCallbacks()) {
                 $value = $this->callDisplayCallbacks($this->original);
-                Arr::set($row, $this->name, $value);
+                Arr::set($row, $name, $value);
             }
         }
 
         $this->value = $value ?? null;
+    }
+
+    protected function getSnakeName($name)
+    {
+        if (! Str::contains($name, '.')) {
+            return $name;
+        }
+
+        $names = explode('.', $name);
+        $count = count($names);
+
+        foreach ($names as $i => &$name) {
+            if ($i + 1 < $count) {
+                $name = Str::snake($name);
+            }
+        }
+
+        return implode('.', $names);
     }
 
     /**

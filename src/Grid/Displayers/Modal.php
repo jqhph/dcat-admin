@@ -10,9 +10,16 @@ class Modal extends AbstractDisplayer
 {
     protected $title;
 
+    protected $xl = false;
+
     public function title(string $title)
     {
         $this->title = $title;
+    }
+
+    public function xl()
+    {
+        $this->xl = true;
     }
 
     protected function setUpLazyRenderable(LazyRenderable $renderable)
@@ -48,7 +55,9 @@ class Modal extends AbstractDisplayer
         $title = $this->title ?: $title;
 
         return WidgetModal::make()
-            ->lg()
+            ->when(true, function ($modal) {
+                $this->xl ? $modal->xl() : $modal->lg();
+            })
             ->title($title)
             ->body($html)
             ->delay(300)

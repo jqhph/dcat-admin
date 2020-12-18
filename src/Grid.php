@@ -177,6 +177,11 @@ class Grid
     protected $request;
 
     /**
+     * @var bool
+     */
+    protected $show = true;
+
+    /**
      * Create a new grid instance.
      *
      * Grid constructor.
@@ -879,6 +884,20 @@ HTML;
     }
 
     /**
+     * 设置是否显示.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function show(bool $value = true)
+    {
+        $this->show = $value;
+
+        return $this;
+    }
+
+    /**
      * Get the string contents of the grid view.
      *
      * @return string
@@ -901,6 +920,10 @@ HTML;
      */
     protected function doWrap()
     {
+        if (! $this->show) {
+            return;
+        }
+
         $view = view($this->view, $this->variables());
 
         if (! $wrapper = $this->wrapper) {

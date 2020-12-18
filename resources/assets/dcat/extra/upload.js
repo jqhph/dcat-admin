@@ -706,7 +706,8 @@
                 return v ? true : false;
             });
 
-            $input.val(arr.join(','));
+            // 手动触发change事件，方便监听文件变化
+            $input.val(arr.join(',')).trigger('change');
         }
 
         // 删除表单值
