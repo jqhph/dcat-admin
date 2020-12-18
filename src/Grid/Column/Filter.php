@@ -102,7 +102,7 @@ abstract class Filter implements Renderable
      */
     public function getOriginalColumnName()
     {
-        return $this->columnName ?: $this->parent->getOriginalName();
+        return $this->columnName ?: $this->parent->getName();
     }
 
     /**

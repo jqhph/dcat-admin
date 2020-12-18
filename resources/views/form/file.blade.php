@@ -78,7 +78,7 @@
         uploader.build();
         uploader.preview();
 
-        for (i = 0; i < events.length; i++) {
+        for (var i = 0; i < events.length; i++) {
             var evt = events[i];
             if (evt.event && evt.script) {
                 if (evt.once) {
