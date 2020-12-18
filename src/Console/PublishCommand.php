@@ -38,17 +38,25 @@ class PublishCommand extends Command
             $options['--force'] = true;
         }
 
+        $tags = [];
+
         if ($this->option('lang')) {
-            $options['--tag'] = 'dcat-admin-lang';
-        } elseif ($this->option('migrations')) {
-            $options['--tag'] = 'dcat-admin-migrations';
-        } elseif ($this->option('assets')) {
-            $options['--tag'] = 'dcat-admin-assets';
-        } elseif ($this->option('config')) {
-            $options['--tag'] = 'dcat-admin-config';
+            $tags[] = 'dcat-admin-lang';
+        }
+        if ($this->option('migrations')) {
+            $tags[] = 'dcat-admin-migrations';
+        }
+        if ($this->option('assets')) {
+            $tags[] = 'dcat-admin-assets';
+        }
+        if ($this->option('config')) {
+            $tags[] = 'dcat-admin-config';
         }
 
-        $this->call('vendor:publish', $options);
+        foreach ($tags as $tag) {
+            $this->call('vendor:publish', $options + ['--tag' => $tag]);
+        }
+
         $this->call('view:clear');
     }
 }
