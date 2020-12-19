@@ -7,6 +7,7 @@ use Dcat\Admin\Contracts\ExceptionHandler;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Http\Controllers\AuthController;
+use Dcat\Admin\Http\JsonResponse;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
@@ -333,6 +334,18 @@ class Admin
     public static function getIgnoreQueryNames()
     {
         return static::context()->ignoreQueries ?? [];
+    }
+
+    /**
+     * 响应json数据.
+     *
+     * @param array $data
+     *
+     * @return JsonResponse
+     */
+    public static function json(array $data = [])
+    {
+        return JsonResponse::make($data);
     }
 
     /**

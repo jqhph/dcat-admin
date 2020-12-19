@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field\File;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Filesystem\FilesystemAdapter;
@@ -86,16 +87,16 @@ trait HasUploadedFile
      *
      * @param string $path 文件完整路径
      * @param string $url
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return mixed
      */
     public function responseUploaded(string $path, string $url)
     {
-        return response()->json([
-            'status' => true,
-            'id'     => $path,
-            'name'   => basename($path),
-            'path'   => basename($path),
-            'url'    => $url,
+        return Admin::json([
+            'id'   => $path,
+            'name' => basename($path),
+            'path' => basename($path),
+            'url'  => $url,
         ]);
     }
 
@@ -104,11 +105,11 @@ trait HasUploadedFile
      *
      * @param mixed $message
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
     public function responseValidationMessage($message)
     {
-        return $this->responseErrorMessage($message, 103);
+        return $this->responseErrorMessage($message);
     }
 
     /**
@@ -117,23 +118,21 @@ trait HasUploadedFile
      * @param $error
      * @param $code
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
-    public function responseErrorMessage($error, $code = 107)
+    public function responseErrorMessage($error)
     {
-        return response()->json([
-            'error' => ['code' => $code, 'message' => $error], 'status' => false,
-        ]);
+        return Admin::json()->error($error);
     }
 
     /**
      * 文件删除成功.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
     public function responseDeleted()
     {
-        return response()->json(['status' => true]);
+        return Admin::json();
     }
 
     /**
@@ -145,6 +144,6 @@ trait HasUploadedFile
      */
     public function responseDeleteFailed($message = '')
     {
-        return response()->json(['status' => false, 'message' => $message]);
+        return $this->responseErrorMessage($message);
     }
 }

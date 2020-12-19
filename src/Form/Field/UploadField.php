@@ -188,10 +188,10 @@ trait UploadField
         $id = $request->get('_id');
 
         if (! $id) {
-            return $this->responseErrorMessage(403, 'Missing id');
+            return $this->responseErrorMessage('Missing id');
         }
 
-        if ($errors = $this->getErrorMessages($file)) {
+        if ($errors = $this->getValidationErrors($file)) {
             return $this->responseValidationMessage($errors);
         }
 
@@ -338,7 +338,7 @@ trait UploadField
      *
      * @return bool|\Illuminate\Support\MessageBag
      */
-    protected function getErrorMessages(UploadedFile $file)
+    protected function getValidationErrors(UploadedFile $file)
     {
         $rules = $attributes = [];
 
@@ -355,7 +355,7 @@ trait UploadField
         if (! $validator->passes()) {
             $errors = $validator->errors()->getMessages()[$this->column];
 
-            return implode('; ', $errors);
+            return implode('<br> ', $errors);
         }
     }
 

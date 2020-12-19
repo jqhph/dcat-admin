@@ -374,7 +374,7 @@
                                         return;
                                     }
 
-                                    Dcat.error(result.message || 'Remove file failed.');
+                                    showErrorResponse(result)
                                 }
                             });
 
@@ -664,6 +664,16 @@
             updateStatusText();
         }
 
+        // 显示api响应的错误信息
+        function showErrorResponse(response) {
+            var message = 'Unknown error!';
+            if (response && response.data) {
+                message = response.data.message || message;
+            }
+
+            Dcat.error(message)
+        }
+
         // 移除form表单的文件
         function removeFormFile(fileId) {
             if (!fileId) return;
@@ -915,7 +925,7 @@
                                 return;
                             }
 
-                            Dcat.error(result.message || 'Remove file failed.')
+                            showErrorResponse(result)
                         }
                     });
                 });
@@ -1063,38 +1073,28 @@
                         break;
                     case  'uploadAccept':
                         // 上传失败，返回false
-                        //正常来说上传返回必须是个json 必须包含 reason.id  否则肯定出错了
-                        if (!reason || !reason.id) {
-                            var errorMessage;
-                            if (reason && reason.data && reason.data.message) {
-                                errorMessage = reason.data.message
-                            } else if(reason && reason.error) {
-                                errorMessage = reason.error.message //DCAT 原有的逻辑
-                            } else {
-                                errorMessage = "Unknown error!"
-                            }
-
-                            Dcat.error(errorMessage);
+                        if (! reason || ! reason.status) {
+                            showErrorResponse(reason);
 
                             faildFiles[obj.file.id] = obj.file;
 
                             return false;
                         }
 
-                        if (reason.merge) {
+                        if (reason.data && reason.data.merge) {
                             // 分片上传
                             return;
                         }
 
                         // 上传成功，保存新文件名和路径到file对象
-                        obj.file.serverId = reason.id;
-                        obj.file.serverName = reason.name;
-                        obj.file.serverPath = reason.path;
-                        obj.file.serverUrl = reason.url || null;
+                        obj.file.serverId = reason.data.id;
+                        obj.file.serverName = reason.data.name;
+                        obj.file.serverPath = reason.data.path;
+                        obj.file.serverUrl = reason.data.url || null;
 
                         appendUploadedFile(obj.file);
 
-                        addInput(reason.id);
+                        addInput(reason.data.id);
 
                         var $li = getFileView(obj.file.id);
 
