@@ -6,7 +6,6 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Show;
-use Faker\Factory;
 use Tests\Models\Painter;
 use Tests\Models\Painting;
 
