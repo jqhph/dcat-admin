@@ -983,9 +983,6 @@
 
             $progress = $statusBar.find('.upload-progress').hide();
 
-            // IE;
-            supportIe();
-
             // 实例化
             this.uploader = uploader = WebUploader.create(opts.upload);
 
@@ -1203,57 +1200,6 @@
         this.getColumn = function () {
             return updateColumn;
         };
-
-        function supportIe() {
-            if (!WebUploader.Uploader.support('flash') && WebUploader.browser.ie) {
-
-                // flash 安装了但是版本过低。
-                if (flashVersion) {
-                    (function (container) {
-                        window['expressinstallcallback'] = function (state) {
-                            switch (state) {
-                                case 'Download.Cancelled':
-                                    break;
-
-                                case 'Download.Failed':
-                                    Dcat.error('Install failed!');
-                                    break;
-
-                                default:
-                                    Dcat.success('Install Success！');
-                                    break;
-                            }
-                            delete window['expressinstallcallback'];
-                        };
-
-                        var swf = './expressInstall.swf';
-                        // insert flash object
-                        var html = `<object type="application/x-shockwave-flash" data="${swf}" `;
-
-                        if (WebUploader.browser.ie) {
-                            html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
-                        }
-
-                        html += `width="100%" height="100%" style="outline:0">
-                            <param name="movie" value="${swf}" />
-                            <param name="wmode" value="transparent" />
-                            <param name="allowscriptaccess" value="always" />
-                            </object>`;
-
-                        container.html(html);
-
-                    })($wrap);
-
-                } else {
-                    $wrap.html('<a href="http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
-                }
-
-                return;
-            } else if (!WebUploader.Uploader.support()) {
-                Dcat.error('您的浏览器不支持Web Uploader！');
-                return;
-            }
-        }
 
         return this;
     }

@@ -28,17 +28,10 @@ class WebUploader
                 return Admin::json(['merge' => 1])->send();
             }
 
-            $response = $next($request);
-
+            return $next($request);
+        } finally {
             // 移除临时文件
             $webUploader->deleteTemporaryFile();
-
-            return $response;
-        } catch (\Throwable $e) {
-            // 移除临时文件
-            $webUploader->deleteTemporaryFile();
-
-            throw $e;
         }
     }
 }
