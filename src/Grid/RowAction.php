@@ -49,7 +49,7 @@ abstract class RowAction extends GridAction
     /**
      * Set row model.
      *
-     * @param Fluent $row
+     * @param Fluent|\Illuminate\Database\Eloquent\Model $row
      *
      * @return $this
      */

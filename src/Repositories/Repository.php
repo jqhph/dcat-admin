@@ -28,7 +28,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 获取主键名称.
      *
-     * @return string
+     * @return string|array
      */
     public function getKeyName()
     {
@@ -38,9 +38,9 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 设置主键名称.
      *
-     * @param string $keyName
+     * @param string|array $keyName
      */
-    public function setKeyName(?string $keyName)
+    public function setKeyName($keyName)
     {
         $this->keyName = $keyName;
     }

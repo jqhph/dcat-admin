@@ -204,7 +204,7 @@ class Model
     /**
      * Get primary key name of model.
      *
-     * @return string
+     * @return string|array
      */
     public function getKeyName()
     {

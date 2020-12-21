@@ -107,9 +107,9 @@ class Grid
     /**
      * Default primary key name.
      *
-     * @var string
+     * @var string|array
      */
-    protected $keyName = 'id';
+    protected $keyName;
 
     /**
      * View for grid to render.
@@ -224,11 +224,11 @@ class Grid
     /**
      * Set primary key name.
      *
-     * @param string $name
+     * @param string|array $name
      *
      * @return $this
      */
-    public function setKeyName(string $name)
+    public function setKeyName($name)
     {
         $this->keyName = $name;
 
@@ -238,7 +238,7 @@ class Grid
     /**
      * Get or set primary key name.
      *
-     * @return string|void
+     * @return string|array
      */
     public function getKeyName()
     {

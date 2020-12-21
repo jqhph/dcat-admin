@@ -242,7 +242,13 @@ class Column
      */
     public static function setOriginalGridModels(Collection $collection)
     {
-        static::$originalGridModels = $collection;
+        static::$originalGridModels = $collection->map(function ($row) {
+            if (is_object($row)) {
+                return clone $row;
+            }
+
+            return $row;
+        });
     }
 
     /**
@@ -527,18 +533,19 @@ class Column
                 $row['#'] = $i;
             }
 
-            $this->original = $value = Arr::get($row, $this->name);
-
-            $this->value = $value = $this->htmlEntityEncode($value);
-
             $this->setOriginalModel(static::$originalGridModels[$key]);
+
+            $this->original = Arr::get($this->originalModel, $this->name);
+
+            $this->value = $value = $this->htmlEntityEncode(Arr::get($row, $this->name));
 
             $this->processConditions();
 
-            Helper::arraySet($row, $this->name, $value);
-
             if ($this->hasDisplayCallbacks()) {
                 $value = $this->callDisplayCallbacks($this->original);
+            }
+
+            if ($value !== $this->value) {
                 Helper::arraySet($row, $this->name, $value);
             }
         }

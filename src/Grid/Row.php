@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Fluent;
 
 class Row implements Arrayable
@@ -197,6 +198,10 @@ class Row implements Arrayable
      */
     protected function output($value)
     {
+        if ($value instanceof Carbon) {
+            return $value;
+        }
+
         if ($value instanceof Renderable) {
             $value = $value->render();
         }
