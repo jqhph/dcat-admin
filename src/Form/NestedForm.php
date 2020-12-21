@@ -358,12 +358,12 @@ class NestedForm extends WidgetForm
             foreach ($column as $k => $name) {
                 $errorKey[$k] = sprintf('%s.%s.%s', $this->relationName, $key, $name);
                 $elementName[$k] = sprintf('%s[%s][%s]', $this->formatName(), $key, $name);
-                $elementClass[$k] = [$this->formatClass(), $this->formatClass($name)];
+                $elementClass[$k] = [$this->formatClass(), $this->formatClass($name), $this->formatClass($name, false)];
             }
         } else {
             $errorKey = sprintf('%s.%s.%s', $this->relationName, $key, $column);
             $elementName = sprintf('%s[%s][%s]', $this->formatName(), $key, $column);
-            $elementClass = [$this->formatClass(), $this->formatClass($column)];
+            $elementClass = [$this->formatClass(), $this->formatClass($column), $this->formatClass($column, false)];
         }
 
         return $field->setErrorKey($errorKey)
@@ -371,9 +371,11 @@ class NestedForm extends WidgetForm
             ->setElementClass($elementClass);
     }
 
-    protected function formatClass($name = null)
+    protected function formatClass($name = null, bool $append = true)
     {
-        return str_replace('.', '_', $name ?: $this->relationName).'_'.$this->key;
+        $class = str_replace('.', '_', $name ?: $this->relationName);
+
+        return $append ? ($class.'_'.$this->key) : $class;
     }
 
     protected function formatName($name = null)

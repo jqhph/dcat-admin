@@ -30,6 +30,8 @@ class Field implements Renderable
 
     const BUILD_IGNORE = 'build-ignore';
 
+    const NORMAL_CLASS = '_normal_';
+
     /**
      * Element value.
      *
@@ -925,10 +927,18 @@ class Field implements Renderable
     public function getElementClass()
     {
         if (! $this->elementClass) {
-            $this->elementClass = $this->normalizeElementClass((array) $this->getElementName());
+            $this->elementClass = $this->getDefaultElementClass();
         }
 
         return $this->elementClass;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultElementClass()
+    {
+        return array_merge($this->normalizeElementClass((array) $this->getElementName()), [static::NORMAL_CLASS]);
     }
 
     /**
@@ -1040,17 +1050,7 @@ class Field implements Renderable
      */
     public function removeElementClass($class)
     {
-        $delClass = [];
-
-        if (is_string($class) || is_array($class)) {
-            $delClass = (array) $class;
-        }
-
-        foreach ($delClass as $del) {
-            if (($key = array_search($del, $this->elementClass))) {
-                unset($this->elementClass[$key]);
-            }
-        }
+        Helper::deleteByValue($this->elementClass, $class);
 
         return $this;
     }
