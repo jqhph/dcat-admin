@@ -14,7 +14,7 @@ class NestedForm extends WidgetForm
 
     const REMOVE_FLAG_NAME = '_remove_';
 
-    const REMOVE_FLAG_CLASS = 'fom-removed';
+    const REMOVE_FLAG_CLASS = 'form-removed';
 
     /**
      * @var string
