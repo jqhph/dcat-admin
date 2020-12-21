@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -15,7 +16,7 @@ trait HasFormResponse
      */
     public function response()
     {
-        return new JsonResponse();
+        return Admin::json();
     }
 
     /**

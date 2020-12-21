@@ -314,7 +314,7 @@ class Form implements Renderable
     {
         $field->setForm($this);
 
-        $this->builder->fields()->push($field);
+        $this->builder->pushField($field);
         $this->builder->layout()->addField($field);
 
         $width = $this->builder->getWidth();

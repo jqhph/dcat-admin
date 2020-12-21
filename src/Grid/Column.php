@@ -242,7 +242,13 @@ class Column
      */
     public static function setOriginalGridModels(Collection $collection)
     {
-        static::$originalGridModels = $collection;
+        static::$originalGridModels = $collection->map(function ($row) {
+            if (is_object($row)) {
+                return clone $row;
+            }
+
+            return $row;
+        });
     }
 
     /**
@@ -515,54 +521,36 @@ class Column
     /**
      * Fill all data to every column.
      *
-     * @param array $data
+     * @param \Illuminate\Support\Collection $data
      */
-    public function fill(array &$data)
+    public function fill($data)
     {
-        $name = $this->getSnakeName($this->name);
-
         $i = 0;
-        foreach ($data as $key => &$row) {
+
+        foreach ($data as $key => $row) {
             $i++;
             if (! isset($row['#'])) {
                 $row['#'] = $i;
             }
 
-            $this->original = $value = Arr::get($row, $name);
-
-            $this->value = $value = $this->htmlEntityEncode($value);
-
             $this->setOriginalModel(static::$originalGridModels[$key]);
+
+            $this->original = Arr::get($this->originalModel, $this->name);
+
+            $this->value = $value = $this->htmlEntityEncode(Arr::get($row, $this->name));
 
             $this->processConditions();
 
-            Arr::set($row, $name, $value);
-
             if ($this->hasDisplayCallbacks()) {
                 $value = $this->callDisplayCallbacks($this->original);
-                Arr::set($row, $name, $value);
+            }
+
+            if ($value !== $this->value) {
+                Helper::arraySet($row, $this->name, $value);
             }
         }
 
         $this->value = $value ?? null;
-    }
-
-    protected function getSnakeName($name)
-    {
-        if (! Str::contains($name, '.')) {
-            return $name;
-        }
-
-        $names = explode('.', $name);
-        $count = count($names);
-
-        foreach ($names as $i => &$name) {
-            if ($i + 1 < $count) {
-                $name = Str::snake($name);
-            }
-        }
-
-        return implode('.', $names);
     }
 
     /**

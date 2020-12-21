@@ -570,6 +570,13 @@ class Builder
         return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
     }
 
+    public function pushField(Field $field)
+    {
+        $this->fields->push($field);
+
+        return $this;
+    }
+
     /**
      * Determine if form fields has files.
      *
@@ -791,20 +798,7 @@ class Builder
             $content = $this->layout->build();
         }
 
-        return <<<EOF
-{$open} {$content} {$this->renderHiddenFields()} {$this->close()}
-EOF;
-    }
-
-    protected function renderHiddenFields()
-    {
-        $html = '';
-
-        foreach ($this->hiddenFields() as $field) {
-            $html .= $field->render();
-        }
-
-        return $html;
+        return "{$open}{$content}{$this->close()}";
     }
 
     /**

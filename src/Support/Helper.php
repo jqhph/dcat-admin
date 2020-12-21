@@ -862,4 +862,42 @@ class Helper
 
         return $html;
     }
+
+    /**
+     * Set an array item to a given value using "dot" notation.
+     *
+     * If no key is given to the method, the entire array will be replaced.
+     *
+     * @param  array|\ArrayAccess  $array
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return array
+     */
+    public static function arraySet(&$array, $key, $value)
+    {
+        if (is_null($key)) {
+            return $array = $value;
+        }
+
+        $keys = explode('.', $key);
+        $default = null;
+
+        while (count($keys) > 1) {
+            $key = array_shift($keys);
+
+            if (! isset($array[$key]) || (! is_array($array[$key]) && ! $array[$key] instanceof \ArrayAccess)) {
+                $array[$key] = [];
+            }
+
+            if (is_array($array)) {
+                $array = &$array[$key];
+            } else {
+                $array[$key] = static::arraySet($array[$key], implode('.', $keys), $value);
+            }
+        }
+
+        $array[array_shift($keys)] = $value;
+
+        return $array;
+    }
 }
