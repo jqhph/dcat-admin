@@ -36,7 +36,7 @@ class Row implements Arrayable
     public function __construct(Grid $grid, $data)
     {
         $this->grid = $grid;
-        $this->data = new Fluent($data);
+        $this->data = is_array($data) ? new Fluent($data) : $data;
     }
 
     /**
@@ -46,7 +46,7 @@ class Row implements Arrayable
      */
     public function getKey()
     {
-        return $this->data->get($this->grid->getKeyName());
+        return $this->data->{$this->grid->getKeyName()};
     }
 
     /**
@@ -123,7 +123,7 @@ class Row implements Arrayable
     /**
      * Get data of this row.
      *
-     * @return Fluent
+     * @return Fluent|\Illuminate\Database\Eloquent\Model
      */
     public function model()
     {
@@ -139,7 +139,7 @@ class Row implements Arrayable
      */
     public function __get($attr)
     {
-        return $this->data->get($attr);
+        return $this->data->{$attr};
     }
 
     /**
@@ -167,7 +167,7 @@ class Row implements Arrayable
     {
         if (is_null($value)) {
             return $this->output(
-                Arr::get($this->toArray(), $name)
+                Arr::get($this->data, $name)
             );
         }
 

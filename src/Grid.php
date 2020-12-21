@@ -416,20 +416,18 @@ class Grid
 
         $collection = $this->processFilter();
 
-        $data = $collection->toArray();
-
         $this->prependRowSelectorColumn();
         $this->appendActionsColumn();
 
         Column::setOriginalGridModels($collection);
 
-        $this->columns->map(function (Column $column) use (&$data) {
-            $column->fill($data);
+        $this->columns->map(function (Column $column) use (&$collection) {
+            $column->fill($collection);
 
             $this->columnNames[] = $column->getName();
         });
 
-        $this->buildRows($data);
+        $this->buildRows($collection);
 
         $this->sortHeaders();
     }
@@ -449,14 +447,14 @@ class Grid
     /**
      * Build the grid rows.
      *
-     * @param array $data
+     * @param Collection $data
      *
      * @return void
      */
-    protected function buildRows(array $data)
+    protected function buildRows($data)
     {
-        $this->rows = collect($data)->map(function ($model) {
-            return new Row($this, $model);
+        $this->rows = $data->map(function ($row) {
+            return new Row($this, $row);
         });
 
         foreach ($this->rowsCallbacks as $callback) {
