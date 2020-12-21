@@ -286,6 +286,8 @@ class NestedForm extends WidgetForm
             $field->attribute(Field::BUILD_IGNORE, true);
 
             $this->form->builder()->pushField((clone $field)->display(false));
+        } elseif ($this->model()->toArray()) {
+            $field->attribute(Field::BUILD_IGNORE, true);
         }
 
         $field->setRelation([
