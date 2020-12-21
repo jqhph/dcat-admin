@@ -1234,7 +1234,7 @@ class Field implements Renderable
     public function saveAsJson($option = 0)
     {
         return $this->saving(function ($value) use ($option) {
-            if (! $value || is_scalar($value)) {
+            if ($value === null || is_scalar($value)) {
                 return $value;
             }
 
