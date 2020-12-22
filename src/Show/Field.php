@@ -254,7 +254,7 @@ class Field implements Renderable
     {
         $field = $this;
 
-        return $this->unescape()->as(function ($path) use ($server , $field) {
+        return $this->unescape()->as(function ($path) use ($server, $field, $download) {
             $name = basename($path);
 
             $field->wrap(false);
