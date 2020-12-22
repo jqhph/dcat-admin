@@ -16,6 +16,11 @@ class Map extends Field
     protected $column = [];
 
     /**
+     * @var string
+     */
+    protected $height = '300px';
+
+    /**
      * Get assets required by this field.
      *
      * @return void
@@ -35,10 +40,8 @@ class Map extends Field
                 $js = '//api-maps.yandex.ru/2.1/?lang=ru_RU';
                 break;
             case 'baidu':
-                $js = '//api.map.baidu.com/api?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
-                break;
             default:
-                $js = '//api.map.baidu.com/api?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
+                $js = '//api.map.baidu.com/getscript?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
         }
 
         Admin::js($js);
@@ -73,6 +76,13 @@ class Map extends Field
         }
     }
 
+    public function height(string $height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
     protected static function getUsingMap()
     {
         return config('admin.map.provider') ?: config('admin.map_provider');
@@ -96,5 +106,19 @@ class Map extends Field
     public function baidu()
     {
         return $this->addVariables(['type' => 'baidu', 'searchId' => 'bdmap'.Str::random()]);
+    }
+
+    protected function getDefaultElementClass()
+    {
+        $class = $this->normalizeElementClass($this->column['lat']).$this->normalizeElementClass($this->column['lng']);
+
+        return [$class, static::NORMAL_CLASS];
+    }
+
+    public function render()
+    {
+        $this->addVariables(['height' => $this->height]);
+
+        return parent::render();
     }
 }

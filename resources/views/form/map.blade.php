@@ -7,12 +7,12 @@
         @include('admin::form.error')
 
         @if($type === 'baidu')
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
+            <div class="row mb-1">
+                <div class="col-md-5 col-md-offset-3">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="{{ $searchId }}">
+                        <input type="text" placeholder="{{ trans('admin.search') }}" class="form-control" id="{{ $searchId }}">
                         <span class="input-group-btn">
-                        <button type="button" class="btn btn-info btn-flat"><i class="fa fa-search"></i></button>
+                        <button type="button" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
                     </span>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
         @endif
 
         <div class="{{ $class }}">
-            <div class="form-map"></div>
+            <div class="form-map" style="width: 100%;height: {{ $height }}"></div>
             <input type="hidden" class="form-lat" name="{{ $name['lat'] }}" value="{{ $value['lat'] ?? null }}" {!! $attributes !!} />
             <input type="hidden" class="form-lng" name="{{$name['lng']}}" value="{{ $value['lng'] ?? null }}" {!! $attributes !!} />
         </div>
@@ -146,10 +146,10 @@
         map.addOverlay(marker);
         marker.enableDragging();
 
-        if( ! lat.val() || ! lng.val()) {
+        if (! lat.val() || ! lng.val()) {
             var geolocation = new BMap.Geolocation();
             geolocation.getCurrentPosition(function(e){
-                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
                     map.panTo(e.point);
                     marker.setPosition(e.point);
 
@@ -162,13 +162,13 @@
             },{enableHighAccuracy: true})
         }
 
-        map.addEventListener("click", function(e){
+        map.addEventListener("click", function(e) {
             marker.setPosition(e.point);
             lat.val(e.point.lat);
             lng.val(e.point.lng);
         });
 
-        marker.addEventListener("dragend", function(e){
+        marker.addEventListener("dragend", function(e) {
             lat.val(e.point.lat);
             lng.val(e.point.lng);
         });
@@ -182,8 +182,8 @@
             address = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
             setPlace();
         });
-        function setPlace(){
-            function myFun(){
+        function setPlace() {
+            function myFun() {
                 var pp = local.getResults().getPoi(0).point;
                 map.centerAndZoom(pp, 15);
                 marker.setPosition(pp);
