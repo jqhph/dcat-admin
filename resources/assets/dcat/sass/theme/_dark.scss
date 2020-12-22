@@ -579,6 +579,13 @@ body.dark-mode {
     color: $body-dark-font-color;
   }
 
+  .form-control:disabled,
+  .form-control[readonly],
+  .select2-container--default.select2-container--disabled .select2-selection--single,
+  .select2-container--default.select2-container--disabled .select2-selection--multiple {
+    background-color: darken($body-dark-bg, 2%)!important;
+  }
+
   // ------ layer
   // 滚动条
   @include dark-scrollbar('.layui-layer-page .layui-layer-content');

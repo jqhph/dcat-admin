@@ -171,6 +171,11 @@ class Form implements Renderable
     protected $hasColumns = false;
 
     /**
+     * @var bool
+     */
+    public $validationErrorToastr = true;
+
+    /**
      * Form constructor.
      *
      * @param array $data
@@ -702,17 +707,33 @@ HTML;
     }
 
     /**
+     * 设置使用 Toastr 展示字段验证信息.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function validationErrorToastr(bool $value = true)
+    {
+        $this->validationErrorToastr = $value;
+
+        return $this;
+    }
+
+    /**
      * @return void
      */
     protected function setUpSubmitScript()
     {
         $confirm = json_encode($this->confirm);
+        $toastr = $this->validationErrorToastr ? 'true' : 'false';
 
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
     confirm: {$confirm},
+    validationErrorToastr: $toastr,
     success: function (data) {
         {$this->buildSuccessScript()}
         {$this->addSavedScript()}

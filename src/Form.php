@@ -269,6 +269,11 @@ class Form implements Renderable
     protected $conditions = [];
 
     /**
+     * @var bool
+     */
+    public $validationErrorToastr = true;
+
+    /**
      * Create a new form instance.
      *
      * @param Repository|Model|\Illuminate\Database\Eloquent\Builder|string $model
@@ -440,6 +445,20 @@ class Form implements Renderable
     public function allowAjaxSubmit()
     {
         return $this->useAjaxSubmit === true;
+    }
+
+    /**
+     * 设置使用 Toastr 展示字段验证信息.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function validationErrorToastr(bool $value = true)
+    {
+        $this->validationErrorToastr = $value;
+
+        return $this;
     }
 
     /**

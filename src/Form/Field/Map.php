@@ -34,10 +34,8 @@ class Map extends Field
                 $js = '//api-maps.yandex.ru/2.1/?lang=ru_RU';
                 break;
             case 'baidu':
-                $js = '//api.map.baidu.com/api?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
-                break;
             default:
-                $js = '//api.map.baidu.com/api?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
+                $js = '//api.map.baidu.com/getscript?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
         }
 
         Admin::js($js);
