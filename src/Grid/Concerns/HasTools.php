@@ -27,6 +27,18 @@ trait HasTools
     }
 
     /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function toolsWithOutline(bool $value = true)
+    {
+        $this->tools->withOutline($value);
+
+        return $this;
+    }
+
+    /**
      * Get or setup grid tools.
      *
      * @param Closure|array|Action|Tools\AbstractTool|Renderable|Htmlable|string $value

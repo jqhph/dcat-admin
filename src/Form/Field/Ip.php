@@ -22,6 +22,8 @@ class Ip extends Text
     {
         $this->inputmask($this->options);
 
+        $this->defaultAttribute('style', 'width: 160px;flex:none');
+
         $this->prepend('<i class="fa fa-laptop fa-fw"></i>')
             ->defaultAttribute('style', 'width: 200px');
 

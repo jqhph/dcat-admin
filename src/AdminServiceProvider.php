@@ -182,6 +182,12 @@ class AdminServiceProvider extends ServiceProvider
     protected function loadAdminAuthConfig()
     {
         config(Arr::dot(config('admin.auth', []), 'auth.'));
+
+        foreach ((array) config('admin.multi_app') as $app => $enable) {
+            if ($enable) {
+                config(Arr::dot(config($app.'.auth', []), 'auth.'));
+            }
+        }
     }
 
     /**

@@ -309,7 +309,7 @@ class Card extends Widget
      */
     public function chartMarginTop(int $number)
     {
-        $this->chartMarginBottom = $number;
+        $this->chartMarginTop = $number;
 
         $this->useChart();
 
@@ -433,7 +433,7 @@ class Card extends Widget
     /**
      * @return mixed
      */
-    public function script()
+    public function addScript()
     {
         if (! $this->allowBuildRequest()) {
             return;
@@ -470,7 +470,7 @@ JS
         }
 
         // 按钮显示选中文本
-        return <<<JS
+        return $this->script = <<<JS
 $('{$clickable}').on('click', function () {
     $(this).parents('.dropdown').find('.btn').html($(this).text());
 });
@@ -533,7 +533,7 @@ JS;
         $this->setUpChart();
         $this->setUpCardHeight();
 
-        $this->script = $this->script();
+        $this->addScript();
 
         $this->variables['icon'] = $this->icon;
         $this->variables['title'] = $this->title;

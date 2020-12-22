@@ -136,11 +136,16 @@ class MinifyCommand extends Command
      */
     protected function backupFiles()
     {
-        $this->files->delete($this->getMixBakFile());
-        $this->files->copy($this->getMixFile(), $this->getMixBakFile());
+        if (! is_file($this->getMixBakFile())) {
+            $this->files->copy($this->getMixFile(), $this->getMixBakFile());
+        } else {
+            $this->files->delete($this->getMixFile());
+            $this->files->copy($this->getMixBakFile(), $this->getMixFile());
+        }
 
-        $this->files->delete($this->getColorBakFile());
-        $this->files->copy($this->getColorFile(), $this->getColorBakFile());
+        if (! is_file($this->getColorBakFile())) {
+            $this->files->copy($this->getColorFile(), $this->getColorBakFile());
+        }
     }
 
     /**

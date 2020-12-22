@@ -10,6 +10,8 @@ use Dcat\Admin\Grid\Filter\Presenter\Presenter;
 use Dcat\Admin\Grid\Filter\Presenter\Radio;
 use Dcat\Admin\Grid\Filter\Presenter\Select;
 use Dcat\Admin\Grid\Filter\Presenter\Text;
+use Dcat\Admin\Grid\LazyRenderable;
+use Dcat\Laravel\Database\WhereHasInServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -97,6 +99,11 @@ abstract class AbstractFilter
      * @var Collection
      */
     public $group;
+
+    /**
+     * @var bool
+     */
+    protected $ignore = false;
 
     /**
      * AbstractFilter constructor.
@@ -201,6 +208,14 @@ abstract class AbstractFilter
     }
 
     /**
+     * @return Filter
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Get siblings of current filter.
      *
      * @param null $index
@@ -253,6 +268,10 @@ abstract class AbstractFilter
      */
     public function condition($inputs)
     {
+        if ($this->ignore) {
+            return;
+        }
+
         $value = Arr::get($inputs, $this->column);
 
         if ($value === null) {
@@ -262,6 +281,18 @@ abstract class AbstractFilter
         $this->value = $value;
 
         return $this->buildCondition($this->column, $this->value);
+    }
+
+    /**
+     * Ignore this query filter.
+     *
+     * @return $this
+     */
+    public function ignore()
+    {
+        $this->ignore = true;
+
+        return $this;
     }
 
     /**
@@ -290,10 +321,32 @@ abstract class AbstractFilter
      * @param mixed $source
      *
      * @return Filter\Presenter\SelectResource
+     *
+     * @deprecated 即将在2.0版本中废弃，请使用 selectTable 和 multipleSelectTable 代替
      */
     public function selectResource($source = null)
     {
         return $this->setPresenter(new Filter\Presenter\SelectResource($source));
+    }
+
+    /**
+     * @param LazyRenderable $table
+     *
+     * @return Filter\Presenter\SelectTable
+     */
+    public function selectTable(LazyRenderable $table)
+    {
+        return $this->setPresenter(new Filter\Presenter\SelectTable($table));
+    }
+
+    /**
+     * @param LazyRenderable $table
+     *
+     * @return Filter\Presenter\MultipleSelectTable
+     */
+    public function multipleSelectTable(LazyRenderable $table)
+    {
+        return $this->setPresenter(new Filter\Presenter\MultipleSelectTable($table));
     }
 
     /**
@@ -466,6 +519,14 @@ abstract class AbstractFilter
     }
 
     /**
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
      * Get value of current filter.
      *
      * @return array|string
@@ -494,7 +555,32 @@ abstract class AbstractFilter
      */
     protected function buildCondition(...$params)
     {
-        return [$this->query => &$params];
+        $column = explode('.', $this->column);
+
+        if (count($column) == 1) {
+            return [$this->query => &$params];
+        }
+
+        return $this->buildRelationQuery(...$params);
+    }
+
+    /**
+     * @param mixed ...$params
+     *
+     * @return array
+     */
+    protected function buildRelationQuery(...$params)
+    {
+        $column = explode('.', $this->column);
+
+        $params[0] = array_pop($column);
+
+        // 增加对whereHasIn的支持
+        $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
+
+        return [$method => [implode('.', $column), function ($q) use ($params) {
+            call_user_func_array([$q, $this->query], $params);
+        }]];
     }
 
     /**
@@ -506,17 +592,24 @@ abstract class AbstractFilter
     {
         $variables = $this->presenter()->variables();
 
-        $value = $this->value ?: Arr::get($this->parent->inputs(), $this->column);
-
         return array_merge([
             'id'        => $this->id,
             'name'      => $this->formatName($this->column),
             'label'     => $this->label,
-            'value'     => $value ?: $this->defaultValue,
+            'value'     => $this->normalizeValue(),
             'presenter' => $this->presenter(),
             'width'     => $this->width,
             'style'     => $this->style,
         ], $variables);
+    }
+
+    protected function normalizeValue()
+    {
+        if ($this->value === '' || $this->value === null) {
+            $this->value = Arr::get($this->parent->inputs(), $this->column);
+        }
+
+        return $this->value === '' || $this->value === null ? $this->defaultValue : $this->value;
     }
 
     /**

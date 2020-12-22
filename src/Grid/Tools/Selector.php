@@ -60,7 +60,7 @@ class Selector
 
     /**
      * @param string        $column
-     * @param string        $label
+     * @param string|array  $label
      * @param array         $options
      * @param null|\Closure $query
      *
@@ -104,7 +104,7 @@ class Selector
     /**
      * @return string
      */
-    public function queryName()
+    public function getQueryName()
     {
         return $this->grid->getName().$this->queryNameSuffix;
     }
@@ -112,10 +112,18 @@ class Selector
     /**
      * Get all selectors.
      *
+     * @param bool $formatKey
+     *
      * @return array|Collection
      */
-    public function all()
+    public function all(bool $formatKey = false)
     {
+        if ($formatKey) {
+            return $this->selectors->mapWithKeys(function ($v, $k) {
+                return [$this->formatKey($k) => $v];
+            });
+        }
+
         return $this->selectors;
     }
 
@@ -128,7 +136,7 @@ class Selector
             return $this->selected;
         }
 
-        $selected = $this->request->get($this->queryName(), []);
+        $selected = $this->request->get($this->getQueryName(), []);
         if (! is_array($selected)) {
             return [];
         }
@@ -144,6 +152,11 @@ class Selector
         return $this->selected = $selected;
     }
 
+    public function formatKey($column)
+    {
+        return str_replace('.', '_', $column);
+    }
+
     /**
      * @param string $column
      * @param mixed  $value
@@ -153,11 +166,15 @@ class Selector
      */
     public function url($column, $value = null, $add = false)
     {
+        $column = $this->formatKey($column);
+
         $query = $this->request->query();
+
+        $query[$this->grid->model()->getPageName()] = null;
 
         $selected = $this->parseSelected();
         $options = Arr::get($selected, $column, []);
-        $queryName = "{$this->queryName()}.{$column}";
+        $queryName = "{$this->getQueryName()}.{$column}";
 
         if (is_null($value)) {
             Arr::forget($query, $queryName);

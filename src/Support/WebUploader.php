@@ -241,6 +241,6 @@ class WebUploader
             app('files')->makeDirectory($dir, 0755, true);
         }
 
-        return trim($dir, '/');
+        return rtrim($dir, '/');
     }
 }

@@ -42,6 +42,7 @@ trait ImageField
      * Execute Intervention calls.
      *
      * @param string $target
+     * @param string $mime
      *
      * @return mixed
      */

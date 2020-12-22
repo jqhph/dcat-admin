@@ -3,8 +3,9 @@
 namespace Dcat\Admin\Form;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Contracts\UploadField;
 use Dcat\Admin\Form;
+use Dcat\Admin\Form\Field\MultipleSelectTable;
+use Dcat\Admin\Form\Field\SelectTable;
 use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -62,6 +63,10 @@ use Illuminate\Support\Collection;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
+ * @method Field\Color                  color($column, $label = '')
+ * @method Field\SelectTable            selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable    multipleSelectTable($column, $label = '')
  */
 class NestedForm
 {
@@ -327,9 +332,7 @@ class NestedForm
             $field->attribute(Builder::BUILD_IGNORE, true);
         }
 
-        if ($field instanceof UploadField) {
-            $field->setRelation($this->relationName, $this->key);
-        }
+        $field->setNestedFormRelation($this->relationName, $this->key);
 
         $field::collectAssets();
 
@@ -387,7 +390,7 @@ class NestedForm
             }
         }
 
-        return [$html, implode("\r\n", $scripts)];
+        return [$html, implode(";\r\n", $scripts)];
     }
 
     /**

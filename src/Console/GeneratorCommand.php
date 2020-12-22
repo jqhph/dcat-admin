@@ -28,9 +28,7 @@ abstract class GeneratorCommand extends BaseCommand
      */
     protected function getPath($name)
     {
-        $name = Str::replaceFirst(explode('\\', $this->rootNamespace())[0], '', $name);
-
-        return $this->getBaseDir().'/'.str_replace('\\', '/', $name).'.php';
+        return Helper::guessClassFileName($name);
     }
 
     /**
@@ -57,7 +55,7 @@ abstract class GeneratorCommand extends BaseCommand
         if (! Str::startsWith(config('admin.route.namespace'), 'App')) {
             $dir = explode('\\', config('admin.route.namespace'))[0];
 
-            $this->baseDirectory = trim($this->ask('Please enter the destination class path', Helper::slug($dir)));
+            $this->baseDirectory = trim($this->ask('Please enter the application path', Helper::slug($dir)));
         }
     }
 }

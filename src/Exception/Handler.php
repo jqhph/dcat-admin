@@ -2,22 +2,27 @@
 
 namespace Dcat\Admin\Exception;
 
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 
 class Handler
 {
-    /**
-     * Render exception.
-     *
-     * @param \Exception $exception
-     *
-     * @return string
-     */
-    public function renderException(\Throwable $exception)
+    public function handle(\Throwable $e)
+    {
+        $this->report($e);
+
+        return $this->render($e);
+    }
+
+    public function render(\Throwable $exception)
     {
         if (config('app.debug')) {
             throw $exception;
+        }
+
+        if (Helper::isAjaxRequest()) {
+            return;
         }
 
         $error = new MessageBag([
@@ -25,6 +30,7 @@ class Handler
             'message' => $exception->getMessage(),
             'file'    => $exception->getFile(),
             'line'    => $exception->getLine(),
+            'trace'   => $this->replaceBasePath($exception->getTraceAsString()),
         ]);
 
         $errors = new ViewErrorBag();
@@ -33,27 +39,34 @@ class Handler
         return view('admin::partials.exception', compact('errors'))->render();
     }
 
-    /**
-     * @param \Throwable $e
-     *
-     * @return mixed
-     */
-    public function handleDestroyException(\Throwable $e)
+    public function report(\Throwable $e)
     {
-        $root = dirname(app_path());
+        $this->getLogger()->error($this->convertExceptionToString($e));
+    }
 
-        $context = [
-            'trace' => str_replace($root, '', $e->getTraceAsString()),
-        ];
-
-        $message = sprintf(
-            '[%s] %s in %s(%s)',
+    protected function convertExceptionToString(\Throwable $e)
+    {
+        return sprintf(
+            "[%s] %s, called in %s(%s)\n%s",
             get_class($e),
             $e->getMessage(),
-            str_replace($root, '', $e->getFile()),
-            $e->getLine()
+            $this->replaceBasePath($e->getFile()),
+            $e->getLine(),
+            $this->replaceBasePath($e->getTraceAsString())
         );
+    }
 
-        logger()->error($message, $context);
+    protected function replaceBasePath(string $path)
+    {
+        return str_replace(
+            str_replace('\\', '/', base_path().'/'),
+            '',
+            str_replace('\\', '/', $path)
+        );
+    }
+
+    protected function getLogger()
+    {
+        return logger();
     }
 }

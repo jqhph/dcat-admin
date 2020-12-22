@@ -103,6 +103,6 @@ class Permission
      */
     public static function isAdministrator()
     {
-        return Admin::user()->isRole(Role::ADMINISTRATOR);
+        return ! config('admin.permission.enable') || Admin::user()->isRole(Role::ADMINISTRATOR);
     }
 }

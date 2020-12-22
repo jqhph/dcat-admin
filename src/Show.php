@@ -7,6 +7,7 @@ use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Show\AbstractTool;
 use Dcat\Admin\Show\Divider;
 use Dcat\Admin\Show\Field;
+use Dcat\Admin\Show\Html;
 use Dcat\Admin\Show\Newline;
 use Dcat\Admin\Show\Panel;
 use Dcat\Admin\Show\Relation;
@@ -511,6 +512,16 @@ class Show implements Renderable
     }
 
     /**
+     * Show the content of html.
+     *
+     * @param string $html
+     */
+    public function html($html = '')
+    {
+        $this->fields->push((new Html($html))->setParent($this));
+    }
+
+    /**
      * Disable `list` tool.
      *
      * @return $this
@@ -695,7 +706,7 @@ class Show implements Renderable
 
             return view($this->view, $data)->render();
         } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
+            return Admin::makeExceptionHandler()->handle($e);
         }
     }
 

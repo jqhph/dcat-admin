@@ -7,6 +7,7 @@ return [
         'table'             => 'Table',
         'model'             => 'Model',
         'controller'        => 'Controller',
+        'repository'        => 'Repository',
         'add_field'         => 'Add field',
         'pk'                => 'Primary key',
         'soft_delete'       => 'Soft delete',

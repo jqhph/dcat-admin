@@ -1,5 +1,9 @@
 
-let w = top || window;
+let w = window;
+
+if (top && w.layer) {
+    w = top;
+}
 
 export default class DialogForm {
     constructor(Dcat, options) {
@@ -46,10 +50,10 @@ export default class DialogForm {
         _this.isLoading = 0;
         _this.isSubmitting = 0;
 
-        _this._execute(options)
+        _this.init(options)
     }
 
-    _execute(options) {
+    init(options) {
         let _this = this,
             defUrl = options.defaultUrl,
             selector = options.buttonSelector;
@@ -140,7 +144,7 @@ export default class DialogForm {
             options = _this.options;
 
         // 加载js代码
-        template = Dcat.assets.filterScriptsAndLoad(template).render();
+        template = Dcat.assets.executeScripts(template).render();
         
         let btns = [options.lang.submit],
             dialogOpts = {
@@ -156,7 +160,7 @@ export default class DialogForm {
                 content: template,
                 title: options.title,
                 yes: function () {
-                    _this._submit()
+                    _this.submit()
                 },
                 cancel: function () {
                     if (options.forceRefresh) { // 是否强制刷新
@@ -197,7 +201,7 @@ export default class DialogForm {
     }
 
     // 提交表单
-    _submit() {
+    submit() {
         let _this = this, 
             options = _this.options,
             counter = _this.$target.attr('counter'),
@@ -209,7 +213,7 @@ export default class DialogForm {
 
         Dcat.Form({
             form: _this.$form,
-            disableRedirect: true,
+            redirect: false,
             before: function () {
                 // 验证表单
                 _this.$form.validator('validate');

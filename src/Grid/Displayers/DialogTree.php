@@ -15,7 +15,7 @@ class DialogTree extends AbstractDisplayer
 
     protected $title;
 
-    protected $area = ['650px', '600px'];
+    protected $area = ['580px', '600px'];
 
     protected $options = [
         'plugins' => ['checkbox', 'types'],

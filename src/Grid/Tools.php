@@ -12,6 +12,7 @@ use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class Tools implements Renderable
 {
@@ -28,6 +29,11 @@ class Tools implements Renderable
      * @var Collection
      */
     protected $tools;
+
+    /**
+     * @var bool
+     */
+    protected $outline = true;
 
     /**
      * Create a new Tools instance.
@@ -122,6 +128,18 @@ class Tools implements Renderable
     }
 
     /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function withOutline(bool $value)
+    {
+        $this->outline = $value;
+
+        return $this;
+    }
+
+    /**
      * Disable refresh button.
      *
      * @return void
@@ -185,12 +203,50 @@ class Tools implements Renderable
      */
     public function render()
     {
-        return $this->tools->map(function ($tool) {
+        $value = $this->tools->map(function ($tool) {
             if ($tool instanceof Action && ! $tool->allowed()) {
                 return;
             }
 
             return Helper::render($tool);
         })->implode(' ');
+
+        return $this->addButtonOutline($value);
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public function format(string $value)
+    {
+        return $this->addButtonOutline($value);
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function addButtonOutline($value)
+    {
+        if (! $this->outline) {
+            return $value;
+        }
+
+        return preg_replace_callback('/class=[\'|"]([a-z0-9A-Z-_\s]*)[\'|"]/', function ($text) {
+            $class = array_filter(explode(' ', $text[1]));
+
+            if (
+                in_array('btn', $class, true)
+                && ! in_array('disable-outline', $class, true)
+                && Str::contains($text[1], 'btn-')
+            ) {
+                $class[] = 'btn-outline';
+            }
+
+            return sprintf('class="%s"', implode(' ', $class));
+        }, $value);
     }
 }

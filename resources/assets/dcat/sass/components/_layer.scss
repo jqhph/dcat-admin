@@ -1,18 +1,18 @@
 .layui-layer {
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2)!important;
-  border-radius: .4rem!important;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,.2)!important;
+  //border-radius: $card-border-radius!important;
 }
 
 .layui-layer-title {
   padding: 0 80px 0 20px;
-  height: 55px!important;
-  line-height: 55px!important;
+  height: 52px!important;
+  line-height: 52px!important;
   border-bottom: 1px solid $divider-color!important;
   font-size: 1.1rem!important;
   text-transform: capitalize;
   overflow: hidden;
   background-color: #fff!important;
-  border-radius: .5rem .5rem 0 0!important;
+  border-radius: $card-border-radius $card-border-radius 0 0!important;
 }
 .layui-layer-setwin .layui-layer-min cite {
   background: transparent!important;

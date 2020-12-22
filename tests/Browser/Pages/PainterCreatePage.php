@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Pages;
 
+use Dcat\Admin\Form\Field;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Form\Field\HasMany;
 
@@ -82,7 +83,7 @@ class PainterCreatePage extends Page
                                 foreach ($input as $k => $v) {
                                     $browser->script(
                                         <<<JS
-                                    $('{$browser->resolver->format('.'.$k)}').val('$v');
+                                    $('{$browser->resolver->format('.'.Field::FIELD_CLASS_PREFIX.$k)}').val('$v');
 JS
                                     );
                                 }

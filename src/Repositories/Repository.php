@@ -266,6 +266,8 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * @param array|string $repositories
      * @param array|string $listeners
+     *
+     * @deprecated 即将在2.0中废弃
      */
     public static function listen($repositories, $listeners)
     {
@@ -288,6 +290,8 @@ abstract class Repository implements RepositoryInterface, TreeRepository
      * @param null|string $repository
      *
      * @return RepositoryListener[]
+     *
+     * @deprecated 即将在2.0中废弃
      */
     public static function getListeners(?string $repository)
     {

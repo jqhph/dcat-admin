@@ -42,7 +42,7 @@ JS;
         $pjaxContainer = Admin::$pjaxContainerId;
 
         return <<<HTML
-&nbsp;<span class="dropdown" style="position:absolute;">
+&nbsp;<span class="dropdown">
 <form action="{$this->formAction()}" {$pjaxContainer} style="display: inline-block;">
     <a href="javascript:void(0);" class="{$active}" data-toggle="dropdown">
         <i class="feather icon-filter"></i>
@@ -62,11 +62,7 @@ JS;
                 {$this->renderOptions($value)}
             </ul>
         </li>
-        <li class="dropdown-divider"></li>
-       <li class="dropdown-item">
-            <button class="btn btn-sm btn-primary column-filter-submit "><i class="feather icon-search"></i></button>
-            <span onclick="Dcat.reload('{$this->urlWithoutFilter()}')" class="btn btn-sm btn-default"><i class="feather icon-rotate-ccw"></i></span>
-        </li>
+        {$this->renderFormButtons()}
     </ul>
 </form>
 </span>

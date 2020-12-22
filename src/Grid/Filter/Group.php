@@ -272,7 +272,9 @@ class Group extends AbstractFilter
 
         $group = Arr::get($inputs, "{$this->id}_group");
 
-        call_user_func($this->builder, $this);
+        if ($this->group->isEmpty()) {
+            call_user_func($this->builder, $this);
+        }
 
         if ($query = $this->group->get($group)) {
             return $this->buildCondition(...$query['condition']);

@@ -1,5 +1,5 @@
 @if(! $isHoldSelectAllCheckbox)
-<div class="btn-group dropdown  {{$selectAllName}}-btn" style="display:none;margin-right: 3px;">
+<div class="btn-group dropdown  {{$selectAllName}}-btn" style="display:none;margin-right: 3px;z-index: 100">
     <button type="button" class="btn btn-white dropdown-toggle btn-mini" data-toggle="dropdown">
         <span class="d-none d-sm-inline selected"></span>
         <span class="caret"></span>

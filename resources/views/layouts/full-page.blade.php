@@ -20,11 +20,9 @@
 
     {!! admin_section(\AdminSection::HEAD) !!}
 
-    {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
-
     {!! Dcat\Admin\Admin::asset()->headerJsToHtml() !!}
 
-    @yield('head')
+    {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
 </head>
 
 <body class="dcat-admin-body full-page {{ $configData['body_class'] }}">

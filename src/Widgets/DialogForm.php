@@ -45,8 +45,6 @@ class DialogForm
         $this->title($title);
 
         $this->url($url);
-
-        $this->autoRender();
     }
 
     /**
@@ -255,20 +253,6 @@ JS
     }
 
     /**
-     * 自动渲染.
-     *
-     * @return void
-     */
-    protected function autoRender()
-    {
-        Content::composed(function () {
-            if ($results = Helper::render($this->render())) {
-                Admin::html($results);
-            }
-        });
-    }
-
-    /**
      * 配置选项初始化.
      *
      * @return void
@@ -315,10 +299,16 @@ JS
         $form->disableFooter();
 
         $form->width(9, 2);
-        $form->hidden('_token')->value(csrf_token());
 
         Content::composing(function (Content $content) {
             $content->view(static::$contentView);
         });
+    }
+
+    public function __destruct()
+    {
+        if ($results = Helper::render($this->render())) {
+            Admin::html($results);
+        }
     }
 }

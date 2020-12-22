@@ -116,7 +116,7 @@ class IdeHelperCommand extends Command
                 $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_schema = "%s"', $value['database']);
 
                 $each = collect(DB::connection($connectName)->select($sql))
-                    ->map(function ($v) use ($value, $exceptTables, &$reject) {
+                    ->map(function ($v) use ($exceptTables, &$reject) {
                         $v = (array) $v;
 
                         if (in_array($v['TABLE_NAME'], $exceptTables) || in_array($v['COLUMN_NAME'], $reject)) {
@@ -235,7 +235,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($value, $key) use (&$space) {
                     return $space.sprintf($this->templates['grid-filter'], '\\'.$value, $key);
                 })
-                ->join("\r\n")
+                ->implode("\r\n")
         );
     }
 
@@ -253,7 +253,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($value, $key) use (&$space) {
                     return $space.sprintf($this->templates['show-column'], $key);
                 })
-                ->join("\r\n")
+                ->implode("\r\n")
         );
     }
 
@@ -279,7 +279,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($value, $key) use (&$space) {
                     return $space.sprintf($this->templates['form'], '\\'.$value, $key);
                 })
-                ->join("\r\n")
+                ->implode("\r\n")
         );
     }
 
@@ -305,7 +305,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($value) use (&$space) {
                     return $space.sprintf($this->templates['grid-column'], $value);
                 })
-                ->join("\r\n")
+                ->implode("\r\n")
         );
     }
 

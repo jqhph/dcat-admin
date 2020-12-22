@@ -1,4 +1,3 @@
-
 .main-menu {
   .navbar-header {
     padding: 0.35rem 1rem 0;
@@ -76,7 +75,7 @@ body.sidebar-collapse {
 
 .main-sidebar {
   .nav-sidebar .nav-item > .nav-link {
-    font-size: 1.1rem;
+    font-size: 1.04rem;
     border-radius: .1rem;
   }
 }
@@ -84,3 +83,128 @@ body.sidebar-collapse {
 .nav-pills .nav-link:not(.active):hover {
   color: $font-color;
 }
+
+[class*=sidebar-dark-] {
+  .navbar-header {
+    padding: 0 1rem 0;
+    height: 61px;
+    //background: $body-darker-color;
+    background: #262d37
+  }
+
+  .navbar-header .navbar-brand {
+    margin: 8px 0;
+  }
+}
+
+[class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active, [class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active:hover {
+  color: $primary-darker;
+  background: none;
+  box-shadow: 0 0;
+}
+
+.nav-treeview > .nav-item > .nav-link p i {
+  margin-top: -5px;
+}
+
+.sidebar-light-primary .nav-item > .nav-link.active {
+  background: none;
+  color: $primary-darker !important;
+  font-weight: bold;
+  box-shadow: 0 0;
+}
+
+.nav-sidebar>.nav-item>.nav-treeview  .nav-link p {
+  font-size: 14px;
+}
+
+// ----- sidebar-separate
+body.sidebar-separate {
+  .main-sidebar {
+    top: 6rem;
+    left: 1.5rem;
+    text-align: center;
+    background-color: #fff;
+  }
+  //.main-sidebar:not(.sidebar-primary) {
+  //  background: url(/vendors/dcat-admin/images/waves.png) no-repeat;
+  //  background-color: #fff;
+  //}
+
+  .navbar-header {
+    .logo-lg,
+    .logo-mini {
+      color: $font-color;
+    }
+
+    .navbar-brand {
+      margin-top: 1rem!important;
+    }
+  }
+
+  .header-navbar.fixed-top,
+  .sidebar-collapse .header-navbar.fixed-top {
+    left: 0;
+  }
+
+  @media (min-width: 768px) {
+    .content-wrapper {
+      margin-left: 280px;
+    }
+  }
+
+  .main-sidebar .nav-sidebar .nav-item>.nav-link {
+    text-align: left;
+  }
+}
+
+body.sidebar-separate.dark-mode [class*=sidebar-dark-] .navbar-header {
+  background: unset!important;
+  height: auto;
+  padding: 0.35rem 1rem 0;
+}
+
+//
+.main-sidebar.sidebar-primary {
+  background-color: $primary!important;
+
+  .navbar-header .logo-mini,
+  .navbar-header .logo-lg,
+  .nav-treeview > .nav-item > .nav-link,
+  .sidebar a {
+    color: $white;
+  }
+
+  .nav-pills .nav-link:not(.active):hover {
+    color: $white;
+  }
+
+  .nav.nav-pills .nav-item .nav-link.active,
+  .nav-treeview > .nav-item > .nav-link.active,
+  .nav-treeview>.nav-item>.nav-link:hover {
+    //background-color: #f7f7f9;
+    //color: #555;
+    font-weight: bold;
+    border-bottom: 1px solid $white;
+  }
+
+  .nav-item>.nav-link i {
+    margin-right: .71rem;
+    font-size: 1.2rem;
+  }
+  .nav-treeview>.nav-item>.nav-link i {
+    margin-right: .65rem;
+    margin-left: 3px;
+  }
+
+  //.navbar-header .navbar-brand {
+  //  margin-top: .5rem;
+  //}
+  //
+  //.navbar-header {
+  //  padding: 0 1rem 0;
+  //  height: 61px;
+  //  background: $primary-darker;
+  //}
+}
+

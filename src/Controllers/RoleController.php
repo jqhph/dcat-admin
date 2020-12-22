@@ -5,7 +5,6 @@ namespace Dcat\Admin\Controllers;
 use Dcat\Admin\Auth\Permission;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Models\Repositories\Role;
 use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
@@ -19,53 +18,40 @@ class RoleController extends AdminController
         return trans('admin.roles');
     }
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
     protected function grid()
     {
-        if ($mini = request(IFrameGrid::QUERY_NAME)) {
-            $grid = new IFrameGrid(new Role());
-        } else {
-            $grid = new Grid(new Role());
-        }
+        return new Grid(new Role(), function (Grid $grid) {
+            $grid->column('id', 'ID')->sortable();
+            $grid->column('slug')->label('primary');
+            $grid->column('name');
 
-        $grid->id('ID')->sortable();
-        $grid->slug->label('primary');
-        $grid->name;
+            $grid->column('created_at');
+            $grid->column('updated_at')->sortable();
 
-        if (! $mini) {
-            $grid->created_at;
-            $grid->updated_at->sortable();
-        }
+            $grid->disableBatchDelete();
+            $grid->disableEditButton();
+            $grid->showQuickEditButton();
+            $grid->disableFilterButton();
+            $grid->quickSearch(['id', 'name', 'slug']);
+            $grid->enableDialogCreate();
 
-        $grid->disableBatchDelete();
-        $grid->disableEditButton();
-        $grid->showQuickEditButton();
-        $grid->disableFilterButton();
-        $grid->quickSearch(['id', 'name', 'slug']);
-        $grid->enableDialogCreate();
-
-        $grid->actions(function (Grid\Displayers\Actions $actions) {
-            $roleModel = config('admin.database.roles_model');
-            if ($roleModel::isAdministrator($actions->row->slug)) {
-                $actions->disableDelete();
-            }
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                $roleModel = config('admin.database.roles_model');
+                if ($roleModel::isAdministrator($actions->row->slug)) {
+                    $actions->disableDelete();
+                }
+            });
         });
-
-        return $grid;
     }
 
     protected function detail($id)
     {
         return Show::make($id, new Role('permissions'), function (Show $show) {
-            $show->id;
-            $show->slug;
-            $show->name;
+            $show->field('id');
+            $show->field('slug');
+            $show->field('name');
 
-            $show->permissions->unescape()->as(function ($permission) {
+            $show->field('permissions')->unescape()->as(function ($permission) {
                 $permissionModel = config('admin.database.permissions_model');
                 $permissionModel = new $permissionModel();
                 $nodes = $permissionModel->allNodes();
@@ -80,8 +66,8 @@ class RoleController extends AdminController
                 return $tree->render();
             });
 
-            $show->created_at;
-            $show->updated_at;
+            $show->field('created_at');
+            $show->field('updated_at');
 
             if ($show->getKey() == RoleModel::ADMINISTRATOR_ID) {
                 $show->disableDeleteButton();

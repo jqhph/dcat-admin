@@ -54,14 +54,27 @@
 
 .custom-data-table {
   .grid-selector {
-    padding: 2px;
+    padding: 2px 0;
+    margin: .35rem 0 -.5rem;
 
     .wrap {
       border-bottom: 0;
       background: $white;
       box-shadow: $shadow;
-      border-radius: .35rem;
+      border-radius: $card-border-radius;
       margin: 7px 0;
+    }
+  }
+}
+
+.simple-grid {
+  .custom-data-table {
+    .grid-selector {
+      .wrap {
+        box-shadow: none;
+        border-radius: 0;
+        border-bottom: 1px dashed $table-border-color;
+      }
     }
   }
 }

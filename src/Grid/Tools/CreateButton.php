@@ -58,6 +58,8 @@ class CreateButton implements Renderable
 
     public function render()
     {
-        return "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderDialogCreateButton()}</div>";
+        return $this->grid->tools()->format(
+            "{$this->renderCreateButton()}{$this->renderDialogCreateButton()}"
+        );
     }
 }

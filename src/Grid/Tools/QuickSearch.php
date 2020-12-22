@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Grid;
 use Dcat\Admin\Support\Helper;
 
 class QuickSearch extends AbstractTool
@@ -45,17 +44,10 @@ class QuickSearch extends AbstractTool
         return $this;
     }
 
-    public function setGrid(Grid $grid)
-    {
-        $grid->setQuickSearchQueryName();
-
-        return parent::setGrid($grid);
-    }
-
     /**
      * @return string
      */
-    public function queryName()
+    public function getQueryName()
     {
         return $this->queryName;
     }

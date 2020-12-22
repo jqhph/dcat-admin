@@ -82,16 +82,17 @@ export default class Dcat {
             if (! pjaxResponded) {
                 return $(callback);
             }
+
             return _this.onPjaxLoaded(callback);
         }
 
-        function proxy(e) {
-            _window.$(_this.config.pjax_container_selector).one('pjax:loaded', proxy);
+        function run(e) {
+            _window.$(_this.config.pjax_container_selector).one('pjax:loaded', run);
 
             callback(e);
         }
 
-        _window.Dcat.ready(proxy);
+        _window.Dcat.ready(run);
     }
 
     /**
@@ -112,8 +113,8 @@ export default class Dcat {
      *
      * @returns {Dcat}
      */
-    pjaxResponded() {
-        pjaxResponded = true;
+    pjaxResponded(value) {
+        pjaxResponded = value !== false;
 
         return this
     }

@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\Components\Form\Field;
 
+use Dcat\Admin\Form\Field;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Components\Component;
 use Tests\PHPUnit;
@@ -186,7 +187,7 @@ JS
     {
         $input = $browser->script(
                 <<<JS
-return $('{$browser->resolver->format('.'.$field)}').val();
+return $('{$browser->resolver->format('.'.Field::FIELD_CLASS_PREFIX.$field)}').val();
 JS
         )[0] ?? null;
 

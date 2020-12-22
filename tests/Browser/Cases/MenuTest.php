@@ -116,8 +116,8 @@ class MenuTest extends TestCase
                         }, 2)
                         ->clickLink(__('admin.submit'));
                 }, 2)
-                ->waitForText(__('admin.update_succeeded'), 2)
-                ->waitForLocation(admin_base_path('auth/menu'), 1)
+                ->waitForText(__('admin.save_succeeded'), 3)
+                ->waitForLocation(admin_base_path('auth/menu'), 3)
                 ->waitForText('balabala', 2);
 
             // 检测是否写入数据库

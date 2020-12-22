@@ -91,7 +91,11 @@ trait HasActions
             return;
         }
 
-        $this->addColumn('__actions__', trans('admin.action'))
+        $attributes = ['class' => 'grid__actions__'];
+
+        $this->addColumn(Grid\Column::ACTION_COLUMN_NAME, trans('admin.action'))
+            ->setHeaderAttributes($attributes)
+            ->setAttributes($attributes)
             ->displayUsing($this->getActionClass(), [$this->actionsCallback]);
     }
 

@@ -11,7 +11,7 @@
         </li>
     @elseif(! isset($item['children']))
         <li class="nav-item">
-            <a href="{{ $builder->getUrl($item['uri']) }}" class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
+            <a @if(mb_strpos($item['uri'], '://') !== false) target="_blank" @endif href="{{ $builder->getUrl($item['uri']) }}" class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
                 {!! str_repeat('&nbsp;', $layer) !!}<i class="fa {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
