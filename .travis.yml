@@ -3,9 +3,10 @@ language: php
 dist: trusty
 
 php:
-#  - 7.1
+  - 7.1
   - 7.2
   - 7.3
+#  - 7.4
 
 addons:
   chrome: stable
@@ -17,14 +18,15 @@ services:
   - mysql
 
 install:
-#  - wget - https://dl.google.com/dl/linux/direct/google-chrome-stable_current_amd64.deb
+  #  - wget - https://dl.google.com/dl/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo apt-get clean
   - sudo apt-get update
   - sudo apt-get install dpkg -f
-#  - sudo apt-get -f install
-#  - sudo apt upgrade dpkg
+  #  - sudo apt-get -f install
+  #  - sudo apt upgrade dpkg
   - sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb
   - mysql -e 'create database if not exists laravel;'
+  - composer self-update --2
   - travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests
   - cp -f ./tests/resources/stubs/artisan ./laravel-tests/
   - cp -f ./tests/resources/stubs/ComposerConfigCommand.php ./laravel-tests/app/
@@ -42,13 +44,13 @@ install:
   - cd ./laravel-tests
   - php artisan admin:composer-config
   - travis_retry composer require dcat/laravel-admin:*@dev
-  - travis_retry composer require laravel/dusk --dev
-#  - travis_retry composer require --dev staudenmeir/dusk-updater:"^1.1"
+  - travis_retry composer require laravel/dusk --dev # --ignore-platform-reqs
+  #  - travis_retry composer require --dev staudenmeir/dusk-updater:"^1.1"
   - php artisan admin:publish --force
   - php artisan admin:install
   - php artisan migrate:rollback
-  - php artisan dusk:chrome-driver 85
-#  - php artisan dusk:update 79
+  - php artisan dusk:chrome-driver 87
+  #  - php artisan dusk:update 79
   - cp -f ./tests/routes.php ./app/Admin/
   - cp -rf ./tests/resources/config ./config/
 
