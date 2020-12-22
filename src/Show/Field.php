@@ -246,15 +246,14 @@ class Field implements Renderable
      * Show field as a file.
      *
      * @param string $server
-     * @param bool   $download
      *
      * @return Field
      */
-    public function file($server = '', $download = true)
+    public function file($server = '')
     {
         $field = $this;
 
-        return $this->unescape()->as(function ($path) use ($server, $field, $download) {
+        return $this->unescape()->as(function ($path) use ($server, $field) {
             $name = basename($path);
 
             $field->wrap(false);
