@@ -29,8 +29,7 @@ class CreateButton implements Renderable
 
         $new = trans('admin.new');
         $url = $this->grid->getCreateUrl();
-        $gridName = $this->grid->getName();
-        $class = 'dialog-create'.($gridName ? "-{$gridName}" : $gridName);
+        $class = $this->grid->makeName('dialog-create');
 
         [$width, $height] = $this->grid->option('dialog_form_area');
 
@@ -59,7 +58,7 @@ class CreateButton implements Renderable
     public function render()
     {
         return $this->grid->tools()->format(
-            "<div class='btn-group' style='margin-right:3px'>{$this->renderCreateButton()}{$this->renderDialogCreateButton()}</div>"
+            "{$this->renderCreateButton()}{$this->renderDialogCreateButton()}"
         );
     }
 }

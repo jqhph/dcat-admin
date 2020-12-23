@@ -11,8 +11,6 @@ class ContextMenuActions extends DropdownActions
      */
     protected function addScript()
     {
-        parent::addScript();
-
         $script = <<<JS
 (function () {
     $("body").on("contextmenu", "table#{$this->grid->getTableId()} tr", function(e) {
@@ -53,6 +51,8 @@ JS;
      */
     public function display($callback = null)
     {
+        $this->addScript();
+
         Admin::html('<div id="grid-context-menu" class="dropdown" style="display: contents"></div>');
         Admin::style('.grid__actions__ .dropdown{display: none!important;} th.grid__actions__{display: none!important;} .grid__actions__{width:1px}');
 

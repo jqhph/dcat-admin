@@ -4,10 +4,20 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field;
+use Illuminate\Support\Str;
 
 class Text extends Field
 {
     use PlainInput;
+
+    public function __construct($column, $arguments = [])
+    {
+        if (static::class === self::class) {
+            $this->prepend('<i class="feather icon-edit-2"></i>');
+        }
+
+        parent::__construct($column, $arguments);
+    }
 
     /**
      * Render this filed.
@@ -18,11 +28,9 @@ class Text extends Field
     {
         $this->initPlainInput();
 
-        $this->prepend('<i class="feather icon-edit-2"></i>')
-            ->defaultAttribute('type', 'text')
-            ->defaultAttribute('id', $this->id)
+        $this->defaultAttribute('type', 'text')
             ->defaultAttribute('name', $this->getElementName())
-            ->defaultAttribute('value', old($this->column, $this->value()))
+            ->defaultAttribute('value', $this->value())
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('placeholder', $this->placeholder());
 
@@ -68,7 +76,7 @@ class Text extends Field
         }
 
         $attributes = [
-            'data-match'       => '#'.$field->getElementId(),
+            'data-match'       => $field->getElementClassSelector(),
             'data-match-error' => str_replace(
                 [':attribute', ':other'],
                 [$field->label(), $this->label()],
@@ -136,7 +144,9 @@ JS
      */
     public function inputmask($options)
     {
-        $options = $this->jsonEncodeOptions($options);
+        Admin::js('@jquery.inputmask');
+
+        $options = admin_javascript_json($options);
 
         $this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
 
@@ -144,38 +154,18 @@ JS
     }
 
     /**
-     * Encode options to Json.
-     *
-     * @param array $options
-     *
-     * @return $json
-     */
-    protected function jsonEncodeOptions($options)
-    {
-        $data = $this->prepareOptions($options);
-
-        $json = json_encode($data['options']);
-
-        $json = str_replace($data['toReplace'], $data['original'], $json);
-
-        return $json;
-    }
-
-    /**
-     * Prepare options.
-     *
      * @param array $options
      *
      * @return array
      */
-    protected function prepareOptions($options)
+    protected function formatOptions($options)
     {
         $original = [];
         $toReplace = [];
 
         foreach ($options as $key => &$value) {
             if (is_array($value)) {
-                $subArray = $this->prepareOptions($value);
+                $subArray = $this->formatOptions($value);
                 $value = $subArray['options'];
                 $original = array_merge($original, $subArray['original']);
                 $toReplace = array_merge($toReplace, $subArray['toReplace']);
@@ -198,9 +188,11 @@ JS
      */
     public function datalist($entries = [])
     {
-        $this->defaultAttribute('list', "list-{$this->id}");
+        $id = Str::random(8);
 
-        $datalist = "<datalist id=\"list-{$this->id}\">";
+        $this->defaultAttribute('list', "list-{$id}");
+
+        $datalist = "<datalist id=\"list-{$id}\">";
         foreach ($entries as $k => $v) {
             $value = is_string($k) ? "value=\"{$k}\"" : '';
 
@@ -208,7 +200,7 @@ JS
         }
         $datalist .= '</datalist>';
 
-        Admin::script("$('#list-{$this->id}').parent().hide()");
+        Admin::script("$('#list-{$id}').parent().hide()");
 
         return $this->append($datalist);
     }

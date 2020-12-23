@@ -7,9 +7,8 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Contracts\UploadField;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field\Hidden;
-use Dcat\Admin\Form\Step\Builder as StepBuilder;
-use Dcat\Admin\IFrameGrid;
 use Dcat\Admin\Support\Helper;
+use Dcat\Admin\Traits\HasVariables;
 use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -22,15 +21,12 @@ use Illuminate\Support\Str;
  */
 class Builder
 {
+    use HasVariables;
+
     /**
      *  上个页面URL保存的key.
      */
     const PREVIOUS_URL_KEY = '_previous_';
-
-    /**
-     * 构建时需要忽略的字段.
-     */
-    const BUILD_IGNORE = 'build-ignore';
 
     /**
      * Modes constants.
@@ -55,7 +51,7 @@ class Builder
     protected $action;
 
     /**
-     * @var Collection
+     * @var Collection|Field[]
      */
     protected $fields;
 
@@ -111,19 +107,9 @@ class Builder
     protected $title;
 
     /**
-     * @var BlockForm[]
-     */
-    protected $multipleForms = [];
-
-    /**
      * @var Layout
      */
     protected $layout;
-
-    /**
-     * @var int
-     */
-    protected $defaultBlockWidth = 12;
 
     /**
      * @var string
@@ -146,9 +132,9 @@ class Builder
     protected $showFooter = true;
 
     /**
-     * @var StepBuilder
+     * @var array
      */
-    protected $stepBuilder;
+    public $confirm = [];
 
     /**
      * Builder constructor.
@@ -199,32 +185,6 @@ class Builder
     }
 
     /**
-     * @param int $width
-     *
-     * @return $this
-     */
-    public function setDefaultBlockWidth(int $width)
-    {
-        $this->defaultBlockWidth = $width;
-
-        return $this;
-    }
-
-    /**
-     * @param BlockForm $form
-     */
-    public function addForm(BlockForm $form)
-    {
-        $this->multipleForms[] = $form;
-
-        $form->disableResetButton();
-        $form->disableSubmitButton();
-        $form->disableFormTag();
-
-        return $this;
-    }
-
-    /**
      * Get form tools instance.
      *
      * @return Tools
@@ -245,35 +205,17 @@ class Builder
     }
 
     /**
-     * @param \Closure|StepForm[]|null $builder
+     * @param string $title
+     * @param string $content
      *
-     * @return StepBuilder
+     * @return $this
      */
-    public function multipleSteps($builder = null)
+    public function confirm(?string $title = null, ?string $content = null)
     {
-        if (! $this->stepBuilder) {
-            $this->view = 'admin::form.steps';
+        $this->confirm['title'] = $title;
+        $this->confirm['content'] = $content;
 
-            $this->stepBuilder = new StepBuilder($this->form);
-        }
-
-        if ($builder) {
-            if ($builder instanceof \Closure) {
-                $builder($this->stepBuilder);
-            } elseif (is_array($builder)) {
-                $this->stepBuilder->add($builder);
-            }
-        }
-
-        return $this->stepBuilder;
-    }
-
-    /**
-     * @return StepBuilder
-     */
-    public function stepBuilder()
-    {
-        return $this->stepBuilder;
+        return $this;
     }
 
     /**
@@ -357,16 +299,16 @@ class Builder
     /**
      * @return string
      */
-    public function getResource($slice = null)
+    public function resource($slice = null)
     {
         if ($this->mode == self::MODE_CREATE) {
-            return $this->form->getResource(-1);
+            return $this->form->resource(-1);
         }
         if ($slice !== null) {
-            return $this->form->getResource($slice);
+            return $this->form->resource($slice);
         }
 
-        return $this->form->getResource();
+        return $this->form->resource();
     }
 
     /**
@@ -413,11 +355,11 @@ class Builder
         }
 
         if ($this->isMode(static::MODE_EDIT)) {
-            return $this->form->getResource().'/'.$this->id;
+            return $this->form->resource().'/'.$this->id;
         }
 
         if ($this->isMode(static::MODE_CREATE)) {
-            return $this->form->getResource(-1);
+            return $this->form->resource(-1);
         }
 
         return '';
@@ -487,44 +429,16 @@ class Builder
     public function field($name)
     {
         return $this->fields->first(function (Field $field) use ($name) {
-            return $field === $name || $field->column() == $name;
-        });
-    }
+            if (is_array($field->column())) {
+                $result = in_array($name, $field->column(), true) || $field->column() === $name ? $field : null;
 
-    /**
-     * @param string $name
-     *
-     * @return Field|null
-     */
-    public function stepField($name)
-    {
-        if (! $builder = $this->stepBuilder()) {
-            return;
-        }
-
-        foreach ($builder->all() as $step) {
-            if ($field = $step->field($name)) {
-                return $field;
+                if ($result) {
+                    return $result;
+                }
             }
-        }
-    }
 
-    /**
-     * @return Field[]|Collection
-     */
-    public function stepFields()
-    {
-        $fields = new Collection();
-
-        if (! $builder = $this->stepBuilder()) {
-            return $fields;
-        }
-
-        foreach ($builder->all() as $step) {
-            $fields = $fields->merge($step->fields());
-        }
-
-        return $fields;
+            return $field === $name || $field->column() === $name;
+        });
     }
 
     /**
@@ -656,6 +570,13 @@ class Builder
         return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
     }
 
+    public function pushField(Field $field)
+    {
+        $this->fields->push($field);
+
+        return $this;
+    }
+
     /**
      * Determine if form fields has files.
      *
@@ -664,10 +585,7 @@ class Builder
     public function hasFile()
     {
         foreach ($this->fields() as $field) {
-            if (
-                $field instanceof UploadField
-                || $field instanceof Form\Field\BootstrapFile
-            ) {
+            if ($field instanceof UploadField) {
                 return true;
             }
         }
@@ -689,8 +607,8 @@ class Builder
         }
 
         if (
-            Str::contains($previous, url($this->getResource()))
-            && ! Helper::urlHasQuery($previous, [IFrameGrid::QUERY_NAME, DialogForm::QUERY_NAME])
+            Str::contains($previous, url($this->resource()))
+            && ! Helper::urlHasQuery($previous, [DialogForm::QUERY_NAME])
         ) {
             $this->addHiddenField(
                 (new Hidden(static::PREVIOUS_URL_KEY))->value($previous)
@@ -713,6 +631,8 @@ class Builder
             $this->addHiddenField((new Hidden('_method'))->value('PUT'));
         }
 
+        $this->addHiddenField((new Hidden('_token'))->value(csrf_token()));
+
         $this->addRedirectUrlField();
 
         $attributes['id'] = $this->getElementId();
@@ -731,7 +651,7 @@ class Builder
             $html[] = "$name=\"$value\"";
         }
 
-        return '<form '.implode(' ', $html).' pjax-container>';
+        return '<form '.implode(' ', $html).' '.Admin::getPjaxContainerId().'>';
     }
 
     /**
@@ -755,7 +675,7 @@ class Builder
     protected function removeIgnoreFields()
     {
         $this->fields = $this->fields()->reject(function (Field $field) {
-            return $field->hasAttribute(static::BUILD_IGNORE);
+            return $field->hasAttribute(Field::BUILD_IGNORE);
         });
     }
 
@@ -776,10 +696,33 @@ class Builder
             $this->form->updatedAtColumn(),
         ];
 
-        $this->fields = $this->fields()->reject(function (Field $field) use (&$reservedColumns) {
-            return in_array($field->column(), $reservedColumns)
-                && $field instanceof Form\Field\Display;
-        });
+        $reject = function ($field) use (&$reservedColumns) {
+            if ($field instanceof Field) {
+                return in_array($field->column(), $reservedColumns, true)
+                    && $field instanceof Form\Field\Display;
+            }
+
+            if ($field instanceof Row) {
+                $fields = $field->fields()->reject(function ($item) use (&$reservedColumns) {
+                    return in_array($item['element']->column(), $reservedColumns, true)
+                        && $item['element'] instanceof Form\Field\Display;
+                });
+
+                $field->setFields($fields);
+            }
+        };
+
+        $this->fields = $this->fields()->reject($reject);
+
+        if ($this->form->hasTab()) {
+            $this->form->getTab()->getTabs()->transform(function ($item) use ($reject) {
+                if (! empty($item['fields'])) {
+                    $item['fields'] = $item['fields']->reject($reject);
+                }
+
+                return $item;
+            });
+        }
     }
 
     /**
@@ -806,6 +749,20 @@ class Builder
         return $this->footer->render();
     }
 
+    protected function defaultVariables()
+    {
+        return [
+            'form'       => $this,
+            'tabObj'     => $this->form->getTab(),
+            'width'      => $this->width,
+            'elementId'  => $this->getElementId(),
+            'showHeader' => $this->showHeader,
+            'fields'     => $this->fields,
+            'rows'       => $this->rows(),
+            'layout'     => $this->layout(),
+        ];
+    }
+
     /**
      * Render form.
      *
@@ -819,32 +776,29 @@ class Builder
         $tabObj = $this->form->getTab();
 
         if (! $tabObj->isEmpty()) {
-            $this->setupTabScript();
+            $tabObj->addScript();
         }
 
-        if ($this->form->allowAjaxSubmit() && empty($this->stepBuilder)) {
-            $this->setupSubmitScript();
+        if ($this->form->allowAjaxSubmit()) {
+            $this->addSubmitScript();
         }
 
         $open = $this->open(['class' => 'form-horizontal']);
 
-        $data = [
-            'form'       => $this,
-            'tabObj'     => $tabObj,
-            'width'      => $this->width,
-            'elementId'  => $this->getElementId(),
-            'showHeader' => $this->showHeader,
-            'steps'      => $this->stepBuilder,
-        ];
+        if ($this->layout->hasColumns()) {
+            $content = $this->doWrap(view($this->view, $this->variables()));
+        } else {
+            if (! $this->layout->hasBlocks()) {
+                $this->layout->prepend(
+                    12,
+                    $this->doWrap(view($this->view, $this->variables()))
+                );
+            }
 
-        $this->layout->prepend(
-            $this->defaultBlockWidth,
-            $this->doWrap(view($this->view, $data))
-        );
+            $content = $this->layout->build();
+        }
 
-        return <<<EOF
-{$open} {$this->layout->build()} {$this->close()}
-EOF;
+        return "{$open}{$content}{$this->close()}";
     }
 
     /**
@@ -855,56 +809,28 @@ EOF;
     protected function doWrap(Renderable $view)
     {
         if ($wrapper = $this->wrapper) {
-            return $wrapper($view);
+            return Helper::render($wrapper($view));
         }
 
-        return "<div class='card dcat-box'>{$view->render()}</div>";
+        return "<div class='card'>{$view->render()}</div>";
     }
 
     /**
      * @return void
      */
-    protected function setupSubmitScript()
+    protected function addSubmitScript()
     {
+        $confirm = admin_javascript_json($this->confirm);
+        $toastr = $this->form->validationErrorToastr ? 'true' : 'false';
+
         Admin::script(
             <<<JS
 $('#{$this->getElementId()}').form({
     validate: true,
+    confirm: {$confirm},
+    validationErrorToastr: $toastr,
 });
 JS
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupTabScript()
-    {
-        $elementId = $this->getElementId();
-
-        $script = <<<JS
-(function () {
-    var hash = document.location.hash;
-    if (hash) {
-        $('#$elementId .nav-tabs a[href="' + hash + '"]').tab('show');
-    }
-    
-    // Change hash for page-reload
-    $('#$elementId .nav-tabs a').on('shown.bs.tab', function (e) {
-        history.pushState(null,null, e.target.hash);
-    });
-    
-    if ($('#$elementId .has-error').length) {
-        $('#$elementId .has-error').each(function () {
-            var tabId = '#'+$(this).closest('.tab-pane').attr('id');
-            $('li a[href="'+tabId+'"] i').removeClass('hide');
-        });
-    
-        var first = $('#$elementId .has-error:first').closest('.tab-pane').attr('id');
-        $('li a[href="#'+first+'"]').tab('show');
-    }
-})();
-JS;
-        Admin::script($script);
     }
 }

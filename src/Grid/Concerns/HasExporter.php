@@ -12,12 +12,17 @@ trait HasExporter
     /**
      * @var Exporter
      */
-    protected $__exporter;
+    protected $exporter;
 
     /**
      * @var bool
      */
     protected $enableExporter = false;
+
+    /**
+     * @var bool
+     */
+    protected $exported = false;
 
     /**
      * Set exporter driver for Grid to export.
@@ -43,7 +48,7 @@ trait HasExporter
             $exporter->resolve($exporterDriver);
         }
 
-        return $exporter->titles($titles);
+        return $titles ? $exporter->titles($titles) : $exporter;
     }
 
     /**
@@ -53,13 +58,24 @@ trait HasExporter
      *
      * @return mixed
      */
-    protected function handleExportRequest($forceExport = false)
+    public function handleExportRequest($forceExport = false)
     {
-        if (! $scope = request($this->exporter()->queryName())) {
+        if (
+            $this->exported
+            || (
+                (! $this->allowExporter()
+                    || ! $scope = request($this->exporter()->getQueryName()))
+                && ! $forceExport
+            )
+        ) {
             return;
         }
 
+        $this->exported = true;
+
         $this->callBuilder();
+
+        $this->fire(new Grid\Events\Exporting([$scope]));
 
         // clear output buffer.
         if (ob_get_length()) {
@@ -76,21 +92,7 @@ trait HasExporter
      */
     public function exporter()
     {
-        return $this->__exporter ?: ($this->__exporter = new Exporter($this));
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    protected function setExporterQueryName(string $name = null)
-    {
-        if (! $this->allowExporter()) {
-            return;
-        }
-
-        $this->exporter()->setQueryName(($name ?: $this->getName()).'_export_');
+        return $this->exporter ?: ($this->exporter = new Exporter($this));
     }
 
     /**

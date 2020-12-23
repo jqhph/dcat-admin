@@ -47,7 +47,6 @@ function dcatDistPath(path) {
 
 mix.copyDirectory('resources/assets/images', distPath + '/images');
 mix.copyDirectory('resources/assets/fonts', distPath + '/fonts');
-mix.copyDirectory('resources/assets/vendors', distPath + '/vendors');
 
 // AdminLTE3.0
 mix.sass('resources/assets/adminlte/scss/AdminLTE.scss', themeCss('adminlte/adminlte')).sourceMaps();
@@ -59,22 +58,8 @@ mix.copyDirectory(dcatPath('plugins'), dcatDistPath('plugins'));
 mix.js(dcatPath('js/dcat-app.js'), dcatDistPath('js/dcat-app.js')).sourceMaps();
 // 打包app.scss
 mix.sass(dcatPath('sass/dcat-app.scss'), themeCss('dcat/css/dcat-app')).sourceMaps();
+mix.copy(dcatPath('sass/nunito.css'), `${distPath}/dcat/css/nunito.css`);
 
 // 打包所有 extra 里面的所有js和css
 mixAssetsDir('dcat/extra/*.js', (src, dest) => mix.js(src, dest));
-mixAssetsDir('dcat/extra/*.scss', (src, dest) => {
-  if (theme) {
-    return mix.sass(src, dest.replace('\.scss', '-'+theme+'.css'))
-  }
-
-  return mix.sass(src, dest.replace('scss', 'css'))
-});
-
-// 皮肤
-// mixAssetsDir('dcat/sass/skins/*.scss', (src, dest) => {
-//   if (theme) {
-//     return mix.sass(src, dest.replace('\.scss', '-'+theme+'.css').replace(/sass/g, 'css'))
-//   }
-//
-//   return mix.sass(src, dest.replace(/sass/g, 'css').replace('scss', 'css'))
-// });
+mixAssetsDir('dcat/extra/*.scss', (src, dest) => mix.sass(src, dest.replace('scss', 'css')));

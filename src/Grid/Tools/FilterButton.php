@@ -43,13 +43,17 @@ class FilterButton extends AbstractTool
     /**
      * Set up script for filter button.
      */
-    protected function setupScripts()
+    protected function addScript()
     {
         $filter = $this->filter();
         $id = $filter->filterID();
 
         if ($filter->mode() === Filter::MODE_RIGHT_SIDE) {
-            $expand = $filter->expand ? 'true' : 'false';
+            if ($this->filter()->grid()->model()->getCurrentPage() > 1) {
+                $expand = 'false';
+            } else {
+                $expand = $filter->expand ? 'true' : 'false';
+            }
 
             $script = <<<JS
 (function () {
@@ -80,7 +84,15 @@ class FilterButton extends AbstractTool
         return false
     });
     
-    $('.wrapper').on('click', function () {
+    $('.wrapper').on('click', '.modal', function (e) {
+        if (typeof e.cancelBubble != "undefined") {
+            e.cancelBubble = true;
+        }
+        if (typeof e.stopPropagation != "undefined") {
+            e.stopPropagation();
+        }
+    });
+    $(document).on('click', '.wrapper', function (e) {
         if (slider && slider.close) {
             slider.close();
         }
@@ -129,12 +141,14 @@ JS;
 
         $scopres = $filter->scopes();
         $filters = $filter->filters();
+        $valueCount = $filter->mode() === Filter::MODE_RIGHT_SIDE
+            ? count($this->parent->filter()->getConditions()) : 0;
 
         if ($scopres->isEmpty() && ! $filters) {
             return;
         }
 
-        $this->setupScripts();
+        $this->addScript();
 
         $onlyScopes = ((! $filters || $this->parent->option('show_filter') === false) && ! $scopres->isEmpty()) ? true : false;
 
@@ -146,6 +160,7 @@ JS;
             'expand'           => $filter->expand,
             'show_filter_text' => true,
             'only_scopes'      => $onlyScopes,
+            'valueCount'       => $valueCount,
         ];
 
         return view($this->view, $variables)->render();

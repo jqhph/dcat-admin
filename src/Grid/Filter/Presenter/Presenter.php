@@ -4,9 +4,12 @@ namespace Dcat\Admin\Grid\Filter\Presenter;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Filter\AbstractFilter;
+use Dcat\Admin\Traits\HasVariables;
 
 abstract class Presenter
 {
+    use HasVariables;
+
     /**
      * @var array
      */
@@ -59,6 +62,18 @@ abstract class Presenter
     }
 
     /**
+     * 忽略筛选项.
+     *
+     * @return $this
+     */
+    public function ignore()
+    {
+        $this->filter->ignore();
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function view(): string
@@ -81,19 +96,25 @@ abstract class Presenter
     }
 
     /**
-     * Blade template variables for this presenter.
+     * Get filter value.
      *
-     * @return array
+     * @return array|string
      */
-    public function variables(): array
+    public function value()
     {
-        return [];
+        $value = $this->filter->getValue();
+
+        if ($value === null || $value === '') {
+            return $this->filter->getDefault();
+        }
+
+        return $value;
     }
 
     /**
      * Collect assets.
      */
-    public static function collectAssets()
+    public static function requireAssets()
     {
         if (static::$js) {
             Admin::js(static::$js);

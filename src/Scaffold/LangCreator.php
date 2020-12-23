@@ -18,10 +18,11 @@ class LangCreator
      * 生成语言包.
      *
      * @param string $controller
+     * @param string $title
      *
      * @return string
      */
-    public function create(string $controller)
+    public function create(string $controller, ?string $title)
     {
         $controller = str_replace('Controller', '', class_basename($controller));
 
@@ -30,9 +31,12 @@ class LangCreator
             return;
         }
 
+        $title = $title ?: $controller;
+
         $content = [
             'labels' => [
-                $controller => $controller,
+                $controller => $title,
+                Helper::slug($controller) => $title,
             ],
             'fields'  => [],
             'options' => [],

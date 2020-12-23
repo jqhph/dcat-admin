@@ -1,14 +1,7 @@
 .card {
   box-shadow: $shadow;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   border-radius: $card-border-radius;
-}
-
-.card.dcat-box {
-  .card-header {
-    border-bottom: 1px solid $divider-color;
-    padding: 1.1rem;
-  }
 }
 
 .card .card-header {

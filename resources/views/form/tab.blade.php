@@ -8,12 +8,24 @@
             </li>
         @endforeach
     </ul>
-    <div class="tab-content fields-group mt-2" style="padding:18px 0">
+    <div class="tab-content fields-group mt-2 pt-1 pb-1">
         @foreach($tabObj->getTabs() as $tab)
             <div class="tab-pane {{ $tab['active'] ? 'active' : '' }}" id="{{ $tab['id'] }}">
-                @foreach($tab['fields'] as $field)
-                    {!! $field->render() !!}
-                @endforeach
+                @if($tab['layout']->hasColumns())
+                    {!! $tab['layout']->build() !!}
+                @else
+                    @if($tabObj->hasRows)
+                    <div class="ml-2 mb-2" style="margin-top: -1rem">
+                        @foreach($tab['fields'] as $field)
+                            {!! $field->render() !!}
+                        @endforeach
+                    </div>
+                    @else
+                        @foreach($tab['fields'] as $field)
+                            {!! $field->render() !!}
+                        @endforeach
+                    @endif
+                @endif
             </div>
         @endforeach
 

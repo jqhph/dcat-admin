@@ -1,18 +1,19 @@
 .grid-selector {
   //margin: -1rem;
   width: 100%;
+  margin-top: 1rem;
 }
 .grid-selector .wrap {
   position: relative;
   line-height: 40px;
   border-bottom: 1px dashed #eee;
-  padding: 0 30px;
+  padding: 0 25px;
   font-size: 13px;
   overflow:auto;
 }
-.grid-selector .wrap:last-child {
-  border-bottom: none;
-}
+//.grid-selector .wrap:last-child {
+//  border-bottom: none;
+//}
 .grid-selector .select-label {
   float: left;
   width: 100px;
@@ -52,16 +53,25 @@
   visibility: visible;
 }
 
-.custom-data-table {
-  .grid-selector {
-    padding: 2px;
+.grid-selector {
+  padding: 2px 0;
+  margin: .35rem 0 -.5rem;
 
+  .wrap {
+    border-bottom: 0;
+    background: $white;
+    box-shadow: $shadow;
+    border-radius: $card-border-radius;
+    margin: 7px 0;
+  }
+}
+
+.simple-grid {
+  .grid-selector {
     .wrap {
-      border-bottom: 0;
-      background: $white;
-      box-shadow: $shadow;
-      border-radius: .35rem;
-      margin: 7px 0;
+      box-shadow: none;
+      border-radius: 0;
+      border-bottom: 1px dashed $table-border-color;
     }
   }
 }

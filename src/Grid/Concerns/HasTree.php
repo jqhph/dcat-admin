@@ -3,6 +3,8 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Grid\Events\Fetched;
+use Dcat\Admin\Grid\Events\Fetching;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
@@ -45,7 +47,7 @@ trait HasTree
     {
         $this->showAllChildrenNodes = $showAll;
 
-        $this->grid->fetching(function () use ($sortable) {
+        $this->grid()->listen(Fetching::class, function () use ($sortable) {
             $this->sortTree($sortable);
             $this->bindChildrenNodesQuery();
 
@@ -58,18 +60,16 @@ trait HasTree
             $this->addIgnoreQueries();
         });
 
-        $this->collection(function (Collection $collection) {
+        $this->grid()->listen(Fetched::class, function ($grid, Collection $collection) {
             if (! $this->getParentIdFromRequest()) {
-                return $collection;
+                return;
             }
 
             if ($collection->isEmpty()) {
-                abort(404);
+                return $grid->show(false);
             }
 
             $this->buildChildrenNodesPagination();
-
-            return $collection;
         });
     }
 
@@ -98,7 +98,7 @@ trait HasTree
             if (
                 $query['method'] === 'where'
                 && $query['arguments']
-                && $query['arguments'][0] === $this->repository->getParentColumn()
+                && $query['arguments'][0] === optional($this->repository)->getParentColumn()
             ) {
                 return false;
             }
@@ -127,7 +127,7 @@ trait HasTree
     public function generateTreeUrl()
     {
         return Helper::urlWithoutQuery(
-            $this->grid->filter()->urlWithoutFilters(),
+            $this->grid()->filter()->urlWithoutFilters(),
             $this->treeIgnoreQueryNames
         );
     }

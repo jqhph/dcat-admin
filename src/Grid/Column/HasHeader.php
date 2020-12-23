@@ -2,8 +2,8 @@
 
 namespace Dcat\Admin\Grid\Column;
 
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Model;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
@@ -52,9 +52,7 @@ trait HasHeader
      */
     public function sortable($cast = null)
     {
-        $sortName = $this->grid->model()->getSortName();
-
-        $sorter = new Sorter($sortName, $this->getName(), $cast);
+        $sorter = new Sorter($this->grid, $this->getName(), $cast);
 
         return $this->addHeader($sorter);
     }
@@ -92,7 +90,7 @@ trait HasHeader
         }
 
         if (! $filter instanceof Grid\Column\Filter) {
-            throw new \InvalidArgumentException('The "$filter" must be a type of '.Grid\Column\Filter::class.'.');
+            throw new RuntimeException('The "$filter" must be a type of '.Grid\Column\Filter::class.'.');
         }
 
         return $this->addHeader($filter);

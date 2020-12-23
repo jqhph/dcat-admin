@@ -4,7 +4,15 @@
 .header-navbar.floating-nav {
   margin: 1.3rem 2.2rem 0;
 }
-
+.navbar-container {
+  height: 60px;
+}
 .navbar-light {
   background-color: white;
+}
+
+.dark-mode-switcher {
+  margin:0 5px 0 0;
+  font-size: 1.5rem;
+  cursor: pointer
 }

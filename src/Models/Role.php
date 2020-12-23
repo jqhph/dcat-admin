@@ -58,7 +58,7 @@ class Role extends Model
 
         $relatedModel = config('admin.database.permissions_model');
 
-        return $this->belongsToMany($relatedModel, $pivotTable, 'role_id', 'permission_id');
+        return $this->belongsToMany($relatedModel, $pivotTable, 'role_id', 'permission_id')->withTimestamps();
     }
 
     /**

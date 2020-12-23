@@ -14,18 +14,23 @@
 $font-family-sans-serif: Nunito, Montserrat,system-ui,BlinkMacSystemFont,-apple-system,sans-serif;
 
 // 常用阴影颜色
-$shadow: 0 2px 4px 0 rgba(0,0,0,.08);
+//$shadow: 0 2px 4px 0 rgba(0,0,0,.08);
+$shadow: 0 2px 4px 0 rgba(0,0,0,.05);
 $shadow-100: 0 3px 1px -2px rgba(0,0,0,.05), 0 2px 2px 0 rgba(0,0,0,.05), 0 1px 5px 1px rgba(0,0,0,.05);
 $shadow-150: 0 3px 1px -2px rgba(0,0,0,.065), 0 2px 2px 0 rgba(0,0,0,.065), 0 1px 5px 1px rgba(0,0,0,.065);
+$shadow-180: 0 3px 1px -2px rgba(0,0,0,.08), 0 2px 4px 0 rgba(0,0,0,.08), 0 1px 5px 1px rgba(0,0,0,.08);
 $shadow-200: 0 3px 1px -2px rgba(0,0,0,.1), 0 2px 2px 0 rgba(0,0,0,.1), 0 1px 5px 1px rgba(0,0,0,.1);
 
 // 按钮阴影颜色
-$btn-white-shadow: $shadow-150;
-$btn-shadow: $shadow-100;
+$default-btn-shadow: $shadow-150;
+$btn-white-shadow: $default-btn-shadow;
+$btn-shadow: $default-btn-shadow;
 $btn-shadow-hover: $shadow-200;
-$btn-group-btn-shadow: 0 2px 0 0 rgba(0,0,0,.08);
+$btn-group-btn-shadow: $btn-shadow;
 
 // 菜单阴影
 $menu-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
 
-$card-border-radius: .4rem;
+$card-border-radius: .25rem;
+
+$input-height: 34px;

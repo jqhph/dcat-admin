@@ -45,13 +45,18 @@ trait InteractsWithApi
     ];
 
     /**
-     * 获取请求附带参数.
+     * @var array
+     */
+    protected $parameters = [];
+
+    /**
+     * 返回请求附带参数.
      *
      * @return array
      */
     public function parameters(): array
     {
-        return [];
+        return $this->parameters;
     }
 
     /**
@@ -191,12 +196,12 @@ trait InteractsWithApi
 
         return <<<JS
 (function () {
-    var requesting;
+    var loading;
     function request(data) {
-        if (requesting) {
+        if (loading) {
             return;
         }
-        requesting = 1;
+        loading = 1;
         
         data = $.extend({$this->formatRequestData()}, data || {});
         
@@ -206,13 +211,13 @@ trait InteractsWithApi
           url: '{$this->getRequestUrl()}',
           dataType: 'json',
           method: '{$this->method}',
-          data: $.extend({_token: Dcat.token}, data),
+          data: data,
           success: function (response) {
-            requesting = 0;
+            loading = 0;
             {$fetched};
           },
           error: function (a, b, c) {
-              requesting = 0;
+              loading = 0;
               Dcat.handleAjaxError(a, b, c)
           },
         });
@@ -270,6 +275,7 @@ JS;
         $this->method = $self->getRequestMethod();
         $this->uriKey = $self->getUriKey();
         $this->requestSelectors = $self->getRequestSelectors();
+        $this->parameters = array_merge($this->parameters, $self->parameters());
 
         $scripts = $self->getRequestScripts();
 

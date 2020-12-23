@@ -2,26 +2,23 @@
 
 namespace Dcat\Admin\Scaffold;
 
+use Dcat\Admin\Support\Helper;
+
 class RepositoryCreator
 {
-    protected $path = 'Admin/Repositories';
-
     /**
-     * @param string $controllerClass
      * @param string $modelClass
+     * @param string $repositoryClass
      *
      * @return string
      */
-    public function create(string $controllerClass, string $modelClass)
+    public function create(?string $modelClass, ?string $repositoryClass)
     {
-        $baseController = class_basename($controllerClass);
-        $controller = str_replace('Controller', '', $baseController);
-
         $model = class_basename($modelClass);
 
         $files = app('files');
 
-        $path = app_path("{$this->path}/{$controller}.php");
+        $path = Helper::guessClassFileName($repositoryClass);
         $dir = dirname($path);
 
         if (! is_dir($dir)) {
@@ -35,22 +32,23 @@ class RepositoryCreator
         $content = $files->get($this->stub());
 
         $files->put($path, str_replace([
-            '{controllerClass}',
-            '{baseController}',
-            '{controller}',
-            '{modelClass}',
+            '{namespace}',
+            '{class}',
             '{model}',
         ], [
-            $controllerClass,
-            $baseController,
-            $controller,
+            $this->getNamespace($repositoryClass),
+            class_basename($repositoryClass),
             $modelClass,
-            $model,
         ], $content));
 
         $files->chmod($path, 0777);
 
         return $path;
+    }
+
+    protected function getNamespace($name)
+    {
+        return trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
     }
 
     protected function stub()

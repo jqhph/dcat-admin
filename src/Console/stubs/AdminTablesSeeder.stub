@@ -1,6 +1,10 @@
 <?php
 
+namespace Database\DummyNamespace;
+
+use Dcat\Admin\Models;
 use Illuminate\Database\Seeder;
+use DB;
 
 class DummyClass extends Seeder
 {
@@ -27,7 +31,27 @@ class DummyClass extends Seeder
             ArrayRole
         );
 
+        ClassSetting::truncate();
+		ClassSetting::insert(
+			ArraySetting
+		);
+
+		ClassExtension::truncate();
+		ClassExtension::insert(
+			ArrayExtension
+		);
+
+		ClassExtensionHistory::truncate();
+		ClassExtensionHistory::insert(
+			ArrayExtHistory
+		);
+
         // pivot tables
+        DB::table('TablePermissionMenu')->truncate();
+		DB::table('TablePermissionMenu')->insert(
+			ArrayPivotPermissionMenu
+		);
+
         DB::table('TableRoleMenu')->truncate();
         DB::table('TableRoleMenu')->insert(
             ArrayPivotRoleMenu
@@ -47,11 +71,6 @@ class DummyClass extends Seeder
         DB::table('TableRoleUsers')->truncate();
         DB::table('TableRoleUsers')->insert(
             ArrayPivotRoleUsers
-        );
-
-        DB::table('TablePermissionsUsers')->truncate();
-        DB::table('TablePermissionsUsers')->insert(
-            ArrayPivotPermissionsUsers
         );
 
         // finish

@@ -5,27 +5,6 @@ namespace Dcat\Admin\Traits;
 trait HasAssets
 {
     /**
-     * @var array
-     */
-    protected static $html = [];
-
-    /**
-     * @param string $html
-     *
-     * @return null|string
-     */
-    public static function html($html = '')
-    {
-        if (! empty($html)) {
-            static::$html = array_merge(static::$html, (array) $html);
-
-            return;
-        }
-
-        return implode('', array_unique(static::$html));
-    }
-
-    /**
      * @return \Dcat\Admin\Layout\Asset
      */
     public static function asset()
@@ -34,13 +13,13 @@ trait HasAssets
     }
 
     /**
-     * @param string $name
+     * @param string|array $name
      *
      * @return void
      */
-    public static function collectAssets(string $name)
+    public static function requireAssets($name)
     {
-        static::asset()->collect($name);
+        static::asset()->require($name);
     }
 
     /**
@@ -59,12 +38,11 @@ trait HasAssets
      * Set base css.
      *
      * @param array $css
-     *
-     * @return array|void
+     * @param bool $merge
      */
-    public static function baseCss(array $css)
+    public static function baseCss(array $css, bool $merge = true)
     {
-        static::asset()->baseCss($css);
+        static::asset()->baseCss($css, $merge);
     }
 
     /**
@@ -95,22 +73,22 @@ trait HasAssets
      * Set base js.
      *
      * @param array $js
-     *
-     * @return void
+     * @param bool $merge
      */
-    public static function baseJs(array $js)
+    public static function baseJs(array $js, bool $merge = true)
     {
-        static::asset()->baseJs($js);
+        static::asset()->baseJs($js, $merge);
     }
 
     /**
      * @param string $script
+     * @param bool   $direct
      *
      * @return void
      */
-    public static function script($script)
+    public static function script($script, bool $direct = false)
     {
-        static::asset()->script($script);
+        static::asset()->script($script, $direct);
     }
 
     /**

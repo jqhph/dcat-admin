@@ -6,6 +6,60 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\MessageBag;
 
+if (! function_exists('admin_setting')) {
+    /**
+     * @param string|array $key
+     * @param mixed         $default
+     *
+     * @return \Dcat\Admin\Support\Setting|mixed
+     */
+    function admin_setting($key = null, $default = null)
+    {
+        if ($key === null) {
+            return app('admin.setting');
+        }
+
+        if (is_array($key)) {
+            app('admin.setting')->save($key);
+
+            return;
+        }
+
+        return app('admin.setting')->get($key, $default);
+    }
+}
+
+if (! function_exists('admin_setting_array')) {
+    /**
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return \Dcat\Admin\Support\Setting|mixed
+     */
+    function admin_setting_array(?string $key, $default = [])
+    {
+        return app('admin.setting')->getArray($key, $default);
+    }
+}
+
+if (! function_exists('admin_extension_setting')) {
+    /**
+     * @param string       $extension
+     * @param string|array $key
+     * @param mixed        $default
+     *
+     * @return mixed
+     */
+    function admin_extension_setting($extension, $key = null, $default = null)
+    {
+        $extension = app($extension);
+
+        if ($extension instanceof Dcat\Admin\Extend\ServiceProvider) {
+            return $extension->config($key, $default);
+        }
+    }
+}
+
 if (! function_exists('admin_section')) {
     /**
      * Get the string contents of a section.
@@ -371,7 +425,6 @@ if (! function_exists('admin_info')) {
 }
 
 if (! function_exists('admin_asset')) {
-
     /**
      * @param $path
      *
@@ -390,8 +443,128 @@ if (! function_exists('admin_api_route')) {
      *
      * @return string
      */
-    function admin_api_route(string $path = '')
+    function admin_api_route(?string $path = '')
     {
         return Dcat\Admin\Admin::app()->getCurrentApiRoutePrefix().$path;
+    }
+}
+
+if (! function_exists('admin_extension_path')) {
+    /**
+     * @param string|null $path
+     *
+     * @return string
+     */
+    function admin_extension_path(?string $path = null)
+    {
+        $dir = rtrim(config('admin.extension.dir'), '/') ?: base_path('dcat-admin-extensions');
+
+        $path = ltrim($path, '/');
+
+        return $path ? $dir.'/'.$path : $dir;
+    }
+}
+
+if (! function_exists('admin_color')) {
+    /**
+     * @param string|null $color
+     *
+     * @return string|\Dcat\Admin\Color
+     */
+    function admin_color(?string $color = null)
+    {
+        if ($color === null) {
+            return Admin::color();
+        }
+
+        return Admin::color()->get($color);
+    }
+}
+
+if (! function_exists('admin_view')) {
+    /**
+     * @param string $view
+     * @param array  $data
+     *
+     * @return string
+     *
+     * @throws \Throwable
+     */
+    function admin_view($view, array $data = [])
+    {
+        return Admin::view($view, $data);
+    }
+}
+
+if (! function_exists('admin_script')) {
+    /**
+     * @param string $js
+     * @param bool   $direct
+     *
+     * @return void
+     */
+    function admin_script($script, bool $direct = false)
+    {
+        Admin::script($script, $direct);
+    }
+}
+
+if (! function_exists('admin_style')) {
+    /**
+     * @param string $style
+     *
+     * @return void
+     */
+    function admin_style($style)
+    {
+        Admin::style($style);
+    }
+}
+
+if (! function_exists('admin_js')) {
+    /**
+     * @param string|array $js
+     *
+     * @return void
+     */
+    function admin_js($js)
+    {
+        Admin::js($js);
+    }
+}
+
+if (! function_exists('admin_css')) {
+    /**
+     * @param string|array $css
+     *
+     * @return void
+     */
+    function admin_css($css)
+    {
+        Admin::css($css);
+    }
+}
+
+if (! function_exists('admin_require_assets')) {
+    /**
+     * @param string|array $asset
+     *
+     * @return void
+     */
+    function admin_require_assets($asset)
+    {
+        Admin::requireAssets($asset);
+    }
+}
+
+if (! function_exists('admin_javascript_json')) {
+    /**
+     * @param array|object $data
+     *
+     * @return string
+     */
+    function admin_javascript_json($data)
+    {
+        return Dcat\Admin\Support\JavaScript::format($data);
     }
 }

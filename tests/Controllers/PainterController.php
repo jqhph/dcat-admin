@@ -2,11 +2,12 @@
 
 namespace Tests\Controllers;
 
-use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Show;
 use Tests\Models\Painter;
+use Tests\Models\Painting;
 
 class PainterController extends AdminController
 {
@@ -25,6 +26,7 @@ class PainterController extends AdminController
             $grid->updated_at->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
+                $filter->between('created_at')->datetime();
                 $filter->equal('id');
             });
         });
@@ -45,6 +47,15 @@ class PainterController extends AdminController
             $show->bio;
             $show->created_at;
             $show->updated_at;
+
+            $show->relation('paintings', function ($model) {
+                return Grid::make(Painting::where('painter_id', $model->getKey()), function (Grid $grid) {
+                    $grid->column('id')->sortable();
+                    $grid->column('title');
+                    $grid->column('body');
+                    $grid->column('completed_at')->sortable();
+                });
+            });
         });
     }
 

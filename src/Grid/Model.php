@@ -3,8 +3,9 @@
 namespace Dcat\Admin\Grid;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Middleware\Pjax;
+use Dcat\Admin\Http\Middleware\Pjax;
 use Dcat\Admin\Repositories\Repository;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -99,13 +100,6 @@ class Model
      * @var string
      */
     protected $sortName = '_sort';
-
-    /**
-     * Collection callback.
-     *
-     * @var callable[]
-     */
-    protected $collectionCallback = [];
 
     /**
      * @var Grid
@@ -210,7 +204,7 @@ class Model
     /**
      * Get primary key name of model.
      *
-     * @return string
+     * @return string|array
      */
     public function getKeyName()
     {
@@ -242,21 +236,7 @@ class Model
      */
     public function getPerPageName()
     {
-        return $this->perPageName;
-    }
-
-    /**
-     * Set the query string variable used to store the per-page.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setPerPageName($name)
-    {
-        $this->perPageName = $name;
-
-        return $this;
+        return $this->grid->makeName($this->perPageName);
     }
 
     /**
@@ -270,21 +250,23 @@ class Model
     }
 
     /**
-     * @param string $pageName
-     */
-    public function setPageName(string $pageName)
-    {
-        $this->pageName = $pageName;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getPageName()
     {
-        return $this->pageName;
+        return $this->grid->makeName($this->pageName);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setPageName($name)
+    {
+        $this->pageName = $name;
+
+        return $this;
     }
 
     /**
@@ -294,12 +276,10 @@ class Model
      */
     public function getSortName()
     {
-        return $this->sortName;
+        return $this->grid->makeName($this->sortName);
     }
 
     /**
-     * Set the query string variable used to store the sort.
-     *
      * @param string $name
      *
      * @return $this
@@ -368,43 +348,17 @@ class Model
     }
 
     /**
-     * Set collection callback.
-     *
-     * @param callable $callback
-     *
-     * @return $this
-     */
-    public function collection(callable $callback = null)
-    {
-        $this->collectionCallback[] = $callback;
-
-        return $this;
-    }
-
-    /**
      * Build.
      *
-     * @param bool $toArray
-     *
-     * @return array|Collection|mixed
+     * @return Collection
      */
-    public function buildData(bool $toArray = false)
+    public function buildData()
     {
         if (is_null($this->data)) {
             $this->setData($this->fetch());
-
-            if ($this->collectionCallback) {
-                $data = $this->data;
-
-                foreach ($this->collectionCallback as $cb) {
-                    $data = call_user_func($cb, $data);
-                }
-
-                $this->setData($data);
-            }
         }
 
-        return $toArray ? $this->data->toArray() : $this->data;
+        return $this->data;
     }
 
     /**
@@ -424,10 +378,9 @@ class Model
             $this->setPaginator($data);
 
             $data = $data->getCollection();
-        } elseif (is_array($data)) {
+        } elseif ($data instanceof Collection) {
+        } elseif ($data instanceof Arrayable || is_array($data)) {
             $data = collect($data);
-        } elseif ($data instanceof Arrayable) {
-            $data = collect($data->toArray());
         }
 
         if ($data instanceof Collection) {
@@ -484,7 +437,7 @@ class Model
             return $results->getCollection();
         }
 
-        throw new \Exception('Grid query error');
+        throw new AdminException('Grid query error');
     }
 
     /**
@@ -496,7 +449,7 @@ class Model
     {
         $this->paginator = $paginator;
 
-        $paginator->setPageName($this->pageName);
+        $paginator->setPageName($this->getPageName());
     }
 
     /**
@@ -548,7 +501,7 @@ class Model
             return;
         }
 
-        return $this->currentPage ?: ($this->currentPage = ($this->request->get($this->pageName) ?: 1));
+        return $this->currentPage ?: ($this->currentPage = ($this->request->get($this->getPageName()) ?: 1));
     }
 
     /**
@@ -572,7 +525,7 @@ class Model
             return;
         }
 
-        return $this->request->get($this->perPageName) ?: $this->perPage;
+        return $this->request->get($this->getPerPageName()) ?: $this->perPage;
     }
 
     /**

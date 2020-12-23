@@ -4,9 +4,6 @@ namespace Dcat\Admin\Form\Field;
 
 class Mobile extends Text
 {
-    public static $js = '@jquery.inputmask';
-    public static $css = '@jquery.inputmask';
-
     /**
      * @see https://github.com/RobinHerbots/Inputmask#options
      *
@@ -19,6 +16,8 @@ class Mobile extends Text
     public function render()
     {
         $this->inputmask($this->options);
+
+        $this->defaultAttribute('style', 'width: 160px;flex:none');
 
         $this->prepend('<i class="feather icon-smartphone"></i>');
 

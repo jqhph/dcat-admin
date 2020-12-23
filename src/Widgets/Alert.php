@@ -6,43 +6,13 @@ use Illuminate\Contracts\Support\Renderable;
 
 class Alert extends Widget
 {
-    /**
-     * @var string
-     */
     protected $view = 'admin::widgets.alert';
-
-    /**
-     * @var string
-     */
     protected $title;
-
-    /**
-     * @var string
-     */
     protected $content;
-
-    /**
-     * @var string
-     */
     protected $style;
-
-    /**
-     * @var string
-     */
     protected $icon;
-
-    /**
-     * @var bool
-     */
     protected $showCloseBtn = false;
 
-    /**
-     * Alert constructor.
-     *
-     * @param mixed  $content
-     * @param string $title
-     * @param string $style
-     */
     public function __construct($content = '', $title = null, $style = 'danger')
     {
         $this->content($content);
@@ -78,6 +48,11 @@ class Alert extends Widget
         $this->content = $this->toString($content);
 
         return $this;
+    }
+
+    public function primary()
+    {
+        return $this->style('primary');
     }
 
     /**
@@ -165,7 +140,7 @@ class Alert extends Widget
     /**
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
         $this->class("alert alert-{$this->style} alert-dismissable");
 

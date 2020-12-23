@@ -1,14 +1,39 @@
 .btn {
   padding: 0.54rem 1.2rem !important;
-  height: 36px;
+  height: 34px;
   line-height: 1.2;
   border-radius: 0.2rem;
-  box-shadow: $btn-shadow;
   cursor: pointer;
+  box-shadow: $default-btn-shadow;
+}
+
+.btn.btn-trans {
+  box-shadow: none;
+}
+
+.btn-trans.btn-primary {
+  background-color: lighten($primary, 40%);
+  border-color: lighten($primary, 40%);
+  color: $primary;
+}
+
+.btn-shadow.btn,
+.btn:hover,
+.btn:focus {
+  box-shadow: $btn-shadow;
+}
+
+.btn-shadow.btn:hover,
+.btn-shadow.btn:focus {
+  box-shadow: $btn-shadow-hover;
 }
 
 .btn-group-sm>.btn, .btn-sm, .btn-lg {
   border-radius: 0.2rem;
+}
+
+.btn-primary {
+  color: $white;
 }
 
 .btn-sm, .btn-xs {
@@ -52,15 +77,18 @@ a.btn-sm, .btn-group-sm > a.btn {
 }
 
 .btn-group {
-
   .btn:not(.btn-white):hover {
-    box-shadow: $shadow-200;
+    box-shadow: $shadow-100;
   }
   .btn {
     box-shadow: none!important;
   }
 
-  box-shadow: $btn-shadow;
+  box-shadow: $default-btn-shadow;
+}
+
+.btn-group.btn-shadow {
+  box-shadow: $btn-group-btn-shadow;
 }
 
 // --------------------- btn-custom -----------------------
@@ -81,19 +109,26 @@ a.btn-sm, .btn-group-sm > a.btn {
 
 .btn.btn-white, .btn.btn-default {
   color: $font-color;
-  box-shadow: $btn-white-shadow;
+  box-shadow: $default-btn-shadow;
+  background: $white;
 }
+
+//.btn.btn-white.btn-shadow, .btn.btn-default.btn-shadow {
+//  box-shadow: none;
+//}
+
 .btn.btn-white.btn-primary, .btn.btn-white.btn-primary:hover, .btn.btn-white.btn-primary:focus {
   color: $white !important;
 }
-.btn-white:hover,.btn-white:focus,.btn-white.active {
+.btn-white:hover, .btn-white:focus, .btn-white.active {
   box-shadow: $btn-shadow-hover !important;
 }
 
 .btn-light {
-  border-color: #f7f7f9!important;
-  background-color: #f7f7f9!important;
+  border-color: $input-border-color!important;
+  background-color: $white!important;
   color: #444;
+  box-shadow: none;
 }
 
 .btn-light:hover, .btn-light:focus {
@@ -121,7 +156,7 @@ a.btn-sm, .btn-group-sm > a.btn {
 
 
 .btn-outline {
-  background: transparent;
+  background-color: transparent;
 }
 .btn-primary.btn-outline {
   color: $primary;
@@ -144,8 +179,31 @@ a.btn-sm, .btn-group-sm > a.btn {
   border-color: $warning;
 }
 
-.btn-primary.btn-outline:hover, .btn-info.btn-outline:hover, .btn-success.btn-outline:hover, .btn-danger.btn-outline:hover, .btn-warning.btn-outline:hover,
+.btn-primary.btn-outline.disabled,
+.btn-primary.btn-outline:disabled {
+  background: transparent;
+}
+
+.btn-info.btn-outline:hover, .btn-success.btn-outline:hover, .btn-danger.btn-outline:hover, .btn-warning.btn-outline:hover,
 //.btn-primary.btn-outline:focus, .btn-info.btn-outline:focus, .btn-success.btn-outline:focus, .btn-danger.btn-outline:focus, .btn-warning.btn-outline:focus,
-.btn-primary.btn-outline.active, .btn-info.btn-outline.active, .btn-success.btn-outline.active, .btn-danger.btn-outline.active, .btn-warning.btn-outline.active{
+.btn-info.btn-outline.active, .btn-success.btn-outline.active, .btn-danger.btn-outline.active, .btn-warning.btn-outline.active{
   color: $white;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-primary.btn-outline.active {
+  background: rgba($primary, .05);
+  color: $primary;
+}
+
+.number-group {
+  .input-group-btn:first-child .btn {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-right: 0;
+  }
+  .input-group-btn:last-child .btn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
 }

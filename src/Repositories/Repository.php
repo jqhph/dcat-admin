@@ -28,7 +28,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 获取主键名称.
      *
-     * @return string
+     * @return string|array
      */
     public function getKeyName()
     {
@@ -38,9 +38,9 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 设置主键名称.
      *
-     * @param string $keyName
+     * @param string|array $keyName
      */
-    public function setKeyName(?string $keyName)
+    public function setKeyName($keyName)
     {
         $this->keyName = $keyName;
     }
@@ -100,9 +100,9 @@ abstract class Repository implements RepositoryInterface, TreeRepository
      *
      * @param Form $form
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function edit(Form $form): array
+    public function edit(Form $form)
     {
         throw new RuntimeException('This repository does not support "edit" method.');
     }
@@ -112,9 +112,9 @@ abstract class Repository implements RepositoryInterface, TreeRepository
      *
      * @param Show $show
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function detail(Show $show): array
+    public function detail(Show $show)
     {
         throw new RuntimeException('This repository does not support "detail" method.');
     }
@@ -138,9 +138,9 @@ abstract class Repository implements RepositoryInterface, TreeRepository
      *
      * @return array
      */
-    public function getDataWhenUpdating(Form $form): array
+    public function updating(Form $form)
     {
-        throw new RuntimeException('This repository does not support "getDataWhenUpdating" method.');
+        throw new RuntimeException('This repository does not support "updating" method.');
     }
 
     /**
@@ -163,7 +163,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
      *
      * @return mixed
      */
-    public function destroy(Form $form, array $deletingData)
+    public function delete(Form $form, array $deletingData)
     {
         throw new RuntimeException('This repository does not support "destroy" method.');
     }
@@ -175,9 +175,9 @@ abstract class Repository implements RepositoryInterface, TreeRepository
      *
      * @return array
      */
-    public function getDataWhenDeleting(Form $form): array
+    public function deleting(Form $form)
     {
-        throw new RuntimeException('This repository does not support "getDataWhenDeleting" method.');
+        throw new RuntimeException('This repository does not support "deleting" method.');
     }
 
     /**
@@ -261,72 +261,5 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     public static function make(...$params)
     {
         return new static(...$params);
-    }
-
-    /**
-     * @param array|string $repositories
-     * @param array|string $listeners
-     */
-    public static function listen($repositories, $listeners)
-    {
-        $storage = app('admin.context');
-
-        $array = $storage->get('repository.listeners') ?: [];
-
-        foreach ((array) $repositories as $v) {
-            if (! isset($array[$v])) {
-                $array[$v] = [];
-            }
-
-            $array[$v] = array_merge($array[$v], (array) $listeners);
-        }
-
-        $storage['repository.listeners'] = $array;
-    }
-
-    /**
-     * @param null|string $repository
-     *
-     * @return RepositoryListener[]
-     */
-    public static function getListeners(?string $repository)
-    {
-        if (! $repository) {
-            return null;
-        }
-
-        $any = $repository !== '*' ? static::getListeners('*') : [];
-
-        $storage = app('admin.context');
-
-        $listeners = $storage->get('repository.listeners') ?: [];
-        $resolves = $storage->get('repository.listeners.resolves') ?: [];
-
-        if (isset($resolves[$repository])) {
-            return array_merge($resolves[$repository], $any);
-        }
-
-        $resolves[$repository] = [];
-
-        if (! isset($listeners[$repository])) {
-            return $any;
-        }
-
-        foreach ($listeners[$repository] as $class) {
-            if (! class_exists($class)) {
-                continue;
-            }
-            $listener = new $class();
-
-            if (! $listener instanceof RepositoryListener) {
-                continue;
-            }
-
-            $resolves[$repository][] = $listener;
-        }
-
-        $storage['repository.listeners.resolves'] = $resolves;
-
-        return array_merge($resolves[$repository], $any);
     }
 }

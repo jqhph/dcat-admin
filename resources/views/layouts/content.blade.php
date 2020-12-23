@@ -1,5 +1,5 @@
 @section('content-header')
-    <section class="content-header breadcrumbs-top mb-2">
+    <section class="content-header breadcrumbs-top">
         @if($header || $description)
             <h1 class=" float-left">
                 <span class="text-capitalize">{!! $header !!}</span>
@@ -32,12 +32,12 @@
 
     <div class="content-body" id="app">
         {{-- 页面埋点--}}
-        {!! admin_section(AdminSection::APP_INNER_BEFORE) !!}
+        {!! admin_section(Dcat\Admin\Admin::SECTION['APP_INNER_BEFORE']) !!}
 
         @yield('content')
 
         {{-- 页面埋点--}}
-        {!! admin_section(AdminSection::APP_INNER_AFTER) !!}
+        {!! admin_section(Dcat\Admin\Admin::SECTION['APP_INNER_AFTER']) !!}
     </div>
 
     {!! Dcat\Admin\Admin::asset()->scriptToHtml() !!}

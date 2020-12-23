@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Form\Field;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
@@ -74,6 +73,8 @@ class HasMany extends Field
         'allowDelete' => true,
     ];
 
+    protected $columnClass;
+
     /**
      * Create a new HasMany field instance.
      *
@@ -86,6 +87,8 @@ class HasMany extends Field
 
         $this->column = $relationName;
 
+        $this->columnClass = $this->formatClass($relationName);
+
         if (count($arguments) == 1) {
             $this->label = $this->formatLabel();
             $this->builder = $arguments[0];
@@ -94,6 +97,11 @@ class HasMany extends Field
         if (count($arguments) == 2) {
             [$this->label, $this->builder] = $arguments;
         }
+    }
+
+    protected function formatClass(string $column)
+    {
+        return str_replace('.', '-', $column);
     }
 
     /**
@@ -105,11 +113,9 @@ class HasMany extends Field
      */
     public function getValidator(array $input)
     {
-        if (! array_key_exists($this->column, $input)) {
+        if (! Arr::has($input, $this->column)) {
             return false;
         }
-
-        $input = Arr::only($input, $this->column);
 
         $form = $this->buildNestedForm();
 
@@ -160,15 +166,17 @@ class HasMany extends Field
         $newInput = [];
 
         foreach ($rules as $column => $rule) {
-            foreach (array_keys($input[$this->column]) as $key) {
-                if ($input[$this->column][$key][NestedForm::REMOVE_FLAG_NAME]) {
+            foreach (array_keys(Arr::get($input, $this->column)) as $key) {
+                if (Arr::get($input, "{$this->column}.{$key}.".NestedForm::REMOVE_FLAG_NAME)) {
                     continue;
                 }
 
                 $newRules["{$this->column}.$key.$column"] = $rule;
-                if (isset($input[$this->column][$key][$column]) &&
-                    is_array($input[$this->column][$key][$column])) {
-                    foreach ($input[$this->column][$key][$column] as $vkey => $value) {
+
+                $ruleValue = Arr::get($input, "{$this->column}.$key.$column");
+
+                if (is_array($ruleValue)) {
+                    foreach ($ruleValue as $vkey => $value) {
                         $newInput["{$this->column}.$key.{$column}$vkey"] = $value;
                     }
                 }
@@ -193,7 +201,7 @@ class HasMany extends Field
     protected function formatValidationMessages(array $input, array $messages)
     {
         $result = [];
-        foreach ($input[$this->column] as $key => &$value) {
+        foreach (Arr::get($input, $this->column) as $key => &$value) {
             $newKey = $this->column.'.'.$key;
 
             foreach ($messages as $k => $message) {
@@ -270,7 +278,7 @@ class HasMany extends Field
          *
          * in the HasMany relation, has many data/field set, $set is field set in the below
          */
-        foreach ($input[$this->column] as $index => $set) {
+        foreach (Arr::get($input, $this->column) as $index => $set) {
 
             /*
              * foreach the field set to find the corresponding $column
@@ -424,182 +432,14 @@ class HasMany extends Field
          *
          * Else get data from database.
          */
-        if ($values = old($this->column)) {
-            foreach ($values as $key => $data) {
-                if ($data[NestedForm::REMOVE_FLAG_NAME] == 1) {
-                    continue;
-                }
+        foreach (Helper::array($this->value()) as $idx => $data) {
+            $key = Arr::get($data, $this->getKeyName(), $idx);
 
-                $forms[$key] = $this->buildNestedForm($key)
-                    ->fill($data);
-            }
-        } else {
-            if (is_array($this->value)) {
-                foreach ($this->value as $idx => $data) {
-                    $key = Arr::get($data, $this->getKeyName(), $idx);
-
-                    $forms[$key] = $this->buildNestedForm($key)
-                        ->fill($data);
-                }
-            }
+            $forms[$key] = $this->buildNestedForm($key)
+                ->fill($data);
         }
 
         return $forms;
-    }
-
-    /**
-     * Setup script for this field in different view mode.
-     *
-     * @param string $script
-     *
-     * @return void
-     */
-    protected function setupScript($script)
-    {
-        $method = 'setupScriptFor'.ucfirst($this->viewMode).'View';
-
-        call_user_func([$this, $method], $script);
-    }
-
-    /**
-     * Setup default template script.
-     *
-     * @param string $templateScript
-     *
-     * @return void
-     */
-    protected function setupScriptForDefaultView($templateScript)
-    {
-        $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-        $defaultKey = NestedForm::DEFAULT_KEY_NAME;
-
-        /**
-         * When add a new sub form, replace all element key in new sub form.
-         *
-         * @example comments[new___key__][title]  => comments[new_{index}][title]
-         *
-         * {count} is increment number of current sub form count.
-         */
-        $script = <<<JS
-(function () {
-    var nestedIndex = 0;
-$('#has-many-{$this->column}').on('click', '.add', function () {
-
-    var tpl = $('template.{$this->column}-tpl');
-
-    nestedIndex++;
-
-    var template = tpl.html().replace(/{$defaultKey}/g, nestedIndex);
-    $('.has-many-{$this->column}-forms').append(template);
-    {$templateScript}
-});
-
-$('#has-many-{$this->column}').on('click', '.remove', function () {
-    $(this).closest('.has-many-{$this->column}-form').hide();
-    $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
-});
-})();
-JS;
-
-        Admin::script($script);
-    }
-
-    /**
-     * Setup tab template script.
-     *
-     * @param string $templateScript
-     *
-     * @return void
-     */
-    protected function setupScriptForTabView($templateScript)
-    {
-        $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-        $defaultKey = NestedForm::DEFAULT_KEY_NAME;
-
-        $script = <<<JS
-(function () {
-    $('#has-many-{$this->column} > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
-    var \$navTab = $(this).siblings('a');
-    var \$pane = $(\$navTab.attr('href'));
-    if( \$pane.hasClass('new') ){
-        \$pane.remove();
-    }else{
-        \$pane.removeClass('active').find('.$removeClass').val(1);
-    }
-    if(\$navTab.closest('li').hasClass('active')){
-        \$navTab.closest('li').remove();
-        $('#has-many-{$this->column} > .nav > li:nth-child(1) > a').click();
-    }else{
-        \$navTab.closest('li').remove();
-    }
-});
-
-var nestedIndex = 0;
-$('#has-many-{$this->column} > .header').off('click', '.add').on('click', '.add', function(){
-    nestedIndex++;
-    var navTabHtml = $('#has-many-{$this->column} > template.nav-tab-tpl').html().replace(/{$defaultKey}/g, nestedIndex);
-    var paneHtml = $('#has-many-{$this->column} > template.pane-tpl').html().replace(/{$defaultKey}/g, nestedIndex);
-    $('#has-many-{$this->column} > .nav').append(navTabHtml);
-    $('#has-many-{$this->column} > .tab-content').append(paneHtml);
-    $('#has-many-{$this->column} > .nav > li:last-child a').click();
-    {$templateScript}
-});
-
-if ($('.has-error').length) {
-    $('.has-error').parent('.tab-pane').each(function () {
-        var tabId = '#'+$(this).attr('id');
-        $('li a[href="'+tabId+'"] i').removeClass('d-none');
-    });
-    
-    var first = $('.has-error:first').parent().attr('id');
-    $('li a[href="#'+first+'"]').tab('show');
-}
-})();
-JS;
-
-        Admin::script($script);
-    }
-
-    /**
-     * Setup default template script.
-     *
-     * @param string $templateScript
-     *
-     * @return void
-     */
-    protected function setupScriptForTableView($templateScript)
-    {
-        $removeClass = NestedForm::REMOVE_FLAG_CLASS;
-        $defaultKey = NestedForm::DEFAULT_KEY_NAME;
-
-        /**
-         * When add a new sub form, replace all element key in new sub form.
-         *
-         * @example comments[new___key__][title]  => comments[new_{index}][title]
-         *
-         * {count} is increment number of current sub form count.
-         */
-        $script = <<<JS
-(function () {
-    var nestedIndex = 0;
-    $('#has-many-{$this->column}').on('click', '.add', function () {
-        var tpl = $('template.{$this->column}-tpl');
-    
-        nestedIndex++;
-    
-        var template = tpl.html().replace(/{$defaultKey}/g, nestedIndex);
-        $('.has-many-{$this->column}-forms').append(template);
-        {$templateScript}
-    });
-    
-    $('#has-many-{$this->column}').on('click', '.remove', function () {
-        $(this).closest('.has-many-{$this->column}-form').hide();
-        $(this).closest('.has-many-{$this->column}-form').find('.$removeClass').val(1);
-    });
-})();
-JS;
-
-        Admin::script($script);
     }
 
     /**
@@ -626,6 +466,15 @@ JS;
         return $this;
     }
 
+    public function value($value = null)
+    {
+        if ($value === null) {
+            return Helper::array(parent::value($value));
+        }
+
+        return parent::value($value);
+    }
+
     /**
      * Render the `HasMany` field.
      *
@@ -646,17 +495,16 @@ JS;
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
-        [$template, $script] = $this->buildNestedForm()
-            ->getTemplateHtmlAndScript();
-
-        $this->setupScript($script);
-
-        return parent::render()->with([
-            'forms'        => $this->buildRelatedForms(),
-            'template'     => $template,
-            'relationName' => $this->relationName,
-            'options'      => $this->options,
+        $this->addVariables([
+            'forms'          => $this->buildRelatedForms(),
+            'template'       => $this->buildNestedForm()->render(),
+            'relationName'   => $this->relationName,
+            'options'        => $this->options,
+            'count'          => count($this->value()),
+            'columnClass'    => $this->columnClass,
         ]);
+
+        return parent::render();
     }
 
     /**
@@ -671,7 +519,6 @@ JS;
         $headers = [];
         $fields = [];
         $hidden = [];
-        $scripts = [];
 
         /* @var Field $field */
         foreach ($this->buildNestedForm()->fields() as $field) {
@@ -683,13 +530,6 @@ JS;
                 $field->width(12, 0);
                 $fields[] = $field->render();
                 $headers[] = $field->label();
-            }
-
-            /*
-             * Get and remove the last script of Admin::$script stack.
-             */
-            if ($field->getScript()) {
-                $scripts[] = array_pop(Admin::asset()->script);
             }
         }
 
@@ -703,19 +543,19 @@ JS;
         /* Build cell with hidden elements */
         $template .= '<td class="hidden">'.implode('', $hidden).'</td>';
 
-        $this->setupScript(implode("\r\n", $scripts));
-
         // specify a view to render.
         $this->view = $this->views[$this->viewMode];
 
-        Admin::style('.table-has-many .input-group{flex-wrap: nowrap!important}');
-
-        return parent::render()->with([
+        $this->addVariables([
             'headers'      => $headers,
             'forms'        => $this->buildRelatedForms(),
             'template'     => $template,
             'relationName' => $this->relationName,
             'options'      => $this->options,
+            'count'        => count($this->value()),
+            'columnClass'  => $this->columnClass,
         ]);
+
+        return parent::render();
     }
 }

@@ -4,28 +4,21 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Color;
+use Illuminate\Support\Str;
 
 class Asset
 {
-    /**
-     * 路径别名.
-     *
-     * @var array
-     */
-    protected $pathAlias = [
-        // Dcat Admin静态资源路径别名
-        '@admin' => 'vendors/dcat-admin',
-
-        // Dcat Acmin扩展静态资源路径别名
-        '@extension' => 'vendors/dcat-admin-extensions',
-    ];
-
     /**
      * 别名.
      *
      * @var array
      */
     protected $alias = [
+        // Dcat Admin静态资源路径别名
+        '@admin' => 'vendor/dcat-admin',
+        // Dcat Acmin扩展静态资源路径别名
+        '@extension' => 'vendor/dcat-admin-extensions',
+
         '@adminlte' => [
             'js' => [
                 '@admin/adminlte/adminlte.js',
@@ -35,27 +28,31 @@ class Asset
             ],
         ],
         '@nunito' => [
-            'css' => ['https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i'],
-        ],
-        '@montserrat' => [
-            'css' => ['https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600'],
+            //'css' => 'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i',
+            'css' => '@admin/dcat/css/nunito.css',
         ],
         '@dcat' => [
             'js'  => '@admin/dcat/js/dcat-app.js',
             'css' => '@admin/dcat/css/dcat-app.css',
         ],
         '@vendors' => [
-            'js'  => '@admin/vendors/js/vendors.min.js',
-            'css' => '@admin/vendors/css/vendors.min.css',
+            'js'  => '@admin/dcat/plugins/vendors.min.js',
+            'css' => '@admin/dcat/plugins/vendors.min.css',
+        ],
+        '@jquery.initialize' => [
+            'js' => '@admin/dcat/plugins/jquery.initialize/jquery.initialize.min.js',
         ],
         '@datatables' => [
-            'css' => '@admin/vendors/css/tables/datatable/datatables.min.css',
+            'css' => '@admin/dcat/plugins/tables/datatable/datatables.min.css',
         ],
         '@grid-extension' => [
             'js' => '@admin/dcat/extra/grid-extend.js',
         ],
         '@resource-selector' => [
             'js' => '@admin/dcat/extra/resource-selector.js',
+        ],
+        '@select-table' => [
+            'js' => '@admin/dcat/extra/select-table.js',
         ],
         '@layer' => [
             'js' => '@admin/dcat/plugins/layer/layer.js',
@@ -67,8 +64,8 @@ class Asset
             'js' => '@admin/dcat/plugins/jquery-pjax/jquery.pjax.min.js',
         ],
         '@toastr' => [
-            'js'  => '@admin/vendors/js/extensions/toastr.min.js',
-            'css' => '@admin/vendors/css/extensions/toastr.css',
+            'js'  => '@admin/dcat/plugins/extensions/toastr.min.js',
+            'css' => '@admin/dcat/plugins/extensions/toastr.css',
         ],
         '@jquery.nestable' => [
             'js'  => '@admin/dcat/plugins/nestable/jquery.nestable.min.js',
@@ -78,8 +75,8 @@ class Asset
             'js' => '@admin/dcat/plugins/bootstrap-validator/validator.min.js',
         ],
         '@select2' => [
-            'js'  => '@admin/vendors/js/forms/select/select2.full.min.js',
-            'css' => '@admin/vendors/css/forms/select/select2.min.css',
+            'js'  => '@admin/dcat/plugins/select/select2.full.min.js',
+            'css' => '@admin/dcat/plugins/select/select2.min.css',
         ],
         '@bootstrap-datetimepicker' => [
             'js'  => '@admin/dcat/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js',
@@ -92,12 +89,8 @@ class Asset
         ],
         '@moment-timezone' => [
             'js' => [
-                '@admin/dcat/plugins/moment/moment-timezone-with-data.min.js',
+                '@admin/dcat/plugins/moment-timezone/moment-timezone-with-data.min.js',
             ],
-        ],
-        '@rwd-table' => [
-            'js'  => '@admin/dcat/plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js',
-            'css' => '@admin/dcat/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css',
         ],
         '@jstree' => [
             'js'  => '@admin/dcat/plugins/jstree-theme/jstree.min.js',
@@ -152,19 +145,34 @@ class Asset
                 '@admin/dcat/extra/markdown.css',
             ],
         ],
+        '@markdown' => [
+            'js' => [
+                '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
+                '@admin/dcat/plugins/editor-md/editormd.min.js',
+            ],
+            'css' => [
+                '@admin/dcat/plugins/editor-md/css/editormd.min.css',
+            ],
+        ],
         '@jquery.inputmask' => [
             'js' => '@admin/dcat/plugins/input-mask/jquery.inputmask.bundle.min.js',
         ],
         '@apex-charts' => [
-            'js' => '@admin/vendors/js/charts/apexcharts.min.js',
-        ],
-        '@smart-wizard' => [
-            'js' => '@admin/dcat/plugins/SmartWizard/dist/js/jquery.smartWizard.min.js',
-            'css' => '@admin/dcat/extra/step.css',
+            'js' => '@admin/dcat/plugins/charts/apexcharts.min.js',
         ],
         '@fontawesome-iconpicker' => [
             'js' => '@admin/dcat/plugins/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js',
             'css' => '@admin/dcat/plugins/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css',
+        ],
+        '@color' => [
+            'js' => '@admin/dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
+            'css' => '@admin/dcat/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',
+        ],
+        '@qrcode' => [
+            'js' => '@admin/dcat/plugins/jquery-qrcode/dist/jquery-qrcode.min.js',
+        ],
+        '@sortable' => [
+            'js' => '@admin/dcat/plugins/sortable/Sortable.min.js',
         ],
     ];
 
@@ -174,6 +182,11 @@ class Asset
      * @var array
      */
     public $script = [];
+
+    /**
+     * @var array
+     */
+    public $directScript = [];
 
     /**
      * css代码.
@@ -230,6 +243,7 @@ class Asset
         'pjax'      => '@pjax',
         'validator' => '@validator',
         'layer'     => '@layer',
+        'init'      => '@jquery.initialize',
     ];
 
     /**
@@ -237,21 +251,12 @@ class Asset
      */
     public $fonts = [
         '@nunito',
-        '@montserrat',
     ];
 
     /**
      * @var bool
      */
     protected $isPjax = false;
-
-    /**
-     * @var array
-     */
-    protected $themeCssMap = [
-        'dark'      => 'dark-layout',
-        'semi-dark' => 'semi-dark-layout',
-    ];
 
     /**
      * Assets constructor.
@@ -268,7 +273,7 @@ class Asset
      */
     protected function initTheme()
     {
-        $color = Admin::color()->name();
+        $color = Admin::color()->getName();
 
         if ($color === Color::DEFAULT_COLOR) {
             return;
@@ -277,8 +282,6 @@ class Asset
         $alias = [
             '@adminlte',
             '@dcat',
-            '@webuploader',
-            '@smart-wizard',
         ];
 
         foreach ($alias as $n) {
@@ -296,22 +299,21 @@ class Asset
      * 设置或获取别名.
      *
      * @param string|array $name
-     * @param string|array $js
-     * @param string|array $css
+     * @param string|array $value
      *
      * @return void|array
      */
-    public function alias($name, $js = null, $css = null)
+    public function alias($name, $value = null)
     {
         if (is_array($name)) {
             foreach ($name as $key => $value) {
-                $this->alias($key, $value['js'] ?? [], $value['css'] ?? []);
+                $this->alias($key, $value);
             }
 
             return;
         }
 
-        if ($js === null && $css === null) {
+        if ($value === null) {
             return $this->alias[$name] ?? [];
         }
 
@@ -319,19 +321,24 @@ class Asset
             $name = '@'.$name;
         }
 
-        $this->alias[$name] = [
-            'js'  => $js,
-            'css' => $css,
-        ];
+        $this->alias[$name] = $value;
     }
 
     /**
      * 根据别名设置需要载入的js和css脚本.
      *
-     * @param string $alias
+     * @param string|array $alias
      */
-    public function collect(string $alias)
+    public function require($alias)
     {
+        if (is_array($alias)) {
+            foreach ($alias as $v) {
+                $this->require($v);
+            }
+
+            return;
+        }
+
         if (mb_strpos($alias, '@') !== 0) {
             $alias = '@'.$alias;
         }
@@ -361,9 +368,13 @@ class Asset
      *
      * @param array $css
      */
-    public function baseCss(array $css)
+    public function baseCss(array $css, bool $merge = false)
     {
-        $this->baseCss = $css;
+        if ($merge) {
+            $this->baseCss = array_merge($this->baseCss, $css);
+        } else {
+            $this->baseCss = $css;
+        }
     }
 
     /**
@@ -440,7 +451,7 @@ class Asset
      */
     public function getRealPath(?string $path)
     {
-        if (! $this->hasAlias($path)) {
+        if (! $this->containsAlias($path)) {
             return $path;
         }
 
@@ -448,17 +459,39 @@ class Asset
             '/',
             array_map(
                 function ($v) {
-                    $v = $this->pathAlias[$v] ?? $v;
-
-                    if (! $this->hasAlias($v)) {
+                    if (! $this->isPathAlias($v)) {
                         return $v;
                     }
 
-                    return $this->getRealPath($v);
+                    return $this->getRealPath($this->alias($v));
                 },
                 explode('/', $path)
             )
         );
+    }
+
+    /**
+     * 判断是否是路径别名.
+     *
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    public function isPathAlias($value)
+    {
+        return $this->hasAlias($value) && is_string($this->alias[$value]);
+    }
+
+    /**
+     * 判断别名是否存在.
+     *
+     * @param $value
+     *
+     * @return bool
+     */
+    public function hasAlias($value)
+    {
+        return isset($this->alias[$value]);
     }
 
     /**
@@ -468,9 +501,9 @@ class Asset
      *
      * @return bool
      */
-    protected function hasAlias($value)
+    protected function containsAlias($value)
     {
-        return $value && mb_strpos($value, '@') !== false;
+        return $value && mb_strpos($value, '@') === 0;
     }
 
     /**
@@ -483,6 +516,7 @@ class Asset
         if (! $js) {
             return;
         }
+
         $this->headerJs = array_merge($this->headerJs, (array) $js);
     }
 
@@ -490,23 +524,33 @@ class Asset
      * 设置基础js脚本.
      *
      * @param array $js
+     * @param bool $merge
      */
-    public function baseJs(array $js)
+    public function baseJs(array $js, bool $merge = true)
     {
-        $this->baseJs = $js;
+        if ($merge) {
+            $this->baseJs = array_merge($this->baseJs, $js);
+        } else {
+            $this->baseJs = $js;
+        }
     }
 
     /**
      * 设置js代码.
      *
      * @param string|array $script
+     * @param bool         $direct
      */
-    public function script($script)
+    public function script($script, bool $direct = false)
     {
         if (! $script) {
             return;
         }
-        $this->script = array_merge($this->script, (array) $script);
+        if ($direct) {
+            $this->directScript = array_merge($this->directScript, (array) $script);
+        } else {
+            $this->script = array_merge($this->script, (array) $script);
+        }
     }
 
     /**
@@ -527,12 +571,10 @@ class Asset
      */
     protected function addFontCss()
     {
-        $this->fonts && (
-            $this->baseCss = array_merge(
-                $this->baseCss,
-                (array) $this->fonts
-            )
-        );
+        $this->fonts && ($this->baseCss = array_merge(
+            $this->baseCss,
+            (array) $this->fonts
+        ));
     }
 
     /**
@@ -564,11 +606,27 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<link rel=\"stylesheet\" href=\"{$path}\">";
+                $html .= "<link rel=\"stylesheet\" href=\"{$this->withVersionQuery($path)}\">";
             }
         }
 
         return $html;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    public function withVersionQuery($url)
+    {
+        if (! Str::contains($url, '?')) {
+            $url .= '?';
+        }
+
+        $ver = 'v'.Admin::VERSION;
+
+        return Str::endsWith($url, '?') ? $url.$ver : $url.'&'.$ver;
     }
 
     /**
@@ -598,7 +656,7 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<script src=\"{$path}\"></script>";
+                $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
             }
         }
 
@@ -618,7 +676,7 @@ class Asset
             }
 
             foreach ((array) $paths as $path) {
-                $html .= "<script src=\"{$path}\"></script>";
+                $html .= "<script src=\"{$this->withVersionQuery($path)}\"></script>";
             }
         }
 
@@ -631,17 +689,25 @@ class Asset
     public function scriptToHtml()
     {
         $script = implode(';', array_unique($this->script));
+        $directScript = implode(';', array_unique($this->directScript));
 
         return <<<HTML
 <script data-exec-on-popstate>
-Dcat.ready(function () { 
+(function () {
+    try {
+        {$directScript}
+    } catch (e) {
+        console.error(e)
+    }
+})();
+Dcat.ready(function () {
     try {
         {$script}
     } catch (e) {
         console.error(e)
     }
- });
- </script>
+})
+</script>
 HTML;
     }
 

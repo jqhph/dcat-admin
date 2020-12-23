@@ -9,11 +9,6 @@ abstract class AbstractTool extends Grid\GridAction
     /**
      * @var string
      */
-    public $selectorPrefix = '.tool-action-';
-
-    /**
-     * @var string
-     */
     protected $style = 'btn btn-white waves-effect';
 
     /**

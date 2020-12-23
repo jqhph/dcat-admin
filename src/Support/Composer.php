@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Support;
 
+use Composer\Autoload\ClassLoader;
+
 class Composer
 {
     /**
@@ -10,13 +12,32 @@ class Composer
     protected static $files = [];
 
     /**
+     * @var ClassLoader
+     */
+    protected static $loader;
+
+    /**
+     * 获取 composer 类加载器.
+     *
+     * @return ClassLoader
+     */
+    public static function loader()
+    {
+        if (! static::$loader) {
+            static::$loader = include base_path().'/vendor/autoload.php';
+        }
+
+        return static::$loader;
+    }
+
+    /**
      * @param $path
      *
      * @return ComposerProperty
      */
     public static function parse(?string $path)
     {
-        return new ComposerProperty(static::readJson($path));
+        return new ComposerProperty(static::fromJson($path));
     }
 
     /**
@@ -33,7 +54,7 @@ class Composer
 
         $lockFile = $lockFile ?: base_path('composer.lock');
 
-        $content = collect(static::readJson($lockFile)['packages'] ?? [])
+        $content = collect(static::fromJson($lockFile)['packages'] ?? [])
             ->filter(function ($value) use ($packageName) {
                 return $value['name'] == $packageName;
             })->first();
@@ -46,7 +67,7 @@ class Composer
      *
      * @return array
      */
-    public static function readJson(?string $path)
+    public static function fromJson(?string $path)
     {
         if (isset(static::$files[$path])) {
             return static::$files[$path];

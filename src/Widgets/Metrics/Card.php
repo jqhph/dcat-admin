@@ -98,6 +98,13 @@ class Card extends Widget
     protected $chartMarginBottom;
 
     /**
+     * 图表右间距.
+     *
+     * @var int
+     */
+    protected $chartMarginRight = 1;
+
+    /**
      * 图表配置.
      *
      * @var array
@@ -309,7 +316,7 @@ class Card extends Widget
      */
     public function chartMarginTop(int $number)
     {
-        $this->chartMarginBottom = $number;
+        $this->chartMarginTop = $number;
 
         $this->useChart();
 
@@ -428,12 +435,16 @@ class Card extends Widget
         if ($this->chartMarginBottom !== null) {
             $this->chart->style("margin-bottom: {$this->chartMarginBottom}px;");
         }
+
+        if ($this->chartMarginRight !== null) {
+            $this->chart->style("margin-right: {$this->chartMarginRight}px;");
+        }
     }
 
     /**
      * @return mixed
      */
-    public function script()
+    public function addScript()
     {
         if (! $this->allowBuildRequest()) {
             return;
@@ -470,7 +481,7 @@ JS
         }
 
         // 按钮显示选中文本
-        return <<<JS
+        return $this->script = <<<JS
 $('{$clickable}').on('click', function () {
     $(this).parents('.dropdown').find('.btn').html($(this).text());
 });
@@ -533,7 +544,7 @@ JS;
         $this->setUpChart();
         $this->setUpCardHeight();
 
-        $this->script = $this->script();
+        $this->addScript();
 
         $this->variables['icon'] = $this->icon;
         $this->variables['title'] = $this->title;
@@ -557,8 +568,8 @@ JS;
 
         return array_merge(
             [
-                'status'  => 1,
-                'header'  => $this->renderHeader(),
+                'status' => 1,
+                'header' => $this->renderHeader(),
                 'content' => $this->renderContent(),
             ],
             (array) optional($this->chart)->valueResult()

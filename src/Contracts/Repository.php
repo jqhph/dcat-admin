@@ -20,7 +20,7 @@ interface Repository
     /**
      * 获取主键名称.
      *
-     * @return string
+     * @return string|array
      */
     public function getKeyName();
 
@@ -59,18 +59,18 @@ interface Repository
      *
      * @param Form $form
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function edit(Form $form): array;
+    public function edit(Form $form);
 
     /**
      * 获取详情页面数据.
      *
      * @param Show $show
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function detail(Show $show): array;
+    public function detail(Show $show);
 
     /**
      * 新增记录.
@@ -86,9 +86,9 @@ interface Repository
      *
      * @param Form $form
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function getDataWhenUpdating(Form $form): array;
+    public function updating(Form $form);
 
     /**
      * 更新数据.
@@ -107,14 +107,14 @@ interface Repository
      *
      * @return mixed
      */
-    public function destroy(Form $form, array $deletingData);
+    public function delete(Form $form, array $deletingData);
 
     /**
      * 查询删除前的行数据.
      *
      * @param Form $form
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function getDataWhenDeleting(Form $form): array;
+    public function deleting(Form $form);
 }

@@ -2,13 +2,15 @@
 
 namespace Dcat\Admin\Form;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
+use Dcat\Admin\Widgets\Form as WidgetForm;
 use Illuminate\Support\Collection;
 
 class Tab
 {
     /**
-     * @var Form
+     * @var Form|WidgetForm
      */
     protected $form;
 
@@ -23,11 +25,21 @@ class Tab
     protected $offset = 0;
 
     /**
+     * @var int
+     */
+    protected $columnOffset = 0;
+
+    /**
+     * @var bool
+     */
+    public $hasRows = false;
+
+    /**
      * Tab constructor.
      *
-     * @param Form $form
+     * @param Form|WidgetForm $form
      */
-    public function __construct(Form $form)
+    public function __construct($form)
     {
         $this->form = $form;
 
@@ -45,11 +57,14 @@ class Tab
      */
     public function append($title, \Closure $content, $active = false)
     {
-        $fields = $this->collectFields($content);
+        call_user_func($content, $this->form);
+
+        $fields = $this->collectFields();
+        $layout = $this->collectColumnLayout();
 
         $id = 'tab-form-'.($this->tabs->count() + 1).'-'.mt_rand(0, 9999);
 
-        $this->tabs->push(compact('id', 'title', 'fields', 'active'));
+        $this->tabs->push(compact('id', 'title', 'fields', 'active', 'layout'));
 
         return $this;
     }
@@ -57,22 +72,18 @@ class Tab
     /**
      * Collect fields under current tab.
      *
-     * @param \Closure $content
-     *
      * @return Collection
      */
-    protected function collectFields(\Closure $content)
+    protected function collectFields()
     {
-        call_user_func($content, $this->form);
-
-        $fields = clone $this->form->builder()->fields();
+        $fields = clone $this->form->fields();
 
         $all = $fields->toArray();
 
         foreach ($this->form->rows() as $row) {
-            $rowFields = array_map(function ($field) {
+            $rowFields = $row->fields()->map(function ($field) {
                 return $field['element'];
-            }, $row->fields());
+            });
 
             $match = false;
 
@@ -87,6 +98,8 @@ class Tab
                     $match = true;
                 }
             }
+
+            $this->hasRows = true;
         }
 
         $fields = $fields->slice($this->offset);
@@ -94,6 +107,15 @@ class Tab
         $this->offset += $fields->count();
 
         return $fields;
+    }
+
+    protected function collectColumnLayout()
+    {
+        $layout = clone $this->form->layout();
+
+        $this->form->layout()->reset();
+
+        return $layout;
     }
 
     /**
@@ -122,5 +144,38 @@ class Tab
     public function isEmpty()
     {
         return $this->tabs->isEmpty();
+    }
+
+    /**
+     * @return void
+     */
+    public function addScript()
+    {
+        $elementId = $this->form->getElementId();
+
+        $script = <<<JS
+(function () {
+    var hash = document.location.hash;
+    if (hash) {
+        $('#$elementId .nav-tabs a[href="' + hash + '"]').tab('show');
+    }
+    
+    // Change hash for page-reload
+    $('#$elementId .nav-tabs a').on('shown.bs.tab', function (e) {
+        history.pushState(null,null, e.target.hash);
+    });
+    
+    if ($('#$elementId .has-error').length) {
+        $('#$elementId .has-error').each(function () {
+            var tabId = '#'+$(this).closest('.tab-pane').attr('id');
+            $('li a[href="'+tabId+'"] i').removeClass('hide');
+        });
+    
+        var first = $('#$elementId .has-error:first').closest('.tab-pane').attr('id');
+        $('li a[href="#'+first+'"]').tab('show');
+    }
+})();
+JS;
+        Admin::script($script);
     }
 }

@@ -19,9 +19,9 @@ class WebUploader
 {
     const FILE_NAME = '_file_';
 
-    public $tempDirectory = 'tmp';
+    public $temporaryDirectory = 'tmp';
 
-    protected $tempFilePath;
+    protected $temporaryFilePath;
 
     protected $completeFile;
 
@@ -71,7 +71,7 @@ class WebUploader
      *
      * @return UploadedFile|void
      */
-    public function getCompleteUploadedFile()
+    public function getUploadedFile()
     {
         $file = $this->file;
 
@@ -93,16 +93,16 @@ class WebUploader
     /**
      * 移除临时文件以及文件夹.
      */
-    public function deleteTempFile()
+    public function deleteTemporaryFile()
     {
-        if (! $this->tempFilePath) {
+        if (! $this->temporaryFilePath) {
             return;
         }
-        @unlink($this->tempFilePath);
+        @unlink($this->temporaryFilePath);
 
         if (
             ! Finder::create()
-                ->in($dir = dirname($this->tempFilePath))
+                ->in($dir = dirname($this->temporaryFilePath))
                 ->files()
                 ->count()
         ) {
@@ -119,7 +119,7 @@ class WebUploader
      */
     protected function mergeChunks(UploadedFile $file)
     {
-        $tmpDir = $this->getTempPath($this->_id);
+        $tmpDir = $this->getTemporaryPath($this->_id);
         $newFilename = $this->generateChunkFileName($file);
 
         // 移动当前分块到临时目录.
@@ -130,12 +130,12 @@ class WebUploader
             return false;
         }
 
-        $this->tempFilePath = $tmpDir.'/'.$newFilename.'.tmp';
+        $this->temporaryFilePath = $tmpDir.'/'.$newFilename.'.tmp';
 
-        $this->putTempFileContent($this->tempFilePath, $tmpDir, $newFilename);
+        $this->putTempFileContent($this->temporaryFilePath, $tmpDir, $newFilename);
 
         return new UploadedFile(
-            $this->tempFilePath,
+            $this->temporaryFilePath,
             $file->getClientOriginalName(),
             null,
             null,
@@ -223,9 +223,9 @@ class WebUploader
      *
      * @return string
      */
-    public function getTempPath($path)
+    public function getTemporaryPath($path)
     {
-        return $this->getTempDirectory().'/'.$path;
+        return $this->getTemporaryDirectory().'/'.$path;
     }
 
     /**
@@ -233,14 +233,14 @@ class WebUploader
      *
      * @return string
      */
-    public function getTempDirectory()
+    public function getTemporaryDirectory()
     {
-        $dir = storage_path($this->tempDirectory);
+        $dir = storage_path($this->temporaryDirectory);
 
         if (! is_dir($dir)) {
             app('files')->makeDirectory($dir, 0755, true);
         }
 
-        return trim($dir, '/');
+        return rtrim($dir, '/');
     }
 }

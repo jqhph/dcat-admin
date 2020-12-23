@@ -11,8 +11,7 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
-use Dcat\Admin\Form\Row;
-use Dcat\Admin\Form\Tab;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
 use Dcat\Admin\Widgets\DialogForm;
@@ -24,7 +23,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\MessageBag;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,16 +58,15 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\SwitchField            switch($column, $label = '')
  * @method Field\Display                display($column, $label = '')
  * @method Field\Rate                   rate($column, $label = '')
- * @method Field\Divide                 divider()
+ * @method Field\Divide                 divider(string $title = null)
  * @method Field\Password               password($column, $label = '')
  * @method Field\Decimal                decimal($column, $label = '')
  * @method Field\Html                   html($html, $label = '')
  * @method Field\Tags                   tags($column, $label = '')
  * @method Field\Icon                   icon($column, $label = '')
- * @method Field\Embeds                 embeds($column, $label = '')
+ * @method Field\Embeds                 embeds($column, $label = '', Closure $callback = null)
  * @method Field\Captcha                captcha()
  * @method Field\Listbox                listbox($column, $label = '')
- * @method Field\SelectResource         selectResource($column, $label = '')
  * @method Field\File                   file($column, $label = '')
  * @method Field\Image                  image($column, $label = '')
  * @method Field\MultipleFile           multipleFile($column, $label = '')
@@ -82,15 +79,23 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\KeyValue               keyValue($column, $label = '')
  * @method Field\Tel                    tel($column, $label = '')
  * @method Field\Markdown               markdown($column, $label = '')
+ * @method Field\Range                  range($start, $end, $label = '')
+ * @method Field\Color                  color($column, $label = '')
+ * @method Field\ArrayField             array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable            selectTable($column, $label = '')
+ * @method Field\MultipleSelectTable    multipleSelectTable($column, $label = '')
+ * @method Field\Button                 button(string $html = null)
  */
 class Form implements Renderable
 {
-    use HasBuilderEvents,
-        HasFormResponse,
-        Concerns\HasEvents,
-        Concerns\HasFiles,
-        Concerns\HasSteps,
-        Macroable {
+    use HasBuilderEvents;
+    use HasFormResponse;
+    use Concerns\HasEvents;
+    use Concerns\HasFiles;
+    use Concerns\HandleCascadeFields;
+    use Concerns\HasRows;
+    use Concerns\HasTabs;
+    use Macroable {
             __call as macroCall;
         }
 
@@ -99,63 +104,69 @@ class Form implements Renderable
      */
     const REMOVE_FLAG_NAME = '_remove_';
 
+    const CURRENT_URL_NAME = '_current_';
+
     /**
      * Available fields.
      *
      * @var array
      */
     protected static $availableFields = [
-        'button'         => Field\Button::class,
-        'checkbox'       => Field\Checkbox::class,
-        'currency'       => Field\Currency::class,
-        'date'           => Field\Date::class,
-        'dateRange'      => Field\DateRange::class,
-        'datetime'       => Field\Datetime::class,
-        'datetimeRange'  => Field\DatetimeRange::class,
-        'decimal'        => Field\Decimal::class,
-        'display'        => Field\Display::class,
-        'divider'        => Field\Divide::class,
-        'embeds'         => Field\Embeds::class,
-        'editor'         => Field\Editor::class,
-        'email'          => Field\Email::class,
-        'hidden'         => Field\Hidden::class,
-        'id'             => Field\Id::class,
-        'ip'             => Field\Ip::class,
-        'map'            => Field\Map::class,
-        'mobile'         => Field\Mobile::class,
-        'month'          => Field\Month::class,
-        'multipleSelect' => Field\MultipleSelect::class,
-        'number'         => Field\Number::class,
-        'password'       => Field\Password::class,
-        'radio'          => Field\Radio::class,
-        'rate'           => Field\Rate::class,
-        'select'         => Field\Select::class,
-        'slider'         => Field\Slider::class,
-        'switch'         => Field\SwitchField::class,
-        'text'           => Field\Text::class,
-        'textarea'       => Field\Textarea::class,
-        'time'           => Field\Time::class,
-        'timeRange'      => Field\TimeRange::class,
-        'url'            => Field\Url::class,
-        'year'           => Field\Year::class,
-        'html'           => Field\Html::class,
-        'tags'           => Field\Tags::class,
-        'icon'           => Field\Icon::class,
-        'captcha'        => Field\Captcha::class,
-        'listbox'        => Field\Listbox::class,
-        'selectResource' => Field\SelectResource::class,
-        'file'           => Field\File::class,
-        'image'          => Field\Image::class,
-        'multipleFile'   => Field\MultipleFile::class,
-        'multipleImage'  => Field\MultipleImage::class,
-        'hasMany'        => Field\HasMany::class,
-        'tree'           => Field\Tree::class,
-        'table'          => Field\Table::class,
-        'list'           => Field\ListField::class,
-        'timezone'       => Field\Timezone::class,
-        'keyValue'       => Field\KeyValue::class,
-        'tel'            => Field\Tel::class,
-        'markdown'       => Field\Markdown::class,
+        'button'              => Field\Button::class,
+        'checkbox'            => Field\Checkbox::class,
+        'currency'            => Field\Currency::class,
+        'date'                => Field\Date::class,
+        'dateRange'           => Field\DateRange::class,
+        'datetime'            => Field\Datetime::class,
+        'datetimeRange'       => Field\DatetimeRange::class,
+        'decimal'             => Field\Decimal::class,
+        'display'             => Field\Display::class,
+        'divider'             => Field\Divide::class,
+        'embeds'              => Field\Embeds::class,
+        'editor'              => Field\Editor::class,
+        'email'               => Field\Email::class,
+        'hidden'              => Field\Hidden::class,
+        'id'                  => Field\Id::class,
+        'ip'                  => Field\Ip::class,
+        'map'                 => Field\Map::class,
+        'mobile'              => Field\Mobile::class,
+        'month'               => Field\Month::class,
+        'multipleSelect'      => Field\MultipleSelect::class,
+        'number'              => Field\Number::class,
+        'password'            => Field\Password::class,
+        'radio'               => Field\Radio::class,
+        'rate'                => Field\Rate::class,
+        'select'              => Field\Select::class,
+        'slider'              => Field\Slider::class,
+        'switch'              => Field\SwitchField::class,
+        'text'                => Field\Text::class,
+        'textarea'            => Field\Textarea::class,
+        'time'                => Field\Time::class,
+        'timeRange'           => Field\TimeRange::class,
+        'url'                 => Field\Url::class,
+        'year'                => Field\Year::class,
+        'html'                => Field\Html::class,
+        'tags'                => Field\Tags::class,
+        'icon'                => Field\Icon::class,
+        'captcha'             => Field\Captcha::class,
+        'listbox'             => Field\Listbox::class,
+        'file'                => Field\File::class,
+        'image'               => Field\Image::class,
+        'multipleFile'        => Field\MultipleFile::class,
+        'multipleImage'       => Field\MultipleImage::class,
+        'hasMany'             => Field\HasMany::class,
+        'tree'                => Field\Tree::class,
+        'table'               => Field\Table::class,
+        'list'                => Field\ListField::class,
+        'timezone'            => Field\Timezone::class,
+        'keyValue'            => Field\KeyValue::class,
+        'tel'                 => Field\Tel::class,
+        'markdown'            => Field\Markdown::class,
+        'range'               => Field\Range::class,
+        'color'               => Field\Color::class,
+        'array'               => Field\ArrayField::class,
+        'selectTable'         => Field\SelectTable::class,
+        'multipleSelectTable' => Field\MultipleSelectTable::class,
     ];
 
     /**
@@ -190,7 +201,7 @@ class Form implements Renderable
     /**
      * @var bool
      */
-    protected $useAjaxSubmit = true;
+    protected $ajax = true;
 
     /**
      * Model of the form.
@@ -238,18 +249,6 @@ class Form implements Renderable
     protected $ignored = [];
 
     /**
-     * @var Form\Tab
-     */
-    protected $tab = null;
-
-    /**
-     * Field rows in form.
-     *
-     * @var Row[]
-     */
-    protected $rows = [];
-
-    /**
      * @var bool
      */
     protected $isSoftDeletes = false;
@@ -265,6 +264,16 @@ class Form implements Renderable
     protected $conditions = [];
 
     /**
+     * @var array
+     */
+    public $context = [];
+
+    /**
+     * @var bool
+     */
+    public $validationErrorToastr = true;
+
+    /**
      * Create a new form instance.
      *
      * @param Repository|Model|\Illuminate\Database\Eloquent\Builder|string $model
@@ -275,7 +284,7 @@ class Form implements Renderable
     {
         $this->repository = $repository ? Admin::repository($repository) : null;
         $this->callback = $callback;
-        $this->request = $request ?: request();
+        $this->request = clone ($request ?: request());
         $this->builder = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
@@ -305,13 +314,14 @@ class Form implements Renderable
     {
         $field->setForm($this);
 
-        $this->builder->fields()->push($field);
+        $this->builder->pushField($field);
+        $this->builder->layout()->addField($field);
 
         $width = $this->builder->getWidth();
 
         $field->width($width['field'], $width['label']);
 
-        $field::collectAssets();
+        $field::requireAssets();
 
         return $this;
     }
@@ -329,6 +339,14 @@ class Form implements Renderable
     }
 
     /**
+     * @return Collection|Field[]
+     */
+    public function fields()
+    {
+        return $this->builder->fields();
+    }
+
+    /**
      * @param $column
      *
      * @return $this
@@ -336,6 +354,19 @@ class Form implements Renderable
     public function removeField($column)
     {
         $this->builder->removeField($column);
+
+        return $this;
+    }
+
+    /**
+     * @param string $title
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function confirm(?string $title = null, ?string $content = null)
+    {
+        $this->builder->confirm($title, $content);
 
         return $this;
     }
@@ -365,14 +396,18 @@ class Form implements Renderable
     }
 
     /**
-     * @param Fluent $model
+     * @param Fluent|array|\Illuminate\Database\Eloquent\Model $model
      *
-     * @return Fluent|void
+     * @return Fluent|\Illuminate\Database\Eloquent\Model|void
      */
-    public function model(Fluent $model = null)
+    public function model($model = null)
     {
         if ($model === null) {
             return $this->model;
+        }
+
+        if (is_array($model)) {
+            $model = new Fluent($model);
         }
 
         $this->model = $model;
@@ -389,15 +424,15 @@ class Form implements Renderable
     }
 
     /**
-     * Disable submit with ajax.
+     * 启用或禁用ajax表单提交.
      *
-     * @param bool $disable
+     * @param bool $value
      *
      * @return $this
      */
-    public function disableAjaxSubmit(bool $disable = true)
+    public function ajax(bool $value = true)
     {
-        $this->useAjaxSubmit = ! $disable;
+        $this->ajax = $value;
 
         return $this;
     }
@@ -407,7 +442,21 @@ class Form implements Renderable
      */
     public function allowAjaxSubmit()
     {
-        return $this->useAjaxSubmit === true;
+        return $this->ajax === true;
+    }
+
+    /**
+     * 设置使用 Toastr 展示字段验证信息.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function validationErrorToastr(bool $value = true)
+    {
+        $this->validationErrorToastr = $value;
+
+        return $this;
     }
 
     /**
@@ -439,6 +488,14 @@ class Form implements Renderable
     }
 
     /**
+     * @return \Dcat\Admin\Form\Layout
+     */
+    public function layout()
+    {
+        return $this->builder->layout();
+    }
+
+    /**
      * @return Repository
      */
     public function repository()
@@ -458,7 +515,7 @@ class Form implements Renderable
         $this->builder->mode(Builder::MODE_EDIT);
         $this->builder->setResourceId($id);
 
-        $this->model(new Fluent($this->repository->edit($this)));
+        $this->model($this->repository->edit($this));
 
         return $this;
     }
@@ -485,35 +542,6 @@ class Form implements Renderable
     }
 
     /**
-     * Use tab to split form.
-     *
-     * @param string  $title
-     * @param Closure $content
-     *
-     * @return $this
-     */
-    public function tab($title, Closure $content, $active = false)
-    {
-        $this->getTab()->append($title, $content, $active);
-
-        return $this;
-    }
-
-    /**
-     * Get Tab instance.
-     *
-     * @return Tab
-     */
-    public function getTab()
-    {
-        if (is_null($this->tab)) {
-            $this->tab = new Tab($this);
-        }
-
-        return $this->tab;
-    }
-
-    /**
      * Destroy data entity and remove files.
      *
      * @param $id
@@ -526,7 +554,7 @@ class Form implements Renderable
             $this->builder->setResourceId($id);
             $this->builder->mode(Builder::MODE_DELETE);
 
-            $data = $this->repository->getDataWhenDeleting($this);
+            $data = $this->repository->deleting($this);
 
             $this->model(new Fluent($data));
 
@@ -534,30 +562,46 @@ class Form implements Renderable
 
             $this->build();
 
-            if (($response = $this->callDeleting()) instanceof Response) {
-                return $response;
+            if ($response = $this->callDeleting()) {
+                return $this->sendResponse($response);
             }
 
-            $result = $this->repository->destroy($this, $data);
+            $result = $this->repository->delete($this, $data);
 
-            if (($response = $this->callDeleted($result)) instanceof Response) {
-                return $response;
+            if ($response = $this->callDeleted($result)) {
+                return $this->sendResponse($response);
             }
 
-            $response = [
-                'status'  => $result ? true : false,
-                'message' => $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed'),
-            ];
+            $status = $result ? true : false;
+            $message = $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed');
         } catch (\Throwable $exception) {
-            $response = Admin::makeExceptionHandler()->handleDestroyException($exception);
+            $response = $this->handleException($exception);
 
-            $response = $response ?: [
-                'status'  => false,
-                'message' => $exception->getMessage() ?: trans('admin.delete_failed'),
-            ];
+            if ($response instanceof Response) {
+                return $response;
+            }
+
+            $status = false;
+            $message = $exception->getMessage() ?: trans('admin.delete_failed');
         }
 
-        return response()->json($response);
+        return $this->sendResponse(
+            $this->response()
+                ->alert()
+                ->status($status)
+                ->message($message)
+                ->redirectIf($status, $this->resource(-1))
+        );
+    }
+
+    /**
+     * @param \Throwable $e
+     *
+     * @return mixed
+     */
+    protected function handleException(\Throwable $e)
+    {
+        return Admin::handleException($e);
     }
 
     /**
@@ -570,38 +614,54 @@ class Form implements Renderable
      */
     public function store(?array $data = null, $redirectTo = null)
     {
-        if ($data) {
-            $this->request->replace($data);
+        try {
+            if ($data) {
+                $this->request->replace($data);
+            }
+
+            $data = $data ?: $this->request->all();
+
+            if ($response = $this->beforeStore($data)) {
+                return $this->sendResponse($response);
+            }
+
+            $this->updates = $this->prepareInsert($this->updates);
+
+            $id = $this->repository->store($this);
+
+            $this->builder->setResourceId($id);
+
+            if (($response = $this->callSaved($id))) {
+                return $this->sendResponse($response);
+            }
+
+            if (! $id) {
+                return $this->sendResponse(
+                    $this->response()
+                        ->error(trans('admin.save_failed'))
+                );
+            }
+
+            $url = $this->getRedirectUrl($id, $redirectTo);
+
+            return $this->sendResponse(
+                $this->response()
+                    ->redirectIf($url !== false, $url)
+                    ->success(trans('admin.save_succeeded'))
+            );
+        } catch (\Throwable $e) {
+            $response = $this->handleException($e);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
+
+            return $this->sendResponse(
+                $this->response()
+                    ->error(trans('admin.save_failed'))
+                    ->withExceptionIf($e->getMessage(), $e)
+            );
         }
-
-        $data = $data ?: $this->request->all();
-
-        if ($response = $this->beforeStore($data)) {
-            return $response;
-        }
-
-        $this->updates = $this->prepareInsert($this->updates);
-
-        $id = $this->repository->store($this);
-
-        $this->builder->setResourceId($id);
-
-        if (($response = $this->callSaved($id))) {
-            return $response;
-        }
-
-        if ($response = $this->responseMultipleStepsDonePage()) {
-            return $response;
-        }
-
-        if (! $id) {
-            return $this->error(trans('admin.save_failed'));
-        }
-
-        return $this->redirect(
-            $this->redirectUrl($id, $redirectTo),
-            trans('admin.save_succeeded')
-        );
     }
 
     /**
@@ -617,30 +677,15 @@ class Form implements Renderable
 
         $this->build();
 
-        $this->prepareStepFormFields($this->inputs);
-
         if (($response = $this->callSubmitted())) {
             return $response;
-        }
-
-        // Validate step form.
-        if ($this->isStepFormValidationRequest()) {
-            return $this->validateStepForm($this->inputs);
         }
 
         if ($response = $this->handleUploadFile($this->inputs)) {
             return $response;
         }
 
-        if ($response = $this->handleFileDeleteBeforeCreate($this->inputs)) {
-            $this->deleteFileInStepFormStashData($this->inputs);
-
-            return $response;
-        }
-
-        if ($response = $this->handleFileDeleteWhenCreating($this->inputs)) {
-            $this->deleteFileInStepFormStashData($this->inputs);
-
+        if ($response = $this->deleteFileWhenCreating($this->inputs)) {
             return $response;
         }
 
@@ -650,8 +695,6 @@ class Form implements Renderable
         }
 
         if (($response = $this->prepare($this->inputs))) {
-            $this->deleteFilesWhenCreating($this->inputs);
-
             return $response;
         }
     }
@@ -667,7 +710,7 @@ class Form implements Renderable
     {
         $this->inputs = $this->removeIgnoredFields($data);
 
-        if (($response = $this->callSaving()) instanceof Response) {
+        if ($response = $this->callSaving()) {
             return $response;
         }
 
@@ -721,9 +764,15 @@ class Form implements Renderable
                 ? $this->repository->moveOrderUp()
                 : $this->repository->moveOrderDown();
 
-            return $updated
-                ? $this->ajaxResponse(__('admin.update_succeeded'))
-                : $this->error(__('admin.nothing_updated'));
+            $message = $updated
+                ? __('admin.update_succeeded')
+                : __('admin.nothing_updated');
+
+            return $this->sendResponse(
+                $this->response()
+                    ->status((bool) $updated)
+                    ->message($message)
+            );
         }
     }
 
@@ -741,32 +790,53 @@ class Form implements Renderable
         ?array $data = null,
         $redirectTo = null
     ) {
-        if ($data) {
-            $this->request->replace($data);
+        try {
+            if ($data) {
+                $this->request->replace($data);
+            }
+
+            $data = $data ?: $this->request->all();
+
+            if ($response = $this->beforeUpdate($id, $data)) {
+                return $this->sendResponse($response);
+            }
+
+            $this->updates = $this->prepareUpdate($this->updates);
+
+            $updated = $this->repository->update($this);
+
+            if ($response = $this->callSaved($updated)) {
+                return $this->sendResponse($response);
+            }
+
+            if (! $updated) {
+                return $this->sendResponse(
+                    $this->response()
+                        ->error(trans('admin.update_failed'))
+                );
+            }
+
+            $url = $this->getRedirectUrl($id, $redirectTo);
+
+            return $this->sendResponse(
+                $this->response()
+                    ->success(trans('admin.update_succeeded'))
+                    ->redirectIf($url !== false, $url)
+                    ->refreshIf($url === false)
+            );
+        } catch (\Throwable $e) {
+            $response = $this->handleException($e);
+
+            if ($response instanceof Response) {
+                return $response;
+            }
+
+            return $this->sendResponse(
+                $this->response()
+                    ->error(trans('admin.update_failed'))
+                    ->withExceptionIf($e->getMessage(), $e)
+            );
         }
-
-        $data = $data ?: $this->request->all();
-
-        if ($response = $this->beforeUpdate($id, $data)) {
-            return $response;
-        }
-
-        $this->updates = $this->prepareUpdate($this->updates);
-
-        $updated = $this->repository->update($this);
-
-        if (($response = $this->callSaved($updated))) {
-            return $response;
-        }
-
-        if (! $updated) {
-            return $this->error(trans('admin.update_succeeded'));
-        }
-
-        return $this->redirect(
-            $this->redirectUrl($id, $redirectTo),
-            trans('admin.update_succeeded')
-        );
     }
 
     /**
@@ -783,7 +853,7 @@ class Form implements Renderable
 
         $this->inputs = $data;
 
-        $this->model(new Fluent($this->repository->getDataWhenUpdating($this)));
+        $this->model($this->repository->updating($this));
 
         $this->build();
 
@@ -855,19 +925,18 @@ class Form implements Renderable
      *
      * @return string|null
      */
-    public function redirectUrl($key, $redirectTo = null)
+    public function getRedirectUrl($key, $redirectTo = null)
     {
         if ($redirectTo) {
             return $redirectTo;
         }
 
-        $resourcesPath = $this->builder->isCreating() ?
-            $this->getResource(0) : $this->getResource(-1);
+        $resourcesPath = $this->isCreating() ? $this->resource(0) : $this->resource(-1);
 
         if ($this->request->get('after-save') == 1) {
             // continue editing
-            if ($this->builder->isEditing() && $this->isAjaxRequest()) {
-                return;
+            if ($this->builder->isEditing()) {
+                return false;
             }
 
             return rtrim($resourcesPath, '/')."/{$key}/edit";
@@ -883,7 +952,7 @@ class Form implements Renderable
             return rtrim($resourcesPath, '/')."/{$key}";
         }
 
-        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: $resourcesPath;
+        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: ($this->getCurrentUrl() ?: $resourcesPath);
     }
 
     /**
@@ -963,10 +1032,10 @@ class Form implements Renderable
      */
     public function prepareInsert($inserts)
     {
-        $this->prepareHasOneRelation($inserts);
+        Helper::prepareHasOneRelation($this->builder->fields(), $inserts);
 
         foreach ($inserts as $column => $value) {
-            if (is_null($field = $this->getFieldByColumn($column))) {
+            if (is_null($field = $this->field($column))) {
                 unset($inserts[$column]);
                 continue;
             }
@@ -984,41 +1053,6 @@ class Form implements Renderable
     }
 
     /**
-     * Is input data is has-one relation.
-     *
-     * @param array $inserts
-     */
-    public function prepareHasOneRelation(array &$inserts)
-    {
-        $relations = [];
-        $this->builder->fields()->each(function ($field) use (&$relations) {
-            $column = $field->column();
-
-            if (is_array($column)) {
-                foreach ($column as $v) {
-                    if (Str::contains($v, '.')) {
-                        $first = explode('.', $v)[0];
-                        $relations[$first] = null;
-                    }
-                }
-
-                return;
-            }
-
-            if (Str::contains($column, '.')) {
-                $first = explode('.', $column)[0];
-                $relations[$first] = null;
-            }
-        });
-
-        foreach ($relations as $first => $v) {
-            if (isset($inserts[$first])) {
-                $inserts = array_merge($inserts, Arr::dot([$first => $inserts[$first]]));
-            }
-        }
-    }
-
-    /**
      * Ignore fields to save.
      *
      * @param string|array $fields
@@ -1027,7 +1061,21 @@ class Form implements Renderable
      */
     public function ignore($fields)
     {
-        $this->ignored = array_merge($this->ignored, (array) $fields);
+        $this->ignored = Arr::flatten(
+            array_merge($this->ignored, (array) $fields)
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param $keys
+     *
+     * @return $this
+     */
+    public function forgetIgnored($keys)
+    {
+        Arr::forget($this->ignored, $keys);
 
         return $this;
     }
@@ -1093,26 +1141,6 @@ class Form implements Renderable
 
             return $value;
         }
-    }
-
-    /**
-     * Find field object by column.
-     *
-     * @param $column
-     *
-     * @return mixed
-     */
-    protected function getFieldByColumn($column)
-    {
-        return $this->builder->fields()->first(
-            function (Field $field) use ($column) {
-                if (is_array($field->column())) {
-                    return in_array($column, $field->column());
-                }
-
-                return $field->column() == $column;
-            }
-        );
     }
 
     /**
@@ -1221,14 +1249,14 @@ class Form implements Renderable
             }
 
             if (($validator instanceof Validator) && ! $validator->passes()) {
-                $failedValidators[] = $validator;
+                $failedValidators[] = [$field, $validator];
             }
         }
 
         $message = $this->mergeValidationMessages($failedValidators);
 
         if ($message->any() && $this->builder->isCreating()) {
-            $this->deleteFilesWhenCreating($input);
+            $this->deleteFiles($input, true);
         }
 
         return $message->any() ? $message : false;
@@ -1269,7 +1297,7 @@ class Form implements Renderable
     /**
      * Merge validation messages from input validators.
      *
-     * @param \Illuminate\Validation\Validator[] $validators
+     * @param array $validators
      *
      * @return MessageBag
      */
@@ -1277,8 +1305,10 @@ class Form implements Renderable
     {
         $messageBag = new MessageBag();
 
-        foreach ($validators as $validator) {
-            $messageBag = $messageBag->merge($validator->messages());
+        foreach ($validators as $value) {
+            [$field, $validator] = $value;
+
+            $messageBag = $messageBag->merge($field->formatValidatorMessages($validator->messages()));
         }
 
         if ($this->validationMessages) {
@@ -1352,28 +1382,6 @@ class Form implements Renderable
         $this->builder->title($title);
 
         return $this;
-    }
-
-    /**
-     * Add a row in form.
-     *
-     * @param Closure $callback
-     *
-     * @return $this
-     */
-    public function row(Closure $callback)
-    {
-        $this->rows[] = new Row($callback, $this);
-
-        return $this;
-    }
-
-    /**
-     * @return Row[]
-     */
-    public function rows()
-    {
-        return $this->rows;
     }
 
     /**
@@ -1543,7 +1551,7 @@ class Form implements Renderable
      *
      * @return string
      */
-    public function getResource($slice = -2)
+    public function resource($slice = -2)
     {
         $path = $this->resource ?: $this->request->getUri();
 
@@ -1563,7 +1571,7 @@ class Form implements Renderable
      *
      * @return $this
      */
-    public function resource(string $resource)
+    public function setResource(string $resource)
     {
         if ($resource) {
             $this->resource = admin_url($resource);
@@ -1579,15 +1587,11 @@ class Form implements Renderable
      */
     public function render()
     {
-        try {
-            $this->rendering();
+        $this->rendering();
 
-            $this->callComposing();
+        $this->callComposing();
 
-            return $this->builder->render();
-        } catch (\Throwable $e) {
-            return Admin::makeExceptionHandler()->renderException($e);
-        }
+        return $this->builder->render();
     }
 
     /**
@@ -1598,8 +1602,12 @@ class Form implements Renderable
      *
      * @return array|mixed
      */
-    public function input($key, $value = null)
+    public function input($key = null, $value = null)
     {
+        if (is_null($key)) {
+            return $this->inputs;
+        }
+
         if (is_null($value)) {
             return Arr::get($this->inputs, $key);
         }
@@ -1625,23 +1633,25 @@ class Form implements Renderable
      */
     public function block(int $width, \Closure $callback)
     {
-        $layout = $this->builder->layout();
-
-        $callback($form = $layout->form());
-
-        $layout->column($width, $form);
+        $this
+            ->builder
+            ->layout()
+            ->block($width, $callback);
 
         return $this;
     }
 
     /**
-     * @param int $width
+     * @param int|float $width
+     * @param Closure   $callback
      *
      * @return $this
      */
-    public function setDefaultBlockWidth(int $width)
+    public function column($width, \Closure $callback)
     {
-        $this->builder->setDefaultBlockWidth($width);
+        $this->builder->layout()->onlyColumn($width, function () use ($callback) {
+            $callback($this);
+        });
 
         return $this;
     }

@@ -15,11 +15,6 @@ abstract class AbstractTool extends Action
     /**
      * @var string
      */
-    public $selectorPrefix = '.tree-tool-action-';
-
-    /**
-     * @var string
-     */
     protected $style = 'btn btn-sm btn-primary';
 
     /**

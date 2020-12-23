@@ -71,6 +71,11 @@ trait UploadField
     protected $retainable = false;
 
     /**
+     * @var bool
+     */
+    protected $saveFullUrl = false;
+
+    /**
      * Initialize the storage instance.
      *
      * @return void.
@@ -151,11 +156,20 @@ trait UploadField
     /**
      * Indicates if the underlying field is retainable.
      *
+     * @param bool $retainable
+     *
      * @return $this
      */
-    public function retainable($retainable = true)
+    public function retainable(bool $retainable = true)
     {
         $this->retainable = $retainable;
+
+        return $this;
+    }
+
+    public function saveFullUrl(bool $value = true)
+    {
+        $this->saveFullUrl = $value;
 
         return $this;
     }
@@ -174,10 +188,10 @@ trait UploadField
         $id = $request->get('_id');
 
         if (! $id) {
-            return $this->responseErrorMessage(403, 'Missing id');
+            return $this->responseErrorMessage('Missing id');
         }
 
-        if ($errors = $this->getErrorMessages($file)) {
+        if ($errors = $this->getValidationErrors($file)) {
             return $this->responseValidationMessage($errors);
         }
 
@@ -195,13 +209,14 @@ trait UploadField
 
         if ($result) {
             $path = $this->getUploadPath();
+            $url = $this->objectUrl($path);
 
             // 上传成功
-            return $this->responseUploaded($path, $this->objectUrl($path));
+            return $this->responseUploaded($this->saveFullUrl ? $url : $path, $url);
         }
 
         // 上传失败
-        return $this->responseErrorMessage(trans('admin.upload.upload_failed'));
+        return $this->responseErrorMessage(trans('admin.uploader.upload_failed'));
     }
 
     /**
@@ -323,7 +338,7 @@ trait UploadField
      *
      * @return bool|\Illuminate\Support\MessageBag
      */
-    protected function getErrorMessages(UploadedFile $file)
+    protected function getValidationErrors(UploadedFile $file)
     {
         $rules = $attributes = [];
 
@@ -340,7 +355,7 @@ trait UploadField
         if (! $validator->passes()) {
             $errors = $validator->errors()->getMessages()[$this->column];
 
-            return implode('; ', $errors);
+            return implode('<br> ', $errors);
         }
     }
 
@@ -351,10 +366,6 @@ trait UploadField
      */
     public function destroy()
     {
-        if ($this->retainable) {
-            return;
-        }
-
         $this->deleteFile($this->original);
     }
 
@@ -382,7 +393,7 @@ trait UploadField
      */
     public function deleteFile($paths)
     {
-        if (! $paths) {
+        if (! $paths || $this->retainable) {
             return;
         }
 

@@ -1,5 +1,6 @@
 <?php
 
-use :namespace\Http\Controllers;
+use {namespace}\Http\Controllers;
+use Illuminate\Support\Facades\Route;
 
-Route::get(':path', Controllers\:class_nameController::class.'@index');
+Route::get('{path}', Controllers\{className}Controller::class.'@index');

@@ -107,32 +107,59 @@ $main-footer-bg: transparent !default;
 // Dark sidebar
 //$sidebar-dark-bg: darken(#505b6b, 14%) !default;
 //$sidebar-dark-bg: #1e1e2d !default;
-$sidebar-dark-bg: lighten(#1a1a27, 1%) !default;
-$sidebar-dark-hover-bg: hsla(100, 100%, 100%, 0.1) !default;
-$sidebar-dark-color: lighten(#C2C7D0, 10%) !default;
-$sidebar-dark-hover-color: $white !default;
-$sidebar-dark-active-color: $font-color !default;
+//$sidebar-dark-bg: lighten(#1a1a27, 1%) !default;
+//$sidebar-dark-bg: #263238!default;
+//$sidebar-dark-bg: $body-dark-color!default;
+//$sidebar-dark-hover-bg: transparent !default;
+//$sidebar-dark-color: $body-dark-font-color!default;
+//$sidebar-dark-hover-color: $white !default;
+//$sidebar-dark-active-bg: $body-darker-color !default;
+//$sidebar-dark-active-color: $white !default;
+//$sidebar-dark-submenu-bg: transparent !default;
+////$sidebar-dark-submenu-color: lighten(#C2C7D0, 6%) !default;
+//$sidebar-dark-submenu-color: $body-dark-font-color!default;
+//$sidebar-dark-submenu-hover-color: $white !default;
+//$sidebar-dark-submenu-hover-bg: $sidebar-dark-hover-bg !default;
+//$sidebar-dark-submenu-active-color: $white !default;
+//$sidebar-dark-submenu-active-bg: $sidebar-dark-active-bg !default;
+//$sidebar-dark-header-color: hsla(0,0%,100%,.7) !default;
+
+// #262d37 #313a46 lighten(#8391a2, 8%) #242939
+// icon lighten(#4B5575, 3%)   #989EB3
+$sidebar-dark-bg: lighten(#3a4452, 2%)!default;
+$sidebar-dark-hover-bg: transparent !default;
+$sidebar-dark-color: hsla(0,0%,100%,.95)!default;
+$sidebar-dark-icon-color: $sidebar-dark-color!default;
+$sidebar-dark-hover-color: lighten($sidebar-dark-color, 10%) !default;
+$sidebar-dark-active-bg: transparent !default;
+$sidebar-dark-active-color: $white !default;
 $sidebar-dark-submenu-bg: transparent !default;
-$sidebar-dark-submenu-color: lighten(#C2C7D0, 10%) !default;
+//$sidebar-dark-submenu-color: lighten(#C2C7D0, 6%) !default;
+$sidebar-dark-submenu-color: $sidebar-dark-color!default;
 $sidebar-dark-submenu-hover-color: $white !default;
 $sidebar-dark-submenu-hover-bg: $sidebar-dark-hover-bg !default;
-$sidebar-dark-submenu-active-color: $sidebar-dark-bg !default;
-$sidebar-dark-submenu-active-bg: hsla(100, 100%, 100%, 0.9) !default;
-$sidebar-dark-header-color: hsla(0,0%,100%,.7) !default;
+$sidebar-dark-submenu-active-color: $white !default;
+$sidebar-dark-submenu-active-bg: transparent !default;
+$sidebar-dark-header-color: hsla(0,0%,100%,.8) !default;
+// #505b6b #49525f
 
 // Light sidebar
 $sidebar-light-bg: $white !default;
-$sidebar-light-hover-bg: #f7f7f9 !default;
-$sidebar-light-color: $pure-black !default;
-$sidebar-light-hover-color: $gray-900 !default;
+$sidebar-light-hover-bg: transparent !default;
+$sidebar-light-color: #555 !default;
+$sidebar-light-hover-color: $sidebar-light-color !default;
 $sidebar-light-active-color: $white !default;
 $sidebar-light-submenu-bg: transparent !default;
 $sidebar-light-submenu-color: $sidebar-light-color !default;
 $sidebar-light-submenu-hover-color: #000 !default;
 $sidebar-light-submenu-hover-bg: $sidebar-light-hover-bg !default;
-$sidebar-light-submenu-active-color: $sidebar-light-hover-color !default;
+$sidebar-light-submenu-active-color: $sidebar-light-color !default;
 $sidebar-light-submenu-active-bg: linear-gradient(118deg, $primary, rgba($primary,.7));
 $sidebar-light-header-color: $gray-800 !default;
+
+// SIDEBAR PADDING
+$sidebar-item-padding: 10px 10px 10px 25px;
+$sidebar-tree-item-padding: 5px 10px 7px 25px;
 
 // SIDEBAR MINI
 // --------------------------------------------------------

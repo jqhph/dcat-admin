@@ -1,4 +1,4 @@
-<div class="{{$viewClass['form-group']}}">
+<div class="{{$viewClass['form-group']}}" style="margin-top: .3rem">
     <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
     <div class="{{$viewClass['field']}}">
         <div class="box box-solid box-default no-margin">

@@ -7,19 +7,12 @@ use Illuminate\Contracts\Support\Arrayable;
 class Radio extends Widget
 {
     protected $view = 'admin::widgets.radio';
-
     protected $type = 'radio';
-
     protected $style = 'primary';
-
-    protected $right = '14px';
-
+    protected $right = '16px';
     protected $checked;
-
     protected $disabledValues = [];
-
     protected $size;
-
     protected $inline = false;
 
     public function __construct(
@@ -182,7 +175,7 @@ class Radio extends Widget
     /**
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
         return [
             'style'      => $this->style,

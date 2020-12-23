@@ -5,7 +5,29 @@
 
     <select class="form-control {{ $class }}" name="{{$name}}[]" multiple style="width: 100%;">
         @foreach($options as $select => $option)
-            <option value="{{$select}}" {{ in_array((string)$select, request($name, []))  ?'selected':'' }}>{{$option}}</option>
+            <option value="{{$select}}" {{ in_array((string)$select, (array) $value)  ?'selected':'' }}>{{$option}}</option>
         @endforeach
     </select>
 </div>
+
+@include('admin::scripts.select')
+
+<script require="@select2">
+    var configs = {!! admin_javascript_json($configs) !!};
+
+    @yield('admin.select-ajax')
+
+    @if(isset($remote))
+    $.ajax({!! admin_javascript_json($remote['ajaxOptions']) !!}).done(function(data) {
+        $("{{ $selector }}").select2($.extend({!! admin_javascript_json($configs) !!}, {
+            data: data,
+        })).val({!! json_encode($remote['values']) !!}).trigger("change");
+    });
+    @else
+    $("{!! $selector !!}").select2(configs);
+    @endif
+</script>
+
+@yield('admin.select-load')
+
+@yield('admin.select-lang')

@@ -6,7 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
-use Dcat\Admin\Traits\HasDefinitions;
+use Dcat\Admin\Traits\HasVariables;
 use Dcat\Admin\Widgets\Dump;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
@@ -19,9 +19,9 @@ use Illuminate\Support\Traits\Macroable;
 
 class Field implements Renderable
 {
-    use HasBuilderEvents,
-        HasDefinitions,
-        Macroable {
+    use HasBuilderEvents;
+    use HasVariables;
+    use Macroable {
             __call as macroCall;
         }
 
@@ -92,7 +92,7 @@ class Field implements Renderable
     /**
      * @var int
      */
-    protected $width = 8;
+    protected $width = ['field' => 8, 'label' => 2];
 
     /**
      * Field constructor.
@@ -136,15 +136,14 @@ class Field implements Renderable
     /**
      * @param int $width
      *
-     * @return $this|int
+     * @return $this|array
      */
-    public function width(int $width = null)
+    public function width(int $field, int $label = 2)
     {
-        if ($width === null) {
-            return $this->width;
-        }
-
-        $this->width = $width;
+        $this->width = [
+            'label' => $label,
+            'field' => $field,
+        ];
 
         return $this;
     }
@@ -158,9 +157,13 @@ class Field implements Renderable
      */
     protected function formatLabel($label)
     {
-        $label = $label ?: admin_trans_field($this->name);
+        if ($label) {
+            return $label;
+        }
 
-        return str_replace(['.', '_'], ' ', $label);
+        $label = admin_trans_field($this->name);
+
+        return str_replace('_', ' ', $label);
     }
 
     /**
@@ -226,7 +229,7 @@ class Field implements Renderable
                 if (url()->isValidUrl($path)) {
                     $src = $path;
                 } elseif ($server) {
-                    $src = $server.$path;
+                    $src = rtrim($server, '/').'/'.ltrim($path, '/');
                 } else {
                     $disk = config('admin.upload.disk');
 
@@ -254,7 +257,7 @@ class Field implements Renderable
     {
         $field = $this;
 
-        return $this->unescape()->as(function ($path) use ($server, $download, $field) {
+        return $this->unescape()->as(function ($path) use ($server, $field) {
             $name = basename($path);
 
             $field->wrap(false);
@@ -350,7 +353,7 @@ HTML;
 
             $style = $style === 'default' ? 'dark70' : $style;
 
-            $background = Admin::color()->get($style);
+            $background = Admin::color()->get($style, $style);
 
             return "<i class='fa fa-circle' style='font-size: 13px;color: {$background}'></i>&nbsp;&nbsp;";
         });
@@ -389,7 +392,7 @@ HTML;
         if ($style !== 'default') {
             $class = '';
 
-            $style = Admin::color()->get($style);
+            $style = Admin::color()->get($style, $style);
             $background = "style='background:{$style}'";
         }
 
@@ -425,7 +428,7 @@ HTML;
 
         return $this->as(function ($v) use (&$val, $name) {
             if ($val instanceof \Closure) {
-                $val = $val->call($this, $v, $this->$name);
+                $val = $val->call($this, $v, Arr::get($this, $name));
             }
 
             if (is_array($v)) {
@@ -451,7 +454,7 @@ HTML;
 
         return $this->as(function ($v) use (&$val, $name) {
             if ($val instanceof \Closure) {
-                $val = $val->call($this, $v, $this->$name);
+                $val = $val->call($this, $v, Arr::get($this, $name));
             }
 
             if (is_array($v)) {
@@ -527,11 +530,11 @@ HTML;
     }
 
     /**
-     * @param Fluent $model
+     * @param Fluent|\Illuminate\Database\Eloquent\Model $model
      *
      * @return void
      */
-    public function fill(Fluent $model)
+    public function fill($model)
     {
         $this->value(Arr::get($model->toArray(), $this->name));
     }
@@ -560,6 +563,21 @@ HTML;
     public function wrap(bool $wrap = true)
     {
         $this->border = $wrap;
+
+        return $this;
+    }
+
+    /**
+     * @param  mixed  $value
+     * @param  callable  $callback
+     *
+     * @return $this|mixed
+     */
+    public function when($value, $callback)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        }
 
         return $this;
     }
@@ -658,7 +676,7 @@ HTML;
      *
      * @return array
      */
-    protected function variables()
+    protected function defaultVariables()
     {
         return [
             'content' => $this->value,
@@ -676,10 +694,6 @@ HTML;
      */
     public function render()
     {
-        if (static::hasDefinition($this->name)) {
-            $this->useDefinedColumn();
-        }
-
         if ($this->showAs->isNotEmpty()) {
             $this->showAs->each(function ($callable) {
                 [$callable, $params] = $callable;
@@ -699,22 +713,6 @@ HTML;
         }
 
         return view($this->view, $this->variables());
-    }
-
-    /**
-     * Use a defined column.
-     *
-     * @throws \Exception
-     */
-    protected function useDefinedColumn()
-    {
-        $class = static::$definitions[$this->name];
-
-        if (! $class instanceof \Closure) {
-            throw new \Exception("Invalid column definition [$class]");
-        }
-
-        $this->as($class);
     }
 
     /**

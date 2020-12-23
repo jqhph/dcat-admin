@@ -7,6 +7,7 @@ use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Support\WebUploader;
+use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +26,7 @@ trait HasFiles
     protected function handleUploadFile($data)
     {
         $column = $data['upload_column'] ?? null;
-        $file = app('admin.web-uploader')->getCompleteUploadedFile() ?: ($data[WebUploader::FILE_NAME] ?? null);
+        $file = app('admin.web-uploader')->getUploadedFile() ?: ($data[WebUploader::FILE_NAME] ?? null);
 
         if (! $column || ! $file instanceof UploadedFile) {
             return;
@@ -43,14 +44,14 @@ trait HasFiles
         }
 
         if ($field && $field instanceof UploadFieldInterface) {
-            if (($results = $this->callUploading($field, $file)) && $results instanceof Response) {
-                return $results;
+            if ($results = $this->callUploading($field, $file)) {
+                return $this->sendResponse($results);
             }
 
             $response = $field->upload($file);
 
-            if (($results = $this->callUploaded($field, $file, $response)) && $results instanceof Response) {
-                return $results;
+            if ($results = $this->callUploaded($field, $file, $response)) {
+                return $this->sendResponse($results);
             }
 
             return $response;
@@ -66,44 +67,105 @@ trait HasFiles
      */
     public function findFieldByName(?string $column)
     {
-        if ($field = $this->builder->field($column)) {
-            return $field;
-        }
-
-        return $this->builder->field($column) ?: $this->builder->stepField($column);
+        return $this->builder->field($column);
     }
 
     /**
-     * 新增之前删除文件操作.
+     * 新增页面删除文件.
+     *
+     * @param array $input
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function deleteFileWhenCreating(array $input)
+    {
+        if ($response = $this->deleteFileIfIsFileDeleteRequest($input)) {
+            return $response;
+        }
+
+        $input = $this->handleFileDelete($input);
+
+        $column = $input['_column'] ?? null;
+
+        if (isset($input[Field::FILE_DELETE_FLAG]) && $column) {
+            $this->builder->fields()->filter(function ($field) use ($column) {
+                /* @var Field $field */
+
+                return $column === $field->column() && $field instanceof UploadFieldInterface;
+            })->each(function (UploadFieldInterface $file) use ($input) {
+                /* @var Field $file */
+                $this->deleteFile($file, $input[Field::FILE_DELETE_FLAG]);
+            });
+
+            return $this
+                ->response()
+                ->status(true)
+                ->send();
+        }
+    }
+
+    /**
+     * 删除文件.
+     *
+     * @param UploadFieldInterface|Field $field
+     * @param array                      $input
+     */
+    protected function deleteFile(UploadFieldInterface $field, $input = null)
+    {
+        if ($input) {
+            if (
+                is_string($input)
+                || (is_array($input) && ! Arr::isAssoc($input))
+            ) {
+                $input = [$field->column() => $input];
+            }
+
+            $field->setOriginal($input);
+        }
+
+        if ($this->callFileDeleting($field) === false) {
+            return;
+        }
+
+        $field->destroy();
+
+        $this->callFileDeleted($field);
+    }
+
+    /**
+     * 如果是删除文件请求，则直接删除文件.
      *
      * @param array $data
      *
      * @return \Illuminate\Http\JsonResponse|void
      */
-    protected function handleFileDeleteBeforeCreate(array $data)
+    protected function deleteFileIfIsFileDeleteRequest(array $data)
     {
         if (! array_key_exists(Field::FILE_DELETE_FLAG, $data)) {
             return;
         }
 
         $column = $data['_column'] ?? null;
-        $file = $data['key'] ?? null;
+        $filePath = $data['key'] ?? null;
         $relation = $data['_relation'] ?? null;
 
-        if (! $column && ! $file) {
+        if (! $column && ! $filePath) {
             return;
         }
 
         if (empty($relation)) {
-            $field = $this->builder->field($column) ?: $this->builder->stepField($column);
+            $field = $this->findFieldByName($column);
         } else {
             $field = $this->getFieldByRelationName($relation[0], $column);
         }
 
         if ($field && $field instanceof UploadFieldInterface) {
-            $field->deleteFile($file);
+            $this->deleteFile($field, $filePath);
 
-            return response()->json(['status' => true]);
+            return $this
+                ->response()
+                ->status(true)
+                ->send();
         }
     }
 
@@ -115,7 +177,7 @@ trait HasFiles
      *
      * @return mixed
      */
-    protected function getFieldByRelationName($relation, $column)
+    public function getFieldByRelationName($relation, $column)
     {
         $relation = $this->findFieldByName($relation);
 
@@ -127,50 +189,29 @@ trait HasFiles
     }
 
     /**
-     * @param array $input
-     *
-     * @return void
-     */
-    public function deleteFilesWhenCreating(array $input)
-    {
-        $this->builder
-            ->fields()
-            ->filter(function ($field) {
-                return $field instanceof UploadFieldInterface;
-            })
-            ->each(function (UploadFieldInterface $file) use ($input) {
-                $file->setOriginal($input);
-
-                $file->destroy();
-            });
-    }
-
-    /**
      * 根据传入数据删除文件.
      *
-     * @param array $data
+     * @param array $input
      * @param bool  $forceDelete
      */
-    public function deleteFiles($data, $forceDelete = false)
+    public function deleteFiles($input, $forceDelete = false)
     {
         // If it's a soft delete, the files in the data will not be deleted.
         if (! $forceDelete && $this->isSoftDeletes) {
             return;
         }
 
-        $this->builder->fields()->filter(function ($field) {
-            return $field instanceof Field\BootstrapFile
-                || $field instanceof UploadFieldInterface;
-        })->each(function (UploadFieldInterface $file) use ($data) {
-            $file->setOriginal($data);
-
-            $file->destroy();
-        });
+        $this->builder
+            ->fields()
+            ->filter(function ($field) {
+                return $field instanceof UploadFieldInterface;
+            })
+            ->each(function (UploadFieldInterface $field) use ($input) {
+                $this->deleteFile($field, $input);
+            });
     }
 
     /**
-     * 编辑页面删除上传文件操作.
-     *
      * @param array $input
      *
      * @return array
@@ -200,34 +241,10 @@ trait HasFiles
             }
         }
 
-        unset($input['key'], $input['_column'], $input['_relation']);
+        $input = Arr::only($input, [Field::FILE_DELETE_FLAG, $input['_column']]);
 
         $this->request->replace($input);
 
         return $input;
-    }
-
-    /**
-     * @param array $input
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function handleFileDeleteWhenCreating(array $input)
-    {
-        $input = $this->handleFileDelete($input);
-
-        $column = $input['_column'] ?? null;
-
-        if (isset($input[Field::FILE_DELETE_FLAG]) && $column) {
-            $this->builder->fields()->filter(function ($field) use ($column) {
-                /* @var Field $field */
-
-                return $column === $field->column() && $field instanceof UploadFieldInterface;
-            })->each(function (UploadFieldInterface $file) use ($input) {
-                $file->deleteFile($input[Field::FILE_DELETE_FLAG]);
-            });
-
-            return \response()->json(['status' => true]);
-        }
     }
 }

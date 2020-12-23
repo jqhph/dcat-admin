@@ -12,15 +12,6 @@ use Dcat\Admin\Support\JavaScript;
  */
 class Markdown extends Field
 {
-    protected static $css = [
-        '@admin/dcat/plugins/editor-md/css/editormd.min.css',
-    ];
-
-    protected static $js = [
-        '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
-        '@admin/dcat/plugins/editor-md/editormd.min.js',
-    ];
-
     /**
      * 编辑器配置.
      *
@@ -41,7 +32,12 @@ class Markdown extends Field
         'autoFocus'          => true,
     ];
 
-    protected $language = '@admin/dcat/plugins/editor-md/languages/en.js';
+    protected $language;
+
+    protected $defaultLangs = [
+        'en'    => '@admin/dcat/plugins/editor-md/languages/en.js',
+        'zh_TW' => '@admin/dcat/plugins/editor-md/languages/zh-tw.js',
+    ];
 
     protected $disk;
 
@@ -113,7 +109,7 @@ class Markdown extends Field
      */
     public function imageUrl(string $url)
     {
-        return $this->options(['imageUploadURL' => $this->formatUrl(admin_url($url))]);
+        return $this->mergeOptions(['imageUploadURL' => $this->formatUrl(admin_url($url))]);
     }
 
     /**
@@ -128,37 +124,6 @@ class Markdown extends Field
         $this->language = $url;
 
         return $this;
-    }
-
-    /**
-     * 初始化js.
-     */
-    protected function setUpScript()
-    {
-        $this->options['path'] = admin_asset('@admin/dcat/plugins/editor-md/lib').'/';
-        $this->options['name'] = $this->column;
-        $this->options['placeholder'] = $this->placeholder();
-        $this->options['readonly'] = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
-
-        if (empty($this->options['imageUploadURL'])) {
-            $this->options['imageUploadURL'] = $this->defaultImageUploadUrl();
-        }
-
-        $this->options['onload'] = JavaScript::make(
-            <<<JS
-function () {
-    this.setMarkdown($('#{$this->id}-template').html());
-}
-JS
-        );
-
-        if (config('app.locale') !== 'zh-CN') {
-            Admin::js($this->language);
-        }
-
-        $opts = JavaScript::format($this->options);
-
-        $this->script = "editormd(\"{$this->id}\", {$opts});";
     }
 
     /**
@@ -191,10 +156,34 @@ JS
      */
     public function render()
     {
-        $this->setUpScript();
+        $this->options['path'] = admin_asset('@admin/dcat/plugins/editor-md/lib').'/';
+        $this->options['name'] = $this->column;
+        $this->options['placeholder'] = $this->placeholder();
+        $this->options['readonly'] = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
 
-        Admin::style('.editormd-fullscreen {z-index: 99999999;}');
+        if (empty($this->options['imageUploadURL'])) {
+            $this->options['imageUploadURL'] = $this->defaultImageUploadUrl();
+        }
+
+        $this->requireLang();
+
+        $this->addVariables(['options' => JavaScript::format($this->options)]);
 
         return parent::render();
+    }
+
+    protected function requireLang()
+    {
+        $locale = config('app.locale');
+
+        if (isset($this->defaultLangs[$locale])) {
+            Admin::js($this->defaultLangs[$locale]);
+
+            return;
+        }
+
+        if ($this->language) {
+            Admin::js($this->language);
+        }
     }
 }

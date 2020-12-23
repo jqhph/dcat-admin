@@ -3,9 +3,12 @@
 namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\LazyRenderable;
+use Dcat\Admin\Grid\LazyRenderable as LazyGrid;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasHtmlAttributes;
+use Dcat\Admin\Traits\HasVariables;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
@@ -18,6 +21,7 @@ use Illuminate\Support\Arr;
 abstract class Widget implements Renderable
 {
     use HasHtmlAttributes;
+    use HasVariables;
 
     /**
      * @var array
@@ -42,12 +46,17 @@ abstract class Widget implements Renderable
     /**
      * @var array
      */
-    protected $variables = [];
+    protected $options = [];
 
     /**
-     * @var array
+     * @var string
      */
-    protected $options = [];
+    protected $elementClass;
+
+    /**
+     * @var bool
+     */
+    protected $runScript = true;
 
     /**
      * @param mixed ...$params
@@ -57,6 +66,23 @@ abstract class Widget implements Renderable
     public static function make(...$params)
     {
         return new static(...$params);
+    }
+
+    /**
+     * 符合条件则执行.
+     *
+     * @param  mixed  $value
+     * @param  callable  $callback
+     *
+     * @return $this|mixed
+     */
+    public function when($value, $callback)
+    {
+        if ($value) {
+            return $callback($this, $value) ?: $this;
+        }
+
+        return $this;
     }
 
     /**
@@ -89,9 +115,9 @@ abstract class Widget implements Renderable
     {
         if ($value === null) {
             return Arr::get($this->options, $key);
-        } else {
-            Arr::set($this->options, $key, $value);
         }
+
+        Arr::set($this->options, $key, $value);
 
         return $this;
     }
@@ -111,23 +137,33 @@ abstract class Widget implements Renderable
      *
      * @return array
      */
-    public function variables()
+    public function defaultVariables()
     {
-        return array_merge($this->variables, [
+        return [
             'attributes' => $this->formatHtmlAttributes(),
             'options'    => $this->options,
-        ]);
+            'class'      => $this->getElementClass(),
+            'selector'   => $this->getElementSelector(),
+        ];
     }
 
     /**
      * 收集静态资源.
      */
-    protected function collectAssets()
+    public static function requireAssets()
     {
-        $this->script && Admin::script($this->script);
-
         static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);
+    }
+
+    /**
+     * 运行JS.
+     */
+    protected function withScript()
+    {
+        if ($this->runScript && $this->script) {
+            Admin::script($this->script);
+        }
     }
 
     /**
@@ -145,17 +181,49 @@ abstract class Widget implements Renderable
      */
     public function render()
     {
-        $this->collectAssets();
+        static::requireAssets();
 
-        return $this->html();
+        $html = $this->html();
+
+        $this->withScript();
+
+        return $html;
     }
 
     /**
+     * 获取元素选择器.
+     *
+     * @return string
+     */
+    public function getElementSelector()
+    {
+        return '.'.$this->getElementClass();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getElementClass()
+    {
+        return $this->elementClass ?: str_replace('\\', '_', static::class);
+    }
+
+    /**
+     * 渲染HTML.
+     *
      * @return string
      */
     public function html()
     {
-        return view($this->view, $this->variables())->render();
+        if (! $this->view) {
+            return;
+        }
+
+        $result = Admin::resolveHtml(view($this->view, $this->variables()), ['runScript' => $this->runScript]);
+
+        $this->script .= $result['script'];
+
+        return $result['html'];
     }
 
     /**
@@ -183,11 +251,43 @@ abstract class Widget implements Renderable
     }
 
     /**
+     * 设置是否执行JS代码.
+     *
+     * @param bool $run
+     *
+     * @return $this
+     */
+    public function runScript(bool $run = true)
+    {
+        $this->runScript = $run;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getScript()
     {
         return $this->script;
+    }
+
+    /**
+     * @param mixed $content
+     *
+     * @return Lazy|LazyTable|mixed
+     */
+    protected function formatRenderable($content)
+    {
+        if ($content instanceof LazyGrid) {
+            return LazyTable::make($content);
+        }
+
+        if ($content instanceof LazyRenderable) {
+            return Lazy::make($content);
+        }
+
+        return $content;
     }
 
     /**
@@ -214,7 +314,7 @@ abstract class Widget implements Renderable
         }
 
         // 获取属性
-        if (count($parameters) === 0) {
+        if (count($parameters) === 0 || $parameters[0] === null) {
             return $this->getHtmlAttribute($method);
         }
 

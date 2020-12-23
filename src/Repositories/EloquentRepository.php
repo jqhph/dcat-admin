@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Repositories;
 
 use Dcat\Admin\Contracts\TreeRepository;
+use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -39,6 +40,11 @@ class EloquentRepository extends Repository implements TreeRepository
     protected $relations = [];
 
     /**
+     * @var \Illuminate\Database\Eloquent\Collection
+     */
+    protected $collection;
+
+    /**
      * EloquentRepository constructor.
      *
      * @param EloquentModel|array|string $modelOrRelations $modelOrRelations
@@ -65,13 +71,13 @@ class EloquentRepository extends Repository implements TreeRepository
             $this->eloquentClass = get_class($this->model);
             $this->queryBuilder = $modelOrRelations;
         } else {
-            $this->with($modelOrRelations);
+            $this->setRelations($modelOrRelations);
         }
 
-        $this->setKeyName($this->eloquent()->getKeyName());
+        $this->setKeyName($this->model()->getKeyName());
 
         $this->setIsSoftDeletes(
-            in_array(SoftDeletes::class, class_uses($this->eloquent()))
+            in_array(SoftDeletes::class, class_uses($this->model()))
         );
     }
 
@@ -80,7 +86,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getCreatedAtColumn()
     {
-        return $this->eloquent()->getCreatedAtColumn();
+        return $this->model()->getCreatedAtColumn();
     }
 
     /**
@@ -88,7 +94,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getUpdatedAtColumn()
     {
-        return $this->eloquent()->getUpdatedAtColumn();
+        return $this->model()->getUpdatedAtColumn();
     }
 
     /**
@@ -128,7 +134,7 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return $this
      */
-    public function with($relations)
+    public function setRelations($relations)
     {
         $this->relations = (array) $relations;
 
@@ -154,9 +160,9 @@ class EloquentRepository extends Repository implements TreeRepository
         }
 
         $model->getQueries()->unique()->each(function ($value) use (&$query) {
-            if ($value['method'] == 'paginate') {
+            if ($value['method'] === 'paginate') {
                 $value['arguments'][1] = $this->getGridColumns();
-            } elseif ($value['method'] == 'get') {
+            } elseif ($value['method'] === 'get') {
                 $value['arguments'] = [$this->getGridColumns()];
             }
 
@@ -268,9 +274,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @param Form $form
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function edit(Form $form): array
+    public function edit(Form $form)
     {
         $query = $this->newQuery();
 
@@ -282,7 +288,7 @@ class EloquentRepository extends Repository implements TreeRepository
             ->with($this->getRelations())
             ->findOrFail($form->getKey(), $this->getFormColumns());
 
-        return $this->model->toArray();
+        return $this->model;
     }
 
     /**
@@ -290,9 +296,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @param Show $show
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function detail(Show $show): array
+    public function detail(Show $show)
     {
         $query = $this->newQuery();
 
@@ -304,7 +310,7 @@ class EloquentRepository extends Repository implements TreeRepository
             ->with($this->getRelations())
             ->findOrFail($show->getKey(), $this->getDetailColumns());
 
-        return $this->model->toArray();
+        return $this->model;
     }
 
     /**
@@ -319,7 +325,7 @@ class EloquentRepository extends Repository implements TreeRepository
         $result = null;
 
         DB::transaction(function () use ($form, &$result) {
-            $model = $this->eloquent();
+            $model = $this->model();
 
             $updates = $form->updates();
 
@@ -338,7 +344,7 @@ class EloquentRepository extends Repository implements TreeRepository
             $this->updateRelation($form, $model, $relations, $relationKeyMap);
         });
 
-        return $this->eloquent()->getKey();
+        return $this->model()->getKey();
     }
 
     /**
@@ -346,9 +352,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @param Form $form
      *
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable
      */
-    public function getDataWhenUpdating(Form $form): array
+    public function updating(Form $form)
     {
         return $this->edit($form);
     }
@@ -363,7 +369,7 @@ class EloquentRepository extends Repository implements TreeRepository
     public function update(Form $form)
     {
         /* @var EloquentModel $builder */
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (! $model->getKey()) {
             $model->exists = true;
@@ -402,10 +408,10 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function moveOrderUp()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (! $model instanceof Sortable) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'The model "%s" must be a type of %s.',
                     get_class($model),
@@ -424,10 +430,10 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function moveOrderDown()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (! $model instanceof Sortable) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'The model "%s" must be a type of %s.',
                     get_class($model),
@@ -442,24 +448,23 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 删除数据.
      *
-     * @param Form $form
+     * @param Form  $form
+     * @param array $originalData
      *
      * @return bool
      */
-    public function destroy(Form $form, array $deletingData)
+    public function delete(Form $form, array $originalData)
     {
-        $id = $form->getKey();
+        $models = $this->collection->keyBy($this->getKeyName());
 
-        $deletingData = collect($deletingData)->keyBy($this->getKeyName());
+        collect(explode(',', $form->getKey()))->filter()->each(function ($id) use ($form, $models) {
+            $model = $models->get($id);
 
-        collect(explode(',', $id))->filter()->each(function ($id) use ($form, $deletingData) {
-            $data = $deletingData->get($id, []);
-
-            if (! $data) {
+            if (! $model) {
                 return;
             }
 
-            $model = $this->createDeletingModel($id, $data);
+            $data = $model->toArray();
 
             if ($this->isSoftDeletes && $model->trashed()) {
                 $form->deleteFiles($data, true);
@@ -477,37 +482,13 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * @param mixed $id
-     * @param array $data
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    protected function createDeletingModel($id, $data)
-    {
-        $model = $this->createEloquent();
-        $keyName = $model->getKeyName();
-
-        $model->{$keyName} = $id;
-
-        if ($this->isSoftDeletes) {
-            $deletedColumn = $model->getDeletedAtColumn();
-
-            $model->{$deletedColumn} = $data[$deletedColumn] ?? null;
-        }
-
-        $model->exists = true;
-
-        return $model;
-    }
-
-    /**
      * 查询删除前的行数据.
      *
      * @param Form $form
      *
      * @return array
      */
-    public function getDataWhenDeleting(Form $form): array
+    public function deleting(Form $form)
     {
         $query = $this->newQuery();
 
@@ -517,13 +498,14 @@ class EloquentRepository extends Repository implements TreeRepository
 
         $id = $form->getKey();
 
-        return $query
+        $this->collection = $query
             ->with($this->getRelations())
             ->findOrFail(
                 collect(explode(',', $id))->filter()->toArray(),
                 $this->getFormColumns()
-            )
-            ->toArray();
+            );
+
+        return $this->collection->toArray();
     }
 
     /**
@@ -533,7 +515,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getParentColumn()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (method_exists($model, 'getParentColumn')) {
             return $model->getParentColumn();
@@ -547,7 +529,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getTitleColumn()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (method_exists($model, 'getTitleColumn')) {
             return $model->getTitleColumn();
@@ -561,7 +543,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function getOrderColumn()
     {
-        $model = $this->eloquent();
+        $model = $this->model();
 
         if (method_exists($model, 'getOrderColumn')) {
             return $model->getOrderColumn();
@@ -576,7 +558,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function saveOrder($tree = [], $parentId = 0)
     {
-        $this->eloquent()->saveOrder($tree, $parentId);
+        $this->model()->saveOrder($tree, $parentId);
     }
 
     /**
@@ -588,7 +570,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     public function withQuery($queryCallback)
     {
-        $this->eloquent()->withQuery($queryCallback);
+        $this->model()->withQuery($queryCallback);
 
         return $this;
     }
@@ -606,7 +588,7 @@ class EloquentRepository extends Repository implements TreeRepository
             });
         }
 
-        return $this->eloquent()->toTree();
+        return $this->model()->toTree();
     }
 
     /**
@@ -618,7 +600,7 @@ class EloquentRepository extends Repository implements TreeRepository
             return clone $this->queryBuilder;
         }
 
-        return $this->eloquent()->newQuery();
+        return $this->model()->newQuery();
     }
 
     /**
@@ -626,9 +608,9 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return EloquentModel
      */
-    public function eloquent()
+    public function model()
     {
-        return $this->model ?: ($this->model = $this->createEloquent());
+        return $this->model ?: ($this->model = $this->createModel());
     }
 
     /**
@@ -636,15 +618,25 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return EloquentModel
      */
-    public function createEloquent(array $data = [])
+    public function createModel(array $data = [])
     {
         $model = new $this->eloquentClass();
 
         if ($data) {
-            $model->forceFill($data);
+            $model->setRawAttributes($data);
         }
 
         return $model;
+    }
+
+    /**
+     * @param array $relations
+     *
+     * @return $this
+     */
+    public static function with($relations = [])
+    {
+        return (new static())->setRelations($relations);
     }
 
     /**
@@ -652,7 +644,7 @@ class EloquentRepository extends Repository implements TreeRepository
      *
      * @return array
      */
-    protected function getRelations()
+    public function getRelations()
     {
         return $this->relations;
     }
@@ -708,7 +700,7 @@ class EloquentRepository extends Repository implements TreeRepository
     protected function updateRelation(Form $form, EloquentModel $model, array $relationsData, array $relationKeyMap)
     {
         foreach ($relationsData as $name => $values) {
-            $relationName = $relationKeyMap[$name];
+            $relationName = $relationKeyMap[$name] ?? $name;
 
             if (! method_exists($model, $relationName)) {
                 continue;
@@ -735,7 +727,7 @@ class EloquentRepository extends Repository implements TreeRepository
                     break;
                 case $relation instanceof Relations\HasOne:
 
-                    $related = $model->$name;
+                    $related = $model->$relationName;
 
                     // if related is empty
                     if (is_null($related)) {
@@ -754,7 +746,7 @@ class EloquentRepository extends Repository implements TreeRepository
                 case $relation instanceof Relations\BelongsTo:
                 case $relation instanceof Relations\MorphTo:
 
-                    $parent = $model->$name;
+                    $parent = $model->$relationName;
 
                     // if related is empty
                     if (is_null($parent)) {
@@ -777,7 +769,7 @@ class EloquentRepository extends Repository implements TreeRepository
 
                     break;
                 case $relation instanceof Relations\MorphOne:
-                    $related = $model->$name;
+                    $related = $model->$relationName;
                     if (is_null($related)) {
                         $related = $relation->make();
                     }
@@ -797,13 +789,18 @@ class EloquentRepository extends Repository implements TreeRepository
 
                         $instance = $relation->findOrNew(Arr::get($related, $keyName));
 
-                        if ($related[Form::REMOVE_FLAG_NAME] == 1) {
+                        if (Arr::get($related, Form::REMOVE_FLAG_NAME) == 1) {
                             $instance->delete();
 
                             continue;
                         }
 
                         Arr::forget($related, Form::REMOVE_FLAG_NAME);
+
+                        $key = Arr::get($related, $relation->getModel()->getKeyName());
+                        if ($key === null || $key === '') {
+                            Arr::forget($related, $relation->getModel()->getKeyName());
+                        }
 
                         $instance->fill($related);
 

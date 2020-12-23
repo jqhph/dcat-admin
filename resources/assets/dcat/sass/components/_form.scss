@@ -1,14 +1,21 @@
-.form-control:not(textarea) {
+.form-control {
   border-color: $input-border-color;
   color: $font-color;
+}
+
+.form-control:not(textarea) {
   padding: .5rem .7rem;
   font-size: .9rem;
 }
 
 input.form-control, div.form-control {
-  max-height: 36px;
-  min-height: 36px;
+  //max-height: 36px;
+  min-height: $input-height;
   border-radius: $card-border-radius;
+}
+
+.input-group-text {
+  border-color: $input-border-color;
 }
 
 .form-control-sm {
@@ -41,12 +48,12 @@ select.form-control:not([multiple=multiple]) {
 .help-block {
   display: block;
   margin-top: 7px;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
   color: #737373;
 }
 
 .control-label {
-  padding-top: 7px;
+  padding-top: 10px;
   padding-right: 5px;
   margin-bottom: 0;
   font-size: 1rem;
@@ -68,6 +75,14 @@ select.form-control:not([multiple=multiple]) {
   margin-bottom: 4px;
 }
 
+.form-control:disabled,
+.form-control[readonly],
+.select2-container--default.select2-container--disabled .select2-selection--single,
+.select2-container--default.select2-container--disabled .select2-selection--multiple {
+  background-color: #F7F7F9!important;
+  cursor: not-allowed!important;
+}
+
 .has-error .checkbox,
 .has-error .checkbox-inline,
 .has-error .control-label, .has-error .help-block,
@@ -81,7 +96,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .control-label.asterisk:before {
-  content: "*";
+  content: "* ";
   font-weight: bold;
   color: $red-darker;
 }
@@ -92,6 +107,7 @@ select.form-control:not([multiple=multiple]) {
 
 .input-group-prepend .input-group-text {
   margin-right: -1px;
+  max-height: $input-height;
 }
 
 // --------------------- input-group-addon ---------------------
@@ -142,11 +158,12 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .select2-container .select2-selection--multiple {
-  min-height: 36px!important;
+  min-height: $input-height!important;
+  //max-height: 36px!important;
 }
 
 .select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
-  min-height: 36px;
+  min-height: $input-height;
   padding: 5px;
   border: 1px solid rgba(0,0,0,.2);
 }
@@ -180,7 +197,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  padding: 2px .7rem!important;
+  padding: 0 .7rem!important;
 }
 
 .select2-selection .default-text {
@@ -189,7 +206,7 @@ select.form-control:not([multiple=multiple]) {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-  line-height: 32px!important;
+  line-height: 30px!important;
 }
 
 .input-group-sm {
@@ -246,7 +263,7 @@ select.form-control:not([multiple=multiple]) {
 }
 .form-control-position {
   position: absolute;
-  top: 2px;
+  top: 0;
   right: 0;
   z-index: 2;
   display: block;
@@ -258,4 +275,16 @@ select.form-control:not([multiple=multiple]) {
 .has-icon-left .form-control {
   padding-right: 2rem;
   padding-left: 3rem;
+}
+
+// divider
+.form-divider {
+  height: 20px;
+  border-bottom: 1px solid #eee;
+
+  span {
+    font-size: 16px;
+    background-color: #ffffff;
+    padding: 0 10px;
+  }
 }

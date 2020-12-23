@@ -90,8 +90,21 @@ $font-color: #414750;
 
 // body背景颜色
 //$body-bg: #f9fafc;
-//$body-bg: lighten($dark40, 1.2%);
-$body-bg: darken(#f4f7fa, 1.2%);
+//$body-bg: lighten($dark40, 1.3%);
+$body-bg: #eff1f7;//darken(#f4f7fa, 1.4%);
+//$body-bg: lighten(#edf1f3, 0.4%);
+
+// 深色主题
+//$body-dark-bg: #262c49;
+$body-dark-bg: #2c2c43;
+$body-dark-color: #222233;
+$body-content-dark-bg: #2c2c43;
+$body-darker-color: #1e1e2d;
+$body-dark-font-color: #a8a9bb;
+//$body-dark-heading-color: darken(#ebeefd, 2%);
+$body-dark-heading-color: lighten($body-dark-font-color, 12%);
+$body-dark-table-bg: $body-dark-color;
+$body-dark-border-color: darken(#363950, 3%);
 
 // 灰背景色
 $gray-bg: #f1f1f1;
@@ -100,9 +113,12 @@ $gray-bg: #f1f1f1;
 $border-color: #ebeff2;
 
 // 表单边框颜色
-$input-border-color: #d9d9d9;
+$input-border-color: darken(#e4eaec, 3%);
 
 // 常用分割线颜色
 $divider-color: #f4f4f4;
 
-$table-border-color: darken(#f1f1f1, 5%);
+//$table-border-color: darken(#f1f1f1, 5%);
+$table-border-color: #f0f0f0;
+$table-border-color-darker: #e4e4e4;
+$table-td-height: 60px;

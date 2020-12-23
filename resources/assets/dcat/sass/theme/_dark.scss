@@ -1,0 +1,899 @@
+
+$body-dark-card-bg: $body-dark-color;
+$body-dark-modal-bg: lighten($body-dark-color, 3%);
+
+@mixin dark-scrollbar($selector) {
+  #{$selector}::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  #{$selector}::-webkit-scrollbar-track {
+    background-color: $body-dark-bg;
+  }
+  #{$selector}::-webkit-scrollbar-thumb {
+    background-color: $body-darker-color;
+    border-radius: .4rem;
+  }
+}
+
+@include dark-scrollbar('body.dark-mode');
+
+body.dark-mode {
+  background-color: $body-dark-bg;
+  color: $body-dark-font-color;
+
+  .body-bg,
+  .content-wrapper,
+  .main-footer {
+    background: $body-dark-bg;
+  }
+
+  .bg-white {
+    background: $body-dark-bg!important;
+  }
+
+  a {
+    color: lighten($primary, 1%);
+
+    &:hover {
+      color: darken($primary, 4%);
+    }
+  }
+
+  .grid-column-header a {
+    color: darken($body-dark-font-color, 15%);
+  }
+  .grid-column-header a:hover, .grid-column-header a.active {
+    color: lighten($primary, 1%);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $body-dark-heading-color;
+  }
+
+  p, small, label {
+    color: $body-dark-font-color;
+  }
+
+  .label {
+    color: darken($white, 2.5%);
+  }
+
+  .dcat-loading:not(.layui-layer-shade) {
+    background-color: inherit!important;
+  }
+
+  // ------- button
+  .btn.btn-white,
+  .btn.btn-default,
+  .btn.btn-light {
+    color: $body-dark-font-color;
+    background-color: $body-dark-color;
+    border-color: $body-dark-color;
+  }
+  .btn.btn-white:hover,
+  .btn.btn-white:focus,
+  .btn.btn-default:hover,
+  .btn.btn-light:hover {
+    color: lighten($body-dark-font-color, 2%)!important;
+  }
+  .btn.btn-light,
+  .bg-light {
+    color: $body-dark-font-color!important;
+    background-color: $body-dark-bg!important;
+    border-color: $body-dark-bg!important;
+  }
+  .bg-default {
+    background-color: $body-dark-color!important;
+    color: $body-dark-font-color!important;
+  }
+
+  .btn-light:hover, .btn-light:focus {
+    color: lighten($body-dark-font-color, 1.2%)!important;
+  }
+  .btn.btn-primary:not(.btn-outline),
+  .btn.btn-warning:not(.btn-outline),
+  .btn.btn-success:not(.btn-outline),
+  .btn.btn-info:not(.btn-outline),
+  .btn.btn-danger:not(.btn-outline),
+  .btn.btn-custom:not(.btn-outline) {
+    color: darken($white, 8%)
+  }
+
+  hr {
+    border-color: $body-dark-border-color;
+  }
+
+  // ------ pre
+  pre {
+    background-color: $body-dark-color;
+    border: 0;
+    color: $body-dark-font-color;
+
+    code {
+      background-color: inherit;
+      .operator,
+      .url {
+        background-color: $body-content-dark-bg;
+      }
+    }
+  }
+  code {
+    background-color: $body-content-dark-bg;
+    color: $gray-600!important;
+  }
+  kbd {
+    background-color: $body-content-dark-bg;
+  }
+
+  .text-dark {
+    color: $gray-600 !important;
+  }
+
+
+  // ------ header-navbar
+  .header-navbar {
+    background-color: $body-dark-color;
+    .navbar-container {
+      .nav {
+        .nav-item {
+          .nav-link {
+            color: $body-dark-font-color;
+            background-color: transparent;
+            i {
+              color: $body-dark-font-color;
+            }
+          }
+        }
+      }
+    }
+    &.navbar-static-top {
+      background-color: transparent;
+    }
+    &[class*="bg-"] {
+      .navbar-nav {
+        .nav-item {
+          .nav-link {
+            background-color: inherit;
+          }
+        }
+      }
+    }
+  }
+
+  .main-menu {
+    .navbar-header {
+      .logo-lg {
+        font-weight: 300;
+      }
+    }
+  }
+
+
+  // ------ dropdown
+  .dropdown-toggle {
+    &:hover {
+      i,
+      &:after {
+        color: $white;
+      }
+    }
+  }
+  .dropdown .dropdown-menu {
+    box-shadow: $shadow-200;
+  }
+  .dropdown-menu {
+    background-color: $body-dark-color;
+    &:before {
+      background: $body-dark-color;
+    }
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+      background: $body-darker-color;
+    }
+    .dropdown-item {
+      color: $body-dark-font-color;
+    }
+    .form-control {
+      background-color: $body-dark-color;
+    }
+    .dropdown-divider {
+      border-color: $body-dark-border-color;
+    }
+  }
+  .dropdown-item a, .dropdown-menu label {
+    color: $body-dark-font-color;
+  }
+
+
+  // ----- modal
+  .modal {
+    .modal-header,
+    .modal-header[class*="bg-"] {
+      border-color: $body-dark-border-color;
+      background-color: lighten($body-dark-color, 1%);
+      .close {
+        span {
+          color: $white50;
+        }
+      }
+    }
+    .modal-content,
+    .modal-body,
+    .modal-footer {
+      background-color: $body-dark-modal-bg;
+    }
+  }
+  .modal-backdrop {
+    background-color: rgba(#22292f, .5);
+  }
+
+  .pagination {
+    &:not([class*="pagination-"]) {
+      .page-item {
+        &.active {
+          background-color: $body-content-dark-bg;
+          .page-link {
+            &:hover {
+              color: $white;
+            }
+          }
+        }
+        .page-link {
+          background-color: $body-content-dark-bg;
+          color: $body-dark-font-color;
+        }
+        &.prev-item,
+        &.next-item {
+          .page-link:hover {
+            color: $white;
+          }
+        }
+      }
+    }
+    &[class*="pagination-"] {
+      .page-item:not(.active):not(:hover) {
+        .page-link {
+          background-color: $body-darker-color;
+          color: $body-dark-font-color;
+        }
+      }
+      .page-item {
+        &:not(.active) {
+          .page-link:hover {
+            background-color: $body-content-dark-bg;
+          }
+        }
+        &.active {
+          background-color: $body-dark-color;
+        }
+      }
+    }
+  }
+
+  .nav {
+    .nav-item {
+      .nav-link {
+        color: $body-dark-font-color;
+        //&.active,
+        //&:hover {
+        //  color: $primary;
+        //}
+      }
+    }
+  }
+
+  // ------ popover
+  .popover {
+    &[x-placement="top"] {
+      .arrow {
+        &:after {
+          border-top-color: $body-dark-color;
+        }
+      }
+    }
+    &[x-placement="bottom"] {
+      .arrow {
+        &:after {
+          border-bottom-color: $body-dark-color;
+        }
+      }
+    }
+    &[x-placement="left"] {
+      .arrow {
+        &:after {
+          border-left-color: $body-dark-color;
+        }
+      }
+    }
+    &[x-placement="right"] {
+      .arrow {
+        &:after {
+          border-right-color: $body-dark-color;
+        }
+      }
+    }
+
+    .popover-body {
+      background-color: $body-dark-color;
+      color: $body-dark-font-color;
+    }
+  }
+
+  // ------ tab
+  .nav.nav-tabs {
+    border-color: lighten($body-dark-border-color, 10%);
+  }
+  .nav-theme-primary .nav.nav-tabs,
+  .nav-theme-white .nav.nav-tabs {
+    background-color: $body-dark-card-bg;
+
+    .nav-item .nav-link:not(.active) {
+      color: darken($body-dark-font-color, 4%)
+    }
+
+    .nav-item .nav-link.active {
+      color: $primary;
+    }
+
+    .nav-item .nav-link.active:after {
+      background: linear-gradient(30deg, $primary, rgba($primary, 0.5)) !important;
+    }
+  }
+
+  // ------ table
+  @include dark-scrollbar('.table-responsive[data-pattern=priority-columns]');
+
+  .table-wrapper {
+    margin-top: 12px!important;
+  }
+
+  .table.default-table td,
+  .table.default-table th {
+    border-color: $body-dark-border-color!important;
+  }
+
+  table.table-bordered.dataTable.complex-headers,
+  .table.default-table {
+    th {
+      background: darken($body-dark-bg, 3%);
+    }
+
+    td {
+      background: darken($body-dark-bg, 1%);
+    }
+  }
+
+  .table {
+    background-color: $body-dark-table-bg;
+    padding: 0 1rem;
+
+    th, td {
+      border-color: $body-dark-border-color;
+    }
+
+    .thead,
+    tbody {
+      tr:not([class*="table-"]) {
+        th,
+        td {
+          border: 0;
+          color: $body-dark-font-color;
+          code {
+            background-color: $body-dark-color;
+          }
+        }
+      }
+    }
+    thead {
+      tr {
+        th {
+          border: 0;
+          background-color: $body-dark-table-bg;
+          color: $body-dark-font-color;
+        }
+      }
+    }
+    tbody {
+      tr {
+        background: $body-content-dark-bg!important;
+
+        &[class*="table-"] {
+          td,
+          th {
+            background-color: unset;
+            color: $black;
+            border-color: $body-dark-border-color;
+          }
+        }
+        &.table-dark {
+          td,
+          th {
+            color: $white;
+          }
+        }
+        &.table-active {
+          td,
+          th {
+            color: $body-dark-font-color;
+          }
+        }
+        th {
+          background-color: $body-content-dark-bg;
+        }
+        td {
+          background-color: $body-content-dark-bg;
+          color: $body-dark-font-color;
+        }
+      }
+    }
+
+    &.table-bordered {
+      border: 1px solid $body-dark-border-color;
+      thead,
+      tbody {
+        tr {
+          th,
+          td {
+            border: 1px solid $body-dark-border-color;
+          }
+        }
+      }
+    }
+
+    &.table-hover {
+      tbody {
+        tr {
+          &:hover {
+            background-color: $body-dark-color;
+          }
+          th,
+          td {
+            background-color: unset;
+          }
+        }
+      }
+    }
+
+    &.table-striped {
+      tbody {
+        tr {
+          &:nth-of-type(odd) {
+            background-color: $body-dark-color;
+          }
+          td,
+          th {
+            background-color: unset;
+          }
+        }
+      }
+    }
+
+  }
+
+  .table.table-bordered {
+    padding: 0;
+  }
+
+  .card, .box {
+    background: $body-dark-card-bg;
+  }
+  .box.box-solid.box-default {
+    background-color: $body-dark-bg;
+  }
+
+  .dd-handle,
+  .card.dcat-box .card-header,
+  .box-header.with-border,
+  .with-border,
+  .box.box-solid.box-default {
+    border-bottom: 1px solid $body-dark-border-color;
+    border-color: $body-dark-border-color!important;
+  }
+
+  .box .box-footer, .card .box-footer {
+    border-color: $body-dark-border-color;
+  }
+
+  .dd-handle {
+    background: darken($body-dark-bg, 1.2%);
+    color: $body-dark-font-color;
+    margin-bottom: 2px;
+  }
+  .dd-item > button:before {
+    color: $body-dark-font-color
+  }
+
+  // ----- 滚动条
+
+  // ----- form
+  .input-group-prepend,
+  .input-group-append,
+  .input-group-addon,
+  .input-group-text {
+    background-color: $body-dark-bg;
+    border-color: $body-dark-border-color;
+    color: $body-dark-font-color!important;
+  }
+
+  input::-webkit-input-placeholder{
+    color: darken($body-dark-font-color, 5%)!important;
+  }
+  input::-moz-placeholder{
+    color: darken($body-dark-font-color, 5%)!important;
+  }
+  input::-moz-placeholder{
+    color: darken($body-dark-font-color, 5%)!important;
+  }
+  input:-ms-input-placeholder {
+    color: darken($body-dark-font-color, 5%)!important;
+  }
+  .help-block {
+    color: darken($body-dark-font-color, 1.3%)!important;
+  }
+  .has-error .checkbox, .has-error .checkbox-inline, .has-error.checkbox label, .has-error .control-label, .has-error .form-control-position i, .has-error .form-control:focus~.form-control-position i, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.radio label
+  {
+    color: $red-darker!important;
+  }
+
+  @include dark-scrollbar('.select2-container--default .select2-results>.select2-results__options');
+  .select2-container--default .select2-selection--single,
+  .select2-container--default .select2-selection--multiple,
+  .form-control {
+    background: $body-dark-bg;
+    color: $body-dark-font-color!important;
+    border-color: $body-dark-border-color!important;
+  }
+  .select2-container--default .select2-search--inline .select2-search__field,
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: $body-dark-font-color!important;
+  }
+
+  .select2-container--default .select2-search--dropdown .select2-search__field {
+    background: $body-dark-bg!important;
+    color: $body-dark-font-color!important;
+  }
+
+  .select2-container--default .select2-search--dropdown .select2-search__field,
+  .select2-container--default .select2-selection--multiple {
+    border-color: $body-dark-border-color!important;
+  }
+
+  //.select2-container--default .select2-selection--multiple .select2-selection__rendered li:first-child.select2-search.select2-search--inline .select2-search__field {
+  //  color: $body-dark-font-color!important;
+  //}
+  .select2-container--default .select2-results>.select2-results__options {
+    background: $body-dark-color!important;
+  }
+  .select2-dropdown {
+    background: $body-dark-color!important;
+  }
+  .select2-container--default .select2-results__option[aria-selected=true],
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: $body-darker-color!important;
+    color: $body-dark-font-color!important;
+  }
+
+  .table-filter .form-control {
+    background: $body-dark-table-bg;
+    color: $body-dark-font-color;
+  }
+
+  // form divider
+  .form-divider {
+    border-color: $body-dark-border-color;
+
+    span {
+      background-color: $body-dark-card-bg;
+    }
+  }
+
+  .form-control:disabled,
+  .form-control[readonly],
+  .select2-container--default.select2-container--disabled .select2-selection--single,
+  .select2-container--default.select2-container--disabled .select2-selection--multiple {
+    background-color: darken($body-dark-bg, 2%)!important;
+  }
+
+  // ------ layer
+  // 滚动条
+  @include dark-scrollbar('.layui-layer-page .layui-layer-content');
+  .layui-layer {
+    background-color: lighten($body-dark-color, 1%)!important;
+  }
+  .layui-layer-page {
+    .layui-layer-btn,
+    .layui-layer-content{
+      background-color: $body-dark-modal-bg!important;
+    }
+  }
+  .layui-layer-title {
+    background-color: lighten($body-dark-color, 1%)!important;
+    border-bottom: 1px solid $body-dark-border-color!important;
+    color: $body-dark-font-color!important;
+  }
+  .layui-layer-btn1 {
+    border-color: $body-dark-color!important;
+    background: $body-dark-color!important;
+  }
+
+  .layui-layer-setwin .layui-layer-min cite:before,
+  .layui-layer-setwin .layui-layer-max:before,
+  .layui-layer-setwin .layui-layer-close1:before {
+    color: $body-dark-font-color!important;
+  }
+
+  .web-uploader {
+    .placeholder {
+      border-width: 2px;
+      border-color: darken($body-dark-font-color, 7%)!important;
+    }
+    .filelist li {
+      background: $body-dark-color!important;
+    }
+    .queueList {
+      border-color: $body-dark-border-color!important;
+    }
+
+    .statusBar .info,
+    .filelist li p.title {
+      color: $body-dark-font-color!important;
+    }
+  }
+
+  // ----- slider
+  .slider-panel {
+    background-color: lighten($body-dark-color, 1.1%);
+  }
+  .right-side-filter-container .header {
+    border-color: $body-dark-border-color;
+    background-color: lighten($body-dark-color, 1.1%);;
+  }
+
+  // ----- sweet2
+  .swal2-popup {
+    background: $body-dark-color;
+
+    h2 {
+      color: $body-dark-font-color
+    }
+  }
+  .swal2-content {
+    color: darken($body-dark-font-color, 1.5%)
+  }
+
+
+  // ---- quick create
+  .quick-create {
+    td {
+      background-color: $body-dark-modal-bg!important;
+      color: darken($body-dark-font-color, 5%)
+    }
+  }
+
+  // ----- iconpicker
+  @include dark-scrollbar('.iconpicker .iconpicker-items');
+
+  .iconpicker-popover.popover .popover-title,
+  .iconpicker .iconpicker-items,
+  .iconpicker-popover.popover {
+    background: $body-dark-color!important;
+    border-color: $body-dark-border-color!important;
+  }
+
+  .iconpicker-popover.popover .popover-title,
+  .iconpicker-popover.popover.bottom>.arrow:after,
+  .iconpicker-popover.popover.bottomRight>.arrow:after, .iconpicker-popover.popover.bottomLeft>.arrow:after {
+    border-color: $body-dark-color;
+  }
+
+  // ----- alert
+  .alert.alert-danger {
+    h3, h4, h5 {
+      color: $danger;
+    }
+  }
+  .alert.alert-success {
+    h3, h4, h5 {
+      color: $success;
+    }
+  }
+  .alert.alert-info {
+    h3, h4, h5 {
+      color: $info;
+    }
+  }
+  .alert.alert-primary {
+    h3, h4, h5 {
+      color: $primary-darker;
+    }
+  }
+  .alert.alert-warning {
+    h3, h4, h5 {
+      color: darken($warning, 5%);
+    }
+  }
+
+  .callout {
+    background: darken($body-dark-bg, 3%);
+    border-color: #8e9aac;
+
+    h3, h4, h5 {
+      color: lighten($body-dark-font-color, 5%);
+    }
+  }
+  
+  // ----- apexcharts
+  .apexcharts-legend-series {
+    .apexcharts-legend-text {
+      color: $body-dark-font-color !important;
+    }
+  }
+  .apexcharts-radialbar-track {
+    path {
+      stroke: $body-dark-bg;
+    }
+  }
+  .apexcharts-inner {
+    polygon {
+      stroke: $body-dark-table-bg !important;
+      fill: $body-dark-bg !important;
+    }
+  }
+  .apexcharts-pie-series {
+    path {
+      stroke: $body-dark-bg;
+    }
+  }
+  .apexcharts-menu {
+    background-color: $body-dark-bg;
+    border: 0;
+  }
+  .apexcharts-toolbar {
+    .apexcharts-zoom-in-icon,
+    .apexcharts-zoom-out-icon,
+    .apexcharts-zoom-icon,
+    .apexcharts-menu-icon,
+    .apexcharts-reset-zoom-icon {
+      &:hover {
+        svg {
+          fill: $body-dark-font-color;
+        }
+      }
+    }
+  }
+
+  // ---- login
+  .login-page {
+    background-color: $body-dark-bg!important;
+  }
+  .login-card-body, .register-card-body {
+    background-color: $body-dark-color;
+    color: $body-dark-font-color
+  }
+
+  // ----- selector
+ .grid-selector {
+    .wrap {
+      background-color: $body-dark-color;
+    }
+
+    .select-label {
+      color: darken($body-dark-font-color, 5%);
+    }
+    ul > li a {
+      color: $body-dark-font-color;
+    }
+
+    .select-options a.active {
+      color: $primary
+    }
+  }
+
+
+  // ----- switchery
+  .switchery {
+    background-color: lighten($body-dark-font-color, 4%)!important;
+    border-color: lighten($body-dark-font-color, 4%)!important;
+    box-shadow: $shadow-200;
+  }
+  .switchery>small {
+    background-color: lighten($body-dark-font-color, 10%)!important;
+  }
+
+
+  // ----- rwd table
+  //.no-touch .dropdown-menu>.checkbox-row:active,
+  .dropdown-menu li.checkbox-row:hover {
+    background-color: $body-darker-color!important;
+  }
+
+
+  // ---- step
+  .dcat-step {
+    .dcat-step-title {
+      color: $body-dark-font-color;
+    }
+
+    .active > .dcat-step-item-container > .dcat-step-content > .dcat-step-title,
+    .done > .dcat-step-item-container > .dcat-step-content > .dcat-step-title {
+      color: lighten($body-dark-font-color, 8%);
+    }
+
+    .dcat-step-icons {
+      border-color: lighten($body-dark-font-color, 4%);
+      > .dcat-step-icon {
+        color: lighten($body-dark-font-color, 4%);
+      }
+    }
+
+    .dcat-step-title:after {
+      background-color: $body-dark-font-color;
+    }
+
+    .active > .dcat-step-item-container > .dcat-step-content > .dcat-step-title:after {
+      background-color: lighten($body-dark-font-color, 4%);
+    }
+
+    .done .dcat-step-icons {
+      background-color: transparent;
+      border-color: $primary;
+    }
+    .done .dcat-step-icons > .dcat-step-icon {
+      color: $primary
+    }
+  }
+  .dcat-done-step .st-title {
+    color: $body-dark-heading-color
+  }
+
+  .dcat-done-step .st-desc {
+    color: $body-dark-font-color;
+  }
+
+  // ------- fixed-columns
+  @include dark-scrollbar('.table-main');
+
+  .table-fixed-left .table {
+    box-shadow: 6px 0 5px -5px rgba(0,0,0,1);
+  }
+
+  .table-fixed-right .table {
+    box-shadow: -5px 0 5px -5px rgba(0,0,0,1);
+  }
+
+  // ------- sidebar
+  [class*=sidebar-dark-] {
+    background-image: none;
+    background-color: $body-dark-color!important;
+
+    .navbar-header {
+      background: $body-darker-color;
+    }
+
+    .nav-sidebar > .nav-item > .nav-treeview {
+      background: transparent;
+    }
+
+    .nav-sidebar > .nav-item > .nav-link.active,
+    .nav-treeview > .nav-item > .nav-link.active,
+    .nav-treeview > .nav-item > .nav-link.active:hover,
+    .nav-treeview > .nav-item > .nav-link.active:focus {
+      background: $body-darker-color;
+    }
+
+    .nav-treeview.nav .nav-item .nav-link.active {
+      padding: 10px 10px 10px 25px !important;
+    }
+  }
+
+  .main-menu .navbar-header .navbar-brand {
+    margin-top: .5rem;
+  }
+}
+
+body.dark-mode:not(.sidebar-separate) {
+  .main-sidebar .sidebar {
+    margin-top: 1rem
+  }
+}
