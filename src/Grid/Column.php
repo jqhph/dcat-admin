@@ -537,7 +537,11 @@ class Column
 
             $this->original = Arr::get($this->originalModel, $this->name);
 
-            $this->value = $value = $this->htmlEntityEncode(Arr::get($row, $this->name));
+            $this->value = $value = $this->htmlEntityEncode($original = Arr::get($row, $this->name));
+
+            if ($original === null) {
+                $original = (string) $original;
+            }
 
             $this->processConditions();
 
@@ -545,7 +549,9 @@ class Column
                 $value = $this->callDisplayCallbacks($this->original);
             }
 
-            Helper::arraySet($row, $this->name, $value);
+            if ($original !== $value) {
+                Helper::arraySet($row, $this->name, $value);
+            }
         }
 
         $this->value = $value ?? null;
