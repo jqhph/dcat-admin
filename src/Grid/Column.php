@@ -527,7 +527,7 @@ class Column
     {
         $i = 0;
 
-        foreach ($data as $key => $row) {
+        $data->transform(function ($row, $key) use (&$i) {
             $i++;
             if (! isset($row['#'])) {
                 $row['#'] = $i;
@@ -552,9 +552,11 @@ class Column
             if ($original !== $value) {
                 Helper::arraySet($row, $this->name, $value);
             }
-        }
 
-        $this->value = $value ?? null;
+            $this->value = $value ?? null;
+
+            return $row;
+        });
     }
 
     /**
