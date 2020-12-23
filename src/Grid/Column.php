@@ -545,9 +545,7 @@ class Column
                 $value = $this->callDisplayCallbacks($this->original);
             }
 
-            if ($value !== $this->value) {
-                Helper::arraySet($row, $this->name, $value);
-            }
+            Helper::arraySet($row, $this->name, $value);
         }
 
         $this->value = $value ?? null;

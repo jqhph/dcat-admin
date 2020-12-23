@@ -892,7 +892,13 @@ class Helper
             if (is_array($array)) {
                 $array = &$array[$key];
             } else {
-                $array[$key] = static::arraySet($array[$key], implode('.', $keys), $value);
+                if (is_object($array[$key])) {
+                    $array[$key] = static::arraySet($array[$key], implode('.', $keys), $value);
+                } else {
+                    $mid = $array[$key];
+
+                    $array[$key] = static::arraySet($mid, implode('.', $keys), $value);
+                }
             }
         }
 

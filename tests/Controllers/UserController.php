@@ -81,12 +81,16 @@ class UserController extends AdminController
 
         $grid->model()->with(['tags', 'profile']);
 
+        $grid->number();
+
         $grid->id('ID')->sortable();
 
         $grid->username();
         $grid->email();
         $grid->mobile();
-        $grid->full_name();
+        $grid->full()->display(function () {
+            return $this->full_name;
+        });
         $grid->avatar()->display(function ($avatar) {
             return "<img src='{$avatar}' />";
         });
