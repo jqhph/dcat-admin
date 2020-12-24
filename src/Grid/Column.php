@@ -528,6 +528,8 @@ class Column
         $i = 0;
 
         $data->transform(function ($row, $key) use (&$i) {
+            $row = $this->convertModelToArray($row);
+
             $i++;
             if (! isset($row['#'])) {
                 $row['#'] = $i;
@@ -557,6 +559,36 @@ class Column
 
             return $row;
         });
+    }
+
+    /**
+     * 把模型转化为数组.
+     *
+     * @param $row
+     *
+     * @return mixed
+     */
+    protected function convertModelToArray($row)
+    {
+        if (is_array($row)) {
+            return $row;
+        }
+
+        // 这里禁止把驼峰转化为下划线
+        if (! empty($row::$snakeAttributes)) {
+            $shouldSnakeAttributes = true;
+
+            $row::$snakeAttributes = false;
+        }
+
+        $array = $row->toArray();
+
+        // 转为数组后还原
+        if (isset($shouldSnakeAttributes)) {
+            $row::$snakeAttributes = true;
+        }
+
+        return $array;
     }
 
     /**
