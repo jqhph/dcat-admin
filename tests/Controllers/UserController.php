@@ -88,9 +88,7 @@ class UserController extends AdminController
         $grid->username();
         $grid->email();
         $grid->mobile();
-        $grid->full()->display(function () {
-            return $this->full_name;
-        });
+        $grid->full_name;
         $grid->avatar()->display(function ($avatar) {
             return "<img src='{$avatar}' />";
         });
