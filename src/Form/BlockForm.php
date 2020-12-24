@@ -98,7 +98,7 @@ class BlockForm extends WidgetForm
     {
         $field->attribute(Field::BUILD_IGNORE, true);
 
-        $this->form->builder()->pushField((clone $field)->display(false));
+        $this->form->builder()->pushField($field);
         $this->fields->push($field);
 
         if ($this->layout()->hasColumns()) {

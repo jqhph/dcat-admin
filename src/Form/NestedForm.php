@@ -149,6 +149,14 @@ class NestedForm extends WidgetForm
     }
 
     /**
+     * @return mixed
+     */
+    public function getParentKey()
+    {
+        return $this->form->getKey();
+    }
+
+    /**
      * Get key for current form.
      *
      * @return string
@@ -282,9 +290,9 @@ class NestedForm extends WidgetForm
             $this->layout()->addField($field);
         }
 
-        if (method_exists($this->form, 'builder')) {
-            $field->attribute(Field::BUILD_IGNORE, true);
+        $field->attribute(Field::BUILD_IGNORE, true);
 
+        if (method_exists($this->form, 'builder')) {
             $this->form->builder()->pushField((clone $field)->display(false));
         }
 

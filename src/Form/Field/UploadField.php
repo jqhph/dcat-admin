@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Exception\UploadException;
 use Dcat\Admin\Traits\HasUploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -216,7 +217,7 @@ trait UploadField
         }
 
         // 上传失败
-        return $this->responseErrorMessage(trans('admin.uploader.upload_failed'));
+        throw new UploadException(trans('admin.uploader.upload_failed'));
     }
 
     /**
@@ -341,6 +342,11 @@ trait UploadField
     protected function getValidationErrors(UploadedFile $file)
     {
         $rules = $attributes = [];
+
+        // 如果文件上传有错误，则直接返回错误信息
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            return $file->getErrorMessage();
+        }
 
         if (! $fieldRules = $this->getRules()) {
             return false;

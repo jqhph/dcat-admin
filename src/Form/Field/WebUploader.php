@@ -119,7 +119,7 @@ trait WebUploader
      *
      * @return $this
      */
-    public function removeable(bool $value = true)
+    public function removable(bool $value = true)
     {
         $this->options['disableRemove'] = ! $value;
 
