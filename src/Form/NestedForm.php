@@ -149,6 +149,14 @@ class NestedForm extends WidgetForm
     }
 
     /**
+     * @return mixed
+     */
+    public function getParentKey()
+    {
+        return $this->form->getKey();
+    }
+
+    /**
      * Get key for current form.
      *
      * @return string
