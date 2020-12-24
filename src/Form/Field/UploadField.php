@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Exception\UploadException;
 use Dcat\Admin\Traits\HasUploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -216,7 +217,7 @@ trait UploadField
         }
 
         // 上传失败
-        return $this->responseErrorMessage(trans('admin.uploader.upload_failed'));
+        throw new UploadException(trans('admin.uploader.upload_failed'));
     }
 
     /**
