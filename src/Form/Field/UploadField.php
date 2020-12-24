@@ -342,6 +342,10 @@ trait UploadField
     {
         $rules = $attributes = [];
 
+        if ($errors = $file->getErrorMessage()) {
+            return $errors;
+        }
+
         if (! $fieldRules = $this->getRules()) {
             return false;
         }
