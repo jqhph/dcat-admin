@@ -343,8 +343,9 @@ trait UploadField
     {
         $rules = $attributes = [];
 
-        if ($errors = $file->getErrorMessage()) {
-            return $errors;
+        // 如果文件上传有错误，则直接返回错误信息
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            return $file->getErrorMessage();
         }
 
         if (! $fieldRules = $this->getRules()) {
