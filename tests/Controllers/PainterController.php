@@ -67,18 +67,24 @@ class PainterController extends AdminController
     protected function form()
     {
         return Form::make(Painter::with('paintings'), function (Form $form) {
-            $form->display('id', 'ID');
+            $form->block(6, function (Form\BlockForm $form) {
+                $form->showFooter();
 
-            $form->text('username')->rules('required');
-            $form->textarea('bio')->rules('required');
+                $form->display('id', 'ID');
 
-            $form->hasMany('paintings', function (Form\NestedForm $form) {
-                $form->text('title');
-                $form->textarea('body');
-                $form->datetime('completed_at');
+                $form->text('username')->rules('required');
+                $form->textarea('bio')->rules('required');
             });
 
-            $form->display('created_at', 'Created At');
+            $form->block(6, function (Form\BlockForm $form) {
+                $form->hasMany('paintings', function (Form\NestedForm $form) {
+                    $form->text('title');
+                    $form->textarea('body');
+                    $form->datetime('completed_at');
+                });
+
+                $form->display('created_at', 'Created At');
+            });
         });
     }
 }
