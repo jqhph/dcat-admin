@@ -443,18 +443,6 @@ class Form implements Renderable
         return $messageBag;
     }
 
-    /**
-     * Disable Pjax.
-     *
-     * @return $this
-     */
-    public function disablePjax()
-    {
-        $this->forgetHtmlAttribute('pjax-container');
-
-        return $this;
-    }
-
     public function useFormTag(bool $tag = true)
     {
         $this->useFormTag = $tag;
@@ -492,14 +480,10 @@ class Form implements Renderable
      * @param bool $value
      *
      * @return $this
-     *
-     * @deprecated 即将废弃，请使用 resetButton 代替
      */
     public function disableResetButton(bool $value = true)
     {
-        $this->buttons['reset'] = ! $value;
-
-        return $this;
+        return $this->resetButton(! $value);
     }
 
     /**
@@ -508,14 +492,10 @@ class Form implements Renderable
      * @param bool $value
      *
      * @return $this
-     *
-     * @deprecated 即将废弃，请使用 submitButton 代替
      */
     public function disableSubmitButton(bool $value = true)
     {
-        $this->buttons['submit'] = ! $value;
-
-        return $this;
+        return $this->submitButton(! $value);
     }
 
     /**
