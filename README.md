@@ -28,7 +28,9 @@
 - [Demo源码 (码云)](https://gitee.com/jqhph/dcat-admin-demo)
 - [扩展](#)
 
+### 关于官网备案暂停访问的公告
 
+大家好，[Dcat Admin官网](http://www.dcatadmin.com)正在进行备案中，在备案期间会关闭网站访问，直至备案完成。在此期间大家可以通过[Learnku中文文档](https://learnku.com/docs/dcat-admin/2.x)查看文档，给大家带来的不便之处敬请谅解，谢谢支持！
 
 ### 截图
 
