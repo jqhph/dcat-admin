@@ -564,11 +564,11 @@ class Column
     /**
      * 把模型转化为数组.
      *
-     * @param $row
+     * @param array|Model $row
      *
      * @return mixed
      */
-    protected function convertModelToArray($row)
+    protected function convertModelToArray(&$row)
     {
         if (is_array($row)) {
             return $row;
