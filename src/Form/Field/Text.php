@@ -148,7 +148,9 @@ JS
 
         $options = admin_javascript_json($options);
 
-        $this->script = "$('{$this->getElementClassSelector()}').inputmask($options);";
+        $this->script = "Dcat.init('{$this->getElementClassSelector()}', function (self) {
+            self.inputmask($options);
+        });";
 
         return $this;
     }
