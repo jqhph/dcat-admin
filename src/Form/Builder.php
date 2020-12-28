@@ -68,7 +68,7 @@ class Builder
     protected $mode = self::MODE_CREATE;
 
     /**
-     * @var array
+     * @var Field[]
      */
     protected $hiddenFields = [];
 
@@ -795,7 +795,9 @@ class Builder
                 );
             }
 
-            $content = $this->layout->build();
+            $content = $this->layout->build(
+                $this->renderHiddenFields()
+            );
         }
 
         return "{$open}{$content}{$this->close()}";
@@ -832,5 +834,18 @@ $('#{$this->getElementId()}').form({
 });
 JS
         );
+    }
+
+    public function renderHiddenFields()
+    {
+        $html = '';
+
+        foreach ($this->hiddenFields as $field) {
+            if (! $field->hasAttribute(Field::BUILD_IGNORE)) {
+                $html .= $field->render();
+            }
+        }
+
+        return $html;
     }
 }

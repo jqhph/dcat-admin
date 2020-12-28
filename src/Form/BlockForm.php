@@ -66,8 +66,8 @@ class BlockForm extends WidgetForm
     public function showFooter()
     {
         $this->ajax(true);
-        $this->disableSubmitButton(false);
-        $this->disableResetButton(false);
+        $this->submitButton(true);
+        $this->resetButton(true);
 
         return $this;
     }

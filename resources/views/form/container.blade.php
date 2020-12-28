@@ -15,8 +15,4 @@
 </div>
 {!! $form->renderFooter() !!}
 
-@foreach($form->hiddenFields() as $field)
-    @if(! $field->hasAttribute(Dcat\Admin\Form\Field::BUILD_IGNORE))
-        {!! $field->render() !!}
-    @endif
-@endforeach
+{!! $form->renderHiddenFields() !!}

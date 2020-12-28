@@ -142,11 +142,13 @@ class Layout
     }
 
     /**
-     * Build html of content.
+     * Build html of content
+     *
+     * @param string $add
      *
      * @return string
      */
-    public function build()
+    public function build($add = null)
     {
         $html = '<div class="row">';
 
@@ -154,7 +156,7 @@ class Layout
             $html .= $column->render();
         }
 
-        return $html.'</div>';
+        return $html.'</div>'.$add;
     }
 
     public function getColumns()
