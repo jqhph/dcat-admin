@@ -128,7 +128,16 @@ JS
             'scrollToBottom' => function () {
                 $this->script(
                     <<<'JS'
-            $(document).scrollTop($(document).height() - $(window).height()); 
+$(document).scrollTop($(document).height() - $(window).height()); 
+JS
+                );
+
+                return $this;
+            },
+            'scrollToTop' => function () {
+                $this->script(
+                    <<<'JS'
+$(document).scrollTop(0); 
 JS
                 );
 

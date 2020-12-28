@@ -100,6 +100,7 @@ class PainterCreatePage extends Page
     public function submit(Browser $browser)
     {
         return $browser->with('@form', function (Browser $browser) {
+            $browser->scrollToTop();
             $browser->press(__('admin.submit'));
             $browser->waitForTextInBody(__('admin.save_succeeded'), 2);
             $browser->waitForLocation(admin_base_path('tests/painters'), 1);
