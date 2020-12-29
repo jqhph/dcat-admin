@@ -952,7 +952,7 @@ class Form implements Renderable
             return rtrim($resourcesPath, '/')."/{$key}";
         }
 
-        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: ($this->getCurrentUrl() ?: $resourcesPath);
+        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: $this->getCurrentUrl($resourcesPath);
     }
 
     /**
