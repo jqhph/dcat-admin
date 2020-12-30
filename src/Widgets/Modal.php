@@ -80,27 +80,32 @@ class Modal extends Widget
 
         $this->class('modal fade');
     }
-	
-	
+
 	/**
 	 * 设置弹窗垂直居中.
+     *
+     * @param bool $value
 	 *
 	 * @return $this
 	 */
-    public function centered()
+    public function centered(bool $value = true)
     {
-    	$this->centered = 'modal-dialog-centered';
+        $this->centered = $value ? 'modal-dialog-centered' : '';
+
     	return $this;
     }
 	
 	/**
-	 * 设置弹窗内容滚动
+	 * 设置弹窗内容滚动.
+     *
+     * @param bool $value
 	 *
 	 * @return $this
 	 */
-    public function scrollable()
+    public function scrollable(bool $value = true)
 	{
-		$this->scrollable = 'modal-dialog-scrollable';
+		$this->scrollable = $value ? 'modal-dialog-scrollable' : '';
+
 		return $this;
 	}
     /**
