@@ -135,6 +135,8 @@ class HasMany extends Field
 
             $column = $field->column();
 
+            $this->normalizeValidatorInput($field, $input);
+
             if (is_array($column)) {
                 foreach ($column as $key => $name) {
                     $rules[$name.$key] = $fieldRules;
@@ -171,23 +173,39 @@ class HasMany extends Field
                     continue;
                 }
 
-                $newRules["{$this->column}.$key.$column"] = $rule;
+                $subKey = "{$this->column}.{$key}.{$column}";
 
-                $ruleValue = Arr::get($input, "{$this->column}.$key.$column");
+                $newRules[$subKey] = $rule;
+
+                $newInput[$subKey] = $ruleValue = Arr::get($input, "{$this->column}.$key.$column");
 
                 if (is_array($ruleValue)) {
                     foreach ($ruleValue as $vkey => $value) {
-                        $newInput["{$this->column}.$key.{$column}$vkey"] = $value;
+                        $newInput["{$subKey}.{$vkey}"] = $value;
                     }
                 }
             }
         }
 
-        if (empty($newInput)) {
-            $newInput = $input;
-        }
+        $newInput += $input;
 
         return Validator::make($newInput, $newRules, array_merge($this->getValidationMessages(), $messages), $attributes);
+    }
+
+    protected function normalizeValidatorInput(Field $field, array &$input)
+    {
+        if (
+            $field instanceof MultipleSelect
+            || $field instanceof Checkbox
+            || $field instanceof Tags
+        ) {
+            foreach (array_keys(Arr::get($input, $this->column)) as $key) {
+                $value = $input[$this->column][$key][$field->column()];
+                $input[$this->column][$key][$field->column()] = array_filter($value, function ($v) {
+                    return $v !== null;
+                });
+            }
+        }
     }
 
     /**

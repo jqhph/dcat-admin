@@ -9,7 +9,7 @@
     </select>
 </div>
 
-<script require="@select2">
+<script require="@select2?lang={{ config('app.locale') === 'en' ? '' : str_replace('_', '-', config('app.locale')) }}">
     $('.grid-column-select').off('change').select2().on('change', function(){
         var value = $(this).val(),
             name = $(this).data('name'),
@@ -32,8 +32,12 @@
             data: data,
             success: function (d) {
                 Dcat.NP.done();
-                Dcat.success(d.data.message || d.message);
-                reload && Dcat.reload();
+                if (d.status) {
+                    Dcat.success(d.data.message);
+                    reload && Dcat.reload();
+                } else {
+                    Dcat.error(d.data.message);
+                }
             }
         });
     });

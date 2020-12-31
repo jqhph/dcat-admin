@@ -1,7 +1,7 @@
 
 @include('admin::scripts.select')
 
-<script require="@select2" init="{!! $selector !!}">
+<script require="@select2?lang={{ config('app.locale') === 'en' ? '' : str_replace('_', '-', config('app.locale')) }}" init="{!! $selector !!}">
     var configs = {!! admin_javascript_json($configs) !!};
 
     @yield('admin.select-ajax')
@@ -71,6 +71,3 @@
 @endif
 
 @yield('admin.select-load')
-
-{{--本地化--}}
-@yield('admin.select-lang')

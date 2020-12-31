@@ -1245,6 +1245,10 @@ class Field implements Renderable
     public function saveAsString()
     {
         return $this->saving(function ($value) {
+            if (is_object($value) || is_object($value)) {
+                return json_encode($value);
+            }
+
             return (string) $value;
         });
     }

@@ -51,11 +51,12 @@ trait HasFormResponse
     /**
      * 获取当前URL.
      *
+     * @param string|null  $default
      * @param Request|null $request
      *
      * @return string
      */
-    protected function getCurrentUrl(Request $request = null)
+    protected function getCurrentUrl($default = null, Request $request = null)
     {
         if ($this->currentUrl) {
             return admin_url($this->currentUrl);
@@ -66,6 +67,10 @@ trait HasFormResponse
 
         if ($current = $request->get(static::CURRENT_URL_NAME)) {
             return admin_url($current);
+        }
+
+        if ($default !== null) {
+            return $default;
         }
 
         $query = $request->query();

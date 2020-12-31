@@ -147,6 +147,7 @@ return [
             'auth/logout',
         ],
 
+        'enable_session_middleware' => false,
     ],
 
     'grid' => [

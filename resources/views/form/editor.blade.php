@@ -21,13 +21,7 @@
     if (! opts.init_instance_callback) {
         opts.init_instance_callback = function (editor) {
             editor.on('Change', function(e) {
-                var content = e.target.getContent();
-                if (! content) {
-                    content = e.level.fragments;
-                    content = content.length && content.join('');
-                }
-
-                $this.val(String(content).replace('<p><br data-mce-bogus="1"></p>', '').replace('<p><br></p>', ''));
+                $this.val(String(e.target.getContent()).replace('<p><br data-mce-bogus="1"></p>', '').replace('<p><br></p>', ''));
             });
         }
     }

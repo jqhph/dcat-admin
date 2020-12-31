@@ -14,12 +14,13 @@ trait HasAssets
 
     /**
      * @param string|array $name
+     * @param array $params
      *
      * @return void
      */
-    public static function requireAssets($name)
+    public static function requireAssets($name, array $params = [])
     {
-        static::asset()->require($name);
+        static::asset()->require($name, $params);
     }
 
     /**
