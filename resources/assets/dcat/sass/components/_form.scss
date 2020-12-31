@@ -194,10 +194,15 @@ select.form-control:not([multiple=multiple]) {
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
   color: #fff!important;
+  border-right: 0!important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover, .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:focus {
+  background-color: $primary!important;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  padding: 0 .7rem!important;
+  padding: 0 .25rem!important;
 }
 
 .select2-selection .default-text {
