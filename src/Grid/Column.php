@@ -574,21 +574,9 @@ class Column
             return $row;
         }
 
-        // 这里禁止把驼峰转化为下划线
-        if (! empty($row::$snakeAttributes)) {
-            $shouldSnakeAttributes = true;
-
-            $row::$snakeAttributes = false;
-        }
-
         $array = $row->toArray();
 
-        // 转为数组后还原
-        if (isset($shouldSnakeAttributes)) {
-            $row::$snakeAttributes = true;
-        }
-
-        return $array;
+        return Helper::camelArray($array);
     }
 
     /**
