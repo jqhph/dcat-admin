@@ -81,9 +81,6 @@ class PainterController extends AdminController
                     $form->text('title');
                     $form->textarea('body');
                     $form->datetime('completed_at');
-
-                    $form->currency('cr');
-                    $form->image('av');
                 });
 
                 $form->display('created_at', 'Created At');

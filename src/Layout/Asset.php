@@ -344,8 +344,6 @@ class Asset
 
         [$name, $query] = $this->parseParams($name);
 
-        $params += $query;
-
         $assets = $this->alias[$name] ?? [];
 
         // 路径别名
@@ -353,23 +351,33 @@ class Asset
             return $assets;
         }
 
-        $normalize = function ($files) use ($params) {
-            $files = (array) $files;
-            foreach ($files as $k => &$file) {
-                foreach ($params as $k => $v) {
-                    $file = str_replace("{{$k}}", $v, $file);
-                }
-            }
-
-            return array_filter($files, function ($file) {
-                return ! mb_strpos($file, '{');
-            });
-        };
+        $params += $query;
 
         return [
-            'js' => $normalize($assets['js'] ?? []) ?: null,
-            'css' => $normalize($assets['css'] ?? []) ?: null,
+            'js' => $this->normalizeAliasPaths($assets['js'] ?? [], $params) ?: null,
+            'css' => $this->normalizeAliasPaths($assets['css'] ?? [], $params) ?: null,
         ];
+    }
+
+    /**
+     * @param array $files
+     * @param array $params
+     *
+     * @return array
+     */
+    protected function normalizeAliasPaths($files, array $params)
+    {
+        $files = (array) $files;
+
+        foreach ($files as &$file) {
+            foreach ($params as $k => $v) {
+                $file = str_replace("{{$k}}", $v, $file);
+            }
+        }
+
+        return array_filter($files, function ($file) {
+            return ! mb_strpos($file, '{');
+        });
     }
 
     /**
