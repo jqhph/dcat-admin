@@ -284,7 +284,7 @@ class Form implements Renderable
     {
         $this->repository = $repository ? Admin::repository($repository) : null;
         $this->callback = $callback;
-        $this->request = clone ($request ?: request());
+        $this->request = $request ?: request();
         $this->builder = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 

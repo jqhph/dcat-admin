@@ -142,7 +142,7 @@ class Layout
     }
 
     /**
-     * Build html of content
+     * Build html of content.
      *
      * @param string $add
      *

@@ -4,7 +4,6 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Color;
-use function GuzzleHttp\Psr7\parse_query;
 use Illuminate\Support\Str;
 
 class Asset
