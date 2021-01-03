@@ -207,7 +207,13 @@ trait HasFiles
             }
         }
 
-        $input = Arr::only($input, [Field::FILE_DELETE_FLAG, $input['_column']]);
+        $fields = [Field::FILE_DELETE_FLAG, $input['_column']];
+
+        if (isset($relation)) {
+            $fields[] = $relation;
+        }
+
+        $input = Arr::only($input, $fields);
 
         $this->request->replace($input);
 
