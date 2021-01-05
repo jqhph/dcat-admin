@@ -1,15 +1,15 @@
 <style>
     .webuploader-pick {
-        background-color: @primary;
+        background-color: {!! admin_color()->primary() !!};
     }
 
     .web-uploader .placeholder .flashTip a {
-        color: @primary(-10);
+        color: {!! admin_color()->primary(-10) !!};
     }
 
     .web-uploader .statusBar .upload-progress span.percentage,
     .web-uploader .filelist li p.upload-progress span {
-        background: @primary(-8);
+        background: {!! admin_color()->primary(-8) !!};
     }
 </style>
 
