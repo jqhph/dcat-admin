@@ -453,6 +453,7 @@ class Admin
     public static function routes()
     {
         $attributes = [
+            'domain'     => config('admin.route.domain', null),
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
             'as'         => static::app()->getName().'.',

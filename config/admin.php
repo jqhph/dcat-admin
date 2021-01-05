@@ -57,6 +57,7 @@ return [
     |
     */
     'route' => [
+        'domain' => null,
 
         'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
 
