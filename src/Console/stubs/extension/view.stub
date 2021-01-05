@@ -4,7 +4,7 @@
 
 <style>
 	.extension-demo {
-		color: {!! admin_color()->primary() !!};
+		color: @primary;
 	}
 </style>
 
