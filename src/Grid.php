@@ -414,7 +414,7 @@ class Grid
             return;
         }
 
-        $collection = $this->processFilter();
+        $collection = clone $this->processFilter();
 
         $this->prependRowSelectorColumn();
         $this->appendActionsColumn();

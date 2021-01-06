@@ -5,6 +5,7 @@ use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\MessageBag;
+use Symfony\Component\HttpFoundation\Response;
 
 if (! function_exists('admin_setting')) {
     /**
@@ -566,5 +567,19 @@ if (! function_exists('admin_javascript_json')) {
     function admin_javascript_json($data)
     {
         return Dcat\Admin\Support\JavaScript::format($data);
+    }
+}
+
+if (! function_exists('admin_exit')) {
+    /**
+     * 响应并中断后续逻辑.
+     *
+     * @param Response|string|array $response
+     *
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
+     */
+    function admin_exit($response = '')
+    {
+        Admin::exit($response);
     }
 }

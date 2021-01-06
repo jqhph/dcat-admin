@@ -334,7 +334,7 @@ HTML;
 
             return collect($value)->map(function ($name) use ($class, $background) {
                 return "<span class='label bg-{$class}' $background>$name</span>";
-            })->implode('&nbsp;');
+            })->implode(' ');
         });
     }
 
@@ -375,7 +375,7 @@ HTML;
 
             return collect($value)->map(function ($name) use ($class, $background) {
                 return "<span class='badge bg-{$class}' $background>$name</span>";
-            })->implode('&nbsp;');
+            })->implode(' ');
         });
     }
 
@@ -565,6 +565,41 @@ HTML;
         $this->border = $wrap;
 
         return $this;
+    }
+
+    /**
+     * @param string $color
+     *
+     * @return $this
+     */
+    public function bold($color = null)
+    {
+        $color = $color ?: Admin::color()->dark80();
+
+        return $this->unescape()->as(function ($value) use ($color) {
+            if (! $value) {
+                return $value;
+            }
+
+            return "<b style='color: {$color}'>$value</b>";
+        });
+    }
+    
+    /**
+     * Display field as boolean , `✓` for true, and `✗` for false.
+     *
+     * @param array $map
+     * @param bool  $default
+     *
+     * @return $this
+     */
+    public function bool(array $map = [], $default = false)
+    {
+        return $this->unescape()->as(function ($value) use ($map, $default) {
+            $bool = empty($map) ? $value : Arr::get($map, $value, $default);
+
+            return $bool ? '<i class="feather icon-check font-md-2 font-w-600 text-primary"></i>' : '<i class="feather icon-x font-md-1 font-w-600 text-70"></i>';
+        });
     }
 
     /**

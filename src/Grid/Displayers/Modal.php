@@ -12,6 +12,8 @@ class Modal extends AbstractDisplayer
 
     protected $xl = false;
 
+    protected $icon = 'fa-clone';
+
     public function title(string $title)
     {
         $this->title = $title;
@@ -20,6 +22,11 @@ class Modal extends AbstractDisplayer
     public function xl()
     {
         $this->xl = true;
+    }
+
+    public function icon($icon)
+    {
+        $this->icon = $icon;
     }
 
     protected function setUpLazyRenderable(LazyRenderable $renderable)
@@ -66,6 +73,8 @@ class Modal extends AbstractDisplayer
 
     protected function renderButton()
     {
-        return "<a href=\"javascript:void(0)\"><i class=\"fa fa-clone\"></i>&nbsp;&nbsp;{$this->value}</a>";
+        $icon = $this->icon ? "<i class='fa {$this->icon}'></i>" : '';
+
+        return "<a href='javascript:void(0)'>{$icon}&nbsp;&nbsp;{$this->value}</a>";
     }
 }

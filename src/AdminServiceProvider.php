@@ -247,10 +247,8 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerBladeDirective()
     {
         Blade::directive('primary', function ($amt = 0) {
-            $color = $amt ? admin_color()->darken('primary', $amt) : admin_color('primary');
-
             return <<<PHP
-<?php echo "{$color}";?>
+<?php echo admin_color()->primary($amt); ?>
 PHP;
         });
     }

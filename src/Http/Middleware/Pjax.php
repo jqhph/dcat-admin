@@ -40,22 +40,6 @@ class Pjax
     }
 
     /**
-     * Send a response through this middleware.
-     *
-     * @param Response $response
-     */
-    public static function respond(Response $response)
-    {
-        $next = function () use ($response) {
-            return $response;
-        };
-
-        (new static())->handle(Request::capture(), $next)->send();
-
-        exit;
-    }
-
-    /**
      * Handle Response with exceptions.
      *
      * @param Response $response
