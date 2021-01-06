@@ -41,11 +41,11 @@ class Table extends Widget
             $headers = [];
         }
 
+        $this->class('table default-table');
+
         $this->setHeaders($headers);
         $this->setRows($rows);
         $this->setStyle($style);
-
-        $this->class('table default-table');
     }
 
     /**
