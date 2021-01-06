@@ -20,9 +20,11 @@ use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class Admin
 {
@@ -362,6 +364,24 @@ class Admin
         }
 
         return app('admin.extend');
+    }
+
+    /**
+     * 响应并中断后续逻辑.
+     *
+     * @param Response|string|array $response
+     *
+     * @throws HttpResponseException
+     */
+    public static function exit($response = '')
+    {
+        if (is_array($response)) {
+            $response = response()->json($response);
+        } elseif ($response instanceof JsonResponse) {
+            $response = $response->send();
+        }
+
+        throw new HttpResponseException($response instanceof Response ? $response : response($response));
     }
 
     /**
