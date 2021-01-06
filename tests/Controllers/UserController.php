@@ -92,7 +92,7 @@ class UserController extends AdminController
         $grid->avatar()->display(function ($avatar) {
             return "<img src='{$avatar}' />";
         });
-        $grid->column('profile.postcode', 'Post code');
+        $grid->column('profile.postcode', 'Post code')->sortable('SIGNED');
         $grid->column('profile.address');
         $grid->column('profile.color');
         $grid->column('profile.start_at', '开始时间');
@@ -123,7 +123,7 @@ class UserController extends AdminController
             $filter->equal('id');
             $filter->like('username');
             $filter->like('email');
-            $filter->equal('profile.postcode')->select('api/placard-classify');
+            $filter->equal('profile.postcode');
             $filter->between('profile.start_at')->datetime();
             $filter->between('profile.end_at')->datetime();
         });

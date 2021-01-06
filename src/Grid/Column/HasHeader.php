@@ -46,13 +46,14 @@ trait HasHeader
     /**
      * Add a column sortable to column header.
      *
+     * @param string $columnName
      * @param string $cast
      *
      * @return $this
      */
-    public function sortable($cast = null)
+    public function sortable($columnName = null, $cast = null)
     {
-        $sorter = new Sorter($this->grid, $this->getName(), $cast);
+        $sorter = new Sorter($this->grid, $columnName ?: $this->getName(), $cast);
 
         return $this->addHeader($sorter);
     }
