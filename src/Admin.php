@@ -518,6 +518,7 @@ class Admin
     public static function registerApiRoutes(string $as = null)
     {
         $attributes = [
+            'domain'     => config('admin.route.domain'),
             'prefix'     => admin_base_path('dcat-api'),
             'middleware' => config('admin.route.middleware'),
             'as'         => $as ?: static::app()->getApiRoutePrefix(Application::DEFAULT),
@@ -549,6 +550,7 @@ class Admin
         }
 
         $attributes = [
+            'domain'     => config('admin.route.domain'),
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
             'as'         => static::app()->getName().'.',
