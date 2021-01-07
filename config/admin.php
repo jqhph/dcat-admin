@@ -57,12 +57,15 @@ return [
     |
     */
     'route' => [
+        'domain' => env('ADMIN_ROUTE_DOMAIN'),
 
         'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
 
         'namespace' => 'App\\Admin\\Controllers',
 
         'middleware' => ['web', 'admin'],
+
+        'enable_session_middleware' => false,
     ],
 
     /*

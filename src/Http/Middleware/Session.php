@@ -8,7 +8,7 @@ class Session
 {
     public function handle(Request $request, \Closure $next)
     {
-        if (! config('admin.auth.enable_session_middleware') && ! config('admin.multi_app')) {
+        if (! config('admin.route.enable_session_middleware') && ! config('admin.multi_app')) {
             return $next($request);
         }
 
