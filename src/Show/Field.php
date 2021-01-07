@@ -584,7 +584,7 @@ HTML;
             return "<b style='color: {$color}'>$value</b>";
         });
     }
-    
+
     /**
      * Display field as boolean , `✓` for true, and `✗` for false.
      *
