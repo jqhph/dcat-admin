@@ -170,6 +170,14 @@ abstract class AbstractFilter
     }
 
     /**
+     * @return string
+     */
+    public function getElementName()
+    {
+        return $this->parent->grid()->makeName($this->originalColumn());
+    }
+
+    /**
      * Format name.
      *
      * @param string $column

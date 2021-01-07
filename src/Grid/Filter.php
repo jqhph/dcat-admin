@@ -730,7 +730,7 @@ class Filter implements Renderable
         $filters = collect($this->filters);
 
         /** @var Collection $columns */
-        $columns = $filters->map->column()->flatten();
+        $columns = $filters->map->getElementName()->flatten();
 
         $columns->push(
             $this->grid()->model()->getPageName()
