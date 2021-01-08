@@ -15,6 +15,13 @@ class Footer implements Renderable
     protected $view = 'admin::form.footer';
 
     /**
+     * Footer view data.
+     *
+     * @var array
+     */
+    protected $data = [];
+
+    /**
      * Form builder instance.
      *
      * @var Builder
@@ -148,6 +155,19 @@ class Footer implements Renderable
     }
 
     /**
+     * Use custom view.
+     *
+     * @param string $view
+     * @param array $data
+     */
+    public function view(string $view, array $data = [])
+    {
+        $this->view = $view;
+
+        $this->data = $data;
+    }
+
+    /**
      * Render footer.
      *
      * @return string
@@ -159,6 +179,8 @@ class Footer implements Renderable
             'checkboxes' => $this->buildCheckboxes(),
             'width'      => $this->builder->getWidth(),
         ];
+
+        $data = array_merge($data, $this->data);
 
         return view($this->view, $data)->render();
     }
