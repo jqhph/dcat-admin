@@ -85,6 +85,13 @@ class Row implements Renderable
     protected $fields;
 
     /**
+     * Options in this row.
+     *
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Default field width for appended field.
      *
      * @var int
@@ -96,13 +103,15 @@ class Row implements Renderable
      *
      * @param \Closure        $callback
      * @param Form|WidgetForm $form
+     * @param array $options
      */
-    public function __construct(\Closure $callback, $form)
+    public function __construct(\Closure $callback, $form, $options)
     {
         $this->callback = $callback;
         $this->fields = collect();
 
         $this->form = $form;
+        $this->options = $options;
 
         call_user_func($this->callback, $this);
     }
@@ -161,7 +170,7 @@ class Row implements Renderable
      */
     public function render()
     {
-        return view('admin::form.row', ['fields' => $this->fields]);
+        return view('admin::form.row', ['fields' => $this->fields, 'options' => $this->options]);
     }
 
     /**

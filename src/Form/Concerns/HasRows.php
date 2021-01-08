@@ -18,12 +18,13 @@ trait HasRows
      * Add a row in form.
      *
      * @param Closure $callback
+     * @param array $options
      *
      * @return $this
      */
-    public function row(Closure $callback)
+    public function row(Closure $callback, array $options = [])
     {
-        $this->rows[] = new Row($callback, $this);
+        $this->rows[] = new Row($callback, $this, $options);
 
         return $this;
     }

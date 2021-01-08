@@ -876,13 +876,25 @@ class Field implements Renderable
     }
 
     /**
+     * @param bool $disable
+     *
      * @return $this
      */
-    public function disableHorizontal()
+    public function disableHorizontal(bool $disable = false)
     {
-        $this->horizontal = false;
+        $this->horizontal = $disable;
 
         return $this;
+    }
+
+    /**
+     * Get label and field width.
+     *
+     * @return array
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 
     /**
