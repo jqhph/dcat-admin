@@ -15,6 +15,16 @@ class User extends Model
         return $this->hasOne(Profile::class, 'user_id');
     }
 
+    public function user_profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id');
+    }
+
+    public function userProfile()
+    {
+        return $this->hasOne(Profile::class, 'user_id');
+    }
+
     public function getFullNameAttribute()
     {
         if (! $this->profile) {

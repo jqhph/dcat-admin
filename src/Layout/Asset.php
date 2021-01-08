@@ -267,14 +267,12 @@ class Asset
     public function __construct()
     {
         $this->isPjax = request()->pjax();
-
-        $this->initTheme();
     }
 
     /**
      * 初始化主题样式.
      */
-    protected function initTheme()
+    protected function setUpTheme()
     {
         $color = Admin::color()->getName();
 
@@ -672,6 +670,8 @@ class Asset
      */
     public function cssToHtml()
     {
+        $this->setUpTheme();
+
         $this->mergeBaseCss();
 
         $html = '';

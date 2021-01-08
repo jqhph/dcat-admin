@@ -108,7 +108,7 @@ class Color
      *
      * @var array
      */
-    protected static $colors = [
+    protected static $allColors = [
         'info'    => 'blue',
         'success' => 'green',
         'danger'  => 'red',
@@ -197,7 +197,7 @@ class Color
     /**
      * @var array
      */
-    protected $currentColors = [];
+    protected $colors = [];
 
     /**
      * @var array
@@ -205,26 +205,29 @@ class Color
     protected $realColors;
 
     /**
-     * Color constructor.
+     * 获取主题色名称.
      *
-     * @param string $name
-     */
-    public function __construct(?string $name = null)
-    {
-        $this->name = ($name ?: config('admin.layout.color')) ?: static::DEFAULT_COLOR;
-
-        $this->currentColors = array_merge(
-            static::$colors,
-            static::$extensions[$this->name]['colors'] ?? []
-        );
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
+        if (! $this->name) {
+            $this->name = config('admin.layout.color') ?: static::DEFAULT_COLOR;
+        }
+
         return $this->name;
+    }
+
+    /**
+     * 设置主题色名称.
+     *
+     * @param string $name
+     *
+     * @return void
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -241,9 +244,11 @@ class Color
             return $this->realColors[$colorName] ?? $default;
         }
 
-        $result = $this->currentColors[$colorName] ?? $default;
+        $colors = $this->getColors();
 
-        if ($result && ! empty($this->currentColors[$result])) {
+        $result = $colors[$colorName] ?? $default;
+
+        if ($result && ! empty($colors[$result])) {
             return $this->get($result, $default);
         }
 
@@ -258,11 +263,13 @@ class Color
     public function all()
     {
         if ($this->realColors === null) {
-            foreach ($this->currentColors as $key => &$color) {
+            $colors = $this->getColors();
+
+            foreach ($colors as $key => &$color) {
                 $color = $this->get($key);
             }
 
-            $this->realColors = &$this->currentColors;
+            $this->realColors = &$colors;
         }
 
         return $this->realColors;
@@ -305,6 +312,21 @@ class Color
     public function alpha(?string $color, $alpha)
     {
         return Helper::colorAlpha($this->get($color, $color), $alpha);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getColors()
+    {
+        if (! $this->colors) {
+            $this->colors = array_merge(
+                static::$allColors,
+                static::$extensions[$this->getName()]['colors'] ?? []
+            );
+        }
+
+        return $this->colors;
     }
 
     /**

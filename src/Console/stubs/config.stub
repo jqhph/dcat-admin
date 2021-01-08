@@ -57,6 +57,7 @@ return [
     |
     */
     'route' => [
+        'domain' => env('ADMIN_ROUTE_DOMAIN'),
 
         'prefix' => 'DummyApp',
 
