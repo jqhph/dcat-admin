@@ -146,6 +146,16 @@ class Footer implements Renderable
 
         return (new Checkbox('after-save', $options))->inline()->circle(true);
     }
+    
+    /**
+     * Use custom view
+     *
+     * @param string $view
+     */
+    public function setView($view)
+    {
+        $this->view = $view;
+    }
 
     /**
      * Render footer.
