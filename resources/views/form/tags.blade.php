@@ -88,5 +88,3 @@
         }
     });
 </script>
-
-@include('admin::scripts.select')
