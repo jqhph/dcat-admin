@@ -201,6 +201,18 @@ abstract class Widget implements Renderable
     }
 
     /**
+     * @param string $elementClass
+     *
+     * @return $this
+     */
+    public function setElementClass(string $elementClass)
+    {
+        $this->elementClass = $elementClass;
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getElementClass()
