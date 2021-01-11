@@ -80,7 +80,7 @@ class Row implements Renderable
     /**
      * Fields in this row.
      *
-     * @var array
+     * @var Collection
      */
     protected $fields;
 
@@ -90,6 +90,11 @@ class Row implements Renderable
      * @var int
      */
     protected $defaultFieldWidth = 12;
+
+    /**
+     * @var bool
+     */
+    protected $horizontal = false;
 
     /**
      * Row constructor.
@@ -115,6 +120,22 @@ class Row implements Renderable
     public function fields()
     {
         return $this->fields;
+    }
+
+    /**
+     * If the form horizontal layout.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function horizontal(bool $value = true)
+    {
+        $this->horizontal = $value;
+
+        $this->fields->each->horizontal($value);
+
+        return $this;
     }
 
     public function setFields(Collection $collection)
@@ -176,7 +197,7 @@ class Row implements Renderable
     {
         $field = $this->form->__call($method, $arguments);
 
-        $field->disableHorizontal();
+        $field->horizontal($this->horizontal);
 
         $this->fields->push([
             'width'   => $this->defaultFieldWidth,

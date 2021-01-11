@@ -876,11 +876,13 @@ class Field implements Renderable
     }
 
     /**
+     * @param bool $value
+     *
      * @return $this
      */
-    public function disableHorizontal()
+    public function horizontal(bool $value = true)
     {
-        $this->horizontal = false;
+        $this->horizontal = $value;
 
         return $this;
     }
@@ -1093,25 +1095,40 @@ class Field implements Renderable
         return $this;
     }
 
-    public function setFormGroupClass($labelClass, bool $append = true)
+    /**
+     * @param string|array $class
+     * @param bool         $append
+     *
+     * @return $this
+     */
+    public function setFormGroupClass($class, bool $append = true)
     {
         $this->formGroupClass = $append
-            ? array_unique(array_merge($this->formGroupClass, (array) $labelClass))
-            : (array) $labelClass;
+            ? array_unique(array_merge($this->formGroupClass, (array) $class))
+            : (array) $class;
 
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getFormGroupClass()
     {
         return implode(' ', $this->formGroupClass);
     }
 
-    public function setFieldClass($labelClass, bool $append = true)
+    /**
+     * @param string|array $class
+     * @param bool         $append
+     *
+     * @return $this
+     */
+    public function setFieldClass($class, bool $append = true)
     {
         $this->fieldClass = $append
-            ? array_unique(array_merge($this->fieldClass, (array) $labelClass))
-            : (array) $labelClass;
+            ? array_unique(array_merge($this->fieldClass, (array) $class))
+            : (array) $class;
 
         return $this;
     }
@@ -1212,7 +1229,15 @@ class Field implements Renderable
         return $this;
     }
 
-    protected function defaultAttribute($attribute, $value)
+    /**
+     * 设置默认属性.
+     *
+     * @param string $attribute
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function defaultAttribute(string $attribute, $value)
     {
         if (! array_key_exists($attribute, $this->attributes)) {
             $this->attribute($attribute, $value);
@@ -1231,6 +1256,13 @@ class Field implements Renderable
         return $this->display;
     }
 
+    /**
+     * 保存数据为json格式.
+     *
+     * @param int $option
+     *
+     * @return $this
+     */
     public function saveAsJson($option = 0)
     {
         return $this->saving(function ($value) use ($option) {
@@ -1242,10 +1274,15 @@ class Field implements Renderable
         });
     }
 
+    /**
+     * 保存数据为字符串格式.
+     *
+     * @return $this
+     */
     public function saveAsString()
     {
         return $this->saving(function ($value) {
-            if (is_object($value) || is_object($value)) {
+            if (is_object($value) || is_array($value)) {
                 return json_encode($value);
             }
 
@@ -1263,6 +1300,16 @@ class Field implements Renderable
     }
 
     /**
+     * 设置默认class.
+     */
+    protected function setDefaultClass()
+    {
+        if (is_string($class = $this->getElementClassString())) {
+            $this->defaultAttribute('class', $class);
+        }
+    }
+
+    /**
      * Render this filed.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
@@ -1273,9 +1320,7 @@ class Field implements Renderable
             return '';
         }
 
-        if (is_string($class = $this->getElementClassString())) {
-            $this->defaultAttribute('class', $class);
-        }
+        $this->setDefaultClass();
 
         $this->callComposing();
 

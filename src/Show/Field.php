@@ -491,17 +491,18 @@ HTML;
      * Render this column with the given view.
      *
      * @param string $view
+     * @param array  $data
      *
      * @return $this
      */
-    public function view($view)
+    public function view($view, array $data = [])
     {
         $name = $this->name;
 
-        return $this->unescape()->as(function ($value) use ($view, $name) {
+        return $this->unescape()->as(function ($value) use ($view, $name, $data) {
             $model = $this;
 
-            return view($view, compact('model', 'value', 'name'))->render();
+            return view($view, array_merge(compact('model', 'value', 'name'), $data))->render();
         });
     }
 

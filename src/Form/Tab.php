@@ -119,6 +119,39 @@ class Tab
     }
 
     /**
+     * Set true for some one tab by title or id.
+     *
+     * @param string $value
+     * @param string $field
+     */
+    public function active(string $value, string $field = 'title')
+    {
+        if ($this->tabs->where($field, $value)->isNotEmpty()) {
+            $this->tabs = $this->tabs->map(function ($item) use ($value, $field) {
+                $item['active'] = $item[$field] === $value;
+
+                return $item;
+            });
+        }
+    }
+
+    /**
+     * Set true for some one tab by key.
+     *
+     * @param int $index
+     */
+    public function activeByIndex(int $index = 0)
+    {
+        if ($this->tabs->offsetExists($index)) {
+            $this->tabs = $this->tabs->map(function ($item, $itemKey) use ($index) {
+                $item['active'] = $itemKey === $index;
+
+                return $item;
+            });
+        }
+    }
+
+    /**
      * Get all tabs.
      *
      * @return Collection
@@ -159,18 +192,18 @@ class Tab
     if (hash) {
         $('#$elementId .nav-tabs a[href="' + hash + '"]').tab('show');
     }
-    
+
     // Change hash for page-reload
     $('#$elementId .nav-tabs a').on('shown.bs.tab', function (e) {
         history.pushState(null,null, e.target.hash);
     });
-    
+
     if ($('#$elementId .has-error').length) {
         $('#$elementId .has-error').each(function () {
             var tabId = '#'+$(this).closest('.tab-pane').attr('id');
             $('li a[href="'+tabId+'"] i').removeClass('hide');
         });
-    
+
         var first = $('#$elementId .has-error:first').closest('.tab-pane').attr('id');
         $('li a[href="#'+first+'"]').tab('show');
     }
