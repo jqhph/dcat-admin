@@ -124,10 +124,10 @@ class Tab
      * @param string $value
      * @param string $field
      */
-    public function activeTab(string $value, string $field = 'title')
+    public function active(string $value, string $field = 'title')
     {
         if ($this->tabs->where($field, $value)->isNotEmpty()) {
-            $this->tabs = $this->tabs->map(function ($item, $key) use ($value, $field) {
+            $this->tabs = $this->tabs->map(function ($item) use ($value, $field) {
                 $item['active'] = $item[$field] === $value;
 
                 return $item;
@@ -138,13 +138,13 @@ class Tab
     /**
      * Set true for some one tab by key.
      *
-     * @param int $key
+     * @param int $index
      */
-    public function activeTabByKey(int $key = 0)
+    public function activeByIndex(int $index = 0)
     {
-        if ($this->tabs->offsetExists($key)) {
-            $this->tabs = $this->tabs->map(function ($item, $itemKey) use ($key) {
-                $item['active'] = $itemKey === $key;
+        if ($this->tabs->offsetExists($index)) {
+            $this->tabs = $this->tabs->map(function ($item, $itemKey) use ($index) {
+                $item['active'] = $itemKey === $index;
 
                 return $item;
             });
