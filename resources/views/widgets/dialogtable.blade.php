@@ -1,7 +1,7 @@
 <span class="{{ $class }}">
     <span style="cursor: pointer" class="switch-dialog">{!! $button !!}</span>
 
-    <template>
+    <template class="content">
         <div {!! $attributes !!}>
             <div class="p-2 dialog-body">{!! $table !!}</div>
 
@@ -10,6 +10,18 @@
             @endif
         </div>
     </template>
+
+    {{-- 标题 --}}
+    <template class="title">{!! $title !!}</template>
+
+    {{-- 事件监听 --}}
+    <template class="event">
+        {!! $events['shown'] !!}
+
+        @if(!empty($events['load']))
+            $t.on('table:loaded', function (e) { {!! $events['load'] !!} });
+        @endif
+    </template>
 </span>
 
 <script init=".{{ $class }}">
@@ -17,7 +29,11 @@
         offset = screen.width <= 850 ? 0 : '70px',
         _tb = '.async-table',
         _container = '.dialog-table',
-        _id, _temp, _btnId;
+        _id,
+        _temp,
+        _title,
+        _event,
+        _btnId;
 
     setId(id);
 
@@ -30,7 +46,7 @@
     function open(btn) {
         var index = layer.open({
             type: 1,
-            title: '{!! $title !!}',
+            title: $(_title).html(),
             area: area,
             offset: offset,
             maxmin: false,
@@ -45,11 +61,7 @@
                 setDataId($c);
                 setMaxHeight(index);
 
-                {!! $events['shown'] !!}
-
-                @if(!empty($events['load']))
-                $t.on('table:loaded', function (event) { {!! $events['load'] !!} });
-                @endif
+                eval($(_event).html());
 
                 setTimeout(function () {
                     Dcat.grid.AsyncTable({container: $t});
@@ -82,7 +94,9 @@
         if (! val) return;
 
         _id = '#' + val;
-        _temp = _id + ' template';
+        _temp = _id + ' .content';
+        _title = _id + ' .title';
+        _event = _id + ' .event';
         _btnId = _id + ' .switch-dialog';
     }
 
