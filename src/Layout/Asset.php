@@ -764,8 +764,8 @@ class Asset
      */
     public function scriptToHtml()
     {
-        $script = implode(';', array_unique($this->script));
-        $directScript = implode(';', array_unique($this->directScript));
+        $script = implode(";\n", array_unique($this->script));
+        $directScript = implode(";\n", array_unique($this->directScript));
 
         return <<<HTML
 <script data-exec-on-popstate>
