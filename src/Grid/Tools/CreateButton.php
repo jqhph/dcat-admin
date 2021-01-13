@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid\Tools;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Arr;
 
 class CreateButton implements Renderable
 {
@@ -27,7 +28,7 @@ class CreateButton implements Renderable
             return;
         }
 
-        $new = trans('admin.new');
+        $new = Arr::get($this->grid->variables(), 'createName', trans('admin.new'));
         $url = $this->grid->getCreateUrl();
         $class = $this->grid->makeName('dialog-create');
 

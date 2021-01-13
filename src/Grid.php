@@ -112,6 +112,13 @@ class Grid
     protected $keyName;
 
     /**
+     * Default create url.
+     *
+     * @var string
+     */
+    protected $createUrl;
+
+    /**
      * View for grid to render.
      *
      * @var string
@@ -479,12 +486,28 @@ class Grid
     }
 
     /**
+     * Set create url.
+     *
+     * @return string
+     */
+    public function setCreateUrl(string $url)
+    {
+        $this->createUrl = $url;
+
+        return $this;
+    }
+
+    /**
      * Get create url.
      *
      * @return string
      */
     public function getCreateUrl()
     {
+        if ($this->createUrl) {
+            return $this->createUrl;
+        }
+
         $queryString = '';
 
         if ($constraints = $this->model()->getConstraints()) {
