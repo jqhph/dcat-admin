@@ -18,7 +18,7 @@ trait HasTree
     /**
      * @var string
      */
-    protected $tierQueryName = '_tier_';
+    protected $depthQueryName = '_depth_';
 
     /**
      * @var bool
@@ -80,7 +80,7 @@ trait HasTree
     {
         Admin::addIgnoreQueryName([
             $this->getParentIdQueryName(),
-            $this->getTierQueryName(),
+            $this->getDepthQueryName(),
             $this->getChildrenPageName($this->getParentIdFromRequest()),
         ]);
     }
@@ -219,18 +219,18 @@ HTML
     /**
      * @return string
      */
-    public function getTierQueryName()
+    public function getDepthQueryName()
     {
-        return $this->getChildrenQueryNamePrefix().$this->tierQueryName;
+        return $this->getChildrenQueryNamePrefix().$this->depthQueryName;
     }
 
     /**
      * @return int
      */
-    public function getTierFromRequest()
+    public function getDepthFromRequest()
     {
         return $this->request->get(
-            $this->getTierQueryName()
+            $this->getDepthQueryName()
         ) ?: 0;
     }
 
