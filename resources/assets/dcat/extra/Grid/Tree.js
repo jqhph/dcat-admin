@@ -22,11 +22,11 @@ export default class Tree {
         
         this.key = this.depth = this.row = this.data = this._req = null;
 
-        this._bind();
+        this._init();
     }
 
     // 绑定点击事件
-    _bind () {
+    _init () {
         var _this = this,
             opts = _this.options;
 
