@@ -9,8 +9,8 @@ export default class AddUploadedFile {
         this.init = false;
     }
 
-    // 添加已上传文件
-    add(file) {
+    // 渲染已上传文件
+    render(file) {
         let _this = this,
             parent =  _this.uploader,
             options = parent.options,
@@ -157,7 +157,7 @@ export default class AddUploadedFile {
         }
     }
 
-    push(file) {
+    add(file) {
         if (!file.serverId || this.uploader.helper.searchUploadedFile(file.serverId) !== -1) {
             return;
         }

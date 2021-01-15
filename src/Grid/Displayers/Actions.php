@@ -246,7 +246,7 @@ EOT;
         $label = trans('admin.edit');
 
         return <<<EOT
-<a href="{$this->resource()}/{$this->getKey()}/edit" title="{$label}">
+<a href="{$this->grid->getEditUrl($this->getKey())}" title="{$label}">
     <i class="feather icon-edit-1 grid-action-icon"></i>
 </a>&nbsp;
 EOT;

@@ -206,7 +206,7 @@ import AddUploadedFile from './Upload/AddUploadedFile'
                 }
 
                 // 添加文件
-                _this.addFile.add(file);
+                _this.addFile.render(file);
                 _this.status.switch('ready');
 
                 // 更新进度条
@@ -335,7 +335,7 @@ import AddUploadedFile from './Upload/AddUploadedFile'
             obj.file.serverPath = reason.data.path;
             obj.file.serverUrl = reason.data.url || null;
 
-            _this.addUploadedFile.push(obj.file);
+            _this.addUploadedFile.add(obj.file);
 
             _this.input.add(reason.data.id);
 
@@ -376,8 +376,8 @@ import AddUploadedFile from './Upload/AddUploadedFile'
                 _this.status.switch('decrFileNumLimit');
 
                 // 添加文件到预览区域
+                _this.addUploadedFile.render(file);
                 _this.addUploadedFile.add(file);
-                _this.addUploadedFile.push(file);
             }
         }
 

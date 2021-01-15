@@ -499,6 +499,24 @@ class Grid
     }
 
     /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function getEditUrl($key)
+    {
+        $url = "{$this->resource()}/{$key}/edit";
+
+        $queryString = '';
+
+        if ($constraints = $this->model()->getConstraints()) {
+            $queryString = http_build_query($constraints);
+        }
+
+        return $url.($queryString ? ('?'.$queryString) : '');
+    }
+
+    /**
      * @param \Closure $closure
      *
      * @return Grid\Tools\RowSelector

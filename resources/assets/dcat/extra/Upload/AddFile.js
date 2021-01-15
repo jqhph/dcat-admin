@@ -4,8 +4,8 @@ export default class AddFile {
         this.uploader = Uploder;
     }
 
-    // 添加新文件
-    add(file) {
+    // 渲染新文件
+    render(file) {
         let _this = this,
             parent = _this.uploader,
             showImg = parent.isImage(),
