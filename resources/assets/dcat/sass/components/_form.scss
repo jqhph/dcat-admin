@@ -142,6 +142,10 @@ select.form-control:not([multiple=multiple]) {
   border-radius: $card-border-radius!important;
 }
 
+.select2-search--inline {
+  display: inline-block;
+}
+
 .select2-container--default .select2-dropdown .select2-search__field:focus, .select2-container--default .select2-search--inline .select2-search__field:focus {
   border-color: $primary!important;
 }
