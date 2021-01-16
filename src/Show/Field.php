@@ -225,7 +225,9 @@ class Field implements Renderable
                 return '';
             }
 
-            return collect((array) $path)->transform(function ($path) use ($server, $width, $height) {
+            $path = Helper::array($path);
+
+            return collect($path)->transform(function ($path) use ($server, $width, $height) {
                 if (url()->isValidUrl($path)) {
                     $src = $path;
                 } elseif ($server) {
@@ -258,46 +260,56 @@ class Field implements Renderable
         $field = $this;
 
         return $this->unescape()->as(function ($path) use ($server, $field) {
-            $name = basename($path);
-
-            $field->wrap(false);
-
-            $size = $url = '';
-
-            if (url()->isValidUrl($path)) {
-                $url = $path;
-            } elseif ($server) {
-                $url = $server.$path;
-            } else {
-                $storage = Storage::disk(config('admin.upload.disk'));
-                if ($storage->exists($path)) {
-                    $url = $storage->url($path);
-                    $size = ($storage->size($path) / 1000).'KB';
-                }
-            }
-
-            if (! $url) {
+            if (empty($path)) {
                 return '';
             }
 
-            $icon = Helper::getFileIcon($name);
+            $path = Helper::array($path);
 
-            return <<<HTML
-<ul class="mailbox-attachments clearfix">
-    <li style="margin-bottom: 0;">
-      <span class="mailbox-attachment-icon"><i class="{$icon}"></i></span>
-      <div class="mailbox-attachment-info">
-        <div class="mailbox-attachment-name">
-            <i class="fa fa-paperclip"></i> {$name}
-            </div>
-            <span class="mailbox-attachment-size">
-              {$size}&nbsp;
-              <a href="{$url}" class="btn btn-white  btn-xs pull-right" target="_blank"><i class="fa fa-cloud-download"></i></a>
-            </span>
-      </div>
-    </li>
-  </ul>
+            $list = collect($path)->transform(function ($path) use ($server, $field) {
+            
+                $name = basename($path);
+
+                $field->wrap(false);
+
+                $size = $url = '';
+
+                if (url()->isValidUrl($path)) {
+                    $url = $path;
+                } elseif ($server) {
+                    $url = $server.$path;
+                } else {
+                    $storage = Storage::disk(config('admin.upload.disk'));
+                    if ($storage->exists($path)) {
+                        $url = $storage->url($path);
+                        $size = ($storage->size($path) / 1000).'KB';
+                    }
+                }
+
+                if (! $url) {
+                    return '';
+                }
+
+                $icon = Helper::getFileIcon($name);
+
+                return <<<HTML
+<li style="margin-bottom: 0;">
+<span class="mailbox-attachment-icon"><i class="{$icon}"></i></span>
+<div class="mailbox-attachment-info">
+    <div class="mailbox-attachment-name">
+        <i class="fa fa-paperclip"></i> {$name}
+        </div>
+        <span class="mailbox-attachment-size">
+        {$size}&nbsp;
+        <a href="{$url}" class="btn btn-white  btn-xs pull-right" target="_blank"><i class="fa fa-cloud-download"></i></a>
+        </span>
+</div>
+</li>
 HTML;
+            })->implode('&nbsp;');
+
+            return "<ul class=\"mailbox-attachments clearfix\">{$list}</ul>";
+
         });
     }
 
