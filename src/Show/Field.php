@@ -267,7 +267,6 @@ class Field implements Renderable
             $path = Helper::array($path);
 
             $list = collect($path)->transform(function ($path) use ($server, $field) {
-            
                 $name = basename($path);
 
                 $field->wrap(false);
@@ -309,7 +308,6 @@ HTML;
             })->implode('&nbsp;');
 
             return "<ul class=\"mailbox-attachments clearfix\">{$list}</ul>";
-
         });
     }
 
