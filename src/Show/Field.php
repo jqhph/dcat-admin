@@ -296,11 +296,11 @@ class Field implements Renderable
     <span class="mailbox-attachment-icon"><i class="{$icon}"></i></span>
     <div class="mailbox-attachment-info">
         <div class="mailbox-attachment-name">
-        <i class="fa fa-paperclip"></i> {$name}
+            <i class="fa fa-paperclip"></i> {$name}
         </div>
         <span class="mailbox-attachment-size">
-        {$size}&nbsp;
-        <a href="{$url}" class="btn btn-white  btn-xs pull-right" target="_blank"><i class="fa fa-cloud-download"></i></a>
+            {$size}&nbsp;
+            <a href="{$url}" class="btn btn-white  btn-xs pull-right" target="_blank"><i class="fa fa-cloud-download"></i></a>
         </span>
     </div>
 </li>
