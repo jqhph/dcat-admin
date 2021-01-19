@@ -267,7 +267,7 @@ class Field implements Renderable
             $path = Helper::array($path);
 
             $list = collect($path)->transform(function ($path) use ($server, $field) {
-                $name = basename($path);
+                $name = Helper::basename($path);
 
                 $field->wrap(false);
 

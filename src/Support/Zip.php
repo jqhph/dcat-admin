@@ -127,14 +127,14 @@ class Zip extends ZipArchive
         if (is_dir($source)) {
             $includeHidden = isset($options['includeHidden']) && $options['includeHidden'];
             $wildcard = $includeHidden ? '{*,.[!.]*,..?*}' : '*';
-            $source = implode('/', [dirname($source), basename($source), $wildcard]);
+            $source = implode('/', [dirname($source), Helper::basename($source), $wildcard]);
         }
 
         extract(array_merge([
             'recursive' => true,
             'includeHidden' => false,
             'basedir' => dirname($source),
-            'baseglob' => basename($source),
+            'baseglob' => Helper::basename($source),
         ], $options));
 
         if (is_file($source)) {
@@ -151,7 +151,7 @@ class Zip extends ZipArchive
             }
 
             $localpath = $this->removePathPrefix($basedir.'/', dirname($file).'/');
-            $localfile = $this->folderPrefix.$localpath.basename($file);
+            $localfile = $this->folderPrefix.$localpath.Helper::basename($file);
             $this->addFile($file, $localfile);
         }
 

@@ -11,19 +11,19 @@
 @endif
 
 @if($click)
-<script>
-    var $btn = $('#{{ $buttonId }}'),
-        $a = $btn.parent().find('ul li a'),
-        text = $btn.text();
+    <script>
+        var $btn = $('#{{ $buttonId }}'),
+            $a = $btn.parent().find('ul li a'),
+            text = String($btn.text());
 
-    $a.on('click', function () {
-        $btn.find('stub').html($(this).html() + ' &nbsp;');
-    });
+        $a.on('click', function () {
+            $btn.find('stub').html($(this).html() + ' &nbsp;');
+        });
 
-    if (text) {
-        $btn.find('stub').html(text + ' &nbsp;');
-    } else {
-        (!$a.length) || $btn.find('stub').html($($a[0]).html() + ' &nbsp;');
-    }
-</script>
+        if (text.replace(/(^\s*)|(\s*$)/g,"")) {
+            $btn.find('stub').html(text + ' &nbsp;');
+        } else {
+            (!$a.length) || $btn.find('stub').html($($a[0]).html() + ' &nbsp;');
+        }
+    </script>
 @endif

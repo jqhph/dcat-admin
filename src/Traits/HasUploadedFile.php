@@ -4,6 +4,7 @@ namespace Dcat\Admin\Traits;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form\Field\File;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
@@ -94,8 +95,8 @@ trait HasUploadedFile
     {
         return Admin::json([
             'id'   => $path,
-            'name' => basename($path),
-            'path' => basename($path),
+            'name' => Helper::basename($path),
+            'path' => Helper::basename($path),
             'url'  => $url,
         ]);
     }
