@@ -133,7 +133,7 @@ class File extends Field implements UploadFieldInterface
         foreach (Helper::array($this->value()) as $value) {
             $previews[] = [
                 'id'   => $value,
-                'path' => basename($value),
+                'path' => Helper::basename($value),
                 'url'  => $this->objectUrl($value),
             ];
         }

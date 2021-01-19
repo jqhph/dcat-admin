@@ -926,4 +926,20 @@ class Helper
 
         return $array;
     }
+
+    /**
+     * 获取文件名称.
+     *
+     * @param string $name
+     *
+     * @return array|mixed
+     */
+    public static function basename($name)
+    {
+        if (! $name) {
+            return $name;
+        }
+
+        return last(explode('/', $name));
+    }
 }
