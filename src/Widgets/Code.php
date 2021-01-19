@@ -45,7 +45,7 @@ class Code extends Markdown
         return $this->lang('javascript');
     }
 
-    public function html()
+    public function asHtml()
     {
         return $this->lang('html');
     }
