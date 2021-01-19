@@ -29,9 +29,11 @@ class Markdown extends Widget
         'sequenceDiagram' => true,
     ];
 
-    public function __construct($markdown = '')
+    public function __construct($markdown = null)
     {
-        $this->content($markdown);
+        if ($markdown !== null) {
+            $this->content($markdown);
+        }
 
         $this->id('mkd-'.Str::random(8));
     }
