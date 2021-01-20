@@ -368,7 +368,9 @@ class Asset
 
         foreach ($files as &$file) {
             foreach ($params as $k => $v) {
-                $file = str_replace("{{$k}}", $v, $file);
+                if ($v !== '' && $v !== null) {
+                    $file = str_replace("{{$k}}", $v, $file);
+                }
             }
         }
 
@@ -409,7 +411,7 @@ class Asset
     {
         if (is_array($alias)) {
             foreach ($alias as $v) {
-                $this->require($v);
+                $this->require($v, $params);
             }
 
             return;
