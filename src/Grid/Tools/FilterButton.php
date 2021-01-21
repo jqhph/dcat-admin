@@ -150,17 +150,17 @@ JS;
 
         $this->addScript();
 
-        $onlyScopes = ((! $filters || $this->parent->option('show_filter') === false) && ! $scopres->isEmpty()) ? true : false;
+        $onlyScopes = ((! $filters || $this->parent->option('filter') === false) && ! $scopres->isEmpty()) ? true : false;
 
         $variables = [
-            'scopes'           => $scopres,
-            'current_label'    => $this->currentScopeLabel(),
-            'url_no_scopes'    => $filter->urlWithoutScopes(),
-            'btn_class'        => $this->getElementClassName(),
-            'expand'           => $filter->expand,
-            'show_filter_text' => true,
-            'only_scopes'      => $onlyScopes,
-            'valueCount'       => $valueCount,
+            'scopes'        => $scopres,
+            'current_label' => $this->currentScopeLabel(),
+            'url_no_scopes' => $filter->urlWithoutScopes(),
+            'btn_class'     => $this->getElementClassName(),
+            'expand'        => $filter->expand,
+            'filter_text'   => true,
+            'only_scopes'   => $onlyScopes,
+            'valueCount'    => $valueCount,
         ];
 
         return view($this->view, $variables)->render();

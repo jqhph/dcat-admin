@@ -142,5 +142,5 @@
 
     {!! $grid->renderFooter() !!}
 
-    @include('admin::grid.table-pagination')
+    {!! $grid->renderPagination() !!}
 </div>

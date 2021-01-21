@@ -69,7 +69,7 @@ trait HasFilter
      */
     public function renderFilter()
     {
-        if (! $this->options['show_filter']) {
+        if (! $this->options['filter']) {
             return '';
         }
 
@@ -97,7 +97,7 @@ trait HasFilter
     {
         $this->filter->disableCollapse($disable);
 
-        return $this->option('show_filter', ! $disable);
+        return $this->option('filter', ! $disable);
     }
 
     /**
