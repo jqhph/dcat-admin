@@ -173,7 +173,7 @@ class Model
     /**
      * @return AbstractPaginator|LengthAwarePaginator
      */
-    public function paginator(): AbstractPaginator
+    public function paginator(): ?AbstractPaginator
     {
         $this->buildData();
 

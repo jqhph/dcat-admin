@@ -87,7 +87,7 @@ trait HasActions
      */
     protected function appendActionsColumn()
     {
-        if (! $this->options['show_actions']) {
+        if (! $this->options['actions']) {
             return;
         }
 
@@ -106,7 +106,7 @@ trait HasActions
      */
     public function disableActions(bool $disable = true)
     {
-        return $this->option('show_actions', ! $disable);
+        return $this->option('actions', ! $disable);
     }
 
     /**
@@ -128,7 +128,7 @@ trait HasActions
      */
     public function disableEditButton(bool $disable = true)
     {
-        $this->options['show_edit_button'] = ! $disable;
+        $this->options['edit_button'] = ! $disable;
 
         return $this;
     }
@@ -152,7 +152,7 @@ trait HasActions
      */
     public function disableQuickEditButton(bool $disable = true)
     {
-        $this->options['show_quick_edit_button'] = ! $disable;
+        $this->options['quick_edit_button'] = ! $disable;
 
         return $this;
     }
@@ -176,7 +176,7 @@ trait HasActions
      */
     public function disableViewButton(bool $disable = true)
     {
-        $this->options['show_view_button'] = ! $disable;
+        $this->options['view_button'] = ! $disable;
 
         return $this;
     }
@@ -202,7 +202,7 @@ trait HasActions
      */
     public function disableDeleteButton(bool $disable = true)
     {
-        $this->options['show_delete_button'] = ! $disable;
+        $this->options['delete_button'] = ! $disable;
 
         return $this;
     }

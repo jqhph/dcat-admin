@@ -36,6 +36,7 @@ return [
         'submit'            => '提交',
         'selected_options'  => '已選中:num個選項',
         'exceed_max_item'   => '已超出最大可選數量',
+        'no_preview'        => '預覽失敗',
 
         '500' => '系統繁忙，請稍後再試！',
         '403' => '對不起，您無訪問權限，請聯繫管理員。',

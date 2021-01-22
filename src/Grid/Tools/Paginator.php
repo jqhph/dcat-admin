@@ -17,7 +17,7 @@ class Paginator implements Renderable
     /**
      * @var \Illuminate\Pagination\LengthAwarePaginator
      */
-    protected $paginator = null;
+    public $paginator = null;
 
     /**
      * Create a new Paginator instance.
