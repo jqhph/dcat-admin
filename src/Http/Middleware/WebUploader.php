@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Http\Middleware;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Support\WebUploader as Uploader;
 use Illuminate\Http\Request;
 
@@ -24,20 +25,13 @@ class WebUploader
         try {
             if (! $file = $webUploader->getUploadedFile()) {
                 // 分块未上传完毕，返回已合并成功信息
-                return response()->json(['merge' => 1]);
+                return Admin::json(['merge' => 1])->send();
             }
 
-            $response = $next($request);
-
+            return $next($request);
+        } finally {
             // 移除临时文件
             $webUploader->deleteTemporaryFile();
-
-            return $response;
-        } catch (\Throwable $e) {
-            // 移除临时文件
-            $webUploader->deleteTemporaryFile();
-
-            throw $e;
         }
     }
 }

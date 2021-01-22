@@ -224,12 +224,13 @@ trait HasDisplayers
      *
      * @param bool $showAll
      * @param bool $sortable
+     * @param mixed $defaultParentId
      *
      * @return $this
      */
-    public function tree(bool $showAll = false, bool $sortable = true)
+    public function tree(bool $showAll = false, bool $sortable = true, $defaultParentId = null)
     {
-        $this->grid->model()->enableTree($showAll, $sortable);
+        $this->grid->model()->enableTree($showAll, $sortable, $defaultParentId);
 
         $this->grid->listen(Grid\Events\Fetching::class, function () use ($showAll) {
             if ($this->grid->model()->getParentIdFromRequest()) {

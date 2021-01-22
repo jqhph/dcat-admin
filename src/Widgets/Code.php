@@ -19,8 +19,8 @@ class Code extends Markdown
         if (is_array($content) || is_object($content)) {
             $content = json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         } elseif (is_file($content)) {
-            $this->fromFile($content, $start, $end);
-            $content = '';
+            $this->readFileContent($content, $start, $end);
+            $content = null;
         }
 
         parent::__construct($content);
@@ -45,7 +45,7 @@ class Code extends Markdown
         return $this->lang('javascript');
     }
 
-    public function html()
+    public function asHtml()
     {
         return $this->lang('html');
     }
@@ -71,7 +71,7 @@ class Code extends Markdown
      */
     public function section($file, $lineNumber = 1, $context = 5)
     {
-        return $this->fromFile($file, $lineNumber - $context, $lineNumber + $context);
+        return $this->readFileContent($file, $lineNumber - $context, $lineNumber + $context);
     }
 
     /**
@@ -83,7 +83,7 @@ class Code extends Markdown
      *
      * @return $this
      */
-    public function fromFile($file, $start = 1, $end = 10)
+    public function readFileContent($file, $start = 1, $end = 10)
     {
         if (! $file or ! is_readable($file) || $end < $start) {
             return $this;

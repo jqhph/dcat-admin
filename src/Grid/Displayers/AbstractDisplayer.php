@@ -5,7 +5,6 @@ namespace Dcat\Admin\Grid\Displayers;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Column;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Fluent;
 
 abstract class AbstractDisplayer
@@ -31,7 +30,7 @@ abstract class AbstractDisplayer
     protected $column;
 
     /**
-     * @var Fluent
+     * @var \Illuminate\Database\Eloquent\Model
      */
     public $row;
 
@@ -71,11 +70,11 @@ abstract class AbstractDisplayer
 
     protected function setRow($row)
     {
-        if ($row instanceof Arrayable) {
-            $row = $row->toArray();
+        if (is_array($row)) {
+            $row = new Fluent($row);
         }
 
-        $this->row = new Fluent($row);
+        $this->row = $row;
     }
 
     /**
@@ -104,7 +103,7 @@ abstract class AbstractDisplayer
      */
     public function getKey()
     {
-        return $this->row->get($this->grid->getKeyName());
+        return $this->row->{$this->grid->getKeyName()};
     }
 
     /**

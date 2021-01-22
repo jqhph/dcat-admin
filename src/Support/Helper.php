@@ -676,8 +676,11 @@ class Helper
             $class = get_class($class);
         }
 
-        if (class_exists($class)) {
-            return (new \ReflectionClass($class))->getFileName();
+        try {
+            if (class_exists($class)) {
+                return (new \ReflectionClass($class))->getFileName();
+            }
+        } catch (\Throwable $e) {
         }
 
         $class = trim($class, '\\');
@@ -858,5 +861,85 @@ class Helper
         }
 
         return $html;
+    }
+
+    /**
+     * Set an array item to a given value using "dot" notation.
+     *
+     * If no key is given to the method, the entire array will be replaced.
+     *
+     * @param  array|\ArrayAccess  $array
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return array
+     */
+    public static function arraySet(&$array, $key, $value)
+    {
+        if (is_null($key)) {
+            return $array = $value;
+        }
+
+        $keys = explode('.', $key);
+        $default = null;
+
+        while (count($keys) > 1) {
+            $key = array_shift($keys);
+
+            if (! isset($array[$key]) || (! is_array($array[$key]) && ! $array[$key] instanceof \ArrayAccess)) {
+                $array[$key] = [];
+            }
+
+            if (is_array($array)) {
+                $array = &$array[$key];
+            } else {
+                if (is_object($array[$key])) {
+                    $array[$key] = static::arraySet($array[$key], implode('.', $keys), $value);
+                } else {
+                    $mid = $array[$key];
+
+                    $array[$key] = static::arraySet($mid, implode('.', $keys), $value);
+                }
+            }
+        }
+
+        $array[array_shift($keys)] = $value;
+
+        return $array;
+    }
+
+    /**
+     * 把下划线风格字段名转化为驼峰风格.
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public static function camelArray(array &$array)
+    {
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                Helper::camelArray($v);
+            }
+
+            $array[Str::camel($k)] = $v;
+        }
+
+        return $array;
+    }
+
+    /**
+     * 获取文件名称.
+     *
+     * @param string $name
+     *
+     * @return array|mixed
+     */
+    public static function basename($name)
+    {
+        if (! $name) {
+            return $name;
+        }
+
+        return last(explode('/', $name));
     }
 }

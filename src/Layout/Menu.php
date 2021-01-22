@@ -23,7 +23,7 @@ class Menu
             'id'        => 2,
             'title'     => 'Extensions',
             'icon'      => '',
-            'uri'       => 'helpers/extensions',
+            'uri'       => 'auth/extensions',
             'parent_id' => 1,
         ],
         [

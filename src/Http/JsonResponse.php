@@ -4,6 +4,7 @@ namespace Dcat\Admin\Http;
 
 use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
@@ -30,7 +31,7 @@ use Illuminate\Validation\ValidationException;
  * @method $this withValidationIf($condition, $errors)
  * @method $this withExceptionIf($condition, \Throwable $e)
  */
-class JsonResponse
+class JsonResponse implements Arrayable
 {
     protected $status = true;
     protected $statusCode = 200;
@@ -38,6 +39,11 @@ class JsonResponse
     protected $data = [];
     protected $html;
     protected $options = [];
+
+    public function __construct(array $data = [])
+    {
+        $this->data($data);
+    }
 
     /**
      * 设置请求结果是否成功.
@@ -90,6 +96,8 @@ class JsonResponse
      */
     public function success(?string $message)
     {
+        $this->status(true);
+
         return $this->show('success', $message);
     }
 
@@ -361,9 +369,27 @@ class JsonResponse
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * Flash a piece of data to the session.
+     *
+     * @param  string|array  $key
+     * @param  mixed  $value
+     * @return $this
      */
-    public function send()
+    public function with($key, $value = null)
+    {
+        $key = is_array($key) ? $key : [$key => $value];
+
+        foreach ($key as $k => $v) {
+            session()->flash($k, $v);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
     {
         $data = ['status' => $this->status, 'data' => $this->data];
 
@@ -371,7 +397,15 @@ class JsonResponse
             $data['html'] = Helper::render($this->html);
         }
 
-        return response()->json($this->options + $data, $this->statusCode);
+        return $data + $this->options;
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function send()
+    {
+        return response()->json($this->toArray(), $this->statusCode);
     }
 
     public function __call($method, $arguments)

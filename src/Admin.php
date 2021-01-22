@@ -7,6 +7,7 @@ use Dcat\Admin\Contracts\ExceptionHandler;
 use Dcat\Admin\Contracts\Repository;
 use Dcat\Admin\Exception\InvalidArgumentException;
 use Dcat\Admin\Http\Controllers\AuthController;
+use Dcat\Admin\Http\JsonResponse;
 use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
@@ -19,16 +20,18 @@ use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class Admin
 {
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.11-beta';
+    const VERSION = '2.0.17-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -336,6 +339,18 @@ class Admin
     }
 
     /**
+     * 响应json数据.
+     *
+     * @param array $data
+     *
+     * @return JsonResponse
+     */
+    public static function json(array $data = [])
+    {
+        return JsonResponse::make($data);
+    }
+
+    /**
      * 插件管理.
      *
      * @param string $name
@@ -349,6 +364,24 @@ class Admin
         }
 
         return app('admin.extend');
+    }
+
+    /**
+     * 响应并中断后续逻辑.
+     *
+     * @param Response|string|array $response
+     *
+     * @throws HttpResponseException
+     */
+    public static function exit($response = '')
+    {
+        if (is_array($response)) {
+            $response = response()->json($response);
+        } elseif ($response instanceof JsonResponse) {
+            $response = $response->send();
+        }
+
+        throw new HttpResponseException($response instanceof Response ? $response : response($response));
     }
 
     /**
@@ -440,6 +473,7 @@ class Admin
     public static function routes()
     {
         $attributes = [
+            'domain'     => config('admin.route.domain'),
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
             'as'         => static::app()->getName().'.',
@@ -484,6 +518,7 @@ class Admin
     public static function registerApiRoutes(string $as = null)
     {
         $attributes = [
+            'domain'     => config('admin.route.domain'),
             'prefix'     => admin_base_path('dcat-api'),
             'middleware' => config('admin.route.middleware'),
             'as'         => $as ?: static::app()->getApiRoutePrefix(Application::DEFAULT),
@@ -515,6 +550,7 @@ class Admin
         }
 
         $attributes = [
+            'domain'     => config('admin.route.domain'),
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
             'as'         => static::app()->getName().'.',
@@ -526,8 +562,6 @@ class Admin
             $router->post('helpers/scaffold', 'Dcat\Admin\Http\Controllers\ScaffoldController@store');
             $router->post('helpers/scaffold/table', 'Dcat\Admin\Http\Controllers\ScaffoldController@table');
             $router->get('helpers/icons', 'Dcat\Admin\Http\Controllers\IconController@index');
-            $router->resource('helpers/extensions', 'Dcat\Admin\Http\Controllers\ExtensionController', ['only' => ['index', 'store', 'update']]);
-            $router->post('helpers/extensions/import', 'Dcat\Admin\Http\Controllers\ExtensionController@import');
         });
     }
 }

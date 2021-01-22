@@ -30,9 +30,9 @@ trait HasFilter
      *
      * @param bool $toArray
      *
-     * @return array|Collection|mixed
+     * @return Collection
      */
-    public function processFilter($toArray = true)
+    public function processFilter()
     {
         $this->callBuilder();
         $this->handleExportRequest();
@@ -41,7 +41,7 @@ trait HasFilter
         $this->applyColumnFilter();
         $this->applySelectorQuery();
 
-        return $this->filter->execute($toArray);
+        return $this->filter->execute();
     }
 
     /**
@@ -69,7 +69,7 @@ trait HasFilter
      */
     public function renderFilter()
     {
-        if (! $this->options['show_filter']) {
+        if (! $this->options['filter']) {
             return '';
         }
 
@@ -97,7 +97,7 @@ trait HasFilter
     {
         $this->filter->disableCollapse($disable);
 
-        return $this->option('show_filter', ! $disable);
+        return $this->option('filter', ! $disable);
     }
 
     /**

@@ -20,15 +20,16 @@
 <p align=""><code>Dcat Admin</code>是一个基于<a href="https://www.laravel-admin.org/" target="_blank">laravel-admin</a>二次开发而成的后台系统构建工具，只需很少的代码即可快速构建出一个功能完善的高颜值后台系统。内置丰富的后台常用组件，开箱即用，让开发者告别冗杂的HTML代码，对后端开发者非常友好。</p>
 
 
-- [Learnku文档](https://learnku.com/docs/dcat-admin)
-- [中文文档](http://www.dcatadmin.com/)
+- [中文文档](https://learnku.com/docs/dcat-admin)
 - [English documentions](http://www.dcatadmin.com/docs/en-2.x/quick-start.html)
 - [Demo / 在线演示](http://103.39.211.179:8080/admin)
 - [Demo源码](https://github.com/jqhph/dcat-admin-demo)
 - [Demo源码 (码云)](https://gitee.com/jqhph/dcat-admin-demo)
 - [扩展](#)
 
+### 关于官网备案暂停访问的公告
 
+大家好，[Dcat Admin官网](http://www.dcatadmin.com)正在进行备案中，在备案期间会关闭网站访问，直至备案完成。在此期间大家可以通过[Learnku中文文档](https://learnku.com/docs/dcat-admin/2.x)查看文档，给大家带来的不便之处敬请谅解，谢谢支持！
 
 ### 截图
 
@@ -76,7 +77,7 @@
 
 > 如果安装过程中出现`composer`下载过慢或安装失败的情况，请运行命令`composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/`把`composer`镜像更换为阿里云镜像。
 
-首先需要安装`laravel`，如已安装可以跳过此步骤
+首先需要安装`laravel`框架，如已安装可以跳过此步骤。如果您是第一次使用`laravel`，请务必先阅读文档 [安装 《Laravel中文文档》](https://learnku.com/docs/laravel/8.x/installation/9354) ！
 ```bash
 composer create-project --prefer-dist laravel/laravel 项目名称 7.*
 # 或

@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid\Concerns;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Events\Fetched;
 use Dcat\Admin\Grid\Events\Fetching;
+use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
@@ -18,7 +19,7 @@ trait HasTree
     /**
      * @var string
      */
-    protected $tierQueryName = '_tier_';
+    protected $depthQueryName = '_depth_';
 
     /**
      * @var bool
@@ -36,16 +37,23 @@ trait HasTree
     protected $treeIgnoreQueryNames = [];
 
     /**
+     * @var mixed
+     */
+    protected $defaultParentId;
+
+    /**
      * 开启树形表格功能.
      *
      * @param bool $showAll
      * @param bool $sortable
+     * @param mixed $defaultParentId
      *
      * @return void
      */
-    public function enableTree(bool $showAll, bool $sortable)
+    public function enableTree(bool $showAll, bool $sortable, $defaultParentId = null)
     {
         $this->showAllChildrenNodes = $showAll;
+        $this->defaultParentId = $defaultParentId;
 
         $this->grid()->listen(Fetching::class, function () use ($sortable) {
             $this->sortTree($sortable);
@@ -66,7 +74,7 @@ trait HasTree
             }
 
             if ($collection->isEmpty()) {
-                abort(404);
+                return $grid->show(false);
             }
 
             $this->buildChildrenNodesPagination();
@@ -80,7 +88,7 @@ trait HasTree
     {
         Admin::addIgnoreQueryName([
             $this->getParentIdQueryName(),
-            $this->getTierQueryName(),
+            $this->getDepthQueryName(),
             $this->getChildrenPageName($this->getParentIdFromRequest()),
         ]);
     }
@@ -213,24 +221,44 @@ HTML
     {
         return $this->request->get(
             $this->getParentIdQueryName()
-        ) ?: 0;
+        ) ?: $this->getDefaultParentId();
+    }
+
+    /**
+     * 获取默认parent_id字段值.
+     *
+     * @return int|mixed
+     */
+    public function getDefaultParentId()
+    {
+        if ($this->defaultParentId !== null) {
+            return $this->defaultParentId;
+        }
+
+        $repository = $this->grid->model()->repository();
+
+        if ($repository instanceof EloquentRepository) {
+            return $repository->model()->getDefaultParentId();
+        }
+
+        return 0;
     }
 
     /**
      * @return string
      */
-    public function getTierQueryName()
+    public function getDepthQueryName()
     {
-        return $this->getChildrenQueryNamePrefix().$this->tierQueryName;
+        return $this->getChildrenQueryNamePrefix().$this->depthQueryName;
     }
 
     /**
      * @return int
      */
-    public function getTierFromRequest()
+    public function getDepthFromRequest()
     {
         return $this->request->get(
-            $this->getTierQueryName()
+            $this->getDepthQueryName()
         ) ?: 0;
     }
 

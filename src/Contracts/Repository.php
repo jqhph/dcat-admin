@@ -20,7 +20,7 @@ interface Repository
     /**
      * 获取主键名称.
      *
-     * @return string
+     * @return string|array
      */
     public function getKeyName();
 

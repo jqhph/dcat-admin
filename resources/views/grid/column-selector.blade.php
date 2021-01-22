@@ -46,7 +46,7 @@
         }
 
         Dcat.reload(url.toString());
-    }, 1400);
+    }, 200);
 
     $('.column-selector .column-select-item').on('change', function () {
         submit($(this));

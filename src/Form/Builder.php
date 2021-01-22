@@ -68,7 +68,7 @@ class Builder
     protected $mode = self::MODE_CREATE;
 
     /**
-     * @var array
+     * @var Field[]
      */
     protected $hiddenFields = [];
 
@@ -570,6 +570,13 @@ class Builder
         return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
     }
 
+    public function pushField(Field $field)
+    {
+        $this->fields->push($field);
+
+        return $this;
+    }
+
     /**
      * Determine if form fields has files.
      *
@@ -788,23 +795,12 @@ class Builder
                 );
             }
 
-            $content = $this->layout->build();
+            $content = $this->layout->build(
+                $this->renderHiddenFields()
+            );
         }
 
-        return <<<EOF
-{$open} {$content} {$this->renderHiddenFields()} {$this->close()}
-EOF;
-    }
-
-    protected function renderHiddenFields()
-    {
-        $html = '';
-
-        foreach ($this->hiddenFields() as $field) {
-            $html .= $field->render();
-        }
-
-        return $html;
+        return "{$open}{$content}{$this->close()}";
     }
 
     /**
@@ -838,5 +834,18 @@ $('#{$this->getElementId()}').form({
 });
 JS
         );
+    }
+
+    public function renderHiddenFields()
+    {
+        $html = '';
+
+        foreach ($this->hiddenFields as $field) {
+            if (! $field->hasAttribute(Field::BUILD_IGNORE)) {
+                $html .= $field->render();
+            }
+        }
+
+        return $html;
     }
 }

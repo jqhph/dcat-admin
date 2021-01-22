@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Exception\UploadException;
 use Dcat\Admin\Traits\HasUploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -188,10 +189,10 @@ trait UploadField
         $id = $request->get('_id');
 
         if (! $id) {
-            return $this->responseErrorMessage(403, 'Missing id');
+            return $this->responseErrorMessage('Missing id');
         }
 
-        if ($errors = $this->getErrorMessages($file)) {
+        if ($errors = $this->getValidationErrors($file)) {
             return $this->responseValidationMessage($errors);
         }
 
@@ -216,7 +217,7 @@ trait UploadField
         }
 
         // 上传失败
-        return $this->responseErrorMessage(trans('admin.uploader.upload_failed'));
+        throw new UploadException(trans('admin.uploader.upload_failed'));
     }
 
     /**
@@ -338,9 +339,14 @@ trait UploadField
      *
      * @return bool|\Illuminate\Support\MessageBag
      */
-    protected function getErrorMessages(UploadedFile $file)
+    protected function getValidationErrors(UploadedFile $file)
     {
         $rules = $attributes = [];
+
+        // 如果文件上传有错误，则直接返回错误信息
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            return $file->getErrorMessage();
+        }
 
         if (! $fieldRules = $this->getRules()) {
             return false;
@@ -355,7 +361,7 @@ trait UploadField
         if (! $validator->passes()) {
             $errors = $validator->errors()->getMessages()[$this->column];
 
-            return implode('; ', $errors);
+            return implode('<br> ', $errors);
         }
     }
 

@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row" style="margin-top: 10px;">
     <div class="{{$viewClass['label']}}"><h4 class="pull-right">{!! $label !!}</h4></div>
     <div class="{{$viewClass['field']}}"></div>
 </div>

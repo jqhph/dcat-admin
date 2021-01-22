@@ -284,7 +284,7 @@ class Form implements Renderable
     {
         $this->repository = $repository ? Admin::repository($repository) : null;
         $this->callback = $callback;
-        $this->request = clone ($request ?: request());
+        $this->request = $request ?: request();
         $this->builder = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
@@ -314,7 +314,7 @@ class Form implements Renderable
     {
         $field->setForm($this);
 
-        $this->builder->fields()->push($field);
+        $this->builder->pushField($field);
         $this->builder->layout()->addField($field);
 
         $width = $this->builder->getWidth();
@@ -931,7 +931,7 @@ class Form implements Renderable
             return $redirectTo;
         }
 
-        $resourcesPath = $this->resource(-1);
+        $resourcesPath = $this->isCreating() ? $this->resource(0) : $this->resource(-1);
 
         if ($this->request->get('after-save') == 1) {
             // continue editing
@@ -952,7 +952,7 @@ class Form implements Renderable
             return rtrim($resourcesPath, '/')."/{$key}";
         }
 
-        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: ($this->getCurrentUrl() ?: $resourcesPath);
+        return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: $this->getCurrentUrl($resourcesPath);
     }
 
     /**
@@ -1597,8 +1597,8 @@ class Form implements Renderable
     /**
      * Get or set input data.
      *
-     * @param string $key
-     * @param null   $value
+     * @param string|array $key
+     * @param mixed        $value
      *
      * @return array|mixed
      */
@@ -1612,7 +1612,13 @@ class Form implements Renderable
             return Arr::get($this->inputs, $key);
         }
 
-        return Arr::set($this->inputs, $key, $value);
+        if (is_array($key)) {
+            $this->inputs = array_merge($this->inputs, $key);
+
+            return;
+        }
+
+        Arr::set($this->inputs, $key, $value);
     }
 
     /**

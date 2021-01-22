@@ -4,7 +4,7 @@ namespace Dcat\Admin\Http\Actions\Menu;
 
 use Dcat\Admin\Tree\RowAction;
 
-class Visiable extends RowAction
+class Show extends RowAction
 {
     public function handle()
     {

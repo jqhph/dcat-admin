@@ -43,6 +43,15 @@ class Modal extends Widget
     protected $size = '';
 
     /**
+     * @var string
+     */
+    protected $centered = '';
+
+    /**
+     * @var string
+     */
+    protected $scrollable = '';
+    /**
      * @var array
      */
     protected $events = [];
@@ -70,6 +79,34 @@ class Modal extends Widget
         $this->content($content);
 
         $this->class('modal fade');
+    }
+
+    /**
+     * 设置弹窗垂直居中.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function centered(bool $value = true)
+    {
+        $this->centered = $value ? 'modal-dialog-centered' : '';
+
+        return $this;
+    }
+
+    /**
+     * 设置弹窗内容滚动.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function scrollable(bool $value = true)
+    {
+        $this->scrollable = $value ? 'modal-dialog-scrollable' : '';
+
+        return $this;
     }
 
     /**
@@ -347,7 +384,7 @@ JS
     {
         return <<<HTML
 <div {$this->formatHtmlAttributes()} role="dialog">
-    <div class="modal-dialog modal-{$this->size}">
+    <div class="modal-dialog {$this->centered} {$this->scrollable} modal-{$this->size}">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">{$this->renderTitle()}</h4>

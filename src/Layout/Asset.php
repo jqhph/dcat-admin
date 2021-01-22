@@ -75,7 +75,10 @@ class Asset
             'js' => '@admin/dcat/plugins/bootstrap-validator/validator.min.js',
         ],
         '@select2' => [
-            'js'  => '@admin/dcat/plugins/select/select2.full.min.js',
+            'js'  => [
+                '@admin/dcat/plugins/select/select2.full.min.js',
+                '@admin/dcat/plugins/select/i18n/{lang}.js',
+            ],
             'css' => '@admin/dcat/plugins/select/select2.min.css',
         ],
         '@bootstrap-datetimepicker' => [
@@ -264,14 +267,12 @@ class Asset
     public function __construct()
     {
         $this->isPjax = request()->pjax();
-
-        $this->initTheme();
     }
 
     /**
      * 初始化主题样式.
      */
-    protected function initTheme()
+    protected function setUpTheme()
     {
         $color = Admin::color()->getName();
 
@@ -314,7 +315,7 @@ class Asset
         }
 
         if ($value === null) {
-            return $this->alias[$name] ?? [];
+            return $this->getAlias($name);
         }
 
         if (mb_strpos($name, '@') !== 0) {
@@ -325,26 +326,101 @@ class Asset
     }
 
     /**
+     * 获取别名.
+     *
+     * @param string $name
+     * @param array $params
+     *
+     * @return array|string
+     */
+    public function getAlias($name, array $params = [])
+    {
+        if (mb_strpos($name, '@') !== 0) {
+            $name = '@'.$name;
+        }
+
+        [$name, $query] = $this->parseParams($name);
+
+        $assets = $this->alias[$name] ?? [];
+
+        // 路径别名
+        if (is_string($assets)) {
+            return $assets;
+        }
+
+        $params += $query;
+
+        return [
+            'js' => $this->normalizeAliasPaths($assets['js'] ?? [], $params) ?: null,
+            'css' => $this->normalizeAliasPaths($assets['css'] ?? [], $params) ?: null,
+        ];
+    }
+
+    /**
+     * @param array $files
+     * @param array $params
+     *
+     * @return array
+     */
+    protected function normalizeAliasPaths($files, array $params)
+    {
+        $files = (array) $files;
+
+        foreach ($files as &$file) {
+            foreach ($params as $k => $v) {
+                if ($v !== '' && $v !== null) {
+                    $file = str_replace("{{$k}}", $v, $file);
+                }
+            }
+        }
+
+        return array_filter($files, function ($file) {
+            return ! mb_strpos($file, '{');
+        });
+    }
+
+    /**
+     * 解析参数.
+     *
+     * @param string $name
+     *
+     * @return array
+     */
+    protected function parseParams($name)
+    {
+        $name = explode('?', $name);
+
+        if (empty($name[1])) {
+            return [$name[0], []];
+        }
+
+        parse_str($name[1], $params);
+
+        return [$name[0], $params];
+    }
+
+    /**
      * 根据别名设置需要载入的js和css脚本.
      *
      * @param string|array $alias
+     * @param array $params
+     *
+     * @return void
      */
-    public function require($alias)
+    public function require($alias, array $params = [])
     {
         if (is_array($alias)) {
             foreach ($alias as $v) {
-                $this->require($v);
+                $this->require($v, $params);
             }
 
             return;
         }
 
-        if (mb_strpos($alias, '@') !== 0) {
-            $alias = '@'.$alias;
-        }
+        $assets = $this->getAlias($alias, $params);
 
-        $this->js($this->alias[$alias]['js'] ?? null);
-        $this->css($this->alias[$alias]['css'] ?? null);
+        $this->js($assets['js']);
+        $this->css($assets['css']);
     }
 
     /**
@@ -596,6 +672,8 @@ class Asset
      */
     public function cssToHtml()
     {
+        $this->setUpTheme();
+
         $this->mergeBaseCss();
 
         $html = '';
@@ -688,8 +766,8 @@ class Asset
      */
     public function scriptToHtml()
     {
-        $script = implode(';', array_unique($this->script));
-        $directScript = implode(';', array_unique($this->directScript));
+        $script = implode(";\n", array_unique($this->script));
+        $directScript = implode(";\n", array_unique($this->directScript));
 
         return <<<HTML
 <script data-exec-on-popstate>

@@ -41,8 +41,12 @@
             success: function (d) {
                 btn.buttonLoading(false);
                 btn.removeAttr('loading');
-                Dcat.success(d.data.message || d.message);
-                reload && Dcat.reload()
+                if (d.status) {
+                    Dcat.success(d.data.message);
+                    reload && Dcat.reload();
+                } else {
+                    Dcat.error(d.data.message);
+                }
             },
             error: function (a, b, c) {
                 btn.buttonLoading(false);

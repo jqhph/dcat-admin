@@ -1,6 +1,6 @@
-@if ($paginator = $grid->paginator())
+@if ($grid->allowPagination())
     <div class="box-footer d-block clearfix ">
-        {!! $paginator->render() !!}
+        {!! $grid->paginator()->render() !!}
     </div>
 @else
     <div class="box-footer d-block clearfix text-80 " style="height:48px;line-height:25px;">

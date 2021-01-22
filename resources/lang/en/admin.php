@@ -35,6 +35,7 @@ return [
         'close'             => 'Close',
         'selected_options'  => ':num options selected',
         'exceed_max_item'   => 'Maximum items exceeded.',
+        'no_preview'        => 'No preview available.',
 
         '500' => 'Internal server error !',
         '403' => 'Permission deny !',

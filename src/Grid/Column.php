@@ -195,20 +195,7 @@ class Column
 
     protected function formatName($name)
     {
-        if (! Str::contains($name, '.')) {
-            return $name;
-        }
-
-        $names = explode('.', $name);
-        $count = count($names);
-
-        foreach ($names as $i => &$name) {
-            if ($i + 1 < $count) {
-                $name = Str::snake($name);
-            }
-        }
-
-        return implode('.', $names);
+        return $name;
     }
 
     /**
@@ -255,7 +242,13 @@ class Column
      */
     public static function setOriginalGridModels(Collection $collection)
     {
-        static::$originalGridModels = $collection;
+        static::$originalGridModels = $collection->map(function ($row) {
+            if (is_object($row)) {
+                return clone $row;
+            }
+
+            return $row;
+        });
     }
 
     /**
@@ -528,34 +521,62 @@ class Column
     /**
      * Fill all data to every column.
      *
-     * @param array $data
+     * @param \Illuminate\Support\Collection $data
      */
-    public function fill(array &$data)
+    public function fill($data)
     {
         $i = 0;
-        foreach ($data as $key => &$row) {
+
+        $data->transform(function ($row, $key) use (&$i) {
+            $row = $this->convertModelToArray($row);
+
             $i++;
             if (! isset($row['#'])) {
                 $row['#'] = $i;
             }
 
-            $this->original = $value = Arr::get($row, $this->name);
-
-            $this->value = $value = $this->htmlEntityEncode($value);
-
             $this->setOriginalModel(static::$originalGridModels[$key]);
+
+            $this->original = Arr::get($this->originalModel, $this->name);
+
+            $this->value = $value = $this->htmlEntityEncode($original = Arr::get($row, $this->name));
+
+            if ($original === null) {
+                $original = (string) $original;
+            }
 
             $this->processConditions();
 
-            Arr::set($row, $this->name, $value);
-
             if ($this->hasDisplayCallbacks()) {
                 $value = $this->callDisplayCallbacks($this->original);
-                Arr::set($row, $this->name, $value);
             }
+
+            if ($original !== $value) {
+                Helper::arraySet($row, $this->name, $value);
+            }
+
+            $this->value = $value ?? null;
+
+            return $row;
+        });
+    }
+
+    /**
+     * 把模型转化为数组.
+     *
+     * @param array|Model $row
+     *
+     * @return mixed
+     */
+    protected function convertModelToArray(&$row)
+    {
+        if (is_array($row)) {
+            return $row;
         }
 
-        $this->value = $value ?? null;
+        $array = $row->toArray();
+
+        return Helper::camelArray($array);
     }
 
     /**

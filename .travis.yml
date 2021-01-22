@@ -6,7 +6,7 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - 7.4
+#  - 7.4
 
 addons:
   chrome: stable
@@ -44,7 +44,7 @@ install:
   - cd ./laravel-tests
   - php artisan admin:composer-config
   - travis_retry composer require dcat/laravel-admin:*@dev
-  - travis_retry composer require laravel/dusk --dev --ignore-platform-reqs
+  - travis_retry composer require laravel/dusk --dev # --ignore-platform-reqs
 #  - travis_retry composer require --dev staudenmeir/dusk-updater:"^1.1"
   - php artisan admin:publish --force
   - php artisan admin:install

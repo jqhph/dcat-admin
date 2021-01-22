@@ -52,7 +52,8 @@
 <script require="@webuploader" init="{!! $selector !!}">
     var uploader,
         newPage,
-        options = {!! $options !!};
+        options = {!! $options !!},
+        events = options.events;
 
     init();
 
@@ -76,6 +77,17 @@
         uploader = Dcat.Uploader(opts);
         uploader.build();
         uploader.preview();
+
+        for (var i = 0; i < events.length; i++) {
+            var evt = events[i];
+            if (evt.event && evt.script) {
+                if (evt.once) {
+                    uploader.uploader.once(evt.event, evt.script.bind(uploader))
+                } else {
+                    uploader.uploader.on(evt.event, evt.script.bind(uploader))
+                }
+            }
+        }
 
         function resize() {
             setTimeout(function () {

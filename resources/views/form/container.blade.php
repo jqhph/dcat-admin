@@ -15,6 +15,4 @@
 </div>
 {!! $form->renderFooter() !!}
 
-@foreach($form->hiddenFields() as $field)
-    {!! $field->render() !!}
-@endforeach
+{!! $form->renderHiddenFields() !!}

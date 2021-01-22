@@ -176,10 +176,10 @@ class Actions extends AbstractDisplayer
      */
     protected function resetDefaultActions()
     {
-        $this->disableView(! $this->grid->option('show_view_button'));
-        $this->disableEdit(! $this->grid->option('show_edit_button'));
-        $this->disableQuickEdit(! $this->grid->option('show_quick_edit_button'));
-        $this->disableDelete(! $this->grid->option('show_delete_button'));
+        $this->disableView(! $this->grid->option('view_button'));
+        $this->disableEdit(! $this->grid->option('edit_button'));
+        $this->disableQuickEdit(! $this->grid->option('quick_edit_button'));
+        $this->disableDelete(! $this->grid->option('delete_button'));
     }
 
     /**
@@ -246,7 +246,7 @@ EOT;
         $label = trans('admin.edit');
 
         return <<<EOT
-<a href="{$this->resource()}/{$this->getKey()}/edit" title="{$label}">
+<a href="{$this->grid->getEditUrl($this->getKey())}" title="{$label}">
     <i class="feather icon-edit-1 grid-action-icon"></i>
 </a>&nbsp;
 EOT;

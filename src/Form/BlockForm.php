@@ -66,8 +66,8 @@ class BlockForm extends WidgetForm
     public function showFooter()
     {
         $this->ajax(true);
-        $this->disableSubmitButton(false);
-        $this->disableResetButton(false);
+        $this->submitButton(true);
+        $this->resetButton(true);
 
         return $this;
     }
@@ -96,14 +96,14 @@ class BlockForm extends WidgetForm
 
     public function pushField(Field $field)
     {
-        $this->form->builder()->fields()->push($field);
+        $field->attribute(Field::BUILD_IGNORE, true);
+
+        $this->form->builder()->pushField($field);
         $this->fields->push($field);
 
         if ($this->layout()->hasColumns()) {
             $this->layout()->addField($field);
         }
-
-        $field->attribute(Field::BUILD_IGNORE, true);
 
         $field->setForm($this->form);
         $field->setParent($this);

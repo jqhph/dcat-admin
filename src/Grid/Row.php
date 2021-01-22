@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Fluent;
 
 class Row implements Arrayable
@@ -36,7 +37,7 @@ class Row implements Arrayable
     public function __construct(Grid $grid, $data)
     {
         $this->grid = $grid;
-        $this->data = new Fluent($data);
+        $this->data = is_array($data) ? new Fluent($data) : $data;
     }
 
     /**
@@ -46,7 +47,7 @@ class Row implements Arrayable
      */
     public function getKey()
     {
-        return $this->data->get($this->grid->getKeyName());
+        return $this->data->{$this->grid->getKeyName()};
     }
 
     /**
@@ -123,7 +124,7 @@ class Row implements Arrayable
     /**
      * Get data of this row.
      *
-     * @return Fluent
+     * @return Fluent|\Illuminate\Database\Eloquent\Model
      */
     public function model()
     {
@@ -139,7 +140,7 @@ class Row implements Arrayable
      */
     public function __get($attr)
     {
-        return $this->data->get($attr);
+        return $this->data->{$attr};
     }
 
     /**
@@ -167,7 +168,7 @@ class Row implements Arrayable
     {
         if (is_null($value)) {
             return $this->output(
-                Arr::get($this->toArray(), $name)
+                Arr::get($this->data, $name)
             );
         }
 
@@ -197,6 +198,10 @@ class Row implements Arrayable
      */
     protected function output($value)
     {
+        if ($value instanceof Carbon) {
+            return $value;
+        }
+
         if ($value instanceof Renderable) {
             $value = $value->render();
         }

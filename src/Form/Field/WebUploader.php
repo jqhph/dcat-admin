@@ -13,11 +13,6 @@ use Illuminate\Support\Str;
 trait WebUploader
 {
     /**
-     * @var array
-     */
-    protected $options = [];
-
-    /**
      * @param string      $extensions exp. gif,jpg,jpeg,bmp,png
      * @param string|null $mimeTypes  exp. image/*
      *
@@ -124,9 +119,9 @@ trait WebUploader
      *
      * @return $this
      */
-    public function removeable(bool $value = true)
+    public function removable(bool $value = true)
     {
-        $this->options['disableRemove'] = ! $value;
+        $this->options['removable'] = ! $value;
 
         return $this;
     }
@@ -214,7 +209,7 @@ trait WebUploader
             'name'                => WebUploaderHelper::FILE_NAME,
             'fileVal'             => WebUploaderHelper::FILE_NAME,
             'isImage'             => false,
-            'disableRemove'       => false,
+            'removable'           => false,
             'chunked'             => false,
             'fileNumLimit'        => 10,
             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。

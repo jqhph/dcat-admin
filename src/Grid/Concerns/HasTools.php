@@ -101,7 +101,7 @@ trait HasTools
      */
     public function disableToolbar(bool $val = true)
     {
-        return $this->option('show_toolbar', ! $val);
+        return $this->option('toolbar', ! $val);
     }
 
     /**
@@ -202,7 +202,7 @@ trait HasTools
     public function allowToolbar()
     {
         if (
-            $this->option('show_toolbar')
+            $this->option('toolbar')
             && (
                 $this->tools()->has()
                 || $this->allowExporter()
