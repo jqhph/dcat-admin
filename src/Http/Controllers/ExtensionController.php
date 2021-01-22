@@ -35,6 +35,9 @@ class ExtensionController extends Controller
     {
         return new Grid(new Extension(), function (Grid $grid) {
             $grid->number();
+            $grid->column('logo')->display(function (){
+                return $this->logo;
+            })->image('',50,50);
             $grid->column('name')->displayUsing(Extensions\Name::class);
             $grid->column('description')->displayUsing(Extensions\Description::class)->width('58%');
 
