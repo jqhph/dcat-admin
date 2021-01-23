@@ -8,6 +8,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Repositories\Repository;
 use Dcat\Admin\Show;
+use ReflectionException;
 
 class Extension extends Repository
 {
@@ -33,6 +34,21 @@ class Extension extends Repository
     {
         $property = $extension->composerProperty;
 
+        // 处理包的Logo
+        $logo = null;
+        try {
+            $logo_path = $extension->path().'/logo.png';
+            if(file_exists($logo_path) && $file = fopen($logo_path,"rb", 0))
+            {
+                $content = fread($file,filesize($logo_path));
+                fclose($file);
+                $base64 = chunk_split(base64_encode($content));
+                $logo = 'data:image/png;base64,' . $base64;
+            }
+        } catch (ReflectionException $e) {
+            // 捕获异常，不用输出
+        }
+
         $name = $extension->getName();
         $current = $extension->getVersion();
         $latest = $extension->getLocalLatestVersion();
@@ -40,6 +56,7 @@ class Extension extends Repository
         return [
             'id'           => $name,
             'alias'        => $name,
+            'logo'         => $logo,
             'name'         => $name,
             'version'      => $current,
             'type'         => $extension->getType(),
