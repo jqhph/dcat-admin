@@ -19,7 +19,7 @@ class Name extends AbstractDisplayer
             'enableAction'    => $this->resolveAction(Enable::class),
             'disableAction'   => $this->resolveAction(Disable::class),
             'uninstallAction' => $this->resolveAction(Uninstall::class),
-            'linkIcon'        => Str::contains($this->row->homepage, 'github.com') ? 'icon-github' : 'icon-link',
+            'linkIcon'        => 'icon-link',
         ]);
     }
 

@@ -8,6 +8,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Repositories\Repository;
 use Dcat\Admin\Show;
+use ReflectionException;
 
 class Extension extends Repository
 {
@@ -39,7 +40,8 @@ class Extension extends Repository
 
         return [
             'id'           => $name,
-            'alias'        => $name,
+            'alias'        => $extension->getAlias(),
+            'logo'         => $extension->getLogoBase64(),
             'name'         => $name,
             'version'      => $current,
             'type'         => $extension->getType(),

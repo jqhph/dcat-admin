@@ -31,7 +31,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.16-beta';
+    const VERSION = '2.0.17-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -473,10 +473,8 @@ class Admin
     public static function routes()
     {
         $attributes = [
-            'domain'     => config('admin.route.domain'),
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
-            'as'         => static::app()->getName().'.',
         ];
 
         if (config('admin.auth.enable', true)) {
@@ -511,18 +509,15 @@ class Admin
     /**
      * 注册api路由.
      *
-     * @param string $as
-     *
      * @return void
      */
-    public static function registerApiRoutes(string $as = null)
+    public static function registerApiRoutes()
     {
         $attributes = [
-            'domain'     => config('admin.route.domain'),
             'prefix'     => admin_base_path('dcat-api'),
             'middleware' => config('admin.route.middleware'),
-            'as'         => $as ?: static::app()->getApiRoutePrefix(Application::DEFAULT),
             'namespace'  => 'Dcat\Admin\Http\Controllers',
+            'as'         => 'dcat-api.',
         ];
 
         app('router')->group($attributes, function ($router) {
@@ -550,10 +545,8 @@ class Admin
         }
 
         $attributes = [
-            'domain'     => config('admin.route.domain'),
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
-            'as'         => static::app()->getName().'.',
         ];
 
         app('router')->group($attributes, function ($router) {

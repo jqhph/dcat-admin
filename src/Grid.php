@@ -154,21 +154,21 @@ class Grid
      * @var array
      */
     protected $options = [
-        'show_pagination'        => true,
-        'show_filter'            => true,
-        'show_actions'           => true,
-        'show_quick_edit_button' => false,
-        'show_edit_button'       => true,
-        'show_view_button'       => true,
-        'show_delete_button'     => true,
-        'show_row_selector'      => true,
-        'show_create_button'     => true,
-        'show_bordered'          => false,
-        'table_collapse'         => true,
-        'show_toolbar'           => true,
-        'create_mode'            => self::CREATE_MODE_DEFAULT,
-        'dialog_form_area'       => ['700px', '670px'],
-        'table_class'            => ['table', 'custom-data-table', 'data-table'],
+        'pagination'        => true,
+        'filter'            => true,
+        'actions'           => true,
+        'quick_edit_button' => false,
+        'edit_button'       => true,
+        'view_button'       => true,
+        'delete_button'     => true,
+        'row_selector'      => true,
+        'create_button'     => true,
+        'bordered'          => false,
+        'table_collapse'    => true,
+        'toolbar'           => true,
+        'create_mode'       => self::CREATE_MODE_DEFAULT,
+        'dialog_form_area'  => ['700px', '670px'],
+        'table_class'       => ['table', 'custom-data-table', 'data-table'],
     ];
 
     /**
@@ -396,7 +396,7 @@ class Grid
 
     public function formatTableClass()
     {
-        if ($this->options['show_bordered']) {
+        if ($this->options['bordered']) {
             $this->addTableClass(['table-bordered', 'complex-headers', 'data-table']);
         }
 
@@ -533,7 +533,7 @@ class Grid
      */
     protected function prependRowSelectorColumn()
     {
-        if (! $this->options['show_row_selector']) {
+        if (! $this->options['row_selector']) {
             return;
         }
 
@@ -567,7 +567,7 @@ class Grid
      */
     public function renderCreateButton()
     {
-        if (! $this->options['show_create_button']) {
+        if (! $this->options['create_button']) {
             return '';
         }
 
@@ -581,7 +581,7 @@ class Grid
      */
     public function withBorder(bool $value = true)
     {
-        $this->options['show_bordered'] = $value;
+        $this->options['bordered'] = $value;
 
         return $this;
     }
@@ -699,7 +699,7 @@ HTML;
 
     protected function setUpOptions()
     {
-        if ($this->options['show_bordered']) {
+        if ($this->options['bordered']) {
             $this->tableCollapse(false);
         }
     }
@@ -713,7 +713,7 @@ HTML;
     {
         $this->tools->disableBatchActions($disable);
 
-        return $this->option('show_row_selector', ! $disable);
+        return $this->option('row_selector', ! $disable);
     }
 
     /**
@@ -733,7 +733,7 @@ HTML;
      */
     public function disableCreateButton(bool $disable = true)
     {
-        return $this->option('show_create_button', ! $disable);
+        return $this->option('create_button', ! $disable);
     }
 
     /**
@@ -753,7 +753,7 @@ HTML;
      */
     public function allowCreateButton()
     {
-        return $this->options['show_create_button'];
+        return $this->options['create_button'];
     }
 
     /**

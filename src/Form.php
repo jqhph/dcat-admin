@@ -1597,8 +1597,8 @@ class Form implements Renderable
     /**
      * Get or set input data.
      *
-     * @param string $key
-     * @param null   $value
+     * @param string|array $key
+     * @param mixed        $value
      *
      * @return array|mixed
      */
@@ -1612,7 +1612,13 @@ class Form implements Renderable
             return Arr::get($this->inputs, $key);
         }
 
-        return Arr::set($this->inputs, $key, $value);
+        if (is_array($key)) {
+            $this->inputs = array_merge($this->inputs, $key);
+
+            return;
+        }
+
+        Arr::set($this->inputs, $key, $value);
     }
 
     /**

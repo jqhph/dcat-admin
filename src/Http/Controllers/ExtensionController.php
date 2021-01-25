@@ -36,7 +36,7 @@ class ExtensionController extends Controller
         return new Grid(new Extension(), function (Grid $grid) {
             $grid->number();
             $grid->column('name')->displayUsing(Extensions\Name::class);
-            $grid->column('description')->displayUsing(Extensions\Description::class)->width('58%');
+            $grid->column('description')->displayUsing(Extensions\Description::class)->width('50%');
 
             $grid->column('authors')->display(function ($v) {
                 if (! $v) {

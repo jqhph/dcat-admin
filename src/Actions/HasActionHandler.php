@@ -70,7 +70,7 @@ trait HasActionHandler
      */
     public function handlerRoute()
     {
-        return route(admin_api_route('action'));
+        return route(admin_api_route_name('action'));
     }
 
     /**

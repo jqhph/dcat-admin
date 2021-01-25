@@ -241,7 +241,7 @@ export default class Helpers {
         };
         img.onerror = function () {
             Dcat.loading(false);
-            Dcat.warning('预览失败');
+            Dcat.error(Dcat.lang.trans('no_preview'))
         };
     }
 
