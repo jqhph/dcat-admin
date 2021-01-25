@@ -1,14 +1,25 @@
-@if($row->homepage)
-    <a href='{!! $row->homepage !!}' target='_blank' class="feather {{ $linkIcon }}"></a>
-@endif
-<span class="ext-name">
-    {{ $value }}
-</span>
+<div class="d-flex">
+    @if($row->logo)
+        <img data-action='preview-img' src='{!! $row->logo !!}' style='max-width:40px;max-height:40px;cursor:pointer' class='img img-thumbnail' />&nbsp;&nbsp;
+    @endif
 
-@if($row->new_version || ! $row->version)
-    &nbsp;
-    <span class="badge bg-primary">New</span>
-@endif
+    <span class="ext-name">
+        @if($row->homepage)
+            <a href='{!! $row->homepage !!}' target='_blank' class="feather {{ $linkIcon }}"></a>
+        @endif
+
+        @if($row->alias)
+            {{ $row->alias }} <br><small class="text-80">{{ $value }}</small>
+        @else
+            {{ $value }}
+        @endif
+    </span>
+
+    @if($row->new_version || ! $row->version)
+        &nbsp;
+        <span class="badge bg-primary">New</span>
+    @endif
+</div>
 
 <div style="height: 10px"></div>
 

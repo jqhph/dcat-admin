@@ -1,5 +1,6 @@
 {
     "name": "{package}",
+    "alias": "{alias}",
     "description": "Description...",
     "type": "library",
     "keywords": ["dcat-admin", "extension"],
