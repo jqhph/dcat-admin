@@ -568,8 +568,8 @@ class Form implements Renderable
         if ($field instanceof Field\File && method_exists($this, 'form')) {
             $formData = [static::REQUEST_NAME => get_called_class()];
 
-            $field->url(route(admin_api_route('form.upload')));
-            $field->deleteUrl(route(admin_api_route('form.destroy-file'), $formData));
+            $field->url(route(admin_api_route_name('form.upload')));
+            $field->deleteUrl(route(admin_api_route_name('form.destroy-file'), $formData));
             $field->withFormData($formData);
         }
     }
@@ -831,7 +831,7 @@ HTML;
         if (method_exists($this, 'handle')) {
             $addHiddenFields = function () {
                 $this->method('POST');
-                $this->action(route(admin_api_route('form')));
+                $this->action(route(admin_api_route_name('form')));
                 $this->hidden(static::REQUEST_NAME)->default(get_called_class());
                 $this->hidden(static::CURRENT_URL_NAME)->default($this->getCurrentUrl());
 

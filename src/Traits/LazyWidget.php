@@ -19,7 +19,7 @@ trait LazyWidget
             'renderable' => $this->getRenderableName(),
         ]);
 
-        return route(admin_api_route('render'), $data);
+        return route(admin_api_route_name('render'), $data);
     }
 
     protected function getRenderableName()

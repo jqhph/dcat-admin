@@ -437,14 +437,30 @@ if (! function_exists('admin_asset')) {
     }
 }
 
-if (! function_exists('admin_api_route')) {
+if (! function_exists('admin_route')) {
+    /**
+     * 获取路由别名.
+     *
+     * @param string|null $route
+     * @param array $params
+     * @param bool $absolute
+     *
+     * @return string
+     */
+    function admin_route(?string $route, array $params = [], $absolute = true)
+    {
+        return Dcat\Admin\Admin::app()->getRoute($route, $params, $absolute);
+    }
+}
+
+if (! function_exists('admin_api_route_name')) {
 
     /**
      * @param string $path
      *
      * @return string
      */
-    function admin_api_route(?string $path = '')
+    function admin_api_route_name(?string $path = '')
     {
         return Dcat\Admin\Admin::app()->getCurrentApiRoutePrefix().$path;
     }
