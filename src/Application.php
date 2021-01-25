@@ -162,7 +162,7 @@ class Application
      */
     public function getRoute(?string $route, array $params = [], $absolute = true)
     {
-        return route("dcat.{$this->getName()}.$route", $params, $absolute);
+        return route($this->getRoutePrefix().$route, $params, $absolute);
     }
 
     /**
