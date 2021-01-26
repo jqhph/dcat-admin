@@ -26,6 +26,7 @@ return [
         'nullable'          => '允许空值',
         'key'               => '索引',
         'translate_title'   => '翻译标题',
+        'sync_translation_with_comment' => '同步翻译与注释',
     ],
     'client' => [
         'delete_confirm'    => '确认删除?',
