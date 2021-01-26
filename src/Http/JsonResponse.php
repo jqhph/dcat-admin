@@ -20,7 +20,7 @@ use Illuminate\Validation\ValidationException;
  * @method $this detailIf($condition, ?string $message)
  * @method $this statusCodeIf($condition, int $code)
  * @method $this redirectIf($condition, ?string $url)
- * @method $this locationIf($condition, ?string $url)
+ * @method $this locationIf($condition, ?string $url = null)
  * @method $this refreshIf($condition)
  * @method $this downloadIf($condition, ?string $url)
  * @method $this scriptIf($condition, ?string $script)
@@ -216,13 +216,13 @@ class JsonResponse implements Arrayable
     /**
      * Location 跳转.
      *
-     * @param string $location
+     * @param string $location 不传则刷新当前页面
      *
      * @return $this
      */
-    public function location(?string $location)
+    public function location(?string $location = null)
     {
-        return $this->then(['action' => 'location', 'value' => admin_url($location)]);
+        return $this->then(['action' => 'location', 'value' => $location ? admin_url($location) : null]);
     }
 
     /**
