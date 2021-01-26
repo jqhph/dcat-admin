@@ -158,8 +158,8 @@ HTML
     {
         if (
             $sortable
-            && ! $this->findQueryByMethod('orderBy')
-            && ! $this->findQueryByMethod('orderByDesc')
+            && $this->findQueryByMethod('orderBy')->isEmpty()
+            && $this->findQueryByMethod('orderByDesc')->isEmpty()
             && ($orderColumn = $this->repository->getOrderColumn())
         ) {
             $this->orderBy($orderColumn)
