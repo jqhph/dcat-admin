@@ -26,6 +26,7 @@ return [
         'nullable'          => '允許null',
         'key'               => '索引',
         'translate_title'   => '翻譯標題',
+        'sync_translation_with_comment' => '同步翻譯與註釋',
     ],
     'client' => [
         'delete_confirm'    => '確認刪除?',
