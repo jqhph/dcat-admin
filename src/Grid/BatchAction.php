@@ -31,6 +31,6 @@ JS;
      */
     public function getSelectedKeysScript()
     {
-        return "Dcat.grid.selected('{$this->parent->getName()}');";
+        return "Dcat.grid.selected('{$this->parent->getName()}')";
     }
 }

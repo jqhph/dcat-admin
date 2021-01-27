@@ -590,7 +590,6 @@ class Form implements Renderable
                 ->alert()
                 ->status($status)
                 ->message($message)
-                ->redirectIf($status, $this->resource(-1))
         );
     }
 
