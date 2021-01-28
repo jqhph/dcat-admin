@@ -1370,6 +1370,18 @@ class Form implements Renderable
     }
 
     /**
+     * @param array $vars
+     *
+     * @return $this
+     */
+    public function addVariables(array $vars)
+    {
+        $this->builder->addVariables($vars);
+
+        return $this;
+    }
+
+    /**
      * Get or set title for form.
      *
      * @param string $title
