@@ -204,6 +204,7 @@
 
                 <div class='form-group'>
                     <button type="button" class="btn btn-sm btn-primary btn-outline text-capitalize" id="add-table-field"><i class="feather icon-plus"></i>&nbsp;&nbsp;{{(trans('admin.scaffold.add_field'))}}</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline text-capitalize ml-1" id="sync-translation-with-comment"><i class="feather icon-repeat"></i>&nbsp;&nbsp;{{(trans('admin.scaffold.sync_translation_with_comment'))}}</button>
                 </div>
 
                 <div class="row">
@@ -332,6 +333,22 @@
 
         $('#add-table-field').click(function (event) {
             addField();
+        });
+
+        $('#sync-translation-with-comment').click(function (event) {
+            var element = $('#table-fields-sortable tr');
+            if (element.length > 0) {
+                element.each(function (i, v) {
+                    var translation = $(v).find('input[name="fields[' + i + '][translation]"]');
+                    var comment = $(v).find('input[name="fields[' + i + '][comment]"]');
+                    if (translation.val() !== "" && comment.val() === "") {
+                        comment.val(translation.val());
+                    }
+                    if (translation.val() === "" && comment.val() !== "") {
+                        translation.val(comment.val());
+                    }
+                });
+            }
         });
 
         $('#table-fields').on('click', '.table-field-remove', function(event) {

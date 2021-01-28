@@ -590,7 +590,6 @@ class Form implements Renderable
                 ->alert()
                 ->status($status)
                 ->message($message)
-                ->redirectIf($status, $this->resource(-1))
         );
     }
 
@@ -1366,6 +1365,18 @@ class Form implements Renderable
     public function view($view)
     {
         $this->builder->view($view);
+
+        return $this;
+    }
+
+    /**
+     * @param array $vars
+     *
+     * @return $this
+     */
+    public function addVariables(array $vars)
+    {
+        $this->builder->addVariables($vars);
 
         return $this;
     }

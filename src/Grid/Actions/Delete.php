@@ -11,15 +11,20 @@ class Delete extends RowAction
      */
     public function title()
     {
+        if ($this->title) {
+            return $this->title;
+        }
+
         return '<i class="feather icon-trash"></i> '.__('admin.delete');
     }
 
     public function render()
     {
         $this->setHtmlAttribute([
-            'data-url'     => $this->url(),
-            'data-message' => "ID - {$this->getKey()}",
-            'data-action'  => 'delete',
+            'data-url'      => $this->url(),
+            'data-message'  => "ID - {$this->getKey()}",
+            'data-action'   => 'delete',
+            'data-redirect' => request()->fullUrl(),
         ]);
 
         return parent::render();

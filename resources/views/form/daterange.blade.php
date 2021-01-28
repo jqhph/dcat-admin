@@ -38,7 +38,7 @@
     $this.datetimepicker(options);
     $end.datetimepicker($.extend(options, {useCurrent: false}));
     $this.on("dp.change", function (e) {
-        $('{{ $selector['end'] }}').data("DateTimePicker").minDate(e.date);
+        $end.data("DateTimePicker").minDate(e.date);
     });
     $end.on("dp.change", function (e) {
         $this.data("DateTimePicker").maxDate(e.date);
