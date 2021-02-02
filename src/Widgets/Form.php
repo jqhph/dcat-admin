@@ -312,9 +312,7 @@ class Form implements Renderable
     }
 
     /**
-     * @param array|Arrayable|Closure $data
-     *
-     * @return Fluent
+     * @return Fluent|\Illuminate\Database\Eloquent\Model
      */
     public function data()
     {
@@ -332,13 +330,21 @@ class Form implements Renderable
      */
     public function fill($data)
     {
-        $this->data = new Fluent(Helper::array($data));
+        if ($data instanceof \Closure) {
+            $data = $data($this);
+        }
+
+        if (is_array($data)) {
+            $this->data = new Fluent($data);
+        } elseif ($data instanceof Arrayable) {
+            $this->data = $data;
+        }
 
         return $this;
     }
 
     /**
-     * @return Fluent
+     * @return Fluent|\Illuminate\Database\Eloquent\Model
      */
     public function model()
     {
