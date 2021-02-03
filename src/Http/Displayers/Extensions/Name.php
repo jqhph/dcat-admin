@@ -7,7 +7,6 @@ use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 use Dcat\Admin\Http\Actions\Extensions\Disable;
 use Dcat\Admin\Http\Actions\Extensions\Enable;
 use Dcat\Admin\Http\Actions\Extensions\Uninstall;
-use Illuminate\Support\Str;
 
 class Name extends AbstractDisplayer
 {

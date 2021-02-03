@@ -65,7 +65,7 @@ trait ModelTree
      */
     public function getDefaultParentId()
     {
-        return empty($this->defaultParentId) ? '0' : $this->defaultParentId;
+        return isset($this->defaultParentId) ? $this->defaultParentId : '0';
     }
 
     /**

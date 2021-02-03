@@ -8,7 +8,6 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Repositories\Repository;
 use Dcat\Admin\Show;
-use ReflectionException;
 
 class Extension extends Repository
 {
@@ -20,9 +19,6 @@ class Extension extends Repository
         }
 
         return $data;
-        //return collect($data)->sort(function ($row) {
-        //    return ! empty($row['version']) && empty($row['new_version']);
-        //})->toArray();
     }
 
     /**
@@ -61,8 +57,6 @@ class Extension extends Repository
 
     public function update(Form $form)
     {
-        $id = $form->getKey();
-
         return true;
     }
 

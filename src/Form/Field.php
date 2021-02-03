@@ -421,7 +421,7 @@ class Field implements Renderable
     }
 
     /**
-     * @return Fluent
+     * @return Fluent|\Illuminate\Database\Eloquent\Model
      */
     public function values()
     {
