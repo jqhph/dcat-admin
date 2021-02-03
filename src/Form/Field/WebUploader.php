@@ -52,7 +52,7 @@ trait WebUploader
     {
         $this->options['chunkSize'] = $size * 1024;
 
-        $this->checked(true);
+        $this->chunked(true);
 
         return $this;
     }
