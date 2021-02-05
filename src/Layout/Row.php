@@ -11,6 +11,8 @@ class Row implements Renderable
      */
     protected $columns = [];
 
+    protected $noGutters = false;
+
     /**
      * Row constructor.
      *
@@ -49,6 +51,18 @@ class Row implements Renderable
     }
 
     /**
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function noGutters(bool $value = true)
+    {
+        $this->noGutters = $value;
+
+        return $this;
+    }
+
+    /**
      * Build row column.
      *
      * @return string
@@ -71,7 +85,9 @@ class Row implements Renderable
      */
     protected function startRow()
     {
-        return '<div class="row">';
+        $noGutters = $this->noGutters ? 'no-gutters' : '';
+
+        return "<div class=\"row {$noGutters}\">";
     }
 
     /**
