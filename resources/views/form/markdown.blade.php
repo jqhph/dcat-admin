@@ -26,7 +26,7 @@
         ele.prototype.webkitMatchesSelector;
 </script>
 
-<script require="@markdown" init="{!! $selector !!}">
+<script require="@editor-md-form" init="{!! $selector !!}">
     editormd(id, {!! $options !!});
 
     Element.prototype.matches = Dcat.eMatches;
