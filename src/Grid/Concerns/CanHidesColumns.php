@@ -205,22 +205,6 @@ trait CanHidesColumns
         })->toArray();
     }
 
-    /**
-     * Get default visible column names.
-     *
-     * @return array
-     */
-    public function getDefaultVisibleColumnNames()
-    {
-        return array_values(
-            array_diff(
-                $this->columnNames,
-                $this->hiddenColumns,
-                [Grid\Column::SELECT_COLUMN_NAME, Grid\Column::ACTION_COLUMN_NAME]
-            )
-        );
-    }
-
     protected function hasColumnSelectorRequestInput()
     {
         return $this->request->has($this->getColumnSelectorQueryName());

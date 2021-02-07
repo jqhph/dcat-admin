@@ -107,7 +107,7 @@ class Permission
         );
 
         foreach ($excepts as $except) {
-            if ($request->routeIs($except)) {
+            if ($request->routeIs($except) || $request->routeIs(admin_route_name($except))) {
                 return true;
             }
 

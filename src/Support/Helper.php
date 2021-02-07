@@ -258,7 +258,7 @@ class Helper
         }
 
         // 判断路由名称
-        if ($request->routeIs($path)) {
+        if ($request->routeIs($path) || $request->routeIs(admin_route_name($path))) {
             return true;
         }
 
