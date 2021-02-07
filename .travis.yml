@@ -62,7 +62,5 @@ before_script:
   - php artisan serve &
 
 script:
-  - php artisan dusk --coverage-clover coverage.xml
+  - php artisan dusk
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
