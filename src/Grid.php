@@ -165,6 +165,7 @@ class Grid
         'create_button'     => true,
         'bordered'          => false,
         'table_collapse'    => true,
+        'table_scrollbar'   => false,
         'toolbar'           => true,
         'create_mode'       => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'  => ['700px', '670px'],
@@ -594,6 +595,20 @@ class Grid
     public function tableCollapse(bool $value = true)
     {
         $this->options['table_collapse'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * 显示横轴滚动条.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function scrollbar(bool $value = true)
+    {
+        $this->options['table_scrollbar'] = $value;
 
         return $this;
     }
