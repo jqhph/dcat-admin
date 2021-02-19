@@ -1,0 +1,79 @@
+
+.horizontal-menu {
+  .content-wrapper, .main-footer, .main-header {
+    margin-left: 0!important;
+  }
+
+  .header-navbar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+
+  .header-navbar.navbar-horizontal,
+  .main-horizontal-sidebar {
+    top: 68px;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: inherit;
+    min-height: auto;
+    bottom: inherit;
+  }
+
+  .nav-sidebar > .nav-item {
+    padding-bottom: .6rem;
+
+    .nav-link {
+      color: $font-color;
+      font-size: 1rem;
+      padding: 0.4rem 1rem;
+    }
+
+    .nav-link.dropdown-toggle::after {
+      margin-top: 0!important;
+    }
+
+    .nav-link.active {
+      color: $primary;
+      font-weight: 600;
+    }
+  }
+  .nav.nav-pills {
+    margin-bottom: 0;
+  }
+
+  .nav.dropdown-menu {
+    display: none;
+    margin-top: -.2rem;
+    min-width: 200px;
+  }
+
+  .open > .nav.dropdown-menu {
+    display: block;
+    -webkit-animation: .8s cubic-bezier(.25,.8,.25,1) 0s normal forwards 1 fadein;
+    animation: .8s cubic-bezier(.25,.8,.25,1) 0s normal forwards 1 fadein;
+  }
+
+  [class*=sidebar-light-] .nav-sidebar > .nav-item > .nav-treeview {
+    background: #fff;
+    border-radius: .4rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .navbar-expand-sm {
+    -webkit-flex-flow: row nowrap;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .navbar-expand-sm, .navbar-expand-sm .navbar-nav {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+  }
+}
+
