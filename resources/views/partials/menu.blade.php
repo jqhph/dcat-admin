@@ -18,8 +18,10 @@
         </li>
     @else
 
-        <li class="{{ $horizontal ? 'dropdown menu-open' : '' }} nav-item has-treeview {{ $builder->isActive($item) ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link {{ $horizontal ? 'dropdown-toggle' : '' }}" {{ $horizontal ? 'data-toggle="dropdown"' : '' }}>
+        <li class="{{ $horizontal ? 'dropdown' : 'has-treeview' }} {{ $depth > 0 ? 'dropdown-submenu' : '' }} nav-item {{ $builder->isActive($item) ? 'menu-open' : '' }}">
+            <a href="#"
+               class="nav-link {{ $builder->isActive($item) ? ($horizontal ? 'active' : '') : '' }}
+                    {{ $horizontal ? 'dropdown-toggle' : '' }}">
                 {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
@@ -29,13 +31,13 @@
                     @endif
                 </p>
             </a>
-            <ul class="nav nav-treeview {{ $horizontal ? 'dropdown-menu' : '' }}">
+            <ul class="nav {{ $horizontal ? 'dropdown-menu' : 'nav-treeview' }}">
                 @foreach($item['children'] as $item)
                     @php
                         $item['depth'] = $depth + 1;
                     @endphp
 
-                    @include('admin::partials.menu', $item)
+                    @include('admin::partials.menu', ['item' => $item])
                 @endforeach
             </ul>
         </li>
