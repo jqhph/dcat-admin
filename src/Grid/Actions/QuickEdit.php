@@ -7,8 +7,6 @@ use Dcat\Admin\Grid\RowAction;
 
 class QuickEdit extends RowAction
 {
-    protected static $resolvedWindow;
-
     /**
      * @return array|null|string
      */
@@ -23,19 +21,15 @@ class QuickEdit extends RowAction
 
     public function render()
     {
-        if (! static::$resolvedWindow) {
-            static::$resolvedWindow = true;
+        [$width, $height] = $this->parent->option('dialog_form_area');
 
-            [$width, $height] = $this->parent->option('dialog_form_area');
+        $title = trans('admin.edit');
 
-            $title = trans('admin.edit');
-
-            Form::dialog($title)
-                ->click(".{$this->getElementClass()}")
-                ->dimensions($width, $height)
-                ->forceRefresh()
-                ->success('Dcat.reload()');
-        }
+        Form::dialog($title)
+            ->click(".{$this->getElementClass()}")
+            ->dimensions($width, $height)
+            ->forceRefresh()
+            ->success('Dcat.reload()');
 
         $this->setHtmlAttribute([
             'data-url' => "{$this->resource()}/{$this->getKey()}/edit",

@@ -148,7 +148,7 @@ class Asset
                 '@admin/dcat/extra/markdown.css',
             ],
         ],
-        '@markdown' => [
+        '@editor-md-form' => [
             'js' => [
                 '@admin/dcat/plugins/editor-md/lib/raphael.min.js',
                 '@admin/dcat/plugins/editor-md/editormd.min.js',

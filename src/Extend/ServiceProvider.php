@@ -343,8 +343,8 @@ abstract class ServiceProvider extends LaravelServiceProvider
     /**
      * 更新扩展.
      *
-     * @param $currentVersion
-     * @param $stopOnVersion
+     * @param string $currentVersion
+     * @param string $stopOnVersion
      *
      * @throws \Exception
      */

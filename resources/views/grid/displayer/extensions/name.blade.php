@@ -45,6 +45,9 @@
 @endif
 
 <style>
+    .badge {
+        max-height: 22px
+    }
     .hover-display {
         display:none;
     }
