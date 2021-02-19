@@ -437,7 +437,7 @@ class Content implements Renderable
             'navbar_color'      => '',
             'navbar_class'      => 'sticky',
             'footer_type'       => '',
-            'body_class'        => '',
+            'body_class'        => [],
         ];
 
         $data = array_merge(
@@ -453,7 +453,7 @@ class Content implements Renderable
         $allOptions = [
             'theme'             => '',
             'footer_type'       => '',
-            'body_class'        => '',
+            'body_class'        => [],
             'sidebar_style'     => ['light' => 'sidebar-light-primary', 'primary' => 'sidebar-primary', 'dark' => 'sidebar-dark-white'],
             'sidebar_collapsed' => [],
             'navbar_color'      => [],
@@ -487,7 +487,11 @@ class Content implements Renderable
             }
         }
 
-        if ($data['body_class'] && Str::contains($data['body_class'], 'dark-mode')) {
+        if (! is_array($data['body_class'])) {
+            $data['body_class'] = explode(' ', (string) $data['body_class']);
+        }
+
+        if ($data['body_class'] && in_array('dark-mode', $data['body_class'], true)) {
             $data['sidebar_style'] = 'sidebar-dark-white';
         }
 
@@ -497,7 +501,7 @@ class Content implements Renderable
             'navbar_color'      => $data['navbar_color'],
             'navbar_class'      => $allOptions['navbar_class'][$data['navbar_class']],
             'sidebar_class'     => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
-            'body_class'        => $data['body_class'],
+            'body_class'        => implode(' ', $data['body_class']),
             'sidebar_style'     => $data['sidebar_style'],
         ];
     }

@@ -458,11 +458,25 @@ class Admin
         $jsVariables['token'] = csrf_token();
         $jsVariables['lang'] = __('admin.client') ?: [];
         $jsVariables['colors'] = static::color()->all();
-        $jsVariables['dark_mode'] = Str::contains(config('admin.layout.body_class'), 'dark-mode');
+        $jsVariables['dark_mode'] = static::isDarkMode();
         $jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
         $jsVariables['sidebar_light_style'] = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
 
         return admin_javascript_json($jsVariables);
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isDarkMode()
+    {
+        $bodyClass = config('admin.layout.body_class');
+
+        return in_array(
+            'dark-mode',
+            is_array($bodyClass) ? $bodyClass : explode(' ', $bodyClass),
+            true
+        );
     }
 
     /**
