@@ -834,7 +834,7 @@ HTML;
 
     protected function prepareHandler()
     {
-        if (method_exists($this, 'handle')) {
+        if ($this->allowAjaxSubmit() && method_exists($this, 'handle')) {
             $addHiddenFields = function () {
                 $this->method('POST');
                 $this->action(route(admin_api_route_name('form')));
