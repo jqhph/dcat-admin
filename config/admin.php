@@ -284,7 +284,7 @@ return [
         // default, blue, blue-light, green
         'color' => 'default',
 
-        'body_class' => '',
+        'body_class' => [],
 
         'sidebar_collapsed' => false,
 

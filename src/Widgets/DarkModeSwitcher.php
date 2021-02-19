@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Widgets;
 
+use Dcat\Admin\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
 
@@ -11,7 +12,7 @@ class DarkModeSwitcher implements Renderable
 
     public function __construct(?bool $defaultDarkMode = null)
     {
-        $this->defaultDarkMode = is_null($defaultDarkMode) ? Str::contains(config('admin.layout.body_class'), 'dark-mode') : $defaultDarkMode;
+        $this->defaultDarkMode = is_null($defaultDarkMode) ? Admin::isDarkMode() : $defaultDarkMode;
     }
 
     public function render()
