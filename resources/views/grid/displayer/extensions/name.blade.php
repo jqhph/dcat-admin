@@ -16,7 +16,6 @@
     </span>
 
     @if($row->new_version || ! $row->version)
-        &nbsp;
         <span class="badge bg-primary">New</span>
     @endif
 </div>
@@ -45,6 +44,9 @@
 @endif
 
 <style>
+    .badge {
+        max-height: 22px
+    }
     .hover-display {
         display:none;
     }
