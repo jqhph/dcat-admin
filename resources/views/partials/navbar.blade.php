@@ -6,6 +6,7 @@
 
     <div class="navbar-wrapper">
         <div class="navbar-container content">
+            @if(! $configData['horizontal_menu'])
             <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
                 <ul class="nav navbar-nav">
                     <li class="nav-item mr-auto">
@@ -15,6 +16,7 @@
                     </li>
                 </ul>
             </div>
+            @endif
 
             <div class="navbar-collapse">
                 <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
@@ -46,8 +48,4 @@ results found.</span></div>
         </a>
     </li>
 </ul>
-<script>
-    $('.menu-toggle').on('click', function () {
-        $(this).find('i').toggleClass('icon-circle icon-disc')
-    })
-</script>
+

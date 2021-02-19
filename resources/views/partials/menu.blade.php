@@ -1,13 +1,15 @@
 @php
-    $active = $builder->isActive($item);
-
     $depth = $item['depth'] ?? 0;
+
+    $horizontal = config('admin.layout.horizontal_menu');
 @endphp
 
 @if($builder->visible($item))
     @if(empty($item['children']))
         <li class="nav-item">
-            <a @if(mb_strpos($item['uri'], '://') !== false) target="_blank" @endif href="{{ $builder->getUrl($item['uri']) }}" class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
+            <a @if(mb_strpos($item['uri'], '://') !== false) target="_blank" @endif
+               href="{{ $builder->getUrl($item['uri']) }}"
+               class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
                 {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
@@ -15,19 +17,19 @@
             </a>
         </li>
     @else
-        @php
-            $active = $builder->isActive($item);
-        @endphp
 
-        <li class="nav-item has-treeview {{ $active ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link">
+        <li class="{{ $horizontal ? 'dropdown menu-open' : '' }} nav-item has-treeview {{ $builder->isActive($item) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ $horizontal ? 'dropdown-toggle' : '' }}" {{ $horizontal ? 'data-toggle="dropdown"' : '' }}>
                 {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
-                    <i class="right fa fa-angle-left"></i>
+
+                    @if(! $horizontal)
+                        <i class="right fa fa-angle-left"></i>
+                    @endif
                 </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview {{ $horizontal ? 'dropdown-menu' : '' }}">
                 @foreach($item['children'] as $item)
                     @php
                         $item['depth'] = $depth + 1;

@@ -1,0 +1,55 @@
+
+.horizontal-menu {
+  .content-wrapper, .main-footer, .main-header {
+    margin-left: 0!important;
+  }
+
+  .header-navbar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+
+  .header-navbar.navbar-horizontal, .main-sidebar {
+    top: 68px;
+    position: fixed;
+    width: 100%;
+    //z-index: 99!important;
+    height: inherit;
+    min-height: auto;
+    bottom: inherit;
+  }
+
+ .header-navbar .main-menu-content {
+   padding-left: 1.5rem!important;
+   padding-right: 1.3rem!important;
+   transition: .3s ease all;
+   background: inherit;
+   margin-left: 0;
+ }
+
+  .wrapper .sidebar {
+    height: inherit!important;
+  }
+
+  .nav.nav-pills {
+    margin-bottom: .8rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .navbar-expand-sm {
+    -webkit-flex-flow: row nowrap;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .navbar-expand-sm, .navbar-expand-sm .navbar-nav {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+  }
+}
+

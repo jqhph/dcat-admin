@@ -438,17 +438,13 @@ class Content implements Renderable
             'navbar_class'      => 'sticky',
             'footer_type'       => '',
             'body_class'        => [],
+            'horizontal_menu'   => false,
         ];
 
         $data = array_merge(
             config('admin.layout') ?: [],
             $this->config
         );
-
-        // 1.0 版本兼容 sidebar_dark 参数
-        if (empty($data['sidebar_style']) && ! empty($data['sidebar_dark'])) {
-            $data['sidebar_style'] = 'sidebar-dark-white';
-        }
 
         $allOptions = [
             'theme'             => '',
@@ -458,6 +454,7 @@ class Content implements Renderable
             'sidebar_collapsed' => [],
             'navbar_color'      => [],
             'navbar_class'      => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
+            'horizontal_menu'   => [],
         ];
 
         $maps = [
@@ -495,6 +492,11 @@ class Content implements Renderable
             $data['sidebar_style'] = 'sidebar-dark-white';
         }
 
+        if ($data['horizontal_menu']) {
+            $data['body_class'][] = 'horizontal-layout';
+            $data['body_class'][] = 'horizontal-menu';
+        }
+
         return [
             'theme'             => $data['theme'],
             'sidebar_collapsed' => $data['sidebar_collapsed'],
@@ -503,6 +505,7 @@ class Content implements Renderable
             'sidebar_class'     => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
             'body_class'        => implode(' ', $data['body_class']),
             'sidebar_style'     => $data['sidebar_style'],
+            'horizontal_menu'   => $data['horizontal_menu'],
         ];
     }
 
