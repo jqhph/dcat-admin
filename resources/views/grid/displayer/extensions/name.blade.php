@@ -16,6 +16,7 @@
     </span>
 
     @if($row->new_version || ! $row->version)
+        &nbsp;
         <span class="badge bg-primary">New</span>
     @endif
 </div>
