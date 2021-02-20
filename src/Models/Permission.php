@@ -21,7 +21,7 @@ class Permission extends Model implements Sortable
     /**
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'http_method', 'http_path'];
+    protected $fillable = ['parent_id', 'name', 'slug', 'http_method', 'http_path'];
 
     /**
      * @var array
