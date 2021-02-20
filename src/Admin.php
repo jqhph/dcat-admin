@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class Admin
@@ -31,7 +30,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.17-beta';
+    const VERSION = '2.0.18-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
