@@ -219,11 +219,11 @@ export default class AddFile {
                     }
 
                     // 删除请求
-                    uploader.request.delete(file, function () {
+                    parent.request.delete(file, function () {
                         // 删除成功回调
                         parent.input.delete(file.serverId);
 
-                        uploader.uploader.removeFile(file);
+                        uploader.removeFile(file);
                     });
 
                     break;
