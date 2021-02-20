@@ -88,7 +88,7 @@ class Permission
     /**
      * Send error response page.
      *
-     * @throws \Dcat\Admin\Exception\RespondException
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
      */
     public static function error()
     {
