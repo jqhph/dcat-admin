@@ -91,8 +91,8 @@
 
             clone.prop('type', 'text').blur(function (e) {
                 var c = parseInt(String.fromCharCode(e.which));
-                if (c === "NaN") {
-                    return;
+                if (isNaN(c)) {
+                    c = 0;
                 }
 
                 var n = getVal() + c;
