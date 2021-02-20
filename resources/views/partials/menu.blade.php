@@ -2,6 +2,8 @@
     $depth = $item['depth'] ?? 0;
 
     $horizontal = config('admin.layout.horizontal_menu');
+
+    $defaultIcon = config('admin.menu.default_icon', 'feather icon-circle');
 @endphp
 
 @if($builder->visible($item))
@@ -22,7 +24,7 @@
             <a href="#"
                class="nav-link {{ $builder->isActive($item) ? ($horizontal ? 'active' : '') : '' }}
                     {{ $horizontal ? 'dropdown-toggle' : '' }}">
-                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
+                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: $defaultIcon }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
 

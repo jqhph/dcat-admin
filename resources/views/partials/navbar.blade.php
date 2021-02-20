@@ -18,19 +18,33 @@
             </div>
             @endif
 
-            <div class="navbar-collapse">
-                <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+            <div class="navbar-collapse d-flex justify-content-between">
+                <div class="d-flex align-items-center">
                     {!! Dcat\Admin\Admin::navbar()->render('left') !!}
                 </div>
-                <div class="float-right d-flex align-items-center">
-                    {!! Dcat\Admin\Admin::navbar()->render() !!}
-                </div>
-                <ul class="nav navbar-nav float-right">
-                    {{--User Account Menu--}}
-                    {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_USER_PANEL']) !!}
 
-                    {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_AFTER_USER_PANEL']) !!}
-                </ul>
+                @if($configData['horizontal_menu'])
+                <div class="d-md-block horizontal-navbar-brand">
+                    <ul class="nav navbar-nav flex-row">
+                        <li class="nav-item mr-auto">
+                            <a href="{{ admin_url('/') }}" class="waves-effect waves-light">
+                                <span class="logo-lg">{!! config('admin.logo') !!}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                @endif
+
+                <div class=" d-flex align-items-center">
+                    {!! Dcat\Admin\Admin::navbar()->render() !!}
+
+                    <ul class="nav navbar-nav">
+                        {{--User Account Menu--}}
+                        {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_USER_PANEL']) !!}
+
+                        {!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_AFTER_USER_PANEL']) !!}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

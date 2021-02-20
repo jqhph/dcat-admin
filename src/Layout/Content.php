@@ -7,7 +7,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\ViewErrorBag;
 
@@ -493,7 +492,6 @@ class Content implements Renderable
         }
 
         if ($data['horizontal_menu']) {
-            $data['body_class'][] = 'horizontal-layout';
             $data['body_class'][] = 'horizontal-menu';
         }
 
