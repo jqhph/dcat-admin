@@ -1,4 +1,6 @@
 
+{!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_BEFORE']) !!}
+
 <nav class="header-navbar navbar-expand-lg navbar
     navbar-with-menu {{ $configData['navbar_class'] }}
     {{ $configData['navbar_color'] }}
@@ -24,7 +26,7 @@
                 </div>
 
                 @if($configData['horizontal_menu'])
-                <div class="d-md-block horizontal-navbar-brand">
+                <div class="d-md-block horizontal-navbar-brand justify-content-center text-center">
                     <ul class="nav navbar-nav flex-row">
                         <li class="nav-item mr-auto">
                             <a href="{{ admin_url('/') }}" class="waves-effect waves-light">
@@ -50,16 +52,4 @@
     </div>
 </nav>
 
-{{-- Search Start Here --}}
-<ul class="main-search-list-defaultlist d-none">
-
-</ul>
-<ul class="main-search-list-defaultlist-other-list d-none">
-    <li class="auto-suggestion d-flex align-items-center justify-content-between cursor-pointer">
-        <a class="d-flex align-items-center justify-content-between w-100 py-50">
-            <div class="d-flex justify-content-start"><span class="mr-75 feather icon-alert-circle"></span><span>No
-results found.</span></div>
-        </a>
-    </li>
-</ul>
-
+{!! admin_section(Dcat\Admin\Admin::SECTION['NAVBAR_AFTER']) !!}

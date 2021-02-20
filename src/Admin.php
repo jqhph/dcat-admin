@@ -47,6 +47,10 @@ class Admin
         // 顶部导航栏用户面板
         'NAVBAR_USER_PANEL' => 'ADMIN_NAVBAR_USER_PANEL',
         'NAVBAR_AFTER_USER_PANEL' => 'ADMIN_NAVBAR_AFTER_USER_PANEL',
+        // 顶部导航栏之前
+        'NAVBAR_BEFORE' => 'ADMIN_NAVBAR_BEFORE',
+        // 顶部导航栏底下
+        'NAVBAR_AFTER' => 'ADMIN_NAVBAR_AFTER',
 
         // 侧边栏顶部用户信息面板
         'LEFT_SIDEBAR_USER_PANEL' => 'ADMIN_LEFT_SIDEBAR_USER_PANEL',
