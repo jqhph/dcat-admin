@@ -130,10 +130,10 @@ trait UploadField
         }
 
         if ($this->name instanceof \Closure) {
-            return $this->name->call($this, $file);
+            $this->name = $this->name->call($this->values(), $file);
         }
 
-        if (is_string($this->name)) {
+        if ($this->name !== '' && is_string($this->name)) {
             return $this->name;
         }
 
@@ -148,7 +148,7 @@ trait UploadField
     public function getDirectory()
     {
         if ($this->directory instanceof \Closure) {
-            return call_user_func($this->directory, $this->form);
+            $this->directory = $this->directory->call($this->values(), $this->form);
         }
 
         return $this->directory ?: $this->defaultDirectory();
@@ -230,8 +230,8 @@ trait UploadField
     /**
      * Specify the directory and name for upload file.
      *
-     * @param string      $directory
-     * @param null|string $name
+     * @param string|\Closure $directory
+     * @param null|string     $name
      *
      * @return $this
      */
@@ -247,7 +247,7 @@ trait UploadField
     /**
      * Specify the directory upload file.
      *
-     * @param string $dir
+     * @param string|\Closure $dir
      *
      * @return $this
      */

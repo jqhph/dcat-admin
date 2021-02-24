@@ -83,7 +83,7 @@ trait InteractsWithApi
      */
     public function getRequestUrl()
     {
-        return $this->url ?: route(admin_api_route('value'));
+        return $this->url ?: route(admin_api_route_name('value'));
     }
 
     /**

@@ -132,9 +132,37 @@ class Application
      *
      * @return string
      */
-    public function getApiRoutePrefix(?string $app)
+    public function getApiRoutePrefix(?string $app = null)
     {
-        return "dcat.api.{$app}.";
+        return $this->getRoutePrefix($app).'dcat-api.';
+    }
+
+    /**
+     * 获取路由别名前缀.
+     *
+     * @param string|null $app
+     *
+     * @return string
+     */
+    public function getRoutePrefix(?string $app = null)
+    {
+        $app = $app ?: $this->getName();
+
+        return 'dcat.'.$app.'.';
+    }
+
+    /**
+     * 获取路由别名.
+     *
+     * @param string|null $route
+     * @param array $params
+     * @param bool $absolute
+     *
+     * @return string
+     */
+    public function getRoute(?string $route, array $params = [], $absolute = true)
+    {
+        return route($this->getRoutePrefix().$route, $params, $absolute);
     }
 
     /**
@@ -146,8 +174,8 @@ class Application
     {
         $this->switch($app);
 
-        $this->loadRoutesFrom(function () use ($app) {
-            Admin::registerApiRoutes($this->getApiRoutePrefix($app));
+        $this->loadRoutesFrom(function () {
+            Admin::registerApiRoutes();
         }, $app);
 
         if (is_file($routes = admin_path('routes.php'))) {
@@ -179,8 +207,10 @@ class Application
      */
     protected function loadRoutesFrom($path, ?string $app)
     {
-        if (! $this->container->routesAreCached()) {
-            Route::middleware('admin.app:'.$app)->group($path);
-        }
+        Route::group(array_filter([
+            'middleware' => 'admin.app:'.$app,
+            'domain'     => config("{$app}.route.domain"),
+            'as'         => $this->getRoutePrefix($app),
+        ]), $path);
     }
 }

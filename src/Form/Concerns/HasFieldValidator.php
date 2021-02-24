@@ -387,9 +387,10 @@ trait HasFieldValidator
                 if (! Arr::has($input, $column)) {
                     continue;
                 }
-                $input[$column.$key] = Arr::get($input, $column);
-                $rules[$column.$key] = $fieldRules;
-                $attributes[$column.$key] = "{$this->label}[$column]";
+                $k = $column.$key;
+                Arr::set($input, $k, Arr::get($input, $column));
+                $rules[$k] = $fieldRules;
+                $attributes[$k] = "{$this->label}[$column]";
             }
         }
 

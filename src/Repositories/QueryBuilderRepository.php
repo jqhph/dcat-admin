@@ -198,7 +198,7 @@ class QueryBuilderRepository extends Repository implements TreeRepository
      */
     protected function setPaginate(Grid\Model $model)
     {
-        $paginate = $model->findQueryByMethod('paginate');
+        $paginate = $model->findQueryByMethod('paginate')->first();
 
         $model->rejectQuery(['paginate']);
 

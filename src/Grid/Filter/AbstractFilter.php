@@ -203,12 +203,20 @@ abstract class AbstractFilter
     /**
      * Format id.
      *
-     * @param $columns
+     * @param string|array $columns
      *
      * @return array|string
      */
     protected function formatId($columns)
     {
+        if (is_array($columns)) {
+            foreach ($columns as &$column) {
+                $column = $this->formatId($column);
+            }
+
+            return $columns;
+        }
+
         return $this->parent->grid()->makeName('filter-column-'.str_replace('.', '-', $columns));
     }
 
@@ -607,12 +615,12 @@ abstract class AbstractFilter
     protected function defaultVariables()
     {
         return array_merge([
-            'id'        => $this->id,
-            'name'      => $this->formatName($this->column),
-            'label'     => $this->label,
-            'value'     => $this->normalizeValue(),
-            'width'     => $this->width,
-            'style'     => $this->style,
+            'id'    => $this->id,
+            'name'  => $this->formatName($this->column),
+            'label' => $this->label,
+            'value' => $this->normalizeValue(),
+            'width' => $this->width,
+            'style' => $this->style,
         ], $this->presenter()->variables());
     }
 

@@ -105,12 +105,11 @@ class LazyTable extends Widget
 
     protected function addScript()
     {
-        $loader = $this->load ? $this->getLoadScript() : '';
-
         $this->script = <<<JS
 Dcat.init('{$this->getElementSelector()}', function (\$this) {
-    Dcat.grid.AsyncTable({container: \$this});
-    {$loader}
+    Dcat.grid.AsyncTable({container: \$this})
+
+    {$this->getLoadScript()}
 });
 JS;
     }
@@ -120,6 +119,10 @@ JS;
      */
     protected function getLoadScript()
     {
+        if (! $this->load) {
+            return;
+        }
+
         return <<<'JS'
 $this.trigger('table:load');
 JS;

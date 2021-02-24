@@ -131,7 +131,7 @@ class Markdown extends Field
      */
     protected function defaultImageUploadUrl()
     {
-        return $this->formatUrl(route(admin_api_route('editor-md.upload')));
+        return $this->formatUrl(route(admin_api_route_name('editor-md.upload')));
     }
 
     /**

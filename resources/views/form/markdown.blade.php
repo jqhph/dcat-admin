@@ -19,6 +19,15 @@
     </div>
 </div>
 
-<script require="@markdown" init="{!! $selector !!}">
+<script first>
+    var ele = window.Element;
+    Dcat.eMatches = ele.prototype.matches ||
+        ele.prototype.msMatchesSelector ||
+        ele.prototype.webkitMatchesSelector;
+</script>
+
+<script require="@editor-md-form" init="{!! $selector !!}">
     editormd(id, {!! $options !!});
+
+    Element.prototype.matches = Dcat.eMatches;
 </script>

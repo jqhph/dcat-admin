@@ -528,14 +528,16 @@ class Column
         $i = 0;
 
         $data->transform(function ($row, $key) use (&$i) {
+            $this->setOriginalModel(static::$originalGridModels[$key]);
+
+            $this->originalModel['_index'] = $row['_index'] = $i;
+
             $row = $this->convertModelToArray($row);
 
             $i++;
             if (! isset($row['#'])) {
                 $row['#'] = $i;
             }
-
-            $this->setOriginalModel(static::$originalGridModels[$key]);
 
             $this->original = Arr::get($this->originalModel, $this->name);
 

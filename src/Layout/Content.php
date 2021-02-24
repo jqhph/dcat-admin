@@ -7,7 +7,6 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\ViewErrorBag;
 
@@ -437,7 +436,8 @@ class Content implements Renderable
             'navbar_color'      => '',
             'navbar_class'      => 'sticky',
             'footer_type'       => '',
-            'body_class'        => '',
+            'body_class'        => [],
+            'horizontal_menu'   => false,
         ];
 
         $data = array_merge(
@@ -445,19 +445,15 @@ class Content implements Renderable
             $this->config
         );
 
-        // 1.0 版本兼容 sidebar_dark 参数
-        if (empty($data['sidebar_style']) && ! empty($data['sidebar_dark'])) {
-            $data['sidebar_style'] = 'sidebar-dark-white';
-        }
-
         $allOptions = [
             'theme'             => '',
             'footer_type'       => '',
-            'body_class'        => '',
+            'body_class'        => [],
             'sidebar_style'     => ['light' => 'sidebar-light-primary', 'primary' => 'sidebar-primary', 'dark' => 'sidebar-dark-white'],
             'sidebar_collapsed' => [],
             'navbar_color'      => [],
             'navbar_class'      => ['floating' => 'floating-nav', 'sticky' => 'fixed-top', 'hidden' => 'd-none'],
+            'horizontal_menu'   => [],
         ];
 
         $maps = [
@@ -487,8 +483,16 @@ class Content implements Renderable
             }
         }
 
-        if ($data['body_class'] && Str::contains($data['body_class'], 'dark-mode')) {
+        if (! is_array($data['body_class'])) {
+            $data['body_class'] = explode(' ', (string) $data['body_class']);
+        }
+
+        if ($data['body_class'] && in_array('dark-mode', $data['body_class'], true)) {
             $data['sidebar_style'] = 'sidebar-dark-white';
+        }
+
+        if ($data['horizontal_menu']) {
+            $data['body_class'][] = 'horizontal-menu';
         }
 
         return [
@@ -497,8 +501,9 @@ class Content implements Renderable
             'navbar_color'      => $data['navbar_color'],
             'navbar_class'      => $allOptions['navbar_class'][$data['navbar_class']],
             'sidebar_class'     => $data['sidebar_collapsed'] ? 'sidebar-collapse' : '',
-            'body_class'        => $data['body_class'],
+            'body_class'        => implode(' ', $data['body_class']),
             'sidebar_style'     => $data['sidebar_style'],
+            'horizontal_menu'   => $data['horizontal_menu'],
         ];
     }
 

@@ -144,6 +144,20 @@ abstract class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
+     * 获取扩展别名.
+     *
+     * @return string
+     */
+    public function getAlias()
+    {
+        if (! $this->composerProperty) {
+            return;
+        }
+
+        return $this->composerProperty->alias;
+    }
+
+    /**
      * 获取包名.
      *
      * @return string|void
@@ -228,6 +242,37 @@ abstract class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
+     * 获取logo路径.
+     *
+     * @return string
+     *
+     * @throws \ReflectionException
+     */
+    public function getLogoPath()
+    {
+        return $this->path('logo.png');
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogoBase64()
+    {
+        try {
+            $logo = $this->getLogoPath();
+
+            if (is_file($logo) && $file = fopen($logo, 'rb', 0)) {
+                $content = fread($file, filesize($logo));
+                fclose($file);
+                $base64 = chunk_split(base64_encode($content));
+
+                return 'data:image/png;base64,'.$base64;
+            }
+        } catch (\ReflectionException $e) {
+        }
+    }
+
+    /**
      * 判断扩展是否启用.
      *
      * @return bool
@@ -298,8 +343,8 @@ abstract class ServiceProvider extends LaravelServiceProvider
     /**
      * 更新扩展.
      *
-     * @param $currentVersion
-     * @param $stopOnVersion
+     * @param string $currentVersion
+     * @param string $stopOnVersion
      *
      * @throws \Exception
      */

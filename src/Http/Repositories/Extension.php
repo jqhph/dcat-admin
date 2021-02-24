@@ -19,9 +19,6 @@ class Extension extends Repository
         }
 
         return $data;
-        //return collect($data)->sort(function ($row) {
-        //    return ! empty($row['version']) && empty($row['new_version']);
-        //})->toArray();
     }
 
     /**
@@ -39,7 +36,8 @@ class Extension extends Repository
 
         return [
             'id'           => $name,
-            'alias'        => $name,
+            'alias'        => $extension->getAlias(),
+            'logo'         => $extension->getLogoBase64(),
             'name'         => $name,
             'version'      => $current,
             'type'         => $extension->getType(),
@@ -59,8 +57,6 @@ class Extension extends Repository
 
     public function update(Form $form)
     {
-        $id = $form->getKey();
-
         return true;
     }
 
