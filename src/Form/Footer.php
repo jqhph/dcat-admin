@@ -136,7 +136,7 @@ class Footer implements Renderable
      *
      * @return $this
      */
-    public function defaultViewChecked(bool $checked = false)
+    public function defaultViewChecked(bool $checked = true)
     {
         $this->defaultcheckeds['view'] = $checked;
 
@@ -150,7 +150,7 @@ class Footer implements Renderable
      *
      * @return $this
      */
-    public function defaultEditingChecked(bool $checked = false)
+    public function defaultEditingChecked(bool $checked = true)
     {
         $this->defaultcheckeds['continue_editing'] = $checked;
 
@@ -164,7 +164,7 @@ class Footer implements Renderable
      *
      * @return $this
      */
-    public function defaultCreatingChecked(bool $checked = false)
+    public function defaultCreatingChecked(bool $checked = true)
     {
         $this->defaultcheckeds['continue_creating'] = $checked;
 

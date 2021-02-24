@@ -1506,6 +1506,42 @@ class Form implements Renderable
     }
 
     /**
+     * default View Checked on footer.
+     *
+     * @return $this
+     */
+    public function defaultViewChecked(bool $checked = true)
+    {
+        $this->builder->footer()->defaultViewChecked($checked);
+
+        return $this;
+    }
+
+    /**
+     * default Editing Checked on footer.
+     *
+     * @return $this
+     */
+    public function defaultEditingChecked(bool $checked = true)
+    {
+        $this->builder->footer()->defaultEditingChecked($checked);
+
+        return $this;
+    }
+
+    /**
+     * default Creating Checked on footer.
+     *
+     * @return $this
+     */
+    public function defaultCreatingChecked(bool $checked = true)
+    {
+        $this->builder->footer()->defaultCreatingChecked($checked);
+
+        return $this;
+    }
+
+    /**
      * Disable `view` tool.
      *
      * @return $this
