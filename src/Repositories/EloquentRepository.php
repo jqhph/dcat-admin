@@ -307,22 +307,18 @@ class EloquentRepository extends Repository implements TreeRepository
     {
         [$relationName, $relationColumn] = explode('.', $column, 2);
 
-        if ($model->getQueries()->contains(function ($query) use ($relationName) {
-            return $query['method'] == 'with' && in_array($relationName, $query['arguments']);
-        })) {
-            $relation = $this->model()->$relationName();
+        $relation = $this->model()->$relationName();
 
-            $model->addQuery('select', [$this->model()->getTable().'.*']);
+        $model->addQuery('select', [$this->model()->getTable().'.*']);
 
-            $model->addQuery('join', $this->joinParameters($relation));
+        $model->addQuery('join', $this->joinParameters($relation));
 
-            $this->setOrderBy(
-                $model,
-                $relation->getRelated()->getTable().'.'.str_replace('.', '->', $relationColumn),
-                $type,
-                $cast
-            );
-        }
+        $this->setOrderBy(
+            $model,
+            $relation->getRelated()->getTable().'.'.str_replace('.', '->', $relationColumn),
+            $type,
+            $cast
+        );
     }
 
     /**
