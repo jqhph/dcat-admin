@@ -34,6 +34,8 @@ class Helper
         'video'      => 'mkv|rmvb|flv|mp4|avi|wmv|rm|asf|mpeg',
     ];
 
+    protected static $controllerNames = [];
+
     /**
      * 把给定的值转化为数组.
      *
@@ -109,6 +111,30 @@ class Helper
         }
 
         return (string) $value;
+    }
+
+    /**
+     * 获取当前控制器名称.
+     *
+     * @return mixed|string
+     */
+    public static function getControllerName()
+    {
+        $router = app('router');
+
+        if (! $router->current()) {
+            return 'undefined';
+        }
+
+        $actionName = $router->current()->getActionName();
+
+        if (! isset(static::$controllerNames[$actionName])) {
+            $controller = class_basename(explode('@', $actionName)[0]);
+
+            static::$controllerNames[$actionName] = str_replace('Controller', '', $controller);
+        }
+
+        return static::$controllerNames[$actionName];
     }
 
     /**
