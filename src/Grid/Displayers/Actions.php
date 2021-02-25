@@ -198,7 +198,7 @@ class Actions extends AbstractDisplayer
     /**
      * @return void
      */
-    protected function resetsetActions()
+    protected function resetDefaultActions()
     {
         $this->view($this->grid->option('view_button'));
         $this->edit($this->grid->option('edit_button'));
@@ -225,7 +225,7 @@ class Actions extends AbstractDisplayer
      */
     public function display(array $callbacks = [])
     {
-        $this->resetsetActions();
+        $this->resetDefaultActions();
 
         $this->call($callbacks);
 
