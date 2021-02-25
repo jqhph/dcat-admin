@@ -85,7 +85,7 @@ class Permission
      */
     protected function isApiRoute($request)
     {
-        return $request->routeIs('dcat.api.*');
+        return $request->routeIs(admin_api_route_name('*'));
     }
 
     /**

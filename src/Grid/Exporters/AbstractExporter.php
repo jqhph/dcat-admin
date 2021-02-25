@@ -230,6 +230,12 @@ abstract class AbstractExporter implements ExporterInterface
     {
         foreach ($data as &$row) {
             $row = Arr::dot($row);
+
+            foreach ($row as &$v) {
+                if (is_array($v) || is_object($v)) {
+                    $v = json_encode($v, JSON_UNESCAPED_UNICODE);
+                }
+            }
         }
 
         return $data;

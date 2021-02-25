@@ -26,7 +26,7 @@ class Setting extends Fluent
             return [];
         }
 
-        return json_decode($value, true) ?: [];
+        return is_array($value) ? $value : (json_decode($value, true) ?: []);
     }
 
     /**

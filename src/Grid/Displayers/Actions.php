@@ -90,6 +90,11 @@ class Actions extends AbstractDisplayer
         }
     }
 
+    public function view(bool $value = true)
+    {
+        return $this->setAction('view', $value);
+    }
+
     /**
      * Disable view action.
      *
@@ -99,7 +104,12 @@ class Actions extends AbstractDisplayer
      */
     public function disableView(bool $disable = true)
     {
-        return $this->disableDefaultAction('view', $disable);
+        return $this->setAction('view', ! $disable);
+    }
+
+    public function delete(bool $value = true)
+    {
+        return $this->setAction('delete', $value);
     }
 
     /**
@@ -111,7 +121,12 @@ class Actions extends AbstractDisplayer
      */
     public function disableDelete(bool $disable = true)
     {
-        return $this->disableDefaultAction('delete', $disable);
+        return $this->setAction('delete', ! $disable);
+    }
+
+    public function edit(bool $value = true)
+    {
+        return $this->setAction('edit', $value);
     }
 
     /**
@@ -123,7 +138,12 @@ class Actions extends AbstractDisplayer
      */
     public function disableEdit(bool $disable = true)
     {
-        return $this->disableDefaultAction('edit', $disable);
+        return $this->setAction('edit', ! $disable);
+    }
+
+    public function quickEdit(bool $value = true)
+    {
+        return $this->setAction('quickEdit', $value);
     }
 
     /**
@@ -135,7 +155,7 @@ class Actions extends AbstractDisplayer
      */
     public function disableQuickEdit(bool $disable = true)
     {
-        return $this->disableDefaultAction('quickEdit', $disable);
+        return $this->setAction('quickEdit', ! $disable);
     }
 
     /**
@@ -144,9 +164,9 @@ class Actions extends AbstractDisplayer
      *
      * @return $this
      */
-    protected function disableDefaultAction(string $key, bool $disable)
+    protected function setAction(string $key, bool $value)
     {
-        $this->actions[$key] = ! $disable;
+        $this->actions[$key] = $value;
 
         return $this;
     }
@@ -180,10 +200,10 @@ class Actions extends AbstractDisplayer
      */
     protected function resetDefaultActions()
     {
-        $this->disableView(! $this->grid->option('view_button'));
-        $this->disableEdit(! $this->grid->option('edit_button'));
-        $this->disableQuickEdit(! $this->grid->option('quick_edit_button'));
-        $this->disableDelete(! $this->grid->option('delete_button'));
+        $this->view($this->grid->option('view_button'));
+        $this->edit($this->grid->option('edit_button'));
+        $this->quickEdit($this->grid->option('quick_edit_button'));
+        $this->delete($this->grid->option('delete_button'));
     }
 
     /**
