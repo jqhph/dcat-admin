@@ -9,6 +9,13 @@ use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
+/**
+ * Trait HasTree
+ *
+ * @package Dcat\Admin\Grid\Concerns
+ *
+ * @method \Dcat\Admin\Grid grid()
+ */
 trait HasTree
 {
     /**
@@ -222,6 +229,34 @@ HTML
         return $this->request->get(
             $this->getParentIdQueryName()
         ) ?: $this->getDefaultParentId();
+    }
+
+    /**
+     * 移除树相关参数.
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    public function withoutTreeQuery($url)
+    {
+        if (! $url) {
+            return $url;
+        }
+
+        parse_str(explode('?', $url)[1] ?? '', $originalQuery);
+
+        $parentId = $originalQuery[$this->getParentIdQueryName()] ?? 0;
+
+        if (! $parentId) {
+            return $url;
+        }
+
+        return Helper::urlWithoutQuery($url, [
+            $this->getParentIdQueryName(),
+            $this->getChildrenPageName($parentId),
+            $this->getDepthQueryName(),
+        ]);
     }
 
     /**

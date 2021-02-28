@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Actions;
 
 use Dcat\Admin\Grid\RowAction;
+use Dcat\Admin\Support\Helper;
 
 class Delete extends RowAction
 {
@@ -24,10 +25,15 @@ class Delete extends RowAction
             'data-url'      => $this->url(),
             'data-message'  => "ID - {$this->getKey()}",
             'data-action'   => 'delete',
-            'data-redirect' => request()->fullUrl(),
+            'data-redirect' => $this->redirectUrl(),
         ]);
 
         return parent::render();
+    }
+
+    protected function redirectUrl()
+    {
+        return $this->parent->model()->withoutTreeQuery(request()->fullUrl());
     }
 
     public function url()

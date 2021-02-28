@@ -784,6 +784,12 @@ class Field implements Renderable
      */
     public function readOnly(bool $value = true)
     {
+        if (! $value) {
+            unset($this->attributes['readonly']);
+
+            return $this;
+        }
+
         return $this->attribute('readonly', $value);
     }
 
@@ -796,6 +802,12 @@ class Field implements Renderable
      */
     public function disable(bool $value = true)
     {
+        if (! $value) {
+            unset($this->attributes['disabled']);
+
+            return $this;
+        }
+
         return $this->attribute('disabled', $value);
     }
 
