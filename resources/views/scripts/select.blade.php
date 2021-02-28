@@ -44,13 +44,24 @@
         $(document).off('change', selector);
         $(document).on('change', selector, function () {
             var target = $(this).closest('{{ $load['group'] ?? '.fields-group' }}').find(".{{ $load['class'] }}");
+            var values = [];
 
-            if (String(this.value) !== '0' && ! this.value) {
+            $(this).find('option:selected').each(function () {
+                if (String(this.value) === '0'|| this.value) {
+                    values.push(this.value)
+                }
+            });
+
+            if (! values.length) {
                 return;
             }
             target.find("option").remove();
 
-            $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+this.value).then(function (data) {
+            Dcat.loading();
+
+            $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+values.join(',')).then(function (data) {
+                Dcat.loading(false);
+
                 $.map(data, function (d) {
                     target.append(new Option(d.{{ $load['textField'] }}, d.{{ $load['idField'] }}, false, false));
                 });
