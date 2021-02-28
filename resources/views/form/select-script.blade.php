@@ -38,7 +38,10 @@
         var urls = '{!! $loads['urls'] !!}'.split('^');
 
         var refreshOptions = function(url, target) {
+            Dcat.loading();
+
             $.ajax(url).then(function(data) {
+                Dcat.loading(false);
                 target.find("option").remove();
                 $(target).select2({
                     data: $.map(data, function (d) {
@@ -54,14 +57,21 @@
         $(document).on('change', selector, function () {
             var _this = this;
             var promises = [];
+            var values = [];
+
+            $(this).find('option:selected').each(function () {
+                if (String(this.value) === '0'|| this.value) {
+                    values.push(this.value)
+                }
+            });
 
             fields.forEach(function(field, index){
                 var target = $(_this).closest('.fields-group').find('.' + fields[index]);
 
-                if (_this.value !== '0' && ! _this.value) {
+                if (! values.length) {
                     return;
                 }
-                promises.push(refreshOptions(urls[index] + (urls[index].match(/\?/)?'&':'?') + "q="+ _this.value, target));
+                promises.push(refreshOptions(urls[index] + (urls[index].match(/\?/)?'&':'?') + "q="+ values.join(','), target));
             });
 
             $.when(promises).then(function() {});
