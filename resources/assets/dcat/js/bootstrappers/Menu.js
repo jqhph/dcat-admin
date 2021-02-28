@@ -53,5 +53,27 @@ export default class Menu {
             $this.parents('.dropdown').find('.nav-link').eq(0).addClass('active');
             $this.parents('.dropdown-submenu').find('.nav-link').eq(0).addClass('active')
         });
+
+
+        // 重新计算高度
+        let resize = function () {
+            if (! $('.horizontal-menu').length) {
+                return;
+            }
+
+            let defaultHorizontalMenuHeight = 55,
+                height = $('.horizontal-menu .main-horizontal-sidebar').height(),
+                diff = height - defaultHorizontalMenuHeight,
+                $wrapper = $('.horizontal-menu.navbar-fixed-top .content-wrapper');
+
+            if (height <= defaultHorizontalMenuHeight) {
+                return $wrapper.css({'padding-top': '80px'});
+            }
+
+            $wrapper.css({'padding-top': (80 + diff) + 'px'});
+        };
+        window.onresize = resize;
+
+        resize();
     }
 }
