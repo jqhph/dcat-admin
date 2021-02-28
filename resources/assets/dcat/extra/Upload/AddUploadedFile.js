@@ -125,7 +125,7 @@ export default class AddUploadedFile {
     reRender() {
         for (let i in this.uploadedFiles) {
             if (this.uploadedFiles[i]) {
-                this.add(this.uploadedFiles[i])
+                this.render(this.uploadedFiles[i])
             }
         }
     }
