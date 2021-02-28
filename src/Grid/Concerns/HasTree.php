@@ -10,9 +10,8 @@ use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
 /**
- * Trait HasTree
+ * Trait HasTree.
  *
- * @package Dcat\Admin\Grid\Concerns
  *
  * @method \Dcat\Admin\Grid grid()
  */
