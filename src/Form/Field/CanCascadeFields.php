@@ -120,9 +120,7 @@ trait CanCascadeFields
 
         Admin::script(
             <<<JS
-Dcat.init('{$this->getElementClassSelector()}', function (\$this) {
     {$script}
-});
 JS
         );
     }
@@ -148,67 +146,69 @@ JS
 
         return <<<JS
 (function () {
-    var compare = function (a, b, o) {
-        if (! $.isArray(b)) {
-            return operator_table[o](a, b)
-        }
-        
-        if (o === '!=') {
-            var result = true;
+    Dcat.init('{$this->getElementClassSelector()}', function (\$this) {
+        var compare = function (a, b, o) {
+            if (! $.isArray(b)) {
+                return operator_table[o](a, b)
+            }
+            
+            if (o === '!=') {
+                var result = true;
+                for (var i in b) {
+                    if (! operator_table[o](a, b[i])) {
+                        result = false;
+                        
+                        break;
+                    }
+                }
+                return result;
+            }
+            
             for (var i in b) {
-                if (! operator_table[o](a, b[i])) {
-                    result = false;
-                    
-                    break;
+                if (operator_table[o](a, b[i])) {
+                    return true;
                 }
             }
-            return result;
-        }
+        };
         
-        for (var i in b) {
-            if (operator_table[o](a, b[i])) {
-                return true;
-            }
-        }
-    };
-    
-    var operator_table = {
-        '=': function(a, b) {
-            if ($.isArray(a) && $.isArray(b)) {
-                return $(a).not(b).length === 0 && $(b).not(a).length === 0;
-            }
+        var operator_table = {
+            '=': function(a, b) {
+                if ($.isArray(a) && $.isArray(b)) {
+                    return $(a).not(b).length === 0 && $(b).not(a).length === 0;
+                }
 
-            return String(a) === String(b);
-        },
-        '>': function(a, b) {
-            return a > b; 
-        },
-        '<': function(a, b) {
-            return a < b; 
-        },
-        '>=': function(a, b) { return a >= b; },
-        '<=': function(a, b) { return a <= b; },
-        '!=': function(a, b) {
-             return ! operator_table['='](a, b);
-        },
-        'in': function(a, b) { return Dcat.helpers.inObject(a, String(b), true); },
-        'notIn': function(a, b) { return ! Dcat.helpers.inObject(a, String(b), true); },
-        'has': function(a, b) { return Dcat.helpers.inObject(b, String(b), true); },
-    };
-    var cascade_groups = {$cascadeGroups}, event = '{$this->cascadeEvent}';
+                return String(a) === String(b);
+            },
+            '>': function(a, b) {
+                return a > b; 
+            },
+            '<': function(a, b) {
+                return a < b; 
+            },
+            '>=': function(a, b) { return a >= b; },
+            '<=': function(a, b) { return a <= b; },
+            '!=': function(a, b) {
+                return ! operator_table['='](a, b);
+            },
+            'in': function(a, b) { return Dcat.helpers.inObject(a, String(b), true); },
+            'notIn': function(a, b) { return ! Dcat.helpers.inObject(a, String(b), true); },
+            'has': function(a, b) { return Dcat.helpers.inObject(b, String(b), true); },
+        };
+        var cascade_groups = {$cascadeGroups}, event = '{$this->cascadeEvent}';
 
-    \$this.on(event, function (e) {
-        {$this->getFormFrontValue()}
+        \$this.on(event, function (e) {
+            {$this->getFormFrontValue()}
 
-        cascade_groups.forEach(function (event) {
-            var group = $('div.cascade-group.'+event.class);
-            if (compare(checked, event.value, event.operator)) {
-                group.removeClass('d-none');
-            } else {
-                group.addClass('d-none');
-            }
-        });
-    }).trigger(event);
+            cascade_groups.forEach(function (event) {
+                var group = $('div.cascade-group.'+event.class);
+                if (compare(checked, event.value, event.operator)) {
+                    group.removeClass('d-none');
+                } else {
+                    group.addClass('d-none');
+                }
+            });
+        }).trigger(event);
+    });
 })();
 JS;
     }

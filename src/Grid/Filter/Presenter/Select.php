@@ -7,6 +7,7 @@ use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class Select extends Presenter
 {
@@ -297,6 +298,37 @@ class Select extends Presenter
     }
 
     /**
+     * Load options for other selects on change.
+     *
+     * @param string $fields
+     * @param string $sourceUrls
+     * @param string $idField
+     * @param string $textField
+     *
+     * @return $this
+     */
+    public function loads($fields = [], $sourceUrls = [], string $idField = 'id', string $textField = 'text')
+    {
+        $fieldsStr = implode('^', array_map(function ($field) {
+            if (Str::contains($field, '.')) {
+                return $this->normalizeElementClass($field).'_';
+            }
+
+            return $this->normalizeElementClass($field);
+        }, (array) $fields));
+        $urlsStr = implode('^', array_map(function ($url) {
+            return admin_url($url);
+        }, (array) $sourceUrls));
+
+        return $this->addVariables(['loads' => [
+            'fields'    => $fieldsStr,
+            'urls'      => $urlsStr,
+            'idField'   => $idField,
+            'textField' => $textField,
+        ]]);
+    }
+
+    /**
      * Get form element class.
      *
      * @param string $target
@@ -306,5 +338,19 @@ class Select extends Presenter
     protected function getClass($target): string
     {
         return str_replace('.', '_', $target);
+    }
+
+        /**
+     * @param string|array $class
+     *
+     * @return array|string
+     */
+    public function normalizeElementClass($class)
+    {
+        if (is_array($class)) {
+            return array_map([$this, 'normalizeElementClass'], $class);
+        }
+
+        return str_replace(['[', ']', '->', '.'], '_', $class);
     }
 }
