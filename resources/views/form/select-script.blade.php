@@ -29,26 +29,3 @@
     {!! $cascadeScript !!}
 </script>
 
-@if(isset($loads))
-    {{--loads联动--}}
-    <script once>
-        var selector = '{!! $selector !!}';
-
-        var fields = '{!! $loads['fields'] !!}'.split('^');
-        var urls = '{!! $loads['urls'] !!}'.split('^');
-
-        $(document).off('change', selector);
-        $(document).on('change', selector, function () {
-            Dcat.helpers.loadFields(this, {
-                group: '.fields-group',
-                urls: urls,
-                fields: fields,
-                textField: "{{ $loads['textField'] }}",
-                idField: "{{ $loads['idField'] }}",
-            });
-        });
-        $(selector).trigger('change');
-    </script>
-@endif
-
-@yield('admin.select-load')

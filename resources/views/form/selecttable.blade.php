@@ -38,21 +38,6 @@
         values: {!! json_encode($options) !!},
     });
 
-    @if(! empty($load))
-    $input.on('change', function () {
-        var values = this.value;
-
-        Dcat.helpers.loadField(this, {
-            group: '{{ $load['group'] ?? '.fields-group' }}',
-            class: '.{{ $load['class'] }}',
-            url: "{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q=",
-            textField: "{{ $load['textField'] }}",
-            idField: "{{ $load['idField'] }}",
-            values: values,
-        });
-    }).trigger('change');
-    @endif
-
     @if(! empty($loads))
     var fields = '{!! $loads['fields'] !!}'.split('^');
     var urls = '{!! $loads['urls'] !!}'.split('^');

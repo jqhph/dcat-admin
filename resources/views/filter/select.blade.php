@@ -28,5 +28,3 @@
     $("{!! $selector !!}").select2(configs);
     @endif
 </script>
-
-@yield('admin.select-load')

@@ -18,22 +18,14 @@ trait CanLoadFields
      */
     public function load($field, $sourceUrl, string $idField = 'id', string $textField = 'text')
     {
-        if (Str::contains($field, '.')) {
-            $field = $this->formatName($field);
-        }
-
-        $class = $this->normalizeElementClass($field);
-
-        $url = admin_url($sourceUrl);
-
-        return $this->addVariables(['load' => compact('url', 'class', 'idField', 'textField')]);
+        return $this->loads($field, $sourceUrl, $idField, $textField);
     }
 
     /**
      * 联动加载多个字段.
      *
-     * @param string $fields
-     * @param string $sourceUrls
+     * @param array|string $fields
+     * @param array|string $sourceUrls
      * @param string $idField
      * @param string $textField
      *

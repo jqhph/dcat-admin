@@ -36,22 +36,26 @@
 @overwrite
 </script>
 
-@section('admin.select-load')
-    @if(isset($load))
-    <script once>
-        var selector = '{!! $selector !!}';
 
-        $(document).off('change', selector);
-        $(document).on('change', selector, function () {
-            Dcat.helpers.loadField(this, {
-                group: '{{ $load['group'] ?? '.fields-group' }}',
-                class: '.{{ $load['class'] }}',
-                url: "{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q=",
-                textField: "{{ $load['textField'] }}",
-                idField: "{{ $load['idField'] }}",
-            });
+@if(isset($loads))
+{{--loads联动--}}
+<script once>
+    var selector = '{!! $selector !!}';
+
+    var fields = '{!! $loads['fields'] !!}'.split('^');
+    var urls = '{!! $loads['urls'] !!}'.split('^');
+
+    $(document).off('change', selector);
+    $(document).on('change', selector, function () {
+        Dcat.helpers.loadFields(this, {
+            group: '{{ $loads['group'] ?? '.fields-group' }}',
+            urls: urls,
+            fields: fields,
+            textField: "{{ $loads['textField'] }}",
+            idField: "{{ $loads['idField'] }}",
         });
-        $(selector).trigger('change');
-    </script>
-    @endif
-@overwrite
+    });
+    $(selector).trigger('change');
+</script>
+@endif
+

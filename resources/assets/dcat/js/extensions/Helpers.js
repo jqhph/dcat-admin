@@ -265,47 +265,6 @@ export default class Helpers {
     }
 
     /**
-     * 联动select表单
-     *
-     * @param _this
-     * @param options
-     */
-    loadField(_this, options) {
-        let target = $(_this).closest(options.group || '.fields-group').find(options.class);
-        let values = [];
-
-        if (! options.values) {
-            $(_this).find('option:selected').each(function () {
-                if (String(this.value) === '0' || this.value) {
-                    values.push(this.value)
-                }
-            });
-        } else {
-            values = options.values;
-            if (typeof values === 'string') {
-                values = [values];
-            }
-        }
-
-        if (! values.length) {
-            return;
-        }
-
-        target.find("option").remove();
-
-        Dcat.loading();
-
-        $.ajax(options.url+values).then(function (data) {
-            Dcat.loading(false);
-
-            $.map(data, function (d) {
-                target.append(new Option(d[options.textField], d[options.idField], false, false));
-            });
-            target.val(String(target.attr('data-value')).split(',')).trigger('change');
-        });
-    }
-
-    /**
      * 联动多个字段.
      *
      * @param _this
