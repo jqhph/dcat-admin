@@ -318,13 +318,12 @@ export default class Helpers {
             $.ajax(url).then(function(data) {
                 Dcat.loading(false);
                 target.find("option").remove();
-                $(target).select2({
-                    data: $.map(data, function (d) {
-                        d.id = d[options.idField];
-                        d.text = d[options.textField];
-                        return d;
-                    })
-                }).val(String(target.data('value')).split(',')).trigger('change');
+
+                $.map(data, function (d) {
+                    target.append(new Option(d[options.textField], d[options.idField], false, false));
+                });
+
+                $(target).val(String(target.data('value')).split(',')).trigger('change');
             });
         };
 
