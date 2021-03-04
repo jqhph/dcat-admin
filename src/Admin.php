@@ -159,7 +159,7 @@ class Admin
     }
 
     /**
-     * 启用或禁用Pjax
+     * 启用或禁用Pjax.
      *
      * @param bool $value
      *
