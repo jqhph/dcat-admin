@@ -9,6 +9,7 @@ use Dcat\Admin\Support\LazyRenderable as Renderable;
 abstract class LazyRenderable extends Renderable
 {
     const SIMPLE_NAME = '_simple_';
+
     const ROW_SELECTOR_COLUMN_NAME = '_row_columns_';
 
     /**
@@ -75,7 +76,7 @@ HTML;
 
             $grid->filter()
                 ->panel()
-                ->view('admin::filter.tile-container');
+                ->view('admin::filter.simple-container');
 
             $grid->rowSelector()->click();
         }
