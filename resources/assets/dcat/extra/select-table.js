@@ -80,8 +80,9 @@
                 self.resetSelected();
 
                 checkbox.on('change', function () {
-                    let id = $(this).data('id'),
-                        label = $(this).data('label');
+                    let $this = $(this),
+                        id = $this.data('id'),
+                        label = $this.data('label');
 
                     if (this.checked) {
                         if (! options.multiple) {
@@ -91,7 +92,7 @@
 
                         // 多选
                         if (options.max && (self.getSelectedRows()[0].length > options.max)) {
-                            $(this).prop('checked', false);
+                            $this.prop('checked', false);
                             delete self.selected[id];
 
                             return Dcat.warning(self.options.lang.exceed_max_item);
@@ -104,9 +105,11 @@
                         if (this.checked) {
                             // 单选效果
                             checkbox.each(function () {
-                                if ($(this).data('id') != id) {
-                                    $(this).prop('checked', false);
-                                    $(this).parents('tr').css('background-color', '');
+                                let $this = $(this);
+
+                                if ($this.data('id') != id) {
+                                    $this.prop('checked', false);
+                                    $this.parents('tr').css('background-color', '');
                                 }
                             });
                         }

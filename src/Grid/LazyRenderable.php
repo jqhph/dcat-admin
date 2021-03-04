@@ -8,6 +8,9 @@ use Dcat\Admin\Support\LazyRenderable as Renderable;
 
 abstract class LazyRenderable extends Renderable
 {
+    const SIMPLE_NAME = '_simple_';
+    const ROW_SELECTOR_COLUMN_NAME = '_row_columns_';
+
     /**
      * 是否启用简化模式.
      *
@@ -50,7 +53,7 @@ HTML;
      */
     public function simple(bool $value = true)
     {
-        return $this->payload(['_simple_' => $value]);
+        return $this->payload([static::SIMPLE_NAME => $value]);
     }
 
     /**
@@ -75,6 +78,14 @@ HTML;
                 ->view('admin::filter.tile-container');
 
             $grid->rowSelector()->click();
+        }
+
+        if (! empty($this->payload[static::ROW_SELECTOR_COLUMN_NAME])) {
+            [$key, $visibleColumn] = $this->payload[static::ROW_SELECTOR_COLUMN_NAME];
+
+            $key && $grid->rowSelector()->idColumn($key);
+
+            $visibleColumn && $grid->rowSelector()->titleColumn($visibleColumn);
         }
 
         return $grid;

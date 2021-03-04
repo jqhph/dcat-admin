@@ -30,7 +30,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.19-beta';
+    const VERSION = '2.0.20-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -159,14 +159,30 @@ class Admin
     }
 
     /**
-     * 禁用pjax.
+     * 启用或禁用Pjax
+     *
+     * @param bool $value
+     *
+     * @return void
      */
-    public static function disablePjax()
+    public function pjax(bool $value = true)
     {
-        static::context()->pjaxContainerId = false;
+        static::context()->pjaxContainerId = $value ? static::$defaultPjaxContainerId : false;
     }
 
     /**
+     * 禁用pjax.
+     *
+     * @return void
+     */
+    public static function disablePjax()
+    {
+        static::pjax(false);
+    }
+
+    /**
+     * 获取pjax ID.
+     *
      * @return string|void
      */
     public static function getPjaxContainerId()

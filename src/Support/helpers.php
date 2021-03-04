@@ -418,7 +418,7 @@ if (! function_exists('admin_asset')) {
      */
     function admin_asset($path)
     {
-        return Dcat\Admin\Admin::asset()->url($path);
+        return Admin::asset()->url($path);
     }
 }
 
@@ -434,7 +434,7 @@ if (! function_exists('admin_route')) {
      */
     function admin_route(?string $route, array $params = [], $absolute = true)
     {
-        return Dcat\Admin\Admin::app()->getRoute($route, $params, $absolute);
+        return Admin::app()->getRoute($route, $params, $absolute);
     }
 }
 
@@ -448,7 +448,7 @@ if (! function_exists('admin_route_name')) {
      */
     function admin_route_name(?string $route)
     {
-        return Dcat\Admin\Admin::app()->getRoutePrefix().$route;
+        return Admin::app()->getRoutePrefix().$route;
     }
 }
 
@@ -462,7 +462,7 @@ if (! function_exists('admin_api_route_name')) {
      */
     function admin_api_route_name(?string $route = '')
     {
-        return Dcat\Admin\Admin::app()->getCurrentApiRoutePrefix().$route;
+        return Admin::app()->getCurrentApiRoutePrefix().$route;
     }
 }
 

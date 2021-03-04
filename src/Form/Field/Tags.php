@@ -57,7 +57,7 @@ class Tags extends Field
      *
      * @return $this
      */
-    public function pluck($visibleColumn, $key)
+    public function pluck($visibleColumn, $key = 'id')
     {
         if (! empty($visibleColumn) && ! empty($key)) {
             $this->keyAsValue = true;
