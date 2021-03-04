@@ -51,7 +51,7 @@ class Context extends Fluent
         return $this->set($key, $results);
     }
 
-    public function addMany($key, array $value)
+    public function merge($key, array $value)
     {
         $results = $this->getArray($key);
 

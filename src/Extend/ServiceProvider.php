@@ -440,11 +440,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function addExceptRoutes()
     {
         if (! empty($this->exceptRoutes['permission'])) {
-            Admin::context()->addMany('permission.except', (array) $this->exceptRoutes['permission']);
+            Admin::context()->merge('permission.except', (array) $this->exceptRoutes['permission']);
         }
 
         if (! empty($this->exceptRoutes['auth'])) {
-            Admin::context()->addMany('auth.except', (array) $this->exceptRoutes['auth']);
+            Admin::context()->merge('auth.except', (array) $this->exceptRoutes['auth']);
         }
     }
 
