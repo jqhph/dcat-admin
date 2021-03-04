@@ -62,6 +62,14 @@ class LazyTable extends Widget
     }
 
     /**
+     * @return LazyRenderable
+     */
+    public function getRenderable()
+    {
+        return $this->renderable;
+    }
+
+    /**
      * 设置是否自动加载.
      *
      * @param bool $value

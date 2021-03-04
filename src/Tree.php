@@ -317,6 +317,7 @@ class Tree implements Renderable
     {
         return $this->disableSaveButton(! $value);
     }
+
     /**
      * Disable refresh.
      *
