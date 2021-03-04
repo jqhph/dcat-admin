@@ -25,15 +25,49 @@
 
 <script require="@select-table" init="{!! $selector !!}">
     var dialogId = $this.parent().find('{!! $dialogSelector !!}').attr('id');
+    var $input = $(this).find('input');
 
     Dcat.grid.SelectTable({
         dialog: '[data-id="' + dialogId + '"]',
         container: $this,
-        input: $(this).find('input'),
+        input: $input,
         @if(isset($max))
         multiple: true,
         max: {{ $max }},
         @endif
         values: {!! json_encode($options) !!},
     });
+
+    @if(! empty($load))
+    $input.on('change', function () {
+        var values = this.value;
+
+        Dcat.helpers.loadField(this, {
+            group: '{{ $load['group'] ?? '.fields-group' }}',
+            class: '.{{ $load['class'] }}',
+            url: "{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q=",
+            textField: "{{ $load['textField'] }}",
+            idField: "{{ $load['idField'] }}",
+            values: values,
+        });
+    }).trigger('change');
+    @endif
+
+    @if(! empty($loads))
+    var fields = '{!! $loads['fields'] !!}'.split('^');
+    var urls = '{!! $loads['urls'] !!}'.split('^');
+
+    $input.on('change', function () {
+        var values = this.value;
+
+        Dcat.helpers.loadFields(this, {
+            group: '.fields-group',
+            urls: urls,
+            fields: fields,
+            textField: "{{ $loads['textField'] }}",
+            idField: "{{ $loads['idField'] }}",
+            values: values,
+        });
+    }).trigger('change');
+    @endif
 </script>

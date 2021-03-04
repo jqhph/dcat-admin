@@ -43,29 +43,12 @@
 
         $(document).off('change', selector);
         $(document).on('change', selector, function () {
-            var target = $(this).closest('{{ $load['group'] ?? '.fields-group' }}').find(".{{ $load['class'] }}");
-            var values = [];
-
-            $(this).find('option:selected').each(function () {
-                if (String(this.value) === '0'|| this.value) {
-                    values.push(this.value)
-                }
-            });
-
-            if (! values.length) {
-                return;
-            }
-            target.find("option").remove();
-
-            Dcat.loading();
-
-            $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+values.join(',')).then(function (data) {
-                Dcat.loading(false);
-
-                $.map(data, function (d) {
-                    target.append(new Option(d.{{ $load['textField'] }}, d.{{ $load['idField'] }}, false, false));
-                });
-                target.val(String(target.attr('data-value')).split(',')).trigger('change');
+            Dcat.helpers.loadField(this, {
+                group: '{{ $load['group'] ?? '.fields-group' }}',
+                class: '.{{ $load['class'] }}',
+                url: "{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q=",
+                textField: "{{ $load['textField'] }}",
+                idField: "{{ $load['idField'] }}",
             });
         });
         $(selector).trigger('change');
