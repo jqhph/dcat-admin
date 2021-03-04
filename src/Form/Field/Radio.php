@@ -9,6 +9,7 @@ use Dcat\Admin\Widgets\Radio as WidgetRadio;
 class Radio extends Field
 {
     use CanCascadeFields;
+    use CanLoadFields;
 
     protected $style = 'primary';
 

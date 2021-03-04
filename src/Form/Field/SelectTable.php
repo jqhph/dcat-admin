@@ -10,6 +10,7 @@ use Dcat\Admin\Widgets\DialogTable;
 class SelectTable extends Field
 {
     use PlainInput;
+    use CanLoadFields;
 
     /**
      * @var DialogTable

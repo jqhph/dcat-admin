@@ -58,16 +58,19 @@
                     self.resetSelected();
                 });
 
+                // 取消按钮
                 self.$cancel.on('click', function () {
                     self.$dialog.trigger('dialog:close');
                 });
 
+                // 绑定相关事件
                 self.bind();
 
                 // 重置已选中数据
                 self.resetSelected();
             });
 
+            // 渲染选中的数据
             self.render(values);
         },
 

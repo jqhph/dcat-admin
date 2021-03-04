@@ -263,4 +263,58 @@ export default class Helpers {
             Dcat.handleAjaxError(a, b, c);
         })
     }
+
+    /**
+     * 联动多个字段.
+     *
+     * @param _this
+     * @param options
+     */
+    loadFields(_this, options) {
+        let refreshOptions = function(url, target) {
+            Dcat.loading();
+
+            $.ajax(url).then(function(data) {
+                Dcat.loading(false);
+                target.find("option").remove();
+
+                $.map(data, function (d) {
+                    target.append(new Option(d[options.textField], d[options.idField], false, false));
+                });
+
+                $(target).val(String(target.data('value')).split(',')).trigger('change');
+            });
+        };
+
+        let promises = [],
+            values = [];
+
+        if (! options.values) {
+            $(_this).find('option:selected').each(function () {
+                if (String(this.value) === '0' || this.value) {
+                    values.push(this.value)
+                }
+            });
+        } else {
+            values = options.values;
+            if (typeof values === 'string') {
+                values = [values];
+            }
+        }
+
+        if (! values.length) {
+            return;
+        }
+
+        options.fields.forEach(function(field, index){
+            var target = $(_this).closest(options.group).find('.' + options.fields[index]);
+
+            if (! values.length) {
+                return;
+            }
+            promises.push(refreshOptions(options.urls[index] + (options.urls[index].match(/\?/)?'&':'?') + "q="+ values.join(','), target));
+        });
+
+        $.when(promises).then(function() {});
+    }
 }

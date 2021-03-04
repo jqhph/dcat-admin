@@ -36,39 +36,26 @@
 @overwrite
 </script>
 
-@section('admin.select-load')
-    @if(isset($load))
-    <script once>
-        var selector = '{!! $selector !!}';
 
-        $(document).off('change', selector);
-        $(document).on('change', selector, function () {
-            var target = $(this).closest('{{ $load['group'] ?? '.fields-group' }}').find(".{{ $load['class'] }}");
-            var values = [];
+@if(isset($loads))
+{{--loads联动--}}
+<script once>
+    var selector = '{!! $selector !!}';
 
-            $(this).find('option:selected').each(function () {
-                if (String(this.value) === '0'|| this.value) {
-                    values.push(this.value)
-                }
-            });
+    var fields = '{!! $loads['fields'] !!}'.split('^');
+    var urls = '{!! $loads['urls'] !!}'.split('^');
 
-            if (! values.length) {
-                return;
-            }
-            target.find("option").remove();
-
-            Dcat.loading();
-
-            $.ajax("{!! $load['url'].(strpos($load['url'],'?')?'&':'?') !!}q="+values.join(',')).then(function (data) {
-                Dcat.loading(false);
-
-                $.map(data, function (d) {
-                    target.append(new Option(d.{{ $load['textField'] }}, d.{{ $load['idField'] }}, false, false));
-                });
-                target.val(String(target.attr('data-value')).split(',')).trigger('change');
-            });
+    $(document).off('change', selector);
+    $(document).on('change', selector, function () {
+        Dcat.helpers.loadFields(this, {
+            group: '{{ $loads['group'] ?? '.fields-group' }}',
+            urls: urls,
+            fields: fields,
+            textField: "{{ $loads['textField'] }}",
+            idField: "{{ $loads['idField'] }}",
         });
-        $(selector).trigger('change');
-    </script>
-    @endif
-@overwrite
+    });
+    $(selector).trigger('change');
+</script>
+@endif
+
