@@ -19,6 +19,7 @@
 
         self.options = options;
         self.$input = $(options.input);
+        self.selected = {}; // 保存临时选中的ID
 
         self.init();
     }
@@ -52,6 +53,9 @@
                     self.render(selected[0]);
 
                     self.$dialog.trigger('dialog:close');
+
+                    // 重置已选中数据
+                    self.resetSelected();
                 });
 
                 self.$cancel.on('click', function () {
@@ -59,13 +63,17 @@
                 });
 
                 self.bind();
+
+                // 重置已选中数据
+                self.resetSelected();
             });
 
             self.render(values);
         },
 
         bind() {
-            let self = this, options = self.options;
+            let self = this,
+                options = self.options;
 
             // 表格加载完成事件
             self.$dialog.find(options.table).on('table:loaded', function () {
@@ -75,9 +83,6 @@
                     // 移除全选按钮
                     $(this).find('.checkbox-grid-header').remove();
                 }
-
-                // 重置已选中数据
-                self.resetSelected();
 
                 checkbox.on('change', function () {
                     let $this = $(this),
@@ -142,7 +147,7 @@
             let self = this,
                 keys = self.getKeys();
 
-            self.selected = [];
+            self.selected = {};
 
             for (let i in keys) {
                 self.selected[keys[i]] = {id: keys[i], label: self.labels[keys[i]]};
