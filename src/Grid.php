@@ -41,8 +41,6 @@ class Grid
     const CREATE_MODE_DEFAULT = 'default';
     const CREATE_MODE_DIALOG = 'dialog';
 
-    const IFRAME_QUERY_NAME = '_grid_iframe_';
-
     /**
      * The grid data model instance.
      *
