@@ -4,6 +4,7 @@ namespace Dcat\Admin\Widgets;
 
 use Dcat\Admin\Contracts\LazyRenderable;
 use Dcat\Admin\Traits\InteractsWithRenderApi;
+use Illuminate\Support\Str;
 
 class Lazy extends Widget
 {
@@ -17,7 +18,7 @@ class Lazy extends Widget
         $this->setRenderable($renderable);
         $this->load($load);
 
-        $this->class($this->elementClass = 'lazy-box');
+        $this->class(['lazy-box', $this->elementClass = 'lazy-'.Str::random(8)]);
     }
 
     /**
