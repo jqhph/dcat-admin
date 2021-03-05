@@ -313,7 +313,7 @@ abstract class Widget implements Renderable
         if ($method === 'style' || $method === 'class') {
             $value = $parameters[0] ?? null;
             $append = $parameters[1] ?? ($method === 'class' ? false : true);
-            
+
             if (is_array($value)) {
                 $value = implode(' ', $value);
             }
