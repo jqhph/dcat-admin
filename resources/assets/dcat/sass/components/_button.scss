@@ -136,6 +136,16 @@ a.btn-sm, .btn-group-sm > a.btn {
   color: #444!important;
 }
 
+.btn-secondary {
+  border-color: darken($border-color, 2.2%)!important;
+  background-color: lighten(#eee, 2.5%)!important;
+  color: $font-color!important;
+  box-shadow: none;
+}
+.btn-secondary:hover, .btn-secondary:focus {
+  box-shadow: $btn-shadow-hover!important;
+}
+
 .btn-no-shadow {
   box-shadow: none;
 }
