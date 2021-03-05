@@ -309,6 +309,25 @@ class Grid
     }
 
     /**
+     * 删除列.
+     *
+     * @param string|Column $column
+     *
+     * @return $this
+     */
+    public function dropColumn($column)
+    {
+        if ($column instanceof Column) {
+            $column = $column->getName();
+        }
+
+        $this->columns->offsetUnset($column);
+        $this->allColumns->offsetUnset($column);
+
+        return $this;
+    }
+
+    /**
      * Add column to grid.
      *
      * @param string $field
