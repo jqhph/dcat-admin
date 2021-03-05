@@ -11,6 +11,7 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Http\JsonResponse;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
@@ -568,6 +569,11 @@ class Form implements Renderable
 
             $result = $this->repository->delete($this, $data);
 
+            // 返回 JsonResponse 对象，直接中断后续逻辑
+            if ($result instanceof JsonResponse) {
+                return $this->sendResponse($result);
+            }
+
             if ($response = $this->callDeleted($result)) {
                 return $this->sendResponse($response);
             }
@@ -627,6 +633,11 @@ class Form implements Renderable
             $this->updates = $this->prepareInsert($this->updates);
 
             $id = $this->repository->store($this);
+
+            // 返回 JsonResponse 对象，直接中断后续逻辑
+            if ($id instanceof JsonResponse) {
+                return $this->sendResponse($id);
+            }
 
             $this->builder->setResourceId($id);
 
@@ -803,6 +814,11 @@ class Form implements Renderable
             $this->updates = $this->prepareUpdate($this->updates);
 
             $updated = $this->repository->update($this);
+
+            // 返回 JsonResponse 对象，直接中断后续逻辑
+            if ($updated instanceof JsonResponse) {
+                return $this->sendResponse($updated);
+            }
 
             if ($response = $this->callSaved($updated)) {
                 return $this->sendResponse($response);
