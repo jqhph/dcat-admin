@@ -819,16 +819,16 @@ HTML;
 
     protected function prepareForm()
     {
-        if (method_exists($this, 'form')) {
-            $this->form();
-        }
-
         if (! $this->data && method_exists($this, 'default')) {
             $data = $this->default();
 
             if (is_array($data)) {
                 $this->fill($data);
             }
+        }
+
+        if (method_exists($this, 'form')) {
+            $this->form();
         }
     }
 
