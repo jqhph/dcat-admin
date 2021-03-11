@@ -18,7 +18,9 @@ class Lazy extends Widget
         $this->setRenderable($renderable);
         $this->load($load);
 
-        $this->class(['lazy-box', $this->elementClass = 'lazy-'.Str::random(8)]);
+        $this->elementClass = 'lazy-'.Str::random(10);
+
+        $this->class(['lazy-box']);
     }
 
     /**

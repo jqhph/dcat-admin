@@ -21,7 +21,7 @@
             @endif
 
             <div class="navbar-collapse d-flex justify-content-between">
-                <div class="d-flex align-items-center">
+                <div class="navbar-left d-flex align-items-center">
                     {!! Dcat\Admin\Admin::navbar()->render('left') !!}
                 </div>
 
@@ -37,7 +37,7 @@
                 </div>
                 @endif
 
-                <div class=" d-flex align-items-center">
+                <div class="navbar-right d-flex align-items-center">
                     {!! Dcat\Admin\Admin::navbar()->render() !!}
 
                     <ul class="nav navbar-nav">

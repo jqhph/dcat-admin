@@ -183,6 +183,8 @@ abstract class Widget implements Renderable
     {
         static::requireAssets();
 
+        $this->class($this->getElementClass(), true);
+
         $html = $this->html();
 
         $this->withScript();
