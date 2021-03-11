@@ -341,16 +341,6 @@ trait ModelTree
     /**
      * {@inheritdoc}
      */
-    public function delete()
-    {
-        $this->where($this->getParentColumn(), $this->getKey())->delete();
-
-        return parent::delete();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected static function boot()
     {
         parent::boot();
@@ -379,6 +369,14 @@ trait ModelTree
             }
 
             return $branch;
+        });
+
+        static::deleting(function ($model) {
+            static::query()
+                ->where($model->getParentColumn(), $model->getKey())
+                ->get()
+                ->each
+                ->delete();
         });
     }
 }
