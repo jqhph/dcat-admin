@@ -537,7 +537,7 @@ class Field implements Renderable
      *
      * @param null $value
      *
-     * @return mixed
+     * @return mixed|$this
      */
     public function value($value = null)
     {
