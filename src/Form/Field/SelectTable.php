@@ -145,6 +145,14 @@ class SelectTable extends Field
         $this->options = $values;
     }
 
+    /**
+     * @return string
+     */
+    protected function defaultPlaceholder()
+    {
+        return trans('admin.choose').' '.$this->label;
+    }
+
     protected function setUpTable()
     {
         $this->dialog

@@ -821,12 +821,20 @@ class Field implements Renderable
     public function placeholder($placeholder = null)
     {
         if ($placeholder === null) {
-            return $this->placeholder ?: trans('admin.input').' '.$this->label;
+            return $this->placeholder ?: $this->defaultPlaceholder();
         }
 
         $this->placeholder = $placeholder;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function defaultPlaceholder()
+    {
+        return trans('admin.input').' '.$this->label;
     }
 
     /**
