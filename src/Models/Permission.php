@@ -33,19 +33,22 @@ class Permission extends Model implements Sortable
     protected $titleColumn = 'name';
 
     /**
-     * Create a new Eloquent model instance.
-     *
-     * @param array $attributes
+     * {@inheritDoc}
      */
     public function __construct(array $attributes = [])
+    {
+        $this->init();
+
+        parent::__construct($attributes);
+    }
+
+    protected function init()
     {
         $connection = config('admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
 
         $this->setTable(config('admin.database.permissions_table'));
-
-        parent::__construct($attributes);
     }
 
     /**

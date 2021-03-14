@@ -12,14 +12,22 @@ class Extension extends Model
         'options' => 'json',
     ];
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(array $attributes = [])
+    {
+        $this->init();
+
+        parent::__construct($attributes);
+    }
+
+    protected function init()
     {
         $connection = config('admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
 
         $this->setTable(config('admin.database.extensions_table') ?: 'admin_extensions');
-
-        parent::__construct($attributes);
     }
 }
