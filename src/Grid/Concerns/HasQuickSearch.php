@@ -53,6 +53,14 @@ trait HasQuickSearch
     }
 
     /**
+     * @return bool
+     */
+    public function allowQuickSearch()
+    {
+        return $this->quickSearch ? true : false;
+    }
+
+    /**
      * @return Tools\QuickSearch
      */
     public function getQuickSearch()
