@@ -70,6 +70,11 @@ class Condition
         }
     }
 
+    public function end()
+    {
+        return $this->column;
+    }
+
     protected function callCallbacks(array $callbacks)
     {
         if (! $callbacks) {
