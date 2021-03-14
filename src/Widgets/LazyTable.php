@@ -46,7 +46,9 @@ class LazyTable extends Widget
         $this->from($renderable);
         $this->load($load);
 
-        $this->class(['async-table', $this->elementClass = 'async-table-'.Str::random(8)]);
+        $this->elementClass = 'async-table-'.Str::random(10);
+
+        $this->class(['async-table']);
     }
 
     /**

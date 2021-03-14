@@ -161,6 +161,13 @@ return [
         |--------------------------------------------------------------------------
         */
         'grid_action_class' => Dcat\Admin\Grid\Displayers\DropdownActions::class,
+
+        'column_selector' => [
+            'store' => Dcat\Admin\Grid\ColumnSelector\SessionStore::class,
+            'store_params' => [
+                'driver' => 'file',
+            ],
+        ],
     ],
 
     /*

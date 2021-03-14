@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Concerns;
 
+use Dcat\Admin\Contracts\Grid\ColumnSelectorStore;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Grid\Tools\ColumnSelector;
 use Dcat\Admin\Support\Helper;
@@ -15,6 +16,11 @@ trait CanHidesColumns
      * @var array
      */
     public $hiddenColumns = [];
+
+    /**
+     * @var ColumnSelectorStore
+     */
+    private $columnSelectorStorage;
 
     /**
      * Remove column selector on grid.
@@ -205,7 +211,7 @@ trait CanHidesColumns
         })->toArray();
     }
 
-    protected function hasColumnSelectorRequestInput()
+    public function hasColumnSelectorRequestInput()
     {
         return $this->request->has($this->getColumnSelectorQueryName());
     }
@@ -216,16 +222,31 @@ trait CanHidesColumns
             return;
         }
 
-        session()->put($this->getVisibleColumnsKey(), $input);
+        $this->getColumnSelectorStorage()->store($input);
     }
 
     protected function getVisibleColumnsFromStorage()
     {
-        return session()->get($this->getVisibleColumnsKey());
+        return $this->getColumnSelectorStorage()->get();
     }
 
-    protected function getVisibleColumnsKey()
+    /**
+     * @return ColumnSelectorStore
+     */
+    public function getColumnSelectorStorage()
     {
-        return $this->getName().'/'.$this->request->path();
+        return $this->columnSelectorStorage ?: ($this->columnSelectorStorage = $this->makeColumnSelectorStorage());
+    }
+
+    protected function makeColumnSelectorStorage()
+    {
+        $store = config('admin.grid.column_selector.store') ?: Grid\ColumnSelector\SessionStore::class;
+        $params = (array) config('admin.grid.column_selector.store_params') ?: [];
+
+        $storage = app($store, $params);
+
+        $storage->setGrid($this);
+
+        return $storage;
     }
 }
