@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\ColumnSelector;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Contracts\Grid\ColumnSelectorStore;
 use Dcat\Admin\Grid;
 
@@ -34,6 +35,6 @@ class SessionStore implements ColumnSelectorStore
 
     protected function getVisibleColumnsKey()
     {
-        return $this->grid->getName().'/'.request()->path();
+        return $this->grid->getName().'/'.request()->path().'/'.Admin::user()->getKey();
     }
 }
