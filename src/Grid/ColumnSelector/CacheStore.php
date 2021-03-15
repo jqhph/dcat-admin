@@ -15,16 +15,16 @@ class CacheStore extends SessionStore
 
     public function store(array $input)
     {
-        $this->driver->put($this->getVisibleColumnsKey(), $input, $this->ttl);
+        $this->driver->put($this->getKey(), $input, $this->ttl);
     }
 
     public function get()
     {
-        return $this->driver->get($this->getVisibleColumnsKey());
+        return $this->driver->get($this->getKey());
     }
 
     public function forget()
     {
-        $this->driver->forget($this->getVisibleColumnsKey());
+        $this->driver->forget($this->getKey());
     }
 }
