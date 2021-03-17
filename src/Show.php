@@ -131,8 +131,8 @@ class Show implements Renderable
             $this->repository = Admin::repository($model);
         } elseif ($model instanceof Model) {
             if ($key = $model->getKey()) {
-                $this->_id = $model->getKey();
-                $this->keyName = $model->getKeyName();
+                $this->setKey($key);
+                $this->setKeyName($model->getKeyName());
 
                 $this->model($model);
             } else {
