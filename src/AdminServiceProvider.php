@@ -46,6 +46,7 @@ class AdminServiceProvider extends ServiceProvider
         Console\ExtensionEnableCommand::class,
         Console\ExtensionDiableCommand::class,
         Console\ExtensionUpdateCommand::class,
+        Console\UpdateCommand::class,
     ];
 
     /**
