@@ -41,8 +41,6 @@ class Grid
     const CREATE_MODE_DEFAULT = 'default';
     const CREATE_MODE_DIALOG = 'dialog';
 
-    const IFRAME_QUERY_NAME = '_grid_iframe_';
-
     /**
      * The grid data model instance.
      *
@@ -306,6 +304,25 @@ class Grid
     public function allColumns()
     {
         return $this->allColumns;
+    }
+
+    /**
+     * 删除列.
+     *
+     * @param string|Column $column
+     *
+     * @return $this
+     */
+    public function dropColumn($column)
+    {
+        if ($column instanceof Column) {
+            $column = $column->getName();
+        }
+
+        $this->columns->offsetUnset($column);
+        $this->allColumns->offsetUnset($column);
+
+        return $this;
     }
 
     /**

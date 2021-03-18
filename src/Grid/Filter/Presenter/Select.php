@@ -287,13 +287,35 @@ class Select extends Presenter
      */
     public function load($target, string $resourceUrl, string $idField = 'id', string $textField = 'text'): self
     {
-        $class = $this->filter->formatColumnClass($target);
+        return $this->loads($target, $resourceUrl, $idField, $textField);
+    }
 
-        $url = admin_url($resourceUrl);
+    /**
+     * 联动加载多个字段.
+     *
+     * @param array|string $fields
+     * @param array|string $sourceUrls
+     * @param string $idField
+     * @param string $textField
+     *
+     * @return $this
+     */
+    public function loads($fields = [], $sourceUrls = [], string $idField = 'id', string $textField = 'text')
+    {
+        $fieldsStr = implode('^', array_map(function ($field) {
+            return $this->filter->formatColumnClass($field);
+        }, (array) $fields));
+        $urlsStr = implode('^', array_map(function ($url) {
+            return admin_url($url);
+        }, (array) $sourceUrls));
 
-        $group = 'form';
-
-        return $this->addVariables(['load' => compact('url', 'class', 'idField', 'textField', 'group')]);
+        return $this->addVariables(['loads' => [
+            'fields'    => $fieldsStr,
+            'urls'      => $urlsStr,
+            'idField'   => $idField,
+            'textField' => $textField,
+            'group'     => 'form',
+        ]]);
     }
 
     /**

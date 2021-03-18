@@ -2,6 +2,7 @@
 export default class Menu {
     constructor(Dcat) {
         this.init();
+        this.initHorizontal();
     }
 
     // 菜单点击选中效果
@@ -28,5 +29,51 @@ export default class Menu {
 
             $(this).addClass('active')
         });
+    }
+
+    initHorizontal() {
+        let selectors = {
+            item: '.horizontal-menu .main-menu-content li.nav-item',
+            link: '.horizontal-menu .main-menu-content li.nav-item .nav-link',
+        };
+
+        $(selectors.item).on('mouseover', function () {
+            $(this).addClass('open')
+        }).on('mouseout', function () {
+            $(this).removeClass('open')
+        });
+
+        $(selectors.link).on('click', function () {
+            let $this = $(this);
+
+            $(selectors.link).removeClass('active');
+
+            $this.addClass('active');
+
+            $this.parents('.dropdown').find('.nav-link').eq(0).addClass('active');
+            $this.parents('.dropdown-submenu').find('.nav-link').eq(0).addClass('active')
+        });
+
+
+        // 重新计算高度
+        let resize = function () {
+            if (! $('.horizontal-menu').length) {
+                return;
+            }
+
+            let defaultHorizontalMenuHeight = 55,
+                height = $('.horizontal-menu .main-horizontal-sidebar').height(),
+                diff = height - defaultHorizontalMenuHeight,
+                $wrapper = $('.horizontal-menu.navbar-fixed-top .content-wrapper');
+
+            if (height <= defaultHorizontalMenuHeight) {
+                return $wrapper.css({'padding-top': '80px'});
+            }
+
+            $wrapper.css({'padding-top': (80 + diff) + 'px'});
+        };
+        window.onresize = resize;
+
+        resize();
     }
 }

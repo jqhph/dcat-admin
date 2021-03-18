@@ -74,7 +74,7 @@ class Modal extends Widget
      */
     public function __construct($title = null, $content = null)
     {
-        $this->id('modal-'.Str::random(8));
+        $this->id('modal-'.Str::random(10));
         $this->title($title);
         $this->content($content);
 

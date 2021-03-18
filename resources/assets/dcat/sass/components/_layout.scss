@@ -3,7 +3,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .content .content-wrapper {
-  padding: 7rem 2.5rem 0;
+  padding: 7rem $content-wrapper-padding 0;
 }
 
 .navbar-fixed-top {

@@ -28,7 +28,7 @@ class Bootstrap
         if (
             config('admin.layout.dark_mode_switch')
             && ! Helper::isAjaxRequest()
-            && ! request()->routeIs(admin_api_route('*'))
+            && ! request()->routeIs(admin_api_route_name('*'))
         ) {
             Admin::navbar()->right((new DarkModeSwitcher())->render());
         }

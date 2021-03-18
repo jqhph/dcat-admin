@@ -36,6 +36,6 @@ class ExcelExporter extends AbstractExporter
 
         $exporter->headings($this->titles())->download($filename);
 
-        admin_exit();
+        exit;
     }
 }

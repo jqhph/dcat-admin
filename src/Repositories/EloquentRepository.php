@@ -188,11 +188,36 @@ class EloquentRepository extends Repository implements TreeRepository
         [$column, $type, $cast] = $model->getSort();
 
         if (empty($column) || empty($type)) {
+            $orders = $model->findQueryByMethod('orderBy')->merge($model->findQueryByMethod('orderByDesc'));
+
+            $model->resetOrderBy();
+
+            $orders->each(function ($orderBy) use ($model) {
+                $column = $orderBy['arguments'][0];
+                $type = $orderBy['method'] === 'orderByDesc' ? 'desc' : ($orderBy['arguments'][1] ?? 'asc');
+                $cast = null;
+
+                $this->addOrderBy($model, $column, $type, $cast);
+            });
+
             return;
         }
 
         $model->resetOrderBy();
 
+        $this->addOrderBy($model, $column, $type, $cast);
+    }
+
+    /**
+     * @param Grid\Model $model
+     * @param string $column
+     * @param string $type
+     * @param string $cast
+     *
+     * @throws \Exception
+     */
+    protected function addOrderBy(Grid\Model $model, $column, $type, $cast)
+    {
         $explodedCols = explode('.', $column);
         $isRelation = empty($explodedCols[1]) ? false : method_exists($this->model(), $explodedCols[0]);
 
@@ -282,22 +307,18 @@ class EloquentRepository extends Repository implements TreeRepository
     {
         [$relationName, $relationColumn] = explode('.', $column, 2);
 
-        if ($model->getQueries()->contains(function ($query) use ($relationName) {
-            return $query['method'] == 'with' && in_array($relationName, $query['arguments']);
-        })) {
-            $relation = $this->model()->$relationName();
+        $relation = $this->model()->$relationName();
 
-            $model->addQuery('select', [$this->model()->getTable().'.*']);
+        $model->addQuery('select', [$this->model()->getTable().'.*']);
 
-            $model->addQuery('join', $this->joinParameters($relation));
+        $model->addQuery('join', $this->joinParameters($relation));
 
-            $this->setOrderBy(
-                $model,
-                $relation->getRelated()->getTable().'.'.str_replace('.', '->', $relationColumn),
-                $type,
-                $cast
-            );
-        }
+        $this->setOrderBy(
+            $model,
+            $relation->getRelated()->getTable().'.'.str_replace('.', '->', $relationColumn),
+            $type,
+            $cast
+        );
     }
 
     /**
@@ -345,7 +366,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     protected function setPaginate(Grid\Model $model)
     {
-        $paginate = $model->findQueryByMethod('paginate');
+        $paginate = $model->findQueryByMethod('paginate')->first();
 
         $model->rejectQuery(['paginate']);
 

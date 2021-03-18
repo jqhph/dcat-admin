@@ -11,6 +11,7 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Http\JsonResponse;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
 use Dcat\Admin\Traits\HasFormResponse;
@@ -568,6 +569,11 @@ class Form implements Renderable
 
             $result = $this->repository->delete($this, $data);
 
+            // 返回 JsonResponse 对象，直接中断后续逻辑
+            if ($result instanceof JsonResponse) {
+                return $this->sendResponse($result);
+            }
+
             if ($response = $this->callDeleted($result)) {
                 return $this->sendResponse($response);
             }
@@ -590,7 +596,6 @@ class Form implements Renderable
                 ->alert()
                 ->status($status)
                 ->message($message)
-                ->redirectIf($status, $this->resource(-1))
         );
     }
 
@@ -628,6 +633,11 @@ class Form implements Renderable
             $this->updates = $this->prepareInsert($this->updates);
 
             $id = $this->repository->store($this);
+
+            // 返回 JsonResponse 对象，直接中断后续逻辑
+            if ($id instanceof JsonResponse) {
+                return $this->sendResponse($id);
+            }
 
             $this->builder->setResourceId($id);
 
@@ -804,6 +814,11 @@ class Form implements Renderable
             $this->updates = $this->prepareUpdate($this->updates);
 
             $updated = $this->repository->update($this);
+
+            // 返回 JsonResponse 对象，直接中断后续逻辑
+            if ($updated instanceof JsonResponse) {
+                return $this->sendResponse($updated);
+            }
 
             if ($response = $this->callSaved($updated)) {
                 return $this->sendResponse($response);
@@ -1371,6 +1386,18 @@ class Form implements Renderable
     }
 
     /**
+     * @param array $vars
+     *
+     * @return $this
+     */
+    public function addVariables(array $vars)
+    {
+        $this->builder->addVariables($vars);
+
+        return $this;
+    }
+
+    /**
      * Get or set title for form.
      *
      * @param string $title
@@ -1490,6 +1517,42 @@ class Form implements Renderable
     public function disableCreatingCheck(bool $disable = true)
     {
         $this->builder->footer()->disableCreatingCheck($disable);
+
+        return $this;
+    }
+
+    /**
+     * default View Checked on footer.
+     *
+     * @return $this
+     */
+    public function defaultViewChecked(bool $checked = true)
+    {
+        $this->builder->footer()->defaultViewChecked($checked);
+
+        return $this;
+    }
+
+    /**
+     * default Editing Checked on footer.
+     *
+     * @return $this
+     */
+    public function defaultEditingChecked(bool $checked = true)
+    {
+        $this->builder->footer()->defaultEditingChecked($checked);
+
+        return $this;
+    }
+
+    /**
+     * default Creating Checked on footer.
+     *
+     * @return $this
+     */
+    public function defaultCreatingChecked(bool $checked = true)
+    {
+        $this->builder->footer()->defaultCreatingChecked($checked);
 
         return $this;
     }

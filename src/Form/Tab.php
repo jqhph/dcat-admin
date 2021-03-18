@@ -52,17 +52,18 @@ class Tab
      * @param string   $title
      * @param \Closure $content
      * @param bool     $active
+     * @param string   $id
      *
      * @return $this
      */
-    public function append($title, \Closure $content, $active = false)
+    public function append($title, \Closure $content, bool $active = false, ?string $id = null)
     {
         call_user_func($content, $this->form);
 
         $fields = $this->collectFields();
         $layout = $this->collectColumnLayout();
 
-        $id = 'tab-form-'.($this->tabs->count() + 1).'-'.mt_rand(0, 9999);
+        $id = $id ?: ('tab-form-'.($this->tabs->count() + 1).'-'.mt_rand(0, 9999));
 
         $this->tabs->push(compact('id', 'title', 'fields', 'active', 'layout'));
 

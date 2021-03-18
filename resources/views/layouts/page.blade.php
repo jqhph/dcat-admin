@@ -25,4 +25,4 @@
     {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
 </head>
 
-@extends('admin::layouts.vertical')
+@extends('admin::layouts.container')

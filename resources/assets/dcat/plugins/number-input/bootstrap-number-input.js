@@ -52,6 +52,7 @@
                 }
 
                 clone.focus().val(n);
+                clone.trigger('change');
                 return true;
             }
 
@@ -89,8 +90,13 @@
             });
 
             clone.prop('type', 'text').blur(function (e) {
-                var c = String.fromCharCode(e.which);
+                var c = parseInt(String.fromCharCode(e.which));
+                if (isNaN(c)) {
+                    c = 0;
+                }
+
                 var n = getVal() + c;
+
                 if ((min && n < min)) {
                     setText(min);
                 }

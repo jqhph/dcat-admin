@@ -81,21 +81,21 @@ export default class AddFile {
     // 显示错误信息
     showError ($li, code, file) {
         let _this = this,
-            __ = _this.uploader.lang.trans,
+            lang = _this.uploader.lang,
             text = '',
             $info = $('<p class="error"></p>');
 
         switch (code) {
             case 'exceed_size':
-                text = __('exceed_size');
+                text = lang.trans('exceed_size');
                 break;
 
             case 'interrupt':
-                text = __('interrupt');
+                text = lang.trans('interrupt');
                 break;
 
             default:
-                text = __('upload_failed');
+                text = lang.trans('upload_failed');
                 break;
         }
 
@@ -219,11 +219,11 @@ export default class AddFile {
                     }
 
                     // 删除请求
-                    uploader.request.delete(file, function () {
+                    parent.request.delete(file, function () {
                         // 删除成功回调
                         parent.input.delete(file.serverId);
 
-                        uploader.uploader.removeFile(file);
+                        uploader.removeFile(file);
                     });
 
                     break;

@@ -187,8 +187,8 @@ TREE;
 
         // make composer.json
         $composerContents = str_replace(
-            ['{package}', '{namespace}', '{className}'],
-            [$this->package, str_replace('\\', '\\\\', $this->namespace).'\\\\', $this->className],
+            ['{package}', '{alias}', '{namespace}', '{className}'],
+            [$this->package, '', str_replace('\\', '\\\\', $this->namespace).'\\\\', $this->className],
             file_get_contents(__DIR__.'/stubs/extension/composer.json.stub')
         );
         $this->putFile('composer.json', $composerContents);

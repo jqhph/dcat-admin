@@ -77,7 +77,7 @@ interface Repository
      *
      * @param Form $form
      *
-     * @return mixed
+     * @return int|bool|\Dcat\Admin\Http\JsonResponse
      */
     public function store(Form $form);
 
@@ -95,7 +95,7 @@ interface Repository
      *
      * @param Form $form
      *
-     * @return bool
+     * @return bool|\Dcat\Admin\Http\JsonResponse
      */
     public function update(Form $form);
 
@@ -105,7 +105,7 @@ interface Repository
      * @param Form  $form
      * @param array $deletingData
      *
-     * @return mixed
+     * @return mixed|\Dcat\Admin\Http\JsonResponse
      */
     public function delete(Form $form, array $deletingData);
 

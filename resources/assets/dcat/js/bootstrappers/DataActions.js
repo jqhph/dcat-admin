@@ -27,8 +27,8 @@ let defaultActions = {
 
                         response.data.detail = msg;
 
-                        if (! response.then) {
-                            response.then = {action: 'redirect', value: redirect}
+                        if (redirect && ! response.data.then) {
+                            response.data.then = {action: 'redirect', value: redirect}
                         }
 
                         Dcat.handleJsonResponse(response);
@@ -42,6 +42,7 @@ let defaultActions = {
         $document.on('click', action, function() {
             let url = $(this).data('url'),
                 name = $(this).data('name'),
+                redirect = $(this).data('redirect'),
                 keys = Dcat.grid.selected(name),
                 lang = Dcat.lang;
 
@@ -57,8 +58,8 @@ let defaultActions = {
                     success: function (response) {
                         Dcat.NP.done();
 
-                        if (! response.then) {
-                            response.then = {action: 'refresh', value: true}
+                        if (redirect && ! response.data.then) {
+                            response.data.then = {action: 'redirect', value: redirect}
                         }
 
                         Dcat.handleJsonResponse(response);

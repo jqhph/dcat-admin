@@ -6,7 +6,7 @@
                 <ul>
                     @foreach($selector['options'] as $value => $option)
                         @php
-                            $active = in_array($value, \Illuminate\Support\Arr::get($selected, $column, []));
+                            $active = in_array((string) $value, \Illuminate\Support\Arr::get($selected, $column, []), true);
                         @endphp
                         <li>
                             <a href="{{ $self->url($column, $value, true) }}"

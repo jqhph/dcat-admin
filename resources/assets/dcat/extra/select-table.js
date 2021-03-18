@@ -19,6 +19,7 @@
 
         self.options = options;
         self.$input = $(options.input);
+        self.selected = {}; // 保存临时选中的ID
 
         self.init();
     }
@@ -52,20 +53,30 @@
                     self.render(selected[0]);
 
                     self.$dialog.trigger('dialog:close');
+
+                    // 重置已选中数据
+                    self.resetSelected();
                 });
 
+                // 取消按钮
                 self.$cancel.on('click', function () {
                     self.$dialog.trigger('dialog:close');
                 });
 
+                // 绑定相关事件
                 self.bind();
+
+                // 重置已选中数据
+                self.resetSelected();
             });
 
+            // 渲染选中的数据
             self.render(values);
         },
 
         bind() {
-            let self = this, options = self.options;
+            let self = this,
+                options = self.options;
 
             // 表格加载完成事件
             self.$dialog.find(options.table).on('table:loaded', function () {
@@ -76,12 +87,10 @@
                     $(this).find('.checkbox-grid-header').remove();
                 }
 
-                // 重置已选中数据
-                self.resetSelected();
-
                 checkbox.on('change', function () {
-                    let id = $(this).data('id'),
-                        label = $(this).data('label');
+                    let $this = $(this),
+                        id = $this.data('id'),
+                        label = $this.data('label');
 
                     if (this.checked) {
                         if (! options.multiple) {
@@ -91,7 +100,7 @@
 
                         // 多选
                         if (options.max && (self.getSelectedRows()[0].length > options.max)) {
-                            $(this).prop('checked', false);
+                            $this.prop('checked', false);
                             delete self.selected[id];
 
                             return Dcat.warning(self.options.lang.exceed_max_item);
@@ -104,9 +113,11 @@
                         if (this.checked) {
                             // 单选效果
                             checkbox.each(function () {
-                                if ($(this).data('id') != id) {
-                                    $(this).prop('checked', false);
-                                    $(this).parents('tr').css('background-color', '');
+                                let $this = $(this);
+
+                                if ($this.data('id') != id) {
+                                    $this.prop('checked', false);
+                                    $this.parents('tr').css('background-color', '');
                                 }
                             });
                         }
@@ -139,7 +150,7 @@
             let self = this,
                 keys = self.getKeys();
 
-            self.selected = [];
+            self.selected = {};
 
             for (let i in keys) {
                 self.selected[keys[i]] = {id: keys[i], label: self.labels[keys[i]]};

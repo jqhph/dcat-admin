@@ -44,20 +44,12 @@ class ColumnSelector extends AbstractTool
         $show = $this->getVisibleColumnNames();
         $all = $this->getGridColumns();
 
+        $visibleColumnNames = $this->grid->getVisibleColumnsFromQuery();
+
         $list = Checkbox::make()
             ->class('column-select-item')
             ->options($all)
-            ->check(
-                $this->getGridColumns()->filter(function ($label, $key) use ($show) {
-                    if (empty($show)) {
-                        return true;
-                    }
-
-                    return in_array($key, $show) ? true : false;
-                }
-            )
-            ->keys()
-        );
+            ->check($visibleColumnNames);
 
         $selectAll = Checkbox::make('_all_', [1 => trans('admin.all')])->check(
             $all->count() === count($show) ? 1 : null
@@ -65,7 +57,7 @@ class ColumnSelector extends AbstractTool
 
         return Admin::view('admin::grid.column-selector', [
             'checkbox'   => $list,
-            'defaults'   => $this->grid->getDefaultVisibleColumnNames(),
+            'defaults'   => $visibleColumnNames,
             'selectAll'  => $selectAll,
             'columnName' => $this->grid->getColumnSelectorQueryName(),
         ]);

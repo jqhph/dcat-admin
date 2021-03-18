@@ -45,13 +45,18 @@ class Menu extends Model implements Sortable
      */
     public function __construct(array $attributes = [])
     {
+        parent::__construct($attributes);
+
+        $this->init();
+    }
+
+    protected function init()
+    {
         $connection = config('admin.database.connection') ?: config('database.default');
 
         $this->setConnection($connection);
 
         $this->setTable(config('admin.database.menu_table'));
-
-        parent::__construct($attributes);
     }
 
     /**

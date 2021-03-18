@@ -10,6 +10,7 @@ use Dcat\Admin\Widgets\DialogTable;
 class SelectTable extends Field
 {
     use PlainInput;
+    use CanLoadFields;
 
     /**
      * @var DialogTable
@@ -17,6 +18,10 @@ class SelectTable extends Field
     protected $dialog;
 
     protected $style = 'primary';
+
+    protected $visibleColumn;
+
+    protected $key;
 
     public function __construct($column, $arguments = [])
     {
@@ -72,6 +77,22 @@ class SelectTable extends Field
     }
 
     /**
+     * 设置选中的key以及标题字段.
+     *
+     * @param $visibleColumn
+     * @param $key
+     *
+     * @return $this
+     */
+    public function pluck(?string $visibleColumn, ?string $key = 'id')
+    {
+        $this->visibleColumn = $visibleColumn;
+        $this->key = $key;
+
+        return $this;
+    }
+
+    /**
      * @param array $options
      *
      * @return $this
@@ -94,7 +115,7 @@ class SelectTable extends Field
      */
     public function model(string $model, string $id = 'id', string $text = 'title')
     {
-        return $this->options(function ($v) use ($model, $id, $text) {
+        return $this->pluck($text, $id)->options(function ($v) use ($model, $id, $text) {
             if (! $v) {
                 return [];
             }
@@ -124,11 +145,27 @@ class SelectTable extends Field
         $this->options = $values;
     }
 
+    /**
+     * @return string
+     */
+    protected function defaultPlaceholder()
+    {
+        return trans('admin.choose').' '.$this->label;
+    }
+
     protected function setUpTable()
     {
         $this->dialog
             ->footer($this->renderFooter())
             ->button($this->renderButton());
+
+        // 设置选中的字段和待显示的标题字段
+        $this->dialog
+            ->getTable()
+            ->getRenderable()
+            ->payload([
+                LazyRenderable::ROW_SELECTOR_COLUMN_NAME => [$this->key, $this->visibleColumn],
+            ]);
     }
 
     public function render()

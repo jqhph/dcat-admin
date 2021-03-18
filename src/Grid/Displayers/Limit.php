@@ -42,9 +42,7 @@ JS;
 
         $value = Helper::strLimit($this->value, $limit, $end);
 
-        $original = $this->column->getOriginal();
-
-        if ($value == $original) {
+        if ($value == $this->value) {
             return $value;
         }
 
@@ -54,7 +52,7 @@ JS;
     &nbsp;<a href="javascript:void(0);" class="limit-more">&nbsp;<i class="fa fa-angle-double-down"></i></a>
 </div>
 <div class="limit-text d-none">
-    <span class="text">{$original}</span>
+    <span class="text">{$this->value}</span>
     &nbsp;<a href="javascript:void(0);" class="limit-more">&nbsp;<i class="fa fa-angle-double-up"></i></a>
 </div>
 HTML;

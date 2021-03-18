@@ -421,7 +421,7 @@ class Field implements Renderable
     }
 
     /**
-     * @return Fluent
+     * @return Fluent|\Illuminate\Database\Eloquent\Model
      */
     public function values()
     {
@@ -537,7 +537,7 @@ class Field implements Renderable
      *
      * @param null $value
      *
-     * @return mixed
+     * @return mixed|$this
      */
     public function value($value = null)
     {
@@ -784,6 +784,12 @@ class Field implements Renderable
      */
     public function readOnly(bool $value = true)
     {
+        if (! $value) {
+            unset($this->attributes['readonly']);
+
+            return $this;
+        }
+
         return $this->attribute('readonly', $value);
     }
 
@@ -796,6 +802,12 @@ class Field implements Renderable
      */
     public function disable(bool $value = true)
     {
+        if (! $value) {
+            unset($this->attributes['disabled']);
+
+            return $this;
+        }
+
         return $this->attribute('disabled', $value);
     }
 
@@ -809,12 +821,20 @@ class Field implements Renderable
     public function placeholder($placeholder = null)
     {
         if ($placeholder === null) {
-            return $this->placeholder ?: trans('admin.input').' '.$this->label;
+            return $this->placeholder ?: $this->defaultPlaceholder();
         }
 
         $this->placeholder = $placeholder;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function defaultPlaceholder()
+    {
+        return trans('admin.input').' '.$this->label;
     }
 
     /**

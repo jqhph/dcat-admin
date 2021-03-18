@@ -8,6 +8,7 @@ use Dcat\Admin\Widgets\Checkbox as WidgetCheckbox;
 class Checkbox extends MultipleSelect
 {
     use CanCascadeFields;
+    use CanLoadFields;
 
     protected $style = 'primary';
 

@@ -7,7 +7,6 @@ use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 use Dcat\Admin\Http\Actions\Extensions\Disable;
 use Dcat\Admin\Http\Actions\Extensions\Enable;
 use Dcat\Admin\Http\Actions\Extensions\Uninstall;
-use Illuminate\Support\Str;
 
 class Name extends AbstractDisplayer
 {
@@ -19,7 +18,7 @@ class Name extends AbstractDisplayer
             'enableAction'    => $this->resolveAction(Enable::class),
             'disableAction'   => $this->resolveAction(Disable::class),
             'uninstallAction' => $this->resolveAction(Uninstall::class),
-            'linkIcon'        => Str::contains($this->row->homepage, 'github.com') ? 'icon-github' : 'icon-link',
+            'linkIcon'        => 'icon-link',
         ]);
     }
 
