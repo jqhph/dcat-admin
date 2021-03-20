@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\ColumnSelector;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Contracts\Grid\ColumnSelectorStore;
 use Dcat\Admin\Grid;
 
@@ -19,21 +20,21 @@ class SessionStore implements ColumnSelectorStore
 
     public function store(array $input)
     {
-        session()->put($this->getVisibleColumnsKey(), $input);
+        session()->put($this->getKey(), $input);
     }
 
     public function get()
     {
-        return session()->get($this->getVisibleColumnsKey());
+        return session()->get($this->getKey());
     }
 
     public function forget()
     {
-        session()->remove($this->getVisibleColumnsKey());
+        session()->remove($this->getKey());
     }
 
-    protected function getVisibleColumnsKey()
+    protected function getKey()
     {
-        return $this->grid->getName().'/'.request()->path();
+        return $this->grid->getName().'/'.request()->path().'/'.Admin::user()->getKey();
     }
 }
