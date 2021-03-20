@@ -224,7 +224,7 @@ export default class Helpers {
                 title = title.substr(0, 50) + '...';
             }
 
-            win.layer.open({
+            layer.open({
                 type: 1,
                 shade: 0.2,
                 title: false,
