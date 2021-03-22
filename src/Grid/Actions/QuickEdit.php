@@ -32,7 +32,7 @@ class QuickEdit extends RowAction
             ->success('Dcat.reload()');
 
         $this->setHtmlAttribute([
-            'data-url' => "{$this->resource()}/{$this->getKey()}/edit",
+            'data-url' => $this->parent->getEditUrl($this->getKey()),
         ]);
 
         return parent::render();
