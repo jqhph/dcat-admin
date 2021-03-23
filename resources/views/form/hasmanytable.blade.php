@@ -98,9 +98,13 @@
     });
 
     $(container).on('click', '.remove', function () {
-        $(this).closest('.has-many-{{ $columnClass }}-form').hide();
-        $(this).closest('.has-many-{{ $columnClass }}-form').find('[required]').prop('required', false);
-        $(this).closest('.has-many-{{ $columnClass }}-form').find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
+        $(this).closest('form')[0].reset();
+
+        var $form = $(this).closest('.has-many-{{ $columnClass }}-form');
+
+        $form.hide();
+        $form.find('[required]').prop('required', false);
+        $form.find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
     });
 </script>
 
