@@ -68,17 +68,15 @@
             var idColumn = options.columns.id,
                 textColumn = options.columns.text,
                 parentColumn = options.columns.parent,
-                parentIds = [], nodes = [], i, v, parentId;
+                nodes = [], i, v, parentId;
 
             for (i in all) {
                 v = all[i];
                 if (!v[idColumn]) continue;
 
                 parentId = v[parentColumn] || '#';
-                if (!parentId) {
+                if (!parentId || parentId == options.rootParentId || parentId == '0') {
                     parentId = '#';
-                } else {
-                    parentIds.push(parentId);
                 }
 
                 v['state'] = {'disabled': true};
@@ -106,6 +104,6 @@
     var area = {!! json_encode($area) !!};
 
     $('.grid-dialog-tree').off('click').on('click', function () {
-        resolveDialogTree.call(this, {config: options, nodes: nodes, area: area, columns: {!! json_encode($columnNames) !!}});
+        resolveDialogTree.call(this, {config: options, nodes: nodes, area: area, rootParentId: '{!! $rootParentId !!}', columns: {!! json_encode($columnNames) !!}});
     });
 </script>
