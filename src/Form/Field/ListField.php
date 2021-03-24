@@ -60,7 +60,7 @@ class ListField extends Field
     {
         $this->data = $data;
 
-        return Helper::array(Arr::get($data, $this->normalizeColumn(), $this->value));
+        return Helper::array($this->getValueFromData($data, null, $this->value));
     }
 
     /**

@@ -20,6 +20,10 @@ class RowSelector
 
     protected $titleColumn;
 
+    protected $checked = [];
+
+    protected $disabled = [];
+
     public function __construct(Grid $grid)
     {
         $this->grid = $grid;
@@ -42,6 +46,20 @@ class RowSelector
     public function click(bool $value = true)
     {
         $this->rowClickable = $value;
+
+        return $this;
+    }
+
+    public function check($data)
+    {
+        $this->checked = $data;
+
+        return $this;
+    }
+
+    public function disable($data)
+    {
+        $this->disabled = $data;
 
         return $this;
     }
@@ -76,10 +94,12 @@ HTML;
         $title = $this->getTitle($row, $id);
         $title = e(is_array($title) ? json_encode($title) : $title);
         $id = $this->idColumn ? Arr::get($row->toArray(), $this->idColumn) : $id;
+        $checked = $this->shouldChecked($row) ? 'checked="true"' : '';
+        $disabled = $this->shouldDisable($row) ? 'disabled' : '';
 
         return <<<EOT
 <div class="vs-checkbox-con vs-checkbox-{$this->style} checkbox-grid checkbox-grid-column">
-    <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" data-label="{$title}">
+    <input type="checkbox" class="{$this->grid->getRowName()}-checkbox" data-id="{$id}" {$checked} {$disabled} data-label="{$title}">
     <span class="vs-checkbox"><span class="vs-checkbox--check"><i class="vs-icon feather icon-check"></i></span></span>
 </div>        
 EOT;
@@ -101,6 +121,33 @@ var selector = Dcat.RowSelector({
 Dcat.grid.addSelector(selector, '{$this->grid->getName()}');
 JS
         );
+    }
+
+    protected function shouldChecked($row)
+    {
+        return $this->isSelectedRow($row, $this->checked);
+    }
+
+    protected function shouldDisable($row)
+    {
+        return $this->isSelectedRow($row, $this->disabled);
+    }
+
+    protected function isSelectedRow($row, $value)
+    {
+        if ($value instanceof \Closure) {
+            return $value->call($row, $row);
+        }
+
+        if (is_array($value)) {
+            foreach ($value as $v) {
+                if (((int) $v) === $row->_index) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     protected function getTitle($row, $id)
