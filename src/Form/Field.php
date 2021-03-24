@@ -12,6 +12,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
@@ -335,7 +336,13 @@ class Field implements Renderable
             $value = [];
 
             foreach ($this->column as $key => $column) {
-                $value[$key] = Arr::get($data, $this->normalizeColumn($column));
+                $column = $this->normalizeColumn($column);
+
+                if (Arr::has($data, $column)) {
+                    $value[$key] = Arr::get($data, $column);
+                } else {
+                    $value[$key] = Arr::get($data, Str::snake($column));
+                }
             }
 
             return $value;

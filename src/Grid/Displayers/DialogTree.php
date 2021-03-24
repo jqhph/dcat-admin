@@ -44,6 +44,8 @@ class DialogTree extends AbstractDisplayer
 
     protected $checkAll;
 
+    protected $rootParentId = 0;
+
     /**
      * @param array $data exp:
      *                    {
@@ -63,6 +65,13 @@ class DialogTree extends AbstractDisplayer
         }
 
         $this->nodes = &$data;
+
+        return $this;
+    }
+
+    public function rootParentId($id)
+    {
+        $this->rootParentId = $id;
 
         return $this;
     }
@@ -147,14 +156,15 @@ class DialogTree extends AbstractDisplayer
         }
 
         return Admin::view('admin::grid.displayer.dialogtree', [
-            'value'       => $this->format($this->value),
-            'nodes'       => $this->nodes,
-            'title'       => $this->title ?: $this->column->getLabel(),
-            'options'     => $this->options,
-            'area'        => $this->area,
-            'columnNames' => $this->columnNames,
-            'url'         => $this->url,
-            'checkAll'    => $this->checkAll,
+            'value'        => $this->format($this->value),
+            'nodes'        => $this->nodes,
+            'title'        => $this->title ?: $this->column->getLabel(),
+            'options'      => $this->options,
+            'area'         => $this->area,
+            'columnNames'  => $this->columnNames,
+            'url'          => $this->url,
+            'checkAll'     => $this->checkAll,
+            'rootParentId' => $this->rootParentId,
         ]);
     }
 
