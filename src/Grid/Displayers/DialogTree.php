@@ -249,7 +249,7 @@ $('.{$this->getSelectorPrefix()}-open-tree').off('click').on('click', function (
             if (!v[idColumn]) continue;
 
             parentId = v[parentColumn] || '#';
-            if (!parentId) {
+            if (!parentId || parentId == '0') {
                 parentId = '#';
             } else {
                 parentIds.push(parentId);
