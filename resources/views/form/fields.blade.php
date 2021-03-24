@@ -1,5 +1,5 @@
 @if($rows)
-    <div class="ml-2 mb-2" style="margin-top: -0.5rem">
+    <div class="ml-2 mb-2 mr-2" style="margin-top: -0.5rem">
         @foreach($rows as $row)
             {!! $row->render() !!}
         @endforeach
