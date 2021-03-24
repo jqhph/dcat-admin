@@ -9,7 +9,7 @@ class MultipleSelect extends Select
 {
     protected function formatFieldData($data)
     {
-        return Helper::array(Arr::get($data, $this->normalizeColumn()));
+        return Helper::array($this->getValueFromData($data));
     }
 
     protected function prepareInputValue($value)

@@ -222,7 +222,7 @@ class Tree extends Field
 
     protected function formatFieldData($data)
     {
-        return Helper::array(Arr::get($data, $this->normalizeColumn()), true);
+        return Helper::array($this->getValueFromData($data), true);
     }
 
     protected function prepareInputValue($value)
