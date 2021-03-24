@@ -137,3 +137,8 @@ body:not(.dark-mode) .simple-grid {
   }
 
 }
+
+.vs-checkbox-con.checkbox-grid-column input:disabled + .vs-checkbox {
+  cursor: not-allowed;
+  opacity: 0.33;
+}

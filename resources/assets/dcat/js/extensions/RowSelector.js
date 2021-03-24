@@ -26,7 +26,15 @@ export default class RowSelector {
             selectAll = options.selectAllSelector;
 
         $(selectAll).on('change', function() {
-            $(this).parents(options.container).find(checkboxSelector).prop('checked', this.checked).trigger('change');
+            let checked = this.checked;
+
+            $.each($(this).parents(options.container).find(checkboxSelector), function (_, checkbox) {
+                let $this = $(checkbox);
+
+                if (! $this.attr('disabled')) {
+                    $this.prop('checked', checked).trigger('change');
+                }
+            });
         });
         if (options.clickRow) {
             $document.off('click', checkboxSelector).on('click', checkboxSelector, function (e) {
