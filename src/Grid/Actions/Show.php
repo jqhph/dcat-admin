@@ -15,7 +15,7 @@ class Show extends RowAction
             return $this->title;
         }
 
-        return '<i class="feather icon-eye"></i> '.__('admin.show');
+        return '<i class="feather icon-eye"></i> '.__('admin.show').' &nbsp;&nbsp;';
     }
 
     /**

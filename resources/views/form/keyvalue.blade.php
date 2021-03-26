@@ -15,8 +15,8 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th>{{ __('Key') }}</th>
-                <th>{{ __('Value') }}</th>
+                <th>{!! $keyLabel !!}</th>
+                <th>{!! $valueLabel !!}</th>
                 <th style="width: 85px;"></th>
             </tr>
             </thead>

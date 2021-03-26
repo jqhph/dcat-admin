@@ -56,6 +56,7 @@ class UserController extends AdminController
             $grid->showQuickEditButton();
             $grid->enableDialogCreate();
             $grid->showColumnSelector();
+            $grid->disableEditButton();
 
             $grid->actions(function (Grid\Displayers\Actions $actions) {
                 if ($actions->getKey() == AdministratorModel::DEFAULT_ID) {

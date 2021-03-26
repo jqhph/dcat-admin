@@ -6,7 +6,6 @@ use Dcat\Admin\Form\Field;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Checkbox as WidgetCheckbox;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Arr;
 
 class Tree extends Field
 {
