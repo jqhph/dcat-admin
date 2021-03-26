@@ -15,7 +15,7 @@ class Delete extends RowAction
             return $this->title;
         }
 
-        return '<i class="feather icon-trash"></i> '.__('admin.delete');
+        return '<i class="feather icon-trash"></i> '.__('admin.delete').' &nbsp;&nbsp;';
     }
 
     public function render()

@@ -16,7 +16,7 @@ class QuickEdit extends RowAction
             return $this->title;
         }
 
-        return '<i class="feather icon-edit"></i> '.__('admin.quick_edit');
+        return '<i class="feather icon-edit"></i> '.__('admin.quick_edit').' &nbsp;&nbsp;';
     }
 
     public function render()
