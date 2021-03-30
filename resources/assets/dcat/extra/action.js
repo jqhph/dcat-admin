@@ -94,6 +94,7 @@
                 Object.assign(data, {
                     _action: options.calledClass,
                     _key: options.key,
+                    _token: Dcat.token,
                 });
 
                 Dcat.NP.start();
