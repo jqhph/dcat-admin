@@ -189,6 +189,17 @@ class HasMany extends Field
 
         $newInput += $input;
 
+        if ($hasManyRules = $this->getRules()) {
+            if (! Arr::has($input, $this->column)) {
+                return false;
+            }
+
+            $newInput += $this->sanitizeInput($input, $this->column);
+
+            $newRules[$this->column] = $hasManyRules;
+            $attributes[$this->column] = $this->label;
+        }
+
         return Validator::make($newInput, $newRules, array_merge($this->getValidationMessages(), $messages), $attributes);
     }
 

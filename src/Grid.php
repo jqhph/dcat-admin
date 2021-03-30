@@ -168,6 +168,7 @@ class Grid
         'create_mode'       => self::CREATE_MODE_DEFAULT,
         'dialog_form_area'  => ['700px', '670px'],
         'table_class'       => ['table', 'custom-data-table', 'data-table'],
+        'scrollbar_x'       => false,
     ];
 
     /**
@@ -943,6 +944,31 @@ HTML;
         $this->show = $value;
 
         return $this;
+    }
+
+    /**
+     * 是否显示横向滚动条.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function scrollbarX(bool $value = true)
+    {
+        $this->options['scrollbar_x'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function formatTableParentClass()
+    {
+        $tableCollaps = $this->option('table_collapse') ? 'table-collapse' : '';
+        $scrollbarX = $this->option('scrollbar_x') ? 'table-scrollbar-x' : '';
+
+        return "table-responsive table-wrapper complex-container table-middle mt-1 {$tableCollaps} {$scrollbarX}";
     }
 
     /**
