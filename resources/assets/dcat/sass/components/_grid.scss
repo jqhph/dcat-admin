@@ -49,6 +49,15 @@
   }
 }
 
+.table-responsive.table-scrollbar-x {
+    overflow-x: auto;
+    /*width: max-content;*/
+}
+.table-responsive.table-scrollbar-x .table {
+    width: max-content;
+    min-width: 100%;
+}
+
 // 过滤器滑动面板
 .right-side-filter-container .header {
   border-bottom: 1px solid $divider-color;

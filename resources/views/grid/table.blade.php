@@ -9,7 +9,7 @@
 
     {!! $grid->renderHeader() !!}
 
-    <div class="table-responsive {{ $grid->option('table_collapse') ? 'table-collapse' : '' }} table-wrapper complex-container table-middle mt-1">
+    <div class="{!! $grid->formatTableParentClass() !!}">
         <table class="{{ $grid->formatTableClass() }}" id="{{ $tableId }}" >
             <thead>
             @if ($headers = $grid->getVisibleComplexHeaders())
