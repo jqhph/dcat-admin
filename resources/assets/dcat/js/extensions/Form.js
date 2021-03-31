@@ -72,6 +72,7 @@ class Form {
         _this.removeErrors();
 
         $form.ajaxSubmit({
+            data: {_token: Dcat.token},
             beforeSubmit: function (fields, form, _opt) {
                 if (options.before(fields, form, _opt, _this) === false) {
                     return false;

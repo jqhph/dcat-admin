@@ -202,11 +202,11 @@ trait InteractsWithApi
             return;
         }
         loading = 1;
-        
+
         data = $.extend({$this->formatRequestData()}, data || {});
-        
-        {$fetching};   
-        
+
+        {$fetching};
+
         $.ajax({
           url: '{$this->getRequestUrl()}',
           dataType: 'json',
@@ -236,7 +236,8 @@ JS;
     private function formatRequestData()
     {
         $data = [
-            '_key' => $this->getUriKey(),
+            '_key'   => $this->getUriKey(),
+            '_token' => csrf_token(),
         ];
 
         return json_encode(
@@ -253,8 +254,8 @@ JS;
 
         foreach ($this->requestSelectors as $v) {
             $script .= <<<JS
-$('{$v}').on('click', function () { 
-    request($(this).data()) 
+$('{$v}').on('click', function () {
+    request($(this).data())
 });
 JS;
         }
