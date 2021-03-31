@@ -17,6 +17,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 
@@ -78,9 +79,7 @@ class ScaffoldController extends Controller
         $dbTypes = static::$dbTypes;
         $dataTypeMap = static::$dataTypeMap;
         $action = URL::current();
-        $tables = collect($this->getDatabaseColumns())->map(function ($v) {
-            return array_keys($v);
-        })->toArray();
+        $tables = $this->getDatabaseTables();
 
         return $content
             ->title(trans('admin.scaffold.header'))
@@ -186,18 +185,10 @@ class ScaffoldController extends Controller
     {
         $db = addslashes(\request('db'));
         $table = \request('tb');
-        if (! $table || ! $db) {
+        if (!$table || !$db) {
             return ['status' => 1, 'list' => []];
         }
-
-        $tables = collect($this->getDatabaseColumns($db, $table))
-            ->filter(function ($v, $k) use ($db) {
-                return $k == $db;
-            })->map(function ($v) use ($table) {
-                return Arr::get($v, $table);
-            })
-            ->filter()
-            ->first();
+        $tables = $this->getTableColumns($table);
 
         return ['status' => 1, 'list' => $tables];
     }
@@ -205,64 +196,63 @@ class ScaffoldController extends Controller
     /**
      * @return array
      */
-    protected function getDatabaseColumns($db = null, $tb = null)
+    protected function getDatabaseTables()
     {
-        $databases = Arr::where(config('database.connections', []), function ($value) {
-            $supports = ['mysql'];
-
-            return in_array(strtolower(Arr::get($value, 'driver')), $supports);
-        });
-
         $data = [];
+        $sm = Schema::getConnection()->getDoctrineSchemaManager();
+        $tables=$sm->listTables();
+        $db=env('DB_DATABASE');
+        foreach ($tables as $table) {
+            $data[$db][] = $table->getName();
+        }
+        return $data;
+    }
 
-        try {
-            foreach ($databases as $connectName => $value) {
-                if ($db && $db != $value['database']) {
-                    continue;
-                }
+    /**
+     * @return array
+     */
+    protected function getTableColumns($tb = null)
+    {
+        $data = [];
+        if (!$tb) {
+            return $data;
+        }
 
-                $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_schema = "%s"', $value['database']);
-
-                if ($tb) {
-                    $p = Arr::get($value, 'prefix');
-
-                    $sql .= " AND TABLE_NAME = '{$p}{$tb}'";
-                }
-
-                $tmp = DB::connection($connectName)->select($sql);
-
-                $collection = collect($tmp)->map(function ($v) use ($value) {
-                    if (! $p = Arr::get($value, 'prefix')) {
-                        return (array) $v;
-                    }
-                    $v = (array) $v;
-
-                    $v['TABLE_NAME'] = Str::replaceFirst($p, '', $v['TABLE_NAME']);
-
-                    return $v;
-                });
-
-                $data[$value['database']] = $collection->groupBy('TABLE_NAME')->map(function ($v) {
-                    return collect($v)->keyBy('COLUMN_NAME')->map(function ($v) {
-                        $v['COLUMN_TYPE'] = strtolower($v['COLUMN_TYPE']);
-                        $v['DATA_TYPE'] = strtolower($v['DATA_TYPE']);
-
-                        if (Str::contains($v['COLUMN_TYPE'], 'unsigned')) {
-                            $v['DATA_TYPE'] .= '@unsigned';
-                        }
-
-                        return [
-                            'type'     => $v['DATA_TYPE'],
-                            'default'  => $v['COLUMN_DEFAULT'],
-                            'nullable' => $v['IS_NULLABLE'],
-                            'key'      => $v['COLUMN_KEY'],
-                            'id'       => $v['COLUMN_KEY'] === 'PRI',
-                            'comment'  => $v['COLUMN_COMMENT'],
-                        ];
-                    })->toArray();
-                })->toArray();
+        $sm = Schema::getConnection()->getDoctrineSchemaManager();
+        $columns = $sm->listTableColumns($tb);
+        foreach ($columns as $c) {
+            $type = $c->getType()->getName();
+            if ($c->getUnsigned()) {
+                $type .= '@unsigned';
             }
-        } catch (\Throwable $e) {
+            $data[$c->getName()] = [
+                'type' => $type,
+                'comment' => $c->getComment(),
+                'id' => false,
+                "default" => $c->getDefault(),
+                "nullable" => $c->getNotnull(),
+                "key"=>''
+            ];
+        }
+
+        $indexes = $sm->listTableIndexes($tb);
+        foreach ($indexes as $index) {
+            $index_columns=$index->getColumns();
+            if (count($index_columns)==1){
+                if ($index->isSimpleIndex()){
+                    $data[$index_columns[0]]['key']='index';
+                }
+                else{
+                    if ($index->isPrimary()){
+                        $data[$index_columns[0]]['id']=$index->isPrimary();
+                        $data[$index_columns[0]]['key']='primary';
+                    }
+                    else
+                    {
+                        $data[$index_columns[0]]['key']='unique';
+                    }
+                }
+            }
         }
 
         return $data;

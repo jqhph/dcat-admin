@@ -420,7 +420,7 @@
                             type: list[i].type,
                             default: helpers.replace(list[i].default, '"', ''),
                             comment: c,
-                            nullable: list[i].nullable != 'NO',
+                            nullable: !list[i].nullable,
                         });
                     }
 
