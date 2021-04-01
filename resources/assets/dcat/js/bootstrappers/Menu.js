@@ -56,13 +56,21 @@ export default class Menu {
 
         // 自动计算高度
         let $horizontalMenu = $('.horizontal-menu .main-horizontal-sidebar'),
-            defaultHorizontalMenuHeight = $horizontalMenu.height(),
-            horizontalMenuTop = $horizontalMenu.offset().top + 15;
+            defaultHorizontalMenuHeight = 0,
+            horizontalMenuTop = 0;
 
         // 重新计算高度
         let resize = function () {
             if (! $('.horizontal-menu').length) {
                 return;
+            }
+
+            if (! defaultHorizontalMenuHeight) {
+                defaultHorizontalMenuHeight = $horizontalMenu.height()
+            }
+
+            if (! horizontalMenuTop) {
+                horizontalMenuTop = $horizontalMenu.offset().top + 15;
             }
 
             let height = $horizontalMenu.height(),

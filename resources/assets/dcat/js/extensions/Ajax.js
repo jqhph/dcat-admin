@@ -39,20 +39,21 @@ export default class Ajax {
 
         $.post = function (options) {
             options.type = 'POST';
+            Object.assign(options.data, {_token: Dcat.token});
 
             return $.ajax(options);
         };
 
         $.delete = function (options) {
             options.type = 'POST';
-            options.data = {_method: 'DELETE'};
+            options.data = {_method: 'DELETE', _token: Dcat.token};
 
             return $.ajax(options);
         };
 
         $.put = function (options) {
             options.type = 'POST';
-            Object.assign(options.data, {_method: 'PUT'});
+            Object.assign(options.data, {_method: 'PUT', _token: Dcat.token});
 
             return $.ajax(options);
         };
