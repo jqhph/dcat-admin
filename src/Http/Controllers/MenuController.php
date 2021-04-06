@@ -48,7 +48,6 @@ class MenuController extends AdminController
                             ->expand(false)
                             ->nodes((new $permissionModel())->allNodes());
                     }
-                    $form->hidden('_token')->default(csrf_token());
 
                     $form->width(9, 2);
 
