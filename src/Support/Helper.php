@@ -844,6 +844,9 @@ class Helper
      */
     public static function htmlEntityEncode($item)
     {
+        if (is_object($item)) {
+            $item = json_decode(json_encode($item), true);
+        }
         if (is_array($item)) {
             array_walk_recursive($item, function (&$value) {
                 $value = htmlentities($value);
