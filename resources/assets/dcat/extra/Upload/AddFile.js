@@ -159,7 +159,9 @@ export default class AddFile {
         let _this = this,
             parent = _this.uploader;
 
-        return function (cur, prev) {
+        return function (cur, prev, a) {
+            console.log(123, cur, prev, file);
+
             if (prev === 'progress') {
                 // $prgress.hide().width(0);
             } else if (prev === 'queued') {
