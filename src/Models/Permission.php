@@ -150,7 +150,7 @@ class Permission extends Model implements Sortable
             return false;
         }
 
-        if (! Helper::matchRequestPath($path)) {
+        if (! Helper::matchRequestPath($path, $request->decodedPath())) {
             return false;
         }
 
