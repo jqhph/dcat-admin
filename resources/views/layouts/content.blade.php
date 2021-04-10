@@ -41,7 +41,7 @@
     </div>
 
     {!! Dcat\Admin\Admin::asset()->scriptToHtml() !!}
-    {!! Dcat\Admin\Admin::html() !!}
+    <div class="extra-html">{!! Dcat\Admin\Admin::html() !!}</div>
 @endsection
 
 @if(! request()->pjax())
