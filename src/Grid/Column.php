@@ -267,25 +267,32 @@ class Column
 
     /**
      * @example
-     *     $grid->config
-     *         ->if(function () {
-     *             return $this->config ? true : false;
+     *     $grid->column('...')
+     *         ->if(function ($column) {
+     *             return $column->getValue() ? true : false;
      *         })
      *         ->display($view)
      *         ->expand(...)
      *         ->else()
-     *         ->emptyString()
+     *         ->display('')
      *
-     *    $grid->config
-     *         ->if(function () {
-     *             return $this->config ? true : false;
-     *         })
+     *    $grid->column('...')
+     *         ->if()
      *         ->then(function (Column $column) {
      *             $column ->display($view)->expand(...);
      *         })
      *         ->else(function (Column $column) {
      *             $column->emptyString();
      *         })
+     *
+     *     $grid->column('...')
+     *         ->if()
+     *         ->display($view)
+     *         ->expand(...)
+     *         ->else()
+     *         ->display('')
+     *         ->end()
+     *         ->modal()
      *
      * @param \Closure $condition
      *
