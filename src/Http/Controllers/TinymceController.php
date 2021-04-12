@@ -19,7 +19,7 @@ class TinymceController
 
         $disk->putFileAs($dir, $file, $newName);
 
-        return ['location' => $disk->url("{$dir}/$newName")];
+        return ['location' => $disk->url(['path' => "{$dir}/$newName", 'domainType' => config('admin.upload.domain_type')])];
     }
 
     protected function generateNewName(UploadedFile $file)
