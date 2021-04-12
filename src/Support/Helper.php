@@ -46,7 +46,7 @@ class Helper
      */
     public static function array($value, bool $filter = true): array
     {
-        if (! $value) {
+        if ($value === null || $value === '' || $value === []) {
             return [];
         }
 
