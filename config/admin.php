@@ -240,6 +240,9 @@ return [
             'image' => 'images',
             'file'  => 'files',
         ],
+
+        // Image and file access protocol http or https.
+        'domain_type' => 'default'
     ],
 
     /*
