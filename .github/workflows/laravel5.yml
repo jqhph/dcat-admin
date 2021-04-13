@@ -27,12 +27,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Validate composer.json and composer.lock
-        run:
+        run: |
           composer self-update --2
           composer validate --strict
 
       - name: Install dependencies
-        run:
+        run: |
           travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests 5.*
           cp -f ./tests/resources/stubs/artisan ./laravel-tests/
           cp -f ./tests/resources/stubs/ComposerConfigCommand.php ./laravel-tests/app/
@@ -63,7 +63,8 @@ jobs:
           DB_DATABASE: database/database.sqlite
 
       - name: Install Adminn
-        run: php artisan admin:publish --force
+        run: |
+          php artisan admin:publish --force
           php artisan admin:install
           php artisan migrate:rollback
           php artisan dusk:chrome-driver 89
