@@ -154,7 +154,7 @@ export default class Tree {
                 });
 
                 // 附加的HTML
-                $('body .extra-html').html(_body.find('.extra-html').html());
+                $('body .extra-html').append(_body.find('.extra-html').html());
 
                 // 主动触发ready事件，执行子节点附带的js脚本
                 Dcat.triggerReady();

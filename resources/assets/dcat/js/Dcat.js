@@ -113,7 +113,6 @@ export default class Dcat {
             };
 
         $document.one('pjax:complete', clear);
-        $document.one('init:off', clear);
 
         clear();
 
@@ -138,8 +137,19 @@ export default class Dcat {
         });
     }
 
-    offInit() {
-        $(document).trigger('init:off')
+    /**
+     * 清理注册过的init回调.
+     *
+     * @param selector
+     */
+    offInit(selector) {
+        if (initialized[selector]) {
+            initialized[selector].disconnect();
+        }
+
+        $(document).trigger('init:off', selector, initialized[selector])
+
+        initialized[selector] = null;
     }
 
     /**
