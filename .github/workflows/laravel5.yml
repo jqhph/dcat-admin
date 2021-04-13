@@ -23,7 +23,6 @@ jobs:
       - run: |
           export DISPLAY=:99
           chromedriver --url-base=/wd/hub &
-#          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
       - uses: actions/checkout@v2
 
@@ -52,7 +51,6 @@ jobs:
           php artisan admin:composer-config
           travis_retry composer require dcat/laravel-admin:*@dev
           travis_retry composer require laravel/dusk --dev # --ignore-platform-reqs
-          #  - travis_retry composer require --dev staudenmeir/dusk-updater:"^1.1"
 
       - name: Create Database
         run: |
