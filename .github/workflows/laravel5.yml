@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    name: Build Dcat Admin
     runs-on: ubuntu-latest
 
     steps:
