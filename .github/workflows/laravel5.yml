@@ -62,6 +62,7 @@ jobs:
 
       - name: Install Adminn
         run: |
+          cd ./laravel-tests
           php artisan admin:publish --force
           php artisan admin:install
           php artisan migrate:rollback
@@ -76,4 +77,6 @@ jobs:
           php artisan serve &
 
       - name: Run test suite
-        run: php artisan dusk
+        run: |
+          cd ./laravel-tests
+          php artisan dusk
