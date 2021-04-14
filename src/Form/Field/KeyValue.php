@@ -22,7 +22,7 @@ class KeyValue extends Field
 
     public function setValueLabel(?string $label)
     {
-        $this->keyLabel = $label;
+        $this->valueLabel = $label;
 
         return $this;
     }
