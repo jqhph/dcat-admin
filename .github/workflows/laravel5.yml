@@ -19,17 +19,11 @@ jobs:
 #        with:
 #          # Optional: do not specify to match Chrome's version
 #          chromedriver-version: '89.0.4389.23'
-      - name: Setup Chrome
-        # You may pin to the exact commit or the version.
-        # uses: browser-actions/setup-chrome@4fa655aad48f56911cad16db9252399a9e592848
-        uses: browser-actions/setup-chrome@v0.0.0
-        with:
-          # The Chromium version to install and use.
-          chromium-version: # optional
-
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
+#      - name: Setup Chrome
+#        # uses: browser-actions/setup-chrome@4fa655aad48f56911cad16db9252399a9e592848
+#        uses: browser-actions/setup-chrome@v0.0.0
+#        with:
+#          chromium-version: # optional
 
       - uses: actions/checkout@v2
 
