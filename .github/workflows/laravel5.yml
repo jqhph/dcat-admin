@@ -86,8 +86,11 @@ jobs:
           cd ./laravel-tests
           export DISPLAY=:99.0
           sudo Xvfb :99.0 -ac &
-          ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
-          php artisan serve &
+          sudo chmod -R 0755 ./vendor/laravel/dusk/bin/
+#          ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost > /dev/null 2>&1 &
+#          php artisan serve > /dev/null 2>&1 &
+          nohup bash -c './vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost > /dev/null 2>&1 &'
+          nohup bash -c 'php artisan serve > /dev/null 2>&1 &'
 
       - name: Run test suite
         run: |
