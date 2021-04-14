@@ -78,16 +78,18 @@ jobs:
           cp -f ./tests/routes.php ./app/Admin/
           cp -rf ./tests/resources/config ./config/
 
+      - name: Install Xvfb
+        run: sudo apt-get install xvfb
+
       - name: Start Server
         run: |
           cd ./laravel-tests
           export DISPLAY=:99.0
+          sh -e /etc/init.d/xvfb start
           ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
           php artisan serve &
 
-      - name: Run Dusk
-        uses: GabrielBB/xvfb-action@v1.4
-        with:
-          working-directory: ./laravel-tests
-          run: |
-            php artisan dusk
+      - name: Run test suite
+        run: |
+          cd ./laravel-tests
+          php artisan dusk
