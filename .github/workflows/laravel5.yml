@@ -86,8 +86,8 @@ jobs:
           php artisan serve &
 
       - name: Run Dusk
-        uses: GabrielBB/xvfb-action@v1
+        uses: GabrielBB/xvfb-action@v1.4
         with:
-          working-directory: ./ #optional
+          working-directory: ./laravel-tests
           run: |
-            php /home/runner/work/dcat-admin/dcat-admin/laravel-tests/artisan dusk
+            php artisan dusk
