@@ -51,8 +51,7 @@ jobs:
         run: sh ./tests/bin/start.sh
 
       - name: Run test suite
-        run: cd ./laravel-tests
-          php artisan dusk
+        run: cd ./laravel-tests && php artisan dusk
 
   laravel6:
     runs-on: ubuntu-latest
@@ -98,8 +97,7 @@ jobs:
         run: sh ./tests/bin/start.sh
 
       - name: Run test suite
-        run: cd ./laravel-tests
-          php artisan dusk
+        run: cd ./laravel-tests && php artisan dusk
 
   laravel7:
     runs-on: ubuntu-latest
@@ -145,8 +143,7 @@ jobs:
         run: sh ./tests/bin/start.sh
 
       - name: Run test suite
-        run: cd ./laravel-tests
-          php artisan dusk
+        run: cd ./laravel-tests && php artisan dusk
 
   laravel8:
     runs-on: ubuntu-latest
@@ -192,5 +189,4 @@ jobs:
         run: sh ./tests/bin/start.sh
 
       - name: Run test suite
-        run: cd ./laravel-tests
-          php artisan dusk
+        run: cd ./laravel-tests && php artisan dusk
