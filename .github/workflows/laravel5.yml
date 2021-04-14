@@ -82,15 +82,13 @@ jobs:
         run: sudo apt-get install xvfb
 
       - name: Start Server
-        # ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost > /dev/null 2>&1 &
-        # php artisan serve > /dev/null 2>&1 &
         run: |
           cd ./laravel-tests
           export DISPLAY=:99.0
-          sudo Xvfb :99.0 -ac &
+          sudo Xvfb start &
           sudo chmod -R 0755 ./vendor/laravel/dusk/bin/
-          nohup bash -c './vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost > /dev/null 2>&1 &'
-          nohup bash -c 'php artisan serve > /dev/null 2>&1 &'
+          ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost > /dev/null 2>&1 &
+          php artisan serve > /dev/null 2>&1 &
 
       - name: Run test suite
         run: |
