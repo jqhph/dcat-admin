@@ -86,6 +86,7 @@ jobs:
           php artisan serve &
 
       - name: Run test suite
+        uses: GabrielBB/xvfb-action@v1
         run: |
           cd ./laravel-tests
           php artisan dusk
