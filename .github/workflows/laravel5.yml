@@ -85,7 +85,7 @@ jobs:
         run: |
           cd ./laravel-tests
           export DISPLAY=:99.0
-          sh -e /etc/init.d/xvfb start
+          sudo Xvfb :99.0 -ac
           ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
           php artisan serve &
 
