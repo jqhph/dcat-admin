@@ -79,8 +79,10 @@ jobs:
           cp -rf ./tests/resources/config ./config/
 
       - name: Start Server
-        run: export DISPLAY=:99.0
-          sudo sh -e /etc/init.d/xvfb start
+        run: |
+          cd ./laravel-tests
+          export DISPLAY=:99.0
+          sudo sh /etc/init.d/xvfb start
           ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
           php artisan serve &
 
