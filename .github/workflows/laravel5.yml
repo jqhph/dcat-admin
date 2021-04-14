@@ -46,9 +46,6 @@ jobs:
           mysql user: root
           # MYSQL_PASSWORD - specified superuser password which user is power for created database
           mysql password: 123456
-        env:
-          DB_DATABASE: laravel
-          DB_PASSWORD: 123456
 
       - name: Install Dependencies
         run: |
