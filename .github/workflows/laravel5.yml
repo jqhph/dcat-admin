@@ -31,6 +31,25 @@ jobs:
           composer self-update --2
           composer validate --strict
 
+      - name: Setup MySQL
+        # You may pin to the exact commit or the version.
+        # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          # Version of MySQL to use
+          mysql version: 5.7
+          # MYSQL_ROOT_PASSWORD - root superuser password
+          mysql root password: # optional, default is
+          # MYSQL_DATABASE - name for the default database that is created
+          mysql database: laravel
+          # MYSQL_USER - create the specified user with superuser power for created database
+          mysql user: root
+          # MYSQL_PASSWORD - specified superuser password which user is power for created database
+          mysql password: 123456
+        env:
+          DB_DATABASE: laravel
+          DB_PASSWORD: 123456
+
       - name: Install Dependencies
         run: |
           composer create-project --prefer-dist laravel/laravel laravel-tests 5.*
@@ -51,25 +70,6 @@ jobs:
           php artisan admin:composer-config
           composer require dcat/laravel-admin:*@dev
           composer require laravel/dusk --dev # --ignore-platform-reqs
-
-      - name: Setup MySQL
-          # You may pin to the exact commit or the version.
-          # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
-          uses: mirromutth/mysql-action@v1.1
-          with:
-            # Version of MySQL to use
-            mysql version: 5.7
-            # MYSQL_ROOT_PASSWORD - root superuser password
-            mysql root password: # optional, default is
-            # MYSQL_DATABASE - name for the default database that is created
-            mysql database: laravel
-            # MYSQL_USER - create the specified user with superuser power for created database
-            mysql user: root
-            # MYSQL_PASSWORD - specified superuser password which user is power for created database
-            mysql password: 123456
-          env:
-            DB_DATABASE: laravel
-            DB_PASSWORD: 123456
 
       - name: Install Admin
         run: |
