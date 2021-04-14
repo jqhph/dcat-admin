@@ -51,7 +51,7 @@ class Permission
             return true;
         }
 
-        if (!Admin::user()->inRoles($roles)) {
+        if (! Admin::user()->inRoles($roles)) {
             static::error();
         }
     }
@@ -112,7 +112,8 @@ class Permission
     public static function isAdministrator()
     {
         $roleModel = config('admin.database.roles_model');
-        return !config('admin.permission.enable') || Admin::user()->isRole($roleModel::ADMINISTRATOR);
+
+        return ! config('admin.permission.enable') || Admin::user()->isRole($roleModel::ADMINISTRATOR);
     }
 
     /**

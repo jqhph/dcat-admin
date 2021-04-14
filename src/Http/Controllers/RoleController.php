@@ -98,7 +98,7 @@ class RoleController extends AdminController
                     return $permissionModel->allNodes();
                 })
                 ->customFormat(function ($v) {
-                    if (!$v) {
+                    if (! $v) {
                         return [];
                     }
 
