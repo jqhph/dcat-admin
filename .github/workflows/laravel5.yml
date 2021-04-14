@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          travis_retry composer create-project --prefer-dist laravel/laravel laravel-tests 5.*
+          composer create-project --prefer-dist laravel/laravel laravel-tests 5.*
           cp -f ./tests/resources/stubs/artisan ./laravel-tests/
           cp -f ./tests/resources/stubs/ComposerConfigCommand.php ./laravel-tests/app/
           mkdir ./laravel-tests/dcat-admin
@@ -49,8 +49,8 @@ jobs:
           cp -f ./.env.testing ./laravel-tests/.env
           cd ./laravel-tests
           php artisan admin:composer-config
-          travis_retry composer require dcat/laravel-admin:*@dev
-          travis_retry composer require laravel/dusk --dev # --ignore-platform-reqs
+          composer require dcat/laravel-admin:*@dev
+          composer require laravel/dusk --dev # --ignore-platform-reqs
 
       - name: Create Database
         run: |
