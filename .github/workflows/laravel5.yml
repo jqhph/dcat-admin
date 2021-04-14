@@ -87,6 +87,8 @@ jobs:
 
       - name: Run test suite
         uses: GabrielBB/xvfb-action@v1
-        run: |
-          cd ./laravel-tests
-          php artisan dusk
+        with:
+          working-directory: ./ #optional
+          run: |
+            cd ./laravel-tests
+            php artisan dusk
