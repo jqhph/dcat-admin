@@ -85,10 +85,9 @@ jobs:
           ./vendor/laravel/dusk/bin/chromedriver-linux --headless --disable-gpu --remote-debugging-port=9515 http://localhost &
           php artisan serve &
 
-      - name: Run test suite
+      - name: Run Dusk
         uses: GabrielBB/xvfb-action@v1
         with:
           working-directory: ./ #optional
           run: |
-            cd ./laravel-tests
-            php artisan dusk
+            php /home/runner/work/dcat-admin/dcat-admin/laravel-tests/artisan dusk
