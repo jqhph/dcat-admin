@@ -15,10 +15,17 @@ jobs:
         with:
           php-version: '7.1'
 
-      - uses: nanasess/setup-chromedriver@master
+#      - uses: nanasess/setup-chromedriver@master
+#        with:
+#          # Optional: do not specify to match Chrome's version
+#          chromedriver-version: '89.0.4389.23'
+      - name: Setup Chrome
+        # You may pin to the exact commit or the version.
+        # uses: browser-actions/setup-chrome@4fa655aad48f56911cad16db9252399a9e592848
+        uses: browser-actions/setup-chrome@v0.0.0
         with:
-          # Optional: do not specify to match Chrome's version
-          chromedriver-version: '89.0.4389.23'
+          # The Chromium version to install and use.
+          chromium-version: '89.0.4389.23'
 
       - run: |
           export DISPLAY=:99
