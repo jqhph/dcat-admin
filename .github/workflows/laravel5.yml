@@ -39,7 +39,7 @@ jobs:
           # Version of MySQL to use
           mysql version: 5.7
           # MYSQL_ROOT_PASSWORD - root superuser password
-          mysql root password: # optional, default is
+          mysql root password: 123456
           # MYSQL_DATABASE - name for the default database that is created
           mysql database: laravel
           # MYSQL_USER - create the specified user with superuser power for created database
