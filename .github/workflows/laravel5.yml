@@ -18,7 +18,7 @@ jobs:
       - uses: nanasess/setup-chromedriver@master
         with:
           # Optional: do not specify to match Chrome's version
-          chromedriver-version: '89.0.4389.82'
+          chromedriver-version: '89.0.4389.23'
 
       - run: |
           export DISPLAY=:99
