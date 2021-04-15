@@ -12,6 +12,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -211,16 +212,20 @@ class Model
      * @param int              $total
      * @param Collection|array $data
      *
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator|Paginator
      */
     public function makePaginator($total, $data, string $url = null)
     {
-        $paginator = new LengthAwarePaginator(
-            $data,
-            $total,
-            $this->getPerPage(), // 传入每页显示行数
-            $this->getCurrentPage() // 传入当前页码
-        );
+        if ($this->simple) {
+            $paginator = new Paginator($data, $this->getPerPage(), $this->getCurrentPage());
+        } else {
+            $paginator = new LengthAwarePaginator(
+                $data,
+                $total,
+                $this->getPerPage(), // 传入每页显示行数
+                $this->getCurrentPage() // 传入当前页码
+            );
+        }
 
         return $paginator->setPath(
             $url ?: url()->current()

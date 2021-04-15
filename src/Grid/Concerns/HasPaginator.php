@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid\Tools;
-use Dcat\Admin\Support\Helper;
 
 trait HasPaginator
 {
