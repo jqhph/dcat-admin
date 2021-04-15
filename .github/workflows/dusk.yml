@@ -44,8 +44,8 @@ jobs:
       - name: Install Admin
         run: sh ./tests/bin/install-admin.sh
 
-      - name: Install Xvfb
-        run: sudo apt-get install xvfb
+#      - name: Install Xvfb
+#        run: sudo apt-get install xvfb
 
       - name: Start Server
         run: sh ./tests/bin/start.sh
@@ -90,8 +90,8 @@ jobs:
       - name: Install Admin
         run: sh ./tests/bin/install-admin.sh
 
-      - name: Install Xvfb
-        run: sudo apt-get install xvfb
+#      - name: Install Xvfb
+#        run: sudo apt-get install xvfb
 
       - name: Start Server
         run: sh ./tests/bin/start.sh
@@ -136,8 +136,8 @@ jobs:
       - name: Install Admin
         run: sh ./tests/bin/install-admin.sh
 
-      - name: Install Xvfb
-        run: sudo apt-get install xvfb
+#      - name: Install Xvfb
+#        run: sudo apt-get install xvfb
 
       - name: Start Server
         run: sh ./tests/bin/start.sh
