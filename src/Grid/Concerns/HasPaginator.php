@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Dcat\Admin\Grid\Tools;
+use Dcat\Admin\Support\Helper;
 
 trait HasPaginator
 {
@@ -29,11 +30,6 @@ trait HasPaginator
      * @var string
      */
     protected $paginatorClass = Tools\Paginator::class;
-
-    /**
-     * @var \Closure
-     */
-    protected $paginationCallback;
 
     /**
      * Paginate the grid.
@@ -65,18 +61,6 @@ trait HasPaginator
     public function setPaginatorClass(string $paginator)
     {
         $this->paginatorClass = $paginator;
-
-        return $this;
-    }
-
-    /**
-     * @param \Closure
-     *
-     * @return $this
-     */
-    public function pagination(\Closure $callback)
-    {
-        $this->paginationCallback = $callback;
 
         return $this;
     }
@@ -160,10 +144,6 @@ trait HasPaginator
      */
     public function renderPagination()
     {
-        if ($callback = $this->paginationCallback) {
-            return $callback($this);
-        }
-
         return view('admin::grid.table-pagination', ['grid' => $this]);
     }
 }
