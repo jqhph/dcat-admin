@@ -101,6 +101,11 @@ class Model
     protected $sortName = '_sort';
 
     /**
+     * @var bool
+     */
+    protected $simple = false;
+
+    /**
      * @var Grid
      */
     protected $grid;
@@ -181,6 +186,28 @@ class Model
     }
 
     /**
+     * 是否使用 simplePaginate方法进行分页.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function simple(bool $value = true)
+    {
+        $this->simple = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaginateMethod()
+    {
+        return $this->simple ? 'simplePaginate' : 'paginate';
+    }
+
+    /**
      * @param int              $total
      * @param Collection|array $data
      *
@@ -214,10 +241,14 @@ class Model
      * Enable or disable pagination.
      *
      * @param bool $use
+     *
+     * @reutrn $this;
      */
     public function usePaginate($use = true)
     {
         $this->usePaginate = $use;
+
+        return $this;
     }
 
     /**

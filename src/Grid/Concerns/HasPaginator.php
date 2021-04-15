@@ -46,6 +46,16 @@ trait HasPaginator
     }
 
     /**
+     * 是否使用 simplePaginate 方法分页.
+     *
+     * @param bool $value
+     */
+    public function simplePaginate(bool $value = true)
+    {
+        $this->model()->simple($value);
+    }
+
+    /**
      * @return int
      */
     public function getPerPage()

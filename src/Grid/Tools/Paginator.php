@@ -79,7 +79,7 @@ class Paginator implements Renderable
         $parameters = [
             'first' => $this->paginator->firstItem(),
             'last'  => $this->paginator->lastItem(),
-            'total' => $this->paginator->total(),
+            'total' => method_exists($this->paginator, 'total') ? $this->paginator->total() : '...',
         ];
 
         $parameters = collect($parameters)->flatMap(function ($parameter, $key) {
