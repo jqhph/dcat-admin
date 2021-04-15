@@ -177,7 +177,14 @@ export default class DialogForm {
 
             dialogOpts.btn2 = function () { // 重置按钮
                 self.$form.trigger('reset');
-                
+                self.$form.find('input').each(function(index, ele) {
+                    if ($(ele).attr('type') == 'radio') {
+                        $(ele).trigger('change');
+                    }
+                });
+                self.$form.find('select').each(function(index, ele) {
+                    $(ele).val($(ele).data('value')).trigger('change');
+                });
                 return false;
             };
         }
