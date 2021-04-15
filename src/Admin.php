@@ -127,6 +127,16 @@ class Admin
     }
 
     /**
+     * 设置翻译文件路径.
+     *
+     * @param string|null $path
+     */
+    public static function translation(?string $path)
+    {
+        app('admin.translator')->setPath($path);
+    }
+
+    /**
      * 获取登录用户模型.
      *
      * @return Model|Authenticatable|HasPermissions
