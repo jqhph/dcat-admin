@@ -31,11 +31,6 @@ trait HasPaginator
     protected $paginatorClass = Tools\Paginator::class;
 
     /**
-     * @var \Closure
-     */
-    protected $paginationCallback;
-
-    /**
      * Paginate the grid.
      *
      * @param int $perPage
@@ -47,6 +42,16 @@ trait HasPaginator
         $this->perPage = $perPage;
 
         $this->model()->setPerPage($perPage);
+    }
+
+    /**
+     * 是否使用 simplePaginate 方法分页.
+     *
+     * @param bool $value
+     */
+    public function simplePaginate(bool $value = true)
+    {
+        $this->model()->simple($value);
     }
 
     /**
@@ -65,18 +70,6 @@ trait HasPaginator
     public function setPaginatorClass(string $paginator)
     {
         $this->paginatorClass = $paginator;
-
-        return $this;
-    }
-
-    /**
-     * @param \Closure
-     *
-     * @return $this
-     */
-    public function pagination(\Closure $callback)
-    {
-        $this->paginationCallback = $callback;
 
         return $this;
     }
@@ -160,10 +153,6 @@ trait HasPaginator
      */
     public function renderPagination()
     {
-        if ($callback = $this->paginationCallback) {
-            return $callback($this);
-        }
-
         return view('admin::grid.table-pagination', ['grid' => $this]);
     }
 }

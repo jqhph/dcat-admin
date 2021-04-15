@@ -242,7 +242,7 @@ return [
         ],
 
         // Image and file access protocol http or https.
-        'domain_type' => 'default'
+        'domain_type' => 'default',
     ],
 
     /*

@@ -6,7 +6,6 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Auth\Permission;
 use Dcat\Admin\Http\Repositories\Role;
-use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Tree;
@@ -67,7 +66,8 @@ class RoleController extends AdminController
             $show->field('created_at');
             $show->field('updated_at');
 
-            if ($show->getKey() == RoleModel::ADMINISTRATOR_ID) {
+            $roleModel = config('admin.database.roles_model');
+            if ($show->getKey() == $roleModel::ADMINISTRATOR_ID) {
                 $show->disableDeleteButton();
             }
         });
@@ -108,7 +108,8 @@ class RoleController extends AdminController
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
 
-            if ($id == RoleModel::ADMINISTRATOR_ID) {
+            $roleModel = config('admin.database.roles_model');
+            if ($id == $roleModel::ADMINISTRATOR_ID) {
                 $form->disableDeleteButton();
             }
         });
@@ -116,7 +117,8 @@ class RoleController extends AdminController
 
     public function destroy($id)
     {
-        if (in_array(RoleModel::ADMINISTRATOR_ID, Helper::array($id))) {
+        $roleModel = config('admin.database.roles_model');
+        if (in_array($roleModel::ADMINISTRATOR_ID, Helper::array($id))) {
             Permission::error();
         }
 
