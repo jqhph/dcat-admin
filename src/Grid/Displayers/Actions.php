@@ -287,7 +287,7 @@ class Actions extends AbstractDisplayer
      */
     protected function getEditLabel()
     {
-        $label = trans('admin.show');
+        $label = trans('admin.edit');
 
         return "<i title='{$label}' class=\"feather icon-edit-1 grid-action-icon\"></i> &nbsp;";
     }
