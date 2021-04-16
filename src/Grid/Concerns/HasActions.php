@@ -16,20 +16,13 @@ trait HasActions
     protected $actionsCallback = [];
 
     /**
-     * Actions column display class.
-     *
-     * @var string
-     */
-    protected $actionsClass;
-
-    /**
      * @param string $actionClass
      *
      * @return $this
      */
     public function setActionClass(string $actionClass)
     {
-        $this->actionsClass = $actionClass;
+        $this->options['actions_class'] = $actionClass;
 
         return $this;
     }
@@ -41,8 +34,8 @@ trait HasActions
      */
     public function getActionClass()
     {
-        if ($this->actionsClass) {
-            return $this->actionsClass;
+        if ($this->options['actions_class']) {
+            return $this->options['actions_class'];
         }
 
         if ($class = config('admin.grid.grid_action_class')) {

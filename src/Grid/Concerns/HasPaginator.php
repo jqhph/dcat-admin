@@ -26,11 +26,6 @@ trait HasPaginator
     protected $perPage = 20;
 
     /**
-     * @var string
-     */
-    protected $paginatorClass = Tools\Paginator::class;
-
-    /**
      * Paginate the grid.
      *
      * @param int $perPage
@@ -73,7 +68,7 @@ trait HasPaginator
      */
     public function setPaginatorClass(string $paginator)
     {
-        $this->paginatorClass = $paginator;
+        $this->options['paginator_class'] = $paginator;
 
         return $this;
     }
@@ -81,11 +76,17 @@ trait HasPaginator
     /**
      * Get the grid paginator.
      *
-     * @return mixed
+     * @return \Dcat\Admin\Grid\Tools\Paginator
      */
     public function paginator()
     {
-        return $this->paginator ?: ($this->paginator = new $this->paginatorClass($this));
+        if (! $this->paginator) {
+            $paginatorClass = $this->options['paginator_class'] ?: (config('admin.grid.paginator_class') ?: Tools\Paginator::class);
+
+            $this->paginator = new $paginatorClass($this);
+        }
+
+        return $this->paginator;
     }
 
     /**

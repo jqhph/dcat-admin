@@ -5,7 +5,7 @@ namespace Dcat\Admin\Traits;
 use Dcat\Admin\Admin;
 
 /**
- * Trait LazyWidget
+ * Trait LazyWidget.
  *
  * @package Dcat\Admin\Traits
  *
