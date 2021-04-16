@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Support;
 
+use Dcat\Admin\Admin;
+
 class Translator
 {
     protected static $method;
@@ -19,7 +21,6 @@ class Translator
     public function __construct()
     {
         $this->translator = app('translator');
-        $this->path = admin_controller_slug();
     }
 
     /**
@@ -35,6 +36,18 @@ class Translator
     }
 
     /**
+     * @return string
+     */
+    public function getPath()
+    {
+        if (! $this->path) {
+            $this->path = Admin::context()->translation ?: admin_controller_slug();
+        }
+
+        return $this->path;
+    }
+
+    /**
      * 翻译字段名称.
      *
      * @param string $field
@@ -44,7 +57,7 @@ class Translator
      */
     public function transField(?string $field, $locale = null)
     {
-        return $this->trans("{$this->path}.fields.{$field}", [], $locale);
+        return $this->trans("{$this->getPath()}.fields.{$field}", [], $locale);
     }
 
     /**
@@ -60,7 +73,7 @@ class Translator
     {
         $label = $label ?: admin_controller_name();
 
-        return $this->trans("{$this->path}.labels.{$label}", $replace, $locale);
+        return $this->trans("{$this->getPath()}.labels.{$label}", $replace, $locale);
     }
 
     /**

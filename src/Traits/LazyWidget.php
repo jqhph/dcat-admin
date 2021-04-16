@@ -2,6 +2,15 @@
 
 namespace Dcat\Admin\Traits;
 
+use Dcat\Admin\Admin;
+
+/**
+ * Trait LazyWidget
+ *
+ * @package Dcat\Admin\Traits
+ *
+ * @property string $translation
+ */
 trait LazyWidget
 {
     protected $payload = [];
@@ -13,10 +22,16 @@ trait LazyWidget
         return $this;
     }
 
+    public function translation()
+    {
+        return empty($this->translation) ? Admin::translator()->getPath() : $this->translation;
+    }
+
     public function getUrl()
     {
         $data = array_merge($this->payload, [
             'renderable' => $this->getRenderableName(),
+            '_trans_'    => $this->translation(),
         ]);
 
         return route(admin_api_route_name('render'), $data);

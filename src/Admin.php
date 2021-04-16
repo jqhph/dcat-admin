@@ -133,7 +133,7 @@ class Admin
      */
     public static function translation(?string $path)
     {
-        app('admin.translator')->setPath($path);
+        static::context()->translation = $path;
     }
 
     /**
@@ -338,11 +338,23 @@ class Admin
     }
 
     /**
+     * 上下文管理.
+     *
      * @return \Dcat\Admin\Support\Context
      */
     public static function context()
     {
         return app('admin.context');
+    }
+
+    /**
+     * 翻译器.
+     *
+     * @return \Dcat\Admin\Support\Translator
+     */
+    public static function translator()
+    {
+        return app('admin.translator');
     }
 
     /**

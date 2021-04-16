@@ -120,6 +120,20 @@ class Content implements Renderable
     }
 
     /**
+     * 设置翻译文件路径.
+     *
+     * @param string|null $translation
+     *
+     * @return $this
+     */
+    public function translation(?string $translation)
+    {
+        Admin::translation($translation);
+
+        return $this;
+    }
+
+    /**
      * Build full page.
      *
      * @return $this

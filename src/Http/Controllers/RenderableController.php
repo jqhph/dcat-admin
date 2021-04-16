@@ -9,13 +9,10 @@ use Illuminate\Http\Request;
 
 class RenderableController
 {
-    /**
-     * @param Request $request
-     *
-     * @return mixed|string
-     */
     public function handle(Request $request)
     {
+        $this->initTranslation($request);
+
         $renderable = $this->newRenderable($request);
 
         $this->addScript();
@@ -35,6 +32,13 @@ class RenderableController
             .$asset->cssToHtml()
             .$asset->scriptToHtml()
             .$asset->styleToHtml();
+    }
+
+    protected function initTranslation(Request $request)
+    {
+        if ($path = $request->get('_trans_')) {
+            Admin::translation($path);
+        }
     }
 
     protected function newRenderable(Request $request): LazyRenderable
