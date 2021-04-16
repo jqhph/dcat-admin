@@ -7,7 +7,6 @@ use Dcat\Admin\Admin;
 /**
  * Trait LazyWidget.
  *
- * @package Dcat\Admin\Traits
  *
  * @property string $translation
  */
