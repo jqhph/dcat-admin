@@ -292,6 +292,7 @@ return [
         'role_permissions_table' => 'admin_role_permissions',
         'role_menu_table'        => 'admin_role_menu',
         'permission_menu_table'  => 'admin_permission_menu',
+        'operation_log_table'    => 'admin_operation_log',
         'settings_table'         => 'admin_settings',
         'extensions_table'       => 'admin_extensions',
         'extension_histories_table' => 'admin_extension_histories',
