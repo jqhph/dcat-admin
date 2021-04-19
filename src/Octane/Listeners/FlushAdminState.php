@@ -20,6 +20,7 @@ class FlushAdminState
         'admin.context',
         'admin.setting',
         'admin.web-uploader',
+        'admin.translator',
     ];
 
     protected $app;

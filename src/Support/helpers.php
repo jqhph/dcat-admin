@@ -168,9 +168,7 @@ if (! function_exists('admin_trans_field')) {
      */
     function admin_trans_field($field, $locale = null)
     {
-        $slug = admin_controller_slug();
-
-        return admin_trans("{$slug}.fields.{$field}", [], $locale);
+        return app('admin.translator')->transField($field, $locale);
     }
 }
 
@@ -186,10 +184,7 @@ if (! function_exists('admin_trans_label')) {
      */
     function admin_trans_label($label = null, $replace = [], $locale = null)
     {
-        $label = $label ?: admin_controller_name();
-        $slug = admin_controller_slug();
-
-        return admin_trans("{$slug}.labels.{$label}", $replace, $locale);
+        return app('admin.translator')->transLabel($label, $replace, $locale);
     }
 }
 
@@ -223,33 +218,7 @@ if (! function_exists('admin_trans')) {
      */
     function admin_trans($key, $replace = [], $locale = null)
     {
-        static $method = null;
-
-        if ($method === null) {
-            $method = version_compare(app()->version(), '6.0', '>=') ? 'get' : 'trans';
-        }
-
-        $translator = app('translator');
-
-        if ($translator->has($key)) {
-            return $translator->$method($key, $replace, $locale);
-        }
-        if (
-            mb_strpos($key, 'global.') !== 0
-            && count($arr = explode('.', $key)) > 1
-        ) {
-            unset($arr[0]);
-            array_unshift($arr, 'global');
-            $key = implode('.', $arr);
-
-            if (! $translator->has($key)) {
-                return end($arr);
-            }
-
-            return $translator->$method($key, $replace, $locale);
-        }
-
-        return last(explode('.', $key));
+        return app('admin.translator')->trans($key, $replace, $locale);
     }
 }
 

@@ -26,11 +26,6 @@ trait HasPaginator
     protected $perPage = 20;
 
     /**
-     * @var string
-     */
-    protected $paginatorClass = Tools\Paginator::class;
-
-    /**
      * Paginate the grid.
      *
      * @param int $perPage
@@ -48,10 +43,14 @@ trait HasPaginator
      * 是否使用 simplePaginate 方法分页.
      *
      * @param bool $value
+     *
+     * @return $this
      */
     public function simplePaginate(bool $value = true)
     {
         $this->model()->simple($value);
+
+        return $this;
     }
 
     /**
@@ -69,7 +68,7 @@ trait HasPaginator
      */
     public function setPaginatorClass(string $paginator)
     {
-        $this->paginatorClass = $paginator;
+        $this->options['paginator_class'] = $paginator;
 
         return $this;
     }
@@ -77,11 +76,17 @@ trait HasPaginator
     /**
      * Get the grid paginator.
      *
-     * @return mixed
+     * @return \Dcat\Admin\Grid\Tools\Paginator
      */
     public function paginator()
     {
-        return $this->paginator ?: ($this->paginator = new $this->paginatorClass($this));
+        if (! $this->paginator) {
+            $paginatorClass = $this->options['paginator_class'] ?: (config('admin.grid.paginator_class') ?: Tools\Paginator::class);
+
+            $this->paginator = new $paginatorClass($this);
+        }
+
+        return $this->paginator;
     }
 
     /**

@@ -127,6 +127,16 @@ class Admin
     }
 
     /**
+     * 设置翻译文件路径.
+     *
+     * @param string|null $path
+     */
+    public static function translation(?string $path)
+    {
+        static::context()->translation = $path;
+    }
+
+    /**
      * 获取登录用户模型.
      *
      * @return Model|Authenticatable|HasPermissions
@@ -328,11 +338,23 @@ class Admin
     }
 
     /**
+     * 上下文管理.
+     *
      * @return \Dcat\Admin\Support\Context
      */
     public static function context()
     {
         return app('admin.context');
+    }
+
+    /**
+     * 翻译器.
+     *
+     * @return \Dcat\Admin\Support\Translator
+     */
+    public static function translator()
+    {
+        return app('admin.translator');
     }
 
     /**

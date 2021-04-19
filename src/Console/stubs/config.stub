@@ -150,15 +150,31 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | The global Grid setting
+    |--------------------------------------------------------------------------
+    */
     'grid' => [
 
-        /*
-        |--------------------------------------------------------------------------
-        | The global Grid action display class.
-        |--------------------------------------------------------------------------
-        */
+        // The global Grid action display class.
         'grid_action_class' => Dcat\Admin\Grid\Displayers\DropdownActions::class,
 
+        // The global Grid batch action display class.
+        'batch_action_class' => Dcat\Admin\Grid\Tools\BatchActions::class,
+
+        // The global Grid pagination display class.
+        'paginator_class' => Dcat\Admin\Grid\Tools\Paginator::class,
+
+        'actions' => [
+            'view' => Dcat\Admin\Grid\Actions\Show::class,
+            'edit' => Dcat\Admin\Grid\Actions\Edit::class,
+            'quick_edit' => Dcat\Admin\Grid\Actions\QuickEdit::class,
+            'delete' => Dcat\Admin\Grid\Actions\Delete::class,
+            'batch_delete' => Dcat\Admin\Grid\Tools\BatchDelete::class,
+        ],
+
+        // The global Grid column selector setting.
         'column_selector' => [
             'store' => Dcat\Admin\Grid\ColumnSelector\SessionStore::class,
             'store_params' => [
