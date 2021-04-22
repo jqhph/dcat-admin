@@ -175,7 +175,7 @@ class Admin
      *
      * @return void
      */
-    public function pjax(bool $value = true)
+    public static function pjax(bool $value = true)
     {
         static::context()->pjaxContainerId = $value ? static::$defaultPjaxContainerId : false;
     }
