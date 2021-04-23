@@ -98,6 +98,8 @@
     });
 
     $(container).on('click', '.remove', function () {
+        $(this).closest('form')[0].reset();
+
         var $form = $(this).closest('.has-many-{{ $columnClass }}-form');
 
         $form.hide();
