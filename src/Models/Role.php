@@ -65,6 +65,18 @@ class Role extends Model
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function menus(): BelongsToMany
+    {
+        $pivotTable = config('admin.database.role_menu_table');
+
+        $relatedModel = config('admin.database.menu_model');
+
+        return $this->belongsToMany($relatedModel, $pivotTable, 'role_id', 'menu_id')->withTimestamps();
+    }
+
+    /**
      * Check user has permission.
      *
      * @param $permission
