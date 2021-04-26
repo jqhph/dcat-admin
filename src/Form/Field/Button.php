@@ -28,5 +28,6 @@ $('{$this->getElementClassSelector()}').on('$event', function() {
     $callback
 });
 JS;
+        return $this;
     }
 }
