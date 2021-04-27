@@ -573,7 +573,7 @@ class HasMany extends Field
         $template .= '<td class="hidden">'.implode('', $hidden).'</td>';
 
         // specify a view to render or use a custom view.
-        $this->view = $this->view?:$this->views[$this->viewMode];
+        $this->view = $this->view ?: $this->views[$this->viewMode];
 
         $this->addVariables([
             'headers'      => $headers,
