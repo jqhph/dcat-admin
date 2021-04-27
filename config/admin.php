@@ -215,7 +215,6 @@ return [
             'auth/logout',
             'auth/setting',
         ],
-
     ],
 
     /*
@@ -233,6 +232,12 @@ return [
 
         // Whether enable menu bind to a permission.
         'bind_permission' => true,
+
+        // Whether enable role bind to menu.
+        'role_bind_menu' => true,
+
+        // Whether enable permission bind to menu.
+        'permission_bind_menu' => true,
 
         'default_icon' => 'feather icon-circle',
     ],

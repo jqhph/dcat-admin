@@ -79,7 +79,13 @@ class PermissionController extends AdminController
 
     public function form()
     {
-        return Form::make(new Permission(), function (Form $form) {
+        $with = [];
+
+        if ($bindMenu = config('admin.menu.permission_bind_menu', true)) {
+            $with[] = 'menus';
+        }
+
+        return Form::make(Permission::with($with), function (Form $form) use ($bindMenu) {
             $permissionTable = config('admin.database.permissions_table');
             $connection = config('admin.database.connection');
             $permissionModel = config('admin.database.permissions_model');
@@ -106,6 +112,25 @@ class PermissionController extends AdminController
 
             $form->tags('http_path', trans('admin.http.path'))
                 ->options($this->getRoutes());
+
+            if ($bindMenu) {
+                $form->tree('menus', trans('admin.menu'))
+                    ->treeState(false)
+                    ->setTitleColumn('title')
+                    ->nodes(function () {
+                        $model = config('admin.database.menu_model');
+                        $model = new $model();
+
+                        return $model->allNodes();
+                    })
+                    ->customFormat(function ($v) {
+                        if (! $v) {
+                            return [];
+                        }
+
+                        return array_column($v, 'id');
+                    });
+            }
 
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));

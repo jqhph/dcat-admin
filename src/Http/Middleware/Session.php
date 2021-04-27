@@ -16,10 +16,6 @@ class Session
 
         config(['session.path' => $path]);
 
-        if ($domain = config('admin.route.domain')) {
-            config(['session.domain' => $domain]);
-        }
-
         return $next($request);
     }
 }

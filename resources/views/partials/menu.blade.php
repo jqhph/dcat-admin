@@ -12,7 +12,7 @@
             <a @if(mb_strpos($item['uri'], '://') !== false) target="_blank" @endif
                href="{{ $builder->getUrl($item['uri']) }}"
                class="nav-link {!! $builder->isActive($item) ? 'active' : '' !!}">
-                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: 'feather icon-circle' }}"></i>
+                {!! str_repeat('&nbsp;', $depth) !!}<i class="fa fa-fw {{ $item['icon'] ?: $defaultIcon }}"></i>
                 <p>
                     {{ $builder->translate($item['title']) }}
                 </p>

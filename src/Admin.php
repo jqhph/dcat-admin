@@ -30,7 +30,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.23-beta';
+    const VERSION = '2.0.24-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -175,7 +175,7 @@ class Admin
      *
      * @return void
      */
-    public function pjax(bool $value = true)
+    public static function pjax(bool $value = true)
     {
         static::context()->pjaxContainerId = $value ? static::$defaultPjaxContainerId : false;
     }
@@ -495,7 +495,9 @@ class Admin
 
         $sidebarStyle = config('admin.layout.sidebar_style') ?: 'light';
 
-        $jsVariables['pjax_container_selector'] = '#'.static::getPjaxContainerId();
+        $pjaxId = static::getPjaxContainerId();
+
+        $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
         $jsVariables['token'] = csrf_token();
         $jsVariables['lang'] = __('admin.client') ?: [];
         $jsVariables['colors'] = static::color()->all();
