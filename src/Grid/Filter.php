@@ -34,6 +34,7 @@ use Dcat\Admin\Grid\Filter\WhereBetween;
 use Dcat\Admin\Grid\Filter\Year;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
+use Dcat\Admin\Traits\HasVariables;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -70,6 +71,7 @@ class Filter implements Renderable
 {
     use HasBuilderEvents;
     use Macroable;
+    use HasVariables;
 
     const MODE_RIGHT_SIDE = 'right-side';
     const MODE_PANEL = 'panel';
@@ -708,7 +710,12 @@ class Filter implements Renderable
             $this->view = $this->mode === static::MODE_RIGHT_SIDE ? 'admin::filter.right-side-container' : 'admin::filter.container';
         }
 
-        return view($this->view)->with([
+        return view($this->view)->with($this->variables())->render();
+    }
+
+    protected function defaultVariables()
+    {
+        return [
             'action'             => $this->action ?: $this->urlWithoutFilters(),
             'layout'             => $this->layout,
             'filterID'           => $this->disableCollapse ? '' : $this->filterID,
@@ -717,7 +724,7 @@ class Filter implements Renderable
             'border'             => $this->border,
             'containerClass'     => $this->containerClass,
             'disableResetButton' => $this->disableResetButton,
-        ])->render();
+        ];
     }
 
     /**
