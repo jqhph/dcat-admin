@@ -81,7 +81,7 @@ class Tree extends Field
     {
         $this->options['checkbox']['three_state'] = $value;
 
-        return $this;
+        return $this->exceptParentNode($value);
     }
 
     /**
