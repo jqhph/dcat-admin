@@ -15,6 +15,7 @@ use Illuminate\Support\Fluent;
  * @property array|null $ignoreQueries
  * @property array|null $jsVariables
  * @property string $translation
+ * @property array $contents
  */
 class Context extends Fluent
 {

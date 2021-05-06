@@ -13,6 +13,7 @@ use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Composer;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Traits\HasHtml;
 use Dcat\Admin\Traits\HasPermissions;
@@ -377,6 +378,54 @@ class Admin
     public static function getIgnoreQueryNames()
     {
         return static::context()->ignoreQueries ?? [];
+    }
+
+    /**
+     * 输入直接渲染的内容.
+     *
+     * @param mixed $value
+     */
+    public static function content($value)
+    {
+        static::context()->add('contents', $value);
+    }
+
+    /**
+     * @return bool
+     */
+    public static function hasContents()
+    {
+        return count(static::context()->getArray('contents')) > 0;
+    }
+
+    /**
+     * 渲染内容.
+     *
+     * @return string
+     */
+    public static function renderContents()
+    {
+        $contents = static::context()->getArray('contents');
+
+        $results = '';
+
+        foreach ($contents as $content) {
+            $results .= Helper::render($content);
+        }
+
+        $asset = static::asset();
+
+        Admin::baseCss([], false);
+        Admin::baseJs([], false);
+        Admin::headerJs([], false);
+
+        $results .= Admin::html()
+            .$asset->jsToHtml()
+            .$asset->cssToHtml()
+            .$asset->scriptToHtml()
+            .$asset->styleToHtml();
+
+        return $results;
     }
 
     /**

@@ -290,10 +290,12 @@ class Grid
         $this->async = $async;
 
         if ($async) {
+            $url = Helper::fullUrlWithoutQuery(['_pjax']);
+
             $this->view('admin::grid.async-table');
             $this->addVariables([
-                'currentUrl' => $this->request->fullUrl(),
-                'asyncUrl'   => Helper::fullUrlWithoutQuery([static::ASYNC_NAME => 1]),
+                'currentUrl' => $url,
+                'asyncUrl'   => Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]),
             ]);
         }
 
@@ -307,7 +309,15 @@ class Grid
      */
     public function buildable()
     {
-        return $this->async && $this->request->get(static::ASYNC_NAME);
+        return ! $this->async || $this->isAsyncRequest();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAsyncRequest()
+    {
+        return $this->request->get(static::ASYNC_NAME);
     }
 
     /**

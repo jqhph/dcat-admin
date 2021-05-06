@@ -535,6 +535,10 @@ class Content implements Renderable
 
         $this->callComposed();
 
+        if (Admin::hasContents()) {
+            return Admin::renderContents();
+        }
+
         return view($this->view, $this->variables())->render();
     }
 

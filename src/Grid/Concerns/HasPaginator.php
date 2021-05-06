@@ -16,7 +16,7 @@ trait HasPaginator
      *
      * @var array
      */
-    protected $perPages = [10, 20, 30, 50, 100, 200];
+    protected $perPages = [5, 10, 20, 30, 50, 100, 200];
 
     /**
      * Default items count per-page.
