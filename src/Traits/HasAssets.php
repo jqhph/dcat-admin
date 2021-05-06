@@ -62,12 +62,13 @@ trait HasAssets
      * Add js.
      *
      * @param string|array $js
+     * @param bool $merge
      *
      * @return void
      */
-    public static function headerJs($js)
+    public static function headerJs($js, bool $merge = true)
     {
-        static::asset()->headerJs($js);
+        static::asset()->headerJs($js, $merge);
     }
 
     /**

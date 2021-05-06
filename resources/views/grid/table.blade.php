@@ -56,5 +56,3 @@
     {!! $grid->renderPagination() !!}
 
 </div>
-
-

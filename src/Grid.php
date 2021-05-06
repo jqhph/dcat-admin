@@ -40,6 +40,7 @@ class Grid
 
     const CREATE_MODE_DEFAULT = 'default';
     const CREATE_MODE_DIALOG = 'dialog';
+    const ASYNC_NAME = '_async_';
 
     /**
      * The grid data model instance.
@@ -184,6 +185,11 @@ class Grid
     protected $show = true;
 
     /**
+     * @var bool
+     */
+    protected $async = false;
+
+    /**
      * Create a new grid instance.
      *
      * Grid constructor.
@@ -270,6 +276,48 @@ class Grid
     public function number(?string $label = null)
     {
         return $this->addColumn('#', $label ?: '#');
+    }
+
+    /**
+     * 启用异步渲染功能.
+     *
+     * @param bool $async
+     *
+     * @return $this
+     */
+    public function async(bool $async = true)
+    {
+        $this->async = $async;
+
+        if ($async) {
+            $url = Helper::fullUrlWithoutQuery(['_pjax']);
+
+            $this->view('admin::grid.async-table');
+            $this->addVariables([
+                'currentUrl' => $url,
+                'asyncUrl'   => Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]),
+            ]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * 判断是否允许查询数据.
+     *
+     * @return bool
+     */
+    public function buildable()
+    {
+        return ! $this->async || $this->isAsyncRequest();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAsyncRequest()
+    {
+        return $this->request->get(static::ASYNC_NAME);
     }
 
     /**
@@ -431,6 +479,18 @@ class Grid
      */
     public function build()
     {
+        if (! $this->buildable()) {
+            $this->callBuilder();
+            $this->handleExportRequest();
+
+            $this->prependRowSelectorColumn();
+            $this->appendActionsColumn();
+
+            $this->sortHeaders();
+
+            return;
+        }
+
         if ($this->built) {
             return;
         }
