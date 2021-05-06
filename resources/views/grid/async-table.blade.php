@@ -30,29 +30,18 @@
                 {!! $grid->renderQuickCreate() !!}
             @endif
 
-            <tbody>
-            @foreach($grid->rows() as $row)
-                <tr {!! $row->rowAttributes() !!}>
-                    @foreach($grid->getVisibleColumnNames() as $name)
-                        <td {!! $row->columnAttributes($name) !!}>
-                            {!! $row->column($name) !!}
-                        </td>
-                    @endforeach
-                </tr>
-            @endforeach
-            @if ($grid->rows()->isEmpty())
-                <tr>
-                    <td colspan="{!! count($grid->getVisibleColumnNames()) !!}">
-                        <div style="margin:5px 0 0 10px;"><span class="help-block" style="margin-bottom:0"><i class="feather icon-alert-circle"></i>&nbsp;{{ trans('admin.no_data') }}</span></div>
-                    </td>
-                </tr>
-            @endif
-            </tbody>
+            <tbody class="async-tbody"></tbody>
         </table>
     </div>
 
     {!! $grid->renderFooter() !!}
-
-    {!! $grid->renderPagination() !!}
-
 </div>
+
+<script>
+Dcat.ready(function () {
+    // history.pushState({}, '', '/tests');
+    $.get('{!! $asyncUrl !!}', function () {
+
+    });
+});
+</script>
