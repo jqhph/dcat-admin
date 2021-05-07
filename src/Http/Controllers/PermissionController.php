@@ -119,9 +119,8 @@ class PermissionController extends AdminController
                     ->setTitleColumn('title')
                     ->nodes(function () {
                         $model = config('admin.database.menu_model');
-                        $model = new $model();
 
-                        return $model->allNodes();
+                        return (new $model())->allNodes();
                     })
                     ->customFormat(function ($v) {
                         if (! $v) {
@@ -137,6 +136,9 @@ class PermissionController extends AdminController
 
             $form->disableViewButton();
             $form->disableViewCheck();
+        })->saved(function () {
+            $model = config('admin.database.menu_model');
+            (new $model())->flushCache();
         });
     }
 
