@@ -294,8 +294,7 @@ class Grid
 
             $this->view('admin::grid.async-table');
             $this->addVariables([
-                'currentUrl' => $url,
-                'asyncUrl'   => Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]),
+                'asyncUrl' => Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]),
             ]);
         }
 
@@ -906,9 +905,7 @@ HTML;
      */
     public function with(array $variables)
     {
-        $this->variables = $variables;
-
-        return $this;
+        return $this->addVariables($variables);
     }
 
     /**
@@ -1037,6 +1034,15 @@ HTML;
         return $this->doWrap();
     }
 
+    public function getView()
+    {
+        if ($this->async && $this->hasFixColumns()) {
+            return 'admin::grid.async-fixed-table';
+        }
+
+        return $this->view;
+    }
+
     /**
      * @return string
      */
@@ -1046,7 +1052,7 @@ HTML;
             return;
         }
 
-        $view = view($this->view, $this->variables());
+        $view = view($this->getView(), $this->variables());
 
         if (! $wrapper = $this->wrapper) {
             return $view->render();
