@@ -31,7 +31,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.3-beta';
+    const VERSION = '2.1.0-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -387,7 +387,9 @@ class Admin
      */
     public static function content($value)
     {
-        static::context()->add('contents', $value);
+        if ($value !== null) {
+            static::context()->add('contents', $value);
+        }
     }
 
     /**
@@ -401,10 +403,14 @@ class Admin
     /**
      * 渲染内容.
      *
-     * @return string
+     * @return string|void
      */
     public static function renderContents()
     {
+        if (! static::hasContents()) {
+            return;
+        }
+
         $contents = static::context()->getArray('contents');
 
         $results = '';
