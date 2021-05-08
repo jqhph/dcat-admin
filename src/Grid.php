@@ -40,6 +40,7 @@ class Grid
 
     const CREATE_MODE_DEFAULT = 'default';
     const CREATE_MODE_DIALOG = 'dialog';
+    const ASYNC_NAME = '_async_';
 
     /**
      * The grid data model instance.
@@ -184,6 +185,11 @@ class Grid
     protected $show = true;
 
     /**
+     * @var bool
+     */
+    protected $async = false;
+
+    /**
      * Create a new grid instance.
      *
      * Grid constructor.
@@ -270,6 +276,47 @@ class Grid
     public function number(?string $label = null)
     {
         return $this->addColumn('#', $label ?: '#');
+    }
+
+    /**
+     * 启用异步渲染功能.
+     *
+     * @param bool $async
+     *
+     * @return $this
+     */
+    public function async(bool $async = true)
+    {
+        $this->async = $async;
+
+        if ($async) {
+            $this->view('admin::grid.async-table');
+        }
+
+        return $this;
+    }
+
+    public function getAsync()
+    {
+        return $this->async;
+    }
+
+    /**
+     * 判断是否允许查询数据.
+     *
+     * @return bool
+     */
+    public function buildable()
+    {
+        return ! $this->async || $this->isAsyncRequest();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAsyncRequest()
+    {
+        return $this->request->get(static::ASYNC_NAME);
     }
 
     /**
@@ -431,6 +478,18 @@ class Grid
      */
     public function build()
     {
+        if (! $this->buildable()) {
+            $this->callBuilder();
+            $this->handleExportRequest();
+
+            $this->prependRowSelectorColumn();
+            $this->appendActionsColumn();
+
+            $this->sortHeaders();
+
+            return;
+        }
+
         if ($this->built) {
             return;
         }
@@ -506,17 +565,7 @@ class Grid
      */
     public function getCreateUrl()
     {
-        $queryString = '';
-
-        if ($constraints = $this->model()->getConstraints()) {
-            $queryString = http_build_query($constraints);
-        }
-
-        return sprintf(
-            '%s/create%s',
-            $this->resource(),
-            $queryString ? ('?'.$queryString) : ''
-        );
+        return $this->urlWithConstraints($this->resource().'/create');
     }
 
     /**
@@ -526,8 +575,16 @@ class Grid
      */
     public function getEditUrl($key)
     {
-        $url = "{$this->resource()}/{$key}/edit";
+        return $this->urlWithConstraints("{$this->resource()}/{$key}/edit");
+    }
 
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    public function urlWithConstraints(?string $url)
+    {
         $queryString = '';
 
         if ($constraints = $this->model()->getConstraints()) {
@@ -860,9 +917,7 @@ HTML;
      */
     public function with(array $variables)
     {
-        $this->variables = $variables;
-
-        return $this;
+        return $this->addVariables($variables);
     }
 
     /**
@@ -988,7 +1043,39 @@ HTML;
 
         $this->setUpOptions();
 
+        $this->addFilterScript();
+
+        $this->addScript();
+
         return $this->doWrap();
+    }
+
+    public function getView()
+    {
+        if ($this->async && $this->hasFixColumns()) {
+            return 'admin::grid.async-fixed-table';
+        }
+
+        return $this->view;
+    }
+
+    protected function addScript()
+    {
+        if ($this->async && ! $this->isAsyncRequest()) {
+            $query = static::ASYNC_NAME;
+            $url = Helper::fullUrlWithoutQuery(['_pjax']);
+            $url = Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]);
+
+            Admin::script(
+                <<<JS
+Dcat.grid.async({
+    selector: '.async-{$this->getTableId()}',
+    queryName: '{$query}',
+    url: '{$url}',
+}).render()
+JS
+            );
+        }
     }
 
     /**
@@ -1000,7 +1087,7 @@ HTML;
             return;
         }
 
-        $view = view($this->view, $this->variables());
+        $view = view($this->getView(), $this->variables());
 
         if (! $wrapper = $this->wrapper) {
             return $view->render();

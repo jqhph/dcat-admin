@@ -1,16 +1,8 @@
-
-<div class="dcat-box">
-
-    <div class="d-block pb-0">
-        @include('admin::grid.table-toolbar')
-    </div>
-
-    {!! $grid->renderFilter() !!}
-
+@if($grid->isAsyncRequest())
     {!! $grid->renderHeader() !!}
 
     <div class="{!! $grid->formatTableParentClass() !!}">
-        <table class="{{ $grid->formatTableClass() }}" id="{{ $tableId }}" >
+        <table class="async-table {{ $grid->formatTableClass() }}" id="{{ $tableId }}" >
             <thead>
             @if ($headers = $grid->getVisibleComplexHeaders())
                 <tr>
@@ -52,5 +44,44 @@
     {!! $grid->renderFooter() !!}
 
     {!! $grid->renderPagination() !!}
+@else
+    <div class="dcat-box async-{{ $tableId }}">
 
-</div>
+        <div class="d-block pb-0">
+            @include('admin::grid.table-toolbar')
+        </div>
+
+        {!! $grid->renderFilter() !!}
+
+        <div class="async-body">
+            {!! $grid->renderHeader() !!}
+
+            <div class="{!! $grid->formatTableParentClass() !!}">
+                <table class="async-table {{ $grid->formatTableClass() }}" id="{{ $tableId }}" >
+                    <thead>
+                    @if ($headers = $grid->getVisibleComplexHeaders())
+                        <tr>
+                            @foreach($headers as $header)
+                                {!! $header->render() !!}
+                            @endforeach
+                        </tr>
+                    @endif
+                    <tr>
+                        @foreach($grid->getVisibleColumns() as $column)
+                            <th {!! $column->formatTitleAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
+                        @endforeach
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td colspan="{!! count($grid->getVisibleColumnNames()) !!}">&nbsp;</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {!! $grid->renderFooter() !!}
+        </div>
+    </div>
+@endif

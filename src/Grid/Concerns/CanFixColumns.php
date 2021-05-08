@@ -29,6 +29,11 @@ trait CanFixColumns
         return $this->fixColumns;
     }
 
+    public function hasFixColumns()
+    {
+        return $this->fixColumns;
+    }
+
     protected function resetActions()
     {
         $actions = $this->getActionClass();

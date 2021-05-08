@@ -117,9 +117,8 @@ class RoleController extends AdminController
                     ->setTitleColumn('title')
                     ->nodes(function () {
                         $model = config('admin.database.menu_model');
-                        $model = new $model();
 
-                        return $model->allNodes();
+                        return (new $model())->allNodes();
                     })
                     ->customFormat(function ($v) {
                         if (! $v) {
@@ -137,6 +136,9 @@ class RoleController extends AdminController
             if ($id == $roleModel::ADMINISTRATOR_ID) {
                 $form->disableDeleteButton();
             }
+        })->saved(function () {
+            $model = config('admin.database.menu_model');
+            (new $model())->flushCache();
         });
     }
 

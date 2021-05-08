@@ -6,7 +6,7 @@
     >
         <i class="feather icon-filter"></i>@if($filter_text)<span class="d-none d-sm-inline">&nbsp;&nbsp;{{ trans('admin.filter') }}</span>@endif
 
-        @if($valueCount) &nbsp;({!! $valueCount !!}) @endif
+        <span class="filter-count">@if($valueCount) &nbsp;({!! $valueCount !!}) @endif</span>
     </button>
     @if($scopes->isNotEmpty())
         <ul class="dropdown-menu" role="menu">
