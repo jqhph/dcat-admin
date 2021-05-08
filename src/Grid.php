@@ -565,17 +565,7 @@ class Grid
      */
     public function getCreateUrl()
     {
-        $queryString = '';
-
-        if ($constraints = $this->model()->getConstraints()) {
-            $queryString = http_build_query($constraints);
-        }
-
-        return sprintf(
-            '%s/create%s',
-            $this->resource(),
-            $queryString ? ('?'.$queryString) : ''
-        );
+        return $this->urlWithConstraints($this->resource().'/create');
     }
 
     /**
@@ -585,8 +575,16 @@ class Grid
      */
     public function getEditUrl($key)
     {
-        $url = "{$this->resource()}/{$key}/edit";
+        return $this->urlWithConstraints("{$this->resource()}/{$key}/edit");
+    }
 
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    public function urlWithConstraints(?string $url)
+    {
         $queryString = '';
 
         if ($constraints = $this->model()->getConstraints()) {
