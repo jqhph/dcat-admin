@@ -186,15 +186,4 @@
         {!! $grid->renderFooter() !!}
     </div>
 </div>
-
-<script>
-    Dcat.ready(function () {
-        Dcat.grid.async({
-            selector: '.async-{{ $tableId }}',
-            queryName: '{!! Dcat\Admin\Grid::ASYNC_NAME !!}',
-            url: '{!! $asyncUrl !!}',
-            loadingStyle: 'height:145px;'
-        }).render()
-    });
-</script>
 @endif

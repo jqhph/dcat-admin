@@ -290,15 +290,15 @@ class Grid
         $this->async = $async;
 
         if ($async) {
-            $url = Helper::fullUrlWithoutQuery(['_pjax']);
-
             $this->view('admin::grid.async-table');
-            $this->addVariables([
-                'asyncUrl' => Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]),
-            ]);
         }
 
         return $this;
+    }
+
+    public function getAsync()
+    {
+        return $this->async;
     }
 
     /**
@@ -1031,6 +1031,10 @@ HTML;
 
         $this->setUpOptions();
 
+        $this->addFilterScript();
+
+        $this->addScript();
+
         return $this->doWrap();
     }
 
@@ -1041,6 +1045,25 @@ HTML;
         }
 
         return $this->view;
+    }
+
+    protected function addScript()
+    {
+        if ($this->async && ! $this->isAsyncRequest()) {
+            $query = static::ASYNC_NAME;
+            $url = Helper::fullUrlWithoutQuery(['_pjax']);
+            $url = Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]);
+
+            Admin::script(
+                <<<JS
+Dcat.grid.async({
+    selector: '.async-{$this->getTableId()}',
+    queryName: '{$query}',
+    url: '{$url}',
+}).render()
+JS
+            );
+        }
     }
 
     /**

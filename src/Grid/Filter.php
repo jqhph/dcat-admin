@@ -534,6 +534,17 @@ class Filter implements Renderable
     }
 
     /**
+     * 统计查询条件的数量.
+     *
+     * @return int
+     */
+    public function countConditions()
+    {
+        return $this->mode() === Filter::MODE_RIGHT_SIDE
+            ? count($this->getConditions()) : 0;
+    }
+
+    /**
      * @param string $key
      * @param string $label
      *

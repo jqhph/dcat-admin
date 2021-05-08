@@ -44,7 +44,6 @@
     {!! $grid->renderFooter() !!}
 
     {!! $grid->renderPagination() !!}
-
 @else
     <div class="dcat-box async-{{ $tableId }}">
 
@@ -85,14 +84,4 @@
             {!! $grid->renderFooter() !!}
         </div>
     </div>
-
-    <script>
-    Dcat.ready(function () {
-        Dcat.grid.async({
-            selector: '.async-{{ $tableId }}',
-            queryName: '{!! Dcat\Admin\Grid::ASYNC_NAME !!}',
-            url: '{!! $asyncUrl !!}',
-        }).render()
-    });
-    </script>
 @endif

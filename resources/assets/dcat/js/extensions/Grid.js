@@ -30,6 +30,8 @@ export default class Grid {
 
 class AsyncGrid {
     constructor(options) {
+        let nullFun = function () {};
+
         options = $.extend({
             selector: null,
             bodySelector: '.async-body',
@@ -37,6 +39,8 @@ class AsyncGrid {
             queryName: null,
             url: null,
             loadingStyle: 'height:240px;',
+            before: nullFun,
+            after: nullFun,
         }, options);
 
         var self = this,
@@ -49,7 +53,7 @@ class AsyncGrid {
         self.loading = false;
     }
 
-    render(url) {
+    render(url, callback) {
         let self = this, options = self.options;
 
         url = url || options.url;
@@ -62,14 +66,23 @@ class AsyncGrid {
         let $box = self.$box,
             $body = self.$body,
             reqName = options.queryName,
-            tableSelector = options.tableSelector;
+            tableSelector = options.tableSelector,
+            $table = $body.find(tableSelector),
+            events = {0: 'grid:rendering', 1: 'grid:render', 2: 'grid:rendered'},
+            before = options.before,
+            after = options.after;
+
+        // 开始渲染前事件
+        before($box, url);
+        $box.trigger(events[0], [url]);
+        $body.trigger(events[0], [url]);
 
         // loading效果
         let loadingOptions = {background: 'transparent'}
         if ($body.find(`${tableSelector} tbody tr`).length <= 2) {
             loadingOptions['style'] = options.loadingStyle;
         }
-        $body.find(tableSelector).loading(loadingOptions);
+        $table.loading(loadingOptions);
         Dcat.NP.start();
 
         if (url.indexOf('?') === -1) {
@@ -95,8 +108,9 @@ class AsyncGrid {
             };
 
             // 表格渲染事件
-            $body.off('grid:render').on('grid:render', refresh);
-            $body.find('table').on('grid:render', refresh);
+            $box.off(events[1]).on(events[1], refresh);
+            $body.off(events[1]).on(events[1], refresh);
+            $table.on(events[1], refresh);
 
             // 刷新按钮
             $box.find('.grid-refresh').off('click').on('click', function () {
@@ -133,6 +147,15 @@ class AsyncGrid {
 
             // 规格选择器
             $box.find('.grid-selector a').on('click', loadLink);
+
+            // 渲染完成后事件
+            $box.trigger(events[2], [url, html]);
+            $body.trigger(events[2], [url, html]);
+            $table.trigger(events[2], [url, html]);
+
+            after($box, url, html);
+
+            callback && callback($box, url, html);
         });
 
         function loadLink() {
