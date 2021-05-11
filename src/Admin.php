@@ -419,13 +419,15 @@ class Admin
             $results .= Helper::render($content);
         }
 
+        static::script('Dcat.pjaxResponded()', true);
+
         $asset = static::asset();
 
-        Admin::baseCss([], false);
-        Admin::baseJs([], false);
-        Admin::headerJs([], false);
+        static::baseCss([], false);
+        static::baseJs([], false);
+        static::headerJs([], false);
 
-        $results .= Admin::html()
+        $results .= static::html()
             .$asset->jsToHtml()
             .$asset->cssToHtml()
             .$asset->scriptToHtml()
