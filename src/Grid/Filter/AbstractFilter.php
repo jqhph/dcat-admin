@@ -129,7 +129,7 @@ abstract class AbstractFilter
      */
     public function view(string $view = '')
     {
-        $this->view = $view?:$this->view;
+        $this->view = $view ?: $this->view;
         return $this;
     }
 
