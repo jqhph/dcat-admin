@@ -123,6 +123,17 @@ abstract class AbstractFilter
     }
 
     /**
+     * custom the filter view
+     * @param string $view
+     * @return $this
+     */
+    public function view(string $view = '')
+    {
+        $this->view = $view?:$this->view;
+        return $this;
+    }
+
+    /**
      * Setup default presenter.
      *
      * @return void
