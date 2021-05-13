@@ -535,7 +535,7 @@ class Content implements Renderable
 
         $this->callComposed();
 
-        if (Admin::hasContents()) {
+        if (Admin::shouldPrevent()) {
             return Admin::renderContents();
         }
 

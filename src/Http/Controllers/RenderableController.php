@@ -60,7 +60,8 @@ class RenderableController
 
     protected function addScript()
     {
-        Admin::script('Dcat.pjaxResponded()', true);
+        // 等待JS脚本加载完成
+        Admin::script('Dcat.wait()', true);
     }
 
     protected function forgetDefaultAssets()

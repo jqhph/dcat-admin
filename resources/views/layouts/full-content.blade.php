@@ -32,7 +32,7 @@
 @else
     <title>{{ Dcat\Admin\Admin::title() }} @if($header) | {{ $header }}@endif</title>
 
-    <script>Dcat.pjaxResponded();</script>
+    <script>Dcat.wait();</script>
 
     {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
     {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}

@@ -381,11 +381,11 @@ class Admin
     }
 
     /**
-     * 输入直接渲染的内容.
+     * 中断默认的渲染逻辑.
      *
-     * @param mixed $value
+     * @param string|\Illuminate\Contracts\Support\Renderable|\Closure $value
      */
-    public static function content($value)
+    public static function prevent($value)
     {
         if ($value !== null) {
             static::context()->add('contents', $value);
@@ -395,7 +395,7 @@ class Admin
     /**
      * @return bool
      */
-    public static function hasContents()
+    public static function shouldPrevent()
     {
         return count(static::context()->getArray('contents')) > 0;
     }
@@ -407,33 +407,32 @@ class Admin
      */
     public static function renderContents()
     {
-        if (! static::hasContents()) {
+        if (! static::shouldPrevent()) {
             return;
         }
 
-        $contents = static::context()->getArray('contents');
-
         $results = '';
 
-        foreach ($contents as $content) {
+        foreach (static::context()->getArray('contents') as $content) {
             $results .= Helper::render($content);
         }
 
-        static::script('Dcat.pjaxResponded()', true);
+        // 等待JS脚本加载完成
+        static::script('Dcat.wait()', true);
 
         $asset = static::asset();
 
         static::baseCss([], false);
         static::baseJs([], false);
         static::headerJs([], false);
+        static::fonts([]);
 
-        $results .= static::html()
+        return $results
+            .static::html()
             .$asset->jsToHtml()
             .$asset->cssToHtml()
             .$asset->scriptToHtml()
             .$asset->styleToHtml();
-
-        return $results;
     }
 
     /**

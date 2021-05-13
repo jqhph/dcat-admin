@@ -30,7 +30,7 @@ export default class AssetsLoader {
             _this.load(urls, callback, args);
         });
     }
-    
+
     // 过滤 <script src> 标签
     filterScripts(content) {
         var obj = {};
@@ -56,7 +56,7 @@ export default class AssetsLoader {
 
         return obj;
     }
-    
+
     // 返回过滤 <script src> 标签后的内容，并在加载完 script 脚本后触发 "pjax:script" 事件
     resolveHtml(content, callback) {
         var obj = this.filterScripts(content);
@@ -77,7 +77,7 @@ export default class AssetsLoader {
     }
 
     fire() {
-        this.dcat.pjaxResponded();
+        this.dcat.wait();
 
         // js加载完毕 触发 ready 事件
         // setTimeout用于保证在所有js代码最后执行

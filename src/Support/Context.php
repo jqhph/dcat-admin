@@ -48,7 +48,7 @@ class Context extends Fluent
 
     public function getArray($key, $default = null)
     {
-        return Helper::array($this->get($key, $default));
+        return Helper::array($this->get($key, $default), false);
     }
 
     public function add($key, $value, $k = null)
