@@ -1036,15 +1036,10 @@ HTML;
     public function render()
     {
         $this->callComposing();
-
         $this->build();
-
         $this->applyFixColumns();
-
         $this->setUpOptions();
-
         $this->addFilterScript();
-
         $this->addScript();
 
         return $this->doWrap();
@@ -1066,13 +1061,21 @@ HTML;
             $url = Helper::fullUrlWithoutQuery(['_pjax']);
             $url = Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]);
 
+            $options = [
+                'selector'  => ".async-{$this->getTableId()}",
+                'queryName' => $query,
+                'url'       => $url,
+            ];
+
+            if ($this->hasFixColumns()) {
+                $options['loadingStyle'] = 'height:140px;';
+            }
+
+            $options = json_encode($options);
+
             Admin::script(
                 <<<JS
-Dcat.grid.async({
-    selector: '.async-{$this->getTableId()}',
-    queryName: '{$query}',
-    url: '{$url}',
-}).render()
+Dcat.grid.async({$options}).render()
 JS
             );
         }
@@ -1123,5 +1126,10 @@ JS
         }
 
         return $this->addColumn($method, $arguments[0] ?? null);
+    }
+
+    public function __toString()
+    {
+        return $this->render();
     }
 }

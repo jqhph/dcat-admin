@@ -100,7 +100,7 @@ class Column implements Renderable
 
         foreach ($this->contents as $content) {
             if ($content instanceof Grid && $content->isAsyncRequest()) {
-                Admin::content($content->render());
+                Admin::prevent($content->render());
 
                 continue;
             }

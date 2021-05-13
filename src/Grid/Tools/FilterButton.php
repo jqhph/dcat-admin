@@ -49,7 +49,7 @@ class FilterButton extends AbstractTool
         $id = $filter->filterID();
 
         if ($filter->mode() === Filter::MODE_RIGHT_SIDE) {
-            if ($this->filter()->grid()->model()->getCurrentPage() > 1) {
+            if ($filter->grid()->model()->getCurrentPage() > 1) {
                 $expand = 'false';
             } else {
                 $expand = $filter->expand ? 'true' : 'false';

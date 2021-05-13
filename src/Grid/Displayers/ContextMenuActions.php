@@ -6,25 +6,26 @@ use Dcat\Admin\Admin;
 
 class ContextMenuActions extends DropdownActions
 {
-    /**
-     * {@inheritdoc}
-     */
+    protected $elementId = 'grid-context-menu';
+
     protected function addScript()
     {
         $script = <<<JS
 (function () {
-    $("body").on("contextmenu", "table#{$this->grid->getTableId()} tr", function(e) {
-         $('#grid-context-menu .dropdown-menu').hide();
-        
+    var id = '#{$this->elementId}';
+
+    $("body").on("contextmenu", "#{$this->grid->getTableId()} tr", function(e) {
+         $(id + ' .dropdown-menu').hide();
+
          var menu = $(this).find('td .grid-dropdown-actions .dropdown-menu');
          var index = $(this).index();
-         
+
          if (menu.length) {
-             menu.attr('index', index).detach().appendTo('#grid-context-menu');
+             menu.attr('index', index).detach().appendTo(id);
          } else {
-             menu = $('#grid-context-menu .dropdown-menu[index='+index+']');
+             menu = $(id + ' .dropdown-menu[index='+index+']');
          }
-         
+
          if (menu.height() > (document.body.clientHeight - e.pageY)) {
             menu.css({left: e.pageX+10, top: e.pageY - menu.height()}).show();
          } else {
@@ -32,13 +33,17 @@ class ContextMenuActions extends DropdownActions
          }
         return false;
     });
-    
+
+    if (! $(id).length) {
+        $("body").append('<div id="{$this->elementId}" class="dropdown" style="display: contents"></div>');
+    }
+
     $(document).on('click',function(){
-        $('#grid-context-menu .dropdown-menu').hide();
+        $(id + ' .dropdown-menu').hide();
     })
-   
-    $('#grid-context-menu').click('a', function () {
-        $('#grid-context-menu .dropdown-menu').hide();
+
+    $(id).click('a', function () {
+        $(this).find('.dropdown-menu').hide();
     });
 })();
 JS;
@@ -46,14 +51,10 @@ JS;
         Admin::script($script);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function display($callback = null)
     {
         $this->addScript();
 
-        Admin::html('<div id="grid-context-menu" class="dropdown" style="display: contents"></div>');
         Admin::style('.grid__actions__ .dropdown{display: none!important;} th.grid__actions__{display: none!important;} .grid__actions__{width:1px}');
 
         return parent::display($callback);
