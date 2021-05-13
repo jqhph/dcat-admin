@@ -144,7 +144,7 @@ class Filter implements Renderable
     /**
      * @var bool
      */
-    public $expand = false;
+    public $expand;
 
     /**
      * @var Collection
@@ -464,7 +464,9 @@ class Filter implements Renderable
 
         return tap(array_filter($conditions), function ($conditions) {
             if (! empty($conditions)) {
-                $this->expand();
+                if ($this->expand === null || $this->mode !== static::MODE_RIGHT_SIDE) {
+                    $this->expand();
+                }
 
                 $this->grid()->fireOnce(new ApplyFilter([$conditions]));
 
