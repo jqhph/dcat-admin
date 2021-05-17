@@ -1,0 +1,192 @@
+name: Dcat Admin Dusk
+
+on:
+  push:
+    branches: [ 2.0 ]
+  pull_request:
+    branches: [ 2.0 ]
+
+jobs:
+  laravel5:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: shivammathur/setup-php@b7d1d9c9a92d8d8463ce36d7f60da34d461724f8
+        with:
+          php-version: '7.1'
+
+      - uses: actions/checkout@v2
+
+      - name: Composer Update
+        run: composer self-update --2
+
+      - name: Setup MySQL
+        # You may pin to the exact commit or the version.
+        # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          # Version of MySQL to use
+          mysql version: 5.7
+          # MYSQL_ROOT_PASSWORD - root superuser password
+          mysql root password: 123456
+          # MYSQL_DATABASE - name for the default database that is created
+          mysql database: laravel
+          # MYSQL_USER - create the specified user with superuser power for created database
+          mysql user: root
+          # MYSQL_PASSWORD - specified superuser password which user is power for created database
+          mysql password: 123456
+
+      - name: Install Dependencies
+        run: |
+          composer create-project --prefer-dist laravel/laravel laravel-tests 5.*
+          sh ./tests/bin/install-dep.sh
+
+      - name: Install Admin
+        run: sh ./tests/bin/install-admin.sh
+
+#      - name: Install Xvfb
+#        run: sudo apt-get install xvfb
+
+      - name: Start Server
+        run: sh ./tests/bin/start.sh
+
+      - name: Run test suite
+        run: cd ./laravel-tests && php artisan dusk
+
+  laravel6:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: shivammathur/setup-php@b7d1d9c9a92d8d8463ce36d7f60da34d461724f8
+        with:
+          php-version: '7.3'
+
+      - uses: actions/checkout@v2
+
+      - name: Composer Update
+        run: composer self-update --2
+
+      - name: Setup MySQL
+        # You may pin to the exact commit or the version.
+        # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          # Version of MySQL to use
+          mysql version: 5.7
+          # MYSQL_ROOT_PASSWORD - root superuser password
+          mysql root password: 123456
+          # MYSQL_DATABASE - name for the default database that is created
+          mysql database: laravel
+          # MYSQL_USER - create the specified user with superuser power for created database
+          mysql user: root
+          # MYSQL_PASSWORD - specified superuser password which user is power for created database
+          mysql password: 123456
+
+      - name: Install Dependencies
+        run: |
+          composer create-project --prefer-dist laravel/laravel laravel-tests 6.*
+          sh ./tests/bin/install-dep.sh
+
+      - name: Install Admin
+        run: sh ./tests/bin/install-admin.sh
+
+#      - name: Install Xvfb
+#        run: sudo apt-get install xvfb
+
+      - name: Start Server
+        run: sh ./tests/bin/start.sh
+
+      - name: Run test suite
+        run: cd ./laravel-tests && php artisan dusk
+
+  laravel7:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: shivammathur/setup-php@b7d1d9c9a92d8d8463ce36d7f60da34d461724f8
+        with:
+          php-version: '7.3'
+
+      - uses: actions/checkout@v2
+
+      - name: Composer Update
+        run: composer self-update --2
+
+      - name: Setup MySQL
+        # You may pin to the exact commit or the version.
+        # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          # Version of MySQL to use
+          mysql version: 5.7
+          # MYSQL_ROOT_PASSWORD - root superuser password
+          mysql root password: 123456
+          # MYSQL_DATABASE - name for the default database that is created
+          mysql database: laravel
+          # MYSQL_USER - create the specified user with superuser power for created database
+          mysql user: root
+          # MYSQL_PASSWORD - specified superuser password which user is power for created database
+          mysql password: 123456
+
+      - name: Install Dependencies
+        run: |
+          composer create-project --prefer-dist laravel/laravel laravel-tests 7.*
+          sh ./tests/bin/install-dep.sh
+
+      - name: Install Admin
+        run: sh ./tests/bin/install-admin.sh
+
+#      - name: Install Xvfb
+#        run: sudo apt-get install xvfb
+
+      - name: Start Server
+        run: sh ./tests/bin/start.sh
+
+      - name: Run test suite
+        run: cd ./laravel-tests && php artisan dusk
+
+  laravel8:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: shivammathur/setup-php@b7d1d9c9a92d8d8463ce36d7f60da34d461724f8
+        with:
+          php-version: '8.0'
+
+      - uses: actions/checkout@v2
+
+      - name: Composer Update
+        run: composer self-update --2
+
+      - name: Setup MySQL
+        # You may pin to the exact commit or the version.
+        # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          # Version of MySQL to use
+          mysql version: 5.7
+          # MYSQL_ROOT_PASSWORD - root superuser password
+          mysql root password: 123456
+          # MYSQL_DATABASE - name for the default database that is created
+          mysql database: laravel
+          # MYSQL_USER - create the specified user with superuser power for created database
+          mysql user: root
+          # MYSQL_PASSWORD - specified superuser password which user is power for created database
+          mysql password: 123456
+
+      - name: Install Dependencies
+        run: |
+          composer create-project --prefer-dist laravel/laravel laravel-tests 8.*
+          sh ./tests/bin/install-dep.sh
+
+      - name: Install Admin
+        run: sh ./tests/bin/install-admin.sh
+
+      - name: Install Xvfb
+        run: sudo apt-get install xvfb
+
+      - name: Start Server
+        run: sh ./tests/bin/start.sh
+
+      - name: Run test suite
+        run: cd ./laravel-tests && php artisan dusk

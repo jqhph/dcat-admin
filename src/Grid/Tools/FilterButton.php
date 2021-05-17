@@ -49,7 +49,7 @@ class FilterButton extends AbstractTool
         $id = $filter->filterID();
 
         if ($filter->mode() === Filter::MODE_RIGHT_SIDE) {
-            if ($this->filter()->grid()->model()->getCurrentPage() > 1) {
+            if ($filter->grid()->model()->getCurrentPage() > 1) {
                 $expand = 'false';
             } else {
                 $expand = $filter->expand ? 'true' : 'false';
@@ -57,33 +57,33 @@ class FilterButton extends AbstractTool
 
             $script = <<<JS
 (function () {
-    var slider, 
+    var slider,
         expand = {$expand};
-    
+
      function initSlider() {
         slider = new Dcat.Slider({
             target: '#{$id}',
         });
-        
+
         slider
             .\$container
             .find('.right-side-filter-container .header')
             .width(slider.\$container.width() - 20);
-        
+
         expand && setTimeout(slider.open.bind(slider), 10);
     }
-    
+
     expand && setTimeout(initSlider, 10);
-    
+
     $('.{$this->getElementClassName()}').on('click', function () {
         if (! slider) {
             initSlider()
         }
         slider.toggle();
-       
+
         return false
     });
-    
+
     $('.wrapper').on('click', '.modal', function (e) {
         if (typeof e.cancelBubble != "undefined") {
             e.cancelBubble = true;
@@ -103,7 +103,7 @@ JS;
             $script = <<<JS
 $('.{$this->getElementClassName()}').on('click', function(){
     $('#{$id}').parent().toggleClass('d-none');
-}); 
+});
 JS;
         }
 
@@ -141,8 +141,7 @@ JS;
 
         $scopres = $filter->scopes();
         $filters = $filter->filters();
-        $valueCount = $filter->mode() === Filter::MODE_RIGHT_SIDE
-            ? count($this->parent->filter()->getConditions()) : 0;
+        $valueCount = $filter->countConditions();
 
         if ($scopres->isEmpty() && ! $filters) {
             return;

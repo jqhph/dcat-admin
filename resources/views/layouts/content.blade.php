@@ -41,7 +41,7 @@
     </div>
 
     {!! Dcat\Admin\Admin::asset()->scriptToHtml() !!}
-    {!! Dcat\Admin\Admin::html() !!}
+    <div class="extra-html">{!! Dcat\Admin\Admin::html() !!}</div>
 @endsection
 
 @if(! request()->pjax())
@@ -49,7 +49,7 @@
 @else
     <title>{{ Dcat\Admin\Admin::title() }} @if($header) | {{ $header }}@endif</title>
 
-    <script>Dcat.pjaxResponded()</script>
+    <script>Dcat.wait()</script>
 
     {!! Dcat\Admin\Admin::asset()->cssToHtml() !!}
     {!! Dcat\Admin\Admin::asset()->jsToHtml() !!}

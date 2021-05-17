@@ -89,7 +89,7 @@ HTML;
             $visibleColumn && $grid->rowSelector()->titleColumn($visibleColumn);
         }
 
-        return $grid;
+        return $grid->async(false);
     }
 
     /**

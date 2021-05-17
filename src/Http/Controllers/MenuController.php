@@ -46,6 +46,7 @@ class MenuController extends AdminController
                     if ($menuModel::withPermission()) {
                         $form->tree('permissions', trans('admin.permission'))
                             ->expand(false)
+                            ->treeState(false)
                             ->nodes((new $permissionModel())->allNodes());
                     }
 
@@ -136,6 +137,7 @@ class MenuController extends AdminController
             }
             if ($menuModel::withPermission()) {
                 $form->tree('permissions', trans('admin.permission'))
+                    ->treeState(false)
                     ->nodes(function () {
                         $permissionModel = config('admin.database.permissions_model');
 

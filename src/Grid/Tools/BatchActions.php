@@ -4,10 +4,17 @@ namespace Dcat\Admin\Grid\Tools;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\BatchAction;
+use Dcat\Admin\Traits\HasVariables;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\Macroable;
 
 class BatchActions extends AbstractTool
 {
+    use Macroable;
+    use HasVariables;
+
+    protected $view = 'admin::grid.batch-actions';
+
     /**
      * @var Collection
      */
@@ -40,7 +47,14 @@ class BatchActions extends AbstractTool
      */
     protected function appendDefaultAction()
     {
-        $this->add(new BatchDelete(trans('admin.delete')));
+        $this->add($this->makeBatchDelete());
+    }
+
+    protected function makeBatchDelete()
+    {
+        $class = config('admin.grid.actions.batch_delete') ?: BatchDelete::class;
+
+        return new $class(trans('admin.delete'));
     }
 
     /**
@@ -97,6 +111,16 @@ class BatchActions extends AbstractTool
         }
     }
 
+    protected function defaultVariables()
+    {
+        return [
+            'actions'                 => $this->actions,
+            'selectAllName'           => $this->parent->getSelectAllName(),
+            'isHoldSelectAllCheckbox' => $this->isHoldSelectAllCheckbox,
+            'parent'                  => $this->parent,
+        ];
+    }
+
     /**
      * Render BatchActions button groups.
      *
@@ -114,13 +138,6 @@ class BatchActions extends AbstractTool
 
         $this->prepareActions();
 
-        $data = [
-            'actions'                 => $this->actions,
-            'selectAllName'           => $this->parent->getSelectAllName(),
-            'isHoldSelectAllCheckbox' => $this->isHoldSelectAllCheckbox,
-            'parent'                  => $this->parent,
-        ];
-
-        return Admin::view('admin::grid.batch-actions', $data);
+        return Admin::view($this->view, $this->variables());
     }
 }

@@ -6,7 +6,7 @@
     <li class="page-item previous"><a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev"></a></li>
     @endif
 
-    <!-- Pagination Elements -->
+    @if(! empty($elements))
     @foreach ($elements as $element)
         <!-- "Three Dots" Separator -->
         @if (is_string($element))
@@ -24,6 +24,7 @@
             @endforeach
         @endif
     @endforeach
+    @endif
 
     <!-- Next Page Link -->
     @if ($paginator->hasMorePages())

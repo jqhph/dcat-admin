@@ -47,7 +47,7 @@ class MenuPage extends Page
                     ->assertSeeText(__('admin.permission'))
                     ->assertSeeText(__('admin.selectall'))
                     ->assertSeeText(__('admin.expand'))
-                    ->assertSelected('parent_id', 0)
+                    //->assertSelected('parent_id', 0)
                     ->hasInput('title')
                     ->hasInput('icon')
                     ->hasInput('uri')

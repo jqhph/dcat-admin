@@ -6,7 +6,6 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Auth\Permission;
 use Dcat\Admin\Http\Repositories\Role;
-use Dcat\Admin\Models\Role as RoleModel;
 use Dcat\Admin\Show;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Widgets\Tree;
@@ -67,7 +66,8 @@ class RoleController extends AdminController
             $show->field('created_at');
             $show->field('updated_at');
 
-            if ($show->getKey() == RoleModel::ADMINISTRATOR_ID) {
+            $roleModel = config('admin.database.roles_model');
+            if ($show->getKey() == $roleModel::ADMINISTRATOR_ID) {
                 $show->disableDeleteButton();
             }
         });
@@ -75,7 +75,13 @@ class RoleController extends AdminController
 
     public function form()
     {
-        return Form::make(Role::with(['permissions']), function (Form $form) {
+        $with = ['permissions'];
+
+        if ($bindMenu = config('admin.menu.role_bind_menu', true)) {
+            $with[] = 'menus';
+        }
+
+        return Form::make(Role::with($with), function (Form $form) use ($bindMenu) {
             $roleTable = config('admin.database.roles_table');
             $connection = config('admin.database.connection');
 
@@ -105,18 +111,41 @@ class RoleController extends AdminController
                     return array_column($v, 'id');
                 });
 
+            if ($bindMenu) {
+                $form->tree('menus', trans('admin.menu'))
+                    ->treeState(false)
+                    ->setTitleColumn('title')
+                    ->nodes(function () {
+                        $model = config('admin.database.menu_model');
+
+                        return (new $model())->allNodes();
+                    })
+                    ->customFormat(function ($v) {
+                        if (! $v) {
+                            return [];
+                        }
+
+                        return array_column($v, 'id');
+                    });
+            }
+
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
 
-            if ($id == RoleModel::ADMINISTRATOR_ID) {
+            $roleModel = config('admin.database.roles_model');
+            if ($id == $roleModel::ADMINISTRATOR_ID) {
                 $form->disableDeleteButton();
             }
+        })->saved(function () {
+            $model = config('admin.database.menu_model');
+            (new $model())->flushCache();
         });
     }
 
     public function destroy($id)
     {
-        if (in_array(RoleModel::ADMINISTRATOR_ID, Helper::array($id))) {
+        $roleModel = config('admin.database.roles_model');
+        if (in_array($roleModel::ADMINISTRATOR_ID, Helper::array($id))) {
             Permission::error();
         }
 

@@ -120,6 +120,20 @@ class Content implements Renderable
     }
 
     /**
+     * 设置翻译文件路径.
+     *
+     * @param string|null $translation
+     *
+     * @return $this
+     */
+    public function translation(?string $translation)
+    {
+        Admin::translation($translation);
+
+        return $this;
+    }
+
+    /**
      * Build full page.
      *
      * @return $this
@@ -520,6 +534,10 @@ class Content implements Renderable
         $this->variables['content'] = $this->build();
 
         $this->callComposed();
+
+        if (Admin::shouldPrevent()) {
+            return Admin::renderContents();
+        }
 
         return view($this->view, $this->variables())->render();
     }

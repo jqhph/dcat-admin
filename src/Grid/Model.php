@@ -12,6 +12,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -101,6 +102,11 @@ class Model
     protected $sortName = '_sort';
 
     /**
+     * @var bool
+     */
+    protected $simple = false;
+
+    /**
      * @var Grid
      */
     protected $grid;
@@ -181,19 +187,45 @@ class Model
     }
 
     /**
+     * 是否使用 simplePaginate方法进行分页.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function simple(bool $value = true)
+    {
+        $this->simple = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaginateMethod()
+    {
+        return $this->simple ? 'simplePaginate' : 'paginate';
+    }
+
+    /**
      * @param int              $total
      * @param Collection|array $data
      *
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator|Paginator
      */
     public function makePaginator($total, $data, string $url = null)
     {
-        $paginator = new LengthAwarePaginator(
-            $data,
-            $total,
-            $this->getPerPage(), // 传入每页显示行数
-            $this->getCurrentPage() // 传入当前页码
-        );
+        if ($this->simple) {
+            $paginator = new Paginator($data, $this->getPerPage(), $this->getCurrentPage());
+        } else {
+            $paginator = new LengthAwarePaginator(
+                $data,
+                $total,
+                $this->getPerPage(), // 传入每页显示行数
+                $this->getCurrentPage() // 传入当前页码
+            );
+        }
 
         return $paginator->setPath(
             $url ?: url()->current()
@@ -214,10 +246,14 @@ class Model
      * Enable or disable pagination.
      *
      * @param bool $use
+     *
+     * @reutrn $this;
      */
     public function usePaginate($use = true)
     {
         $this->usePaginate = $use;
+
+        return $this;
     }
 
     /**

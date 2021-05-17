@@ -19,7 +19,7 @@ export default class Tree {
         }, opts);
 
         this.helper = Helper;
-        
+
         this.key = this.depth = this.row = this.data = this._req = null;
 
         this._init();
@@ -128,8 +128,8 @@ export default class Tree {
                     // 加载更多
                     let loadMore = $(
                         `<tr data-depth="${depth + 1}" data-page="${nextPage}">
-                                <td colspan="${row.find('td').length}" align="center" style="cursor: pointer"> 
-                                    <a href="#" style="font-size: 1.5rem">${_this.options.loadMoreIcon}</a> 
+                                <td colspan="${row.find('td').length}" align="center" style="cursor: pointer">
+                                    <a href="#" style="font-size: 1.5rem">${_this.options.loadMoreIcon}</a>
                                 </td>
                             </tr>`
                     );
@@ -152,6 +152,10 @@ export default class Tree {
                 _body.find('script').each(function (_, v) {
                     row.after(v);
                 });
+
+                // 附加的HTML
+                $('body .extra-html').append(_body.find('.extra-html').html());
+
                 // 主动触发ready事件，执行子节点附带的js脚本
                 Dcat.triggerReady();
             },

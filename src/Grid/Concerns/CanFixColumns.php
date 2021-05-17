@@ -29,9 +29,14 @@ trait CanFixColumns
         return $this->fixColumns;
     }
 
+    public function hasFixColumns()
+    {
+        return $this->fixColumns;
+    }
+
     protected function resetActions()
     {
-        $actions = $this->actionsClass ?: config('admin.grid.grid_action_class');
+        $actions = $this->getActionClass();
 
         if ($actions === DropdownActions::class) {
             $this->setActionClass(Actions::class);

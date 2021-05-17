@@ -190,7 +190,7 @@ class NestedForm extends WidgetForm
     protected function setFieldOriginalValue($key)
     {
         $values = [];
-        if (array_key_exists($key, $this->original)) {
+        if (Helper::keyExists($key, $this->original)) {
             $values = $this->original[$key];
         }
         $this->fields->each(function (Field $field) use ($values) {
@@ -292,7 +292,7 @@ class NestedForm extends WidgetForm
 
         $field->attribute(Field::BUILD_IGNORE, true);
 
-        if (method_exists($this->form, 'builder')) {
+        if ($this->form && method_exists($this->form, 'builder')) {
             $this->form->builder()->pushField((clone $field)->display(false));
         }
 

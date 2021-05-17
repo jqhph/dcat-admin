@@ -587,13 +587,13 @@ class Asset
      *
      * @param string|array $js
      */
-    public function headerJs($js)
+    public function headerJs($js, bool $merge = true)
     {
-        if (! $js) {
-            return;
+        if ($merge) {
+            $this->headerJs = $js ? array_merge($this->headerJs, (array) $js) : $this->headerJs;
+        } else {
+            $this->headerJs = (array) $js;
         }
-
-        $this->headerJs = array_merge($this->headerJs, (array) $js);
     }
 
     /**

@@ -246,7 +246,9 @@ import AddUploadedFile from './Upload/AddUploadedFile'
                         _this.status.switch('paused');
                         break;
                     case  'uploadAccept':
-                        _this._uploadAccept(obj, reason);
+                        if (_this._uploadAccept(obj, reason) === false) {
+                            return false;
+                        }
 
                         break;
                 }
