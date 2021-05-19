@@ -43,6 +43,14 @@ class Application
     }
 
     /**
+     * 获取已经启用的 app 列表
+     */
+    public function enableApps()
+    {
+        return array_filter($this->apps);
+    }
+
+    /**
      * 设置当前应用配置.
      *
      * @param string $app
