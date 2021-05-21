@@ -39,7 +39,11 @@ class Application
     public function __construct(Container $app)
     {
         $this->container = $app;
-        $this->apps = (array) config('admin.multi_app');
+    }
+
+    public function getApps()
+    {
+        return $this->apps ?: ($this->apps = (array) config('admin.multi_app'));
     }
 
     /**
@@ -81,7 +85,7 @@ class Application
     {
         $this->registerRoute(static::DEFAULT);
 
-        if ($this->apps) {
+        if ($this->getApps()) {
             $this->registerMultiAppRoutes();
 
             $this->switch(static::DEFAULT);
@@ -97,8 +101,8 @@ class Application
     {
         $this->loadRoutesFrom($pathOrCallback, static::DEFAULT);
 
-        if ($this->apps) {
-            foreach ($this->apps as $app => $enable) {
+        if ($apps = $this->getApps()) {
+            foreach ($apps as $app => $enable) {
                 if ($enable) {
                     $this->switch($app);
 
@@ -112,7 +116,7 @@ class Application
 
     protected function registerMultiAppRoutes()
     {
-        foreach ($this->apps as $app => $enable) {
+        foreach ($this->getApps() as $app => $enable) {
             if ($enable) {
                 $this->registerRoute($app);
             }
