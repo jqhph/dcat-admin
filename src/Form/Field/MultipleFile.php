@@ -51,7 +51,7 @@ class MultipleFile extends File
         if ($path = request(static::FILE_DELETE_FLAG)) {
             $this->deleteFile($path);
 
-            return array_diff($this->original, [$path]);
+            return array_values(array_diff($this->original, [$path]));
         }
 
         $file = Helper::array($file, true);

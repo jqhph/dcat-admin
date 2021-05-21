@@ -8,9 +8,6 @@ use Lang;
 
 class Menu
 {
-    /**
-     * @var array
-     */
     protected static $helperNodes = [
         [
             'id'        => 1,
@@ -42,14 +39,8 @@ class Menu
         ],
     ];
 
-    /**
-     * @var string
-     */
     protected $view = 'admin::partials.menu';
 
-    /**
-     * Register menu.
-     */
     public function register()
     {
         if (! admin_has_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'])) {
@@ -66,6 +57,8 @@ class Menu
     }
 
     /**
+     * 增加菜单节点.
+     *
      * @param array $nodes
      * @param int   $priority
      *
@@ -79,7 +72,7 @@ class Menu
     }
 
     /**
-     * Build html.
+     * 转化为HTML.
      *
      * @param array $nodes
      *
@@ -99,6 +92,8 @@ class Menu
     }
 
     /**
+     * 设置菜单视图.
+     *
      * @param string $view
      *
      * @return $this
@@ -111,6 +106,8 @@ class Menu
     }
 
     /**
+     * 渲染视图.
+     *
      * @param array $item
      *
      * @return string
@@ -121,6 +118,8 @@ class Menu
     }
 
     /**
+     * 判断是否选中.
+     *
      * @param array       $item
      * @param null|string $path
      *
@@ -155,6 +154,8 @@ class Menu
     }
 
     /**
+     * 判断节点是否可见.
+     *
      * @param array $item
      *
      * @return bool

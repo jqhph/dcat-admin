@@ -68,7 +68,7 @@
             pick: {
                 id: $this.find('.file-picker'),
                 name: '_file_',
-                label: '<i class="feather icon-folder"></i>&nbsp; {!! trans('admin.uploader.add_new_media') !!}'
+                label: '<i class="feather icon-folder"><\/i>&nbsp; {!! trans('admin.uploader.add_new_media') !!}'
             },
             dnd: $this.find('.dnd-area'),
             paste: $this.find('.web-uploader')
