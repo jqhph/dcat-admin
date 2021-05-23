@@ -5,6 +5,7 @@ namespace Dcat\Admin\Grid\Concerns;
 use Closure;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
 trait HasFilter
@@ -154,5 +155,9 @@ if (count > 0) {
 }
 JS
         );
+
+        $url = Helper::fullUrlWithoutQuery(['_pjax']);
+
+        Admin::script("$('.grid-filter-form').attr('action', '{$url}');", true);
     }
 }
