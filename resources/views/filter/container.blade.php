@@ -9,7 +9,7 @@
 
 <div class="filter-box shadow-0 card mb-0 {{ $expand ? '' : 'd-none' }} {{$containerClass}}">
     <div class="card-body" style="{!! $style !!}"  id="{{ $filterID }}">
-        <form action="{!! $action !!}" class="form-horizontal" pjax-container method="get">
+        <form action="{!! $action !!}" class="form-horizontal grid-filter-form" pjax-container method="get">
             <div class="row mb-0">
                 @foreach($layout->columns() as $column)
                     @foreach($column->filters() as $filter)

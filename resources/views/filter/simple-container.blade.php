@@ -1,6 +1,6 @@
 <div class="filter-box card p-2 {{ $expand ? '' : 'd-none' }} {{$containerClass}}" style="padding-bottom: .5rem!important;margin-top: 10px;margin-bottom: 8px;box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.04);">
     <div class="card-body" style="{!! $style !!}"  id="{{ $filterID }}">
-        <form action="{!! $action !!}" class="form-horizontal" pjax-container method="get">
+        <form action="{!! $action !!}" class="form-horizontal grid-filter-form" pjax-container method="get">
             <div class="row mt-1 mb-0">
                 @foreach($layout->columns() as $column)
                     @foreach($column->filters() as $filter)
