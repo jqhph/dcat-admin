@@ -154,7 +154,7 @@ $('.async-{$this->getTableId()}').find('.filter-count').text(count > 0 ? ('('+co
 JS
         );
 
-        $url = Helper::fullUrlWithoutQuery(['_pjax']);
+        $url = Helper::urlWithoutQuery($this->filter()->urlWithoutFilters(), ['_pjax', static::ASYNC_NAME]);
 
         Admin::script("$('.grid-filter-form').attr('action', '{$url}');", true);
     }

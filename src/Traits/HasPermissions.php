@@ -136,10 +136,8 @@ trait HasPermissions
      *
      * @return void
      */
-    protected static function boot()
+    protected static function bootHasPermissions()
     {
-        parent::boot();
-
         static::deleting(function ($model) {
             $model->roles()->detach();
         });

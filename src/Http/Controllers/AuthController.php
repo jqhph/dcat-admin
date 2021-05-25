@@ -31,7 +31,7 @@ class AuthController extends Controller
     /**
      * Show the login page.
      *
-     * @return Content
+     * @return Content|\Illuminate\Http\RedirectResponse
      */
     public function getLogin(Content $content)
     {
@@ -241,9 +241,12 @@ class AuthController extends Controller
     {
         $request->session()->regenerate();
 
+        $path = $this->getRedirectPath();
+
         return $this->response()
             ->success(trans('admin.login_successful'))
-            ->locationToIntended($this->getRedirectPath())
+            ->locationToIntended($path)
+            ->locationIf(Admin::app()->getEnabledApps(), $path)
             ->send();
     }
 

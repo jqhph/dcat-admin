@@ -5,8 +5,8 @@
 <br>
 
 <p align="center">
-    <a href="https://travis-ci.org/jqhph/dcat-admin">
-        <img src="https://travis-ci.org/jqhph/dcat-admin.svg?branch=master" alt="Build Status">
+    <a href="https://github.com/jqhph/dcat-admin/actions">
+        <img src="https://github.com/jqhph/dcat-admin/workflows/Laravel%20Dusk/badge.svg" alt="Build Status">
     </a>
     <a href="https://styleci.io/repos/182349597">
         <img src="https://github.styleci.io/repos/182349597/shield" alt="StyleCI">
