@@ -3,7 +3,6 @@
 namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Admin;
-use Dcat\Admin\Application;
 use Dcat\Admin\Form;
 use Dcat\Admin\Http\Repositories\Administrator;
 use Dcat\Admin\Layout\Content;
@@ -32,7 +31,7 @@ class AuthController extends Controller
     /**
      * Show the login page.
      *
-     * @return Content
+     * @return Content|\Illuminate\Http\RedirectResponse
      */
     public function getLogin(Content $content)
     {
