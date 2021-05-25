@@ -242,17 +242,13 @@ class AuthController extends Controller
     {
         $request->session()->regenerate();
 
-        $response = $this->response()
+        $path = $this->getRedirectPath();
+
+        return $this->response()
             ->success(trans('admin.login_successful'))
-            ->locationToIntended($this->getRedirectPath());
-
-        // 如果当前启用了多应用后台,
-        // 不要跳去 session 存储的 path
-        if (! empty(Admin::app()->enableApps())) {
-            $response->location($this->getRedirectPath());
-        }
-
-        return $response->send();
+            ->locationToIntended($path)
+            ->locationIf(Admin::app()->getEnabledApps(), $path)
+            ->send();
     }
 
     /**
