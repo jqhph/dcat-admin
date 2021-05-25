@@ -150,9 +150,7 @@ trait HasFilter
             <<<JS
 var count = {$this->filter()->countConditions()};
 
-if (count > 0) {
-    $('.async-{$this->getTableId()}').find('.filter-count').text('('+count+')');
-}
+$('.async-{$this->getTableId()}').find('.filter-count').text(count > 0 ? ('('+count+')') : '');
 JS
         );
 
