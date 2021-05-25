@@ -1,4 +1,4 @@
-name: Dcat Admin Dusk
+name: Laravel Dusk
 
 on:
   push:
