@@ -97,6 +97,10 @@ class Helper
             $value = $value(...(array) $params);
         }
 
+        if ($value instanceof Grid) {
+            return (string) $value->render();
+        }
+
         if ($value instanceof Renderable) {
             return (string) $value->render();
         }
