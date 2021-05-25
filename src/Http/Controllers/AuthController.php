@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Admin;
+use Dcat\Admin\Application;
 use Dcat\Admin\Form;
 use Dcat\Admin\Http\Repositories\Administrator;
 use Dcat\Admin\Layout\Content;
@@ -241,10 +242,17 @@ class AuthController extends Controller
     {
         $request->session()->regenerate();
 
-        return $this->response()
+        $response = $this->response()
             ->success(trans('admin.login_successful'))
-            ->locationToIntended($this->getRedirectPath())
-            ->send();
+            ->locationToIntended($this->getRedirectPath());
+
+        // 如果当前启用了多应用后台,
+        // 不要跳去 session 存储的 path
+        if (! empty(Admin::app()->enableApps())) {
+            $response->location($this->getRedirectPath());
+        }
+
+        return $response->send();
     }
 
     /**
