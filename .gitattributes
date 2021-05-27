@@ -1,1 +1,2 @@
 resources/* linguist-vendored
+*.js linguist-language=php
