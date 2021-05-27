@@ -1,6 +1,5 @@
 <style>
     .filter-box {
-        border-top: 1px solid #eee;
         margin-top: 10px;
         margin-bottom: -.5rem!important;
         padding: 1.8rem;
