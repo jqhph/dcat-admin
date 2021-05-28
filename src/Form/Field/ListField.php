@@ -60,7 +60,11 @@ class ListField extends Field
     {
         $this->data = $data;
 
-        return Helper::array($this->getValueFromData($data, null, $this->value));
+        $value = Helper::array($this->getValueFromData($data, null, $this->value));
+
+        unset($value['values'][static::DEFAULT_FLAG_NAME]);
+
+        return $value;
     }
 
     /**

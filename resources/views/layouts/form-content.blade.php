@@ -1,4 +1,4 @@
-<script>Dcat.pjaxResponded();</script>
+<script>Dcat.wait();</script>
 
 <style>
     .form-content .row {

@@ -75,7 +75,13 @@ class RoleController extends AdminController
 
     public function form()
     {
-        return Form::make(Role::with(['permissions']), function (Form $form) {
+        $with = ['permissions'];
+
+        if ($bindMenu = config('admin.menu.role_bind_menu', true)) {
+            $with[] = 'menus';
+        }
+
+        return Form::make(Role::with($with), function (Form $form) use ($bindMenu) {
             $roleTable = config('admin.database.roles_table');
             $connection = config('admin.database.connection');
 
@@ -105,6 +111,24 @@ class RoleController extends AdminController
                     return array_column($v, 'id');
                 });
 
+            if ($bindMenu) {
+                $form->tree('menus', trans('admin.menu'))
+                    ->treeState(false)
+                    ->setTitleColumn('title')
+                    ->nodes(function () {
+                        $model = config('admin.database.menu_model');
+
+                        return (new $model())->allNodes();
+                    })
+                    ->customFormat(function ($v) {
+                        if (! $v) {
+                            return [];
+                        }
+
+                        return array_column($v, 'id');
+                    });
+            }
+
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
 
@@ -112,6 +136,9 @@ class RoleController extends AdminController
             if ($id == $roleModel::ADMINISTRATOR_ID) {
                 $form->disableDeleteButton();
             }
+        })->saved(function () {
+            $model = config('admin.database.menu_model');
+            (new $model())->flushCache();
         });
     }
 

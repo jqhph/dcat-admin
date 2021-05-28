@@ -41,7 +41,7 @@ class Map extends Field
                 break;
             case 'baidu':
             default:
-                $js = '//api.map.baidu.com/getscript?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
+                $js = '//api.map.baidu.com/api?v=2.0&ak='.($keys['baidu'] ?? env('BAIDU_MAP_API_KEY'));
         }
 
         Admin::js($js);

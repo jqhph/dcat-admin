@@ -66,6 +66,18 @@ class Permission extends Model implements Sortable
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function menus(): BelongsToMany
+    {
+        $pivotTable = config('admin.database.permission_menu_table');
+
+        $relatedModel = config('admin.database.menu_model');
+
+        return $this->belongsToMany($relatedModel, $pivotTable, 'permission_id', 'menu_id')->withTimestamps();
+    }
+
+    /**
      * If request should pass through the current permission.
      *
      * @param Request $request

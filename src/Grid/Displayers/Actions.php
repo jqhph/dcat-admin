@@ -11,9 +11,12 @@ use Dcat\Admin\Grid\RowAction;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Traits\Macroable;
 
 class Actions extends AbstractDisplayer
 {
+    use Macroable;
+
     /**
      * @var array
      */
@@ -76,7 +79,7 @@ class Actions extends AbstractDisplayer
     /**
      * @param mixed $action
      *
-     * @return void
+     * @return mixed
      */
     protected function prepareAction(&$action)
     {
@@ -85,6 +88,8 @@ class Actions extends AbstractDisplayer
                 ->setColumn($this->column)
                 ->setRow($this->row);
         }
+
+        return $action;
     }
 
     public function view(bool $value = true)
@@ -248,10 +253,10 @@ class Actions extends AbstractDisplayer
      */
     protected function renderView()
     {
-        return Show::make($this->getViewLabel())
-            ->setGrid($this->grid)
-            ->setRow($this->row)
-            ->render();
+        $action = config('admin.grid.actions.view') ?: Show::class;
+        $action = $action::make($this->getViewLabel());
+
+        return $this->prepareAction($action);
     }
 
     /**
@@ -271,10 +276,10 @@ class Actions extends AbstractDisplayer
      */
     protected function renderEdit()
     {
-        return Edit::make($this->getEditLabel())
-            ->setGrid($this->grid)
-            ->setRow($this->row)
-            ->render();
+        $action = config('admin.grid.actions.edit') ?: Edit::class;
+        $action = $action::make($this->getEditLabel());
+
+        return $this->prepareAction($action);
     }
 
     /**
@@ -282,7 +287,7 @@ class Actions extends AbstractDisplayer
      */
     protected function getEditLabel()
     {
-        $label = trans('admin.show');
+        $label = trans('admin.edit');
 
         return "<i title='{$label}' class=\"feather icon-edit-1 grid-action-icon\"></i> &nbsp;";
     }
@@ -292,10 +297,10 @@ class Actions extends AbstractDisplayer
      */
     protected function renderQuickEdit()
     {
-        return QuickEdit::make($this->getQuickEditLabel())
-            ->setGrid($this->grid)
-            ->setRow($this->row)
-            ->render();
+        $action = config('admin.grid.actions.quick_edit') ?: QuickEdit::class;
+        $action = $action::make($this->getQuickEditLabel());
+
+        return $this->prepareAction($action);
     }
 
     /**
@@ -315,10 +320,10 @@ class Actions extends AbstractDisplayer
      */
     protected function renderDelete()
     {
-        return Delete::make($this->getDeleteLabel())
-            ->setGrid($this->grid)
-            ->setRow($this->row)
-            ->render();
+        $action = config('admin.grid.actions.delete') ?: Delete::class;
+        $action = $action::make($this->getDeleteLabel());
+
+        return $this->prepareAction($action);
     }
 
     /**

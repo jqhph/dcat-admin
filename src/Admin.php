@@ -13,6 +13,7 @@ use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Composer;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Traits\HasHtml;
 use Dcat\Admin\Traits\HasPermissions;
@@ -30,7 +31,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.23-beta';
+    const VERSION = '2.1.0-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -127,6 +128,16 @@ class Admin
     }
 
     /**
+     * 设置翻译文件路径.
+     *
+     * @param string|null $path
+     */
+    public static function translation(?string $path)
+    {
+        static::context()->translation = $path;
+    }
+
+    /**
      * 获取登录用户模型.
      *
      * @return Model|Authenticatable|HasPermissions
@@ -165,7 +176,7 @@ class Admin
      *
      * @return void
      */
-    public function pjax(bool $value = true)
+    public static function pjax(bool $value = true)
     {
         static::context()->pjaxContainerId = $value ? static::$defaultPjaxContainerId : false;
     }
@@ -328,11 +339,23 @@ class Admin
     }
 
     /**
+     * 上下文管理.
+     *
      * @return \Dcat\Admin\Support\Context
      */
     public static function context()
     {
         return app('admin.context');
+    }
+
+    /**
+     * 翻译器.
+     *
+     * @return \Dcat\Admin\Support\Translator
+     */
+    public static function translator()
+    {
+        return app('admin.translator');
     }
 
     /**
@@ -355,6 +378,61 @@ class Admin
     public static function getIgnoreQueryNames()
     {
         return static::context()->ignoreQueries ?? [];
+    }
+
+    /**
+     * 中断默认的渲染逻辑.
+     *
+     * @param string|\Illuminate\Contracts\Support\Renderable|\Closure $value
+     */
+    public static function prevent($value)
+    {
+        if ($value !== null) {
+            static::context()->add('contents', $value);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public static function shouldPrevent()
+    {
+        return count(static::context()->getArray('contents')) > 0;
+    }
+
+    /**
+     * 渲染内容.
+     *
+     * @return string|void
+     */
+    public static function renderContents()
+    {
+        if (! static::shouldPrevent()) {
+            return;
+        }
+
+        $results = '';
+
+        foreach (static::context()->getArray('contents') as $content) {
+            $results .= Helper::render($content);
+        }
+
+        // 等待JS脚本加载完成
+        static::script('Dcat.wait()', true);
+
+        $asset = static::asset();
+
+        static::baseCss([], false);
+        static::baseJs([], false);
+        static::headerJs([], false);
+        static::fonts([]);
+
+        return $results
+            .static::html()
+            .$asset->jsToHtml()
+            .$asset->cssToHtml()
+            .$asset->scriptToHtml()
+            .$asset->styleToHtml();
     }
 
     /**
@@ -473,7 +551,9 @@ class Admin
 
         $sidebarStyle = config('admin.layout.sidebar_style') ?: 'light';
 
-        $jsVariables['pjax_container_selector'] = '#'.static::getPjaxContainerId();
+        $pjaxId = static::getPjaxContainerId();
+
+        $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
         $jsVariables['token'] = csrf_token();
         $jsVariables['lang'] = __('admin.client') ?: [];
         $jsVariables['colors'] = static::color()->all();

@@ -21,6 +21,7 @@ class Tree extends Field
         ],
         'checkbox' => [
             'keep_selected_style' => false,
+            'three_state' => true,
         ],
         'types' => [
             'default'  => [
@@ -67,6 +68,20 @@ class Tree extends Field
         $this->nodes = &$data;
 
         return $this;
+    }
+
+    /**
+     * 设置父级复选框是否禁止被单独选中.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function treeState(bool $value = true)
+    {
+        $this->options['checkbox']['three_state'] = $value;
+
+        return $this->exceptParentNode($value);
     }
 
     /**

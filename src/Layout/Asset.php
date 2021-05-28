@@ -257,19 +257,6 @@ class Asset
     ];
 
     /**
-     * @var bool
-     */
-    protected $isPjax = false;
-
-    /**
-     * Assets constructor.
-     */
-    public function __construct()
-    {
-        $this->isPjax = request()->pjax();
-    }
-
-    /**
      * 初始化主题样式.
      */
     protected function setUpTheme()
@@ -587,13 +574,13 @@ class Asset
      *
      * @param string|array $js
      */
-    public function headerJs($js)
+    public function headerJs($js, bool $merge = true)
     {
-        if (! $js) {
-            return;
+        if ($merge) {
+            $this->headerJs = $js ? array_merge($this->headerJs, (array) $js) : $this->headerJs;
+        } else {
+            $this->headerJs = (array) $js;
         }
-
-        $this->headerJs = array_merge($this->headerJs, (array) $js);
     }
 
     /**
@@ -653,12 +640,17 @@ class Asset
         ));
     }
 
+    protected function isPjax()
+    {
+        return request()->pjax();
+    }
+
     /**
      * 合并基础css脚本.
      */
     protected function mergeBaseCss()
     {
-        if ($this->isPjax) {
+        if ($this->isPjax()) {
             return;
         }
 
@@ -712,7 +704,7 @@ class Asset
      */
     protected function mergeBaseJs()
     {
-        if ($this->isPjax) {
+        if ($this->isPjax()) {
             return;
         }
 

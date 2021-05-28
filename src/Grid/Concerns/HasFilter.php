@@ -3,7 +3,9 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Closure;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
 trait HasFilter
@@ -136,5 +138,24 @@ trait HasFilter
     public function showFilterButton(bool $val = true)
     {
         return $this->disableFilterButton(! $val);
+    }
+
+    protected function addFilterScript()
+    {
+        if (! $this->isAsyncRequest()) {
+            return;
+        }
+
+        Admin::script(
+            <<<JS
+var count = {$this->filter()->countConditions()};
+
+$('.async-{$this->getTableId()}').find('.filter-count').text(count > 0 ? ('('+count+')') : '');
+JS
+        );
+
+        $url = Helper::urlWithoutQuery($this->filter()->urlWithoutFilters(), ['_pjax', static::ASYNC_NAME]);
+
+        Admin::script("$('.grid-filter-form').attr('action', '{$url}');", true);
     }
 }
