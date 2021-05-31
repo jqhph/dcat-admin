@@ -97,6 +97,7 @@ class RoleController extends AdminController
             $form->text('name', trans('admin.name'))->required();
 
             $form->tree('permissions')
+                ->treeState(false)
                 ->nodes(function () {
                     $permissionModel = config('admin.database.permissions_model');
                     $permissionModel = new $permissionModel();
