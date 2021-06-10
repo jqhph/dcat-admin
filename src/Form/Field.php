@@ -967,11 +967,12 @@ class Field implements Renderable
      */
     public function getElementClass()
     {
-        if (! $this->elementClass) {
-            $this->elementClass = $this->getDefaultElementClass();
-        }
-
-        return $this->elementClass;
+        return array_values(
+            array_unique(
+                $this->elementClass,
+                $this->getDefaultElementClass()
+            )
+        );
     }
 
     /**
