@@ -80,4 +80,8 @@
             tree.nestable('collapseAll');
         }
     });
+
+    @if(! $expand)
+    tree.nestable('collapseAll')
+    @endif
 </script>

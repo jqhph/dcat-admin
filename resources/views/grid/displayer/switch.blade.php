@@ -1,9 +1,8 @@
-<input class="grid-column-switch" data-url="{{ $url }}" data-size="small" name="{{ $column }}" {{ $checked }} type="checkbox" data-color="{{ $color }}"/>
+<input class="grid-column-switch" data-url="{{ $url }}" data-reload="{{ $refresh }}}" data-size="small" name="{{ $column }}" {{ $checked }} type="checkbox" data-color="{{ $color }}"/>
 
 <script require="@switchery">
     var swt = $('.grid-column-switch'),
-        that,
-        reload = '{{ $refresh }}';
+        that;
     function initSwitchery() {
         swt.parent().find('.switchery').remove();
         swt.each(function () {
@@ -16,6 +15,7 @@
     swt.off('change').on('change', function(e) {
         var that = $(this),
             url = that.data('url'),
+            reload = that.data('reload'),
             checked = that.is(':checked'),
             name = that.attr('name'),
             data = {},

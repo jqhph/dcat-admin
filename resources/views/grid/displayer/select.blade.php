@@ -1,5 +1,5 @@
 <div class="input-group input-group-sm">
-    <select style="width: 100%;" class="grid-column-select" data-url="{{ $url }}" data-name="{{ $column }}">
+    <select style="width: 100%;" class="grid-column-select" data-reload="{{ $refresh }}" data-url="{{ $url }}" data-name="{{ $column }}">
         @foreach($options as $k => $v)
             @php($selected = Dcat\Admin\Support\Helper::equal($k, $value)  ? 'selected' : '')
 
@@ -15,7 +15,7 @@
             name = $(this).data('name'),
             url = $(this).data('url'),
             data = {},
-            reload = '{{ $refresh }}';
+            reload = $(this).data('reload');
 
         if (name.indexOf('.') === -1) {
             data[name] = value;
