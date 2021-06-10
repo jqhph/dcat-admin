@@ -961,13 +961,33 @@ class Field implements Renderable
     }
 
     /**
+     * Add element class.
+     *
+     * @param string|array $class
+     *
+     * @return $this
+     */
+    public function addElementClass($class)
+    {
+        $this->setElementClass($class);
+
+        $this->elementClass = array_values(array_unique(array_merge($this->elementClass, $this->getDefaultElementClass())));
+
+        return $this;
+    }
+
+    /**
      * Get element class.
      *
      * @return array
      */
     public function getElementClass()
     {
-        return array_values(array_unique(array_merge($this->elementClass, $this->getDefaultElementClass())));
+        if (! $this->elementClass) {
+            $this->elementClass = $this->getDefaultElementClass();
+        }
+
+        return $this->elementClass;
     }
 
     /**
