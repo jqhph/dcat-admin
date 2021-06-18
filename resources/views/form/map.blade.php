@@ -1,3 +1,10 @@
+<style>
+    .amap-icon img,
+    .amap-marker-content img{
+        width: 25px;
+        height: 34px;
+    }
+</style>
 <div class="{{$viewClass['form-group']}}">
 
     <label class="{{$viewClass['label']}} control-label">{!! $label !!}</label>
@@ -6,14 +13,16 @@
 
         @include('admin::form.error')
 
-        @if($type === 'baidu')
+        @if($type === 'baidu' || $type === 'amap')
             <div class="row mb-1">
                 <div class="col-md-5 col-md-offset-3">
                     <div class="input-group">
                         <input type="text" placeholder="{{ trans('admin.search') }}" class="form-control" id="{{ $searchId }}">
-                        <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
-                    </span>
+                        @if($type === 'baidu')
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -198,5 +207,65 @@
     }
 
     initBaiduMap();
+    @endif
+    @if($type === 'amap')
+    function initAmap(){
+        var map = new AMap.Map(container[0], {
+            resizeEnable: true
+        });
+        var marker = new AMap.Marker({
+            position: new AMap.LngLat(lng.val(), lat.val()),
+            draggable: true,
+            map:map,
+            icon:'//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png'
+        });
+        if (!lng.val() || !lat.val()){
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,
+                zoomToAccuracy: true,
+                buttonPosition: 'RB'
+            })
+            geolocation.getCurrentPosition(function (status,result){
+                if (status === 'complete'){
+                    var point = new AMap.LngLat(result.position.lng, result.position.lat);
+                    map.setCenter(point);
+                    map.setZoom(15);
+                    marker.setPosition(point)
+                    lat.val(result.position.lat);
+                    lng.val(result.position.lng);
+                }
+            })
+        }
+        //输入提示
+        var auto = new AMap.Autocomplete({
+            input: "{{$searchId}}"
+        });
+        var placeSearch = new AMap.PlaceSearch({
+            map: map
+        });
+        AMap.event.addListener(auto, "select", function (e){
+            placeSearch.setCity(e.poi.adcode);
+            placeSearch.search(e.poi.name);
+        });
+        AMap.event.addListener(placeSearch, "markerClick", function (e){
+            let point = new AMap.LngLat(e.data.location.lng, e.data.location.lat);
+            marker.setPosition(point)
+            lat.val(e.data.location.lat);
+            lng.val(e.data.location.lng);
+        });
+        marker.on('dragend',function (e){
+            lat.val(e.lnglat.lat);
+            lng.val(e.lnglat.lng);
+        });
+        map.on('click',function (e){
+            if (e.type === 'click'){
+                let point = new AMap.LngLat(e.lnglat.lng, e.lnglat.lat);
+                marker.setPosition(point)
+                lat.val(e.lnglat.lat);
+                lng.val(e.lnglat.lng);
+            }
+        })
+    }
+    initAmap();
     @endif
 </script>
