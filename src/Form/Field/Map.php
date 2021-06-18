@@ -40,7 +40,7 @@ class Map extends Field
                 $js = '//api-maps.yandex.ru/2.1/?lang=ru_RU';
                 break;
             case 'amap':
-                $js = '//webapi.amap.com/maps?v=1.4.15&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.Geolocation&key=' . ($keys['amap'] ?? env('AMAP_API_KEY'));;
+                $js = '//webapi.amap.com/maps?v=1.4.15&plugin=AMap.Autocomplete,AMap.PlaceSearch,AMap.Geolocation&key='.($keys['amap'] ?? env('AMAP_API_KEY'));
                 break;
             case 'baidu':
             default:
@@ -116,7 +116,7 @@ class Map extends Field
 
     public function amap()
     {
-        return $this->addVariables(['type' => 'amap', 'searchId' => 'amap' . Str::random()]);
+        return $this->addVariables(['type' => 'amap', 'searchId' => 'amap'.Str::random()]);
     }
 
     protected function getDefaultElementClass()
