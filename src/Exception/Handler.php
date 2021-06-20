@@ -4,6 +4,7 @@ namespace Dcat\Admin\Exception;
 
 use Dcat\Admin\Contracts\ExceptionHandler;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\ViewErrorBag;
 
@@ -18,6 +19,10 @@ class Handler implements ExceptionHandler
      */
     public function handle(\Throwable $e)
     {
+        if ($e instanceof HttpResponseException) {
+            throw $e;
+        }
+
         $this->report($e);
 
         return $this->render($e);
