@@ -29,6 +29,15 @@ export default class Menu {
 
             $(this).addClass('active')
         });
+
+        // 启用sidebar_collapsed模式后点击菜单自动缩进
+        $('.sidebar-collapse .main-sidebar .nav-item .nav-link[href]').on('click', function () {
+            var href = $(this).attr('href');
+
+            if (href !== '#' && href !== 'javascript:void(0)') {
+                $('.sidebar-collapse .main-sidebar').removeClass('sidebar-focused');
+            }
+        });
     }
 
     initHorizontal() {
