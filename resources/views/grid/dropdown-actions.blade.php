@@ -1,3 +1,4 @@
+@if (!empty($default) || !empty($custom))
 <div class="grid-dropdown-actions dropdown">
     <a href="#" style="padding:0 10px;" data-toggle="dropdown">
         <i class="feather icon-more-vertical"></i>
@@ -20,3 +21,4 @@
         @endif
     </ul>
 </div>
+@endif

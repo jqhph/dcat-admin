@@ -47,7 +47,7 @@ class BatchActions extends AbstractTool
      */
     protected function appendDefaultAction()
     {
-        $this->add($this->makeBatchDelete());
+        $this->add($this->makeBatchDelete(), '_delete_');
     }
 
     protected function makeBatchDelete()
@@ -87,14 +87,19 @@ class BatchActions extends AbstractTool
      * Add a batch action.
      *
      * @param BatchAction $action
+     * @param ?string $key
      *
      * @return $this
      */
-    public function add(BatchAction $action)
+    public function add(BatchAction $action, ?string $key = null)
     {
         $action->selectorPrefix = '.grid-batch-action-'.$this->actions->count();
 
-        $this->actions->push($action);
+        if ($key) {
+            $this->actions->push($action);
+        } else {
+            $this->actions->put($key, $action);
+        }
 
         return $this;
     }
@@ -129,7 +134,7 @@ class BatchActions extends AbstractTool
     public function render()
     {
         if (! $this->enableDelete) {
-            $this->actions->shift();
+            $this->actions->forget('_delete_');
         }
 
         if ($this->actions->isEmpty()) {

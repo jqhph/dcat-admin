@@ -92,6 +92,11 @@ class Tree implements Renderable
     /**
      * @var bool
      */
+    public $expand = true;
+
+    /**
+     * @var bool
+     */
     public $useQuickCreate = true;
 
     /**
@@ -259,6 +264,16 @@ class Tree implements Renderable
         $this->nestableOptions = array_merge($this->nestableOptions, $options);
 
         return $this;
+    }
+
+    /**
+     * @param bool $value
+     *
+     * @return void
+     */
+    public function expand(bool $value = true)
+    {
+        $this->expand = $value;
     }
 
     /**
@@ -532,6 +547,7 @@ class Tree implements Renderable
             'nestableOptions' => $this->nestableOptions,
             'url'             => $this->url,
             'resolveAction'   => $this->resolveAction(),
+            'expand'          => $this->expand,
         ];
     }
 

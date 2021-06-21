@@ -950,12 +950,34 @@ class Field implements Renderable
      * Set element class.
      *
      * @param string|array $class
+     * @param bool $normalize
      *
      * @return $this
      */
-    public function setElementClass($class)
+    public function setElementClass($class, bool $normalize = true)
     {
-        $this->elementClass = array_merge($this->elementClass, (array) $this->normalizeElementClass($class));
+        if ($normalize) {
+            $class = $this->normalizeElementClass($class);
+        }
+
+        $this->elementClass = array_merge($this->elementClass, (array) $class);
+
+        return $this;
+    }
+
+    /**
+     * Add element class.
+     *
+     * @param string|array $class
+     * @param bool $normalize
+     *
+     * @return $this
+     */
+    public function addElementClass($class, bool $normalize = false)
+    {
+        $this->setElementClass($class, $normalize);
+
+        $this->elementClass = array_values(array_unique(array_merge($this->elementClass, $this->getDefaultElementClass())));
 
         return $this;
     }
@@ -1064,22 +1086,6 @@ class Field implements Renderable
     protected function getFormElementId()
     {
         return $this->form ? $this->form->getElementId() : null;
-    }
-
-    /**
-     * Add the element class.
-     *
-     * @param $class
-     *
-     * @return $this
-     */
-    public function addElementClass($class)
-    {
-        $this->elementClass = array_unique(
-            array_merge($this->elementClass, (array) $class)
-        );
-
-        return $this;
     }
 
     /**

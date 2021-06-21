@@ -1,4 +1,4 @@
-<li class="dd-item" data-id="{{ $branch[$keyName] }}">
+<li class="dd-item {!! $expand ? '' : 'dd-collapsed' !!}" data-id="{{ $branch[$keyName] }}">
     <div class="dd-handle">
         {!! $branchCallback($branch) !!}
         <span class="pull-right dd-nodrag">
