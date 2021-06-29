@@ -57,7 +57,7 @@
 }
 
 body.sidebar-collapse {
-  .main-sidebar:not(:hover) {
+  .main-sidebar:not(:hover,.sidebar-focused) {
     .navbar-header {
       //width: 80px;
       padding: 0.35rem 15px;
