@@ -33,6 +33,7 @@ import AddUploadedFile from './Upload/AddUploadedFile'
                 disabled: false, // 禁止任何上传编辑
                 autoUpdateColumn: false,
                 removable: false, // 是否允许直接删除服务器图片
+                downloadable: false, // 是否允许下载文件
                 dimensions: {
                     // width: 100, // 图片宽限制
                     // height: 100, // 图片高限制
@@ -350,6 +351,11 @@ import AddUploadedFile from './Upload/AddUploadedFile'
 
             if (options.sortable) {
                 $li.find('[data-file-act="order"]').removeClass('d-none').show();
+            }
+            if (options.downloadable) {
+                let $download = $li.find('[data-file-act="downloadable"]');
+                $download.removeClass('d-none').show();
+                $download.attr('data-id', obj.file.serverUrl);
             }
         }
 

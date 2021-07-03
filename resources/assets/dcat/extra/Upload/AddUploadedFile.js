@@ -22,8 +22,15 @@ export default class AddUploadedFile {
         if (! showImg && options.sortable) {
             // 文件排序
             html += `
-<p style="right: 45px" class="file-action" data-file-act='order' data-order="1" data-id='${file.serverId}'><i class='feather icon-arrow-up'></i></p>
-<p style="right: 25px" class="file-action" data-file-act='order' data-order="0" data-id='${file.serverId}'><i class='feather icon-arrow-down'></i></p>
+<p style="right: 65px" class="file-action" data-file-act='order' data-order="1" data-id='${file.serverId}'><i class='feather icon-arrow-up'></i></p>
+<p style="right: 45px" class="file-action" data-file-act='order' data-order="0" data-id='${file.serverId}'><i class='feather icon-arrow-down'></i></p>
+`;
+        }
+
+        // 下载
+        if (! showImg && options.downloadable) {
+            html += `
+<p style="right: 25px" class="file-action" data-file-act='download' data-id='${file.serverUrl}'><i class='feather icon-download-cloud'></i></p>
 `;
         }
 
@@ -94,8 +101,14 @@ export default class AddUploadedFile {
 
         // 文件排序
         if (options.sortable) {
-            html.find('[data-file-act="order"').click(function () {
+            html.find('[data-file-act="order"]').click(function () {
                 parent.helper.orderFiles($(this));
+            });
+        }
+
+        if (options.downloadable) {
+            html.find('[data-file-act="download"]').click(function () {
+                window.open($(this).attr('data-id'));
             });
         }
 

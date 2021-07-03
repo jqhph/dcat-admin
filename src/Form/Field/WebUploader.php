@@ -197,6 +197,20 @@ trait WebUploader
     }
 
     /**
+     * 是否允许下载文件.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function downloadable(bool $value = true)
+    {
+        $this->options['downloadable'] = $value;
+
+        return $this;
+    }
+
+    /**
      * 默认上传配置.
      *
      * @return void
