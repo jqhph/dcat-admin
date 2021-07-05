@@ -118,7 +118,7 @@ class Select extends Field
                 $resources[] = $value;
             }
 
-            return $model::find($resources)->pluck($textField, $idField)->toArray();
+            return $model::whereIn($idField, $resources)->pluck($textField, $idField)->toArray();
         };
 
         return $this;
