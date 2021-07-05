@@ -226,6 +226,11 @@ class Field implements Renderable
     protected $savingCallbacks = [];
 
     /**
+     * @var string
+     */
+    protected $size = '';
+
+    /**
      * Field constructor.
      *
      * @param string|array $column
@@ -237,6 +242,22 @@ class Field implements Renderable
         $this->label = $this->formatLabel($arguments);
 
         $this->callResolving();
+    }
+
+    /**
+     * 设置为小尺寸.
+     */
+    public function small()
+    {
+        $this->size = 'sm';
+    }
+
+    /**
+     * 设置为大尺寸.
+     */
+    public function large()
+    {
+        $this->size = 'lg';
     }
 
     /**

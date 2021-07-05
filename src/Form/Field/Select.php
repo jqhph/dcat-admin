@@ -236,6 +236,11 @@ class Select extends Field
             'cascadeScript' => $this->getCascadeScript(),
         ]);
 
+        if ($this->size) {
+            $this->addElementClass('form-control-'.$this->size);
+            $this->setLabelClass('control-label-'.$this->size);
+        }
+
         $this->attribute('data-value', implode(',', Helper::array($this->value())));
 
         return parent::render();
