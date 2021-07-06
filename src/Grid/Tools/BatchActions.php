@@ -69,6 +69,11 @@ class BatchActions extends AbstractTool
         return $this;
     }
 
+    public function divider()
+    {
+        return $this->add(new ActionDivider());
+    }
+
     /**
      * Disable delete And Hide SelectAll Checkbox.
      *
