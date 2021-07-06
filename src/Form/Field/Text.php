@@ -28,6 +28,11 @@ class Text extends Field
     {
         $this->initPlainInput();
 
+        if ($this->size) {
+            $this->addElementClass('form-control-'.$this->size);
+            $this->setLabelClass('control-label-'.$this->size);
+        }
+
         $this->defaultAttribute('type', 'text')
             ->defaultAttribute('name', $this->getElementName())
             ->defaultAttribute('value', $this->value())
