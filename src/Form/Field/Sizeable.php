@@ -28,7 +28,7 @@ trait Sizeable
     {
         return $this->size('lg');
     }
-    
+
     public function size(?string $size)
     {
         $this->size = $size;
