@@ -10,6 +10,7 @@ class Radio extends Field
 {
     use CanCascadeFields;
     use CanLoadFields;
+    use Sizeable;
 
     protected $style = 'primary';
 

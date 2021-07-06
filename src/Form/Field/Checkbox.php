@@ -9,6 +9,7 @@ class Checkbox extends MultipleSelect
 {
     use CanCascadeFields;
     use CanLoadFields;
+    use Sizeable;
 
     protected $style = 'primary';
 

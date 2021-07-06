@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 class Text extends Field
 {
     use PlainInput;
+    use Sizeable;
 
     public function __construct($column, $arguments = [])
     {
@@ -27,11 +28,7 @@ class Text extends Field
     public function render()
     {
         $this->initPlainInput();
-
-        if ($this->size) {
-            $this->addElementClass('form-control-'.$this->size);
-            $this->setLabelClass('control-label-'.$this->size);
-        }
+        $this->initSize();
 
         $this->defaultAttribute('type', 'text')
             ->defaultAttribute('name', $this->getElementName())

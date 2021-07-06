@@ -12,6 +12,7 @@ class Select extends Field
 {
     use CanCascadeFields;
     use CanLoadFields;
+    use Sizeable;
 
     protected $cascadeEvent = 'change';
 
@@ -236,10 +237,7 @@ class Select extends Field
             'cascadeScript' => $this->getCascadeScript(),
         ]);
 
-        if ($this->size) {
-            $this->addElementClass('form-control-'.$this->size);
-            $this->setLabelClass('control-label-'.$this->size);
-        }
+        $this->initSize();
 
         $this->attribute('data-value', implode(',', Helper::array($this->value())));
 
