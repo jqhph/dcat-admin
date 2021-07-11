@@ -649,6 +649,19 @@ class Model
         return $this;
     }
 
+    public function getSortQueries()
+    {
+        return $this->findQueryByMethod('orderBy')
+            ->merge($this->findQueryByMethod('orderByDesc'))
+            ->merge($this->findQueryByMethod('latest'))
+            ->merge($this->findQueryByMethod('oldest'));
+    }
+
+    public function getSortDescMethods()
+    {
+        return ['orderByDesc', 'latest'];
+    }
+
     /**
      * Set the relationships that should be eager loaded.
      *

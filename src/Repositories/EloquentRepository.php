@@ -192,13 +192,13 @@ class EloquentRepository extends Repository implements TreeRepository
         [$column, $type, $cast] = $model->getSort();
 
         if (empty($column) || empty($type)) {
-            $orders = $model->findQueryByMethod('orderBy')->merge($model->findQueryByMethod('orderByDesc'));
+            $orders = $model->getSortQueries();
 
             $model->resetOrderBy();
 
             $orders->each(function ($orderBy) use ($model) {
                 $column = $orderBy['arguments'][0];
-                $type = $orderBy['method'] === 'orderByDesc' ? 'desc' : ($orderBy['arguments'][1] ?? 'asc');
+                $type = in_array($orderBy['method'], $model->getSortDescMethods(), true) ? 'desc' : ($orderBy['arguments'][1] ?? 'asc');
                 $cast = null;
 
                 $this->addOrderBy($model, $column, $type, $cast);
