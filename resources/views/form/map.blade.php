@@ -217,7 +217,8 @@
             position: new AMap.LngLat(lng.val(), lat.val()),
             draggable: true,
             map:map,
-            icon:'//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png'
+            icon:'//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png',
+            zoom:15
         });
         if (!lng.val() || !lat.val()){
             var geolocation = new AMap.Geolocation({
