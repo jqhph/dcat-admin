@@ -211,7 +211,9 @@
     @if($type === 'amap')
     function initAmap(){
         var map = new AMap.Map(container[0], {
-            resizeEnable: true
+            resizeEnable: true,
+            center: lng.val() && lat.val() ? [lng.val(), lat.val()] : null,
+            zoom: 14
         });
         var marker = new AMap.Marker({
             position: new AMap.LngLat(lng.val(), lat.val()),
