@@ -167,17 +167,7 @@ class EloquentRepository extends Repository implements TreeRepository
             $query->with($this->relations);
         }
 
-        $model->getQueries()->unique()->each(function ($value) use (&$query) {
-            if ($value['method'] === 'paginate' || $value['method'] === 'simplePaginate') {
-                $value['arguments'][1] = $this->getGridColumns();
-            } elseif ($value['method'] === 'get') {
-                $value['arguments'] = [$this->getGridColumns()];
-            }
-
-            $query = call_user_func_array([$query, $value['method']], $value['arguments'] ?? []);
-        });
-
-        return $query;
+        return $model->apply($query, true, $this->getGridColumns());
     }
 
     /**
