@@ -4,7 +4,7 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Lang;
+use Illuminate\Support\Facades\Lang;
 
 class Menu
 {
