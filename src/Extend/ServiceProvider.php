@@ -138,7 +138,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string|void
      */
-    final public function getName()
+    public function getName()
     {
         return $this->name ?: ($this->name = str_replace('/', '.', $this->getPackageName()));
     }
@@ -162,7 +162,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string|void
      */
-    final public function getPackageName()
+    public function getPackageName()
     {
         if (! $this->packageName) {
             if (! $this->composerProperty) {
@@ -190,7 +190,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    final public function getVersion()
+    public function getVersion()
     {
         return Admin::extension()->versionManager()->getCurrentVersion($this);
     }
@@ -200,7 +200,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    final public function getLatestVersion()
+    public function getLatestVersion()
     {
         return Admin::extension()->versionManager()->getFileVersions($this);
     }
@@ -210,7 +210,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return string
      */
-    final public function getLocalLatestVersion()
+    public function getLocalLatestVersion()
     {
         return last(
             array_keys(Admin::extension()->versionManager()->getFileVersions($this))
@@ -277,7 +277,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return bool
      */
-    final public function enabled()
+    public function enabled()
     {
         return Admin::extension()->enabled($this->getName());
     }
@@ -287,7 +287,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return bool
      */
-    final public function disabled()
+    public function disabled()
     {
         return ! $this->enabled();
     }
@@ -300,7 +300,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
      *
      * @return mixed
      */
-    final public function config($key = null, $default = null)
+    public function config($key = null, $default = null)
     {
         if ($this->config === null) {
             $this->initConfig();

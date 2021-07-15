@@ -42,8 +42,9 @@ export default class AddFile {
                 `);
 
             $btns = $(`
-<span style="right: 45px;" class="file-action d-none" data-file-act='order' data-order="1"><i class='feather icon-arrow-up'></i></span>
-<span style="right: 25px;" class="file-action d-none" data-file-act='order' data-order="0"><i class='feather icon-arrow-down'></i></span>
+<span style="right: 65px;" class="file-action d-none" data-file-act='order' data-order="1"><i class='feather icon-arrow-up'></i></span>
+<span style="right: 45px;" class="file-action d-none" data-file-act='order' data-order="0"><i class='feather icon-arrow-down'></i></span>
+<span style="right: 25px;" class="file-action d-none" data-file-act='download' data-id=''><i class='feather icon-download-cloud'></i></span>
 <span data-file-act="cancel" class="file-action" style="font-size:13px">
     <i class="feather icon-x red-dark"></i>
 </span>
@@ -235,6 +236,10 @@ export default class AddFile {
                     $(this).attr('data-id', file.serverId);
 
                     helper.orderFiles($(this));
+
+                    break;
+                case 'download':
+                    window.open($(this).attr('data-id'));
 
                     break;
             }

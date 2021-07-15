@@ -43,7 +43,7 @@ abstract class Setting extends Form implements LazyRenderable
     {
         $this->extension()->config($this->formatInput($input));
 
-        return $this->response()->success(trans('admin.save_succeeded'));
+        return $this->response()->success(trans('admin.save_succeeded'))->refresh();
     }
 
     /**

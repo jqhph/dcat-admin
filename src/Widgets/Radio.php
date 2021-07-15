@@ -38,26 +38,6 @@ class Radio extends Widget
     }
 
     /**
-     * 设置为小尺寸.
-     *
-     * @return $this
-     */
-    public function small()
-    {
-        return $this->size('sm');
-    }
-
-    /**
-     * 设置为大尺寸.
-     *
-     * @return $this
-     */
-    public function large()
-    {
-        return $this->size('lg');
-    }
-
-    /**
      * 尺寸设置.
      *
      * "sm", "lg"

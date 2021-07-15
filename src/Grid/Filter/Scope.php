@@ -6,12 +6,15 @@ use Dcat\Admin\Grid\Filter;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\Macroable;
 
 /**
  * @mixin Builder
  */
 class Scope implements Renderable
 {
+    use Macroable;
+
     /**
      * @var Filter
      */

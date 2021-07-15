@@ -7,9 +7,13 @@
     </button>
     <ul class="dropdown-menu" role="menu">
         @foreach($actions as $action)
-            <li class="dropdown-item">
-                {!! $action->render() !!}
-            </li>
+            @if ($action instanceof Dcat\Admin\Grid\Tools\ActionDivider)
+                <li class="dropdown-divider"></li>
+            @else
+                <li class="dropdown-item">
+                    {!! $action->render() !!}
+                </li>
+            @endif
         @endforeach
     </ul>
 </div>

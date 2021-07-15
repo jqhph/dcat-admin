@@ -722,7 +722,7 @@ HTML;
 
     protected function renderHeaderOrFooter($callbacks)
     {
-        $target = [$this->processFilter()];
+        $target = [$this->processFilter(), $this];
         $content = [];
 
         foreach ($callbacks as $callback) {

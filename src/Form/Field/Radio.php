@@ -10,6 +10,7 @@ class Radio extends Field
 {
     use CanCascadeFields;
     use CanLoadFields;
+    use Sizeable;
 
     protected $style = 'primary';
 
@@ -78,7 +79,8 @@ class Radio extends Field
         $radio
             ->inline($this->inline)
             ->check($this->value())
-            ->class($this->getElementClassString());
+            ->class($this->getElementClassString())
+            ->size($this->size);
 
         $this->addVariables([
             'radio' => $radio,

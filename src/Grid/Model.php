@@ -649,6 +649,47 @@ class Model
         return $this;
     }
 
+    public function getSortQueries()
+    {
+        return $this->findQueryByMethod('orderBy')
+            ->merge($this->findQueryByMethod('orderByDesc'))
+            ->merge($this->findQueryByMethod('latest'))
+            ->merge($this->findQueryByMethod('oldest'));
+    }
+
+    public function getSortDescMethods()
+    {
+        return ['orderByDesc', 'latest'];
+    }
+
+    /**
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param bool $fetch
+     * @param string[] $columns
+     *
+     * @return mixed
+     */
+    public function apply($query, bool $fetch = true, $columns = null)
+    {
+        $this->getQueries()->unique()->each(function ($value) use (&$query, $fetch, $columns) {
+            if (! $fetch && in_array($value['method'], ['paginate', 'simplePaginate', 'get'], true)) {
+                return;
+            }
+
+            if ($columns) {
+                if (in_array($value['method'], ['paginate', 'simplePaginate'], true)) {
+                    $value['arguments'][1] = $columns;
+                } elseif ($value['method'] === 'get') {
+                    $value['arguments'] = [$columns];
+                }
+            }
+
+            $query = call_user_func_array([$query, $value['method']], $value['arguments'] ?? []);
+        });
+
+        return $query;
+    }
+
     /**
      * Set the relationships that should be eager loaded.
      *

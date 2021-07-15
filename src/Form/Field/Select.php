@@ -12,6 +12,7 @@ class Select extends Field
 {
     use CanCascadeFields;
     use CanLoadFields;
+    use Sizeable;
 
     protected $cascadeEvent = 'change';
 
@@ -118,7 +119,7 @@ class Select extends Field
                 $resources[] = $value;
             }
 
-            return $model::find($resources)->pluck($textField, $idField)->toArray();
+            return $model::whereIn($idField, $resources)->pluck($textField, $idField)->toArray();
         };
 
         return $this;
@@ -235,6 +236,8 @@ class Select extends Field
             'configs'       => $this->config,
             'cascadeScript' => $this->getCascadeScript(),
         ]);
+
+        $this->initSize();
 
         $this->attribute('data-value', implode(',', Helper::array($this->value())));
 
