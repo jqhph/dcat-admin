@@ -139,7 +139,7 @@ class BatchActions extends AbstractTool
     public function render()
     {
         if (! $this->enableDelete) {
-            $this->actions->forget('_delete_');
+            $this->actions->forget('0');
         }
 
         if ($this->actions->isEmpty()) {
