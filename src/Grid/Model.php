@@ -484,7 +484,13 @@ class Model
     {
         $this->paginator = $paginator;
 
-        $paginator->withQueryString();
+        if ($this->simple) {
+            if (method_exists($paginator, 'withQueryString')) {
+                $paginator->withQueryString();
+            } else {
+                $paginator->appends(request()->all());
+            }
+        }
 
         $paginator->setPageName($this->getPageName());
     }
