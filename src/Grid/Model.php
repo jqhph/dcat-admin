@@ -484,6 +484,8 @@ class Model
     {
         $this->paginator = $paginator;
 
+        $paginator->withQueryString();
+
         $paginator->setPageName($this->getPageName());
     }
 
