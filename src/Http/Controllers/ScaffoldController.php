@@ -228,6 +228,8 @@ class ScaffoldController extends Controller
 
                     $sql .= " AND TABLE_NAME = '{$p}{$tb}'";
                 }
+                
+                $sql .= " ORDER BY `ORDINAL_POSITION` ASC";
 
                 $tmp = DB::connection($connectName)->select($sql);
 
