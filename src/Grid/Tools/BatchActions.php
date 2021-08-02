@@ -47,7 +47,7 @@ class BatchActions extends AbstractTool
      */
     protected function appendDefaultAction()
     {
-        $this->add($this->makeBatchDelete());
+        $this->add($this->makeBatchDelete(), '_delete_');
     }
 
     protected function makeBatchDelete()
@@ -69,6 +69,11 @@ class BatchActions extends AbstractTool
         return $this;
     }
 
+    public function divider()
+    {
+        return $this->add(new ActionDivider());
+    }
+
     /**
      * Disable delete And Hide SelectAll Checkbox.
      *
@@ -87,14 +92,19 @@ class BatchActions extends AbstractTool
      * Add a batch action.
      *
      * @param BatchAction $action
+     * @param ?string $key
      *
      * @return $this
      */
-    public function add(BatchAction $action)
+    public function add(BatchAction $action, ?string $key = null)
     {
         $action->selectorPrefix = '.grid-batch-action-'.$this->actions->count();
 
-        $this->actions->push($action);
+        if ($key) {
+            $this->actions->put($key, $action);
+        } else {
+            $this->actions->push($action);
+        }
 
         return $this;
     }
@@ -129,7 +139,7 @@ class BatchActions extends AbstractTool
     public function render()
     {
         if (! $this->enableDelete) {
-            $this->actions->shift();
+            $this->actions->forget('_delete_');
         }
 
         if ($this->actions->isEmpty()) {

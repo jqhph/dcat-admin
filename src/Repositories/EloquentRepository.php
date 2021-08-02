@@ -167,17 +167,7 @@ class EloquentRepository extends Repository implements TreeRepository
             $query->with($this->relations);
         }
 
-        $model->getQueries()->unique()->each(function ($value) use (&$query) {
-            if ($value['method'] === 'paginate' || $value['method'] === 'simplePaginate') {
-                $value['arguments'][1] = $this->getGridColumns();
-            } elseif ($value['method'] === 'get') {
-                $value['arguments'] = [$this->getGridColumns()];
-            }
-
-            $query = call_user_func_array([$query, $value['method']], $value['arguments'] ?? []);
-        });
-
-        return $query;
+        return $model->apply($query, true, $this->getGridColumns());
     }
 
     /**
@@ -192,13 +182,13 @@ class EloquentRepository extends Repository implements TreeRepository
         [$column, $type, $cast] = $model->getSort();
 
         if (empty($column) || empty($type)) {
-            $orders = $model->findQueryByMethod('orderBy')->merge($model->findQueryByMethod('orderByDesc'));
+            $orders = $model->getSortQueries();
 
             $model->resetOrderBy();
 
             $orders->each(function ($orderBy) use ($model) {
                 $column = $orderBy['arguments'][0];
-                $type = $orderBy['method'] === 'orderByDesc' ? 'desc' : ($orderBy['arguments'][1] ?? 'asc');
+                $type = in_array($orderBy['method'], $model->getSortDescMethods(), true) ? 'desc' : ($orderBy['arguments'][1] ?? 'asc');
                 $cast = null;
 
                 $this->addOrderBy($model, $column, $type, $cast);

@@ -301,7 +301,8 @@
 
 .web-uploader .filelist li img {
   max-width: 95%;
-  height: 120px
+  height: 120px;
+  object-fit: cover;
 }
 
 .web-uploader .filelist li p.error {
