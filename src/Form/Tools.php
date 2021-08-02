@@ -1,34 +1,25 @@
 <?php
 
-namespace Dcat\Admin\Show;
+namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Form;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 class Tools implements Renderable
 {
     /**
-     * The panel that holds this tool.
-     *
-     * @var Panel
+     * @var Builder
      */
-    protected $panel;
+    protected $form;
 
     /**
-     * @var string
-     */
-    protected $resource;
-
-    /**
-     * Default tools.
+     * Collection of tools.
      *
      * @var array
      */
-    protected $tools = ['delete', 'edit', 'list'];
+    protected $tools = ['delete' => true, 'view' => true, 'list' => true];
 
     /**
      * Tools should be appends to default tools.
@@ -45,45 +36,19 @@ class Tools implements Renderable
     protected $prepends;
 
     /**
-     * @var bool
-     */
-    protected $showList = true;
-
-    /**
-     * @var bool
-     */
-    protected $showDelete = true;
-
-    /**
-     * @var bool
-     */
-    protected $showEdit = true;
-
-    /**
-     * @var bool
-     */
-    protected $showQuickEdit = false;
-
-    /**
-     * @var array
-     */
-    protected $dialogFormDimensions = ['700px', '670px'];
-
-    /**
      * 全局curd约束条件
      * @var array
      */
     protected $constraints = [];
 
     /**
-     * Tools constructor.
+     * Create a new Tools instance.
      *
-     * @param Panel $panel
+     * @param Builder $builder
      */
-    public function __construct(Panel $panel)
+    public function __construct(Builder $builder)
     {
-        $this->panel = $panel;
-
+        $this->form = $builder;
         $this->appends = new Collection();
         $this->prepends = new Collection();
     }
@@ -91,7 +56,7 @@ class Tools implements Renderable
     /**
      * Append a tools.
      *
-     * @param string|\Closure|AbstractTool|Renderable|Htmlable $tool
+     * @param string|\Closure|Renderable|Htmlable|AbstractTool $tool
      *
      * @return $this
      */
@@ -107,7 +72,7 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param string|\Closure|AbstractTool|Renderable|Htmlable $tool
+     * @param string|\Closure|Renderable|Htmlable|AbstractTool $tool
      *
      * @return $this
      */
@@ -121,29 +86,15 @@ class Tools implements Renderable
     }
 
     /**
-     * @param $tool
+     * @param mixed $tool
      *
      * @return void
      */
     protected function prepareTool($tool)
     {
         if ($tool instanceof AbstractTool) {
-            $tool->setParent($this->panel->parent());
+            $tool->setForm($this->form->form());
         }
-    }
-
-    /**
-     * Get resource path.
-     *
-     * @return string
-     */
-    public function resource()
-    {
-        if (is_null($this->resource)) {
-            $this->resource = $this->panel->parent()->resource();
-        }
-
-        return $this->resource;
     }
 
     /**
@@ -153,7 +104,7 @@ class Tools implements Renderable
      */
     public function disableList(bool $disable = true)
     {
-        $this->showList = ! $disable;
+        $this->tools['list'] = ! $disable;
 
         return $this;
     }
@@ -165,48 +116,19 @@ class Tools implements Renderable
      */
     public function disableDelete(bool $disable = true)
     {
-        $this->showDelete = ! $disable;
+        $this->tools['delete'] = ! $disable;
 
         return $this;
     }
 
     /**
-     * Disable `edit` tool.
+     * Disable `view` tool.
      *
      * @return $this
      */
-    public function disableEdit(bool $disable = true)
+    public function disableView(bool $disable = true)
     {
-        $this->showEdit = ! $disable;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $disable
-     *
-     * @return $this
-     */
-    public function disableQuickEdit(bool $disable = true)
-    {
-        $this->showQuickEdit = ! $disable;
-
-        return $this;
-    }
-
-    /**
-     * @param string $width
-     * @param string $height
-     *
-     * @return $this
-     */
-    public function showQuickEdit(?string $width = null, ?string $height = null)
-    {
-        $this->showQuickEdit = true;
-        $this->showEdit = false;
-
-        $width && ($this->dialogFormDimensions[0] = $width);
-        $height && ($this->dialogFormDimensions[1] = $height);
+        $this->tools['view'] = ! $disable;
 
         return $this;
     }
@@ -240,14 +162,11 @@ class Tools implements Renderable
      */
     protected function getListPath()
     {
-        $url = $this->resource();
-
         $queryString = '';
         if ($this->constraints) {
             $queryString = http_build_query($this->constraints);
         }
-
-        return (url()->isValidUrl($url) ? $url : '/'.trim($url, '/')).($queryString ? ('?'.$queryString) : '');
+        return $this->form->resource().($queryString ? ('?'.$queryString) : '');
     }
 
     /**
@@ -255,17 +174,9 @@ class Tools implements Renderable
      *
      * @return string
      */
-    protected function getEditPath()
+    protected function getDeletePath()
     {
-        $url = $this->resource();
-        $key = $this->panel->parent()->getKey();
-
-        $queryString = '';
-        if ($this->constraints) {
-            $queryString = http_build_query($this->constraints);
-        }
-
-        return ((url()->isValidUrl($url) ? $url : '/'.trim($url, '/')).'/'.$key.'/edit').($queryString ? ('?'.$queryString) : '');
+        return $this->getViewPath();
     }
 
     /**
@@ -273,81 +184,60 @@ class Tools implements Renderable
      *
      * @return string
      */
-    protected function getDeletePath()
+    protected function getViewPath()
     {
-        $url = $this->resource();
-        $key = $this->panel->parent()->getKey();
-
         $queryString = '';
         if ($this->constraints) {
             $queryString = http_build_query($this->constraints);
         }
+        if ($key = $this->form->getResourceId()) {
+            return $this->form->resource().'/'.$key.($queryString ? ('?'.$queryString) : '');
+        }
 
-        return ((url()->isValidUrl($url) ? $url : '/'.trim($url, '/')).'/'.$key).($queryString ? ('?'.$queryString) : '');
+        return $this->form->resource().($queryString ? ('?'.$queryString) : '');
     }
 
     /**
-     * Render `list` tool.
+     * Get parent form of tool.
+     *
+     * @return Builder
+     */
+    public function form()
+    {
+        return $this->form;
+    }
+
+    /**
+     * Render list button.
      *
      * @return string
      */
     protected function renderList()
     {
-        if (! $this->showList) {
-            return;
-        }
+        $text = trans('admin.list');
 
-        $list = trans('admin.list');
-
-        return <<<HTML
-<div class="btn-group pull-right btn-mini" style="margin-right: 5px">
-    <a href="{$this->getListPath()}" class="btn btn-sm btn-primary ">
-        <i class="feather icon-list"></i><span class="d-none d-sm-inline"> {$list}</span>
-    </a>
+        return <<<EOT
+<div class="btn-group pull-right" style="margin-right: 5px">
+    <a href="{$this->getListPath()}" class="btn btn-sm btn-primary "><i class="feather icon-list"></i><span class="d-none d-sm-inline">&nbsp;$text</span></a>
 </div>
-HTML;
+EOT;
     }
 
     /**
-     * Render `edit` tool.
+     * Render list button.
      *
      * @return string
      */
-    protected function renderEdit()
+    protected function renderView()
     {
-        if (! $this->showQuickEdit && ! $this->showEdit) {
-            return;
-        }
-
-        $edit = trans('admin.edit');
-        $url = $this->getEditPath();
-
-        $quickBtn = $btn = '';
-
-        if ($this->showEdit) {
-            $btn = <<<EOF
-<a href="{$url}" class="btn btn-sm btn-primary">
-        <i class="feather icon-edit-1"></i><span class="d-none d-sm-inline"> {$edit}</span>
-    </a>
-EOF;
-        }
-
-        if ($this->showQuickEdit) {
-            $id = 'show-edit-'.Str::random(8);
-            [$width, $height] = $this->dialogFormDimensions;
-
-            Form::dialog($edit)
-                ->click(".$id")
-                ->dimensions($width, $height)
-                ->success('Dcat.reload()');
-
-            $text = $this->showEdit ? '' : "<span class='d-none d-sm-inline'> &nbsp; $edit</span>";
-
-            $quickBtn = "<button data-url='$url' class='btn btn-sm btn-primary {$id}'><i class=' fa fa-clone'></i>$text</button>";
-        }
+        $view = trans('admin.view');
 
         return <<<HTML
-<div class="btn-group pull-right btn-mini" style="margin-right: 5px">{$btn}{$quickBtn}</div>
+<div class="btn-group pull-right" style="margin-right: 5px">
+    <a href="{$this->getViewPath()}" class="btn btn-sm btn-primary">
+        <i class="feather icon-eye"></i><span class="d-none d-sm-inline"> {$view}</span>
+    </a>
+</div>
 HTML;
     }
 
@@ -358,17 +248,13 @@ HTML;
      */
     protected function renderDelete()
     {
-        if (! $this->showDelete) {
-            return;
-        }
-
         $delete = trans('admin.delete');
 
         return <<<HTML
-<div class="btn-group pull-right btn-mini" style="margin-right: 5px">
-    <button class="btn btn-sm btn-white " data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
-        <i class="feather icon-trash"></i><span class="d-none d-sm-inline">  {$delete}</span>
-    </button>
+<div class="btn-group pull-right" style="margin-right: 5px">
+    <a class="btn btn-sm btn-white" data-action="delete" data-url="{$this->getDeletePath()}" data-redirect="{$this->getListPath()}">
+        <i class="feather icon-trash"></i><span class="d-none d-sm-inline"> {$delete}</span>
+    </a>
 </div>
 HTML;
     }
@@ -382,6 +268,15 @@ HTML;
      */
     protected function renderCustomTools($tools)
     {
+        if ($this->form->isCreating()) {
+            $this->disableView();
+            $this->disableDelete();
+        }
+
+        if (empty($tools)) {
+            return '';
+        }
+
         return $tools->map([Helper::class, 'render'])->implode(' ');
     }
 
@@ -394,9 +289,12 @@ HTML;
     {
         $output = $this->renderCustomTools($this->prepends);
 
-        foreach ($this->tools as $tool) {
-            $renderMethod = 'render'.ucfirst($tool);
-            $output .= $this->$renderMethod();
+        foreach ($this->tools as $tool => $enable) {
+            if ($enable) {
+                $renderMethod = 'render'.ucfirst($tool);
+
+                $output .= $this->$renderMethod();
+            }
         }
 
         return $output.$this->renderCustomTools($this->appends);
