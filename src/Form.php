@@ -948,23 +948,25 @@ class Form implements Renderable
 
         $resourcesPath = $this->isCreating() ? $this->resource(0) : $this->resource(-1);
 
+        $queryString = $this->request->getQueryString(); // url上的参数统一传递到新页面
+
         if ($this->request->get('after-save') == 1) {
             // continue editing
             if ($this->builder->isEditing()) {
                 return false;
             }
 
-            return rtrim($resourcesPath, '/')."/{$key}/edit";
+            return rtrim($resourcesPath, '/')."/{$key}/edit".($queryString ? ('?'.$queryString) : '');
         }
 
         if ($this->request->get('after-save') == 2) {
             // continue creating
-            return rtrim($resourcesPath, '/').'/create';
+            return rtrim($resourcesPath, '/').'/create'.($queryString ? ('?'.$queryString) : '');
         }
 
         if ($this->request->get('after-save') == 3) {
             // view resource
-            return rtrim($resourcesPath, '/')."/{$key}";
+            return rtrim($resourcesPath, '/')."/{$key}".($queryString ? ('?'.$queryString) : '');
         }
 
         return $this->request->get(Builder::PREVIOUS_URL_KEY) ?: $this->getCurrentUrl($resourcesPath);

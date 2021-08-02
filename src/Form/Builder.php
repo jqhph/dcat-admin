@@ -137,6 +137,12 @@ class Builder
     public $confirm = [];
 
     /**
+     * 全局约束条件
+     * @var array
+     */
+    protected $constraints = [];
+
+    /**
      * Builder constructor.
      *
      * @param Form $form
@@ -338,6 +344,28 @@ class Builder
     }
 
     /**
+     * Get constraints.
+     *
+     * @return array|bool
+     */
+    public function getConstraints()
+    {
+        return $this->constraints;
+    }
+
+    /**
+     * @param array $constraints
+     *
+     * @return $this
+     */
+    public function setConstraints(array $constraints)
+    {
+        $this->constraints = $constraints;
+
+        return $this;
+    }
+
+    /**
      * Get or set action for form.
      *
      * @return string|void
@@ -354,12 +382,17 @@ class Builder
             return $this->action;
         }
 
+        $queryString = '';
+        if ($this->constraints) {
+            $queryString = http_build_query($this->constraints);
+        }
+
         if ($this->isMode(static::MODE_EDIT)) {
-            return $this->form->resource().'/'.$this->id;
+            return $this->form->resource().'/'.$this->id.($queryString ? ('?'.$queryString) : '');
         }
 
         if ($this->isMode(static::MODE_CREATE)) {
-            return $this->form->resource(-1);
+            return $this->form->resource(-1).($queryString ? ('?'.$queryString) : '');
         }
 
         return '';

@@ -70,6 +70,12 @@ class Tools implements Renderable
     protected $dialogFormDimensions = ['700px', '670px'];
 
     /**
+     * 全局curd约束条件
+     * @var array
+     */
+    protected $constraints = [];
+
+    /**
      * Tools constructor.
      *
      * @param Panel $panel
@@ -206,6 +212,28 @@ class Tools implements Renderable
     }
 
     /**
+     * Get constraints.
+     *
+     * @return array|bool
+     */
+    public function getConstraints()
+    {
+        return $this->constraints;
+    }
+
+    /**
+     * @param array $constraints
+     *
+     * @return $this
+     */
+    public function setConstraints(array $constraints)
+    {
+        $this->constraints = $constraints;
+
+        return $this;
+    }
+
+    /**
      * Get request path for resource list.
      *
      * @return string
@@ -214,7 +242,12 @@ class Tools implements Renderable
     {
         $url = $this->resource();
 
-        return url()->isValidUrl($url) ? $url : '/'.trim($url, '/');
+        $queryString = '';
+        if ($this->constraints) {
+            $queryString = http_build_query($this->constraints);
+        }
+
+        return (url()->isValidUrl($url) ? $url : '/'.trim($url, '/')).($queryString ? ('?'.$queryString) : '');
     }
 
     /**
@@ -224,9 +257,15 @@ class Tools implements Renderable
      */
     protected function getEditPath()
     {
+        $url = $this->resource();
         $key = $this->panel->parent()->getKey();
 
-        return $this->getListPath().'/'.$key.'/edit';
+        $queryString = '';
+        if ($this->constraints) {
+            $queryString = http_build_query($this->constraints);
+        }
+
+        return ((url()->isValidUrl($url) ? $url : '/'.trim($url, '/')).'/'.$key.'/edit').($queryString ? ('?'.$queryString) : '');
     }
 
     /**
@@ -236,9 +275,15 @@ class Tools implements Renderable
      */
     protected function getDeletePath()
     {
+        $url = $this->resource();
         $key = $this->panel->parent()->getKey();
 
-        return $this->getListPath().'/'.$key;
+        $queryString = '';
+        if ($this->constraints) {
+            $queryString = http_build_query($this->constraints);
+        }
+
+        return ((url()->isValidUrl($url) ? $url : '/'.trim($url, '/')).'/'.$key).($queryString ? ('?'.$queryString) : '');
     }
 
     /**
