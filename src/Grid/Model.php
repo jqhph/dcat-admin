@@ -484,7 +484,13 @@ class Model
     {
         $this->paginator = $paginator;
 
-        $paginator->withQueryString();
+        if ($this->simple) {
+            if (method_exists($paginator, 'withQueryString')) {
+                $paginator->withQueryString();
+            } else {
+                $paginator->appends(request()->all());
+            }
+        }
 
         $paginator->setPageName($this->getPageName());
     }
@@ -665,13 +671,13 @@ class Model
     }
 
     /**
-     * @param \Illuminate\Database\Query\Builder $query
+     * @param Builder $query
      * @param bool $fetch
      * @param string[] $columns
      *
-     * @return mixed
+     * @return Builder|Paginator|Collection
      */
-    public function apply($query, bool $fetch = true, $columns = null)
+    public function apply($query, bool $fetch = false, $columns = null)
     {
         $this->getQueries()->unique()->each(function ($value) use (&$query, $fetch, $columns) {
             if (! $fetch && in_array($value['method'], ['paginate', 'simplePaginate', 'get'], true)) {
