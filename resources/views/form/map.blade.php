@@ -211,13 +211,16 @@
     @if($type === 'amap')
     function initAmap(){
         var map = new AMap.Map(container[0], {
-            resizeEnable: true
+            resizeEnable: true,
+            center: lng.val() && lat.val() ? [lng.val(), lat.val()] : null,
+            zoom: 14
         });
         var marker = new AMap.Marker({
             position: new AMap.LngLat(lng.val(), lat.val()),
             draggable: true,
             map:map,
-            icon:'//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png'
+            icon:'//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png',
+            zoom:15
         });
         if (!lng.val() || !lat.val()){
             var geolocation = new AMap.Geolocation({

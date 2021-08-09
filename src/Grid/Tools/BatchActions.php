@@ -101,9 +101,9 @@ class BatchActions extends AbstractTool
         $action->selectorPrefix = '.grid-batch-action-'.$this->actions->count();
 
         if ($key) {
-            $this->actions->push($action);
-        } else {
             $this->actions->put($key, $action);
+        } else {
+            $this->actions->push($action);
         }
 
         return $this;

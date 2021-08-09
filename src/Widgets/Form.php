@@ -71,7 +71,7 @@ use Illuminate\Validation\Validator;
  * @method Field\MultipleFile        multipleFile($column, $label = '')
  * @method Field\MultipleImage       multipleImage($column, $label = '')
  * @method Field\Tree                tree($column, $label = '')
- * @method Field\Table               table($column, $callback)
+ * @method Field\Table               table($column, $labelOrCallback, $callback = null)
  * @method Field\ListField           list($column, $label = '')
  * @method Field\Timezone            timezone($column, $label = '')
  * @method Field\KeyValue            keyValue($column, $label = '')

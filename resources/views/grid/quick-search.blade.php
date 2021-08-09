@@ -1,6 +1,6 @@
 <style>::-ms-clear,::-ms-reveal{display: none;}</style>
 
-<form action="{!! $action !!}" class="input-no-border quick-search-form d-md-inline-block" style="display:none;margin-right: 16px">
+<form pjax-container action="{!! $action !!}" class="input-no-border quick-search-form d-md-inline-block" style="display:none;margin-right: 16px">
     <div class="table-filter">
         <label style="width: {{ $width }}rem">
             <input

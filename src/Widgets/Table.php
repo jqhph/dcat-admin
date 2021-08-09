@@ -83,7 +83,7 @@ class Table extends Widget
      */
     public function setRows($rows = [])
     {
-        if ($rows && ! Arr::isAssoc(Helper::array($rows))) {
+        if ($rows && ! Arr::isAssoc(Helper::array($rows, false))) {
             $this->rows = $rows;
 
             return $this;

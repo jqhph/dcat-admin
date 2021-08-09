@@ -153,7 +153,7 @@ class Helper
             $element = '';
 
             if ($value !== null) {
-                $element = $key.'="'.htmlentities($value, ENT_QUOTES, 'UTF-8').'"';
+                $element = $key.'="'.htmlentities($value, ENT_QUOTES, 'UTF-8').'" ';
             }
 
             $html .= $element;
