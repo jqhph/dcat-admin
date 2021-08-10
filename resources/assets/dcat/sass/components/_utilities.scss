@@ -195,6 +195,11 @@ button:focus{
 
 .overflow-x-auto {
   overflow-x: auto!important;
+
+  .table {
+    width: max-content;
+    min-width: 100%;
+  }
 }
 .overflow-y-auto {
   overflow-y: auto!important;

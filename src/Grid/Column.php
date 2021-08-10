@@ -16,7 +16,9 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
- * @method $this editable(bool $refresh = false)
+ * @method $this input(bool|array $options = [])
+ * @method $this textarea(bool|array $options = [])
+ * @method $this editable(bool|array $options = [])
  * @method $this switch(string $color = '', $refresh = false)
  * @method $this switchGroup($columns = [], string $color = '', $refresh = false)
  * @method $this image($server = '', int $width = 200, int $height = 200)
@@ -90,7 +92,9 @@ class Column
         'copyable'         => Displayers\Copyable::class,
         'orderable'        => Displayers\Orderable::class,
         'limit'            => Displayers\Limit::class,
-        'editable'         => Displayers\Editable::class,
+        'editable'         => Displayers\Input::class,
+        'input'            => Displayers\Input::class,
+        'textarea'         => Displayers\Textarea::class,
     ];
 
     /**
