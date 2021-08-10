@@ -1,0 +1,147 @@
+<span class="ie-wrap">
+    <a
+        href="javascript:void(0);"
+        class="{{ $class }}"
+        data-editinline="popover"
+        data-temp="grid-editinline-{{ $type }}-{{ $name }}"
+        data-value="{{ $value }}"
+        data-original="{{ $value }}"
+        data-key="{{ $key }}"
+        data-name="{{ $name }}"
+        data-url="{!! $url !!}"
+        data-refresh="{{ $refresh }}"
+    >
+        <span class="ie-display">{{ $display }}</span>
+
+        <i class="feather icon-edit-2" style="visibility: hidden;"></i>
+    </a>
+</span>
+
+<template>
+    <template id="grid-editinline-{{ $type }}-{{ $name }}">
+        <div class="ie-content ie-content-{{ $name }}" data-type="{{ $type }}">
+            <div class="ie-container">
+                @yield('field')
+                <div class="error"></div>
+            </div>
+            <div class="ie-action">
+                <button class="btn btn-primary btn-sm ie-submit">{{ __('admin.submit') }}</button>
+                <button class="btn btn-white btn-sm ie-cancel">{{ __('admin.cancel') }}</button>
+            </div>
+        </div>
+    </template>
+</template>
+
+<style>
+    .ie-wrap>a {
+        padding: 3px;
+        border-radius: 3px;
+        color:@primary;
+    }
+
+    table tr:hover .ie-wrap>a>i {
+        visibility: visible !important;
+    }
+
+    .ie-action button {
+        margin: 10px 0 10px 10px;
+        float: right;
+    }
+</style>
+
+<script>
+    function hide() {
+        $('[data-editinline="popover"]').popover('hide');
+    }
+
+    $('.{{ $class }}').popover({
+        html: true,
+        container: 'body',
+        trigger: 'manual',
+        sanitize: false,
+        placement: function (context, source) {
+            var position = $(source).position();
+            if (position.left < 100) return "right";
+            if (position.top < 110) return "bottom";
+            if ($(window).height() - $(source).offset().top < 370) {
+                return 'top';
+            }
+            return "bottom";
+        },
+        content: function () {
+            var $trigger = $(this);
+            var $template = $($('template#'+$(this).data('temp')).html());
+
+            @yield('popover-content')
+
+            return $template.prop("outerHTML");
+        }
+    }).on('shown.bs.popover', function (e) {
+
+        var $popover = $($(this).data('bs.popover').tip).find('.ie-content');
+        var $display = $(this).parents('.ie-wrap').find('.ie-display');
+        var $trigger = $(this);
+
+        $popover.data('display', $display);
+        $popover.data('trigger', $trigger);
+
+        @yield('popover-shown')
+
+    }).click(function () {
+        hide();
+        $(this).popover('toggle');
+    });
+</script>
+
+<script>
+    function hide() {
+        $('[data-editinline="popover"]').popover('hide');
+    }
+
+    $(document).off('click', '.ie-content .ie-cancel').on('click', '.ie-content .ie-cancel', hide)
+
+    $(document).off('click', '.ie-content .ie-submit').on('click', '.ie-content .ie-submit', function () {
+        var $popover = $(this).closest('.ie-content'),
+            $trigger = $popover.data('trigger'),
+            original = $trigger.data('original'),
+            refresh = $trigger.data('refresh'),
+            val,
+            label;
+
+        switch($popover.data('type')) {
+            case 'input':
+            case 'textarea':
+                val = $popover.find('.ie-input').val();
+                label = val;
+                break;
+        }
+
+        if (val == original) {
+            hide();
+            return;
+        }
+
+        var data = {};
+        data[$trigger.data('name')] = val;
+        data['_inline_edit_'] = 1;
+
+        $.put({
+            url: $trigger.data('url'),
+            data: data,
+            error:function(a,b,c) {
+                Dcat.handleAjaxError(a, b, c);
+            },
+        }).done(function (res) {
+            var data = res.data;
+            if (res.status === true) {
+                Dcat.success(data.message);
+                $popover.data('display').html(label);
+                $trigger.data('value', val).data('original', val);
+                hide();
+                refresh && Dcat.reload();
+            } else {
+                Dcat.error(data.message);
+            }
+        });
+    });
+</script>

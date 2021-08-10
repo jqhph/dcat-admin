@@ -23,7 +23,7 @@ class UserController extends AdminController
         return Grid::make(Administrator::with(['roles']), function (Grid $grid) {
             $grid->column('id', 'ID')->sortable();
             $grid->column('username');
-            $grid->column('name');
+            $grid->column('name')->textarea();
 
             if (config('admin.permission.enable')) {
                 $grid->column('roles')->pluck('name')->label('primary', 3);
