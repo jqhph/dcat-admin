@@ -2,8 +2,6 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Dcat\Admin\Support\Helper;
-
 abstract class Editable extends AbstractDisplayer
 {
     protected $type;
