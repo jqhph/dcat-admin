@@ -10,9 +10,8 @@
 @endsection
 
 @section('popover-shown')
-    $popover.find('.ie-input').focus();
     @if(! empty($mask))
-    $popover.find('.ie-input').inputmask(@json($mask));
+    $popover.find('.ie-input').inputmask({!! admin_javascript_json($mask) !!});
     @endif
 @endsection
 </script>

@@ -11,7 +11,12 @@
         data-url="{!! $url !!}"
         data-refresh="{{ $refresh }}"
     >
-        <span class="ie-display">{{ $display }}</span>
+        <span class="ie-display">
+            {{ $display }}
+            @if(! $display)
+                <i class="feather icon-edit-2"></i>
+            @endif
+        </span>
     </a>
 </span>
 
@@ -100,6 +105,7 @@
     $(document).off('click', '.ie-content .ie-submit').on('click', '.ie-content .ie-submit', function () {
         var $popover = $(this).closest('.ie-content'),
             $trigger = $popover.data('trigger'),
+            name = $trigger.data('name'),
             original = $trigger.data('original'),
             refresh = $trigger.data('refresh'),
             val,
@@ -111,6 +117,19 @@
                 val = $popover.find('.ie-input').val();
                 label = val;
                 break;
+            case 'checkbox':
+                val = [];
+                label = [];
+                $popover.find('.ie-input:checked').each(function(){
+                    val.push($(this).val());
+                    label.push($(this).parent().text());
+                });
+                label = label.join(';');
+                break;
+            case 'radio':
+                val = $popover.find('.ie-input:checked').val();
+                label = $popover.find('.ie-input:checked').parent().text();
+                break;
         }
 
         if (val == original) {
@@ -121,7 +140,15 @@
         Dcat.NP.start();
 
         var data = {};
-        data[$trigger.data('name')] = val;
+
+        if (name.indexOf('.') === -1) {
+            data[name] = val;
+        } else {
+            name = name.split('.');
+
+            data[name[0]] = {};
+            data[name[0]][name[1]] = val;
+        }
         data['_inline_edit_'] = 1;
 
         $.put({
@@ -135,7 +162,7 @@
             var data = res.data;
             if (res.status === true) {
                 Dcat.success(data.message);
-                $popover.data('display').html(label);
+                $popover.data('display').html(label || '<i class="feather icon-edit-2"></i>');
                 $trigger.data('value', val).data('original', val);
                 hide();
                 refresh && Dcat.reload();

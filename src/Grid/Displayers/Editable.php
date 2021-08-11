@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
 
 abstract class Editable extends AbstractDisplayer
@@ -37,12 +36,27 @@ abstract class Editable extends AbstractDisplayer
         return [
             'key'     => $this->getKey(),
             'class'   => $this->getSelector(),
+            'name'    => $this->getName(),
             'type'    => $this->type,
-            'display' => Helper::render($this->value),
-            'value'   => $this->column->getOriginal(),
-            'name'    => $this->column->getName(),
+            'display' => $this->getValue(),
+            'value'   => $this->getOriginal(),
             'url'     => $this->getUrl(),
         ];
+    }
+
+    protected function getName()
+    {
+        return $this->column->getName();
+    }
+
+    protected function getValue()
+    {
+        return $this->value;
+    }
+
+    protected function getOriginal()
+    {
+        return $this->column->getOriginal();
     }
 
     protected function getSelector()

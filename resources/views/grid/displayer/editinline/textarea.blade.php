@@ -8,10 +8,4 @@
 @section('popover-content')
     $template.find('textarea').text($trigger.data('value'));
 @endsection
-
-@section('popover-shown')
-    $popover.find('.ie-input').focus();
-@endsection
 </script>
-
-

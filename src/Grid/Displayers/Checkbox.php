@@ -2,32 +2,42 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Support\Arr;
 
-class Checkbox extends AbstractDisplayer
+class Checkbox extends Editable
 {
+    protected $type = 'checkbox';
+
+    protected $view = 'admin::grid.displayer.editinline.checkbox';
+
     public function display($options = [], $refresh = false)
     {
-        if ($options instanceof \Closure) {
-            $options = $options->call($this, $this->row);
-        }
+        $options['options'] = $options;
+        $options['refresh'] = $refresh;
+        $options['checkbox'] = $this->renderCheckbox($options['options']);
 
-        $this->value = Helper::array($this->value);
-
-        return Admin::view('admin::grid.displayer.checkbox', [
-            'options'  => $options,
-            'key'      => $this->getKey(),
-            'column'   => $this->column->getName(),
-            'value'    => $this->value,
-            'class'    => $this->getElementClass(),
-            'resource' => $this->resource(),
-            'refresh'  => $refresh,
-        ]);
+        return parent::display($options);
     }
 
-    protected function getElementClass()
+    protected function renderCheckbox($options)
     {
-        return 'grid-checkbox-'.$this->column->getName();
+        $checkbox = \Dcat\Admin\Widgets\Checkbox::make($this->getName().'[]');
+        $checkbox->options($options);
+        $checkbox->class('ie-input');
+
+        return $checkbox;
+    }
+
+    protected function getValue()
+    {
+        return implode('; ', Arr::only($this->options['options'], Helper::array($this->value, false)));
+    }
+
+    protected function getOriginal()
+    {
+        return json_encode(array_map(function ($value) {
+            return (string) $value;
+        }, Helper::array($this->column->getOriginal(), false)));
     }
 }
