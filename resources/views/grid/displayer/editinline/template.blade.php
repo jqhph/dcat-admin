@@ -12,8 +12,6 @@
         data-refresh="{{ $refresh }}"
     >
         <span class="ie-display">{{ $display }}</span>
-
-        <i class="feather icon-edit-2" style="visibility: hidden;"></i>
     </a>
 </span>
 
@@ -33,19 +31,18 @@
 </template>
 
 <style>
-    .ie-wrap>a {
-        padding: 3px;
-        border-radius: 3px;
-        color:@primary;
-    }
-
-    table tr:hover .ie-wrap>a>i {
-        visibility: visible !important;
-    }
-
     .ie-action button {
         margin: 10px 0 10px 10px;
         float: right;
+    }
+    [data-editinline="popover"] {
+        border-bottom:dashed 1px @primary;
+        color: @primary;
+        display: inline-block;
+    }
+    body.dark-mode [data-editinline="popover"] {
+        color: @primary;
+        border-color: @primary;
     }
 </style>
 
@@ -121,6 +118,8 @@
             return;
         }
 
+        Dcat.NP.start();
+
         var data = {};
         data[$trigger.data('name')] = val;
         data['_inline_edit_'] = 1;
@@ -132,6 +131,7 @@
                 Dcat.handleAjaxError(a, b, c);
             },
         }).done(function (res) {
+            Dcat.NP.done();
             var data = res.data;
             if (res.status === true) {
                 Dcat.success(data.message);
