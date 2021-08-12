@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Console;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -267,6 +268,9 @@ class IdeHelperCommand extends Command
         preg_match_all($this->patterns['form-field'], $content, $fields);
 
         $reject = $fields[1];
+        
+        Admin::callBooting();
+        Admin::callBooted();
 
         $fields = collect(Form::extensions())->reject(function ($value, $key) use (&$reject) {
             return in_array($key, $reject);
