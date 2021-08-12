@@ -268,7 +268,7 @@ class IdeHelperCommand extends Command
         preg_match_all($this->patterns['form-field'], $content, $fields);
 
         $reject = $fields[1];
-        
+
         Admin::callBooting();
         Admin::callBooted();
 
