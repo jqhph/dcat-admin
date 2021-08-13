@@ -13,5 +13,3 @@
     });
 @endsection
 </script>
-
-
