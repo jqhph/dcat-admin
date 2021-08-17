@@ -323,7 +323,7 @@ trait UploadField
     {
         $index = 1;
         $extension = $file->getClientOriginalExtension();
-        $originalName = $file->getClientOriginalName();
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $newName = $originalName.'_'.$index.'.'.$extension;
 
         while ($this->getStorage()->exists("{$this->getDirectory()}/$newName")) {
