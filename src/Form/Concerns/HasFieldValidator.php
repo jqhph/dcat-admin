@@ -384,8 +384,8 @@ trait HasFieldValidator
 
             $input = $this->sanitizeInput($input, $this->column);
 
-            $rules[$this->column] = $fieldRules;
-            $attributes[$this->column] = $this->label;
+            Arr::set($rules, $this->column, $fieldRules);
+            Arr::set($attributes, $this->column, $this->label);
         }
 
         if (is_array($this->column)) {
