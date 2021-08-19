@@ -99,7 +99,7 @@ trait HasFieldValidator
             $this->rules = $rules;
         }
 
-        $originalRules = is_array($this->rules) ? $this->rules : [];
+        $originalRules = $this->getRules();
 
         if (is_array($rules)) {
             $this->rules = array_merge($originalRules, $rules);
