@@ -133,7 +133,7 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function ensureHttps()
     {
-        if (config('admin.https') || config('admin.secure')) {
+        if (config('admin.https')) {
             \URL::forceScheme('https');
             $this->app['request']->server->set('HTTPS', true);
         }

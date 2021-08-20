@@ -278,7 +278,7 @@ if (! function_exists('admin_url')) {
             return $path;
         }
 
-        $secure = $secure ?: (config('admin.https') || config('admin.secure'));
+        $secure = $secure ?: config('admin.https');
 
         return url(admin_base_path($path), $parameters, $secure);
     }
