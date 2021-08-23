@@ -36,6 +36,12 @@ class Tools implements Renderable
     protected $prepends;
 
     /**
+     * 全局curd约束条件
+     * @var array
+     */
+    protected $constraints = [];
+
+    /**
      * Create a new Tools instance.
      *
      * @param Builder $builder
@@ -128,13 +134,39 @@ class Tools implements Renderable
     }
 
     /**
+     * Get constraints.
+     *
+     * @return array|bool
+     */
+    public function getConstraints()
+    {
+        return $this->constraints;
+    }
+
+    /**
+     * @param array $constraints
+     *
+     * @return $this
+     */
+    public function setConstraints(array $constraints)
+    {
+        $this->constraints = $constraints;
+
+        return $this;
+    }
+
+    /**
      * Get request path for resource list.
      *
      * @return string
      */
     protected function getListPath()
     {
-        return $this->form->resource();
+        $queryString = '';
+        if ($this->constraints) {
+            $queryString = http_build_query($this->constraints);
+        }
+        return $this->form->resource().($queryString ? ('?'.$queryString) : '');
     }
 
     /**
@@ -154,11 +186,15 @@ class Tools implements Renderable
      */
     protected function getViewPath()
     {
+        $queryString = '';
+        if ($this->constraints) {
+            $queryString = http_build_query($this->constraints);
+        }
         if ($key = $this->form->getResourceId()) {
-            return $this->getListPath().'/'.$key;
+            return $this->form->resource().'/'.$key.($queryString ? ('?'.$queryString) : '');
         }
 
-        return $this->getListPath();
+        return $this->form->resource().($queryString ? ('?'.$queryString) : '');
     }
 
     /**
