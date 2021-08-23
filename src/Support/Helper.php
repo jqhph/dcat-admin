@@ -820,13 +820,14 @@ class Helper
     {
         $column = explode('.', $column);
 
-        array_unshift($params, array_pop($column));
+        $relColumn = array_pop($column);
 
         // 增加对whereHasIn的支持
         $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
 
-        $model->$method(implode('.', $column), function ($relation) use ($params, $query) {
-            $relation->$query(...$params);
+        $model->$method(implode('.', $column), function ($relation) use ($relColumn, $params, $query) {
+            $table = $relation->getModel()->getTable();
+            $relation->$query("{$table}.{$relColumn}", ...$params);
         });
     }
 
