@@ -92,6 +92,8 @@ export default class Ajax {
                     } catch (e) {}
                     return;
                 }
+             case 0:
+                return;
         }
 
         Dcat.error(_msg || (xhr.status + ' ' + msg));
