@@ -2,29 +2,34 @@
 
 namespace Dcat\Admin\Grid\Displayers;
 
-use Dcat\Admin\Admin;
+use Illuminate\Support\Arr;
 
-class Radio extends AbstractDisplayer
+class Radio extends Editable
 {
+    protected $type = 'radio';
+
+    protected $view = 'admin::grid.displayer.editinline.radio';
+
     public function display($options = [], $refresh = false)
     {
-        if ($options instanceof \Closure) {
-            $options = $options->call($this, $this->row);
-        }
+        $options['options'] = $options;
+        $options['refresh'] = $refresh;
+        $options['radio'] = $this->renderRadio($options['options']);
 
-        return Admin::view('admin::grid.displayer.radio', [
-            'options'  => $options,
-            'key'      => $this->getKey(),
-            'column'   => $this->column->getName(),
-            'value'    => $this->value,
-            'class'    => $this->getElementClass(),
-            'resource' => $this->resource(),
-            'refresh'  => $refresh,
-        ]);
+        return parent::display($options);
     }
 
-    protected function getElementClass()
+    protected function renderRadio($options)
     {
-        return 'grid-radio-'.$this->column->getName();
+        $checkbox = \Dcat\Admin\Widgets\Radio::make($this->getName());
+        $checkbox->options($options);
+        $checkbox->class('ie-input');
+
+        return $checkbox;
+    }
+
+    protected function getValue()
+    {
+        return Arr::get($this->options['options'], $this->value);
     }
 }

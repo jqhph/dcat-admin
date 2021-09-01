@@ -8,7 +8,7 @@ use DOMElement;
 
 trait HasHtml
 {
-    protected static $shouldResolveTags = ['style', 'script'];
+    protected static $shouldResolveTags = ['style', 'script', 'template', 'link'];
 
     /**
      * @param string|array $content
@@ -101,6 +101,33 @@ trait HasHtml
         $method = 'resolve'.ucfirst($element->tagName);
 
         return static::{$method}($element);
+    }
+
+    /**
+     * @param DOMElement $element
+     *
+     * @return void
+     */
+    protected static function resolveLink(DOMElement $element)
+    {
+        if ($element->getAttribute('rel') == 'stylesheet' && $href = $element->getAttribute('href')) {
+            static::css(admin_asset($href));
+        }
+    }
+
+    /**
+     * @param DOMElement $element
+     *
+     * @return void
+     */
+    protected static function resolveTemplate(DOMElement $element)
+    {
+        $html = '';
+        foreach ($element->childNodes as $childNode) {
+            $html .= $element->ownerDocument->saveHTML($childNode);
+        }
+
+        $html && static::html($html);
     }
 
     /**
