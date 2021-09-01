@@ -121,7 +121,7 @@ class Admin
     public static function favicon($favicon = null)
     {
         if ($favicon === null) {
-            return static::context()->favicon;
+            return static::context()->favicon ?: config('admin.favicon');
         }
 
         static::context()->favicon = $favicon;
