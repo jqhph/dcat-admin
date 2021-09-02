@@ -947,7 +947,6 @@ class Form implements Renderable
         }
 
         $resourcesPath = $this->isCreating() ? $this->resource(0) : $this->resource(-1);
-
         $queryString = $this->request->getQueryString(); // url上的参数统一传递到新页面
 
         if ($this->request->get('after-save') == 1) {
