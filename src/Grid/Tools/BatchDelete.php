@@ -19,7 +19,7 @@ class BatchDelete extends BatchAction
 <a  data-name="{$this->parent->getName()}" 
     data-action="batch-delete" 
     data-redirect="{$redirect}"
-    data-url="{$this->resource()}"><i class="feather icon-trash"></i> {$this->title}</a>
+    data-url="{$this->parent->urlWithConstraints($this->resource())}"><i class="feather icon-trash"></i> {$this->title}</a>
 HTML;
     }
 }
