@@ -34,6 +34,6 @@ class SwitchDisplay extends AbstractDisplayer
 
     protected function url()
     {
-        return $this->resource().'/'.$this->getKey();
+        return $this->grid->urlWithConstraints($this->resource().'/'.$this->getKey());
     }
 }
