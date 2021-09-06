@@ -33,7 +33,7 @@ EOT;
         return <<<JS
         Dcat.grid.Orderable({
             button: '.{$this->grid->getRowName()}-orderable',
-            url: $url,
+            url: '{$url}',
         });
 JS;
     }
