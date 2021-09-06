@@ -29,10 +29,11 @@ EOT;
 
     protected function script()
     {
+        $url = $this->grid->urlWithConstraints($this->resource().'/:key');
         return <<<JS
         Dcat.grid.Orderable({
             button: '.{$this->grid->getRowName()}-orderable',
-            url: '{$this->resource()}/:key',
+            url: $url,
         });
 JS;
     }
