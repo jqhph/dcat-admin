@@ -63,7 +63,7 @@ class SelectTable extends Presenter
                 return [];
             }
 
-            return $model::find($v)->pluck($text, $id);
+            return $model::query()->where($id, $v)->pluck($text, $id);
         });
     }
 
