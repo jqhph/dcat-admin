@@ -67,7 +67,7 @@ class SelectTable extends Presenter
                 return [];
             }
 
-            return $model::query()->where($id, $v)->pluck($text, $id);
+            return $model::query()->whereIn($id, $v)->pluck($text, $id);
         });
     }
 
