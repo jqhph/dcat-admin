@@ -210,13 +210,14 @@
     @endif
     @if($type === 'amap')
     function initAmap(){
+        var point = new AMap.LngLat(lng.val() || 0, lat.val() || 0)
         var map = new AMap.Map(container[0], {
             resizeEnable: true,
-            center: lng.val() && lat.val() ? [lng.val(), lat.val()] : null,
+            center: point,
             zoom: 14
         });
         var marker = new AMap.Marker({
-            position: new AMap.LngLat(lng.val(), lat.val()),
+            position: point,
             draggable: true,
             map:map,
             icon:'//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png',
@@ -230,15 +231,15 @@
             })
             geolocation.getCurrentPosition(function (status,result){
                 if (status === 'complete'){
-                    var point = new AMap.LngLat(result.position.lng, result.position.lat);
-                    map.setCenter(point);
-                    map.setZoom(15);
-                    marker.setPosition(point)
+                    point = new AMap.LngLat(result.position.lng, result.position.lat);
                     lat.val(result.position.lat);
                     lng.val(result.position.lng);
                 }
             })
         }
+        map.setCenter(point);
+        map.setZoom(15);
+        marker.setPosition(point)
         //输入提示
         var auto = new AMap.Autocomplete({
             input: "{{$searchId}}"
