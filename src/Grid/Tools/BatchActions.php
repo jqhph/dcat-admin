@@ -91,8 +91,8 @@ class BatchActions extends AbstractTool
     /**
      * Add a batch action.
      *
-     * @param BatchAction $action
-     * @param ?string $key
+     * @param  BatchAction $action
+     * @param  ?string $key
      *
      * @return $this
      */
@@ -139,7 +139,7 @@ class BatchActions extends AbstractTool
     public function render()
     {
         if (! $this->enableDelete) {
-            $this->actions->forget('0');
+            $this->actions->forget('_delete_');
         }
 
         if ($this->actions->isEmpty()) {
