@@ -323,7 +323,7 @@ trait UploadField
     {
         $index = 1;
         $extension = $file->getClientOriginalExtension();
-        $originalName = $file->getClientOriginalName();
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $newName = $originalName.'_'.$index.'.'.$extension;
 
         while ($this->getStorage()->exists("{$this->getDirectory()}/$newName")) {
@@ -341,7 +341,7 @@ trait UploadField
      */
     protected function getValidationErrors(UploadedFile $file)
     {
-        $rules = $attributes = [];
+        $data = $rules = $attributes = [];
 
         // 如果文件上传有错误，则直接返回错误信息
         if ($file->getError() !== UPLOAD_ERR_OK) {
@@ -352,11 +352,12 @@ trait UploadField
             return false;
         }
 
-        $rules[$this->column] = $fieldRules;
-        $attributes[$this->column] = $this->label;
+        Arr::set($rules, $this->column, $fieldRules);
+        Arr::set($attributes, $this->column, $this->label);
+        Arr::set($data, $this->column, $file);
 
         /* @var \Illuminate\Validation\Validator $validator */
-        $validator = Validator::make([$this->column => $file], $rules, $this->validationMessages, $attributes);
+        $validator = Validator::make($data, $rules, $this->validationMessages, $attributes);
 
         if (! $validator->passes()) {
             $errors = $validator->errors()->getMessages()[$this->column];

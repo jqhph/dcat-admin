@@ -353,7 +353,7 @@ import AddUploadedFile from './Upload/AddUploadedFile'
                 $li.find('[data-file-act="order"]').removeClass('d-none').show();
             }
             if (options.downloadable) {
-                let $download = $li.find('[data-file-act="downloadable"]');
+                let $download = $li.find('[data-file-act="download"]');
                 $download.removeClass('d-none').show();
                 $download.attr('data-id', obj.file.serverUrl);
             }

@@ -589,21 +589,25 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param mixed ...$params
+     * @param string|callable $relColumn
+     * @param  mixed  ...$params
      *
      * @return array
      */
-    protected function buildRelationQuery(...$params)
+    protected function buildRelationQuery($relColumn, ...$params)
     {
         $column = explode('.', $this->column);
 
-        $params[0] = array_pop($column);
+        $col = array_pop($column);
+
+        $relColumn = is_callable($relColumn) ? $relColumn : $col;
 
         // 增加对whereHasIn的支持
         $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
 
-        return [$method => [implode('.', $column), function ($q) use ($params) {
-            call_user_func_array([$q, $this->query], $params);
+        return [$method => [implode('.', $column), function ($q) use ($relColumn, $params) {
+            $relColumn = is_string($relColumn) ? $q->getModel()->getTable().'.'.$relColumn : $relColumn;
+            call_user_func_array([$q, $this->query], [$relColumn, $params]);
         }]];
     }
 

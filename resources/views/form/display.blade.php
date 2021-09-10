@@ -3,7 +3,7 @@
     <div class="{{$viewClass['field']}}">
         <div class="box box-solid box-default no-margin">
             <div class="box-body">
-                {!! $value !!}&nbsp;
+                <div class="{{$class}}">{!! $value !!}&nbsp;</div>
             </div>
         </div>
 

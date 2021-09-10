@@ -31,7 +31,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.1.1-beta';
+    const VERSION = '2.1.3-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -121,7 +121,7 @@ class Admin
     public static function favicon($favicon = null)
     {
         if ($favicon === null) {
-            return static::context()->favicon;
+            return static::context()->favicon ?: config('admin.favicon');
         }
 
         static::context()->favicon = $favicon;

@@ -99,7 +99,7 @@ trait HasFieldValidator
             $this->rules = $rules;
         }
 
-        $originalRules = is_array($this->rules) ? $this->rules : [];
+        $originalRules = $this->getRules();
 
         if (is_array($rules)) {
             $this->rules = array_merge($originalRules, $rules);
@@ -384,8 +384,8 @@ trait HasFieldValidator
 
             $input = $this->sanitizeInput($input, $this->column);
 
-            $rules[$this->column] = $fieldRules;
-            $attributes[$this->column] = $this->label;
+            Arr::set($rules, $this->column, $fieldRules);
+            Arr::set($attributes, $this->column, $this->label);
         }
 
         if (is_array($this->column)) {

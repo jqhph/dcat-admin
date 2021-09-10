@@ -677,6 +677,20 @@ class Grid
     }
 
     /**
+     * 显示横轴滚动条.
+     *
+     * @param bool $value
+     *
+     * @return $this
+     */
+    public function scrollbar(bool $value = true)
+    {
+        $this->options['table_scrollbar'] = $value;
+
+        return $this;
+    }
+
+    /**
      * Set grid header.
      *
      * @param Closure|string|Renderable $content
