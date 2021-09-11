@@ -210,7 +210,6 @@ class Form implements Renderable
     {
         $this->setHtmlAttribute([
             'method'         => 'POST',
-            'action'         => '',
             'class'          => 'form-horizontal',
             'accept-charset' => 'UTF-8',
             'pjax-container' => true,
@@ -837,7 +836,7 @@ HTML;
         if ($this->allowAjaxSubmit() && method_exists($this, 'handle')) {
             $addHiddenFields = function () {
                 $this->method('POST');
-                $this->action(route(admin_api_route_name('form')));
+                $this->defaultHtmlAttribute('action', route(admin_api_route_name('form')));
                 $this->hidden(static::REQUEST_NAME)->default(get_called_class());
                 $this->hidden(static::CURRENT_URL_NAME)->default($this->getCurrentUrl());
 
