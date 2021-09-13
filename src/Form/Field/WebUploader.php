@@ -32,6 +32,18 @@ trait WebUploader
     }
 
     /**
+     * @param string $mimeTypes  exp. image/*
+     *
+     * @return $this
+     */
+    public function mimeTypes(string $mimeTypes)
+    {
+        $this->options['accept']['mimeTypes'] = $mimeTypes;
+
+        return $this;
+    }
+
+    /**
      * @param bool $value
      *
      * @return $this
@@ -233,7 +245,7 @@ trait WebUploader
             'elementName'         => $this->getElementName(), // 字段name属性值
             'lang'                => trans('admin.uploader'),
             'compress'            => false,
-
+            'accept'              => [],
             'deleteData' => [
                 static::FILE_DELETE_FLAG => '',
                 'primary_key'            => $key,

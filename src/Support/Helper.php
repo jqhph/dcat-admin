@@ -426,6 +426,23 @@ class Helper
     }
 
     /**
+     * @param array $array
+     * @param mixed $value
+     */
+    public static function deleteContains(&$array, $value)
+    {
+        $value = (array) $value;
+
+        foreach ($array as $index => $item) {
+            foreach ($value as  $v) {
+                if (Str::contains($item, $v)) {
+                    unset($array[$index]);
+                }
+            }
+        }
+    }
+
+    /**
      * 颜色转亮.
      *
      * @param string $color

@@ -27,13 +27,25 @@ class WebUploader
 
     public function __construct(Request $request = null)
     {
-        $request = $request ?: request();
+        $request = $this->prepareRequest($request ?: request());
 
         $this->_id = $request->get('_id');
         $this->chunk = $request->get('chunk');
         $this->chunks = $request->get('chunks');
         $this->upload_column = $request->get('upload_column');
         $this->file = $request->file(static::FILE_NAME);
+    }
+
+    protected function prepareRequest($request)
+    {
+        $relation = $request->get('_relation');
+        if (! $relation || ! is_string($relation)) {
+            return $request;
+        }
+
+        return $request->merge([
+            '_relation' => trim($relation, ','),
+        ]);
     }
 
     /**

@@ -296,6 +296,8 @@ class NestedForm extends WidgetForm
             $this->form->builder()->pushField((clone $field)->display(false));
         }
 
+        $this->callResolvingFieldCallbacks($field);
+
         $field->setRelation([
             'relation' => $this->relationName,
             'key'      => $this->key,

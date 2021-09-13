@@ -66,6 +66,8 @@ use Illuminate\Support\Collection;
  */
 class EmbeddedForm
 {
+    use ResolveField;
+
     /**
      * @var Form
      */
@@ -286,6 +288,8 @@ class EmbeddedForm
         $field = $this->formatField($field);
 
         $this->fields->push($field);
+
+        $this->callResolvingFieldCallbacks($field);
 
         $field::requireAssets();
 

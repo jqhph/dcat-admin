@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class File extends Field implements UploadFieldInterface
 {
-    use WebUploader,
-        UploadField;
+    use WebUploader;
+    use UploadField;
 
     /**
      * @var array
@@ -214,5 +214,20 @@ class File extends Field implements UploadFieldInterface
     public function once(string $event, string $script)
     {
         return $this->on($event, $script, true);
+    }
+
+    /**
+     * @param Field $field
+     * @param string|array $fieldRules
+     *
+     * @return void
+     */
+    public static function deleteRules(Field $field, &$fieldRules)
+    {
+        if ($field instanceof self) {
+            $fieldRules = is_string($fieldRules) ? explode('|', $fieldRules) : $fieldRules;
+
+            Helper::deleteContains($fieldRules, ['image', 'file', 'dimensions', 'size', 'max', 'min']);
+        }
     }
 }

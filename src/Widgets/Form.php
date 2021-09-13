@@ -11,6 +11,7 @@ use Dcat\Admin\Form\Concerns\HasLayout;
 use Dcat\Admin\Form\Concerns\HasRows;
 use Dcat\Admin\Form\Concerns\HasTabs;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\ResolveField;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAuthorization;
 use Dcat\Admin\Traits\HasFormResponse;
@@ -92,6 +93,7 @@ class Form implements Renderable
     use HasRows;
     use HasTabs;
     use HasLayout;
+    use ResolveField;
     use HasFormResponse {
         setCurrentUrl as defaultSetCurrentUrl;
     }
@@ -193,6 +195,26 @@ class Form implements Renderable
         $this->initCurrentUrl();
 
         $this->initPayload();
+
+        $formData = [static::REQUEST_NAME => static::class];
+
+        $this->resolvingField(function ($field) use ($formData) {
+            if (! method_exists($this, 'form')) {
+                return;
+            }
+
+            if ($field instanceof Field\File) {
+                $this->setFileUploadUrl($field, $formData);
+            }
+
+            if ($field instanceof Field\Embeds || $field instanceof Field\HasMany) {
+                $field->resolvingField(function ($field) use ($formData) {
+                    if (($field instanceof Field\File)) {
+                        $this->setFileUploadUrl($field, $formData);
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -561,18 +583,19 @@ class Form implements Renderable
         $field->setForm($this);
         $field->width($this->width['field'], $this->width['label']);
 
-        $this->setFileUploadUrl($field);
+        $this->callResolvingFieldCallbacks($field);
 
         $field::requireAssets();
 
         return $this;
     }
 
-    protected function setFileUploadUrl(Field $field)
+    protected function setFileUploadUrl(Field $field, $formData)
     {
-        if ($field instanceof Field\File && method_exists($this, 'form')) {
-            $formData = [static::REQUEST_NAME => get_called_class()];
-
+        if (
+            $field instanceof Field\File
+            && method_exists($this, 'form')
+        ) {
             $field->url(route(admin_api_route_name('form.upload')));
             $field->deleteUrl(route(admin_api_route_name('form.destroy-file'), $formData));
             $field->withFormData($formData);

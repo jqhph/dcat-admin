@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\EmbeddedForm;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\ResolveField;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,8 @@ use Illuminate\Support\Str;
 
 class Embeds extends Field
 {
+    use ResolveField;
+
     /**
      * @var \Closure
      */
@@ -68,6 +71,8 @@ class Embeds extends Field
             if (! $fieldRules = $field->getRules()) {
                 continue;
             }
+
+            File::deleteRules($field, $fieldRules);
 
             $column = $field->column();
 
@@ -246,6 +251,8 @@ class Embeds extends Field
         $form = new EmbeddedForm($this->column);
 
         $form->setParent($this->form);
+
+        $form->setResolvingFieldCallbacks($this->resolvingFieldCallbacks);
 
         call_user_func($this->builder, $form);
 

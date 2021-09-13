@@ -15,6 +15,8 @@ use Illuminate\Support\Str;
  */
 class HasMany extends Field
 {
+    use Form\ResolveField;
+
     /**
      * Relation name.
      *
@@ -127,11 +129,7 @@ class HasMany extends Field
                 continue;
             }
 
-            if ($field instanceof File) {
-                $fieldRules = is_string($fieldRules) ? explode('|', $fieldRules) : $fieldRules;
-
-                Helper::deleteByValue($fieldRules, ['image', 'file']);
-            }
+            File::deleteRules($field, $fieldRules);
 
             $column = $field->column();
 
@@ -369,6 +367,8 @@ class HasMany extends Field
         $form = new Form\NestedForm($this->column, $key);
 
         $form->setForm($this->form);
+
+        $form->setResolvingFieldCallbacks($this->resolvingFieldCallbacks);
 
         call_user_func($this->builder, $form);
 

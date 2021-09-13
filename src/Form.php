@@ -11,6 +11,7 @@ use Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Form\Condition;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\NestedForm;
+use Dcat\Admin\Form\ResolveField;
 use Dcat\Admin\Http\JsonResponse;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasBuilderEvents;
@@ -91,6 +92,7 @@ class Form implements Renderable
 {
     use HasBuilderEvents;
     use HasFormResponse;
+    use ResolveField;
     use Concerns\HasEvents;
     use Concerns\HasFiles;
     use Concerns\HandleCascadeFields;
@@ -321,6 +323,8 @@ class Form implements Renderable
         $width = $this->builder->getWidth();
 
         $field->width($width['field'], $width['label']);
+
+        $this->callResolvingFieldCallbacks($field);
 
         $field::requireAssets();
 
