@@ -909,7 +909,7 @@
         },
         filter: function(c) {
             if (b.isEmpty(c)) {
-                this.iconpicker.find(".iconpicker-item").css({position: 'relative', top: 'unset', left: 'unset'});
+                this.iconpicker.find(".iconpicker-item").show();
                 return a(false);
             } else {
                 var d = [];
@@ -924,9 +924,9 @@
                     }
                     if (f !== false && e.match(f)) {
                         d.push(b);
-                        b.css({position: 'relative', top: 'unset', left: 'unset'});
+                        b.show();
                     } else {
-                        b.css({position: 'absolute', top: '-100px', left: '-100px'});
+                        b.hide();
                     }
                 });
                 return d;
