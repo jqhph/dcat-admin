@@ -14,8 +14,7 @@ class Checkbox extends Radio
     /**
      * 设置选中的的选项.
      *
-     * @param string|array $options
-     *
+     * @param  string|array  $options
      * @return $this
      */
     public function check($options)
@@ -28,8 +27,7 @@ class Checkbox extends Radio
     /**
      * 选中所有选项.
      *
-     * @param string|array $excepts
-     *
+     * @param  string|array  $excepts
      * @return $this
      */
     public function checkAll($excepts = [])

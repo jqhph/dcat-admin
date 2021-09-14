@@ -63,8 +63,7 @@ class Row implements Arrayable
     /**
      * Get column attributes.
      *
-     * @param string $column
-     *
+     * @param  string  $column
      * @return string
      */
     public function columnAttributes($column)
@@ -82,8 +81,7 @@ class Row implements Arrayable
     /**
      * Format attributes to html.
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return string
      */
     private function formatHtmlAttributes($attributes = [])
@@ -94,7 +92,7 @@ class Row implements Arrayable
     /**
      * Set attributes.
      *
-     * @param array $attributes
+     * @param  array  $attributes
      */
     public function setAttributes(array $attributes)
     {
@@ -106,7 +104,7 @@ class Row implements Arrayable
     /**
      * Set style of the row.
      *
-     * @param array|string $style
+     * @param  array|string  $style
      */
     public function style($style)
     {
@@ -134,8 +132,7 @@ class Row implements Arrayable
     /**
      * Getter.
      *
-     * @param mixed $attr
-     *
+     * @param  mixed  $attr
      * @return mixed
      */
     public function __get($attr)
@@ -146,9 +143,8 @@ class Row implements Arrayable
     /**
      * Setter.
      *
-     * @param mixed $attr
-     * @param mixed $value
-     *
+     * @param  mixed  $attr
+     * @param  mixed  $value
      * @return void
      */
     public function __set($attr, $value)
@@ -159,9 +155,8 @@ class Row implements Arrayable
     /**
      * Get or set value of column in this row.
      *
-     * @param string $name
-     * @param mixed  $value
-     *
+     * @param  string  $name
+     * @param  mixed  $value
      * @return $this|mixed
      */
     public function column($name, $value = null)
@@ -192,8 +187,7 @@ class Row implements Arrayable
     /**
      * Output column value.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed|string
      */
     protected function output($value)

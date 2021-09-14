@@ -26,7 +26,6 @@ trait CanCascadeFields
      * @param $operator
      * @param $value
      * @param $closure
-     *
      * @return $this
      */
     public function when($operator, $value, $closure = null)
@@ -54,8 +53,8 @@ trait CanCascadeFields
     }
 
     /**
-     * @param string $operator
-     * @param mixed  $value
+     * @param  string  $operator
+     * @param  mixed  $value
      */
     protected function formatValues(string $operator, &$value)
     {
@@ -71,9 +70,9 @@ trait CanCascadeFields
     }
 
     /**
-     * @param string   $operator
-     * @param mixed    $value
-     * @param \Closure $closure
+     * @param  string  $operator
+     * @param  mixed  $value
+     * @param  \Closure  $closure
      */
     protected function addDependents(string $operator, $value, \Closure $closure)
     {
@@ -87,8 +86,7 @@ trait CanCascadeFields
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return string
      */
     protected function getCascadeClass($value, string $operator)

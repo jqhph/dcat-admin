@@ -44,7 +44,7 @@ class Card extends Widget
     /**
      * 设置卡片间距.
      *
-     * @param string $padding
+     * @param  string  $padding
      */
     public function padding(string $padding)
     {
@@ -59,8 +59,7 @@ class Card extends Widget
     }
 
     /**
-     * @param string|\Closure|Renderable|LazyWidget $content
-     *
+     * @param  string|\Closure|Renderable|LazyWidget  $content
      * @return $this
      */
     public function content($content)
@@ -75,8 +74,7 @@ class Card extends Widget
     }
 
     /**
-     * @param string $content
-     *
+     * @param  string  $content
      * @return $this
      */
     public function footer($content)
@@ -87,8 +85,7 @@ class Card extends Widget
     }
 
     /**
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -99,8 +96,7 @@ class Card extends Widget
     }
 
     /**
-     * @param string|Renderable|\Closure $content
-     *
+     * @param  string|Renderable|\Closure  $content
      * @return $this
      */
     public function tool($content)

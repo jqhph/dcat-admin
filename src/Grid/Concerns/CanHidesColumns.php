@@ -25,8 +25,7 @@ trait CanHidesColumns
     /**
      * Remove column selector on grid.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this|mixed
      */
     public function disableColumnSelector(bool $disable = true)
@@ -65,8 +64,7 @@ trait CanHidesColumns
     /**
      * Setting default shown columns on grid.
      *
-     * @param array|string $columns
-     *
+     * @param  array|string  $columns
      * @return $this
      */
     public function hideColumns($columns)

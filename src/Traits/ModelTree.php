@@ -16,7 +16,7 @@ use Spatie\EloquentSortable\SortableTrait;
  * @property string $titleColumn
  * @property string $orderColumn
  * @property string $defaultParentId
- * @property array  $sortable
+ * @property array $sortable
  */
 trait ModelTree
 {
@@ -71,8 +71,7 @@ trait ModelTree
     /**
      * Set query callback to model.
      *
-     * @param \Closure|null $query
-     *
+     * @param  \Closure|null  $query
      * @return $this
      */
     public function withQuery(\Closure $query = null)
@@ -114,8 +113,7 @@ trait ModelTree
     }
 
     /**
-     * @param $this $model
-     *
+     * @param  $this  $model
      * @return $this|Builder
      */
     protected function callQueryCallbacks($model)
@@ -132,8 +130,7 @@ trait ModelTree
     /**
      * Set the order of branches in the tree.
      *
-     * @param array $order
-     *
+     * @param  array  $order
      * @return void
      */
     protected static function setBranchOrder(array $order)
@@ -148,8 +145,8 @@ trait ModelTree
     /**
      * Save tree order from a tree like array.
      *
-     * @param array $tree
-     * @param int   $parentId
+     * @param  array  $tree
+     * @param  int  $parentId
      */
     public static function saveOrder($tree = [], $parentId = 0)
     {
@@ -273,9 +270,8 @@ trait ModelTree
     /**
      * Get options for Select field in form.
      *
-     * @param \Closure|null $closure
-     * @param string        $rootText
-     *
+     * @param  \Closure|null  $closure
+     * @param  string  $rootText
      * @return array
      */
     public static function selectOptions(\Closure $closure = null, $rootText = null)
@@ -290,11 +286,10 @@ trait ModelTree
     /**
      * Build options of select field in form.
      *
-     * @param array  $nodes
-     * @param int    $parentId
-     * @param string $prefix
-     * @param string $space
-     *
+     * @param  array  $nodes
+     * @param  int  $parentId
+     * @param  string  $prefix
+     * @param  string  $space
      * @return array
      */
     protected function buildSelectOptions(array $nodes = [], $parentId = 0, $prefix = '', $space = '&nbsp;')

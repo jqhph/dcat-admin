@@ -52,7 +52,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * EloquentRepository constructor.
      *
-     * @param EloquentModel|array|string $modelOrRelations $modelOrRelations
+     * @param  EloquentModel|array|string  $modelOrRelations  $modelOrRelations
      */
     public function __construct($modelOrRelations = [])
     {
@@ -62,7 +62,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 初始化模型.
      *
-     * @param EloquentModel|Builder|array|string $modelOrRelations
+     * @param  EloquentModel|Builder|array|string  $modelOrRelations
      */
     protected function initModel($modelOrRelations)
     {
@@ -138,8 +138,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 设置关联关系.
      *
-     * @param mixed $relations
-     *
+     * @param  mixed  $relations
      * @return $this
      */
     public function setRelations($relations)
@@ -152,8 +151,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 查询Grid表格数据.
      *
-     * @param Grid\Model $model
-     *
+     * @param  Grid\Model  $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|array
      */
     public function get(Grid\Model $model)
@@ -173,8 +171,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 设置表格数据排序.
      *
-     * @param Grid\Model $model
-     *
+     * @param  Grid\Model  $model
      * @return void
      */
     protected function setSort(Grid\Model $model)
@@ -203,10 +200,10 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * @param Grid\Model $model
-     * @param string $column
-     * @param string $type
-     * @param string $cast
+     * @param  Grid\Model  $model
+     * @param  string  $column
+     * @param  string  $type
+     * @param  string  $cast
      *
      * @throws \Exception
      */
@@ -229,10 +226,9 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * @param Grid\Model $model
+     * @param  Grid\Model  $model
      * @param $column
      * @param $type
-     *
      * @param $cast
      */
     protected function setOrderBy(Grid\Model $model, $column, $type, $cast)
@@ -266,8 +262,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * @param string $column
-     *
+     * @param  string  $column
      * @return string
      */
     protected function wrapMySqlColumn($column)
@@ -290,10 +285,10 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 设置关联数据排序.
      *
-     * @param Grid\Model $model
-     * @param string $column
-     * @param string $type
-     * @param string $cast
+     * @param  Grid\Model  $model
+     * @param  string  $column
+     * @param  string  $type
+     * @param  string  $cast
      *
      * @throws \Exception
      */
@@ -318,11 +313,10 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 关联模型 join 连接查询.
      *
-     * @param Relation $relation
+     * @param  Relation  $relation
+     * @return array
      *
      * @throws \Exception
-     *
-     * @return array
      */
     protected function joinParameters(Relation $relation)
     {
@@ -354,8 +348,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 设置分页参数.
      *
-     * @param Grid\Model $model
-     *
+     * @param  Grid\Model  $model
      * @return void
      */
     protected function setPaginate(Grid\Model $model)
@@ -376,9 +369,8 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 获取分页参数.
      *
-     * @param Grid\Model $model
-     * @param array|null $paginate
-     *
+     * @param  Grid\Model  $model
+     * @param  array|null  $paginate
      * @return array
      */
     protected function resolvePerPage(Grid\Model $model, $paginate)
@@ -402,8 +394,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 查询编辑页面数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function edit(Form $form)
@@ -424,8 +415,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 查询详情页面数据.
      *
-     * @param Show $show
-     *
+     * @param  Show  $show
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function detail(Show $show)
@@ -446,8 +436,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 新增记录.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return mixed
      */
     public function store(Form $form)
@@ -480,8 +469,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 查询更新前的行数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function updating(Form $form)
@@ -492,8 +480,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 更新数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return bool
      */
     public function update(Form $form)
@@ -578,9 +565,8 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 删除数据.
      *
-     * @param Form  $form
-     * @param array $originalData
-     *
+     * @param  Form  $form
+     * @param  array  $originalData
      * @return bool
      */
     public function delete(Form $form, array $originalData)
@@ -614,8 +600,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 查询删除前的行数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array
      */
     public function deleting(Form $form)
@@ -683,8 +668,8 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 保存层级数据排序.
      *
-     * @param array $tree
-     * @param int   $parentId
+     * @param  array  $tree
+     * @param  int  $parentId
      */
     public function saveOrder($tree = [], $parentId = 0)
     {
@@ -694,8 +679,7 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 设置数据查询回调.
      *
-     * @param \Closure|null $query
-     *
+     * @param  \Closure|null  $query
      * @return $this
      */
     public function withQuery($queryCallback)
@@ -744,8 +728,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * @param array $data
-     *
+     * @param  array  $data
      * @return EloquentModel
      */
     public function createModel(array $data = [])
@@ -760,8 +743,7 @@ class EloquentRepository extends Repository implements TreeRepository
     }
 
     /**
-     * @param array $relations
-     *
+     * @param  array  $relations
      * @return $this
      */
     public static function with($relations = [])
@@ -782,9 +764,8 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 获取模型关联关系的表单数据.
      *
-     * @param EloquentModel $model
-     * @param array         $inputs
-     *
+     * @param  EloquentModel  $model
+     * @param  array  $inputs
      * @return array
      */
     protected function getRelationInputs($model, $inputs = [])
@@ -820,10 +801,10 @@ class EloquentRepository extends Repository implements TreeRepository
     /**
      * 更新关联关系数据.
      *
-     * @param Form          $form
-     * @param EloquentModel $model
-     * @param array         $relationsData
-     * @param array         $relationKeyMap
+     * @param  Form  $form
+     * @param  EloquentModel  $model
+     * @param  array  $relationsData
+     * @param  array  $relationKeyMap
      *
      * @throws \Exception
      */

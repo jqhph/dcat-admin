@@ -42,10 +42,10 @@ abstract class AbstractDisplayer
     /**
      * Create a new displayer instance.
      *
-     * @param mixed     $value
-     * @param Grid      $grid
-     * @param Column    $column
-     * @param \stdClass $row
+     * @param  mixed  $value
+     * @param  Grid  $grid
+     * @param  Column  $column
+     * @param  \stdClass  $row
      */
     public function __construct($value, Grid $grid, Column $column, $row)
     {
@@ -119,8 +119,7 @@ abstract class AbstractDisplayer
     /**
      * Get translation.
      *
-     * @param string $text
-     *
+     * @param  string  $text
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */
     protected function trans($text)

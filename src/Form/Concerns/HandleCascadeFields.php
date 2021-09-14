@@ -7,9 +7,8 @@ use Dcat\Admin\Form\Field;
 trait HandleCascadeFields
 {
     /**
-     * @param array    $dependency
-     * @param \Closure $closure
-     *
+     * @param  array  $dependency
+     * @param  \Closure  $closure
      * @return Field\CascadeGroup
      */
     public function cascadeGroup(\Closure $closure, array $dependency)

@@ -18,8 +18,7 @@ abstract class AbstractTool extends Action
     protected $style = 'btn btn-sm btn-primary';
 
     /**
-     * @param Show $show
-     *
+     * @param  Show  $show
      * @return void
      */
     public function setParent(Show $show)

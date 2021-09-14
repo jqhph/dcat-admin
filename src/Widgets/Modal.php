@@ -69,8 +69,8 @@ class Modal extends Widget
     /**
      * Modal constructor.
      *
-     * @param string|Closure|Renderable                $title
-     * @param string|Closure|Renderable|LazyRenderable $content
+     * @param  string|Closure|Renderable  $title
+     * @param  string|Closure|Renderable|LazyRenderable  $content
      */
     public function __construct($title = null, $content = null)
     {
@@ -84,8 +84,7 @@ class Modal extends Widget
     /**
      * 设置弹窗垂直居中.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function centered(bool $value = true)
@@ -98,8 +97,7 @@ class Modal extends Widget
     /**
      * 设置弹窗内容滚动.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function scrollable(bool $value = true)
@@ -112,8 +110,7 @@ class Modal extends Widget
     /**
      * 设置弹窗尺寸.
      *
-     * @param string $size
-     *
+     * @param  string  $size
      * @return $this
      */
     public function size(string $size)
@@ -156,8 +153,7 @@ class Modal extends Widget
     /**
      * 设置loading效果延迟时间.
      *
-     * @param int $delay
-     *
+     * @param  int  $delay
      * @return $this
      */
     public function delay(int $delay)
@@ -170,8 +166,7 @@ class Modal extends Widget
     /**
      * 设置按钮.
      *
-     * @param string|Closure|Renderable $button
-     *
+     * @param  string|Closure|Renderable  $button
      * @return $this
      */
     public function button($button)
@@ -184,8 +179,7 @@ class Modal extends Widget
     /**
      * 设置弹窗标题.
      *
-     * @param string|Closure|Renderable $title
-     *
+     * @param  string|Closure|Renderable  $title
      * @return $this
      */
     public function title($title)
@@ -198,8 +192,7 @@ class Modal extends Widget
     /**
      * 设置弹窗内容.
      *
-     * @param string|Closure|Renderable|LazyRenderable $content
-     *
+     * @param  string|Closure|Renderable|LazyRenderable  $content
      * @return $this
      */
     public function content($content)
@@ -224,8 +217,7 @@ class Modal extends Widget
     }
 
     /**
-     * @param string|Closure|Renderable|LazyRenderable $content
-     *
+     * @param  string|Closure|Renderable|LazyRenderable  $content
      * @return $this
      */
     public function body($content)
@@ -236,8 +228,7 @@ class Modal extends Widget
     /**
      * 设置是否返回弹窗HTML.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function join(bool $value = true)
@@ -250,8 +241,7 @@ class Modal extends Widget
     /**
      * 设置弹窗底部内容.
      *
-     * @param string|Closure|Renderable|LazyRenderable $footer
-     *
+     * @param  string|Closure|Renderable|LazyRenderable  $footer
      * @return $this
      */
     public function footer($footer)
@@ -264,9 +254,8 @@ class Modal extends Widget
     /**
      * 监听弹窗事件.
      *
-     * @param string $event
-     * @param string $script
-     *
+     * @param  string  $event
+     * @param  string  $script
      * @return $this
      */
     public function on(string $event, string $script)
@@ -279,8 +268,7 @@ class Modal extends Widget
     /**
      * 监听弹窗显示事件.
      *
-     * @param string $script
-     *
+     * @param  string  $script
      * @return $this
      */
     public function onShow(string $script)
@@ -291,8 +279,7 @@ class Modal extends Widget
     /**
      * 监听弹窗已显示事件.
      *
-     * @param string $script
-     *
+     * @param  string  $script
      * @return $this
      */
     public function onShown(string $script)
@@ -303,8 +290,7 @@ class Modal extends Widget
     /**
      * 监听弹窗隐藏事件.
      *
-     * @param string $script
-     *
+     * @param  string  $script
      * @return $this
      */
     public function onHide(string $script)
@@ -315,8 +301,7 @@ class Modal extends Widget
     /**
      * 监听弹窗已隐藏事件.
      *
-     * @param string $script
-     *
+     * @param  string  $script
      * @return $this
      */
     public function onHidden(string $script)

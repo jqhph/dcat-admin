@@ -25,7 +25,7 @@ class Layout
     /**
      * Layout constructor.
      *
-     * @param Filter $filter
+     * @param  Filter  $filter
      */
     public function __construct(Filter $filter)
     {
@@ -39,7 +39,7 @@ class Layout
     /**
      * Add a filter to layout column.
      *
-     * @param Filter\AbstractFilter $filter
+     * @param  Filter\AbstractFilter  $filter
      */
     public function addFilter(Filter\AbstractFilter $filter)
     {
@@ -49,8 +49,8 @@ class Layout
     /**
      * Add a new column in layout.
      *
-     * @param int      $width
-     * @param \Closure $closure
+     * @param  int  $width
+     * @param  \Closure  $closure
      */
     public function column($width, \Closure $closure)
     {

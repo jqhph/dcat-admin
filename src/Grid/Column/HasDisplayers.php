@@ -20,9 +20,8 @@ trait HasDisplayers
     /**
      * Display using display abstract.
      *
-     * @param string $abstract
-     * @param array  $arguments
-     *
+     * @param  string  $abstract
+     * @param  array  $arguments
      * @return Column
      */
     public function displayUsing($abstract, $arguments = [])
@@ -42,9 +41,8 @@ trait HasDisplayers
     /**
      * Display column using array value map.
      *
-     * @param array $values
-     * @param null  $default
-     *
+     * @param  array  $values
+     * @param  null  $default
      * @return $this
      */
     public function using(array $values, $default = null)
@@ -59,8 +57,7 @@ trait HasDisplayers
     }
 
     /**
-     * @param string $color
-     *
+     * @param  string  $color
      * @return $this
      */
     public function bold($color = null)
@@ -79,8 +76,7 @@ trait HasDisplayers
     /**
      * Display column with "long2ip".
      *
-     * @param null $default
-     *
+     * @param  null  $default
      * @return $this
      */
     public function long2ip($default = null)
@@ -97,8 +93,7 @@ trait HasDisplayers
     /**
      * Render this column with the given view.
      *
-     * @param string $view
-     *
+     * @param  string  $view
      * @return $this
      */
     public function view($view)
@@ -113,8 +108,7 @@ trait HasDisplayers
     }
 
     /**
-     * @param string $val
-     *
+     * @param  string  $val
      * @return $this
      */
     public function prepend($val)
@@ -137,8 +131,7 @@ trait HasDisplayers
     }
 
     /**
-     * @param string $val
-     *
+     * @param  string  $val
      * @return $this
      */
     public function append($val)
@@ -163,8 +156,7 @@ trait HasDisplayers
     /**
      * Split a string by string.
      *
-     * @param string $d
-     *
+     * @param  string  $d
      * @return $this
      */
     public function explode(string $d = ',')
@@ -181,8 +173,7 @@ trait HasDisplayers
     /**
      * Display the fields in the email format as gavatar.
      *
-     * @param int $size
-     *
+     * @param  int  $size
      * @return $this
      */
     public function gravatar($size = 30)
@@ -201,9 +192,8 @@ trait HasDisplayers
     /**
      * Add a `dot` before column text.
      *
-     * @param array  $options
-     * @param string $default
-     *
+     * @param  array  $options
+     * @param  string  $default
      * @return $this
      */
     public function dot($options = [], $default = 'default')
@@ -222,10 +212,9 @@ trait HasDisplayers
     /**
      * Show children of current node.
      *
-     * @param bool $showAll
-     * @param bool $sortable
-     * @param mixed $defaultParentId
-     *
+     * @param  bool  $showAll
+     * @param  bool  $sortable
+     * @param  mixed  $defaultParentId
      * @return $this
      */
     public function tree(bool $showAll = false, bool $sortable = true, $defaultParentId = null)
@@ -249,8 +238,7 @@ trait HasDisplayers
     /**
      * Display column using a grid row action.
      *
-     * @param string $action
-     *
+     * @param  string  $action
      * @return $this
      */
     public function action($action)
@@ -275,9 +263,8 @@ trait HasDisplayers
     /**
      * Display column as boolean , `✓` for true, and `✗` for false.
      *
-     * @param array $map
-     * @param bool  $default
-     *
+     * @param  array  $map
+     * @param  bool  $default
      * @return $this
      */
     public function bool(array $map = [], $default = false)

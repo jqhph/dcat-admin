@@ -228,8 +228,8 @@ class Field implements Renderable
     /**
      * Field constructor.
      *
-     * @param string|array $column
-     * @param array        $arguments
+     * @param  string|array  $column
+     * @param  array  $arguments
      */
     public function __construct($column, $arguments = [])
     {
@@ -240,8 +240,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function setRelation(array $options = [])
@@ -252,8 +251,7 @@ class Field implements Renderable
     /**
      * Format the label value.
      *
-     * @param array $arguments
-     *
+     * @param  array  $arguments
      * @return string
      */
     protected function formatLabel($arguments = [])
@@ -270,8 +268,7 @@ class Field implements Renderable
     /**
      * Format the name of the field.
      *
-     * @param string $column
-     *
+     * @param  string  $column
      * @return array|mixed|string
      */
     protected function formatName($column)
@@ -282,8 +279,7 @@ class Field implements Renderable
     /**
      * Set form element name.
      *
-     * @param string|array $name
-     *
+     * @param  string|array  $name
      * @return $this
      *
      * @author Edwin Hui
@@ -308,8 +304,7 @@ class Field implements Renderable
     /**
      * Fill data to the field.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return void
      */
     final public function fill($data)
@@ -326,8 +321,7 @@ class Field implements Renderable
     /**
      * Format field data.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return mixed
      */
     protected function formatFieldData($data)
@@ -346,10 +340,9 @@ class Field implements Renderable
     }
 
     /**
-     * @param array $data
-     * @param string $column
-     * @param mixed $default
-     *
+     * @param  array  $data
+     * @param  string  $column
+     * @param  mixed  $default
      * @return mixed
      */
     protected function getValueFromData($data, $column = null, $default = null)
@@ -371,8 +364,7 @@ class Field implements Renderable
     /**
      * custom format form column data when edit.
      *
-     * @param \Closure $call
-     *
+     * @param  \Closure  $call
      * @return $this
      */
     public function customFormat(\Closure $call)
@@ -385,8 +377,7 @@ class Field implements Renderable
     /**
      * Set original value to the field.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return void
      */
     final public function setOriginal($data)
@@ -399,8 +390,8 @@ class Field implements Renderable
     }
 
     /**
-     * @param string      $key
-     * @param Fluent|null $dataremoveField
+     * @param  string  $key
+     * @param  Fluent|null  $dataremoveField
      */
     protected function callCustomFormatter($key = 'value', Fluent $data = null)
     {
@@ -416,8 +407,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param Form|WidgetForm $form
-     *
+     * @param  Form|WidgetForm  $form
      * @return $this
      */
     public function setForm($form = null)
@@ -428,8 +418,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param WidgetForm $form
-     *
+     * @param  WidgetForm  $form
      * @return $this
      */
     public function setParent($form = null)
@@ -450,9 +439,8 @@ class Field implements Renderable
     /**
      * Set width for field and label.
      *
-     * @param int $field
-     * @param int $label
-     *
+     * @param  int  $field
+     * @param  int  $label
      * @return $this
      */
     public function width($field = 8, $label = 2)
@@ -468,8 +456,7 @@ class Field implements Renderable
     /**
      * Set the field options.
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function options($options = [])
@@ -484,8 +471,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function replaceOptions($options)
@@ -500,8 +486,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param array|Arrayable $options
-     *
+     * @param  array|Arrayable  $options
      * @return $this
      */
     public function mergeOptions($options)
@@ -512,8 +497,7 @@ class Field implements Renderable
     /**
      * Set the field option checked.
      *
-     * @param array $checked
-     *
+     * @param  array  $checked
      * @return $this
      */
     public function checked($checked = [])
@@ -530,8 +514,7 @@ class Field implements Renderable
     /**
      * Set key for error message.
      *
-     * @param string|array $key
-     *
+     * @param  string|array  $key
      * @return $this
      */
     public function setErrorKey($key)
@@ -554,8 +537,7 @@ class Field implements Renderable
     /**
      * Set or get value of the field.
      *
-     * @param null $value
-     *
+     * @param  null  $value
      * @return mixed|$this
      */
     public function value($value = null)
@@ -579,8 +561,7 @@ class Field implements Renderable
     /**
      * Set or get data.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return $this|Fluent
      */
     public function data(array $data = null)
@@ -601,9 +582,8 @@ class Field implements Renderable
     /**
      * Get or set default value for field.
      *
-     * @param mixed $default
-     * @param bool  $edit
-     *
+     * @param  mixed  $default
+     * @param  bool  $edit
      * @return $this|mixed
      */
     public function default($default = null, bool $edit = false)
@@ -636,9 +616,8 @@ class Field implements Renderable
     /**
      * Set help block for current field.
      *
-     * @param string $text
-     * @param string $icon
-     *
+     * @param  string  $text
+     * @param  string  $icon
      * @return $this
      */
     public function help($text = '', $icon = 'feather icon-help-circle')
@@ -661,8 +640,7 @@ class Field implements Renderable
     /**
      * Get or set label of the field.
      *
-     * @param null $label
-     *
+     * @param  null  $label
      * @return $this|string
      */
     public function label($label = null)
@@ -693,9 +671,8 @@ class Field implements Renderable
     /**
      * Sanitize input data.
      *
-     * @param array  $input
-     * @param string $column
-     *
+     * @param  array  $input
+     * @param  string  $column
      * @return array
      */
     protected function sanitizeInput($input, $column)
@@ -711,9 +688,8 @@ class Field implements Renderable
     /**
      * Add html attributes to elements.
      *
-     * @param array|string $attribute
-     * @param mixed        $value
-     *
+     * @param  array|string  $attribute
+     * @param  mixed  $value
      * @return $this
      */
     public function attribute($attribute, $value = null)
@@ -728,8 +704,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function hasAttribute(string $key)
@@ -738,8 +713,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed|null
      */
     public function getAttribute(string $key)
@@ -750,9 +724,8 @@ class Field implements Renderable
     /**
      * Specifies a regular expression against which to validate the value of the input.
      *
-     * @param string $error
-     * @param string $regexp
-     *
+     * @param  string  $error
+     * @param  string  $regexp
      * @return $this
      */
     public function pattern($regexp, $error = null)
@@ -767,8 +740,7 @@ class Field implements Renderable
     /**
      * set the input filed required.
      *
-     * @param bool $isLabelAsterisked
-     *
+     * @param  bool  $isLabelAsterisked
      * @return $this
      */
     public function required($isLabelAsterisked = true)
@@ -785,8 +757,7 @@ class Field implements Renderable
     /**
      * Set the field automatically get focus.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function autofocus(bool $value = true)
@@ -797,8 +768,7 @@ class Field implements Renderable
     /**
      * Set the field as readonly mode.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function readOnly(bool $value = true)
@@ -815,8 +785,7 @@ class Field implements Renderable
     /**
      * Set field as disabled.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function disable(bool $value = true)
@@ -833,8 +802,7 @@ class Field implements Renderable
     /**
      * Get or set field placeholder.
      *
-     * @param string $placeholder
-     *
+     * @param  string  $placeholder
      * @return $this|string
      */
     public function placeholder($placeholder = null)
@@ -857,8 +825,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed
      */
     protected function prepareInputValue($value)
@@ -867,8 +834,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param \Closure $closure
-     *
+     * @param  \Closure  $closure
      * @return $this
      */
     public function saving(\Closure $closure)
@@ -881,8 +847,7 @@ class Field implements Renderable
     /**
      * Prepare for a field value before update or insert.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed
      */
     final public function prepare($value)
@@ -915,8 +880,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function horizontal(bool $value = true)
@@ -949,9 +913,8 @@ class Field implements Renderable
     /**
      * Set element class.
      *
-     * @param string|array $class
-     * @param bool $normalize
-     *
+     * @param  string|array  $class
+     * @param  bool  $normalize
      * @return $this
      */
     public function setElementClass($class, bool $normalize = true)
@@ -968,9 +931,8 @@ class Field implements Renderable
     /**
      * Add element class.
      *
-     * @param string|array $class
-     * @param bool $normalize
-     *
+     * @param  string|array  $class
+     * @param  bool  $normalize
      * @return $this
      */
     public function addElementClass($class, bool $normalize = false)
@@ -1005,8 +967,7 @@ class Field implements Renderable
     }
 
     /**
-     * @param string|array $class
-     *
+     * @param  string|array  $class
      * @return array|string
      */
     public function normalizeElementClass($class)
@@ -1092,7 +1053,6 @@ class Field implements Renderable
      * Remove element class.
      *
      * @param $class
-     *
      * @return $this
      */
     public function removeElementClass($class)
@@ -1103,9 +1063,8 @@ class Field implements Renderable
     }
 
     /**
-     * @param array|string $labelClass
-     * @param bool         $append
-     *
+     * @param  array|string  $labelClass
+     * @param  bool  $append
      * @return $this|string
      */
     public function setLabelClass($labelClass, bool $append = true)
@@ -1128,7 +1087,6 @@ class Field implements Renderable
     /**
      * @param  mixed  $value
      * @param  callable  $callback
-     *
      * @return $this|mixed
      */
     public function when($value, $callback)
@@ -1141,9 +1099,8 @@ class Field implements Renderable
     }
 
     /**
-     * @param string|array $class
-     * @param bool         $append
-     *
+     * @param  string|array  $class
+     * @param  bool  $append
      * @return $this
      */
     public function setFormGroupClass($class, bool $append = true)
@@ -1164,9 +1121,8 @@ class Field implements Renderable
     }
 
     /**
-     * @param string|array $class
-     * @param bool         $append
-     *
+     * @param  string|array  $class
+     * @param  bool  $append
      * @return $this
      */
     public function setFieldClass($class, bool $append = true)
@@ -1277,9 +1233,8 @@ class Field implements Renderable
     /**
      * 设置默认属性.
      *
-     * @param string $attribute
-     * @param mixed  $value
-     *
+     * @param  string  $attribute
+     * @param  mixed  $value
      * @return $this
      */
     public function defaultAttribute(string $attribute, $value)
@@ -1304,8 +1259,7 @@ class Field implements Renderable
     /**
      * 保存数据为json格式.
      *
-     * @param int $option
-     *
+     * @param  int  $option
      * @return $this
      */
     public function saveAsJson($option = 0)

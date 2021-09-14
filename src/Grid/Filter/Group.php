@@ -29,9 +29,9 @@ class Group extends AbstractFilter
     /**
      * Group constructor.
      *
-     * @param string        $column
-     * @param string        $label
-     * @param \Closure|null $builder
+     * @param  string  $column
+     * @param  string  $label
+     * @param  \Closure|null  $builder
      */
     public function __construct($column, \Closure $builder = null, $label = '')
     {
@@ -41,7 +41,7 @@ class Group extends AbstractFilter
     }
 
     /**
-     * @param Filter $filter
+     * @param  Filter  $filter
      */
     public function setParent(Filter $filter)
     {
@@ -62,9 +62,8 @@ class Group extends AbstractFilter
     /**
      * Join a query to group.
      *
-     * @param string $label
-     * @param array  $condition
-     *
+     * @param  string  $label
+     * @param  array  $condition
      * @return $this
      */
     protected function joinGroup($label, array $condition)
@@ -79,9 +78,8 @@ class Group extends AbstractFilter
     /**
      * Filter out `equal` records.
      *
-     * @param string $label
-     * @param string $operator
-     *
+     * @param  string  $label
+     * @param  string  $operator
      * @return Group
      */
     public function equal($label = '', $operator = '=')
@@ -96,8 +94,7 @@ class Group extends AbstractFilter
     /**
      * Filter out `not equal` records.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function notEqual($label = '')
@@ -108,8 +105,7 @@ class Group extends AbstractFilter
     /**
      * Filter out `greater then` records.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function gt($label = '')
@@ -120,8 +116,7 @@ class Group extends AbstractFilter
     /**
      * Filter out `less then` records.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function lt($label = '')
@@ -132,8 +127,7 @@ class Group extends AbstractFilter
     /**
      * Filter out `not less then` records.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function nlt($label = '')
@@ -144,8 +138,7 @@ class Group extends AbstractFilter
     /**
      * Filter out `not greater than` records.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function ngt($label = '')
@@ -156,8 +149,7 @@ class Group extends AbstractFilter
     /**
      * Filter out records that match the regex.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function match($label = '')
@@ -170,9 +162,8 @@ class Group extends AbstractFilter
     /**
      * Specify a where query.
      *
-     * @param string   $label
-     * @param \Closure $builder
-     *
+     * @param  string  $label
+     * @param  \Closure  $builder
      * @return Group
      */
     public function where($label, \Closure $builder)
@@ -187,9 +178,8 @@ class Group extends AbstractFilter
     /**
      * Specify a where like query.
      *
-     * @param string $label
-     * @param string $operator
-     *
+     * @param  string  $label
+     * @param  string  $operator
      * @return Group
      */
     public function like($label = '', $operator = 'like')
@@ -204,8 +194,7 @@ class Group extends AbstractFilter
     /**
      * Alias of `like` method.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function contains($label = '')
@@ -216,8 +205,7 @@ class Group extends AbstractFilter
     /**
      * Specify a where ilike query.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function ilike($label = '')
@@ -228,8 +216,7 @@ class Group extends AbstractFilter
     /**
      * Filter out records which starts with input query.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function startWith($label = '')
@@ -244,8 +231,7 @@ class Group extends AbstractFilter
     /**
      * Filter out records which ends with input query.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return Group
      */
     public function endWith($label = '')

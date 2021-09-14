@@ -62,10 +62,9 @@ trait InteractsWithApi
     /**
      * 设置请求地址.
      *
-     * @param string $method
-     * @param string $url
-     * @param array $query
-     *
+     * @param  string  $method
+     * @param  string  $url
+     * @param  array  $query
      * @return $this
      */
     public function request(string $method, string $url, array $query = [])
@@ -119,8 +118,7 @@ trait InteractsWithApi
     /**
      * 设置点击抓取数据的按钮的css选择器.
      *
-     * @param string|array $selector
-     *
+     * @param  string|array  $selector
      * @return $this
      */
     public function click($selector)
@@ -142,8 +140,7 @@ trait InteractsWithApi
     /**
      * 设置抓取数据时执行的js代码.
      *
-     * @param string|\Closure $script
-     *
+     * @param  string|\Closure  $script
      * @return $this
      */
     public function fetching($script)
@@ -156,8 +153,7 @@ trait InteractsWithApi
     /**
      * 设置抓取完数据后执行的js代码.
      *
-     * @param string|\Closure $script
-     *
+     * @param  string|\Closure  $script
      * @return $this
      */
     public function fetched($script)
@@ -266,8 +262,7 @@ JS;
     /**
      * 合并.
      *
-     * @param static $self
-     *
+     * @param  static  $self
      * @return $this
      */
     public function merge($self)

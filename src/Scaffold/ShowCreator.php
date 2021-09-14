@@ -5,9 +5,8 @@ namespace Dcat\Admin\Scaffold;
 trait ShowCreator
 {
     /**
-     * @param string $primaryKey
-     * @param array  $fields
-     *
+     * @param  string  $primaryKey
+     * @param  array  $fields
      * @return string
      */
     protected function generateShow(string $primaryKey = null, array $fields = [], $timestamps = null)

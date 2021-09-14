@@ -17,7 +17,7 @@ class In extends Filter
     /**
      * CheckFilter constructor.
      *
-     * @param array $options
+     * @param  array  $options
      */
     public function __construct(array $options)
     {
@@ -32,8 +32,8 @@ class In extends Filter
     /**
      * Add a binding to the query.
      *
-     * @param array $value
-     * @param Model $model
+     * @param  array  $value
+     * @param  Model  $model
      */
     public function addBinding($value, Model $model)
     {

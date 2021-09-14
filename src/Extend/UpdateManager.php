@@ -96,7 +96,7 @@ class UpdateManager
     /**
      * 发布扩展资源.
      *
-     * @param string $name
+     * @param  string  $name
      */
     public function publish($name)
     {

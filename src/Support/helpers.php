@@ -11,9 +11,8 @@ if (! function_exists('admin_setting')) {
     /**
      * 获取或保存配置参数.
      *
-     * @param string|array $key
-     * @param mixed         $default
-     *
+     * @param  string|array  $key
+     * @param  mixed  $default
      * @return \Dcat\Admin\Support\Setting|mixed
      */
     function admin_setting($key = null, $default = null)
@@ -36,9 +35,8 @@ if (! function_exists('admin_setting_array')) {
     /**
      * 获取配置参数并转化为数组格式.
      *
-     * @param string $key
-     * @param mixed  $default
-     *
+     * @param  string  $key
+     * @param  mixed  $default
      * @return \Dcat\Admin\Support\Setting|mixed
      */
     function admin_setting_array(?string $key, $default = [])
@@ -51,10 +49,9 @@ if (! function_exists('admin_extension_setting')) {
     /**
      * 获取扩展配置参数.
      *
-     * @param string       $extension
-     * @param string|array $key
-     * @param mixed        $default
-     *
+     * @param  string  $extension
+     * @param  string|array  $key
+     * @param  mixed  $default
      * @return mixed
      */
     function admin_extension_setting($extension, $key = null, $default = null)
@@ -71,10 +68,9 @@ if (! function_exists('admin_section')) {
     /**
      * Get the string contents of a section.
      *
-     * @param string $section
-     * @param mixed  $default
-     * @param array  $options
-     *
+     * @param  string  $section
+     * @param  mixed  $default
+     * @param  array  $options
      * @return mixed
      */
     function admin_section(string $section, $default = null, array $options = [])
@@ -87,8 +83,7 @@ if (! function_exists('admin_has_section')) {
     /**
      * Check if section exists.
      *
-     * @param string $section
-     *
+     * @param  string  $section
      * @return mixed
      */
     function admin_has_section(string $section)
@@ -101,10 +96,10 @@ if (! function_exists('admin_inject_section')) {
     /**
      * Injecting content into a section.
      *
-     * @param string $section
-     * @param mixed  $content
-     * @param bool   $append
-     * @param int    $priority
+     * @param  string  $section
+     * @param  mixed  $content
+     * @param  bool  $append
+     * @param  int  $priority
      */
     function admin_inject_section(string $section, $content = null, bool $append = true, int $priority = 10)
     {
@@ -116,11 +111,11 @@ if (! function_exists('admin_inject_section_if')) {
     /**
      * Injecting content into a section.
      *
-     * @param mixed  $condition
-     * @param string $section
-     * @param mixed  $content
-     * @param bool   $append
-     * @param int    $priority
+     * @param  mixed  $condition
+     * @param  string  $section
+     * @param  mixed  $content
+     * @param  bool  $append
+     * @param  int  $priority
      */
     function admin_inject_section_if($condition, $section, $content = null, bool $append = false, int $priority = 10)
     {
@@ -134,8 +129,7 @@ if (! function_exists('admin_has_default_section')) {
     /**
      * Check if default section exists.
      *
-     * @param string $section
-     *
+     * @param  string  $section
      * @return mixed
      */
     function admin_has_default_section(string $section)
@@ -148,8 +142,8 @@ if (! function_exists('admin_inject_default_section')) {
     /**
      * Injecting content into a section.
      *
-     * @param string                              $section
-     * @param string|Renderable|Htmlable|callable $content
+     * @param  string  $section
+     * @param  string|Renderable|Htmlable|callable  $content
      */
     function admin_inject_default_section(string $section, $content)
     {
@@ -162,8 +156,7 @@ if (! function_exists('admin_trans_field')) {
      * Translate the field name.
      *
      * @param $field
-     * @param null $locale
-     *
+     * @param  null  $locale
      * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     function admin_trans_field($field, $locale = null)
@@ -177,9 +170,8 @@ if (! function_exists('admin_trans_label')) {
      * Translate the label.
      *
      * @param $label
-     * @param array $replace
-     * @param null  $locale
-     *
+     * @param  array  $replace
+     * @param  null  $locale
      * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     function admin_trans_label($label = null, $replace = [], $locale = null)
@@ -193,9 +185,8 @@ if (! function_exists('admin_trans_option')) {
      * Translate the field name.
      *
      * @param $field
-     * @param array $replace
-     * @param null  $locale
-     *
+     * @param  array  $replace
+     * @param  null  $locale
      * @return array|\Illuminate\Contracts\Translation\Translator|null|string
      */
     function admin_trans_option($optionValue, $field, $replace = [], $locale = null)
@@ -210,10 +201,9 @@ if (! function_exists('admin_trans')) {
     /**
      * Translate the given message.
      *
-     * @param string $key
-     * @param array  $replace
-     * @param string $locale
-     *
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  string  $locale
      * @return \Illuminate\Contracts\Translation\Translator|string|array|null
      */
     function admin_trans($key, $replace = [], $locale = null)
@@ -252,8 +242,7 @@ if (! function_exists('admin_path')) {
     /**
      * Get admin path.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string
      */
     function admin_path($path = '')
@@ -266,10 +255,9 @@ if (! function_exists('admin_url')) {
     /**
      * Get admin url.
      *
-     * @param string $path
-     * @param mixed  $parameters
-     * @param bool   $secure
-     *
+     * @param  string  $path
+     * @param  mixed  $parameters
+     * @param  bool  $secure
      * @return string
      */
     function admin_url($path = '', $parameters = [], $secure = null)
@@ -288,8 +276,7 @@ if (! function_exists('admin_base_path')) {
     /**
      * Get admin url.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string
      */
     function admin_base_path($path = '')
@@ -312,9 +299,9 @@ if (! function_exists('admin_toastr')) {
     /**
      * Flash a toastr message bag to session.
      *
-     * @param string $message
-     * @param string $type
-     * @param array $options
+     * @param  string  $message
+     * @param  string  $type
+     * @param  array  $options
      */
     function admin_toastr($message = '', $type = 'success', $options = [])
     {
@@ -328,8 +315,8 @@ if (! function_exists('admin_success')) {
     /**
      * Flash a success message bag to session.
      *
-     * @param string $title
-     * @param string $message
+     * @param  string  $title
+     * @param  string  $message
      */
     function admin_success($title, $message = '')
     {
@@ -341,8 +328,8 @@ if (! function_exists('admin_error')) {
     /**
      * Flash a error message bag to session.
      *
-     * @param string $title
-     * @param string $message
+     * @param  string  $title
+     * @param  string  $message
      */
     function admin_error($title, $message = '')
     {
@@ -354,8 +341,8 @@ if (! function_exists('admin_warning')) {
     /**
      * Flash a warning message bag to session.
      *
-     * @param string $title
-     * @param string $message
+     * @param  string  $title
+     * @param  string  $message
      */
     function admin_warning($title, $message = '')
     {
@@ -367,9 +354,9 @@ if (! function_exists('admin_info')) {
     /**
      * Flash a message bag to session.
      *
-     * @param string $title
-     * @param string $message
-     * @param string $type
+     * @param  string  $title
+     * @param  string  $message
+     * @param  string  $type
      */
     function admin_info($title, $message = '', $type = 'info')
     {
@@ -382,7 +369,6 @@ if (! function_exists('admin_info')) {
 if (! function_exists('admin_asset')) {
     /**
      * @param $path
-     *
      * @return string
      */
     function admin_asset($path)
@@ -395,10 +381,9 @@ if (! function_exists('admin_route')) {
     /**
      * 根据路由别名获取url.
      *
-     * @param string|null $route
-     * @param array $params
-     * @param bool $absolute
-     *
+     * @param  string|null  $route
+     * @param  array  $params
+     * @param  bool  $absolute
      * @return string
      */
     function admin_route(?string $route, array $params = [], $absolute = true)
@@ -411,8 +396,7 @@ if (! function_exists('admin_route_name')) {
     /**
      * 获取路由别名.
      *
-     * @param string|null $route
-     *
+     * @param  string|null  $route
      * @return string
      */
     function admin_route_name(?string $route)
@@ -425,8 +409,7 @@ if (! function_exists('admin_api_route_name')) {
     /**
      * 获取api的路由别名.
      *
-     * @param string $route
-     *
+     * @param  string  $route
      * @return string
      */
     function admin_api_route_name(?string $route = '')
@@ -437,8 +420,7 @@ if (! function_exists('admin_api_route_name')) {
 
 if (! function_exists('admin_extension_path')) {
     /**
-     * @param string|null $path
-     *
+     * @param  string|null  $path
      * @return string
      */
     function admin_extension_path(?string $path = null)
@@ -453,8 +435,7 @@ if (! function_exists('admin_extension_path')) {
 
 if (! function_exists('admin_color')) {
     /**
-     * @param string|null $color
-     *
+     * @param  string|null  $color
      * @return string|\Dcat\Admin\Color
      */
     function admin_color(?string $color = null)
@@ -469,9 +450,8 @@ if (! function_exists('admin_color')) {
 
 if (! function_exists('admin_view')) {
     /**
-     * @param string $view
-     * @param array  $data
-     *
+     * @param  string  $view
+     * @param  array  $data
      * @return string
      *
      * @throws \Throwable
@@ -484,9 +464,8 @@ if (! function_exists('admin_view')) {
 
 if (! function_exists('admin_script')) {
     /**
-     * @param string $js
-     * @param bool   $direct
-     *
+     * @param  string  $js
+     * @param  bool  $direct
      * @return void
      */
     function admin_script($script, bool $direct = false)
@@ -497,8 +476,7 @@ if (! function_exists('admin_script')) {
 
 if (! function_exists('admin_style')) {
     /**
-     * @param string $style
-     *
+     * @param  string  $style
      * @return void
      */
     function admin_style($style)
@@ -509,8 +487,7 @@ if (! function_exists('admin_style')) {
 
 if (! function_exists('admin_js')) {
     /**
-     * @param string|array $js
-     *
+     * @param  string|array  $js
      * @return void
      */
     function admin_js($js)
@@ -521,8 +498,7 @@ if (! function_exists('admin_js')) {
 
 if (! function_exists('admin_css')) {
     /**
-     * @param string|array $css
-     *
+     * @param  string|array  $css
      * @return void
      */
     function admin_css($css)
@@ -533,8 +509,7 @@ if (! function_exists('admin_css')) {
 
 if (! function_exists('admin_require_assets')) {
     /**
-     * @param string|array $asset
-     *
+     * @param  string|array  $asset
      * @return void
      */
     function admin_require_assets($asset)
@@ -547,8 +522,7 @@ if (! function_exists('admin_javascript')) {
     /**
      * 暂存JS代码，并使用唯一字符串代替.
      *
-     * @param string $scripts
-     *
+     * @param  string  $scripts
      * @return string
      */
     function admin_javascript(string $scripts)
@@ -559,8 +533,7 @@ if (! function_exists('admin_javascript')) {
 
 if (! function_exists('admin_javascript_json')) {
     /**
-     * @param array|object $data
-     *
+     * @param  array|object  $data
      * @return string
      */
     function admin_javascript_json($data)
@@ -573,7 +546,7 @@ if (! function_exists('admin_exit')) {
     /**
      * 响应数据并中断后续逻辑.
      *
-     * @param Response|string|array $response
+     * @param  Response|string|array  $response
      *
      * @throws \Illuminate\Http\Exceptions\HttpResponseException
      */

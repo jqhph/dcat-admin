@@ -19,8 +19,7 @@ class Radio extends Field
     protected $inline = true;
 
     /**
-     * @param array|\Closure|string $options
-     *
+     * @param  array|\Closure|string  $options
      * @return $this
      */
     public function options($options = [])
@@ -46,8 +45,7 @@ class Radio extends Field
     /**
      * "info", "primary", "inverse", "danger", "success", "purple".
      *
-     * @param string $style
-     *
+     * @param  string  $style
      * @return $this
      */
     public function style(string $style)

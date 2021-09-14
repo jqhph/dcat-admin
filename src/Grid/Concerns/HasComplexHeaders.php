@@ -17,10 +17,9 @@ trait HasComplexHeaders
     /**
      * Merge cells.
      *
-     * @param string $column
-     * @param array  $columnNames
-     * @param string $label
-     *
+     * @param  string  $column
+     * @param  array  $columnNames
+     * @param  string  $label
      * @return ComplexHeader
      */
     public function combine(string $column, array $columnNames, string $label = null)

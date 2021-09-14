@@ -48,9 +48,8 @@ class RowSelector extends Component
     /**
      * 选中.
      *
-     * @param  Browser       $browser
+     * @param  Browser  $browser
      * @param  string|array  $value
-     *
      * @return Browser
      */
     public function choose(Browser $browser, $value)
@@ -71,8 +70,7 @@ JS
     /**
      * 选中所有.
      *
-     * @param Browser $browser
-     *
+     * @param  Browser  $browser
      * @return Browser
      */
     public function selectAll(Browser $browser)

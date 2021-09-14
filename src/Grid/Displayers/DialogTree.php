@@ -47,15 +47,14 @@ class DialogTree extends AbstractDisplayer
     protected $rootParentId = 0;
 
     /**
-     * @param array $data exp:
-     *                    {
-     *                    "id": "1",
-     *                    "parent": "#",
-     *                    "text": "Dashboard",
-     *                    // "state": {"selected": true}
-     *                    }
-     * @param array $data
-     *
+     * @param  array  $data  exp:
+     *                       {
+     *                       "id": "1",
+     *                       "parent": "#",
+     *                       "text": "Dashboard",
+     *                       // "state": {"selected": true}
+     *                       }
+     * @param  array  $data
      * @return $this
      */
     public function nodes($data)
@@ -91,8 +90,7 @@ class DialogTree extends AbstractDisplayer
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function options($options = [])
@@ -114,9 +112,8 @@ class DialogTree extends AbstractDisplayer
     }
 
     /**
-     * @param string $width
-     * @param string $height
-     *
+     * @param  string  $width
+     * @param  string  $height
      * @return $this
      */
     public function area(string $width, string $height)

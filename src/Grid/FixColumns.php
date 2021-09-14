@@ -56,9 +56,9 @@ class FixColumns
     /**
      * FixColumns constructor.
      *
-     * @param Grid $grid
-     * @param int  $head
-     * @param int  $tail
+     * @param  Grid  $grid
+     * @param  int  $head
+     * @param  int  $tail
      */
     public function __construct(Grid $grid, $head, $tail = -1)
     {
@@ -105,8 +105,7 @@ class FixColumns
     }
 
     /**
-     * @param int $height px
-     *
+     * @param  int  $height  px
      * @return $this
      */
     public function height(int $height)

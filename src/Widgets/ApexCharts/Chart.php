@@ -41,8 +41,7 @@ class Chart extends Widget
     /**
      * 设置或获取图表容器选择器.
      *
-     * @param string|null $selector
-     *
+     * @param  string|null  $selector
      * @return $this|string|null
      */
     public function selector(?string $selector = null)
@@ -61,8 +60,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param string|array $title
-     *
+     * @param  string|array  $title
      * @return $this
      */
     public function title($title)
@@ -79,8 +77,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array $series
-     *
+     * @param  array  $series
      * @return $this
      */
     public function series($series)
@@ -91,8 +88,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function labels($value)
@@ -103,8 +99,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param string|array $colors
-     *
+     * @param  string|array  $colors
      * @return $this
      */
     public function colors($colors)
@@ -115,8 +110,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function stroke($value)
@@ -127,8 +121,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function xaxis($value)
@@ -139,8 +132,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function tooltip($value)
@@ -151,8 +143,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function yaxis($value)
@@ -163,8 +154,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function fill($value)
@@ -175,8 +165,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function chart($value)
@@ -187,8 +176,7 @@ class Chart extends Widget
     }
 
     /**
-     * @param array|bool $value
-     *
+     * @param  array|bool  $value
      * @return $this
      */
     public function dataLabels($value)

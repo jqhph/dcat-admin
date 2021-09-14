@@ -43,8 +43,7 @@ class Tooltip extends Widget
     }
 
     /**
-     * @param string|Renderable|\Closure $content
-     *
+     * @param  string|Renderable|\Closure  $content
      * @return $this
      */
     public function title($content)

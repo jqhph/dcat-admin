@@ -32,8 +32,7 @@ abstract class AbstractTool extends Action
     public $allowOnlyEditing = false;
 
     /**
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return void
      */
     public function setForm(Form $form)
@@ -80,8 +79,7 @@ abstract class AbstractTool extends Action
     }
 
     /**
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return $this
      */
     public static function allowOnlyCreating(...$params)
@@ -95,8 +93,7 @@ abstract class AbstractTool extends Action
     }
 
     /**
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return $this
      */
     public static function allowOnlyEditing(...$params)

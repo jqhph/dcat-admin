@@ -64,8 +64,7 @@ class Panel implements Renderable
     /**
      * Set parent container.
      *
-     * @param Show $show
-     *
+     * @param  Show  $show
      * @return $this
      */
     public function setParent(Show $show)
@@ -88,9 +87,9 @@ class Panel implements Renderable
     /**
      * Set style for this panel.
      *
-     * @param string $style
-     *
+     * @param  string  $style
      * @return $this
+     *
      * @deprecated
      */
     public function style($style = 'info')
@@ -103,8 +102,7 @@ class Panel implements Renderable
     /**
      * Set title for this panel.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -117,8 +115,7 @@ class Panel implements Renderable
     /**
      * Set view for this panel to render.
      *
-     * @param string $view
-     *
+     * @param  string  $view
      * @return $this
      */
     public function view($view)
@@ -131,8 +128,7 @@ class Panel implements Renderable
     /**
      * Add variables to show view.
      *
-     * @param array $variables
-     *
+     * @param  array  $variables
      * @return $this
      */
     public function with(array $variables = [])
@@ -164,7 +160,6 @@ class Panel implements Renderable
      * Build panel tools.
      *
      * @param $callable
-     *
      * @return Tools|null
      */
     public function tools($callable = null)
@@ -180,7 +175,6 @@ class Panel implements Renderable
      * Fill fields to panel.
      *
      * @param []Field $fields
-     *
      * @return $this
      */
     public function fill($fields)

@@ -36,7 +36,7 @@ abstract class Filter implements Renderable
     protected $display = true;
 
     /**
-     * @param Column $column
+     * @param  Column  $column
      */
     public function setParent(Column $column)
     {
@@ -64,8 +64,7 @@ abstract class Filter implements Renderable
     }
 
     /**
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return $this
      */
     public function resolving(\Closure $callback)
@@ -76,8 +75,7 @@ abstract class Filter implements Renderable
     }
 
     /**
-     * @param string $name
-     *
+     * @param  string  $name
      * @return $this
      */
     public function setColumnName(string $name)
@@ -118,8 +116,7 @@ abstract class Filter implements Renderable
     /**
      * Get filter value of this column.
      *
-     * @param string $default
-     *
+     * @param  string  $default
      * @return array|\Illuminate\Http\Request|string
      */
     public function value($default = '')
@@ -128,10 +125,9 @@ abstract class Filter implements Renderable
     }
 
     /**
-     * @param mixed $model
-     * @param string $query
+     * @param  mixed  $model
+     * @param  string  $query
      * @param mixed array $params
-     *
      * @return void
      */
     protected function withQuery($model, string $query, array $params)
@@ -196,8 +192,7 @@ HMLT;
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return array|null|string
      */
     protected function trans($key)
@@ -206,8 +201,7 @@ HMLT;
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function display(bool $value)
@@ -236,8 +230,8 @@ HMLT;
     /**
      * Add a query binding.
      *
-     * @param mixed $value
-     * @param Model $model
+     * @param  mixed  $value
+     * @param  Model  $model
      */
     public function addBinding($value, Model $model)
     {
@@ -253,8 +247,7 @@ HMLT;
     }
 
     /**
-     * @param array ...$params
-     *
+     * @param  array  ...$params
      * @return static
      */
     public static function make(...$params)

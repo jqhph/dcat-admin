@@ -221,8 +221,7 @@ class Color
     /**
      * 设置主题色名称.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return void
      */
     public function setName(string $name)
@@ -233,9 +232,8 @@ class Color
     /**
      * 获取颜色.
      *
-     * @param string $colorName
-     * @param string $default
-     *
+     * @param  string  $colorName
+     * @param  string  $default
      * @return string
      */
     public function get(?string $colorName, ?string $default = null)
@@ -278,9 +276,8 @@ class Color
     /**
      * 颜色转亮.
      *
-     * @param string $color
-     * @param int    $amt
-     *
+     * @param  string  $color
+     * @param  int  $amt
      * @return string
      */
     public function lighten(?string $color, int $amt)
@@ -291,9 +288,8 @@ class Color
     /**
      * 颜色转暗.
      *
-     * @param string $color
-     * @param int    $amt
-     *
+     * @param  string  $color
+     * @param  int  $amt
      * @return string
      */
     public function darken(string $color, int $amt)
@@ -304,9 +300,8 @@ class Color
     /**
      * 颜色透明度转化.
      *
-     * @param string       $color
-     * @param float|string $alpha
-     *
+     * @param  string  $color
+     * @param  float|string  $alpha
      * @return string
      */
     public function alpha(?string $color, $alpha)
@@ -332,9 +327,8 @@ class Color
     /**
      * 获取颜色.
      *
-     * @param string $method
-     * @param array $arguments
-     *
+     * @param  string  $method
+     * @param  array  $arguments
      * @return string
      */
     public function __call(string $method, array $arguments = [])
@@ -348,9 +342,8 @@ class Color
     /**
      * 扩展颜色.
      *
-     * @param string $name
-     * @param array  $colors
-     *
+     * @param  string  $name
+     * @param  array  $colors
      * @return void
      */
     public static function extend(string $name, array $colors)

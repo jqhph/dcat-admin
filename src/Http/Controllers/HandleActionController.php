@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 class HandleActionController
 {
     /**
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return $this|\Illuminate\Http\JsonResponse
      */
     public function handle(Request $request)
@@ -30,11 +29,10 @@ class HandleActionController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
+     * @return Action
      *
      * @throws AdminException
-     *
-     * @return Action
      */
     protected function resolveActionInstance(Request $request): Action
     {

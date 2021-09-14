@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * WebUploader文件上传处理.
  *
- * @property string       $_id
- * @property int          $chunk
- * @property int          $chunks
- * @property string       $upload_column
+ * @property string $_id
+ * @property int $chunk
+ * @property int $chunks
+ * @property string $upload_column
  * @property UploadedFile $file
  */
 class WebUploader
@@ -125,8 +125,7 @@ class WebUploader
     /**
      * 合并分块文件.
      *
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return UploadedFile|false
      */
     protected function mergeChunks(UploadedFile $file)
@@ -158,9 +157,8 @@ class WebUploader
     /**
      * 判断所有分块是否上传完毕.
      *
-     * @param string $tmpDir
-     * @param string $newFilename
-     *
+     * @param  string  $tmpDir
+     * @param  string  $newFilename
      * @return bool
      */
     protected function isComplete($tmpDir, $newFilename)
@@ -177,9 +175,9 @@ class WebUploader
     /**
      * 移动分块文件到临时目录.
      *
-     * @param UploadedFile $file
-     * @param string $tmpDir
-     * @param string $newFilename
+     * @param  UploadedFile  $file
+     * @param  string  $tmpDir
+     * @param  string  $newFilename
      */
     protected function moveChunk(UploadedFile $file, $tmpDir, $newFilename)
     {
@@ -187,9 +185,9 @@ class WebUploader
     }
 
     /**
-     * @param string $path
-     * @param string $tmpDir
-     * @param string $newFilename
+     * @param  string  $path
+     * @param  string  $tmpDir
+     * @param  string  $newFilename
      */
     protected function putTempFileContent($path, $tmpDir, $newFileame)
     {
@@ -219,8 +217,7 @@ class WebUploader
     /**
      * 生成分块文件名称.
      *
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     protected function generateChunkFileName(UploadedFile $file)
@@ -231,8 +228,7 @@ class WebUploader
     /**
      * 获取临时文件路径.
      *
-     * @param mixed $path
-     *
+     * @param  mixed  $path
      * @return string
      */
     public function getTemporaryPath($path)

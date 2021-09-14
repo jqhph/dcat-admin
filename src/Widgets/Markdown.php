@@ -39,8 +39,7 @@ class Markdown extends Widget
     }
 
     /**
-     * @param string|Renderable $markdown
-     *
+     * @param  string|Renderable  $markdown
      * @return $this
      */
     public function content($markdown)

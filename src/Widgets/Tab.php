@@ -30,10 +30,9 @@ class Tab extends Widget
     /**
      * Add a tab and its contents.
      *
-     * @param string            $title
-     * @param string|Renderable $content
-     * @param bool              $active
-     *
+     * @param  string  $title
+     * @param  string|Renderable  $content
+     * @param  bool  $active
      * @return $this
      */
     public function add($title, $content, $active = false)
@@ -55,10 +54,9 @@ class Tab extends Widget
     /**
      * Add a link on tab.
      *
-     * @param string $title
-     * @param string $href
-     * @param bool   $active
-     *
+     * @param  string  $title
+     * @param  string  $href
+     * @param  bool  $active
      * @return $this
      */
     public function addLink($title, $href, $active = false)
@@ -80,7 +78,7 @@ class Tab extends Widget
     /**
      * Set tab content padding.
      *
-     * @param string $padding
+     * @param  string  $padding
      */
     public function padding(string $padding)
     {
@@ -97,7 +95,7 @@ class Tab extends Widget
     /**
      * Set title.
      *
-     * @param string $title
+     * @param  string  $title
      */
     public function title($title = '')
     {
@@ -109,8 +107,7 @@ class Tab extends Widget
     /**
      * Set drop-down items.
      *
-     * @param array $links
-     *
+     * @param  array  $links
      * @return $this
      */
     public function dropdown(array $links)

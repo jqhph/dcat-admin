@@ -13,8 +13,7 @@ class Handler implements ExceptionHandler
     /**
      * 处理异常.
      *
-     * @param \Throwable $e
-     *
+     * @param  \Throwable  $e
      * @return array|string|void
      */
     public function handle(\Throwable $e)
@@ -31,8 +30,7 @@ class Handler implements ExceptionHandler
     /**
      * 显示异常信息.
      *
-     * @param \Throwable $exception
-     *
+     * @param  \Throwable  $exception
      * @return array|string|void
      *
      * @throws \Throwable
@@ -64,7 +62,7 @@ class Handler implements ExceptionHandler
     /**
      * 上报异常信息.
      *
-     * @param \Throwable $e
+     * @param  \Throwable  $e
      */
     public function report(\Throwable $e)
     {
@@ -72,8 +70,7 @@ class Handler implements ExceptionHandler
     }
 
     /**
-     * @param string $path
-     *
+     * @param  string  $path
      * @return mixed
      */
     protected function replaceBasePath(string $path)
