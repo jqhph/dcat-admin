@@ -93,9 +93,10 @@ class Checkbox extends MultipleSelect
             $checkbox->disable();
         }
 
+        $checked = $this->value ?: $this->checked;
         $checkbox
             ->inline($this->inline)
-            ->check($this->value())
+            ->check($checked)
             ->class($this->getElementClassString())
             ->size($this->size);
 
