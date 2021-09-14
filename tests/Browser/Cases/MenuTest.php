@@ -83,7 +83,7 @@ class MenuTest extends TestCase
                     $browser->choose($id);
                 })
                 ->press(__('admin.submit'))
-                ->waitForText('500 Internal Server Error', 2);
+                ->waitForText(__('admin.parent_select_error'), 2);
         });
     }
 
