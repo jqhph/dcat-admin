@@ -30,8 +30,7 @@ class Navbar implements Renderable
     }
 
     /**
-     * @param string|\Closure|Renderable|Htmlable $element
-     *
+     * @param  string|\Closure|Renderable|Htmlable  $element
      * @return $this
      */
     public function left($element)
@@ -42,8 +41,7 @@ class Navbar implements Renderable
     }
 
     /**
-     * @param string|\Closure|Renderable|Htmlable $element
-     *
+     * @param  string|\Closure|Renderable|Htmlable  $element
      * @return $this
      */
     public function right($element)
@@ -54,8 +52,7 @@ class Navbar implements Renderable
     }
 
     /**
-     * @param string $part
-     *
+     * @param  string  $part
      * @return mixed
      */
     public function render($part = 'right')

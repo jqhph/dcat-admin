@@ -91,9 +91,8 @@ class ExportSeedCommand extends Command
     /**
      * Get data array from table as string result var_export.
      *
-     * @param string $table
-     * @param array  $exceptFields
-     *
+     * @param  string  $table
+     * @param  array  $exceptFields
      * @return string
      */
     protected function getTableDataArrayAsString($table, $exceptFields = [])
@@ -112,7 +111,6 @@ class ExportSeedCommand extends Command
      * Get stub contents.
      *
      * @param $name
-     *
      * @return string
      */
     protected function getStub($name)
@@ -124,8 +122,7 @@ class ExportSeedCommand extends Command
      * Custom var_export for correct work with \r\n.
      *
      * @param $var
-     * @param string $indent
-     *
+     * @param  string  $indent
      * @return string
      */
     protected function varExport($var, $indent = '')

@@ -58,8 +58,7 @@ class HasMany extends Component
     /**
      * 点击添加按钮.
      *
-     * @param Browser $browser
-     *
+     * @param  Browser  $browser
      * @return int
      */
     public function add(Browser $browser)
@@ -84,8 +83,7 @@ JS
     /**
      * 获取最后一组新增的表单索引.
      *
-     * @param Browser $browser
-     *
+     * @param  Browser  $browser
      * @return int|null
      */
     public function getLastFormGroupIndex(Browser $browser)
@@ -101,9 +99,8 @@ JS
     }
 
     /**
-     * @param Browser $browser
-     * @param \Closure $callback
-     *
+     * @param  Browser  $browser
+     * @param  \Closure  $callback
      * @return Browser
      */
     public function withLastFormGroup(Browser $browser, \Closure $callback = null)
@@ -114,9 +111,8 @@ JS
     /**
      * 检测表单组.
      *
-     * @param Browser $browser
-     * @param \Closure $callback
-     *
+     * @param  Browser  $browser
+     * @param  \Closure  $callback
      * @return Browser
      */
     public function withFormGroup(Browser $browser, $index, ?\Closure $callback = null)
@@ -131,9 +127,8 @@ JS
     }
 
     /**
-     * @param Browser $browser
-     * @param int $index
-     *
+     * @param  Browser  $browser
+     * @param  int  $index
      * @return string
      */
     protected function formatGroupSelector(Browser $browser, $index)
@@ -144,9 +139,8 @@ JS
     /**
      * 移除表单.
      *
-     * @param Browser $browser
-     * @param int $index
-     *
+     * @param  Browser  $browser
+     * @param  int  $index
      * @return Browser
      */
     public function remove(Browser $browser, $index)
@@ -165,8 +159,7 @@ JS
     /**
      * 移除最后一个表单.
      *
-     * @param Browser $browser
-     *
+     * @param  Browser  $browser
      * @return Browser
      */
     public function removeLast(Browser $browser)
@@ -177,10 +170,9 @@ JS
     /**
      * 获取hasMany内表单字段值.
      *
-     * @param Browser $browser
-     * @param string $field
-     * @param string $value
-     *
+     * @param  Browser  $browser
+     * @param  string  $field
+     * @param  string  $value
      * @return string|null
      */
     public function assertFormGroupInputValue(Browser $browser, $field, $value, $id = null)
@@ -197,10 +189,10 @@ JS
     /**
      * 填充字段数据.
      *
-     * @param \Laravel\Dusk\Browser $browser
+     * @param  \Laravel\Dusk\Browser  $browser
      * @param $field
      * @param $value
-     * @param null $id
+     * @param  null  $id
      */
     public function fillFieldValue(Browser $browser, $field, $value, $id = null)
     {
@@ -215,8 +207,7 @@ JS
      * 获取元素选择器.
      *
      * @param $field
-     * @param null $id
-     *
+     * @param  null  $id
      * @return array|string
      */
     public function getFieldSelector(Browser $browser, $field, $id = null)

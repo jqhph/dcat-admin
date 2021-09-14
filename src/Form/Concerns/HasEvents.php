@@ -18,8 +18,7 @@ trait HasEvents
     /**
      * 监听创建页面访问事件.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function creating(Closure $callback)
@@ -32,8 +31,7 @@ trait HasEvents
     /**
      * 监听编辑页面访问时间.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function editing(Closure $callback)
@@ -46,8 +44,7 @@ trait HasEvents
     /**
      * 监听提交事件.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function submitted(Closure $callback)
@@ -60,8 +57,7 @@ trait HasEvents
     /**
      * 保存.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function saving(Closure $callback)
@@ -74,8 +70,7 @@ trait HasEvents
     /**
      * 保存完成.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function saved(Closure $callback)
@@ -88,8 +83,7 @@ trait HasEvents
     /**
      * 删除.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function deleting(Closure $callback)
@@ -102,8 +96,7 @@ trait HasEvents
     /**
      * 删除完成.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function deleted(Closure $callback)
@@ -116,8 +109,7 @@ trait HasEvents
     /**
      * 文件上传.
      *
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return $this
      */
     public function uploading(Closure $callback)
@@ -130,8 +122,7 @@ trait HasEvents
     /**
      * 上传完成.
      *
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return $this
      */
     public function uploaded(Closure $callback)
@@ -144,8 +135,7 @@ trait HasEvents
     /**
      * 删除文件.
      *
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return $this
      */
     public function fileDeleting(Closure $callback)
@@ -158,8 +148,7 @@ trait HasEvents
     /**
      * 删除文件完成.
      *
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return $this
      */
     public function fileDeleted(Closure $callback)
@@ -170,8 +159,7 @@ trait HasEvents
     }
 
     /**
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return \Closure
      */
     protected function makeListener(Closure $callback)
@@ -238,8 +226,7 @@ trait HasEvents
     /**
      * 触发表单保存完成事件.
      *
-     * @param mixed $result
-     *
+     * @param  mixed  $result
      * @return mixed|null
      */
     protected function callSaved($result)
@@ -260,8 +247,7 @@ trait HasEvents
     /**
      * 触发数据删除完成事件.
      *
-     * @param mixed $result
-     *
+     * @param  mixed  $result
      * @return mixed|null
      */
     protected function callDeleted($result)
@@ -272,9 +258,8 @@ trait HasEvents
     /**
      * 触发文件上传事件.
      *
-     * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
-     * @param UploadedFile                                $file
-     *
+     * @param  UploadFieldInterface|\Dcat\Admin\Form\Field  $field
+     * @param  UploadedFile  $file
      * @return mixed|null
      */
     protected function callUploading($field, $file)
@@ -285,10 +270,9 @@ trait HasEvents
     /**
      * 触发文件上传完成事件.
      *
-     * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
-     * @param UploadedFile                                $file
-     * @param Response                                    $response
-     *
+     * @param  UploadFieldInterface|\Dcat\Admin\Form\Field  $field
+     * @param  UploadedFile  $file
+     * @param  Response  $response
      * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\RedirectResponse|void
      */
     protected function callUploaded($field, $file, $response)
@@ -299,10 +283,9 @@ trait HasEvents
     /**
      * 触发文件删除事件.
      *
-     * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
-     * @param UploadedFile                                $file
-     * @param Response                                    $response
-     *
+     * @param  UploadFieldInterface|\Dcat\Admin\Form\Field  $field
+     * @param  UploadedFile  $file
+     * @param  Response  $response
      * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\RedirectResponse|void
      */
     protected function callFileDeleting($field)
@@ -313,10 +296,9 @@ trait HasEvents
     /**
      * 触发文件删除完成事件.
      *
-     * @param UploadFieldInterface|\Dcat\Admin\Form\Field $field
-     * @param UploadedFile                                $file
-     * @param Response                                    $response
-     *
+     * @param  UploadFieldInterface|\Dcat\Admin\Form\Field  $field
+     * @param  UploadedFile  $file
+     * @param  Response  $response
      * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\RedirectResponse|void
      */
     protected function callFileDeleted($field)
@@ -325,9 +307,8 @@ trait HasEvents
     }
 
     /**
-     * @param string $name
-     * @param array  $payload
-     *
+     * @param  string  $name
+     * @param  array  $payload
      * @return RedirectResponse|\Illuminate\Http\Response|void
      */
     protected function fire($name, array $payload = [])

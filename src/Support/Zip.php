@@ -57,8 +57,9 @@ class Zip extends ZipArchive
 
     /**
      * Extract an existing zip file.
-     * @param  string $source Path for the existing zip
-     * @param  string $destination Path to extract the zip files
+     *
+     * @param  string  $source  Path for the existing zip
+     * @param  string  $destination  Path to extract the zip files
      * @param  array  $options
      * @return bool
      */
@@ -83,7 +84,8 @@ class Zip extends ZipArchive
 
     /**
      * Creates a new empty zip file.
-     * @param  string $destination Path for the new zip
+     *
+     * @param  string  $destination  Path for the new zip
      * @param  mixed  $source
      * @param  array  $options
      * @return self
@@ -110,8 +112,9 @@ class Zip extends ZipArchive
 
     /**
      * Includes a source to the Zip.
-     * @param mixed $source
-     * @param array $options
+     *
+     * @param  mixed  $source
+     * @param  array  $options
      * @return self
      */
     public function add($source, $options = [])
@@ -174,7 +177,8 @@ class Zip extends ZipArchive
 
     /**
      * Creates a new folder inside the Zip and adds source files (optional).
-     * @param  string $name Folder name
+     *
+     * @param  string  $name  Folder name
      * @param  mixed  $source
      * @return self
      */
@@ -206,7 +210,8 @@ class Zip extends ZipArchive
     /**
      * Removes a file or folder from the zip collection.
      * Does not support wildcards.
-     * @param  string $source
+     *
+     * @param  string  $source
      * @return self
      */
     public function remove($source)
@@ -237,8 +242,9 @@ class Zip extends ZipArchive
 
     /**
      * Removes a prefix from a path.
-     * @param  string $prefix /var/sites/
-     * @param  string $path /var/sites/moo/cow/
+     *
+     * @param  string  $prefix  /var/sites/
+     * @param  string  $path  /var/sites/moo/cow/
      * @return string moo/cow/
      */
     protected function removePathPrefix($prefix, $path)

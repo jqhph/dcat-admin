@@ -194,8 +194,8 @@ class Grid
      *
      * Grid constructor.
      *
-     * @param Repository|\Illuminate\Database\Eloquent\Model|Builder|null $repository
-     * @param null|\Closure                                       $builder
+     * @param  Repository|\Illuminate\Database\Eloquent\Model|Builder|null  $repository
+     * @param  null|\Closure  $builder
      */
     public function __construct($repository = null, ?\Closure $builder = null, $request = null)
     {
@@ -232,8 +232,7 @@ class Grid
     /**
      * Set primary key name.
      *
-     * @param string|array $name
-     *
+     * @param  string|array  $name
      * @return $this
      */
     public function setKeyName($name)
@@ -256,9 +255,8 @@ class Grid
     /**
      * Add column to Grid.
      *
-     * @param string $name
-     * @param string $label
-     *
+     * @param  string  $name
+     * @param  string  $label
      * @return Column
      */
     public function column($name, $label = '')
@@ -269,8 +267,7 @@ class Grid
     /**
      * Add number column.
      *
-     * @param null|string $label
-     *
+     * @param  null|string  $label
      * @return Column
      */
     public function number(?string $label = null)
@@ -281,8 +278,7 @@ class Grid
     /**
      * 启用异步渲染功能.
      *
-     * @param bool $async
-     *
+     * @param  bool  $async
      * @return $this
      */
     public function async(bool $async = true)
@@ -326,8 +322,7 @@ class Grid
      * 1.$grid->columns(['name' => 'Name', 'email' => 'Email' ...]);
      * 2.$grid->columns('name', 'email' ...)
      *
-     * @param array $columns
-     *
+     * @param  array  $columns
      * @return Collection|Column[]|void
      */
     public function columns($columns = null)
@@ -360,8 +355,7 @@ class Grid
     /**
      * 删除列.
      *
-     * @param string|Column $column
-     *
+     * @param  string|Column  $column
      * @return $this
      */
     public function dropColumn($column)
@@ -379,9 +373,8 @@ class Grid
     /**
      * Add column to grid.
      *
-     * @param string $field
-     * @param string $label
-     *
+     * @param  string  $field
+     * @param  string  $label
      * @return Column
      */
     protected function addColumn($field = '', $label = '')
@@ -395,9 +388,8 @@ class Grid
     }
 
     /**
-     * @param string $field
-     * @param string $label
-     *
+     * @param  string  $field
+     * @param  string  $label
      * @return Column
      */
     public function prependColumn($field = '', $label = '')
@@ -411,9 +403,8 @@ class Grid
     }
 
     /**
-     * @param string $field
-     * @param string $label
-     *
+     * @param  string  $field
+     * @param  string  $label
      * @return Column
      */
     public function newColumn($field = '', $label = '')
@@ -451,8 +442,7 @@ class Grid
     }
 
     /**
-     * @param string|array $class
-     *
+     * @param  string|array  $class
      * @return $this
      */
     public function addTableClass($class)
@@ -527,8 +517,7 @@ class Grid
     /**
      * Build the grid rows.
      *
-     * @param Collection $data
-     *
+     * @param  Collection  $data
      * @return void
      */
     protected function buildRows($data)
@@ -569,8 +558,7 @@ class Grid
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return string
      */
     public function getEditUrl($key)
@@ -579,8 +567,7 @@ class Grid
     }
 
     /**
-     * @param string $url
-     *
+     * @param  string  $url
      * @return string
      */
     public function urlWithConstraints(?string $url)
@@ -595,8 +582,7 @@ class Grid
     }
 
     /**
-     * @param \Closure $closure
-     *
+     * @param  \Closure  $closure
      * @return Grid\Tools\RowSelector
      */
     public function rowSelector()
@@ -626,9 +612,8 @@ class Grid
     }
 
     /**
-     * @param string $width
-     * @param string $height
-     *
+     * @param  string  $width
+     * @param  string  $height
      * @return $this
      */
     public function setDialogFormDimensions(string $width, string $height)
@@ -653,8 +638,7 @@ class Grid
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function withBorder(bool $value = true)
@@ -665,8 +649,7 @@ class Grid
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function tableCollapse(bool $value = true)
@@ -679,8 +662,7 @@ class Grid
     /**
      * 显示横轴滚动条.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function scrollbar(bool $value = true)
@@ -693,8 +675,7 @@ class Grid
     /**
      * Set grid header.
      *
-     * @param Closure|string|Renderable $content
-     *
+     * @param  Closure|string|Renderable  $content
      * @return $this
      */
     public function header($content)
@@ -739,8 +720,7 @@ HTML;
     /**
      * Set grid footer.
      *
-     * @param Closure|string|Renderable $content
-     *
+     * @param  Closure|string|Renderable  $content
      * @return $this
      */
     public function footer($content)
@@ -769,9 +749,8 @@ HTML;
     /**
      * Get or set option for grid.
      *
-     * @param string|array $key
-     * @param mixed        $value
-     *
+     * @param  string|array  $key
+     * @param  mixed  $value
      * @return $this|mixed
      */
     public function option($key, $value = null)
@@ -849,8 +828,7 @@ HTML;
     }
 
     /**
-     * @param string $mode
-     *
+     * @param  string  $mode
      * @return $this
      */
     public function createMode(string $mode)
@@ -879,8 +857,7 @@ HTML;
     /**
      * Create a grid instance.
      *
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return $this
      */
     public static function make(...$params)
@@ -889,8 +866,7 @@ HTML;
     }
 
     /**
-     * @param Closure $closure
-     *
+     * @param  Closure  $closure
      * @return $this;
      */
     public function wrap(\Closure $closure)
@@ -911,8 +887,7 @@ HTML;
     /**
      * Add variables to grid view.
      *
-     * @param array $variables
-     *
+     * @param  array  $variables
      * @return $this
      */
     public function with(array $variables)
@@ -936,8 +911,7 @@ HTML;
     /**
      * Set a view to render.
      *
-     * @param string $view
-     *
+     * @param  string  $view
      * @return $this
      */
     public function view($view)
@@ -950,8 +924,7 @@ HTML;
     /**
      * Set grid title.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -964,8 +937,7 @@ HTML;
     /**
      * Set grid description.
      *
-     * @param string $description
-     *
+     * @param  string  $description
      * @return $this
      */
     public function description($description)
@@ -978,8 +950,7 @@ HTML;
     /**
      * Set resource path for grid.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return $this
      */
     public function setResource($path)
@@ -992,8 +963,7 @@ HTML;
     /**
      * 设置是否显示.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function show(bool $value = true)
@@ -1006,8 +976,7 @@ HTML;
     /**
      * 是否显示横向滚动条.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function scrollbarX(bool $value = true)
@@ -1102,8 +1071,7 @@ JS
     /**
      * Add column to grid.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return Column
      */
     public function __get($name)
@@ -1116,7 +1084,6 @@ JS
      *
      * @param $method
      * @param $arguments
-     *
      * @return Column
      */
     public function __call($method, $arguments)

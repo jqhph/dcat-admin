@@ -19,8 +19,7 @@ class In extends AbstractFilter
     /**
      * Get condition of this filter.
      *
-     * @param array $inputs
-     *
+     * @param  array  $inputs
      * @return mixed
      */
     public function condition($inputs)

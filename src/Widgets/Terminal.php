@@ -19,9 +19,8 @@ class Terminal extends Widget
     }
 
     /**
-     * @param string $command
-     * @param array  $parameters
-     *
+     * @param  string  $command
+     * @param  array  $parameters
      * @return static
      */
     public static function call(string $command, array $parameters = [])

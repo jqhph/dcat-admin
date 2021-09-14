@@ -50,10 +50,9 @@ trait HasTree
     /**
      * 开启树形表格功能.
      *
-     * @param bool $showAll
-     * @param bool $sortable
-     * @param mixed $defaultParentId
-     *
+     * @param  bool  $showAll
+     * @param  bool  $sortable
+     * @param  mixed  $defaultParentId
      * @return void
      */
     public function enableTree(bool $showAll, bool $sortable, $defaultParentId = null)
@@ -124,8 +123,7 @@ trait HasTree
     /**
      * 设置子节点查询链接需要忽略的字段.
      *
-     * @param string|array $keys
-     *
+     * @param  string|array  $keys
      * @return $this
      */
     public function treeUrlWithoutQuery($keys)
@@ -191,8 +189,7 @@ HTML
     }
 
     /**
-     * @param mixed $parentId
-     *
+     * @param  mixed  $parentId
      * @return string
      */
     public function getChildrenPageName($parentId)
@@ -233,8 +230,7 @@ HTML
     /**
      * 移除树相关参数.
      *
-     * @param string $url
-     *
+     * @param  string  $url
      * @return string
      */
     public function withoutTreeQuery($url)

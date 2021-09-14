@@ -45,8 +45,7 @@ class SwitchField extends Field
     /**
      * Set color of the switcher.
      *
-     * @param string $color
-     *
+     * @param  string  $color
      * @return $this
      */
     public function color($color)
@@ -55,8 +54,7 @@ class SwitchField extends Field
     }
 
     /**
-     * @param string $color
-     *
+     * @param  string  $color
      * @return $this
      */
     public function secondary($color)
@@ -81,8 +79,7 @@ class SwitchField extends Field
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return int
      */
     protected function prepareInputValue($value)

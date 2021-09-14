@@ -38,7 +38,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 设置主键名称.
      *
-     * @param string|array $keyName
+     * @param  string|array  $keyName
      */
     public function setKeyName($keyName)
     {
@@ -76,7 +76,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * @param bool $isSoftDeletes
+     * @param  bool  $isSoftDeletes
      */
     public function setIsSoftDeletes(?bool $isSoftDeletes)
     {
@@ -86,8 +86,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 获取Grid表格数据.
      *
-     * @param Grid\Model $model
-     *
+     * @param  Grid\Model  $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|array
      */
     public function get(Grid\Model $model)
@@ -98,8 +97,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 获取编辑页面数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function edit(Form $form)
@@ -110,8 +108,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 获取详情页面数据.
      *
-     * @param Show $show
-     *
+     * @param  Show  $show
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function detail(Show $show)
@@ -122,8 +119,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 新增记录.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return int|bool|\Dcat\Admin\Http\JsonResponse
      */
     public function store(Form $form)
@@ -134,8 +130,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 查询更新前的行数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function updating(Form $form)
@@ -146,8 +141,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 更新数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return bool|\Dcat\Admin\Http\JsonResponse
      */
     public function update(Form $form)
@@ -158,9 +152,8 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 删除数据.
      *
-     * @param Form  $form
-     * @param array $deletingData
-     *
+     * @param  Form  $form
+     * @param  array  $deletingData
      * @return bool|int|\Dcat\Admin\Http\JsonResponse
      */
     public function delete(Form $form, array $deletingData)
@@ -171,8 +164,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 查询删除前的行数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array
      */
     public function deleting(Form $form)
@@ -223,8 +215,8 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 保存层级数据排序.
      *
-     * @param array $tree
-     * @param int   $parentId
+     * @param  array  $tree
+     * @param  int  $parentId
      */
     public function saveOrder($tree = [], $parentId = 0)
     {
@@ -234,8 +226,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     /**
      * 设置数据查询回调.
      *
-     * @param \Closure|null $query
-     *
+     * @param  \Closure|null  $query
      * @return $this
      */
     public function withQuery($queryCallback)
@@ -254,8 +245,7 @@ abstract class Repository implements RepositoryInterface, TreeRepository
     }
 
     /**
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return $this
      */
     public static function make(...$params)

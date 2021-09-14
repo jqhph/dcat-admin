@@ -11,8 +11,7 @@ trait ResolveField
      *     ...
      * });
      *
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return $this
      */
     public function resolvingField(\Closure $callback)
@@ -28,8 +27,7 @@ trait ResolveField
     }
 
     /**
-     * @param Field $field
-     *
+     * @param  Field  $field
      * @return void
      */
     protected function callResolvingFieldCallbacks(Field $field)

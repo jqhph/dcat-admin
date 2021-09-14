@@ -21,8 +21,7 @@ trait HasAuthorization
     /**
      * 是否有权限判断.
      *
-     * @param Model|Authenticatable|HasPermissions|null $user
-     *
+     * @param  Model|Authenticatable|HasPermissions|null  $user
      * @return bool
      */
     protected function authorize($user): bool

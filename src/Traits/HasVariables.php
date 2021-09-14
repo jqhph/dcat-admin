@@ -26,8 +26,7 @@ trait HasVariables
     /**
      * 设置变量.
      *
-     * @param array $variables
-     *
+     * @param  array  $variables
      * @return $this
      */
     public function addVariables(array $variables = [])

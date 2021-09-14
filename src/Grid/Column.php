@@ -185,8 +185,8 @@ class Column
     protected $conditions = [];
 
     /**
-     * @param string $name
-     * @param string $label
+     * @param  string  $name
+     * @param  string  $label
      */
     public function __construct($name, $label)
     {
@@ -224,7 +224,7 @@ class Column
     /**
      * Set grid instance for column.
      *
-     * @param Grid $grid
+     * @param  Grid  $grid
      */
     public function setGrid(Grid $grid)
     {
@@ -242,7 +242,7 @@ class Column
     /**
      * Set original data for column.
      *
-     * @param Collection $collection
+     * @param  Collection  $collection
      */
     public static function setOriginalGridModels(Collection $collection)
     {
@@ -258,8 +258,7 @@ class Column
     /**
      * Set width for column.
      *
-     * @param string $width
-     *
+     * @param  string  $width
      * @return $this|string
      */
     public function width(?string $width)
@@ -298,8 +297,7 @@ class Column
      *         ->end()
      *         ->modal()
      *
-     * @param \Closure $condition
-     *
+     * @param  \Closure  $condition
      * @return Column\Condition
      */
     public function if(\Closure $condition = null)
@@ -314,8 +312,7 @@ class Column
     /**
      * Set column attributes.
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return $this
      */
     public function setAttributes(array $attributes = [])
@@ -328,8 +325,7 @@ class Column
     /**
      * Get column attributes.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return mixed
      */
     public function getAttributes()
@@ -350,8 +346,7 @@ class Column
     /**
      * Set style of this column.
      *
-     * @param string $style
-     *
+     * @param  string  $style
      * @return Column
      */
     public function style($style)
@@ -370,7 +365,7 @@ class Column
     }
 
     /**
-     * @param array|Model $model
+     * @param  array|Model  $model
      */
     public function setOriginalModel($model)
     {
@@ -408,8 +403,7 @@ class Column
     /**
      * Format label.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return mixed
      */
     protected function formatLabel($label)
@@ -428,8 +422,7 @@ class Column
     }
 
     /**
-     * @param string $label
-     *
+     * @param  string  $label
      * @return $this
      */
     public function setLabel($label)
@@ -442,9 +435,8 @@ class Column
     /**
      * Add a display callback.
      *
-     * @param \Closure|string $callback
-     * @param array           $params
-     *
+     * @param  \Closure|string  $callback
+     * @param  array  $params
      * @return $this
      */
     public function display($callback, ...$params)
@@ -465,8 +457,7 @@ class Column
     }
 
     /**
-     * @param array $callbacks
-     *
+     * @param  array  $callbacks
      * @return void
      */
     public function setDisplayCallbacks(array $callbacks)
@@ -485,8 +476,7 @@ class Column
     /**
      * Call all of the "display" callbacks column.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed
      */
     protected function callDisplayCallbacks($value)
@@ -520,8 +510,7 @@ class Column
     /**
      * Set original grid data to column.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return Closure
      */
     protected function bindOriginalRowModel(Closure $callback)
@@ -532,7 +521,7 @@ class Column
     /**
      * Fill all data to every column.
      *
-     * @param \Illuminate\Support\Collection $data
+     * @param  \Illuminate\Support\Collection  $data
      */
     public function fill($data)
     {
@@ -577,8 +566,7 @@ class Column
     /**
      * 把模型转化为数组.
      *
-     * @param array|Model $row
-     *
+     * @param  array|Model  $row
      * @return mixed
      */
     protected function convertModelToArray(&$row)
@@ -609,8 +597,7 @@ class Column
     /**
      * Convert characters to HTML entities recursively.
      *
-     * @param array|string $item
-     *
+     * @param  array|string  $item
      * @return mixed
      */
     protected function htmlEntityEncode($item)
@@ -637,9 +624,8 @@ class Column
     /**
      * Find a displayer to display column.
      *
-     * @param string $abstract
-     * @param array  $arguments
-     *
+     * @param  string  $abstract
+     * @param  array  $arguments
      * @return Column
      */
     protected function resolveDisplayer($abstract, $arguments)
@@ -654,9 +640,8 @@ class Column
     /**
      * Call Illuminate/Support displayer.
      *
-     * @param string $abstract
-     * @param array  $arguments
-     *
+     * @param  string  $abstract
+     * @param  array  $arguments
      * @return Column
      */
     protected function callSupportDisplayer($abstract, $arguments)
@@ -677,9 +662,8 @@ class Column
     /**
      * Call Builtin displayer.
      *
-     * @param string $abstract
-     * @param array  $arguments
-     *
+     * @param  string  $abstract
+     * @param  array  $arguments
      * @return Column
      */
     protected function callBuiltinDisplayer($abstract, $arguments)
@@ -708,8 +692,7 @@ class Column
     /**
      * Set column title attributes.
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return $this
      */
     public function setHeaderAttributes(array $attributes = [])
@@ -722,8 +705,7 @@ class Column
     /**
      * Set column title default attributes.
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return $this
      */
     public function setDefaultHeaderAttribute(array $attributes)
@@ -755,7 +737,6 @@ class Column
     /**
      * @param  mixed  $value
      * @param  callable  $callback
-     *
      * @return $this|mixed
      */
     public function when($value, $callback)
@@ -772,9 +753,8 @@ class Column
      *
      * Allow fluent calls on the Column object.
      *
-     * @param string $method
-     * @param array  $arguments
-     *
+     * @param  string  $method
+     * @param  array  $arguments
      * @return $this
      */
     public function __call($method, $arguments)

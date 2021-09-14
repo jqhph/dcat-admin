@@ -17,8 +17,8 @@ class Hidden extends AbstractFilter
     /**
      * Hidden constructor.
      *
-     * @param string $name
-     * @param string $value
+     * @param  string  $name
+     * @param  string  $value
      */
     public function __construct($name, $value)
     {

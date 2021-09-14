@@ -28,8 +28,7 @@ trait HasPaginator
     /**
      * Paginate the grid.
      *
-     * @param int $perPage
-     *
+     * @param  int  $perPage
      * @return void
      */
     public function paginate(int $perPage = 20)
@@ -42,8 +41,7 @@ trait HasPaginator
     /**
      * 是否使用 simplePaginate 方法分页.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function simplePaginate(bool $value = true)
@@ -62,8 +60,7 @@ trait HasPaginator
     }
 
     /**
-     * @param string $paginator
-     *
+     * @param  string  $paginator
      * @return $this
      */
     public function setPaginatorClass(string $paginator)
@@ -102,7 +99,7 @@ trait HasPaginator
     /**
      * Set per-page options.
      *
-     * @param array $perPages
+     * @param  array  $perPages
      */
     public function perPages(array $perPages)
     {
@@ -144,8 +141,7 @@ trait HasPaginator
     /**
      * Show grid pagination.
      *
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return $this
      */
     public function showPagination(bool $val = true)

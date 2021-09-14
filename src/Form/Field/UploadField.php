@@ -94,7 +94,6 @@ trait UploadField
      * If name already exists, rename it.
      *
      * @param $file
-     *
      * @return void
      */
     public function renameIfExists(UploadedFile $file)
@@ -115,8 +114,7 @@ trait UploadField
     /**
      * Get store name of upload file.
      *
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     protected function getStoreName(UploadedFile $file)
@@ -157,8 +155,7 @@ trait UploadField
     /**
      * Indicates if the underlying field is retainable.
      *
-     * @param bool $retainable
-     *
+     * @param  bool  $retainable
      * @return $this
      */
     public function retainable(bool $retainable = true)
@@ -178,8 +175,7 @@ trait UploadField
     /**
      * Upload File.
      *
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return Response
      */
     public function upload(UploadedFile $file)
@@ -221,7 +217,7 @@ trait UploadField
     }
 
     /**
-     * @param UploadedFile $file
+     * @param  UploadedFile  $file
      */
     protected function prepareFile(UploadedFile $file)
     {
@@ -230,9 +226,8 @@ trait UploadField
     /**
      * Specify the directory and name for upload file.
      *
-     * @param string|\Closure $directory
-     * @param null|string     $name
-     *
+     * @param  string|\Closure  $directory
+     * @param  null|string  $name
      * @return $this
      */
     public function move($directory, $name = null)
@@ -247,8 +242,7 @@ trait UploadField
     /**
      * Specify the directory upload file.
      *
-     * @param string|\Closure $dir
-     *
+     * @param  string|\Closure  $dir
      * @return $this
      */
     public function dir($dir)
@@ -263,8 +257,7 @@ trait UploadField
     /**
      * Set name of store name.
      *
-     * @param string|callable $name
-     *
+     * @param  string|callable  $name
      * @return $this
      */
     public function name($name)
@@ -303,8 +296,7 @@ trait UploadField
     /**
      * Generate a unique name for uploaded file.
      *
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     protected function generateUniqueName(UploadedFile $file)
@@ -315,8 +307,7 @@ trait UploadField
     /**
      * Generate a sequence name for uploaded file.
      *
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return string
      */
     protected function generateSequenceName(UploadedFile $file)
@@ -335,8 +326,7 @@ trait UploadField
     }
 
     /**
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return bool|\Illuminate\Support\MessageBag
      */
     protected function getValidationErrors(UploadedFile $file)
@@ -396,7 +386,7 @@ trait UploadField
     /**
      * Destroy files.
      *
-     * @param string|array $path
+     * @param  string|array  $path
      */
     public function deleteFile($paths)
     {
@@ -437,11 +427,10 @@ trait UploadField
     /**
      * Set disk for storage.
      *
-     * @param string $disk Disks defined in `config/filesystems.php`.
+     * @param  string  $disk  Disks defined in `config/filesystems.php`.
+     * @return $this
      *
      * @throws \Exception
-     *
-     * @return $this
      */
     public function disk($disk)
     {
@@ -466,8 +455,7 @@ trait UploadField
     /**
      * Get file visit url.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string
      */
     public function objectUrl($path)
@@ -481,7 +469,6 @@ trait UploadField
 
     /**
      * @param $permission
-     *
      * @return $this
      */
     public function storagePermission($permission)

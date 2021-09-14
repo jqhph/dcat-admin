@@ -58,7 +58,7 @@ class Content implements Renderable
     /**
      * Content constructor.
      *
-     * @param Closure|null $callback
+     * @param  Closure|null  $callback
      */
     public function __construct(\Closure $callback = null)
     {
@@ -72,8 +72,7 @@ class Content implements Renderable
     /**
      * Create a content instance.
      *
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return $this
      */
     public static function make(...$params)
@@ -82,8 +81,7 @@ class Content implements Renderable
     }
 
     /**
-     * @param string $header
-     *
+     * @param  string  $header
      * @return $this
      */
     public function header($header = '')
@@ -94,8 +92,7 @@ class Content implements Renderable
     /**
      * Set title of content.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -108,8 +105,7 @@ class Content implements Renderable
     /**
      * Set description of content.
      *
-     * @param string $description
-     *
+     * @param  string  $description
      * @return $this
      */
     public function description($description = '')
@@ -122,8 +118,7 @@ class Content implements Renderable
     /**
      * 设置翻译文件路径.
      *
-     * @param string|null $translation
-     *
+     * @param  string|null  $translation
      * @return $this
      */
     public function translation(?string $translation)
@@ -152,8 +147,7 @@ class Content implements Renderable
      *         ['text' => 'Menu', 'url' => 'auth/menu', 'icon' => 'fa fa-align-justify']
      *     ]);
      *
-     * @param array ...$breadcrumb
-     *
+     * @param  array  ...$breadcrumb
      * @return $this
      */
     public function breadcrumb(...$breadcrumb)
@@ -166,11 +160,10 @@ class Content implements Renderable
     }
 
     /**
-     * @param array $breadcrumb
+     * @param  array  $breadcrumb
+     * @return void
      *
      * @throws \Exception
-     *
-     * @return void
      */
     protected function formatBreadcrumb(array &$breadcrumb)
     {
@@ -205,8 +198,7 @@ class Content implements Renderable
     /**
      * Alias of method row.
      *
-     * @param mixed $content
-     *
+     * @param  mixed  $content
      * @return Content
      */
     public function body($content)
@@ -218,7 +210,6 @@ class Content implements Renderable
      * Add one row for content body.
      *
      * @param $content
-     *
      * @return $this
      */
     public function row($content)
@@ -236,7 +227,6 @@ class Content implements Renderable
 
     /**
      * @param $content
-     *
      * @return $this
      */
     public function prepend($content)
@@ -260,7 +250,7 @@ class Content implements Renderable
     /**
      * Add Row.
      *
-     * @param Row $row
+     * @param  Row  $row
      */
     protected function addRow(Row $row)
     {
@@ -288,8 +278,7 @@ class Content implements Renderable
     }
 
     /**
-     * @param \Throwable $e
-     *
+     * @param  \Throwable  $e
      * @return mixed|string
      */
     protected function handleException(\Throwable $e)
@@ -308,9 +297,8 @@ class Content implements Renderable
     /**
      * Set success message for content.
      *
-     * @param string $title
-     * @param string $message
-     *
+     * @param  string  $title
+     * @param  string  $message
      * @return $this
      */
     public function withSuccess($title = '', $message = '')
@@ -323,9 +311,8 @@ class Content implements Renderable
     /**
      * Set error message for content.
      *
-     * @param string $title
-     * @param string $message
-     *
+     * @param  string  $title
+     * @param  string  $message
      * @return $this
      */
     public function withError($title = '', $message = '')
@@ -338,9 +325,8 @@ class Content implements Renderable
     /**
      * Set warning message for content.
      *
-     * @param string $title
-     * @param string $message
-     *
+     * @param  string  $title
+     * @param  string  $message
      * @return $this
      */
     public function withWarning($title = '', $message = '')
@@ -353,9 +339,8 @@ class Content implements Renderable
     /**
      * Set info message for content.
      *
-     * @param string $title
-     * @param string $message
-     *
+     * @param  string  $title
+     * @param  string  $message
      * @return $this
      */
     public function withInfo($title = '', $message = '')
@@ -368,8 +353,7 @@ class Content implements Renderable
     /**
      * Set content view.
      *
-     * @param null|string $view
-     *
+     * @param  null|string  $view
      * @return $this
      */
     public function view(?string $view)
@@ -380,9 +364,8 @@ class Content implements Renderable
     }
 
     /**
-     * @param string|array $key
-     * @param mixed $value
-     *
+     * @param  string|array  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function with($key, $value = null)
@@ -397,9 +380,8 @@ class Content implements Renderable
     }
 
     /**
-     * @param string|array $key
-     * @param mixed $value
-     *
+     * @param  string|array  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function withConfig($key, $value = null)
@@ -545,8 +527,8 @@ class Content implements Renderable
     /**
      * Register a composed event.
      *
-     * @param callable $callback
-     * @param bool     $once
+     * @param  callable  $callback
+     * @param  bool  $once
      */
     public static function composed(callable $callback, bool $once = false)
     {
@@ -556,7 +538,7 @@ class Content implements Renderable
     /**
      * Call the composed callbacks.
      *
-     * @param array ...$params
+     * @param  array  ...$params
      */
     protected function callComposed(...$params)
     {

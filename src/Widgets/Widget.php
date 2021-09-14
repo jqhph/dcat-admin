@@ -59,8 +59,7 @@ abstract class Widget implements Renderable
     protected $runScript = true;
 
     /**
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return static
      */
     public static function make(...$params)
@@ -73,7 +72,6 @@ abstract class Widget implements Renderable
      *
      * @param  mixed  $value
      * @param  callable  $callback
-     *
      * @return $this|mixed
      */
     public function when($value, $callback)
@@ -88,8 +86,7 @@ abstract class Widget implements Renderable
     /**
      * 批量设置选项.
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function options($options = [])
@@ -106,9 +103,8 @@ abstract class Widget implements Renderable
     /**
      * 设置或获取配置选项.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function option($key, $value = null)
@@ -168,7 +164,6 @@ abstract class Widget implements Renderable
 
     /**
      * @param $value
-     *
      * @return string
      */
     protected function toString($value)
@@ -203,8 +198,7 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * @param string $elementClass
-     *
+     * @param  string  $elementClass
      * @return $this
      */
     public function setElementClass(string $elementClass)
@@ -257,7 +251,7 @@ abstract class Widget implements Renderable
     /**
      * 设置模板.
      *
-     * @param string $view
+     * @param  string  $view
      */
     public function view($view)
     {
@@ -267,8 +261,7 @@ abstract class Widget implements Renderable
     /**
      * 设置是否执行JS代码.
      *
-     * @param bool $run
-     *
+     * @param  bool  $run
      * @return $this
      */
     public function runScript(bool $run = true)
@@ -287,8 +280,7 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * @param mixed $content
-     *
+     * @param  mixed  $content
      * @return Lazy|LazyTable|mixed
      */
     protected function formatRenderable($content)
@@ -307,7 +299,6 @@ abstract class Widget implements Renderable
     /**
      * @param $method
      * @param $parameters
-     *
      * @return $this
      */
     public function __call($method, $parameters)
@@ -343,8 +334,7 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function __get($key)
@@ -353,9 +343,8 @@ abstract class Widget implements Renderable
     }
 
     /**
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return void
      */
     public function __set($key, $value)

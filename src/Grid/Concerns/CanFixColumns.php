@@ -15,9 +15,8 @@ trait CanFixColumns
     protected $fixColumns;
 
     /**
-     * @param int $head
-     * @param int $tail
-     *
+     * @param  int  $head
+     * @param  int  $tail
      * @return FixColumns
      */
     public function fixColumns(int $head, int $tail = -1)

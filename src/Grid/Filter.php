@@ -44,28 +44,28 @@ use Illuminate\Support\Traits\Macroable;
 /**
  * Class Filter.
  *
- * @method Equal        equal($column, $label = '')
- * @method NotEqual     notEqual($column, $label = '')
- * @method Like         like($column, $label = '')
- * @method Ilike        ilike($column, $label = '')
- * @method StartWith    startWith($column, $label = '')
- * @method EndWith      endWith($column, $label = '')
- * @method Gt           gt($column, $label = '')
- * @method Lt           lt($column, $label = '')
- * @method Ngt          ngt($column, $label = '')
- * @method Nlt          nlt($column, $label = '')
- * @method Between      between($column, $label = '')
- * @method In           in($column, $label = '')
- * @method NotIn        notIn($column, $label = '')
- * @method Where        where($colum, $callback, $label = '')
+ * @method Equal equal($column, $label = '')
+ * @method NotEqual notEqual($column, $label = '')
+ * @method Like like($column, $label = '')
+ * @method Ilike ilike($column, $label = '')
+ * @method StartWith startWith($column, $label = '')
+ * @method EndWith endWith($column, $label = '')
+ * @method Gt gt($column, $label = '')
+ * @method Lt lt($column, $label = '')
+ * @method Ngt ngt($column, $label = '')
+ * @method Nlt nlt($column, $label = '')
+ * @method Between between($column, $label = '')
+ * @method In in($column, $label = '')
+ * @method NotIn notIn($column, $label = '')
+ * @method Where where($colum, $callback, $label = '')
  * @method WhereBetween whereBetween($colum, $callback, $label = '')
- * @method Date         date($column, $label = '')
- * @method Day          day($column, $label = '')
- * @method Month        month($column, $label = '')
- * @method Year         year($column, $label = '')
- * @method Hidden       hidden($name, $value)
- * @method Group        group($column, $builder = null, $label = '')
- * @method Newline      newline()
+ * @method Date date($column, $label = '')
+ * @method Day day($column, $label = '')
+ * @method Month month($column, $label = '')
+ * @method Year year($column, $label = '')
+ * @method Hidden hidden($name, $value)
+ * @method Group group($column, $builder = null, $label = '')
+ * @method Newline newline()
  */
 class Filter implements Renderable
 {
@@ -203,7 +203,7 @@ class Filter implements Renderable
     /**
      * Create a new filter instance.
      *
-     * @param Model $model
+     * @param  Model  $model
      */
     public function __construct(Model $model)
     {
@@ -239,8 +239,7 @@ class Filter implements Renderable
     /**
      * Set action of search form.
      *
-     * @param string $action
-     *
+     * @param  string  $action
      * @return $this
      */
     public function setAction($action)
@@ -261,8 +260,7 @@ class Filter implements Renderable
     }
 
     /**
-     * @param bool $disabled
-     *
+     * @param  bool  $disabled
      * @return $this
      */
     public function disableCollapse(bool $disabled = true)
@@ -273,8 +271,7 @@ class Filter implements Renderable
     }
 
     /**
-     * @param bool $disabled
-     *
+     * @param  bool  $disabled
      * @return $this
      */
     public function disableResetButton(bool $disabled = true)
@@ -287,9 +284,8 @@ class Filter implements Renderable
     /**
      * Get input data.
      *
-     * @param string $key
-     * @param null   $value
-     *
+     * @param  string  $key
+     * @param  null  $value
      * @return array|mixed
      */
     public function input($key = null, $default = null)
@@ -326,8 +322,7 @@ class Filter implements Renderable
     /**
      * Set ID of search form.
      *
-     * @param string $filterID
-     *
+     * @param  string  $filterID
      * @return $this
      */
     public function setFilterID($filterID)
@@ -354,8 +349,7 @@ class Filter implements Renderable
     }
 
     /**
-     * @param string|null $mode
-     *
+     * @param  string|null  $mode
      * @return $this|string
      */
     public function mode(string $mode = null)
@@ -400,7 +394,7 @@ class Filter implements Renderable
     /**
      * Remove filter by column.
      *
-     * @param string|array $column
+     * @param  string|array  $column
      */
     public function removeFilter($column)
     {
@@ -478,8 +472,7 @@ class Filter implements Renderable
     }
 
     /**
-     * @param array $inputs
-     *
+     * @param  array  $inputs
      * @return void
      */
     protected function sanitizeInputs(&$inputs)
@@ -500,8 +493,7 @@ class Filter implements Renderable
     /**
      * Add a filter to grid.
      *
-     * @param AbstractFilter $filter
-     *
+     * @param  AbstractFilter  $filter
      * @return AbstractFilter
      */
     protected function addFilter(AbstractFilter $filter)
@@ -516,8 +508,7 @@ class Filter implements Renderable
     /**
      * Use a custom filter.
      *
-     * @param AbstractFilter $filter
-     *
+     * @param  AbstractFilter  $filter
      * @return AbstractFilter
      */
     public function use(AbstractFilter $filter)
@@ -547,9 +538,8 @@ class Filter implements Renderable
     }
 
     /**
-     * @param string $key
-     * @param string $label
-     *
+     * @param  string  $key
+     * @param  string  $label
      * @return Scope
      */
     public function scope($key, $label = '')
@@ -620,8 +610,7 @@ class Filter implements Renderable
     /**
      * Expand filter container.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function expand(bool $value = true)
@@ -655,11 +644,10 @@ class Filter implements Renderable
     }
 
     /**
-     * @param string $top
-     * @param string $right
-     * @param string $bottom
-     * @param string $left
-     *
+     * @param  string  $top
+     * @param  string  $right
+     * @param  string  $bottom
+     * @param  string  $left
      * @return Filter
      */
     public function padding($top = '15px', $right = '15px', $bottom = '5px', $left = '')
@@ -668,8 +656,7 @@ class Filter implements Renderable
     }
 
     /**
-     * @param string $style
-     *
+     * @param  string  $style
      * @return $this
      */
     public function style(?string $style)
@@ -780,9 +767,8 @@ class Filter implements Renderable
     /**
      * Generate a filter object and add to grid.
      *
-     * @param string $method
-     * @param array  $arguments
-     *
+     * @param  string  $method
+     * @param  array  $arguments
      * @return AbstractFilter|$this
      */
     public function __call($method, $arguments)
@@ -804,8 +790,8 @@ class Filter implements Renderable
     }
 
     /**
-     * @param string $name
-     * @param string $filterClass
+     * @param  string  $name
+     * @param  string  $filterClass
      */
     public static function extend($name, $filterClass)
     {

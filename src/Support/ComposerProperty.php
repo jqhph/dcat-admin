@@ -9,17 +9,17 @@ use Illuminate\Support\Arr;
  * @property string $name
  * @property string $description
  * @property string $type
- * @property array  $keywords
+ * @property array $keywords
  * @property string $homepage
  * @property string $license
- * @property array  $authors
- * @property array  $require
- * @property array  $require_dev
- * @property array  $suggest
- * @property array  $autoload
- * @property array  $autoload_dev
- * @property array  $scripts
- * @property array  $extra
+ * @property array $authors
+ * @property array $require
+ * @property array $require_dev
+ * @property array $suggest
+ * @property array $autoload
+ * @property array $autoload_dev
+ * @property array $scripts
+ * @property array $extra
  * @property string $version
  */
 class ComposerProperty implements Arrayable
@@ -36,8 +36,7 @@ class ComposerProperty implements Arrayable
 
     /**
      * @param $key
-     * @param null $default
-     *
+     * @param  null  $default
      * @return mixed
      */
     public function get($key, $default = null)
@@ -48,7 +47,6 @@ class ComposerProperty implements Arrayable
     /**
      * @param $key
      * @param $val
-     *
      * @return $this
      */
     public function set($key, $val)
@@ -62,7 +60,6 @@ class ComposerProperty implements Arrayable
 
     /**
      * @param $key
-     *
      * @return $this
      */
     public function delete($key)
@@ -76,7 +73,6 @@ class ComposerProperty implements Arrayable
 
     /**
      * @param $name
-     *
      * @return mixed
      */
     public function __get($name)

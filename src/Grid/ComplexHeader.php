@@ -85,8 +85,7 @@ class ComplexHeader extends Widget
     }
 
     /**
-     * @param string $html
-     *
+     * @param  string  $html
      * @return $this
      */
     public function append($html)
@@ -97,10 +96,9 @@ class ComplexHeader extends Widget
     }
 
     /**
-     * @param string|\Closure $message
-     * @param null|string     $style     'green', 'blue', 'red', 'purple'
-     * @param null|string     $placement 'bottom', 'left', 'right', 'top'
-     *
+     * @param  string|\Closure  $message
+     * @param  null|string  $style  'green', 'blue', 'red', 'purple'
+     * @param  null|string  $placement  'bottom', 'left', 'right', 'top'
      * @return $this
      */
     public function help($message, ?string $style = null, ?string $placement = null)

@@ -27,8 +27,7 @@ JS;
     /**
      * Set input placeholder.
      *
-     * @param null|string $placeholder
-     *
+     * @param  null|string  $placeholder
      * @return $this
      */
     public function placeholder(?string $placeholder)
@@ -67,8 +66,7 @@ HTML;
     }
 
     /**
-     * @param string|\Closure $valueKey
-     *
+     * @param  string|\Closure  $valueKey
      * @return $this
      */
     public function valueFilter($valueKey = null)

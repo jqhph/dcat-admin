@@ -15,8 +15,7 @@ class Number extends Text
     /**
      * Set min value of number field.
      *
-     * @param int $value
-     *
+     * @param  int  $value
      * @return $this
      */
     public function min($value)
@@ -29,8 +28,7 @@ class Number extends Text
     /**
      * Set max value of number field.
      *
-     * @param int $value
-     *
+     * @param  int  $value
      * @return $this
      */
     public function max($value)

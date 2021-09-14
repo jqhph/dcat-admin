@@ -17,8 +17,7 @@ trait HasRows
     /**
      * Add a row in form.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function row(Closure $callback)

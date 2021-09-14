@@ -22,8 +22,8 @@ class Embeds extends Field
     /**
      * Create a new HasMany field instance.
      *
-     * @param string $column
-     * @param array  $arguments
+     * @param  string  $column
+     * @param  array  $arguments
      */
     public function __construct($column, $arguments = [])
     {
@@ -42,8 +42,7 @@ class Embeds extends Field
     /**
      * Prepare input data for insert or update.
      *
-     * @param array $input
-     *
+     * @param  array  $input
      * @return array
      */
     protected function prepareInputValue($input)
@@ -146,9 +145,8 @@ class Embeds extends Field
     /**
      * Format validation messages.
      *
-     * @param array $input
-     * @param array $messages
-     *
+     * @param  array  $input
+     * @param  array  $messages
      * @return array
      */
     protected function formatValidationMessages(array $input, array $messages)
@@ -164,10 +162,9 @@ class Embeds extends Field
     /**
      * Format validation attributes.
      *
-     * @param array  $input
-     * @param string $label
-     * @param string $column
-     *
+     * @param  array  $input
+     * @param  string  $label
+     * @param  string  $column
      * @return array
      */
     protected function formatValidationAttribute($input, $label, $column)
@@ -200,9 +197,8 @@ class Embeds extends Field
     /**
      * Reset input key for validation.
      *
-     * @param array $input
-     * @param array $column $column is the column name array set
-     *
+     * @param  array  $input
+     * @param  array  $column  $column is the column name array set
      * @return void.
      */
     public function resetInputKey(array &$input, array $column)

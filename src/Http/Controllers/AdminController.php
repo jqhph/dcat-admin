@@ -66,8 +66,7 @@ class AdminController extends Controller
     /**
      * Index interface.
      *
-     * @param Content $content
-     *
+     * @param  Content  $content
      * @return Content
      */
     public function index(Content $content)
@@ -82,9 +81,8 @@ class AdminController extends Controller
     /**
      * Show interface.
      *
-     * @param mixed   $id
-     * @param Content $content
-     *
+     * @param  mixed  $id
+     * @param  Content  $content
      * @return Content
      */
     public function show($id, Content $content)
@@ -99,9 +97,8 @@ class AdminController extends Controller
     /**
      * Edit interface.
      *
-     * @param mixed   $id
-     * @param Content $content
-     *
+     * @param  mixed  $id
+     * @param  Content  $content
      * @return Content
      */
     public function edit($id, Content $content)
@@ -116,8 +113,7 @@ class AdminController extends Controller
     /**
      * Create interface.
      *
-     * @param Content $content
-     *
+     * @param  Content  $content
      * @return Content
      */
     public function create(Content $content)
@@ -132,8 +128,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update($id)
@@ -154,8 +149,7 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

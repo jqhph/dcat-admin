@@ -44,8 +44,7 @@ class QuickSearch extends AbstractTool
     }
 
     /**
-     * @param int $width
-     *
+     * @param  int  $width
      * @return $this
      */
     public function width(int $width)
@@ -58,8 +57,7 @@ class QuickSearch extends AbstractTool
     /**
      * Set placeholder.
      *
-     * @param string $text
-     *
+     * @param  string  $text
      * @return $this
      */
     public function placeholder(?string $text = '')
@@ -90,8 +88,7 @@ class QuickSearch extends AbstractTool
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function auto(bool $value = true)

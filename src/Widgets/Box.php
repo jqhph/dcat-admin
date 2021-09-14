@@ -29,7 +29,7 @@ class Box extends Widget
     /**
      * Set content padding.
      *
-     * @param string $padding
+     * @param  string  $padding
      */
     public function padding(string $padding)
     {
@@ -41,8 +41,7 @@ class Box extends Widget
     /**
      * Set box content.
      *
-     * @param string $content
-     *
+     * @param  string  $content
      * @return $this
      */
     public function content($content)
@@ -59,8 +58,7 @@ class Box extends Widget
     /**
      * Set box title.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -99,8 +97,7 @@ class Box extends Widget
     /**
      * Set box style.
      *
-     * @param string $styles
-     *
+     * @param  string  $styles
      * @return $this|Box
      */
     public function style($styles)
@@ -115,8 +112,7 @@ class Box extends Widget
     }
 
     /**
-     * @param string|Renderable|\Closure $content
-     *
+     * @param  string|Renderable|\Closure  $content
      * @return $this
      */
     public function tool($content)

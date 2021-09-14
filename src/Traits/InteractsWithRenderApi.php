@@ -22,8 +22,7 @@ trait InteractsWithRenderApi
     /**
      * 监听异步渲染完成事件.
      *
-     * @param string $script
-     *
+     * @param  string  $script
      * @return $this
      */
     public function onLoad(string $script)

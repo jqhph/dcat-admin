@@ -12,8 +12,7 @@ trait MenuCache
     /**
      * Get an item from the cache, or execute the given Closure and store the result.
      *
-     * @param \Closure $builder
-     *
+     * @param  \Closure  $builder
      * @return mixed
      */
     protected function remember(\Closure $builder)

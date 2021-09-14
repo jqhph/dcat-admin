@@ -37,8 +37,7 @@ class Between extends AbstractFilter
     /**
      * Format id.
      *
-     * @param string $column
-     *
+     * @param  string  $column
      * @return array|string
      */
     public function formatId($column)
@@ -52,8 +51,7 @@ class Between extends AbstractFilter
     /**
      * Format two field names of this filter.
      *
-     * @param string $column
-     *
+     * @param  string  $column
      * @return array
      */
     protected function formatName($column)
@@ -76,8 +74,7 @@ class Between extends AbstractFilter
     /**
      * Get condition of this filter.
      *
-     * @param array $inputs
-     *
+     * @param  array  $inputs
      * @return mixed
      */
     public function condition($inputs)
@@ -118,8 +115,7 @@ class Between extends AbstractFilter
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function datetime($options = [])

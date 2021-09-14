@@ -80,7 +80,6 @@ class Role extends Model
      * Check user has permission.
      *
      * @param $permission
-     *
      * @return bool
      */
     public function can(?string $permission): bool
@@ -92,7 +91,6 @@ class Role extends Model
      * Check user has no permission.
      *
      * @param $permission
-     *
      * @return bool
      */
     public function cannot(?string $permission): bool
@@ -103,8 +101,7 @@ class Role extends Model
     /**
      * Get id of the permission by id.
      *
-     * @param array $roleIds
-     *
+     * @param  array  $roleIds
      * @return \Illuminate\Support\Collection
      */
     public static function getPermissionId(array $roleIds)
@@ -130,8 +127,7 @@ class Role extends Model
     }
 
     /**
-     * @param string $slug
-     *
+     * @param  string  $slug
      * @return bool
      */
     public static function isAdministrator(?string $slug)

@@ -53,8 +53,7 @@ class Select2 extends Component
      * 选中下拉选框.
      *
      * @param  Browser  $browser
-     * @param  mixed    $value
-     *
+     * @param  mixed  $value
      * @return Browser
      */
     public function choose(Browser $browser, $value)

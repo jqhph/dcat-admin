@@ -25,8 +25,7 @@ class Alert extends Widget
     /**
      * Set title.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -39,8 +38,7 @@ class Alert extends Widget
     /**
      * Set contents.
      *
-     * @param string|\Closure|Renderable $content
-     *
+     * @param  string|\Closure|Renderable  $content
      * @return $this
      */
     public function content($content)
@@ -98,8 +96,7 @@ class Alert extends Widget
     /**
      * Show close button.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function removable(bool $value = true)
@@ -112,8 +109,7 @@ class Alert extends Widget
     /**
      * Add style.
      *
-     * @param string $style
-     *
+     * @param  string  $style
      * @return $this
      */
     public function style($style = 'info')
@@ -126,8 +122,7 @@ class Alert extends Widget
     /**
      * Add icon.
      *
-     * @param string $icon
-     *
+     * @param  string  $icon
      * @return $this
      */
     public function icon($icon)

@@ -13,9 +13,8 @@ class Pjax
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
-     *
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return Response
      */
     public function handle($request, Closure $next)
@@ -41,8 +40,7 @@ class Pjax
     /**
      * Handle Response with exceptions.
      *
-     * @param Response $response
-     *
+     * @param  Response  $response
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function handleErrorResponse(Response $response)
@@ -66,8 +64,8 @@ class Pjax
     /**
      * Set the PJAX-URL header to the current uri.
      *
-     * @param Response $response
-     * @param Request  $request
+     * @param  Response  $response
+     * @param  Request  $request
      */
     protected function setUriHeader(Response $response, Request $request)
     {

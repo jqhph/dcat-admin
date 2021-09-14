@@ -9,11 +9,10 @@ trait CanLoadFields
     /**
      * 联动加载.
      *
-     * @param string $field
-     * @param string $sourceUrl
-     * @param string $idField
-     * @param string $textField
-     *
+     * @param  string  $field
+     * @param  string  $sourceUrl
+     * @param  string  $idField
+     * @param  string  $textField
      * @return $this
      */
     public function load($field, $sourceUrl, string $idField = 'id', string $textField = 'text')
@@ -24,11 +23,10 @@ trait CanLoadFields
     /**
      * 联动加载多个字段.
      *
-     * @param array|string $fields
-     * @param array|string $sourceUrls
-     * @param string $idField
-     * @param string $textField
-     *
+     * @param  array|string  $fields
+     * @param  array|string  $sourceUrls
+     * @param  string  $idField
+     * @param  string  $textField
      * @return $this
      */
     public function loads($fields = [], $sourceUrls = [], string $idField = 'id', string $textField = 'text')

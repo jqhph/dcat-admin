@@ -54,7 +54,6 @@ class Tags extends Field
      *
      * @param $visibleColumn
      * @param $key
-     *
      * @return $this
      */
     public function pluck($visibleColumn, $key = 'id')
@@ -72,9 +71,8 @@ class Tags extends Field
     /**
      * Sanitize input data.
      *
-     * @param array  $input
-     * @param string $column
-     *
+     * @param  array  $input
+     * @param  string  $column
      * @return array
      */
     protected function sanitizeInput($input, $column)
@@ -93,8 +91,7 @@ class Tags extends Field
     /**
      * Set the field options.
      *
-     * @param array|Collection|Arrayable|\Closure $options
-     *
+     * @param  array|Collection|Arrayable|\Closure  $options
      * @return $this|Field
      */
     public function options($options = [])
@@ -137,8 +134,7 @@ class Tags extends Field
     /**
      * Get or set value for this field.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return $this|array|mixed
      */
     public function value($value = null)
@@ -155,10 +151,9 @@ class Tags extends Field
     /**
      * Load options from ajax results.
      *
-     * @param string $url
+     * @param  string  $url
      * @param $idField
      * @param $textField
-     *
      * @return $this
      */
     public function ajax(string $url, string $idField = 'id', string $textField = 'text')

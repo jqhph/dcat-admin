@@ -114,8 +114,7 @@ class RadialBar extends Card
     /**
      * 设置卡片底部内容.
      *
-     * @param string|\Closure|Renderable $value
-     *
+     * @param  string|\Closure|Renderable  $value
      * @return $this
      */
     public function footer($value)
@@ -128,9 +127,8 @@ class RadialBar extends Card
     /**
      * 设置内容宽度.
      *
-     * @param int $left
-     * @param int $right
-     *
+     * @param  int  $left
+     * @param  int  $right
      * @return $this
      */
     public function contentWidth(int $left, int $right)
@@ -143,8 +141,7 @@ class RadialBar extends Card
     /**
      * 图表位置靠右.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function chartPullRight(bool $value = true)

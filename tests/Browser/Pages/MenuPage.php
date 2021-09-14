@@ -59,9 +59,8 @@ class MenuPage extends Page
     /**
      * 创建.
      *
-     * @param Browser $browser
-     * @param array $input
-     *
+     * @param  Browser  $browser
+     * @param  array  $input
      * @return Browser
      */
     public function newMenu(Browser $browser, array $input)

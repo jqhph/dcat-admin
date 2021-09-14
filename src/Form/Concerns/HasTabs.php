@@ -15,9 +15,8 @@ trait HasTabs
     /**
      * Use tab to split form.
      *
-     * @param string  $title
-     * @param Closure $content
-     *
+     * @param  string  $title
+     * @param  Closure  $content
      * @return $this
      */
     public function tab($title, Closure $content, $active = false)
