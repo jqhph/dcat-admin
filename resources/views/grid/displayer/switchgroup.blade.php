@@ -1,9 +1,9 @@
 
 <style>
-    table.grid-switch-group td {
-        padding: 3px 0;
-        height:23px;
-        border: 0;
+    table.grid-switch-group tr td {
+        padding: 3px 0!important;
+        height:25px!important;
+        border: 0!important;
     }
 </style>
 
