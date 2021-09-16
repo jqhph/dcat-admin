@@ -393,8 +393,7 @@ class Column
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function setOriginal($value)
@@ -411,8 +410,7 @@ class Column
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function setValue($value)
@@ -478,7 +476,6 @@ class Column
 
     /**
      * @param  array  $callbacks
-     *
      * @return void
      */
     public function setDisplayCallbacks(array $callbacks)
