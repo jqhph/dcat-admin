@@ -586,7 +586,7 @@ abstract class AbstractFilter
 
         return [$method => [implode('.', $column), function ($q) use ($relColumn, $params) {
             $relColumn = is_string($relColumn) ? $q->getModel()->getTable().'.'.$relColumn : $relColumn;
-            call_user_func_array([$q, $this->query], [$relColumn, $params]);
+            call_user_func_array([$q, $this->query], [$relColumn, ...$params]);
         }]];
     }
 
