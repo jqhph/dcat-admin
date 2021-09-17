@@ -19,8 +19,7 @@ trait HasFiles
     /**
      * 文件上传操作.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return Response|void
      */
     protected function handleUploadFile($data)
@@ -61,8 +60,7 @@ trait HasFiles
     /**
      * 根据字段名称查找字段.
      *
-     * @param string|null $column
-     *
+     * @param  string|null  $column
      * @return Field|null
      */
     public function findFieldByName(?string $column)
@@ -73,8 +71,7 @@ trait HasFiles
     /**
      * 新增页面删除文件.
      *
-     * @param array $input
-     *
+     * @param  array  $input
      * @return \Illuminate\Http\JsonResponse
      */
     protected function deleteFileWhenCreating(array $input)
@@ -110,8 +107,8 @@ trait HasFiles
     /**
      * 删除文件.
      *
-     * @param UploadFieldInterface|Field $field
-     * @param array                      $input
+     * @param  UploadFieldInterface|Field  $field
+     * @param  array  $input
      */
     protected function deleteFile(UploadFieldInterface $field, $input = null)
     {
@@ -138,9 +135,8 @@ trait HasFiles
     /**
      * 获取hasMany的子表单字段.
      *
-     * @param string $relation
-     * @param string $column
-     *
+     * @param  string  $relation
+     * @param  string  $column
      * @return mixed
      */
     public function getFieldByRelationName($relation, $column)
@@ -157,8 +153,8 @@ trait HasFiles
     /**
      * 根据传入数据删除文件.
      *
-     * @param array $input
-     * @param bool  $forceDelete
+     * @param  array  $input
+     * @param  bool  $forceDelete
      */
     public function deleteFiles($input, $forceDelete = false)
     {
@@ -178,8 +174,7 @@ trait HasFiles
     }
 
     /**
-     * @param array $input
-     *
+     * @param  array  $input
      * @return array
      */
     protected function handleFileDelete(array $input = [])

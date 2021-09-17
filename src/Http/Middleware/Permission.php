@@ -19,10 +19,9 @@ class Permission
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     * @param array                    $args
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  array  $args
      * @return mixed
      */
     public function handle(Request $request, \Closure $next, ...$args)
@@ -53,8 +52,7 @@ class Permission
      * If the route of current request contains a middleware prefixed with 'admin.permission:',
      * then it has a manually set permission middleware, we need to handle it first.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return bool
      */
     public function checkRoutePermission(Request $request)
@@ -79,8 +77,7 @@ class Permission
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
     protected function isApiRoute($request)
@@ -91,8 +88,7 @@ class Permission
     /**
      * Determine if the request has a URI that should pass through verification.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
     public function shouldPassThrough($request)

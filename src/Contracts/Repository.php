@@ -48,8 +48,7 @@ interface Repository
     /**
      * 获取Grid表格数据.
      *
-     * @param Grid\Model $model
-     *
+     * @param  Grid\Model  $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|array
      */
     public function get(Grid\Model $model);
@@ -57,8 +56,7 @@ interface Repository
     /**
      * 获取编辑页面数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function edit(Form $form);
@@ -66,8 +64,7 @@ interface Repository
     /**
      * 获取详情页面数据.
      *
-     * @param Show $show
-     *
+     * @param  Show  $show
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function detail(Show $show);
@@ -75,8 +72,7 @@ interface Repository
     /**
      * 新增记录.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return int|bool|\Dcat\Admin\Http\JsonResponse
      */
     public function store(Form $form);
@@ -84,8 +80,7 @@ interface Repository
     /**
      * 查询更新前的行数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function updating(Form $form);
@@ -93,8 +88,7 @@ interface Repository
     /**
      * 更新数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return bool|\Dcat\Admin\Http\JsonResponse
      */
     public function update(Form $form);
@@ -102,9 +96,8 @@ interface Repository
     /**
      * 删除数据.
      *
-     * @param Form  $form
-     * @param array $deletingData
-     *
+     * @param  Form  $form
+     * @param  array  $deletingData
      * @return mixed|\Dcat\Admin\Http\JsonResponse
      */
     public function delete(Form $form, array $deletingData);
@@ -112,8 +105,7 @@ interface Repository
     /**
      * 查询删除前的行数据.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array|\Illuminate\Contracts\Support\Arrayable
      */
     public function deleting(Form $form);

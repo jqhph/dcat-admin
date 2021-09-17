@@ -145,7 +145,7 @@ class Builder
     /**
      * Builder constructor.
      *
-     * @param Form $form
+     * @param  Form  $form
      */
     public function __construct(Form $form)
     {
@@ -157,8 +157,7 @@ class Builder
     }
 
     /**
-     * @param \Closure $closure
-     *
+     * @param  \Closure  $closure
      * @return Layout
      */
     public function layout($closure = null)
@@ -171,8 +170,7 @@ class Builder
     }
 
     /**
-     * @param Closure $closure
-     *
+     * @param  Closure  $closure
      * @return $this;
      */
     public function wrap(Closure $closure)
@@ -211,9 +209,8 @@ class Builder
     }
 
     /**
-     * @param string $title
-     * @param string $content
-     *
+     * @param  string  $title
+     * @param  string  $content
      * @return $this
      */
     public function confirm(?string $title = null, ?string $content = null)
@@ -227,8 +224,7 @@ class Builder
     /**
      * Set the builder mode.
      *
-     * @param string $mode
-     *
+     * @param  string  $mode
      * @return void|string
      */
     public function mode(string $mode = null)
@@ -244,7 +240,6 @@ class Builder
      * Returns builder is $mode.
      *
      * @param $mode
-     *
      * @return bool
      */
     public function isMode($mode)
@@ -286,7 +281,6 @@ class Builder
      * Set resource Id.
      *
      * @param $id
-     *
      * @return mixed|void
      */
     public function setResourceId($id)
@@ -318,9 +312,8 @@ class Builder
     }
 
     /**
-     * @param int $field
-     * @param int $label
-     *
+     * @param  int  $field
+     * @param  int  $label
      * @return $this
      */
     public function width($field = 8, $label = 2)
@@ -401,8 +394,7 @@ class Builder
     /**
      * Set view for this form.
      *
-     * @param string $view
-     *
+     * @param  string  $view
      * @return $this
      */
     public function view($view)
@@ -415,8 +407,7 @@ class Builder
     /**
      * Get or set title for form.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this|string
      */
     public function title($title = null)
@@ -455,8 +446,7 @@ class Builder
     /**
      * Get specify field.
      *
-     * @param string|Field $name
-     *
+     * @param  string|Field  $name
      * @return Field|null
      */
     public function field($name)
@@ -476,7 +466,6 @@ class Builder
 
     /**
      * @param $column
-     *
      * @return void
      */
     public function removeField($column)
@@ -523,8 +512,7 @@ class Builder
     }
 
     /**
-     * @param Field $field
-     *
+     * @param  Field  $field
      * @return void
      */
     public function addHiddenField(Field $field)
@@ -535,8 +523,7 @@ class Builder
     /**
      * Add or get options.
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return array|null
      */
     public function options($options = [])
@@ -551,9 +538,8 @@ class Builder
     /**
      * Get or set option.
      *
-     * @param string $option
-     * @param mixed  $value
-     *
+     * @param  string  $option
+     * @param  mixed  $value
      * @return void
      */
     public function option($option, $value = null)
@@ -566,8 +552,7 @@ class Builder
     }
 
     /**
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return void
      */
     public function disableHeader(bool $disable = true)
@@ -576,8 +561,7 @@ class Builder
     }
 
     /**
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return void
      */
     public function disableFooter(bool $disable = true)
@@ -587,7 +571,6 @@ class Builder
 
     /**
      * @param $id
-     *
      * @return void
      */
     public function setElementId($id)
@@ -652,8 +635,7 @@ class Builder
     /**
      * Open up a new HTML form.
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return string
      */
     public function open($options = [])
@@ -835,8 +817,7 @@ class Builder
     }
 
     /**
-     * @param Renderable $view
-     *
+     * @param  Renderable  $view
      * @return string
      */
     protected function doWrap(Renderable $view)

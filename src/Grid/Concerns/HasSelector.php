@@ -17,8 +17,7 @@ trait HasSelector
     protected $_selector;
 
     /**
-     * @param \Closure $closure
-     *
+     * @param  \Closure  $closure
      * @return $this|Selector
      */
     public function selector(\Closure $closure = null)

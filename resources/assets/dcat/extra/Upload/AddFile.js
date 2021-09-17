@@ -230,7 +230,7 @@ export default class AddFile {
 
                     break;
                 case 'preview':
-                    Dcat.helpers.previewImage(parent.$wrapper.find('img').attr('src'), null, file.name);
+                    Dcat.helpers.previewImage($(this).parent().parent().find('img').attr('src'), null, file.name);
 
                     break;
                 case 'order':

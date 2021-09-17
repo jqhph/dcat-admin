@@ -35,8 +35,7 @@ abstract class Setting extends Form implements LazyRenderable
     /**
      * 处理请求.
      *
-     * @param array $input
-     *
+     * @param  array  $input
      * @return \Dcat\Admin\Http\JsonResponse
      */
     public function handle(array $input)
@@ -49,8 +48,7 @@ abstract class Setting extends Form implements LazyRenderable
     /**
      * 格式化配置信息.
      *
-     * @param array $input
-     *
+     * @param  array  $input
      * @return array
      */
     protected function formatInput(array $input)
@@ -77,10 +75,9 @@ abstract class Setting extends Form implements LazyRenderable
     /**
      * 翻译.
      *
-     * @param string $key
-     * @param array  $replace
-     * @param null   $locale
-     *
+     * @param  string  $key
+     * @param  array  $replace
+     * @param  null  $locale
      * @return array|string|null
      */
     protected function trans($key, $replace = [], $locale = null)

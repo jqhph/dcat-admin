@@ -62,6 +62,8 @@ class ArrayField extends HasMany
         $form->setForm($this->form)
             ->setKey($key);
 
+        $form->setResolvingFieldCallbacks($this->resolvingFieldCallbacks);
+
         call_user_func($this->builder, $form);
 
         $form->hidden(NestedForm::REMOVE_FLAG_NAME)->default(0)->addElementClass(NestedForm::REMOVE_FLAG_CLASS);

@@ -11,8 +11,7 @@ class StartWith extends AbstractFilter
     /**
      * Get condition of this filter.
      *
-     * @param array $inputs
-     *
+     * @param  array  $inputs
      * @return array|mixed|void
      */
     public function condition($inputs)

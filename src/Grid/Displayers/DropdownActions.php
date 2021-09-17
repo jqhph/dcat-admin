@@ -19,8 +19,7 @@ class DropdownActions extends Actions
     }
 
     /**
-     * @param mixed $action
-     *
+     * @param  mixed  $action
      * @return mixed
      */
     protected function prepareAction(&$action)
@@ -31,8 +30,7 @@ class DropdownActions extends Actions
     }
 
     /**
-     * @param mixed $action
-     *
+     * @param  mixed  $action
      * @return string
      */
     protected function wrapCustomAction($action)
@@ -61,8 +59,7 @@ class DropdownActions extends Actions
     }
 
     /**
-     * @param \Closure[] $callback
-     *
+     * @param  \Closure[]  $callback
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function display(array $callbacks = [])

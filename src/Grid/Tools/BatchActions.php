@@ -91,9 +91,8 @@ class BatchActions extends AbstractTool
     /**
      * Add a batch action.
      *
-     * @param BatchAction $action
-     * @param ?string $key
-     *
+     * @param  BatchAction  $action
+     * @param  ?string  $key
      * @return $this
      */
     public function add(BatchAction $action, ?string $key = null)

@@ -13,9 +13,8 @@ class Setting extends Fluent
     /**
      * 获取配置，并转化为数组.
      *
-     * @param string $key
-     * @param mixed  $default
-     *
+     * @param  string  $key
+     * @param  mixed  $default
      * @return array
      */
     public function getArray($key, $default = [])
@@ -32,9 +31,8 @@ class Setting extends Fluent
     /**
      * 获取配置.
      *
-     * @param string $key
-     * @param mixed  $default
-     *
+     * @param  string  $key
+     * @param  mixed  $default
      * @return mixed
      */
     public function get($key, $default = null)
@@ -45,8 +43,7 @@ class Setting extends Fluent
     /**
      * 设置配置信息.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return $this
      */
     public function set($key, $value = null)
@@ -63,10 +60,9 @@ class Setting extends Fluent
     /**
      * 追加数据.
      *
-     * @param mixed $key
-     * @param mixed $value
-     * @param mixed $k
-     *
+     * @param  mixed  $key
+     * @param  mixed  $value
+     * @param  mixed  $k
      * @return $this
      */
     public function add($key, $value, $k = null)
@@ -85,9 +81,8 @@ class Setting extends Fluent
     /**
      * 批量追加数据.
      *
-     * @param string $key
-     * @param array  $value
-     *
+     * @param  string  $key
+     * @param  array  $value
      * @return $this
      */
     public function addMany($key, array $value)
@@ -100,8 +95,7 @@ class Setting extends Fluent
     /**
      * 保存配置到数据库.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return $this
      */
     public function save(array $data = [])

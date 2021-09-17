@@ -43,16 +43,15 @@ interface TreeRepository
     /**
      * 保存层级数据排序.
      *
-     * @param array $tree
-     * @param int   $parentId
+     * @param  array  $tree
+     * @param  int  $parentId
      */
     public function saveOrder($tree = [], $parentId = 0);
 
     /**
      * 设置数据查询回调.
      *
-     * @param \Closure|null $query
-     *
+     * @param  \Closure|null  $query
      * @return $this
      */
     public function withQuery($queryCallback);

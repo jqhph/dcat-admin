@@ -37,7 +37,7 @@ class Tab
     /**
      * Tab constructor.
      *
-     * @param Form|WidgetForm $form
+     * @param  Form|WidgetForm  $form
      */
     public function __construct($form)
     {
@@ -49,11 +49,10 @@ class Tab
     /**
      * Append a tab section.
      *
-     * @param string   $title
-     * @param \Closure $content
-     * @param bool     $active
-     * @param string   $id
-     *
+     * @param  string  $title
+     * @param  \Closure  $content
+     * @param  bool  $active
+     * @param  string  $id
      * @return $this
      */
     public function append($title, \Closure $content, bool $active = false, ?string $id = null)
@@ -122,8 +121,8 @@ class Tab
     /**
      * Set true for some one tab by title or id.
      *
-     * @param string $value
-     * @param string $field
+     * @param  string  $value
+     * @param  string  $field
      */
     public function active(string $value, string $field = 'title')
     {
@@ -139,7 +138,7 @@ class Tab
     /**
      * Set true for some one tab by key.
      *
-     * @param int $index
+     * @param  int  $index
      */
     public function activeByIndex(int $index = 0)
     {

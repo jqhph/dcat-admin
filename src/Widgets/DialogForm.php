@@ -48,8 +48,7 @@ class DialogForm
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function options($options = [])
@@ -66,8 +65,7 @@ class DialogForm
     /**
      * 设置弹窗标题.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title(?string $title)
@@ -80,8 +78,7 @@ class DialogForm
     /**
      * 绑定点击按钮.
      *
-     * @param string $buttonSelector
-     *
+     * @param  string  $buttonSelector
      * @return $this
      */
     public function click(string $buttonSelector)
@@ -106,8 +103,7 @@ class DialogForm
     /**
      * 重置按钮.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function resetButton(bool $value = true)
@@ -120,8 +116,7 @@ class DialogForm
     /**
      * 保存后触发的js的代码（不论成功还是失败）.
      *
-     * @param string $script
-     *
+     * @param  string  $script
      * @return $this
      */
     public function saved(string $script)
@@ -134,8 +129,7 @@ class DialogForm
     /**
      * 保存失败时触发的js代码
      *
-     * @param string $script
-     *
+     * @param  string  $script
      * @return $this
      */
     public function error(string $script)
@@ -148,8 +142,7 @@ class DialogForm
     /**
      * 保存成功后触发的js代码
      *
-     * @param string $script
-     *
+     * @param  string  $script
      * @return $this
      */
     public function success(string $script)
@@ -163,9 +156,8 @@ class DialogForm
      * 设置弹窗宽高
      * 支持百分比和"px".
      *
-     * @param string $width
-     * @param string $height
-     *
+     * @param  string  $width
+     * @param  string  $height
      * @return $this
      */
     public function dimensions(string $width, string $height)
@@ -179,8 +171,7 @@ class DialogForm
      * 设置弹窗宽度
      * 支持百分比和"px".
      *
-     * @param string|null $width
-     *
+     * @param  string|null  $width
      * @return $this
      */
     public function width(?string $width)
@@ -194,8 +185,7 @@ class DialogForm
      * 设置弹窗高度
      * 支持百分比和"px".
      *
-     * @param string|null $height
-     *
+     * @param  string|null  $height
      * @return $this
      */
     public function height(?string $height)
@@ -208,8 +198,7 @@ class DialogForm
     /**
      * 设置默认的表单页面url.
      *
-     * @param null|string $url
-     *
+     * @param  null|string  $url
      * @return $this
      */
     public function url(?string $url)
@@ -280,7 +269,7 @@ JS
     }
 
     /**
-     * @param Form $form
+     * @param  Form  $form
      */
     public static function prepare(Form $form)
     {

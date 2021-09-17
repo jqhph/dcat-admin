@@ -11,8 +11,7 @@ class MultipleImage extends Image
     /**
      * Allow to sort files.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function sortable(bool $value = true)
@@ -25,8 +24,7 @@ class MultipleImage extends Image
     /**
      * Set a limit of files.
      *
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return $this
      */
     public function limit(int $limit)
@@ -43,8 +41,7 @@ class MultipleImage extends Image
     /**
      * Prepare for saving.
      *
-     * @param string|array $file
-     *
+     * @param  string|array  $file
      * @return array
      */
     protected function prepareInputValue($file)

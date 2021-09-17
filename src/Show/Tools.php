@@ -78,7 +78,7 @@ class Tools implements Renderable
     /**
      * Tools constructor.
      *
-     * @param Panel $panel
+     * @param  Panel  $panel
      */
     public function __construct(Panel $panel)
     {
@@ -91,8 +91,7 @@ class Tools implements Renderable
     /**
      * Append a tools.
      *
-     * @param string|\Closure|AbstractTool|Renderable|Htmlable $tool
-     *
+     * @param  string|\Closure|AbstractTool|Renderable|Htmlable  $tool
      * @return $this
      */
     public function append($tool)
@@ -107,8 +106,7 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param string|\Closure|AbstractTool|Renderable|Htmlable $tool
-     *
+     * @param  string|\Closure|AbstractTool|Renderable|Htmlable  $tool
      * @return $this
      */
     public function prepend($tool)
@@ -122,7 +120,6 @@ class Tools implements Renderable
 
     /**
      * @param $tool
-     *
      * @return void
      */
     protected function prepareTool($tool)
@@ -183,8 +180,7 @@ class Tools implements Renderable
     }
 
     /**
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableQuickEdit(bool $disable = true)
@@ -195,9 +191,8 @@ class Tools implements Renderable
     }
 
     /**
-     * @param string $width
-     * @param string $height
-     *
+     * @param  string  $width
+     * @param  string  $height
      * @return $this
      */
     public function showQuickEdit(?string $width = null, ?string $height = null)
@@ -376,8 +371,7 @@ HTML;
     /**
      * Render custom tools.
      *
-     * @param Collection $tools
-     *
+     * @param  Collection  $tools
      * @return mixed
      */
     protected function renderCustomTools($tools)

@@ -5,10 +5,9 @@ namespace Dcat\Admin\Scaffold;
 trait FormCreator
 {
     /**
-     * @param string $primaryKey
-     * @param array  $fields
-     * @param bool   $timestamps
-     *
+     * @param  string  $primaryKey
+     * @param  array  $fields
+     * @param  bool  $timestamps
      * @return string
      */
     protected function generateForm(string $primaryKey = null, array $fields = [], $timestamps = null)

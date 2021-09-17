@@ -13,8 +13,7 @@ trait HasQuickCreate
     protected $quickCreate;
 
     /**
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function quickCreate(\Closure $callback)

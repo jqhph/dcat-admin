@@ -13,9 +13,8 @@ trait HasLayout
     protected $layout;
 
     /**
-     * @param int|float $width
-     * @param Closure   $callback
-     *
+     * @param  int|float  $width
+     * @param  Closure  $callback
      * @return $this
      */
     public function column($width, Closure $callback)

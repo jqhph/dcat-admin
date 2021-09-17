@@ -16,7 +16,7 @@ class ExportButton implements Renderable
     /**
      * Create a new Export button instance.
      *
-     * @param Grid $grid
+     * @param  Grid  $grid
      */
     public function __construct(Grid $grid)
     {

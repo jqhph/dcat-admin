@@ -36,8 +36,7 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param string|\Closure|AbstractTool|Renderable|Htmlable $tool
-     *
+     * @param  string|\Closure|AbstractTool|Renderable|Htmlable  $tool
      * @return $this
      */
     public function add($tool)

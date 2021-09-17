@@ -60,9 +60,8 @@ class BatchActions extends Component
     /**
      * 判断按钮是否已显示.
      *
-     * @param Browser $browser
-     * @param null $number
-     *
+     * @param  Browser  $browser
+     * @param  null  $number
      * @return Browser
      */
     public function shown(Browser $browser, $number = null)
@@ -79,9 +78,8 @@ class BatchActions extends Component
     /**
      * 显示菜单.
      *
-     * @param Browser $browser
-     * @param int     $seconds
-     *
+     * @param  Browser  $browser
+     * @param  int  $seconds
      * @return Browser
      */
     public function open(Browser $browser)
@@ -102,9 +100,8 @@ JS
     /**
      * 关闭菜单.
      *
-     * @param Browser $browser
-     * @param int     $seconds
-     *
+     * @param  Browser  $browser
+     * @param  int  $seconds
      * @return Browser
      */
     public function close(Browser $browser)
@@ -123,9 +120,8 @@ JS
     /**
      * 点击选项.
      *
-     * @param  Browser $browser
+     * @param  Browser  $browser
      * @param  string  $value
-     *
      * @return Browser
      */
     public function choose(Browser $browser, $value)

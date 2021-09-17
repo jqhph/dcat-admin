@@ -7,9 +7,8 @@ use Dcat\Admin\Support\Helper;
 class RepositoryCreator
 {
     /**
-     * @param string $modelClass
-     * @param string $repositoryClass
-     *
+     * @param  string  $modelClass
+     * @param  string  $repositoryClass
      * @return string
      */
     public function create(?string $modelClass, ?string $repositoryClass)

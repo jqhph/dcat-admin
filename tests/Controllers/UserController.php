@@ -29,7 +29,6 @@ class UserController extends AdminController
      * Edit interface.
      *
      * @param $id
-     *
      * @return Content
      */
     public function edit($id, Content $content)
@@ -57,9 +56,8 @@ class UserController extends AdminController
     /**
      * Show interface.
      *
-     * @param mixed   $id
-     * @param Content $content
-     *
+     * @param  mixed  $id
+     * @param  Content  $content
      * @return Content
      */
     public function show($id, Content $content)
@@ -140,8 +138,7 @@ class UserController extends AdminController
     /**
      * Make a show builder.
      *
-     * @param mixed $id
-     *
+     * @param  mixed  $id
      * @return Show
      */
     protected function detail($id)

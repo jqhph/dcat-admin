@@ -41,7 +41,7 @@ class Menu extends Model implements Sortable
     /**
      * Create a new Eloquent model instance.
      *
-     * @param array $attributes
+     * @param  array  $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -85,8 +85,7 @@ class Menu extends Model implements Sortable
     /**
      * Get all elements.
      *
-     * @param bool $force
-     *
+     * @param  bool  $force
      * @return static[]|\Illuminate\Support\Collection
      */
     public function allNodes(bool $force = false)

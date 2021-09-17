@@ -28,7 +28,7 @@ class Tree extends Component
     /**
      * 浏览器包含组件的断言
      *
-     * @param Browser $browser
+     * @param  Browser  $browser
      * @return void
      */
     public function assert(Browser $browser)
@@ -55,9 +55,8 @@ class Tree extends Component
     /**
      * 选中下拉选框.
      *
-     * @param Browser $browser
-     * @param mixed   $values
-     *
+     * @param  Browser  $browser
+     * @param  mixed  $values
      * @return Browser
      */
     public function choose(Browser $browser, $values)
@@ -78,7 +77,7 @@ JS
     /**
      * 展开所有选项.
      *
-     * @param Browser $browser
+     * @param  Browser  $browser
      */
     public function expand(Browser $browser)
     {
@@ -91,8 +90,7 @@ JS
     /**
      * 选中所有.
      *
-     * @param Browser $browser
-     *
+     * @param  Browser  $browser
      * @return Browser
      */
     public function checkAll(Browser $browser)
@@ -108,8 +106,7 @@ JS
     /**
      * 取消选中所有.
      *
-     * @param Browser $browser
-     *
+     * @param  Browser  $browser
      * @return Browser
      */
     public function unCheckAll(Browser $browser)
@@ -123,8 +120,7 @@ JS
     }
 
     /**
-     * @param \Laravel\Dusk\Browser $browser
-     *
+     * @param  \Laravel\Dusk\Browser  $browser
      * @return string
      */
     protected function getTreeSelector(Browser $browser)

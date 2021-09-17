@@ -79,8 +79,7 @@ class HasManyTest extends TestCase
     }
 
     /**
-     * @param array $data
-     *
+     * @param  array  $data
      * @return Painter
      */
     protected function save($data)

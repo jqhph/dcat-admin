@@ -29,8 +29,7 @@ class Select extends Field
     /**
      * Set options.
      *
-     * @param array|\Closure|string $options
-     *
+     * @param  array|\Closure|string  $options
      * @return $this|mixed
      */
     public function options($options = [])
@@ -57,7 +56,7 @@ class Select extends Field
     }
 
     /**
-     * @param array $groups
+     * @param  array  $groups
      */
 
     /**
@@ -74,8 +73,7 @@ class Select extends Field
      *        ...
      *     ]
      *
-     * @param array $groups
-     *
+     * @param  array  $groups
      * @return $this
      */
     public function groups(array $groups)
@@ -88,10 +86,9 @@ class Select extends Field
     /**
      * Load options from current selected resource(s).
      *
-     * @param string $model
-     * @param string $idField
-     * @param string $textField
-     *
+     * @param  string  $model
+     * @param  string  $idField
+     * @param  string  $textField
      * @return $this
      */
     public function model($model, string $idField = 'id', string $textField = 'name')
@@ -128,10 +125,9 @@ class Select extends Field
     /**
      * Load options from remote.
      *
-     * @param string $url
-     * @param array  $parameters
-     * @param array  $options
-     *
+     * @param  string  $url
+     * @param  array  $parameters
+     * @param  array  $options
      * @return $this
      */
     protected function loadRemoteOptions(string $url, array $parameters = [], array $options = [])
@@ -146,9 +142,8 @@ class Select extends Field
     }
 
     /**
-     * @param string|array $key
-     * @param mixed        $value
-     *
+     * @param  string|array  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function addDefaultConfig($key, $value = null)
@@ -171,10 +166,9 @@ class Select extends Field
     /**
      * Load options from ajax results.
      *
-     * @param string $url
+     * @param  string  $url
      * @param $idField
      * @param $textField
-     *
      * @return $this
      */
     public function ajax(string $url, string $idField = 'id', string $textField = 'text')
@@ -193,9 +187,8 @@ class Select extends Field
      *
      * all configurations see https://select2.org/configuration/options-api
      *
-     * @param string $key
-     * @param mixed  $val
-     *
+     * @param  string  $key
+     * @param  mixed  $val
      * @return $this
      */
     public function config(string $key, $val)

@@ -33,8 +33,7 @@ class SelectTable extends Field
     /**
      * 设置弹窗标题.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -51,8 +50,7 @@ class SelectTable extends Field
      *    $this->width('500px');
      *    $this->width('50%');
      *
-     * @param string $width
-     *
+     * @param  string  $width
      * @return $this
      */
     public function dialogWidth(string $width)
@@ -65,8 +63,7 @@ class SelectTable extends Field
     /**
      * 设置表格异步渲染实例.
      *
-     * @param LazyRenderable $renderable
-     *
+     * @param  LazyRenderable  $renderable
      * @return $this
      */
     public function from(LazyRenderable $renderable)
@@ -81,7 +78,6 @@ class SelectTable extends Field
      *
      * @param $visibleColumn
      * @param $key
-     *
      * @return $this
      */
     public function pluck(?string $visibleColumn, ?string $key = 'id')
@@ -93,8 +89,7 @@ class SelectTable extends Field
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function options($options = [])
@@ -107,10 +102,9 @@ class SelectTable extends Field
     /**
      * 设置选中数据显示.
      *
-     * @param string $model
-     * @param string $id
-     * @param string $text
-     *
+     * @param  string  $model
+     * @param  string  $id
+     * @param  string  $text
      * @return $this
      */
     public function model(string $model, string $id = 'id', string $text = 'title')

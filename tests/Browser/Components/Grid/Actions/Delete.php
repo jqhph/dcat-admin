@@ -47,9 +47,8 @@ class Delete extends Component
     /**
      * 选中.
      *
-     * @param  Browser       $browser
+     * @param  Browser  $browser
      * @param  string|array  $value
-     *
      * @return Browser
      */
     public function delete(Browser $browser, $value)
@@ -82,8 +81,7 @@ JS
     /**
      * 等待确认弹窗.
      *
-     * @param \Laravel\Dusk\Browser $browser
-     *
+     * @param  \Laravel\Dusk\Browser  $browser
      * @return \Laravel\Dusk\Browser
      */
     public function waitForConfirmDialog(Browser $browser)
@@ -94,8 +92,7 @@ JS
     /**
      * 等待成功信息.
      *
-     * @param \Laravel\Dusk\Browser $browser
-     *
+     * @param  \Laravel\Dusk\Browser  $browser
      * @return \Laravel\Dusk\Browser
      */
     public function waitForSucceeded(Browser $browser)
@@ -108,8 +105,7 @@ JS
     /**
      * 点击确认删除按钮.
      *
-     * @param \Laravel\Dusk\Browser $browser
-     *
+     * @param  \Laravel\Dusk\Browser  $browser
      * @return \Laravel\Dusk\Browser
      */
     public function clickConfirmButton(Browser $browser)

@@ -4,6 +4,7 @@ namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Form\EmbeddedForm;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\ResolveField;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,8 @@ use Illuminate\Support\Str;
 
 class Embeds extends Field
 {
+    use ResolveField;
+
     /**
      * @var \Closure
      */
@@ -19,8 +22,8 @@ class Embeds extends Field
     /**
      * Create a new HasMany field instance.
      *
-     * @param string $column
-     * @param array  $arguments
+     * @param  string  $column
+     * @param  array  $arguments
      */
     public function __construct($column, $arguments = [])
     {
@@ -39,8 +42,7 @@ class Embeds extends Field
     /**
      * Prepare input data for insert or update.
      *
-     * @param array $input
-     *
+     * @param  array  $input
      * @return array
      */
     protected function prepareInputValue($input)
@@ -68,6 +70,8 @@ class Embeds extends Field
             if (! $fieldRules = $field->getRules()) {
                 continue;
             }
+
+            File::deleteRules($field, $fieldRules);
 
             $column = $field->column();
 
@@ -141,9 +145,8 @@ class Embeds extends Field
     /**
      * Format validation messages.
      *
-     * @param array $input
-     * @param array $messages
-     *
+     * @param  array  $input
+     * @param  array  $messages
      * @return array
      */
     protected function formatValidationMessages(array $input, array $messages)
@@ -159,10 +162,9 @@ class Embeds extends Field
     /**
      * Format validation attributes.
      *
-     * @param array  $input
-     * @param string $label
-     * @param string $column
-     *
+     * @param  array  $input
+     * @param  string  $label
+     * @param  string  $column
      * @return array
      */
     protected function formatValidationAttribute($input, $label, $column)
@@ -195,9 +197,8 @@ class Embeds extends Field
     /**
      * Reset input key for validation.
      *
-     * @param array $input
-     * @param array $column $column is the column name array set
-     *
+     * @param  array  $input
+     * @param  array  $column  $column is the column name array set
      * @return void.
      */
     public function resetInputKey(array &$input, array $column)
@@ -246,6 +247,8 @@ class Embeds extends Field
         $form = new EmbeddedForm($this->column);
 
         $form->setParent($this->form);
+
+        $form->setResolvingFieldCallbacks($this->resolvingFieldCallbacks);
 
         call_user_func($this->builder, $form);
 

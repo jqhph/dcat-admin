@@ -16,8 +16,7 @@ trait HasActions
     protected $actionsCallback = [];
 
     /**
-     * @param string $actionClass
-     *
+     * @param  string  $actionClass
      * @return $this
      */
     public function setActionClass(string $actionClass)
@@ -48,8 +47,7 @@ trait HasActions
     /**
      * Set grid action callback or add actions.
      *
-     * @param Closure|array|string|Renderable|Grid\RowAction $callback
-     *
+     * @param  Closure|array|string|Renderable|Grid\RowAction  $callback
      * @return $this
      */
     public function actions($callback)
@@ -115,8 +113,7 @@ trait HasActions
     /**
      * Disable edit.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableEditButton(bool $disable = true)
@@ -129,8 +126,7 @@ trait HasActions
     /**
      * Show edit.
      *
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return $this
      */
     public function showEditButton(bool $val = true)
@@ -163,8 +159,7 @@ trait HasActions
     /**
      * Disable view action.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableViewButton(bool $disable = true)
@@ -177,8 +172,7 @@ trait HasActions
     /**
      * Show view action.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function showViewButton(bool $val = true)
@@ -189,8 +183,7 @@ trait HasActions
     /**
      * Disable delete.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableDeleteButton(bool $disable = true)
@@ -203,8 +196,7 @@ trait HasActions
     /**
      * Show delete button.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function showDeleteButton(bool $val = true)

@@ -15,8 +15,7 @@ class Permission
     /**
      * Check permission.
      *
-     * @param string|array|Arrayable $permission
-     *
+     * @param  string|array|Arrayable  $permission
      * @return true|void
      */
     public static function check($permission)
@@ -41,8 +40,7 @@ class Permission
     /**
      * Roles allowed to access.
      *
-     * @param string|array|Arrayable $roles
-     *
+     * @param  string|array|Arrayable  $roles
      * @return true|void
      */
     public static function allow($roles)
@@ -69,8 +67,7 @@ class Permission
     /**
      * Roles denied to access.
      *
-     * @param string|array|Arrayable $roles
-     *
+     * @param  string|array|Arrayable  $roles
      * @return true|void
      */
     public static function deny($roles)
@@ -117,8 +114,7 @@ class Permission
     }
 
     /**
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return void
      */
     public static function registerErrorHandler(\Closure $callback)

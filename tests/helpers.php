@@ -2,8 +2,7 @@
 
 if (! function_exists('test_path')) {
     /**
-     * @param string $file
-     *
+     * @param  string  $file
      * @return string
      */
     function test_path($file = '')
@@ -14,8 +13,7 @@ if (! function_exists('test_path')) {
 
 if (! function_exists('test_resource_path')) {
     /**
-     * @param string $file
-     *
+     * @param  string  $file
      * @return string
      */
     function test_resource_path($file = '')

@@ -20,8 +20,7 @@ class Checkbox extends MultipleSelect
     protected $inline = true;
 
     /**
-     * @param array|\Closure|string $options
-     *
+     * @param  array|\Closure|string  $options
      * @return $this|mixed
      */
     public function options($options = [])
@@ -40,8 +39,7 @@ class Checkbox extends MultipleSelect
     /**
      * "info", "primary", "inverse", "danger", "success", "purple".
      *
-     * @param string $style
-     *
+     * @param  string  $style
      * @return $this
      */
     public function style(string $style)

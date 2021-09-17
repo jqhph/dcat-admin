@@ -91,8 +91,7 @@ class Bar extends RadialBar
     /**
      * 设置柱间距.
      *
-     * @param string $value
-     *
+     * @param  string  $value
      * @return $this
      */
     public function chartBarColumnWidth($value)

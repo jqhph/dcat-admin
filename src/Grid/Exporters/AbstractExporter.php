@@ -51,7 +51,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Create a new exporter instance.
      *
-     * @param array $titles
+     * @param  array  $titles
      */
     public function __construct($titles = [])
     {
@@ -63,8 +63,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Set the headings of excel sheet.
      *
-     * @param array|false $titles
-     *
+     * @param  array|false  $titles
      * @return $this|array
      */
     public function titles($titles = null)
@@ -102,8 +101,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Set filename.
      *
-     * @param string|\Closure $filename
-     *
+     * @param  string|\Closure  $filename
      * @return $this
      */
     public function filename($filename)
@@ -116,8 +114,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Set export data callback function.
      *
-     * @param \Closure $builder
-     *
+     * @param  \Closure  $builder
      * @return $this
      */
     public function rows(\Closure $builder)
@@ -152,8 +149,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @param string $ext e.g. csv/xlsx/ods
-     *
+     * @param  string  $ext  e.g. csv/xlsx/ods
      * @return $this
      */
     public function extension(string $ext)
@@ -166,8 +162,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Set grid for exporter.
      *
-     * @param Grid $grid
-     *
+     * @param  Grid  $grid
      * @return $this
      */
     public function setGrid(Grid $grid)
@@ -189,9 +184,8 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Get data with export query.
      *
-     * @param int $page
-     * @param int $perPage
-     *
+     * @param  int  $page
+     * @param  int  $perPage
      * @return array|\Illuminate\Support\Collection|mixed
      */
     public function buildData(?int $page = null, ?int $perPage = null)
@@ -222,8 +216,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * 格式化待导出数据.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return array
      */
     protected function normalize(array $data)
@@ -260,8 +253,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @param array $data
-     *
+     * @param  array  $data
      * @return array
      */
     protected function callBuilder(array &$data)
@@ -284,8 +276,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Export data with scope.
      *
-     * @param string $scope
-     *
+     * @param  string  $scope
      * @return $this
      */
     public function withScope($scope)
@@ -313,7 +304,6 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * @param $method
      * @param $arguments
-     *
      * @return mixed
      */
     public function __call($method, $arguments)
@@ -326,7 +316,7 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * Create a new exporter instance.
      *
-     * @param \Closure|array $closure
+     * @param  \Closure|array  $closure
      */
     public static function make($builder = null)
     {

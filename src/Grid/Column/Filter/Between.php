@@ -66,8 +66,7 @@ class Between extends Filter
     }
 
     /**
-     * @param string $format
-     *
+     * @param  string  $format
      * @return $this
      */
     protected function setDateFormat($format)
@@ -82,8 +81,8 @@ class Between extends Filter
     /**
      * Add a binding to the query.
      *
-     * @param mixed $value
-     * @param Model $model
+     * @param  mixed  $value
+     * @param  Model  $model
      */
     public function addBinding($value, Model $model)
     {

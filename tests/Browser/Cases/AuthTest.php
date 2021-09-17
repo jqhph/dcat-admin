@@ -72,7 +72,6 @@ class AuthTest extends TestCase
      * 翻译菜单标题.
      *
      * @param $title
-     *
      * @return string
      */
     protected function translateMenuTitle($title)

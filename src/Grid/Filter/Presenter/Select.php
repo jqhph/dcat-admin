@@ -45,7 +45,7 @@ class Select extends Presenter
     /**
      * Select constructor.
      *
-     * @param mixed $options
+     * @param  mixed  $options
      */
     public function __construct($options)
     {
@@ -57,9 +57,8 @@ class Select extends Presenter
      *
      * all configurations see https://select2.org/configuration/options-api
      *
-     * @param string|array $key
-     * @param mixed  $val
-     *
+     * @param  string|array  $key
+     * @param  mixed  $val
      * @return $this
      */
     public function config($key, $val = null)
@@ -116,10 +115,9 @@ class Select extends Presenter
     /**
      * Load options from current selected resource(s).
      *
-     * @param string $model
-     * @param string $idField
-     * @param string $textField
-     *
+     * @param  string  $model
+     * @param  string  $idField
+     * @param  string  $textField
      * @return $this
      */
     public function model($model, string $idField = 'id', string $textField = 'name')
@@ -156,10 +154,9 @@ class Select extends Presenter
     /**
      * Load options from remote.
      *
-     * @param string $url
-     * @param array  $parameters
-     * @param array  $options
-     *
+     * @param  string  $url
+     * @param  array  $parameters
+     * @param  array  $options
      * @return $this
      */
     protected function loadRemoteOptions(string $url, array $parameters = [], array $options = [])
@@ -185,9 +182,8 @@ class Select extends Presenter
     }
 
     /**
-     * @param string|array $key
-     * @param mixed        $value
-     *
+     * @param  string|array  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function addDefaultConfig($key, $value = null)
@@ -210,8 +206,7 @@ class Select extends Presenter
     /**
      * Set input placeholder.
      *
-     * @param string $placeholder
-     *
+     * @param  string  $placeholder
      * @return $this|string
      */
     public function placeholder(string $placeholder = null)
@@ -228,10 +223,9 @@ class Select extends Presenter
     /**
      * Load options from ajax.
      *
-     * @param string $resourceUrl
+     * @param  string  $resourceUrl
      * @param $idField
      * @param $textField
-     *
      * @return $this
      */
     public function ajax(string $resourceUrl, string $idField = 'id', string $textField = 'text')
@@ -278,11 +272,10 @@ class Select extends Presenter
     /**
      * Load options for other select when change.
      *
-     * @param string $target
-     * @param string $resourceUrl
-     * @param string $idField
-     * @param string $textField
-     *
+     * @param  string  $target
+     * @param  string  $resourceUrl
+     * @param  string  $idField
+     * @param  string  $textField
      * @return $this
      */
     public function load($target, string $resourceUrl, string $idField = 'id', string $textField = 'text'): self
@@ -293,11 +286,10 @@ class Select extends Presenter
     /**
      * 联动加载多个字段.
      *
-     * @param array|string $fields
-     * @param array|string $sourceUrls
-     * @param string $idField
-     * @param string $textField
-     *
+     * @param  array|string  $fields
+     * @param  array|string  $sourceUrls
+     * @param  string  $idField
+     * @param  string  $textField
      * @return $this
      */
     public function loads($fields = [], $sourceUrls = [], string $idField = 'id', string $textField = 'text')
@@ -321,8 +313,7 @@ class Select extends Presenter
     /**
      * Get form element class.
      *
-     * @param string $target
-     *
+     * @param  string  $target
      * @return mixed
      */
     protected function getClass($target): string

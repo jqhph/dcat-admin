@@ -48,8 +48,7 @@ HTML;
     /**
      * 是否启用简化模式.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function simple(bool $value = true)
@@ -58,8 +57,7 @@ HTML;
     }
 
     /**
-     * @param Grid $grid
-     *
+     * @param  Grid  $grid
      * @return Grid
      */
     protected function prepare(Grid $grid)

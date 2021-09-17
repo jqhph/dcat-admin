@@ -11,6 +11,7 @@ use Dcat\Admin\Form\Concerns\HasLayout;
 use Dcat\Admin\Form\Concerns\HasRows;
 use Dcat\Admin\Form\Concerns\HasTabs;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\ResolveField;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAuthorization;
 use Dcat\Admin\Traits\HasFormResponse;
@@ -29,60 +30,60 @@ use Illuminate\Validation\Validator;
 /**
  * Class Form.
  *
- * @method Field\Text                text($column, $label = '')
- * @method Field\Checkbox            checkbox($column, $label = '')
- * @method Field\Radio               radio($column, $label = '')
- * @method Field\Select              select($column, $label = '')
- * @method Field\MultipleSelect      multipleSelect($column, $label = '')
- * @method Field\Textarea            textarea($column, $label = '')
- * @method Field\Hidden              hidden($column, $label = '')
- * @method Field\Id                  id($column, $label = '')
- * @method Field\Ip                  ip($column, $label = '')
- * @method Field\Url                 url($column, $label = '')
- * @method Field\Email               email($column, $label = '')
- * @method Field\Mobile              mobile($column, $label = '')
- * @method Field\Slider              slider($column, $label = '')
- * @method Field\Map                 map($latitude, $longitude, $label = '')
- * @method Field\Editor              editor($column, $label = '')
- * @method Field\Date                date($column, $label = '')
- * @method Field\Datetime            datetime($column, $label = '')
- * @method Field\Time                time($column, $label = '')
- * @method Field\Year                year($column, $label = '')
- * @method Field\Month               month($column, $label = '')
- * @method Field\DateRange           dateRange($start, $end, $label = '')
- * @method Field\DateTimeRange       datetimeRange($start, $end, $label = '')
- * @method Field\TimeRange           timeRange($start, $end, $label = '')
- * @method Field\Number              number($column, $label = '')
- * @method Field\Currency            currency($column, $label = '')
- * @method Field\SwitchField         switch($column, $label = '')
- * @method Field\Display             display($column, $label = '')
- * @method Field\Rate                rate($column, $label = '')
- * @method Field\Divide              divider(string $title = null)
- * @method Field\Password            password($column, $label = '')
- * @method Field\Decimal             decimal($column, $label = '')
- * @method Field\Html                html($html, $label = '')
- * @method Field\Tags                tags($column, $label = '')
- * @method Field\Icon                icon($column, $label = '')
- * @method Field\Embeds              embeds($column, $label = '')
- * @method Field\Captcha             captcha($column, $label = '')
- * @method Field\Listbox             listbox($column, $label = '')
- * @method Field\File                file($column, $label = '')
- * @method Field\Image               image($column, $label = '')
- * @method Field\MultipleFile        multipleFile($column, $label = '')
- * @method Field\MultipleImage       multipleImage($column, $label = '')
- * @method Field\Tree                tree($column, $label = '')
- * @method Field\Table               table($column, $labelOrCallback, $callback = null)
- * @method Field\ListField           list($column, $label = '')
- * @method Field\Timezone            timezone($column, $label = '')
- * @method Field\KeyValue            keyValue($column, $label = '')
- * @method Field\Tel                 tel($column, $label = '')
- * @method Field\Markdown            markdown($column, $label = '')
- * @method Field\Range               range($start, $end, $label = '')
- * @method Field\Color               color($column, $label = '')
- * @method Field\ArrayField          array($column, $labelOrCallback, $callback = null)
- * @method Field\SelectTable         selectTable($column, $label = '')
+ * @method Field\Text text($column, $label = '')
+ * @method Field\Checkbox checkbox($column, $label = '')
+ * @method Field\Radio radio($column, $label = '')
+ * @method Field\Select select($column, $label = '')
+ * @method Field\MultipleSelect multipleSelect($column, $label = '')
+ * @method Field\Textarea textarea($column, $label = '')
+ * @method Field\Hidden hidden($column, $label = '')
+ * @method Field\Id id($column, $label = '')
+ * @method Field\Ip ip($column, $label = '')
+ * @method Field\Url url($column, $label = '')
+ * @method Field\Email email($column, $label = '')
+ * @method Field\Mobile mobile($column, $label = '')
+ * @method Field\Slider slider($column, $label = '')
+ * @method Field\Map map($latitude, $longitude, $label = '')
+ * @method Field\Editor editor($column, $label = '')
+ * @method Field\Date date($column, $label = '')
+ * @method Field\Datetime datetime($column, $label = '')
+ * @method Field\Time time($column, $label = '')
+ * @method Field\Year year($column, $label = '')
+ * @method Field\Month month($column, $label = '')
+ * @method Field\DateRange dateRange($start, $end, $label = '')
+ * @method Field\DateTimeRange datetimeRange($start, $end, $label = '')
+ * @method Field\TimeRange timeRange($start, $end, $label = '')
+ * @method Field\Number number($column, $label = '')
+ * @method Field\Currency currency($column, $label = '')
+ * @method Field\SwitchField switch($column, $label = '')
+ * @method Field\Display display($column, $label = '')
+ * @method Field\Rate rate($column, $label = '')
+ * @method Field\Divide divider(string $title = null)
+ * @method Field\Password password($column, $label = '')
+ * @method Field\Decimal decimal($column, $label = '')
+ * @method Field\Html html($html, $label = '')
+ * @method Field\Tags tags($column, $label = '')
+ * @method Field\Icon icon($column, $label = '')
+ * @method Field\Embeds embeds($column, $label = '')
+ * @method Field\Captcha captcha($column, $label = '')
+ * @method Field\Listbox listbox($column, $label = '')
+ * @method Field\File file($column, $label = '')
+ * @method Field\Image image($column, $label = '')
+ * @method Field\MultipleFile multipleFile($column, $label = '')
+ * @method Field\MultipleImage multipleImage($column, $label = '')
+ * @method Field\Tree tree($column, $label = '')
+ * @method Field\Table table($column, $labelOrCallback, $callback = null)
+ * @method Field\ListField list($column, $label = '')
+ * @method Field\Timezone timezone($column, $label = '')
+ * @method Field\KeyValue keyValue($column, $label = '')
+ * @method Field\Tel tel($column, $label = '')
+ * @method Field\Markdown markdown($column, $label = '')
+ * @method Field\Range range($start, $end, $label = '')
+ * @method Field\Color color($column, $label = '')
+ * @method Field\ArrayField array($column, $labelOrCallback, $callback = null)
+ * @method Field\SelectTable selectTable($column, $label = '')
  * @method Field\MultipleSelectTable multipleSelectTable($column, $label = '')
- * @method Field\Button              button(string $html = null)
+ * @method Field\Button button(string $html = null)
  */
 class Form implements Renderable
 {
@@ -92,6 +93,7 @@ class Form implements Renderable
     use HasRows;
     use HasTabs;
     use HasLayout;
+    use ResolveField;
     use HasFormResponse {
         setCurrentUrl as defaultSetCurrentUrl;
     }
@@ -171,8 +173,8 @@ class Form implements Renderable
     /**
      * Form constructor.
      *
-     * @param array $data
-     * @param mixed $key
+     * @param  array  $data
+     * @param  mixed  $key
      */
     public function __construct($data = [], $key = null)
     {
@@ -193,6 +195,26 @@ class Form implements Renderable
         $this->initCurrentUrl();
 
         $this->initPayload();
+
+        $formData = [static::REQUEST_NAME => static::class];
+
+        $this->resolvingField(function ($field) use ($formData) {
+            if (! method_exists($this, 'form')) {
+                return;
+            }
+
+            if ($field instanceof Field\File) {
+                $this->setFileUploadUrl($field, $formData);
+            }
+
+            if ($field instanceof Field\Embeds || $field instanceof Field\HasMany) {
+                $field->resolvingField(function ($field) use ($formData) {
+                    if (($field instanceof Field\File)) {
+                        $this->setFileUploadUrl($field, $formData);
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -233,8 +255,7 @@ class Form implements Renderable
     /**
      * Action uri of the form.
      *
-     * @param string $action
-     *
+     * @param  string  $action
      * @return $this|string
      */
     public function action($action = null)
@@ -249,8 +270,7 @@ class Form implements Renderable
     /**
      * Method of the form.
      *
-     * @param string $method
-     *
+     * @param  string  $method
      * @return $this
      */
     public function method(string $method = 'POST')
@@ -259,9 +279,8 @@ class Form implements Renderable
     }
 
     /**
-     * @param string $title
-     * @param string $content
-     *
+     * @param  string  $title
+     * @param  string  $content
      * @return $this
      */
     public function confirm(?string $title = null, ?string $content = null)
@@ -275,8 +294,7 @@ class Form implements Renderable
     /**
      * 设置使用 Toastr 展示字段验证信息.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function validationErrorToastr(bool $value = true)
@@ -289,8 +307,7 @@ class Form implements Renderable
     /**
      * Set primary key.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return $this
      */
     public function setKey($value)
@@ -323,8 +340,7 @@ class Form implements Renderable
     }
 
     /**
-     * @param array|Arrayable|Closure $data
-     *
+     * @param  array|Arrayable|Closure  $data
      * @return $this
      */
     public function fill($data)
@@ -353,9 +369,8 @@ class Form implements Renderable
     /**
      * Add a fieldset to form.
      *
-     * @param string  $title
-     * @param Closure $setCallback
-     *
+     * @param  string  $title
+     * @param  Closure  $setCallback
      * @return Field\Fieldset
      */
     public function fieldset(string $title, Closure $setCallback)
@@ -374,8 +389,7 @@ class Form implements Renderable
     /**
      * Get specify field.
      *
-     * @param string|Field $name
-     *
+     * @param  string|Field  $name
      * @return Field|null
      */
     public function field($name)
@@ -406,8 +420,7 @@ class Form implements Renderable
     /**
      * Validate this form fields.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return bool|MessageBag
      */
     public function validate(Request $request)
@@ -433,8 +446,7 @@ class Form implements Renderable
     /**
      * Merge validation messages from input validators.
      *
-     * @param \Illuminate\Validation\Validator[] $validators
-     *
+     * @param  \Illuminate\Validation\Validator[]  $validators
      * @return MessageBag
      */
     protected function mergeValidationMessages($validators)
@@ -456,8 +468,7 @@ class Form implements Renderable
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function submitButton(bool $value = true)
@@ -468,8 +479,7 @@ class Form implements Renderable
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function resetButton(bool $value = true)
@@ -482,8 +492,7 @@ class Form implements Renderable
     /**
      * Disable reset button.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function disableResetButton(bool $value = true)
@@ -494,8 +503,7 @@ class Form implements Renderable
     /**
      * Disable submit button.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function disableSubmitButton(bool $value = true)
@@ -506,9 +514,8 @@ class Form implements Renderable
     /**
      * Set field and label width in current form.
      *
-     * @param int $fieldWidth
-     * @param int $labelWidth
-     *
+     * @param  int  $fieldWidth
+     * @param  int  $labelWidth
      * @return $this
      */
     public function width($fieldWidth = 8, $labelWidth = 2)
@@ -529,8 +536,7 @@ class Form implements Renderable
     /**
      * Find field class with given name.
      *
-     * @param string $method
-     *
+     * @param  string  $method
      * @return bool|string
      */
     public static function findFieldClass($method)
@@ -547,8 +553,7 @@ class Form implements Renderable
     /**
      * Add a form field to form.
      *
-     * @param Field $field
-     *
+     * @param  Field  $field
      * @return $this
      */
     public function pushField(Field $field)
@@ -561,18 +566,19 @@ class Form implements Renderable
         $field->setForm($this);
         $field->width($this->width['field'], $this->width['label']);
 
-        $this->setFileUploadUrl($field);
+        $this->callResolvingFieldCallbacks($field);
 
         $field::requireAssets();
 
         return $this;
     }
 
-    protected function setFileUploadUrl(Field $field)
+    protected function setFileUploadUrl(Field $field, $formData)
     {
-        if ($field instanceof Field\File && method_exists($this, 'form')) {
-            $formData = [static::REQUEST_NAME => get_called_class()];
-
+        if (
+            $field instanceof Field\File
+            && method_exists($this, 'form')
+        ) {
             $field->url(route(admin_api_route_name('form.upload')));
             $field->deleteUrl(route(admin_api_route_name('form.destroy-file'), $formData));
             $field->withFormData($formData);
@@ -651,8 +657,7 @@ HTML;
     /**
      * 设置视图变量.
      *
-     * @param array $variables
-     *
+     * @param  array  $variables
      * @return $this
      */
     public function addVariables(array $variables)
@@ -715,7 +720,6 @@ HTML;
 
     /**
      * @param $id
-     *
      * @return $this
      */
     public function setFormId($id)
@@ -746,8 +750,7 @@ HTML;
     }
 
     /**
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function ajax(bool $value = true)
@@ -780,8 +783,7 @@ HTML;
     }
 
     /**
-     * @param array $input
-     *
+     * @param  array  $input
      * @return array
      */
     public function sanitize(array $input)
@@ -902,9 +904,8 @@ JS
     /**
      * Generate a Field object and add to form builder if Field exists.
      *
-     * @param string $method
-     * @param array  $arguments
-     *
+     * @param  string  $method
+     * @param  array  $arguments
      * @return Field|null
      */
     public function __call($method, $arguments)
@@ -937,8 +938,7 @@ JS
     }
 
     /**
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return $this
      */
     public static function make(...$params)

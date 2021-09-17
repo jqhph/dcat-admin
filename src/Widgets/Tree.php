@@ -87,15 +87,14 @@ class Tree extends Widget
     }
 
     /**
-     * @param array $data exp:
-     *                    {
-     *                    "id": "1",
-     *                    "parent": "#",
-     *                    "text": "Dashboard",
-     *                    // "state": {"selected": true}
-     *                    }
-     * @param array $data
-     *
+     * @param  array  $data  exp:
+     *                       {
+     *                       "id": "1",
+     *                       "parent": "#",
+     *                       "text": "Dashboard",
+     *                       // "state": {"selected": true}
+     *                       }
+     * @param  array  $data
      * @return $this
      */
     public function nodes($data)

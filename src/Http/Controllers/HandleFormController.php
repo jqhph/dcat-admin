@@ -4,6 +4,7 @@ namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Form\Field\File;
+use Dcat\Admin\Form\Field\HasMany;
 use Dcat\Admin\Http\JsonResponse;
 use Dcat\Admin\Traits\HasUploadedFile;
 use Dcat\Admin\Widgets\Form;
@@ -38,10 +39,33 @@ class HandleFormController
 
         $form->form();
 
-        /* @var $field File */
-        $field = $form->field($this->uploader()->upload_column);
+        return $this->getField($request, $form)->upload($this->file());
+    }
 
-        return $field->upload($this->file());
+    /**
+     * @param  Request  $request
+     * @param $form
+     * @return File
+     */
+    protected function getField(Request $request, $form)
+    {
+        $column = $this->uploader()->upload_column ?: $request->get('_column');
+
+        if (! $relation = $request->get('_relation')) {
+            return $form->field($column);
+        }
+
+        $relation = is_array($relation) ? current($relation) : $relation;
+
+        $relationField = $form->field($relation);
+
+        if (! $relationField) {
+            return;
+        }
+
+        if ($relationField instanceof HasMany) {
+            return $relationField->buildNestedForm()->field($column);
+        }
     }
 
     public function destroyFile(Request $request)
@@ -50,8 +74,7 @@ class HandleFormController
 
         $form->form();
 
-        /* @var $field File */
-        $field = $form->field($request->_column);
+        $field = $this->getField($request, $form);
 
         $field->deleteFile($request->key);
 
@@ -59,11 +82,10 @@ class HandleFormController
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
+     * @return Form
      *
      * @throws AdminException
-     *
-     * @return Form
      */
     protected function resolveForm(Request $request)
     {
