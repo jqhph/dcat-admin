@@ -16,13 +16,25 @@
                 @foreach($groups as $group)
                     <optgroup label="{{ $group['label'] }}">
                         @foreach($group['options'] as $select => $option)
-                            <option value="{{$select}}" {{ $select == $value ?'selected':'' }}>{{$option}}</option>
+                            <option value="{{$select}}" {{ $select == $value ?'selected':'' }}
+                            @if(!empty($otherOptions['disableOptions']))
+                                @if((!empty($otherOptions['disableType']) && in_array($select,$otherOptions['disableOptions'])) || (empty($otherOptions['disableType']) && !in_array($select,$otherOptions['disableOptions'])))
+                                    disabled
+                                @endif
+                            @endif
+                            >{{$option}}</option>
                         @endforeach
                     </optgroup>
                 @endforeach
              @else
                 @foreach($options as $select => $option)
-                    <option value="{{$select}}" {{ Dcat\Admin\Support\Helper::equal($select, $value) ?'selected':'' }}>{{$option}}</option>
+                    <option value="{{$select}}" {{ Dcat\Admin\Support\Helper::equal($select, $value) ?'selected':'' }}
+                    @if(!empty($otherOptions['disableOptions']))
+                        @if((!empty($otherOptions['disableType']) && in_array($select,$otherOptions['disableOptions'])) || (empty($otherOptions['disableType']) && !in_array($select,$otherOptions['disableOptions'])))
+                            disabled
+                        @endif
+                    @endif
+                    >{{$option}}</option>
                 @endforeach
             @endif
         </select>
