@@ -27,6 +27,12 @@ class Select extends Field
     protected $config = [];
 
     /**
+     * auto params
+     * @var array
+     */
+    protected $otherOptions = [];
+
+    /**
      * Set options.
      *
      * @param  array|\Closure|string  $options
@@ -228,6 +234,7 @@ class Select extends Field
             'groups'        => $this->groups,
             'configs'       => $this->config,
             'cascadeScript' => $this->getCascadeScript(),
+            'otherOptions'  => $this->getOtherOptions(),
         ]);
 
         $this->initSize();
@@ -258,6 +265,43 @@ class Select extends Field
         }
 
         $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    /**
+     * Set auto option.
+     *
+     * @param string $key
+     * @param mixed  $val
+     *
+     * @return $this
+     */
+    public function otherOptions(string $key, $val)
+    {
+        $this->otherOptions[$key] = $val;
+
+        return $this;
+    }
+
+    public function getOtherOptions()
+    {
+        if (isset($this->otherOptions['disableOptions']) && empty($this->otherOptions['disableOptions'])) {
+            $this->otherOptions['disableOptions'] = Helper::array($this->value());
+        }
+
+        return $this->otherOptions;
+    }
+
+    /**
+     * @param array $options 需要处理的数据
+     * @param bool  $type    true in_array($options) false !in_array($options)
+     * @return $this
+     */
+    public function disableOptions($options = [], $type = true)
+    {
+        $this->otherOptions['disableOptions'] = Helper::array($options);
+        $this->otherOptions['disableType']    = $type;
 
         return $this;
     }
