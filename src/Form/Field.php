@@ -549,6 +549,11 @@ class Field implements Renderable
             ) {
                 return $this->default();
             }
+            
+            // 这里是多字段数组时，就无法判断 value 为全 null 的情况(value为全null,则返回default,或者合并)
+            if(is_array($this->value) && count(array_unique($this->value)) == 1 && array_values(array_unique($this->value))[0] === null) {
+                return array_merge($this->value, $this->default());
+            }
 
             return $this->value;
         }
