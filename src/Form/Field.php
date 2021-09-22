@@ -330,7 +330,7 @@ class Field implements Renderable
             $value = [];
 
             foreach ($this->column as $key => $column) {
-                $value[$key] = $this->getValueFromData($data, $this->normalizeColumn($column));
+                $value[$key] = $this->getValueFromData($data, $this->normalizeColumn($column), data_get($this->value, $key));
             }
 
             return $value;
