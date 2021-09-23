@@ -182,9 +182,9 @@ trait ImageField
             });
 
             if (! is_null($this->storagePermission)) {
-                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode(), $this->storagePermission);
+                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode()->stream(), $this->storagePermission);
             } else {
-                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode());
+                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode()->stream());
             }
         }
 
