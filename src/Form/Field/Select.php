@@ -27,7 +27,6 @@ class Select extends Field
     protected $config = [];
 
     /**
-     * auto params
      * @var array
      */
     protected $otherOptions = [];
@@ -272,9 +271,8 @@ class Select extends Field
     /**
      * Set auto option.
      *
-     * @param string $key
-     * @param mixed  $val
-     *
+     * @param  string  $key
+     * @param  mixed  $val
      * @return $this
      */
     public function otherOptions(string $key, $val)
@@ -294,14 +292,14 @@ class Select extends Field
     }
 
     /**
-     * @param array $options 需要处理的数据
-     * @param bool  $type    true in_array($options) false !in_array($options)
+     * @param  array  $options  need dispose options
+     * @param  bool  $type  true in_array($options) false !in_array($options)
      * @return $this
      */
     public function disableOptions($options = [], $type = true)
     {
         $this->otherOptions['disableOptions'] = Helper::array($options);
-        $this->otherOptions['disableType']    = $type;
+        $this->otherOptions['disableType'] = $type;
 
         return $this;
     }
