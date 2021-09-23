@@ -552,7 +552,6 @@ class Field implements Renderable
 
             return $this->value;
         }
-        
         if (is_array($this->value) && count(array_unique($this->value)) == 1 && array_values(array_unique($this->value))[0] === null) {
             return array_merge($this->value, $this->default());
         }
