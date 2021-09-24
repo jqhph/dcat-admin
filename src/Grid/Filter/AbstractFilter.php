@@ -460,7 +460,7 @@ abstract class AbstractFilter
      */
     public function default($default = null)
     {
-        if ($default) {
+        if (filled($default)) {
             $this->defaultValue = $default;
         }
 
