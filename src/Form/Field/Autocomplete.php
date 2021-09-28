@@ -12,14 +12,13 @@ class Autocomplete extends Text
     protected $group = [];
 
     protected $configs = [
-        'groupBy' => 'group'
+        'groupBy' => 'group',
     ];
 
     public function datalist($entries = [])
     {
         return $this->options($entries);
     }
-
 
     /**
      * Set option groups.
@@ -35,7 +34,7 @@ class Autocomplete extends Text
      *        ...
      *     ]
      *
-     * @param array $groups
+     * @param  array  $groups
      * @return $this
      */
     public function groups(array $groups)
@@ -53,9 +52,10 @@ class Autocomplete extends Text
 
         $options = array_map(function ($opt) {
             if (is_array($opt)) {
-                if (!array_key_exists('value', $opt)) {
+                if (! array_key_exists('value', $opt)) {
                     return null;
                 }
+
                 return $opt;
             }
 
@@ -64,7 +64,6 @@ class Autocomplete extends Text
             }
 
             return null;
-
         }, Helper::array($options));
 
         $this->options = array_merge($this->options, array_filter($options));
@@ -77,7 +76,7 @@ class Autocomplete extends Text
      *
      * all configurations see https://github.com/devbridge/jQuery-Autocomplete
      *
-     * @param array $configs
+     * @param  array  $configs
      * @return $this
      */
     public function configs($configs = [])
@@ -94,9 +93,9 @@ class Autocomplete extends Text
     /**
      * Load options from ajax results.
      *
-     * @param string $url
-     * @param string $valueField
-     * @param string|null $groupField
+     * @param  string  $url
+     * @param  string  $valueField
+     * @param  string|null  $groupField
      * @return $this
      */
     public function ajax(string $url, string $valueField = '', string $groupField = '')
@@ -118,11 +117,10 @@ class Autocomplete extends Text
         return parent::render();
     }
 
-
     protected function formatGroupOptions()
     {
         foreach ($this->group as $group) {
-            if (!array_key_exists('options', $group) || !array_key_exists('label', $group)) {
+            if (! array_key_exists('options', $group) || ! array_key_exists('label', $group)) {
                 continue;
             }
 
