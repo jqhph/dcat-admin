@@ -21,7 +21,7 @@
 
         @include('admin::form.error')
 
-        <input name="{{ $name }}" class="file-input" type="hidden" />
+        <input name="{{ $name }}" class="file-input" type="hidden" {!! $attributes !!}/>
 
         <div class="web-uploader {{ $fileType }}">
             <div class="queueList">
