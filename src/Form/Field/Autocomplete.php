@@ -7,9 +7,13 @@ use Dcat\Admin\Support\JavaScript;
 
 class Autocomplete extends Text
 {
+    protected $view = 'admin::form.autocomplete';
+
     protected $group = [];
 
-    protected $configs = [];
+    protected $configs = [
+        'groupBy' => 'group'
+    ];
 
     public function datalist($entries = [])
     {
@@ -107,7 +111,7 @@ class Autocomplete extends Text
         $this->formatGroupOptions();
 
         $this->addVariables([
-            'options' => $this->options,
+            'options' => json_encode($this->options),
             'configs' => JavaScript::format($this->configs),
         ]);
 
