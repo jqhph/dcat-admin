@@ -13,6 +13,7 @@ class Autocomplete extends Text
 
     protected $configs = [
         'groupBy' => 'group',
+        'autoSelectFirst' => true,
     ];
 
     public function datalist($entries = [])
