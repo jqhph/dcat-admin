@@ -16,6 +16,13 @@ class Autocomplete extends Text
         'autoSelectFirst' => true,
     ];
 
+    public function __construct($column, $arguments = [])
+    {
+        $this->prepend('<i class="feather icon-edit-2"></i>');
+
+        parent::__construct($column, $arguments);
+    }
+
     public function datalist($entries = [])
     {
         return $this->options($entries);
