@@ -34,12 +34,16 @@ class Autocomplete extends Text
      *        ...
      *     ]
      *
-     * @param  array  $groups
+     * @param  array|\Closure  $groups
      * @return $this
      */
-    public function groups(array $groups)
+    public function groups($groups = [])
     {
-        $this->groups = $groups;
+        if ($groups instanceof \Closure) {
+            $groups = $groups->call($this->data(), $this->value());
+        }
+
+        $this->groups = array_merge($this->groups, $groups);
 
         return $this;
     }
