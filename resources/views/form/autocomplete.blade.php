@@ -7,32 +7,7 @@
     .autocomplete-group { padding: 2px 5px; font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
 </style>
 
-<div class="{{$viewClass['form-group']}}">
-
-    <div class="{{$viewClass['label']}} control-label">
-        <span>{!! $label !!}</span>
-    </div>
-
-    <div class="{{$viewClass['field']}}">
-
-        @include('admin::form.error')
-
-        <div class="input-group">
-
-            @if ($prepend)
-                <span class="input-group-prepend"><span class="input-group-text bg-white">{!! $prepend !!}</span></span>
-            @endif
-            <input {!! $attributes !!} />
-
-            @if ($append)
-                <span class="input-group-append">{!! $append !!}</span>
-            @endif
-        </div>
-
-        @include('admin::form.help-block')
-
-    </div>
-</div>
+@include('admin::form.input')
 
 <script init="{!! $selector !!}" require="@autocomplete">
 
