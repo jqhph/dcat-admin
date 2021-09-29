@@ -171,7 +171,7 @@ class Form implements Renderable
         'array'               => Field\ArrayField::class,
         'selectTable'         => Field\SelectTable::class,
         'multipleSelectTable' => Field\MultipleSelectTable::class,
-        'autocomplete'        =>Field\Autocomplete::class,
+        'autocomplete'        => Field\Autocomplete::class,
     ];
 
     /**
