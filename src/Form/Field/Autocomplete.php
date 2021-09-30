@@ -130,7 +130,7 @@ class Autocomplete extends Text
     protected function formatGroupOptions()
     {
         foreach ($this->groups as $group) {
-            if ( ! array_key_exists('options', $group) || ! array_key_exists('label', $group)) {
+            if (! array_key_exists('options', $group) || ! array_key_exists('label', $group)) {
                 continue;
             }
 
@@ -145,11 +145,11 @@ class Autocomplete extends Text
     protected function formatOptions($options, string $group = ''): array
     {
         return array_filter(array_map(function ($opt) use ($group) {
-            if ( ! is_array($opt)) {
+            if (! is_array($opt)) {
                 $opt = ['value' => $opt, 'data' => []];
             }
 
-            if ( ! array_key_exists('value', $opt)) {
+            if (! array_key_exists('value', $opt)) {
                 return null;
             }
 
