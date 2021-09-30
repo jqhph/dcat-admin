@@ -14,16 +14,14 @@ trait HasDepends
     public function depends($fields = [], bool $clear = true)
     {
         $fields = array_map(function ($field) {
-
             return $this->formatName($field);
-
         }, (array) $fields);
 
         return $this->addVariables([
             'depends' => [
                 'fields' => json_encode($fields, \JSON_UNESCAPED_UNICODE),
                 'clear' => $clear,
-            ]
+            ],
         ]);
     }
 }
