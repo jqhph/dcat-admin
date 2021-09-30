@@ -15,30 +15,71 @@
 
     @if(isset($ajax))
 
-        configs = $.extend(configs, {
+    configs = $.extend(configs, {
 
-            serviceUrl: '{{ $ajax['url'] }}',
-            dataType: 'json',
-            transformResult: function (response, originalQuery) {
-                return {
-                    suggestions: (function (data, valueField, groupField) {
+        serviceUrl: '{{ $ajax['url'] }}',
+        groupBy: '{{ $ajax['groupField'] }}',
+        dataType: 'json',
+        transformResult: function (response) {
+            return {
+                suggestions: (function (data, valueField) {
+                    if (!data) {
+                        return [];
+                    }
 
-                        if (valueField) {
-                            return $.map(data, function (dat) {
-                                return  {value: Dcat.helpers.get(dat,valueField), data: {group: Dcat.helpers.get(dat,groupField)}};
-                            });
-                        }
+                    if (valueField) {
+                        return $.map(data, function (dat) {
+                            return {value: Dcat.helpers.get(dat, valueField), data: data};
+                        });
+                    }
 
-                        return data;
-
-                    })(response.data, '{{ $ajax['valueField'] }}', '{{ $ajax['groupField'] }}')
-                };
-            }
-        });
+                    return data;
+                })(response.data, '{{ $ajax['valueField'] }}')
+            };
+        }
+    });
     @else
-        configs = $.extend(configs, {
-            lookup: {!! $options !!}
-        });
+    configs = $.extend(configs, {
+        lookup: {!! $options !!}
+    });
+    @endif
+
+    @if(isset($depends))
+
+    var fields = {!! $depends['fields'] !!};
+
+    configs = $.extend(configs, {
+        'onSearchStart': function (params) {
+
+            var formData = $this.closest('form').serializeArray();
+
+            var p = {};
+
+            for (var data of formData) {
+                for (var field of fields) {
+                    if (data.name === field) {
+                        if (data.value !== false && !data.value) {
+                            return false;
+                        }
+                        p[field] = data.value
+                    }
+                }
+            }
+
+            params = $.extend(params, p);
+        }
+    })
+
+    @if($depends['clear'])
+    $.map(fields, function (field) {
+        var _selector = '[name="' + field + '"]';
+        $this.closest('form').off('change.depends', _selector)
+            .on('change.depends', _selector, function () {
+                $this.val('');
+            });
+    });
+    @endif
+
     @endif
 
     $this.autocomplete(configs);

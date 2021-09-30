@@ -7,12 +7,15 @@ use Dcat\Admin\Support\JavaScript;
 
 class Autocomplete extends Text
 {
+    use HasDepends;
+
     protected $view = 'admin::form.autocomplete';
 
-    protected $group = [];
+    protected $groups = [];
+
+    protected $groupBy = '__group__';
 
     protected $configs = [
-        'groupBy' => 'group',
         'autoSelectFirst' => true,
     ];
 
@@ -42,7 +45,7 @@ class Autocomplete extends Text
      *        ...
      *     ]
      *
-     * @param  array|\Closure  $groups
+     * @param array|\Closure $groups
      * @return $this
      */
     public function groups($groups = [])
@@ -56,29 +59,17 @@ class Autocomplete extends Text
         return $this;
     }
 
+    /**
+     * @param array|\Closure $options
+     * @return $this|Autocomplete
+     */
     public function options($options = [])
     {
         if ($options instanceof \Closure) {
             $options = $options->call($this->data(), $this->value());
         }
 
-        $options = array_map(function ($opt) {
-            if (is_array($opt)) {
-                if (! array_key_exists('value', $opt)) {
-                    return null;
-                }
-
-                return $opt;
-            }
-
-            if (is_string($opt)) {
-                return ['value' => $opt, 'data' => []];
-            }
-
-            return null;
-        }, Helper::array($options));
-
-        $this->options = array_merge($this->options, array_filter($options));
+        $this->options = array_merge($this->options, $this->formatOptions($options));
 
         return $this;
     }
@@ -88,7 +79,7 @@ class Autocomplete extends Text
      *
      * all configurations see https://github.com/devbridge/jQuery-Autocomplete
      *
-     * @param  array  $configs
+     * @param array|\Closure $configs
      * @return $this
      */
     public function configs($configs = [])
@@ -102,12 +93,19 @@ class Autocomplete extends Text
         return $this;
     }
 
+    public function groupBy(string $groupBy)
+    {
+        $this->groupBy = $groupBy;
+
+        return $this;
+    }
+
     /**
      * Load options from ajax results.
      *
-     * @param  string  $url
-     * @param  string  $valueField
-     * @param  string|null  $groupField
+     * @param string $url
+     * @param string|null $valueField
+     * @param string|null $groupField
      * @return $this
      */
     public function ajax(string $url, string $valueField = '', string $groupField = '')
@@ -122,7 +120,7 @@ class Autocomplete extends Text
         $this->formatGroupOptions();
 
         $this->addVariables([
-            'options' => json_encode($this->options),
+            'options' => json_encode($this->options, \JSON_UNESCAPED_UNICODE),
             'configs' => JavaScript::format($this->configs),
         ]);
 
@@ -131,18 +129,35 @@ class Autocomplete extends Text
 
     protected function formatGroupOptions()
     {
-        foreach ($this->group as $group) {
-            if (! array_key_exists('options', $group) || ! array_key_exists('label', $group)) {
+        foreach ($this->groups as $group) {
+            if (!array_key_exists('options', $group) || !array_key_exists('label', $group)) {
                 continue;
             }
 
-            $this->options(array_map(function ($str) use ($group) {
-                return ['value' => $str, 'data' => ['group' => $group['label']]];
-            }, $group['options']));
+            $this->options = array_merge($this->options, $this->formatOptions($group['options'], $group['label']));
         }
 
-        $this->group = [];
+        $this->groups = [];
 
         return $this;
+    }
+
+    protected function formatOptions($options, string $group = ''): array
+    {
+        return array_filter(array_map(function ($opt) use ($group) {
+            if (!is_array($opt)) {
+                $opt = ['value' => $opt, 'data' => []];
+            }
+
+            if (!array_key_exists('value', $opt)) {
+                return null;
+            }
+
+            if ($group) {
+                $opt['data'][$this->groupBy] = $group;
+            }
+
+            return $opt;
+        }, Helper::array($options)));
     }
 }
