@@ -177,6 +177,9 @@ class Asset
         '@sortable' => [
             'js' => '@admin/dcat/plugins/sortable/Sortable.min.js',
         ],
+        '@autocomplete' => [
+            'js' => '@admin/dcat/plugins/autocomplete/jquery.autocomplete.min.js',
+        ],
     ];
 
     /**
