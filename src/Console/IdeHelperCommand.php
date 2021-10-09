@@ -232,6 +232,7 @@ class IdeHelperCommand extends Command
                 ->map(function ($class, $alias) use (&$space) {
                     $class = '\\'.$class;
                     $params = $this->getClassMethodParameters($class, '__construct');
+
                     return $space.sprintf($this->templates['grid-filter'], $class, $alias, $params);
                 })
                 ->implode("\r\n")
@@ -251,6 +252,7 @@ class IdeHelperCommand extends Command
             $extensions
                 ->map(function ($class, $alias) use (&$space) {
                     $params = $this->getClassMethodParameters('\\'.$class, 'render');
+
                     return $space.sprintf($this->templates['show-column'], $alias, $params);
                 })
                 ->implode("\r\n")
@@ -277,7 +279,6 @@ class IdeHelperCommand extends Command
         return trim(
             $fields
                 ->map(function ($class, $alias) use (&$space) {
-
                     $class = '\\'.$class;
 
                     $params = $this->getClassMethodParameters($class, '__construct');
@@ -308,8 +309,8 @@ class IdeHelperCommand extends Command
         return trim(
             $columns
                 ->map(function ($class, $alias) use (&$space) {
-
                     $params = $this->getClassMethodParameters('\\'.$class, 'display');
+
                     return $space.sprintf($this->templates['grid-column'], $alias, $params);
                 })
                 ->implode("\r\n")
@@ -397,7 +398,7 @@ class IdeHelperCommand extends Command
         try {
             $params = (new \ReflectionClass($class))->getMethod($method)->getParameters();
 
-            $params = array_map(function($param){
+            $params = array_map(function ($param) {
                 $type = $param->getType();
 
                 $str = '';
@@ -413,13 +414,12 @@ class IdeHelperCommand extends Command
                 }
 
                 return $str;
-
             }, $params);
 
             return implode(', ', $params);
-
         } catch (\Exception $e) {
             $this->warn('Get method exception: '.$e->getMessage());
+
             return '...$params';
         }
     }
