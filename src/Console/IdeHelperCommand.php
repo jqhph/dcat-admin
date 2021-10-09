@@ -56,9 +56,9 @@ class IdeHelperCommand extends Command
             'property' => '* @property Show\Field|Collection %s',
         ],
         'form'        => '* @method %s %s(%s)',
-        'grid-column' => '* @method $this %s(...$params)',
-        'grid-filter' => '* @method %s %s(...$params)',
-        'show-column' => '* @method $this %s(...$params)',
+        'grid-column' => '* @method $this %s(%s)',
+        'grid-filter' => '* @method %s %s(%s)',
+        'show-column' => '* @method $this %s(%s)',
     ];
 
     protected $path = 'dcat_admin_ide_helper.php';
@@ -221,16 +221,18 @@ class IdeHelperCommand extends Command
 
         $reject = $fields[1];
 
-        $fields = collect(Grid\Filter::extensions())->reject(function ($value, $key) use (&$reject) {
-            return in_array($key, $reject);
+        $fields = collect(Grid\Filter::extensions())->reject(function ($class, $alias) use (&$reject) {
+            return in_array($alias, $reject);
         });
 
         $space = str_repeat(' ', 5);
 
         return trim(
             $fields
-                ->map(function ($value, $key) use (&$space) {
-                    return $space.sprintf($this->templates['grid-filter'], '\\'.$value, $key);
+                ->map(function ($class, $alias) use (&$space) {
+                    $class = '\\'.$class;
+                    $params = $this->getClassMethodParameters($class, '__construct');
+                    return $space.sprintf($this->templates['grid-filter'], $class, $alias, $params);
                 })
                 ->implode("\r\n")
         );
@@ -247,8 +249,9 @@ class IdeHelperCommand extends Command
 
         return trim(
             $extensions
-                ->map(function ($value, $key) use (&$space) {
-                    return $space.sprintf($this->templates['show-column'], $key);
+                ->map(function ($class, $alias) use (&$space) {
+                    $params = $this->getClassMethodParameters('\\'.$class, 'render');
+                    return $space.sprintf($this->templates['show-column'], $alias, $params);
                 })
                 ->implode("\r\n")
         );
@@ -277,9 +280,9 @@ class IdeHelperCommand extends Command
 
                     $class = '\\'.$class;
 
-                    $params = $this->getClassConstructorParameters($class);
+                    $params = $this->getClassMethodParameters($class, '__construct');
 
-                    return $space . sprintf($this->templates['form'], $class, $alias, $params);
+                    return $space.sprintf($this->templates['form'], $class, $alias, $params);
                 })
                 ->implode("\r\n")
         );
@@ -296,16 +299,18 @@ class IdeHelperCommand extends Command
 
         $reject = $column[1];
 
-        $columns = collect(array_keys(Grid\Column::extensions()))->reject(function ($displayer) use (&$reject) {
-            return in_array($displayer, $reject);
+        $columns = collect(Grid\Column::extensions())->reject(function ($class, $alias) use (&$reject) {
+            return in_array($alias, $reject);
         });
 
         $space = str_repeat(' ', 5);
 
         return trim(
             $columns
-                ->map(function ($value) use (&$space) {
-                    return $space.sprintf($this->templates['grid-column'], $value);
+                ->map(function ($class, $alias) use (&$space) {
+
+                    $params = $this->getClassMethodParameters('\\'.$class, 'display');
+                    return $space.sprintf($this->templates['grid-column'], $alias, $params);
                 })
                 ->implode("\r\n")
         );
@@ -384,37 +389,37 @@ class IdeHelperCommand extends Command
 
     /**
      * @param  string  $class
+     * @param  string  $method
      * @return string
      */
-    protected function getClassConstructorParameters(string $class)
+    protected function getClassMethodParameters(string $class, string $method)
     {
-        try{
-
-            $params = (new \ReflectionClass($class))->getConstructor()->getParameters();
+        try {
+            $params = (new \ReflectionClass($class))->getMethod($method)->getParameters();
 
             $params = array_map(function($param){
-
                 $type = $param->getType();
 
                 $str = '';
 
-                if($type){
-                    $str .=    $type->getName() . ' ';
+                if ($type) {
+                    $str .= $type->getName().' ';
                 }
 
-                $str .= '$'. $param->getName();
+                $str .= '$'.$param->getName();
 
-                if($param->isDefaultValueAvailable()){
-                    $str .= ' = ' . json_encode($param->getDefaultValue(), \JSON_UNESCAPED_UNICODE);
+                if ($param->isDefaultValueAvailable()) {
+                    $str .= ' = '.json_encode($param->getDefaultValue(), \JSON_UNESCAPED_UNICODE);
                 }
 
                 return $str;
 
-            },$params);
+            }, $params);
 
             return implode(', ', $params);
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
+            $this->warn('Get method exception: '.$e->getMessage());
             return '...$params';
         }
     }
