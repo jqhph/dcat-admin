@@ -55,7 +55,7 @@ class IdeHelperCommand extends Command
             'method'   => '* @method Show\Field|Collection %s(string $label = null)',
             'property' => '* @property Show\Field|Collection %s',
         ],
-        'form'        => '* @method %s %s(...$params)',
+        'form'        => '* @method %s %s(%s)',
         'grid-column' => '* @method $this %s(...$params)',
         'grid-filter' => '* @method %s %s(...$params)',
         'show-column' => '* @method $this %s(...$params)',
@@ -273,8 +273,13 @@ class IdeHelperCommand extends Command
 
         return trim(
             $fields
-                ->map(function ($value, $key) use (&$space) {
-                    return $space.sprintf($this->templates['form'], '\\'.$value, $key);
+                ->map(function ($class, $alias) use (&$space) {
+
+                    $class = '\\'.$class;
+
+                    $params = $this->getClassConstructorParameters($class);
+
+                    return $space . sprintf($this->templates['form'], $class, $alias, $params);
                 })
                 ->implode("\r\n")
         );
@@ -375,5 +380,42 @@ class IdeHelperCommand extends Command
         }
 
         return (new \ReflectionClass($class))->getFileName();
+    }
+
+    /**
+     * @param  string  $class
+     * @return string
+     */
+    protected function getClassConstructorParameters(string $class)
+    {
+        try{
+
+            $params = (new \ReflectionClass($class))->getConstructor()->getParameters();
+
+            $params = array_map(function($param){
+
+                $type = $param->getType();
+
+                $str = '';
+
+                if($type){
+                    $str .=    $type->getName() . ' ';
+                }
+
+                $str .= '$'. $param->getName();
+
+                if($param->isDefaultValueAvailable()){
+                    $str .= ' = ' . json_encode($param->getDefaultValue(), \JSON_UNESCAPED_UNICODE);
+                }
+
+                return $str;
+
+            },$params);
+
+            return implode(', ', $params);
+
+        }catch (\Exception $e){
+            return '...$params';
+        }
     }
 }
