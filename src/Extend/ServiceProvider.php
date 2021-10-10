@@ -569,7 +569,7 @@ abstract class ServiceProvider extends LaravelServiceProvider
             return array_map([$this, 'formatAssetFiles'], $files);
         }
 
-        if(URL::isValidUrl($files)){
+        if (URL::isValidUrl($files)) {
             return $files;
         }
 
