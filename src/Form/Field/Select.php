@@ -13,6 +13,7 @@ class Select extends Field
     use CanCascadeFields;
     use CanLoadFields;
     use Sizeable;
+    use HasDepends;
 
     protected $cascadeEvent = 'change';
 

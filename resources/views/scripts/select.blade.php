@@ -1,6 +1,7 @@
 <script>
 @section('admin.select-ajax')
     @if(isset($ajax))
+        var _this = $('{{ $selector }}');
         configs = $.extend(configs, {
         ajax: {
             url: "{{ $ajax['url'] }}",
@@ -32,6 +33,10 @@
             return markup;
         }
     });
+    @if(isset($depends))
+    _this.data('selectConfigs', $.extend({}, configs));
+    delete configs.ajax;
+    @endif
     @endif
 @overwrite
 </script>
@@ -59,3 +64,78 @@
 </script>
 @endif
 
+@if(isset($depends) && isset($ajax))
+{{--depends联动--}}
+<script once>
+    var _this = $('{!! $selector !!}');
+    var fields = {!! $depends['fields'] !!};
+    var form = _this.closest('form');
+
+    var getFormFieldsVal = function(form, fields){
+        var formData = $(form).serializeArray();
+        var params = {};
+
+        for (var field of fields) {
+            for (var data of formData) {
+                if (!data.value.length) {
+                    continue;
+                }
+                if (data.name === field) {
+                    params[field] = data.value
+                }else if (data.name === field + '[]') {
+                    if(!Array.isArray(params[field])){
+                        params[field] = []
+                    }
+                    params[field].push(data.value);
+                }
+            }
+            if (!params.hasOwnProperty(field)){
+                return false;
+            }
+        }
+        return params;
+    }
+
+    var getSourceUrl = function(url, params){
+        return url + (url.match(/\?/)?'&':'?') + (new URLSearchParams(params)).toString();
+    }
+
+    @if($depends['clear'])
+    $.map(fields, function (field) {
+        var _selectors = [
+            '[name="' + field + '"]',
+            '[name="' + field + '[]"]'
+        ];
+        $.map(_selectors, function(_selector){
+            form.off('change.depends', _selector)
+                .on('change.depends', _selector, function () {
+                    _this.val(null).trigger('change');
+
+                    var params = getFormFieldsVal(form, fields);
+                    var configs = $.extend({}, _this.data('selectConfigs'));
+
+                    configs.ajax = !params ? {} : $.extend(configs.ajax, { url: getSourceUrl("{{ $ajax['url'] }}", params) });
+
+                    _this.select2(configs)
+                });
+        })
+    });
+    @endif
+</script>
+@endif
+
+<script once>
+    // on first focus (bubbles up to document), open the menu
+    $(document).off('focus', '.select2-selection.select2-selection--single')
+        .on('focus', '.select2-selection.select2-selection--single', function (e) {
+            $(this).closest(".select2-container").siblings('select:enabled').select2('open');
+        });
+
+    // steal focus during close - only capture once and stop propogation
+    $(document).off('select2:closing', 'select.select2')
+        .on('select2:closing', 'select.select2', function (e) {
+            $(e.target).data("select2").$selection.one('focus focusin', function (e) {
+                e.stopPropagation();
+            });
+        });
+</script>
