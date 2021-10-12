@@ -118,6 +118,8 @@
 
                     _this.select2(configs)
                 });
+
+            form.find(_selector).trigger('change.depends');
         })
     });
     @endif
