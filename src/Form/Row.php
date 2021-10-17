@@ -96,7 +96,7 @@ class Row implements Renderable
      *
      * @var int
      */
-    protected $fieldWidth;
+    protected $fieldWidth = 12;
 
     /**
      * @var bool
@@ -204,11 +204,11 @@ class Row implements Renderable
         $field->horizontal($this->horizontal);
 
         $this->fields->push([
-            'width'   => $this->fieldWidth ?: $this->defaultFieldWidth,
+            'width'   => $this->fieldWidth,
             'element' => $field,
         ]);
 
-        unset($this->fieldWidth); // unset field width for next field
+        $this->fieldWidth = $this->defaultFieldWidth; // reset field width for next field
 
         return $field;
     }
