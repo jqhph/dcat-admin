@@ -92,6 +92,13 @@ class Row implements Renderable
     protected $defaultFieldWidth = 12;
 
     /**
+     * field width for appended field.
+     *
+     * @var int
+     */
+    protected $fieldWidth;
+
+    /**
      * @var bool
      */
     protected $horizontal = false;
@@ -168,7 +175,7 @@ class Row implements Renderable
      */
     public function width($width = 12)
     {
-        $this->defaultFieldWidth = $width;
+        $this->fieldWidth = $width;
 
         return $this;
     }
@@ -197,9 +204,11 @@ class Row implements Renderable
         $field->horizontal($this->horizontal);
 
         $this->fields->push([
-            'width'   => $this->defaultFieldWidth,
+            'width'   => $this->fieldWidth ?: $this->defaultFieldWidth,
             'element' => $field,
         ]);
+
+        unset($this->fieldWidth); // unset field width for next field
 
         return $field;
     }
