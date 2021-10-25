@@ -68,4 +68,24 @@
     $this.select2(options);
 </script>
 
+{{--解决输入中文后无法回车结束的问题。--}}
+<script once>
+    var selector = '.select2-selection--multiple .select2-search__field';
+    $(document).off('keyup', selector).on('keyup', selector, function (event) {
+        try {
+            if (event.keyCode == 13) {
+                var $this = $(this), optionText = $this.val();
+                if (optionText != "" && $this.find("option[value='" + optionText + "']").length === 0) {
+                    var $select = $this.parents('.select2-container').prev("select");
+                    var newOption = new Option(optionText, optionText, true, true);
+                    $select.append(newOption).trigger('change');
+                    $this.val('');
+                    $select.select2('close');
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    });
+</script>
 

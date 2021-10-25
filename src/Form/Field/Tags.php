@@ -128,7 +128,13 @@ class Tags extends Field
             return $value;
         }
 
-        return array_filter($value, 'strlen');
+        $value = array_filter($value, 'strlen');
+
+        if ($value && ! Arr::isAssoc($value)) {
+            $value = implode(',', $value);
+        }
+
+        return $value;
     }
 
     /**
