@@ -6,6 +6,8 @@
 
     @yield('admin.select-ajax')
 
+    @yield('admin.select-depends')
+
     @if(isset($remoteOptions))
     $.ajax({!! admin_javascript_json($remoteOptions) !!}).done(function(data) {
         configs.data = data;

@@ -63,10 +63,10 @@
     $(selector).trigger('change');
 </script>
 @endif
-
-@if(isset($depends) && isset($ajax))
 {{--depends联动--}}
-<script once>
+<script>
+@section('admin.select-depends')
+@if(isset($depends) && isset($ajax))
     var _this = $('{!! $selector !!}');
     var fields = {!! $depends['fields'] !!};
     var form = _this.closest('form');
@@ -96,11 +96,21 @@
         return params;
     }
 
-    var getSourceUrl = function(url, params){
+    var getSourceUrl = function(url, params) {
         return url + (url.match(/\?/)?'&':'?') + (new URLSearchParams(params)).toString();
     }
 
-    @if($depends['clear'])
+    var resetSelect2Configs = function(form, fields) {
+        var params = getFormFieldsVal(form, fields);
+        var configs = $.extend({}, _this.data('selectConfigs'));
+
+        configs.ajax = !params ? {} : $.extend(configs.ajax, { url: getSourceUrl("{{ $ajax['url'] }}", params) });
+
+        _this.select2(configs)
+    }
+
+    resetSelect2Configs(form, fields);
+
     $.map(fields, function (field) {
         var _selectors = [
             '[name="' + field + '"]',
@@ -109,22 +119,16 @@
         $.map(_selectors, function(_selector){
             form.off('change.depends', _selector)
                 .on('change.depends', _selector, function () {
+                    @if($depends['clear'])
                     _this.val(null).trigger('change');
-
-                    var params = getFormFieldsVal(form, fields);
-                    var configs = $.extend({}, _this.data('selectConfigs'));
-
-                    configs.ajax = !params ? {} : $.extend(configs.ajax, { url: getSourceUrl("{{ $ajax['url'] }}", params) });
-
-                    _this.select2(configs)
+                    @endif
+                    resetSelect2Configs(form, fields);
                 });
-
-            form.find(_selector).trigger('change.depends');
         })
     });
-    @endif
-</script>
 @endif
+@overwrite
+</script>
 
 <script once>
     // on first focus (bubbles up to document), open the menu
