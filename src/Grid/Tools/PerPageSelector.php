@@ -77,13 +77,13 @@ class PerPageSelector implements Renderable
         $options = $this->getOptions()->map(function ($option) {
             $url = app('request')->fullUrlWithQuery([$this->perPageName => $option]);
 
-            return "<a href=\"$url\">$option</a>";
+            return "<a style=\"border-color: transparent;\" class=\"page-link\" href=\"$url\">$option</a>";
         })->toArray();
 
         $dropdown = Dropdown::make($options)->button($this->perPage)->render();
 
         return <<<EOT
-<label class="pull-right d-none d-sm-inline" style="margin-right: 10px">
+<label class="pagination pull-right d-none d-sm-inline" style="margin-right: 10px">
     $dropdown
 </label>
 EOT;
