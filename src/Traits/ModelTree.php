@@ -15,6 +15,7 @@ use Spatie\EloquentSortable\SortableTrait;
  * @property string $parentColumn
  * @property string $titleColumn
  * @property string $orderColumn
+ * @property string $depthColumn
  * @property string $defaultParentId
  * @property array $sortable
  */
@@ -58,6 +59,16 @@ trait ModelTree
     public function getOrderColumn()
     {
         return empty($this->orderColumn) ? 'order' : $this->orderColumn;
+    }
+
+    /**
+     * Get depth column name.
+     *
+     * @return string
+     */
+    public function getDepthColumn()
+    {
+        return $this->depthColumn ?: '';
     }
 
     /**
@@ -148,7 +159,7 @@ trait ModelTree
      * @param  array  $tree
      * @param  int  $parentId
      */
-    public static function saveOrder($tree = [], $parentId = 0)
+    public static function saveOrder($tree = [], $parentId = 0, $depth = 1)
     {
         if (empty(static::$branchOrder)) {
             static::setBranchOrder($tree);
@@ -159,10 +170,11 @@ trait ModelTree
 
             $node->{$node->getParentColumn()} = $parentId;
             $node->{$node->getOrderColumn()} = static::$branchOrder[$branch['id']];
+            $node->getDepthColumn() && $node->{$node->getDepthColumn()} = $depth;
             $node->save();
 
             if (isset($branch['children'])) {
-                static::saveOrder($branch['children'], $branch['id']);
+                static::saveOrder($branch['children'], $branch['id'], $depth + 1);
             }
         }
     }
