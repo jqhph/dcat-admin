@@ -539,7 +539,7 @@ class Model
         if ($perPage) {
             return (int) $perPage;
         }
-        
+
         return null;
     }
 
