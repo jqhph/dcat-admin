@@ -11,6 +11,14 @@
     .web-uploader .filelist li p.upload-progress span {
         background: @primary(-8);
     }
+
+    .web-uploader .dnd-area.webuploader-dnd-over {
+        border: 3px dashed #999 !important;
+    }
+    .web-uploader .dnd-area.webuploader-dnd-over .placeholder {
+        border: none;
+    }
+
 </style>
 
 <div class="{{$viewClass['form-group']}} {{ $class }}">
@@ -24,8 +32,8 @@
         <input name="{{ $name }}" class="file-input" type="hidden" {!! $attributes !!}/>
 
         <div class="web-uploader {{ $fileType }}">
-            <div class="queueList">
-                <div class="placeholder dnd-area">
+            <div class="queueList dnd-area">
+                <div class="placeholder">
                     <div class="file-picker"></div>
                     <p>{{trans('admin.uploader.drag_file')}}</p>
                 </div>
