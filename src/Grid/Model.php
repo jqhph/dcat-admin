@@ -536,7 +536,7 @@ class Model
         }
 
         $perPage =  $this->request->get($this->getPerPageName()) ?: $this->perPage;
-        if($perPage){
+        if ($perPage) {
             return (int) $perPage;
         }
         
