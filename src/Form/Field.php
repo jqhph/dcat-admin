@@ -1065,7 +1065,7 @@ class Field implements Renderable
     /**
      * @param  array|string  $labelClass
      * @param  bool  $append
-     * @return $this|string
+     * @return $this
      */
     public function setLabelClass($labelClass, bool $append = true)
     {
