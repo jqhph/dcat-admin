@@ -537,7 +537,7 @@ class Field implements Renderable
     /**
      * Set or get value of the field.
      *
-     * @param  null  $value
+     * @param  mixed|null  $value
      * @return mixed|$this
      */
     public function value($value = null)
@@ -640,7 +640,7 @@ class Field implements Renderable
     /**
      * Get or set label of the field.
      *
-     * @param  null  $label
+     * @param  mixed|null  $label
      * @return $this|string
      */
     public function label($label = null)
