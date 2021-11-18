@@ -40,7 +40,9 @@ class Date extends Text
 
         $this->script = <<<JS
 Dcat.init('{$this->getElementClassSelector()}', function (self) {
-    self.datetimepicker({$options});
+    $(self).focusin(function () {
+        $(this).datetimepicker({$options});
+    });
 });
 JS;
 
