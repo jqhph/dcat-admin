@@ -107,7 +107,7 @@ function listen(Dcat) {
                 'X-CSRF-TOKEN': Dcat.token
             }
         });
-		// pjax初始化功能
+        // pjax初始化功能
         new Pjax(Dcat);
     });
 }
