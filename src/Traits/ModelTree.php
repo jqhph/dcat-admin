@@ -38,7 +38,7 @@ trait ModelTree
      */
     public function getParentColumn()
     {
-        return empty($this->parentColumn) ? 'parent_id' : $this->parentColumn;
+        return property_exists($this,'parentColumn') ? $this->parentColumn : 'parent_id';
     }
 
     /**
@@ -48,7 +48,7 @@ trait ModelTree
      */
     public function getTitleColumn()
     {
-        return empty($this->titleColumn) ? 'title' : $this->titleColumn;
+        return property_exists($this,'titleColumn') ? $this->titleColumn : 'title';
     }
 
     /**
@@ -58,7 +58,7 @@ trait ModelTree
      */
     public function getOrderColumn()
     {
-        return empty($this->orderColumn) ? 'order' : $this->orderColumn;
+        return property_exists($this,'orderColumn') ? $this->orderColumn : 'order';
     }
 
     /**
@@ -68,7 +68,7 @@ trait ModelTree
      */
     public function getDepthColumn()
     {
-        return $this->depthColumn ?: '';
+        return property_exists($this,'depthColumn') ? $this->depthColumn : '';
     }
 
     /**
@@ -76,7 +76,7 @@ trait ModelTree
      */
     public function getDefaultParentId()
     {
-        return isset($this->defaultParentId) ? $this->defaultParentId : '0';
+        return property_exists($this,'defaultParentId') ? $this->defaultParentId : '0';
     }
 
     /**
