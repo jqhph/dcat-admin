@@ -95,8 +95,6 @@ function listen(Dcat) {
         new Footer(Dcat);
         // data-action 动作绑定(包括删除、批量删除等操作)
         new DataActions(Dcat);
-        // pjax初始化功能
-        new Pjax(Dcat);
     });
 
     // 每个请求都初始化
@@ -109,6 +107,8 @@ function listen(Dcat) {
                 'X-CSRF-TOKEN': Dcat.token
             }
         });
+        // pjax初始化功能
+        new Pjax(Dcat);
     });
 }
 
