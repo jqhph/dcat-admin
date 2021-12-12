@@ -119,13 +119,13 @@ class Autocomplete extends Text
     {
         $this->formatGroupOptions();
 
+        $this->configs([
+            'groupBy' => $this->groupBy,
+        ]);
+
         $this->addVariables([
             'options' => json_encode($this->options, \JSON_UNESCAPED_UNICODE),
             'configs' => JavaScript::format($this->configs),
-        ]);
-
-        $this->configs([
-            'groupBy' => $this->groupBy,
         ]);
 
         return parent::render();
