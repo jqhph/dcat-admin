@@ -394,6 +394,8 @@ trait UploadField
             return;
         }
 
+        $this->destroyThumbnail($paths);
+
         $storage = $this->getStorage();
 
         foreach ((array) $paths as $path) {

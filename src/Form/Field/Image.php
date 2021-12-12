@@ -122,16 +122,4 @@ class Image extends File
 
         $this->uploadAndDeleteOriginalThumbnail($file);
     }
-
-    /**
-     * Destroy original files.
-     *
-     * @return void.
-     */
-    public function destroy()
-    {
-        parent::destroy();
-
-        $this->destroyThumbnail();
-    }
 }
