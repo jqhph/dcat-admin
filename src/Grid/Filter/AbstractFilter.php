@@ -318,7 +318,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param  array  $options
+     * @param  array|\Illuminate\Contracts\Support\Arrayable|\Closure  $options
      * @return MultipleSelect
      */
     public function multipleSelect($options = [])
