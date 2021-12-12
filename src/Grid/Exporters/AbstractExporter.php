@@ -4,6 +4,7 @@ namespace Dcat\Admin\Grid\Exporters;
 
 use Dcat\Admin\Grid;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
@@ -206,7 +207,7 @@ abstract class AbstractExporter implements ExporterInterface
             $model->forPage($page, $perPage);
         }
 
-        $array = $this->grid->processFilter()->toArray();
+        $array = $this->grid->processFilter();
 
         $model->reset();
 
@@ -219,7 +220,7 @@ abstract class AbstractExporter implements ExporterInterface
      * @param  array  $data
      * @return array
      */
-    protected function normalize(array $data)
+    protected function normalize(Collection $data)
     {
         foreach ($data as &$row) {
             $row = Arr::dot($row);
@@ -256,7 +257,7 @@ abstract class AbstractExporter implements ExporterInterface
      * @param  array  $data
      * @return array
      */
-    protected function callBuilder(array &$data)
+    protected function callBuilder(Collection &$data)
     {
         if ($data && $this->builder) {
             return ($this->builder)($data);
