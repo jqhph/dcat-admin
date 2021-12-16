@@ -39,9 +39,9 @@ JS;
         $content = $this->column->getOriginal();
 
         if ($formatter instanceof \Closure) {
-            $content = $formatter->call($this->row, $content);
+            $value = $formatter->call($this->row, $content);
         }
-
+        $value = $value ?? $this->value;
         return <<<HTML
 <a href="javascript:void(0);" 
     class="grid-column-qrcode text-muted" 
@@ -54,7 +54,7 @@ JS;
     tabindex='0'
 >
     <i class="fa fa-qrcode"></i>
-</a>&nbsp;{$this->value}
+</a>&nbsp;{$value}
 HTML;
     }
 }
