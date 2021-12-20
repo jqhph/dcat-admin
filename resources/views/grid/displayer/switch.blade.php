@@ -1,4 +1,4 @@
-<input class="grid-column-switch" data-url="{{ $url }}" data-reload="{{ $refresh }}}" data-size="small" name="{{ $column }}" {{ $checked }} type="checkbox" data-color="{{ $color }}"/>
+<input class="grid-column-switch" data-url="{{ $url }}" data-reload="{{ $refresh }}" data-size="small" name="{{ $column }}" {{ $checked }} type="checkbox" data-color="{{ $color }}"/>
 
 <script require="@switchery">
     var swt = $('.grid-column-switch'),

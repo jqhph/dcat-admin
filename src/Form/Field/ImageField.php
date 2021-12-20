@@ -132,7 +132,7 @@ trait ImageField
 
         if (is_array($file)) {
             foreach ($file as $f) {
-                $this->destroyThumbnail($f);
+                $this->destroyThumbnail($f, $force);
             }
 
             return;
@@ -188,7 +188,9 @@ trait ImageField
             }
         }
 
-        $this->destroyThumbnail();
+        if (! is_array($this->original)) {
+            $this->destroyThumbnail();
+        }
 
         return $this;
     }

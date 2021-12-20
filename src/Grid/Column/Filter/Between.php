@@ -125,6 +125,7 @@ class Between extends Filter
             'locale'           => config('app.locale'),
             'allowInputToggle' => true,
             'format'           => $this->dateFormat,
+            'extraFormats' => ['DD-MM-YYYY', 'DD/MM/YYYY', 'DD.MM.YYYY', 'DD,MM,YYYY'],
         ];
 
         $options = json_encode($options);

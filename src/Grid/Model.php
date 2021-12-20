@@ -535,7 +535,12 @@ class Model
             return;
         }
 
-        return $this->request->get($this->getPerPageName()) ?: $this->perPage;
+        $perPage = $this->request->get($this->getPerPageName()) ?: $this->perPage;
+        if ($perPage) {
+            return (int) $perPage;
+        }
+
+        return null;
     }
 
     /**
