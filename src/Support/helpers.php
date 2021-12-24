@@ -2,6 +2,7 @@
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\MessageBag;
@@ -553,5 +554,21 @@ if (! function_exists('admin_exit')) {
     function admin_exit($response = '')
     {
         Admin::exit($response);
+    }
+}
+
+if (! function_exists('admin_redirect')) {
+    /**
+     * 跳转.
+     *
+     * @param string $to
+     * @param int $statusCode
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    function admin_redirect($to, int $statusCode = 302, Request $request = null)
+    {
+        return Helper::redirect($to, $statusCode, $request);
     }
 }

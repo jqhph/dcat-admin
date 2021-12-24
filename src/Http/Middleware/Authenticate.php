@@ -26,17 +26,7 @@ class Authenticate
             return $next($request);
         }
 
-        $loginPage = admin_base_path('auth/login');
-
-        if ($request->ajax() && ! $request->pjax()) {
-            return response()->json(['message' => 'Unauthorized.', 'login' => $loginPage], 401);
-        }
-
-        if ($request->pjax()) {
-            return response("<script>location.href = '$loginPage';</script>");
-        }
-
-        return redirect()->guest($loginPage);
+        return admin_redirect('auth/login', 401);
     }
 
     /**
