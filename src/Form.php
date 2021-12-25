@@ -998,7 +998,7 @@ class Form implements Renderable
             $columns = $field->column();
 
             // If column not in input array data, then continue.
-            if (! Arr::has($updates, $columns)) {
+            if (! Arr::has($updates, $columns) || Arr::has($prepared, $columns)) {
                 continue;
             }
 
