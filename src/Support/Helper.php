@@ -974,10 +974,9 @@ class Helper
     /**
      * 跳转.
      *
-     * @param string $to
-     * @param int $statusCode
-     * @param Request $request
-     *
+     * @param  string  $to
+     * @param  int  $statusCode
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public static function redirect($to, int $statusCode = 302, $request = null)
