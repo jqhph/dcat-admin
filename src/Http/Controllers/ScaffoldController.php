@@ -78,7 +78,7 @@ class ScaffoldController extends Controller
         $dbTypes = static::$dbTypes;
         $dataTypeMap = static::$dataTypeMap;
         $action = URL::current();
-        $appNamespace = 'App\\' . implode('\\', array_map(function($name){
+        $appNamespace = 'App\\'.implode('\\', array_map(function ($name) {
             return Str::studly($name);
         }, explode(DIRECTORY_SEPARATOR, ltrim(config('admin.directory'), app_path().DIRECTORY_SEPARATOR))));
         $tables = collect($this->getDatabaseColumns())->map(function ($v) {
