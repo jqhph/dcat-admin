@@ -78,7 +78,7 @@ class ScaffoldController extends Controller
         $dbTypes = static::$dbTypes;
         $dataTypeMap = static::$dataTypeMap;
         $action = URL::current();
-        $app = ucfirst(mb_substr(request()->path(), 0, mb_stripos(request()->path(), '/')));
+        $app = ltrim(config('admin.directory'), app_path().DIRECTORY_SEPARATOR);
         $tables = collect($this->getDatabaseColumns())->map(function ($v) {
             return array_keys($v);
         })->toArray();
