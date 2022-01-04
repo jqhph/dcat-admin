@@ -77,7 +77,7 @@
                     <span for="inputControllerName" class="col-sm-1 control-label text-capitalize">{{(trans('admin.scaffold.controller'))}}</span>
 
                     <div class="col-sm-4">
-                        <input type="text" name="controller_name" class="form-control text-capitalize" id="inputControllerName" placeholder="{{(trans('admin.scaffold.controller'))}}" value="{{ old('controller_name', $appNamespace."\\Controllers\\") }}">
+                        <input type="text" name="controller_name" class="form-control text-capitalize" id="inputControllerName" placeholder="{{(trans('admin.scaffold.controller'))}}" value="{{ old('controller_name', $namespaceBase."\\Controllers\\") }}">
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
                     <span for="inputRepositoryName" class="col-sm-1 control-label text-capitalize">{{(trans('admin.scaffold.repository'))}}</span>
 
                     <div class="col-sm-4">
-                        <input type="text" name="repository_name" class="form-control text-capitalize" id="inputRepositoryName" placeholder="{{(trans('admin.scaffold.repository'))}}" value="{{ old('repository_name', $appNamespace."\\Repositories\\") }}">
+                        <input type="text" name="repository_name" class="form-control text-capitalize" id="inputRepositoryName" placeholder="{{(trans('admin.scaffold.repository'))}}" value="{{ old('repository_name', $namespaceBase."\\Repositories\\") }}">
                     </div>
                 </div>
 
@@ -302,8 +302,8 @@
             $fieldsBody = $('#table-fields tbody'),
             tpl = $('#table-field-tpl').html(),
             modelNamespace = 'App\\Models\\',
-            repositoryNamespace = '{{$appNamespace}}\\Repositories\\',
-            controllerNamespace = '{{$appNamespace}}\\Controllers\\',
+            repositoryNamespace = '{{ $namespaceBase }}\\Repositories\\',
+            controllerNamespace = '{{ $namespaceBase }}\\Controllers\\',
             dataTypeMap = {!! json_encode($dataTypeMap) !!},
             helpers = Dcat.helpers;
 
