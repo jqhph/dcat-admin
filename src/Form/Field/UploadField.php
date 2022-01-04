@@ -394,7 +394,9 @@ trait UploadField
             return;
         }
 
-        $this->destroyThumbnail($paths);
+        if (method_exists($this, 'destroyThumbnail')) {
+            $this->destroyThumbnail($paths);
+        }
 
         $storage = $this->getStorage();
 
