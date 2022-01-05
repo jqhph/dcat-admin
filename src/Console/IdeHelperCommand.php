@@ -230,7 +230,7 @@ class IdeHelperCommand extends Command
         return trim(
             $fields
                 ->map(function ($class, $alias) use (&$space) {
-                    $class = '\\'.$class;
+
                     $params = $this->getClassMethodParameters($class, '__construct');
 
                     return $space.sprintf($this->templates['grid-filter'], $class, $alias, $params);
@@ -251,7 +251,8 @@ class IdeHelperCommand extends Command
         return trim(
             $extensions
                 ->map(function ($class, $alias) use (&$space) {
-                    $params = $this->getClassMethodParameters('\\'.$class, 'render');
+
+                    $params = $this->getClassMethodParameters($class, 'render');
 
                     return $space.sprintf($this->templates['show-column'], $alias, $params);
                 })
@@ -279,7 +280,6 @@ class IdeHelperCommand extends Command
         return trim(
             $fields
                 ->map(function ($class, $alias) use (&$space) {
-                    $class = '\\'.$class;
 
                     $params = $this->getClassMethodParameters($class, '__construct');
 
@@ -309,7 +309,8 @@ class IdeHelperCommand extends Command
         return trim(
             $columns
                 ->map(function ($class, $alias) use (&$space) {
-                    $params = $this->getClassMethodParameters('\\'.$class, 'display');
+
+                    $params = $this->getClassMethodParameters($class, 'display');
 
                     return $space.sprintf($this->templates['grid-column'], $alias, $params);
                 })
@@ -393,7 +394,7 @@ class IdeHelperCommand extends Command
      * @param  string  $method
      * @return string
      */
-    protected function getClassMethodParameters(string $class, string $method)
+    protected function getClassMethodParameters(string $class, string $method): string
     {
         try {
             $reflectedClass = new \ReflectionClass($class);
