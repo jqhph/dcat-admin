@@ -409,8 +409,9 @@ class IdeHelperCommand extends Command
 
             $source = substr($source, 0, strpos($source, ')')); // 截取第一个右括号之前的所有内容（不包含）
             $source = substr($source, strpos($source, '(') + 1);  // 截取第一个左括号之前的所有内容（不包含）
+            $source = preg_replace("/\s*\r?\n\s*/", ' ', $source); // 删除所有换行
 
-            return $source;
+            return trim($source);
         } catch (\Exception $e) {
             $this->warn('Get method exception: '.$e->getMessage());
 
