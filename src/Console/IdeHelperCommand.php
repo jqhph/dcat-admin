@@ -233,7 +233,7 @@ class IdeHelperCommand extends Command
 
                     $params = $this->getClassMethodParameters($class, '__construct');
 
-                    return $space.sprintf($this->templates['grid-filter'], $class, $alias, $params);
+                    return $space.sprintf($this->templates['grid-filter'], '\\'.$class, $alias, $params);
                 })
                 ->implode("\r\n")
         );
@@ -283,7 +283,7 @@ class IdeHelperCommand extends Command
 
                     $params = $this->getClassMethodParameters($class, '__construct');
 
-                    return $space.sprintf($this->templates['form'], $class, $alias, $params);
+                    return $space.sprintf($this->templates['form'], '\\'.$class, $alias, $params);
                 })
                 ->implode("\r\n")
         );
