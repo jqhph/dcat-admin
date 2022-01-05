@@ -207,7 +207,7 @@ class IdeHelperCommand extends Command
             $methods[] = $space.sprintf($this->templates[$type]['method'], $name);
         });
 
-        return trim(implode("\r\n", array_merge($properties, [$space.'*'], $methods)));
+        return trim(implode("\n", array_merge($properties, [$space.'*'], $methods)));
     }
 
     /**
@@ -235,7 +235,7 @@ class IdeHelperCommand extends Command
 
                     return $space.sprintf($this->templates['grid-filter'], '\\'.$class, $alias, $params);
                 })
-                ->implode("\r\n")
+                ->implode("\n")
         );
     }
 
@@ -256,7 +256,7 @@ class IdeHelperCommand extends Command
 
                     return $space.sprintf($this->templates['show-column'], $alias, $params);
                 })
-                ->implode("\r\n")
+                ->implode("\n")
         );
     }
 
@@ -285,7 +285,7 @@ class IdeHelperCommand extends Command
 
                     return $space.sprintf($this->templates['form'], '\\'.$class, $alias, $params);
                 })
-                ->implode("\r\n")
+                ->implode("\n")
         );
     }
 
@@ -314,7 +314,7 @@ class IdeHelperCommand extends Command
 
                     return $space.sprintf($this->templates['grid-column'], $alias, $params);
                 })
-                ->implode("\r\n")
+                ->implode("\n")
         );
     }
 
