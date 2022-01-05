@@ -396,27 +396,20 @@ class IdeHelperCommand extends Command
     protected function getClassMethodParameters(string $class, string $method)
     {
         try {
-            $params = (new \ReflectionClass($class))->getMethod($method)->getParameters();
+            $reflectedClass = new \ReflectionClass($class);
+            $file = $reflectedClass->getFileName();
 
-            $params = array_map(function ($param) {
-                $type = $param->getType();
+            $reflectedMethod = $reflectedClass->getMethod($method);
+            $startLine = $reflectedMethod->getStartLine() - 1;
+            $endLine = $reflectedMethod->getEndLine();
+            $length = $endLine - $startLine;
 
-                $str = '';
+            $source = implode("", array_slice(file($file), $startLine, $length));
 
-                if ($type) {
-                    $str .= $type->getName().' ';
-                }
+            $source = substr($source, 0, strpos($source, ')')); // 截取第一个右括号之前的所有内容（不包含）
+            $source = substr($source, strpos($source, '(') + 1);  // 截取第一个左括号之前的所有内容（不包含）
 
-                $str .= '$'.$param->getName();
-
-                if ($param->isDefaultValueAvailable()) {
-                    $str .= ' = '.json_encode($param->getDefaultValue(), \JSON_UNESCAPED_UNICODE);
-                }
-
-                return $str;
-            }, $params);
-
-            return implode(', ', $params);
+            return $source;
         } catch (\Exception $e) {
             $this->warn('Get method exception: '.$e->getMessage());
 
