@@ -29,7 +29,7 @@ class Administrator extends Model implements AuthenticatableContract
     /**
      * Create a new Eloquent model instance.
      *
-     * @param array $attributes
+     * @param  array  $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -84,8 +84,7 @@ class Administrator extends Model implements AuthenticatableContract
     /**
      * 判断是否允许查看菜单.
      *
-     * @param array|Menu $menu
-     *
+     * @param  array|Menu  $menu
      * @return bool
      */
     public function canSeeMenu($menu)

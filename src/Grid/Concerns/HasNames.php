@@ -19,8 +19,7 @@ trait HasNames
     /**
      * Set name to grid.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return $this
      */
     public function setName($name)
@@ -44,8 +43,7 @@ trait HasNames
     /**
      * Retrieve an input item from the request.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function getRequestInput($key)
@@ -54,8 +52,7 @@ trait HasNames
     }
 
     /**
-     * @param string $key
-     *
+     * @param  string  $key
      * @return string
      */
     public function makeName($key)

@@ -15,6 +15,7 @@ use Illuminate\Support\Fluent;
  * @property array|null $ignoreQueries
  * @property array|null $jsVariables
  * @property string $translation
+ * @property array $contents
  */
 class Context extends Fluent
 {
@@ -47,7 +48,7 @@ class Context extends Fluent
 
     public function getArray($key, $default = null)
     {
-        return Helper::array($this->get($key, $default));
+        return Helper::array($this->get($key, $default), false);
     }
 
     public function add($key, $value, $k = null)

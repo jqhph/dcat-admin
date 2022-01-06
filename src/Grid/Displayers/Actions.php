@@ -47,8 +47,7 @@ class Actions extends AbstractDisplayer
     /**
      * Append a action.
      *
-     * @param string|Renderable|Action|Htmlable $action
-     *
+     * @param  string|Renderable|Action|Htmlable  $action
      * @return $this
      */
     public function append($action)
@@ -63,8 +62,7 @@ class Actions extends AbstractDisplayer
     /**
      * Prepend a action.
      *
-     * @param string|Renderable|Action|Htmlable $action
-     *
+     * @param  string|Renderable|Action|Htmlable  $action
      * @return $this
      */
     public function prepend($action)
@@ -77,8 +75,7 @@ class Actions extends AbstractDisplayer
     }
 
     /**
-     * @param mixed $action
-     *
+     * @param  mixed  $action
      * @return mixed
      */
     protected function prepareAction(&$action)
@@ -100,8 +97,7 @@ class Actions extends AbstractDisplayer
     /**
      * Disable view action.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableView(bool $disable = true)
@@ -117,8 +113,7 @@ class Actions extends AbstractDisplayer
     /**
      * Disable delete.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this.
      */
     public function disableDelete(bool $disable = true)
@@ -134,8 +129,7 @@ class Actions extends AbstractDisplayer
     /**
      * Disable edit.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this.
      */
     public function disableEdit(bool $disable = true)
@@ -151,8 +145,7 @@ class Actions extends AbstractDisplayer
     /**
      * Disable quick edit.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this.
      */
     public function disableQuickEdit(bool $disable = true)
@@ -161,9 +154,8 @@ class Actions extends AbstractDisplayer
     }
 
     /**
-     * @param string $key
-     * @param bool $disable
-     *
+     * @param  string  $key
+     * @param  bool  $disable
      * @return $this
      */
     protected function setAction(string $key, bool $value)
@@ -177,7 +169,6 @@ class Actions extends AbstractDisplayer
      * Set resource of current resource.
      *
      * @param $resource
-     *
      * @return $this
      */
     public function setResource($resource)
@@ -209,8 +200,7 @@ class Actions extends AbstractDisplayer
     }
 
     /**
-     * @param array $callbacks
-     *
+     * @param  array  $callbacks
      * @return void
      */
     protected function call(array $callbacks = [])

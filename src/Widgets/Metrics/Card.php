@@ -165,8 +165,7 @@ class Card extends Widget
     /**
      * 设置图标.
      *
-     * @param string $icon
-     *
+     * @param  string  $icon
      * @return $this
      */
     public function icon(?string $icon)
@@ -179,8 +178,7 @@ class Card extends Widget
     /**
      * 设置卡片标题.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title(?string $title)
@@ -193,8 +191,7 @@ class Card extends Widget
     /**
      * 设置卡片子标题.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function subTitle(?string $title)
@@ -207,8 +204,7 @@ class Card extends Widget
     /**
      * 设置卡片头内容.
      *
-     * @param string $contents
-     *
+     * @param  string  $contents
      * @return $this
      */
     public function header($contents)
@@ -221,8 +217,7 @@ class Card extends Widget
     /**
      * 设置卡片内容.
      *
-     * @param string $contents
-     *
+     * @param  string  $contents
      * @return $this
      */
     public function content($contents)
@@ -235,8 +230,7 @@ class Card extends Widget
     /**
      * 设置主题色.
      *
-     * @param string $style
-     *
+     * @param  string  $style
      * @return $this
      */
     public function style(string $style)
@@ -249,8 +243,7 @@ class Card extends Widget
     /**
      * 设置卡片的下拉菜单选项.
      *
-     * @param array $items
-     *
+     * @param  array  $items
      * @return $this
      */
     public function dropdown(array $items)
@@ -263,8 +256,7 @@ class Card extends Widget
     /**
      * 设置最小高度.
      *
-     * @param string|int $value
-     *
+     * @param  string|int  $value
      * @return $this
      */
     public function height($value)
@@ -277,9 +269,8 @@ class Card extends Widget
     /**
      * 设置图表配置.
      *
-     * @param string $key
-     * @param mixed $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function chartOption($key, $value)
@@ -294,8 +285,7 @@ class Card extends Widget
     /**
      * 设置图表高度.
      *
-     * @param int $number
-     *
+     * @param  int  $number
      * @return $this
      */
     public function chartHeight(int $number)
@@ -310,8 +300,7 @@ class Card extends Widget
     /**
      * 设置图表上间距.
      *
-     * @param int $number
-     *
+     * @param  int  $number
      * @return $this
      */
     public function chartMarginTop(int $number)
@@ -326,8 +315,7 @@ class Card extends Widget
     /**
      * 设置图表下间距.
      *
-     * @param int $number
-     *
+     * @param  int  $number
      * @return $this
      */
     public function chartMarginBottom(int $number)
@@ -342,8 +330,7 @@ class Card extends Widget
     /**
      * 设置图表label.
      *
-     * @param string|array $label
-     *
+     * @param  string|array  $label
      * @return $this
      */
     public function chartLabels($label)
@@ -358,8 +345,7 @@ class Card extends Widget
     /**
      * 设置图表颜色.
      *
-     * @param string|array $colors
-     *
+     * @param  string|array  $colors
      * @return $this
      */
     public function chartColors($colors)
@@ -374,8 +360,7 @@ class Card extends Widget
     /**
      * 设置图表.
      *
-     * @param array|\Closure $options
-     *
+     * @param  array|\Closure  $options
      * @return $this
      */
     public function chart($options = [])

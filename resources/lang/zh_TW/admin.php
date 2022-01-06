@@ -195,6 +195,7 @@ return [
         'Q_EXCEED_SIZE_LIMIT'    => '对不起，檔案大小超出限制',
         'F_DUPLICATE'            => '檔案重複',
         'confirm_delete_file'    => '您確定要刪除該檔案嗎?',
+        'dimensions'             => '圖片規格不正確',
     ],
     'import_extension_confirm'  => '確認導入擴展?',
     'quick_create'              => '快速新增',

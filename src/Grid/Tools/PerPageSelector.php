@@ -27,7 +27,7 @@ class PerPageSelector implements Renderable
     /**
      * Create a new PerPageSelector instance.
      *
-     * @param Grid $grid
+     * @param  Grid  $grid
      */
     public function __construct(Grid $grid)
     {
@@ -86,7 +86,7 @@ class PerPageSelector implements Renderable
             ->render();
 
         return <<<EOT
-<label class="pull-right d-none d-sm-inline" style="margin-right: 10px">
+<label class="pull-right d-none d-sm-inline per-pages-selector" style="margin-right: 10px">
     $dropdown
 </label>
 EOT;

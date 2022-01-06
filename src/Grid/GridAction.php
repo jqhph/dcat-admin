@@ -16,8 +16,7 @@ abstract class GridAction extends Action
     protected $parent;
 
     /**
-     * @param Grid $grid
-     *
+     * @param  Grid  $grid
      * @return $this
      */
     public function setGrid(Grid $grid)

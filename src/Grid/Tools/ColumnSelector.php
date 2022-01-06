@@ -27,7 +27,7 @@ class ColumnSelector extends AbstractTool
     /**
      * Create a new Export button instance.
      *
-     * @param Grid $grid
+     * @param  Grid  $grid
      */
     public function __construct(Grid $grid)
     {
@@ -106,8 +106,7 @@ class ColumnSelector extends AbstractTool
     /**
      * Is column ignored in column selector.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return bool
      */
     protected function isColumnIgnored($name)
@@ -118,8 +117,7 @@ class ColumnSelector extends AbstractTool
     /**
      * Ignore a column to display in column selector.
      *
-     * @param string|array $name
-     *
+     * @param  string|array  $name
      * @return $this
      */
     public function ignore($name)

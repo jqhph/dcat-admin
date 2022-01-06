@@ -13,6 +13,7 @@ use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Dcat\Admin\Support\Composer;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasAssets;
 use Dcat\Admin\Traits\HasHtml;
 use Dcat\Admin\Traits\HasPermissions;
@@ -30,7 +31,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.0.24-beta';
+    const VERSION = '2.1.7-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -85,8 +86,7 @@ class Admin
     /**
      * 菜单管理.
      *
-     * @param Closure|null $builder
-     *
+     * @param  Closure|null  $builder
      * @return Menu
      */
     public static function menu(Closure $builder = null)
@@ -113,14 +113,13 @@ class Admin
     }
 
     /**
-     * @param null|string $favicon
-     *
+     * @param  null|string  $favicon
      * @return string|void
      */
     public static function favicon($favicon = null)
     {
         if ($favicon === null) {
-            return static::context()->favicon;
+            return static::context()->favicon ?: config('admin.favicon');
         }
 
         static::context()->favicon = $favicon;
@@ -129,7 +128,7 @@ class Admin
     /**
      * 设置翻译文件路径.
      *
-     * @param string|null $path
+     * @param  string|null  $path
      */
     public static function translation(?string $path)
     {
@@ -155,8 +154,7 @@ class Admin
     }
 
     /**
-     * @param Closure|null $builder
-     *
+     * @param  Closure|null  $builder
      * @return Navbar
      */
     public static function navbar(Closure $builder = null)
@@ -171,8 +169,7 @@ class Admin
     /**
      * 启用或禁用Pjax.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return void
      */
     public static function pjax(bool $value = true)
@@ -209,8 +206,7 @@ class Admin
     /**
      * section.
      *
-     * @param Closure|null $builder
-     *
+     * @param  Closure|null  $builder
      * @return SectionManager
      */
     public static function section(Closure $builder = null)
@@ -235,9 +231,8 @@ class Admin
     /**
      * 创建数据仓库实例.
      *
-     * @param string|Repository|Model|Builder $value
-     * @param array                   $args
-     *
+     * @param  string|Repository|Model|Builder  $value
+     * @param  array  $args
      * @return Repository
      */
     public static function repository($repository, array $args = [])
@@ -272,8 +267,7 @@ class Admin
     /**
      * 处理异常.
      *
-     * @param \Throwable $e
-     *
+     * @param  \Throwable  $e
      * @return mixed
      */
     public static function handleException(\Throwable $e)
@@ -284,8 +278,7 @@ class Admin
     /**
      * 上报异常.
      *
-     * @param \Throwable $e
-     *
+     * @param  \Throwable  $e
      * @return mixed
      */
     public static function reportException(\Throwable $e)
@@ -296,8 +289,7 @@ class Admin
     /**
      * 显示异常信息.
      *
-     * @param \Throwable $e
-     *
+     * @param  \Throwable  $e
      * @return mixed
      */
     public static function renderException(\Throwable $e)
@@ -306,7 +298,7 @@ class Admin
     }
 
     /**
-     * @param callable $callback
+     * @param  callable  $callback
      */
     public static function booting($callback)
     {
@@ -314,7 +306,7 @@ class Admin
     }
 
     /**
-     * @param callable $callback
+     * @param  callable  $callback
      */
     public static function booted($callback)
     {
@@ -358,8 +350,7 @@ class Admin
     }
 
     /**
-     * @param array|string $name
-     *
+     * @param  array|string  $name
      * @return void
      */
     public static function addIgnoreQueryName($name)
@@ -380,10 +371,64 @@ class Admin
     }
 
     /**
+     * 中断默认的渲染逻辑.
+     *
+     * @param  string|\Illuminate\Contracts\Support\Renderable|\Closure  $value
+     */
+    public static function prevent($value)
+    {
+        if ($value !== null) {
+            static::context()->add('contents', $value);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public static function shouldPrevent()
+    {
+        return count(static::context()->getArray('contents')) > 0;
+    }
+
+    /**
+     * 渲染内容.
+     *
+     * @return string|void
+     */
+    public static function renderContents()
+    {
+        if (! static::shouldPrevent()) {
+            return;
+        }
+
+        $results = '';
+
+        foreach (static::context()->getArray('contents') as $content) {
+            $results .= Helper::render($content);
+        }
+
+        // 等待JS脚本加载完成
+        static::script('Dcat.wait()', true);
+
+        $asset = static::asset();
+
+        static::baseCss([], false);
+        static::baseJs([], false);
+        static::headerJs([], false);
+        static::fonts([]);
+
+        return $results
+            .static::html()
+            .$asset->jsToHtml()
+            .$asset->cssToHtml()
+            .$asset->scriptToHtml()
+            .$asset->styleToHtml();
+    }
+
+    /**
      * 响应json数据.
      *
-     * @param array $data
-     *
+     * @param  array  $data
      * @return JsonResponse
      */
     public static function json(array $data = [])
@@ -394,8 +439,7 @@ class Admin
     /**
      * 插件管理.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return \Dcat\Admin\Extend\Manager|\Dcat\Admin\Extend\ServiceProvider|null
      */
     public static function extension(?string $name = null)
@@ -410,7 +454,7 @@ class Admin
     /**
      * 响应并中断后续逻辑.
      *
-     * @param Response|string|array $response
+     * @param  Response|string|array  $response
      *
      * @throws HttpResponseException
      */
@@ -438,7 +482,7 @@ class Admin
     /**
      * 往分组插入中间件.
      *
-     * @param array $mix
+     * @param  array  $mix
      */
     public static function mixMiddlewareGroup(array $mix = [])
     {
@@ -476,8 +520,7 @@ class Admin
     /**
      * 获取js配置.
      *
-     * @param array|null $variables
-     *
+     * @param  array|null  $variables
      * @return string
      */
     public static function jsVariables(array $variables = null)

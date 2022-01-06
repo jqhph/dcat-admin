@@ -4,13 +4,10 @@ namespace Dcat\Admin\Layout;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Support\Helper;
-use Lang;
+use Illuminate\Support\Facades\Lang;
 
 class Menu
 {
-    /**
-     * @var array
-     */
     protected static $helperNodes = [
         [
             'id'        => 1,
@@ -42,14 +39,8 @@ class Menu
         ],
     ];
 
-    /**
-     * @var string
-     */
     protected $view = 'admin::partials.menu';
 
-    /**
-     * Register menu.
-     */
     public function register()
     {
         if (! admin_has_default_section(Admin::SECTION['LEFT_SIDEBAR_MENU'])) {
@@ -66,9 +57,10 @@ class Menu
     }
 
     /**
-     * @param array $nodes
-     * @param int   $priority
+     * 增加菜单节点.
      *
+     * @param  array  $nodes
+     * @param  int  $priority
      * @return void
      */
     public function add(array $nodes = [], int $priority = 10)
@@ -79,13 +71,12 @@ class Menu
     }
 
     /**
-     * Build html.
+     * 转化为HTML.
      *
-     * @param array $nodes
+     * @param  array  $nodes
+     * @return string
      *
      * @throws \Throwable
-     *
-     * @return string
      */
     public function toHtml($nodes)
     {
@@ -99,8 +90,9 @@ class Menu
     }
 
     /**
-     * @param string $view
+     * 设置菜单视图.
      *
+     * @param  string  $view
      * @return $this
      */
     public function view(string $view)
@@ -111,8 +103,9 @@ class Menu
     }
 
     /**
-     * @param array $item
+     * 渲染视图.
      *
+     * @param  array  $item
      * @return string
      */
     public function render($item)
@@ -121,9 +114,10 @@ class Menu
     }
 
     /**
-     * @param array       $item
-     * @param null|string $path
+     * 判断是否选中.
      *
+     * @param  array  $item
+     * @param  null|string  $path
      * @return bool
      */
     public function isActive($item, ?string $path = null)
@@ -155,8 +149,9 @@ class Menu
     }
 
     /**
-     * @param array $item
+     * 判断节点是否可见.
      *
+     * @param  array  $item
      * @return bool
      */
     public function visible($item)
@@ -181,7 +176,6 @@ class Menu
      * 判断扩展是否启用.
      *
      * @param $item
-     *
      * @return bool
      */
     protected function checkExtension($item)
@@ -202,8 +196,7 @@ class Menu
     /**
      * 判断用户.
      *
-     * @param array|\Dcat\Admin\Models\Menu $item
-     *
+     * @param  array|\Dcat\Admin\Models\Menu  $item
      * @return bool
      */
     protected function userCanSeeMenu($item)
@@ -221,7 +214,6 @@ class Menu
      * 判断权限.
      *
      * @param $item
-     *
      * @return bool
      */
     protected function checkPermission($item)
@@ -250,8 +242,7 @@ class Menu
     }
 
     /**
-     * @param string $text
-     *
+     * @param  string  $text
      * @return string
      */
     public function translate($text)
@@ -266,8 +257,7 @@ class Menu
     }
 
     /**
-     * @param string $uri
-     *
+     * @param  string  $uri
      * @return string
      */
     public function getPath($uri)
@@ -278,8 +268,7 @@ class Menu
     }
 
     /**
-     * @param string $uri
-     *
+     * @param  string  $uri
      * @return string
      */
     public function getUrl($uri)

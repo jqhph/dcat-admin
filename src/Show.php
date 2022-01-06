@@ -96,9 +96,9 @@ class Show implements Renderable
     /**
      * Show constructor.
      *
-     * @param mixed $id                                $id
-     * @param Model|Builder|Repository|array|Arrayable $model
-     * @param \Closure                                 $builder
+     * @param  mixed  $id  $id
+     * @param  Model|Builder|Repository|array|Arrayable  $model
+     * @param  \Closure  $builder
      */
     public function __construct($id = null, $model = null, ?\Closure $builder = null)
     {
@@ -154,8 +154,7 @@ class Show implements Renderable
     /**
      * Create a show instance.
      *
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return $this
      */
     public static function make(...$params)
@@ -164,8 +163,7 @@ class Show implements Renderable
     }
 
     /**
-     * @param string $value
-     *
+     * @param  string  $value
      * @return $this
      */
     public function setKeyName(string $value)
@@ -190,8 +188,7 @@ class Show implements Renderable
     }
 
     /**
-     * @param mixed $id
-     *
+     * @param  mixed  $id
      * @return mixed
      */
     public function setKey($id)
@@ -210,8 +207,7 @@ class Show implements Renderable
     }
 
     /**
-     * @param Fluent|\Illuminate\Database\Eloquent\Model|null $model
-     *
+     * @param  Fluent|\Illuminate\Database\Eloquent\Model|null  $model
      * @return Fluent|$this|\Illuminate\Database\Eloquent\Model
      */
     public function model($model = null)
@@ -232,8 +228,7 @@ class Show implements Renderable
     /**
      * Set a view to render.
      *
-     * @param string $view
-     *
+     * @param  string  $view
      * @return $this
      */
     public function view($view)
@@ -246,8 +241,7 @@ class Show implements Renderable
     /**
      * Add variables to show view.
      *
-     * @param array $variables
-     *
+     * @param  array  $variables
      * @return $this
      */
     public function with($variables = [])
@@ -295,8 +289,7 @@ class Show implements Renderable
     }
 
     /**
-     * @param \Closure|array|AbstractTool|Renderable|Htmlable|string $callback
-     *
+     * @param  \Closure|array|AbstractTool|Renderable|Htmlable|string  $callback
      * @return $this|Tools
      */
     public function tools($callback = null)
@@ -325,9 +318,8 @@ class Show implements Renderable
     /**
      * Add a model field to show.
      *
-     * @param string $name
-     * @param string $label
-     *
+     * @param  string  $name
+     * @param  string  $label
      * @return Field
      */
     public function field($name, $label = '')
@@ -338,8 +330,7 @@ class Show implements Renderable
     /**
      * Get fields or add multiple fields.
      *
-     * @param array $fields
-     *
+     * @param  array  $fields
      * @return $this|Collection
      */
     public function fields(array $fields = null)
@@ -382,10 +373,9 @@ class Show implements Renderable
     /**
      * Add a relation to show.
      *
-     * @param string          $name
-     * @param string|\Closure $label
-     * @param null|\Closure   $builder
-     *
+     * @param  string  $name
+     * @param  string|\Closure  $label
+     * @param  null|\Closure  $builder
      * @return Relation
      */
     public function relation($name, $label, $builder = null)
@@ -401,9 +391,8 @@ class Show implements Renderable
     /**
      * Add a model field to show.
      *
-     * @param string $name
-     * @param string $label
-     *
+     * @param  string  $name
+     * @param  string  $label
      * @return Field
      */
     protected function addField($name, $label = '')
@@ -422,10 +411,9 @@ class Show implements Renderable
     /**
      * Add a relation panel to show.
      *
-     * @param string   $name
-     * @param \Closure $builder
-     * @param string   $label
-     *
+     * @param  string  $name
+     * @param  \Closure  $builder
+     * @param  string  $label
      * @return Relation
      */
     protected function addRelation($name, $builder, $label = '')
@@ -444,7 +432,7 @@ class Show implements Renderable
     /**
      * Overwrite existing field.
      *
-     * @param string $name
+     * @param  string  $name
      */
     protected function overwriteExistingField($name)
     {
@@ -462,7 +450,7 @@ class Show implements Renderable
     /**
      * Overwrite existing relation.
      *
-     * @param string $name
+     * @param  string  $name
      */
     protected function overwriteExistingRelation($name)
     {
@@ -504,7 +492,7 @@ class Show implements Renderable
     /**
      * Show the content of html.
      *
-     * @param string $html
+     * @param  string  $html
      */
     public function html($html = '')
     {
@@ -550,9 +538,8 @@ class Show implements Renderable
     /**
      * Show quick edit tool.
      *
-     * @param null|string $width
-     * @param null|string $height
-     *
+     * @param  null|string  $width
+     * @param  null|string  $height
      * @return $this
      */
     public function showQuickEdit(?string $width = null, ?string $height = null)
@@ -594,8 +581,7 @@ class Show implements Renderable
     /**
      * Set resource path.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return $this
      */
     public function setResource($path)
@@ -610,9 +596,8 @@ class Show implements Renderable
     /**
      * Add field and relation dynamically.
      *
-     * @param string $method
-     * @param array  $arguments
-     *
+     * @param  string  $method
+     * @param  array  $arguments
      * @return Field
      */
     public function __call($method, $arguments = [])
@@ -626,8 +611,7 @@ class Show implements Renderable
 
     /**
      * @param $method
-     * @param array $arguments
-     *
+     * @param  array  $arguments
      * @return bool|Show|Field|Relation
      */
     protected function call($method, $arguments = [])
@@ -644,9 +628,8 @@ class Show implements Renderable
     /**
      * Handle relation field.
      *
-     * @param string $method
-     * @param array  $arguments
-     *
+     * @param  string  $method
+     * @param  array  $arguments
      * @return $this|bool|Relation|Field
      */
     protected function handleRelationField($method, $arguments)
@@ -697,8 +680,7 @@ class Show implements Renderable
     /**
      * Add a row in Show.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this
      */
     public function row(Closure $callback)
@@ -719,8 +701,7 @@ class Show implements Renderable
     /**
      * Add a model field to show.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return Field|Collection
      */
     public function __get($name)

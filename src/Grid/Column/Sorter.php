@@ -34,9 +34,9 @@ class Sorter implements Renderable
     /**
      * Sorter constructor.
      *
-     * @param Grid $grid
-     * @param string $columnName
-     * @param string $cast
+     * @param  Grid  $grid
+     * @param  string  $columnName
+     * @param  string  $cast
      */
     public function __construct(Grid $grid, $columnName, $cast)
     {

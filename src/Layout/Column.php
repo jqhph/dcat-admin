@@ -2,6 +2,8 @@
 
 namespace Dcat\Admin\Layout;
 
+use Dcat\Admin\Admin;
+use Dcat\Admin\Grid;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -23,7 +25,7 @@ class Column implements Renderable
      * Column constructor.
      *
      * @param $content
-     * @param int $width
+     * @param  int  $width
      */
     public function __construct($content, $width = 12)
     {
@@ -57,7 +59,6 @@ class Column implements Renderable
      * Append content to column.
      *
      * @param $content
-     *
      * @return $this
      */
     public function append($content)
@@ -71,7 +72,6 @@ class Column implements Renderable
      * Add a row for column.
      *
      * @param $content
-     *
      * @return Column
      */
     public function row($content)
@@ -97,6 +97,11 @@ class Column implements Renderable
         $html = $this->startColumn();
 
         foreach ($this->contents as $content) {
+            if ($content instanceof Grid && $content->isAsyncRequest()) {
+                Admin::prevent($content->render());
+
+                continue;
+            }
             $html .= Helper::render($content);
         }
 

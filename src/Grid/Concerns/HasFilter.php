@@ -3,7 +3,9 @@
 namespace Dcat\Admin\Grid\Concerns;
 
 use Closure;
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Collection;
 
 trait HasFilter
@@ -28,8 +30,7 @@ trait HasFilter
     /**
      * Process the grid filter.
      *
-     * @param bool $toArray
-     *
+     * @param  bool  $toArray
      * @return Collection
      */
     public function processFilter()
@@ -47,8 +48,7 @@ trait HasFilter
     /**
      * Get or set the grid filter.
      *
-     * @param Closure $callback
-     *
+     * @param  Closure  $callback
      * @return $this|Grid\Filter
      */
     public function filter(Closure $callback = null)
@@ -103,8 +103,7 @@ trait HasFilter
     /**
      * Show grid filter.
      *
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return $this
      */
     public function showFilter(bool $val = true)
@@ -115,8 +114,7 @@ trait HasFilter
     /**
      * Disable filter button.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableFilterButton(bool $disable = true)
@@ -129,12 +127,30 @@ trait HasFilter
     /**
      * Show filter button.
      *
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return $this
      */
     public function showFilterButton(bool $val = true)
     {
         return $this->disableFilterButton(! $val);
+    }
+
+    protected function addFilterScript()
+    {
+        if (! $this->isAsyncRequest()) {
+            return;
+        }
+
+        Admin::script(
+            <<<JS
+var count = {$this->filter()->countConditions()};
+
+$('.async-{$this->getTableId()}').find('.filter-count').text(count > 0 ? ('('+count+')') : '');
+JS
+        );
+
+        $url = Helper::urlWithoutQuery($this->filter()->urlWithoutFilters(), ['_pjax', static::ASYNC_NAME]);
+
+        Admin::script("$('.grid-filter-form').attr('action', '{$url}');", true);
     }
 }

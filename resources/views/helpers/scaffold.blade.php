@@ -77,7 +77,7 @@
                     <span for="inputControllerName" class="col-sm-1 control-label text-capitalize">{{(trans('admin.scaffold.controller'))}}</span>
 
                     <div class="col-sm-4">
-                        <input type="text" name="controller_name" class="form-control text-capitalize" id="inputControllerName" placeholder="{{(trans('admin.scaffold.controller'))}}" value="{{ old('controller_name', "App\\Admin\\Controllers\\") }}">
+                        <input type="text" name="controller_name" class="form-control text-capitalize" id="inputControllerName" placeholder="{{(trans('admin.scaffold.controller'))}}" value="{{ old('controller_name', "App\\".$app."\\Controllers\\") }}">
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
                     <span for="inputRepositoryName" class="col-sm-1 control-label text-capitalize">{{(trans('admin.scaffold.repository'))}}</span>
 
                     <div class="col-sm-4">
-                        <input type="text" name="repository_name" class="form-control text-capitalize" id="inputRepositoryName" placeholder="{{(trans('admin.scaffold.repository'))}}" value="{{ old('repository_name', "App\\Admin\\Repositories\\") }}">
+                        <input type="text" name="repository_name" class="form-control text-capitalize" id="inputRepositoryName" placeholder="{{(trans('admin.scaffold.repository'))}}" value="{{ old('repository_name', "App\\".$app."\\Repositories\\") }}">
                     </div>
                 </div>
 
@@ -302,8 +302,8 @@
             $fieldsBody = $('#table-fields tbody'),
             tpl = $('#table-field-tpl').html(),
             modelNamespace = 'App\\Models\\',
-            repositoryNamespace = 'App\\Admin\\Repositories\\',
-            controllerNamespace = 'App\\Admin\\Controllers\\',
+            repositoryNamespace = 'App\\{{$app}}\\Repositories\\',
+            controllerNamespace = 'App\\{{$app}}\\Controllers\\',
             dataTypeMap = {!! json_encode($dataTypeMap) !!},
             helpers = Dcat.helpers;
 

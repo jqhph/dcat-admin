@@ -49,14 +49,13 @@ class Tree extends Field
     protected $rootParentId = 0;
 
     /**
-     * @param array|Arrayable|\Closure $data exp:
-     *                                       {
-     *                                       "id": "1",
-     *                                       "parent": "#",
-     *                                       "text": "Dashboard",
-     *                                       // "state": {"selected": true}
-     *                                       }
-     *
+     * @param  array|Arrayable|\Closure  $data  exp:
+     *                                          {
+     *                                          "id": "1",
+     *                                          "parent": "#",
+     *                                          "text": "Dashboard",
+     *                                          // "state": {"selected": true}
+     *                                          }
      * @return $this
      */
     public function nodes($data)
@@ -73,22 +72,20 @@ class Tree extends Field
     /**
      * 设置父级复选框是否禁止被单独选中.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function treeState(bool $value = true)
     {
         $this->options['checkbox']['three_state'] = $value;
 
-        return $this;
+        return $this->exceptParentNode($value);
     }
 
     /**
      * 过滤父节点.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function exceptParentNode(bool $value = true)
@@ -197,8 +194,7 @@ class Tree extends Field
     /**
      * Set type.
      *
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function type(array $value)
@@ -211,8 +207,7 @@ class Tree extends Field
     /**
      * Set plugins.
      *
-     * @param array $value
-     *
+     * @param  array  $value
      * @return $this
      */
     public function plugins(array $value)
@@ -223,8 +218,7 @@ class Tree extends Field
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function expand(bool $value = true)

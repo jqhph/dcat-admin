@@ -16,9 +16,8 @@ class Browser extends BaseBrowser
     /**
      * 作用与 with 方法完全相同，不同的在于此方法可以让下层 Broser 对象继承当前 Component 的方法.
      *
-     * @param string|Component $selector
-     * @param \Closure         $callback
-     *
+     * @param  string|Component  $selector
+     * @param  \Closure  $callback
      * @return $this
      */
     public function extend($selector, $callback)

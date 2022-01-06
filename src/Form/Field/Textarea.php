@@ -16,8 +16,7 @@ class Textarea extends Field
     /**
      * Set rows of textarea.
      *
-     * @param int $rows
-     *
+     * @param  int  $rows
      * @return $this
      */
     public function rows($rows = 5)

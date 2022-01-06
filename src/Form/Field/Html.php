@@ -28,8 +28,8 @@ class Html extends Field
     /**
      * Create a new Html instance.
      *
-     * @param mixed $html
-     * @param array $arguments
+     * @param  mixed  $html
+     * @param  array  $arguments
      */
     public function __construct($html, $arguments)
     {
@@ -71,7 +71,7 @@ class Html extends Field
 <div class="{$viewClass['form-group']}">
     <label  class="{$viewClass['label']} control-label">{$this->label}</label>
     <div class="{$viewClass['field']}">
-        {$this->html}
+        <div class="{$this->getElementClassString()}">{$this->html}</div>
     </div>
 </div>
 EOT;

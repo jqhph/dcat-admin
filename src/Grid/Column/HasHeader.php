@@ -27,8 +27,7 @@ trait HasHeader
     /**
      * Add contents to column header.
      *
-     * @param string|Renderable|Htmlable $header
-     *
+     * @param  string|Renderable|Htmlable  $header
      * @return $this
      */
     public function addHeader($header)
@@ -46,9 +45,8 @@ trait HasHeader
     /**
      * Add a column sortable to column header.
      *
-     * @param string $columnName
-     * @param string $cast
-     *
+     * @param  string  $columnName
+     * @param  string  $cast
      * @return $this
      */
     public function sortable($columnName = null, $cast = null)
@@ -78,8 +76,7 @@ trait HasHeader
      *          Grid\Column\Filter\Equal::make(__('admin.created_at'))->date()
      *      );
      *
-     * @param Grid\Column\Filter|string $filter
-     *
+     * @param  Grid\Column\Filter|string  $filter
      * @return $this
      */
     public function filter($filter = null)
@@ -98,8 +95,7 @@ trait HasHeader
     }
 
     /**
-     * @param string|\Closure $valueKey
-     *
+     * @param  string|\Closure  $valueKey
      * @return $this
      */
     public function filterByValue($valueKey = null)
@@ -114,10 +110,9 @@ trait HasHeader
     /**
      * Add a help tooltip to column header.
      *
-     * @param string|\Closure $message
-     * @param null|string     $style     'green', 'blue', 'red', 'purple'
-     * @param null|string     $placement 'bottom', 'left', 'right', 'top'
-     *
+     * @param  string|\Closure  $message
+     * @param  null|string  $style  'green', 'blue', 'red', 'purple'
+     * @param  null|string  $placement  'bottom', 'left', 'right', 'top'
      * @return $this
      */
     public function help($message, ?string $style = null, ?string $placement = null)
@@ -128,7 +123,7 @@ trait HasHeader
     /**
      * Add a binding based on filter to the model query.
      *
-     * @param Model $model
+     * @param  Model  $model
      */
     public function bindFilterQuery(Model $model)
     {

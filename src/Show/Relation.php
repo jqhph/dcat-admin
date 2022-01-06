@@ -46,9 +46,9 @@ class Relation extends Field
     /**
      * Relation constructor.
      *
-     * @param string   $name
-     * @param \Closure $builder
-     * @param string   $title
+     * @param  string  $name
+     * @param  \Closure  $builder
+     * @param  string  $title
      */
     public function __construct($name, $builder, $title = '')
     {
@@ -60,8 +60,7 @@ class Relation extends Field
     /**
      * Set parent model for relation.
      *
-     * @param Fluent|Model $model
-     *
+     * @param  Fluent|Model  $model
      * @return $this|Fluent
      */
     public function model($model = null)
@@ -76,8 +75,7 @@ class Relation extends Field
     }
 
     /**
-     * @param int $width
-     *
+     * @param  int  $width
      * @return $this
      */
     public function width(int $width, int $_ = 2)

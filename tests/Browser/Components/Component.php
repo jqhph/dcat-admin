@@ -10,9 +10,8 @@ abstract class Component extends BaseComponent
     /**
      * 解析css选择器别名.
      *
-     * @param Browser $browser
-     * @param string $selector
-     *
+     * @param  Browser  $browser
+     * @param  string  $selector
      * @return string
      */
     public function formatSelector(Browser $browser, $selector = '')
@@ -23,9 +22,8 @@ abstract class Component extends BaseComponent
     /**
      * 解析css选择器别名但不使用前缀.
      *
-     * @param \Laravel\Dusk\Browser $browser
-     * @param string $selector
-     *
+     * @param  \Laravel\Dusk\Browser  $browser
+     * @param  string  $selector
      * @return string
      */
     public function formatSelectorWithoutPrefix(Browser $browser, $selector = '')
@@ -38,8 +36,7 @@ abstract class Component extends BaseComponent
     }
 
     /**
-     * @param Browser $browser
-     *
+     * @param  Browser  $browser
      * @return string
      */
     public function parentSelector(Browser $browser)

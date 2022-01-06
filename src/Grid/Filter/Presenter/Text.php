@@ -24,7 +24,7 @@ class Text extends Presenter
     /**
      * Text constructor.
      *
-     * @param string $placeholder
+     * @param  string  $placeholder
      */
     public function __construct($placeholder = '')
     {
@@ -49,8 +49,7 @@ class Text extends Presenter
     /**
      * Set input placeholder.
      *
-     * @param string $placeholder
-     *
+     * @param  string  $placeholder
      * @return $this
      */
     public function placeholder($placeholder = '')
@@ -85,7 +84,7 @@ class Text extends Presenter
     }
 
     /**
-     * @param array $options
+     * @param  array  $options
      *
      * @see https://github.com/RobinHerbots/Inputmask/blob/4.x/README_numeric.md
      *
@@ -97,7 +96,7 @@ class Text extends Presenter
     }
 
     /**
-     * @param array $options
+     * @param  array  $options
      *
      * @see https://github.com/RobinHerbots/Inputmask/blob/4.x/README_numeric.md
      *
@@ -113,7 +112,7 @@ class Text extends Presenter
     }
 
     /**
-     * @param array $options
+     * @param  array  $options
      *
      * @see https://github.com/RobinHerbots/Inputmask/blob/4.x/README_numeric.md
      *
@@ -143,8 +142,7 @@ class Text extends Presenter
     }
 
     /**
-     * @param string $mask
-     *
+     * @param  string  $mask
      * @return Text
      */
     public function mobile($mask = '19999999999')
@@ -153,9 +151,8 @@ class Text extends Presenter
     }
 
     /**
-     * @param array  $options
-     * @param string $icon
-     *
+     * @param  array  $options
+     * @param  string  $icon
      * @return $this
      */
     public function inputmask($options = [], $icon = 'pencil')

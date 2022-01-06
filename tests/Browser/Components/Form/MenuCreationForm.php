@@ -60,9 +60,8 @@ class MenuCreationForm extends Component
     /**
      * 注入表单.
      *
-     * @param Browser $browser
-     * @param array $input
-     *
+     * @param  Browser  $browser
+     * @param  array  $input
      * @return Browser
      */
     public function fill(Browser $browser, array $input)

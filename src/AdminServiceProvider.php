@@ -13,6 +13,7 @@ use Dcat\Admin\Layout\Menu;
 use Dcat\Admin\Layout\Navbar;
 use Dcat\Admin\Layout\SectionManager;
 use Dcat\Admin\Support\Context;
+use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Support\Setting;
 use Dcat\Admin\Support\Translator;
 use Dcat\Admin\Support\WebUploader;
@@ -274,8 +275,8 @@ PHP;
 
         // register middleware group.
         foreach ($this->middlewareGroups as $key => $middleware) {
-            if ($disablePermission && $middleware == 'admin.permission') {
-                continue;
+            if ($disablePermission) {
+                Helper::deleteByValue($middleware, 'admin.permission', true);
             }
             $router->middlewareGroup($key, $middleware);
         }

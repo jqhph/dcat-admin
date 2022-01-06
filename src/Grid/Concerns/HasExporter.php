@@ -27,8 +27,7 @@ trait HasExporter
     /**
      * Set exporter driver for Grid to export.
      *
-     * @param string|Grid\Exporters\AbstractExporter|array $exporterDriver
-     *
+     * @param  string|Grid\Exporters\AbstractExporter|array  $exporterDriver
      * @return Exporter
      */
     public function export($exporterDriver = null)
@@ -54,8 +53,7 @@ trait HasExporter
     /**
      * Handle export request.
      *
-     * @param bool $forceExport
-     *
+     * @param  bool  $forceExport
      * @return mixed
      */
     public function handleExportRequest($forceExport = false)
@@ -96,8 +94,7 @@ trait HasExporter
     }
 
     /**
-     * @param string $scope
-     *
+     * @param  string  $scope
      * @return AbstractExporter
      */
     protected function resolveExportDriver($scope)
@@ -108,9 +105,8 @@ trait HasExporter
     /**
      * Get the export url.
      *
-     * @param int  $scope
-     * @param null $args
-     *
+     * @param  int  $scope
+     * @param  null  $args
      * @return string
      */
     public function exportUrl($scope = 1, $args = null)

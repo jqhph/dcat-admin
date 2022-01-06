@@ -24,8 +24,7 @@ class JavaScript
     /**
      * 设置或获取代码内容.
      *
-     * @param mixed $script
-     *
+     * @param  mixed  $script
      * @return mixed
      */
     public function value($script = null)
@@ -38,8 +37,7 @@ class JavaScript
     }
 
     /**
-     * @param string|\Closure $script
-     *
+     * @param  string|\Closure  $script
      * @return string
      */
     public static function make($script)
@@ -60,7 +58,7 @@ class JavaScript
     /**
      * 删除代码.
      *
-     * @param string $id
+     * @param  string  $id
      */
     public static function delete(string $id)
     {
@@ -70,8 +68,7 @@ class JavaScript
     /**
      * 格式化为js代码.
      *
-     * @param array|Arrayable $value
-     *
+     * @param  array|Arrayable  $value
      * @return string
      */
     public static function format($value)

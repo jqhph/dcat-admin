@@ -329,8 +329,7 @@ TEXT;
     /**
      * Extension path.
      *
-     * @param string $path
-     *
+     * @param  string  $path
      * @return string
      */
     protected function extensionPath($path = '')
@@ -347,8 +346,8 @@ TEXT;
     /**
      * Put contents to file.
      *
-     * @param string $to
-     * @param string $content
+     * @param  string  $to
+     * @param  string  $content
      */
     protected function putFile($to, $content)
     {
@@ -360,8 +359,8 @@ TEXT;
     /**
      * Copy files to extension path.
      *
-     * @param string|array $from
-     * @param string|null  $to
+     * @param  string|array  $from
+     * @param  string|null  $to
      */
     protected function copy($from, $to = null)
     {
@@ -385,7 +384,7 @@ TEXT;
     /**
      * Make new directory.
      *
-     * @param array|string $paths
+     * @param  array|string  $paths
      */
     protected function makeDir($paths = '')
     {

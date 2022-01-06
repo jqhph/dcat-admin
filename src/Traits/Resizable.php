@@ -2,7 +2,6 @@
 
 namespace Dcat\Admin\Traits;
 
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 trait Resizable
@@ -10,9 +9,8 @@ trait Resizable
     /**
      * Method for returning specific thumbnail for model.
      *
-     * @param string $type
-     * @param string $attribute
-     *
+     * @param  string  $type
+     * @param  string  $attribute
      * @return string|null
      */
     public function thumbnail($type, $attribute = 'image', $disk = null)
@@ -27,7 +25,7 @@ trait Resizable
 
         $thumbnail = $this->getThumbnailPath($image, $type);
 
-        return Storage::disk($disk ?: config('admin.upload.disk'))->exists($thumbnail) ? $thumbnail : null;
+        return $thumbnail;
     }
 
     /**
@@ -35,7 +33,6 @@ trait Resizable
      *
      * @param $image
      * @param $type
-     *
      * @return string
      */
     public function getThumbnailPath($image, $type)

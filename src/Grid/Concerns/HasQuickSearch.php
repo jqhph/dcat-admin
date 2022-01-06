@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Grid\Concerns;
 
+use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Column;
 use Dcat\Admin\Grid\Events\ApplyQuickSearch;
 use Dcat\Admin\Grid\Model;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
  * @property Collection $columns
  * @property Tools $tools
  *
- * @method  Model model()
+ * @method Model model()
  */
 trait HasQuickSearch
 {
@@ -30,7 +31,6 @@ trait HasQuickSearch
 
     /**
      * @param array|string|\Closure
-     *
      * @return Tools\QuickSearch
      */
     public function quickSearch($search = null)
@@ -49,6 +49,8 @@ trait HasQuickSearch
             $this->quickSearch = $search;
 
             $search->setGrid($this);
+
+            $this->addQuickSearchScript();
         });
     }
 
@@ -132,7 +134,7 @@ trait HasQuickSearch
     /**
      * Add where bindings.
      *
-     * @param string $query
+     * @param  string  $query
      */
     protected function addWhereBindings($query)
     {
@@ -186,8 +188,7 @@ trait HasQuickSearch
     /**
      * Parse quick query bindings.
      *
-     * @param array $queries
-     *
+     * @param  array  $queries
      * @return array
      */
     protected function parseQueryBindings(array $queries)
@@ -226,10 +227,10 @@ trait HasQuickSearch
     /**
      * Add where like binding to model query.
      *
-     * @param mixed  $query
-     * @param string $column
-     * @param bool   $or
-     * @param string $pattern
+     * @param  mixed  $query
+     * @param  string  $column
+     * @param  bool  $or
+     * @param  string  $pattern
      */
     protected function addWhereLikeBinding($query, ?string $column, ?bool $or, ?string $pattern)
     {
@@ -242,11 +243,11 @@ trait HasQuickSearch
     /**
      * Add where date time function binding to model query.
      *
-     * @param mixed  $query
-     * @param string $column
-     * @param bool   $or
-     * @param string $function
-     * @param string $value
+     * @param  mixed  $query
+     * @param  string  $column
+     * @param  bool  $or
+     * @param  string  $function
+     * @param  string  $value
      */
     protected function addWhereDatetimeBinding($query, ?string $column, ?bool $or, ?string $function, ?string $value)
     {
@@ -258,11 +259,11 @@ trait HasQuickSearch
     /**
      * Add where in binding to the model query.
      *
-     * @param mixed  $query
-     * @param string $column
-     * @param bool   $or
-     * @param bool   $not
-     * @param string $values
+     * @param  mixed  $query
+     * @param  string  $column
+     * @param  bool  $or
+     * @param  bool  $not
+     * @param  string  $values
      */
     protected function addWhereInBinding($query, ?string $column, ?bool $or, ?bool $not, ?string $values)
     {
@@ -283,11 +284,11 @@ trait HasQuickSearch
     /**
      * Add where between binding to the model query.
      *
-     * @param mixed  $query
-     * @param string $column
-     * @param bool   $or
-     * @param string $start
-     * @param string $end
+     * @param  mixed  $query
+     * @param  string  $column
+     * @param  bool  $or
+     * @param  string  $start
+     * @param  string  $end
      */
     protected function addWhereBetweenBinding($query, ?string $column, ?bool $or, ?string $start, ?string $end)
     {
@@ -299,11 +300,11 @@ trait HasQuickSearch
     /**
      * Add where basic binding to the model query.
      *
-     * @param mixed  $query
-     * @param string $column
-     * @param bool   $or
-     * @param string $operator
-     * @param string $value
+     * @param  mixed  $query
+     * @param  string  $column
+     * @param  bool  $or
+     * @param  string  $operator
+     * @param  string  $value
      */
     protected function addWhereBasicBinding($query, ?string $column, ?bool $or, ?string $operator, ?string $value)
     {
@@ -323,5 +324,19 @@ trait HasQuickSearch
         }
 
         Helper::withQueryCondition($query, $column, $method, [$operator, $value]);
+    }
+
+    protected function addQuickSearchScript()
+    {
+        if ($this->isAsyncRequest()) {
+            $url = Helper::fullUrlWithoutQuery([
+                '_pjax',
+                $this->quickSearch->getQueryName(),
+                static::ASYNC_NAME,
+                $this->model()->getPageName(),
+            ]);
+
+            Admin::script("$('.quick-search-form').attr('action', '{$url}');", true);
+        }
     }
 }

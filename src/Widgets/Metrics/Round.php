@@ -109,8 +109,7 @@ class Round extends RadialBar
     /**
      * 设置圆圈宽度.
      *
-     * @param int $size
-     *
+     * @param  int  $size
      * @return $this
      */
     public function chartRadialBarSize(int $size)
@@ -121,8 +120,7 @@ class Round extends RadialBar
     /**
      * 设置圆圈间距.
      *
-     * @param int $margin
-     *
+     * @param  int  $margin
      * @return $this
      */
     public function chartRadialBarMargin(int $margin)
@@ -133,9 +131,8 @@ class Round extends RadialBar
     /**
      * 设置图表统计总数信息.
      *
-     * @param string $label
-     * @param int $number
-     *
+     * @param  string  $label
+     * @param  int  $number
      * @return $this
      */
     public function chartTotal(string $label, int $number)
@@ -150,8 +147,7 @@ class Round extends RadialBar
     /**
      * 设置图标 dataLabel name 的字体尺寸.
      *
-     * @param mixed $size
-     *
+     * @param  mixed  $size
      * @return $this
      */
     public function chartLabelNameFontSize($size)
@@ -162,8 +158,7 @@ class Round extends RadialBar
     /**
      * 设置图标 dataLabel name 的Y轴偏移量.
      *
-     * @param mixed $size
-     *
+     * @param  mixed  $size
      * @return $this
      */
     public function chartLabelNameOffsetY(int $offset)
@@ -174,8 +169,7 @@ class Round extends RadialBar
     /**
      * 设置图标 dataLabel value 的字体尺寸.
      *
-     * @param mixed $size
-     *
+     * @param  mixed  $size
      * @return $this
      */
     public function chartLabelValueFontSize($size)
@@ -186,8 +180,7 @@ class Round extends RadialBar
     /**
      * 设置图标 dataLabel value 的Y轴偏移量.
      *
-     * @param mixed $size
-     *
+     * @param  mixed  $size
      * @return $this
      */
     public function chartLabelValueOffsetY(int $offset)

@@ -77,6 +77,7 @@ class DatabaseUpdater
 
     /**
      * Resolve a migration instance from a file.
+     *
      * @param  string  $file
      * @return object
      */
@@ -118,7 +119,8 @@ class DatabaseUpdater
 
     /**
      * Extracts the namespace and class name from a file.
-     * @param string $file
+     *
+     * @param  string  $file
      * @return string
      */
     public function getClassFromFile($file)

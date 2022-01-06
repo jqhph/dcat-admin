@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 class Text extends Field
 {
     use PlainInput;
+    use Sizeable;
 
     public function __construct($column, $arguments = [])
     {
@@ -27,6 +28,7 @@ class Text extends Field
     public function render()
     {
         $this->initPlainInput();
+        $this->initSize();
 
         $this->defaultAttribute('type', 'text')
             ->defaultAttribute('name', $this->getElementName())
@@ -45,8 +47,7 @@ class Text extends Field
     /**
      * Set input type.
      *
-     * @param string $type
-     *
+     * @param  string  $type
      * @return $this
      */
     public function type(string $type)
@@ -59,9 +60,8 @@ class Text extends Field
      *
      * @see http://1000hz.github.io/bootstrap-validator/
      *
-     * @param string|Field $field
-     * @param string       $error
-     *
+     * @param  string|Field  $field
+     * @param  string  $error
      * @return $this
      */
     public function same($field, ?string $error = null)
@@ -88,9 +88,8 @@ class Text extends Field
     }
 
     /**
-     * @param int         $length
-     * @param string|null $error
-     *
+     * @param  int  $length
+     * @param  string|null  $error
      * @return $this
      */
     public function minLength(int $length, ?string $error = null)
@@ -108,9 +107,8 @@ class Text extends Field
     }
 
     /**
-     * @param int         $length
-     * @param string|null $error
-     *
+     * @param  int  $length
+     * @param  string|null  $error
      * @return $this
      */
     public function maxLength(int $length, ?string $error = null)
@@ -138,8 +136,7 @@ JS
     /**
      * Add inputmask to an elements.
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return $this
      */
     public function inputmask($options)
@@ -156,8 +153,7 @@ JS
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return array
      */
     protected function formatOptions($options)
@@ -184,8 +180,7 @@ JS
     /**
      * Add datalist element to Text input.
      *
-     * @param array $entries
-     *
+     * @param  array  $entries
      * @return $this
      */
     public function datalist($entries = [])

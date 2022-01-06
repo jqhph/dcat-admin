@@ -46,9 +46,16 @@ export default class Pjax {
                 $(formContainer).find('[type="submit"],.submit').buttonLoading(false)
             }
 
+            var $body = $('body');
+
             // 移除遮罩层
             $(".modal-backdrop").remove();
-            $("body").removeClass("modal-open");
+            $body.removeClass("modal-open");
+
+            // 刷新页面后需要重置modal弹窗设置的间隔
+            if ($body.css('padding-right')) {
+                $body.css('padding-right', '');
+            }
         });
 
         $d.on('pjax:loaded', () => {

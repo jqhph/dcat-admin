@@ -92,8 +92,7 @@ class IdeHelperCommand extends Command
     }
 
     /**
-     * @param array $reject
-     *
+     * @param  array  $reject
      * @return Collection
      */
     protected function getFieldsFromDatabase(array $reject = [])
@@ -136,8 +135,7 @@ class IdeHelperCommand extends Command
     }
 
     /**
-     * @param array $reject
-     *
+     * @param  array  $reject
      * @return Collection
      */
     protected function getFieldsFromControllerFiles(array $reject = [])
@@ -167,7 +165,7 @@ class IdeHelperCommand extends Command
     }
 
     /**
-     * @param Collection $fields
+     * @param  Collection  $fields
      */
     protected function write(Collection $fields)
     {
@@ -195,9 +193,8 @@ class IdeHelperCommand extends Command
     }
 
     /**
-     * @param string     $type
-     * @param Collection $fields
-     *
+     * @param  string  $type
+     * @param  Collection  $fields
      * @return string
      */
     public function generate(string $type, Collection $fields)
@@ -368,8 +365,7 @@ class IdeHelperCommand extends Command
     }
 
     /**
-     * @param string $class
-     *
+     * @param  string  $class
      * @return string
      */
     public function getFileNameByClass($class)

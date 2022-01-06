@@ -211,7 +211,7 @@
   padding-left: 8px;
   float: left;
   text-align: left;
-  width: 100%
+  max-width: 100%
 }
 
 .web-uploader .filelist .file-type {
@@ -301,7 +301,8 @@
 
 .web-uploader .filelist li img {
   max-width: 95%;
-  height: 120px
+  height: 120px;
+  object-fit: cover;
 }
 
 .web-uploader .filelist li p.error {

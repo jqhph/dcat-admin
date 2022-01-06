@@ -47,8 +47,7 @@ class BlockForm extends WidgetForm
     /**
      * 设置标题.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title($title)
@@ -75,8 +74,7 @@ class BlockForm extends WidgetForm
     /**
      * 在当前列增加一块表单.
      *
-     * @param \Closure $callback
-     *
+     * @param  \Closure  $callback
      * @return $this
      */
     public function next(\Closure $callback)

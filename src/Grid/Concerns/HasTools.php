@@ -27,8 +27,7 @@ trait HasTools
     }
 
     /**
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function toolsWithOutline(bool $value = true)
@@ -41,8 +40,7 @@ trait HasTools
     /**
      * Get or setup grid tools.
      *
-     * @param Closure|array|Action|Tools\AbstractTool|Renderable|Htmlable|string $value
-     *
+     * @param  Closure|array|Action|Tools\AbstractTool|Renderable|Htmlable|string  $value
      * @return $this|Tools
      */
     public function tools($value = null)
@@ -71,8 +69,7 @@ trait HasTools
     /**
      * Set grid batch-action callback.
      *
-     * @param Closure|BatchAction|BatchAction[] $value
-     *
+     * @param  Closure|BatchAction|BatchAction[]  $value
      * @return $this
      */
     public function batchActions($value)
@@ -95,8 +92,7 @@ trait HasTools
     }
 
     /**
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return mixed
      */
     public function disableToolbar(bool $val = true)
@@ -105,8 +101,7 @@ trait HasTools
     }
 
     /**
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return mixed
      */
     public function showToolbar(bool $val = true)
@@ -117,8 +112,7 @@ trait HasTools
     /**
      * Disable batch actions.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableBatchActions(bool $disable = true)
@@ -131,8 +125,7 @@ trait HasTools
     /**
      * Show batch actions.
      *
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return $this
      */
     public function showBatchActions(bool $val = true)
@@ -143,8 +136,7 @@ trait HasTools
     /**
      * Disable batch delete.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableBatchDelete(bool $disable = true)
@@ -159,8 +151,7 @@ trait HasTools
     /**
      * Show batch delete.
      *
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return $this
      */
     public function showBatchDelete(bool $val = true)
@@ -171,8 +162,7 @@ trait HasTools
     /**
      * Disable refresh button.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disableRefreshButton(bool $disable = true)
@@ -185,8 +175,7 @@ trait HasTools
     /**
      * Show refresh button.
      *
-     * @param bool $val
-     *
+     * @param  bool  $val
      * @return $this
      */
     public function showRefreshButton(bool $val = true)

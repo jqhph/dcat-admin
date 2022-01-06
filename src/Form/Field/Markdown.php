@@ -47,8 +47,7 @@ class Markdown extends Field
      * 开启 HTML 标签解析.
      * style,script,iframe|on*.
      *
-     * @param string $decode
-     *
+     * @param  string  $decode
      * @return $this
      */
     public function htmlDecode($decode)
@@ -61,8 +60,7 @@ class Markdown extends Field
     /**
      * 设置编辑器容器高度.
      *
-     * @param int $height
-     *
+     * @param  int  $height
      * @return $this
      */
     public function height($height)
@@ -75,8 +73,7 @@ class Markdown extends Field
     /**
      * 设置文件上传存储配置.
      *
-     * @param string $disk
-     *
+     * @param  string  $disk
      * @return $this
      */
     public function disk(string $disk)
@@ -89,8 +86,7 @@ class Markdown extends Field
     /**
      * 设置图片上传文件夹.
      *
-     * @param string $dir
-     *
+     * @param  string  $dir
      * @return $this
      */
     public function imageDirectory(string $dir)
@@ -103,8 +99,7 @@ class Markdown extends Field
     /**
      * 自定义图片上传接口.
      *
-     * @param string $url
-     *
+     * @param  string  $url
      * @return $this
      */
     public function imageUrl(string $url)
@@ -115,8 +110,7 @@ class Markdown extends Field
     /**
      * 设置语言包路径.
      *
-     * @param string $url
-     *
+     * @param  string  $url
      * @return $this
      */
     public function languageUrl(string $url)
@@ -135,8 +129,7 @@ class Markdown extends Field
     }
 
     /**
-     * @param string $url
-     *
+     * @param  string  $url
      * @return string
      */
     protected function formatUrl(string $url)

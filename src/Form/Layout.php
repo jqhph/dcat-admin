@@ -53,8 +53,8 @@ class Layout
     /**
      * 列布局.
      *
-     * @param int   $width   1~12
-     * @param mixed $content
+     * @param  int  $width  1~12
+     * @param  mixed  $content
      */
     public function onlyColumn($width, $content)
     {
@@ -74,9 +74,8 @@ class Layout
     /**
      * 增加列.
      *
-     * @param int   $width   1~12
-     * @param mixed $content
-     *
+     * @param  int  $width  1~12
+     * @param  mixed  $content
      * @return Column
      */
     public function column(int $width, $content)
@@ -87,8 +86,8 @@ class Layout
     /**
      * block布局.
      *
-     * @param int $width
-     * @param \Closure $callback
+     * @param  int  $width
+     * @param  \Closure  $callback
      */
     public function block(int $width, \Closure $callback)
     {
@@ -110,8 +109,8 @@ class Layout
     }
 
     /**
-     * @param int   $width
-     * @param mixed $content
+     * @param  int  $width
+     * @param  mixed  $content
      */
     public function prepend(int $width, $content)
     {
@@ -121,8 +120,7 @@ class Layout
     }
 
     /**
-     * @param \Closure|null $callback
-     *
+     * @param  \Closure|null  $callback
      * @return BlockForm
      */
     public function form(\Closure $callback = null)
@@ -144,8 +142,7 @@ class Layout
     /**
      * Build html of content.
      *
-     * @param string $add
-     *
+     * @param  string  $add
      * @return string
      */
     public function build($add = null)

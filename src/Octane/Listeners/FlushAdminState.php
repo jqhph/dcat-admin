@@ -30,12 +30,6 @@ class FlushAdminState
         $this->app = $container;
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param  mixed  $event
-     * @return void
-     */
     public function handle($event): void
     {
         $provider = new AdminServiceProvider($this->app);

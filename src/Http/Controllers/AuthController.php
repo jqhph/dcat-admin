@@ -31,7 +31,7 @@ class AuthController extends Controller
     /**
      * Show the login page.
      *
-     * @return Content
+     * @return Content|\Illuminate\Http\RedirectResponse
      */
     public function getLogin(Content $content)
     {
@@ -45,8 +45,7 @@ class AuthController extends Controller
     /**
      * Handle a login request.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return mixed
      */
     public function postLogin(Request $request)
@@ -95,8 +94,7 @@ class AuthController extends Controller
     /**
      * User setting page.
      *
-     * @param Content $content
-     *
+     * @param  Content  $content
      * @return Content
      */
     public function getSetting(Content $content)
@@ -233,17 +231,19 @@ class AuthController extends Controller
     /**
      * Send the response after the user was authenticated.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function sendLoginResponse(Request $request)
     {
         $request->session()->regenerate();
 
+        $path = $this->getRedirectPath();
+
         return $this->response()
             ->success(trans('admin.login_successful'))
-            ->locationToIntended($this->getRedirectPath())
+            ->locationToIntended($path)
+            ->locationIf(Admin::app()->getEnabledApps(), $path)
             ->send();
     }
 

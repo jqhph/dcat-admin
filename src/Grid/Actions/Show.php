@@ -23,6 +23,6 @@ class Show extends RowAction
      */
     public function href()
     {
-        return "{$this->resource()}/{$this->getKey()}";
+        return $this->parent->urlWithConstraints("{$this->resource()}/{$this->getKey()}");
     }
 }

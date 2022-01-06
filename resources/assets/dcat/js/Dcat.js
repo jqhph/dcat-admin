@@ -4,7 +4,7 @@ import Translator from './extensions/Translator'
 
 let $ = jQuery,
     $document = $(document),
-    pjaxResponded = false,
+    waiting = false,
     bootingCallbacks = [],
     actions = {},
     initialized = {},
@@ -81,7 +81,7 @@ export default class Dcat {
         let _this = this;
 
         if (! _window || _window === window) {
-            if (! pjaxResponded) {
+            if (! waiting) {
                 return $(callback);
             }
 
@@ -147,7 +147,7 @@ export default class Dcat {
             initialized[selector].disconnect();
         }
 
-        $(document).trigger('init:off', selector, initialized[selector])
+        $(document).trigger('dcat:init:off', selector, initialized[selector])
 
         initialized[selector] = null;
     }
@@ -156,7 +156,7 @@ export default class Dcat {
      * 主动触发 ready 事件
      */
     triggerReady() {
-        if (! pjaxResponded) {
+        if (! waiting) {
             return;
         }
 
@@ -166,14 +166,14 @@ export default class Dcat {
     }
 
     /**
-     * 如果是 pjax 响应的页面，需要调用此方法
+     * 等待JS脚本加载完成
      *
      * @returns {Dcat}
      */
-    pjaxResponded(value) {
-        pjaxResponded = value !== false;
+    wait(value) {
+        waiting = value !== false;
 
-        $document.trigger('pjax:responded');
+        $document.trigger('dcat:waiting');
 
         return this
     }

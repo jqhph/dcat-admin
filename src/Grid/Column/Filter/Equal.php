@@ -18,7 +18,7 @@ class Equal extends Filter
     /**
      * InputFilter constructor.
      *
-     * @param string $type
+     * @param  string  $type
      */
     public function __construct(?string $placeholder = null)
     {
@@ -58,8 +58,7 @@ class Equal extends Filter
     }
 
     /**
-     * @param string $format
-     *
+     * @param  string  $format
      * @return $this
      */
     protected function setDateFormat($format)
@@ -88,8 +87,8 @@ class Equal extends Filter
     /**
      * Add a binding to the query.
      *
-     * @param string     $value
-     * @param Model|null $model
+     * @param  string  $value
+     * @param  Model|null  $model
      */
     public function addBinding($value, Model $model)
     {

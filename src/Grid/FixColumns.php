@@ -56,9 +56,9 @@ class FixColumns
     /**
      * FixColumns constructor.
      *
-     * @param Grid $grid
-     * @param int  $head
-     * @param int  $tail
+     * @param  Grid  $grid
+     * @param  int  $head
+     * @param  int  $tail
      */
     public function __construct(Grid $grid, $head, $tail = -1)
     {
@@ -105,8 +105,7 @@ class FixColumns
     }
 
     /**
-     * @param int $height px
-     *
+     * @param  int  $height  px
      * @return $this
      */
     public function height(int $height)
@@ -170,32 +169,32 @@ class FixColumns
 
 (function () {
     var $tableMain = $('.table-main'), minHeight = 600;
-    
+
     var theadHeight = $('.table-main thead tr').outerHeight();
     $('.table-fixed thead tr').outerHeight(theadHeight);
-    
+
     var tfootHeight = $('.table-main tfoot tr').outerHeight();
     $('.table-fixed tfoot tr').outerHeight(tfootHeight);
-    
+
     $('.table-main tbody tr').each(function(i, obj) {
         var height = $(obj).outerHeight();
 
         $('.table-fixed-left tbody tr').eq(i).outerHeight(height);
         $('.table-fixed-right tbody tr').eq(i).outerHeight(height);
     });
-    
+
     if ($tableMain.width() >= $tableMain.prop('scrollWidth') || $(window).width() < 600) {
         $('.table-fixed').hide();
     } else {
         var height = ($(window).height() - 220);
         height = height < minHeight ? minHeight : height;
-        
+
         $tableMain.each(function (k, v) {
             var tableHight = $(v).find('.custom-data-table.table').eq(0).height();
             var maxHeight = $(v).data('height') || (height >= tableHight ? tableHight : height);
-            
+
             $(v).css({'max-height': maxHeight + 'px'});
-            
+
             if (maxHeight < tableHight) {
                 $(v).parents('.tables-container').find('.table-fixed-right').css({right: '12px'})
             }
@@ -203,24 +202,24 @@ class FixColumns
         $('.table-fixed-right,.table-fixed-left').each(function (k, v) {
             $(v).css({'max-height': (($(v).data('height') || height) - 15) + 'px'});
         });
-        
+
         $tableMain.scroll(function () {
-            var self = $(this); 
-            
+            var self = $(this);
+
             self.parents('.tables-container').find('.table-fixed-right,.table-fixed-left').scrollTop(self.scrollTop());
         });
     }
-    
+
     $('.table-wrap tbody tr').on('mouseover', function () {
         var index = $(this).index();
         $('.table-main tbody tr').eq(index).addClass('active');
         $('.table-fixed-left tbody tr').eq(index).addClass('active');
         $('.table-fixed-right tbody tr').eq(index).addClass('active');
     });
-    
+
     $('.table-wrap tbody tr').on('mouseout', function () {
         var index = $(this).index();
-        
+
         $('.table-main tbody tr').eq(index).removeClass('active');
         $('.table-fixed-left tbody tr').eq(index).removeClass('active');
         $('.table-fixed-right tbody tr').eq(index).removeClass('active');

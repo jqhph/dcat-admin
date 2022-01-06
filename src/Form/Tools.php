@@ -38,7 +38,7 @@ class Tools implements Renderable
     /**
      * Create a new Tools instance.
      *
-     * @param Builder $builder
+     * @param  Builder  $builder
      */
     public function __construct(Builder $builder)
     {
@@ -50,8 +50,7 @@ class Tools implements Renderable
     /**
      * Append a tools.
      *
-     * @param string|\Closure|Renderable|Htmlable|AbstractTool $tool
-     *
+     * @param  string|\Closure|Renderable|Htmlable|AbstractTool  $tool
      * @return $this
      */
     public function append($tool)
@@ -66,8 +65,7 @@ class Tools implements Renderable
     /**
      * Prepend a tool.
      *
-     * @param string|\Closure|Renderable|Htmlable|AbstractTool $tool
-     *
+     * @param  string|\Closure|Renderable|Htmlable|AbstractTool  $tool
      * @return $this
      */
     public function prepend($tool)
@@ -80,8 +78,7 @@ class Tools implements Renderable
     }
 
     /**
-     * @param mixed $tool
-     *
+     * @param  mixed  $tool
      * @return void
      */
     protected function prepareTool($tool)
@@ -226,8 +223,7 @@ HTML;
     /**
      * Render custom tools.
      *
-     * @param Collection $tools
-     *
+     * @param  Collection  $tools
      * @return mixed
      */
     protected function renderCustomTools($tools)

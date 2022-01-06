@@ -104,7 +104,13 @@ class Condition
 
     protected function copy()
     {
-        return clone $this->original;
+        $column = clone $this->original;
+
+        $column->setOriginalModel($this->column->getOriginalModel());
+        $column->setOriginal($this->column->getOriginal());
+        $column->setValue($this->column->getValue());
+
+        return $column;
     }
 
     public function is()

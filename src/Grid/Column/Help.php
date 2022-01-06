@@ -26,7 +26,7 @@ class Help implements Renderable
     /**
      * Help constructor.
      *
-     * @param string $message
+     * @param  string  $message
      */
     public function __construct($message = '', ?string $style = null, ?string $placement = null)
     {

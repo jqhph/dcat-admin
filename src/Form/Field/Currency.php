@@ -22,8 +22,7 @@ class Currency extends Text
     /**
      * Set symbol for currency field.
      *
-     * @param string $symbol
-     *
+     * @param  string  $symbol
      * @return $this
      */
     public function symbol($symbol)
@@ -36,8 +35,7 @@ class Currency extends Text
     /**
      * Set digits for input number.
      *
-     * @param int $digits
-     *
+     * @param  int  $digits
      * @return $this
      */
     public function digits($digits)
@@ -46,8 +44,7 @@ class Currency extends Text
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed
      */
     protected function prepareInputValue($value)

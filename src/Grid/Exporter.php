@@ -7,6 +7,7 @@ use Dcat\Admin\Grid\Exporters\ExporterInterface;
 
 /**
  * @mixin Grid\Exporters\AbstractExporter
+ *
  * @method mixed export
  */
 class Exporter
@@ -55,7 +56,7 @@ class Exporter
     /**
      * Create a new Exporter instance.
      *
-     * @param Grid $grid
+     * @param  Grid  $grid
      */
     public function __construct(Grid $grid)
     {
@@ -65,9 +66,8 @@ class Exporter
     /**
      *  Get or set option for exporter.
      *
-     * @param string     $key
-     * @param mixed|null $value
-     *
+     * @param  string  $key
+     * @param  mixed|null  $value
      * @return $this|mixed|null
      */
     public function option($key, $value = null)
@@ -84,8 +84,7 @@ class Exporter
     /**
      * Disable export all.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function disableExportAll(bool $value = true)
@@ -96,8 +95,7 @@ class Exporter
     /**
      * Disable export current page.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function disableExportCurrentPage(bool $value = true)
@@ -108,8 +106,7 @@ class Exporter
     /**
      * Disable export selected rows.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function disableExportSelectedRow(bool $value = true)
@@ -118,8 +115,7 @@ class Exporter
     }
 
     /**
-     * @param int $value
-     *
+     * @param  int  $value
      * @return $this
      */
     public function chunkSize(int $value)
@@ -151,8 +147,7 @@ class Exporter
     /**
      * Resolve export driver.
      *
-     * @param string $driver
-     *
+     * @param  string  $driver
      * @return Grid\Exporters\AbstractExporter
      */
     public function resolve($driver = null)
@@ -183,8 +178,7 @@ class Exporter
     /**
      * Get export driver.
      *
-     * @param string $driver
-     *
+     * @param  string  $driver
      * @return Grid\Exporters\AbstractExporter
      */
     protected function newDriver($driver): ExporterInterface
@@ -215,9 +209,8 @@ class Exporter
     /**
      * Format query for export url.
      *
-     * @param int  $scope
-     * @param null $args
-     *
+     * @param  int  $scope
+     * @param  null  $args
      * @return array
      */
     public function formatExportQuery($scope = '', $args = null)
@@ -242,7 +235,6 @@ class Exporter
     /**
      * @param $method
      * @param $arguments
-     *
      * @return mixed
      */
     public function __call($method, $arguments)

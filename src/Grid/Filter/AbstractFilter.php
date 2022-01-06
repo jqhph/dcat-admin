@@ -114,7 +114,7 @@ abstract class AbstractFilter
      * AbstractFilter constructor.
      *
      * @param $column
-     * @param string $label
+     * @param  string  $label
      */
     public function __construct($column, $label = '')
     {
@@ -146,8 +146,7 @@ abstract class AbstractFilter
     /**
      * Format label.
      *
-     * @param string $label
-     *
+     * @param  string  $label
      * @return string
      */
     protected function formatLabel($label)
@@ -164,8 +163,7 @@ abstract class AbstractFilter
     /**
      * Set the column width.
      *
-     * @param int|string $width
-     *
+     * @param  int|string  $width
      * @return $this
      */
     public function width($width)
@@ -191,8 +189,7 @@ abstract class AbstractFilter
     /**
      * Format name.
      *
-     * @param string $column
-     *
+     * @param  string  $column
      * @return string
      */
     protected function formatName($column)
@@ -214,8 +211,7 @@ abstract class AbstractFilter
     /**
      * Format id.
      *
-     * @param string|array $columns
-     *
+     * @param  string|array  $columns
      * @return array|string
      */
     protected function formatId($columns)
@@ -232,7 +228,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param Filter $filter
+     * @param  Filter  $filter
      */
     public function setParent(Filter $filter)
     {
@@ -252,8 +248,7 @@ abstract class AbstractFilter
     /**
      * Get siblings of current filter.
      *
-     * @param null $index
-     *
+     * @param  null  $index
      * @return AbstractFilter[]|mixed
      */
     public function siblings($index = null)
@@ -268,8 +263,7 @@ abstract class AbstractFilter
     /**
      * Get previous filter.
      *
-     * @param int $step
-     *
+     * @param  int  $step
      * @return AbstractFilter[]|mixed
      */
     public function previous($step = 1)
@@ -282,8 +276,7 @@ abstract class AbstractFilter
     /**
      * Get next filter.
      *
-     * @param int $step
-     *
+     * @param  int  $step
      * @return AbstractFilter[]|mixed
      */
     public function next($step = 1)
@@ -296,8 +289,7 @@ abstract class AbstractFilter
     /**
      * Get query condition from filter.
      *
-     * @param array $inputs
-     *
+     * @param  array  $inputs
      * @return array|mixed|null
      */
     public function condition($inputs)
@@ -328,8 +320,7 @@ abstract class AbstractFilter
     /**
      * Select filter.
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return Select
      */
     public function select($options = [])
@@ -338,8 +329,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array|\Illuminate\Contracts\Support\Arrayable|\Closure  $options
      * @return MultipleSelect
      */
     public function multipleSelect($options = [])
@@ -348,8 +338,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param LazyRenderable $table
-     *
+     * @param  LazyRenderable  $table
      * @return Filter\Presenter\SelectTable
      */
     public function selectTable(LazyRenderable $table)
@@ -358,8 +347,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param LazyRenderable $table
-     *
+     * @param  LazyRenderable  $table
      * @return Filter\Presenter\MultipleSelectTable
      */
     public function multipleSelectTable(LazyRenderable $table)
@@ -368,8 +356,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return Radio
      */
     public function radio($options = [])
@@ -378,8 +365,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param array $options
-     *
+     * @param  array  $options
      * @return Checkbox
      */
     public function checkbox($options = [])
@@ -390,8 +376,7 @@ abstract class AbstractFilter
     /**
      * Datetime filter.
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return DateTime
      */
     public function datetime($options = [])
@@ -452,8 +437,7 @@ abstract class AbstractFilter
     /**
      * Set presenter object of filter.
      *
-     * @param Presenter $presenter
-     *
+     * @param  Presenter  $presenter
      * @return mixed
      */
     public function setPresenter(Presenter $presenter)
@@ -482,13 +466,12 @@ abstract class AbstractFilter
     /**
      * Set default value for filter.
      *
-     * @param null $default
-     *
+     * @param  null  $default
      * @return $this
      */
     public function default($default = null)
     {
-        if ($default) {
+        if (filled($default)) {
             $this->defaultValue = $default;
         }
 
@@ -513,8 +496,7 @@ abstract class AbstractFilter
     /**
      * Set element id.
      *
-     * @param string $id
-     *
+     * @param  string  $id
      * @return $this
      */
     public function setId($id)
@@ -540,8 +522,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param string $column
-     *
+     * @param  string  $column
      * @return string
      */
     public function formatColumnClass($column)
@@ -568,8 +549,7 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return $this
      */
     public function setValue($value)
@@ -600,20 +580,25 @@ abstract class AbstractFilter
     }
 
     /**
-     * @param mixed ...$params
-     *
+     * @param  string|callable  $relColumn
+     * @param  mixed  ...$params
      * @return array
      */
-    protected function buildRelationQuery(...$params)
+    protected function buildRelationQuery($relColumn, ...$params)
     {
         $column = explode('.', $this->column);
 
-        $params[0] = array_pop($column);
+        $col = array_pop($column);
+
+        $relColumn = is_callable($relColumn) ? $relColumn : $col;
 
         // 增加对whereHasIn的支持
         $method = class_exists(WhereHasInServiceProvider::class) ? 'whereHasIn' : 'whereHas';
 
-        return [$method => [implode('.', $column), function ($q) use ($params) {
+        return [$method => [implode('.', $column), function ($q) use ($relColumn, $params) {
+            $relColumn = is_string($relColumn) ? $q->getModel()->getTable().'.'.$relColumn : $relColumn;
+            array_unshift($params, $relColumn);
+
             call_user_func_array([$q, $this->query], $params);
         }]];
     }
@@ -683,10 +668,9 @@ abstract class AbstractFilter
     /**
      * @param $method
      * @param $params
+     * @return mixed
      *
      * @throws \Exception
-     *
-     * @return mixed
      */
     public function __call($method, $params)
     {

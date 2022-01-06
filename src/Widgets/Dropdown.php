@@ -58,9 +58,8 @@ class Dropdown extends Widget
     /**
      * Set the options of dropdown menus.
      *
-     * @param array       $options
-     * @param string|null $title
-     *
+     * @param  array  $options
+     * @param  string|null  $title
      * @return $this
      */
     public function options($options = [], ?string $title = null)
@@ -77,8 +76,7 @@ class Dropdown extends Widget
     /**
      * Set the button text.
      *
-     * @param string|null $text
-     *
+     * @param  string|null  $text
      * @return $this
      */
     public function button(?string $text)
@@ -91,8 +89,7 @@ class Dropdown extends Widget
     /**
      * Set the button class.
      *
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
      */
     public function buttonClass(?string $class)
@@ -105,8 +102,7 @@ class Dropdown extends Widget
     /**
      * Set the button style.
      *
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
      */
     public function buttonStyle(?string $style)
@@ -136,8 +132,7 @@ class Dropdown extends Widget
     /**
      * Show divider.
      *
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
      */
     public function divider()
@@ -150,8 +145,7 @@ class Dropdown extends Widget
     /**
      * Applies the callback to the elements of the options.
      *
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
      */
     public function map(\Closure $builder)
@@ -164,8 +158,7 @@ class Dropdown extends Widget
     /**
      * Add click event listener.
      *
-     * @param string|null $defaultLabel
-     *
+     * @param  string|null  $defaultLabel
      * @return $this
      */
     public function click(?string $defaultLabel = null)
@@ -212,9 +205,8 @@ class Dropdown extends Widget
     }
 
     /**
-     * @param mixed $k
-     * @param mixed $v
-     *
+     * @param  mixed  $k
+     * @param  mixed  $v
      * @return mixed|string
      */
     protected function renderOption($k, $v)

@@ -22,8 +22,7 @@ class Extension extends Repository
     }
 
     /**
-     * @param AbstractExtension $extension
-     *
+     * @param  AbstractExtension  $extension
      * @return array
      */
     protected function each(AbstractExtension $extension)
@@ -63,8 +62,7 @@ class Extension extends Repository
     /**
      * Get data before update.
      *
-     * @param Form $form
-     *
+     * @param  Form  $form
      * @return array
      */
     public function updating(Form $form): array

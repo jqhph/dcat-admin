@@ -26,7 +26,6 @@ trait CanCascadeFields
      * @param $operator
      * @param $value
      * @param $closure
-     *
      * @return $this
      */
     public function when($operator, $value, $closure = null)
@@ -54,8 +53,8 @@ trait CanCascadeFields
     }
 
     /**
-     * @param string $operator
-     * @param mixed  $value
+     * @param  string  $operator
+     * @param  mixed  $value
      */
     protected function formatValues(string $operator, &$value)
     {
@@ -71,9 +70,9 @@ trait CanCascadeFields
     }
 
     /**
-     * @param string   $operator
-     * @param mixed    $value
-     * @param \Closure $closure
+     * @param  string  $operator
+     * @param  mixed  $value
+     * @param  \Closure  $closure
      */
     protected function addDependents(string $operator, $value, \Closure $closure)
     {
@@ -87,8 +86,7 @@ trait CanCascadeFields
     }
 
     /**
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return string
      */
     protected function getCascadeClass($value, string $operator)
@@ -109,7 +107,11 @@ trait CanCascadeFields
             'has' => '8',
         ];
 
-        return sprintf('cascade-%s-%s-%s', str_replace(' ', '-', $this->getElementClassString()), $value, $map[$operator]);
+        return str_replace(
+            '.',
+            '',
+            sprintf('cascade-%s-%s-%s', str_replace(' ', '-', $this->getElementClassString()), $value, $map[$operator])
+        );
     }
 
     protected function addCascadeScript()
@@ -152,26 +154,26 @@ JS
         if (! $.isArray(b)) {
             return operator_table[o](a, b)
         }
-        
+
         if (o === '!=') {
             var result = true;
             for (var i in b) {
                 if (! operator_table[o](a, b[i])) {
                     result = false;
-                    
+
                     break;
                 }
             }
             return result;
         }
-        
+
         for (var i in b) {
             if (operator_table[o](a, b[i])) {
                 return true;
             }
         }
     };
-    
+
     var operator_table = {
         '=': function(a, b) {
             if ($.isArray(a) && $.isArray(b)) {
@@ -181,10 +183,10 @@ JS
             return String(a) === String(b);
         },
         '>': function(a, b) {
-            return a > b; 
+            return a > b;
         },
         '<': function(a, b) {
-            return a < b; 
+            return a < b;
         },
         '>=': function(a, b) { return a >= b; },
         '<=': function(a, b) { return a <= b; },

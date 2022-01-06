@@ -8,11 +8,10 @@ use DOMElement;
 
 trait HasHtml
 {
-    protected static $shouldResolveTags = ['style', 'script'];
+    protected static $shouldResolveTags = ['style', 'script', 'template', 'link'];
 
     /**
-     * @param string|array $content
-     *
+     * @param  string|array  $content
      * @return null|string
      */
     public static function html($content = null)
@@ -30,10 +29,9 @@ trait HasHtml
     }
 
     /**
-     * @param string $view
-     * @param array  $data
-     * @param array  $data
-     *
+     * @param  string  $view
+     * @param  array  $data
+     * @param  array  $data
      * @return string
      *
      * @throws \Throwable
@@ -44,13 +42,12 @@ trait HasHtml
     }
 
     /**
-     * @param string|\Illuminate\Contracts\Support\Renderable $content
-     * @param array                                           $data
-     * @param array                                           $options
+     * @param  string|\Illuminate\Contracts\Support\Renderable  $content
+     * @param  array  $data
+     * @param  array  $options
+     * @return array ['html' => $html, 'script' => $script]
      *
      * @throws \Throwable
-     *
-     * @return array ['html' => $html, 'script' => $script]
      */
     public static function resolveHtml($content, array $options = []): array
     {
@@ -72,11 +69,10 @@ trait HasHtml
     }
 
     /**
-     * @param string $html
+     * @param  string  $html
+     * @return DOMDocument
      *
      * @throws \Throwable
-     *
-     * @return DOMDocument
      */
     protected static function getDOMDocument(string $html)
     {
@@ -92,8 +88,7 @@ trait HasHtml
     }
 
     /**
-     * @param DOMElement $element
-     *
+     * @param  DOMElement  $element
      * @return void|string
      */
     protected static function resolve(DOMElement $element)
@@ -104,8 +99,32 @@ trait HasHtml
     }
 
     /**
-     * @param DOMElement $element
-     *
+     * @param  DOMElement  $element
+     * @return void
+     */
+    protected static function resolveLink(DOMElement $element)
+    {
+        if ($element->getAttribute('rel') == 'stylesheet' && $href = $element->getAttribute('href')) {
+            static::css(admin_asset($href));
+        }
+    }
+
+    /**
+     * @param  DOMElement  $element
+     * @return void
+     */
+    protected static function resolveTemplate(DOMElement $element)
+    {
+        $html = '';
+        foreach ($element->childNodes as $childNode) {
+            $html .= $element->ownerDocument->saveHTML($childNode);
+        }
+
+        $html && static::html($html);
+    }
+
+    /**
+     * @param  DOMElement  $element
      * @return string|void
      */
     protected static function resolveScript(DOMElement $element)
@@ -138,8 +157,7 @@ trait HasHtml
     }
 
     /**
-     * @param DOMElement $element
-     *
+     * @param  DOMElement  $element
      * @return void
      */
     protected static function resolveStyle(DOMElement $element)

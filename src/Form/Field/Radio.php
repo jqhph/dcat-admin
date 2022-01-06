@@ -10,6 +10,7 @@ class Radio extends Field
 {
     use CanCascadeFields;
     use CanLoadFields;
+    use Sizeable;
 
     protected $style = 'primary';
 
@@ -18,8 +19,7 @@ class Radio extends Field
     protected $inline = true;
 
     /**
-     * @param array|\Closure|string $options
-     *
+     * @param  array|\Closure|string  $options
      * @return $this
      */
     public function options($options = [])
@@ -45,8 +45,7 @@ class Radio extends Field
     /**
      * "info", "primary", "inverse", "danger", "success", "purple".
      *
-     * @param string $style
-     *
+     * @param  string  $style
      * @return $this
      */
     public function style(string $style)
@@ -78,7 +77,8 @@ class Radio extends Field
         $radio
             ->inline($this->inline)
             ->check($this->value())
-            ->class($this->getElementClassString());
+            ->class($this->getElementClassString())
+            ->size($this->size);
 
         $this->addVariables([
             'radio' => $radio,

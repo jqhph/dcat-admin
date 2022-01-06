@@ -32,9 +32,9 @@ class ModelCreator
     /**
      * ModelCreator constructor.
      *
-     * @param string $tableName
-     * @param string $name
-     * @param null   $files
+     * @param  string  $tableName
+     * @param  string  $name
+     * @param  null  $files
      */
     public function __construct($tableName, $name, $files = null)
     {
@@ -48,13 +48,12 @@ class ModelCreator
     /**
      * Create a new migration file.
      *
-     * @param string     $keyName
-     * @param bool|true  $timestamps
-     * @param bool|false $softDeletes
+     * @param  string  $keyName
+     * @param  bool|true  $timestamps
+     * @param  bool|false  $softDeletes
+     * @return string
      *
      * @throws \Exception
-     *
-     * @return string
      */
     public function create($keyName = 'id', $timestamps = true, $softDeletes = false)
     {
@@ -89,8 +88,7 @@ class ModelCreator
     /**
      * Get path for migration file.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return string
      */
     public function getPath($name)
@@ -101,8 +99,7 @@ class ModelCreator
     /**
      * Get namespace of giving class full name.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return string
      */
     protected function getNamespace($name)
@@ -113,9 +110,8 @@ class ModelCreator
     /**
      * Replace class dummy.
      *
-     * @param string $stub
-     * @param string $name
-     *
+     * @param  string  $stub
+     * @param  string  $name
      * @return $this
      */
     protected function replaceClass(&$stub, $name)
@@ -130,9 +126,8 @@ class ModelCreator
     /**
      * Replace namespace dummy.
      *
-     * @param string $stub
-     * @param string $name
-     *
+     * @param  string  $stub
+     * @param  string  $name
      * @return $this
      */
     protected function replaceNamespace(&$stub, $name)
@@ -149,9 +144,8 @@ class ModelCreator
     /**
      * Replace soft-deletes dummy.
      *
-     * @param string $stub
-     * @param bool   $softDeletes
-     *
+     * @param  string  $stub
+     * @param  bool  $softDeletes
      * @return $this
      */
     protected function replaceSoftDeletes(&$stub, $softDeletes)
@@ -171,9 +165,8 @@ class ModelCreator
     /**
      * Replace datetimeFormatter dummy.
      *
-     * @param string $stub
-     * @param bool   $softDeletes
-     *
+     * @param  string  $stub
+     * @param  bool  $softDeletes
      * @return $this
      */
     protected function replaceDatetimeFormatter(&$stub)
@@ -193,9 +186,8 @@ class ModelCreator
     /**
      * Replace primarykey dummy.
      *
-     * @param string $stub
-     * @param string $keyName
-     *
+     * @param  string  $stub
+     * @param  string  $keyName
      * @return $this
      */
     protected function replacePrimaryKey(&$stub, $keyName)
@@ -210,9 +202,8 @@ class ModelCreator
     /**
      * Replace Table name dummy.
      *
-     * @param string $stub
-     * @param string $name
-     *
+     * @param  string  $stub
+     * @param  string  $name
      * @return $this
      */
     protected function replaceTable(&$stub, $name)
@@ -229,9 +220,8 @@ class ModelCreator
     /**
      * Replace timestamps dummy.
      *
-     * @param string $stub
-     * @param bool   $timestamps
-     *
+     * @param  string  $stub
+     * @param  bool  $timestamps
      * @return $this
      */
     protected function replaceTimestamp(&$stub, $timestamps)
@@ -246,8 +236,7 @@ class ModelCreator
     /**
      * Replace spaces.
      *
-     * @param string $stub
-     *
+     * @param  string  $stub
      * @return mixed
      */
     public function replaceSpace($stub)

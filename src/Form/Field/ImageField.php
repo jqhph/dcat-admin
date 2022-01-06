@@ -42,9 +42,8 @@ trait ImageField
     /**
      * Execute Intervention calls.
      *
-     * @param string $target
-     * @param string $mime
-     *
+     * @param  string  $target
+     * @param  string  $mime
      * @return mixed
      */
     public function callInterventionMethods($target, $mime)
@@ -68,12 +67,11 @@ trait ImageField
     /**
      * Call intervention methods.
      *
-     * @param string $method
-     * @param array  $arguments
+     * @param  string  $method
+     * @param  array  $arguments
+     * @return $this
      *
      * @throws \Exception
-     *
-     * @return $this
      */
     public function __call($method, $arguments)
     {
@@ -94,10 +92,9 @@ trait ImageField
     }
 
     /**
-     * @param string|array $name
-     * @param int          $width
-     * @param int          $height
-     *
+     * @param  string|array  $name
+     * @param  int  $width
+     * @param  int  $height
      * @return $this
      */
     public function thumbnail($name, int $width = null, int $height = null)
@@ -118,9 +115,8 @@ trait ImageField
     /**
      * Destroy original thumbnail files.
      *
-     * @param string|array $file
-     * @param bool         $force
-     *
+     * @param  string|array  $file
+     * @param  bool  $force
      * @return void.
      */
     public function destroyThumbnail($file = null, bool $force = false)
@@ -136,7 +132,7 @@ trait ImageField
 
         if (is_array($file)) {
             foreach ($file as $f) {
-                $this->destroyThumbnail($f);
+                $this->destroyThumbnail($f, $force);
             }
 
             return;
@@ -161,8 +157,7 @@ trait ImageField
     /**
      * Upload file and delete original thumbnail files.
      *
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return $this
      */
     protected function uploadAndDeleteOriginalThumbnail(UploadedFile $file)
@@ -187,13 +182,15 @@ trait ImageField
             });
 
             if (! is_null($this->storagePermission)) {
-                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode(), $this->storagePermission);
+                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode()->stream(), $this->storagePermission);
             } else {
-                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode());
+                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode()->stream());
             }
         }
 
-        $this->destroyThumbnail();
+        if (! is_array($this->original)) {
+            $this->destroyThumbnail();
+        }
 
         return $this;
     }

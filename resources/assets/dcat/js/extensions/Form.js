@@ -141,6 +141,11 @@ class Form {
                         key;
 
                     if (response.status != 422 || ! error || ! Dcat.helpers.isset(error, 'errors')) {
+                        let json = response.responseJSON;
+                        if (json && json.message) {
+                            return Dcat.error(json.message);
+                        }
+
                         return Dcat.error(response.status + ' ' + response.statusText);
                     }
                     error = error.errors;

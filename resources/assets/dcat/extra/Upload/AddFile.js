@@ -42,8 +42,9 @@ export default class AddFile {
                 `);
 
             $btns = $(`
-<span style="right: 45px;" class="file-action d-none" data-file-act='order' data-order="1"><i class='feather icon-arrow-up'></i></span>
-<span style="right: 25px;" class="file-action d-none" data-file-act='order' data-order="0"><i class='feather icon-arrow-down'></i></span>
+<span style="right: 65px;" class="file-action d-none" data-file-act='order' data-order="1"><i class='feather icon-arrow-up'></i></span>
+<span style="right: 45px;" class="file-action d-none" data-file-act='order' data-order="0"><i class='feather icon-arrow-down'></i></span>
+<span style="right: 25px;" class="file-action d-none" data-file-act='download' data-id=''><i class='feather icon-download-cloud'></i></span>
 <span data-file-act="cancel" class="file-action" style="font-size:13px">
     <i class="feather icon-x red-dark"></i>
 </span>
@@ -108,6 +109,7 @@ export default class AddFile {
     showImage($li, file) {
         let _this = this,
             uploader = _this.uploader.uploader,
+            lang = _this.uploader.lang,
             $wrap = $li.find('p.imgWrap');
 
         var image = uploader.makeThumb(file, function (error, src) {
@@ -137,7 +139,7 @@ export default class AddFile {
 
                 // 验证图片宽高
                 if (! _this.validateDimensions(file)) {
-                    Dcat.error('The image dimensions is invalid.');
+                    Dcat.error(lang.trans('dimensions') || 'The image dimensions is invalid.');
 
                     uploader.removeFile(file);
 
@@ -160,8 +162,6 @@ export default class AddFile {
             parent = _this.uploader;
 
         return function (cur, prev, a) {
-            console.log(123, cur, prev, file);
-
             if (prev === 'progress') {
                 // $prgress.hide().width(0);
             } else if (prev === 'queued') {
@@ -230,13 +230,17 @@ export default class AddFile {
 
                     break;
                 case 'preview':
-                    Dcat.helpers.previewImage(parent.$wrapper.find('img').attr('src'), null, file.name);
+                    Dcat.helpers.previewImage($(this).parent().parent().find('img').attr('src'), null, file.name);
 
                     break;
                 case 'order':
                     $(this).attr('data-id', file.serverId);
 
                     helper.orderFiles($(this));
+
+                    break;
+                case 'download':
+                    window.open($(this).attr('data-id'));
 
                     break;
             }

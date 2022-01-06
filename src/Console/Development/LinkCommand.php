@@ -29,8 +29,7 @@ class LinkCommand extends Command
     }
 
     /**
-     * @param Filesystem $files
-     *
+     * @param  Filesystem  $files
      * @return void
      */
     protected function linkTests($files)
@@ -60,8 +59,7 @@ class LinkCommand extends Command
     }
 
     /**
-     * @param Filesystem $files
-     *
+     * @param  Filesystem  $files
      * @return void
      */
     protected function linkAssets($files)

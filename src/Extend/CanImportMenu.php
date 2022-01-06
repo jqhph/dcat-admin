@@ -32,7 +32,7 @@ trait CanImportMenu
     /**
      * 添加菜单.
      *
-     * @param array $menu
+     * @param  array  $menu
      *
      * @throws \Exception
      */
@@ -81,8 +81,7 @@ trait CanImportMenu
     /**
      * 根据名称获取菜单ID.
      *
-     * @param int|string $parent
-     *
+     * @param  int|string  $parent
      * @return int
      */
     protected function getParentMenuId($parent)
@@ -118,11 +117,10 @@ trait CanImportMenu
     /**
      * 验证菜单字段格式是否正确.
      *
-     * @param array $menu
+     * @param  array  $menu
+     * @return bool
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function validateMenu(array $menu)
     {

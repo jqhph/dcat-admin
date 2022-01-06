@@ -8,7 +8,7 @@
     <div class="table-responsive table-wrapper {{ $grid->option('table_collapse') ? 'table-collapse' : '' }}">
         <div class="tables-container">
             <div class="table-wrap table-main" data-height="{{ $tableHeight }}">
-                <table class="custom-data-table dataTable {{ $grid->formatTableClass() }}" id="{{ $tableId }}">
+                <table class="custom-data-table {{ $grid->formatTableClass() }}" id="{{ $tableId }}">
                     <thead>
                     @if ($headers = $grid->getVisibleComplexHeaders())
                         <tr>
@@ -51,7 +51,7 @@
 
             @if ($grid->leftVisibleColumns()->isNotEmpty() || $grid->leftVisibleComplexColumns()->isNotEmpty())
                 <div class="table-wrap table-fixed table-fixed-left" data-height="{{ $tableHeight }}">
-                    <table class="custom-data-table dataTable {{ $grid->formatTableClass() }} ">
+                    <table class="custom-data-table {{ $grid->formatTableClass() }} ">
                         <thead>
 
                         @if ($grid->getVisibleComplexHeaders())
@@ -95,7 +95,7 @@
 
             @if ($grid->rightVisibleColumns()->isNotEmpty() || $grid->rightVisibleComplexColumns()->isNotEmpty())
                 <div class="table-wrap table-fixed table-fixed-right" data-height="{{ $tableHeight }}">
-                    <table class="custom-data-table dataTable {{ $grid->formatTableClass() }} ">
+                    <table class="custom-data-table {{ $grid->formatTableClass() }} ">
                         <thead>
                         @if ($grid->getVisibleComplexHeaders())
                             <tr>

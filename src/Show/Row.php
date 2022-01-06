@@ -37,8 +37,8 @@ class Row implements Renderable
     /**
      * Row constructor.
      *
-     * @param \Closure $callback
-     * @param Show $show
+     * @param  \Closure  $callback
+     * @param  Show  $show
      */
     public function __construct(\Closure $callback, Show $show)
     {
@@ -72,8 +72,7 @@ class Row implements Renderable
     /**
      * Set width for a incomming field.
      *
-     * @param int $width
-     *
+     * @param  int  $width
      * @return $this
      */
     public function width($width = 12)
@@ -86,9 +85,8 @@ class Row implements Renderable
     /**
      * Add field.
      *
-     * @param string $name
-     * @param string $label
-     *
+     * @param  string  $name
+     * @param  string  $label
      * @return \Dcat\Admin\Show\Field
      */
     public function field($name, $label = '')
@@ -104,7 +102,6 @@ class Row implements Renderable
      * Add field.
      *
      * @param $name
-     *
      * @return \Dcat\Admin\Show\Field|Collection
      */
     public function __get($name)
@@ -119,7 +116,6 @@ class Row implements Renderable
     /**
      * @param $method
      * @param $arguments
-     *
      * @return \Dcat\Admin\Show\Field
      */
     public function __call($method, $arguments)
@@ -132,8 +128,7 @@ class Row implements Renderable
     }
 
     /**
-     * @param \Dcat\Admin\Show\Field $field
-     *
+     * @param  \Dcat\Admin\Show\Field  $field
      * @return void
      */
     protected function pushField($field)

@@ -22,8 +22,7 @@ trait HasFormResponse
     /**
      * 返回字段验证错误信息.
      *
-     * @param array|MessageBag|\Illuminate\Validation\Validator $validationMessages
-     *
+     * @param  array|MessageBag|\Illuminate\Validation\Validator  $validationMessages
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function validationErrorsResponse($validationMessages)
@@ -37,8 +36,7 @@ trait HasFormResponse
     /**
      * 设置当前URL.
      *
-     * @param string $url
-     *
+     * @param  string  $url
      * @return $this
      */
     public function setCurrentUrl($url)
@@ -51,9 +49,8 @@ trait HasFormResponse
     /**
      * 获取当前URL.
      *
-     * @param string|null  $default
-     * @param Request|null $request
-     *
+     * @param  string|null  $default
+     * @param  Request|null  $request
      * @return string
      */
     protected function getCurrentUrl($default = null, Request $request = null)
@@ -86,7 +83,6 @@ trait HasFormResponse
      * 响应数据.
      *
      * @param $response
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     protected function sendResponse($response)

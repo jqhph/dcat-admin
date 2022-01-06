@@ -11,8 +11,7 @@ class MultipleFile extends File
     /**
      * Allow to sort files.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function sortable(bool $value = true)
@@ -25,8 +24,7 @@ class MultipleFile extends File
     /**
      * Set a limit of files.
      *
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return $this
      */
     public function limit(int $limit)
@@ -42,8 +40,7 @@ class MultipleFile extends File
     /**
      * Prepare for saving.
      *
-     * @param string|array $file
-     *
+     * @param  string|array  $file
      * @return array
      */
     protected function prepareInputValue($file)
@@ -51,7 +48,7 @@ class MultipleFile extends File
         if ($path = request(static::FILE_DELETE_FLAG)) {
             $this->deleteFile($path);
 
-            return array_diff($this->original, [$path]);
+            return array_values(array_diff($this->original, [$path]));
         }
 
         $file = Helper::array($file, true);

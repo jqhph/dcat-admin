@@ -47,6 +47,7 @@ abstract class DuskTestCase extends BaseTestCase
      * Prepare for Dusk test execution.
      *
      * @beforeClass
+     *
      * @return void
      */
     public static function prepare()
@@ -55,8 +56,7 @@ abstract class DuskTestCase extends BaseTestCase
     }
 
     /**
-     * @param \Facebook\WebDriver\Remote\RemoteWebDriver $driver
-     *
+     * @param  \Facebook\WebDriver\Remote\RemoteWebDriver  $driver
      * @return \Laravel\Dusk\Browser
      */
     protected function newBrowser($driver)

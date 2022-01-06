@@ -22,8 +22,7 @@ class Callout extends Widget
     /**
      * Set title.
      *
-     * @param string $title
-     *
+     * @param  string  $title
      * @return $this
      */
     public function title(?string $title)
@@ -36,8 +35,7 @@ class Callout extends Widget
     /**
      * Set contents.
      *
-     * @param string|\Closure|Renderable $content
-     *
+     * @param  string|\Closure|Renderable  $content
      * @return $this
      */
     public function content($content)
@@ -110,8 +108,7 @@ class Callout extends Widget
     /**
      * Show close button.
      *
-     * @param bool $value
-     *
+     * @param  bool  $value
      * @return $this
      */
     public function removable(bool $value = true)
@@ -124,8 +121,7 @@ class Callout extends Widget
     /**
      * Add style.
      *
-     * @param string $style
-     *
+     * @param  string  $style
      * @return $this
      */
     public function style(?string $style = 'info')

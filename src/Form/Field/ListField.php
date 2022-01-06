@@ -28,8 +28,7 @@ class ListField extends Field
     /**
      * Set Max list size.
      *
-     * @param int $size
-     *
+     * @param  int  $size
      * @return $this
      */
     public function max(int $size)
@@ -42,8 +41,7 @@ class ListField extends Field
     /**
      * Set Minimum list size.
      *
-     * @param int $size
-     *
+     * @param  int  $size
      * @return $this
      */
     public function min(int $size)

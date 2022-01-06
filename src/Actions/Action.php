@@ -61,7 +61,7 @@ abstract class Action implements Renderable
     /**
      * Action constructor.
      *
-     * @param string $title
+     * @param  string  $title
      */
     public function __construct($title = null)
     {
@@ -73,8 +73,7 @@ abstract class Action implements Renderable
     /**
      * 是否禁用动作.
      *
-     * @param bool $disable
-     *
+     * @param  bool  $disable
      * @return $this
      */
     public function disable(bool $disable = true)
@@ -105,8 +104,7 @@ abstract class Action implements Renderable
     /**
      * 设置主键.
      *
-     * @param mixed $key
-     *
+     * @param  mixed  $key
      * @return $this
      */
     public function setKey($key)
@@ -145,8 +143,7 @@ abstract class Action implements Renderable
     /**
      * 生成选择器.
      *
-     * @param string $prefix
-     *
+     * @param  string  $prefix
      * @return string
      */
     public function makeSelector()
@@ -155,8 +152,7 @@ abstract class Action implements Renderable
     }
 
     /**
-     * @param string|array $class
-     *
+     * @param  string|array  $class
      * @return $this
      */
     public function addHtmlClass($class)
@@ -247,7 +243,7 @@ HTML;
             $attributes['href'] = $href;
         }
 
-        $this->defaultHtmlAttribute('style', 'cursor: pointer');
+        $this->defaultHtmlAttribute('style', 'cursor: pointer;');
         $this->setHtmlAttribute($attributes);
     }
 
@@ -260,8 +256,7 @@ HTML;
     }
 
     /**
-     * @param mixed ...$params
-     *
+     * @param  mixed  ...$params
      * @return $this
      */
     public static function make(...$params)

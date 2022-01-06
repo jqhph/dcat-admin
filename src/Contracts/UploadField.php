@@ -10,8 +10,7 @@ interface UploadField
     /**
      * Upload File.
      *
-     * @param UploadedFile $file
-     *
+     * @param  UploadedFile  $file
      * @return Response
      */
     public function upload(UploadedFile $file);
@@ -26,7 +25,7 @@ interface UploadField
     /**
      * Destroy files.
      *
-     * @param string|array $path
+     * @param  string|array  $path
      */
     public function deleteFile($path);
 }
