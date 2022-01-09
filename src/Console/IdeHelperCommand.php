@@ -230,7 +230,6 @@ class IdeHelperCommand extends Command
         return trim(
             $fields
                 ->map(function ($class, $alias) use (&$space) {
-
                     $params = $this->getClassMethodParameters($class, '__construct');
 
                     return $space.sprintf($this->templates['grid-filter'], '\\'.$class, $alias, $params);
@@ -251,7 +250,6 @@ class IdeHelperCommand extends Command
         return trim(
             $extensions
                 ->map(function ($class, $alias) use (&$space) {
-
                     $params = $this->getClassMethodParameters($class, 'render');
 
                     return $space.sprintf($this->templates['show-column'], $alias, $params);
@@ -280,7 +278,6 @@ class IdeHelperCommand extends Command
         return trim(
             $fields
                 ->map(function ($class, $alias) use (&$space) {
-
                     $params = $this->getClassMethodParameters($class, '__construct');
 
                     return $space.sprintf($this->templates['form'], '\\'.$class, $alias, $params);
@@ -309,7 +306,6 @@ class IdeHelperCommand extends Command
         return trim(
             $columns
                 ->map(function ($class, $alias) use (&$space) {
-
                     $params = $this->getClassMethodParameters($class, 'display');
 
                     return $space.sprintf($this->templates['grid-column'], $alias, $params);
@@ -405,7 +401,7 @@ class IdeHelperCommand extends Command
             $endLine = $reflectedMethod->getEndLine();
             $length = $endLine - $startLine;
 
-            $source = implode("", array_slice(file($file), $startLine, $length));
+            $source = implode('', array_slice(file($file), $startLine, $length));
 
             $source = substr($source, 0, strpos($source, ')')); // 截取第一个右括号之前的所有内容（不包含）
             $source = substr($source, strpos($source, '(') + 1);  // 截取第一个左括号之前的所有内容（不包含）
