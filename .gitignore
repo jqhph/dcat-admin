@@ -9,3 +9,4 @@ mix-manifest.json
 pre-dist
 /laravel-tests
 *.bak.*
+.vscode

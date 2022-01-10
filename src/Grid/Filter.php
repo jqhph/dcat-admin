@@ -13,6 +13,7 @@ use Dcat\Admin\Grid\Filter\Date;
 use Dcat\Admin\Grid\Filter\Day;
 use Dcat\Admin\Grid\Filter\EndWith;
 use Dcat\Admin\Grid\Filter\Equal;
+use Dcat\Admin\Grid\Filter\Exists;
 use Dcat\Admin\Grid\Filter\Group;
 use Dcat\Admin\Grid\Filter\Gt;
 use Dcat\Admin\Grid\Filter\Hidden;
@@ -91,6 +92,7 @@ class Filter implements Renderable
         'like'         => Like::class,
         'startWith'    => StartWith::class,
         'endWith'      => EndWith::class,
+        'exists'      => Exists::class,
         'gt'           => Gt::class,
         'lt'           => Lt::class,
         'ngt'          => Ngt::class,
