@@ -14,13 +14,13 @@ class Exists extends AbstractFilter
      */
     public function condition($inputs)
     {
-        if (!Arr::has($inputs, $this->column)) {
+        if (! Arr::has($inputs, $this->column)) {
             return;
         }
 
         $this->value = Arr::get($inputs, $this->column);
 
-        if ($this->value === "0") {
+        if ($this->value === '0') {
             $this->query = 'whereNull';
             return $this->buildCondition($this->column);
         }
