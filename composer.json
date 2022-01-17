@@ -1,5 +1,5 @@
 {
-    "name": "gelaku/laravel-dcat",
+    "name": "gelaku/dcat-admin",
     "description": "dcat admin",
     "type": "library",
     "keywords": ["dcat", "laravel", "admin", "grid", "form", "laravel admin"],
