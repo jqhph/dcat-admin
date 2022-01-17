@@ -28,7 +28,7 @@ class DialogForm
         'query'          => null,
         'lang'           => null,
         'forceRefresh'   => false,
-        'reset'          => true,
+        'resetButton'    => true,
     ];
 
     /**
@@ -108,7 +108,7 @@ class DialogForm
      */
     public function resetButton(bool $value = true)
     {
-        $this->options['reset'] = $value;
+        $this->options['resetButton'] = $value;
 
         return $this;
     }
@@ -226,7 +226,7 @@ class DialogForm
             <<<JS
 (function () {
     var opts = {$opts};
-    
+
     opts.success = function (success, response) {
         {$this->handlers['success']}
     };
@@ -236,7 +236,7 @@ class DialogForm
     opts.saved = function (success, response) {
         {$this->handlers['saved']}
     };
-    
+
     Dcat.DialogForm(opts);
 })();
 JS
