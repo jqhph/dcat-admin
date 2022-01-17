@@ -3,7 +3,7 @@
     "description": "dcat admin",
     "type": "library",
     "keywords": ["dcat", "laravel", "admin", "grid", "form", "laravel admin"],
-    "homepage": "https://github.com/gelaku/dcat-admin",
+    "homepage": "https://github.com/jqhph/dcat-admin",
     "license": "MIT",
     "authors": [
         {
