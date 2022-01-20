@@ -572,18 +572,19 @@ if (! function_exists('admin_redirect')) {
     }
 }
 
-if (!function_exists('format_byte')) {
+if (! function_exists('format_byte')) {
     /**
-     * 文件单位换算
+     * 文件单位换算.
+     *
      * @param $input
      * @param  int  $dec
      * @return string
      */
     function format_byte($input, $dec = 0)
     {
-        $prefix_arr = array("B", "KB", "MB", "GB", "TB");
-        $value      = round($input, $dec);
-        $i          = 0;
+        $prefix_arr = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $value = round($input, $dec);
+        $i = 0;
         while ($value > 1024) {
             $value /= 1024;
             $i++;
