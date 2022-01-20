@@ -755,9 +755,9 @@ HTML;
     {
         return static::$extendedFields;
     }
-    
+
     /**
-     * set file size
+     * set file size.
      *
      * @param  int  $dec
      * @return Field
