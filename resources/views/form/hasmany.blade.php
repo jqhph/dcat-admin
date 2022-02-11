@@ -17,12 +17,12 @@
                 {!! $form->render() !!}
 
                 @if($options['allowDelete'])
-                <div class="form-group row">
-                    <label class="{{$viewClass['label']}} control-label"></label>
-                    <div class="{{$viewClass['field']}}">
-                        <div class="remove btn btn-white btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                    <div class="form-group row">
+                        <label class="{{$viewClass['label']}} control-label"></label>
+                        <div class="{{$viewClass['field']}}">
+                            <div class="remove btn btn-white btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                        </div>
                     </div>
-                </div>
                 @endif
                 <hr>
             </div>
@@ -39,7 +39,7 @@
             <div class="form-group row">
                 <label class="{{$viewClass['label']}} control-label"></label>
                 <div class="{{$viewClass['field']}}">
-                    <div class="remove btn btn-white btn-sm pull-right"><i class="feather icon-trash"></i>&nbsp;{{ trans('admin.remove') }}</div>
+                    <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right"><i class="feather icon-trash"></i>&nbsp;{{ trans('admin.remove') }}</div>
                 </div>
             </div>
             <hr>
@@ -47,12 +47,12 @@
     </template>
 
     @if($options['allowCreate'])
-    <div class="form-group row">
-        <label class="{{$viewClass['label']}} control-label"></label>
-        <div class="{{$viewClass['field']}}">
-            <div class="add btn btn-primary btn-outline btn-sm"><i class="feather icon-plus"></i>&nbsp;{{ trans('admin.new') }}</div>
+        <div class="form-group row">
+            <label class="{{$viewClass['label']}} control-label"></label>
+            <div class="{{$viewClass['field']}}">
+                <div class="{{$columnClass}}-add btn btn-primary btn-outline btn-sm"><i class="feather icon-plus"></i>&nbsp;{{ trans('admin.new') }}</div>
+            </div>
         </div>
-    </div>
     @endif
 
 </div>
@@ -66,7 +66,7 @@
         return String(value).replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);
     }
 
-    $(container).on('click', '.add', function () {
+    $(container).on('click', '.{{$columnClass}}-add', function () {
 
         var tpl = $('template.{{ $columnClass }}-tpl');
 
@@ -76,7 +76,7 @@
         $(forms).append(template);
     });
 
-    $(container).on('click', '.remove', function () {
+    $(container).on('click', '.{{$columnClass}}-remove', function () {
         var $form = $(this).closest('.has-many-{{ $columnClass  }}-form');
         $form.hide();
         $form.find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
