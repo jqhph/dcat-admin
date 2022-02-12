@@ -302,8 +302,9 @@
             $fieldsBody = $('#table-fields tbody'),
             tpl = $('#table-field-tpl').html(),
             modelNamespace = 'App\\Models\\',
-            repositoryNamespace = '{{ $namespaceBase }}\\Repositories\\',
-            controllerNamespace = '{{ $namespaceBase }}\\Controllers\\',
+            namespaceBase = '{{ str_replace( '\\', '\\\\', $namespaceBase ) }}',
+            repositoryNamespace = namespaceBase + '\\Repositories\\',
+            controllerNamespace = namespaceBase + '\\Controllers\\',
             dataTypeMap = {!! json_encode($dataTypeMap) !!},
             helpers = Dcat.helpers;
 
