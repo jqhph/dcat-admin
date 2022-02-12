@@ -20,7 +20,7 @@
                     <div class="form-group row">
                         <label class="{{$viewClass['label']}} control-label"></label>
                         <div class="{{$viewClass['field']}}">
-                            <div class="remove btn btn-white btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                            <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
                         </div>
                     </div>
                 @endif
@@ -63,21 +63,22 @@
         forms = '.has-many-{{ $columnClass  }}-forms';
 
     function replaceNestedFormIndex(value) {
-        return String(value).replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);
+        return String(value)
+            .replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex)
+            .replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_PARENT_KEY_NAME }}/g, nestedIndex);
     }
 
     $(container).on('click', '.{{$columnClass}}-add', function () {
-
         var tpl = $('template.{{ $columnClass }}-tpl');
 
         nestedIndex++;
 
-        var template = replaceNestedFormIndex(tpl.html());
-        $(forms).append(template);
+        $(forms).append(replaceNestedFormIndex(tpl.html()));
     });
 
     $(container).on('click', '.{{$columnClass}}-remove', function () {
-        var $form = $(this).closest('.has-many-{{ $columnClass  }}-form');
+        var $form = $(this).closest('.has-many-{{ $columnClass }}-form');
+
         $form.hide();
         $form.find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
         $form.find('[required]').prop('required', false);

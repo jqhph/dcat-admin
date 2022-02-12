@@ -81,20 +81,21 @@
 {{--<hr style="margin-top: 0px;">--}}
 
 <script>
+(function () {
     var nestedIndex = {!! $count !!},
         container = '.has-many-table-{{ $columnClass }}';
 
     function replaceNestedFormIndex(value) {
-        return String(value).replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);
+        return String(value).replace(/{{ $parentKey ?: Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);
     }
 
     $(document).off('click', container+' .add').on('click', container+' .add', function (e) {
-        var tpl = $('template.{{ $columnClass }}-tpl');
+        var $con = $(this).closest(container);
+        var tpl = $con.find('template.{{ $columnClass }}-tpl');
 
         nestedIndex++;
 
-        var template = replaceNestedFormIndex(tpl.html());
-        $(this).closest(container).find('.has-many-table-{{ $columnClass }}-forms').append(template);
+        $con.find('.has-many-table-{{ $columnClass }}-forms').append(replaceNestedFormIndex(tpl.html()));
 
         e.preventDefault();
         return false
@@ -107,5 +108,5 @@
         $form.find('[required]').prop('required', false);
         $form.find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
     });
+})();
 </script>
-
