@@ -29,7 +29,7 @@
 
                     if (valueField) {
                         return $.map(data, function (dat) {
-                            return {value: Dcat.helpers.get(dat, valueField), data: dat};
+                            return {value: Dcat.helpers.get(dat, valueField) + '', data: dat};
                         });
                     }
 
