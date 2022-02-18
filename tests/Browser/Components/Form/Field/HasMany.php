@@ -48,8 +48,8 @@ class HasMany extends Component
     {
         return [
             '@container' => '.has-many-'.$this->relation,
-            '@add' => '.add',
-            '@remove' => '.remove',
+            '@add' => ".{$this->relation}-add",
+            '@remove' => ".{$this->relation}-remove",
             '@forms' => ".has-many-{$this->relation}-forms",
             '@group' => ".has-many-{$this->relation}-forms .has-many-{$this->relation}-form",
         ];
