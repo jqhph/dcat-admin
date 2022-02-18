@@ -383,7 +383,7 @@ class HasMany extends Field
     {
         if ($this->parentRelationName) {
             // hasmany嵌套table时，需要重新设置行的默认key
-            return $this->parentRelationName . '_NKEY_';
+            return $this->parentRelationName.'_NKEY_';
         }
     }
 
