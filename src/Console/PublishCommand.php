@@ -158,12 +158,14 @@ class PublishCommand extends Command
 
     protected function moveManagedFiles(MountManager $manager)
     {
-        if (method_exists($manager, 'write')) {
+        if (method_exists($manager, 'put')) {
             foreach ($manager->listContents('from://', true) as $file) {
-                $path = Str::after($file['path'], 'from://');
-
-                if ($file['type'] === 'file' && (! $manager->fileExists('to://'.$path) || $this->option('force'))) {
-                    $manager->write('to://'.$path, $manager->read($file['path']));
+                if (
+                    $file['type'] === 'file'
+                    && (! $manager->has('to://'.$file['path']) || $this->option('force'))
+                    && ! $this->isExceptPath($manager, $file['path'])
+                ) {
+                    $manager->put('to://'.$file['path'], $manager->read('from://'.$file['path']));
                 }
             }
 
@@ -171,12 +173,10 @@ class PublishCommand extends Command
         }
 
         foreach ($manager->listContents('from://', true) as $file) {
-            if (
-                $file['type'] === 'file'
-                && (! $manager->has('to://'.$file['path']) || $this->option('force'))
-                && ! $this->isExceptPath($manager, $file['path'])
-            ) {
-                $manager->put('to://'.$file['path'], $manager->read('from://'.$file['path']));
+            $path = Str::after($file['path'], 'from://');
+
+            if ($file['type'] === 'file' && (! $manager->fileExists('to://'.$path) || $this->option('force'))) {
+                $manager->write('to://'.$path, $manager->read($file['path']));
             }
         }
     }
