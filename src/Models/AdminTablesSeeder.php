@@ -39,7 +39,6 @@ class AdminTablesSeeder extends Seeder
         Permission::truncate();
         Permission::insert([
             [
-                'id'          => 1,
                 'name'        => 'Auth management',
                 'slug'        => 'auth-management',
                 'http_method' => '',
@@ -49,7 +48,6 @@ class AdminTablesSeeder extends Seeder
                 'created_at'  => $createdAt,
             ],
             [
-                'id'          => 2,
                 'name'        => 'Users',
                 'slug'        => 'users',
                 'http_method' => '',
@@ -59,7 +57,6 @@ class AdminTablesSeeder extends Seeder
                 'created_at'  => $createdAt,
             ],
             [
-                'id'          => 3,
                 'name'        => 'Roles',
                 'slug'        => 'roles',
                 'http_method' => '',
@@ -69,7 +66,6 @@ class AdminTablesSeeder extends Seeder
                 'created_at'  => $createdAt,
             ],
             [
-                'id'          => 4,
                 'name'        => 'Permissions',
                 'slug'        => 'permissions',
                 'http_method' => '',
@@ -79,7 +75,6 @@ class AdminTablesSeeder extends Seeder
                 'created_at'  => $createdAt,
             ],
             [
-                'id'          => 5,
                 'name'        => 'Menu',
                 'slug'        => 'menu',
                 'http_method' => '',
@@ -89,7 +84,6 @@ class AdminTablesSeeder extends Seeder
                 'created_at'  => $createdAt,
             ],
             [
-                'id'          => 6,
                 'name'        => 'Extension',
                 'slug'        => 'extension',
                 'http_method' => '',
