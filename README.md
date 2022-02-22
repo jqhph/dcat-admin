@@ -62,7 +62,7 @@
 
 ### 环境
  - PHP >= 7.1.0
- - Laravel 5.5.0 ~ 8.*
+ - Laravel 5.5.0 ~ 9.*
  - Fileinfo PHP Extension
 
 ### 安装
