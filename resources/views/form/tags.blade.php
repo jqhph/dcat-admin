@@ -19,15 +19,16 @@
 </div>
 
 <script init="{!! $selector !!}" require="@select2?lang={{ config('app.locale') === 'en' ? '' : str_replace('_', '-', config('app.locale')) }}">
+    /* licjie change */
     var options = {
         tags: true,
         createTag: function(params) {
-            if (/[,;，； ]/.test(params.term)) {
-                var str = params.term.trim().replace(/[,;，；]*$/, '');
-                return { id: str, text: str }
-            } else {
+            var str = params.term.trim().replace(/[,;，； ]*$/, '');
+            if (!str){
                 return null;
             }
+
+            return { id: str, text: str };
         }
     };
 

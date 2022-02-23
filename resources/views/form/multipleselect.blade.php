@@ -10,6 +10,7 @@
 
         <select class="form-control {{$class}}" style="width: 100%!important;" name="{{$name}}[]" multiple="multiple" data-placeholder="{{ $placeholder }}" {!! $attributes !!} >
             @foreach($options as $select => $option)
+                {{-- licjie --}}
                 <option value="{{ $select }}" {{  in_array($select, (array) $value) ?'selected':'' }}
                 @if(!empty($otherOptions['disableOptions']))
                     @if((!empty($otherOptions['disableType']) && in_array($select,$otherOptions['disableOptions'])) || (empty($otherOptions['disableType']) && !in_array($select,$otherOptions['disableOptions'])))

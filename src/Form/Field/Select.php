@@ -27,10 +27,11 @@ class Select extends Field
     protected $config = [];
 
     /**
+     * licjie
+     * auto params
      * @var array
      */
     protected $otherOptions = [];
-
     /**
      * Set options.
      *
@@ -233,7 +234,7 @@ class Select extends Field
             'groups'        => $this->groups,
             'configs'       => $this->config,
             'cascadeScript' => $this->getCascadeScript(),
-            'otherOptions'  => $this->getOtherOptions(),
+            'otherOptions'  => $this->getOtherOptions(),// licjie
         ]);
 
         $this->initSize();
@@ -267,12 +268,13 @@ class Select extends Field
 
         return $this;
     }
-
     /**
+     * licjie
      * Set auto option.
      *
-     * @param  string  $key
-     * @param  mixed  $val
+     * @param string $key
+     * @param mixed  $val
+     *
      * @return $this
      */
     public function otherOptions(string $key, $val)
@@ -282,6 +284,10 @@ class Select extends Field
         return $this;
     }
 
+    /**
+     * lijcie
+     * @return array
+     */
     public function getOtherOptions()
     {
         if (isset($this->otherOptions['disableOptions']) && empty($this->otherOptions['disableOptions'])) {
@@ -292,14 +298,15 @@ class Select extends Field
     }
 
     /**
-     * @param  array  $options  need dispose options
-     * @param  bool  $type  true in_array($options) false !in_array($options)
+     * licjie
+     * @param array $options need dispose options
+     * @param bool  $type    true in_array($options) false !in_array($options)
      * @return $this
      */
     public function disableOptions($options = [], $type = true)
     {
         $this->otherOptions['disableOptions'] = Helper::array($options);
-        $this->otherOptions['disableType'] = $type;
+        $this->otherOptions['disableType']    = $type;
 
         return $this;
     }

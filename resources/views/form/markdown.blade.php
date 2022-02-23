@@ -11,7 +11,8 @@
         @include('admin::form.error')
 
         <div class="{{$class}}" {!! $attributes !!}>
-            <textarea class="d-none" name="{{$name}}" placeholder="{{ $placeholder }}">{!! $value !!}</textarea>
+            {{-- licjie 2021-12-30 --}}
+            <textarea class="d-none" name="{{$name}}" placeholder="{{ $placeholder }}">{{ $value }}</textarea>
         </div>
 
         @include('admin::form.help-block')

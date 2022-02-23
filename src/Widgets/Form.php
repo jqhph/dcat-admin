@@ -171,6 +171,11 @@ class Form implements Renderable
     protected $validationErrorToastr = true;
 
     /**
+     * licjie
+     * @var string
+     */
+    protected $elementBoxId;
+    /**
      * Form constructor.
      *
      * @param  array  $data
@@ -606,6 +611,7 @@ class Form implements Renderable
             'elementId' => $this->getElementId(),
             'ajax'      => $this->ajax,
             'footer'    => $this->renderFooter(),
+            'elementBoxId'    => $this->elementBoxId,// licjie
         ], $this->variables);
     }
 
@@ -944,5 +950,18 @@ JS
     public static function make(...$params)
     {
         return new static(...$params);
+    }
+
+    /**
+     * licjie
+     * 关闭表单头尾
+     * @return $this
+     */
+    public function setElementBoxId(){
+        $this->useFormTag = false;
+        $this->buttons = [];
+        $this->elementBoxId = $this->getElementId();
+
+        return $this;
     }
 }
