@@ -31,8 +31,14 @@ class InstallTest extends TestCase
         $this->assertFileExists(config_path('admin.php'));
         $this->assertFileExists(public_path(Admin::asset()->getRealPath('@admin')));
         $this->assertFileExists(database_path('migrations/2016_01_04_173148_create_admin_tables.php'));
-        $this->assertFileExists(resource_path('lang/en/admin.php'));
-        $this->assertFileExists(resource_path('lang/zh_CN/admin.php'));
-        $this->assertFileExists(resource_path('lang/zh_CN/global.php'));
+        if($this->app->version() < '9.0.0'){
+            $this->assertFileExists(resource_path('lang/en/admin.php'));
+            $this->assertFileExists(resource_path('lang/zh_CN/admin.php'));
+            $this->assertFileExists(resource_path('lang/zh_CN/global.php'));
+        } else {
+            $this->assertFileExists(lang_path('en/admin.php'));
+            $this->assertFileExists(lang_path('zh_CN/admin.php'));
+            $this->assertFileExists(lang_path('zh_CN/global.php'));
+        }
     }
 }
