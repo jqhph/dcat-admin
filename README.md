@@ -93,7 +93,7 @@ DB_PASSWORD=
 ```
 cd {项目名称}
 
-composer require dcat/laravel-admin
+composer require gelaku/dcat-admin
 ```
 
 然后运行下面的命令来发布资源：
