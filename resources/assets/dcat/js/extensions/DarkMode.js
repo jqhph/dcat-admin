@@ -53,6 +53,16 @@ export default class DarkMode {
                 switchMode(true)
             }
         })
+
+        window.addEventListener('storage', function (event) {
+            if (event.key === key) {
+                if (event.newValue === 'dark') {
+                    switchMode(true);
+                } else if (event.newValue === 'def') {
+                    switchMode(false)
+                }
+            }
+        });
     }
 
     toggle() {
