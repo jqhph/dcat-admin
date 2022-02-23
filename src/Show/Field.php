@@ -755,4 +755,21 @@ HTML;
     {
         return static::$extendedFields;
     }
+
+    /**
+     * set file size.
+     *
+     * @param  int  $dec
+     * @return Field
+     */
+    public function filesize($dec = 0)
+    {
+        return $this->unescape()->as(function ($value) use ($dec) {
+            if (empty($value)) {
+                return $this;
+            }
+
+            return format_byte($value, $dec);
+        });
+    }
 }

@@ -57,7 +57,9 @@ class ArrayField extends HasMany
 
     public function buildNestedForm($key = null)
     {
-        $form = new NestedForm($this->column);
+        $form = new NestedForm($this->getNestedFormColumnName());
+
+        $this->setNestedFormDefaultKey($form);
 
         $form->setForm($this->form)
             ->setKey($key);

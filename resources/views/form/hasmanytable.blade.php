@@ -9,8 +9,8 @@
 
         <span name="{{$column}}"></span> {{-- 用于显示错误信息 --}}
 
-        <div class="has-many-{{$columnClass}}" >
-            <table class="table table-has-many has-many-{{$columnClass}}">
+        <div class="has-many-table-{{$columnClass}}" >
+            <table class="table table-has-many has-many-table-{{$columnClass}}">
                 <thead>
                 <tr>
                     @foreach($headers as $header)
@@ -24,9 +24,9 @@
                     @endif
                 </tr>
                 </thead>
-                <tbody class="has-many-{{$columnClass}}-forms">
+                <tbody class="has-many-table-{{$columnClass}}-forms">
                 @foreach($forms as $pk => $form)
-                    <tr class="has-many-{{$columnClass}}-form fields-group">
+                    <tr class="has-many-table-{{$columnClass}}-form fields-group">
 
                         <?php $hidden = ''; ?>
 
@@ -55,7 +55,7 @@
             </table>
 
             <template class="{{$columnClass}}-tpl">
-                <tr class="has-many-{{$columnClass}}-form fields-group">
+                <tr class="has-many-table-{{$columnClass}}-form fields-group">
 
                     {!! $template !!}
 
@@ -81,28 +81,32 @@
 {{--<hr style="margin-top: 0px;">--}}
 
 <script>
+(function () {
     var nestedIndex = {!! $count !!},
-        container = '.has-many-{{ $columnClass }}';
+        container = '.has-many-table-{{ $columnClass }}';
 
     function replaceNestedFormIndex(value) {
-        return String(value).replace(/{{ Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);
+        return String(value).replace(/{{ $parentKey ?: Dcat\Admin\Form\NestedForm::DEFAULT_KEY_NAME }}/g, nestedIndex);
     }
 
-    $(container).on('click', '.add', function () {
-        var tpl = $('template.{{ $columnClass }}-tpl');
+    $(document).off('click', container+' .add').on('click', container+' .add', function (e) {
+        var $con = $(this).closest(container);
+        var tpl = $con.find('template.{{ $columnClass }}-tpl');
 
         nestedIndex++;
 
-        var template = replaceNestedFormIndex(tpl.html());
-        $('.has-many-{{ $columnClass }}-forms').append(template);
+        $con.find('.has-many-table-{{ $columnClass }}-forms').append(replaceNestedFormIndex(tpl.html()));
+
+        e.preventDefault();
+        return false
     });
 
-    $(container).on('click', '.remove', function () {
-        var $form = $(this).closest('.has-many-{{ $columnClass }}-form');
+    $(document).off('click', container+' .remove').on('click', container+' .remove', function () {
+        var $form = $(this).closest('.has-many-table-{{ $columnClass }}-form');
 
         $form.hide();
         $form.find('[required]').prop('required', false);
         $form.find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
     });
+})();
 </script>
-

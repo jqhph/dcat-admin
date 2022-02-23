@@ -10,7 +10,9 @@ use Illuminate\Support\Collection;
 
 class NestedForm extends WidgetForm
 {
-    const DEFAULT_KEY_NAME = '__LA_KEY__';
+    const DEFAULT_KEY_PREFIX = 'new_';
+    const DEFAULT_PARENT_KEY_NAME = '__PARENT_NESTED__';
+    const DEFAULT_KEY_NAME = '__NESTED__';
 
     const REMOVE_FLAG_NAME = '_remove_';
 
@@ -24,9 +26,14 @@ class NestedForm extends WidgetForm
     /**
      * NestedForm key.
      *
-     * @var
+     * @var string
      */
     protected $key;
+
+    /**
+     * @var string
+     */
+    protected $defaultKey;
 
     /**
      * Fields in form.
@@ -289,6 +296,11 @@ class NestedForm extends WidgetForm
             $this->form->builder()->pushField((clone $field)->display(false));
         }
 
+        if ($field instanceof Form\Field\HasMany) {
+            // HasMany以及array嵌套table，需要保存上级字段名
+            $field->setParentRelationName($this->relationName, $this->key);
+        }
+
         $this->callResolvingFieldCallbacks($field);
 
         $field->setRelation([
@@ -341,6 +353,18 @@ class NestedForm extends WidgetForm
         return $this;
     }
 
+    public function getDefaultKey()
+    {
+        return $this->defaultKey ?: (static::DEFAULT_KEY_PREFIX.static::DEFAULT_KEY_NAME);
+    }
+
+    public function setDefaultKey($key)
+    {
+        $this->defaultKey = $key;
+
+        return $this;
+    }
+
     /**
      * Set `errorKey` `elementName` `elementClass` for fields inside hasmany fields.
      *
@@ -353,17 +377,17 @@ class NestedForm extends WidgetForm
 
         $elementName = $elementClass = $errorKey = [];
 
-        $key = $this->key ?: 'new_'.static::DEFAULT_KEY_NAME;
+        $key = $this->key ?? $this->getDefaultKey();
 
         if (is_array($column)) {
             foreach ($column as $k => $name) {
                 $errorKey[$k] = sprintf('%s.%s.%s', $this->relationName, $key, $name);
-                $elementName[$k] = sprintf('%s[%s][%s]', $this->formatName(), $key, $name);
+                $elementName[$k] = Helper::formatElementName($this->formatName().'.'.$key.'.'.$name);
                 $elementClass[$k] = [$this->formatClass(), $this->formatClass($name), $this->formatClass($name, false)];
             }
         } else {
             $errorKey = sprintf('%s.%s.%s', $this->relationName, $key, $column);
-            $elementName = sprintf('%s[%s][%s]', $this->formatName(), $key, $column);
+            $elementName = Helper::formatElementName($this->formatName().'.'.$key.'.'.$column);
             $elementClass = [$this->formatClass(), $this->formatClass($column), $this->formatClass($column, false)];
         }
 

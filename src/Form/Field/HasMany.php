@@ -22,7 +22,17 @@ class HasMany extends Field
      *
      * @var string
      */
-    protected $relationName = '';
+    protected $relationName;
+
+    /**
+     * @var string
+     */
+    protected $parentRelationName;
+
+    /**
+     * @var string|int
+     */
+    protected $parentKey;
 
     /**
      * Relation key name.
@@ -350,6 +360,41 @@ class HasMany extends Field
         );
     }
 
+    public function setParentRelationName($name, $parentKey)
+    {
+        $this->parentRelationName = $name;
+        $this->parentKey = $parentKey;
+
+        return $this;
+    }
+
+    public function getNestedFormColumnName()
+    {
+        if ($this->parentRelationName) {
+            $key = $this->parentKey ?? (NestedForm::DEFAULT_KEY_PREFIX.NestedForm::DEFAULT_PARENT_KEY_NAME);
+
+            return $this->parentRelationName.'.'.$key.'.'.$this->column;
+        }
+
+        return $this->column;
+    }
+
+    protected function getNestedFormDefaultKeyName()
+    {
+        if ($this->parentRelationName) {
+            // hasmany嵌套table时，需要重新设置行的默认key
+            return $this->parentRelationName.'_NKEY_';
+        }
+    }
+
+    protected function setNestedFormDefaultKey(Form\NestedForm $form)
+    {
+        if ($this->parentRelationName) {
+            // hasmany嵌套table时需要特殊处理
+            $form->setDefaultKey(Form\NestedForm::DEFAULT_KEY_PREFIX.$this->getNestedFormDefaultKeyName());
+        }
+    }
+
     /**
      * Build a Nested form.
      *
@@ -358,7 +403,9 @@ class HasMany extends Field
      */
     public function buildNestedForm($key = null)
     {
-        $form = new Form\NestedForm($this->column, $key);
+        $form = new Form\NestedForm($this->getNestedFormColumnName(), $key);
+
+        $this->setNestedFormDefaultKey($form);
 
         $form->setForm($this->form);
 
@@ -576,6 +623,7 @@ class HasMany extends Field
             'options'      => $this->options,
             'count'        => count($this->value()),
             'columnClass'  => $this->columnClass,
+            'parentKey'    => $this->getNestedFormDefaultKeyName(),
         ]);
 
         return parent::render();

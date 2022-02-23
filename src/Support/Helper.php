@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
@@ -968,5 +969,34 @@ class Helper
         }
 
         return array_key_exists($key, $arrayOrObject);
+    }
+
+    /**
+     * 跳转.
+     *
+     * @param  string  $to
+     * @param  int  $statusCode
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     */
+    public static function redirect($to, int $statusCode = 302, $request = null)
+    {
+        $request = $request ?: request();
+
+        if (! URL::isValidUrl($to)) {
+            $to = admin_base_path($to);
+        }
+
+        if ($request->ajax() && ! $request->pjax()) {
+            return response()->json(['redirect' => $to], $statusCode);
+        }
+
+        if ($request->pjax()) {
+            return response("<script>location.href = '{$to}';</script>");
+        }
+
+        $redirectCodes = [201, 301, 302, 303, 307, 308];
+
+        return redirect($to, in_array($statusCode, $redirectCodes, true) ? $statusCode : 302);
     }
 }
