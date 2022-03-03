@@ -88,6 +88,18 @@ class DialogTree extends AbstractDisplayer
 
         return $this;
     }
+    
+    /**
+     * 设置选中的值
+     * @param $value
+     * @return $this
+     */
+    public function check($value)
+    {
+        $this->value = Helper::array($value);
+
+        return $this;
+    }
 
     /**
      * @param  array  $options
