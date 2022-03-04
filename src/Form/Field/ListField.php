@@ -138,7 +138,7 @@ class ListField extends Field
         unset($value['values'][static::DEFAULT_FLAG_NAME]);
 
         if (empty($value['values'])) {
-            return $value ??[];
+            return $value ?? [];
         }
 
         return array_values($value['values']);
