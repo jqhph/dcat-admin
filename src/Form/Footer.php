@@ -201,7 +201,7 @@ class Footer implements Renderable
             $checked = 3;
         }
 
-        if (!$options) {
+        if (! $options) {
             return;
         }
 
