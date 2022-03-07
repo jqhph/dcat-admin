@@ -2,7 +2,7 @@
 
 namespace Dcat\Admin\Form;
 
-use Dcat\Admin\Widgets\Checkbox;
+use Dcat\Admin\Widgets\Radio;
 use Illuminate\Contracts\Support\Renderable;
 
 class Footer implements Renderable
@@ -175,7 +175,7 @@ class Footer implements Renderable
         }
 
         $options = [];
-        $checked = [];
+        $checked = null;
 
         if ($this->checkboxes['continue_editing']) {
             $options[1] = sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.continue_editing'));
@@ -190,22 +190,22 @@ class Footer implements Renderable
         }
 
         if ($this->defaultcheckeds['continue_editing']) {
-            $checked[] = 1;
+            $checked = 1;
         }
 
         if ($this->defaultcheckeds['continue_creating']) {
-            $checked[] = 2;
+            $checked = 2;
         }
 
         if ($this->defaultcheckeds['view']) {
-            $checked[] = 3;
+            $checked = 3;
         }
 
-        if (! $options) {
+        if (!$options) {
             return;
         }
 
-        return (new Checkbox('after-save', $options))->check($checked)->inline()->circle(true);
+        return (new Radio('after-save', $options))->check($checked)->inline()->circle(true);
     }
 
     /**
