@@ -138,7 +138,11 @@ class ListField extends Field
         unset($value['values'][static::DEFAULT_FLAG_NAME]);
 
         if (empty($value['values'])) {
-            return $value ?? [];
+            if (count(explode('.', $this->column())) > 1){
+                return $value;
+            }else{
+                return [];
+            }
         }
 
         return array_values($value['values']);
