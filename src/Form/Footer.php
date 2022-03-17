@@ -175,7 +175,7 @@ class Footer implements Renderable
         }
 
         $options = [];
-        $checked = null;
+        $checked = 0;
 
         if ($this->checkboxes['continue_editing']) {
             $options[1] = sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.continue_editing'));
@@ -187,6 +187,10 @@ class Footer implements Renderable
 
         if ($this->checkboxes['view']) {
             $options[3] = sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.view'));
+        }
+
+        if ($options) {
+            $options = [0 => sprintf('<span class="text-80 text-bold">%s</span>', trans('admin.back'))] + $options;
         }
 
         if ($this->defaultcheckeds['continue_editing']) {
