@@ -34,7 +34,7 @@ class Tab extends Widget
      * @param  string  $title
      * @param  string|Renderable  $content
      * @param  bool  $active
-     * @param string|null $id
+     * @param  string|null  $id
      * @return $this
      */
     public function add($title, $content, $active = false, $id = null)
