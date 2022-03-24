@@ -26,6 +26,7 @@
 - [Demo / 在线演示](http://103.39.211.179:8080/admin)
 - [Demo源码](https://github.com/jqhph/dcat-admin-demo)
 - [Demo源码 (码云)](https://gitee.com/jqhph/dcat-admin-demo)
+- [扩展](#)
 
 
 ![](https://cdn.learnku.com/uploads/images/202101/28/38389/YLmL7PLqH7.png!large)
