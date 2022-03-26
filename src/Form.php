@@ -111,6 +111,13 @@ class Form implements Renderable
     const CURRENT_URL_NAME = '_current_';
 
     /**
+     * Action mode constants
+     */
+    const MODE_STORE = 'store';
+
+    const MODE_UPDATE = 'update';
+
+    /**
      * Available fields.
      *
      * @var array
@@ -277,6 +284,12 @@ class Form implements Renderable
      * @var bool
      */
     public $validationErrorToastr = true;
+
+    /**
+     * Current action mode
+     * @var string
+     */
+    protected $mode = '';
 
     /**
      * Create a new form instance.
@@ -611,6 +624,8 @@ class Form implements Renderable
      */
     public function store(?array $data = null, $redirectTo = null)
     {
+        $this->mode(self::MODE_STORE);
+
         try {
             if ($data) {
                 $this->request->replace($data);
@@ -786,6 +801,8 @@ class Form implements Renderable
         ?array $data = null,
         $redirectTo = null
     ) {
+        $this->mode(self::MODE_UPDATE);
+
         try {
             if ($data) {
                 $this->request->replace($data);
@@ -1819,5 +1836,20 @@ class Form implements Renderable
         admin_error('Error', "Field type [$method] does not exist.");
 
         return new Field\Nullable();
+    }
+
+    /**
+     * Set the current action mode.
+     *
+     * @param  string  $mode
+     * @return void|string
+     */
+    public function mode(string $mode = '')
+    {
+        if (empty($mode)) {
+            return $this->mode;
+        }
+
+        $this->mode = $mode;
     }
 }
