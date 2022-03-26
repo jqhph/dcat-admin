@@ -287,6 +287,7 @@ class Form implements Renderable
 
     /**
      * Current action mode.
+     *
      * @var string
      */
     protected $mode = '';
