@@ -111,7 +111,7 @@ class Form implements Renderable
     const CURRENT_URL_NAME = '_current_';
 
     /**
-     * Action mode constants
+     * Action mode constants.
      */
     const MODE_STORE = 'store';
 
@@ -286,7 +286,7 @@ class Form implements Renderable
     public $validationErrorToastr = true;
 
     /**
-     * Current action mode
+     * Current action mode.
      * @var string
      */
     protected $mode = '';
