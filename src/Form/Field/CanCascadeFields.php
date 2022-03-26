@@ -40,7 +40,7 @@ trait CanCascadeFields
         $this->formatValues($operator, $value);
 
         if (in_array($this->form->mode(), [Form::MODE_STORE, Form::MODE_UPDATE])) {
-            if (!Helper::compare($operator, $this->form->input($this->column()), $value)) {
+            if (! Helper::compare($operator, $this->form->input($this->column()), $value)) {
                 return $this;
             }
         }

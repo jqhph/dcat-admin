@@ -1001,9 +1001,9 @@ class Helper
     }
 
     /**
-     * @param string $operator
-     * @param string|array $value
-     * @param string|array $condition
+     * @param  string $operator
+     * @param  string|array $value
+     * @param  string|array $condition
      * @return bool
      */
     public static function compare($operator, $value, $condition)
@@ -1037,12 +1037,12 @@ class Helper
         };
 
         $notIn = function ($value, $condition) {
-            return !in_array($value, Arr::wrap($condition));
+            return ! in_array($value, Arr::wrap($condition));
         };
 
         $operator = [
             '=' => 'eq', '>' => 'gt', '<' => 'lt', '>=' => 'gte', '<=' => 'lte',
-            '!=' => 'neq', 'in' => 'in', 'notIn' => 'notIn', 'has' => 'in'
+            '!=' => 'neq', 'in' => 'in', 'notIn' => 'notIn', 'has' => 'in',
         ][$operator];
 
         if (is_array($value)) {
