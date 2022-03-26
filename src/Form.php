@@ -1842,7 +1842,6 @@ class Form implements Renderable
      * Set the current action mode.
      *
      * @param  string  $mode
-     *
      * @return void|string
      */
     public function mode(string $mode = '')
