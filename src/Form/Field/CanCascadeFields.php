@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Field;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Form;
+use Dcat\Admin\Support\Helper;
 use Illuminate\Support\Arr;
 
 /**
@@ -39,7 +40,7 @@ trait CanCascadeFields
         $this->formatValues($operator, $value);
 
         if (in_array($this->form->mode(), [Form::MODE_STORE, Form::MODE_UPDATE])) {
-            if ($this->form->input($this->column()) != $value) {
+            if (!Helper::compare($operator, $this->form->input($this->column()), $value)) {
                 return $this;
             }
         }

@@ -999,4 +999,62 @@ class Helper
 
         return redirect($to, in_array($statusCode, $redirectCodes, true) ? $statusCode : 302);
     }
+
+    /**
+     * @param string $operator
+     * @param string|array $value
+     * @param string|array $condition
+     * @return bool
+     */
+    public static function compare($operator, $value, $condition)
+    {
+        $eq = function ($value, $condition) {
+            return $value == $condition;
+        };
+
+        $gt = function ($value, $condition) {
+            return $value > $condition;
+        };
+
+        $lt = function ($value, $condition) {
+            return $value < $condition;
+        };
+
+        $gte = function ($value, $condition) {
+            return $value >= $condition;
+        };
+
+        $lte = function ($value, $condition) {
+            return $value <= $condition;
+        };
+
+        $neq = function ($value, $condition) {
+            return $value != $condition;
+        };
+
+        $in = function ($value, $condition) {
+            return in_array($value, Arr::wrap($condition));
+        };
+
+        $notIn = function ($value, $condition) {
+            return !in_array($value, Arr::wrap($condition));
+        };
+
+        $operator = [
+            '=' => 'eq', '>' => 'gt', '<' => 'lt', '>=' => 'gte', '<=' => 'lte',
+            '!=' => 'neq', 'in' => 'in', 'notIn' => 'notIn', 'has' => 'in'
+        ][$operator];
+
+        if (is_array($value)) {
+            foreach ($value as $item) {
+                if ($$operator($item, $condition)) {
+                    return true;
+                }
+            }
+
+            return false;
+        } else {
+            return (bool) $$operator($value, $condition);
+        }
+    }
 }
