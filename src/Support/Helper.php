@@ -1001,9 +1001,9 @@ class Helper
     }
 
     /**
-     * @param  string $operator
-     * @param  string|array $value
-     * @param  string|array $condition
+     * @param  string  $operator
+     * @param  string|array  $value
+     * @param  string|array  $condition
      * @return bool
      */
     public static function compare($operator, $value, $condition)
