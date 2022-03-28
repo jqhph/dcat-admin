@@ -132,4 +132,23 @@ class Map extends Field
 
         return parent::render();
     }
+
+    /**
+     * Set element class.
+     *
+     * @param  string|array  $class
+     * @param  bool  $normalize
+     * @return $this
+     */
+    public function setElementClass($class, bool $normalize = true)
+    {
+        if ($normalize) {
+            $class = $this->normalizeElementClass($class);
+        }
+        
+        $strClass = array_merge($class["lat"],$class["lng"]);
+        $this->elementClass = $strClass;
+        
+        return $this;
+    }
 }
