@@ -573,6 +573,7 @@ class Admin
     public static function routes()
     {
         $attributes = [
+            'as'       => 'auth.',
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
         ];
