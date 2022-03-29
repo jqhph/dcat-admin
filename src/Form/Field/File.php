@@ -228,7 +228,7 @@ class File extends Field implements UploadFieldInterface
         }
     }
 
-    public function override ( bool $override = true )
+    public function override(bool $override = true)
     {
         $this->options['override'] = $override;
 
