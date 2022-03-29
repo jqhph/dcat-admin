@@ -269,6 +269,10 @@ return [
             'image' => 'images',
             'file'  => 'files',
         ],
+
+        // Overwriting an existing file.
+        'override' => env('ADMIN_UPLOAD_OVERRIDE', false),
+
     ],
 
     /*
