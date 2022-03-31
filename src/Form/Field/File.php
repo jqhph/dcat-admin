@@ -17,7 +17,10 @@ class File extends Field implements UploadFieldInterface
     /**
      * @var array
      */
-    protected $options = ['events' => []];
+    protected $options = [
+        'events' => [],
+        'override' => false,
+    ];
 
     public function __construct($column, $arguments = [])
     {

@@ -98,8 +98,10 @@ trait UploadField
      */
     public function renameIfExists(UploadedFile $file)
     {
-        if ($this->getStorage()->exists("{$this->getDirectory()}/$this->name") && ! ($this->options['override'] ?? false)) {
+        if ($this->getStorage()->exists("{$this->getDirectory()}/$this->name") && ! $this->options['override']) {
             $this->name = $this->generateUniqueName($file);
+        } else {
+            $this->getStorage()->delete("{$this->getDirectory()}/$this->name");
         }
     }
 
