@@ -98,7 +98,7 @@ trait UploadField
      */
     public function renameIfExists(UploadedFile $file)
     {
-        if ($this->getStorage()->exists("{$this->getDirectory()}/$this->name") && ! config('admin.upload.override')) {
+        if ($this->getStorage()->exists("{$this->getDirectory()}/$this->name")) {
             $this->name = $this->generateUniqueName($file);
         }
     }
@@ -194,6 +194,10 @@ trait UploadField
 
         $this->name = $this->getStoreName($file);
 
+        if ($this->options['override']) {
+            $this->remove();
+        }
+
         $this->renameIfExists($file);
 
         $this->prepareFile($file);
@@ -214,6 +218,13 @@ trait UploadField
 
         // 上传失败
         throw new UploadException(trans('admin.uploader.upload_failed'));
+    }
+
+    public function remove()
+    {
+        if ($this->getStorage()->exists("{$this->getDirectory()}/$this->name")) {
+            $this->getStorage()->delete("{$this->getDirectory()}/$this->name");
+        }
     }
 
     /**
