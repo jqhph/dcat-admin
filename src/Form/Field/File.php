@@ -63,12 +63,13 @@ class File extends Field implements UploadFieldInterface
 
         $fileLimit = $this->options['fileNumLimit'] ?? 1;
         if ($fileLimit < count($value)) {
-            $this->form->responseValidationMessages(
-                $this->column,
-                trans('admin.uploader.max_file_limit', ['attribute' => $this->label, 'max' => $fileLimit])
-            );
-
-            return false;
+            $rules = $attributes = [];
+            $attributes[$this->column] = $this->label;
+            $valicationMessages = [
+                'max' => trans('admin.uploader.max_file_limit', ['attribute' => $this->label, 'max' => $fileLimit])
+            ];
+            return Validator::make($input, [$this->column =>'max:'.$fileLimit],
+                $valicationMessages, $attributes);
         }
 
         $rules = $attributes = [];
