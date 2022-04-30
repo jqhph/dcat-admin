@@ -217,11 +217,12 @@ abstract class AbstractExporter implements ExporterInterface
     /**
      * 格式化待导出数据.
      *
-     * @param  array  $data
+     * @param  Collection  $data
      * @return array
      */
     protected function normalize(Collection $data)
     {
+        $data = $data->toArray();
         foreach ($data as &$row) {
             $row = Arr::dot($row);
 
@@ -254,7 +255,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @param  array  $data
+     * @param  Collection  $data
      * @return array
      */
     protected function callBuilder(Collection &$data)
