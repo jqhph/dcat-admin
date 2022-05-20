@@ -162,7 +162,11 @@
             var data = res.data;
             if (res.status === true) {
                 Dcat.success(data.message);
-                $popover.data('display').html(label || '<i class="feather icon-edit-2"></i>');
+                var $display = $popover.data('display');
+                $display.text(label);
+                if (! label) {
+                    $display.html('<i class="feather icon-edit-2"></i>');
+                }
                 $trigger.data('value', val).data('original', val);
                 hide();
                 refresh && Dcat.reload();
