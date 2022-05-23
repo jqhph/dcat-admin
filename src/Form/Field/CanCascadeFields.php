@@ -201,9 +201,13 @@ JS
 
     \$this.on(event, function (e) {
         {$this->getFormFrontValue()}
+        let parent = \$this.closest('.fields-group');
+        if (parent.length === 0){
+            parent = \$this.closest('form');
+        }
 
         cascade_groups.forEach(function (event) {
-            var group = $('div.cascade-group.'+event.class);
+            var group = parent.find('div.cascade-group.'+event.class);
             if (compare(checked, event.value, event.operator)) {
                 group.removeClass('d-none');
             } else {
