@@ -5,6 +5,7 @@ namespace Dcat\Admin\Form\Concerns;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
+use Dcat\Admin\Form\Field\Embeds;
 use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Support\Arr;
@@ -65,7 +66,16 @@ trait HasFiles
      */
     public function findFieldByName(?string $column)
     {
-        return $this->builder->field($column);
+        $columns    = explode('.', $column);
+        $field = $this->builder->field($columns[0]);
+        unset($columns[0]);
+        foreach ($columns as $column) {
+            if ($field instanceof Embeds) {
+                $field = $field->findFieldByName($column);
+            }
+        }
+
+        return $field;
     }
 
     /**
