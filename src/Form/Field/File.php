@@ -247,7 +247,7 @@ class File extends Field implements UploadFieldInterface
     public function setErrorKey($key)
     {
         parent::setErrorKey($key);
-        $this->options['formData']['upload_column']    = $key;
+        $this->options['formData']['upload_column'] = $key;
 
         return $this;
     }
