@@ -66,6 +66,10 @@ trait HasFiles
      */
     public function findFieldByName(?string $column)
     {
+        if ($field = $this->builder->field($column)) {
+            return $field;
+        }
+
         $columns = explode('.', $column);
         $field = $this->builder->field($columns[0]);
         unset($columns[0]);
