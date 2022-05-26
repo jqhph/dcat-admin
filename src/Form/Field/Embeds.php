@@ -278,7 +278,7 @@ class Embeds extends Field
     public function findFieldByName($name)
     {
         return $this->buildEmbeddedForm()->fields()->first(function (Field $field) use ($name) {
-            return $field->column() === $name;
+            return $field->column() == $name;
         });
     }
 }
