@@ -10,6 +10,7 @@ class Number extends Text
         'upClass'   => 'primary shadow-0',
         'downClass' => 'light shadow-0',
         'center'    => true,
+        'disabled'  => false,
     ];
 
     /**
@@ -34,6 +35,21 @@ class Number extends Text
     public function max($value)
     {
         $this->attribute('max', $value);
+
+        return $this;
+    }
+
+    /**
+     * Set increment and decrement button to disabled.
+     *
+     * @param bool $value
+     * @return $this
+     */
+    public function disable(bool $value = true)
+    {
+        parent::disable($value);
+
+        $this->options['disabled'] = $value;
 
         return $this;
     }
