@@ -78,9 +78,6 @@
 
     $(container).on('click', '.{{$columnClass}}-remove', function () {
         var $form = $(this).closest('.has-many-{{ $columnClass }}-form');
-
-        $form.hide();
-        $form.find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
-        $form.find('[required]').prop('required', false);
+        $form.remove();
     });
 </script>

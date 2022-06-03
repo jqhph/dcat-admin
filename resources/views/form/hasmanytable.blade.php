@@ -103,10 +103,7 @@
 
     $(document).off('click', container+' .remove').on('click', container+' .remove', function () {
         var $form = $(this).closest('.has-many-table-{{ $columnClass }}-form');
-
-        $form.hide();
-        $form.find('[required]').prop('required', false);
-        $form.find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
+        $form.remove();
     });
 })();
 </script>
