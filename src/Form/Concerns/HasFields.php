@@ -1,7 +1,15 @@
 <?php
-
+/*
+ * This file is part of the Dcat package.
+ *
+ * (c) Pian Zhou <pianzhou2021@163.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Dcat\Admin\Form\Concerns;
 
+use Dcat\Admin\Contracts\FieldsCollection;
 use Dcat\Admin\Form\Field;
 use Illuminate\Support\Collection;
 
@@ -100,5 +108,25 @@ trait HasFields
     public function setFields(Collection $fields)
     {
         $this->fields   = $fields;
+    }
+
+    /**
+     * Get all merged fields
+     *
+     * @return array
+     */
+    protected function mergedFields()
+    {
+        $fields = [];
+        foreach ($this->fields() as $field) {
+            if ($field instanceof FieldsCollection) {
+                /** @var Field $field */
+                $fields = array_merge($fields, $field->mergedFields());
+            } else {
+                $fields[]   = $field;
+            }
+        }
+
+        return $fields;
     }
 }

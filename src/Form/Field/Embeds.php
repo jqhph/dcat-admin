@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * This file is part of the Dcat Admin package.
+ *
+ * (c) Pian Zhou <pianzhou2021@163.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Dcat\Admin\Form\Field;
 
 use Dcat\Admin\Contracts\FieldsCollection;
@@ -9,7 +16,6 @@ use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\ResolveField;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 /**
  * Class Embeds.
  *
@@ -138,166 +144,28 @@ class Embeds extends Field implements FieldsCollection
             return false;
         }
 
-        //$input = Arr::only($input, $this->column);
-
         $rules = $attributes = $messages = [];
-
         /** @var Field $field */
-        foreach ($this->fields() as $field) {
+        foreach ($this->mergedFields() as $field) {
             if (! $fieldRules = $field->getRules()) {
                 continue;
             }
-
             File::deleteRules($field, $fieldRules);
-
             $column = $field->column();
-
-            /*
-             *
-             * For single column field format rules to:
-             * [
-             *     'extra.name' => 'required'
-             *     'extra.email' => 'required'
-             * ]
-             *
-             * For multiple column field with rules like 'required':
-             * 'extra' => [
-             *     'start' => 'start_at'
-             *     'end'   => 'end_at',
-             * ]
-             *
-             * format rules to:
-             * [
-             *     'extra.start_atstart' => 'required'
-             *     'extra.end_atend' => 'required'
-             * ]
-             */
             if (is_array($column)) {
-                foreach ($column as $key => $name) {
-                    $rules["{$this->column}.$name$key"] = $fieldRules;
-                }
-
-                $this->resetInputKey($input, $column);
+                $rules[current($column)] = $fieldRules;
             } else {
-                $rules["{$this->column}.$column"] = $fieldRules;
+                $rules[$column] = $fieldRules;
             }
 
-            /**
-             * For single column field format attributes to:
-             * [
-             *     'extra.name' => $label
-             *     'extra.email' => $label
-             * ].
-             *
-             * For multiple column field with rules like 'required':
-             * 'extra' => [
-             *     'start' => 'start_at'
-             *     'end'   => 'end_at',
-             * ]
-             *
-             * format rules to:
-             * [
-             *     'extra.start_atstart' => "$label[start_at]"
-             *     'extra.end_atend' => "$label[end_at]"
-             * ]
-             */
-            $attributes = array_merge(
-                $attributes,
-                $this->formatValidationAttribute($input, $field->label(), $column)
-            );
-
-            $messages = array_merge(
-                $messages,
-                $this->formatValidationMessages($input, $field->getValidationMessages())
-            );
+            $attributes[]   = $field->label();
+            $messages[] = $field->getValidationMessages();
         }
-
         if (empty($rules)) {
             return false;
         }
 
         return Validator::make($input, $rules, array_merge($this->getValidationMessages(), $messages), $attributes);
-    }
-
-    /**
-     * Format validation messages.
-     *
-     * @param  array  $input
-     * @param  array  $messages
-     * @return array
-     */
-    protected function formatValidationMessages(array $input, array $messages)
-    {
-        $result = [];
-        foreach ($messages as $k => $message) {
-            $result[$this->column.'.'.$k] = $message;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Format validation attributes.
-     *
-     * @param  array  $input
-     * @param  string  $label
-     * @param  string  $column
-     * @return array
-     */
-    protected function formatValidationAttribute($input, $label, $column)
-    {
-        $new = $attributes = [];
-
-        if (is_array($column)) {
-            foreach ($column as $index => $col) {
-                $new[$col.$index] = $col;
-            }
-        }
-
-        foreach (array_keys(Arr::dot($input)) as $key) {
-            if (is_string($column)) {
-                if (Str::endsWith($key, ".$column")) {
-                    $attributes[$key] = $label;
-                }
-            } else {
-                foreach ($new as $k => $val) {
-                    if (Str::endsWith($key, ".$k")) {
-                        $attributes[$key] = $label."[$val]";
-                    }
-                }
-            }
-        }
-
-        return $attributes;
-    }
-
-    /**
-     * Reset input key for validation.
-     *
-     * @param  array  $input
-     * @param  array  $column  $column is the column name array set
-     * @return void.
-     */
-    public function resetInputKey(array &$input, array $column)
-    {
-        $column = array_flip($column);
-
-        foreach (Arr::get($input, $this->column) as $key => $value) {
-            if (! array_key_exists($key, $column)) {
-                continue;
-            }
-
-            $newKey = $key.$column[$key];
-
-            /*
-             * set new key
-             */
-            Arr::set($input, "{$this->column}.$newKey", $value);
-            /*
-             * forget the old key and value
-             */
-            Arr::forget($input, "{$this->column}.$key");
-        }
     }
 
     /**
