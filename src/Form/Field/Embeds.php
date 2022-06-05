@@ -115,6 +115,21 @@ class Embeds extends Field implements FieldsCollection
     }
 
     /**
+     * Fill data to the field.
+     *
+     * @param  array  $data
+     * @return void
+     */
+    public function fill($data)
+    {
+        parent::fill($data);
+
+        foreach ($this->fields() as $field) {
+            $field->fill($data);
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getValidator(array $input)
