@@ -839,7 +839,7 @@ class Helper
                 $value = htmlentities($value);
             });
         } else {
-            $item = htmlentities($item);
+            $item = $item ? htmlentities($item) : null;
         }
 
         return $item;
