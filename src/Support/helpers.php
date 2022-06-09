@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 
 if (! function_exists('admin_setting')) {
     /**
@@ -591,5 +592,26 @@ if (! function_exists('format_byte')) {
         }
 
         return round($value, $dec).$prefix_arr[$i];
+    }
+}
+
+if (! function_exists('eot_view')) {
+    /**
+     * Get the evaluated view contents for the given EOT view.
+     *
+     * @param  string|null  $view
+     * @param  \Illuminate\Contracts\Support\Arrayable|array  $data
+     * @param  array  $mergeData
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    function eot_view($view = null, $data = [], $mergeData = [])
+    {
+        $factory = app(ViewFactory::class);
+        $factory->addExtension('js','blade');
+        if (func_num_args() === 0) {
+            return $factory;
+        }
+
+        return $factory->make($view, $data, $mergeData)->render();
     }
 }
