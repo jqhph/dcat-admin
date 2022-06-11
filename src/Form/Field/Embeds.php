@@ -136,31 +136,59 @@ class Embeds extends Field implements FieldsCollection
     }
 
     /**
-     * {@inheritdoc}
+     * Prepare for a field value before update or insert.
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    public function prepare($value)
+    {
+        $data = [];
+        foreach ($this->fields() as $field) {
+            if (is_array($field->column())) {
+                foreach ($field->column() as $fieldColumn) {
+                    $column = str_replace($this->column().'.', '', $fieldColumn);
+                    $data[$column]  = $field->prepare(Arr::get($value, $column));
+                }
+            } else {
+                $column = str_replace($this->column().'.', '', $field->column());
+                $data[$column]  = $field->prepare(Arr::get($value, $column));
+            }
+
+        }
+
+        return parent::prepare($data);
+    }
+
+    /**
+     * Get Validator
+     *
+     * @param array $input
+     * @return void
      */
     public function getValidator(array $input)
     {
         if (! Arr::has($input, $this->column)) {
             return false;
         }
-
         $rules = $attributes = $messages = [];
+
         /** @var Field $field */
         foreach ($this->mergedFields() as $field) {
+            if (! $field->getValidator($input)) {
+                continue;
+            }
+
             if (! $fieldRules = $field->getRules()) {
                 continue;
             }
-            File::deleteRules($field, $fieldRules);
-            $column = $field->column();
-            if (is_array($column)) {
-                $rules[current($column)] = $fieldRules;
-            } else {
-                $rules[$column] = $fieldRules;
-            }
 
+            File::deleteRules($field, $fieldRules);
+            $rules[current((array) $field->column())] = $fieldRules;
             $attributes[]   = $field->label();
             $messages[] = $field->getValidationMessages();
         }
+
         if (empty($rules)) {
             return false;
         }
@@ -181,6 +209,28 @@ class Embeds extends Field implements FieldsCollection
     }
 
     /**
+     *
+     *
+     * @param Field $field
+     * @return $this
+     */
+    protected function fixArrayFieldColumn(Field $field)
+    {
+        if (is_array($field->column())) {
+            $columns    = [];
+            $prefix = $this->column() . '.';
+            foreach ($field->column() as $key => $column) {
+                $columns[$key]  = $prefix . str_replace($prefix, '', $column);
+            }
+
+            $field->setColumn($columns);
+        }
+
+        return $this;
+    }
+
+
+    /**
      * Generate a Field object and add to form builder if Field exists.
      *
      * @param  string  $method
@@ -192,7 +242,8 @@ class Embeds extends Field implements FieldsCollection
         if ($className = Form::findFieldClass($method)) {
             $column = Arr::get($arguments, 0, '');
             $element = new $className($this->column() . '.' . $column, array_slice($arguments, 1));
-            $this->pushField($element);
+            $this->fixArrayFieldColumn($element)
+                ->pushField($element);
             return $element;
         }
 

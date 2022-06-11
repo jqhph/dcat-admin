@@ -78,6 +78,8 @@ trait HasFiles
             if ($field instanceof FieldsCollection) {
                 $newColumn  = $newColumn ? $newColumn . '.' . $column : $column;
                 $field = $field->field($newColumn);
+            } else {
+                return null;
             }
         }
 
