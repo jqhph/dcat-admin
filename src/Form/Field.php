@@ -307,7 +307,7 @@ class Field implements Renderable
      * @param  array  $data
      * @return void
      */
-    final public function fill($data)
+    public function fill($data)
     {
         $data = Helper::array($data);
 
@@ -627,6 +627,12 @@ class Field implements Renderable
         return $this;
     }
 
+    public function setColumn($column)
+    {
+        $this->column   = $column;
+        return $this;
+    }
+
     /**
      * Get column of the field.
      *
@@ -850,7 +856,7 @@ class Field implements Renderable
      * @param  mixed  $value
      * @return mixed
      */
-    final public function prepare($value)
+    public function prepare($value)
     {
         $value = $this->prepareInputValue($value);
 

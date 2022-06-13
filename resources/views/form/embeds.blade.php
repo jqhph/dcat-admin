@@ -12,7 +12,7 @@
 
         <div class="embed-{{$column}}-form fields-group">
 
-            @foreach($form->fields() as $field)
+            @foreach($fields as $field)
                 {!! $field->render() !!}
             @endforeach
 
