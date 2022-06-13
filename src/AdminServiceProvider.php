@@ -89,6 +89,10 @@ class AdminServiceProvider extends ServiceProvider
 
     public function register()
     {
+        //check if admin request
+        if (! $this->isAdminRequest()) {
+            return;
+        }
         $this->aliasAdmin();
         $this->loadAdminAuthConfig();
         $this->registerRouteMiddleware();
@@ -104,6 +108,10 @@ class AdminServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        //check if admin request
+        if (! $this->isAdminRequest()) {
+            return;
+        }
         $this->registerDefaultSections();
         $this->registerViews();
         $this->ensureHttps();
@@ -112,6 +120,18 @@ class AdminServiceProvider extends ServiceProvider
         $this->compatibleBlade();
         $this->bootExtensions();
         $this->registerBladeDirective();
+    }
+
+    /**
+     * check if admin request or running in console.
+     *
+     * @author pianzhou2021@163.com
+     * 
+     * @return bool
+     */
+    protected function isAdminRequest()
+    {
+        return app()->runningInConsole() || request()->is(config('admin.route.prefix').'*');
     }
 
     protected function aliasAdmin()
