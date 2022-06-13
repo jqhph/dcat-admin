@@ -16,4 +16,4 @@ cp -f ./.env.testing ./laravel-tests/.env
 cd ./laravel-tests
 php artisan admin:composer-config
 composer require dcat/laravel-admin:*@dev
-composer require laravel/dusk --dev # --ignore-platform-reqs
+composer require laravel/dusk --dev --ignore-platform-reqs
