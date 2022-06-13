@@ -126,7 +126,7 @@ class AdminServiceProvider extends ServiceProvider
      * check if admin request or running in console.
      *
      * @author pianzhou2021@163.com
-     * 
+     *
      * @return bool
      */
     protected function isAdminRequest()
