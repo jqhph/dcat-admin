@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Dcat\Admin\Form\Concerns;
 
 use Dcat\Admin\Contracts\FieldsCollection;
@@ -30,6 +31,7 @@ trait HasFields
         if (! $this->fields) {
             $this->resetFields();
         }
+
         return $this->fields;
     }
 
