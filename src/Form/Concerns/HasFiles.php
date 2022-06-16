@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Concerns;
 
+use Dcat\Admin\Contracts\FieldsCollection;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
@@ -71,11 +72,10 @@ trait HasFiles
         }
 
         $columns = explode('.', $column);
-        $field = $this->builder->field($columns[0]);
-        unset($columns[0]);
+        $field = $this->builder;
         foreach ($columns as $column) {
-            if ($field instanceof Embeds) {
-                $field = $field->findFieldByName($column);
+            if ($field instanceof FieldsCollection) {
+                $field = $field->field($column);
             }
         }
 
