@@ -421,10 +421,10 @@ if (! function_exists('admin_api_route_name')) {
 
 if (! function_exists('admin_extension_path')) {
     /**
-     * @param  string|null  $path
+     * @param  string  $path
      * @return string
      */
-    function admin_extension_path(?string $path = null)
+    function admin_extension_path(string $path = '')
     {
         $dir = rtrim(config('admin.extension.dir'), '/') ?: base_path('dcat-admin-extensions');
 

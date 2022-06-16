@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@b7d1d9c9a92d8d8463ce36d7f60da34d461724f8
         with:
-          php-version: '7.1'
+          php-version: '7.2'
 
       - uses: actions/checkout@v2
 

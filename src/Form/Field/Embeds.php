@@ -268,4 +268,17 @@ class Embeds extends Field
 
         return parent::render();
     }
+
+    /**
+     * 根据字段名称查找字段.
+     *
+     * @param  string  $column
+     * @return Field|null
+     */
+    public function findFieldByName($name)
+    {
+        return $this->buildEmbeddedForm()->fields()->first(function (Field $field) use ($name) {
+            return $field->column() == $name;
+        });
+    }
 }
