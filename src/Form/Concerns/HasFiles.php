@@ -6,7 +6,6 @@ use Dcat\Admin\Contracts\FieldsCollection;
 use Dcat\Admin\Contracts\UploadField as UploadFieldInterface;
 use Dcat\Admin\Form\Builder;
 use Dcat\Admin\Form\Field;
-use Dcat\Admin\Form\Field\Embeds;
 use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Support\WebUploader;
 use Illuminate\Support\Arr;

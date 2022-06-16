@@ -27,7 +27,7 @@ trait HasFields
      */
     public function fields()
     {
-        if (!$this->fields) {
+        if (! $this->fields) {
             $this->resetFields();
         }
         return $this->fields;
@@ -55,7 +55,7 @@ trait HasFields
     }
 
     /**
-     * Remove Field
+     * Remove Field.
      *
      * @param $column
      * @return void
@@ -68,9 +68,9 @@ trait HasFields
     }
 
     /**
-     * Push Field
+     * Push Field.
      *
-     * @param Field $field
+     * @param  Field  $field
      * @return Collection
      */
     public function pushField(Field $field)
@@ -79,7 +79,7 @@ trait HasFields
     }
 
     /**
-     * Reset Fields
+     * Reset Fields.
      *
      * @return void
      */
@@ -89,7 +89,7 @@ trait HasFields
     }
 
     /**
-     * Reject Fields
+     * Reject Fields.
      *
      * @param [type] $reject
      * @return void
@@ -100,18 +100,18 @@ trait HasFields
     }
 
     /**
-     * Set Fields
+     * Set Fields.
      *
-     * @param Collection $fields
+     * @param  Collection  $fields
      * @return void
      */
     public function setFields(Collection $fields)
     {
-        $this->fields   = $fields;
+        $this->fields = $fields;
     }
 
     /**
-     * Get all merged fields
+     * Get all merged fields.
      *
      * @return array
      */
@@ -123,7 +123,7 @@ trait HasFields
                 /** @var Field $field */
                 $fields = array_merge($fields, $field->mergedFields());
             } else {
-                $fields[]   = $field;
+                $fields[] = $field;
             }
         }
 

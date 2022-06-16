@@ -284,7 +284,7 @@ class Embeds extends Field implements FieldsCollection
     }
 
     /**
-     * 获取所有字段
+     * 获取所有字段.
      *
      * @return void
      */
