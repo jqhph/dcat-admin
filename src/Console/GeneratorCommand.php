@@ -3,8 +3,8 @@
 namespace Dcat\Admin\Console;
 
 use Dcat\Admin\Support\Helper;
-use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Console\Command;
+use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
