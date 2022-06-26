@@ -3,6 +3,7 @@
 namespace Dcat\Admin\Http\Controllers;
 
 use Dcat\Admin\Exception\AdminException;
+use Dcat\Admin\Form\Field\Embeds;
 use Dcat\Admin\Form\Field\File;
 use Dcat\Admin\Form\Field\HasMany;
 use Dcat\Admin\Http\JsonResponse;
@@ -65,6 +66,9 @@ class HandleFormController
 
         if ($relationField instanceof HasMany) {
             return $relationField->buildNestedForm()->field($column);
+        }
+        if ($relationField instanceof Embeds) {
+            return $relationField->field($column);
         }
     }
 
