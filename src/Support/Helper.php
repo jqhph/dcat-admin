@@ -836,10 +836,10 @@ class Helper
         }
         if (is_array($item)) {
             array_walk_recursive($item, function (&$value) {
-                $value = htmlentities($value);
+                $value = htmlentities($value ?? '');
             });
         } else {
-            $item = $item ? htmlentities($item) : null;
+            $item = htmlentities($item ?? '');
         }
 
         return $item;
