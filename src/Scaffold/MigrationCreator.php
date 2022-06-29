@@ -88,7 +88,7 @@ class MigrationCreator extends BaseMigrationCreator
             throw new AdminException('Table fields can\'t be empty');
         }
 
-        $rows[] = "\$table->increments('$keyName');\n";
+        $rows[] = "\$table->bigIncrements('$keyName');\n";
 
         foreach ($fields as $field) {
             $column = "\$table->{$field['type']}('{$field['name']}')";
