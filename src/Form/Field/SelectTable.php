@@ -63,7 +63,7 @@ class SelectTable extends Field
     /**
      * Show Max or Min icon.
      *
-     * @param bool $maxmin
+     * @param  bool  $maxmin
      * @return $this
      */
     public function dialogMaxMin(bool $maxmin)
@@ -76,7 +76,7 @@ class SelectTable extends Field
     /**
      * Resize.
      *
-     * @param bool $maxmin
+     * @param  bool  $resize
      * @return $this
      */
     public function dialogResize(bool $resize)
