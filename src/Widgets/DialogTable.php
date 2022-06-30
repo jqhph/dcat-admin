@@ -116,26 +116,28 @@ class DialogTable extends Widget
     }
 
     /**
-     * show max or min
+     * show max or min.
      *
-     * @param bool $maxmin
+     * @param  bool  $maxmin
      * @return $this
      */
     public function maxmin(bool $maxmin)
     {
-        $this->maxmin   = $maxmin;
+        $this->maxmin = $maxmin;
+
         return $this;
     }
 
     /**
-     * Resize setting
+     * resize setting.
      *
      * @param bool $resize
      * @return $this
      */
     public function resize(bool $resize)
     {
-        $this->resize   = $resize;
+        $this->resize = $resize;
+
         return $this;
     }
 
