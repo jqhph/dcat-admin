@@ -36,13 +36,14 @@ class DialogTable extends Widget
     protected $footer;
 
     /**
-     * show max or min
+     * show max or min.
+     *
      * @var bool
      */
     protected $maxmin = true;
 
     /**
-     * resize setting
+     * resize setting.
      *
      * @var bool
      */
@@ -131,7 +132,7 @@ class DialogTable extends Widget
     /**
      * resize setting.
      *
-     * @param bool $resize
+     * @param  bool  $resize
      * @return $this
      */
     public function resize(bool $resize)
