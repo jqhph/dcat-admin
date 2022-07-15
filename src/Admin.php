@@ -245,10 +245,10 @@ class Admin
             $repository = EloquentRepository::make($repository);
         }
 
-        if (! $repository instanceof Repository) {
+        if (!$repository instanceof Repository) {
             $class = is_object($repository) ? get_class($repository) : $repository;
 
-            throw new InvalidArgumentException("The class [{$class}] must be a type of [".Repository::class.'].');
+            throw new InvalidArgumentException("The class [{$class}] must be a type of [" . Repository::class . '].');
         }
 
         return $repository;
@@ -397,7 +397,7 @@ class Admin
      */
     public static function renderContents()
     {
-        if (! static::shouldPrevent()) {
+        if (!static::shouldPrevent()) {
             return;
         }
 
@@ -418,11 +418,11 @@ class Admin
         static::fonts([]);
 
         return $results
-            .static::html()
-            .$asset->jsToHtml()
-            .$asset->cssToHtml()
-            .$asset->scriptToHtml()
-            .$asset->styleToHtml();
+            . static::html()
+            . $asset->jsToHtml()
+            . $asset->cssToHtml()
+            . $asset->scriptToHtml()
+            . $asset->styleToHtml();
     }
 
     /**
@@ -498,7 +498,7 @@ class Admin
 
                 $finalGroup[] = $mid;
 
-                if (! isset($group[$next]) || $group[$next] !== 'admin.permission') {
+                if (!isset($group[$next]) || $group[$next] !== 'admin.permission') {
                     continue;
                 }
 
@@ -540,13 +540,18 @@ class Admin
 
         $pjaxId = static::getPjaxContainerId();
 
-        $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
-        $jsVariables['token'] = csrf_token();
-        $jsVariables['lang'] = __('admin.client') ?: [];
-        $jsVariables['colors'] = static::color()->all();
-        $jsVariables['dark_mode'] = static::isDarkMode();
-        $jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
-        $jsVariables['sidebar_light_style'] = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
+        $lang = __('admin.client') ?: [];
+        if (isset($jsVariables['lang'])) {
+            $lang = array_merge($lang, $jsVariables['lang']);
+        }
+
+        $jsVariables['pjax_container_selector'] = $pjaxId ? ('#' . $pjaxId) : '';
+        $jsVariables['token']                   = csrf_token();
+        $jsVariables['lang']                    = $lang;
+        $jsVariables['colors']                  = static::color()->all();
+        $jsVariables['dark_mode']               = static::isDarkMode();
+        $jsVariables['sidebar_dark']            = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
+        $jsVariables['sidebar_light_style']     = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
 
         return admin_javascript_json($jsVariables);
     }
@@ -595,11 +600,11 @@ class Admin
 
                 $authController = config('admin.auth.controller', AuthController::class);
 
-                $router->get('auth/login', $authController.'@getLogin');
-                $router->post('auth/login', $authController.'@postLogin');
-                $router->get('auth/logout', $authController.'@getLogout');
-                $router->get('auth/setting', $authController.'@getSetting');
-                $router->put('auth/setting', $authController.'@putSetting');
+                $router->get('auth/login', $authController . '@getLogin');
+                $router->post('auth/login', $authController . '@postLogin');
+                $router->get('auth/logout', $authController . '@getLogout');
+                $router->get('auth/setting', $authController . '@getSetting');
+                $router->put('auth/setting', $authController . '@putSetting');
             });
         }
 
@@ -640,7 +645,7 @@ class Admin
      */
     public static function registerHelperRoutes()
     {
-        if (! config('admin.helpers.enable', true) || ! config('app.debug')) {
+        if (!config('admin.helpers.enable', true) || !config('app.debug')) {
             return;
         }
 
