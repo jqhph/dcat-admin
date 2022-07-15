@@ -540,9 +540,14 @@ class Admin
 
         $pjaxId = static::getPjaxContainerId();
 
+        $lang = __('admin.client') ?: [];
+        if (isset($jsVariables['lang'])) {
+            $lang = array_merge($lang, $jsVariables['lang']);
+        }
+
         $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
         $jsVariables['token'] = csrf_token();
-        $jsVariables['lang'] = __('admin.client') ?: [];
+        $jsVariables['lang'] = $lang;
         $jsVariables['colors'] = static::color()->all();
         $jsVariables['dark_mode'] = static::isDarkMode();
         $jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
