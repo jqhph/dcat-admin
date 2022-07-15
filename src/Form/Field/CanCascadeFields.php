@@ -201,9 +201,13 @@ JS
 
     \$this.on(event, function (e) {
         {$this->getFormFrontValue()}
+        let parent = \$this.closest('.fields-group');
+        if (parent.length === 0){
+            parent = \$this.closest('form');
+        }
 
         cascade_groups.forEach(function (event) {
-            var group = $('div.cascade-group.'+event.class);
+            var group = parent.find('div.cascade-group.'+event.class);
             if (compare(checked, event.value, event.operator)) {
                 group.removeClass('d-none');
             } else {
@@ -226,11 +230,11 @@ JS;
                 return 'var checked = $(this).val();';
             case Radio::class:
                 return <<<JS
-var checked = $('{$this->getElementClassSelector()}:checked').val();
+var checked = \$this.closest('.fields-group').find(':checked').val();
 JS;
             case Checkbox::class:
                 return <<<JS
-var checked = $('{$this->getElementClassSelector()}:checked').map(function(){
+var checked = \$this.closest('.fields-group').find(':checked').map(function(){
   return $(this).val();
 }).get();
 JS;

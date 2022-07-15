@@ -64,7 +64,7 @@ class ScaffoldController extends Controller
 
     public function index(Content $content)
     {
-        if (! config('app.debug')) {
+        if (!config('app.debug')) {
             Permission::error();
         }
 
@@ -80,7 +80,7 @@ class ScaffoldController extends Controller
         $action = URL::current();
         $namespaceBase = 'App\\' . implode('\\', array_map(function ($name) {
             return Str::studly($name);
-        }, explode(DIRECTORY_SEPARATOR, Str::replaceFirst(app_path().DIRECTORY_SEPARATOR, "", config('admin.directory')))));
+        }, explode(DIRECTORY_SEPARATOR, Str::replaceFirst(app_path() . DIRECTORY_SEPARATOR, "", config('admin.directory')))));
         $tables = collect($this->getDatabaseColumns())->map(function ($v) {
             return array_keys($v);
         })->toArray();

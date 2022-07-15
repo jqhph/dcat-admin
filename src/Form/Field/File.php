@@ -237,4 +237,18 @@ class File extends Field implements UploadFieldInterface
 
         return $this;
     }
+
+    /**
+     * Set key for error message.
+     *
+     * @param  string|array  $key
+     * @return $this
+     */
+    public function setErrorKey($key)
+    {
+        parent::setErrorKey($key);
+        $this->options['formData']['upload_column'] = $key;
+
+        return $this;
+    }
 }
