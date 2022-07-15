@@ -78,9 +78,9 @@ class ScaffoldController extends Controller
         $dbTypes = static::$dbTypes;
         $dataTypeMap = static::$dataTypeMap;
         $action = URL::current();
-        $namespaceBase = 'App\\'.implode('\\', array_map(function ($name) {
+        $namespaceBase = 'App\\' . implode('\\', array_map(function ($name) {
             return Str::studly($name);
-        }, explode(DIRECTORY_SEPARATOR, ltrim(config('admin.directory'), app_path().DIRECTORY_SEPARATOR))));
+        }, explode(DIRECTORY_SEPARATOR, Str::replaceFirst(app_path().DIRECTORY_SEPARATOR, "", config('admin.directory')))));
         $tables = collect($this->getDatabaseColumns())->map(function ($v) {
             return array_keys($v);
         })->toArray();
@@ -104,7 +104,7 @@ class ScaffoldController extends Controller
 
     public function store(Request $request)
     {
-        if (! config('app.debug')) {
+        if (!config('app.debug')) {
             Permission::error();
         }
 
@@ -137,7 +137,7 @@ class ScaffoldController extends Controller
 
             // 3. Create migration.
             if (in_array('migration', $creates)) {
-                $migrationName = 'create_'.$table.'_table';
+                $migrationName = 'create_' . $table . '_table';
 
                 $paths['migration'] = (new MigrationCreator(app('files')))->buildBluePrint(
                     $request->get('fields'),
@@ -189,7 +189,7 @@ class ScaffoldController extends Controller
     {
         $db = addslashes(\request('db'));
         $table = \request('tb');
-        if (! $table || ! $db) {
+        if (!$table || !$db) {
             return ['status' => 1, 'list' => []];
         }
 
@@ -237,7 +237,7 @@ class ScaffoldController extends Controller
                 $tmp = DB::connection($connectName)->select($sql);
 
                 $collection = collect($tmp)->map(function ($v) use ($value) {
-                    if (! $p = Arr::get($value, 'prefix')) {
+                    if (!$p = Arr::get($value, 'prefix')) {
                         return (array) $v;
                     }
                     $v = (array) $v;
@@ -288,7 +288,7 @@ class ScaffoldController extends Controller
         $messages = [];
 
         foreach ($paths as $name => $path) {
-            $messages[] = ucfirst($name).": $path";
+            $messages[] = ucfirst($name) . ": $path";
         }
 
         $messages[] = "<br />$message";
