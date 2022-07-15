@@ -307,7 +307,7 @@ class Field implements Renderable
      * @param  array  $data
      * @return void
      */
-    final public function fill($data)
+    public function fill($data)
     {
         $data = Helper::array($data);
 

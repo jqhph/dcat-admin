@@ -229,12 +229,12 @@ JS;
             case MultipleSelect::class:
                 return 'var checked = $(this).val();';
             case Radio::class:
-                return <<<JS
-var checked = \$this.closest('.fields-group').find(':checked').val();
+                return <<<'JS'
+var checked = $(this).closest('.form-group').find(':checked').val();
 JS;
             case Checkbox::class:
-                return <<<JS
-var checked = \$this.closest('.fields-group').find(':checked').map(function(){
+                return <<<'JS'
+var checked = $this.closest('.form-group').find(':checked').map(function(){
   return $(this).val();
 }).get();
 JS;

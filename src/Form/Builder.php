@@ -4,24 +4,26 @@ namespace Dcat\Admin\Form;
 
 use Closure;
 use Dcat\Admin\Admin;
+use Dcat\Admin\Contracts\FieldsCollection;
 use Dcat\Admin\Contracts\UploadField;
 use Dcat\Admin\Form;
+use Dcat\Admin\Form\Concerns\HasFields;
 use Dcat\Admin\Form\Field\Hidden;
 use Dcat\Admin\Support\Helper;
 use Dcat\Admin\Traits\HasVariables;
 use Dcat\Admin\Widgets\DialogForm;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 /**
  * Class Builder.
  */
-class Builder
+class Builder implements FieldsCollection
 {
     use HasVariables;
+    use HasFields;
 
     /**
      *  上个页面URL保存的key.
@@ -49,11 +51,6 @@ class Builder
      * @var
      */
     protected $action;
-
-    /**
-     * @var Collection|Field[]
-     */
-    protected $fields;
 
     /**
      * @var array
@@ -144,7 +141,6 @@ class Builder
     public function __construct(Form $form)
     {
         $this->form = $form;
-        $this->fields = new Collection();
         $this->layout = new Layout($form);
         $this->tools = new Tools($this);
         $this->footer = new Footer($this);
@@ -401,48 +397,6 @@ class Builder
     }
 
     /**
-     * Get fields of this builder.
-     *
-     * @return Collection
-     */
-    public function fields()
-    {
-        return $this->fields;
-    }
-
-    /**
-     * Get specify field.
-     *
-     * @param  string|Field  $name
-     * @return Field|null
-     */
-    public function field($name)
-    {
-        return $this->fields->first(function (Field $field) use ($name) {
-            if (is_array($field->column())) {
-                $result = in_array($name, $field->column(), true) || $field->column() === $name ? $field : null;
-
-                if ($result) {
-                    return $result;
-                }
-            }
-
-            return $field === $name || $field->column() === $name;
-        });
-    }
-
-    /**
-     * @param $column
-     * @return void
-     */
-    public function removeField($column)
-    {
-        $this->fields = $this->fields->filter(function (Field $field) use ($column) {
-            return $field->column() != $column;
-        });
-    }
-
-    /**
      * If the parant form has rows.
      *
      * @return bool
@@ -553,13 +507,6 @@ class Builder
         return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
     }
 
-    public function pushField(Field $field)
-    {
-        $this->fields->push($field);
-
-        return $this;
-    }
-
     /**
      * Determine if form fields has files.
      *
@@ -642,7 +589,7 @@ class Builder
     public function close()
     {
         $this->form = null;
-        $this->fields = null;
+        $this->resetFields();
 
         return '</form>';
     }
@@ -654,7 +601,7 @@ class Builder
      */
     protected function removeIgnoreFields()
     {
-        $this->fields = $this->fields()->reject(function (Field $field) {
+        $this->rejectFields(function (Field $field) {
             return $field->hasAttribute(Field::BUILD_IGNORE);
         });
     }
@@ -692,7 +639,7 @@ class Builder
             }
         };
 
-        $this->fields = $this->fields()->reject($reject);
+        $this->rejectFields($reject);
 
         if ($this->form->hasTab()) {
             $this->form->getTab()->getTabs()->transform(function ($item) use ($reject) {
@@ -737,7 +684,7 @@ class Builder
             'width'      => $this->width,
             'elementId'  => $this->getElementId(),
             'showHeader' => $this->showHeader,
-            'fields'     => $this->fields,
+            'fields'     => $this->fields(),
             'rows'       => $this->rows(),
             'layout'     => $this->layout(),
         ];

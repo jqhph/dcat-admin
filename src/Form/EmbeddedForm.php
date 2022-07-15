@@ -281,6 +281,10 @@ class EmbeddedForm
 
         $this->fields->push($field);
 
+        $field->setRelation([
+            'relation' => $this->column,
+        ]);
+
         $this->callResolvingFieldCallbacks($field);
 
         $field::requireAssets();

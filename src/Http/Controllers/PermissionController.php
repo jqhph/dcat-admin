@@ -157,7 +157,7 @@ class PermissionController extends AdminController
 
             if (! Str::contains($uri, '{')) {
                 if ($prefix !== '/') {
-                    $route = Str::replaceFirst($prefix, '', $uri . '*');
+                    $route = Str::replaceFirst($prefix, '', $uri.'*');
                 } else {
                     $route = $uri.'*';
                 }

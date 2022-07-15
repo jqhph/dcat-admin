@@ -61,6 +61,32 @@ class SelectTable extends Field
     }
 
     /**
+     * Show Max or Min icon.
+     *
+     * @param  bool  $maxmin
+     * @return $this
+     */
+    public function dialogMaxMin(bool $maxmin)
+    {
+        $this->dialog->maxmin($maxmin);
+
+        return $this;
+    }
+
+    /**
+     * Resize.
+     *
+     * @param  bool  $resize
+     * @return $this
+     */
+    public function dialogResize(bool $resize)
+    {
+        $this->dialog->resize($resize);
+
+        return $this;
+    }
+
+    /**
      * 设置表格异步渲染实例.
      *
      * @param  LazyRenderable  $renderable
