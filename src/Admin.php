@@ -545,7 +545,7 @@ class Admin
             $lang = array_merge($lang, $jsVariables['lang']);
         }
 
-        $jsVariables['pjax_container_selector'] = $pjaxId ? ('#' . $pjaxId) : '';
+        $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
         $jsVariables['token'] = csrf_token();
         $jsVariables['lang'] = $lang;
         $jsVariables['colors'] = static::color()->all();
