@@ -80,7 +80,7 @@ class ScaffoldController extends Controller
         $action = URL::current();
         $namespaceBase = 'App\\' . implode('\\', array_map(function ($name) {
             return Str::studly($name);
-        }, explode(DIRECTORY_SEPARATOR, Str::replaceFirst(app_path() . DIRECTORY_SEPARATOR, "", config('admin.directory')))));
+        }, explode(DIRECTORY_SEPARATOR, substr(config('admin.directory'), strlen(app_path() . DIRECTORY_SEPARATOR)))));
         $tables = collect($this->getDatabaseColumns())->map(function ($v) {
             return array_keys($v);
         })->toArray();
