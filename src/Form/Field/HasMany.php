@@ -83,6 +83,7 @@ class HasMany extends Field
     protected $options = [
         'allowCreate' => true,
         'allowDelete' => true,
+        'allowMove'   => true,
     ];
 
     protected $columnClass;
@@ -533,6 +534,18 @@ class HasMany extends Field
     public function disableDelete()
     {
         $this->options['allowDelete'] = false;
+
+        return $this;
+    }
+
+    /**
+     * Disable move button.
+     *
+     * @return $this
+     */
+    public function disableMove()
+    {
+        $this->options['allowMove'] = false;
 
         return $this;
     }

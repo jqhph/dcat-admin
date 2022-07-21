@@ -1,4 +1,15 @@
 
+<style>
+    .has-many-{{$columnClass}}-forms .has-many-{{$columnClass}}-form:last-child .{{$columnClass}}-down {
+        display: none;
+    }
+
+    .has-many-{{$columnClass}}-forms .has-many-{{$columnClass}}-form:first-child .{{$columnClass}}-up {
+        display: none;
+    }
+
+</style>
+
 <div class="row" style="margin-top: 10px;">
     <div class="{{$viewClass['label']}}"><h4 class="pull-right">{!! $label !!}</h4></div>
     <div class="{{$viewClass['field']}}"></div>
@@ -16,11 +27,17 @@
 
                 {!! $form->render() !!}
 
-                @if($options['allowDelete'])
+                @if($options['allowDelete'] || $options['allowMove'])
                     <div class="form-group row">
                         <label class="{{$viewClass['label']}} control-label"></label>
                         <div class="{{$viewClass['field']}}">
-                            <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                            @if($options['allowMove'])
+                                <div class="{{$columnClass}}-up btn btn-success btn-sm mr-1"><i class="fa fa-arrow-up">&nbsp;</i>{{ trans('admin.move_up') }}</div>
+                                <div class="{{$columnClass}}-down btn btn-info btn-sm"><i class="fa fa-arrow-down">&nbsp;</i>{{ trans('admin.move_down') }}</div>
+                            @endif
+                            @if($options['allowDelete'])
+                                <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right"><i class="feather icon-trash">&nbsp;</i>{{ trans('admin.remove') }}</div>
+                            @endif
                         </div>
                     </div>
                 @endif
@@ -36,12 +53,20 @@
 
             {!! $template !!}
 
-            <div class="form-group row">
-                <label class="{{$viewClass['label']}} control-label"></label>
-                <div class="{{$viewClass['field']}}">
-                    <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right"><i class="feather icon-trash"></i>&nbsp;{{ trans('admin.remove') }}</div>
+            @if($options['allowDelete'] || $options['allowMove'])
+                <div class="form-group row">
+                    <label class="{{$viewClass['label']}} control-label"></label>
+                    <div class="{{$viewClass['field']}}">
+                        @if($options['allowMove'])
+                            <div class="{{$columnClass}}-up btn btn-success btn-sm mr-1"><i class="fa fa-arrow-up"></i>&nbsp;{{ trans('admin.move_up') }}</div>
+                            <div class="{{$columnClass}}-down btn btn-info btn-sm"><i class="fa fa-arrow-down"></i>&nbsp;{{ trans('admin.move_down') }}</div>
+                        @endif
+                        @if($options['allowDelete'])
+                            <div class="{{$columnClass}}-remove btn btn-white btn-sm pull-right"><i class="feather icon-trash"></i>&nbsp;{{ trans('admin.remove') }}</div>
+                        @endif
+                    </div>
                 </div>
-            </div>
+            @endif
             <hr>
         </div>
     </template>
@@ -83,4 +108,30 @@
         $form.find('.{{ Dcat\Admin\Form\NestedForm::REMOVE_FLAG_CLASS }}').val(1);
         $form.find('[required]').prop('required', false);
     });
+
+    // move up
+    $(container).on('click', '.{{$columnClass}}-up', function () {
+        var $form = $(this).closest('.has-many-{{ $columnClass }}-form');
+        if ($form.prev().length === 0) {
+            return;
+        }
+
+        exchange($form.prev(), $form);
+    });
+
+    // move down
+    $(container).on('click', '.{{$columnClass}}-down', function () {
+        var $form = $(this).closest('.has-many-{{ $columnClass }}-form');
+        if ($form.next().length === 0) {
+            return;
+        }
+
+        exchange($form, $form.next());
+    });
+
+    var exchange = function (a, b) {
+        var n = a.next(), p = b.prev();
+        b.insertBefore(p);
+        a.insertAfter(n);
+    };
 </script>

@@ -63,6 +63,8 @@ return [
     'create'                => '創建',
     'delete'                => '刪除',
     'remove'                => '移除',
+    'move_up'               => '上移',
+    'move_down'             => '下移',
     'edit'                  => '編輯',
     'quick_edit'            => '快速編輯',
     'continue_editing'      => '繼續編輯',
