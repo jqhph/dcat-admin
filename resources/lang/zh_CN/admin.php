@@ -15,7 +15,7 @@ return [
         'create_model'      => '创建模型',
         'create_repository' => '创建数据仓库',
         'create_controller' => '创建控制器',
-        'run_migrate'       => '创建数据表',
+        'run_migrate'       => '执行迁移文件',
         'create_lang'       => '创建翻译文件',
         'field'             => '字段',
         'translation'       => '翻译',
