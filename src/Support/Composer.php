@@ -34,8 +34,7 @@ class Composer
     {
         $loaders = spl_autoload_functions();
         foreach ($loaders as $loader) {
-            if (is_array($loaders) && $loader[0] instanceof ClassLoader)
-            {
+            if (is_array($loaders) && $loader[0] instanceof ClassLoader) {
                 return $loader[0];
             }
         }
