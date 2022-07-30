@@ -24,10 +24,23 @@ class Composer
     public static function loader()
     {
         if (! static::$loader) {
-            static::$loader = include base_path().'/vendor/autoload.php';
+            static::$loader = self::getLoader();
         }
 
         return static::$loader;
+    }
+
+    private static function getLoader()
+    {
+        $loaders = spl_autoload_functions();
+        foreach ($loaders as $loader)
+        {
+            if (is_array($loaders) && $loader[0] instanceof ClassLoader)
+            {
+                return $loader[0];
+            }
+        }
+        throw new \RuntimeException('Class Loader Not Found');
     }
 
     /**
