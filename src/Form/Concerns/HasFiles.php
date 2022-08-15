@@ -160,7 +160,7 @@ trait HasFiles
                 return $relation->buildNestedForm()->fields()->first(function ($field) use ($column) {
                     return $field->column() === $column;
                 });
-            } else if ($relation instanceof Field\Embeds) {
+            } elseif ($relation instanceof Field\Embeds) {
                 return $relation->field($column);
             }
         }
