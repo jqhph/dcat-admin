@@ -155,8 +155,8 @@ trait HasFiles
     public function getFieldByRelationName($relation, $column)
     {
         $relation = $this->findFieldByName($relation);
-        if($relation) {
-            if($relation instanceof Field\HasMany) {
+        if ($relation) {
+            if ($relation instanceof Field\HasMany) {
                 return $relation->buildNestedForm()->fields()->first(function ($field) use ($column) {
                     return $field->column() === $column;
                 });
