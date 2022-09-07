@@ -64,18 +64,19 @@ class File extends Field implements UploadFieldInterface
         $value = Arr::get($input, $this->column);
         $value = array_filter(is_array($value) ? $value : explode(',', $value));
 
-        $fileLimit = $this->options['fileNumLimit'] ?? 1;
-        if ($fileLimit < count($value)) {
-            $this->form->responseValidationMessages(
-                $this->column,
-                trans('admin.uploader.max_file_limit', ['attribute' => $this->label, 'max' => $fileLimit])
-            );
-
-            return false;
-        }
-
         $rules = $attributes = [];
         $requiredIf = null;
+
+        $fileLimit = $this->options['fileNumLimit'] ?? 1;
+        if (!empty($value) && $fileLimit > 1){
+            $rules[$this->column][] = function($atribute,$value,$fail)use($fileLimit){
+                $value = array_filter(is_array($value) ? $value : explode(',', $value));
+                if (count($value) > $fileLimit ) {
+                    $fail(trans('admin.uploader.max_file_limit', ['attribute' => $this->label, 'max' => $fileLimit]));
+                }
+            };
+            return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);
+        }
 
         if (! $this->hasRule('required') && ! $requiredIf = $this->getRule('required_if*')) {
             return false;
