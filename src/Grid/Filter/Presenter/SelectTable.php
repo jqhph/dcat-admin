@@ -34,7 +34,7 @@ class SelectTable extends Presenter
     public function __construct(LazyRenderable $table)
     {
         $this->dialog = DialogTable::make($table);
-        $this->id     = 'select-table-filter-'.Str::random(8);
+        $this->id = 'select-table-filter-'.Str::random(8);
     }
 
     /**
@@ -79,7 +79,7 @@ class SelectTable extends Presenter
     public function pluck(?string $visibleColumn, ?string $key = 'id')
     {
         $this->visibleColumn = $visibleColumn;
-        $this->key           = $key;
+        $this->key = $key;
 
         return $this;
     }

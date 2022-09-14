@@ -58,7 +58,7 @@ trait HasTree
     public function enableTree(bool $showAll, bool $sortable, $defaultParentId = null)
     {
         $this->showAllChildrenNodes = $showAll;
-        $this->defaultParentId      = $defaultParentId;
+        $this->defaultParentId = $defaultParentId;
 
         $this->grid()->listen(Fetching::class, function () use ($sortable) {
             $this->sortTree($sortable);

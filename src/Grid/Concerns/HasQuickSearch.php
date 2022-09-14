@@ -202,7 +202,7 @@ trait HasQuickSearch
     {
         $columnMap = $this->columns->mapWithKeys(function (Column $column) {
             $label = $column->getLabel();
-            $name  = $column->getName();
+            $name = $column->getName();
 
             return [$label => $name, $name => $name];
         });
@@ -213,11 +213,11 @@ trait HasQuickSearch
                 return;
             }
 
-            $or                   = false;
+            $or = false;
             [$column, $condition] = $segments;
 
             if (Str::startsWith($column, '|')) {
-                $or     = true;
+                $or = true;
                 $column = substr($column, 1);
             }
 
@@ -242,7 +242,7 @@ trait HasQuickSearch
     protected function addWhereLikeBinding($query, ?string $column, ?bool $or, ?string $pattern)
     {
         $likeOperator = 'like';
-        $method       = $or ? 'orWhere' : 'where';
+        $method = $or ? 'orWhere' : 'where';
 
         Helper::withQueryCondition($query, $column, $method, [$likeOperator, $pattern]);
     }
@@ -282,7 +282,7 @@ trait HasQuickSearch
             }
         }
 
-        $where  = $or ? 'orWhere' : 'where';
+        $where = $or ? 'orWhere' : 'where';
         $method = $where.($not ? 'NotIn' : 'In');
 
         Helper::withQueryCondition($query, $column, $method, [$values]);
@@ -315,11 +315,11 @@ trait HasQuickSearch
      */
     protected function addWhereBasicBinding($query, ?string $column, ?bool $or, ?string $operator, ?string $value)
     {
-        $method   = $or ? 'orWhere' : 'where';
+        $method = $or ? 'orWhere' : 'where';
         $operator = $operator ?: '=';
         if ($operator == '%') {
             $operator = 'like';
-            $value    = "%{$value}%";
+            $value = "%{$value}%";
         }
 
         if ($value === 'NULL') {

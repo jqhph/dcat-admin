@@ -238,7 +238,7 @@ trait CanHidesColumns
 
     protected function makeColumnSelectorStorage()
     {
-        $store  = config('admin.grid.column_selector.store') ?: Grid\ColumnSelector\SessionStore::class;
+        $store = config('admin.grid.column_selector.store') ?: Grid\ColumnSelector\SessionStore::class;
         $params = (array) config('admin.grid.column_selector.store_params') ?: [];
 
         $storage = app($store, $params);

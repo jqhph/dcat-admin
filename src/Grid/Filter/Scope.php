@@ -45,8 +45,8 @@ class Scope implements Renderable
     public function __construct(Filter $filter, $key, $label = '')
     {
         $this->filter = $filter;
-        $this->key    = $key;
-        $this->label  = $label ?: admin_trans_field($key);
+        $this->key = $key;
+        $this->label = $label ?: admin_trans_field($key);
 
         $this->queries = new Collection();
     }
