@@ -37,7 +37,7 @@ class Table extends Widget
     public function __construct($headers = [], $rows = false, $style = [])
     {
         if ($rows === false) {
-            $rows = $headers;
+            $rows    = $headers;
             $headers = [];
         }
 

@@ -66,9 +66,9 @@ class FixColumns
         $this->head = $head;
         $this->tail = $tail;
 
-        $this->left = Collection::make();
-        $this->right = Collection::make();
-        $this->complexLeft = Collection::make();
+        $this->left         = Collection::make();
+        $this->right        = Collection::make();
+        $this->complexLeft  = Collection::make();
         $this->complexRight = Collection::make();
     }
 
@@ -128,7 +128,7 @@ class FixColumns
         if ($this->head > 0) {
             if ($complexHeaders) {
                 $this->complexLeft = $complexHeaders->slice(0, $this->head);
-                $this->left = $this->formatColumns($this->complexLeft);
+                $this->left        = $this->formatColumns($this->complexLeft);
             } else {
                 $this->left = $this->grid->getVisibleColumns()->slice(0, $this->head);
             }
@@ -137,7 +137,7 @@ class FixColumns
         if ($this->tail < 0) {
             if ($complexHeaders) {
                 $this->complexRight = $complexHeaders->slice($this->tail);
-                $this->right = $this->formatColumns($this->complexRight);
+                $this->right        = $this->formatColumns($this->complexRight);
             } else {
                 $this->right = $this->grid->getVisibleColumns()->slice($this->tail);
             }

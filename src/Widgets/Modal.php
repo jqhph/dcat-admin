@@ -51,6 +51,7 @@ class Modal extends Widget
      * @var string
      */
     protected $scrollable = '';
+
     /**
      * @var array
      */
@@ -198,8 +199,7 @@ class Modal extends Widget
     public function content($content)
     {
         if ($content instanceof LazyGrid) {
-            $content = $table =
-                LazyTable::make()
+            $content = $table = LazyTable::make()
                 ->from($content)
                 ->simple()
                 ->load(false);

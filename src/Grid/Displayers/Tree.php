@@ -17,7 +17,7 @@ class Tree extends AbstractDisplayer
         $model = $this->grid->model();
 
         // 是否显示下一页按钮
-        $pageName = $model->getChildrenPageName(':key');
+        $pageName     = $model->getChildrenPageName(':key');
         $showNextPage = $model->showAllChildrenNodes() ? 'false' : 'true';
 
         $script = <<<JS
@@ -39,10 +39,10 @@ JS;
     {
         $this->setupScript();
 
-        $key = $this->getKey();
+        $key     = $this->getKey();
         $tableId = $this->grid->getTableId();
 
-        $depth = $this->grid->model()->getDepthFromRequest();
+        $depth   = $this->grid->model()->getDepthFromRequest();
         $indents = str_repeat(' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ', $depth);
 
         return <<<EOT
@@ -58,8 +58,7 @@ EOT;
 
         $showNextPage = $this->grid->allowPagination();
         if (! $model->showAllChildrenNodes() && $showNextPage) {
-            $showNextPage =
-                $model->getCurrentChildrenPage() < $model->paginator()->lastPage()
+            $showNextPage = $model->getCurrentChildrenPage() < $model->paginator()->lastPage()
                 && $model->buildData()->count() == $model->getPerPage();
         }
 

@@ -47,7 +47,7 @@ class ControllerCreator
     public function create($model)
     {
         $path = $this->getPath($this->name);
-        $dir = dirname($path);
+        $dir  = dirname($path);
 
         if (! is_dir($dir)) {
             $this->files->makeDirectory($dir, 0755, true);

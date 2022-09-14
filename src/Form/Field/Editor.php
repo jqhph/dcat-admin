@@ -33,9 +33,9 @@ class Editor extends Field
             'undo redo | preview fullscreen | styleselect | fontsizeselect bold italic underline strikethrough forecolor backcolor | link image media blockquote removeformat codesample',
             'alignleft aligncenter alignright  alignjustify| indent outdent bullist numlist table subscript superscript | code',
         ],
-        'min_height' => 400,
+        'min_height'           => 400,
         'save_enablewhendirty' => true,
-        'convert_urls' => false,
+        'convert_urls'         => false,
     ];
 
     protected $disk;

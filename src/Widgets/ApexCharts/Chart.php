@@ -29,7 +29,7 @@ class Chart extends Widget
     public function __construct($selector = null, $options = [])
     {
         if ($selector && ! is_string($selector)) {
-            $options = $selector;
+            $options  = $selector;
             $selector = null;
         }
 

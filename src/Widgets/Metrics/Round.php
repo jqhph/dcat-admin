@@ -80,22 +80,22 @@ class Round extends RadialBar
             ],
             'plotOptions' => [
                 'radialBar' => [
-                    'size' => 90,
+                    'size'   => 90,
                     'hollow' => [
                         'size' => '20%',
                     ],
                     'track' => [
                         'strokeWidth' => '100%',
-                        'margin' => 13,
+                        'margin'      => 13,
                     ],
                     'dataLabels' => [
                         'name' => [
                             'fontSize' => '14px',
-                            'offsetY' => -2,
+                            'offsetY'  => -2,
                         ],
                         'value' => [
                             'fontSize' => '12px',
-                            'offsetY' => 4,
+                            'offsetY'  => 4,
                         ],
                         'total' => [
                             'show' => true,

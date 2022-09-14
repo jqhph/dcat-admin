@@ -102,7 +102,9 @@ class Form implements Renderable
     }
 
     const REQUEST_NAME = '_form_';
+
     const CURRENT_URL_NAME = '_current_';
+
     const LAZY_PAYLOAD_NAME = '_payload_';
 
     /**
@@ -285,7 +287,7 @@ class Form implements Renderable
      */
     public function confirm(?string $title = null, ?string $content = null)
     {
-        $this->confirm['title'] = $title;
+        $this->confirm['title']   = $title;
         $this->confirm['content'] = $content;
 
         return $this;
@@ -882,7 +884,7 @@ HTML;
     protected function addAjaxScript()
     {
         $confirm = admin_javascript_json($this->confirm);
-        $toastr = $this->validationErrorToastr ? 'true' : 'false';
+        $toastr  = $this->validationErrorToastr ? 'true' : 'false';
 
         Admin::script(
             <<<JS

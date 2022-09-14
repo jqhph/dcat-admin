@@ -531,12 +531,12 @@ JS;
 
         $this->addScript();
 
-        $this->variables['icon'] = $this->icon;
-        $this->variables['title'] = $this->title;
+        $this->variables['icon']     = $this->icon;
+        $this->variables['title']    = $this->title;
         $this->variables['subTitle'] = $this->subTitle;
-        $this->variables['style'] = $this->style;
-        $this->variables['header'] = $this->renderHeader();
-        $this->variables['content'] = $this->renderContent();
+        $this->variables['style']    = $this->style;
+        $this->variables['header']   = $this->renderHeader();
+        $this->variables['content']  = $this->renderContent();
         $this->variables['dropdown'] = $this->dropdown;
 
         return parent::render();
@@ -553,8 +553,8 @@ JS;
 
         return array_merge(
             [
-                'status' => 1,
-                'header' => $this->renderHeader(),
+                'status'  => 1,
+                'header'  => $this->renderHeader(),
                 'content' => $this->renderContent(),
             ],
             (array) optional($this->chart)->valueResult()

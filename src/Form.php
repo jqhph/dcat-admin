@@ -100,8 +100,8 @@ class Form implements Renderable
     use Concerns\HasRows;
     use Concerns\HasTabs;
     use Macroable {
-            __call as macroCall;
-        }
+        __call as macroCall;
+    }
 
     /**
      * Remove flag in `has many` form.
@@ -287,10 +287,10 @@ class Form implements Renderable
      */
     public function __construct($repository = null, ?Closure $callback = null, Request $request = null)
     {
-        $this->repository = $repository ? Admin::repository($repository) : null;
-        $this->callback = $callback;
-        $this->request = $request ?: request();
-        $this->builder = new Builder($this);
+        $this->repository    = $repository ? Admin::repository($repository) : null;
+        $this->callback      = $callback;
+        $this->request       = $request ?: request();
+        $this->builder       = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
         $this->model(new Fluent());
@@ -462,7 +462,7 @@ class Form implements Renderable
      * @param  \Closure  $closure
      * @return $this;
      */
-    public function wrap(\Closure $closure)
+    public function wrap(Closure $closure)
     {
         $this->builder->wrap($closure);
 
@@ -572,7 +572,7 @@ class Form implements Renderable
                 return $this->sendResponse($response);
             }
 
-            $status = $result ? true : false;
+            $status  = $result ? true : false;
             $message = $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed');
         } catch (\Throwable $exception) {
             $response = $this->handleException($exception);
@@ -581,7 +581,7 @@ class Form implements Renderable
                 return $response;
             }
 
-            $status = false;
+            $status  = false;
             $message = $exception->getMessage() ?: trans('admin.delete_failed');
         }
 
@@ -973,7 +973,7 @@ class Form implements Renderable
     protected function handleEditable(array $input = [])
     {
         if (array_key_exists('_editable', $input)) {
-            $name = $input['name'];
+            $name  = $input['name'];
             $value = $input['value'];
 
             Arr::forget($input, ['pk', 'value', 'name']);
@@ -1031,6 +1031,7 @@ class Form implements Renderable
         foreach ($inserts as $column => $value) {
             if (is_null($field = $this->field($column))) {
                 unset($inserts[$column]);
+
                 continue;
             }
 
@@ -1657,7 +1658,7 @@ class Form implements Renderable
      * @param  Closure  $callback
      * @return $this
      */
-    public function block(int $width, \Closure $callback)
+    public function block(int $width, Closure $callback)
     {
         $this
             ->builder
@@ -1672,7 +1673,7 @@ class Form implements Renderable
      * @param  Closure  $callback
      * @return $this
      */
-    public function column($width, \Closure $callback)
+    public function column($width, Closure $callback)
     {
         $this->builder->layout()->onlyColumn($width, function () use ($callback) {
             $callback($this);
@@ -1695,7 +1696,7 @@ class Form implements Renderable
      * @param  Closure  $callback
      * @return bool|void
      */
-    public function inDialog(\Closure $callback = null)
+    public function inDialog(Closure $callback = null)
     {
         if (! $callback) {
             return DialogForm::is();

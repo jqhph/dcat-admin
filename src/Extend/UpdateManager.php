@@ -26,7 +26,7 @@ class UpdateManager
 
     public function __construct(Manager $manager)
     {
-        $this->manager = $manager;
+        $this->manager        = $manager;
         $this->versionManager = $manager->versionManager();
     }
 
@@ -109,7 +109,7 @@ class UpdateManager
 
     protected function versionUpdate($extension, $stopOnVersion)
     {
-        $this->versionManager->notes = [];
+        $this->versionManager->notes  = [];
         $this->versionManager->output = $this->output;
 
         if ($this->versionManager->update($extension, $stopOnVersion) !== false) {

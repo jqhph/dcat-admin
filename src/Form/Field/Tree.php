@@ -21,10 +21,10 @@ class Tree extends Field
         ],
         'checkbox' => [
             'keep_selected_style' => false,
-            'three_state' => true,
+            'three_state'         => true,
         ],
         'types' => [
-            'default'  => [
+            'default' => [
                 'icon' => false,
             ],
         ],
@@ -147,8 +147,8 @@ class Tree extends Field
             return;
         }
 
-        $idColumn = $this->columnNames['id'];
-        $textColumn = $this->columnNames['text'];
+        $idColumn     = $this->columnNames['id'];
+        $textColumn   = $this->columnNames['text'];
         $parentColumn = $this->columnNames['parent'];
 
         $parentIds = $nodes = [];

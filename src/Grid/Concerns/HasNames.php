@@ -24,7 +24,7 @@ trait HasNames
      */
     public function setName($name)
     {
-        $this->_name = $name;
+        $this->_name   = $name;
         $this->tableId = $this->makeName($this->tableId);
 
         return $this;

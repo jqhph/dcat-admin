@@ -260,12 +260,12 @@ return [
         'menu_model' => Dcat\Admin\Models\Menu::class,
 
         // Pivot table for table above.
-        'role_users_table'       => 'admin_role_users',
-        'role_permissions_table' => 'admin_role_permissions',
-        'role_menu_table'        => 'admin_role_menu',
-        'permission_menu_table'  => 'admin_permission_menu',
-        'settings_table'         => 'admin_settings',
-        'extensions_table'       => 'admin_extensions',
+        'role_users_table'          => 'admin_role_users',
+        'role_permissions_table'    => 'admin_role_permissions',
+        'role_menu_table'           => 'admin_role_menu',
+        'permission_menu_table'     => 'admin_permission_menu',
+        'settings_table'            => 'admin_settings',
+        'extensions_table'          => 'admin_extensions',
         'extension_histories_table' => 'admin_extension_histories',
     ],
 

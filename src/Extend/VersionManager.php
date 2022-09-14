@@ -20,12 +20,17 @@ class VersionManager
     const NO_VERSION_VALUE = 0;
 
     const HISTORY_TYPE_COMMENT = 1;
+
     const HISTORY_TYPE_SCRIPT = 2;
 
     protected $fileVersions;
+
     protected $databaseVersions;
+
     protected $databaseHistory;
+
     protected $updater;
+
     protected $manager;
 
     public function __construct(Manager $manager)
@@ -42,7 +47,7 @@ class VersionManager
             return false;
         }
 
-        $currentVersion = $this->getLatestFileVersion($name);
+        $currentVersion  = $this->getLatestFileVersion($name);
         $databaseVersion = $this->getDatabaseVersion($name);
 
         if ($currentVersion === $databaseVersion) {
@@ -111,7 +116,7 @@ class VersionManager
         $extensionHistory = $this->getDatabaseHistory($name);
         $extensionHistory = array_reverse($extensionHistory);
 
-        $stopOnNextVersion = false;
+        $stopOnNextVersion   = false;
         $newExtensionVersion = null;
 
         try {
@@ -252,8 +257,7 @@ class VersionManager
         }
 
         if (! isset($this->databaseVersions[$name])) {
-            $this->databaseVersions[$name] =
-                Extension::query()
+            $this->databaseVersions[$name] = Extension::query()
                 ->where('name', $name)
                 ->value('version');
         }

@@ -67,7 +67,7 @@ class Image extends File
         }
 
         $this->options['accept']['mimeTypes'] = 'image/*';
-        $this->options['isImage'] = true;
+        $this->options['isImage']             = true;
     }
 
     /**

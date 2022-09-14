@@ -125,7 +125,7 @@ class Between extends Filter
             'locale'           => config('app.locale'),
             'allowInputToggle' => true,
             'format'           => $this->dateFormat,
-            'extraFormats' => ['DD-MM-YYYY', 'DD/MM/YYYY', 'DD.MM.YYYY', 'DD,MM,YYYY'],
+            'extraFormats'     => ['DD-MM-YYYY', 'DD/MM/YYYY', 'DD.MM.YYYY', 'DD,MM,YYYY'],
         ];
 
         $options = json_encode($options);
@@ -164,7 +164,7 @@ JS;
 
         $this->addScript();
 
-        $value = $this->value(['start' => '', 'end' => '']);
+        $value  = $this->value(['start' => '', 'end' => '']);
         $active = empty(array_filter($value)) ? '' : 'active';
 
         return <<<EOT

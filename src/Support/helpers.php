@@ -583,8 +583,8 @@ if (! function_exists('format_byte')) {
     function format_byte($input, $dec = 0)
     {
         $prefix_arr = ['B', 'KB', 'MB', 'GB', 'TB'];
-        $value = round($input, $dec);
-        $i = 0;
+        $value      = round($input, $dec);
+        $i          = 0;
         while ($value > 1024) {
             $value /= 1024;
             $i++;

@@ -76,10 +76,8 @@ class Dump extends Widget
     protected function convertJsonToArray($content)
     {
         if (
-            is_string($content) &&
-            (
-                (mb_strpos($content, '{') === 0 && mb_strpos($content, '}', -1) !== false) ||
-                (mb_strpos($content, '[') === 0 && mb_strpos($content, ']', -1) !== false)
+            is_string($content) && (
+                (mb_strpos($content, '{') === 0 && mb_strpos($content, '}', -1) !== false) || (mb_strpos($content, '[') === 0 && mb_strpos($content, ']', -1) !== false)
             )
         ) {
             return json_decode($content, true);

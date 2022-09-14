@@ -242,13 +242,13 @@ class EmbeddedForm
 
         if (is_array($jsonKey)) {
             foreach ($jsonKey as $index => $name) {
-                $elementName[$index] = $this->formatName("{$this->column}.{$name}");
-                $errorKey[$index] = "{$this->column}.$name";
+                $elementName[$index]  = $this->formatName("{$this->column}.{$name}");
+                $errorKey[$index]     = "{$this->column}.$name";
                 $elementClass[$index] = $this->formatClass("{$this->column}_$name");
             }
         } else {
-            $elementName = $this->formatName("{$this->column}.$jsonKey");
-            $errorKey = "{$this->column}.$jsonKey";
+            $elementName  = $this->formatName("{$this->column}.$jsonKey");
+            $errorKey     = "{$this->column}.$jsonKey";
             $elementClass = $this->formatClass("{$this->column}_$jsonKey");
         }
 

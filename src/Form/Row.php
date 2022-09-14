@@ -112,7 +112,7 @@ class Row implements Renderable
     public function __construct(\Closure $callback, $form)
     {
         $this->callback = $callback;
-        $this->fields = collect();
+        $this->fields   = collect();
 
         $this->form = $form;
 

@@ -200,11 +200,11 @@ class IdeHelperCommand extends Command
     public function generate(string $type, Collection $fields)
     {
         $methods = $properties = [];
-        $space = str_repeat(' ', 5);
+        $space   = str_repeat(' ', 5);
 
         $fields->each(function ($name) use ($type, &$methods, &$properties, $space) {
             $properties[] = $space.sprintf($this->templates[$type]['property'], $name);
-            $methods[] = $space.sprintf($this->templates[$type]['method'], $name);
+            $methods[]    = $space.sprintf($this->templates[$type]['method'], $name);
         });
 
         return trim(implode("\r\n", array_merge($properties, [$space.'*'], $methods)));

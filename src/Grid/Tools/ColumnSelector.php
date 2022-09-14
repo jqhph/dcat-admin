@@ -42,7 +42,7 @@ class ColumnSelector extends AbstractTool
     public function render()
     {
         $show = $this->getVisibleColumnNames();
-        $all = $this->getGridColumns();
+        $all  = $this->getGridColumns();
 
         $visibleColumnNames = $this->grid->getVisibleColumnsFromQuery();
 

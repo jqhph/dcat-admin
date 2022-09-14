@@ -39,14 +39,14 @@ class Admin
 
         // 往body标签内部输入内容
         'BODY_INNER_BEFORE' => 'ADMIN_BODY_INNER_BEFORE',
-        'BODY_INNER_AFTER' => 'ADMIN_BODY_INNER_AFTER',
+        'BODY_INNER_AFTER'  => 'ADMIN_BODY_INNER_AFTER',
 
         // 往#app内部输入内容
         'APP_INNER_BEFORE' => 'ADMIN_APP_INNER_BEFORE',
-        'APP_INNER_AFTER' => 'ADMIN_APP_INNER_AFTER',
+        'APP_INNER_AFTER'  => 'ADMIN_APP_INNER_AFTER',
 
         // 顶部导航栏用户面板
-        'NAVBAR_USER_PANEL' => 'ADMIN_NAVBAR_USER_PANEL',
+        'NAVBAR_USER_PANEL'       => 'ADMIN_NAVBAR_USER_PANEL',
         'NAVBAR_AFTER_USER_PANEL' => 'ADMIN_NAVBAR_AFTER_USER_PANEL',
         // 顶部导航栏之前
         'NAVBAR_BEFORE' => 'ADMIN_NAVBAR_BEFORE',
@@ -541,12 +541,12 @@ class Admin
         $pjaxId = static::getPjaxContainerId();
 
         $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
-        $jsVariables['token'] = csrf_token();
-        $jsVariables['lang'] = ($lang = __('admin.client')) ? array_merge($lang, $jsVariables['lang'] ?? []) : [];
-        $jsVariables['colors'] = static::color()->all();
-        $jsVariables['dark_mode'] = static::isDarkMode();
-        $jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
-        $jsVariables['sidebar_light_style'] = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
+        $jsVariables['token']                   = csrf_token();
+        $jsVariables['lang']                    = ($lang = __('admin.client')) ? array_merge($lang, $jsVariables['lang'] ?? []) : [];
+        $jsVariables['colors']                  = static::color()->all();
+        $jsVariables['dark_mode']               = static::isDarkMode();
+        $jsVariables['sidebar_dark']            = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
+        $jsVariables['sidebar_light_style']     = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
 
         return admin_javascript_json($jsVariables);
     }

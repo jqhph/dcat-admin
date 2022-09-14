@@ -76,6 +76,7 @@ class Filter implements Renderable
     use HasVariables;
 
     const MODE_RIGHT_SIDE = 'right-side';
+
     const MODE_PANEL = 'panel';
 
     /**

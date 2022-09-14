@@ -75,7 +75,7 @@ class Asset
             'js' => '@admin/dcat/plugins/bootstrap-validator/validator.min.js',
         ],
         '@select2' => [
-            'js'  => [
+            'js' => [
                 '@admin/dcat/plugins/select/select2.full.min.js',
                 '@admin/dcat/plugins/select/i18n/{lang}.js',
             ],
@@ -164,11 +164,11 @@ class Asset
             'js' => '@admin/dcat/plugins/charts/apexcharts.min.js',
         ],
         '@fontawesome-iconpicker' => [
-            'js' => '@admin/dcat/plugins/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js',
+            'js'  => '@admin/dcat/plugins/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js',
             'css' => '@admin/dcat/plugins/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css',
         ],
         '@color' => [
-            'js' => '@admin/dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
+            'js'  => '@admin/dcat/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js',
             'css' => '@admin/dcat/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css',
         ],
         '@qrcode' => [
@@ -231,11 +231,11 @@ class Asset
      * @var array
      */
     public $baseCss = [
-        'adminlte'    => '@adminlte',
-        'vendors'     => '@vendors',
-        'toastr'      => '@toastr',
-        'datatables'  => '@datatables',
-        'dcat'        => '@dcat',
+        'adminlte'   => '@adminlte',
+        'vendors'    => '@vendors',
+        'toastr'     => '@toastr',
+        'datatables' => '@datatables',
+        'dcat'       => '@dcat',
     ];
 
     /**
@@ -339,7 +339,7 @@ class Asset
         $params += $query;
 
         return [
-            'js' => $this->normalizeAliasPaths($assets['js'] ?? [], $params) ?: null,
+            'js'  => $this->normalizeAliasPaths($assets['js'] ?? [], $params) ?: null,
             'css' => $this->normalizeAliasPaths($assets['css'] ?? [], $params) ?: null,
         ];
     }
@@ -749,7 +749,7 @@ class Asset
      */
     public function scriptToHtml()
     {
-        $script = implode(";\n", array_unique($this->script));
+        $script       = implode(";\n", array_unique($this->script));
         $directScript = implode(";\n", array_unique($this->directScript));
 
         return <<<HTML

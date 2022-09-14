@@ -36,9 +36,9 @@ class ComplexHeader extends Widget
 
     public function __construct(Grid $grid, ?string $column, array $columnNames, ?string $label = null)
     {
-        $this->grid = $grid;
-        $this->column = $column;
-        $this->label = $label ?: admin_trans_field($column);
+        $this->grid        = $grid;
+        $this->column      = $column;
+        $this->label       = $label ?: admin_trans_field($column);
         $this->columnNames = collect($columnNames);
 
         $this->addDefaultAttributes();

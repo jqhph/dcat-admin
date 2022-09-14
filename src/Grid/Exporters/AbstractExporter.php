@@ -168,7 +168,7 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function setGrid(Grid $grid)
     {
-        $this->grid = $grid;
+        $this->grid   = $grid;
         $this->parent = $grid->exporter();
 
         return $this;
@@ -195,7 +195,7 @@ abstract class AbstractExporter implements ExporterInterface
 
         // current page
         if ($this->scope === Grid\Exporter::SCOPE_CURRENT_PAGE) {
-            $page = $model->getCurrentPage();
+            $page    = $model->getCurrentPage();
             $perPage = $model->getPerPage();
         }
 
@@ -283,9 +283,9 @@ abstract class AbstractExporter implements ExporterInterface
      */
     public function withScope($scope)
     {
-        $data = explode(':', $scope);
+        $data  = explode(':', $scope);
         $scope = $data[0] ?? '';
-        $args = $data[1] ?? '';
+        $args  = $data[1] ?? '';
 
         $this->scope = $scope;
 

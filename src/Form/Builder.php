@@ -34,7 +34,9 @@ class Builder implements FieldsCollection
      * Modes constants.
      */
     const MODE_EDIT = 'edit';
+
     const MODE_CREATE = 'create';
+
     const MODE_DELETE = 'delete';
 
     /**
@@ -140,9 +142,9 @@ class Builder implements FieldsCollection
      */
     public function __construct(Form $form)
     {
-        $this->form = $form;
+        $this->form   = $form;
         $this->layout = new Layout($form);
-        $this->tools = new Tools($this);
+        $this->tools  = new Tools($this);
         $this->footer = new Footer($this);
     }
 
@@ -205,7 +207,7 @@ class Builder implements FieldsCollection
      */
     public function confirm(?string $title = null, ?string $content = null)
     {
-        $this->confirm['title'] = $title;
+        $this->confirm['title']   = $title;
         $this->confirm['content'] = $content;
 
         return $this;
@@ -562,12 +564,12 @@ class Builder implements FieldsCollection
 
         $this->addRedirectUrlField();
 
-        $attributes['id'] = $this->getElementId();
-        $attributes['action'] = $this->action();
-        $attributes['method'] = Arr::get($options, 'method', 'post');
+        $attributes['id']             = $this->getElementId();
+        $attributes['action']         = $this->action();
+        $attributes['method']         = Arr::get($options, 'method', 'post');
         $attributes['accept-charset'] = 'UTF-8';
-        $attributes['data-toggle'] = 'validator';
-        $attributes['class'] = Arr::get($options, 'class');
+        $attributes['data-toggle']    = 'validator';
+        $attributes['class']          = Arr::get($options, 'class');
 
         if ($this->hasFile()) {
             $attributes['enctype'] = 'multipart/form-data';
@@ -749,7 +751,7 @@ class Builder implements FieldsCollection
     protected function addSubmitScript()
     {
         $confirm = admin_javascript_json($this->confirm);
-        $toastr = $this->form->validationErrorToastr ? 'true' : 'false';
+        $toastr  = $this->form->validationErrorToastr ? 'true' : 'false';
 
         Admin::script(
             <<<JS

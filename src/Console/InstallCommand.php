@@ -105,7 +105,7 @@ class InstallCommand extends Command
     public function createHomeController()
     {
         $homeController = $this->directory.'/Controllers/HomeController.php';
-        $contents = $this->getStub('HomeController');
+        $contents       = $this->getStub('HomeController');
 
         $this->laravel['files']->put(
             $homeController,
@@ -126,7 +126,7 @@ class InstallCommand extends Command
     public function createAuthController()
     {
         $authController = $this->directory.'/Controllers/AuthController.php';
-        $contents = $this->getStub('AuthController');
+        $contents       = $this->getStub('AuthController');
 
         $this->laravel['files']->put(
             $authController,

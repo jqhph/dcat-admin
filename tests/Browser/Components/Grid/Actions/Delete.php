@@ -38,9 +38,9 @@ class Delete extends Component
     public function elements()
     {
         return [
-            '@item' => 'a[data-action="delete"]:visible',
+            '@item'    => 'a[data-action="delete"]:visible',
             '@confirm' => '.swal2-confirm',
-            '@cancel' => '.swal2-cancel',
+            '@cancel'  => '.swal2-cancel',
         ];
     }
 

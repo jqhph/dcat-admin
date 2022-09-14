@@ -7,10 +7,15 @@ use Illuminate\Contracts\Support\Renderable;
 class Alert extends Widget
 {
     protected $view = 'admin::widgets.alert';
+
     protected $title;
+
     protected $content;
+
     protected $style;
+
     protected $icon;
+
     protected $showCloseBtn = false;
 
     public function __construct($content = '', $title = null, $style = 'danger')

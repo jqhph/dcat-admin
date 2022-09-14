@@ -29,8 +29,8 @@ class UserController extends AdminController
                 $grid->column('roles')->pluck('name')->label('primary', 3);
 
                 $permissionModel = config('admin.database.permissions_model');
-                $roleModel = config('admin.database.roles_model');
-                $nodes = (new $permissionModel())->allNodes();
+                $roleModel       = config('admin.database.roles_model');
+                $nodes           = (new $permissionModel())->allNodes();
                 $grid->column('permissions')
                     ->if(function () {
                         return ! $this->roles->isEmpty();
@@ -88,9 +88,9 @@ class UserController extends AdminController
                     $roles = $this->roles->toArray();
 
                     $permissionModel = config('admin.database.permissions_model');
-                    $roleModel = config('admin.database.roles_model');
+                    $roleModel       = config('admin.database.roles_model');
                     $permissionModel = new $permissionModel();
-                    $nodes = $permissionModel->allNodes();
+                    $nodes           = $permissionModel->allNodes();
 
                     $tree = Tree::make($nodes);
 

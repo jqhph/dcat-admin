@@ -28,9 +28,9 @@ class ExportSeedCommand extends Command
      */
     public function handle()
     {
-        $name = $this->argument('classname');
+        $name         = $this->argument('classname');
         $exceptFields = [];
-        $exportUsers = $this->option('users');
+        $exportUsers  = $this->option('users');
 
         $namespace = version_compare(app()->version(), '8.0.0', '<') ? 'seeds' : 'seeders';
 
@@ -39,7 +39,7 @@ class ExportSeedCommand extends Command
 
         $replaces = [
             'DummyNamespace' => ucwords($namespace),
-            'DummyClass' => $name,
+            'DummyClass'     => $name,
 
             'ClassMenu'             => $this->getTableName('admin.database.menu_model'),
             'ClassPermission'       => $this->getTableName('admin.database.permissions_model'),
@@ -66,10 +66,10 @@ class ExportSeedCommand extends Command
 
         if ($exportUsers) {
             $replaces = array_merge($replaces, [
-                'ClassUsers'            => $this->getTableName('admin.database.users_model'),
-                'TableRoleUsers'        => config('admin.database.role_users_table'),
-                'ArrayUsers'            => $this->getTableDataArrayAsString(config('admin.database.users_table'), $exceptFields),
-                'ArrayPivotRoleUsers'   => $this->getTableDataArrayAsString(config('admin.database.role_users_table'), $exceptFields),
+                'ClassUsers'          => $this->getTableName('admin.database.users_model'),
+                'TableRoleUsers'      => config('admin.database.role_users_table'),
+                'ArrayUsers'          => $this->getTableDataArrayAsString(config('admin.database.users_table'), $exceptFields),
+                'ArrayPivotRoleUsers' => $this->getTableDataArrayAsString(config('admin.database.role_users_table'), $exceptFields),
             ]);
         } else {
             $contents = preg_replace('/\/\/ users tables[\s\S]*?(?=\/\/ finish)/mu', '', $contents);
@@ -128,7 +128,6 @@ class ExportSeedCommand extends Command
     protected function varExport($var, $indent = '')
     {
         switch (gettype($var)) {
-
             case 'string':
                 return '"'.addcslashes($var, "\\\$\"\r\n\t\v\f").'"';
 

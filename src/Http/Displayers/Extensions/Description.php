@@ -12,10 +12,10 @@ class Description extends AbstractDisplayer
     public function display()
     {
         return Admin::view('admin::grid.displayer.extensions.description', [
-            'value' => $this->value,
-            'row'   => $this->row,
+            'value'         => $this->value,
+            'row'           => $this->row,
             'settingAction' => $this->resolveSettingForm(),
-            'updateAction' => $this->resolveAction(Update::class),
+            'updateAction'  => $this->resolveAction(Update::class),
         ]);
     }
 

@@ -219,8 +219,8 @@ class Menu
     protected function checkPermission($item)
     {
         $permissionIds = $item['permission_id'] ?? null;
-        $roles = array_column(Helper::array($item['roles'] ?? []), 'slug');
-        $permissions = array_column(Helper::array($item['permissions'] ?? []), 'slug');
+        $roles         = array_column(Helper::array($item['roles'] ?? []), 'slug');
+        $permissions   = array_column(Helper::array($item['permissions'] ?? []), 'slug');
 
         if (! $permissionIds && ! $roles && ! $permissions) {
             return true;

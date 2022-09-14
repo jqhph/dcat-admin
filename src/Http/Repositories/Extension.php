@@ -29,23 +29,23 @@ class Extension extends Repository
     {
         $property = $extension->composerProperty;
 
-        $name = $extension->getName();
+        $name    = $extension->getName();
         $current = $extension->getVersion();
-        $latest = $extension->getLocalLatestVersion();
+        $latest  = $extension->getLocalLatestVersion();
 
         return [
-            'id'           => $name,
-            'alias'        => $extension->getAlias(),
-            'logo'         => $extension->getLogoBase64(),
-            'name'         => $name,
-            'version'      => $current,
-            'type'         => $extension->getType(),
-            'description'  => $property->description,
-            'authors'      => $property->authors,
-            'homepage'     => $property->homepage,
-            'enabled'      => $extension->enabled(),
-            'new_version'  => $latest === $current || ! $current ? '' : $latest,
-            'extension'    => $extension,
+            'id'          => $name,
+            'alias'       => $extension->getAlias(),
+            'logo'        => $extension->getLogoBase64(),
+            'name'        => $name,
+            'version'     => $current,
+            'type'        => $extension->getType(),
+            'description' => $property->description,
+            'authors'     => $property->authors,
+            'homepage'    => $property->homepage,
+            'enabled'     => $extension->enabled(),
+            'new_version' => $latest === $current || ! $current ? '' : $latest,
+            'extension'   => $extension,
         ];
     }
 

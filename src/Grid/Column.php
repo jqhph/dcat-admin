@@ -64,6 +64,7 @@ class Column
     }
 
     const SELECT_COLUMN_NAME = '__row_selector__';
+
     const ACTION_COLUMN_NAME = '__actions__';
 
     /**
@@ -300,7 +301,7 @@ class Column
      * @param  \Closure  $condition
      * @return Column\Condition
      */
-    public function if(\Closure $condition = null)
+    public function if(Closure $condition = null)
     {
         $condition = $condition ?: function ($column) {
             return $column->getValue();
@@ -504,21 +505,22 @@ class Column
 
             if (! $callback instanceof \Closure) {
                 $value = $callback;
+
                 continue;
             }
 
             $previous = $value;
 
             $callback = $this->bindOriginalRowModel($callback);
-            $value = $callback($value, $this, ...$params);
+            $value    = $callback($value, $this, ...$params);
 
             if (
                 $value instanceof static
                 && ($last = array_pop($this->displayCallbacks))
             ) {
                 [$last, $params] = $last;
-                $last = $this->bindOriginalRowModel($last);
-                $value = call_user_func($last, $previous, $this, ...$params);
+                $last            = $this->bindOriginalRowModel($last);
+                $value           = call_user_func($last, $previous, $this, ...$params);
             }
         }
 
@@ -693,7 +695,7 @@ class Column
         }
 
         if (is_subclass_of($abstract, AbstractDisplayer::class)) {
-            $grid = $this->grid;
+            $grid   = $this->grid;
             $column = $this;
 
             return $this->display(function ($value) use ($abstract, $grid, $column, $arguments) {

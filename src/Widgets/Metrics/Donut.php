@@ -40,7 +40,7 @@ class Donut extends Card
 
         return [
             'chart' => [
-                'type' => 'donut',
+                'type'    => 'donut',
                 'toolbar' => [
                     'show' => false,
                 ],

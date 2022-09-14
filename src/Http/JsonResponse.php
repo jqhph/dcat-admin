@@ -34,10 +34,15 @@ use Illuminate\Validation\ValidationException;
 class JsonResponse implements Arrayable
 {
     protected $status = true;
+
     protected $statusCode = 200;
+
     protected $exception;
+
     protected $data = [];
+
     protected $html;
+
     protected $options = [];
 
     public function __construct(array $data = [])

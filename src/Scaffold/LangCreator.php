@@ -34,7 +34,7 @@ class LangCreator
 
         $content = [
             'labels' => [
-                $controller => $title,
+                $controller               => $title,
                 Helper::slug($controller) => $title,
             ],
             'fields'  => [],

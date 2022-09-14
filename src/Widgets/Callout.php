@@ -7,9 +7,13 @@ use Illuminate\Contracts\Support\Renderable;
 class Callout extends Widget
 {
     protected $view = 'admin::widgets.alert';
+
     protected $title;
+
     protected $content;
+
     protected $style = 'default';
+
     protected $showCloseBtn = false;
 
     public function __construct($content = '', ?string $title = null, ?string $style = null)

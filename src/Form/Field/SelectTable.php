@@ -109,7 +109,7 @@ class SelectTable extends Field
     public function pluck(?string $visibleColumn, ?string $key = 'id')
     {
         $this->visibleColumn = $visibleColumn;
-        $this->key = $key;
+        $this->key           = $key;
 
         return $this;
     }

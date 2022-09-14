@@ -15,7 +15,7 @@ class ExtensionUpdateCommand extends Command
 
     public function handle()
     {
-        $name = $this->argument('name');
+        $name    = $this->argument('name');
         $version = ltrim($this->option('ver'), 'v');
 
         Admin::extension()->load();

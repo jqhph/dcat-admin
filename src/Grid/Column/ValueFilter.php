@@ -19,7 +19,7 @@ class ValueFilter
 
     public function __construct(Filter $filter, $valueKey)
     {
-        $this->filter = $filter;
+        $this->filter   = $filter;
         $this->valueKey = $valueKey;
 
         $this->addStyle();
@@ -82,7 +82,7 @@ class ValueFilter
 
         $url = request()->fullUrlWithQuery([
             $this->getQueryName() => $this->originalValue(),
-            $pageName          => null,
+            $pageName             => null,
         ]);
 
         return "<a class='value-filter' href='{$url}'>{$this->wrap($value)}</a> &nbsp;<a href='#' style='opacity:0;' class='feather icon-search'></a>";

@@ -45,8 +45,8 @@ class Scope implements Renderable
     public function __construct(Filter $filter, $key, $label = '')
     {
         $this->filter = $filter;
-        $this->key = $key;
-        $this->label = $label ?: admin_trans_field($key);
+        $this->key    = $key;
+        $this->label  = $label ?: admin_trans_field($key);
 
         $this->queries = new Collection();
     }
@@ -79,7 +79,7 @@ class Scope implements Renderable
     public function render()
     {
         $url = request()->fullUrlWithQuery([
-            $this->filter->getScopeQueryName() => $this->key,
+            $this->filter->getScopeQueryName()            => $this->key,
             $this->filter->grid()->model()->getPageName() => null,
         ]);
 

@@ -24,7 +24,7 @@ class Column
      */
     public function __construct($width = 12)
     {
-        $this->width = $width;
+        $this->width   = $width;
         $this->filters = new Collection();
     }
 

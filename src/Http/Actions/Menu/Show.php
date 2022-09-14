@@ -11,7 +11,7 @@ class Show extends RowAction
         $key = $this->getKey();
 
         $menuModel = config('admin.database.menu_model');
-        $menu = $menuModel::find($key);
+        $menu      = $menuModel::find($key);
 
         $menu->update(['show' => $menu->show ? 0 : 1]);
 

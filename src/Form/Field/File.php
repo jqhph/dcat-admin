@@ -18,7 +18,7 @@ class File extends Field implements UploadFieldInterface
      * @var array
      */
     protected $options = [
-        'events' => [],
+        'events'   => [],
         'override' => false,
     ];
 
@@ -64,17 +64,18 @@ class File extends Field implements UploadFieldInterface
         $value = Arr::get($input, $this->column);
         $value = array_filter(is_array($value) ? $value : explode(',', $value));
 
-        $rules = $attributes = [];
+        $rules      = $attributes = [];
         $requiredIf = null;
 
         $fileLimit = $this->options['fileNumLimit'] ?? 1;
-        if (!empty($value) && $fileLimit > 1){
-            $rules[$this->column][] = function($atribute,$value,$fail)use($fileLimit){
+        if (! empty($value) && $fileLimit > 1) {
+            $rules[$this->column][] = function ($atribute, $value, $fail) use ($fileLimit) {
                 $value = array_filter(is_array($value) ? $value : explode(',', $value));
-                if (count($value) > $fileLimit ) {
+                if (count($value) > $fileLimit) {
                     $fail(trans('admin.uploader.max_file_limit', ['attribute' => $this->label, 'max' => $fileLimit]));
                 }
             };
+
             return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);
         }
 
@@ -82,7 +83,7 @@ class File extends Field implements UploadFieldInterface
             return false;
         }
 
-        $rules[$this->column] = $requiredIf ?: 'required';
+        $rules[$this->column]      = $requiredIf ?: 'required';
         $attributes[$this->column] = $this->label;
 
         return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);

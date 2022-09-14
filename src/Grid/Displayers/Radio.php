@@ -14,7 +14,7 @@ class Radio extends Editable
     {
         $options['options'] = $options;
         $options['refresh'] = $refresh;
-        $options['radio'] = $this->renderRadio($options['options']);
+        $options['radio']   = $this->renderRadio($options['options']);
 
         return parent::display($options);
     }

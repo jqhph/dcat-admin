@@ -182,9 +182,9 @@ class Color
         // 背景色
         'dark-mode-bg' => '#2c2c43',
         // 深色
-        'dark-mode-color' => '#222233',
+        'dark-mode-color'  => '#222233',
         'dark-mode-color2' => '#1e1e2d',
-        'dark-mode-font' => '##a8a9bb',
+        'dark-mode-font'   => '##a8a9bb',
     ];
 
     /**

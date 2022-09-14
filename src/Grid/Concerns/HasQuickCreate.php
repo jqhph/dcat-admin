@@ -16,7 +16,7 @@ trait HasQuickCreate
      * @param  Closure  $callback
      * @return $this
      */
-    public function quickCreate(\Closure $callback)
+    public function quickCreate(Closure $callback)
     {
         $this->quickCreate = new QuickCreate($this);
 

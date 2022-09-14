@@ -217,12 +217,12 @@ trait WebUploader
         $key = optional($this->form)->getKey();
 
         $defaultOptions = [
-            'name'                => WebUploaderHelper::FILE_NAME,
-            'fileVal'             => WebUploaderHelper::FILE_NAME,
-            'isImage'             => false,
-            'removable'           => false,
-            'chunked'             => false,
-            'fileNumLimit'        => 10,
+            'name'         => WebUploaderHelper::FILE_NAME,
+            'fileVal'      => WebUploaderHelper::FILE_NAME,
+            'isImage'      => false,
+            'removable'    => false,
+            'chunked'      => false,
+            'fileNumLimit' => 10,
             // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。
             'disableGlobalDnd'    => true,
             'fileSizeLimit'       => 20971520000, // 20000M
@@ -231,7 +231,7 @@ trait WebUploader
             'lang'                => trans('admin.uploader'),
             'compress'            => false,
             'accept'              => [],
-            'deleteData' => [
+            'deleteData'          => [
                 static::FILE_DELETE_FLAG => '',
                 'primary_key'            => $key,
             ],
@@ -267,7 +267,7 @@ trait WebUploader
             && $this->form->builder()
             && $this->form->builder()->isEditing()
         ) {
-            $this->options['formData']['_method'] = 'PUT';
+            $this->options['formData']['_method']   = 'PUT';
             $this->options['deleteData']['_method'] = 'PUT';
             if (! isset($this->options['autoUpdateColumn'])) {
                 $this->options['autoUpdateColumn'] = true;

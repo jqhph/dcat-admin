@@ -368,7 +368,7 @@ trait HasFieldValidator
 
             $input = $this->sanitizeInput($input, $this->column);
 
-            $rules[$this->column] = $fieldRules;
+            $rules[$this->column]      = $fieldRules;
             $attributes[$this->column] = $this->label;
         }
 
@@ -379,7 +379,7 @@ trait HasFieldValidator
                 }
                 $k = $column.$key;
                 Arr::set($input, $k, Arr::get($input, $column));
-                $rules[$k] = $fieldRules;
+                $rules[$k]      = $fieldRules;
                 $attributes[$k] = "{$this->label}[$column]";
             }
         }
@@ -422,6 +422,7 @@ trait HasFieldValidator
         foreach ($messages as $k => $v) {
             if (Str::contains($k, '.')) {
                 $result[$k] = $v;
+
                 continue;
             }
 
@@ -429,6 +430,7 @@ trait HasFieldValidator
                 $k = $this->column.'.'.$k;
 
                 $result[$k] = $v;
+
                 continue;
             }
 

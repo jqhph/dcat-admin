@@ -8,9 +8,13 @@ use Illuminate\Contracts\Support\Renderable;
 class Box extends Widget
 {
     protected $view = 'admin::widgets.box';
+
     protected $title = 'Box header';
+
     protected $content = 'here is the box content.';
+
     protected $tools = [];
+
     protected $padding;
 
     public function __construct($title = '', $content = '')
@@ -75,8 +79,7 @@ class Box extends Widget
      */
     public function collapsable()
     {
-        $this->tools[] =
-            '<button class="border-0 bg-white" data-action="collapse"><i class="feather icon-minus"></i></button>';
+        $this->tools[] = '<button class="border-0 bg-white" data-action="collapse"><i class="feather icon-minus"></i></button>';
 
         return $this;
     }
@@ -88,8 +91,7 @@ class Box extends Widget
      */
     public function removable()
     {
-        $this->tools[] =
-            '<button class="border-0 bg-white" data-action="remove"><i class="feather icon-x"></i></button>';
+        $this->tools[] = '<button class="border-0 bg-white" data-action="remove"><i class="feather icon-x"></i></button>';
 
         return $this;
     }

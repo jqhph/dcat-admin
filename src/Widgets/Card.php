@@ -10,18 +10,24 @@ use Illuminate\Support\Str;
 class Card extends Widget
 {
     protected $view = 'admin::widgets.card';
+
     protected $title;
+
     protected $content;
+
     protected $footer;
+
     protected $tools = [];
+
     protected $divider = false;
+
     protected $padding;
 
     public function __construct($title = '', $content = null)
     {
         if ($content === null) {
             $content = $title;
-            $title = '';
+            $title   = '';
         }
 
         $this->title($title);

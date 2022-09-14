@@ -178,16 +178,16 @@ return [
         'paginator_class' => Dcat\Admin\Grid\Tools\Paginator::class,
 
         'actions' => [
-            'view' => Dcat\Admin\Grid\Actions\Show::class,
-            'edit' => Dcat\Admin\Grid\Actions\Edit::class,
-            'quick_edit' => Dcat\Admin\Grid\Actions\QuickEdit::class,
-            'delete' => Dcat\Admin\Grid\Actions\Delete::class,
+            'view'         => Dcat\Admin\Grid\Actions\Show::class,
+            'edit'         => Dcat\Admin\Grid\Actions\Edit::class,
+            'quick_edit'   => Dcat\Admin\Grid\Actions\QuickEdit::class,
+            'delete'       => Dcat\Admin\Grid\Actions\Delete::class,
             'batch_delete' => Dcat\Admin\Grid\Tools\BatchDelete::class,
         ],
 
         // The global Grid column selector setting.
         'column_selector' => [
-            'store' => Dcat\Admin\Grid\ColumnSelector\SessionStore::class,
+            'store'        => Dcat\Admin\Grid\ColumnSelector\SessionStore::class,
             'store_params' => [
                 'driver' => 'file',
             ],
@@ -302,12 +302,12 @@ return [
         'menu_model' => Dcat\Admin\Models\Menu::class,
 
         // Pivot table for table above.
-        'role_users_table'       => 'admin_role_users',
-        'role_permissions_table' => 'admin_role_permissions',
-        'role_menu_table'        => 'admin_role_menu',
-        'permission_menu_table'  => 'admin_permission_menu',
-        'settings_table'         => 'admin_settings',
-        'extensions_table'       => 'admin_extensions',
+        'role_users_table'          => 'admin_role_users',
+        'role_permissions_table'    => 'admin_role_permissions',
+        'role_menu_table'           => 'admin_role_menu',
+        'permission_menu_table'     => 'admin_permission_menu',
+        'settings_table'            => 'admin_settings',
+        'extensions_table'          => 'admin_extensions',
         'extension_histories_table' => 'admin_extension_histories',
     ],
 

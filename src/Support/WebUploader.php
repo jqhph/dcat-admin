@@ -29,11 +29,11 @@ class WebUploader
     {
         $request = $this->prepareRequest($request ?: request());
 
-        $this->_id = $request->get('_id');
-        $this->chunk = $request->get('chunk');
-        $this->chunks = $request->get('chunks');
+        $this->_id           = $request->get('_id');
+        $this->chunk         = $request->get('chunk');
+        $this->chunks        = $request->get('chunks');
         $this->upload_column = $request->get('upload_column');
-        $this->file = $request->file(static::FILE_NAME);
+        $this->file          = $request->file(static::FILE_NAME);
     }
 
     protected function prepareRequest($request)
@@ -130,7 +130,7 @@ class WebUploader
      */
     protected function mergeChunks(UploadedFile $file)
     {
-        $tmpDir = $this->getTemporaryPath($this->_id);
+        $tmpDir      = $this->getTemporaryPath($this->_id);
         $newFilename = $this->generateChunkFileName($file);
 
         // 移动当前分块到临时目录.

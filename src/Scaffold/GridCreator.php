@@ -12,7 +12,7 @@ trait GridCreator
     protected function generateGrid(string $primaryKey = null, array $fields = [], $timestamps = null)
     {
         $primaryKey = $primaryKey ?: request('primary_key', 'id');
-        $fields = $fields ?: request('fields', []);
+        $fields     = $fields ?: request('fields', []);
         $timestamps = $timestamps === null ? request('timestamps') : $timestamps;
 
         $rows = [

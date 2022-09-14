@@ -11,6 +11,7 @@ class Lazy extends Widget
     use InteractsWithRenderApi;
 
     protected $target = 'lazy';
+
     protected $load = true;
 
     public function __construct(LazyRenderable $renderable = null, bool $load = true)

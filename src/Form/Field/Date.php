@@ -8,6 +8,7 @@ class Date extends Text
         '@moment',
         '@bootstrap-datetimepicker',
     ];
+
     public static $css = [
         '@bootstrap-datetimepicker',
     ];
@@ -32,8 +33,8 @@ class Date extends Text
 
     public function render()
     {
-        $this->options['format'] = $this->format;
-        $this->options['locale'] = config('app.locale');
+        $this->options['format']           = $this->format;
+        $this->options['locale']           = config('app.locale');
         $this->options['allowInputToggle'] = true;
 
         $options = admin_javascript_json($this->options);

@@ -96,12 +96,12 @@ class FactoryBuilder
     public function __construct($class, $name, array $definitions, array $states,
         array $afterMaking, array $afterCreating, Faker $faker)
     {
-        $this->name = $name;
-        $this->class = $class;
-        $this->faker = $faker;
-        $this->states = $states;
-        $this->definitions = $definitions;
-        $this->afterMaking = $afterMaking;
+        $this->name          = $name;
+        $this->class         = $class;
+        $this->faker         = $faker;
+        $this->states        = $states;
+        $this->definitions   = $definitions;
+        $this->afterMaking   = $afterMaking;
         $this->afterCreating = $afterCreating;
     }
 
@@ -440,7 +440,6 @@ class FactoryBuilder
      */
     protected function stateHasAfterCallback($state)
     {
-        return isset($this->afterMaking[$this->class][$state]) ||
-            isset($this->afterCreating[$this->class][$state]);
+        return isset($this->afterMaking[$this->class][$state]) || isset($this->afterCreating[$this->class][$state]);
     }
 }

@@ -51,7 +51,7 @@ class RoleController extends AdminController
             $show->field('permissions')->unescape()->as(function ($permission) {
                 $permissionModel = config('admin.database.permissions_model');
                 $permissionModel = new $permissionModel();
-                $nodes = $permissionModel->allNodes();
+                $nodes           = $permissionModel->allNodes();
 
                 $tree = Tree::make($nodes);
 
@@ -82,7 +82,7 @@ class RoleController extends AdminController
         }
 
         return Form::make(Role::with($with), function (Form $form) use ($bindMenu) {
-            $roleTable = config('admin.database.roles_table');
+            $roleTable  = config('admin.database.roles_table');
             $connection = config('admin.database.connection');
 
             $id = $form->getKey();

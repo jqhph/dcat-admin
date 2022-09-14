@@ -23,7 +23,7 @@ class Line extends Card
      */
     protected $chartOptions = [
         'chart' => [
-            'type' => 'area',
+            'type'    => 'area',
             'toolbar' => [
                 'show' => false,
             ],
@@ -31,9 +31,9 @@ class Line extends Card
                 'enabled' => true,
             ],
             'grid' => [
-                'show' => false,
+                'show'    => false,
                 'padding' => [
-                    'left' => 0,
+                    'left'  => 0,
                     'right' => 0,
                 ],
             ],
@@ -52,7 +52,7 @@ class Line extends Card
             ],
         ],
         'yaxis' => [
-            'y' => 0,
+            'y'       => 0,
             'offsetX' => 0,
             'offsetY' => 0,
             'padding' => ['left' => 0, 'right' => 0],
@@ -66,7 +66,7 @@ class Line extends Card
         ],
         'fill' => [
             'opacity' => 0.1,
-            'type' => 'solid',
+            'type'    => 'solid',
         ],
     ];
 

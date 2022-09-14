@@ -47,10 +47,10 @@ class Bar extends RadialBar
 
         return [
             'chart' => [
-                'type' => 'bar',
-                'height' => 200,
+                'type'      => 'bar',
+                'height'    => 200,
                 'sparkline' => ['enabled' => true],
-                'toolbar' => ['show' => false],
+                'toolbar'   => ['show' => false],
             ],
             'states' => [
                 'hover' => [
@@ -65,9 +65,9 @@ class Bar extends RadialBar
                 ],
             ],
             'grid' => [
-                'show' => false,
+                'show'    => false,
                 'padding' => [
-                    'left' => 0,
+                    'left'  => 0,
                     'right' => 0,
                 ],
             ],

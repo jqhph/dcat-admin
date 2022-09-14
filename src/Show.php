@@ -28,8 +28,8 @@ class Show implements Renderable
 {
     use HasBuilderEvents;
     use Macroable {
-            __call as macroCall;
-        }
+        __call as macroCall;
+    }
 
     /**
      * @var string
@@ -88,6 +88,7 @@ class Show implements Renderable
      * @var Panel
      */
     protected $panel;
+
     /**
      * @var \Illuminate\Support\Collection
      */
@@ -100,7 +101,7 @@ class Show implements Renderable
      * @param  Model|Builder|Repository|array|Arrayable  $model
      * @param  \Closure  $builder
      */
-    public function __construct($id = null, $model = null, ?\Closure $builder = null)
+    public function __construct($id = null, $model = null, ?Closure $builder = null)
     {
         switch (func_num_args()) {
             case 1:
@@ -109,13 +110,13 @@ class Show implements Renderable
                     $this->setKey($id);
                 } else {
                     $builder = $model;
-                    $model = $id;
+                    $model   = $id;
                 }
                 break;
             default:
                 $this->setKey($id);
         }
-        $this->rows = new Collection();
+        $this->rows    = new Collection();
         $this->builder = $builder;
 
         $this->initModel($model);
@@ -254,7 +255,7 @@ class Show implements Renderable
     /**
      * @return $this
      */
-    public function wrap(\Closure $wrapper)
+    public function wrap(Closure $wrapper)
     {
         $this->panel->wrap($wrapper);
 
@@ -266,7 +267,7 @@ class Show implements Renderable
      */
     protected function initContents()
     {
-        $this->fields = new Collection();
+        $this->fields    = new Collection();
         $this->relations = new Collection();
     }
 
@@ -382,7 +383,7 @@ class Show implements Renderable
     {
         if (is_null($builder)) {
             $builder = $label;
-            $label = '';
+            $label   = '';
         }
 
         return $this->addRelation($name, $builder, $label);

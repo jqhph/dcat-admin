@@ -162,7 +162,7 @@ class Tab
         if ($this->tabs->filter(function ($tab) {
             return $tab['active'];
         })->isEmpty()) {
-            $first = $this->tabs->first();
+            $first           = $this->tabs->first();
             $first['active'] = true;
 
             $this->tabs->offsetSet(0, $first);

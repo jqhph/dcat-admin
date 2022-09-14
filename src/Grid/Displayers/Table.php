@@ -19,7 +19,7 @@ class Table extends AbstractDisplayer
         if (Arr::isAssoc($titles)) {
             $columns = array_keys($titles);
         } else {
-            $titles = array_combine($titles, $titles);
+            $titles  = array_combine($titles, $titles);
             $columns = $titles;
         }
 

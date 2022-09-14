@@ -11,7 +11,9 @@ use Illuminate\Support\Collection;
 class NestedForm extends WidgetForm
 {
     const DEFAULT_KEY_PREFIX = 'new_';
+
     const DEFAULT_PARENT_KEY_NAME = '__PARENT_NESTED__';
+
     const DEFAULT_KEY_NAME = '__NESTED__';
 
     const REMOVE_FLAG_NAME = '_remove_';
@@ -381,13 +383,13 @@ class NestedForm extends WidgetForm
 
         if (is_array($column)) {
             foreach ($column as $k => $name) {
-                $errorKey[$k] = sprintf('%s.%s.%s', $this->relationName, $key, $name);
-                $elementName[$k] = Helper::formatElementName($this->formatName().'.'.$key.'.'.$name);
+                $errorKey[$k]     = sprintf('%s.%s.%s', $this->relationName, $key, $name);
+                $elementName[$k]  = Helper::formatElementName($this->formatName().'.'.$key.'.'.$name);
                 $elementClass[$k] = [$this->formatClass(), $this->formatClass($name), $this->formatClass($name, false)];
             }
         } else {
-            $errorKey = sprintf('%s.%s.%s', $this->relationName, $key, $column);
-            $elementName = Helper::formatElementName($this->formatName().'.'.$key.'.'.$column);
+            $errorKey     = sprintf('%s.%s.%s', $this->relationName, $key, $column);
+            $elementName  = Helper::formatElementName($this->formatName().'.'.$key.'.'.$column);
             $elementClass = [$this->formatClass(), $this->formatClass($column), $this->formatClass($column, false)];
         }
 

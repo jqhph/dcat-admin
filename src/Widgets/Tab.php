@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 class Tab extends Widget
 {
     const TYPE_CONTENT = 1;
+
     const TYPE_LINK = 2;
 
     /**
@@ -64,10 +65,10 @@ class Tab extends Widget
     public function addLink($title, $href, $active = false)
     {
         $this->data['tabs'][] = [
-            'id'      => mt_rand(),
-            'title'   => $title,
-            'href'    => $href,
-            'type'    => static::TYPE_LINK,
+            'id'    => mt_rand(),
+            'title' => $title,
+            'href'  => $href,
+            'type'  => static::TYPE_LINK,
         ];
 
         if ($active) {

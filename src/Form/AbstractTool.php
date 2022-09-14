@@ -87,7 +87,7 @@ abstract class AbstractTool extends Action
         $tool = static::make(...$params);
 
         $tool->allowOnlyCreating = true;
-        $tool->allowOnlyEditing = false;
+        $tool->allowOnlyEditing  = false;
 
         return $tool;
     }
@@ -100,7 +100,7 @@ abstract class AbstractTool extends Action
     {
         $tool = static::make(...$params);
 
-        $tool->allowOnlyEditing = true;
+        $tool->allowOnlyEditing  = true;
         $tool->allowOnlyCreating = false;
 
         return $tool;

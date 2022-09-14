@@ -13,8 +13,8 @@ class Checkbox extends Editable
 
     public function display($options = [], $refresh = false)
     {
-        $options['options'] = $options;
-        $options['refresh'] = $refresh;
+        $options['options']  = $options;
+        $options['refresh']  = $refresh;
         $options['checkbox'] = $this->renderCheckbox($options['options']);
 
         return parent::display($options);

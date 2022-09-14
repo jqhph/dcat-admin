@@ -12,9 +12,9 @@ class BatchDelete extends Delete
     public function elements()
     {
         return [
-            '@item' => 'a[data-action="batch-delete"]:visible',
+            '@item'    => 'a[data-action="batch-delete"]:visible',
             '@confirm' => '.swal2-confirm',
-            '@cancel' => '.swal2-cancel',
+            '@cancel'  => '.swal2-cancel',
         ];
     }
 }

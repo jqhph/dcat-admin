@@ -90,7 +90,7 @@ class PublishCommand extends Command
         // 设置默认标签.
         if (! $tags && ! $this->tags) {
             $this->tags[] = 'dcat-admin-lang';
-            $tags = [
+            $tags         = [
                 'dcat-admin-migrations',
                 'dcat-admin-assets',
                 'dcat-admin-config',
@@ -150,7 +150,7 @@ class PublishCommand extends Command
 
         $this->moveManagedFiles(new MountManager([
             'from' => new Flysystem(new $localClass($from)),
-            'to' => new Flysystem(new $localClass($to)),
+            'to'   => new Flysystem(new $localClass($to)),
         ]));
 
         $this->status($from, $to, 'Directory');

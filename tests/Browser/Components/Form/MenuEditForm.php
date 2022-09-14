@@ -11,16 +11,17 @@ use Tests\Browser\Components\Form\Field\Tree;
 class MenuEditForm extends MenuCreationForm
 {
     protected $id;
+
     protected $selector;
 
     public function __construct($id = null, $selector = 'form[method="POST"]')
     {
         if ($id && ! is_numeric($id)) {
             $selector = $id;
-            $id = null;
+            $id       = null;
         }
 
-        $this->id = $id;
+        $this->id       = $id;
         $this->selector = $selector;
     }
 

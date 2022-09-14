@@ -21,8 +21,7 @@ trait HasPermissions
             return $this->allPermissions;
         }
 
-        return $this->allPermissions =
-            $this->roles
+        return $this->allPermissions = $this->roles
             ->pluck('permissions')
             ->flatten()
             ->keyBy($this->getKeyName());

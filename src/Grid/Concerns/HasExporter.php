@@ -37,7 +37,7 @@ trait HasExporter
         $titles = [];
 
         if (is_array($exporterDriver) || $exporterDriver === false) {
-            $titles = $exporterDriver;
+            $titles         = $exporterDriver;
             $exporterDriver = null;
         }
 

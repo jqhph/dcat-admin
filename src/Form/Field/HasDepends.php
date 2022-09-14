@@ -20,7 +20,7 @@ trait HasDepends
         return $this->addVariables([
             'depends' => [
                 'fields' => json_encode($fields, \JSON_UNESCAPED_UNICODE),
-                'clear' => $clear,
+                'clear'  => $clear,
             ],
         ]);
     }

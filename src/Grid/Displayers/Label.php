@@ -15,7 +15,7 @@ class Label extends AbstractDisplayer
             return;
         }
 
-        $original = $this->column->getOriginal();
+        $original     = $this->column->getOriginal();
         $defaultStyle = is_array($style) ? ($style['default'] ?? 'default') : 'default';
 
         $background = $this->formatStyle(
@@ -47,7 +47,7 @@ class Label extends AbstractDisplayer
         $values = Helper::array($this->value);
 
         if ($max && count($values) > $max) {
-            $values = array_slice($values, 0, $max);
+            $values   = array_slice($values, 0, $max);
             $values[] = '...';
         }
 

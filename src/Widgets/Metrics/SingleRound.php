@@ -27,35 +27,35 @@ class SingleRound extends Round
     {
         $color = Admin::color();
 
-        $colors = [$color->success()];
+        $colors           = [$color->success()];
         $gradientToColors = [$color->tear1()];
-        $strokColor = $color->gray();
+        $strokColor       = $color->gray();
 
         return [
             'chart' => [
-                'type' => 'radialBar',
+                'type'      => 'radialBar',
                 'sparkline' => [
                     'enabled' => true,
                 ],
                 'dropShadow' => [
                     'enabled' => true,
-                    'blur' => 3,
-                    'left' => 1,
-                    'top' => 1,
+                    'blur'    => 3,
+                    'left'    => 1,
+                    'top'     => 1,
                     'opacity' => 0.1,
                 ],
             ],
-            'colors' => $colors,
+            'colors'      => $colors,
             'plotOptions' => [
                 'radialBar' => [
-                    'size' => 70,
+                    'size'       => 70,
                     'startAngle' => -180,
-                    'endAngle' => 179,
-                    'hollow' => [
+                    'endAngle'   => 179,
+                    'hollow'     => [
                         'size' => '74%',
                     ],
                     'track' => [
-                        'background' => $strokColor,
+                        'background'  => $strokColor,
                         'strokeWidth' => '50%',
                     ],
                     'dataLabels' => [
@@ -63,24 +63,24 @@ class SingleRound extends Round
                             'show' => false,
                         ],
                         'value' => [
-                            'offsetY' => 14,
-                            'color' => $strokColor,
+                            'offsetY'  => 14,
+                            'color'    => $strokColor,
                             'fontSize' => '2.8rem',
                         ],
                     ],
                 ],
             ],
             'fill' => [
-                'type' => 'gradient',
+                'type'     => 'gradient',
                 'gradient' => [
-                    'shade' => 'dark',
-                    'type' => 'horizontal',
-                    'shadeIntensity' => 0.5,
+                    'shade'            => 'dark',
+                    'type'             => 'horizontal',
+                    'shadeIntensity'   => 0.5,
                     'gradientToColors' => $gradientToColors,
-                    'inverseColors' => true,
-                    'opacityFrom' => 1,
-                    'opacityTo' => 1,
-                    'stops' => [0, 100],
+                    'inverseColors'    => true,
+                    'opacityFrom'      => 1,
+                    'opacityTo'        => 1,
+                    'stops'            => [0, 100],
                 ],
             ],
             'series' => [100],

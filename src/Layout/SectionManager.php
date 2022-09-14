@@ -176,7 +176,7 @@ class SectionManager
 
         $result = '';
         foreach ($content as &$item) {
-            $value = Helper::render($item['value'] ?? '', [$options]);
+            $value  = Helper::render($item['value'] ?? '', [$options]);
             $append = $item['append'] ?? false;
 
             if (! $append) {
@@ -196,7 +196,7 @@ class SectionManager
      */
     public function flushSections()
     {
-        $this->sections = [];
+        $this->sections        = [];
         $this->defaultSections = [];
     }
 }

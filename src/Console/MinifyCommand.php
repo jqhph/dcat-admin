@@ -10,6 +10,7 @@ use Symfony\Component\Process\Process;
 class MinifyCommand extends Command
 {
     const ALL = 'all';
+
     const DEFAULT = 'default';
 
     /**
@@ -54,7 +55,7 @@ class MinifyCommand extends Command
     public function handle()
     {
         $this->packagePath = realpath(__DIR__.'/../..');
-        $this->files = $this->laravel['files'];
+        $this->files       = $this->laravel['files'];
 
         $name = $this->argument('name');
 
@@ -64,7 +65,7 @@ class MinifyCommand extends Command
         }
 
         $publish = $this->option('publish');
-        $color = $this->getColor($name);
+        $color   = $this->getColor($name);
 
         $this->backupFiles();
         $this->replaceFiles($name, $color);
@@ -118,7 +119,7 @@ class MinifyCommand extends Command
             return;
         }
 
-        $mixFile = $this->getMixFile();
+        $mixFile  = $this->getMixFile();
         $contents = str_replace('let theme = null', "let theme = '{$name}'", $this->files->get($mixFile));
         $this->files->put($mixFile, $contents);
 
@@ -148,7 +149,7 @@ class MinifyCommand extends Command
      */
     protected function resetFiles()
     {
-        $mixFile = $this->getMixFile();
+        $mixFile    = $this->getMixFile();
         $mixBakFile = $this->getMixBakFile();
 
         if (is_file($mixBakFile)) {
@@ -157,7 +158,7 @@ class MinifyCommand extends Command
             $this->files->delete($mixBakFile);
         }
 
-        $colorFile = $this->getColorFile();
+        $colorFile    = $this->getColorFile();
         $colorBakFile = $this->getColorBakFile();
 
         if (is_file($colorBakFile)) {

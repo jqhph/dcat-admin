@@ -127,7 +127,7 @@ class MenuTest extends TestCase
 
     private function assertDatabase($id, $updates)
     {
-        $roles = $updates['roles'];
+        $roles       = $updates['roles'];
         $permissions = $updates['permissions'];
 
         unset($updates['roles'], $updates['permissions']);

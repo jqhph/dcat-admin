@@ -48,10 +48,10 @@ class HasMany extends Component
     {
         return [
             '@container' => '.has-many-'.$this->relation,
-            '@add' => ".{$this->relation}-add",
-            '@remove' => ".{$this->relation}-remove",
-            '@forms' => ".has-many-{$this->relation}-forms",
-            '@group' => ".has-many-{$this->relation}-forms .has-many-{$this->relation}-form",
+            '@add'       => ".{$this->relation}-add",
+            '@remove'    => ".{$this->relation}-remove",
+            '@forms'     => ".has-many-{$this->relation}-forms",
+            '@group'     => ".has-many-{$this->relation}-forms .has-many-{$this->relation}-form",
         ];
     }
 
@@ -178,7 +178,7 @@ JS
     public function assertFormGroupInputValue(Browser $browser, $field, $value, $id = null)
     {
         $input = $browser->script(
-                <<<JS
+            <<<JS
 return $('{$this->getFieldSelector($browser, $field, $id)}').val();
 JS
         )[0] ?? null;

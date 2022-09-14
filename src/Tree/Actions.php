@@ -120,7 +120,7 @@ class Actions implements Renderable
         $toString = [Helper::class, 'render'];
 
         $prepends = array_map($toString, $this->prepends);
-        $appends = array_map($toString, $this->appends);
+        $appends  = array_map($toString, $this->appends);
 
         return implode('', array_merge($prepends, $appends));
     }

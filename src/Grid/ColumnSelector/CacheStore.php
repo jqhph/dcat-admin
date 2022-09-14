@@ -5,12 +5,13 @@ namespace Dcat\Admin\Grid\ColumnSelector;
 class CacheStore extends SessionStore
 {
     protected $driver;
+
     protected $ttl;
 
     public function __construct($driver = 'file', $ttl = 25920000)
     {
         $this->driver = cache()->driver($driver);
-        $this->ttl = $ttl;
+        $this->ttl    = $ttl;
     }
 
     public function store(array $input)

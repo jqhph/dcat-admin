@@ -22,8 +22,8 @@ class Field implements Renderable
     use HasBuilderEvents;
     use HasVariables;
     use Macroable {
-            __call as macroCall;
-        }
+        __call as macroCall;
+    }
 
     /**
      * @var array
@@ -102,8 +102,8 @@ class Field implements Renderable
      */
     public function __construct($name = '', $label = '')
     {
-        $this->name = $name;
-        $this->label = $this->formatLabel($label);
+        $this->name   = $name;
+        $this->label  = $this->formatLabel($label);
         $this->showAs = new Collection();
 
         $this->callResolving();
@@ -273,7 +273,7 @@ class Field implements Renderable
                 } else {
                     $storage = Storage::disk(config('admin.upload.disk'));
                     if ($storage->exists($path)) {
-                        $url = $storage->url($path);
+                        $url  = $storage->url($path);
                         $size = ($storage->size($path) / 1000).'KB';
                     }
                 }
@@ -384,13 +384,13 @@ HTML;
      */
     public function formatStyle($style)
     {
-        $class = 'default';
+        $class      = 'default';
         $background = '';
 
         if ($style !== 'default') {
             $class = '';
 
-            $style = Admin::color()->get($style, $style);
+            $style      = Admin::color()->get($style, $style);
             $background = "style='background:{$style}'";
         }
 

@@ -23,9 +23,9 @@ HTML;
 
     protected function setupScript()
     {
-        $text = trans('admin.import_extension_confirm');
+        $text    = trans('admin.import_extension_confirm');
         $confirm = trans('admin.confirm');
-        $cancel = trans('admin.cancel');
+        $cancel  = trans('admin.cancel');
 
         $url = admin_url('helpers/extensions/import');
 

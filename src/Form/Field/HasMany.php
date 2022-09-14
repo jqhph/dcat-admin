@@ -102,7 +102,7 @@ class HasMany extends Field
         $this->columnClass = $this->formatClass($relationName);
 
         if (count($arguments) == 1) {
-            $this->label = $this->formatLabel();
+            $this->label   = $this->formatLabel();
             $this->builder = $arguments[0];
         }
 
@@ -203,7 +203,7 @@ class HasMany extends Field
 
             $newInput += $this->sanitizeInput($input, $this->column);
 
-            $newRules[$this->column] = $hasManyRules;
+            $newRules[$this->column]   = $hasManyRules;
             $attributes[$this->column] = $this->label;
         }
 
@@ -218,7 +218,7 @@ class HasMany extends Field
             || $field instanceof Tags
         ) {
             foreach (array_keys(Arr::get($input, $this->column)) as $key) {
-                $value = $input[$this->column][$key][$field->column()];
+                $value                                        = $input[$this->column][$key][$field->column()];
                 $input[$this->column][$key][$field->column()] = array_filter($value, function ($v) {
                     return $v !== null;
                 });
@@ -312,7 +312,6 @@ class HasMany extends Field
          * in the HasMany relation, has many data/field set, $set is field set in the below
          */
         foreach (Arr::get($input, $this->column) as $index => $set) {
-
             /*
              * foreach the field set to find the corresponding $column
              */
@@ -363,7 +362,7 @@ class HasMany extends Field
     public function setParentRelationName($name, $parentKey)
     {
         $this->parentRelationName = $name;
-        $this->parentKey = $parentKey;
+        $this->parentKey          = $parentKey;
 
         return $this;
     }
@@ -567,12 +566,12 @@ class HasMany extends Field
         $this->view = $this->view ?: $this->views[$this->viewMode];
 
         $this->addVariables([
-            'forms'          => $this->buildRelatedForms(),
-            'template'       => $this->buildNestedForm()->render(),
-            'relationName'   => $this->relationName,
-            'options'        => $this->options,
-            'count'          => count($this->value()),
-            'columnClass'    => $this->columnClass,
+            'forms'        => $this->buildRelatedForms(),
+            'template'     => $this->buildNestedForm()->render(),
+            'relationName' => $this->relationName,
+            'options'      => $this->options,
+            'count'        => count($this->value()),
+            'columnClass'  => $this->columnClass,
         ]);
 
         return parent::render();
@@ -588,8 +587,8 @@ class HasMany extends Field
     protected function renderTable()
     {
         $headers = [];
-        $fields = [];
-        $hidden = [];
+        $fields  = [];
+        $hidden  = [];
 
         /* @var Field $field */
         foreach ($this->buildNestedForm()->fields() as $field) {
@@ -599,7 +598,7 @@ class HasMany extends Field
                 /* Hide label and set field width 100% */
                 $field->setLabelClass(['hidden']);
                 $field->width(12, 0);
-                $fields[] = $field->render();
+                $fields[]  = $field->render();
                 $headers[] = $field->label();
             }
         }

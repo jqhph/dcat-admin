@@ -40,8 +40,8 @@ class RowSelector extends Component
     {
         return [
             '@container' => '#grid-table',
-            '@all' => 'input.select-all',
-            '@item' => 'input.grid-row-checkbox',
+            '@all'       => 'input.select-all',
+            '@item'      => 'input.grid-row-checkbox',
         ];
     }
 

@@ -16,7 +16,9 @@ class Exporter
      * Export scope constants.
      */
     const SCOPE_ALL = 'all';
+
     const SCOPE_CURRENT_PAGE = 'page';
+
     const SCOPE_SELECTED_ROWS = 'selected';
 
     /**

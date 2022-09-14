@@ -102,17 +102,17 @@ class HasManyTest extends TestCase
     protected function data()
     {
         return [
-            'username' => 'uuu',
-            'bio'      => 'bxbxbxbxbxbx',
+            'username'  => 'uuu',
+            'bio'       => 'bxbxbxbxbxbx',
             'paintings' => [
                 [
-                    'title' => '蒙娜丽莎',
-                    'body' => '(*￣︶￣)',
+                    'title'        => '蒙娜丽莎',
+                    'body'         => '(*￣︶￣)',
                     'completed_at' => now(),
                 ],
                 [
-                    'title' => '鸡蛋',
-                    'body' => '(*￣︶￣)',
+                    'title'        => '鸡蛋',
+                    'body'         => '(*￣︶￣)',
                     'completed_at' => now(),
                 ],
             ],
