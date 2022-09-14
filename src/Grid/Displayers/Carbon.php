@@ -15,7 +15,7 @@ class Carbon extends AbstractDisplayer
 {
     /**
      * @param  string|\Closure  $format
-     * @param  mixed            $default
+     * @param  mixed  $default
      *
      * @return string|null
      */
