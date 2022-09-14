@@ -12,7 +12,6 @@ class Decimal extends AbstractDisplayer
 {
     /**
      * @param  int  $length
-     *
      * @return string
      */
     public function display(int $length = 2): string
