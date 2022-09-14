@@ -16,7 +16,6 @@ class Carbon extends AbstractDisplayer
     /**
      * @param  string|\Closure  $format
      * @param  mixed  $default
-     *
      * @return string|null
      */
     public function display(string|\Closure $format = 'Y-m-d H:i:s', mixed $default = ''): ?string
