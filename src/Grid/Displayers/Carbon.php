@@ -5,7 +5,7 @@ namespace Dcat\Admin\Grid\Displayers;
 use Carbon\CarbonInterface;
 
 /**
- * Carbon 日期格式化
+ * Carbon 日期格式化.
  *
  * @example $grid->column('created_at')->carbon();
  *          $grid->column('created_at')->carbon('Y-m-d H:i:s');
@@ -14,7 +14,7 @@ use Carbon\CarbonInterface;
 class Carbon extends AbstractDisplayer
 {
     /**
-     * @param \Closure|string $format
+     * @param  \Closure|string  $format
      *
      * @return string
      */

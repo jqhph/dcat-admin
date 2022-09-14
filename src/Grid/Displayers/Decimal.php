@@ -3,7 +3,7 @@
 namespace Dcat\Admin\Grid\Displayers;
 
 /**
- * number format
+ * number format.
  *
  * @example $grid->column('price')->decimal();
  *          $grid->column('price')->decimal(2);
@@ -11,7 +11,7 @@ namespace Dcat\Admin\Grid\Displayers;
 class Decimal extends AbstractDisplayer
 {
     /**
-     * @param int $length
+     * @param  int  $length
      *
      * @return string
      */
