@@ -37,8 +37,8 @@ class Condition
     public function __construct($condition, Column $column)
     {
         $this->condition = $condition;
-        $this->original  = clone $column;
-        $this->column    = $column;
+        $this->original = clone $column;
+        $this->column = $column;
     }
 
     public function then(\Closure $closure)

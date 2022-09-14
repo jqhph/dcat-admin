@@ -234,7 +234,7 @@ class Field implements Renderable
     public function __construct($column, $arguments = [])
     {
         $this->column = $column;
-        $this->label  = $this->formatLabel($arguments);
+        $this->label = $this->formatLabel($arguments);
 
         $this->callResolving();
     }
@@ -607,7 +607,7 @@ class Field implements Renderable
             return $this->default;
         }
 
-        $this->default                     = value($default);
+        $this->default = value($default);
         $this->allowDefaultValueInEditPage = $edit;
 
         return $this;
@@ -1294,7 +1294,7 @@ class Field implements Renderable
      */
     public static function requireAssets()
     {
-        static::$js  && Admin::js(static::$js);
+        static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);
     }
 

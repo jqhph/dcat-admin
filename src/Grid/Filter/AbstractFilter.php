@@ -119,7 +119,7 @@ abstract class AbstractFilter
     public function __construct($column, $label = '')
     {
         $this->column = $column;
-        $this->label  = $this->formatLabel($label);
+        $this->label = $this->formatLabel($label);
     }
 
     /**

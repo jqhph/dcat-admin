@@ -148,7 +148,7 @@ abstract class Widget implements Renderable
      */
     public static function requireAssets()
     {
-        static::$js  && Admin::js(static::$js);
+        static::$js && Admin::js(static::$js);
         static::$css && Admin::css(static::$css);
     }
 
@@ -304,7 +304,7 @@ abstract class Widget implements Renderable
     public function __call($method, $parameters)
     {
         if ($method === 'style' || $method === 'class') {
-            $value  = $parameters[0] ?? null;
+            $value = $parameters[0] ?? null;
             $append = $parameters[1] ?? ($method === 'class' ? false : true);
 
             if (is_array($value)) {

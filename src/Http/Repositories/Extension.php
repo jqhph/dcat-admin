@@ -29,9 +29,9 @@ class Extension extends Repository
     {
         $property = $extension->composerProperty;
 
-        $name    = $extension->getName();
+        $name = $extension->getName();
         $current = $extension->getVersion();
-        $latest  = $extension->getLocalLatestVersion();
+        $latest = $extension->getLocalLatestVersion();
 
         return [
             'id'          => $name,

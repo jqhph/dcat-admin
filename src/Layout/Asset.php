@@ -749,7 +749,7 @@ class Asset
      */
     public function scriptToHtml()
     {
-        $script       = implode(";\n", array_unique($this->script));
+        $script = implode(";\n", array_unique($this->script));
         $directScript = implode(";\n", array_unique($this->directScript));
 
         return <<<HTML

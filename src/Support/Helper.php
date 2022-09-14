@@ -302,9 +302,9 @@ class Helper
         ?string $parentKeyName = null,
         ?string $childrenKeyName = null
     ) {
-        $branch          = [];
-        $primaryKeyName  = $primaryKeyName ?: 'id';
-        $parentKeyName   = $parentKeyName ?: 'parent_id';
+        $branch = [];
+        $primaryKeyName = $primaryKeyName ?: 'id';
+        $parentKeyName = $parentKeyName ?: 'parent_id';
         $childrenKeyName = $childrenKeyName ?: 'children';
 
         $parentId = is_numeric($parentId) ? (int) $parentId : $parentId;
@@ -354,7 +354,7 @@ class Helper
     public static function exportArray(array &$array, $level = 1)
     {
         $start = '[';
-        $end   = ']';
+        $end = ']';
 
         $txt = "$start\n";
 
@@ -511,8 +511,8 @@ class Helper
 
         $num = hexdec($color);
 
-        $red   = $format(($num >> 16) + $amt);
-        $blue  = $format((($num >> 8) & 0x00FF) + $amt);
+        $red = $format(($num >> 16) + $amt);
+        $blue = $format((($num >> 8) & 0x00FF) + $amt);
         $green = $format(($num & 0x0000FF) + $amt);
 
         return [$red, $blue, $green];
@@ -747,7 +747,7 @@ class Helper
             if (is_array($column)) {
                 foreach ($column as $v) {
                     if (Str::contains($v, '.')) {
-                        $first             = explode('.', $v)[0];
+                        $first = explode('.', $v)[0];
                         $relations[$first] = null;
                     }
                 }
@@ -756,7 +756,7 @@ class Helper
             }
 
             if (Str::contains($column, '.')) {
-                $first             = explode('.', $column)[0];
+                $first = explode('.', $column)[0];
                 $relations[$first] = null;
             }
         });
@@ -791,7 +791,7 @@ class Helper
             return;
         }
 
-        $method   = $query === 'orWhere' ? 'orWhere' : 'where';
+        $method = $query === 'orWhere' ? 'orWhere' : 'where';
         $subQuery = $query === 'orWhere' ? 'where' : $query;
 
         $model->$method(function ($q) use ($column, $subQuery, $params) {
@@ -895,7 +895,7 @@ class Helper
             return $array = $value;
         }
 
-        $keys    = explode('.', $key);
+        $keys = explode('.', $key);
         $default = null;
 
         while (count($keys) > 1) {

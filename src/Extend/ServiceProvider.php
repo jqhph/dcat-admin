@@ -415,11 +415,11 @@ abstract class ServiceProvider extends LaravelServiceProvider
     protected function addMiddleware()
     {
         $adminMiddleware = (array) config('admin.route.middleware');
-        $middleware      = $this->middleware();
+        $middleware = $this->middleware();
 
         $before = $middleware['before'] ?? [];
         $middle = $middleware['middle'] ?? [];
-        $after  = $middleware['after']  ?? [];
+        $after = $middleware['after'] ?? [];
 
         $this->mixMiddleware($middle);
 

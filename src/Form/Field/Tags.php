@@ -63,7 +63,7 @@ class Tags extends Field
         }
 
         $this->visibleColumn = $visibleColumn;
-        $this->key           = $key;
+        $this->key = $key;
 
         return $this;
     }

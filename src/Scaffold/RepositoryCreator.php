@@ -18,7 +18,7 @@ class RepositoryCreator
         $files = app('files');
 
         $path = Helper::guessClassFileName($repositoryClass);
-        $dir  = dirname($path);
+        $dir = dirname($path);
 
         if (! is_dir($dir)) {
             $files->makeDirectory($dir, 0755, true);

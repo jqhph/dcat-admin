@@ -224,7 +224,7 @@ class Actions extends AbstractDisplayer
         $toString = [Helper::class, 'render'];
 
         $prepends = array_map($toString, $this->prepends);
-        $appends  = array_map($toString, $this->appends);
+        $appends = array_map($toString, $this->appends);
 
         foreach ($this->actions as $action => $enable) {
             if ($enable) {

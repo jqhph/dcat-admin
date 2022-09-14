@@ -126,8 +126,8 @@ class DatabaseUpdater
     public function getClassFromFile($file)
     {
         $fileParser = fopen($file, 'r');
-        $class      = $namespace = $buffer = '';
-        $i          = 0;
+        $class = $namespace = $buffer = '';
+        $i = 0;
 
         while (! $class) {
             if (feof($fileParser)) {

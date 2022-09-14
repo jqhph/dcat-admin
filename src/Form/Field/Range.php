@@ -16,7 +16,7 @@ class Range extends Field
     public function __construct($column, $arguments)
     {
         $this->column['start'] = $column;
-        $this->column['end']   = $arguments[0];
+        $this->column['end'] = $arguments[0];
 
         array_shift($arguments);
         $this->label = $this->formatLabel($arguments);
@@ -42,7 +42,7 @@ class Range extends Field
         $result = [];
         foreach ($messages as $key => $message) {
             $column = explode('.', $key);
-            $rule   = array_pop($column);
+            $rule = array_pop($column);
             $column = implode('.', $column);
 
             if ($this->column['start'] === $column) {

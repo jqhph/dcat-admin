@@ -135,8 +135,8 @@ class Tree extends Widget
             return;
         }
 
-        $idColumn     = $this->columnNames['id'];
-        $textColumn   = $this->columnNames['text'];
+        $idColumn = $this->columnNames['id'];
+        $textColumn = $this->columnNames['text'];
         $parentColumn = $this->columnNames['parent'];
 
         $nodes = [];

@@ -267,7 +267,7 @@ trait WebUploader
             && $this->form->builder()
             && $this->form->builder()->isEditing()
         ) {
-            $this->options['formData']['_method']   = 'PUT';
+            $this->options['formData']['_method'] = 'PUT';
             $this->options['deleteData']['_method'] = 'PUT';
             if (! isset($this->options['autoUpdateColumn'])) {
                 $this->options['autoUpdateColumn'] = true;

@@ -98,7 +98,7 @@ class ExtensionMakeCommand extends Command
             $this->makeDir();
         }
 
-        $this->package       = str_replace('.', '/', $this->argument('name'));
+        $this->package = str_replace('.', '/', $this->argument('name'));
         $this->extensionName = str_replace('/', '.', $this->package);
 
         $this->basePath = rtrim($this->extensionDir, '/').'/'.ltrim($this->package, '/');
@@ -276,7 +276,7 @@ TEXT;
     {
         $files = [
             $view = __DIR__.'/stubs/extension/view.stub' => 'resources/views/index.blade.php',
-            $js   = __DIR__.'/stubs/extension/js.stub'   => 'resources/assets/js/index.js',
+            $js = __DIR__.'/stubs/extension/js.stub'     => 'resources/assets/js/index.js',
             __DIR__.'/stubs/extension/css.stub'          => 'resources/assets/css/index.css',
             __DIR__.'/stubs/extension/.gitignore.stub'   => '.gitignore',
             __DIR__.'/stubs/extension/README.md.stub'    => 'README.md',

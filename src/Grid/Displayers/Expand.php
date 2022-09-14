@@ -20,7 +20,7 @@ class Expand extends AbstractDisplayer
 
     public function display($callbackOrButton = null)
     {
-        $html      = $this->value;
+        $html = $this->value;
         $remoteUrl = '';
 
         if ($callbackOrButton && $callbackOrButton instanceof \Closure) {

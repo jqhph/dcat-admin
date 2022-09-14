@@ -164,7 +164,7 @@ JS;
 
         $this->addScript();
 
-        $value  = $this->value(['start' => '', 'end' => '']);
+        $value = $this->value(['start' => '', 'end' => '']);
         $active = empty(array_filter($value)) ? '' : 'active';
 
         return <<<EOT

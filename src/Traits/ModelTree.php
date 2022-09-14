@@ -168,8 +168,8 @@ trait ModelTree
         foreach ($tree as $branch) {
             $node = static::find($branch['id']);
 
-            $node->{$node->getParentColumn()}                           = $parentId;
-            $node->{$node->getOrderColumn()}                            = static::$branchOrder[$branch['id']];
+            $node->{$node->getParentColumn()} = $parentId;
+            $node->{$node->getOrderColumn()} = static::$branchOrder[$branch['id']];
             $node->getDepthColumn() && $node->{$node->getDepthColumn()} = $depth;
             $node->save();
 
@@ -186,7 +186,7 @@ trait ModelTree
 
     public function moveOrderDown()
     {
-        $orderColumnName  = $this->determineOrderColumnName();
+        $orderColumnName = $this->determineOrderColumnName();
         $parentColumnName = $this->getParentColumn();
 
         $sameOrderModel = $this->getSameOrderModel('>');
@@ -215,7 +215,7 @@ trait ModelTree
 
     public function moveOrderUp()
     {
-        $orderColumnName  = $this->determineOrderColumnName();
+        $orderColumnName = $this->determineOrderColumnName();
         $parentColumnName = $this->getParentColumn();
 
         $swapWithModel = $this->buildSortQuery()
@@ -242,7 +242,7 @@ trait ModelTree
 
     protected function getSameOrderModel(string $operator = '<')
     {
-        $orderColumnName  = $this->determineOrderColumnName();
+        $orderColumnName = $this->determineOrderColumnName();
         $parentColumnName = $this->getParentColumn();
 
         return $this->buildSortQuery()
@@ -306,7 +306,7 @@ trait ModelTree
      */
     protected function buildSelectOptions(array $nodes = [], $parentId = 0, $prefix = '', $space = '&nbsp;')
     {
-        $d      = '├─';
+        $d = '├─';
         $prefix = $prefix ?: $d.$space;
 
         $options = [];

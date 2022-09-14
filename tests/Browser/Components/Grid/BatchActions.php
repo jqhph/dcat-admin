@@ -17,7 +17,7 @@ class BatchActions extends Component
     public function __construct($gridName = '')
     {
         $this->gridName = $gridName;
-        $this->prefix   = $gridName ? $gridName.'-' : '';
+        $this->prefix = $gridName ? $gridName.'-' : '';
     }
 
     /**

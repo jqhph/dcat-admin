@@ -287,10 +287,10 @@ class Form implements Renderable
      */
     public function __construct($repository = null, ?Closure $callback = null, Request $request = null)
     {
-        $this->repository    = $repository ? Admin::repository($repository) : null;
-        $this->callback      = $callback;
-        $this->request       = $request ?: request();
-        $this->builder       = new Builder($this);
+        $this->repository = $repository ? Admin::repository($repository) : null;
+        $this->callback = $callback;
+        $this->request = $request ?: request();
+        $this->builder = new Builder($this);
         $this->isSoftDeletes = $repository ? $this->repository->isSoftDeletes() : false;
 
         $this->model(new Fluent());
@@ -572,7 +572,7 @@ class Form implements Renderable
                 return $this->sendResponse($response);
             }
 
-            $status  = $result ? true : false;
+            $status = $result ? true : false;
             $message = $result ? trans('admin.delete_succeeded') : trans('admin.delete_failed');
         } catch (\Throwable $exception) {
             $response = $this->handleException($exception);
@@ -581,7 +581,7 @@ class Form implements Renderable
                 return $response;
             }
 
-            $status  = false;
+            $status = false;
             $message = $exception->getMessage() ?: trans('admin.delete_failed');
         }
 
@@ -973,7 +973,7 @@ class Form implements Renderable
     protected function handleEditable(array $input = [])
     {
         if (array_key_exists('_editable', $input)) {
-            $name  = $input['name'];
+            $name = $input['name'];
             $value = $input['value'];
 
             Arr::forget($input, ['pk', 'value', 'name']);

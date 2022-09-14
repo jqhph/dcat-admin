@@ -201,12 +201,12 @@ class Grid
      */
     public function __construct($repository = null, ?Closure $builder = null, $request = null)
     {
-        $this->model        = new Model(request(), $repository);
-        $this->columns      = new Collection();
-        $this->allColumns   = new Collection();
-        $this->rows         = new Collection();
-        $this->builder      = $builder;
-        $this->request      = $request ?: request();
+        $this->model = new Model(request(), $repository);
+        $this->columns = new Collection();
+        $this->allColumns = new Collection();
+        $this->rows = new Collection();
+        $this->builder = $builder;
+        $this->request = $request ?: request();
         $this->resourcePath = url($this->request->getPathInfo());
 
         if ($repository = $this->model->repository()) {
@@ -604,7 +604,7 @@ class Grid
         }
 
         $rowSelector = $this->rowSelector();
-        $keyName     = $this->getKeyName();
+        $keyName = $this->getKeyName();
 
         $this->prependColumn(
             Grid\Column::SELECT_COLUMN_NAME
@@ -705,7 +705,7 @@ HTML;
 
     protected function renderHeaderOrFooter($callbacks)
     {
-        $target  = [$this->processFilter(), $this];
+        $target = [$this->processFilter(), $this];
         $content = [];
 
         foreach ($callbacks as $callback) {
@@ -994,7 +994,7 @@ HTML;
     public function formatTableParentClass()
     {
         $tableCollaps = $this->option('table_collapse') ? 'table-collapse' : '';
-        $scrollbarX   = $this->option('scrollbar_x') ? 'table-scrollbar-x' : '';
+        $scrollbarX = $this->option('scrollbar_x') ? 'table-scrollbar-x' : '';
 
         return "table-responsive table-wrapper complex-container table-middle mt-1 {$tableCollaps} {$scrollbarX}";
     }
@@ -1029,8 +1029,8 @@ HTML;
     {
         if ($this->async && ! $this->isAsyncRequest()) {
             $query = static::ASYNC_NAME;
-            $url   = Helper::fullUrlWithoutQuery(['_pjax']);
-            $url   = Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]);
+            $url = Helper::fullUrlWithoutQuery(['_pjax']);
+            $url = Helper::urlWithQuery($url, [static::ASYNC_NAME => 1]);
 
             $options = [
                 'selector'  => ".async-{$this->getTableId()}",

@@ -27,7 +27,7 @@ class Card extends Widget
     {
         if ($content === null) {
             $content = $title;
-            $title   = '';
+            $title = '';
         }
 
         $this->title($title);

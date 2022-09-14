@@ -58,7 +58,7 @@ class ModelCreator
     public function create($keyName = 'id', $timestamps = true, $softDeletes = false)
     {
         $path = $this->getpath($this->name);
-        $dir  = dirname($path);
+        $dir = dirname($path);
 
         if (! is_dir($dir)) {
             $this->files->makeDirectory($dir, 0755, true);
@@ -154,7 +154,7 @@ class ModelCreator
 
         if ($softDeletes) {
             $import = 'use Illuminate\\Database\\Eloquent\\SoftDeletes;';
-            $use    = 'use SoftDeletes;';
+            $use = 'use SoftDeletes;';
         }
 
         $stub = str_replace(['DummyImportSoftDeletesTrait', 'DummyUseSoftDeletesTrait'], [$import, $use], $stub);
@@ -175,7 +175,7 @@ class ModelCreator
 
         if (version_compare(app()->version(), '7.0.0') >= 0) {
             $import = 'use Dcat\\Admin\\Traits\\HasDateTimeFormatter;';
-            $use    = 'use HasDateTimeFormatter;';
+            $use = 'use HasDateTimeFormatter;';
         }
 
         $stub = str_replace(['DummyImportDateTimeFormatterTrait', 'DummyUseDateTimeFormatterTrait'], [$import, $use], $stub);

@@ -37,8 +37,8 @@ JS;
 
         $this->addScript();
 
-        $allCheck      = (count($value) == count($this->options)) ? 'checked' : '';
-        $active        = empty($value) ? '' : 'active';
+        $allCheck = (count($value) == count($this->options)) ? 'checked' : '';
+        $active = empty($value) ? '' : 'active';
         $pjaxContainer = Admin::getPjaxContainerId();
 
         return <<<HTML

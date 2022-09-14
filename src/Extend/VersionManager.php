@@ -47,7 +47,7 @@ class VersionManager
             return false;
         }
 
-        $currentVersion  = $this->getLatestFileVersion($name);
+        $currentVersion = $this->getLatestFileVersion($name);
         $databaseVersion = $this->getDatabaseVersion($name);
 
         if ($currentVersion === $databaseVersion) {
@@ -116,7 +116,7 @@ class VersionManager
         $extensionHistory = $this->getDatabaseHistory($name);
         $extensionHistory = array_reverse($extensionHistory);
 
-        $stopOnNextVersion   = false;
+        $stopOnNextVersion = false;
         $newExtensionVersion = null;
 
         try {

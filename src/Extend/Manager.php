@@ -236,7 +236,7 @@ class Manager
         $composerProperty = Composer::parse($directory.'/composer.json');
 
         $serviceProvider = $composerProperty->get('extra.dcat-admin');
-        $psr4            = $composerProperty->get('autoload.psr-4');
+        $psr4 = $composerProperty->get('autoload.psr-4');
 
         if (! $serviceProvider || ! $psr4) {
             return;
@@ -525,7 +525,7 @@ class Manager
 
         foreach (scandir($dir) as $value) {
             if (
-                $value    !== '.'
+                $value !== '.'
                 && $value !== '..'
                 && is_dir($value = $dir.'/'.$value)
             ) {

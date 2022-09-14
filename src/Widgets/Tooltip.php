@@ -117,7 +117,7 @@ class Tooltip extends Widget
     protected function addScript()
     {
         $background = $this->background ?: Admin::color()->primary(-5);
-        $title      = $this->title;
+        $title = $this->title;
 
         Admin::script(
             <<<JS

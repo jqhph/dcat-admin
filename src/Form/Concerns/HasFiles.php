@@ -26,7 +26,7 @@ trait HasFiles
     protected function handleUploadFile($data)
     {
         $column = $data['upload_column'] ?? null;
-        $file   = app('admin.web-uploader')->getUploadedFile() ?: ($data[WebUploader::FILE_NAME] ?? null);
+        $file = app('admin.web-uploader')->getUploadedFile() ?: ($data[WebUploader::FILE_NAME] ?? null);
 
         if (! $column || ! $file instanceof UploadedFile) {
             return;
@@ -71,7 +71,7 @@ trait HasFiles
         }
 
         $columns = explode('.', $column);
-        $field   = $this->builder;
+        $field = $this->builder;
         foreach ($columns as $column) {
             if ($field instanceof FieldsCollection) {
                 $field = $field->field($column);
@@ -93,8 +93,8 @@ trait HasFiles
             return;
         }
 
-        $column   = $input['_column']   ?? null;
-        $filePath = $input['key']       ?? null;
+        $column = $input['_column'] ?? null;
+        $filePath = $input['key'] ?? null;
         $relation = $input['_relation'] ?? null;
 
         if (! $column && ! $filePath) {
@@ -206,7 +206,7 @@ trait HasFiles
                 $input[$input['_column']] = '';
             } else {
                 [$relation, $relationKey] = $input['_relation'];
-                $keyName                  = $this->builder()->field($relation)->getKeyName();
+                $keyName = $this->builder()->field($relation)->getKeyName();
 
                 $input[$relation] = [
                     $relationKey => [

@@ -110,13 +110,13 @@ class Show implements Renderable
                     $this->setKey($id);
                 } else {
                     $builder = $model;
-                    $model   = $id;
+                    $model = $id;
                 }
                 break;
             default:
                 $this->setKey($id);
         }
-        $this->rows    = new Collection();
+        $this->rows = new Collection();
         $this->builder = $builder;
 
         $this->initModel($model);
@@ -267,7 +267,7 @@ class Show implements Renderable
      */
     protected function initContents()
     {
-        $this->fields    = new Collection();
+        $this->fields = new Collection();
         $this->relations = new Collection();
     }
 
@@ -383,7 +383,7 @@ class Show implements Renderable
     {
         if (is_null($builder)) {
             $builder = $label;
-            $label   = '';
+            $label = '';
         }
 
         return $this->addRelation($name, $builder, $label);

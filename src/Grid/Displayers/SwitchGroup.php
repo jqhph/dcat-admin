@@ -18,7 +18,7 @@ class SwitchGroup extends SwitchDisplay
         }
 
         if (! Arr::isAssoc($columns)) {
-            $labels  = array_map('admin_trans_field', $columns);
+            $labels = array_map('admin_trans_field', $columns);
             $columns = array_combine($columns, $labels);
         }
 

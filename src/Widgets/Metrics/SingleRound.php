@@ -27,9 +27,9 @@ class SingleRound extends Round
     {
         $color = Admin::color();
 
-        $colors           = [$color->success()];
+        $colors = [$color->success()];
         $gradientToColors = [$color->tear1()];
-        $strokColor       = $color->gray();
+        $strokColor = $color->gray();
 
         return [
             'chart' => [

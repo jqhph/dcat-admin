@@ -78,7 +78,7 @@ class Tools implements Renderable
     {
         $this->panel = $panel;
 
-        $this->appends  = new Collection();
+        $this->appends = new Collection();
         $this->prepends = new Collection();
     }
 
@@ -192,9 +192,9 @@ class Tools implements Renderable
     public function showQuickEdit(?string $width = null, ?string $height = null)
     {
         $this->showQuickEdit = true;
-        $this->showEdit      = false;
+        $this->showEdit = false;
 
-        $width  && ($this->dialogFormDimensions[0] = $width);
+        $width && ($this->dialogFormDimensions[0] = $width);
         $height && ($this->dialogFormDimensions[1] = $height);
 
         return $this;
@@ -270,7 +270,7 @@ HTML;
         }
 
         $edit = trans('admin.edit');
-        $url  = $this->getEditPath();
+        $url = $this->getEditPath();
 
         $quickBtn = $btn = '';
 
@@ -283,7 +283,7 @@ EOF;
         }
 
         if ($this->showQuickEdit) {
-            $id               = 'show-edit-'.Str::random(8);
+            $id = 'show-edit-'.Str::random(8);
             [$width, $height] = $this->dialogFormDimensions;
 
             Form::dialog($edit)

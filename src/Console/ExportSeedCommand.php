@@ -28,9 +28,9 @@ class ExportSeedCommand extends Command
      */
     public function handle()
     {
-        $name         = $this->argument('classname');
+        $name = $this->argument('classname');
         $exceptFields = [];
-        $exportUsers  = $this->option('users');
+        $exportUsers = $this->option('users');
 
         $namespace = version_compare(app()->version(), '8.0.0', '<') ? 'seeds' : 'seeders';
 

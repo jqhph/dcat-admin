@@ -70,11 +70,11 @@ class EloquentRepository extends Repository implements TreeRepository
             $this->eloquentClass = $modelOrRelations;
         } elseif ($modelOrRelations instanceof EloquentModel) {
             $this->eloquentClass = get_class($modelOrRelations);
-            $this->model         = $modelOrRelations;
+            $this->model = $modelOrRelations;
         } elseif ($modelOrRelations instanceof Builder) {
-            $this->model         = $modelOrRelations->getModel();
+            $this->model = $modelOrRelations->getModel();
             $this->eloquentClass = get_class($this->model);
-            $this->queryBuilder  = $modelOrRelations;
+            $this->queryBuilder = $modelOrRelations;
         } else {
             $this->setRelations($modelOrRelations);
         }
@@ -185,8 +185,8 @@ class EloquentRepository extends Repository implements TreeRepository
 
             $orders->each(function ($orderBy) use ($model) {
                 $column = $orderBy['arguments'][0];
-                $type   = in_array($orderBy['method'], $model->getSortDescMethods(), true) ? 'desc' : ($orderBy['arguments'][1] ?? 'asc');
-                $cast   = null;
+                $type = in_array($orderBy['method'], $model->getSortDescMethods(), true) ? 'desc' : ($orderBy['arguments'][1] ?? 'asc');
+                $cast = null;
 
                 $this->addOrderBy($model, $column, $type, $cast);
             });
@@ -210,7 +210,7 @@ class EloquentRepository extends Repository implements TreeRepository
     protected function addOrderBy(Grid\Model $model, $column, $type, $cast)
     {
         $explodedCols = explode('.', $column);
-        $isRelation   = empty($explodedCols[1]) ? false : method_exists($this->model(), $explodedCols[0]);
+        $isRelation = empty($explodedCols[1]) ? false : method_exists($this->model(), $explodedCols[0]);
 
         if (count($explodedCols) > 1 && $isRelation) {
             $this->setRelationSort($model, $column, $type, $cast);
@@ -238,8 +238,8 @@ class EloquentRepository extends Repository implements TreeRepository
         if ($isJsonColumn) {
             $explodedCols = explode('->', $column);
             // json字段排序
-            $col    = $this->wrapMySqlColumn(array_shift($explodedCols));
-            $parts  = implode('.', $explodedCols);
+            $col = $this->wrapMySqlColumn(array_shift($explodedCols));
+            $parts = implode('.', $explodedCols);
             $column = "JSON_UNQUOTE(JSON_EXTRACT({$col}, '$.{$parts}'))";
         }
 
@@ -770,7 +770,7 @@ class EloquentRepository extends Repository implements TreeRepository
      */
     protected function getRelationInputs($model, $inputs = [])
     {
-        $map       = [];
+        $map = [];
         $relations = [];
 
         foreach ($inputs as $column => $value) {
@@ -842,9 +842,9 @@ class EloquentRepository extends Repository implements TreeRepository
 
                     // if related is empty
                     if (is_null($related)) {
-                        $related                                   = $relation->getRelated();
-                        $qualifiedParentKeyName                    = $relation->getQualifiedParentKeyName();
-                        $localKey                                  = Arr::last(explode('.', $qualifiedParentKeyName));
+                        $related = $relation->getRelated();
+                        $qualifiedParentKeyName = $relation->getQualifiedParentKeyName();
+                        $localKey = Arr::last(explode('.', $qualifiedParentKeyName));
                         $related->{$relation->getForeignKeyName()} = $model->{$localKey};
                     }
 

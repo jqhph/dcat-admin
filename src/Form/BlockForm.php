@@ -36,7 +36,7 @@ class BlockForm extends WidgetForm
 
     public function __construct(Form $form)
     {
-        $this->form    = $form;
+        $this->form = $form;
         $this->builder = $form->builder();
 
         $this->initFields();

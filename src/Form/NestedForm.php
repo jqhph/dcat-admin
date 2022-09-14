@@ -383,13 +383,13 @@ class NestedForm extends WidgetForm
 
         if (is_array($column)) {
             foreach ($column as $k => $name) {
-                $errorKey[$k]     = sprintf('%s.%s.%s', $this->relationName, $key, $name);
-                $elementName[$k]  = Helper::formatElementName($this->formatName().'.'.$key.'.'.$name);
+                $errorKey[$k] = sprintf('%s.%s.%s', $this->relationName, $key, $name);
+                $elementName[$k] = Helper::formatElementName($this->formatName().'.'.$key.'.'.$name);
                 $elementClass[$k] = [$this->formatClass(), $this->formatClass($name), $this->formatClass($name, false)];
             }
         } else {
-            $errorKey     = sprintf('%s.%s.%s', $this->relationName, $key, $column);
-            $elementName  = Helper::formatElementName($this->formatName().'.'.$key.'.'.$column);
+            $errorKey = sprintf('%s.%s.%s', $this->relationName, $key, $column);
+            $elementName = Helper::formatElementName($this->formatName().'.'.$key.'.'.$column);
             $elementClass = [$this->formatClass(), $this->formatClass($column), $this->formatClass($column, false)];
         }
 

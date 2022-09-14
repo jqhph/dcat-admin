@@ -210,7 +210,7 @@ trait UploadField
 
         if ($result) {
             $path = $this->getUploadPath();
-            $url  = $this->objectUrl($path);
+            $url = $this->objectUrl($path);
 
             // 上传成功
             return $this->responseUploaded($this->saveFullUrl ? $url : $path, $url);
@@ -323,10 +323,10 @@ trait UploadField
      */
     protected function generateSequenceName(UploadedFile $file)
     {
-        $index        = 1;
-        $extension    = $file->getClientOriginalExtension();
+        $index = 1;
+        $extension = $file->getClientOriginalExtension();
         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $newName      = $originalName.'_'.$index.'.'.$extension;
+        $newName = $originalName.'_'.$index.'.'.$extension;
 
         while ($this->getStorage()->exists("{$this->getDirectory()}/$newName")) {
             $index++;
@@ -388,7 +388,7 @@ trait UploadField
             return $this->destroy();
         }
 
-        $file     = array_filter((array) $file);
+        $file = array_filter((array) $file);
         $original = (array) $this->original;
 
         $this->deleteFile(Arr::except(array_combine($original, $original), $file));
@@ -416,7 +416,7 @@ trait UploadField
                 $storage->delete($path);
             } else {
                 $prefix = $storage->url('');
-                $path   = str_replace($prefix, '', $path);
+                $path = str_replace($prefix, '', $path);
 
                 if ($storage->exists($path)) {
                     $storage->delete($path);

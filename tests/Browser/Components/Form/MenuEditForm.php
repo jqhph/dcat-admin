@@ -18,10 +18,10 @@ class MenuEditForm extends MenuCreationForm
     {
         if ($id && ! is_numeric($id)) {
             $selector = $id;
-            $id       = null;
+            $id = null;
         }
 
-        $this->id       = $id;
+        $this->id = $id;
         $this->selector = $selector;
     }
 

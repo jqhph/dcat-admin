@@ -147,8 +147,8 @@ class Tree extends Field
             return;
         }
 
-        $idColumn     = $this->columnNames['id'];
-        $textColumn   = $this->columnNames['text'];
+        $idColumn = $this->columnNames['id'];
+        $textColumn = $this->columnNames['text'];
         $parentColumn = $this->columnNames['parent'];
 
         $parentIds = $nodes = [];

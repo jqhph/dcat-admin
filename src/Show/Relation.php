@@ -52,9 +52,9 @@ class Relation extends Field
      */
     public function __construct($name, $builder, $title = '')
     {
-        $this->name    = $name;
+        $this->name = $name;
         $this->builder = $builder;
-        $this->title   = $this->formatLabel($title);
+        $this->title = $this->formatLabel($title);
     }
 
     /**

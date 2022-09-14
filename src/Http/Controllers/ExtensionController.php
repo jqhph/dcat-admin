@@ -106,9 +106,9 @@ class ExtensionController extends Controller
         $self = $this;
 
         $form->saving(function (Form $form) use ($self) {
-            $package   = $form->name;
+            $package = $form->name;
             $namespace = $form->namespace;
-            $type      = $form->type;
+            $type = $form->type;
 
             if ($package) {
                 $results = $self->createExtension($package, $namespace, $type);

@@ -19,7 +19,7 @@ class ValueFilter
 
     public function __construct(Filter $filter, $valueKey)
     {
-        $this->filter   = $filter;
+        $this->filter = $filter;
         $this->valueKey = $valueKey;
 
         $this->addStyle();

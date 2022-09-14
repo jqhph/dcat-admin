@@ -94,7 +94,7 @@ class Permission extends Model implements Sortable
         $matches = array_map(function ($path) use ($method) {
             if (Str::contains($path, ':')) {
                 [$method, $path] = explode(':', $path);
-                $method          = explode(',', $method);
+                $method = explode(',', $method);
             }
 
             $path = Str::contains($path, '.') ? $path : ltrim(admin_base_path($path), '/');

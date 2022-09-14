@@ -64,7 +64,7 @@ class RadialBar extends Card
     protected function defaultChartOptions()
     {
         $gradientColor = Admin::color()->success();
-        $labelColor    = '#99a2ac';
+        $labelColor = '#99a2ac';
 
         return [
             'chart' => [

@@ -27,8 +27,8 @@ class CreateButton implements Renderable
             return;
         }
 
-        $new   = trans('admin.new');
-        $url   = $this->grid->getCreateUrl();
+        $new = trans('admin.new');
+        $url = $this->grid->getCreateUrl();
         $class = $this->grid->makeName('dialog-create');
 
         [$width, $height] = $this->grid->option('dialog_form_area');

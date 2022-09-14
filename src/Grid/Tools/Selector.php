@@ -40,8 +40,8 @@ class Selector
      */
     public function __construct(Grid $grid)
     {
-        $this->grid      = $grid;
-        $this->request   = request();
+        $this->grid = $grid;
+        $this->request = request();
         $this->selectors = new Collection();
     }
 
@@ -85,7 +85,7 @@ class Selector
             }
 
             $options = $label;
-            $label   = admin_trans_field($column);
+            $label = admin_trans_field($column);
         }
 
         $this->selectors[$column] = compact(
@@ -171,8 +171,8 @@ class Selector
 
         $query[$this->grid->model()->getPageName()] = null;
 
-        $selected  = $this->parseSelected();
-        $options   = Arr::get($selected, $column, []);
+        $selected = $this->parseSelected();
+        $options = Arr::get($selected, $column, []);
         $queryName = "{$this->getQueryName()}.{$column}";
 
         if (is_null($value)) {

@@ -15,7 +15,7 @@ abstract class Event
 
     public function __construct(Form $form, array $payload = [])
     {
-        $this->form    = $form;
+        $this->form = $form;
         $this->payload = $payload;
     }
 }

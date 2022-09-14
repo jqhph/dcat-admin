@@ -90,7 +90,7 @@ class PublishCommand extends Command
         // 设置默认标签.
         if (! $tags && ! $this->tags) {
             $this->tags[] = 'dcat-admin-lang';
-            $tags         = [
+            $tags = [
                 'dcat-admin-migrations',
                 'dcat-admin-assets',
                 'dcat-admin-config',

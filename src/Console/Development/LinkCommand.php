@@ -38,7 +38,7 @@ class LinkCommand extends Command
             $files->copy(realpath(__DIR__.'/../../../phpunit.dusk.xml'), base_path('phpunit.dusk.xml'));
         }
 
-        $target    = base_path('tests');
+        $target = base_path('tests');
         $testsPath = realpath(__DIR__.'/../../../tests');
 
         if (is_dir($target)) {
@@ -64,7 +64,7 @@ class LinkCommand extends Command
      */
     protected function linkAssets($files)
     {
-        $basePath   = Admin::asset()->getRealPath('@admin');
+        $basePath = Admin::asset()->getRealPath('@admin');
         $publicPath = public_path($basePath);
 
         if (! is_dir($publicPath.'/..')) {

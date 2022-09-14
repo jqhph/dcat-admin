@@ -146,7 +146,7 @@ class Map extends Field
             $class = $this->normalizeElementClass($class);
         }
 
-        $strClass           = array_merge($class['lat'], $class['lng']);
+        $strClass = array_merge($class['lat'], $class['lng']);
         $this->elementClass = $strClass;
 
         return $this;

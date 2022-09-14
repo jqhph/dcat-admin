@@ -75,9 +75,9 @@ class KeyValue extends Field
             return false;
         }
 
-        $rules["{$this->column}.keys.*"]        = 'distinct';
-        $rules["{$this->column}.values.*"]      = $fieldRules;
-        $attributes["{$this->column}.keys.*"]   = $this->getKeyLabel();
+        $rules["{$this->column}.keys.*"] = 'distinct';
+        $rules["{$this->column}.values.*"] = $fieldRules;
+        $attributes["{$this->column}.keys.*"] = $this->getKeyLabel();
         $attributes["{$this->column}.values.*"] = $this->getValueLabel();
 
         $input = $this->prepareValidatorInput($input);

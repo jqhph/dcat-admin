@@ -91,10 +91,10 @@ HTML;
     public function renderColumn($row, $id)
     {
         $this->addScript();
-        $title    = $this->getTitle($row, $id);
-        $title    = e(is_array($title) ? json_encode($title) : $title);
-        $id       = $this->idColumn ? Arr::get($row->toArray(), $this->idColumn) : $id;
-        $checked  = $this->shouldChecked($row) ? 'checked="true"' : '';
+        $title = $this->getTitle($row, $id);
+        $title = e(is_array($title) ? json_encode($title) : $title);
+        $id = $this->idColumn ? Arr::get($row->toArray(), $this->idColumn) : $id;
+        $checked = $this->shouldChecked($row) ? 'checked="true"' : '';
         $disabled = $this->shouldDisable($row) ? 'disabled' : '';
 
         return <<<EOT
@@ -107,7 +107,7 @@ EOT;
 
     protected function addScript()
     {
-        $clickable  = $this->rowClickable ? 'true' : 'false';
+        $clickable = $this->rowClickable ? 'true' : 'false';
         $background = $this->background ?: Admin::color()->dark20();
 
         Admin::script(

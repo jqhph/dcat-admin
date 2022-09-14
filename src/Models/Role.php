@@ -111,7 +111,7 @@ class Role extends Model
         }
         $related = config('admin.database.role_permissions_table');
 
-        $model   = new static();
+        $model = new static();
         $keyName = $model->getKeyName();
 
         return $model->newQuery()

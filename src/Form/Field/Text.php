@@ -67,7 +67,7 @@ class Text extends Field
     public function same($field, ?string $error = null)
     {
         $field = $field instanceof Field ? $field : $this->form->field($field);
-        $name  = $field->column();
+        $name = $field->column();
 
         if ($name.'_confirmation' === $this->column) {
             $field->rules('confirmed');
@@ -158,18 +158,18 @@ JS
      */
     protected function formatOptions($options)
     {
-        $original  = [];
+        $original = [];
         $toReplace = [];
 
         foreach ($options as $key => &$value) {
             if (is_array($value)) {
-                $subArray  = $this->formatOptions($value);
-                $value     = $subArray['options'];
-                $original  = array_merge($original, $subArray['original']);
+                $subArray = $this->formatOptions($value);
+                $value = $subArray['options'];
+                $original = array_merge($original, $subArray['original']);
                 $toReplace = array_merge($toReplace, $subArray['toReplace']);
             } elseif (preg_match('/function.*?/', $value)) {
-                $original[]  = $value;
-                $value       = "%{$key}%";
+                $original[] = $value;
+                $value = "%{$key}%";
                 $toReplace[] = "\"{$value}\"";
             }
         }

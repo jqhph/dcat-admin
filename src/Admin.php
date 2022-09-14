@@ -541,12 +541,12 @@ class Admin
         $pjaxId = static::getPjaxContainerId();
 
         $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
-        $jsVariables['token']                   = csrf_token();
-        $jsVariables['lang']                    = ($lang = __('admin.client')) ? array_merge($lang, $jsVariables['lang'] ?? []) : [];
-        $jsVariables['colors']                  = static::color()->all();
-        $jsVariables['dark_mode']               = static::isDarkMode();
-        $jsVariables['sidebar_dark']            = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
-        $jsVariables['sidebar_light_style']     = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
+        $jsVariables['token'] = csrf_token();
+        $jsVariables['lang'] = ($lang = __('admin.client')) ? array_merge($lang, $jsVariables['lang'] ?? []) : [];
+        $jsVariables['colors'] = static::color()->all();
+        $jsVariables['dark_mode'] = static::isDarkMode();
+        $jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');
+        $jsVariables['sidebar_light_style'] = in_array($sidebarStyle, ['dark', 'light'], true) ? 'sidebar-light-primary' : 'sidebar-primary';
 
         return admin_javascript_json($jsVariables);
     }

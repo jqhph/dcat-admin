@@ -149,8 +149,8 @@ class Tree implements Renderable
     public function __construct($repository = null, ?Closure $callback = null)
     {
         $this->repository = $this->makeRepository($repository);
-        $this->path       = $this->path ?: request()->getPathInfo();
-        $this->url        = url($this->path);
+        $this->path = $this->path ?: request()->getPathInfo();
+        $this->url = url($this->path);
 
         $this->elementId .= Str::random(8);
 
@@ -203,7 +203,7 @@ class Tree implements Renderable
     {
         if (is_null($this->branchCallback)) {
             $this->branchCallback = function ($branch) {
-                $key   = $branch[$this->repository->getPrimaryKeyColumn()];
+                $key = $branch[$this->repository->getPrimaryKeyColumn()];
                 $title = $branch[$this->repository->getTitleColumn()];
 
                 return "$key - $title";
@@ -612,7 +612,7 @@ class Tree implements Renderable
         }
 
         if ($this->useQuickCreate) {
-            $text     = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp; $new</span>";
+            $text = $this->useCreate ? '<i class=\' fa fa-clone\'></i>' : "<i class='feather icon-plus'></i><span class='d-none d-sm-inline'>&nbsp; $new</span>";
             $quickBtn = "<button data-url='$url' class='btn btn-sm btn-primary tree-quick-create'>$text</button>";
         }
 

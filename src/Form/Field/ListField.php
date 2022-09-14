@@ -95,7 +95,7 @@ class ListField extends Field
             $rules["{$this->column}.values.*"] = $fieldRules;
         }
         $attributes["{$this->column}.values.*"] = __('Value');
-        $rules["{$this->column}.values"][]      = 'array';
+        $rules["{$this->column}.values"][] = 'array';
 
         if (! is_null($this->max)) {
             $rules["{$this->column}.values"][] = "max:$this->max";

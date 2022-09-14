@@ -64,7 +64,7 @@ class File extends Field implements UploadFieldInterface
         $value = Arr::get($input, $this->column);
         $value = array_filter(is_array($value) ? $value : explode(',', $value));
 
-        $rules      = $attributes = [];
+        $rules = $attributes = [];
         $requiredIf = null;
 
         $fileLimit = $this->options['fileNumLimit'] ?? 1;
@@ -83,7 +83,7 @@ class File extends Field implements UploadFieldInterface
             return false;
         }
 
-        $rules[$this->column]      = $requiredIf ?: 'required';
+        $rules[$this->column] = $requiredIf ?: 'required';
         $attributes[$this->column] = $this->label;
 
         return Validator::make($input, $rules, $this->getValidationMessages(), $attributes);

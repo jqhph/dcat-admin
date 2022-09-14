@@ -129,8 +129,8 @@ class Zip extends ZipArchive
          */
         if (is_dir($source)) {
             $includeHidden = isset($options['includeHidden']) && $options['includeHidden'];
-            $wildcard      = $includeHidden ? '{*,.[!.]*,..?*}' : '*';
-            $source        = implode('/', [dirname($source), Helper::basename($source), $wildcard]);
+            $wildcard = $includeHidden ? '{*,.[!.]*,..?*}' : '*';
+            $source = implode('/', [dirname($source), Helper::basename($source), $wildcard]);
         }
 
         extract(array_merge([
@@ -141,10 +141,10 @@ class Zip extends ZipArchive
         ], $options));
 
         if (is_file($source)) {
-            $files     = [$source];
+            $files = [$source];
             $recursive = false;
         } else {
-            $files   = glob($source, GLOB_BRACE);
+            $files = glob($source, GLOB_BRACE);
             $folders = glob(dirname($source).'/*', GLOB_ONLYDIR);
         }
 

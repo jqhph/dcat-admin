@@ -149,10 +149,10 @@ class Markdown extends Field
      */
     public function render()
     {
-        $this->options['path']        = admin_asset('@admin/dcat/plugins/editor-md/lib').'/';
-        $this->options['name']        = $this->column;
+        $this->options['path'] = admin_asset('@admin/dcat/plugins/editor-md/lib').'/';
+        $this->options['name'] = $this->column;
         $this->options['placeholder'] = $this->placeholder();
-        $this->options['readonly']    = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
+        $this->options['readonly'] = ! empty($this->attributes['readonly']) || ! empty($this->attributes['disabled']);
 
         if (empty($this->options['imageUploadURL'])) {
             $this->options['imageUploadURL'] = $this->defaultImageUploadUrl();
