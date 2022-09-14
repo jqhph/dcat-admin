@@ -95,6 +95,8 @@ class Column
         'editable'         => Displayers\Input::class,
         'input'            => Displayers\Input::class,
         'textarea'         => Displayers\Textarea::class,
+        'carbon'           => Displayers\Carbon::class,
+        'decimal'          => Displayers\Decimal::class,
     ];
 
     /**
