@@ -88,7 +88,7 @@ class DialogTree extends AbstractDisplayer
 
         return $this;
     }
-
+    
     public function check($value)
     {
         $this->value = Helper::array($value);
