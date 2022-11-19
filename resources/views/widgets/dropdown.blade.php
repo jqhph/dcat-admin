@@ -1,6 +1,6 @@
 @if(! empty($button['text']) || $click)
     <span class="drop{{ $direction }}" style="display:inline-block">
-        <a id="{{ $buttonId }}" class="dropdown-toggle {{ $button['class'] }}" data-toggle="dropdown" href="javascript:void(0)">
+        <a id="{{ $buttonId }}" class="dropdown-toggle {{ $button['class'] }}" style="{{ $button['style'] }}" data-toggle="dropdown" href="javascript:void(0)">
             <stub>{!! $button['text'] !!}</stub>
             <span class="caret"></span>
         </a>
