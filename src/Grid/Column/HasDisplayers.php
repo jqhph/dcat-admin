@@ -108,7 +108,7 @@ trait HasDisplayers
     }
 
     /**
-     * @param  string  $val
+     * @param  \Closure|string  $val
      * @return $this
      */
     public function prepend($val)
@@ -131,7 +131,7 @@ trait HasDisplayers
     }
 
     /**
-     * @param  string  $val
+     * @param  \Closure|string  $val
      * @return $this
      */
     public function append($val)
