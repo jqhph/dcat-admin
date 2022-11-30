@@ -358,7 +358,7 @@ trait UploadField
         Arr::set($data, $this->column, $file);
 
         /* @var \Illuminate\Validation\Validator $validator */
-        $validator = Validator::make($data, $rules, $this->validationMessages, $attributes);
+        $validator = Validator::make($data, $rules, $this->getValidationMessages(), $attributes);
 
         if (! $validator->passes()) {
             $errors = $validator->errors()->getMessages()[$this->column];
