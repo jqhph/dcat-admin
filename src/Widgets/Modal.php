@@ -36,6 +36,11 @@ class Modal extends Widget
      * @var string|Closure|Renderable
      */
     protected $button;
+    
+    /**
+     * @var bool
+    */
+    protected $buttonWarp = false;
 
     /**
      * @var string
@@ -167,12 +172,13 @@ class Modal extends Widget
      * 设置按钮.
      *
      * @param  string|Closure|Renderable  $button
+     * @param  bool  $buttonWarp
      * @return $this
      */
-    public function button($button)
+    public function button($button, bool $buttonWarp = false)
     {
         $this->button = $button;
-
+        $this->buttonWarp = $buttonWarp;
         return $this;
     }
 
@@ -415,7 +421,7 @@ HTML;
         $button = Helper::render($this->button);
 
         // 如果没有HTML标签则添加一个 a 标签
-        if (! preg_match('/(\<\/[\d\w]+\s*\>+)/i', $button)) {
+        if (! preg_match('/(\<\/[\d\w]+\s*\>+)/i', $button) || $this->buttonWarp) {
             $button = "<a href=\"javascript:void(0)\">{$button}</a>";
         }
 
