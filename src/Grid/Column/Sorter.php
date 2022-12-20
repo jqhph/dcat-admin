@@ -76,7 +76,7 @@ class Sorter implements Renderable
         $active = '';
 
         if ($this->isSorted()) {
-            $type = $this->sort['type'] == 'desc' ? 'asc' : 'desc';
+            $type = $this->sort['type'] == 'desc' ? 'desc' : 'asc';
             $active = 'active';
 
             if ($this->sort['type'] === 'asc') {
