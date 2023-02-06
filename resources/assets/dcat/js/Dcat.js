@@ -116,6 +116,8 @@ export default class Dcat {
 
         clear();
 
+        options = $.extend(options, { target: $(this.config.pjax_container_selector).get(0) });
+
         setTimeout(function () {
             initialized[selector] = $.initialize(selector, function () {
                 let $this = $(this),
