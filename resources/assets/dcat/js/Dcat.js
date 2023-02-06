@@ -134,7 +134,7 @@ export default class Dcat {
 
                 callback.call(this, $this, id)
             };
-            $.each($(selector), (idx,elem) => fn.call(elem));
+            $(selector).each((idx,elem) => fn.call(elem));
             initialized[selector] = $.initialize(selector, fn, options);
         });
     }
