@@ -116,7 +116,7 @@ export default class Dcat {
 
         clear();
 
-        options = $.extend({ target: $(this.config.pjax_container_selector).get(0) }, options);
+        options = $.extend({ observer: { childList: true, subtree: true } }, options);
 
         setTimeout(function () {
             initialized[selector] = $.initialize(selector, function () {
