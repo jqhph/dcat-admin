@@ -117,7 +117,7 @@ export default class Dcat {
         clear();
 
         setTimeout(function () {
-            initialized[selector] = $.initialize(selector, function () {
+            let fn = function () {
                 let $this = $(this),
                     id = $this.attr('id');
 
@@ -133,7 +133,9 @@ export default class Dcat {
                 }
 
                 callback.call(this, $this, id)
-            }, options);
+            };
+            $.each($(selector), (idx,elem) => fn.call(elem));
+            initialized[selector] = $.initialize(selector, fn, options);
         });
     }
 
