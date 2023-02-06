@@ -34,9 +34,21 @@
 
   .main-horizontal-sidebar > div {
     box-shadow: $shadow;
-    background: $white;
     //border-radius: .4rem;
   }
+
+  .main-horizontal-sidebar[class*=sidebar-light-] > div {
+    background: $white;
+  }
+
+  .main-horizontal-sidebar.sidebar-primary > div {
+    background: $primary;
+  }
+
+  .main-horizontal-sidebar[class*=sidebar-dark-] > div {
+    background: $dark;
+  }
+
 
   [class*=sidebar-dark-] .nav-sidebar > .nav-item.menu-open > .nav-link,
   [class*=sidebar-dark-] .nav-sidebar > .nav-item:hover > .nav-link,
@@ -61,8 +73,15 @@
 
     .nav-link.active i,
     .nav-link.active {
-      color: $primary!important;
       font-weight: 600;
+    }
+  }
+
+  .main-horizontal-sidebar:not(.sidebar-primary,[class*=sidebar-dark-]) .nav-sidebar > .nav-item,
+  .nav-sidebar > .nav-item .dropdown-menu {
+    .nav-link.active i,
+    .nav-link.active {
+      color: $primary!important;
     }
   }
 
@@ -113,6 +132,44 @@
       font-size: 1.45rem;
     }
   }
+
+  [class*=sidebar-dark-] .nav-sidebar>.nav-item i {
+    margin-right: 0;
+    color: inherit;
+  }
+}
+
+.horizontal-menu:not(.dark-mode) {
+  .sidebar-primary .nav-sidebar:not(.dropdown-menu) > .nav-item > .nav-link {
+    color: $white;
+  
+    &:hover {
+      background-color: #445692;
+    }
+  }
+  
+  [class*=sidebar-dark-] .nav-sidebar:not(.dropdown-menu) > .nav-item > .nav-link {
+    color: $white;
+  
+    &:hover {
+      background-color: #0d0f11;
+    }
+  }
+  
+  .sidebar-primary .menu-open >.nav-link {
+    background-color: #445692;
+  }
+  
+  [class*=sidebar-dark-] .menu-open >.nav-link {
+    background-color: #0d0f11;
+  }
+
+  .dropdown-menu {
+    .nav-item:hover > .nav-link {
+      color: $primary;
+      font-weight: 600;
+    }
+  }
 }
 
 .horizontal-menu.navbar-fixed-top .content-wrapper {
@@ -134,6 +191,21 @@ body.dark-mode.horizontal-menu {
     color: $body-dark-font-color;
   }
 
+  .dropdown-toggle.active {
+    &:hover {
+      i,
+      &:after {
+        color: $primary;
+      }
+    }
+  }
+
+  .nav-sidebar > .nav-item .nav-link:hover {
+    i, p {
+      color: $white;
+    }
+  }
+
   .main-horizontal-sidebar > div,
   [class*=sidebar-dark-],
   [class*=sidebar-light-] {
@@ -150,6 +222,14 @@ body.dark-mode.horizontal-menu {
 
   [class*=sidebar-light-] .nav-sidebar > .nav-item:hover > .nav-link:not(.active) {
     color: $white;
+  }
+
+  .nav-sidebar > .nav-item,
+  .nav-sidebar > .nav-item .dropdown-menu {
+    .nav-link.active i,
+    .nav-link.active {
+      color: $primary;
+    }
   }
 }
 
