@@ -37,7 +37,7 @@ use Illuminate\Support\Traits\Macroable;
  * @method $this qrcode($formatter = null, $width = 150, $height = 150)
  * @method $this downloadable($server = '', $disk = null)
  * @method $this copyable()
- * @method $this orderable()
+ * @method $this orderable($order='asc')
  * @method $this limit(int $limit = 100, string $end = '...')
  * @method $this ascii()
  * @method $this camel()
