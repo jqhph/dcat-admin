@@ -461,7 +461,7 @@ class Filter implements Renderable
 
         return tap(array_filter($conditions), function ($conditions) {
             if (! empty($conditions)) {
-                if ($this->expand === null || $this->mode !== static::MODE_RIGHT_SIDE) {
+                if ($this->expand === null) {
                     $this->expand();
                 }
 
@@ -536,7 +536,7 @@ class Filter implements Renderable
      */
     public function countConditions()
     {
-        return $this->mode() === Filter::MODE_RIGHT_SIDE
+        return !$this->expand
             ? count($this->getConditions()) : 0;
     }
 
