@@ -17,8 +17,6 @@ class DateRange extends Field
 
         array_shift($arguments);
         $this->label = $this->formatLabel($arguments);
-
-        $this->options(['format' => $this->format]);
     }
 
     protected function prepareInputValue($value)
@@ -30,10 +28,18 @@ class DateRange extends Field
         return $value;
     }
 
+    public function format($format)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
     public function render()
     {
         $this->options['locale'] = config('app.locale');
-
+        $this->options(['format' => $this->format]);
+        
         $this->addVariables(['options' => $this->options]);
 
         return parent::render();
