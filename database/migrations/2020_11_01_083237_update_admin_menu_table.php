@@ -37,8 +37,7 @@ class UpdateAdminMenuTable extends Migration
     public function down()
     {
         Schema::table($this->config('database.menu_table'), function (Blueprint $table) {
-            $table->dropColumn('show');
-            $table->dropColumn('extension');
+            $table->dropColumn(['show', 'extension']);
         });
     }
 }
