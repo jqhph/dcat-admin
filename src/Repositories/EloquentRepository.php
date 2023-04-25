@@ -830,6 +830,14 @@ class EloquentRepository extends Repository implements TreeRepository
                 continue;
             }
 
+            $updateSubRelation = function ($model, $inputs)use($form) {
+                [$subRelations, $subRelationKeyMap] = $this->getRelationInputs($model, $inputs);
+
+                if($subRelations) {
+                    $this->updateRelation($form, $model, $subRelations, $subRelationKeyMap);
+                }
+            };
+
             switch (true) {
                 case $relation instanceof Relations\BelongsToMany:
                 case $relation instanceof Relations\MorphToMany:
@@ -850,10 +858,12 @@ class EloquentRepository extends Repository implements TreeRepository
                     }
 
                     foreach ($prepared[$name] as $column => $value) {
-                        $related->setAttribute($column, $value);
+                        !$related->isRelation($column) && $related->setAttribute($column, $value);
                     }
 
                     $related->save();
+
+                    $updateSubRelation($related, $prepared[$name]);
                     break;
                 case $relation instanceof Relations\BelongsTo:
                 case $relation instanceof Relations\MorphTo:
@@ -866,7 +876,7 @@ class EloquentRepository extends Repository implements TreeRepository
                     }
 
                     foreach ($prepared[$name] as $column => $value) {
-                        $parent->setAttribute($column, $value);
+                        !$parent->isRelation($column) && $parent->setAttribute($column, $value);
                     }
 
                     $parent->save();
@@ -879,6 +889,8 @@ class EloquentRepository extends Repository implements TreeRepository
                         $model->save();
                     }
 
+                    $updateSubRelation($parent, $prepared[$name]);
+
                     break;
                 case $relation instanceof Relations\MorphOne:
                     $related = $model->$relationName;
@@ -886,9 +898,11 @@ class EloquentRepository extends Repository implements TreeRepository
                         $related = $relation->make();
                     }
                     foreach ($prepared[$name] as $column => $value) {
-                        $related->setAttribute($column, $value);
+                        !$related->isRelation($column) && $related->setAttribute($column, $value);
                     }
                     $related->save();
+
+                    $updateSubRelation($related, $prepared[$name]);
                     break;
                 case $relation instanceof Relations\HasMany:
                 case $relation instanceof Relations\MorphMany:
@@ -914,9 +928,13 @@ class EloquentRepository extends Repository implements TreeRepository
                             Arr::forget($related, $relation->getModel()->getKeyName());
                         }
 
-                        $instance->fill($related);
+                        foreach ($related as $column => $value) {
+                            !$instance->isRelation($column) && $instance->setAttribute($column, $value);
+                        }
 
                         $instance->save();
+
+                        $updateSubRelation($instance, $related);
                     }
 
                     break;
