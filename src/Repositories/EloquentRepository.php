@@ -830,10 +830,10 @@ class EloquentRepository extends Repository implements TreeRepository
                 continue;
             }
 
-            $updateSubRelation = function ($model, $inputs)use($form) {
+            $updateSubRelation = function ($model, $inputs) use ($form) {
                 [$subRelations, $subRelationKeyMap] = $this->getRelationInputs($model, $inputs);
 
-                if($subRelations) {
+                if ($subRelations) {
                     $this->updateRelation($form, $model, $subRelations, $subRelationKeyMap);
                 }
             };
@@ -858,7 +858,7 @@ class EloquentRepository extends Repository implements TreeRepository
                     }
 
                     foreach ($prepared[$name] as $column => $value) {
-                        !$related->isRelation($column) && $related->setAttribute($column, $value);
+                        ! $related->isRelation($column) && $related->setAttribute($column, $value);
                     }
 
                     $related->save();
@@ -876,7 +876,7 @@ class EloquentRepository extends Repository implements TreeRepository
                     }
 
                     foreach ($prepared[$name] as $column => $value) {
-                        !$parent->isRelation($column) && $parent->setAttribute($column, $value);
+                        ! $parent->isRelation($column) && $parent->setAttribute($column, $value);
                     }
 
                     $parent->save();
@@ -898,7 +898,7 @@ class EloquentRepository extends Repository implements TreeRepository
                         $related = $relation->make();
                     }
                     foreach ($prepared[$name] as $column => $value) {
-                        !$related->isRelation($column) && $related->setAttribute($column, $value);
+                        ! $related->isRelation($column) && $related->setAttribute($column, $value);
                     }
                     $related->save();
 
@@ -929,7 +929,7 @@ class EloquentRepository extends Repository implements TreeRepository
                         }
 
                         foreach ($related as $column => $value) {
-                            !$instance->isRelation($column) && $instance->setAttribute($column, $value);
+                            ! $instance->isRelation($column) && $instance->setAttribute($column, $value);
                         }
 
                         $instance->save();
