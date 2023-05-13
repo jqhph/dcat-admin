@@ -18,20 +18,13 @@ class Menu
         ],
         [
             'id'        => 2,
-            'title'     => 'Extensions',
-            'icon'      => '',
-            'uri'       => 'auth/extensions',
-            'parent_id' => 1,
-        ],
-        [
-            'id'        => 3,
             'title'     => 'Scaffold',
             'icon'      => '',
             'uri'       => 'helpers/scaffold',
             'parent_id' => 1,
         ],
         [
-            'id'        => 4,
+            'id'        => 3,
             'title'     => 'Icons',
             'icon'      => '',
             'uri'       => 'helpers/icons',
