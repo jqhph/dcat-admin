@@ -24,12 +24,14 @@ return [
         'type'                  => '類型',
     ],
     'labels' => [
+        'auth'     => '系統',
+        'helpers'  => '開發工具',
+        'scaffold' => '代碼生成器',
         'list'     => '列表',
         'edit'     => '編輯',
         'detail'   => '詳細',
         'create'   => '創建',
         'root'     => 'root',
-        'scaffold' => '代碼生成器',
     ],
 
     'options' => [
