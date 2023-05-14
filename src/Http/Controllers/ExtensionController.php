@@ -21,7 +21,7 @@ class ExtensionController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->title(admin_trans_label('Extensions'))
+            ->title(trans('admin.extensions'))
             ->description(trans('admin.list'))
             ->body($this->grid());
     }
