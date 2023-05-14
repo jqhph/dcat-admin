@@ -24,12 +24,14 @@ return [
         'type'                  => '类型',
     ],
     'labels' => [
+        'auth'     => '系统',
+        'helpers'  => '开发工具',
+        'scaffold' => '代码生成器',
         'list'     => '列表',
         'edit'     => '编辑',
         'detail'   => '详细',
         'create'   => '创建',
         'root'     => '顶级',
-        'scaffold' => '代码生成器',
     ],
     'options' => [
         //
