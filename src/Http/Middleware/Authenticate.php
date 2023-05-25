@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class Authenticate
 {
+    public function __construct()
+    {
+        $this->guard = Admin::guard();
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -20,9 +25,11 @@ class Authenticate
     {
         if (
             ! config('admin.auth.enable', true)
-            || ! Admin::guard()->guest()
+            || ! $this->guard->guest()
             || $this->shouldPassThrough($request)
         ) {
+            app('auth')->shouldUse($this->guard->name);
+
             return $next($request);
         }
 
