@@ -9,7 +9,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 
 /**
- * @mixin Builder
+ * @mixin  Builder
+ * @method $this onlyTrashed(string $deletedAtColumn = 'deleted_at')
  */
 class Scope implements Renderable
 {
