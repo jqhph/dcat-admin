@@ -479,6 +479,10 @@ trait UploadField
             return $path;
         }
 
+        if(config('admin.upload.private')){
+            return $this->getStorage()->temporaryUrl($path,config('admin.upload.expiration'),config('admin.upload.options'));
+        }
+
         return $this->getStorage()->url($path);
     }
 
