@@ -57,15 +57,14 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
     {
         $avatar = $this->avatar;
 
-        if ($avatar) {
-            if (! URL::isValidUrl($avatar)) {
-                $avatar = Storage::disk(config('admin.upload.disk'))->url($avatar);
-            }
-
+        if (URL::isValidUrl($avatar)) {
             return $avatar;
         }
 
-        return admin_asset(config('admin.default_avatar') ?: '@admin/images/default-avatar.jpg');
+        if (config('admin.upload.private')) {
+            return Storage::disk(config('admin.upload.disk'))->temporaryUrl($avatar, config('admin.upload.expiration'), config('admin.upload.options'));
+        }
+        return Storage::disk(config('admin.upload.disk'))->url($avatar);
     }
 
     /**
