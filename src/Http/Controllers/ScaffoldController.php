@@ -211,7 +211,7 @@ class ScaffoldController extends Controller
     protected function getDatabaseColumns($db = null, $tb = null)
     {
         $databases = Arr::where(config('database.connections', []), function ($value) {
-            $supports = ['mysql'];
+            $supports = ['mysql', 'pgsql'];
 
             return in_array(strtolower(Arr::get($value, 'driver')), $supports);
         });
@@ -223,8 +223,14 @@ class ScaffoldController extends Controller
                 if ($db && $db != $value['database']) {
                     continue;
                 }
-
-                $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_schema = "%s"', $value['database']);
+                switch ($value['drive']) {
+                    case 'mysql':
+                        $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_schema = "%s"', $value['database']);
+                        break;
+                    case 'pgsql':
+                        $sql = sprintf('SELECT * FROM information_schema.columns WHERE table_catalog = \'%s\' and table_schema = \'%s\'', $value['database'], $value['search_path']);
+                        break;
+                }
 
                 if ($tb) {
                     $p = Arr::get($value, 'prefix');
@@ -232,7 +238,7 @@ class ScaffoldController extends Controller
                     $sql .= " AND TABLE_NAME = '{$p}{$tb}'";
                 }
 
-                $sql .= ' ORDER BY `ORDINAL_POSITION` ASC';
+                $sql .= ' ORDER BY ORDINAL_POSITION ASC';
 
                 $tmp = DB::connection($connectName)->select($sql);
 
