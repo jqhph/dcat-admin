@@ -122,8 +122,8 @@ class Tooltip extends Widget
         Admin::script(
             <<<JS
 $('{$this->selector}').on('mouseover', function () {
-    var title = '{$title}' || $(this).data('title');
-    var idx = layer.tips(title, this, {
+    var title = `{$title}` || $(this).data('title');
+    var idx = layer.tips('<span style="word-wrap: break-word;">' + title + '</span>', this, {
       tips: ['{$this->placement}', '{$background}'],
       time: 0,
       maxWidth: {$this->maxWidth},
