@@ -12,7 +12,9 @@
                     @else
                         {!! $content !!}
                     @endif
-                    &nbsp;
+                    @if(is_null($content) || $content === '')
+                        &nbsp;
+                    @endif
                 </div>
             </div>
         @else
