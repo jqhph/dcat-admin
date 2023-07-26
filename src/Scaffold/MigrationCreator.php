@@ -42,10 +42,10 @@ class MigrationCreator extends BaseMigrationCreator
 
         $stub = $this->files->get(__DIR__.'/stubs/create.stub');
 
-        $this->files->put($path, $this->populateStub($name, $stub, $table));
+        $this->files->put($path, $this->populateAdminStub($name, $stub, $table));
         $this->files->chmod($path, 0777);
 
-        $this->firePostCreateHooks($table);
+        $this->firePostCreateHooks($table, $path);
 
         return $path;
     }
@@ -58,7 +58,7 @@ class MigrationCreator extends BaseMigrationCreator
      * @param  string  $table
      * @return mixed
      */
-    protected function populateStub($name, $stub, $table)
+    protected function populateAdminStub($name, $stub, $table)
     {
         return str_replace(
             ['DummyClass', 'DummyTable', 'DummyStructure'],
@@ -88,7 +88,7 @@ class MigrationCreator extends BaseMigrationCreator
             throw new AdminException('Table fields can\'t be empty');
         }
 
-        $rows[] = "\$table->increments('$keyName');\n";
+        $rows[] = "\$table->bigIncrements('$keyName');\n";
 
         foreach ($fields as $field) {
             $column = "\$table->{$field['type']}('{$field['name']}')";

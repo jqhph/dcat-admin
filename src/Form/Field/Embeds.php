@@ -2,6 +2,7 @@
 
 namespace Dcat\Admin\Form\Field;
 
+use Dcat\Admin\Contracts\FieldsCollection;
 use Dcat\Admin\Form\EmbeddedForm;
 use Dcat\Admin\Form\Field;
 use Dcat\Admin\Form\ResolveField;
@@ -10,7 +11,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class Embeds extends Field
+class Embeds extends Field implements FieldsCollection
 {
     use ResolveField;
 
@@ -267,5 +268,28 @@ class Embeds extends Field
         $this->addVariables(['form' => $this->buildEmbeddedForm()]);
 
         return parent::render();
+    }
+
+    /**
+     * 根据字段名称查找字段.
+     *
+     * @param  string  $column
+     * @return Field|null
+     */
+    public function field($name)
+    {
+        return $this->buildEmbeddedForm()->fields()->first(function (Field $field) use ($name) {
+            return $field->column() == $name;
+        });
+    }
+
+    /**
+     * 获取所有字段.
+     *
+     * @return void
+     */
+    public function fields()
+    {
+        return $this->buildEmbeddedForm()->fields();
     }
 }

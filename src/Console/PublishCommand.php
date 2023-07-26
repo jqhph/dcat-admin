@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem as Flysystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\MountManager;
 
 class PublishCommand extends Command
@@ -145,23 +146,37 @@ class PublishCommand extends Command
 
     protected function publishDirectory($from, $to)
     {
+        $localClass = class_exists(LocalAdapter::class) ? LocalAdapter::class : LocalFilesystemAdapter::class;
+
         $this->moveManagedFiles(new MountManager([
-            'from' => new Flysystem(new LocalAdapter($from)),
-            'to' => new Flysystem(new LocalAdapter($to)),
+            'from' => new Flysystem(new $localClass($from)),
+            'to' => new Flysystem(new $localClass($to)),
         ]));
 
         $this->status($from, $to, 'Directory');
     }
 
-    protected function moveManagedFiles($manager)
+    protected function moveManagedFiles(MountManager $manager)
     {
+        if (method_exists($manager, 'put')) {
+            foreach ($manager->listContents('from://', true) as $file) {
+                if (
+                    $file['type'] === 'file'
+                    && (! $manager->has('to://'.$file['path']) || $this->option('force'))
+                    && ! $this->isExceptPath($manager, $file['path'])
+                ) {
+                    $manager->put('to://'.$file['path'], $manager->read('from://'.$file['path']));
+                }
+            }
+
+            return;
+        }
+
         foreach ($manager->listContents('from://', true) as $file) {
-            if (
-                $file['type'] === 'file'
-                && (! $manager->has('to://'.$file['path']) || $this->option('force'))
-                && ! $this->isExceptPath($manager, $file['path'])
-            ) {
-                $manager->put('to://'.$file['path'], $manager->read('from://'.$file['path']));
+            $path = Str::after($file['path'], 'from://');
+
+            if ($file['type'] === 'file' && (! $manager->fileExists('to://'.$path) || $this->option('force'))) {
+                $manager->write('to://'.$path, $manager->read($file['path']));
             }
         }
     }

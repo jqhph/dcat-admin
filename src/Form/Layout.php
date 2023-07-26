@@ -40,6 +40,15 @@ class Layout
         $this->currentFields[] = $field;
     }
 
+    public function appendToLastColumn($content)
+    {
+        if ($end = end($this->columns)) {
+            foreach (is_array($content) ? $content : [$content] as $value) {
+                $end->append($value);
+            }
+        }
+    }
+
     public function hasBlocks()
     {
         return $this->hasBlock;

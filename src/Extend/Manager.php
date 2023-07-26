@@ -5,7 +5,6 @@ namespace Dcat\Admin\Extend;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\AdminException;
 use Dcat\Admin\Exception\RuntimeException;
-use Dcat\Admin\Models\Extension;
 use Dcat\Admin\Models\Extension as ExtensionModel;
 use Dcat\Admin\Support\Composer;
 use Dcat\Admin\Support\Helper;
@@ -97,7 +96,7 @@ class Manager
     {
         $name = $this->getName($name);
 
-        $extension = Extension::where('name', $name)->first();
+        $extension = ExtensionModel::where('name', $name)->first();
 
         if (! $extension) {
             throw new RuntimeException(sprintf('Please install the extension(%s) first!', $name));

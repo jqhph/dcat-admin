@@ -15,6 +15,10 @@ class RenderableController
 
         $renderable = $this->newRenderable($request);
 
+        if (method_exists($renderable, 'passesAuthorization') && ! $renderable->passesAuthorization()) {
+            return $renderable->failedAuthorization();
+        }
+
         $this->addScript();
 
         $this->forgetDefaultAssets();

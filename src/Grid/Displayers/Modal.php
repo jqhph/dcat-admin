@@ -73,8 +73,8 @@ class Modal extends AbstractDisplayer
 
     protected function renderButton()
     {
-        $icon = $this->icon ? "<i class='fa {$this->icon}'></i>" : '';
+        $icon = $this->icon ? "<i class='fa {$this->icon}'></i>&nbsp;&nbsp;" : '';
 
-        return "<a href='javascript:void(0)'>{$icon}&nbsp;&nbsp;{$this->value}</a>";
+        return "<a href='javascript:void(0)'>{$icon}{$this->value}</a>";
     }
 }

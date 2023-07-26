@@ -307,7 +307,7 @@ class Field implements Renderable
      * @param  array  $data
      * @return void
      */
-    final public function fill($data)
+    public function fill($data)
     {
         $data = Helper::array($data);
 
@@ -537,7 +537,7 @@ class Field implements Renderable
     /**
      * Set or get value of the field.
      *
-     * @param  null  $value
+     * @param  mixed|null  $value
      * @return mixed|$this
      */
     public function value($value = null)
@@ -640,7 +640,7 @@ class Field implements Renderable
     /**
      * Get or set label of the field.
      *
-     * @param  null  $label
+     * @param  mixed|null  $label
      * @return $this|string
      */
     public function label($label = null)
@@ -1065,7 +1065,7 @@ class Field implements Renderable
     /**
      * @param  array|string  $labelClass
      * @param  bool  $append
-     * @return $this|string
+     * @return $this
      */
     public function setLabelClass($labelClass, bool $append = true)
     {

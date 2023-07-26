@@ -81,6 +81,7 @@ class Application
 
     public function routes($pathOrCallback)
     {
+        $this->switch(static::DEFAULT);
         $this->loadRoutesFrom($pathOrCallback, static::DEFAULT);
 
         if ($apps = $this->getApps()) {

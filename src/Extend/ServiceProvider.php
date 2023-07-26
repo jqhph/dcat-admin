@@ -6,6 +6,7 @@ use Dcat\Admin\Admin;
 use Dcat\Admin\Exception\RuntimeException;
 use Dcat\Admin\Support\ComposerProperty;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -566,6 +567,10 @@ abstract class ServiceProvider extends LaravelServiceProvider
     {
         if (is_array($files)) {
             return array_map([$this, 'formatAssetFiles'], $files);
+        }
+
+        if (URL::isValidUrl($files)) {
+            return $files;
         }
 
         return '@'.$this->getName().'.path/'.trim($files, '/');

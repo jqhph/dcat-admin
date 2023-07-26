@@ -57,7 +57,9 @@ class ArrayField extends HasMany
 
     public function buildNestedForm($key = null)
     {
-        $form = new NestedForm($this->column);
+        $form = new NestedForm($this->getNestedFormColumnName());
+
+        $this->setNestedFormDefaultKey($form);
 
         $form->setForm($this->form)
             ->setKey($key);
@@ -66,7 +68,10 @@ class ArrayField extends HasMany
 
         call_user_func($this->builder, $form);
 
-        $form->hidden(NestedForm::REMOVE_FLAG_NAME)->default(0)->addElementClass(NestedForm::REMOVE_FLAG_CLASS);
+        $hidden = $form->hidden(NestedForm::REMOVE_FLAG_NAME)->default(0)->addElementClass(NestedForm::REMOVE_FLAG_CLASS);
+
+        // 使用column布局之后需要重新追加字段
+        $form->layout()->appendToLastColumn($hidden);
 
         return $form;
     }

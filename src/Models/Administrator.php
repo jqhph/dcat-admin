@@ -6,6 +6,7 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Dcat\Admin\Traits\HasPermissions;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\URL;
  *
  * @property Role[] $roles
  */
-class Administrator extends Model implements AuthenticatableContract
+class Administrator extends Model implements AuthenticatableContract, Authorizable
 {
     use Authenticatable,
         HasPermissions,

@@ -87,6 +87,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method Field\SelectTable selectTable($column, $label = '')
  * @method Field\MultipleSelectTable multipleSelectTable($column, $label = '')
  * @method Field\Button button(string $html = null)
+ * @method Field\Autocomplete autocomplete($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -170,6 +171,7 @@ class Form implements Renderable
         'array'               => Field\ArrayField::class,
         'selectTable'         => Field\SelectTable::class,
         'multipleSelectTable' => Field\MultipleSelectTable::class,
+        'autocomplete'        => Field\Autocomplete::class,
     ];
 
     /**
@@ -996,7 +998,7 @@ class Form implements Renderable
             $columns = $field->column();
 
             // If column not in input array data, then continue.
-            if (! Arr::has($updates, $columns)) {
+            if (! Arr::has($updates, $columns) || Arr::has($prepared, $columns)) {
                 continue;
             }
 

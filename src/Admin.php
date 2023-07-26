@@ -31,7 +31,7 @@ class Admin
     use HasAssets;
     use HasHtml;
 
-    const VERSION = '2.1.5-beta';
+    const VERSION = '2.2.2-beta';
 
     const SECTION = [
         // 往 <head> 标签内输入内容
@@ -542,7 +542,7 @@ class Admin
 
         $jsVariables['pjax_container_selector'] = $pjaxId ? ('#'.$pjaxId) : '';
         $jsVariables['token'] = csrf_token();
-        $jsVariables['lang'] = __('admin.client') ?: [];
+        $jsVariables['lang'] = ($lang = __('admin.client')) ? array_merge($lang, $jsVariables['lang'] ?? []) : [];
         $jsVariables['colors'] = static::color()->all();
         $jsVariables['dark_mode'] = static::isDarkMode();
         $jsVariables['sidebar_dark'] = config('admin.layout.sidebar_dark') || ($sidebarStyle === 'dark');

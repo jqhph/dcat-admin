@@ -108,7 +108,7 @@ trait HasDisplayers
     }
 
     /**
-     * @param  string  $val
+     * @param  \Closure|string  $val
      * @return $this
      */
     public function prepend($val)
@@ -131,7 +131,7 @@ trait HasDisplayers
     }
 
     /**
-     * @param  string  $val
+     * @param  \Closure|string  $val
      * @return $this
      */
     public function append($val)
@@ -251,7 +251,9 @@ trait HasDisplayers
 
         return $this->display(function ($_, $column) use ($action, $grid) {
             /** @var RowAction $action */
-            $action = $action::make();
+            if (! ($action instanceof RowAction)) {
+                $action = $action::make();
+            }
 
             return $action
                 ->setGrid($grid)

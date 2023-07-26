@@ -17,11 +17,13 @@ trait HasTabs
      *
      * @param  string  $title
      * @param  Closure  $content
+     * @param  bool  $active
+     * @param  string|null  $id
      * @return $this
      */
-    public function tab($title, Closure $content, $active = false)
+    public function tab($title, Closure $content, $active = false, ?string $id = null)
     {
-        $this->getTab()->append($title, $content, $active);
+        $this->getTab()->append($title, $content, $active, $id);
 
         return $this;
     }

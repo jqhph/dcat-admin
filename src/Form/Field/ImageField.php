@@ -132,7 +132,7 @@ trait ImageField
 
         if (is_array($file)) {
             foreach ($file as $f) {
-                $this->destroyThumbnail($f);
+                $this->destroyThumbnail($f, $force);
             }
 
             return;
@@ -182,13 +182,15 @@ trait ImageField
             });
 
             if (! is_null($this->storagePermission)) {
-                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode(), $this->storagePermission);
+                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode()->stream(), $this->storagePermission);
             } else {
-                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode());
+                $this->getStorage()->put("{$this->getDirectory()}/{$path}", $image->encode()->stream());
             }
         }
 
-        $this->destroyThumbnail();
+        if (! is_array($this->original)) {
+            $this->destroyThumbnail();
+        }
 
         return $this;
     }
