@@ -83,14 +83,9 @@ export default class Menu {
             }
 
             let height = $horizontalMenu.height(),
-                diff = height - defaultHorizontalMenuHeight,
                 $wrapper = $('.horizontal-menu.navbar-fixed-top .content-wrapper');
 
-            if (height <= defaultHorizontalMenuHeight) {
-                return $wrapper.css({'padding-top': horizontalMenuTop + 'px'});
-            }
-
-            $wrapper.css({'padding-top': (horizontalMenuTop + diff) + 'px'});
+            $wrapper.css({'padding-top': (height + 15) + 'px'});
         };
         window.onresize = resize;
 
