@@ -2,22 +2,22 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "cross-env": "^5.2.1",
-        "laravel-mix": "^4.1.4",
-        "lodash": "^4.17.15",
-        "resolve-url-loader": "^2.3.1",
-        "rtlcss": "^2.4.0",
-        "sass": "^1.22.12",
-        "sass-loader": "^7.3.1",
-        "vue-template-compiler": "^2.6.12",
-        "webpack-cli": "^3.3.5"
+        "cross-env": "^7.0.3",
+        "laravel-mix": "^6.0.49",
+        "lodash": "^4.17.21",
+        "resolve-url-loader": "^5.0.0",
+        "rtlcss": "^4.1.0",
+        "sass": "^1.66.1",
+        "sass-loader": "^13.3.2",
+        "vue-template-compiler": "^2.7.14",
+        "webpack-cli": "^4.10.0"
     }
 }

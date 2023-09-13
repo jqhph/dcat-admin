@@ -1,0 +1,5 @@
+/*!
+ * jQuery Form Plugin
+ * version: 4.2.2
+ * Project repository: https://github.com/jquery-form/form
+ */

@@ -10,3 +10,5 @@ pre-dist
 /laravel-tests
 *.bak.*
 .DS_Store
+
+pnpm-lock.yaml
