@@ -70,7 +70,7 @@ $h3-font-size: $font-size-base * 1.51;
 $h4-font-size: $font-size-base * 1.32;
 $h5-font-size: $font-size-base * 1.14;
 
-$headings-margin-bottom: ($spacer / 2);
+$headings-margin-bottom: calc($spacer / 2);
 $headings-font-family: inherit;
 $headings-font-weight: 500;
 
