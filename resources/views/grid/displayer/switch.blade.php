@@ -41,10 +41,11 @@
 
                 if (d.status) {
                     Dcat.success(msg);
-                    reload && Dcat.reload();
                 } else {
                     Dcat.error(msg);
                 }
+
+                reload && Dcat.reload();
             }
         });
     });
