@@ -173,7 +173,7 @@ class UserController extends AdminController
                 $form->disableDeleteButton();
             }
         })->saving(function (Form $form) {
-            if ($form->password && $form->model()->get('password') != $form->password) {
+            if ($form->password && $form->model()->password != $form->password) {
                 $form->password = bcrypt($form->password);
             }
 
