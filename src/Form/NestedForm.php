@@ -54,6 +54,8 @@ class NestedForm extends WidgetForm
      */
     protected $form;
 
+    protected $tabName;
+
     /**
      * Create a new NestedForm instance.
      *
@@ -168,6 +170,25 @@ class NestedForm extends WidgetForm
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * $nestForm->setTableName($nestForm->model()->xxx);
+     * @param $tabName
+     * @return mixed
+     */
+    public function setTabName($tabName)
+    {
+        return $this->tabName = $tabName;
+    }
+
+    public function getTabName()
+    {
+        if (is_null($this->tabName)) {
+            $this->tabName = $this->getKey();
+        }
+
+        return $this->tabName;
     }
 
     /**

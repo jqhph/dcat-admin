@@ -25,14 +25,14 @@
         @foreach($forms as $pk => $form)
             <li class="nav-item ">
                 <a href="#{{ $relationName . '_' . $pk }}" class="nav-link @if ($form == reset($forms)) active @endif " data-toggle="tab">
-                    {{ $pk }} <i class="feather icon-alert-circle text-red d-none"></i>
+                    {{ $form->getTabName() }} <i class="feather icon-alert-circle text-red d-none"></i>
                 </a>
                 <i class="close-tab feather icon-trash text-red"></i>
             </li>
         @endforeach
 
     </ul>
-    
+
     <div class="tab-content has-many-{{$columnClass}}-forms">
 
         @foreach($forms as $pk => $form)
@@ -60,7 +60,7 @@
 
 <script>
     var container = '.has-many-{{ $columnClass }}';
-    
+
     $(container+' > .nav').off('click', 'i.close-tab').on('click', 'i.close-tab', function(){
         var $navTab = $(this).siblings('a');
         var $pane = $($navTab.attr('href'));
