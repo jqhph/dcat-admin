@@ -210,13 +210,14 @@
     @endif
     @if($type === 'amap')
     function initAmap(){
+        var center = lng.val() && lat.val() ? [lng.val(), lat.val()] : null
         var map = new AMap.Map(container[0], {
             resizeEnable: true,
-            center: lng.val() && lat.val() ? [lng.val(), lat.val()] : null,
+            center: center,
             zoom: 14
         });
         var marker = new AMap.Marker({
-            position: new AMap.LngLat(lng.val(), lat.val()),
+            position: center,
             draggable: true,
             map:map,
             icon:'//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png',
