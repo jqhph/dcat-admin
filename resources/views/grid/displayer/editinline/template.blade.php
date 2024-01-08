@@ -124,6 +124,8 @@
                     val.push($(this).val());
                     label.push($(this).parent().text());
                 });
+                // due to $.param() removing fileds with empty arrays
+                val = val.length == 0 ? null : val;
                 label = label.join(';');
                 break;
             case 'radio':
