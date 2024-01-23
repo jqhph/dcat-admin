@@ -494,7 +494,10 @@ class Asset
 
         $path = $this->getRealPath($path);
 
-        if (mb_strpos($path, '//') === false) {
+        //静文件可以自适应当前域名,不同域名,不同的协议,进来都能自适应
+        if ($path == '/' || empty($path)) {
+            $path = '/';
+        } else if (mb_strpos($path, '//') === false) {
             $path = config('admin.assets_server').'/'.trim($path, '/');
         }
 
