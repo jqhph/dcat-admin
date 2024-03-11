@@ -18,6 +18,8 @@
 
     @yield('admin.select-ajax')
 
+    @yield('admin.select-ajax'.$selector)
+
     @if(isset($remote))
     $.ajax({!! admin_javascript_json($remote['ajaxOptions']) !!}).done(function(data) {
         $("{{ $selector }}").select2($.extend({!! admin_javascript_json($configs) !!}, {
