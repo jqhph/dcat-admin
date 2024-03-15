@@ -12,16 +12,16 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0",
-        "laravel/framework": "~5.5|~6.0|~7.0|~8.0|~9.0|~10.0",
+        "php": "^7.0|^8.0",
+        "laravel/framework": "~5.5|~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
         "spatie/eloquent-sortable": "3.*|4.*",
-        "doctrine/dbal": "^2.6|^3.0"
+        "doctrine/dbal": "^2.6|^3.0|^4.0"
     },
     "require-dev": {
         "laravel/dusk": "~5.9|~6",
         "phpstan/phpstan": "^0.12.0",
-        "phpunit/phpunit": "^7.5|~9",
-        "fzaninotto/faker": "^1.4",
+        "phpunit/phpunit": "^7.5|~9|^10.5",
+        "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.0"
     },
     "autoload": {
