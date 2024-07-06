@@ -12,25 +12,25 @@ class ContextMenuActions extends DropdownActions
     {
         $script = <<<JS
 (function () {
+
     var id = '#{$this->elementId}';
+    // 先解绑事件再绑定，不然切换界面时会导致事件重复绑定
+    $("body").off('contextmenu').on("contextmenu", "#{$this->grid->getTableId()} tr", function(e) {
+        // 每次都要移除，免得不同界面出现Bug
+         $(id + ' .dropdown-menu').remove();
 
-    $("body").on("contextmenu", "#{$this->grid->getTableId()} tr", function(e) {
-         $(id + ' .dropdown-menu').hide();
-
-         var menu = $(this).find('td .grid-dropdown-actions .dropdown-menu');
+         // 直接复制操作栏元素和事件
+         var menu = $(this).find('td .grid-dropdown-actions .dropdown-menu').clone(true);
          var index = $(this).index();
 
-         if (menu.length) {
-             menu.attr('index', index).detach().appendTo(id);
-         } else {
-             menu = $(id + ' .dropdown-menu[index='+index+']');
-         }
+         menu.attr('index', index).appendTo(id);
 
          if (menu.height() > (document.body.clientHeight - e.pageY)) {
             menu.css({left: e.pageX+10, top: e.pageY - menu.height()}).show();
          } else {
             menu.css({left: e.pageX+10, top: e.pageY-10}).show();
          }
+
         return false;
     });
 
@@ -39,11 +39,13 @@ class ContextMenuActions extends DropdownActions
     }
 
     $(document).on('click',function(){
-        $(id + ' .dropdown-menu').hide();
+        // 每次都需要移除插入的元素
+        $(id + ' .dropdown-menu').remove();
     })
 
     $(id).click('a', function () {
-        $(this).find('.dropdown-menu').hide();
+        // 每次都需要移除插入的元素
+        $(this).find('.dropdown-menu').remove();
     });
 })();
 JS;
