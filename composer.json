@@ -2,7 +2,14 @@
     "name": "dcat/laravel-admin",
     "description": "dcat admin",
     "type": "library",
-    "keywords": ["dcat", "laravel", "admin", "grid", "form", "laravel admin"],
+    "keywords": [
+        "dcat",
+        "laravel",
+        "admin",
+        "grid",
+        "form",
+        "laravel admin"
+    ],
     "homepage": "https://github.com/jqhph/dcat-admin",
     "license": "MIT",
     "authors": [
@@ -13,16 +20,17 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "laravel/framework": "~5.5|~6.0|~7.0|~8.0|~9.0|~10.0",
+        "laravel/framework": "~5.5|~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
         "spatie/eloquent-sortable": "3.*|4.*",
-        "doctrine/dbal": "^2.6|^3.0"
+        "doctrine/dbal": "^2.6|^3.0|^4.0",
+        "dcat/easy-excel": "*"
     },
     "require-dev": {
-        "laravel/dusk": "~5.9|~6",
-        "phpstan/phpstan": "^0.12.0",
-        "phpunit/phpunit": "^7.5|~9",
-        "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0"
+        "laravel/dusk": "~5.9|~6|~7.0|~8.0",
+        "phpstan/phpstan": "^0.12.0|~1.0",
+        "phpunit/phpunit": "^7.5|~9|~10|~11",
+        "fakerphp/faker": "^1.23",
+        "mockery/mockery": "^1.6"
     },
     "autoload": {
         "psr-4": {
