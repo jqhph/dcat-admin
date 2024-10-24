@@ -21,11 +21,14 @@ trait HasPermissions
             return $this->allPermissions;
         }
 
+        $permissionsModel = config('admin.database.permissions_model');
+        $primaryKey = (new $permissionsModel)->getKeyName();
+        
         return $this->allPermissions =
             $this->roles
             ->pluck('permissions')
             ->flatten()
-            ->keyBy($this->getKeyName());
+            ->keyBy($primaryKey);
     }
 
     /**
