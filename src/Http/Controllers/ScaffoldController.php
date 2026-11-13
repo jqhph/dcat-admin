@@ -211,7 +211,7 @@ class ScaffoldController extends Controller
     protected function getDatabaseColumns($db = null, $tb = null)
     {
         $databases = Arr::where(config('database.connections', []), function ($value) {
-            $supports = ['mysql'];
+            $supports = ['mysql', 'pgsql'];
 
             return in_array(strtolower(Arr::get($value, 'driver')), $supports);
         });
@@ -221,6 +221,10 @@ class ScaffoldController extends Controller
         try {
             foreach ($databases as $connectName => $value) {
                 if ($db && $db != $value['database']) {
+                    continue;
+                }
+
+                if (strtolower(Arr::get($value, 'driver')) === 'pgsql') {
                     continue;
                 }
 
@@ -270,7 +274,124 @@ class ScaffoldController extends Controller
         } catch (\Throwable $e) {
         }
 
+        // PostgreSQL connections are read separately, so that a failing connection
+        // does not hide the tables of the other ones.
+        foreach ($databases as $connectName => $value) {
+            if (strtolower(Arr::get($value, 'driver')) !== 'pgsql' || ($db && $db != $value['database'])) {
+                continue;
+            }
+
+            try {
+                $data[$value['database']] = $this->getPgsqlColumns($connectName, $value, $tb);
+            } catch (\Throwable $e) {
+            }
+        }
+
         return $data;
+    }
+
+    /**
+     * Read the columns of a PostgreSQL connection, for every schema in its search path.
+     * Tables outside the "public" schema are keyed as "schema.table".
+     *
+     * @param  string  $connectName
+     * @param  array  $config
+     * @param  string|null  $tb
+     * @return array
+     */
+    protected function getPgsqlColumns($connectName, array $config, $tb = null)
+    {
+        $schemas = Arr::get($config, 'search_path', Arr::get($config, 'schema', 'public'));
+        $schemas = is_array($schemas) ? $schemas : explode(',', (string) $schemas);
+        $schemas = array_values(array_filter(array_map(function ($v) {
+            return trim($v, " \t\n\r\0\x0B\"");
+        }, $schemas))) ?: ['public'];
+
+        $prefix = (string) Arr::get($config, 'prefix', '');
+        $table = $tb;
+
+        if ($tb && Str::contains($tb, '.')) {
+            [$schema, $table] = explode('.', $tb, 2);
+            $schemas = [$schema];
+        }
+
+        $sql = 'SELECT c.table_schema, c.table_name, c.column_name, c.data_type, c.udt_name, c.is_nullable, c.column_default, '
+            .'pg_catalog.col_description((quote_ident(c.table_schema)||\'.\'||quote_ident(c.table_name))::regclass::oid, c.ordinal_position) AS column_comment, '
+            .'CASE WHEN pk.column_name IS NULL THEN \'\' ELSE \'PRI\' END AS column_key '
+            .'FROM information_schema.columns c '
+            .'LEFT JOIN (SELECT ku.table_schema, ku.table_name, ku.column_name FROM information_schema.table_constraints tc '
+            .'INNER JOIN information_schema.key_column_usage ku ON tc.constraint_name = ku.constraint_name AND tc.table_schema = ku.table_schema '
+            .'WHERE tc.constraint_type = \'PRIMARY KEY\') pk '
+            .'ON pk.table_schema = c.table_schema AND pk.table_name = c.table_name AND pk.column_name = c.column_name '
+            .'WHERE c.table_schema IN ('.implode(',', array_fill(0, count($schemas), '?')).')';
+
+        $bindings = $schemas;
+
+        if ($table) {
+            $sql .= ' AND c.table_name = ?';
+            $bindings[] = $prefix.$table;
+        }
+
+        $sql .= ' ORDER BY c.table_schema, c.table_name, c.ordinal_position';
+
+        $data = [];
+
+        foreach (DB::connection($connectName)->select($sql, $bindings) as $v) {
+            $v = (array) $v;
+
+            $tableName = $prefix ? Str::replaceFirst($prefix, '', $v['table_name']) : $v['table_name'];
+
+            if ($v['table_schema'] !== 'public') {
+                $tableName = $v['table_schema'].'.'.$tableName;
+            }
+
+            $data[$tableName][$v['column_name']] = [
+                'type'     => $this->convertPgsqlType($v['udt_name'] ?: $v['data_type']),
+                'default'  => Str::startsWith((string) $v['column_default'], 'nextval(') ? null : $v['column_default'],
+                'nullable' => $v['is_nullable'],
+                'key'      => $v['column_key'],
+                'id'       => $v['column_key'] === 'PRI',
+                'comment'  => (string) $v['column_comment'],
+            ];
+        }
+
+        return $data;
+    }
+
+    /**
+     * Map a PostgreSQL type to the MySQL style type names used by the scaffold form.
+     *
+     * @param  string  $type
+     * @return string
+     */
+    protected function convertPgsqlType($type)
+    {
+        $type = strtolower((string) $type);
+
+        if (Str::startsWith($type, 'int') || in_array($type, ['serial', 'bigserial', 'smallserial'])) {
+            return $type === 'int8' || $type === 'bigserial' ? 'bigint' : ($type === 'int2' ? 'smallint' : 'int');
+        }
+
+        $map = [
+            'bool'        => 'tinyint',
+            'float4'      => 'float',
+            'float8'      => 'double',
+            'numeric'     => 'decimal',
+            'bpchar'      => 'char',
+            'varchar'     => 'varchar',
+            'text'        => 'text',
+            'uuid'        => 'char',
+            'json'        => 'json',
+            'jsonb'       => 'json',
+            'bytea'       => 'binary',
+            'date'        => 'date',
+            'time'        => 'time',
+            'timetz'      => 'time',
+            'timestamp'   => 'timestamp',
+            'timestamptz' => 'timestamp',
+        ];
+
+        return $map[$type] ?? 'varchar';
     }
 
     protected function backWithException(\Exception $exception)
